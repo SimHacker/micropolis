@@ -1,0 +1,23 @@
+#summary Description of Micropolis source code release.
+#labels Featured
+
+= Micropolis Source Code Release =
+
+This is the binary and source code for Micropolis (A.K.A. "S*mC*ty": see the GPL License and additional terms, below), which is released under the GPL.
+
+For more information, see Don Hopkins' Blog: http://www.DonHopkins.com. 
+Please email questions and comments to dhopkins@DonHopkins.com .
+
+  * micropolis.xo
+    Download this to TCL/Tk Micropolis install on the OLPC XO-1.
+  * micropolis-activity.tgz
+    Download this to install TCL/Tk Micropolis on x86 Linux systems.
+  * micropolis-activity-source.tgz
+    Download this to build TCL/Tk Micropolis from source.
+  * MicropolisCore.tgz
+    Download this to build the Python modules micropolis, cellengine and tileengine.
+    * The micropolis module is the new version of Micropolis, cleaned up and recast as a C++ class.
+    * The cellengine module is a cellular automata machine engine.
+    * The tileengine module is a Cairo based tile renderer, used to display micropolis tiles and cellengine cells. It plugs into micropolis and cellengine, but is independent of them and useful for other applications.
+    * These modules require Python 2.5 and the Python modules pygtk, pycairo and PIL to be installed. Probably some other modules I can't think of off the top of my head, too.
+    * This code will compile on Windows or Linux. It is intended to be used with the OLPC's Sugar user interface environemnt (depending on Cairo and Pango for graphics and text formatting), but layered so the core code is useful in other contexts such as different scripting languages, web servers, desktop applications, embedded devices, etc.
