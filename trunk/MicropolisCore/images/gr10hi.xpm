@@ -1,0 +1,39 @@
+/* XPM */
+static char *noname[] = {
+/* width height ncolors chars_per_pixel */
+"69 26 6 1",
+/* colors */
+"` c #000000 m #ffffff",
+"a c #00FFFF m #000000",
+"b c #727272 m #000000",
+"c c #FFFF00 m #ffffff",
+"d c #DFDFDF m #000000",
+"e c #0000FF m #000000",
+/* pixels */
+"`````````````````````````````````````````````````````````````````````",
+"``bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb``",
+"`b`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`d`",
+"`bb`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`dd`",
+"`bbb`````````````````````````````````````````````````````````````ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`cccccccaeecccccaeeccccccaeeecccaeeeeeeeeccccaeeeecccccccccc`ddd`",
+"`bbb`ccccccccaeccccaecaeccccccaeecccaecaeccaeeccaeccaecccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaeccccccaeecaeccaecccaeccaeccaecccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaecccccccaeeecccaecccaeccaeeccccccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaecccccccaeeccccaeccaeecccaeecccccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaeccccccccaeccccaeeeeecccccaeeccccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaeccccccccaeccccaeaeecccccccaeecccccccccc`ddd`",
+"`bbb`ccccccccaecccaecccaeccccccccaeccccaecaeecccaeccaecccccccccc`ddd`",
+"`bbb`ccccccccaeccccaecaecccccccccaeccccaeccaeeccaeccaecccccccccc`ddd`",
+"`bbb`cccccccaeeeccccaeecccccccccaeeeccaeeeccaeeeaeeeecccaecccccc`ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc`ddd`",
+"`bbb`````````````````````````````````````````````````````````````ddd`",
+"`bb`ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd`dd`",
+"`b`ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd`d`",
+"``ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd``",
+"`````````````````````````````````````````````````````````````````````"
+};

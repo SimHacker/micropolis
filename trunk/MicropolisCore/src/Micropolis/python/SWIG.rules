@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="SWIG Rule File"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="SWIG"
+			DisplayName="SWIG"
+			CommandLine="[Disable] c:\swig\swig.exe [AllOptions] [AdditionalOptions] [Inputs]"
+			Outputs="..\swig\$(InputName)_wrap.cpp"
+			FileExtensions="*.i"
+			ExecutionDescription="Executing tool..."
+			>
+			<Properties>
+				<StringProperty
+					Name="ScriptingLanguage"
+					DisplayName="SWIG Scripting Language"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Specifies the name of the scripting language for SWIG to generate wrappers."
+					Switch="-[value]"
+					DefaultValue="lua"
+				/>
+				<BooleanProperty
+					Name="CPlusPlus"
+					DisplayName="C++"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="C++"
+					Switch="-c++"
+					DefaultValue="true"
+				/>
+				<StringProperty
+					Name="OutDir"
+					DisplayName="Output Directory"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Output Directory"
+					Switch="-outdir [value] -o [value]\$(InputName)_wrap.cpp"
+					DefaultValue="."
+				/>
+				<BooleanProperty
+					Name="Disable"
+					DisplayName="Disable"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Disable"
+					Switch="C:\cygwin\bin\echo DISABLED: "
+				/>
+				<StringProperty
+					Name="Arguments"
+					DisplayName="Arguments"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Command Line Arguments"
+					Switch="[value]"
+				/>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>

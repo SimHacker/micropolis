@@ -1,0 +1,38 @@
+/* XPM */
+static char *tiles__[] = {
+/* columns rows colors chars-per-pixel */
+"69 26 6 1",
+"  c black",
+". c #727272727272",
+"X c blue",
+"o c cyan",
+"O c yellow",
+"+ c #DFDFDFDFDFDF",
+/* pixels */
+"                                                                     ",
+"  .................................................................  ",
+" . ............................................................... + ",
+" .. ............................................................. ++ ",
+" ...                                                             +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ... OOOoXXOOOOoXXXOOOOoXXOOOOOOoXXXOOOoXXXXXXXXOOOOoXXXXOOOOOOO +++ ",
+" ... OOOOoXOOOoXOOoXOOoXOoXOOOOOOoXXOOOoXOoXOOoXXOOoXOOoXOOOOOOO +++ ",
+" ... OOOOoXOOOoXOOoXOoXOOOoXOOOOOOoXXOoXOOoXOOOoXOOoXOOoXOOOOOOO +++ ",
+" ... OOOOoXOOOOOOOoXOoXOOOoXOOOOOOOoXXXOOOoXOOOoXOOoXXOOOOOOOOOO +++ ",
+" ... OOOOoXOOOOOOOoXOoXOOOoXOOOOOOOoXXOOOOoXOOoXXOOOoXXOOOOOOOOO +++ ",
+" ... OOOOoXOOOOOOoXOOoXOOOoXOOOOOOOOoXOOOOoXXXXXOOOOOoXXOOOOOOOO +++ ",
+" ... OOOOoXOOOOOOoXOOoXOOOoXOOOOOOOOoXOOOOoXoXXOOOOOOOoXXOOOOOOO +++ ",
+" ... OOOOoXOOOOOoXOOOoXOOOoXOOOOOOOOoXOOOOoXOoXXOOOoXOOoXOOOOOOO +++ ",
+" ... OOOOoXOOOOoXOOoXOoXOoXOOOOOOOOOoXOOOOoXOOoXXOOoXOOoXOOOOOOO +++ ",
+" ... OOOoXXXOOoXXXXXOOOoXXOOOOOOOOOoXXXOOoXXXOOoXXXoXXXXOOOoXOOO +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ... OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO +++ ",
+" ...                                                             +++ ",
+" .. +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ++ ",
+" . +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ + ",
+"  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  ",
+"                                                                     "
+};
