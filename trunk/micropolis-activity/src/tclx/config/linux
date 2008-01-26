@@ -1,0 +1,13 @@
+#------------------------------------------------------------------------------
+# SUN OS newer versions (~4.1, let us know which ones works for you)
+#------------------------------------------------------------------------------
+# $Id: sunos4.1,v 2.3 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS=-DTCL_HAVE_SETLINEBUF -DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TM_GMTOFF
+LIBS=-lm
+RANLIB_CMD=ranlib
+MCS_CMD=true
+TCL_TK_LIBS= -L/usr/X11/lib -lX11 -lm -lXpm
+
+TCL_MAN_SEPARATOR=

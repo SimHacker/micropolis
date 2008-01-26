@@ -1,0 +1,45 @@
+########################################################################
+# Questions
+########################################################################
+
+
+global Questions
+
+
+proc Question {id color title msg {props {}}} {
+  global Questions
+  set Questions($id) [list $color $title $msg $props]
+}
+
+Question QuitSingle #ff0000 "Quit Micropolis" \
+    "Do you want to quit playing Micropolis?" \
+{{left {{Keep Playing.} Quit.KeepPlaying
+   {RejectPlan}}}
+ {right {{I Quit!} Quit.IQuit
+   {DoReallyQuit %s}}}}
+
+Question QuitMulti #ff0000 "Quit Micropolis" \
+    "Do you want to quit playing Micropolis?" \
+{{left {{Keep Playing.} Quit.KeepPlaying 
+   {RejectPlan}}}
+ {middle {{I Resign!} Quit.IResign
+   {DoIResign %s}}}
+ {right {{I Quit!} Quit.AllQuit 
+   {DoReallyQuit %s}}}}
+
+Question Choose #ff0000 "New City" \
+"Do you want to abandon this city and select another one?" \
+{{left {{Keep Playing.} SelectCity.No
+   {RejectPlan}}}
+ {right {{Yes, another city!} SelectCity.Yes
+   {UIPickScenarioMode}}}}
+
+# Ugh.
+Question Build #00ff00 "%s" "%s" \
+{{left {{Dismiss Plan.} Plan.Dismiss
+   {WithdrawAskOf %s}}}
+ {right {{Support plan!} Plan.Support 
+   {SupportPlan $view %s $tool $x $y}
+   {PreviewSupportPlan $view %s $tool $x $y}}}}
+
+

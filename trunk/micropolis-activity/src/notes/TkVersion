@@ -1,0 +1,40 @@
+tcl6.4
+tclX6.4c-p1
+tk2.3
+tkpixmap-1.3 patch to tk
+xpm3.2a
+
+tcl, tclX and tk absolute file name global variable patchs
+  tcl default file?? TCL_DEFAULT
+
+fix tkpixmap patch to support named pixmaps on a per screen basis
+
+
+tcl patches:
+  config:
+    forced: set stdlibOK=1
+  tclCmdIL.c:
+    added global TCL_Library
+  tclUnix.h:
+    #if 0'ed out unix procedure prototypes
+  stdlib.h:
+    added CONST to atof
+
+tclX patches:
+  tkWindow.c:
+    added global TK_Library
+  src/tclExtdInt.h:
+    acc warns of integer overflow. inserted casts.
+  tclXlib.h:
+    changed (char *)NULL to (char **)NULL
+
+tk patches:
+  multiple display patchs to tk
+    hash tables:
+      tkBitmap.c tkCursor.c tkPixmap.c 
+    grab:
+      tkGrab.c
+      library/menu.tcl
+  tk.h:
+    defined _PTRDIFF_T and _SIZE_T, so gcc's stddef.h doesn't clash 
+    with sunos4.1.1's stdtypes.h

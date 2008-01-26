@@ -1,0 +1,16 @@
+#!/usr/local/bin/wish -f
+#
+# Simple script to change size of something in a window.
+
+if "$argc < 3" {error "Usage: size appName window option"}
+set appName [lindex $argv 0]
+set widget [lindex $argv 1]
+set option [lindex $argv 2]
+
+pack append . [scale .scale -command {send $appName $widget config $option} \
+	-label "Pixels" -length 250 \
+	-from 0 -to 100 -orient vertical] {top expand filly}
+
+bind . <Control-q> {destroy .}
+bind . <Control-c> {destroy .}
+focus .

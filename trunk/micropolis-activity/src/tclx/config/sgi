@@ -1,0 +1,17 @@
+#------------------------------------------------------------------------------
+# SGI IRIX 4.0
+#------------------------------------------------------------------------------
+# The strftime function supplied with IRIX 4.0.5 is broken, when a time
+# is 12:00 AM, %I and %r return times of 00:00, as if it was 24-hour time.
+# We substitute in our own version of strftime to fix this problem.
+#------------------------------------------------------------------------------
+# $Id: sgi,v 2.7 1992/11/09 07:18:22 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS=-DTCL_HAVE_SETLINEBUF -DTCL_POSIX_SIG -DTCL_IEEE_FP_MATH -DTCL_TIMEZONE_VAR
+LIBS=-lm
+RANLIB_CMD=true
+MCS_CMD=true
+TCL_TK_LIBS= -lX11 -lm
+SUPPORT_OBJS=strftime.o
+TCL_MAN_SEPARATOR=

@@ -1,0 +1,29 @@
+#!/usr/local/bin/wish -f
+#
+# This script generates a counter with start and stop buttons.
+
+label .counter -text 0.00 -relief raised -width 10
+button .start -text Start -command "set stop 0; tick"
+button .stop -text Stop -command {set stop 1}
+pack append . .counter {bot fill} .start {left expand fill} \
+	.stop {right expand fill}
+
+set seconds 0
+set hundredths 0
+set stop 0
+
+proc tick {} {
+    global seconds hundredths stop
+    if $stop return
+    after 20 tick
+    set hundredths [expr $hundredths+2]
+    if {$hundredths >= 100} {
+	set hundredths 0
+	set seconds [expr $seconds+1]
+    }
+    .counter config -text [format "%d.%2d" $seconds $hundredths]
+}
+
+bind . <Control-c> {destroy .}
+bind . <Control-q> {destroy .}
+focus .

@@ -1,0 +1,54 @@
+#!/usr/local/bin/wish -f
+#
+# This script generates a sample dialog box that waits for one of three
+# buttons to be pressed, then prints a message and exits.
+
+# Create two frames in the main window. The top frame will hold the
+# message and the bottom one will hold the buttons.  Arrange them
+# on above the other, with any extra vertical space split between
+# them.
+
+frame .top -relief raised -border 1
+frame .bot -relief raised -border 1
+pack append . .top {top fill expand} .bot {top fill expand}
+
+# Create the message widget and arrange for it to be centered in the
+# top frame.
+
+message .top.msg -text "File main.c hasn't been saved to disk since \
+it was last modified.  What should I do?" -justify center \
+-font -Adobe-helvetica-medium-r-normal--*-240* -aspect 200
+pack append .top .top.msg {top padx 5 pady 5 expand}
+
+# Create the buttons and arrange them from left to right in the bottom
+# frame.  Embed the left button in an additional sunken frame to indicate
+# that it is the default button.
+
+frame .bot.left -relief sunken -border 1
+pack append .bot .bot.left {left expand padx 20 pady 20}
+button .bot.left.button -text "Save File" -command "quit save"
+pack append .bot.left .bot.left.button {expand padx 12 pady 12}
+button .bot.middle -text "Quit Anyway" -command "quit quit"
+pack append .bot .bot.middle {left expand padx 20}
+button .bot.right -text "Return To Editor" -command "quit return"
+pack append .bot .bot.right {left expand padx 20}
+
+# The procedure below is invoked as the action for each of the buttons.
+# It prints a message and exits by destroying the application's main
+# window.
+
+proc quit button {
+    puts stdout "You pressed the \"$button\" button;  bye-bye!"
+    destroy .
+}
+
+bind .top <Enter> {.bot.left.button activate}
+bind .top.msg <Enter> {.bot.left.button activate}
+bind .bot <Enter> {.bot.left.button activate}
+bind .top <Leave> {.bot.left.button deactivate}
+bind .top.msg <Leave> {.bot.left.button deactivate}
+bind .bot <Leave> {.bot.left.button deactivate}
+bind . <1> {.bot.left.button config -relief sunken}
+bind . <ButtonRelease-1> {quit save}
+focus .
+bind . <Return> {quit save}

@@ -1,0 +1,20 @@
+*** ../../tcl6.4/tclExpr.c	Mon Mar 23 09:54:06 1992
+--- tclExpr.c	Tue Oct  6 17:20:10 1992
+***************
+*** 1318,1324
+  	if (value.type == TYPE_INT) {
+  	    sprintf(interp->result, "%ld", value.intValue);
+  	} else if (value.type == TYPE_DOUBLE) {
+! 	    sprintf(interp->result, "%g", value.doubleValue);
+  	} else {
+  	    if (value.pv.buffer != value.staticSpace) {
+  		interp->result = value.pv.buffer;
+
+--- 1318,1324 -----
+  	if (value.type == TYPE_INT) {
+  	    sprintf(interp->result, "%ld", value.intValue);
+  	} else if (value.type == TYPE_DOUBLE) {
+! 	    Tcl_ReturnDouble (interp, value.doubleValue);
+  	} else {
+  	    if (value.pv.buffer != value.staticSpace) {
+  		interp->result = value.pv.buffer;

@@ -1,0 +1,36 @@
+/* XPM */
+static char *noname[] = {
+/* width height ncolors chars_per_pixel */
+"56 24 5 1",
+/* colors */
+"# c #000000",
+"a c #7F7F7F",
+"b c #5D5D5D",
+"  c #FFFFFF",
+"d c #BFBFBF",
+/* pixels */
+"dddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+"dbbbb    bbbb    bbbb    bbbb    bbbb    bbbb    bbbb  b",
+"dbbbb    bbbb    bbbb    bbbb    bbbb    bbbb    bbbb  b",
+"d  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  b",
+"d  b################################################d  b",
+"d  b# # # # # # # # # # # # # # # # # # # # # # # ##dbbb",
+"d  b##bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb #dbbb",
+"dbbb# b aad#bbbbbbbbbbbb aad#bbbbbb aad#bbbb aad#b##dbbb",
+"dbbb##b aad#bbbbbbbbbbbb aad#bbbbbb aad#bbbb aad#b #dbbb",
+"dbbb# b#####bbbbbbbbbbbb#####bbbbbb#####bbbb#####b##d  b",
+"dbbb##bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb #d  b",
+"d  b# bbbb# # bbbb# # bbbb# # bbbb# # bbbb# # bbbb##d  b",
+"d  b##bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb #d  b",
+"d  b# bb aad#bbbbb aad#bbbbbbbbb aad#bbbbbb aad#bb##dbbb",
+"d  b##bb aad#bbbbb aad#bbbbbbbbb aad#bbbbbb aad#bb #dbbb",
+"dbbb# bb#####bbbbb#####bbbbbbbbb#####bbbbbb#####bb##dbbb",
+"dbbb##bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb #dbbb",
+"dbbb# ##############################################d  b",
+"dbbb## # # # # # # # # # # # # # # # # # # # # # # #d  b",
+"d  b################################################d  b",
+"d  bddddddddddddddddddddddddddddddddddddddddddddddddd  b",
+"d  bbbb    bbbb    bbbb    bbbb    bbbb    bbbb    bbbbb",
+"d  bbbb    bbbb    bbbb    bbbb    bbbb    bbbb    bbbbb",
+"dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+};

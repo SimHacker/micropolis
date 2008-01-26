@@ -1,0 +1,154 @@
+This file contains a collection of notes that various people have
+provided about porting Tcl to various machines and operating systems.
+I don't have personal access to any of these machines, so I make
+no guarantees that the notes are correct, complete, or up-to-date.
+In some cases, a person has volunteered to act as a contact point
+for questions about porting Tcl to a particular machine;  in these
+cases the person's name and e-mail address are listed.
+
+---------------------------------------------
+Cray machines running UNICOS:
+Contact: John Freeman (jlf@cray.com)
+---------------------------------------------
+
+1. The nm command on unicos doesn't have a -p option, so I removed it
+from the config script without apparent harm.
+
+diff -c -r1.1 config
+*** 1.1	1991/11/12 15:11:51
+--- config	1991/11/12 15:14:18
+***************
+*** 57,63 ****
+      echo "  to set the libc variable."
+      exit(1)
+  endif
+! nm -p $libc > tmp.libc
+  if ( $status != 0 ) then
+      echo "- ERROR\!\!  Nm failed to extract names of system-supplied library"
+      echo "  procedures from $libc.  You'll have to modify config by hand to"
+--- 57,63 ----
+      echo "  to set the libc variable."
+      exit(1)
+  endif
+! nm $libc > tmp.libc
+  if ( $status != 0 ) then
+      echo "- ERROR\!\!  Nm failed to extract names of system-supplied library"
+      echo "  procedures from $libc.  You'll have to modify config by hand to"
+
+2. There is an error in the strstr function in UNICOS such that if the
+string to be searched is empty (""), the search will continue past the
+end of the string.  Because of this, the history substitution loop
+will sometimes run past the end of its target string and trash
+malloc's free list, resulting in a core dump some time later.  (As you
+can probably guess, this took a while to diagnose.)  I've submitted a
+problem report to the C library maintainers, but in the meantime here
+is a workaround.
+
+-----------------------------------------------------------------
+diff -c1 -r1.1 tclHistory.c
+*** 1.1	1991/11/12 16:01:58
+--- tclHistory.c	1991/11/12 16:14:22
+***************
+*** 23,24 ****
+--- 23,29 ----
+  #include "tclInt.h"
++ 
++ #ifdef _CRAY
++ /* There is a bug in strstr in UNICOS; this works around it. */
++ #define strstr(s1,s2) ((s1)?(*(s1)?strstr((s1),(s2)):0):0)
++ #endif _CRAY
+
+
+---------------------------------------------
+HP-UX systems:
+---------------------------------------------
+
+1. The #define for TCL_UNION_WAIT in tclUnix.h needs to be set to 0,
+not 1.  I've tried a number of techniques to get the "config" script
+to figure this out and set it correctly, but so far I haven't been
+able to make it work for HP-UX systems.
+
+2. It may also be useful to add the flag "-D_BSD" to CFLAGS in the
+Makefile, but I'm not sure this is necessary (and it may even be
+evil) if TCL_UNION_WAIT has been #define'd correctly.
+
+---------------------------------------------
+MIPS systems runing EP/IX:
+---------------------------------------------
+
+1. Need to add a line "#include <bsd/sys/time.h>" in tclUnix.h.
+
+2. Need to add "-lbsd" into the line that makes tclTest:
+
+	${CC} ${CFLAGS} tclTest.o libtcl.a -lbsd -o tclTest
+
+---------------------------------------------
+IBM RS/6000 systems running AIX:
+---------------------------------------------
+
+1. The system version of strtoul is buggy, at least under some
+versions of AIX.  If the expression tests fail, try forcing Tcl
+to use its own version of strtoul instead of the system version.
+To do this, first copy strtoul.c from the compat subdirectory up
+to the main Tcl directory.  Then modify the Makefile so that
+the definition for COMPAT_OBJS includes "strtoul.o".  Note:  the
+"config" script should now detect the buggy strtoul and substitute
+Tcl's version automatically.
+
+2. You may have to comment out the declaration of open in tclUnix.h.
+
+3. The "nm -p ..." line in the file "config" has to be changed to
+"nm -en ..." if you use the version of nm that's in /bin.  If you're
+set up to use the BSD version (in /usr/ucb) then this won't be a
+problem.
+
+---------------------------------------------
+AT&T 4.03 OS:
+---------------------------------------------
+
+Machine: i386/33Mhz i387 32k Cache 16MByte 
+OS: AT&T SYSV Release 4 Version 3
+X: X11R5 fixlevel 9
+Xserver: X386 1.2
+
+1. Change the Tk Makefile as follows:
+XLIB            = -lX11
+	should be changed to:
+XLIB            = -lX11 -lsocket -lnsl
+
+2. Change the Tcl "config" script as follows:
+set libc="/lib/libc.a"
+	should be changed to:
+set libc="/usr/ccs/lib/libc.a"
+
+-------------------------------------------------------
+Motorola MPC's running UNIX System V/88 Release R32V2:
+-------------------------------------------------------
+
+1.  Tcl should build without any modifications to sources, but csh
+isn't supplied with the operating system so you'll have to find and
+use the public-domain tcsh.
+
+-------------------------------------------------------
+SGI machines running Irix release 4.0.1 or earlier:
+-------------------------------------------------------
+
+1. There's a bug in the optimizer;  compile tclVar.c using -O0.
+
+2. In tclUnix.h, add the following just before the declaration of environ:
+
+#ifdef __sgi
+#define environ _environ
+#endif
+
+---------------------------------------------
+NeXT machines running NeXTStep 2.1:
+---------------------------------------------
+
+1. Change the "libc" definition in the config file to
+    set libc="/lib/libsys_s.a"
+
+2. Several of the "format" and "scan" tests will fail, but these are
+all minor nits stemming from imperfect POSIX compliance in the NeXT
+C library procedures.  The errors are unlikely to affect any Tcl
+applications.

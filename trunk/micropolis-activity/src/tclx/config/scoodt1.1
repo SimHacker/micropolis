@@ -1,0 +1,16 @@
+#------------------------------------------------------------------------------
+#  SCO ODT 1.1 - System V 3.2.2
+#------------------------------------------------------------------------------
+# $Id: scoodt1.1,v 2.2 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS=-DTCL_USE_BZERO_MACRO -DTCL_POSIX_SIG -DTCL_NEED_TIME_H -DTCL_DUP_CLK_TCK
+LIBS= -lm -lintl -lmalloc -lc_s
+RANLIB_CMD=true
+MCS_CMD=mcs -d
+TCL_TK_LIBS= -lX11 -lsocket -lm -lintl -lmalloc -lc_s
+
+TCL_MAN_SEPARATOR=.
+TCL_MAN_STYLE=SHORT
+TCL_MAN_INDEX=1
+

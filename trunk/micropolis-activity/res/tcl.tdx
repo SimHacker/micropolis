@@ -1,0 +1,15 @@
+TclX-ArrayProcedures 48 407 for_array_keys
+TclX-assign_fields 500 148 assign_fields
+TclX-developer_utils 699 804 saveprocs edprocs
+TclX-forfile 1537 167 for_file
+TclX-forrecur 1749 356 for_recursive_glob
+TclX-globrecur 2147 330 recursive_glob
+TclX-help 2527 4828 help helpcd helppwd apropos
+TclX-packages 7400 950 packages autoprocs
+TclX-directory_stack 8399 574 pushd popd dirs
+TclX-set_functions 9039 2020 union intersect intersect3 lrmdups
+TclX-show_procedures 11111 603 showproc showprocs
+TclX-stringfile_functions 11773 363 read_file write_file
+TclX-Compatibility 12174 59 execvp
+TclX-convertlib 12273 933 convert_lib
+TclX-profrep 13239 3168 profrep

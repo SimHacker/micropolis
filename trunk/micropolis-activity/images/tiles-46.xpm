@@ -1,0 +1,37 @@
+/* XPM */
+static char *tiles___[] = {
+/* columns rows colors chars-per-pixel */
+"56 24 7 1",
+"  c black",
+". c #7F7F7F7F0000",
+"X c #5D5D5D5D5D5D",
+"o c gray50",
+"O c red",
+"+ c gray75",
+"@ c gray100",
+/* pixels */
+"++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+"+XXXX....XXXX....XXXX....XXXX....XXXX....XXXX....XXXX..X",
+"+XXXX....XXXX....XXXX....XXXX....XXXX....XXXX....XXXX..X",
+"+..XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..X",
+"+..X                                                +..X",
+"+..X @ @ @ @ @ @ @ @ @ +++++++++++++++++++ @ @ @ @  +XXX",
+"+XXX  @ @ @ @ @ @ @ @  @@@@@@@@@@@@@@@@@@@  @ @ @ @ +XXX",
+"+XXX @ ..@ ..@ ..@ .+ o@O@@@@@@@@@@@@@@@O@ X.@ ..@  +XXX",
+"+XXX   ..  ..  ..  ++o @@@@@@@@@@@@@@@@@@@XX.  .. @ +..X",
+"+XXX @ooooooooooooo++  @@@@@@@@@@@@@@@@@@@ Xoooooo  +..X",
+"+..X   ..X ..X ..X ++   ++XX++XX++XX++XX+  X.X ..X@ +..X",
+"+..X @ ..@ ..@ ..@ +++ ooXXooXXooXXooXXooooX.@ ..@  +..X",
+"+..X   ..  ..  ..  ++oooooooooooooooooooooX..  .. @ +XXX",
+"+..X @ ..@ ..@ ..@ ..ooXXXXooooooooXXXXooX ..@ ..@  +XXX",
+"+XXX  oooooooooooooooooooooooooooooooooooooooooooo@ +XXX",
+"+XXX @ ..X ..X ..X ..X ..X ..X ..X ..X ..X ..X ..X  +XXX",
+"+XXX   ..  ..  ..  ..  ..  ..  ..  ..  ..  ..  .. @ +..X",
+"+XXX @   @   @   @   @   @   @   @   @   @   @   @  +..X",
+"+..X  @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ +..X",
+"+..X                                                +..X",
+"+..X+++++++++++++++++++++++++++++++++++++++++++++++++..X",
+"+..XXXX....XXXX....XXXX....XXXX....XXXX....XXXX....XXXXX",
+"+..XXXX....XXXX....XXXX....XXXX....XXXX....XXXX....XXXXX",
+"+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+};

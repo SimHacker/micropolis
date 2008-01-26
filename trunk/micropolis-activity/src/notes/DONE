@@ -1,0 +1,36 @@
+* multiple maps & editors (1)
+  need menu for creating new editor and map windows
+* about dialog (1)
+  pictures, copyright notice, credits, etc.
+* notice dialog (1)
+  window that pops up to display text and graphics
+  city size changes, warnings, disasters, win/lose
+* elan license manager (2)
+* map & editor controls (2)
+  controls for things effecting the editor or map,
+  like update frequency, autogoto
+* scenario descriptions (3)
+  describe each scenario when it's selected
+* query zone status (2)
+  no editing tool for "query" function, so press help key instead
+* "are you sure?" confirmation dialogs (3)
+  pop-up window asks a question with yes/no buttons,
+  before "quit", "load city", "select city", etc
+* map icons (4)
+  make a bunch of big new map icons
+* get key dialog (1)
+* hour glass on budget window (3)
+  take down budget window and continue when timer runs out
+* history mechanism should reset history when you play a game
+* now that autogoto is a view option, and there's no way to set the global
+  flag from the user interface, turn it on after reading from a file. 
+* audio mixer does alopen on hw without audio
+* elmd -s 0, kill when done
+* Programs dumps core upon start-up on krill.corp.  Running 12 bit deep
+  root.  So it appears that it needs to be a little smarter about different
+  depth roots.
+* get key panel
+  show license status! give more feedback!
+    unsigned long elm_fexpdate(feature)
+    elm_getservers
+  micropolis / micropolisnet licenses

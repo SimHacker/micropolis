@@ -1,0 +1,475 @@
+BUGS:
+
+
+* multi-user "select city" dialog
+** Add about, configure buttons
+** draw and erase on map window
+
+* configuration panel
+** players
+** keys
+
+* sim.
+** command to set process nice
+** first editor on a display gets a control window
+
+
+* control window.
+** file menu.
+*** About (dialog)
+*** LoadScenario (confirm)
+*** StartNewCity (confirm)
+*** LoadCity (file dialog)
+*** SaveCity (file dialog if no file name)
+*** SaveCityAs (file dialog)
+*** PrintCity (print dialog)
+*** GetKey (key dialog)
+*** QuitMicropolis (confirm)
+** options menu
+*** auto budget, auto goto, auto bulldoze, disasters, sound
+** disasters menu
+*** monster, fire, flood, air crash, tornado, earthquake, meltdown
+** window menu
+   defer creating windows
+
+
+* more controls
+** command field
+*** type in arguments to menu commands
+*** interpret tcl
+** icon for each window opened and openable (dim)
+*** window name, display name, user name
+*** click opened icon to bring to top
+*** click openable icon to make new window
+*** make nice icons
+*** display nice icons in x window icons too
+*** save window layout
+*** restore window layout
+** speed slider
+** priority slider
+
+
+* editor window.
+** editor view.
+** tool pallet.
+** various text fields.
+*** funds, date, message, cost.
+** initialize controls
+** autogoto is a per-editor flag
+** autogoto toggle
+** coal/nuclear toggle
+** update frequency slider
+** cursor tool outline (preview?)
+** pie menus
+** earthquake
+** demand gauge
+** auto scroll
+** constrained drag
+** arrow keys pan
+** fix autorepeat problem
+
+
+* map window.
+** set window title
+** initialize pallet and menus
+** legend tied to map state
+** menu buttons that appear when needed
+*** zone type
+*** population type
+*** service type
+** disable manipulation of other peoples maps (unless you're god)
+** click on a rectangle to bring that editor to the top
+** create a new editor by clicking on the small map
+** open new display by typing in a display name and creating a new editor
+** update frequency slider
+
+* budget window.
+** set window title
+** hour glass
+** auto budget behavior
+     do we or don't we pause the simulator?
+     do we or don't we bring up other peoples budget window?
+     when AutoBudget, simulator continues, and just your window opens.
+     when not AutoBudget, simulator pauses, so everyones window opens, 
+     hour glasses starts
+     how about we just don't pause, and everyone controls their own window.
+
+* graph window
+** set window title
+** graph object
+*** GraphRange ?10|120?
+*** GraphType 0..5 ?0..1?
+*** set window title
+
+
+* dialogs
+
+** start scenario.
+*** 6 scenario buttons, labeled.
+*** new city.
+*** load city.
+*** get key
+*** dynamic scenario description
+
+** generate city
+*** label "creating new map"
+*** city name text field
+*** city level buttons with labels
+*** map view
+*** generate new terrain
+*** use this map
+*** load city
+*** play scenario
+*** get key
+
+** load
+*** file dialog
+
+** save
+*** file dialog
+
+** print
+*** mono / color
+*** small map / large map
+*** printer command text field
+*** print button
+
+** key
+*** Instructions, Address, Phone Number (labels)
+*** License Type: Node/Network (exclusive settings)
+*** License Code: (field)
+*** Enter Key: (text field)
+*** Install Key (button)
+
+** zone status
+*** zone type label
+*** Density, Value, Crime, Pollution, Growth (fields)
+
+** notice
+*** city size
+**** city size label, description message
+**** town, city, capital, metropolis, megalopolis, winner
+*** warning messages
+**** warning name, description message
+**** pollution, crime, traffic, monster, meltdown, riots, demo, impeachment
+
+** about
+*** text, pictures, noises
+
+** confirm
+*** message, yes button, no button
+
+** error
+*** message
+*** ok
+
+* evaluation window.
+
+
+* help
+
+
+* printing
+
+
+* sound
+
+
+* new elm interface
+
+
+* tk
+** masked pixmap object for canvases (or a regular componant)
+** pie menus
+
+
+
+
+* stacks
+
+** Audio
+  implement audio interface
+
+** Micropolis
+  About box
+*** messages
+  /StartGame { % HomeDir ResourceDir StackDir KeyDir => -
+  /ReallyStartGame { % - => -
+  /NewGame { % - => -
+  /StartLoad { % - => -
+  /StartScenario { % name|number => -
+  /DoStartNewCity { % - => -
+  /DoPlayNewCity { % - => -
+  /DoLoseGame { % - => -
+  /DoLoadScenario { % - => -
+  /DidLoadScenario { % - => -
+  /DoLoadCity { % - => -
+  /HeyLoadCity { % name => -
+  /CancelLoadCity { % - => -
+  /DidLoadCity { % - => -
+  /DidntLoadCity { % error => -
+  /DoSaveCity { % - => -
+  /DoSaveCityAs { % - => -
+  /HeySaveCityAs { % name => -
+  /DidSaveCity { % - => -
+  /DidntSaveCity { % error => -
+  /DoGetKey { % - => -
+  /DoQuitMicropolis { % - => -
+  /InitializeSound { % - => -
+  /ShutDownSound { % - => -
+  /SetUserSound { % bool => -
+  /MakeSound { % n => -
+  /StartSound { % n => -
+  /StopSound { % n => -
+  /SoundOff { % - => -
+  /UckfayEthayOlicepay { % - => -
+  /PrintLargeMap { % - => -
+  /PrintSmallMap { % - => -
+  /HyperDrawLargeMap { % - => -
+  /HyperDrawSmallMap { % - => -
+  /HyperDrawCityView { % - => -
+  /DoPrintCity { % - => -
+  /StartElmd { % - => -
+
+** Budget
+  Tax Rate Percent: (slider 0% 20%)
+    /SetTaxRate
+  Taxes Collected: (field)
+  Amount Requested (column heading)
+  Amount Allocated (column heading)
+  Funding Level (column heading)
+  Fire Fund: (field) (numeric) (slider 0% 100%)
+    /SetFireFund
+  Police Fund: (field) (numeric) (slider 0% 100%)
+    /SetPoliceFund
+  Trans. Fund: (field) (numeric) (slider 0% 100%)
+    /SetTransFund
+  Cash Flow: (field)
+  Previous Funds: (field)
+  Current Funds: (field)
+  Hour Glass (inactivity timer)
+    goes for 20 seconds then takes down budget window and continues
+  Go With These Figures (button)
+    /GoWithTheseFigures /ResumeSim /Hide
+*** messages
+  /SetBudget { % [($flow) ($previous) () ($current)] ($collected) tax => -
+  /SetMaxFunds { % [($road)] [road] [($police)] [police] [($fire)] [fire] => -
+  /StartWaiting { % - => -
+    shows hour glass
+
+** Editor
+  File (menu)
+    { NIL /DoLoadScenario /Micropolis Send }
+    { NIL /DoStartNewCity /Micropolis Send }
+    { NIL /DoLoadCity /Micropolis Send }
+    { NIL /DoSaveCity /Micropolis Send }
+    { NIL /DoSaveCityAs /Micropolis Send }
+    { NIL /DoPrintCity /Micropolis Send }
+    { NIL /DoGetKey /Micropolis Send }
+    { NIL /DoQuitMicropolis /Micropolis Send }
+  Options (menu)
+    [exch] /SetOptions ClientSend
+  Disasters (menu)
+    { NIL /MakeMonster ClientSend }
+    { NIL /MakeFire ClientSend }
+    { NIL /MakeFlood ClientSend }
+    { NIL /MakeAirCrash ClientSend }
+    { NIL /MakeTornado ClientSend }
+    { NIL /MakeEarthquake ClientSend }
+    { NIL /MakeMeltdown ClientSend }
+  Time (menu)
+    /Action {
+       [exch] /SetSpeed ClientSend
+    } def
+  Priority (menu)
+    /Action {
+       { {1000 5} {500 4} {250 3} {120 2} {60 0} {25 0} {0 0}
+       } exch get cvx exec
+       [exch] /SetNice ClientSend
+       [exch] /SetDelay ClientSend
+    } def
+  Windows (menu)
+    { NIL /UpdateBudget ClientSend }
+    { NIL /UpdateEvaluation ClientSend
+      /MicropolisEvaluation ShowStack }
+    { /MicropolisGraph ShowStack }
+    { /MicropolisSurveyor ShowStack }
+    { /MicropolisNotice ShowStack }
+    { /MicropolisMap ShowStack }
+    { /MicropolisEditor ShowStack }
+  Funds: (field)
+  Date: (field)
+  Message: (field)
+  Editing Icons (exclusive settings)
+    /InitGame
+    /DoSetWandState /SetPowerType
+  Demand: (gauge)
+    /SetDemand { % r c i => -
+  Zoom In/Out (rocker switch)
+  Zoom Reset (button)
+  Tool Cost: (field)
+  Editor View
+    Editing Icons (pie menu)
+      /DoSetWandState
+    Cursor outline showing where tool will operate
+      color codes for tools
+        query		gray
+        bulldozer	brown
+	road		black white
+	wire		black yellow
+	rail		black brown
+	park		brown green
+	residential	green
+	commercial	blue
+	industrial	yellow
+	police		brown blue
+	fire		brown red
+	stadium		gray green
+	coal		gray yellow
+	seaport		gray blue
+	airport		gray white
+	nuclear		gray yellow
+	monster		orange
+	helicopter	red
+
+	draw (colored pen)
+
+	
+	
+    Panning with arrow keys
+    Panning by dragging
+    Dynamic panning & bouncing
+    Earthquake
+    Mouse tool handling
+    Tools connect corners
+    Constrained drag
+    Auto scroll
+*** messages
+  /InitGame { % - => -
+  /DoEarthQuake { % - => -
+  /DoSetWandState { % state => -
+  /JustSetWandState { % n => -
+  /SetMessage { % str => -
+
+** Evaluation
+  Public Opinion (column header)
+    Is the mayor doing a good job? (field)
+      % yes, % no (fields)
+    What are the worst problems? (field)
+      % problem, ... (fields)
+  Statistics (column header)
+    Population, Net Migration, Assessed, Value, Category (fields)
+    Overall City Score (field)
+      current score (field)
+      anual change (field)
+*** messages
+  /SetEvaluation { % [strings] => -
+
+** Graph
+  Graph Plot
+    /InitGraph /GraphMe
+    /SetGraph { % [range year month res com ind money crime pollution] => -
+  10/120 Year (exclusive toggle)
+    /SetGraphRange
+  Residential, Commercial, Industrial, Money, Crime, Pollution (toggles)
+*** messages
+
+** Map
+  Scenerio Screen
+    Noisy Grill (toggle)
+    Duck (button)
+    Key (button)
+    New City, Load City (buttons)
+    6 scenarios (buttons)
+    scenario names (labels)
+  Map Background
+    Map View
+      Shows rectangles for editor views
+      Drag rectangles to scroll editor views
+    Terrain Generator
+      Generate New Terrain, Use This Map (buttons)
+    City Map
+      Map State Icons (exclusive settings)
+	Zone Type (menu)
+	Population Type (menu)
+	Service Type (menu)
+	/OnInit
+	/SetMapState /SetZoneType /SetPopNRate /SetPoliceRadius
+      Legend
+	Max/Min / +/- / none (picture)
+*** messages
+  /InitGame { % - => -
+
+** Notice
+  Welcome Notice
+  New City (dialog)
+    Creating New Map ... (label)
+    City Name: (text field)
+    Game Level: Easy/Medium/Hard (exclusive settings)
+  Are You Sure?
+    Yes, No (buttons)
+  Really Quit?
+    Save City, Really Quit, Never Mind (buttons)
+  Print City
+    Monochrome/Color (exclusive settings)
+    Edit Small Map, Edit Large Map, Edit City View (buttons)
+    Printer Command: (text field)
+    Print Small Map, Print Large Map, Show Printer Queue (buttons)
+  Install Key
+    Instructions, Address, Phone Number (labels)
+    License Type: Node/Network (exclusive settings)
+    License Code: (field)
+    Enter Key: (text field)
+    Install Key (button)
+  Earthquake Control
+    Richter Scale: (slider .1% 10%)
+    Earthquake (button)
+  Scenario Descriptions
+  Zone Status
+    Zone Type (field)
+    Density, Value, Crime, Pollution, Growth (fields)
+  Game Level Notices
+  Warnings
+*** messages
+  /InitGame { % - => -
+  /ShowNotice { % card => -
+  /ShowPicture { % id => -
+  /ShowZoneStatus { % type [s0 s1 s2 s3 s4] => -
+  /AreYouSure? { % yesResponse => -
+  /Respond { % target thing|null => -
+  /Yes { % - => -
+  /No { % - => -
+
+** Surveyor
+  Editor View(s)
+  Zoom In/Out (rocker switch)
+  Zoom Reset (button)
+  Single/Multiple View (toggle)
+  Click on surveyor view to center editor there
+*** messages
+  /AutoGoto { % x y msg => -
+  /AutoGotoClick { % - => -
+
+** Help
+  Help Text Display
+  Done (button)
+
+
+
+Dullsville
+	Philip Glass, Powaqqatsi, That Place
+San_Francisco
+	Grateful Dead, Fire on the Mountain
+	Philip Glass, Powaqqatsi, Serra Pelada
+Hamburg
+	Yello, Oh Yeah
+Bern
+	Yello, RubberBandMan
+	Philip Glass, Powaqqatsi, CAUGHT!
+Tokyo
+	Percussions D'Asie
+	Philip Glass, Powaqqatsi, Serra Pelada
+Detroit
+Boston
+Rio_de_Janeiro
+	Philip Glass, Powaqqatsi, From Egypt

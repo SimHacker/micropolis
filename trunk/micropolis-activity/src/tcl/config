@@ -1,0 +1,322 @@
+#!/bin/csh -f
+#
+# This script should be executed to configure the Tcl source directory
+# for a particular system.  It probes the system for various header
+# files and library object files.  Where things needed by Tcl are missing,
+# substitute versions are included from the "compat" subdirectory.
+#
+# $Header: /user6/ouster/tcl/RCS/config,v 1.30 92/05/13 09:27:18 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1991, 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+
+#--------------------------------------------------------------
+# The variable definitions below configure this script:  they
+# tell where system-defined things are kept (so this program
+# can tell whether the system contains certain features needed
+# by Tcl), and they indicate which Tcl files to modify to
+# reflect the configuration.
+
+# Directory containing system include files:
+
+set includeDir="/usr/include"
+
+# Archive file containing object code for standard C library:
+
+set libc="/usr/lib/libc.a"
+
+# Makefile to modify:
+
+set makefile="makefile"
+
+# Header file to modify to hold #defines about system configuration:
+
+set config="tclunix.h"
+#--------------------------------------------------------------
+
+set changes=0
+unset time
+
+# First make sure that the configuration variables have been
+# set in a reasonable fashion.
+
+if ( ! -r $includeDir/stdio.h ) then
+    echo "- ERROR\!\! $includeDir doesn't seem to contain standard system"
+    echo "  include files.  Please edit config to set the includeDir"
+    echo "  variable."
+    exit(1)
+endif
+if ( ! -r $libc ) then
+    echo "- ERROR\!\! C library $libc doesn\'t exist.  Please edit config"
+    echo "  to set the libc variable."
+    exit(1)
+endif
+nm -p $libc > tmp.libc
+if ( $status != 0 ) then
+    echo "- ERROR\!\!  Nm failed to extract names of system-supplied library"
+    echo "  procedures from $libc.  You'll have to modify config by hand to"
+    echo "  fix the problem (whatever it is)."
+    exit(1)
+endif
+
+# Since nm produces different output on different machines, the code
+# below attempts to guess what pattern to grep for in the nm output.
+
+set pattern="[ADIT]"
+set x=`grep printf tmp.libc | grep -c CODE`
+if ( $x ) then
+    set pattern=CODE
+endif
+set x=`grep printf tmp.libc | grep -c extern`
+if ( $x ) then
+    set pattern="|extern|"
+endif
+
+# Check in the C library for particular library procedures and
+# variables needed by Tcl.
+
+set gettod=`grep gettimeofday tmp.libc | grep -c "$pattern"`
+if ( $gettod > 1 ) set gettod=1
+set getwd=`grep getwd tmp.libc | grep -c "$pattern"`
+if ( $getwd > 1 ) set getwd=1
+set opendir=`grep opendir tmp.libc | grep -c "$pattern"`
+if ( $opendir > 1 ) set opendir=1
+set strerror=`grep strerror tmp.libc | grep -c "$pattern"`
+if ( $strerror > 1 ) set strerror=1
+set strstr=`grep strstr tmp.libc | grep -c "$pattern"`
+if ( $strstr > 1 ) set strstr=1
+set strtod=`grep strtod tmp.libc | grep -c "$pattern"`
+if ( $strtod > 1 ) set strtod=1
+set strtol=`grep strtol tmp.libc | grep -c "$pattern"`
+if ( $strtol > 1 ) set strtol=1
+set strtoul=`grep strtoul tmp.libc | grep -c "$pattern"`
+if ( $strtoul > 1 ) set strtoul=1
+set sys_errlist=`grep sys_errlist tmp.libc | grep -c "$pattern"`
+if ( $sys_errlist > 1 ) set sys_errlist=1
+\rm tmp.libc
+
+# Next, install header files that aren't present in /usr/include.
+
+set extraHdrs=""
+foreach i (dirent.h limits.h)
+    \rm -f $i
+    if ( ! -r $includeDir/$i ) then
+	cp compat/$i .
+	set extraHdrs="$extraHdrs $i"
+    endif
+end
+set stdlibOK=0
+\rm -f stdlib.h
+if ( -r $includeDir/stdlib.h ) then
+    # The check below is needed because SunOS has a stdlib that
+    # doesn't declare strtod and other procedures, so we have to
+    # use ours instead.
+
+    set chk1=`grep -c strtol $includeDir/stdlib.h`
+    set chk2=`grep -c strtoul $includeDir/stdlib.h`
+    set chk3=`grep -c strtod $includeDir/stdlib.h`
+    if ( $chk1 > 0 && $chk2 > 0 && $chk3 > 0 ) then
+	set stdlibOK=1
+    endif
+endif
+# XXX: Un-Kludge around sun acc, which doesn't need this...
+set stdlibOK=1
+if ( ! $stdlibOK ) then
+    cp compat/stdlib.h .
+    set extraHdrs="$extraHdrs stdlib.h"
+endif
+
+# Even if string.h exists it's not complete on all systems.  If
+# some of the procedures we need are missing from the library, then
+# also install a Tcl-specific string.h.
+
+\rm -f string.h
+if ( ! $strstr || ! $strtoul || ! -r $includeDir/string.h ) then
+    cp compat/string.h .
+    set extraHdrs="$extraHdrs string.h"
+endif
+if ( "$extraHdrs" != "" ) then
+    echo "- Substitutes will be used for the following header files,"
+    echo "  which aren't in ${includeDir} or aren't complete:"
+    echo "     $extraHdrs"
+    set changes=1
+endif
+
+# Even if strtoul exists, it is bogus on some AIX systems.  Detect
+# this and pretend the system version doesn't exist if it's bogus.
+
+if ( $strtoul ) then
+    cp compat/teststrtoul.c test.c
+    make configtest >& /dev/null
+    if ( $status == 0 ) then
+	./a.out
+	if ( $status != 0 ) then
+	    set strtoul=0
+	endif
+    endif
+    \rm -f a.out test.c
+endif
+
+# Next, install C procedures for missing library functions.
+
+set extraLibs=""
+\rm -f strerror.c
+if ( ! $strerror ) then
+    set extraLibs="$extraLibs strerror"
+    cp compat/strerror.c .
+endif
+\rm -f opendir.c
+if ( ! $opendir ) then
+    set extraLibs="$extraLibs opendir"
+    cp compat/opendir.c .
+    \rm -f dirent.h
+    cp compat/dirent2.h dirent.h
+    echo "- No opendir/readdir/closedir library exists in this system,"
+    echo "  so substitutes will be provided.  This system better have"
+    echo "  V7-style directories\!"
+endif
+\rm -f strstr.c
+if ( ! $strstr ) then
+    set extraLibs="$extraLibs strstr"
+    cp compat/strstr.c .
+endif
+\rm -f strtod.c
+if ( ! $strtod ) then
+    set extraLibs="$extraLibs strtod"
+    cp compat/strtod.c .
+endif
+\rm -f strtol.c
+if ( ! $strtol ) then
+    set extraLibs="$extraLibs strtol"
+    cp compat/strtol.c .
+endif
+\rm -f strtoul.c
+if ( ! $strtoul ) then
+    set extraLibs="$extraLibs strtoul"
+    cp compat/strtoul.c .
+endif
+if ( "$extraLibs" != "" ) then
+    echo "- Substitutes will be used for the following library procedures,"
+    echo "  which aren't in ${libc} or don't work correctly:"
+    echo "     $extraLibs"
+    set changes=1
+endif
+
+# The following statements determine whether ranlib should be used
+# in the Makefile.  On System-V systems it shouldn't.  The only way
+# to figure this out is to run ranlib and see if it complains (ranlib
+# actually exists on some Sys-V systems, but it returns an error if
+# you run it).
+
+set ranlibOK=0
+cat > ranlibtest.c << EOF
+#include <stdio.h>
+main (argc, argv)
+    int    argc;
+    char **argv;
+{
+    printf ("Hello, world.\n");
+}
+EOF
+cc -c ranlibtest.c
+ar cru ranlibtest.a ranlibtest.o
+ranlib ranlibtest.a >& /dev/null
+if ( $status == 0 ) then
+    set ranlibOK=1
+else
+    echo "- This system appears to be a System V one where ranlib isn't"
+    echo "  used.  The ranlib commands will be removed from Makefile."
+    set changes=1
+endif
+\rm -f ranlibtest.*
+
+# Modify the Makefile to include supplemental library sources, if needed.
+
+set compatObjs=""
+foreach i ($extraLibs)
+    set compatObjs="$compatObjs $i.o"
+end
+#if ( ! -e $makefile.bak ) mv $makefile $makefile.bak
+mv $makefile $makefile.bak
+if ( $ranlibOK ) then
+    sed -e "s/COMPAT_OBJS =/COMPAT_OBJS =$compatObjs/" $makefile.bak > $makefile
+else
+    sed -e "s/COMPAT_OBJS =/COMPAT_OBJS =$compatObjs/" \
+	-e "/ranlib/d" $makefile.bak > $makefile
+endif
+
+# Set the #defines in tclUnix.h to provide various pieces of system
+# configuration information at compile time (existence of header files,
+# variables, type definitions, etc.)
+
+if ( ! $gettod ) then
+    echo "- There's no gettimeofday in ${libc} so Tcl will use"
+    echo '  times for the "time" command.'
+    set changes=1
+endif
+if ( ! $getwd ) then
+    echo "- There's no getwd in ${libc} so Tcl will use"
+    echo '  getcwd for the "pwd" command.'
+    set changes=1
+endif
+set errlist=1
+if ( ! $sys_errlist && ! $strerror ) then
+    echo "- Neither strerror nor sys_errlist is defined in ${libc} so"
+    echo "  Tcl will make a guess about errno-related messages."
+    set errlist=0
+    set changes=1
+endif
+set sysTime=0
+if ( -r $includeDir/sys/time.h ) then
+    set sysTime=1
+endif
+set sysWait=0
+set unionWait=0
+if ( -r $includeDir/sys/wait.h ) then
+    set sysWait=1
+    cp compat/testwait.c test.c
+    make configtest >& /dev/null
+    if ( $status == 0 ) then
+	set unionWait=1
+    endif
+    \rm -f a.out test.c
+endif
+set pid_t=1
+cp compat/testpid.c test.c
+make configtest >& /dev/null
+if ( $status != 0 ) then
+    set pid_t=0
+    echo "- The type pid_t isn't defined in <sys/types.h> so Tcl will"
+    echo '  use "int" instead.'
+endif
+\rm -f a.out test.c
+set uid_t=1
+cp compat/testuid.c test.c
+make configtest >& /dev/null
+if ( $status != 0 ) then
+    set uid_t=0
+    echo "- The type uid_t isn't defined in <sys/types.h> so Tcl will"
+    echo '  use "int" instead.'
+endif
+\rm -f a.out test.c
+if ( ! -e $config.bak ) mv $config $config.bak
+set x=\.\*\$
+sed -e "s/define TCL_GETTOD 1/define TCL_GETTOD $gettod/" \
+    -e "s/define TCL_GETWD 1/define TCL_GETWD $getwd/" \
+    -e "s/define TCL_SYS_ERRLIST 1/define TCL_SYS_ERRLIST $errlist/" \
+    -e "s/define TCL_SYS_TIME_H 1/define TCL_SYS_TIME_H $sysTime/" \
+    -e "s/define TCL_SYS_WAIT_H 1/define TCL_SYS_WAIT_H $sysWait/" \
+    -e "s/define TCL_UNION_WAIT 1/define TCL_UNION_WAIT $unionWait/" \
+    -e "s/define TCL_PID_T 1/define TCL_PID_T $pid_t/" \
+    -e "s/define TCL_UID_T 1/define TCL_UID_T $uid_t/" \
+$config.bak > $config
+
+if ( ! $changes ) then
+    echo "- No special modifications were needed for this system."
+endif

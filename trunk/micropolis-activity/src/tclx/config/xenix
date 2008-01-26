@@ -1,0 +1,15 @@
+#------------------------------------------------------------------------------
+#    XENIX-386 - SCO Xenix 2.3.3 for the 80386
+#------------------------------------------------------------------------------
+# $Id: xenix,v 2.2 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS= -DTCL_NEED_SYS_SELECT_H -DTCL_USE_BZERO_MACRO -DTCL_SIG_PROC_INT -DTCL_NO_ITIMER
+LIBS=-ldir -lm
+RANLIB_CMD=ranlib
+MCS_CMD=true
+
+TCL_MAN_STYLE=SHORT
+TCL_MAN_INDEX=1
+TCL_MAN_INDEX_MERGE=1
+

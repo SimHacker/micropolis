@@ -1,0 +1,16 @@
+#------------------------------------------------------------------------------
+# DEC Ultrix
+#------------------------------------------------------------------------------
+# $Id: ultrix,v 2.1 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS=-DTCL_HAVE_SETLINEBUF -DTCL_32_BIT_RANDOM -DTCL_TM_GMTOFF
+LIBS=-lm
+RANLIB_CMD=ranlib
+MCS_CMD=true
+SUPPORT_FLAGS=-DTCL_HAS_TM_ZONE
+SUPPORT_OBJS=strftime.o
+TCL_TK_LIBS= -lX11 -lm
+
+TCL_MAN_SEPARATOR=
+

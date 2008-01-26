@@ -1,0 +1,63 @@
+tcl/tk interface to audio library
+  gui to auctl
+  easily reconfigure user interface for other different audio servers
+  audio error handler / io error handler
+
+set aud [audio openserver server]
+
+$au errorhandler
+$au ioerrorhandler
+$au flush
+$au sync
+$au synchronize
+$au closeserver
+
+$au server connectionnumber
+$au server vendor
+$au server vendorrelease
+$au server string
+$au server name
+
+$au device count
+$au device list
+$au device id valuemask
+$au device id changablemask
+$au device id identifier
+$au device id kind
+$au device id use
+$au device id format
+$au device id numtracks
+$au device id access
+$au device id description
+$au device id minsamplerate
+$au device id maxsamplerate
+$au device id location
+$au device id gain
+$au device id linemode
+$au device id numchildren
+$au device id children
+
+$au bucket count
+$au bucket list
+set id [$au bucket create format tracks access rate samples description]
+$au bucket id destroy
+$au bucket id valuemask
+$au bucket id changablemask
+$au bucket id identifier
+$au bucket id kind
+$au bucket id use
+$au bucket id format
+$au bucket id numtracks
+$au bucket id access
+$au bucket id description
+$au bucket id samplerate
+$au bucket id numsamples
+set flow [$au bucket id play dev start samples volume done]
+set flow [$au bucket id record dev start samples volume done]
+
+$au flow id volume percent
+$au flow id start
+$au flow id stop
+$au flow id state
+
+$au monitor 

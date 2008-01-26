@@ -1,0 +1,22 @@
+*** ../../tcl6.4/tclBasic.c	Sun Jun 21 14:09:46 1992
+--- tclBasic.c	Tue Oct  6 17:19:52 1992
+***************
+*** 705,710
+  	iPtr->result = iPtr->resultSpace;
+  	iPtr->resultSpace[0] = 0;
+  	result = (*cmdPtr->proc)(cmdPtr->clientData, interp, argc, argv);
+  	if (result != TCL_OK) {
+  	    break;
+  	}
+
+--- 705,714 -----
+  	iPtr->result = iPtr->resultSpace;
+  	iPtr->resultSpace[0] = 0;
+  	result = (*cmdPtr->proc)(cmdPtr->clientData, interp, argc, argv);
++         /*
++          * Signal handling added for Extended Tcl.
++          */
++         result = Tcl_CheckForSignal (interp, result);
+  	if (result != TCL_OK) {
+  	    break;
+  	}
