@@ -74,6 +74,7 @@
 #include <malloc.h>
 #include <errno.h>
 #include <math.h>
+#include <cstdarg>
 
 #ifdef _WIN32
 
@@ -144,6 +145,8 @@
 #define SETPOWERBIT(x, y)       PowerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
 #define PWRMAPSIZE              (POWERMAPROW * WORLD_Y)
 #define PWRSTKSIZE              ((WORLD_X * WORLD_Y) / 4)
+
+#define POINT_BATCH				32
 
 #define ALMAP                   0 /* all */
 #define REMAP                   1 /* residential */
@@ -492,6 +495,13 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+// Forward class definitions
+
+
+class Micropolis;
+
+
+////////////////////////////////////////////////////////////////////////
 // Typedefs
 
 
@@ -502,6 +512,15 @@ typedef Byte *Ptr;
 typedef long Quad;
 
 typedef unsigned long UQuad;
+
+// This is the signature of the scripting language independent 
+// callback function. 
+typedef void (*CallbackFunction)(
+  Micropolis *micropolis,
+  void *data,
+  const char *name,
+  const char *params,
+  va_list arglist);
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -567,39 +586,33 @@ public:
 };
 
 
+class InkPoint {
+
+public:
+
+  int x;
+  int y;
+
+};
+
+
 class Ink {
 
 public:
 
-  int foo;
-
-};
-
-
-class X11Stub {
-
-public:
-
+  Ink *next;
+  int x;
+  int y;
   int color;
-  int depth;
-
-};
-
-class SimView {
-
-public:
-
-  int map_state;
-  int tool_state;
-  int super_user;
-  int skip;
-  X11Stub *x;
-  int line_bytes8;
-  int pixel_bytes;
-  unsigned char *pixels;
-  unsigned char *data;
-  unsigned char *data8;
-  unsigned char *smalltiles;
+  int length;
+  int maxlength;
+  InkPoint *points;
+  int left;
+  int top;
+  int right;
+  int bottom;
+  int last_x;
+  int last_y;
 
 };
 
@@ -1371,6 +1384,12 @@ class Micropolis {
   // map.cpp
 
 
+#if 0
+  ////////////////////////////////////////////////////////////////////////
+  // Disabled this small map drawing, filtering and overlaying code. 
+  // Going to re-implement it in the tile engine and Python.
+
+
   int DynamicData[32];
 
 
@@ -1448,6 +1467,9 @@ class Micropolis {
     int y, 
     int w, 
     int h);
+
+
+#endif
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -1832,11 +1854,9 @@ class Micropolis {
     int x, 
     int y);
 
-  void DrawObjects(
-    SimView *view);
+  void DrawObjects();
 
   void DrawSprite(
-    SimView *view, 
     SimSprite *sprite);
 
   short GetChar(
@@ -1995,6 +2015,17 @@ class Micropolis {
 
   short flagBlink;
 
+  // Hook into scripting language to send callbacks. 
+  // (i.e. a function that calls back into the Python interpreter.)
+  CallbackFunction callbackHook;
+
+  // Hook for scripting language to store scripted callback function. 
+  // (i.e. a callable Python object.)
+  void *callbackData;
+
+  // Hook for scripting language to store context (i.e. peer object).
+  // (i.e. Python SWIG wrapper of this Micropolis object.)
+  void *userData;
 
   void Spend(
     int dollars);
@@ -2027,8 +2058,10 @@ class Micropolis {
 
   void ReallyQuit();
 
-  void Eval(
-    char *tcl);
+  void Callback(
+	const char *name,
+	const char *params,
+	...);
 
   void DoEarthquake();
 
@@ -2054,11 +2087,6 @@ class Micropolis {
     char *channel,
     char *sound);
 
-  void MakeSoundOn(
-    SimView *view,
-    char *channel,
-    char *sound);
-
   void UpdateFlush();
 
   void StartMicropolisTimer();
@@ -2070,6 +2098,23 @@ class Micropolis {
 	int y);
 
   void *getMapBuffer();
+
+  Ink *NewInk();
+
+  void FreeInk(
+    Ink *ink);
+
+  void StartInk(
+    Ink *ink, 
+    int x, 
+    int y);
+
+  void Micropolis::AddInk(
+    Ink *ink, 
+    int x, 
+    int y);
+
+  void EraseOverlay();
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2090,6 +2135,20 @@ class Micropolis {
 
   int PendingY;
 
+  Ink *OldInk;
+
+  Ink *overlay;
+
+  Ink *track_ink;
+
+  int last_x;
+
+  int last_y;
+
+  int tool_x;
+
+  int tool_y;
+
   static Quad CostOf[];
 
   static short toolSize[];
@@ -2099,23 +2158,18 @@ class Micropolis {
   static Quad toolColors[];
 
 
-  void setWandState(
-    SimView *view, 
-    short state);
-
   int putDownPark(
-    SimView *view, 
     short mapH, 
     short mapV);
 
   int putDownNetwork(
-    SimView *view, 
+	short state,
     short mapH, 
     short mapV);
 
   short checkBigZone(
     short id, 
-     short *deltaHPtr, 
+    short *deltaHPtr, 
     short *deltaVPtr);
 
   short tally(
@@ -2129,7 +2183,6 @@ class Micropolis {
     short yMap);
 
   int check3x3(
-    SimView *view, 
     short mapH, 
     short mapV, 
     short base, 
@@ -2140,7 +2193,6 @@ class Micropolis {
     short yMap);
 
   short check4x4(
-    SimView *view, 
     short mapH, 
     short mapV, 
     short base, 
@@ -2152,7 +2204,6 @@ class Micropolis {
     short yMap);
 
   short check6x6(
-    SimView *view, 
     short mapH, 
     short mapV, 
     short base, 
@@ -2190,120 +2241,94 @@ class Micropolis {
     short y);
 
   void DidTool(
-    SimView *view, 
     char *name, 
     short x, 
     short y);
 
-  void DoSetWandState(
-    SimView *view, 
-    short state);
-
   int query_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int bulldozer_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int road_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int rail_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int wire_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int park_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int residential_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int commercial_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int industrial_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int police_dept_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int fire_dept_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int stadium_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int coal_power_plant_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int nuclear_power_plant_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int seaport_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int airport_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int network_tool(
-    SimView *view, 
     short x, 
     short y);
 
   int ChalkTool(
-    SimView *view, 
     short x, 
     short y, 
     short color, 
     short first);
 
   void ChalkStart(
-    SimView *view, 
     int x, 
     int y, 
     int color);
 
   void ChalkTo(
-    SimView *view, 
     int x, 
     int y);
 
   int EraserTool(
-    SimView *view, 
     short x, 
     short y, 
     short first);
@@ -2316,51 +2341,40 @@ class Micropolis {
     int bottom);
 
   void EraserStart(
-    SimView *view, 
     int x, 
     int y);
 
   void EraserTo(
-    SimView *view, 
     int x, 
     int y);
 
   int do_tool(
-    SimView *view, 
     short state, 
     short x, 
     short y, 
     short first);
 
-  int current_tool(
-    SimView *view, 
-    short x, 
-    short y, 
-    short first);
-
   void DoTool(
-    SimView *view, 
     short tool, 
     short x, 
     short y);
 
   void ToolDown(
-    SimView *view, 
+	short tool,
     int x, 
     int y);
 
   void ToolUp(
-    SimView *view, 
+	short tool,
     int x, 
     int y);
 
   void ToolDrag(
-    SimView *view, 
+	short tool,
     int px, 
     int py);
 
   void DoPendTool(
-    SimView *view, 
     int tool, 
     int x, 
     int y);
@@ -2513,7 +2527,6 @@ class Micropolis {
   int CurrentYear();
 
   void DoSetMapState(
-    SimView *view, 
     short state);
 
   void DoNewGame();

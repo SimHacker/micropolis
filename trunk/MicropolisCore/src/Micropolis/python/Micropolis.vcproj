@@ -441,6 +441,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\micropolismodel.py"
+					>
+				</File>
+				<File
 					RelativePath=".\micropolisutils.py"
 					>
 				</File>
@@ -469,6 +473,10 @@
 		<Filter
 			Name="Doc"
 			>
+			<File
+				RelativePath="..\callbacks.txt"
+				>
+			</File>
 			<File
 				RelativePath="..\README.txt"
 				>

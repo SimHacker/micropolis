@@ -129,7 +129,7 @@ void Micropolis::UpdateFunds()
 
 void Micropolis::ReallyUpdateFunds()
 {
-  char localStr[256], dollarStr[256], buf[256];
+  char localStr[256], dollarStr[256];
 
   if (!MustUpdateFunds) {
     return;
@@ -146,11 +146,12 @@ void Micropolis::ReallyUpdateFunds()
     sprintf(localStr, "%d", (int)TotalFunds);
     makeDollarDecimalStr(localStr, dollarStr);
 
-    sprintf(localStr, "Funds: %s", dollarStr);
-
-    sprintf(buf, "UISetFunds {%s}", localStr);
-    Eval(buf);
+    Callback(
+      "UISetFunds",
+      "s",
+      dollarStr);
   }
+
 }
 
 
@@ -166,7 +167,7 @@ void Micropolis::updateDate()
 {       
   int y;
   int m;
-  char str[256], buf[256];
+  char str[256];
   int megalinium = 1000000;
 
   LastCityTime = CityTime >> 2;
@@ -196,14 +197,12 @@ void Micropolis::updateDate()
 
     CityDate = str;
 
-    sprintf(
-      buf,
-      "UISetDate {%s} %d %d",
-      str, 
-      (int)m, 
+    Callback(
+      "UISetDate",
+      "sdd",
+      str,
+      (int)m,
       (int)y);
-
-    Eval(buf);
   }
 }
 
@@ -269,16 +268,12 @@ void Micropolis::SetDemand(
   double c, 
   double i)
 {
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetDemand %d %d %d",
+  Callback(
+    "UISetDemand",
+    "ddd",
     (int)(r / 100), 
     (int)(c / 100), 
     (int)(i / 100));
-
-  Eval(buf);
 }
 
 
@@ -331,11 +326,9 @@ void Micropolis::updateOptions()
 void Micropolis::UpdateOptionsMenu(
   int options)
 {
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetOptions %d %d %d %d %d %d %d %d",
+  Callback(
+    "UISetOptions",
+    "dddddddd",
     (options & 1) ? 1 : 0, 
     (options & 2) ? 1 : 0,
     (options & 4) ? 1 : 0, 
@@ -344,8 +337,6 @@ void Micropolis::UpdateOptionsMenu(
     (options & 32) ? 1 : 0,
     (options & 64) ? 1 : 0,
     (options & 128) ? 1 : 0);
-
-  Eval(buf);
 }
 
 

@@ -91,6 +91,7 @@ import array
 sys.path.append(os.getcwd() + '\\..\\swig')
 sys.path.append(os.getcwd() + '\\ReleaseSymbols')
 import micropolis
+import micropolismodel
 import micropolisutils
 
 sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\swig')
@@ -98,6 +99,14 @@ sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python')
 sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python\\ReleaseSymbols')
 import tileengine
 import tilewindow
+
+
+########################################################################
+# Utilities
+
+
+def PRINT(*args):
+    print args
 
 
 ########################################################################
@@ -123,9 +132,20 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
 
     def createEngine(self):
 
-        engine = micropolis.Micropolis()
+        # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
+        engine = micropolismodel.MicropolisModel()
         self.engine = engine
+
         print "Created Micropolis simulator engine:", engine
+
+        # Hook the engine up so it has a handle on its Python object side. 
+        engine.userData = micropolis.GetPythonCallbackData(engine)
+
+        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
+        engine.callbackHook = micropolis.GetPythonCallbackHook()
+
+        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
+        engine.callbackData = micropolis.GetPythonCallbackData(engine.invokeCallback)
 
         engine.ResourceDir = 'res'
         engine.InitGame()
@@ -142,7 +162,7 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
         engine.setSkips(100)
         engine.SetFunds(1000000000)
         engine.autoGo = 0
-        engine.CityTax = 9
+        engine.CityTax = 7
 
         tilewindow.TileDrawingArea.createEngine(self)
 
@@ -161,12 +181,27 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
 
     def destroyEngine(self):
 
+        # TODO: clean up all user pointers and callbacks. 
+        # TODO: Make sure there are no memory leaks.
+        
         tilewindow.TileDrawingArea.destroyEngine(self)
 
 
     def getCell(self, col, row):
 
         return self.engine.getTile(col, row)
+
+
+    def drawOverlays(
+        self,
+        ctx):
+
+        self.drawSprites(ctx)
+        self.drawCursor(ctx)
+
+
+    def drawSprites(self, ctx):
+        pass
 
 
     def tickEngine(self):

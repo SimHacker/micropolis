@@ -254,14 +254,8 @@ void Micropolis::DestroySprite(
 {
   SimSprite **sp;
 
-/*
-  SimView *view;
-  for (view = editorList; view != NULL; view = view->next) {
-    if (view->follow == sprite) {
-      view->follow = NULL;
-    }
-  }
-*/
+  // TODO: Break the connection between any views 
+  // that are following this sprite. 
 
   if (GlobalSprites[sprite->type] == sprite) {
     GlobalSprites[sprite->type] = (SimSprite *)NULL;
@@ -326,23 +320,19 @@ SimSprite *Micropolis::MakeNewSprite(
 }
 
 
-void Micropolis::DrawObjects(
-  SimView *view)
+void Micropolis::DrawObjects()
 {
   SimSprite *sprite;
 
   for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
-    DrawSprite(view, sprite);
+    DrawSprite(sprite);
   }
 }
 
 
 void Micropolis::DrawSprite(
-  SimView *view, 
   SimSprite *sprite)
 {
-/*
-  Pixmap pict, mask;
   int x, y, i;
 
   if (sprite->frame == 0) {
@@ -350,25 +340,19 @@ void Micropolis::DrawSprite(
   }
 
   i = (sprite->frame - 1) * 2;
-  pict = view->x->objects[sprite->type][i];
-  mask = view->x->objects[sprite->type][i + 1];
 
   x = 
-    sprite->x -
-    ((view->tile_x <<4) - view->screen_x) +
+    sprite->x +
     sprite->x_offset;
   y = 
-    sprite->y -
-    ((view->tile_y <<4) - view->screen_y) +
+    sprite->y +
     sprite->y_offset;
 
-  XSetClipMask(view->x->dpy, view->x->gc, mask);
-  XSetClipOrigin(view->x->dpy, view->x->gc, x, y);
-  XCopyArea(view->x->dpy, pict, view->pixmap2, view->x->gc, 
-            0, 0, sprite->width, sprite->height, x, y);
-  XSetClipMask(view->x->dpy, view->x->gc, None);
-  XSetClipOrigin(view->x->dpy, view->x->gc, 0, 0);
-*/
+  // TODO: draw sprite
+
+  // pict = spriteImages[sprite->type][i];
+  // mask = spriteImages[sprite->type][i + 1];
+
 }
 
 
@@ -1549,7 +1533,7 @@ printf("drive from tile %d %d to %d %d\n",
 
       /* can't drive forward into a new tile */
       if (speed == 8) {
-        bulldozer_tool(NULL, tx, ty);
+        bulldozer_tool(tx, ty);
       } else {
       }
 

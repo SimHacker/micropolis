@@ -153,6 +153,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.tileCtx = None
         self.tilesWidth = 0
         self.tilesHeight = 0
+        self.tileFunction = None
         self.tileMap = None
         self.tileCache = None
         self.tileCacheSurfaces = None
@@ -466,9 +467,11 @@ class TileDrawingArea(gtk.DrawingArea):
     def handleExpose(
         self,
         widget,
-        event):
+        event,
+        *args):
 
-        #print "handleExpose TileDrawingArea", self, widget, event
+        if args:
+            print "handleExpose TileDrawingArea", self, "WIDGET", widget, "EVENT", event, "ARGS", args
         self.draw(widget, event)
 
         return False
@@ -601,6 +604,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
             self.tengine.renderTilesLazy(
                 ctx,
+                self.tileFunction,
                 self.tileMap,
                 self.tileSize,
                 self.renderCol,
@@ -687,10 +691,10 @@ class TileDrawingArea(gtk.DrawingArea):
             self.startTimer()
 
 
-	# This function is called from the C++ code in self.tengine.renderTilesLazy.
-	# It renders a tile, and returns a tuple with a surface index, tile x and tile y position. 
-	# This function is totally in charge of the scaled tile cache, and can implement a variety 
-	# variety of different policies. 
+    # This function is called from the C++ code in self.tengine.renderTilesLazy.
+    # It renders a tile, and returns a tuple with a surface index, tile x and tile y position. 
+    # This function is totally in charge of the scaled tile cache, and can implement a variety 
+    # variety of different policies. 
     def generateTile(
         self,
         tile):

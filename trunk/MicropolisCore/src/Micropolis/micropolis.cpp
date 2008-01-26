@@ -674,8 +674,17 @@ void Micropolis::init()
   // map.cpp
 
 
+#if 0
+  ////////////////////////////////////////////////////////////////////////
+  // Disabled this small map drawing, filtering and overlaying code. 
+  // Going to re-implement it in the tile engine and Python.
+
+
   // int DynamicData[32];
   memset(DynamicData, 0, sizeof(int) * 32);
+
+
+#endif
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -950,6 +959,15 @@ void Micropolis::init()
   // short flagBlink;
   flagBlink = 0;
 
+  // CallbackFunction callbackHook;
+  callbackHook = NULL;
+
+  // void *callbackData;
+  callbackData = NULL;
+
+  // void *userData;
+  userData = NULL;
+
 
   ////////////////////////////////////////////////////////////////////////
   //  tool.cpp
@@ -975,6 +993,27 @@ void Micropolis::init()
 
   // int PendingY;
   PendingY = 0;
+
+  // Ink *OldInk;
+  OldInk = NULL;
+
+  // Ink *overlay;
+  overlay = NULL;
+
+  // Ink *track_ink;
+  track_ink = NULL;
+
+  // int last_x;
+  last_x = 0;
+
+  // int last_y;
+  last_y = 0;
+
+  // int tool_x;
+  tool_x = 0;
+
+  // int tool_y;
+  tool_y = 0;
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -1054,6 +1093,9 @@ void Micropolis::destroy()
 {
 
   destroyMapArrays();
+
+  // TODO: Clean up all other stuff:
+  // Ink *overlay
 
 }
 

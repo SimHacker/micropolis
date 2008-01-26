@@ -177,16 +177,10 @@ void Micropolis::setSpeed(
     StartMicropolisTimer();
   }
 
-  {
-    char buf[256];
-
-    sprintf(
-      buf, 
-      "UISetSpeed %d", 
-      sim_paused ? 0 : SimMetaSpeed);
-
-    Eval(buf);
-  }
+  Callback(
+    "UISetSpeed",
+    "d", 
+    (int)(sim_paused ? 0 : SimMetaSpeed));
 
 }
 
@@ -234,14 +228,10 @@ void Micropolis::SetGameLevel(
 
 void Micropolis::UpdateGameLevel()
 {
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetGameLevel %d", 
-    GameLevel);
-
-  Eval(buf);
+  Callback(
+    "UISetGameLevel",
+	"d", 
+    (int)GameLevel);
 }
 
 
@@ -266,16 +256,12 @@ void Micropolis::setCityName(
 void Micropolis::setAnyCityName(
   char *name)
 {
-  char buf[1024];
-
   CityName = name;
 
-  sprintf(
-    buf, 
-    "UISetCityName {%s}", 
+  Callback(
+    "UISetCityName",
+    "s",
     CityName);
-
-  Eval(buf);
 }
 
 
@@ -300,30 +286,18 @@ int Micropolis::CurrentYear()
 
 
 void Micropolis::DoSetMapState(
-  SimView *view, 
   short state)
 {
-/*
-  char buf[256];
-
-  view->map_state = state;
-  view->invalid = 1;
-  EventuallyRedrawView(view);
-
-  sprintf(
-    buf, 
-    "UISetMapState %s %d", 
-    Tk_PathName(view->tkwin), 
-    state);
-
-  Eval(buf);
-*/
+  Callback(
+    "UISetMapState",
+    "d",
+    (int)state);
 }
 
 
 void Micropolis::DoNewGame()
 {
-  Eval("UINewGame");
+  Callback("UINewGame", "");
 }
 
 
@@ -341,14 +315,10 @@ void Micropolis::DoGeneratedCityImage(
 void Micropolis::DoPopUpMessage(
   char *msg)
 {
-  char buf[1024];
-
-  sprintf(
-    buf, 
-    "UIPopUpMessage {%s}", 
+  Callback(
+    "UIPopUpMessage",
+    "s", 
     msg);
-
-  Eval(buf);
 }
 
 

@@ -67,7 +67,10 @@
 #include "stdafx.h"
 
 
+#if 0
 ////////////////////////////////////////////////////////////////////////
+// Disabled this small map drawing, filtering and overlaying code. 
+// Going to re-implement it in the tile engine and Python.
 
 
 #define VAL_NONE        0
@@ -1005,6 +1008,9 @@ void Micropolis::drawRect(
   }
 */
 }
+
+
+#endif
 
 
 ////////////////////////////////////////////////////////////////////////

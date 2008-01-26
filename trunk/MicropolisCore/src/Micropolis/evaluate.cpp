@@ -553,32 +553,6 @@ void Micropolis::SetEvaluation(
   const char *goodno, 
   const char *title)
 {
-  char buf[2048];
-
-  sprintf(
-    buf, 
-    "UISetEvaluation {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s} {%s}",
-    changed, 
-    score,
-    ps0, 
-    ps1, 
-    ps2, 
-    ps3,
-    pv0, 
-    pv1, 
-    pv2, 
-    pv3,
-    pop, 
-    delta, 
-    assessed_dollars,
-    cityclass, 
-    citylevel,
-    goodyes, 
-    goodno, 
-    title);
-
-  Eval(buf);
-
   evalChanged = changed;
   evalScore = score;
   evalPs0 = ps0;
@@ -597,6 +571,28 @@ void Micropolis::SetEvaluation(
   evalGoodYes = goodyes;
   evalGoodNo = goodno;
   evalTitle = title;
+
+  Callback(
+    "UISetEvaluation",
+	"ssssssssssssssssss",
+    changed, 
+    score,
+    ps0, 
+    ps1, 
+    ps2, 
+    ps3,
+    pv0, 
+    pv1, 
+    pv2, 
+    pv3,
+    pop, 
+    delta, 
+    assessed_dollars,
+    cityclass, 
+    citylevel,
+    goodyes, 
+    goodno, 
+    title);
 }
 
 

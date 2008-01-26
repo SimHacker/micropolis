@@ -133,19 +133,7 @@ Quad Micropolis::toolColors[] = {
 /* UTILITIES */
 
 
-void Micropolis::setWandState(
-  SimView *view, 
-  short state)
-{
-
-  view->tool_state = state;
-  DoUpdateHeads();
-  DoSetWandState(view, state);
-}
-
-
 int Micropolis::putDownPark(
-  SimView *view, 
   short mapH, 
   short mapV)
 {
@@ -176,7 +164,7 @@ int Micropolis::putDownPark(
 
 
 int Micropolis::putDownNetwork(
-  SimView *view, 
+  short state,
   short mapH, 
   short mapV)
 {
@@ -188,10 +176,10 @@ int Micropolis::putDownNetwork(
   }
 
   if (tile == 0) {
-    if ((TotalFunds - CostOf[view->tool_state]) >= 0) {
+    if ((TotalFunds - CostOf[state]) >= 0) {
 
       Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
-      Spend(CostOf[view->tool_state]);
+      Spend(CostOf[state]);
 
       return 1;
     } else {
@@ -429,7 +417,6 @@ void Micropolis::check3x3border(
 
 
 int Micropolis::check3x3(
-  SimView *view, 
   short mapH, 
   short mapV, 
   short base, 
@@ -502,9 +489,7 @@ int Micropolis::check3x3(
 
   if ((Players > 1) &&
       (OverRide == 0) &&
-      (cost >= Expensive) &&
-      (view != NULL) &&
-      (view->super_user == 0)) {
+      (cost >= Expensive)) {
     return -3;
   }
 
@@ -590,7 +575,6 @@ void Micropolis::check4x4border(
 
 
 short Micropolis::check4x4(
-  SimView *view, 
   short mapH, 
   short mapV, 
   short base, 
@@ -667,9 +651,7 @@ short Micropolis::check4x4(
 
   if ((Players > 1) &&
       (OverRide == 0) &&
-      (cost >= Expensive) &&
-      (view != NULL) &&
-      (view->super_user == 0)) {
+      (cost >= Expensive)) {
     return -3;
   }
 
@@ -756,7 +738,6 @@ void Micropolis::check6x6border(
 
 
 short Micropolis::check6x6(
-  SimView *view, 
   short mapH, 
   short mapV, 
   short base, 
@@ -831,9 +812,7 @@ short Micropolis::check6x6(
 
   if ((Players > 1) &&
       (OverRide == 0) &&
-      (cost >= Expensive) &&
-      (view != NULL) &&
-      (view->super_user == 0)) {
+      (cost >= Expensive)) {
     return -3;
   }
 
@@ -1052,21 +1031,17 @@ void Micropolis::DoShowZoneStatus(
   int x, 
   int y)
 {
-  char buf[1024];
-
-  sprintf(
-    buf, 
-    "UIShowZoneStatus {%s} {%s} {%s} {%s} {%s} {%s} %d %d",
+  Callback(
+    "UIShowZoneStatus",
+    "ssssssdd",
     str, 
     s0, 
     s1, 
     s2, 
     s3, 
     s4, 
-    x, 
-    y);
-
-  Eval(buf);
+    (int)x, 
+    (int)y);
 }
 
 
@@ -1161,42 +1136,16 @@ void Micropolis::put6x6Rubble(
 
 
 void Micropolis::DidTool(
-  SimView *view, 
   char *name, 
   short x, 
   short y)
 {
-/*
-  char buf[256];
-
-  if (view != NULL) {
-    sprintf(
-      buf, 
-      "UIDidTool%s %s %d %d",
-      name, 
-      Tk_PathName(view->tkwin), 
-      x, 
-      y);
-    Eval(buf);
-  }
-*/
-}
-
-
-void Micropolis::DoSetWandState(
-  SimView *view, 
-  short state)
-{
-/*
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetToolState %s %d", 
-    Tk_PathName(view->tkwin), 
-    state);
-  Eval(buf);
-*/
+  Callback(
+    "UIDidTool",
+    "sdd",
+    name, 
+    (int)x, 
+    (int)y);
 }
 
 
@@ -1205,7 +1154,6 @@ void Micropolis::DoSetWandState(
 
 
 int Micropolis::query_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1217,14 +1165,13 @@ int Micropolis::query_tool(
   }
 
   doZoneStatus(x, y);
-  DidTool(view, "Qry", x, y);
+  DidTool("Qry", x, y);
 
   return 1;
 }
 
 
 int Micropolis::bulldozer_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1326,7 +1273,7 @@ int Micropolis::bulldozer_tool(
   UpdateFunds();
 
   if (result == 1) {
-    DidTool(view, "Dozr", x, y);
+    DidTool("Dozr", x, y);
   }
 
   return result;
@@ -1334,7 +1281,6 @@ int Micropolis::bulldozer_tool(
 
 
 int Micropolis::road_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1351,7 +1297,7 @@ int Micropolis::road_tool(
   UpdateFunds();
 
   if (result == 1) {
-    DidTool(view, "Road", x, y);
+    DidTool("Road", x, y);
   }
 
   return result;
@@ -1359,7 +1305,6 @@ int Micropolis::road_tool(
 
 
 int Micropolis::rail_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1376,7 +1321,7 @@ int Micropolis::rail_tool(
   UpdateFunds();
 
   if (result == 1) {
-    DidTool(view, "Rail", x, y);
+    DidTool("Rail", x, y);
   }
 
   return result;
@@ -1384,7 +1329,6 @@ int Micropolis::rail_tool(
 
 
 int Micropolis::wire_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1401,7 +1345,7 @@ int Micropolis::wire_tool(
   UpdateFunds();
 
   if (result == 1) {
-    DidTool(view, "Wire", x, y);
+    DidTool("Wire", x, y);
   }
 
   return result;
@@ -1409,7 +1353,6 @@ int Micropolis::wire_tool(
 
 
 int Micropolis::park_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1422,10 +1365,10 @@ int Micropolis::park_tool(
     return -1;
   }
 
-  result = putDownPark(view, x, y);
+  result = putDownPark(x, y);
 
   if (result == 1) {
-    DidTool(view, "Park", x, y);
+    DidTool("Park", x, y);
   }
 
   return result;
@@ -1433,7 +1376,6 @@ int Micropolis::park_tool(
 
 
 int Micropolis::residential_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1446,10 +1388,10 @@ int Micropolis::residential_tool(
     return -1;
   }
 
-  result = check3x3(view, x, y, RESBASE, residentialState);
+  result = check3x3(x, y, RESBASE, residentialState);
 
   if (result == 1) {
-    DidTool(view, "Res", x, y);
+    DidTool("Res", x, y);
   }
 
   return result;
@@ -1457,7 +1399,6 @@ int Micropolis::residential_tool(
 
 
 int Micropolis::commercial_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1470,10 +1411,10 @@ int Micropolis::commercial_tool(
     return -1;
   }
 
-  result = check3x3(view, x, y, COMBASE, commercialState);
+  result = check3x3(x, y, COMBASE, commercialState);
 
   if (result == 1) {
-    DidTool(view, "Com", x, y);
+    DidTool("Com", x, y);
   }
 
   return result;
@@ -1481,7 +1422,6 @@ int Micropolis::commercial_tool(
 
 
 int Micropolis::industrial_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1494,10 +1434,10 @@ int Micropolis::industrial_tool(
     return -1;
   }
 
-  result = check3x3(view, x, y, INDBASE, industrialState);
+  result = check3x3(x, y, INDBASE, industrialState);
 
   if (result == 1) {
-    DidTool(view, "Ind", x, y);
+    DidTool("Ind", x, y);
   }
 
   return result;
@@ -1505,7 +1445,6 @@ int Micropolis::industrial_tool(
 
 
 int Micropolis::police_dept_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1518,10 +1457,10 @@ int Micropolis::police_dept_tool(
     return -1;
   }
 
-  result = check3x3(view, x, y, POLICESTBASE, policeState);
+  result = check3x3(x, y, POLICESTBASE, policeState);
 
   if (result == 1) {
-    DidTool(view, "Pol", x, y);
+    DidTool("Pol", x, y);
   }
 
   return result;
@@ -1529,7 +1468,6 @@ int Micropolis::police_dept_tool(
 
 
 int Micropolis::fire_dept_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1542,10 +1480,10 @@ int Micropolis::fire_dept_tool(
     return -1;
   }
 
-  result = check3x3(view, x, y, FIRESTBASE, fireState);
+  result = check3x3(x, y, FIRESTBASE, fireState);
 
   if (result == 1) {
-    DidTool(view, "Fire", x, y);
+    DidTool("Fire", x, y);
   }
 
   return result;
@@ -1553,7 +1491,6 @@ int Micropolis::fire_dept_tool(
 
 
 int Micropolis::stadium_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1566,10 +1503,10 @@ int Micropolis::stadium_tool(
     return -1;
   }
 
-  result = check4x4(view, x, y, STADIUMBASE, 0, stadiumState);
+  result = check4x4(x, y, STADIUMBASE, 0, stadiumState);
 
   if (result == 1) {
-    DidTool(view, "Stad", x, y);
+    DidTool("Stad", x, y);
   }
 
   return result;
@@ -1577,7 +1514,6 @@ int Micropolis::stadium_tool(
 
 
 int Micropolis::coal_power_plant_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1590,10 +1526,10 @@ int Micropolis::coal_power_plant_tool(
     return -1;
   }
 
-  result = check4x4(view, x, y, COALBASE, 1, powerState);
+  result = check4x4(x, y, COALBASE, 1, powerState);
 
   if (result == 1) {
-    DidTool(view, "Coal", x, y);
+    DidTool("Coal", x, y);
   }
 
   return result;
@@ -1601,7 +1537,6 @@ int Micropolis::coal_power_plant_tool(
 
 
 int Micropolis::nuclear_power_plant_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1614,10 +1549,10 @@ int Micropolis::nuclear_power_plant_tool(
     return -1;
   }
 
-  result = check4x4(view, x, y, NUCLEARBASE, 1, nuclearState);
+  result = check4x4(x, y, NUCLEARBASE, 1, nuclearState);
 
   if (result == 1) {
-    DidTool(view, "Nuc", x, y);
+    DidTool("Nuc", x, y);
   }
 
   return result;
@@ -1625,7 +1560,6 @@ int Micropolis::nuclear_power_plant_tool(
 
 
 int Micropolis::seaport_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1638,10 +1572,10 @@ int Micropolis::seaport_tool(
     return -1;
   }
 
-  result = check4x4(view, x, y, PORTBASE, 0, seaportState);
+  result = check4x4(x, y, PORTBASE, 0, seaportState);
 
   if (result == 1) {
-    DidTool(view, "Seap", x, y);
+    DidTool("Seap", x, y);
   }
 
   return result;
@@ -1649,7 +1583,6 @@ int Micropolis::seaport_tool(
 
 
 int Micropolis::airport_tool(
-  SimView *view, 
   short x, 
   short y)
 {
@@ -1662,10 +1595,10 @@ int Micropolis::airport_tool(
     return -1;
   }
 
-  result = check6x6(view, x, y, AIRPORTBASE, airportState);
+  result = check6x6(x, y, AIRPORTBASE, airportState);
 
   if (result == 1) {
-    DidTool(view, "Airp", x, y);
+    DidTool("Airp", x, y);
   }
 
   return result;
@@ -1673,8 +1606,8 @@ int Micropolis::airport_tool(
 
 
 int Micropolis::network_tool(
-  SimView *view, 
-  short x, short y)
+  short x, 
+  short y)
 {
   int result;
 
@@ -1685,10 +1618,11 @@ int Micropolis::network_tool(
     return -1;
   }
 
-  result = putDownNetwork(view, x, y);
+  result = 
+	putDownNetwork(networkState, x, y);
 
   if (result == 1) {
-    DidTool(view, "Net", x, y);
+    DidTool("Net", x, y);
   }
 
   return result;
@@ -1696,120 +1630,65 @@ int Micropolis::network_tool(
 
 
 int Micropolis::ChalkTool(
-  SimView *view, 
   short x, 
   short y, 
   short color, 
   short first)
 {
   if (first) {
-    ChalkStart(view, x, y, color);
+    ChalkStart(x, y, color);
   } else {
-    ChalkTo(view, x, y);
+    ChalkTo(x, y);
   }
 
-  DidTool(view, "Chlk", x, y);
+  DidTool("Chlk", x, y);
 
   return 1;
 }
 
 
 void Micropolis::ChalkStart(
-  SimView *view, 
   int x, 
   int y, 
   int color)
 {
-/*
   Ink *ink;
   Ink **ip;
 
-  for (ip = &sim->overlay; *ip != NULL; ip = &((*ip)->next)) ;
+  for (ip = &overlay; *ip != NULL; ip = &((*ip)->next)) ;
 
   *ip = ink = NewInk();
   ink->x = x; ink->y = y;
   ink->color = color;
   StartInk(ink, x, y);
-  view->track_info = (char *)ink;
-  view->last_x = x;
-  view->last_y = y;
-  view->tool_event_time = view->tool_last_event_time =
-    ((TkWindow *)view->tkwin)->dispPtr->lastEventTime;
-*/
+  track_ink = ink;
+  last_x = x;
+  last_y = y;
 }
 
 
 void Micropolis::ChalkTo(
-  SimView *view, 
   int x, 
   int y)
 {
-/*
-  int x0, y0, lx, ly;
-  Ink *ink = (Ink *)view->track_info;
-
-#ifdef MOTIONBUFFER
-  if (view->x->dpy->motion_buffer) {
-    XTimeCoord *coords = NULL, *coord;
-    int n = 0, i;
-    
-    view->tool_last_event_time = view->tool_event_time;
-    view->tool_event_time =
-      ((TkWindow *)view->tkwin)->dispPtr->lastEventTime;
-
-    coords = XGetMotionEvents(view->x->dpy,
-                              Tk_WindowId(view->tkwin),
-                              view->tool_last_event_time,
-                              view->tool_event_time,
-                              &n);
-#if 0
-printf("got %d events at %x from %d to %d (%d elapsed)\n",
-       n, coords,
-       view->tool_last_event_time, view->tool_event_time,
-       view->tool_event_time - view->tool_last_event_time);
-#endif
-    if (n) {
-      lx = ink->last_x; ly = ink->last_y;
-
-      for (i = 0, coord = coords; i < n; i++, coord++) {
-        ViewToPixelCoords(view, coord->x, coord->y, &x0, &y0);
-        lx = (lx + lx + lx + x0) >>2;
-        ly = (ly + ly + ly + y0) >>2;
-#if 0
-printf("adding %d %d => %d %d => %d %d\n",
-       coord->x, coord->y, x0, y0, lx, ly);
-#endif
-        AddInk(ink, lx, ly);
-      }
-    }
-
-    if (coords) {
-      XFree((char *)coords);
-    }
-  }
-#endif
-
-  AddInk(ink, x, y);
-  view->last_x = x;
-  view->last_y = y;
-*/
+  AddInk(track_ink, x, y);
+  last_x = x;
+  last_y = y;
 }
 
 
 int Micropolis::EraserTool(
-  SimView *view, 
   short x, 
   short y, 
   short first)
 {
-/*
   if (first) {
-    EraserStart(view, x, y);
+    EraserStart(x, y);
   } else {
-    EraserTo(view, x, y);
+    EraserTo(x, y);
   }
-  DidTool(view, "Eraser", x, y);
-*/
+
+  DidTool("Eraser", x, y);
 
   return 1;
 }
@@ -1822,7 +1701,6 @@ int Micropolis::InkInBox(
   int right, 
   int bottom)
 {
-/*
   if ((left <= ink->right) &&
       (right >= ink->left) &&
       (top <= ink->bottom) &&
@@ -1860,45 +1738,30 @@ int Micropolis::InkInBox(
       }
     }
   }
-*/
 
   return 0;
 }
 
 
 void Micropolis::EraserStart(
-  SimView *view, 
   int x, 
   int y)
 {
-  EraserTo(view, x, y);
+  EraserTo(x, y);
 }
 
 
 void Micropolis::EraserTo(
-  SimView *view, 
   int x, 
   int y)
 {
-/*
-  SimView *v;
   Ink **ip, *ink;
 
-  for (ip = &sim->overlay; *ip != NULL;) {
+  for (ip = &overlay; *ip != NULL;) {
     ink = *ip;
     if (InkInBox(ink, x - 8, y - 8, x + 8, y + 8)) {
 
-      for (view = sim->editor; view != NULL; view = view->next) {
-        int vleft, vtop;
-
-        if ((ink->right >= (vleft = (view->pan_x - (view->w_width / 2)))) &&
-            (ink->left <= (vleft + view->w_width)) &&
-            (ink->bottom >= (vtop = (view->pan_y - (view->w_height / 2)))) &&
-            (ink->top <= (vtop + view->w_height))) {
-          view->overlay_mode = 0;
-          EventuallyRedrawView(view);
-        }
-      }
+	  // TODO: Redraw views that contain this rectangle. 
 
       *ip = ink->next;
 
@@ -1907,12 +1770,10 @@ void Micropolis::EraserTo(
       ip = &((*ip)->next);
     }
   }
-*/
 }
 
 
 int Micropolis::do_tool(
-  SimView *view, 
   short state, 
   short x, 
   short y, 
@@ -1923,79 +1784,79 @@ int Micropolis::do_tool(
   switch (state) {
 
   case residentialState:
-    result = residential_tool(view, x >>4, y >>4);
+    result = residential_tool(x >>4, y >>4);
     break;
 
   case commercialState:
-    result = commercial_tool(view, x >>4, y >>4);
+    result = commercial_tool(x >>4, y >>4);
     break;
 
   case industrialState:
-    result = industrial_tool(view, x >>4, y >>4);
+    result = industrial_tool(x >>4, y >>4);
     break;
 
   case fireState:
-    result = fire_dept_tool(view, x >>4, y >>4);
+    result = fire_dept_tool(x >>4, y >>4);
     break;
 
   case queryState:
-    result = query_tool(view, x >>4, y >>4);
+    result = query_tool(x >>4, y >>4);
     break;
 
   case policeState:
-    result = police_dept_tool(view, x >>4, y >>4);
+    result = police_dept_tool(x >>4, y >>4);
     break;
 
   case wireState:
-    result = wire_tool(view, x >>4, y >>4);
+    result = wire_tool(x >>4, y >>4);
     break;
 
   case dozeState:
-    result = bulldozer_tool(view, x >>4, y >>4);
+    result = bulldozer_tool(x >>4, y >>4);
     break;
     
   case rrState:
-    result = rail_tool(view, x >>4, y >>4);
+    result = rail_tool(x >>4, y >>4);
     break;
 
   case roadState:
-    result = road_tool(view, x >>4, y >>4);
+    result = road_tool(x >>4, y >>4);
     break;
 
   case chalkState:
-    result = ChalkTool(view, x - 5, y + 11, COLOR_WHITE, first);
+    result = ChalkTool(x - 5, y + 11, COLOR_WHITE, first);
     break;
 
   case eraserState:
-    result = EraserTool(view, x, y, first);
+    result = EraserTool(x, y, first);
     break;
 
   case stadiumState:
-    result = stadium_tool(view, x >>4, y >>4);
+    result = stadium_tool(x >>4, y >>4);
     break;
 
   case parkState:
-    result = park_tool(view, x >>4, y >>4);
+    result = park_tool(x >>4, y >>4);
     break;
 
   case seaportState:
-    result = seaport_tool(view, x >>4, y >>4);
+    result = seaport_tool(x >>4, y >>4);
     break;
 
   case powerState:
-    result = coal_power_plant_tool(view, x >>4, y >>4);
+    result = coal_power_plant_tool(x >>4, y >>4);
     break;
 
   case nuclearState:
-    result = nuclear_power_plant_tool(view, x >>4, y >>4);
+    result = nuclear_power_plant_tool(x >>4, y >>4);
     break;
 
   case airportState:
-    result = airport_tool(view, x >>4, y >>4);
+    result = airport_tool(x >>4, y >>4);
     break;
 
   case networkState:
-    result = network_tool(view, x >>4, y >>4);
+    result = network_tool(x >>4, y >>4);
     break;
 
   default:
@@ -2008,185 +1869,178 @@ int Micropolis::do_tool(
 }
 
 
-int Micropolis::current_tool(
-  SimView *view, 
-  short x, 
-  short y, 
-  short first)
-{
-  return do_tool(view, view->tool_state, x, y, first);
-}
-
-
 void Micropolis::DoTool(
-  SimView *view, 
   short tool, 
   short x, 
   short y)
 {
   int result;
 
-  result = do_tool(view, tool, x <<4, y <<4, 1);
+  result = do_tool(tool, x <<4, y <<4, 1);
 
   if (result == -1) {
     ClearMes();
     SendMes(34);
-    MakeSoundOn(view, "edit", "UhUh");
+    MakeSound("edit", "UhUh");
   } else if (result == -2) {
     ClearMes();
     SendMes(33);
-    MakeSoundOn(view, "edit", "Sorry");
+    MakeSound("edit", "Sorry");
   }
 
   sim_skip = 0;
-  view->skip = 0;
   InvalidateEditors();
 }
 
 
 void Micropolis::ToolDown(
-  SimView *view, 
+  short tool,
   int x, 
   int y)
 {
-/*
   int result;
 
-  ViewToPixelCoords(view, x, y, &x, &y);
-  view->last_x = x;
-  view->last_y = y;
+  // TODO: fix this
+  //ViewToPixelCoords(x, y, &x, &y);
+  last_x = x;
+  last_y = y;
 
-  result = current_tool(view, x, y, 1);
+  result = do_tool(tool, x, y, 1);
 
   if (result == -1) {
     ClearMes();
     SendMes(34);
-    MakeSoundOn(view, "edit", "UhUh");
+    MakeSound("edit", "UhUh");
   } else if (result == -2) {
     ClearMes();
     SendMes(33);
-    MakeSoundOn(view, "edit", "Sorry");
+    MakeSound("edit", "Sorry");
   } else if (result == -3) {
-    DoPendTool(view, view->tool_state, x >>4, y >>4);
+    DoPendTool(tool, x >>4, y >>4);
   }
 
   sim_skip = 0;
-  view->skip = 0;
-  view->invalid = 1;
-*/
+
+  // TODO: update views
 }
 
 
 void Micropolis::ToolUp(
-  SimView *view, 
+  short tool,
   int x, 
   int y)
 {
-  ToolDrag(view, x, y);
+  ToolDrag(tool, x, y);
 }
 
 
 void Micropolis::ToolDrag(
-  SimView *view, 
+  short tool,
   int px, 
   int py)
 {
-/*
   int x, y, dx, dy, adx, ady, lx, ly, dist;
   float i, step, tx, ty, dtx, dty, rx, ry;
 
-  ViewToPixelCoords(view, px, py, &x, &y);
-  view->tool_x = x; view->tool_y = y;
+  // TODO: fix this
+  // ViewToPixelCoords(px, py, &x, &y);
+  x = px;
+  y = py;
 
-  if ((view->tool_state == chalkState) ||
-      (view->tool_state == eraserState)) {
+  tool_x = x; 
+  tool_y = y;
 
-    current_tool(view, x, y, 0);
-    view->last_x = x; view->last_y = y;
+  if ((tool == chalkState) ||
+      (tool == eraserState)) {
+
+    do_tool(tool, x, y, 0);
+    last_x = x; 
+	last_y = y;
 
   } else {
 
-    dist = toolSize[view->tool_state];
+    dist = toolSize[tool];
 
-    x >>= 4; y >>= 4;
-    lx = view->last_x >> 4;
-    ly = view->last_y >> 4;
-
-  reset:
+    x >>= 4; 
+	y >>= 4;
+    lx = last_x >> 4;
+    ly = last_y >> 4;
 
     dx = x - lx;
     dy = y - ly;
 
-    if (dx == 0 && dy == 0) {
+    if ((dx == 0) && 
+		(dy == 0)) {
       return;
     }
 
-    adx = ABS(dx); ady = ABS(dy);
+    adx = ABS(dx); 
+	ady = ABS(dy);
 
     if (adx > ady) {
-      step = .3 / adx;
+      step = (float)0.3 / adx;
     } else {
-      step = .3 / ady;
+      step = (float)0.3 / ady;
     }
 
-    rx = (dx < 0 ? 1 : 0);
-    ry = (dy < 0 ? 1 : 0);
+    rx = (float)(dx < 0 ? 1 : 0);
+    ry = (float)(dy < 0 ? 1 : 0);
 
     if (dist == 1) {
       for (i = 0.0; i <= 1 + step; i += step) {
-        tx = (view->last_x >>4) + i * dx;
-        ty = (view->last_y >>4) + i * dy;
+        tx = (last_x >>4) + i * dx;
+        ty = (last_y >>4) + i * dy;
         dtx = ABS(tx - lx);
         dty = ABS(ty - ly);
-        if (dtx >= 1 || dty >= 1) {
+        if ((dtx >= 1) || 
+			(dty >= 1)) {
           // fill in corners
-          if ((dtx >= 1) && (dty >= 1)) {
+          if ((dtx >= 1) && 
+			  (dty >= 1)) {
             if (dtx > dty) {
-              current_tool(view, ((int)(tx + rx)) <<4, ly <<4, 0);
+              do_tool(tool, ((int)(tx + rx)) <<4, ly <<4, 0);
             } else {
-              current_tool(view, lx <<4, ((int)(ty + ry)) <<4, 0);
+              do_tool(tool, lx <<4, ((int)(ty + ry)) <<4, 0);
             }
           }
           lx = (int)(tx + rx);
           ly = (int)(ty + ry);
-          current_tool(view, lx <<4, ly <<4, 0);
+          do_tool(tool, lx <<4, ly <<4, 0);
         }
       }
     } else {
       for (i = 0.0; i <= 1 + step; i += step) {
-        tx = (view->last_x >>4) + i * dx;
-        ty = (view->last_y >>4) + i * dy;
+        tx = (last_x >>4) + i * dx;
+        ty = (last_y >>4) + i * dy;
         dtx = ABS(tx - lx);
         dty = ABS(ty - ly);
         lx = (int)(tx + rx);
         ly = (int)(ty + ry);
-        current_tool(view, lx <<4, ly <<4, 0);
+        do_tool(tool, lx <<4, ly <<4, 0);
       }
     }
 
-    view->last_x = (lx <<4) + 8;
-    view->last_y = (ly <<4) + 8;
+    last_x = (lx <<4) + 8;
+    last_y = (ly <<4) + 8;
   }
+
   sim_skip = 0; // update editors overlapping this one
-  view->skip = 0;
-  view->invalid = 1;
-*/
+  
+  // TODO: update views
 }
 
 
 void Micropolis::DoPendTool(
-  SimView *view, 
   int tool, 
   int x, 
   int y)
 {
-/*
-  char buf[256];
-
-  sprintf(buf, "DoPendTool %s %d %d %d",
-          Tk_PathName(view->tkwin), tool, x, y);
-  Eval(buf);
-*/
+  Callback(
+    "UIDoPendTool",
+    "ddd",
+    tool,
+    x,
+    y);
 }
 
 
