@@ -1,0 +1,32 @@
+#!/usr/local/bin/wish -f
+#
+# Simple script to change colors of a window.
+
+if "$argc < 3" {error "Usage: color appName window option"}
+set appName [lindex $argv 0]
+set widget [lindex $argv 1]
+set option [lindex $argv 2]
+set red 0
+set green 0
+set blue 0
+
+option add *Scale.sliderForeground "#cdb79e"
+option add *Scale.activeForeground "#ffe4c4"
+pack append . [scale .red -command "color red" -label "Red Intensity" \
+	-from 0 -to 255 -orient horizontal -bg "#ffaeb9" -length 250] \
+	{top expand fill}
+pack append . [scale .green -command "color green" -label "Green Intensity" \
+	-from 0 -to 255 -orient horizontal -bg "#43cd80"] {top expand fill}
+pack append . [scale .blue -command "color blue" -label "Blue Intensity" \
+	-from 0 -to 255 -orient horizontal -bg "#7ec0ee"] {top expand fill}
+
+proc color {which intensity} {
+    global red green blue appName widget option
+    set $which $intensity
+    send $appName $widget config $option \
+	    [format #%02x%02x%02x $red $green $blue]
+}
+
+bind . <Control-q> {destroy .}
+bind . <Control-c> {destroy .}
+focus .

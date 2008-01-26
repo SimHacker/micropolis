@@ -1,0 +1,50 @@
+==== IN PROGRESS ====
+
+IRC Chat Server connection
+
+If Numeric Lock is on, Tk ignores all mouse clicks! Ignore NumLock state. 
+
+
+==== UNIMPLEMENTED FEATURES ====
+
+Integrate sound server into main application.
+
+
+==== BUGS ====
+
+Wrap year back around from 1000000 to 0 instead of 1900. 
+Ensure floored arithmetic in code w.r.t. CityTime.
+
+pause game and change graph mode from 10 yrs to 120 yrs. graph does not update.
+
+colors in the power grid overlay are not correct.
+if funds negative, then current funds displays $-,600
+
+earthquakes at high speed slow down mouse tracking
+
+lots of res/sounddev processes sitting around.
+
+errors on one x server should not kill whole game for all players, just close down that x server.
+
+pan cursor gets displaced when it hits the limits.
+
+panning needs to be easier, some shift key accelerator for two button mice.
+Panning mode, so you don't need to hold the button down, or lose your current tool.
+
+function or control keys to switch between drawing tools, that don't interfere with chat. 
+
+Need an official way to cheat, since FUND does not work. One armed bandit? 
+
+
+==== FIXED ====
+
+option to turn off alerts
+option to print notices less frequently
+blur the quickly changing date
+
+sometimes the date window stops updating
+sometimes the text buttons stop updating
+
+sometimes the graph window does not show up in the head window! 
+
+

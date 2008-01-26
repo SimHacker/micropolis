@@ -1,0 +1,15 @@
+#------------------------------------------------------------------------------
+# System V 3.2.0 (tested on Bell-Tech or Intel Unix for the Intel 386)
+#------------------------------------------------------------------------------
+# $Id: sysv.3.2.0,v 2.2 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS=-DTCL_NO_SELECT -DTCL_NO_ITIMER -DTCL_NO_FILE_LOCKING
+LIBS=-lform -lm -lc_s
+RANLIB_CMD=true
+MCS_CMD=mcs -d
+
+TCL_MAN_SEPARATOR=.
+TCL_MAN_STYLE=SHORT
+TCL_MAN_INDEX=1
+

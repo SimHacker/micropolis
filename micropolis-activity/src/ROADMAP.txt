@@ -1,0 +1,263 @@
+========================================================================
+
+Roadmap of the Micropolis source code. 
+
+========================================================================
+
+Micropolis designed and implemented by Will Wright, 
+Unix porting, optimization and multi player user interface design 
+by Don Hopkins (dhopkins@DonHopkins.com), for DUX Software.
+
+========================================================================
+
+Documentation:
+
+  manual
+    User manual and help page templates. 
+
+  src/notes
+    Notes, to-do lists, lists of potential bugs to work on, and screen
+    snapshots.
+
+Resources:
+
+  res
+
+    Resources, data, TCL code, etc.
+
+    Modified standard TCL/Tk widget libraries to support multiple
+    displays, by removing uses of global variables, and instead 
+    storing screen-specific data in tk_priv map, 
+    keyed by "<variable>@<screen>" where screen is
+    "[winfo screen $w]", the screen identifier. 
+
+    Data files:
+      hexa.112
+      hexa.232
+      hexa.384
+      hexa.385
+      hexa.386
+      hexa.387
+      hexa.388
+      hexa.456
+      hexa.544
+      hexa.563
+      hexa.999
+
+    Scenarios:
+      snro.111
+      snro.222
+      snro.333
+      snro.444
+      snro.555
+      snro.666
+      snro.777
+      snro.888
+
+    String resources:
+      stri.202
+      stri.219
+      stri.301
+      stri.356
+
+    Audio files:
+      aaah.au
+      a.au
+      airport.au
+      beep.au
+      boing.au
+      bop.au
+      build.au
+      bulldoze.au
+      chalk.au
+      coal.au
+      com.au
+      computer.au
+      cuckoo.au
+      e.au
+      eraser.au
+      expl-hi.au
+      expl-low.au
+      fire.au
+      honk-hi.au
+      honk-low.au
+      honk-med.au
+      ignition.au
+      ind.au
+      monster.au
+      nuclear.au
+      o.au
+      oop.au
+      park.au
+      police.au
+      quack.au
+      query.au
+      rail.au
+      res.au
+      road.au
+      rumble.au
+      seaport.au
+      siren.au
+      skid.au
+      sorry.au
+      stadium.au
+      traffic.au
+      uhuh.au
+      unix.au
+      whip.au
+      wire.au
+      woosh.au
+      zone.au
+
+    Modified TCL/Tk standard library code:
+    
+      button.tcl
+        Modified to support multiple displays.
+      menu.tcl
+        Modified to support multiple displays.
+      text.tcl
+        Modified to support multiple displays.
+      tk.tcl
+        Modified to support multiple displays.
+      buildidx.tcl
+      entry.tcl
+      init.tcl
+      listbox.tcl
+      mkindex.tcl
+      parray.tcl
+      tclinit.tcl
+      tkerror.tcl
+      wish.tcl
+      wishx.tcl
+      tclindex
+      tcl.tdx
+      tcl.tlb
+      tk.tdx
+      tk.tlb
+
+    Micropolis user interface code:
+
+      micropolis.tcl
+        Micropolis utilities and shared interface code. 
+      help.tcl
+        Micropolis help messages.
+      wask.tcl
+        Ask question window.
+      wbudget.tcl
+        Budget window.
+      weditor.tcl
+        Map editor window.
+      weval.tcl
+        Evaluation window.
+      wfile.tcl
+        File open window.
+      wfrob.tcl
+        Frob window (dynamic zone finder sliders).
+      wgraph.tcl
+        Graph window.
+      whead.tcl
+        Head main application window.
+      whelp.tcl
+        Help window.
+      wmap.tcl
+        Map overview window.
+      wnotice.tcl
+        Notice message window.
+      wplayer.tcl
+        Add player window.
+      wscen.tcl
+        Choose scenario window.
+
+    Micropolis sound server code:
+
+      sound.tcl
+        Code loaded by sound server, 
+	which runs in another process,
+	and is controlled via the TCL "send" command. 
+	No longer used. 
+	Sound should be built into Micropolis, using a modern standard sound library (and file formats). 
+
+Base Libraries:
+
+  src/tcl
+    TCL language interpreter.
+    Free software.
+    Modified for unix porting.
+
+  src/tk
+    Tk user interface toolkit.
+    Free software.
+    Modified for unix porting, multiple display support, various extensions and bug fixes.
+    See src/notes/to.ouster (message about multiple display support),
+	src/notes/TkVersion (description of origin and changes in tk)
+
+  src/tclx
+    Useful extensions to TCL/Tk.
+    Free software.
+    Modified for unix porting.
+
+Micropolis source code:
+
+  src/sim
+
+  src/sim/terrain
+
+========================================================================
+Micropolis, Unix Version.  This game was released for the Unix platform
+in or about 1990 and has been modified for inclusion in the One Laptop
+Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
+you need assistance with this program, you may contact:
+  http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.  You should have received a
+copy of the GNU General Public License along with this program.  If
+not, see <http://www.gnu.org/licenses/>.
+
+            ADDITIONAL TERMS per GNU GPL Section 7
+
+No trademark or publicity rights are granted.  This license does NOT
+give you any right, title or interest in the trademark SimCity or any
+other Electronic Arts trademark.  You may not distribute any
+modification of this program using the trademark SimCity or claim any
+affliation or association with Electronic Arts Inc. or its employees.
+
+Any propagation or conveyance of this program must include this
+copyright notice and these terms.
+
+If you convey this program (or any modifications of it) and assume
+contractual liability for the program to recipients of it, you agree
+to indemnify Electronic Arts for any liability that those contractual
+assumptions impose on Electronic Arts.
+
+You may not misrepresent the origins of this program; modified
+versions of the program must be marked as such and not identified as
+the original program.
+
+This disclaimer supplements the one included in the General Public
+License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
+PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
+OF ANY KIND, AND YOUR USE IS AT YOUR SOLE RISK.  THE ENTIRE RISK OF
+SATISFACTORY QUALITY AND PERFORMANCE RESIDES WITH YOU.  ELECTRONIC ARTS
+DISCLAIMS ANY AND ALL EXPRESS, IMPLIED OR STATUTORY WARRANTIES,
+INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY,
+FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT OF THIRD PARTY
+RIGHTS, AND WARRANTIES (IF ANY) ARISING FROM A COURSE OF DEALING,
+USAGE, OR TRADE PRACTICE.  ELECTRONIC ARTS DOES NOT WARRANT AGAINST
+INTERFERENCE WITH YOUR ENJOYMENT OF THE PROGRAM; THAT THE PROGRAM WILL
+MEET YOUR REQUIREMENTS; THAT OPERATION OF THE PROGRAM WILL BE
+UNINTERRUPTED OR ERROR-FREE, OR THAT THE PROGRAM WILL BE COMPATIBLE
+WITH THIRD PARTY SOFTWARE OR THAT ANY ERRORS IN THE PROGRAM WILL BE
+CORRECTED.  NO ORAL OR WRITTEN ADVICE PROVIDED BY ELECTRONIC ARTS OR
+ANY AUTHORIZED REPRESENTATIVE SHALL CREATE A WARRANTY.  SOME
+JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF OR LIMITATIONS ON IMPLIED
+WARRANTIES OR THE LIMITATIONS ON THE APPLICABLE STATUTORY RIGHTS OF A
+CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS AND LIMITATIONS MAY
+NOT APPLY TO YOU.

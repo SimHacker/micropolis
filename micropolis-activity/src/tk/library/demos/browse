@@ -1,0 +1,45 @@
+#!/usr/local/bin/wish -f
+#
+# This script generates a directory browser, which lists the working
+# directory and allows you to open files or subdirectories by
+# double-clicking.
+
+# Create a scrollbar on the right side of the main window and a listbox
+# on the left side.
+
+scrollbar .scroll -command ".list yview"
+listbox .list -yscroll ".scroll set" -relief raised -geometry 20x20
+pack append . .scroll {right filly} .list {left expand fill}
+
+# The procedure below is invoked to open a browser on a given file;  if the
+# file is a directory then another instance of this program is invoked; if
+# the file is a regular file then the Mx editor is invoked to display
+# the file.
+
+proc browse {dir file} {
+    if {[string compare $dir "."] != 0} {set file $dir/$file}
+    if [file isdirectory $file] {
+	exec browse $file &
+    } else {
+	if [file isfile $file] {
+	    exec xedit $file &
+	} else {
+	    puts stdout "\"$file\" isn't a directory or regular file"
+	}
+    }
+}
+
+# Fill the listbox with a list of all the files in the directory (run
+# the "ls" command to get that information).
+
+if $argc>0 {set dir [lindex $argv 0]} else {set dir "."}
+foreach i [exec ls -a $dir] {
+    .list insert end $i
+}
+
+# Set up bindings for the browser.
+
+bind .list <Control-q> {destroy .}
+bind .list <Control-c> {destroy .}
+focus .list
+bind .list <Double-Button-1> {foreach i [selection get] {browse $dir $i}}

@@ -1,0 +1,234 @@
+/* messages
+ *
+ * Micropolis, Unix Version.  This game was released for the Unix platform
+ * in or about 1990 and has been modified for inclusion in the One Laptop
+ * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
+ * you need assistance with this program, you may contact:
+ *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.  You should have received a
+ * copy of the GNU General Public License along with this program.  If
+ * not, see <http://www.gnu.org/licenses/>.
+ * 
+ *             ADDITIONAL TERMS per GNU GPL Section 7
+ * 
+ * No trademark or publicity rights are granted.  This license does NOT
+ * give you any right, title or interest in the trademark SimCity or any
+ * other Electronic Arts trademark.  You may not distribute any
+ * modification of this program using the trademark SimCity or claim any
+ * affliation or association with Electronic Arts Inc. or its employees.
+ * 
+ * Any propagation or conveyance of this program must include this
+ * copyright notice and these terms.
+ * 
+ * If you convey this program (or any modifications of it) and assume
+ * contractual liability for the program to recipients of it, you agree
+ * to indemnify Electronic Arts for any liability that those contractual
+ * assumptions impose on Electronic Arts.
+ * 
+ * You may not misrepresent the origins of this program; modified
+ * versions of the program must be marked as such and not identified as
+ * the original program.
+ * 
+ * This disclaimer supplements the one included in the General Public
+ * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
+ * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
+ * OF ANY KIND, AND YOUR USE IS AT YOUR SOLE RISK.  THE ENTIRE RISK OF
+ * SATISFACTORY QUALITY AND PERFORMANCE RESIDES WITH YOU.  ELECTRONIC ARTS
+ * DISCLAIMS ANY AND ALL EXPRESS, IMPLIED OR STATUTORY WARRANTIES,
+ * INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT OF THIRD PARTY
+ * RIGHTS, AND WARRANTIES (IF ANY) ARISING FROM A COURSE OF DEALING,
+ * USAGE, OR TRADE PRACTICE.  ELECTRONIC ARTS DOES NOT WARRANT AGAINST
+ * INTERFERENCE WITH YOUR ENJOYMENT OF THE PROGRAM; THAT THE PROGRAM WILL
+ * MEET YOUR REQUIREMENTS; THAT OPERATION OF THE PROGRAM WILL BE
+ * UNINTERRUPTED OR ERROR-FREE, OR THAT THE PROGRAM WILL BE COMPATIBLE
+ * WITH THIRD PARTY SOFTWARE OR THAT ANY ERRORS IN THE PROGRAM WILL BE
+ * CORRECTED.  NO ORAL OR WRITTEN ADVICE PROVIDED BY ELECTRONIC ARTS OR
+ * ANY AUTHORIZED REPRESENTATIVE SHALL CREATE A WARRANTY.  SOME
+ * JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF OR LIMITATIONS ON IMPLIED
+ * WARRANTIES OR THE LIMITATIONS ON THE APPLICABLE STATUTORY RIGHTS OF A
+ * CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS AND LIMITATIONS MAY
+ * NOT APPLY TO YOU.
+ */
+
+struct msgpr popMsgs[]={ 
+{"TRAFFIC WARNING-Traffic in this"
+ "\ncity is expanding. The commuters"
+ "\nare getting militant. Highway"
+ "\nshootings are on the rise. Either"
+ "\nbuild more roads and rails or get"
+ "\na bulletproof limo.",-12},
+
+{"CRIME ALERT-  Crime in your city is"
+ "\nout of hand. Angry mobs are looting"
+ "\nand vandalizing the central city. The"
+ "\npresident will send in the national"
+ "\nguard soon if you cannot control the"
+ "\nproblem.",-11},
+
+{"NUCLEAR MELTDOWN-A nuclear meltdown"
+ "\nhas occurred at your power plant."
+ "\nYou are advised to avoid the area"
+ "\nuntil the radioactive isotopes decay."
+ "\nMany  generations will confront this"
+ "\nproblem before it goes away so don't"
+ "\nhold your breath.",-43},
+
+{"YOU'RE A WINNER- Your mayorial skill"
+ "\nand city planning expertise have"
+ "\nearned you the KEY TO THE CITY. Local"
+ "\nresidents will erect monuments to"
+ "\nyour glory and name their first-born"
+ "\nchildren after you. Why not run for"
+ "\ngovernor?",-100},
+
+{"IMPEACHMENT NOTICE- The entire"
+ "\npopulation of this city has finally"
+ "\nhad enough of your inept planning "
+ "\nand incompetant management. An angry"
+ "\nmob - lead by your mother - has been"
+ "\nspotted in the vicinity of city hall."
+ "\nYou should seriously consider taking"
+ "\nan extended vacation - NOW. (Or read"
+ "\nthe manual and try again).",-200},
+
+{"MONSTER ATTACK- A large reptilian"
+ "\ncreature has been spotted in the"
+ "\nwater. It seems to be attracted to "
+ "\nareas of high pollution. There is a"
+ "\ntrail of destruction wherever it"
+ "\n goes.  As a last resort try calling"
+ "\n(Kanji) "
+ "\nOther than that wait till it leaves"
+ "\nthen rebuild from the rubble.",-21},
+
+{"POLLUTION ALERT- Pollution in your"
+ "\ncity has exceeded the maximum"
+ "\nallowable amounts established by"
+ "\nthe Micropolis pollution agency. You"
+ "\nare running the risk of grave"
+ "\necological consequences. Either"
+ "\nclean up your act or open a gas"
+ "\nmask concession at city hall.",-10},
+
+{"MEGALOPOLIS - Congratulations, you"
+ "\nhave reached the highest category"
+ "\nof urban development, the mega-"
+ "\nlopolis. If you manage to reach"
+ "\nthis level send us email at micropolis@laptop.org"
+ "\nor send us a copy of your city. We "
+ "\nmight do something interesting with"
+ "\nit.",-39},
+
+{"METROPOLIS - Your capital city has"
+ "\nnow achieved the status of metro-"
+ "\npolis. The current population is"
+ "\n100,000. With your planning skills,"
+ "\nyou should consider running for"
+ "\ngovernor, or maybe VLSI design.",-38},
+
+{"CAPITAL- Your current city has"
+ "\nbecome a capital.  The current"
+ "\npopulation here is 50,000. Your"
+ "\npolitical future looks bright.",-37},
+
+{"CITY- Your town has grown into a"
+ "\nfull sized city, with a current"
+ "\npopulation of 10,000. Keep up the"
+ "\ngood work!",-36},
+
+{"TOWN- Congratulations, your village"
+ "\nhas grown to town status. You now"
+ "\nhave 2,000 citizens.",-35},
+
+
+{"Detroit, MI. 1972-"
+ "\nBy 1970, competition from overseas"
+ "\nand other economic factors pushed the"
+ "\nonce automobile capital of the world"
+ "\ninto recession.  Plummeting land"
+ "\nvalues and unemployment then"
+ "\nincreased crime in the inner-city"
+ "\nto chronic levels.  You have 10 years"
+ "\nto reduce crime and rebuild the"
+ "\nindustrial base of the city. ",-6},
+
+{"Rio de Janiero, Brazil 2047 -"
+"\nBy the mid-21st century, the green-"
+"\nhouse effect increased global tem-"
+"\nperatures about 4 degrees F. Polar"
+"\nicecaps melted and raised sea levels"
+"\nworldwide. Coastal areas were"
+"\ndevastated by flood and erosion. You"
+"\nhave 10 years to turn this swamp back"
+"\ninto a city again.",-8},
+
+{"Tokyo, Japan 1957-"
+"\nA large reptilian creature has been"
+"\nspotted heading for Tokyo bay. It"
+"\nseems to be attracted to the heavy"
+"\nlevels of industrial pollution.  Try"
+"\nto control the fires, then rebuild"
+"\nthe industrial center. You have five"
+"\nyears.",-5},
+
+{"Hamburg, Germany 1944-"
+"\nAllied fire-bombing of German cities"
+"\nin WWII caused tremendous damage and"
+"\nloss of life. People living in the"
+"\ninner cities were at greatest risk."
+"\nYou must control the firestorms"
+"\nduring the bombing and then rebuild"
+"\nthe city after the war. You have"
+"\nfive years.",-3},
+
+{"San Francisco, CA. 1906-"
+"\nDamage from the earthquake was minor"
+"\ncompared to that of the ensuing"
+"\nfires, which took days to control."
+"\n1500 people died.  Controlling the"
+"\nfires should be your initial concern."
+"\nThen clear the rubble and start re-"
+"\nbuilding. You have five years.",-2},
+
+{"Dullsville, USA 1900-"
+"\nThings haven't changed much around"
+"\nhere in the last hundred years or"
+"\nso and the residents are beginning"
+"\nto get bored. They think Dullsville"
+"\ncould be the next great city with"
+"\nthe right leader. It is your job to"
+"\nattract new growth and development,"
+"\nturning Dullsville into a"
+"\nMetropolis within 30 years.",-1},
+
+{"Boston, MA. 2010-"
+"\nA major meltdown is about to occur"
+"\nat one of the new downtown nuclear"
+"\nreactors. The area in the vicinity"
+"\nof the reactor will be severely "
+"\ncontaminated by radiation, forcing"
+"\nyou to restructure the city around"
+"\nit. You have 5 years to get the"
+"\nsituation under control.",-7},
+
+{"Bern, Switzerland 1965-"
+"\nThe roads here are becoming more"
+"\ncongested every day, and the"
+"\nresidents are upset. They demand"
+"\nthat you do something about it."
+"\nSome have suggested a mass transit"
+"\nsystem as the answer, but this"
+"\nwould require major rezoning in"
+"\nthe downtown area. You have"
+"\nten years.",-4},
+  {NULL, 0}};

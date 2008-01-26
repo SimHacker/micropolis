@@ -1,0 +1,35 @@
+/* XPM */
+static char *tiles___[] = {
+/* columns rows colors chars-per-pixel */
+"56 24 5 1",
+"  c black",
+". c #5D5D5D5D5D5D",
+"X c gray50",
+"o c gray75",
+"O c gray100",
+/* pixels */
+"oooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
+"o....OOOO....OOOO....OOOO....OOOO....OOOO....OOOO....OO.",
+"o....OOOO....OOOO....OOOO....OOOO....OOOO....OOOO....OO.",
+"oOO..................................................OO.",
+"oOO.                                                oOO.",
+"oOO. O O O O O O O O O O O O O O O O O O O O O O O  o...",
+"oOO.  ............................................O o...",
+"o... O.OXXo ............OXXo ......OXXo ....OXXo .  o...",
+"o...  .OXXo ............OXXo ......OXXo ....OXXo .O o...",
+"o... O.     ............     ......     ....     .  oOO.",
+"o...  ............................................O oOO.",
+"oOO. O.... O O.... O O.... O O.... O O.... O O....  oOO.",
+"oOO.  ............................................O oOO.",
+"oOO. O..OXXo .....OXXo .........OXXo ......OXXo ..  o...",
+"oOO.  ..OXXo .....OXXo .........OXXo ......OXXo ..O o...",
+"o... O..     .....     .........     ......     ..  o...",
+"o...  ............................................O o...",
+"o... O                                              oOO.",
+"o...  O O O O O O O O O O O O O O O O O O O O O O O oOO.",
+"oOO.                                                oOO.",
+"oOO.oooooooooooooooooooooooooooooooooooooooooooooooooOO.",
+"oOO....OOOO....OOOO....OOOO....OOOO....OOOO....OOOO.....",
+"oOO....OOOO....OOOO....OOOO....OOOO....OOOO....OOOO.....",
+"o......................................................."
+};

@@ -1,0 +1,121 @@
+*** ../../tk2.3/main.c	Wed Aug 19 08:10:32 1992
+--- main.c	Tue Oct  6 17:27:56 1992
+***************
+*** 19,24
+  
+  #include "tkConfig.h"
+  #include "tkInt.h"
+  
+  /*
+   * Declarations for library procedures:
+
+--- 19,29 -----
+  
+  #include "tkConfig.h"
+  #include "tkInt.h"
++ #define TK_EXTENDED
++ #ifdef TK_EXTENDED
++ #    include "tclExtend.h"
++      Tcl_Interp *tk_mainInterp;  /* Need to process signals */
++ #endif
+  
+  /*
+   * Declarations for library procedures:
+***************
+*** 30,35
+   * Command used to initialize wish:
+   */
+  
+  char initCmd[] = "source $tk_library/wish.tcl";
+  
+  Tk_Window w;			/* NULL means window has been deleted. */
+
+--- 35,43 -----
+   * Command used to initialize wish:
+   */
+  
++ #ifdef TK_EXTENDED
++ char initCmd[] = "load wishx.tcl";
++ #else
+  char initCmd[] = "source $tk_library/wish.tcl";
+  #endif
+  
+***************
+*** 31,36
+   */
+  
+  char initCmd[] = "source $tk_library/wish.tcl";
+  
+  Tk_Window w;			/* NULL means window has been deleted. */
+  Tk_TimerToken timeToken = 0;
+
+--- 39,45 -----
+  char initCmd[] = "load wishx.tcl";
+  #else
+  char initCmd[] = "source $tk_library/wish.tcl";
++ #endif
+  
+  Tk_Window w;			/* NULL means window has been deleted. */
+  Tk_TimerToken timeToken = 0;
+***************
+*** 219,224
+      int result;
+      Tk_3DBorder border;
+  
+      interp = Tcl_CreateInterp();
+  #ifdef TCL_MEM_DEBUG
+      Tcl_InitMemory(interp);
+
+--- 228,236 -----
+      int result;
+      Tk_3DBorder border;
+  
++ #ifdef TK_EXTENDED
++     tk_mainInterp = interp = Tcl_CreateExtendedInterp();
++ #else
+      interp = Tcl_CreateInterp();
+  #endif
+  #ifdef TCL_MEM_DEBUG
+***************
+*** 220,225
+      Tk_3DBorder border;
+  
+      interp = Tcl_CreateInterp();
+  #ifdef TCL_MEM_DEBUG
+      Tcl_InitMemory(interp);
+  #endif
+
+--- 232,238 -----
+      tk_mainInterp = interp = Tcl_CreateExtendedInterp();
+  #else
+      interp = Tcl_CreateInterp();
++ #endif
+  #ifdef TCL_MEM_DEBUG
+      Tcl_InitMemory(interp);
+  #endif
+***************
+*** 284,289
+      if (geometry != NULL) {
+  	Tcl_SetVar(interp, "geometry", geometry, TCL_GLOBAL_ONLY);
+      }
+      result = Tcl_Eval(interp, initCmd, 0, (char **) NULL);
+      if (result != TCL_OK) {
+  	goto error;
+
+--- 297,312 -----
+      if (geometry != NULL) {
+  	Tcl_SetVar(interp, "geometry", geometry, TCL_GLOBAL_ONLY);
+      }
++ #ifdef TK_EXTENDED
++     tclAppName     = "Wish";
++     tclAppLongname = "Wish - Tk Shell";
++     tclAppVersion  = TK_VERSION;
++     Tcl_ShellEnvInit (interp, TCLSH_ABORT_STARTUP_ERR,
++                       name,
++                       0, NULL,           /* argv var already set  */
++                       fileName == NULL,  /* interactive?          */
++                       NULL);             /* Standard default file */
++ #endif
+      result = Tcl_Eval(interp, initCmd, 0, (char **) NULL);
+      if (result != TCL_OK) {
+  	goto error;

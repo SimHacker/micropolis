@@ -1,0 +1,15 @@
+#------------------------------------------------------------------------------
+# SUN OS newer versions (~4.1, let us know which ones works for you)
+#------------------------------------------------------------------------------
+# $Id: sunos4.1,v 2.3 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+#SYS_DEP_FLAGS=-DTCL_HAVE_SETLINEBUF -DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TM_GMTOFF
+SYS_DEP_FLAGS=-DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TIMEZONE_VAR -I/usr/openwin/include
+LIBS=-lm -lsocket -lnsl
+RANLIB_CMD=echo
+MCS_CMD=true
+SUPPORT_FLAGS=-DTCL_HAS_TM_ZONE
+TCL_TK_LIBS= -lX11 -lm -lsocket -lnsl
+
+TCL_MAN_SEPARATOR=

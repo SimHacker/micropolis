@@ -1,0 +1,661 @@
+
+#@package: TclX-ArrayProcedures for_array_keys
+
+proc for_array_keys {varName arrayName codeFragment} {
+    upvar $varName enumVar $arrayName enumArray
+
+    if ![info exists enumArray] {
+	error "\"$arrayName\" isn't an array"
+    }
+
+    set searchId [array startsearch enumArray]
+    while {[array anymore enumArray $searchId]} {
+	set enumVar [array nextelement enumArray $searchId]
+	uplevel $codeFragment
+    }
+    array donesearch enumArray $searchId
+}
+
+#@package: TclX-assign_fields assign_fields
+
+proc assign_fields {list args} {
+    foreach varName $args {
+        set value [lvarpop list]
+        uplevel "set $varName [list $value]"
+    }
+}
+
+#@package: TclX-developer_utils saveprocs edprocs
+
+proc saveprocs {fileName args} {
+    set fp [open $fileName w]
+    puts $fp "# tcl procs saved on [fmtclock [getclock]]\n"
+    puts $fp [eval "showprocs $args"]
+    close $fp
+}
+
+proc edprocs {args} {
+    global env
+
+    set tmpFilename /tmp/tcldev.[id process]
+
+    set fp [open $tmpFilename w]
+    puts $fp "\n# TEMP EDIT BUFFER -- YOUR CHANGES ARE FOR THIS SESSION ONLY\n"
+    puts $fp [eval "showprocs $args"]
+    close $fp
+
+    if [info exists env(EDITOR)] {
+        set editor $env(EDITOR)
+    } else {
+	set editor vi
+    }
+
+    set startMtime [file mtime $tmpFilename]
+    system "$editor $tmpFilename"
+
+    if {[file mtime $tmpFilename] != $startMtime} {
+	source $tmpFilename
+	echo "Procedures were reloaded."
+    } else {
+	echo "No changes were made."
+    }
+    unlink $tmpFilename
+    return
+}
+
+#@package: TclX-forfile for_file
+
+proc for_file {var filename code} {
+    upvar $var line
+    set fp [open $filename r]
+    while {[gets $fp line] >= 0} {
+        uplevel $code
+    }
+    close $fp
+}
+
+
+#@package: TclX-forrecur for_recursive_glob
+
+proc for_recursive_glob {var globlist code {depth 1}} {
+    upvar $depth $var myVar
+    foreach globpat $globlist {
+        foreach file [glob -nocomplain $globpat] {
+            if [file isdirectory $file] {
+                for_recursive_glob $var $file/* $code [expr {$depth + 1}]
+	    }
+	    set myVar $file
+	    uplevel $depth $code
+        }
+    }
+}
+
+#@package: TclX-globrecur recursive_glob
+
+proc recursive_glob {globlist} {
+    set result ""
+    foreach pattern $globlist {
+        foreach file [glob -nocomplain $pattern] {
+            lappend result $file
+            if [file isdirectory $file] {
+                set result [concat $result [recursive_glob $file/*]]
+            }
+        }
+    }
+    return $result
+}
+
+#@package: TclX-help help helpcd helppwd apropos
+
+
+proc help:flattenPath {pathName} {
+    set newPath {}
+    foreach element [split $pathName /] {
+        if {"$element" == "."} {
+           continue
+        }
+        if {"$element" == ".."} {
+            if {[llength [join $newPath /]] == 0} {
+                error "Help: name goes above subject directory root"}
+            lvarpop newPath [expr [llength $newPath]-1]
+            continue
+        }
+        lappend newPath $element
+    }
+    set newPath [join $newPath /]
+    
+
+    if {("$newPath" == "") && [string match "/*" $pathName]} {
+        set newPath "/"}
+        
+    return $newPath
+}
+
+
+proc help:EvalPath {pathName} {
+    global TCLENV
+
+    if {![string match "/*" $pathName]} {
+        if {"$pathName" == ""} {
+            return $TCLENV(help:curDir)}
+        if {"$TCLENV(help:curDir)" == "/"} {
+            set pathName "/$pathName"
+        } else {
+            set pathName "$TCLENV(help:curDir)/$pathName"
+        }
+    }
+    set pathName [help:flattenPath $pathName]
+    if {[string match "*/" $pathName] && ($pathName != "/")} {
+        set pathName [csubstr $pathName 0 [expr [length $pathName]-1]]}
+
+    return $pathName    
+}
+
+
+proc help:Display {line} {
+    global TCLENV
+    if {$TCLENV(help:lineCnt) >= 23} {
+        set TCLENV(help:lineCnt) 0
+        puts stdout ":" nonewline
+        flush stdout
+        gets stdin response
+        if {![lempty $response]} {
+            return 0}
+    }
+    puts stdout $line
+    incr TCLENV(help:lineCnt)
+}
+
+
+proc help:DisplayFile {filepath} {
+
+    set inFH [open $filepath r]
+    while {[gets $inFH fileBuf] >= 0} {
+        if {![help:Display $fileBuf]} {
+            break}
+    }
+    close $inFH
+
+}    
+
+
+proc help:ListDir {dirPath} {
+    set dirList {}
+    set fileList {}
+    if {[catch {set dirFiles [glob $dirPath/*]}] != 0} {
+        error "No files in subject directory: $dirPath"}
+    foreach fileName $dirFiles {
+        if [file isdirectory $fileName] {
+            lappend dirList "[file tail $fileName]/"
+        } else {
+            lappend fileList [file tail $fileName]
+        }
+    }
+   return [list [lsort $dirList] [lsort $fileList]]
+}
+
+
+proc help:DisplayColumns {nameList} {
+    set count 0
+    set outLine ""
+    foreach name $nameList {
+        if {$count == 0} {
+            append outLine "   "}
+        append outLine $name
+        if {[incr count] < 4} {
+            set padLen [expr 17-[clength $name]]
+            if {$padLen < 3} {
+               set padLen 3}
+            append outLine [replicate " " $padLen]
+        } else {
+           if {![help:Display $outLine]} {
+               return}
+           set outLine ""
+           set count 0
+        }
+    }
+    if {$count != 0} {
+        help:Display $outLine}
+    return
+}
+
+
+
+proc help {{subject {}}} {
+    global TCLENV
+
+    set TCLENV(help:lineCnt) 0
+
+
+    if {($subject == "help") || ($subject == "?")} {
+        help:DisplayFile "$TCLENV(help:root)/help"
+        return
+    }
+
+    set request [help:EvalPath $subject]
+    set requestPath "$TCLENV(help:root)$request"
+
+    if {![file exists $requestPath]} {
+        error "Help:\"$request\" does not exist"}
+    
+    if [file isdirectory $requestPath] {
+        set dirList [help:ListDir $requestPath]
+        set subList  [lindex $dirList 0]
+        set fileList [lindex $dirList 1]
+        if {[llength $subList] != 0} {
+            help:Display "\nSubjects available in $request:"
+            help:DisplayColumns $subList
+        }
+        if {[llength $fileList] != 0} {
+            help:Display "\nHelp files available in $request:"
+            help:DisplayColumns $fileList
+        }
+    } else {
+        help:DisplayFile $requestPath
+    }
+    return
+}
+
+
+
+proc helpcd {{dir /}} {
+    global TCLENV
+
+    set request [help:EvalPath $dir]
+    set requestPath "$TCLENV(help:root)$request"
+
+    if {![file exists $requestPath]} {
+        error "Helpcd: \"$request\" does not exist"}
+    
+    if {![file isdirectory $requestPath]} {
+        error "Helpcd: \"$request\" is not a directory"}
+
+    set TCLENV(help:curDir) $request
+    return    
+}
+
+
+proc helppwd {} {
+        global TCLENV
+        echo "Current help subject directory: $TCLENV(help:curDir)"
+}
+
+
+proc apropos {name} {
+    global TCLENV
+
+    set TCLENV(help:lineCnt) 0
+
+    set aproposCT [scancontext create]
+    scanmatch -nocase $aproposCT $name {
+        set path [lindex $matchInfo(line) 0]
+        set desc [lrange $matchInfo(line) 1 end]
+        if {![help:Display [format "%s - %s" $path $desc]]} {
+            return}
+    }
+    foreach brief [glob -nocomplain $TCLENV(help:root)/*.brf] {
+        set briefFH [open $brief]
+        scanfile $aproposCT $briefFH
+        close $briefFH
+    }
+    scancontext delete $aproposCT
+}
+
+global TCLENV TCLPATH
+
+set TCLENV(help:root) [searchpath $TCLPATH help]
+set TCLENV(help:curDir) "/"
+set TCLENV(help:outBuf) {}
+
+#@package: TclX-packages packages autoprocs
+
+proc packages {{option {}}} {
+    global TCLENV
+    set packList {}
+    foreach key [array names TCLENV] {
+        if {[string match "PKG:*" $key]} {
+            lappend packList [string range $key 4 end]
+        }
+    }
+    if [lempty $option] {
+        return $packList
+    } else {
+        if {$option != "-location"} {
+            error "Unknow option \"$option\", expected \"-location\""
+        }
+        set locList {}
+        foreach pack $packList {
+            set fileId [lindex $TCLENV(PKG:$pack) 0]
+            
+            lappend locList [list $pack [concat $TCLENV($fileId) \
+                                             [lrange $TCLENV(PKG:$pack) 1 2]]]
+        }
+        return $locList
+    }
+}
+
+proc autoprocs {} {
+    global TCLENV
+    set procList {}
+    foreach key [array names TCLENV] {
+        if {[string match "PROC:*" $key]} {
+            lappend procList [string range $key 5 end]
+        }
+    }
+    return $procList
+}
+
+#@package: TclX-directory_stack pushd popd dirs
+
+global TCLENV(dirPushList)
+
+set TCLENV(dirPushList) ""
+
+proc pushd {args} {
+    global TCLENV
+
+    if {[llength $args] > 1} {
+        error "bad # args: pushd [dir_to_cd_to]"
+    }
+    set TCLENV(dirPushList) [linsert $TCLENV(dirPushList) 0 [pwd]]
+
+    if {[llength $args] != 0} {
+        cd [glob $args]
+    }
+}
+
+proc popd {} {
+    global TCLENV
+
+    if [llength $TCLENV(dirPushList)] {
+        cd [lvarpop TCLENV(dirPushList)]
+        pwd
+    } else {
+        error "directory stack empty"
+    }
+}
+
+proc dirs {} { 
+    global TCLENV
+    echo [pwd] $TCLENV(dirPushList)
+}
+
+#@package: TclX-set_functions union intersect intersect3 lrmdups
+
+proc union {lista listb} {
+    set full_list [lsort [concat $lista $listb]]
+    set check_element [lindex $full_list 0]
+    set outlist $check_element
+    foreach element [lrange $full_list 1 end] {
+	if {$check_element == $element} continue
+	lappend outlist $element
+	set check_element $element
+    }
+    return $outlist
+}
+
+proc lrmdups {list} {
+    set list [lsort $list]
+    set result [lvarpop list]
+    lappend last $result
+    foreach element $list {
+	if {$last != $element} {
+	    lappend result $element
+	    set last $element
+	}
+    }
+    return $result
+}
+
+
+proc intersect3 {list1 list2} {
+    set list1Result ""
+    set list2Result ""
+    set intersectList ""
+
+    set list1 [lrmdups $list1]
+    set list2 [lrmdups $list2]
+
+    while {1} {
+        if [lempty $list1] {
+            if ![lempty $list2] {
+                set list2Result [concat $list2Result $list2]
+            }
+            break
+        }
+        if [lempty $list2] {
+	    set list1Result [concat $list1Result $list1]
+            break
+        }
+        set compareResult [string compare [lindex $list1 0] [lindex $list2 0]]
+
+        if {$compareResult < 0} {
+            lappend list1Result [lvarpop list1]
+            continue
+        }
+        if {$compareResult > 0} {
+            lappend list2Result [lvarpop list2]
+            continue
+        }
+        lappend intersectList [lvarpop list1]
+        lvarpop list2
+    }
+    return [list $list1Result $intersectList $list2Result]
+}
+
+proc intersect {list1 list2} {
+    set intersectList ""
+
+    set list1 [lsort $list1]
+    set list2 [lsort $list2]
+
+    while {1} {
+        if {[lempty $list1] || [lempty $list2]} break
+
+        set compareResult [string compare [lindex $list1 0] [lindex $list2 0]]
+
+        if {$compareResult < 0} {
+            lvarpop list1
+            continue
+        }
+
+        if {$compareResult > 0} {
+            lvarpop list2
+            continue
+        }
+
+        lappend intersectList [lvarpop list1]
+        lvarpop list2
+    }
+    return $intersectList
+}
+
+
+
+#@package: TclX-show_procedures showproc showprocs
+
+proc showproc {procname} {
+    if [lempty [info procs $procname]] {demand_load $procname}
+	set arglist [info args $procname]
+	set nargs {}
+	while {[llength $arglist] > 0} {
+	    set varg [lvarpop arglist 0]
+	    if [info default $procname $varg defarg] {
+		lappend nargs [list $varg $defarg]
+	    } else {
+		lappend nargs $varg
+	    }
+    }
+    format "proc %s \{%s\} \{%s\}\n" $procname $nargs [info body $procname]
+}
+
+proc showprocs {args} {
+    if [lempty $args] { set args [info procs] }
+    set out ""
+
+    foreach i $args {
+	foreach j $i { append out [showproc $j] "\n"}
+    }
+    return $out
+}
+
+
+#@package: TclX-stringfile_functions read_file write_file
+
+proc read_file {fileName {numBytes {}}} {
+    set fp [open $fileName]
+    if {$numBytes != ""} {
+        set result [read $fp $numBytes]
+    } else {
+        set result [read $fp]
+    }
+    close $fp
+    return $result
+} 
+
+proc write_file {fileName args} {
+    set fp [open $fileName w]
+    foreach string $args {
+        puts $fp $string
+    }
+    close $fp
+}
+
+
+#@package: TclX-Compatibility execvp
+
+proc execvp {progname args} {
+    execl $progname $args
+}
+
+#@package: TclX-convertlib convert_lib
+
+proc convert_lib {tclIndex packageLib {ignore {}}} {
+    if {[file tail $tclIndex] != "tclIndex"} {
+        error "Tail file name numt be `tclIndex': $tclIndex"}
+    set srcDir [file dirname $tclIndex]
+
+    if {[file extension $packageLib] != ".tlib"} {
+        append packageLib ".tlib"}
+
+
+    set tclIndexFH [open $tclIndex r]
+    while {[gets $tclIndexFH line] >= 0} {
+        if {([cindex $line 0] == "#") || ([llength $line] != 2)} {
+            continue}
+        if {[lsearch $ignore [lindex $line 1]] >= 0} {
+            continue}
+        lappend entryTable([lindex $line 1]) [lindex $line 0]
+    }
+    close $tclIndexFH
+
+    set libFH [open $packageLib w]
+    foreach srcFile [array names entryTable] {
+        set srcFH [open $srcDir/$srcFile r]
+        puts $libFH "#@package: $srcFile $entryTable($srcFile)\n"
+        copyfile $srcFH $libFH
+        close $srcFH
+    }
+    close $libFH
+    buildpackageindex $packageLib
+}
+
+#@package: TclX-profrep profrep
+
+proc profrep:summarize {profDataVar stackDepth sumProfDataVar} {
+    upvar $profDataVar profData $sumProfDataVar sumProfData
+
+    if {(![info exists profData]) || ([catch {array size profData}] != 0)} {
+        error "`profDataVar' must be the name of an array returned by the `profile off' command"
+    }
+    set maxNameLen 0
+    foreach procStack [array names profData] {
+        if {[llength $procStack] < $stackDepth} {
+            set sigProcStack $procStack
+        } else {
+            set sigProcStack [lrange $procStack 0 [expr {$stackDepth - 1}]]
+        }
+        set maxNameLen [max $maxNameLen [clength $sigProcStack]]
+        if [info exists sumProfData($sigProcStack)] {
+            set cur $sumProfData($sigProcStack)
+            set add $profData($procStack)
+            set     new [expr [lindex $cur 0]+[lindex $add 0]]
+            lappend new [expr [lindex $cur 1]+[lindex $add 1]]
+            lappend new [expr [lindex $cur 2]+[lindex $add 2]]
+            set $sumProfData($sigProcStack) $new
+        } else {
+            set sumProfData($sigProcStack) $profData($procStack)
+        }
+    }
+    return $maxNameLen
+}
+
+proc profrep:sort {sumProfDataVar sortKey} {
+    upvar $sumProfDataVar sumProfData
+
+    case $sortKey {
+        {calls} {set keyIndex 0}
+        {real}  {set keyIndex 1}
+        {cpu}   {set keyIndex 2}
+        default {
+            error "Expected a sort of: `calls',  `cpu' or ` real'"}
+    }
+
+
+    foreach procStack [array names sumProfData] {
+        set key [format "%016d" [lindex $sumProfData($procStack) $keyIndex]]
+        lappend keyProcList [list $key $procStack]
+    }
+    set keyProcList [lsort $keyProcList]
+
+
+    for {set idx [expr [llength $keyProcList]-1]} {$idx >= 0} {incr idx -1} {
+        lappend sortedProcList [lindex [lindex $keyProcList $idx] 1]
+    }
+    return $sortedProcList
+}
+
+
+proc profrep:print {sumProfDataVar sortedProcList maxNameLen outFile
+                    userTitle} {
+    upvar $sumProfDataVar sumProfData
+    
+    if {$outFile == ""} {
+        set outFH stdout
+    } else {
+        set outFH [open $outFile w]
+    }
+
+
+    set stackTitle "Procedure Call Stack"
+    set maxNameLen [max $maxNameLen [clength $stackTitle]]
+    set hdr [format "%-${maxNameLen}s %10s %10s %10s" $stackTitle \
+                    "Calls" "Real Time" "CPU Time"]
+    if {$userTitle != ""} {
+        puts $outFH [replicate - [clength $hdr]]
+        puts $outFH $userTitle
+    }
+    puts $outFH [replicate - [clength $hdr]]
+    puts $outFH $hdr
+    puts $outFH [replicate - [clength $hdr]]
+
+
+    foreach procStack $sortedProcList {
+        set data $sumProfData($procStack)
+        puts $outFH [format "%-${maxNameLen}s %10d %10d %10d" $procStack \
+                            [lindex $data 0] [lindex $data 1] [lindex $data 2]]
+    }
+    if {$outFile != ""} {
+        close $outFH
+    }
+}
+
+
+proc profrep {profDataVar sortKey stackDepth {outFile {}} {userTitle {}}} {
+    upvar $profDataVar profData
+
+    set maxNameLen [profrep:summarize profData $stackDepth sumProfData]
+    set sortedProcList [profrep:sort sumProfData $sortKey]
+    profrep:print sumProfData $sortedProcList $maxNameLen $outFile $userTitle
+
+}

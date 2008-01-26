@@ -1,0 +1,14 @@
+#------------------------------------------------------------------------------
+# HPUX - Hewlett-Packard HP/UX
+#------------------------------------------------------------------------------
+# $Id: hpux,v 2.3 1992/11/08 17:24:26 markd Exp $
+#------------------------------------------------------------------------------
+#
+SYS_DEP_FLAGS= -DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TIMEZONE_VAR
+LIBS=-lBSD -lPW -lm
+RANLIB_CMD=true
+MCS_CMD=true
+SUPPORT_FLAGS=-DTCL_HAS_TM_ZONE
+TCL_TK_LIBS= -L/usr/lib/X11R5 -lX11 -lBSD -lPW -lm
+
+TCL_MAN_SEPARATOR=

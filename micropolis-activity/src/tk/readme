@@ -1,0 +1,213 @@
+The Tk Toolkit, Version 2.3
+
+by John Ousterhout
+University of California at Berkeley
+
+1. Introduction
+---------------
+
+This directory contains the sources and documentation for Tk, which
+is an X11 toolkit that provides the Motif look and feel and is
+implemented using the Tcl command language.
+
+For an introduction to Tcl and Tk you may wish to read two papers:
+``Tcl:  An Embeddable Command Language'', in the Proceedings of the
+1990 Winter USENIX Conference, and ``An X11 Toolkit Based on the Tcl
+Language'', in the Proceedings of the 1991 Winter USENIX Conference.
+A copy of the first paper is present in Postscript form in the file
+"tcl/usenix.ps";  Postscript for the second paper is in "doc/usenix.ps".
+Both Tcl and Tk have evolved quite a bit since these papers were
+written so the papers are no longer complete or correct, but they will
+give you an introduction to the systems.
+
+The following things are present in this directory and its subdirectories:
+
+    1. Tk, a toolkit for X11 windowing applications.
+    2. Tcl, an embeddable command language on which Tk is based.
+    3. Wish, a simple windowing shell that uses Tk and Tcl.
+    4. A collection of demonstration scripts to illustrate the use
+       of various features of Tk.
+
+The enclosed code is known to run on most versions of SunOS and Ultrix
+in combination with the X11R4 and X11R5 window servers from MIT.  It
+should also run with few or no changes on H-P and IBM workstations.
+
+2. What's New In This Release
+-----------------------------
+
+Tk 2.2 is a major new release with a number of new features relative
+to the 2.1 release.  Here is a summary of some of the most significant
+improvements:
+
+- There is now a text widget.  It will display multiple lines of text
+  and allows the text to be edited (but the set of bindings for
+  editing isn't very rich yet).  It also includes a tagging mechanism
+  that allows you to change the fonts, colors, etc. on a character-
+  by-character basis, and you can associate bindings with tags to
+  implement hypertext-like features.  It handles large texts
+  efficiently.
+
+- Canvases have been improved in many ways, including new item types
+  (arcs, bitmaps, and subwindows), Bezier spline support for lines
+  and polygons, "coords" and "bbox" widget commands, and many other
+  improvements and bug fixes.
+
+- There is a new "grab" command that can be used to create modal dialog
+  boxes.
+
+- There is a new "tkwait" command for waiting for particular events to
+  occur (such as modal dialog box to complete its task).
+
+- The menu bindings have been completely reworked to have better Motif
+  compliance, such as keyboard traversal.
+
+- Individual menu entries can now have their own colors and fonts.
+
+- Most widgets (e.g. buttons, entries, text) now have a "-state" option
+  that can be set to "disabled" to make the widget insensitive.
+
+- A new "-disabledForeground" option allows you to request that disabled
+  buttons and menu entries be displayed in a dimmer color rather than with
+  a stippled version of the original color.
+
+- Entries and messages can now be tied to a variable so that either is
+  updated if the other changes.
+
+A good way to try out the new features is to run the "widget" demo;
+there are a number of new demonstrations to illustrate the new features.
+This release also contains many bug fixes.  For a complete description
+of the changes in this release, see the file "changes".  As far as I
+know there should not be any compatibility problems with respect to the
+2.1 release.
+
+3. Documentation
+----------------
+
+Manual entries for Tk are in the "doc" subdirectory as a set of files
+with ".man" extensions.  Man pages whose names start with capital letters
+are for the procedures in Tk's C library.  All other man pages document Tcl
+commands provided by Tk.  To print any of the man pages, cd to the "doc"
+directory and invoke your favorite variant of troff using the normal
+-man macros, for example
+
+		ditroff -man <file>
+
+where <file> is the name of the man page you'd like to print.  If you'd
+like a complete set of hardcopy manual entries, send me a message with
+your street address.
+
+Manual entries for Tcl are available in the subdirectory "tcl/doc";
+see the README file in the "tcl" directory for more information.
+
+Unfortunately, there doesn't yet exist a tutorial-style introduction
+to the facilities of Tcl and Tk.  The papers give a general introduction,
+but it may be difficult to make the transition from the papers to the
+manual entries.  If you are familiar with the Xt toolkit then the Tk
+facilities will probably be easy to pick up from the manual entries.
+If you have no experience with X or Xt, you may wish to wait another
+6-12 months to use Tk, until a more gentle introduction is available.
+
+4. Compiling Tk
+---------------
+
+Before attempting to compile Tk, personalize Makefile by following the
+directions at the beginning of the file.  You should also configure
+Tcl by following the directions in the file "tcl/README".  Then type
+"make" in the top-level directory (the one that contains this file).
+This will compile the Tk library and generate a simple windowing shell
+called "wish".  It will also compile the Tcl library, which is in the
+"tcl" subdirectory.
+
+5. Installing Scripts
+---------------------
+
+Tk depends on a library of scripts that establish default behaviors
+for Tk widgets and do many other things.  Tk normally expects the
+scripts to be in /usr/local/lib/tk.  Create this directory and copy
+everything in the "library" subdirectory to it, including both files
+and subdirectories.  Or, if you don't want to create a subdirectory of
+/usr/local/lib (or if you can't), you can either make a symbolic link
+from there to the library subdirectory or you can add a "-DTK_LIBRARY"
+switch to CFLAGS in Makefile;  this will allow you to put the script
+library anywhere you like.
+
+I also recommend installing the wish binary in /usr/local.  The demo
+scripts all work best when it is installed there.
+
+6. Getting Started
+------------------
+
+Once wish is compiled you can use it to play around with the Tk
+facilities.  If you run wish with no arguments, it will open a small
+window on the screen and read Tcl commands from standard input.
+Or, you can play with some of the pre-canned scripts in the subdirectory
+scripts/demos.  See the README file in the directory for a description
+of what's available.  The file scripts/demos/widget is a script that
+you can use to invoke many individual demostrations of Tk's facilities. 
+
+If you want to start typing Tcl/Tk commands to wish, I'd suggest
+starting with the "bind" command.  Then learn about a widget-creation
+command like "button", and also learn about the "pack" and "place"
+commands for geometry management.  Note:  when you create a widget,
+it won't appear on the screen until you tell a geometry manager about
+it.  The only geometry managers at present are the packer and the placer.
+If you don't already know Tcl, read the Tcl paper and the Tcl.man manual
+entry in the tcl subdirectory.
+
+The easiest way to learn about writing new widgets is probably to look
+at existing widget implementations.  The demos directory contains an
+example of a trivial widget, which you might find useful as a starting
+point for writing new widgets.  You might also take a look at main.c,
+the main program for wish, to see how to write a main program that uses
+the facilities of Tk and Tcl.
+
+7. Newsgroup
+------------
+
+There is a network news group "comp.lang.tcl" intended for the exchange
+of information about Tcl, Tk, and related applications.  Feel free to use
+this newsgroup both for general information questions and for bug reports.
+I read the newsgroup and will attempt to fix bugs and problems reported
+to it.
+
+8. Known Problems
+-----------------
+
+There are still many imperfections with the system.  Below is a list
+of some of the more serious omissions and bugs:
+
+    1. The widgets don't look very good on monochrome displays right now,
+    because I haven't had a chance to figure out how to do the 3-D
+    effects right without color.  The widgets should look pretty good in
+    color.  The widgets aren't fully Motif-compliant yet. In particular,
+    there is no keyboard navigation yet.  The widgets will eventually
+    become fully Motif-compatible (assuming I can figure out how Motif
+    widgets are supposed to look and feel).
+
+    2. Tk doesn't work very well with virtual-root window managers such
+    as tvtwm.
+
+The file ToDo contains a list of various smaller bugs and mis-features
+that haven't been fixed yet.
+    
+9. Feedback Wanted
+------------------
+
+I'm very interested in getting feedback from you both about bugs and about
+overall design issues.  Send your comments to "ouster@sprite.berkeley.edu".
+I'll do my best to fix show-stopping bugs quickly, but most other things
+may not get fast turnaround, since I already have a zillion high-priority
+things to fix or implement.  Before submitting requests for new features
+you may wish to check the file ToDo, which has a list of things I already
+know about and plan to implement soon.
+
+7. The Future
+-------------
+
+Tk is still young.  I expect it to undergo substantial changes as I learn
+more about its strengths and weaknesses.  Some of the changes will not be
+backward compatible:  at this point I think it's more important to fix
+problems and improve Tk's structure than to maintain compatibility.  At
+some point in the next year or so there will be a new release with major
+incompatibilities.  My plan is to save up as many as possible of the
+incompatible changes that are needed and do them all at once.

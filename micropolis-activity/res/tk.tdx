@@ -1,0 +1,6 @@
+button.tcl 66 2232 tk_butEnter tk_butLeave tk_butDown tk_butUp
+listbox.tcl 2345 1170 tk_listboxSingleSelect
+tkerror.tcl 3547 174 tkerror
+text.tcl 3813 3124 tk_textSelectTo tk_textBackspace tk_textIndexCloser tk_textResetAnchor
+menu.tcl 7123 8987 tk_menus tk_bindForTraversal tk_mbPost tk_mbUnpost tk_traverseToMenu tk_traverseWithinMenu tk_getMenuButtons tk_nextMenu tk_nextMenuEntry tk_invokeMenu tk_firstMenu
+entry.tcl 16184 1762 tk_entryBackspace tk_entryBackword tk_entrySeeCaret

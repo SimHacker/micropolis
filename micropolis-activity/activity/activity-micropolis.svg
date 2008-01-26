@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   enable-background="new 0 0 55 55"
+   height="55px"
+   version="1.1"
+   viewBox="0 0 55 55"
+   width="55px"
+   x="0px"
+   xml:space="preserve"
+   y="0px"
+   id="svg2172"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="/d1/gnu/olpc"
+   sodipodi:docname="activity-micropolis2.svg"><metadata
+     id="metadata2190"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs2188" /><sodipodi:namedview
+     inkscape:window-height="627"
+     inkscape:window-width="1227"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="7.4"
+     inkscape:cx="30.202703"
+     inkscape:cy="25.885243"
+     inkscape:window-x="0"
+     inkscape:window-y="520"
+     inkscape:current-layer="svg2172" /><g
+     display="block"
+     id="activity-micropolis">
+	<g
+   display="inline"
+   id="g2175">
+		
+		
+		<path
+   transform="translate(8.7837833,-0.1351351)"
+   style="fill:#ffffff;stroke:#010101;stroke-width:3.5"
+   d="M 26.883676,22.084 L 18.883676,36.185811 L 10.883676,22.084 L 10.883676,51 L 26.883676,51 L 26.883676,22.084 z "
+   id="polygon2181"
+   sodipodi:nodetypes="cccccc" />
+		
+		<polygon
+   points="52.625,20 43.875,12.084 43.875,51 52.625,51 52.625,20 "
+   id="polygon2185"
+   transform="matrix(-0.9385702,0,0,1.1643121,93.536013,-8.4935442)"
+   style="fill:#ffffff;stroke:#010101;stroke-width:3.5" />
+	<polygon
+   style="fill:#ffffff;stroke:#010101;stroke-width:3.5"
+   transform="matrix(0.9740285,0,0,1.1643121,-39.692821,-8.4935442)"
+   id="polygon2270"
+   points="52.625,20 43.875,12.084 43.875,51 52.625,51 52.625,20 " /></g>
+</g></svg>

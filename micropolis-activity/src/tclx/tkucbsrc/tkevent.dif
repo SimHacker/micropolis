@@ -1,0 +1,57 @@
+*** ../../tk2.3/tkEvent.c	Fri Aug 21 16:16:16 1992
+--- tkEvent.c	Tue Oct  6 17:28:21 1992
+***************
+*** 23,28
+  #include "tkInt.h"
+  #include <errno.h>
+  #include <signal.h>
+  
+  /*
+   * For each timer callback that's pending, there is one record
+
+--- 23,29 -----
+  #include "tkInt.h"
+  #include <errno.h>
+  #include <signal.h>
++ extern Tcl_Interp *tk_mainInterp;
+  
+  /*
+   * For each timer callback that's pending, there is one record
+***************
+*** 1321,1326
+  	    memcpy((VOID *) ready, (VOID *) masks, 3*MASK_SIZE*sizeof(int));
+  	    timeout.tv_sec = timeout.tv_usec = 0;
+  	    do {
+  		numFound = select(numFds, (SELECT_MASK *) readPtr,
+  			(SELECT_MASK *) writePtr, (SELECT_MASK *) exceptPtr,
+  		    &timeout);
+
+--- 1322,1330 -----
+  	    memcpy((VOID *) ready, (VOID *) masks, 3*MASK_SIZE*sizeof(int));
+  	    timeout.tv_sec = timeout.tv_usec = 0;
+  	    do {
++ 	if (Tcl_CheckForSignal (tk_mainInterp, TCL_OK) == TCL_ERROR)
++ 	    TkBindError(tk_mainInterp);
++ 
+  		numFound = select(numFds, (SELECT_MASK *) readPtr,
+  			(SELECT_MASK *) writePtr, (SELECT_MASK *) exceptPtr,
+  		    &timeout);
+***************
+*** 1384,1389
+      }
+      memcpy((VOID *) ready, (VOID *) masks, 3*MASK_SIZE*sizeof(int));
+      do {
+  	numFound = select(numFds, (SELECT_MASK *) readPtr,
+  		(SELECT_MASK *) writePtr, (SELECT_MASK *) exceptPtr,
+  		timeoutPtr);
+
+--- 1388,1396 -----
+      }
+      memcpy((VOID *) ready, (VOID *) masks, 3*MASK_SIZE*sizeof(int));
+      do {
++ 	if (Tcl_CheckForSignal (tk_mainInterp, TCL_OK) == TCL_ERROR)
++ 	    TkBindError(tk_mainInterp);
++ 
+  	numFound = select(numFds, (SELECT_MASK *) readPtr,
+  		(SELECT_MASK *) writePtr, (SELECT_MASK *) exceptPtr,
+  		timeoutPtr);

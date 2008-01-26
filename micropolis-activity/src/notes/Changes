@@ -1,0 +1,102 @@
+* xpm
+** Makefile
+  delete -DNEED_STRDUP
+  change ranlib to echo
+** hashtab.c
+  Used aho-sethi-ullman hash function instead of mock lisp (ick)
+
+* tcl
+** Makefile
+  CC=cc
+  CFLAGS -O
+  deleted COMPAT_OBJS from OBJS
+** config
+  set libc="/usr/lib/libc.a"
+  made it always mv Makefile Makefile.bak
+** tclVar.c
+  worked around Tcl_GetVar optimizer bug
+
+* tk
+** Makefile
+  CC=cc
+  CFLAGS -O
+  # ranlib
+** tkConfig.h
+  ifdef around open()
+** tkWm.c
+  "wm front window" raises window to front
+** tkWmProtocol.c
+  53: warning: text following #endif violates ANSI standard
+** main.c
+  accom: Warning 100: main.c, line 321: statement not reached
+** tkTCP.c tkTCP.h
+  integrated "tcp" command
+  updated: tkWindow.c tk.h
+** tkEntry.c
+  bug when changing entry's variable value to shorted than selected string,
+  not clearing selection properly, fixed EntrySetValue from:
+    entryPtr->selectFirst = -1;
+  to:
+    entryPtr->selectFirst = entryPtr->selectLast = -1;
+** tkEvent.c
+  added "focus -query <windowname>" argument
+  added IdleHandlerPool because it was calling malloc alot
+** tkCanvas.c
+  fixed bug in tk_CanvasCmd with multiple displays of different res,
+  by changing tkwin to new:
+    canvasPtr->pixelsPerMM = WidthOfScreen(Tk_Screen(new));
+    canvasPtr->pixelsPerMM /= WidthMMOfScreen(Tk_Screen(new));
+** tkGrab.c
+  added "grab -off <window>" argument to specify which server to ungrab
+** tkSelect.c
+  added "selection -window <windowname>"
+** tk_TextSelectTo was being called with one arg instead of x y in text.tcl
+  made default second arg that does the right thing
+** tkCmds.c
+  tk_WinfoCmd added "server" option that returns DisplayName w/out screen
+** tkColor.c
+  added Tk_DefaultColormap, replacing calls to DefaultColormapOfScreen. 
+
+* tclX
+** Config.mk
+  TCL_CONFIG_FILE=sgi
+  OPTIMIZE_FLAG=-O
+  CC=cc
+  XPM_LIBS= -L$(XPM_DIR) -L../$(XPM_DIR) -lXpm
+** src/tclXgetdate.y
+  added declarations:
+	static time_t timeconv(int hh, int mm, int ss, int mer);
+	static time_t daylcorr(time_t future, time_t now);
+	static lookup(char *id);
+** tksrc/Makefile
+  Moved TCL_TK_LIBS to end:
+	$(CC) $(CFLAGS) ../tkucbsrc/main.o ../libtk.a ../libtcl.a \
+             $(XLDFLAGS) $(XPM_LIBS) $(TCL_TK_LIBS) -o ../wish
+
+
+* X
+** Makefile
+  XHOME = /usr
+  CC = cc $(CPPFLAGS) $(CFLAGS)
+  OPTFLAGS = -O
+  #LDFLAGS = -Bstatic
+  #	$(ELMHOME)/lib/elm.a
+  -lm
+** Headers/Sim.h
+  #ifdef sun around #include <sys/vadvise.h>
+  #ifdef ELM around #include "elm.h"
+  added short YourStupid;
+** sim.c
+  #ifdef ELM around vars and in sim_exit lice_init sim_update
+  factored out env_init and called in main
+** w_tk.c
+  static int SimTileViewCmd
+  static int SimGraphViewCmd
+** w_stubs.c
+  deleted CdestX CdestY YourStupid
+** w_fileio.c
+  deleted InitSimLoad roadPercent policePercent firePercent
+
+* Resources
+** tclIndex
+  prune files, make index

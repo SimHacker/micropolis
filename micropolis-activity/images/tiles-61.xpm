@@ -1,0 +1,21 @@
+/* XPM */
+static char *tiles___[] = {
+/* columns rows colors chars-per-pixel */
+"1 14 1 1",
+"  c #0D080C9F0CAE",
+/* pixels */
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" ",
+" "
+};

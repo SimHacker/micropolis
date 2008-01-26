@@ -1,0 +1,53 @@
+This directory contains a collection of programs to demonstrate
+the features of the Tk toolkit.  The programs are all scripts for
+"wish", a windowing shell.  If wish has been installed in /usr/local
+then you can invoke any of the programs in this directory just
+by typing its file name to your command shell.  Otherwise invoke
+wish on the file using the "-f" switch to wish, e.g. "wish -f hello".
+The rest of this file contains a brief description of each program.
+Files with names ending in ".tcl" are procedure packages used by one
+or more of the demo programs;  they can't be used as programs by
+themselves so they aren't described below.
+
+hello -		Creates a single button;  if you click on it, a message
+		is typed and the application terminates.
+
+widget -	Contains a collection of demonstrations of the widgets
+		currently available in the Tk library.  Most of the .tcl
+		files are scripts for individual demos available through
+		the "widget" program.
+
+ixset -		A simple Tk-based wrapper for the "xset" program, which
+		allows you to interactively query and set various X options
+		such as mouse acceleration and bell volume.  Thanks to
+		Pierre David for contributing this example.
+
+rolodex -	A mock-up of a simple rolodex application.  It has much of
+		the user interface for such an application but no back-end
+		database.  This program was written in response to Tom
+		LaStrange's toolkit benchmark challenge.
+
+timer -		Displays a seconds timer with start and stop buttons.
+		Control-c and control-q cause it to exit.
+
+browse -	A simple directory browser.  Invoke it with and argument
+		giving the name of the directory you'd like to browse.
+		Double-click on files or subdirectories to browse them.
+		Control-c and control-q cause the program to exit.
+
+dialog -	Displays a simple dialog.  Click on any button and the
+		application exits.
+
+size -		Takes three arguments:  the name of an application, the
+		name of a widget in that application, and the name of an
+		integer-valued option for that widget.  Allows you to
+		interactively resize the given option.  For example,
+		start up the dialog demo, then type
+		"size dialog .bot.middle -pady" for an example.
+
+color -		Similar to "size", but modifies a color option.  Try
+		"color dialog .bot.middle -bg" for an example.
+
+tkSquare.c -	A very simple widget to provide an example of how to
+		implement a new widget.  When building a new widget you
+		may find it useful to start from this code.

@@ -1,0 +1,7 @@
+[Activity]
+name = Micropolis
+activity_version = 7
+icon = activity-micropolis
+service_name = org.laptop.Micropolis
+class = micropolisactivity.MicropolisActivity
+show_launcher = yes
