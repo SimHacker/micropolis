@@ -1,0 +1,39 @@
+/* XPM */
+static char *noname[] = {
+/* width height ncolors chars_per_pixel */
+"69 26 6 1",
+/* colors */
+"` c #000000",
+"a c #3F3F3F",
+"b c #727272 m #ffffff",
+"c c #FFFF00",
+"d c #FFBB00",
+"e c #DFDFDF",
+/* pixels */
+"`````````````````````````````````````````````````````````````````````",
+"``eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee``",
+"`e`eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`b`",
+"`ee`eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`bb`",
+"`eee`````````````````````````````````````````````````````````````bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`aaacddaaaacdddaaaacddaaaaaacdddaaacddddddddaaaacddddaaaaaaa`bbb`",
+"`eee`aaaacdaaacdaacdaacdacdaaaaaacddaaacdacdaacddaacdaacdaaaaaaa`bbb`",
+"`eee`aaaacdaaacdaacdacdaaacdaaaaaacddacdaacdaaacdaacdaacdaaaaaaa`bbb`",
+"`eee`aaaacdaaaaaaacdacdaaacdaaaaaaacdddaaacdaaacdaacddaaaaaaaaaa`bbb`",
+"`eee`aaaacdaaaaaaacdacdaaacdaaaaaaacddaaaacdaacddaaacddaaaaaaaaa`bbb`",
+"`eee`aaaacdaaaaaacdaacdaaacdaaaaaaaacdaaaacdddddaaaaacddaaaaaaaa`bbb`",
+"`eee`aaaacdaaaaaacdaacdaaacdaaaaaaaacdaaaacdcddaaaaaaacddaaaaaaa`bbb`",
+"`eee`aaaacdaaaaacdaaacdaaacdaaaaaaaacdaaaacdacddaaacdaacdaaaaaaa`bbb`",
+"`eee`aaaacdaaaacdaacdacdacdaaaaaaaaacdaaaacdaacddaacdaacdaaaaaaa`bbb`",
+"`eee`aaacdddaacdddddaaacddaaaaaaaaacdddaacdddaacdddcddddaaacdaaa`bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`bbb`",
+"`eee`````````````````````````````````````````````````````````````bbb`",
+"`ee`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`bb`",
+"`e`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`b`",
+"``bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb``",
+"`````````````````````````````````````````````````````````````````````"
+};

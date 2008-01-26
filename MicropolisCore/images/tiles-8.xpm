@@ -1,0 +1,38 @@
+/* XPM */
+static char *tiles__[] = {
+/* columns rows colors chars-per-pixel */
+"69 26 6 1",
+"  c black",
+". c #3F3F3F3F3F3F",
+"X c #727272727272",
+"o c #FFFFBBBB0000",
+"O c yellow",
+"+ c #DFDFDFDFDFDF",
+/* pixels */
+"                                                                     ",
+"  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  ",
+" + +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ X ",
+" ++ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ XX ",
+" +++                                                             XXX ",
+" +++ ........................................................... XXX ",
+" +++ ........................................................... XXX ",
+" +++ ...Ooo....Oooo....Ooo......Oooo...Ooooooooo....Ooooo....... XXX ",
+" +++ ....Oo...Oo..Oo..Oo.Oo......Ooo...Oo.Oo..Ooo..Oo..Oo....... XXX ",
+" +++ ....Oo...Oo..Oo.Oo...Oo......Ooo.Oo..Oo...Oo..Oo..Oo....... XXX ",
+" +++ ....Oo.......Oo.Oo...Oo.......Oooo...Oo...Oo..Ooo.......... XXX ",
+" +++ ....Oo.......Oo.Oo...Oo.......Ooo....Oo..Ooo...Ooo......... XXX ",
+" +++ ....Oo......Oo..Oo...Oo........Oo....Oooooo.....Ooo........ XXX ",
+" +++ ....Oo......Oo..Oo...Oo........Oo....OoOoo.......Ooo....... XXX ",
+" +++ ....Oo.....Oo...Oo...Oo........Oo....Oo.Ooo...Oo..Oo....... XXX ",
+" +++ ....Oo....Oo..Oo.Oo.Oo.........Oo....Oo..Ooo..Oo..Oo....... XXX ",
+" +++ ...Oooo..Oooooo...Ooo.........Oooo..Oooo..OoooOoooo...Oo... XXX ",
+" +++ ........................................................... XXX ",
+" +++ ........................................................... XXX ",
+" +++ ........................................................... XXX ",
+" +++ ........................................................... XXX ",
+" +++                                                             XXX ",
+" ++ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XX ",
+" + XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X ",
+"  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  ",
+"                                                                     "
+};

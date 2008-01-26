@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Micropolis", "Micropolis\python\Micropolis.vcproj", "{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TileEngine", "TileEngine\python\TileEngine.vcproj", "{28C58030-8704-44A4-A165-0A95628AA6B3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellEngine", "CellEngine\python\CellEngine.vcproj", "{28C58030-8704-44A4-A165-0A95628AA6B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|Win32 = Release|Win32
+		ReleaseSymbols|Win32 = ReleaseSymbols|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}.Release|Win32.ActiveCfg = Release|Win32
+		{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}.Release|Win32.Build.0 = Release|Win32
+		{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}.ReleaseSymbols|Win32.ActiveCfg = ReleaseSymbols|Win32
+		{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}.ReleaseSymbols|Win32.Build.0 = ReleaseSymbols|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B3}.Release|Win32.ActiveCfg = Release|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B3}.Release|Win32.Build.0 = Release|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B3}.ReleaseSymbols|Win32.ActiveCfg = ReleaseSymbols|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B3}.ReleaseSymbols|Win32.Build.0 = ReleaseSymbols|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B9}.Release|Win32.ActiveCfg = Release|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B9}.Release|Win32.Build.0 = Release|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B9}.ReleaseSymbols|Win32.ActiveCfg = ReleaseSymbols|Win32
+		{28C58030-8704-44A4-A165-0A95628AA6B9}.ReleaseSymbols|Win32.Build.0 = ReleaseSymbols|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

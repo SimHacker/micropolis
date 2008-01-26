@@ -1,0 +1,588 @@
+#@package: button.tcl tk_butEnter tk_butLeave tk_butDown tk_butUp
+
+# button.tcl --
+#
+# This file contains Tcl procedures used to manage Tk buttons.
+#
+# $Header: /user6/ouster/wish/scripts/RCS/button.tcl,v 1.7 92/07/28 15:41:13 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+#
+
+# The procedure below is invoked when the mouse pointer enters a
+# button widget.  It records the button we're in and changes the
+# state of the button to active unless the button is disabled.
+
+proc tk_butEnter w {
+    global tk_priv tk_strictMotif
+    if {[lindex [$w config -state] 4] != "disabled"} {
+	if {!$tk_strictMotif} {
+	    $w config -state active
+	}
+	set tk_priv(window) $w
+    }
+}
+
+# The procedure below is invoked when the mouse pointer leaves a
+# button widget.  It changes the state of the button back to
+# inactive.
+
+proc tk_butLeave w {
+    global tk_priv tk_strictMotif
+    if {[lindex [$w config -state] 4] != "disabled"} {
+	if {!$tk_strictMotif} {
+	    $w config -state normal
+	}
+    }
+    set tk_priv(window) ""
+}
+
+# The procedure below is invoked when the mouse button is pressed in
+# a button/radiobutton/checkbutton widget.  It records information
+# (a) to indicate that the mouse is in the button, and
+# (b) to save the button's relief so it can be restored later.
+
+proc tk_butDown w {
+    global tk_priv
+    set tk_priv(relief) [lindex [$w config -relief] 4]
+    if {[lindex [$w config -state] 4] != "disabled"} {
+	$w config -relief sunken
+    }
+}
+
+# The procedure below is invoked when the mouse button is released
+# for a button/radiobutton/checkbutton widget.  It restores the
+# button's relief and invokes the command as long as the mouse
+# hasn't left the button.
+
+proc tk_butUp w {
+    global tk_priv
+    $w config -relief $tk_priv(relief)
+    if {($w == $tk_priv(window))
+	    && ([lindex [$w config -state] 4] != "disabled")} {
+	uplevel #0 [list $w invoke]
+    }
+}
+#@package: listbox.tcl tk_listboxSingleSelect
+
+# listbox.tcl --
+#
+# This file contains Tcl procedures used to manage Tk listboxes.
+#
+# $Header: /user6/ouster/wish/scripts/RCS/listbox.tcl,v 1.2 92/06/03 15:21:28 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+#
+
+# The procedure below may be invoked to change the behavior of
+# listboxes so that only a single item may be selected at once.
+# The arguments give one or more windows whose behavior should
+# be changed;  if one of the arguments is "Listbox" then the default
+# behavior is changed for all listboxes.
+
+proc tk_listboxSingleSelect args {
+    foreach w $args {
+	bind $w <B1-Motion> {%W select from [%W nearest %y]} 
+	bind $w <Shift-1> {%W select from [%W nearest %y]}
+	bind $w <Shift-B1-Motion> {%W select from [%W nearest %y]}
+    }
+}
+#@package: tkerror.tcl tkerror
+
+# This file contains a default version of the tkError procedure.  It
+# just prints out a stack trace.
+
+proc tkerror err {
+    global errorInfo
+    puts stdout "$errorInfo"
+}
+#@package: text.tcl tk_textSelectTo tk_textBackspace tk_textIndexCloser tk_textResetAnchor
+
+# text.tcl --
+#
+# This file contains Tcl procedures used to manage Tk entries.
+#
+# $Header: /user6/ouster/wish/scripts/RCS/text.tcl,v 1.2 92/07/16 16:26:33 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+#
+
+# The procedure below is invoked when dragging one end of the selection.
+# The arguments are the text window name and the index of the character
+# that is to be the new end of the selection.
+
+proc tk_textSelectTo {w index} {
+    global tk_priv
+
+    case $tk_priv(selectMode) {
+	char {
+	    if [$w compare $index < anchor] {
+		set first $index
+		set last anchor
+	    } else {
+		set first anchor
+		set last [$w index $index+1c]
+	    }
+	}
+	word {
+	    if [$w compare $index < anchor] {
+		set first [$w index "$index wordstart"]
+		set last [$w index "anchor wordend"]
+	    } else {
+		set first [$w index "anchor wordstart"]
+		set last [$w index "$index wordend"]
+	    }
+	}
+	line {
+	    if [$w compare $index < anchor] {
+		set first [$w index "$index linestart"]
+		set last [$w index "anchor lineend + 1c"]
+	    } else {
+		set first [$w index "anchor linestart"]
+		set last [$w index "$index lineend + 1c"]
+	    }
+	}
+    }
+    $w tag remove sel 0.0 $first
+    $w tag add sel $first $last
+    $w tag remove sel $last end
+}
+
+# The procedure below is invoked to backspace over one character in
+# a text widget.  The name of the widget is passed as argument.
+
+proc tk_textBackspace w {
+    $w delete insert-1c insert
+}
+
+# The procedure below compares three indices, a, b, and c.  Index b must
+# be less than c.  The procedure returns 1 if a is closer to b than to c,
+# and 0 otherwise.  The "w" argument is the name of the text widget in
+# which to do the comparison.
+
+proc tk_textIndexCloser {w a b c} {
+    set a [$w index $a]
+    set b [$w index $b]
+    set c [$w index $c]
+    if [$w compare $a <= $b] {
+	return 1
+    }
+    if [$w compare $a >= $c] {
+	return 0
+    }
+    scan $a "%d.%d" lineA chA
+    scan $b "%d.%d" lineB chB
+    scan $c "%d.%d" lineC chC
+    if {$chC == 0} {
+	incr lineC -1
+	set chC [string length [$w get $lineC.0 $lineC.end]]
+    }
+    if {$lineB != $lineC} {
+	return [expr {($lineA-$lineB) < ($lineC-$lineA)}]
+    }
+    return [expr {($chA-$chB) < ($chC-$chA)}]
+}
+
+# The procedure below is called to reset the selection anchor to
+# whichever end is FARTHEST from the index argument.
+
+proc tk_textResetAnchor {w index} {
+    global tk_priv
+    if {[$w tag ranges sel] == ""} {
+	set tk_priv(selectMode) char
+	$w mark set anchor $index
+	return
+    }
+    if [tk_textIndexCloser $w $index sel.first sel.last] {
+	if {$tk_priv(selectMode) == "char"} {
+	    $w mark set anchor sel.last
+	} else {
+	    $w mark set anchor sel.last-1c
+	}
+    } else {
+	$w mark set anchor sel.first
+    }
+}
+#@package: menu.tcl tk_menus tk_bindForTraversal tk_mbPost tk_mbUnpost tk_traverseToMenu tk_traverseWithinMenu tk_getMenuButtons tk_nextMenu tk_nextMenuEntry tk_invokeMenu tk_firstMenu
+
+# menu.tcl --
+#
+# This file contains Tcl procedures used to manage Tk menus and
+# menubuttons.  Most of the code here is dedicated to support for
+# menu traversal via the keyboard.
+#
+# $Header: /user6/ouster/wish/scripts/RCS/menu.tcl,v 1.11 92/08/08 14:49:55 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+#
+
+# The procedure below is publically available.  It is used to indicate
+# the menus associated with a particular top-level window, for purposes
+# of keyboard menu traversal.  Its first argument is the path name of
+# a top-level window, and any additional arguments are the path names of
+# the menu buttons associated with that top-level window, in the order
+# they should be traversed.  If no menu buttons are named, the procedure
+# returns the current list of menus for w.  If a single empty string is
+# supplied, then the menu list for w is cancelled.  Otherwise, tk_menus
+# sets the menu list for w to the menu buttons.
+
+proc tk_menus {w args} {
+    global tk_priv
+
+    if {$args == ""} {
+	if [catch {set result [set tk_priv(menusFor$w)]}] {
+	    return ""
+	}
+	return $result
+    }
+
+    if {$args == "{}"} {
+	catch {unset tk_priv(menusFor$w)}
+	return ""
+    }
+
+    set tk_priv(menusFor$w) $args
+}
+
+# The procedure below is publically available.  It takes any number of
+# arguments taht are names of widgets or classes.  It sets up bindings
+# for the widgets or classes so that keyboard menu traversal is possible
+# when the input focus is in those widgets or classes.
+
+proc tk_bindForTraversal args {
+    foreach w $args {
+	bind $w <Alt-KeyPress> {tk_traverseToMenu %W %A}
+	bind $w <F10> {tk_firstMenu %W}
+    }
+}
+
+# The procedure below does all of the work of posting a menu (including
+# unposting any other menu that might currently be posted).  The "w"
+# argument is the name of the menubutton for the menu to be posted.
+# Note:  if $w is disabled then the procedure does nothing.
+
+proc tk_mbPost {w} {
+    global tk_priv tk_strictMotif
+    if {[lindex [$w config -state] 4] == "disabled"} {
+	return
+    }
+    set cur $tk_priv(posted)
+    if {$cur == $w} {
+	return
+    }
+    if {$cur != ""} tk_mbUnpost
+    set tk_priv(relief) [lindex [$w config -relief] 4]
+    $w config -relief raised
+    set tk_priv(cursor) [lindex [$w config -cursor] 4]
+    $w config -cursor arrow
+    $w post
+    grab -global $w
+    set tk_priv(posted) $w
+    if {$tk_priv(focus) == ""} {
+	set tk_priv(focus) [focus]
+    }
+    set menu [lindex [$w config -menu] 4]
+    set tk_priv(activeBg) [lindex [$menu config -activebackground] 4]
+    set tk_priv(activeFg) [lindex [$menu config -activeforeground] 4]
+    if $tk_strictMotif {
+	$menu config -activebackground [lindex [$menu config -background] 4]
+	$menu config -activeforeground [lindex [$menu config -foreground] 4]
+    }
+    focus $menu
+}
+
+# The procedure below does all the work of unposting the menubutton that's
+# currently posted.  It takes no arguments.
+
+proc tk_mbUnpost {} {
+    global tk_priv
+    if {$tk_priv(posted) != ""} {
+	$tk_priv(posted) config -relief $tk_priv(relief)
+	$tk_priv(posted) config -cursor $tk_priv(cursor)
+	$tk_priv(posted) config -activebackground $tk_priv(activeBg)
+	$tk_priv(posted) config -activeforeground $tk_priv(activeFg)
+	$tk_priv(posted) unpost
+	grab none
+	focus $tk_priv(focus)
+	set tk_priv(focus) ""
+	set menu [lindex [$tk_priv(posted) config -menu] 4]
+	$menu config -activebackground $tk_priv(activeBg)
+	$menu config -activeforeground $tk_priv(activeFg)
+	set tk_priv(posted) {}
+    }
+}
+
+# The procedure below is invoked to implement keyboard traversal to
+# a menu button.  It takes two arguments:  the name of a window where
+# a keystroke originated, and the ascii character that was typed.
+# This procedure finds a menu bar by looking upward for a top-level
+# window, then looking for a window underneath that named "menu".
+# Then it searches through all the subwindows of "menu" for a menubutton
+# with an underlined character matching char.  If one is found, it
+# posts that menu.
+
+proc tk_traverseToMenu {w char} {
+    global tk_priv
+    if {$char == ""} {
+	return
+    }
+    set char [string tolower $char]
+
+    foreach mb [tk_getMenuButtons $w] {
+	if {[winfo class $mb] == "Menubutton"} {
+	    set char2 [string index [lindex [$mb config -text] 4] \
+		    [lindex [$mb config -underline] 4]]
+	    if {[string compare $char [string tolower $char2]] == 0} {
+		tk_mbPost $mb
+		[lindex [$mb config -menu] 4] activate 0
+		return
+	    }
+	}
+    }
+}
+
+# The procedure below is used to implement keyboard traversal within
+# the posted menu.  It takes two arguments:  the name of the menu to
+# be traversed within, and an ASCII character.  It searches for an
+# entry in the menu that has that character underlined.  If such an
+# entry is found, it is invoked and the menu is unposted.
+
+proc tk_traverseWithinMenu {w char} {
+    if {$char == ""} {
+	return
+    }
+    set char [string tolower $char]
+    set last [$w index last]
+    for {set i 0} {$i <= $last} {incr i} {
+	if [catch {set char2 [string index \
+		[lindex [$w entryconfig $i -label] 4] \
+		[lindex [$w entryconfig $i -underline] 4]]}] {
+	    continue
+	}
+	if {[string compare $char [string tolower $char2]] == 0} {
+	    tk_mbUnpost
+	    $w invoke $i
+	    return
+	}
+    }
+}
+
+# The procedure below takes a single argument, which is the name of
+# a window.  It returns a list containing path names for all of the
+# menu buttons associated with that window's top-level window, or an
+# empty list if there are none.
+
+proc tk_getMenuButtons w {
+    global tk_priv
+    set top [winfo toplevel $w]
+    if [catch {set buttons [set tk_priv(menusFor$top)]}] {
+	return ""
+    }
+    return $buttons
+}
+
+# The procedure below is used to traverse to the next or previous
+# menu in a menu bar.  It takes one argument, which is a count of
+# how many menu buttons forward or backward (if negative) to move.
+# If there is no posted menu then this procedure has no effect.
+
+proc tk_nextMenu count {
+    global tk_priv
+    if {$tk_priv(posted) == ""} {
+	return
+    }
+    set buttons [tk_getMenuButtons $tk_priv(posted)]
+    set length [llength $buttons]
+    for {set i 0} 1 {incr i} {
+	if {$i >= $length} {
+	    return
+	}
+	if {[lindex $buttons $i] == $tk_priv(posted)} {
+	    break
+	}
+    }
+    incr i $count
+    while 1 {
+	while {$i < 0} {
+	    incr i $length
+	}
+	while {$i >= $length} {
+	    incr i -$length
+	}
+	set mb [lindex $buttons $i]
+	if {[lindex [$mb configure -state] 4] != "disabled"} {
+	    break
+	}
+	incr i $count
+    }
+    tk_mbUnpost
+    tk_mbPost $mb
+    [lindex [$mb config -menu] 4] activate 0
+}
+
+# The procedure below is used to traverse to the next or previous entry
+# in the posted menu.  It takes one argument, which is 1 to go to the
+# next entry or -1 to go to the previous entry.  Disabled entries are
+# skipped in this process.
+
+proc tk_nextMenuEntry count {
+    global tk_priv
+    if {$tk_priv(posted) == ""} {
+	return
+    }
+    set menu [lindex [$tk_priv(posted) config -menu] 4]
+    set length [expr [$menu index last]+1]
+    set i [$menu index active]
+    if {$i == "none"} {
+	set i 0
+    } else {
+	incr i $count
+    }
+    while 1 {
+	while {$i < 0} {
+	    incr i $length
+	}
+	while {$i >= $length} {
+	    incr i -$length
+	}
+	if {[catch {$menu entryconfigure $i -state} state] == 0} {
+	    if {[lindex $state 4] != "disabled"} {
+		break
+	    }
+	}
+	incr i $count
+    }
+    $menu activate $i
+}
+
+# The procedure below invokes the active entry in the posted menu,
+# if there is one.  Otherwise it does nothing.
+
+proc tk_invokeMenu {menu} {
+    set i [$menu index active]
+    if {$i != "none"} {
+	tk_mbUnpost
+	update idletasks
+	$menu invoke $i
+    }
+}
+
+# The procedure below is invoked to keyboard-traverse to the first
+# menu for a given source window.  The source window is passed as
+# parameter.
+
+proc tk_firstMenu w {
+    set mb [lindex [tk_getMenuButtons $w] 0]
+    if {$mb != ""} {
+	tk_mbPost $mb
+	[lindex [$mb config -menu] 4] activate 0
+    }
+}
+
+# The procedure below is invoked when a button-1-down event is
+# received by a menu button.  If the mouse is in the menu button
+# then it posts the button's menu.  If the mouse isn't in the
+# button's menu, then it deactivates any active entry in the menu.
+# Remember, event-sharing can cause this procedure to be invoked
+# for two different menu buttons on the same event.
+
+proc tk_mbButtonDown w {
+    global tk_priv
+    if {[lindex [$w config -state] 4] == "disabled"} {
+	return
+    } 
+    if {$tk_priv(inMenuButton) == $w} {
+	tk_mbPost $w
+    }
+    set menu [lindex [$tk_priv(posted) config -menu] 4]
+    if {$tk_priv(window) != $menu} {
+	$menu activate none
+    }
+}
+#@package: entry.tcl tk_entryBackspace tk_entryBackword tk_entrySeeCaret
+
+# entry.tcl --
+#
+# This file contains Tcl procedures used to manage Tk entries.
+#
+# $Header: /user6/ouster/wish/scripts/RCS/entry.tcl,v 1.2 92/05/23 16:40:57 ouster Exp $ SPRITE (Berkeley)
+#
+# Copyright 1992 Regents of the University of California
+# Permission to use, copy, modify, and distribute this
+# software and its documentation for any purpose and without
+# fee is hereby granted, provided that this copyright
+# notice appears in all copies.  The University of California
+# makes no representations about the suitability of this
+# software for any purpose.  It is provided "as is" without
+# express or implied warranty.
+#
+
+# The procedure below is invoked to backspace over one character
+# in an entry widget.  The name of the widget is passed as argument.
+
+proc tk_entryBackspace w {
+    set x [expr {[$w index cursor] - 1}]
+    if {$x != -1} {$w delete $x}
+}
+
+# The procedure below is invoked to backspace over one word in an
+# entry widget.  The name of the widget is passed as argument.
+
+proc tk_entryBackword w {
+    set string [$w get]
+    set curs [expr [$w index cursor]-1]
+    if {$curs < 0} return
+    for {set x $curs} {$x > 0} {incr x -1} {
+	if {([string first [string index $string $x] " \t"] < 0)
+		&& ([string first [string index $string [expr $x-1]] " \t"]
+		>= 0)} {
+	    break
+	}
+    }
+    $w delete $x $curs
+}
+
+# The procedure below is invoked after insertions.  If the caret is not
+# visible in the window then the procedure adjusts the entry's view to
+# bring the caret back into the window again.
+
+proc tk_entrySeeCaret w {
+    set c [$w index cursor]
+    set left [$w index @0]
+    if {$left > $c} {
+	$w view $c
+	return
+    }
+    while {[$w index @[expr [winfo width $w]-5]] < $c} {
+	set left [expr $left+1]
+	$w view $left
+    }
+}

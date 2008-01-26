@@ -1,0 +1,62 @@
+* Notes:
+do tile animation in parallel - tileSynch
+maps on demand
+
+* Initialize at start of game:
+
+short mickStartingYear;
+extern char *cityName;
+extern char *CityFileName;
+extern short GameLevel;
+
+* Share data:
+
+** global
+long CityTime;
+short *Map[WORLD_X];
+** editor window
+short Oframe[OBJN];
+short GlobalX[OBJN];
+short GlobalY[OBJN];
+long totalFunds;
+short RValve, CValve, IValve;
+** map window
+short *PowerMap;
+Byte *PopDensity[HWLDX];		/* 2X2 Maps  60 x 50 */
+Byte *TrfDensity[HWLDX];
+Byte *PollutionMem[HWLDX];
+Byte *LandValueMem[HWLDX];
+Byte *CrimeMem[HWLDX];
+short RateOGMem[SmX][SmY];
+short PoliceMapEffect[SmX][SmY];
+short FireRate[SmX][SmY];
+** graph window
+short ResHisMax, Res2HisMax;
+short ComHisMax, Com2HisMax;
+short IndHisMax, Ind2HisMax;
+short *ResHis;
+short *ComHis;
+short *IndHis;
+short *MoneyHis;
+short *PollutionHis;
+short *CrimeHis;
+short *MiscHis;
+short Graph10Max, Graph120Max;
+short Res2HisMax, Com2HisMax, Ind2HisMax;
+** evaluation window
+** budget window
+short CityTax;
+long RoadSpend, PoliceSpend, FireSpend;
+long RoadFund, PoliceFund, FireFund;
+float roadPercent, policePercent, firePercent;
+long roadMaxValue, policeMaxValue, fireMaxValue;
+long TaxFund, RoadFund, PoliceFund, FireFund;
+
+
+* Messages
+censusChanged
+message(msg, x, y)
+earthquake
+newMap
+
+formalize all global variable setter functions, to go through tcl
