@@ -513,25 +513,26 @@ void Micropolis::DoAutoGoto(
   short y, 
   char *msg)
 {
-  char buf[256];
-
-  SetMessageField(msg);
-  sprintf(buf, "UIAutoGoto %d %d", x, y);
-  Eval(buf);
+  Callback(
+	"UIAutoGoto", 
+	"dd", 
+	(int)x, 
+	(int)y);
 }
 
 
 void Micropolis::SetMessageField(
   char *str)
 {
-  char buf[256];
-
   if (!HaveLastMessage ||
       strcmp(LastMessage, str)) {
     strcpy(LastMessage, str);
     HaveLastMessage = 1;
-    sprintf(buf, "UISetMessage {%s}", str);
-    Eval(buf);
+
+	Callback(
+	  "UISetMessage",
+	  "s", 
+	  str);
   }
 }
 
@@ -539,22 +540,22 @@ void Micropolis::SetMessageField(
 void Micropolis::DoShowPicture(
   short id)
 {
-  char buf[256];
-
-  sprintf(buf, "UIShowPicture %d", id);
-  Eval(buf);
+  Callback(
+	"UIShowPicture",
+	"d", 
+	(int)id);
 }
 
 
 void Micropolis::DoLoseGame()
 {
-  Eval("UILoseGame");
+  Callback("UILoseGame", "");
 }
 
 
 void Micropolis::DoWinGame()
 {
-  Eval("UIWinGame");
+  Callback("UIWinGame", "");
 }
 
 

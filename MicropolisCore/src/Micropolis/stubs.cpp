@@ -155,35 +155,35 @@ void Micropolis::GameStarted()
 
 void Micropolis::DoPlayNewCity()
 {
-  Eval("UIPlayNewCity");
+  Callback("UIPlayNewCity", "");
 }
 
 
 void Micropolis::DoReallyStartGame()
 {
-  Eval("UIReallyStartGame");
+  Callback("UIReallyStartGame", "");
 }
 
 
 void Micropolis::DoStartLoad()
 {
-  Eval("UIStartLoad");
+  Callback("UIStartLoad", "");
 }
 
 
 void Micropolis::DoStartScenario(
   int scenario)
 {
-  char buf[256];
-
-  sprintf(buf, "UIStartScenario %d", scenario);
-  Eval(buf);
+  Callback(
+	"UIStartScenario", 
+	"d", 
+	(int)scenario);
 }
 
 
 void Micropolis::DropFireBombs()
 {
-  Eval("DropFireBombs");
+  Callback("UIDropFireBombs", "");
 }
 
 
@@ -200,17 +200,54 @@ void Micropolis::ReallyQuit()
 }
 
 
-void Micropolis::Eval(
-  char *tcl)
+// Scripting language independent callback mechanism. 
+// This allows Micropolis to send callback messages with 
+// a variable number of typed parameters back to the 
+// scripting language, while maintining independence from
+// the particular scripting language (or user interface 
+// runtime). 
+//
+// The name is the name of a message to send. 
+// The params is a string that specifies the number and 
+// types of the following vararg parameters. 
+// There is one character in the param string per vararg
+// parameter. The following parameter types are currently
+// supported:
+//
+// i: integer
+// f: float
+// s: string
+//
+// See PythonCallbackHook defined in swig/micropolis-swig-python.i
+// for an example of a callback function. 
+//
+void Micropolis::Callback(
+  const char *name,
+  const char *params,
+  ...)
 {
-  //printf("EVAL: %s\n", tcl);
+  if (callbackHook == NULL) {
+    return;
+  }
+
+  va_list arglist;
+  va_start(arglist, params); // beginning after last named argument: params
+
+  (*callbackHook)(
+    this,
+	callbackData,
+	name,
+	params,
+	arglist);
+
+  va_end(arglist);
 }
 
 
 void Micropolis::DoEarthquake()
 {
   MakeSound("city", "Explosion-Low");
-  Eval("UIEarthquake");
+  Callback("UIStartEarthquake", "");
   ShakeNow++;
 /*
   if (earthquake_timer_set) {
@@ -224,6 +261,7 @@ void Micropolis::DoEarthquake()
 
 void Micropolis::StopEarthquake()
 {
+  Callback("UIStopEarthquake", "");
 }
 
 
@@ -267,6 +305,7 @@ void Micropolis::ResetLastKeys()
 
 void Micropolis::InitializeSound()
 {
+  Callback("UIInitializeSound", "");
 }
 
 
@@ -274,14 +313,11 @@ void Micropolis::MakeSound(
   char *channel,
   char *sound)
 {
-}
-
-
-void Micropolis::MakeSoundOn(
-  SimView *view,
-  char *channel,
-  char *sound)
-{
+  Callback(
+	"UIMakeSound",
+	"ss",
+	channel,
+	sound);
 }
 
 
@@ -318,6 +354,147 @@ int Micropolis::getTile(
 void *Micropolis::getMapBuffer()
 {
     return (void *)mapPtr;
+}
+
+
+Ink *Micropolis::NewInk()
+{
+  Ink *ink;
+
+  if (OldInk) {
+    ink = OldInk;
+    OldInk = OldInk->next;
+  } else {
+    ink = (Ink *)ckalloc(sizeof(Ink));
+    ink->maxlength = POINT_BATCH;
+    ink->points = 
+	  (InkPoint *)ckalloc(POINT_BATCH * sizeof(InkPoint));
+  }
+  ink->length = 0;
+  ink->color = COLOR_WHITE;
+  ink->next = NULL;
+  ink->left = ink->right = ink->top = ink->bottom =
+    ink->last_x = ink->last_y = -1;
+  return (ink);
+}
+
+
+void Micropolis::FreeInk(
+  Ink *ink)
+{
+  ink->next = OldInk;
+  OldInk = ink;
+}
+
+
+void Micropolis::StartInk(
+  Ink *ink, 
+  int x, 
+  int y)
+{
+  ink->length = 1;
+  ink->left = ink->right = ink->last_x = ink->points[0].x = x;
+  ink->top = ink->bottom = ink->last_y = ink->points[0].y = y;
+}
+
+
+void Micropolis::AddInk(
+  Ink *ink, 
+  int x, 
+  int y)
+{
+  int dx = x - ink->last_x;
+  int dy = y - ink->last_y;
+
+  if ((dx != 0) || 
+	  (dy != 0)) {
+    if (ink->length > 1) {
+      if ((dx == 0) &&
+	      (ink->points[ink->length - 1].x == 0) &&
+	      ((ink->points[ink->length - 1].y < 0) ?
+	       (dy < 0) : (dy > 0))) {
+	    ink->points[ink->length - 1].y += dy;
+	    goto ADJUST;
+      } else if ((dy == 0) &&
+		 (ink->points[ink->length - 1].y == 0) &&
+		 ((ink->points[ink->length - 1].x < 0) ?
+		  (dx < 0) : (dx > 0))) {
+	    ink->points[ink->length - 1].x += dx;
+	    goto ADJUST;
+      }
+    }
+
+    if (ink->length >= ink->maxlength) {
+      ink->maxlength += POINT_BATCH;
+      ink->points = 
+		(InkPoint *)realloc(
+		  (void *)ink->points,
+	      ink->maxlength * sizeof(InkPoint));
+    }
+
+	ink->points[ink->length].x = dx;
+    ink->points[ink->length].y = dy;
+    ink->length++;
+
+  ADJUST:
+
+	if (x < ink->left) {
+      ink->left = x;
+	}
+
+	if (x > ink->right) {
+      ink->right = x;
+	}
+
+	if (y < ink->top) {
+      ink->top = y;
+	}
+
+	if (y > ink->bottom) {
+      ink->bottom = y;
+	}
+
+    { 
+	  int left, right, top, bottom;
+
+      if (ink->last_x < x) { 
+		left = ink->last_x; 
+		right = x; 
+	  } else { 
+		left = x; 
+		right = ink->last_x; 
+	  }
+      if (ink->last_y < y) { 
+		top = ink->last_y; 
+		bottom = y; 
+	  } else { 
+		top = y; 
+		bottom = ink->last_y; 
+	  }
+
+      left -= 5; 
+	  right += 5; 
+	  top -= 5; 
+	  bottom += 5;
+
+	  // TODO: Redraw views overlapping this change.
+    }
+
+	ink->last_x = x; 
+	ink->last_y = y;
+  }
+}
+
+
+void Micropolis::EraseOverlay()
+{
+  Ink *ink;
+
+  while (overlay) {
+    ink = overlay;
+    overlay = ink->next;
+    FreeInk(ink);
+  }
 }
 
 

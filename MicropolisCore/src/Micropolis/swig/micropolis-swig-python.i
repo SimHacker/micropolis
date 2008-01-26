@@ -71,6 +71,13 @@
 ////////////////////////////////////////////////////////////////////////
 
 
+CallbackFunction GetPythonCallbackHook();
+void *GetPythonCallbackData(PyObject *data);
+
+
+////////////////////////////////////////////////////////////////////////
+
+
 %{
 
 ////////////////////////////////////////////////////////////////////////
@@ -81,6 +88,212 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+
+
+// This callback hook glues Python into Micropolis's language 
+// independent callback mechanism.
+//
+// Arguments:
+//
+// micropolis: the C++ micropolis object
+//
+// data: a void pointer which came from micropolis->data,
+// that is actually a PyObject * to a Python callback function.
+//
+// name: the name of the callback message.
+//
+// params: a string describing the types of the additional parameters. 
+//
+// arglist: a list of arguments (in a varargs va_list), described by params. 
+//
+// There is one character in the param string per vararg
+// parameter. The following parameter types are currently
+// supported:
+//
+// i: integer
+// f: float
+// s: string
+//
+void PythonCallbackHook(
+  Micropolis *micropolis,
+  void *data,
+  const char *name,
+  const char *params,
+  va_list arglist)
+{
+  // Cast the void *data into a PyObject *callback.
+  PyObject *callback =
+    (PyObject *)data;
+  
+  // We will pass a PyObject wrapper of micropolis, 
+  // a Python callback name string, and the params
+  // to the Python callback function. 
+  int paramCount = 
+    2 + ((params == NULL) ? 0 : (int)strlen(params));
+
+  // Put the parameters together in a tuple of 
+  // the appropriate size.
+  PyObject *paramTuple =
+    PyTuple_New(paramCount);
+
+#ifdef TRACE_CALLBACKS
+  printf(
+    "PythonCallbackHook: micropolis 0x%X data 0x%X name \"%s\" params \"%s\"\n", 
+    (int)micropolis, 
+    (int)data, 
+    name,
+	(params == NULL) ? "(null)" : params);
+#endif
+
+  // Get the SWIG PyObject *micropolisObj wrapper from
+  // the userData of the micropolis. If it's not defined,
+  // then somebody forgot to set the userdata, so we do
+  // nothing. 
+  PyObject *micropolisObj = 
+    NULL;
+  if (micropolis->userData != NULL) {
+    micropolisObj =
+      (PyObject *)micropolis->userData;
+  } else {
+    // We have not been hooked up yet, so do nothing.
+    return;
+  }
+
+  // Need to increment the reference count here.
+  Py_INCREF(micropolisObj);
+
+  int i = 0; // Parameter index.
+  
+  // Pass the SWIG micropolis wrapper as the first parameter. 
+  PyTuple_SetItem(
+    paramTuple,
+    i,
+    micropolisObj);
+  i++;
+
+  // Pass the callback name as the next parameter.
+  PyTuple_SetItem(
+    paramTuple,
+    i,
+    PyString_FromString(
+	  name));
+  i++;
+
+  // Now pass the params as the subsequent parameters,
+  // according to their type specified in params. 
+  if (params != NULL) {
+	char ch;
+	while ((ch = *params++) != '\0') {
+	  switch (ch) {
+
+	    case 'd': {
+	      // Pass an integer. 
+	      int d =
+			va_arg(arglist, int);
+#ifdef TRACE_CALLBACKS
+		  printf(
+		    "  int: %d\n",
+		    d);
+#endif
+		  PyTuple_SetItem(
+			paramTuple,
+			i,
+		    PyInt_FromLong(
+			  (long)d));
+		  i++;
+		  break;
+	    }
+
+	    case 'f': {
+	      // Pass a float. 
+	      float f =
+			va_arg(arglist, float);
+#ifdef TRACE_CALLBACKS
+		  printf(
+		    "  float: %f\n",
+		    f);
+#endif
+		  PyTuple_SetItem(
+			paramTuple,
+			i,
+		    PyFloat_FromDouble(
+			  (double)f));
+		  i++;
+		  break;
+	    }
+
+	    case 's': {
+	      // Pass a string.
+	      char *s =
+			va_arg(arglist, char *);
+#ifdef TRACE_CALLBACKS
+		  printf(
+		    "  string: %s\n",
+		    s);
+#endif
+		  PyTuple_SetItem(
+			paramTuple,
+			i,
+		    PyString_FromString(
+			  s));
+		  i++;
+		  break;
+	    }
+
+		default: {
+		  // Unrecognized type code. 
+#ifdef TRACE_CALLBACKS
+		  void *v =
+		    va_arg(arglist, void *);
+		  printf(
+		    "  ?%c?: 0x%X\n",
+			ch,
+		    (int)v);
+#endif
+		  break;
+		}
+		
+	  }
+
+	}
+	
+  }
+
+  // Now call the Python callback with all the parameters.   
+  PyObject *result =
+    PyObject_CallObject(
+      callback,
+      paramTuple);
+
+  // Clean up nicely. 
+  Py_XDECREF(result);
+  Py_XDECREF(paramTuple);
+}
+
+
+// This returns a reference to the PythonCallbackHook. 
+// I wrapped it in a function that returns the object 
+// (which gets wrapped by SWIG), because just exposing 
+// the function itself makes a callable method, not a 
+// way to get a pointer to it. 
+CallbackFunction GetPythonCallbackHook()
+{
+  return PythonCallbackHook;
+}
+
+
+// This can be used to convert any Python object into a
+// void pointer that you can store in a member that takes
+// such a type, like the userData or callbackData. 
+void *GetPythonCallbackData(
+  PyObject *data)
+{
+  return (void *)data;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+
 
 %}
 

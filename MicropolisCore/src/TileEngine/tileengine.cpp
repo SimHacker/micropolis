@@ -108,8 +108,18 @@ void TileEngine::setBuffer(
 
 unsigned long TileEngine::getValue(
     int row,
-    int col)
+    int col,
+	PyObject *tileFunction)
 {
+
+  if ((tileFunction != Py_None) &&
+	  !PyCallable_Check(tileFunction)) {
+    PyErr_SetString(
+      PyExc_TypeError,
+      "tileFunction must be a callable function or None");
+    return 0;
+  }
+
   if ((bufData == NULL) ||
       (col < 0) ||
 	  (col >= width) ||
@@ -118,68 +128,96 @@ unsigned long TileEngine::getValue(
     return 0;
   }
 
+  unsigned long tile = 0;
+
   switch (typeCode) {
 
   case 'c':
   case 'b':
   case 'B':
-    return
-      (unsigned long)(
+    tile = 
+	  (unsigned long)(
         *(unsigned char *)(
           (unsigned char *)bufData +
           (col * colBytes) +
-          (row * rowBytes))) & 
-          tileMask;
+          (row * rowBytes)));
+	break;
 
   case 'u':
   case 'h':
   case 'H':
   case 'i':
   case 'I':
-    return
-      (unsigned long)(
+    tile = 
+	  (unsigned long)(
         *(unsigned short *)(
           (unsigned char *)bufData +
           (col * colBytes) +
-          (row * rowBytes))) & 
-          tileMask;
+          (row * rowBytes)));
+	break;
 
   case 'l':
   case 'L':
-    return
+    tile =
       (unsigned long)(
         *(unsigned long *)(
           (unsigned char *)bufData +
           (col * colBytes) +
-          (row * rowBytes))) &
-          tileMask;
+          (row * rowBytes)));
+	break;
 
   case 'f':
-    return
+    tile =
       (unsigned long)(
         floatOffset +
         (floatScale *
           *(float *)(
             (unsigned char *)bufData +
             (col * colBytes) +
-            (row * rowBytes)))) &
-          tileMask;
+            (row * rowBytes))));
+	break;
 
   case 'd':
-    return
+    tile =
       (unsigned long)(
         floatOffset +
         (floatScale *
           *(double *)(
             (unsigned char *)bufData +
             (col * colBytes) +
-            (row * rowBytes)))) &
-          tileMask;
+            (row * rowBytes))));
+	break;
 
   default:
-    return 0;
+    tile = 
+	  0;
+	break;
 
   }
+
+  if (tileFunction &&
+	  tileFunction != Py_None) {
+    // Call tile function.
+	PyObject *result =
+	  PyObject_CallFunction(
+		tileFunction,
+		"iii",
+		row,
+		col,
+		(int)tile);
+	if (!PyNumber_Check(result)) {
+      PyErr_SetString(
+        PyExc_TypeError,
+        "tileFunction should return an integer");
+	} else {
+	  tile = (unsigned long)PyInt_AsLong(result);
+	}
+	Py_DECREF(result);
+  }
+
+  tile &= tileMask;
+
+  return tile;
 }
 
 
@@ -189,6 +227,7 @@ void TileEngine::renderTiles(
   cairo_surface_t *tilesSurf,
   int tilesWidth,
   int tilesHeight,
+  PyObject *tileFunction,
   PyObject *tileMap,
   int tileSize,
   int renderCol,
@@ -257,7 +296,8 @@ void TileEngine::renderTiles(
       unsigned long value =
         getValue(
           row,
-          col);
+          col,
+		  tileFunction);
 
       int tileIndex =
         value % tileCount;
@@ -327,6 +367,7 @@ void TileEngine::renderTiles(
 
 void TileEngine::renderTilesLazy(
   cairo_t *ctx,
+  PyObject *tileFunction,
   PyObject *tileMap,
   int tileSize,
   int renderCol,
@@ -443,7 +484,8 @@ void TileEngine::renderTilesLazy(
       unsigned long value = 
         getValue(
           row,
-          col);
+          col,
+		  tileFunction);
 
       int tileIndex =
         value % tileCount;
@@ -514,6 +556,7 @@ void TileEngine::renderTilesLazy(
 		    &tileSurfaceIndex,
 		    &tileX,
 		    &tileY);
+		Py_DECREF(result);
 		if (!success) {
 		  PyErr_SetString(
 		    PyExc_TypeError,
@@ -603,13 +646,14 @@ void TileEngine::renderTilesLazy(
 
 
 void TileEngine::renderPixels(
-    cairo_surface_t *destSurf,
-    cairo_surface_t *cmapSurf,
-    PyObject *tileMap,
-    int renderCol,
-    int renderRow,
-    int renderCols,
-    int renderRows)
+  cairo_surface_t *destSurf,
+  cairo_surface_t *cmapSurf,
+  PyObject *tileFunction,
+  PyObject *tileMap,
+  int renderCol,
+  int renderRow,
+  int renderCols,
+  int renderRows)
 {
 
   unsigned int tileCount =
@@ -663,7 +707,8 @@ void TileEngine::renderPixels(
       unsigned long value = 
         getValue(
           row,
-          col);
+          col,
+		  tileFunction);
 
       int tileIndex =
         value % tileCount;

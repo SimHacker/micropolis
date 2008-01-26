@@ -374,13 +374,13 @@ void Micropolis::UpdateBudget()
   drawCurrPercents();
   drawBudgetWindow();
 
-  Eval("UIUpdateBudget");
+  Callback("UIUpdateBudget", "");
 }
 
 
 void Micropolis::ShowBudgetWindowAndStartWaiting()
 {
-  Eval("UIShowBudgetAndWait");
+  Callback("UIShowBudgetAndWait", "");
 
   Pause();
 }
@@ -393,17 +393,14 @@ void Micropolis::SetBudget(
   char *collectedStr, 
   short tax)
 {
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetBudget {%s} {%s} {%s} {%s} {%d}",
+  Callback(
+    "UISetBudget",
+	"ssssd",
     flowStr, 
     previousStr, 
     currentStr, 
     collectedStr, 
-    tax);
-  Eval(buf);
+    (int)tax);
 }
 
 
@@ -415,11 +412,9 @@ void Micropolis::SetBudgetValues(
   char *fireGot, 
   char *fireWant)
 {
-  char buf[256];
-
-  sprintf(
-    buf, 
-    "UISetBudgetValues {%s} {%s} %d {%s} {%s} %d {%s} {%s} %d",
+  Callback(
+    "UISetBudgetValues",
+    "ssdssdssd",
     roadGot, 
     roadWant, 
     (int)(roadPercent * 100),
@@ -429,7 +424,6 @@ void Micropolis::SetBudgetValues(
     fireGot, 
     fireWant, 
     (int)(firePercent * 100));
-  Eval(buf);
 }
 
 

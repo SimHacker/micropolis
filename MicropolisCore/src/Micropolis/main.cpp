@@ -385,7 +385,10 @@ void Micropolis::sim_loop(
 void Micropolis::sim_tick()
 {
   if (SimSpeed) {
-    sim_loop(1);
+    int i;
+	for (i = 0; i < sim_skips; i++) {
+	  sim_loop(1);
+	}
   }
 }
 

@@ -1,0 +1,41 @@
+
+
+Callback("UIAutoGoto", "dd", x, y);
+Callback("UIDidGenerateNewCity", "");
+Callback("UIDidLoadCity", "");
+Callback("UIDidLoadScenario", "");
+Callback("UIDidSaveCity", "");
+Callback("UIDidTool", "sdd", name, x, y);
+Callback("UIDidntLoadCity", "s", msg);
+Callback("UIDidntSaveCity", "s", msg);
+Callback("UIDoPendTool", "ddd", tool, x, y);
+Callback("UIDropFireBombs", "");
+Callback("UIInitializeSound", "");
+Callback("UILoseGame", "");
+Callback("UIMakeSound", "ss", channel, sound);
+Callback("UINewGame", "");
+Callback("UIPlayNewCity", "");
+Callback("UIPopUpMessage", "s", msg);
+Callback("UIReallyStartGame", "");
+Callback("UISaveCityAs", "");
+Callback("UISetBudget", "ssssd", flowStr, previousStr, currentStr, collectedStr, tax);
+Callback("UISetBudgetValues", "ssdssdssd", roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent);
+Callback("UISetCityName", "s", CityName);
+Callback("UISetDate", "sdd", str, m, y);
+Callback("UISetDemand", "ddd", r, c, i);
+Callback("UISetEvaluation", "ssssssssssssssssss", changed, score, ps0, ps1, ps2, ps3, pv0, pv1, pv2, pv3, pop, delta, assessed_dollars, cityclass, citylevel, goodyes, goodno, title);
+Callback("UISetFunds", "s", dollarStr);
+Callback("UISetGameLevel", "d", GameLevel);
+Callback("UISetMapState", "d", state);
+Callback("UISetMessage", "s", str);
+Callback("UISetOptions", "dddddddd", autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
+Callback("UISetSpeed", "d", speed);
+Callback("UIShowBudgetAndWait", "");
+Callback("UIShowPicture", "d", id);
+Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
+Callback("UIStartEarthquake", "");
+Callback("UIStartLoad", "");
+Callback("UIStartScenario", "d", scenario);
+Callback("UIStopEarthquake", "");
+Callback("UIUpdateBudget", "");
+Callback("UIWinGame", "");

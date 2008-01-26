@@ -487,7 +487,7 @@ void Micropolis::LoadScenario(
 
 void Micropolis::DidLoadScenario()
 {
-  Eval("UIDidLoadScenario");
+  Callback("UIDidLoadScenario", "");
 }
 
 
@@ -554,16 +554,17 @@ int Micropolis::LoadCity(
 
 void Micropolis::DidLoadCity()
 {
-  Eval("UIDidLoadCity");
+  Callback("UIDidLoadCity", "");
 }
 
 
 void Micropolis::DidntLoadCity(
   char *msg)
 {
-  char buf[1024];
-  sprintf(buf, "UIDidntLoadCity {%s}", msg);
-  Eval(buf);
+  Callback(
+	"UIDidntLoadCity", 
+	"s", 
+	msg);
 }
 
 
@@ -597,22 +598,23 @@ void Micropolis::SaveCity()
 
 void Micropolis::DoSaveCityAs()
 {
-  Eval("UISaveCityAs");
+  Callback("UISaveCityAs", "");
 }
 
 
 void Micropolis::DidSaveCity()
 {
-  Eval("UIDidSaveCity");
+  Callback("UIDidSaveCity", "");
 }
 
 
 void Micropolis::DidntSaveCity(
   char *msg)
 {
-  char buf[1024];
-  sprintf(buf, "UIDidntSaveCity {%s}", msg);
-  Eval(buf);
+  Callback(
+	"UIDidntSaveCity", 
+	"s", 
+	msg);
 }
 
 

@@ -101,7 +101,9 @@ void Micropolis::GenerateSomeCity(
   InvalidateMaps();
   UpdateFunds();
   DoSimInit();
-  Eval("UIDidGenerateNewCity");
+
+  Callback("UIDidGenerateNewCity", "");
+
   Kick();
 }
 
