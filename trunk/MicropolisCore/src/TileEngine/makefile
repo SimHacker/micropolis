@@ -95,7 +95,9 @@ python/tileengine_wrap.cpp: swig/tileengine.i tileengine.h
 clean:
 	rm -rf *~ *.ncb python/build
 	rm -rf swig/*~
-	rm -rf python/tileengine.py python/tileengine_wrap.cpp python/*~ python/*.pyc python/*.o python/*.pyd python/ReleaseSymbols python/Release python/Debug
+	rm -rf python/*~ python/*.pyc python/*.o python/*.pyd python/ReleaseSymbols python/Release python/Debug
+	# Disabled this to leave SWIG generated stuff around.
+	#rm -rf python/tileengine.py python/tileengine_wrap.cpp
 
 install: all
 	(cd python ; python setup.py install)
