@@ -119,6 +119,10 @@ class TileDrawingArea(gtk.DrawingArea):
         scale=1.0,
         cursorCol=0,
         cursorRow=0,
+        cursorCols=1,
+        cursorRows=1,
+        cursorHotCol=0,
+        cursorHotRow=0,
         outsideBackgroundColor=(0.5, 0.5, 0.5),
         insideBackgroundColor=(0.0, 0.0, 0.0),
         **args):
@@ -143,6 +147,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self.scale = scale
         self.cursorCol = cursorCol
         self.cursorRow = cursorRow
+        self.cursorCols = cursorCols
+        self.cursorRows = cursorRows
+        self.cursorHotCol = cursorHotCol
+        self.cursorHotRow = cursorHotRow
         self.outsideBackgroundColor = outsideBackgroundColor
         self.insideBackgroundColor = insideBackgroundColor
 
@@ -276,16 +284,18 @@ class TileDrawingArea(gtk.DrawingArea):
         panY = self.panY
         #print "PAN", panX, panY
 
-        cursorRow = self.cursorRow
         cursorCol = self.cursorCol
-        #print "CURSOR", cursorRow, cursorCol
+        cursorRow = self.cursorRow
+        cursorCols = self.cursorCols
+        cursorRows = self.cursorRows
+        #print "CURSOR", cursorCol, cursorRow, cursorCols, cursorRows
 
         cursorScreenX = panX + (cursorCol * tileSize)
         cursorScreenY = panY + (cursorRow * tileSize)
         #print "CURSORSCREEN", cursorScreenX, cursorScreenY
 
-        cursorCenterScreenX = cursorScreenX + (0.5 * tileSize)
-        cursorCenterScreenY = cursorScreenY + (0.5 * tileSize)
+        cursorCenterScreenX = cursorScreenX + (0.5 * cursorCols * tileSize)
+        cursorCenterScreenY = cursorScreenY + (0.5 * cursorRows * tileSize)
         #print "CURSORCENTERSCREEN", cursorCenterScreenX, cursorCenterScreenY
 
         self.setScale(scale)
@@ -293,8 +303,8 @@ class TileDrawingArea(gtk.DrawingArea):
         tileSize = self.tileSize
         #print "TILESIZE", tileSize
         
-        cursorScreenX = cursorCenterScreenX - (0.5 * tileSize)
-        cursorScreenY = cursorCenterScreenY - (0.5 * tileSize)
+        cursorScreenX = cursorCenterScreenX - (0.5 * cursorCols * tileSize)
+        cursorScreenY = cursorCenterScreenY - (0.5 * cursorRows * tileSize)
         #print "CURSORSCREEN", cursorScreenX, cursorScreenY
         
         panX = cursorScreenX - (cursorCol * tileSize)
@@ -837,6 +847,8 @@ class TileDrawingArea(gtk.DrawingArea):
 
         cursorCol = self.cursorCol
         cursorRow = self.cursorRow
+        cursorCols = self.cursorCols
+        cursorRows = self.cursorRows
         tileSize = self.tileSize
         panX = self.panX
         panY = self.panY
@@ -844,7 +856,7 @@ class TileDrawingArea(gtk.DrawingArea):
         x = panX + (tileSize * cursorCol)
         y = panY + (tileSize * cursorRow)
 
-        #print "drawCursor", "cursor", cursorCol, cursorRow, "size", tileSize, "pan", panX, panY, "tile", x, y
+        #print "drawCursor", "cursor", cursorCol, cursorRow, cursorCols, cursorRow, "size", tileSize, "pan", panX, panY, "tile", x, y
 
         ctx.save()
 
@@ -855,8 +867,8 @@ class TileDrawingArea(gtk.DrawingArea):
         ctx.rectangle(
             -2,
             -2,
-            tileSize + 4,
-            tileSize + 4)
+            (cursorCols * tileSize) + 4,
+            (cursorRows * tileSize) + 4)
 
         ctx.set_line_width(
             4.0)
@@ -878,9 +890,15 @@ class TileDrawingArea(gtk.DrawingArea):
 
         ctx.stroke()
 
+        self.drawCursorDetails(ctx)
+
         ctx.restore()
 
-        tileCode = self.getTile(cursorCol, cursorRow)
+
+    def drawCursorDetails(self, ctx):
+        tileCode = self.getTile(
+            self.cursorCol - self.cursorHotCol,
+            self.cursorRow - self.cursorHotRow)
 
         tileName = str(tileCode)
         if not tileName:
@@ -895,15 +913,35 @@ class TileDrawingArea(gtk.DrawingArea):
         #print hex(tileCode), tileName, tileDescription
 
 
+    def setCursorSize(
+        self,
+        cols,
+        rows):
+        
+        if ((self.cursorCols == cols) and
+            (self.cursorRowsa == rows)):
+            return
+        
+        self.cursorCols = cols
+        self.cursorRows = rows
+        self.setCursorPos(self.cursorCol, self.cursorRow, True)
+
+
+    # Sets the upper left corner of the cursor, regardless of
+    # the hot spot. 
     def setCursorPos(
         self,
         col,
-        row):
+        row,
+        forceRedraw=False):
 
-        col = max(0, min(self.worldCols - 1, col))
-        row = max(0, min(self.worldRows - 1, row))
+        cursorRows = self.cursorRows
+        cursorCols = self.cursorCols
+        col = max(0, min(self.worldCols - cursorCols, col))
+        row = max(0, min(self.worldRows - cursorRows, row))
 
-        if ((self.cursorCol != col) or
+        if (forceRedraw or
+            (self.cursorCol != col) or
             (self.cursorRow != row)):
             self.cursorCol = col
             self.cursorRow = row
@@ -916,8 +954,8 @@ class TileDrawingArea(gtk.DrawingArea):
         y):
 
         tileSize = self.tileSize
-        col = int(math.floor((x - self.panX) / tileSize))
-        row = int(math.floor((y - self.panY) / tileSize))
+        col = int(math.floor((x - self.panX) / tileSize)) - self.cursorHotCol
+        row = int(math.floor((y - self.panY) / tileSize)) - self.cursorHotRow
 
         self.setCursorPos(col, row)
 
@@ -930,18 +968,20 @@ class TileDrawingArea(gtk.DrawingArea):
         col = self.cursorCol + dx
         row = self.cursorRow + dy
 
+        cursorCols = self.cursorCols
+        cursorRows = self.cursorRows
         worldCols = self.worldCols
         worldRows = self.worldRows
 
         if col < 0:
             col = 0
-        if col >= worldCols:
-            col =  worldCols - 1
+        if col >= (worldCols - cursorCols):
+            col =  (worldCols - cursorCols) - 1
 
         if row < 0:
             row = 0
-        if row >= worldRows:
-            row = worldRows - 1
+        if row >= (worldRows - cursorRows):
+            row = (worldRows - cursorRows) - 1
 
         self.setCursorPos(
             col,
@@ -961,14 +1001,16 @@ class TileDrawingArea(gtk.DrawingArea):
 
         cursorCol = self.cursorCol
         cursorRow = self.cursorRow
+        cursorCols = self.cursorCols
+        cursorRows = self.cursorRows
         tileSize = self.tileSize
         panX = self.panX
         panY = self.panY
 
         left = panX + (tileSize * cursorCol)
-        right = left + tileSize
+        right = left + (cursorCols * tileSize)
         top = panY + (tileSize * cursorRow)
-        bottom = top + tileSize
+        bottom = top + (cursorRows * tileSize)
 
         dx = 0
         dy = 0
@@ -1098,6 +1140,9 @@ class TileDrawingArea(gtk.DrawingArea):
         event):
 
         #print "handleButtonPress TileDrawingArea", self
+
+        print "EVENT", event
+        #print dir(event)
 
         self.down = True
         self.downX = event.x
