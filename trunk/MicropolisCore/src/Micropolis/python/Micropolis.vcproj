@@ -445,6 +445,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\micropolispiemenus.py"
+					>
+				</File>
+				<File
 					RelativePath=".\micropolisutils.py"
 					>
 				</File>

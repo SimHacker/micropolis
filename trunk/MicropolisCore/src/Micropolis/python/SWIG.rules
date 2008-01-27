@@ -11,6 +11,7 @@
 			Outputs="..\swig\$(InputName)_wrap.cpp"
 			FileExtensions="*.i"
 			ExecutionDescription="Executing tool..."
+			ShowOnlyRuleProperties="false"
 			>
 			<Properties>
 				<StringProperty

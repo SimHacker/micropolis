@@ -93,6 +93,7 @@ sys.path.append(os.getcwd() + '\\ReleaseSymbols')
 import micropolis
 import micropolismodel
 import micropolisutils
+import micropolispiemenus
 
 sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\swig')
 sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python')
@@ -112,12 +113,23 @@ def PRINT(*args):
 ########################################################################
 
 
+class Tool:
+
+
+    def __init__(self, **args):
+        pass
+
+
+########################################################################
+
+
 class MicropolisDrawingArea(tilewindow.TileDrawingArea):
 
 
     def __init__(
         self,
         engine=None,
+        toolPie=None,
         **args):
 
         args['tileCount'] = 960
@@ -126,6 +138,7 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
         args['worldRows'] = micropolis.WORLD_Y
 
         self.engine = engine
+        self.toolPie = toolPie
 
         tilewindow.TileDrawingArea.__init__(self, **args)
 
@@ -159,10 +172,17 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
 
         engine.Resume()
         engine.setSpeed(2)
-        engine.setSkips(100)
+        engine.setSkips(10)
         engine.SetFunds(1000000000)
         engine.autoGo = 0
-        engine.CityTax = 7
+        engine.CityTax = 8
+
+        # Testing...
+
+        self.cursorCols = 3
+        self.cursorRows = 3
+        self.cursorHotCol = 1
+        self.cursorHotRow = 1
 
         tilewindow.TileDrawingArea.createEngine(self)
 
@@ -209,6 +229,56 @@ class MicropolisDrawingArea(tilewindow.TileDrawingArea):
         engine = self.engine
         engine.sim_tick()
         engine.animateTiles()
+
+
+    def getToolPie(self):
+
+        toolPie = self.toolPie
+        if toolPie:
+            return toolPie
+
+        toolPie = micropolispiemenus.MakeToolPie()
+        self.toolPie = toolPie
+        return toolPie
+
+
+    def handleButtonPress(
+        self,
+        widget,
+        event):
+
+        #print "handleButtonPress TileDrawingArea", self
+
+        print "EVENT", event
+        #print dir(event)
+
+        if event.button == 1:
+
+            self.down = True
+            self.downX = event.x
+            self.downY = event.y
+
+            self.panning = True
+            self.downPanX = self.panX
+            self.downPanY = self.panY
+
+        elif event.button == 3:
+
+            toolPie = self.getToolPie()
+
+            win_x, win_y, state = event.window.get_pointer()
+
+            print "POP UP TOOLPIE", toolPie, win_x, win_y, state
+
+            #print "WIN", win_x, win_y
+
+            x, y = event.get_root_coords()
+
+            #print "ROOT", x, y
+
+            toolPie.popup(x, y, False)
+
+        self.handleDrag(widget, event)
 
 
 ########################################################################
