@@ -212,6 +212,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.connect('motion_notify_event', self.handleMotionNotify)
         self.connect('button_press_event', self.handleButtonPress)
         self.connect('button_release_event', self.handleButtonRelease)
+	self.connect('scroll_event', self.handleMouseScroll)
 
         if self.running:
             self.startTimer()
@@ -1168,6 +1169,17 @@ class TileDrawingArea(gtk.DrawingArea):
 
         self.panning = False
 
+    def handleMouseScroll(
+	self,
+	widget,
+	event):
+		
+	direction = event.direction
+		
+	if direction == gtk.gdk.SCROLL_UP:
+	    self.changeScale(self.scale * 1.1)
+	elif direction == gtk.gdk.SCROLL_DOWN:
+	    self.changeScale(self.scale * 0.9)
 
 ########################################################################
 
