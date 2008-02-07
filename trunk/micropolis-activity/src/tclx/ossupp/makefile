@@ -30,7 +30,8 @@ CFLAGS=$(OPTIMIZE_FLAG) $(XCFLAGS) -I../$(TCL_UCB_DIR) $(MEM_DEBUG_FLAGS) \
 all: made.tmp
 
 made.tmp: $(SUPPORT_OBJS)
-	$(AR) cr ../libtcl.a $(SUPPORT_OBJS)
+	echo Don disabled because not needed for Linux.
+	echo $(AR) cr ../libtcl.a $(SUPPORT_OBJS)
 	touch made.tmp
 
 #------------------------------------------------------------------------------

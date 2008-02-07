@@ -196,12 +196,14 @@ Tcp_ConnectCmd(notUsed, interp, argc, argv)
 	/* Find out what port we got */
 	char buf[50];
 	struct sockaddr_in sockaddr;
-	int res,len=sizeof(sockaddr);
-	res =getsockname(fd,(struct sockaddr *) &sockaddr, &len);
+	int res;
+	unsigned int len = sizeof(sockaddr);
+	res = getsockname(fd, (struct sockaddr *) &sockaddr, &len);
 	if (res < 0) {
 	    sprintf(buf,"%d",errno);
-	} else 
+	} else {
 	    sprintf(buf,"%d",(int)ntohs(sockaddr.sin_port));
+	}
 	Tcl_SetVar2(interp,"connect_info",interp->result,buf,TCL_GLOBAL_ONLY);
     }
 
@@ -319,7 +321,7 @@ Tcp_AcceptCmd(notUsed, interp, argc, argv)
 {
     Interp *iPtr = (Interp *) interp;
     struct sockaddr_in sockaddr;
-    int len = sizeof sockaddr;
+    unsigned int len = sizeof(sockaddr);
     OpenFile *filePtr;
     register FILE *f;
     int fd;

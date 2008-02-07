@@ -91,7 +91,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <setjmp.h>
+#ifndef __APPLE__
 #include <malloc.h>
+#endif
 #include <errno.h>
 #include <signal.h>
 #include <math.h>
