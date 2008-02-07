@@ -898,13 +898,32 @@ DoShipSprite(SimSprite *sprite)
     sprite->frame = 0;
     return;
   }
-  for (z = 0; z < 8; z++) {
-    if (t == BtClrTab[z]) break;
-    if (z == 7) {
-      ExplodeSprite(sprite);
-      Destroy(sprite->x + 48, sprite->y);
+  if (!NoDisasters) {
+    for (z = 0; z < 8; z++) {
+      if (t == BtClrTab[z]) break;
+      if (z == 7) {
+	ExplodeSprite(sprite);
+	Destroy(sprite->x + 48, sprite->y);
+      }
     }
   }
+}
+
+
+MakeAirCrash(void)
+{
+#ifndef NO_AIRCRASH
+  if (GetSprite(AIR) == NULL) {
+    short x, y;
+
+    x = Rand(WORLD_X - 20) + 10;
+    y = Rand(WORLD_Y - 10) + 5;
+
+    GeneratePlane(x, y);
+  }
+
+  ExplodeSprite(GetSprite(AIR));
+#endif
 }
 
 

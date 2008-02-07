@@ -1316,14 +1316,12 @@ ScaleMouseProc(clientData, eventPtr)
 	SetScaleValue(scalePtr,  PixelToValue(scalePtr,
 		eventPtr->xmotion.x, eventPtr->xmotion.y));
     } else if ((eventPtr->type == ButtonPress)
-/*	    && (eventPtr->xbutton.button == Button1) */
-	    && (eventPtr->xbutton.state == 0)) {
+	    && ((eventPtr->xbutton.state & ALL_BUTTONS) == 0)) {
 	scalePtr->flags |= BUTTON_PRESSED;
 	SetScaleValue(scalePtr, PixelToValue(scalePtr,
 		eventPtr->xbutton.x, eventPtr->xbutton.y));
 	EventuallyRedrawScale(scalePtr, REDRAW_SLIDER);
     } else if ((eventPtr->type == ButtonRelease)
-/*	    && (eventPtr->xbutton.button == Button1) */
 	    && (scalePtr->flags & BUTTON_PRESSED)) {
 	scalePtr->flags &= ~BUTTON_PRESSED;
 	EventuallyRedrawScale(scalePtr, REDRAW_SLIDER);

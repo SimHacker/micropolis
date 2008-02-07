@@ -62,16 +62,18 @@
 #include "sim.h"
 
 
-#if defined(MSDOS) || defined(OSF1) || defined(IS_INTEL)
-
 #define SWAP_SHORTS(a,b)	_swap_shorts(a,b)
 #define SWAP_LONGS(a,b)		_swap_longs(a,b)
 #define HALF_SWAP_LONGS(a,b)	_half_swap_longs(a,b)
+
+#define NOOP_ON_BE	{ int test = 1; if (!(*(unsigned char*) (&test))) return; }
 
 static void
 _swap_shorts(short *buf, int len)
 {
   int i;
+
+  NOOP_ON_BE;
 
   /* Flip bytes in each short! */
   for (i = 0; i < len; i++) {	
@@ -84,6 +86,8 @@ static void
 _swap_longs(long *buf, int len)
 {
   int i;
+
+  NOOP_ON_BE;
 
   /* Flip bytes in each long! */
   for (i = 0; i < len; i++) {	
@@ -102,6 +106,8 @@ _half_swap_longs(long *buf, int len)
 {
   int i;
 
+  NOOP_ON_BE;
+
   /* Flip bytes in each long! */
   for (i = 0; i < len; i++) {	
     long l = *buf;
@@ -111,14 +117,6 @@ _half_swap_longs(long *buf, int len)
     buf++;
   }
 }
-
-#else
-
-#define SWAP_SHORTS(a, b)
-#define SWAP_LONGS(a, b)
-#define HALF_SWAP_LONGS(a, b)
-
-#endif
 
 
 static int

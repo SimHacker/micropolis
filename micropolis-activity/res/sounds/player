@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PLAYER=
+
+if type -a aplay &>/dev/null; then
+	PLAYER=aplay
+elif type -a afplay &>/dev/null; then
+	#afplay is shipped with OS X Leopard
+	PLAYER=afplay
+elif type -a play &>/dev/null; then
+	PLAYER=play
+elif type -a mplayer &>/dev/null; then
+	PLAYER="mplayer -nogui -nocache"
+fi
+
+if [ "x${PLAYER}" = "x" ]; then
+	echo "Can't find audio player!"
+	echo "Please make sure you have aplay, play or mplayer in your path."
+	if [ "`uname`" = "Darwin" ]; then
+		echo "A working play for OS X is available from:"
+		echo "http://www.hieper.nl/html/play.html"
+	fi
+else
+	exec ${PLAYER} "$@" >/dev/null 2>&1
+fi

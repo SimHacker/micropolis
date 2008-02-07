@@ -38,6 +38,12 @@
 #include "tclhash.h"
 #endif
 
+#define META_MASK	(AnyModifier<<1)
+#define ALT_MASK	(AnyModifier<<2)
+
+#define ALL_BUTTONS \
+	(Button1Mask|Button2Mask|Button3Mask|Button4Mask|Button5Mask)
+
 /*
  * One of the following structures is maintained for each display
  * containing a window managed by Tk:
@@ -77,7 +83,11 @@ typedef struct TkDisplay {
     KeySym *keySyms;		/* Array of KeySyms, returned by
 				 * XGetKeyboardMapping. */
 
-    /*
+    unsigned int modeModMask;
+    unsigned int metaModMask;
+    unsigned int altModMask; 
+
+   /*
      * Information used by tkError.c only:
      */
 

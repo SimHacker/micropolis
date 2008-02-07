@@ -498,8 +498,6 @@ TkPointerEvent(eventPtr, winPtr)
     int appGrabbed = 0;			/* Non-zero means event is being
 					 * reported to an application that is
 					 * affected by the grab. */
-#define ALL_BUTTONS \
-	(Button1Mask|Button2Mask|Button3Mask|Button4Mask|Button5Mask)
     static unsigned int state[] = {
 	Button1Mask, Button2Mask, Button3Mask, Button4Mask, Button5Mask
     };

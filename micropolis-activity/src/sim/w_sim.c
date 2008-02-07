@@ -145,6 +145,7 @@ SIMCMD_CALL(StartBulldozer)
 SIMCMD_CALL(StopBulldozer)
 SIMCMD_CALL(MakeFire)
 SIMCMD_CALL(MakeFlood)
+SIMCMD_CALL(MakeAirCrash)
 SIMCMD_CALL(MakeTornado)
 SIMCMD_CALL(MakeEarthquake)
 SIMCMD_CALL(MakeMonster)
@@ -1512,6 +1513,23 @@ int SimCmdSugarMode(ARGS)
 }
 
 
+int SimCmdHasAirCrash(ARGS)
+{
+  int aircrash = 0;
+
+  if (argc != 2) {
+    return (TCL_ERROR);
+  }
+
+#ifndef NO_AIRCRASH
+  aircrash = 1;
+#endif
+
+  sprintf(interp->result, "%d", aircrash);
+  return (TCL_OK);
+}
+
+
 /************************************************************************/
 
 int
@@ -1567,6 +1585,7 @@ sim_command_init()
   SIM_CMD(StopBulldozer);
   SIM_CMD(MakeFire);
   SIM_CMD(MakeFlood);
+  SIM_CMD(MakeAirCrash);
   SIM_CMD(MakeTornado);
   SIM_CMD(MakeEarthquake);
   SIM_CMD(MakeMonster);
@@ -1674,4 +1693,5 @@ sim_command_init()
   SIM_CMD(NeedRest);
   SIM_CMD(MultiPlayerMode);
   SIM_CMD(SugarMode);
+  SIM_CMD(HasAirCrash);
 }

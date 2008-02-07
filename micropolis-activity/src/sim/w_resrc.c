@@ -71,7 +71,7 @@
 #endif
 
 
-char *HomeDir, *ResourceDir, *KeyDir, *HostName;
+char *HomeDir, *ResourceDir, *KeyDir, *HostName = "";
 
 struct Resource *Resources = NULL;
 

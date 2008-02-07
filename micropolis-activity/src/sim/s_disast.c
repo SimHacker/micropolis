@@ -97,6 +97,7 @@ DoDisasters(void)
       MakeFlood();
       break;
     case 4:
+      MakeAirCrash();
       break;
     case 5:
       MakeTornado();

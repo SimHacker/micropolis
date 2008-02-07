@@ -1083,44 +1083,52 @@ cam_load_rule(Cam *cam, char *filename)
   FILE *fp;
   QUAD magic, neighborhood, rule_size;
   Byte *rule;
+  int test = 1;
 
   if ((fp = fopen(filename, "r")) == NULL) {
     fprintf(stderr, "cam: Can't open rule file \"%s\"\n", filename);
     return;
   }
 
-/* XXX: Make this byte order independent!!! */
-
-#if defined(MSDOS) || defined(OSF1) || defined(IS_INTEL)
-
 #define SWAPQUAD(x) ((x = ((x <<24) & 0xff000000) | \
 			  ((x <<8)  & 0x00ff0000) | \
 			  ((x >>8)  & 0x0000ff00) | \
 			  ((x >>24) & 0x000000ff)), 0)
 
-#else
 
-#define SWAPQUAD(x) 0
+    /* XXX: Make this byte order independent!!! */
 
-#endif
-
-  if ((fread(&magic, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
-      SWAPQUAD(magic) ||
-      (magic != 0xcac0cac0) ||
-      (fread(&neighborhood, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
-      SWAPQUAD(neighborhood) ||
-      (fread(&rule_size, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
-      SWAPQUAD(rule_size) ||
-      ((rule = (Byte *)malloc(rule_size)) == NULL) ||
-      (fread(rule, 1, rule_size, fp) != rule_size)) {
-    fprintf(stderr, "cam: Bad rule file \"%s\"\n", filename);
-    fclose(fp);
-    return;
+  if ((*(unsigned char*) (&test))) {
+    if ((fread(&magic, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        SWAPQUAD(magic) ||
+        (magic != 0xcac0cac0) ||
+        (fread(&neighborhood, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        SWAPQUAD(neighborhood) ||
+        (fread(&rule_size, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        SWAPQUAD(rule_size) ||
+        ((rule = (Byte *)malloc(rule_size)) == NULL) ||
+        (fread(rule, 1, rule_size, fp) != rule_size)) {
+      fprintf(stderr, "cam: Bad rule file \"%s\"\n", filename);
+      fclose(fp);
+      return;
+    }
+  } else {
+    if ((fread(&magic, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        (magic != 0xcac0cac0) ||
+        (fread(&neighborhood, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        (fread(&rule_size, 1, sizeof(QUAD), fp) != sizeof(QUAD)) ||
+        ((rule = (Byte *)malloc(rule_size)) == NULL) ||
+        (fread(rule, 1, rule_size, fp) != rule_size)) {
+      fprintf(stderr, "cam: Bad rule file \"%s\"\n", filename);
+      fclose(fp);
+      return;
+    }
   }
 
   fclose(fp);
-  if (cam->rule != NULL)
+  if (cam->rule != NULL) {
     free(cam->rule);
+  }
   cam->rule = rule;
   cam->rule_size = rule_size;
   cam_set_neighborhood(cam, neighborhood);

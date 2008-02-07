@@ -11,12 +11,12 @@ CC = gcc
 OPTFLAGS = -O3
 #OPTFLAGS = -g
 
-#DEFINES = -DIS_LINUX -DIS_INTEL -DCAM -DNET
-DEFINES = -DIS_LINUX -DIS_INTEL
+#DEFINES = -DIS_LINUX -DCAM -DNET
+DEFINES = -DIS_LINUX -DNO_AIRCRASH
 
 CFLAGS = $(OPTFLAGS) $(DEFINES)
 
-#LDFLAGS = -Bstatic
+LDFLAGS = -L/usr/X11/lib -L/usr/X11R6/lib
 
 INSTALL = install -s
 
@@ -98,7 +98,7 @@ all: sim
 lint:
 	alint $(INCLUDES) $(SRCS) > LINT
 
-sim: $(ALLOBJS)
+sim: $(ALLOBJS) $(TCLXHOME)/libtk.a $(TCLXHOME)/libtcl.a
 	$(CC) $(CFLAGS) $(LDFLAGS) $(INCLUDES) $(ALLOBJS) $(LIBS) -o sim
 
 clean:

@@ -89,7 +89,7 @@ SetHelp $win Scenario
 canvas $win.canvas \
   -scrollincrement 0 \
   -borderwidth 0 \
-  -background #000000 \
+  -background #BFBFBF \
   -width 1200 -height 900
 LinkWindow $win.canvas $win.canvas
 LinkWindow $win.canvas.w $win
