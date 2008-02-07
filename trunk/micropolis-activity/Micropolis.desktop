@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+Name=Micropolis
+GenericName=Micropolis City Simulation Game
+Comment=City simulation game, open sourced from original SimCity(tm)
+Icon=micropolis.png
+Exec=micropolis
+Terminal=false
+StartupNotify=false
+Categories=Game;Simulation;

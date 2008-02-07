@@ -239,7 +239,7 @@ Tcl_IdCmd (clientData, interp, argc, argv)
                                   " process group [set]", (char *) NULL);
                 return TCL_ERROR;
             }
-            setpgrp ();
+            setpgid(getpid(), getpid());
             return TCL_OK;
         }
         Tcl_AppendResult (interp, tclXWrongArgs, argv [0], 

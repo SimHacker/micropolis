@@ -219,7 +219,8 @@ drawFireRadius(SimView *view)
   short x, y;
 
   drawAll(view);
-  for (x = 0; x < SmY; x++) {
+
+  for (x = 0; x < SmX; x++) { // Oops: was SmY. Nice catch!
     for (y = 0; y < SmY; y++) {
       maybeDrawRect(view, GetCI(FireRate[x][y]),
 		    x * 24, y * 24, 24, 24);
@@ -406,25 +407,16 @@ drawRect(SimView *view, int pixel, int solid,
 	unsigned char *image = 
 	  &data[(line * y) + (x * pixelBytes)];
 
-	if (solid) {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
+	for (i = h; i > 0; i--) {
+	  for (j = w; j > 0; j--) {
+	    if (solid || (stipple++ & 1)) {
 	      *image = pixel;
-	      image++;
 	    }
-	    image += line - w;
 	  }
-	} else {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
-	      if (stipple++ & 1)
-		*image = pixel;
-	      image++;
-	    }
-	    if (!(w & 1))
-	      stipple++;
-	    image += line - w;
+	  if (!(w & 1)) {
+	    stipple++;
 	  }
+	  image += line - w;
 	}
       }
       break;
@@ -438,25 +430,21 @@ drawRect(SimView *view, int pixel, int solid,
 	image = 
 	  &data[(line * y) + x];
 
-	if (solid) {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
-	      *image = pixel;
-	      image++;
+	for (i = h; i > 0; i--) {
+	  for (j = w; j > 0; j--) {
+	    if (solid || (stipple++ & 1)) {
+	      if (view->x->x_big_endian) {
+	        *image = ((pixel & 0xff) << 8) | ((pixel & 0xff00) >> 8);
+	      } else {
+	        *image = pixel;
+	      }
 	    }
-	    image += line - w;
+	    image++;
 	  }
-	} else {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
-	      if (stipple++ & 1)
-		*image = pixel;
-	      image++;
-	    }
-	    if (!(w & 1))
-	      stipple++;
-	    image += line - w;
+	  if (!(w & 1)) {
+	    stipple++;
 	  }
+	  image += line - w;
 	}
       }
       break;
@@ -467,41 +455,38 @@ drawRect(SimView *view, int pixel, int solid,
 	unsigned char *data = 
 	  (unsigned char *)view->data;
 	unsigned char *image;
-	int bitmapPad = view->x->small_tile_image->bitmap_pad;
-	int rowBytes = view->x->small_tile_image->bytes_per_line;
-	line = rowBytes >> 1; /* Convert from byte offset to short offset */
 	image = 
-	  &data[(line * y) + x];
-
-	if (solid) {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
-	      *(image++) = (pixel >> 0) & 0xff;
-	      *(image++) = (pixel >> 8) & 0xff;
-	      *(image++) = (pixel >> 16) & 0xff;
-	      if (bitmapPad == 32) {
+	  &data[(line * y) + (x * pixelBytes)];
+	for (i = h; i > 0; i--) {
+	  for (j = w; j > 0; j--) {
+	    if (view->x->x_big_endian) {
+	      if (pixelBytes == 4) {
+	        image++;
+	      }
+	      if (solid || stipple++ & 1) {
+	        *(image++) = (pixel >> 16) & 0xff;
+	        *(image++) = (pixel >> 8) & 0xff;
+	        *(image++) = (pixel >> 0) & 0xff;
+	      } else {
+	        image += 3;
+	      }
+	    } else {
+	      if (solid || stipple++ & 1) {
+	        *(image++) = (pixel >> 0) & 0xff;
+	        *(image++) = (pixel >> 8) & 0xff;
+	        *(image++) = (pixel >> 16) & 0xff;
+	      } else {
+	        image += 3;
+	      }
+	      if (pixelBytes == 4) {
 	        image++;
 	      }
 	    }
-	    image += line - w;
 	  }
-	} else {
-	  for (i = h; i > 0; i--) {
-	    for (j = w; j > 0; j--) {
-	      if (stipple++ & 1) {
-		*(image++) = (pixel >> 0) & 0xff;
-		*(image++) = (pixel >> 8) & 0xff;
-		*(image++) = (pixel >> 16) & 0xff;
-	        if (bitmapPad == 32) {
-		  image++;
-		}
-	      }
-	    }
-	    if (!(w & 1)) {
-	      stipple++;
-	    }
-	    image += line - w;
+	  if (!(w & 1)) {
+	    stipple++;
 	  }
+	  image += line - (w * pixelBytes);
 	}
       }
       break;

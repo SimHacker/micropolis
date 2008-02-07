@@ -125,6 +125,7 @@ LinkWindow $win.zones $win.topframe.zones
 tk_bindForTraversal $win.topframe.zones
 bind $win.topframe.zones <F10> {tk_firstMenu %W} 
 bind $win.topframe.zones <Mod2-Key> {tk_traverseToMenu %W %A} 
+bind $win.topframe.zones <Alt-Key> {tk_traverseToMenu %W %A} 
 tk_menus $win $win.topframe.zones
 
 SetHelp $win.topframe.zones Map.Zones
@@ -134,6 +135,7 @@ menu $win.topframe.zones.m\
 tk_bindForTraversal $win.topframe.zones.m
 bind $win.topframe.zones.m <F10> {tk_firstMenu %W} 
 bind $win.topframe.zones.m <Mod2-Key> {tk_traverseToMenu %W %A} 
+bind $win.topframe.zones.m <Alt-Key> {tk_traverseToMenu %W %A} 
   $win.topframe.zones.m add radiobutton\
     -label {All}\
     -variable MapState.$win\
@@ -177,6 +179,7 @@ LinkWindow $win.overlays $win.topframe.overlays
 tk_bindForTraversal $win.topframe.overlays
 bind $win.topframe.overlays <F10> {tk_firstMenu %W} 
 bind $win.topframe.overlays <Mod2-Key> {tk_traverseToMenu %W %A} 
+bind $win.topframe.overlays <Alt-Key> {tk_traverseToMenu %W %A} 
 tk_menus $win $win.topframe.overlays
 
 SetHelp $win.topframe.overlays Map.Overlays
@@ -186,6 +189,7 @@ menu $win.topframe.overlays.m\
 tk_bindForTraversal $win.topframe.overlays.m
 bind $win.topframe.overlays.m <F10> {tk_firstMenu %W} 
 bind $win.topframe.overlays.m <Mod2-Key> {tk_traverseToMenu %W %A} 
+bind $win.topframe.overlays.m <Alt-Key> {tk_traverseToMenu %W %A} 
   $win.topframe.overlays.m add radiobutton\
     -label {Population Density}\
     -variable MapState.$win\

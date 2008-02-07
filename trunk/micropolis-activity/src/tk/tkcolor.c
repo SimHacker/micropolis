@@ -484,42 +484,68 @@ Tk_VisInfo(Screen *screen)
 #else
 	scrnum = Tk_IndexOfScreen(screen);
 	vTemplate.screen = scrnum;
-	vTemplate.depth = 8;
-	vTemplate.class = PseudoColor;
+	vTemplate.class = TrueColor;
 	visualList =
 	  XGetVisualInfo(DisplayOfScreen(screen),
 			 VisualScreenMask |
-			 VisualDepthMask |
 			 VisualClassMask,
 			 &vTemplate, &visualsMatched);
-	if (visualsMatched > 0) {
-	    info->visual = visualList[0].visual;
-	    info->depth = 8;
-	    info->pixmap = XCreatePixmap(screen->display,
-					 RootWindowOfScreen(screen),
-					 1, 1, 8);
-//fprintf(stderr, "TK_CreateColormap %d\n", TK_CreateColormap);
-	    if ((TK_CreateColormap == 0) &&
-		(info->visual == DefaultVisualOfScreen(screen))) {
-	      info->colormap = DefaultColormapOfScreen(screen);
-	      info->gc = DefaultGCOfScreen(screen);
-	    } else {
-	      info->colormap =
-		XCreateColormap(screen->display,
-				RootWindowOfScreen(screen),
-				info->visual, AllocNone);
-	      info->gc =
-		XCreateGC(screen->display,
-			  info->pixmap, 0, &values);
-	    }
-	} else {
+	info->visual = NULL;
+
+	if (visualList != NULL) {
+	  int i;
+	  for (i = 0; i < visualsMatched; i++) {
+	      if (visualList[i].depth > 24) {
+		continue; /* Most likely broken */
+	      }
+
+	      info->visual = visualList[i].visual;
+	      info->depth = visualList[i].depth;
+
+	      break;
+	  }
+	}
+
+	if (info->visual == NULL) {
 	    info->visual = XDefaultVisualOfScreen(screen);
 	    info->depth = XDefaultDepthOfScreen(screen);
-	    info->pixmap = XCreatePixmap(screen->display,
-					 RootWindowOfScreen(screen),
-					 1, 1, info->depth);
 	    info->colormap = XDefaultColormapOfScreen(screen);
 	    info->gc = DefaultGCOfScreen(screen);
+
+	    if (info->depth == 8) {
+	      vTemplate.screen = scrnum;
+	      vTemplate.class = PseudoColor;
+	      vTemplate.depth = 8;
+	      visualList = XGetVisualInfo(DisplayOfScreen(screen),
+	      		VisualScreenMask |
+			VisualDepthMask |
+			VisualClassMask,
+			&vTemplate, &visualsMatched);
+
+	      if (visualsMatched > 0) {
+	          info->visual = visualList[0].visual;
+	          info->depth = visualList[0].depth;
+
+	      }
+	    }
+	}
+
+	info->pixmap = XCreatePixmap(screen->display,
+				 RootWindowOfScreen(screen),
+				 1, 1, info->depth);
+	
+	if ((TK_CreateColormap == 0) &&
+	    (info->visual == DefaultVisualOfScreen(screen))) {
+	  info->colormap = DefaultColormapOfScreen(screen);
+	  info->gc = DefaultGCOfScreen(screen);
+	} else {
+	  info->colormap =
+	     XCreateColormap(screen->display,
+	     	RootWindowOfScreen(screen),
+	     	info->visual, AllocNone);
+	  info->gc =
+	     XCreateGC(screen->display,
+	       info->pixmap, 0, &values);
 	}
 
 	XFree((char *)visualList);

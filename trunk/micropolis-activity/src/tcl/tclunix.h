@@ -101,12 +101,6 @@
  */
 
 extern int errno;
-#ifndef __APPLE__
-extern int sys_nerr;
-#endif
-//#ifndef IS_LINUX
-//extern char *sys_errlist[];
-//#endif
 
 /*
  * The type of the status returned by wait varies from UNIX system

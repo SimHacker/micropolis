@@ -1488,7 +1488,7 @@ ConfigureCanvas(interp, canvasPtr, argc, argv, flags)
 
 #if defined(USE_XPM3)
 //#include "xpmtk.h"
-#include <xpm.h>
+#include <X11/xpm.h>
 /*
  *--------------------------------------------------------------
  *

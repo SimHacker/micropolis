@@ -974,7 +974,7 @@ ScrollbarMouseProc(clientData, eventPtr)
 		    eventPtr->xmotion.y));
 	}
     } else if ((eventPtr->type == ButtonPress)
-	    && (eventPtr->xbutton.state == 0)) {
+	    && ((eventPtr->xbutton.state & ALL_BUTTONS) == 0)) {
 	scrollPtr->pressField = scrollPtr->mouseField;
 	if (scrollPtr->pressField != SLIDER) {
 	    scrollPtr->autoRepeat = Tk_CreateTimerHandler(

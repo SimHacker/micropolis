@@ -327,28 +327,44 @@ FindXDisplay(Tk_Window tkwin)
 	      color->pixel; \
 	    break; \
 	  case 15: \
-	    xd->pixels[i] = \
-	      (((color->red >> (8 + 3)) & 0x1f) << (5 + 5)) | \
-	      (((color->green >> (8 + 2)) & 0x1f) << (5)) | \
-	      (((color->blue >> (8 + 3)) & 0x1f) << (0)); \
+	    if (xd->visual->red_mask == 0x7c00) { \
+	      xd->pixels[i] = \
+		(((color->red >> (8 + 3)) & 0x1f) << (5 + 5)) | \
+		(((color->green >> (8 + 2)) & 0x1f) << (5)) | \
+		(((color->blue >> (8 + 3)) & 0x1f) << (0)); \
+	    } else { \
+	      xd->pixels[i] = \
+	       (((color->blue >> (8 + 3)) & 0x1f) << (5 + 5)) | \
+	       (((color->green >> (8 + 2)) & 0x1f) << (5)) | \
+	       (((color->red >> (8 + 3)) & 0x1f) << (0)); \
+	    } \
 	    break; \
 	  case 16: \
-	    xd->pixels[i] = \
-	      (((color->red >> (8 + 3)) & 0x1f) << (6 + 5)) | \
-	      (((color->green >> (8 + 2)) & 0x3f) << (5)) | \
-	      (((color->blue >> (8 + 3)) & 0x1f) << (0)); \
+	    if (xd->visual->red_mask == 0xf800) { \
+	      xd->pixels[i] = \
+		(((color->red >> (8 + 3)) & 0x1f) << (6 + 5)) | \
+		(((color->green >> (8 + 2)) & 0x3f) << (5)) | \
+		(((color->blue >> (8 + 3)) & 0x1f) << (0)); \
+	    } else { \
+	      xd->pixels[i] = \
+		(((color->blue >> (8 + 3)) & 0x1f) << (6 + 5)) | \
+		(((color->green >> (8 + 2)) & 0x3f) << (5)) | \
+		(((color->red >> (8 + 3)) & 0x1f) << (0)); \
+	    } \
 	    break; \
 	  case 24: \
-	    xd->pixels[i] = \
-	      ((color->red & 0xff) << 16) | \
-	      ((color->green & 0xff) << 8) | \
-	      ((color->blue & 0xff) << 0); \
-	    break; \
 	  case 32: \
-	    xd->pixels[i] = \
-	      ((color->red & 0xff) << 16) | \
-	      ((color->green & 0xff) << 8) | \
-	      ((color->blue & 0xff) << 0); \
+	    if (xd->visual->red_mask == 0xff0000) { \
+	      xd->pixels[i] = \
+		((color->red & 0xff) << 16) | \
+		((color->green & 0xff) << 8) | \
+		((color->blue & 0xff) << 0); \
+	    } else { \
+	      xd->pixels[i] = \
+		((color->blue & 0xff) << 16) | \
+		((color->green & 0xff) << 8) | \
+		((color->red & 0xff) << 0); \
+	    } \
 	    break; \
 	  } \
 	} \
@@ -488,6 +504,7 @@ SimView *
 InitNewView(SimView *view, char *title, int class, int w, int h)
 {
   int type, i;
+  int test = 1;
   int d = 8;
   unsigned long valuemask = 0;
   char *t;
@@ -582,6 +599,9 @@ InitNewView(SimView *view, char *title, int class, int w, int h)
     view->type = X_Mem_View;
   }
 
+  view->x->needs_swap = !(*(unsigned char*) (&test));
+  view->x->x_big_endian = (ImageByteOrder(view->x->dpy) == MSBFirst);
+
   GetPixmaps(view->x);
   view->pixels = view->x->pixels;
 
@@ -590,8 +610,6 @@ InitNewView(SimView *view, char *title, int class, int w, int h)
 
   view->pan_x = w / 2; view->pan_y = h / 2;
   DoResizeView(view, w, h);
-
-  GetViewTiles(view);
 
   return (view);
 }
@@ -822,7 +840,7 @@ DoResizeView(SimView *view, int w, int h)
     }
 
     view->image =
-      XShmCreateImage(view->x->dpy, view->x->visual, view->x->depth,
+      XShmCreateImage(view->x->dpy, view->x->visual, (unsigned int)view->x->depth,
 		      view->x->color ? ZPixmap : XYBitmap,
 		      NULL, view->shminfo,
 		      view->m_width, view->m_height);
@@ -916,7 +934,7 @@ DoResizeView(SimView *view, int w, int h)
       if (!GotXError) {
 	attached = 1;
 	view->pixmap = XShmCreatePixmap(view->x->dpy, view->x->root,
-					view->data, view->shminfo,
+					(char *)view->data, view->shminfo,
 					view->m_width, view->m_height,
 					view->x->depth);
 	XSync(view->x->dpy, False);
@@ -1138,7 +1156,7 @@ DoResizeView(SimView *view, int w, int h)
 	  view->pixel_bytes = 2;
 	  view->depth = 15;
 	  bitmap_pad = 16;
-	  bitmap_depth = 16;
+	  bitmap_depth = 15;
 	  view->line_bytes8 =
 	    ((view->m_width * view->pixel_bytes) + 3) & (~3);
 	  break;
@@ -1154,9 +1172,8 @@ DoResizeView(SimView *view, int w, int h)
 
 	case 24:
 	  view->pixel_bytes = 4;
-	  //view->pixel_bytes = 3;
 	  view->depth = 24;
-	  bitmap_depth = 32;
+	  bitmap_depth = 24;
 	  bitmap_pad = 32;
 	  view->line_bytes8 =
 	    ((view->m_width * 4) + 3) & (~3);
@@ -1224,6 +1241,9 @@ DoResizeView(SimView *view, int w, int h)
       }
     }
   }
+
+  GetViewTiles(view);
+
 }
 
 

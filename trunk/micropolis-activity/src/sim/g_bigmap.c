@@ -169,6 +169,15 @@ MemDrawBeegMapRect(SimView *view, int x, int y, int w, int h)
 #define ROW8_16(n) ROW4_16(n) ROW4_16(n+4)
 #define ROW16_16() ROW8_16(0) ROW8_16(8)
 
+#define ROW1_32(n) \
+      memcpy((char *)image, (char *)mem + (4 * 16 * (n)), 4 * 16); \
+      image = (unsigned QUAD *)(((unsigned char *)image) + lineBytes);
+
+#define ROW2_32(n) ROW1_32(n) ROW1_32(n+1)
+#define ROW4_32(n) ROW2_32(n) ROW2_32(n+2)
+#define ROW8_32(n) ROW4_32(n) ROW4_32(n+4)
+#define ROW16_32() ROW8_32(0) ROW8_32(8)
+
 	  switch (view->x->depth) {
 
 	  case 8:
@@ -183,7 +192,7 @@ MemDrawBeegMapRect(SimView *view, int x, int y, int w, int h)
 	  case 24:
 	  case 32:
 	  default:
-	    /* XXX: handle different depths */
+	    ROW16_32();
 	    break;
 
 	  } // switch

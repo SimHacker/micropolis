@@ -43,15 +43,10 @@
         static int month, day, year;
         static int ourzone;
 
-#if 0
 	static time_t timeconv(int hh, int mm, int ss, int mer);
 	static time_t daylcorr(time_t future, time_t now);
-	static lookup(char *id);
-#else
-	static time_t timeconv();
-	static time_t daylcorr();
-	static lookup();
-#endif
+	static int lookup(char *id);
+	static void yyerror(const char *msg);
 
 #define AM 1
 #define PM 2
@@ -64,78 +59,78 @@
 timedate:               /* empty */
         | timedate item;
 
-item:   tspec =
+item:   tspec
                 {timeflag++;}
-        | zone =
+        | zone
                 {zoneflag++;}
-        | dtspec =
+        | dtspec
                 {dateflag++;}
-        | dyspec =
+        | dyspec
                 {dayflag++;}
-        | rspec =
+        | rspec
                 {relflag++;}
         | nspec;
 
-nspec:  NUMBER =
+nspec:  NUMBER
                 {if (timeflag && dateflag && !relflag) year = $1;
                 else {timeflag++;hh = $1/100;mm = $1%100;ss = 0;merid = 24;}};
 
-tspec:  NUMBER MERIDIAN =
+tspec:  NUMBER MERIDIAN
                 {hh = $1; mm = 0; ss = 0; merid = $2;}
-        | NUMBER ':' NUMBER =
+        | NUMBER ':' NUMBER
                 {hh = $1; mm = $3; merid = 24;}
-        | NUMBER ':' NUMBER MERIDIAN =
+        | NUMBER ':' NUMBER MERIDIAN
                 {hh = $1; mm = $3; merid = $4;}
-        | NUMBER ':' NUMBER NUMBER =
+        | NUMBER ':' NUMBER NUMBER
                 {hh = $1; mm = $3; merid = 24;
                 dayLight = STANDARD; ourzone = -($4%100 + 60*$4/100);}
-        | NUMBER ':' NUMBER ':' NUMBER =
+        | NUMBER ':' NUMBER ':' NUMBER
                 {hh = $1; mm = $3; ss = $5; merid = 24;}
-        | NUMBER ':' NUMBER ':' NUMBER MERIDIAN =
+        | NUMBER ':' NUMBER ':' NUMBER MERIDIAN
                 {hh = $1; mm = $3; ss = $5; merid = $6;}
-        | NUMBER ':' NUMBER ':' NUMBER NUMBER =
+        | NUMBER ':' NUMBER ':' NUMBER NUMBER
                 {hh = $1; mm = $3; ss = $5; merid = 24;
                 dayLight = STANDARD; ourzone = -($6%100 + 60*$6/100);};
 
-zone:   ZONE =
+zone:   ZONE
                 {ourzone = $1; dayLight = STANDARD;}
-        | DAYZONE =
+        | DAYZONE
                 {ourzone = $1; dayLight = DAYLIGHT;};
 
-dyspec: DAY =
+dyspec: DAY
                 {dayord = 1; dayreq = $1;}
-        | DAY ',' =
+        | DAY ','
                 {dayord = 1; dayreq = $1;}
-        | NUMBER DAY =
+        | NUMBER DAY
                 {dayord = $1; dayreq = $2;};
 
-dtspec: NUMBER '/' NUMBER =
+dtspec: NUMBER '/' NUMBER
                 {month = $1; day = $3;}
-        | NUMBER '/' NUMBER '/' NUMBER =
+        | NUMBER '/' NUMBER '/' NUMBER
                 {month = $1; day = $3; year = $5;}
-        | MONTH NUMBER =
+        | MONTH NUMBER
                 {month = $1; day = $2;}
-        | MONTH NUMBER ',' NUMBER =
+        | MONTH NUMBER ',' NUMBER
                 {month = $1; day = $2; year = $4;}
-        | NUMBER MONTH =
+        | NUMBER MONTH
                 {month = $2; day = $1;}
-        | NUMBER MONTH NUMBER =
+        | NUMBER MONTH NUMBER
                 {month = $2; day = $1; year = $3;};
 
 
-rspec:  NUMBER UNIT =
+rspec:  NUMBER UNIT
                 {relsec +=  60L * $1 * $2;}
-        | NUMBER MUNIT =
+        | NUMBER MUNIT
                 {relmonth += $1 * $2;}
-        | NUMBER SUNIT =
+        | NUMBER SUNIT
                 {relsec += $1;}
-        | UNIT =
+        | UNIT
                 {relsec +=  60L * $1;}
-        | MUNIT =
+        | MUNIT
                 {relmonth += $1;}
-        | SUNIT =
+        | SUNIT
                 {relsec++;}
-        | rspec AGO =
+        | rspec AGO
                 {relsec = -relsec; relmonth = -relmonth;};
 %%
 
@@ -146,12 +141,11 @@ static int mdays[12] =
 extern struct tm *localtime();
 
 static
-time_t dateconv(mm, dd, yy, h, m, s, mer, zone, dayflag)
-int mm, dd, yy, h, m, s, mer, zone, dayflag;
+time_t dateconv(int mm, int dd, int yy, int h, int m, int s, int mer, int zone, int dayflag)
 {
         time_t tod, jdate;
         register int i;
-        time_t timeconv();
+        time_t timeconv(int hh, int mm, int ss, int mer);
 
         if (yy < 0) yy = -yy;
         if (yy < 100) yy += 1900;
@@ -171,7 +165,7 @@ int mm, dd, yy, h, m, s, mer, zone, dayflag;
 }
 
 static
-time_t dayconv(ord, day, now) int ord, day; time_t now;
+time_t dayconv(int ord, int day, time_t now)
 {
         register struct tm *loctime;
         time_t tod;
@@ -185,7 +179,7 @@ time_t dayconv(ord, day, now) int ord, day; time_t now;
 }
 
 static
-time_t timeconv(hh, mm, ss, mer) register int hh, mm, ss, mer;
+time_t timeconv(int hh, int mm, int ss, int mer)
 {
         if (mm < 0 || mm > 59 || ss < 0 || ss > 59) return (-1);
         switch (mer) {
@@ -228,7 +222,6 @@ time_t daylcorr(future, now) time_t future, now;
 
 static char *lptr;
 
-static
 yylex()
 {
 #ifndef YYSTYPE
@@ -459,7 +452,7 @@ struct table milzone[] = {
         {0, 0, 0}};
 
 static
-lookup(id) char *id;
+int lookup(char *id)
 {
 #define gotit (yylval=i->value,  i->type)
 #define getid for(j=idvar, k=id; *j++ = *k++; )
@@ -520,10 +513,10 @@ lookup(id) char *id;
 }
 
 time_t
-Tcl_GetDate (p, now, zone)
-    char   *p;
-    time_t  now;
-    long    zone;
+Tcl_GetDate (
+    char   *p,
+    time_t  now,
+    long    zone)
 {
 #define mcheck(f)       if (f>1) err++
         time_t monthadd();
@@ -581,7 +574,6 @@ Tcl_GetDate (p, now, zone)
  */
 
 void
-yyerror(msg)
-    char *msg;
+yyerror(const char *msg)
 {
 }

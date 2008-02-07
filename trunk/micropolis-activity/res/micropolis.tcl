@@ -97,6 +97,7 @@ set DemandCom 0
 set DemandInd 0
 set Priority 2
 set Time 3
+set Pause 0
 set AutoGoto 1
 set AutoBudget 1
 set Disasters 1
@@ -412,8 +413,8 @@ sim ResetDynamic
 # the font in res (because it's already in the system fonts).  These lines
 # are for other systems that lack the font.
 set FontPath "[pwd]/res/dejavu-lgc"
-system "xset -fp $FontPath >&/dev/null"
-system "xset +fp $FontPath >&/dev/null"
+system "xset -fp \"$FontPath\" >&/dev/null"
+system "xset +fp \"$FontPath\" >&/dev/null"
 
 
 ########################################################################
@@ -484,7 +485,7 @@ Either clean up your act or open a gas mask concession at city hall.} \
 {{view {PanView $v [sim PolMaxX] [sim PolMaxY]}}}
 
 Message 11 #ff4f4f {CRIME ALERT!} \
-{Crime in your city is our of hand.  Angry mobs are looting and vandalizing the central city.  The president will send in the national guard soon if you cannot control the problem.} \
+{Crime in your city is out of hand.  Angry mobs are looting and vandalizing the central city.  The president will send in the national guard soon if you cannot control the problem.} \
 {{view {PanView $v [sim CrimeMaxX] [sim CrimeMaxY]}}}
 
 Message 12 #ff4f4f {TRAFFIC WARNING!} \
@@ -945,19 +946,28 @@ proc EchoPlaySound {soundspec} {
 }
 
 
-proc UIMakeSoundOn {win chan sound {opts ""}} {
-  # Send message to Python to play sound.
-  EchoPlaySound $sound
+proc RunPlaySound {soundspec} {
+  global Sound ResourceDir
+    if {$Sound} {
+      signal ignore SIGCHLD
+      exec "${ResourceDir}/sounds/player" "${ResourceDir}/sounds/[string tolower [lindex $soundspec 0]].wav" "&"
+    }
+}
 
+
+proc PlatformPlaySound {win chan sound opts} {
+  RunPlaySound $sound
+  #EchoPlaySound $sound
   #UIDoSoundOn $win "play $sound -replay -channel $chan $opts"
+}
+
+proc UIMakeSoundOn {win chan sound {opts ""}} {
+  PlatformPlaySound $win $chan $sound $opts
 }
 
 
 proc UIStartSoundOn {win chan sound {opts ""}} {
-  # Send message to Python to play sound.
-  EchoPlaySound $sound
-
-  #UIDoSoundOn $win "play $sound -replay -channel $chan -repeat 100 $opts"
+  PlatformPlaySound $win $chan $sound $opts
 }
 
 
@@ -967,18 +977,12 @@ proc UIStopSoundOn {win chan sound {opts ""}} {
 
 
 proc UIMakeSound {chan sound {opts ""}} {
-  # Send message to Python to play sound.
-  EchoPlaySound $sound
-
-  #UIDoSound "sound play $sound -replay -channel $chan $opts"
+  PlatformPlaySound "" $chan $sound $opts
 }
 
 
 proc UIStartSound {chan sound {opts ""}} {
-  # Send message to Python to play sound.
-  EchoPlaySound $sound
-
-  #UIDoSound "sound play $sound -channel $chan -repeat 100 $opts"
+  PlatformPlaySound "" $chan $sound $opts
 }
 
 
@@ -2041,13 +2045,15 @@ proc DoFileDialog {win Message Path Pattern FileName ActionOk ActionCancel} {
       wm withdraw $win"
   bind $win.files.files "<Double-Button-1>" "\
     FileSelectDouble $win %W %y $Pattern \"
-	$ActionOk \[$win.file.file get\] \[$win.path.path get\]\""
+	$ActionOk {\[$win.file.file get\]} {\[$win.path.path get\]}\""
+  # TODO: Should we put {brackets} around path and file here too?
   bind $win.path.path <Return> "
     ShowFileDialog $win \[$win.path.path get\] $Pattern
     $win.file.file cursor 0
     focus $win.file.file"
+  # TODO: Should we put {brackets} around path and file here too?
   bind $win.file.file <Return> "\
-    $ActionOk \[$win.file.file get\] \[$win.path.path get]
+    $ActionOk \[$win.file.file get\] \[$win.path.path get\]
     wm withdraw $win"
 }
 
@@ -2283,18 +2289,21 @@ proc NameComplete {win Type} {
 
 proc ShowFileDialog {win Path Pattern} {
   busy $win {
-    set Path [lindex [split $Path] 0]
+    # TODO: Make sure commenting the following line out does not break other platforms than the Mac.
+    #set Path [lindex [split $Path] 0]
     if {[$win.files.files size] > 0} {
       $win.files.files delete 0 end
     }
     # read directory
-    if {[catch "exec ls -F $Path" Result]} {
+    if {[catch "exec ls -F \"$Path\"" Result]} {
       set ElementList {}
     }
     if {[string match $Result "* not found"]} {
       set ElementList {}
     }
-    set ElementList [lsort $Result]
+    # TODO: Make sure the following lines do not break other platforms than the Mac.
+    #set ElementList [lsort $Result]
+    set ElementList [lsort [split $Result "\n"]]
 
     # insert ..
     if {[string compare $Path "/"]} {
@@ -3100,7 +3109,9 @@ proc ShowSplashOf {head} {
 
 proc WithdrawSplashOf {head} {
   set win WindowLink $head.splash]
-  wm withdraw $win
+  if {$win != {}} {
+    wm withdraw $win
+  }
 }
 
 
@@ -3151,7 +3162,9 @@ proc ShowScenarioOf {head} {
 
 proc WithdrawScenarioOf {head} {
   set win WindowLink $head.scenario]
-  wm withdraw $win
+  if {$win != {}} {
+    wm withdraw $win
+  }
 }
 
 
@@ -3303,12 +3316,36 @@ proc UpdateScenarioButtonID {win id} {
 
 
 proc UpdateScenarioButton {win data} {
+  global Messages
+
   set type [lindex $data 0]
   set id [lindex $data 1]
   set over [WindowLink $win.$id.over]
   set enabled [WindowLink $win.$id.enabled]
   set checked [WindowLink $win.$id.checked]
+
   #echo "WIN $win TYPE $type ID $id OVER $over ENABLED $enabled CHECKED $checked"
+
+  if {$over} {
+    if {[lindex ${data} 2] == "DoPickScenario"} {
+      catch {text $win.desc \
+      	-borderwidth 2 \
+      	-relief flat \
+      	-wrap word \
+      	-state normal \
+      	-font [Font $win Large]}
+      
+      $win.desc configure -state normal
+      $win.desc delete 0.0 end
+      $win.desc insert end "[lindex $Messages([lindex ${data} 3]) 1]\n\n[lindex $Messages([lindex ${data} 3]) 2]"
+      $win.desc configure -state disabled
+      
+      place $win.desc -x 232 -y 170 -width 280 -height 285
+    }
+  } else {
+    catch {destroy $win.desc}
+  }
+
   if {$enabled} {
     if {$checked} {
       if {$over} {
@@ -3540,6 +3577,11 @@ proc DoPlay {win param} {
 proc DoPickScenario {win param} {
   #echo DOPICKSCENARIO $win $param
   UILoadScenario $param
+}
+
+
+proc DeleteScenarioWindow {win} {
+  UIQuit $win
 }
 
 
@@ -4907,12 +4949,14 @@ proc oops {} {
 
 
 proc TogglePause {} {
-  global State
+  global State Pause
 
   if {"$State" != "play" || [sim Speed]} {
     sim Speed 0
+    set Pause 1
   } else {
     sim Speed 3
+    set Pause 0
   }
   MakeRunningSound
 }
@@ -5119,7 +5163,7 @@ proc UIDoLoadCity {name path} {
   if {![string match *.cty $name]} {
     set name $name.cty
   }
-  MakeHistory "DoLoadCity $path/$name"
+    MakeHistory "DoLoadCity {$path/$name}"
 }
 
 
@@ -5214,8 +5258,14 @@ proc DoLeaveGame {head} {
 
 
 proc UILoseGame {} {
-  UIPickScenarioMode
+  global Messages
   UIShowPicture 200
+  sim Pause
+  AskQuestion [Color . #ff0000 #ffffff] [lindex $Messages(200) 1] \
+    [lindex $Messages(200) 2] \
+    ""\
+    ""\
+    "{Ok} SelectCity.Yes {UIPickScenarioMode}"
 }
 
 

@@ -1,7 +1,7 @@
 /* 
  * tclEnv.c --
  *
- *	Tcl support for environment variables, including a setenv
+ *	Tcl support for environment variables, including a setenv_tcl
  *	procedure.
  *
  * Copyright 1991 Regents of the University of California
@@ -57,13 +57,8 @@ static char *		EnvTraceProc _ANSI_ARGS_((ClientData clientData,
 			    int flags));
 static int		FindVariable _ANSI_ARGS_((char *name, int *lengthPtr));
 
-#ifdef IS_LINUX
-int			setenv _ANSI_ARGS_((const char *name, const char *value, int replace));
-int			unsetenv _ANSI_ARGS_((const char *name));
-#else
-void			setenv _ANSI_ARGS_((char *name, char *value));
-void			unsetenv _ANSI_ARGS_((char *name));
-#endif
+void			setenv_tcl _ANSI_ARGS_((char *name, char *value));
+int			unsetenv_tcl _ANSI_ARGS_((char *name));
 
 
 /*
@@ -188,7 +183,7 @@ FindVariable(name, lengthPtr)
 /*
  *----------------------------------------------------------------------
  *
- * setenv --
+ * setenv_tcl --
  *
  *	Set an environment variable, replacing an existing value
  *	or creating a new variable if there doesn't exist a variable
@@ -204,20 +199,11 @@ FindVariable(name, lengthPtr)
  *----------------------------------------------------------------------
  */
 
-#ifdef IS_LINUX
-int
-setenv(name, value, replace)
-    const char *name;		/* Name of variable whose value is to be
-				 * set. */
-    const char *value;		/* New value for variable. */
-    int replace;
-#else
 void
-setenv(name, value)
+setenv_tcl(name, value)
     char *name;			/* Name of variable whose value is to be
 				 * set. */
     char *value;		/* New value for variable. */
-#endif
 {
     int index, length, nameLength;
     char *p;
@@ -272,17 +258,12 @@ setenv(name, value)
     for (eiPtr= firstInterpPtr; eiPtr != NULL; eiPtr = eiPtr->nextPtr) {
 	(void) Tcl_SetVar2(eiPtr->interp, "env", (char *)name, p+1, TCL_GLOBAL_ONLY);
     }
-
-#ifdef IS_LINUX
-    return 0;
-#endif
-
 }
 
 /*
  *----------------------------------------------------------------------
  *
- * unsetenv --
+ * unsetenv_tcl --
  *
  *	Remove an environment variable, updating the "env" arrays
  *	in all interpreters managed by us.
@@ -297,12 +278,8 @@ setenv(name, value)
  */
 
 int
-unsetenv(name)
-#ifdef IS_LINUX
-    const char *name;			/* Name of variable to remove. */
-#else
+unsetenv_tcl(name)
     char *name;			/* Name of variable to remove. */
-#endif
 {
     int index, dummy;
     char **envPtr;
@@ -402,15 +379,15 @@ EnvTraceProc(clientData, interp, name1, name2, flags)
     }
 
     /*
-     * If a value is being set, call setenv to do all of the work.
+     * If a value is being set, call setenv_tcl to do all of the work.
      */
 
     if (flags & TCL_TRACE_WRITES) {
-	setenv(name2, Tcl_GetVar2(interp, "env", name2, TCL_GLOBAL_ONLY), 0);
+	setenv_tcl(name2, Tcl_GetVar2(interp, "env", name2, TCL_GLOBAL_ONLY));
     }
 
     if (flags & TCL_TRACE_UNSETS) {
-	unsetenv(name2);
+	unsetenv_tcl(name2);
     }
     return NULL;
 }

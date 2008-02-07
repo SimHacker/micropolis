@@ -91,9 +91,6 @@
 #include <assert.h>
 #include <ctype.h>
 #include <setjmp.h>
-#ifndef __APPLE__
-#include <malloc.h>
-#endif
 #include <errno.h>
 #include <signal.h>
 #include <math.h>
@@ -105,16 +102,13 @@
 #include <sys/ioctl.h>
 #include <sys/resource.h>
 #ifndef MSDOS
-#ifndef HPUX
-#include <alloca.h>
-#endif
 #include <sys/mman.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
 
 #ifdef sun
-#ifdef SOLARIS2
+#ifdef __SVR4
 #include <sys/systeminfo.h>
 #else
 #include <sys/vadvise.h>

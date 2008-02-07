@@ -360,6 +360,9 @@ GetScreen(interp, screenName, screenPtr)
 	    dispPtr->selectionSerial = 0;
 	    dispPtr->multipleAtom = None;
 	    dispPtr->atomInit = 0;
+	    dispPtr->modeModMask = 0;
+	    dispPtr->metaModMask = 0;
+	    dispPtr->altModMask = 0;
 	    dispPtr->cursorFont = None;
 	    dispPtr->grabWinPtr = NULL;
 	    dispPtr->ungrabWinPtr = NULL;

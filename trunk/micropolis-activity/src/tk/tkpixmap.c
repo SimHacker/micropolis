@@ -40,8 +40,7 @@ static char *AtFSid = "$Header: tkPixmap.c[1.1] Mon Sep 28 14:12:35 1992 garfiel
 /*
  * Include the xpm 3 defines for color pixmaps
  */
-//#include "xpmtk.h"
-#include <xpm.h>
+#include <X11/xpm.h>
 
 /*
  * One of the following data structures exists for each bitmap that is

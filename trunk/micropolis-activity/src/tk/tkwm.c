@@ -349,36 +349,37 @@ TkWmMapWindow(winPtr)
     if (wmPtr->hints.initial_state == NormalState) {
 	winPtr->flags |= TK_MAPPED;
     }
-    if (!(wmPtr->flags & WM_NEVER_MAPPED)) {
-	return 1;
-    }
-    wmPtr->flags &= ~WM_NEVER_MAPPED;
 
-    /*
-     * This is the first time this window has ever been mapped.
-     * Store all the window-manager-related information for the
-     * window.
-     */
+    if (wmPtr->flags & WM_NEVER_MAPPED) {
+        wmPtr->flags &= ~WM_NEVER_MAPPED;
+
+      /*
+       * This is the first time this window has ever been mapped.
+       * Store all the window-manager-related information for the
+       * window.
+       */
 
 #ifndef X11R3
-    if (wmPtr->titleUid == NULL) {
-	wmPtr->titleUid = winPtr->nameUid;
-    }
-    if (XStringListToTextProperty(&wmPtr->titleUid, 1, &textProp)  != 0) {
-	XSetWMName(winPtr->display, winPtr->window, &textProp);
-	XFree((char *) textProp.value);
-    }
+      if (wmPtr->titleUid == NULL) {
+	  wmPtr->titleUid = winPtr->nameUid;
+      }
+      if (XStringListToTextProperty(&wmPtr->titleUid, 1, &textProp)  != 0) {
+	  XSetWMName(winPtr->display, winPtr->window, &textProp);
+	  XFree((char *) textProp.value);
+      }
 #endif
 
-    TkWmSetClass(winPtr);
-    TkWmSetWmProtocols(winPtr);
+      TkWmSetClass(winPtr);
+      TkWmSetWmProtocols(winPtr);
 
-    if (wmPtr->iconName != NULL) {
-	XSetIconName(winPtr->display, winPtr->window, wmPtr->iconName);
-    }
+      if (wmPtr->iconName != NULL) {
+	  XSetIconName(winPtr->display, winPtr->window, wmPtr->iconName);
+      }
 
-    if (wmPtr->master != None) {
-	XSetTransientForHint(winPtr->display, winPtr->window, wmPtr->master);
+      if (wmPtr->master != None) {
+	  XSetTransientForHint(winPtr->display, winPtr->window, wmPtr->master);
+      }
+
     }
 
     wmPtr->flags |= WM_UPDATE_SIZE_HINTS;

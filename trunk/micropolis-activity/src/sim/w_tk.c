@@ -474,9 +474,17 @@ TileViewEventProc(ClientData clientData, XEvent *eventPtr)
 
 /* XXX: redraw all views showing cursor */
 /* XXX: also, make sure switching tools works w/out moving */
-    if (((view->tool_showing != last_showing) ||
+    if ((view->tool_showing != last_showing) ||
+#if 1
 	 (view->tool_x != last_x) ||
-	 (view->tool_y != last_y))) {
+	 (view->tool_y != last_y)
+#else
+	// TODO: Fix this optimized code to update every pixel moved (as above) if in pen or eraser mode.
+	// TODO: Also make sure tool_x and tool_y are in tile pixel coordinates, not screen coordinates. 
+        ((view->tool_x >> 4) != (last_x >> 4)) ||
+        ((view->tool_y >> 4)  != (last_y >> 4))
+#endif
+      ) {
 #if 1
       EventuallyRedrawView(view);
 #else
@@ -508,7 +516,7 @@ StdinProc(ClientData clientData, int mask)
     if (fgets(line, 200, stdin) == NULL) {
       if (!gotPartial) {
 	if (sim_tty) {
-	  sim_exit(0); // Just sets tkMustExit and ExitReturn
+	  sim_really_exit(0);
 	  return;
 	} else {
 	  Tk_DeleteFileHandler(0);
