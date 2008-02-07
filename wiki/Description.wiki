@@ -8,9 +8,9 @@ This is the binary and source code for Micropolis (A.K.A. "S*mC*ty": see the GPL
 For more information, see Don Hopkins' Blog: http://www.DonHopkins.com. 
 Please email questions and comments to dhopkins@DonHopkins.com .
 
-  * micropolis.xo
+  * [http://micropolis.googlecode.com/files/micropolis.xo micropolis.xo]
     Download this to TCL/Tk Micropolis install on the OLPC XO-1.
-  * micropolis-activity.tgz
+  * [http://micropolis.googlecode.com/files/micropolis-activity.tgz micropolis-activity.tgz]
     Download this to install TCL/Tk Micropolis on x86 Linux systems.
   * micropolis-activity-source.tgz
     Download this to build TCL/Tk Micropolis from source.
