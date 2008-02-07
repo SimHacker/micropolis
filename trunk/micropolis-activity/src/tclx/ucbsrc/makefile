@@ -40,17 +40,9 @@ made.tmp: $(OBJS)
 	$(AR)  cr ../libtcl.a $(OBJS)
 	touch made.tmp
 
-tclbasic.c: ../$(TCL_UCB_DIR)/tclbasic.c
-	rm -f tclbasic.c
-	sed -f tclbasic.sed <../$(TCL_UCB_DIR)/tclbasic.c >tclbasic.c
-
-tclexpr.c: ../$(TCL_UCB_DIR)/tclexpr.c
-	rm -f tclexpr.c
-	sed -f tclexpr.sed <../$(TCL_UCB_DIR)/tclexpr.c >tclexpr.c
-
 #------------------------------------------------------------------------------
 
 clean:
 	touch junk~
-	-rm -f *~ made.tmp tclbasic.c tclexpr.c
+	-rm -f *~ made.tmp
 	-rm -f $(OBJS)

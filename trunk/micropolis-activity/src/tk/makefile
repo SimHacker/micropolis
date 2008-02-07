@@ -33,7 +33,7 @@ CFLAGS		= -I. -I$(XINCLUDE) -I$(TCL_DIR) -O3 -DTK_VERSION=\"2.3\" -DUSE_XPM3 -DI
 #CFLAGS		= -I. -I$(XINCLUDE) -I$(TCL_DIR) -g -DTK_VERSION=\"2.3\" -DUSE_XPM3 -DIS_LINUX
 
 TCL_DIR		= ../tcl
-XINCLUDE	= /usr/include/X11
+XINCLUDE	= /usr/X11R6/include/X11
 XLIB		= -L/usr/X11R6/lib -lX11 -lXpm
 
 LIBS = libtk.a $(TCL_DIR)/libtcl.a
@@ -96,9 +96,9 @@ OBJS = \
 	tkwindow.o \
 	tkwm.o \
 	tkrawtcp.o \
-	$(WIDGOBJS) \
+	$(TEXTOBJS) \
 	$(CANVOBJS) \
-	$(TEXTOBJS)
+	$(WIDGOBJS)
 
 WIDGSRCS = \
 	tkbutton.c \

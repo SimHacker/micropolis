@@ -1,4 +1,5 @@
-XINCLUDE = /usr/include/X11
+XINCLUDE = /usr/X11R6/include/X11
+XLIB = /usr/X11R6/lib
 TCLHOME = ../tcl
 TKHOME = ../tk
 TCLXHOME = ../tclx
@@ -32,6 +33,7 @@ CPPFLAGS = $(INCLUDES)
 LIBS =	$(TCLXHOME)/libtk.a \
 	$(TCLXHOME)/libtcl.a \
 	-lm \
+	-L$(XLIB) \
         -lX11 \
         -lXext \
 	-lXpm
