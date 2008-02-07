@@ -619,13 +619,13 @@ ParseLockUnlockArgs (interp, argc, argv, argIdx, filePtrPtr, lockInfoPtr)
 
     if ((argIdx < argc) && (argv [argIdx][0] != '\0')) {
         if (Tcl_GetLong (interp, argv [argIdx],
-                         &lockInfoPtr->l_start) != TCL_OK)
+                         (long *)&lockInfoPtr->l_start) != TCL_OK)
             return TCL_ERROR;
     }
     argIdx++;
 
     if ((argIdx < argc) && (argv [argIdx][0] != '\0')) {
-        if (Tcl_GetLong (interp, argv [argIdx], &lockInfoPtr->l_len) != TCL_OK)
+        if (Tcl_GetLong (interp, argv [argIdx], (long *)&lockInfoPtr->l_len) != TCL_OK)
             return TCL_ERROR;
     }
     argIdx++;
