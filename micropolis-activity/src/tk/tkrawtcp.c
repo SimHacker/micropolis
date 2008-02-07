@@ -205,7 +205,7 @@ Tcp_ConnectCmd(notUsed, interp, argc, argv)
 	Tcl_SetVar2(interp,"connect_info",interp->result,buf,TCL_GLOBAL_ONLY);
     }
 
-    Tcp_MakeOpenFile(iPtr,fd,1,1-server);
+    Tcp_MakeOpenFile(interp,fd,1,1-server);
 
     return TCL_OK;
 }
@@ -363,7 +363,7 @@ Tcp_AcceptCmd(notUsed, interp, argc, argv)
     /*
      * Create the FILE*
      */
-    Tcp_MakeOpenFile(iPtr,fd,1,1);
+    Tcp_MakeOpenFile(interp,fd,1,1);
 
     sprintf(interp->result, "file%d", fd);
     return TCL_OK;
