@@ -98,14 +98,14 @@ install: all
 tar:
 	touch $(RES)/junk~ ../images/junk~
 	rm -f ../../micropolis-activity.tgz $(RES)/*~ ../images/*~
-	(cd ../.. ; tar cfvz micropolis-activity.tgz $(TARFILES)) 
+	(cd ../.. ; tar cfvz micropolis-activity.tgz --exclude .svn $(TARFILES)) 
 
 xo:  install
 	touch $(RES)/junk~ ../images/junk~
 	rm -f ../../micropolis.xo $(RES)/*~ ../images/*~
 	rm -rf BUILDIT
 	mkdir BUILDIT
-	tar cf - -C ../.. $(TARFILES) | (cd BUILDIT; tar xf -)
+	tar cf - -C ../.. --exclude .svn $(TARFILES) | (cd BUILDIT; tar xf -)
 	# The DejaVu fonts are not needed on the XO, only other platforms.
 	rm -rf BUILDIT/micropolis-activity/res/dejavu-lgc
 	mv BUILDIT/micropolis-activity BUILDIT/micropolis.activity
