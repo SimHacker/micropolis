@@ -1,7 +1,5 @@
 #------------------------------------------------------------------------------
-# SUN OS newer versions (~4.1, let us know which ones works for you)
-#------------------------------------------------------------------------------
-# $Id: sunos4.1,v 2.3 1992/11/08 17:24:26 markd Exp $
+# Linux and also Mac OS/X for that matter.
 #------------------------------------------------------------------------------
 #
 SYS_DEP_FLAGS=-DTCL_HAVE_SETLINEBUF -DTCL_32_BIT_RANDOM -DTCL_POSIX_SIG -DTCL_TM_GMTOFF

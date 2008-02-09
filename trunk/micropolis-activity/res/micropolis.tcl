@@ -661,10 +661,10 @@ option add Mwm*Micropolis.clientDecoration -maximize
 ########################################################################
 
 
-bind all <Help> {HandleHelp %W %x %y %X %Y}
-bind all <Shift-ButtonPress> {HandleHelp %W %x %y %X %Y}
-bind all <Meta-ButtonPress> {HandleHelp %W %x %y %X %Y}
-bind all <Shift-Meta-ButtonPress> {HandleHelp %W %x %y %X %Y}
+#bind all <Help> {HandleHelp %W %x %y %X %Y}
+#bind all <Shift-ButtonPress> {HandleHelp %W %x %y %X %Y}
+#bind all <Meta-ButtonPress> {HandleHelp %W %x %y %X %Y}
+#bind all <Shift-Meta-ButtonPress> {HandleHelp %W %x %y %X %Y}
 
 
 ########################################################################
@@ -4380,6 +4380,9 @@ proc InitPie {win pie} {
   bind $win <3> "PieMenuDown $win $pie $pie Initial %X %Y"
   bind $win <B3-Motion> {}
   bind $win <B3-ButtonRelease> {}
+  bind $win <Shift-1> "PieMenuDown $win $pie $pie Initial %X %Y"
+  bind $win <Shift-B1-Motion> {}
+  bind $win <Shift-ButtonRelease-1> {}
 }
 
 
@@ -4390,6 +4393,9 @@ proc ActivatePie {win root pie state} {
   bind $win <3> "PieMenuDown $win $root $pie $state %X %Y"
   bind $win <B3-Motion> "PieMenuMotion $win $root $pie $state %X %Y"
   bind $win <B3-ButtonRelease> "PieMenuUp $win $root $pie $state %X %Y"
+  bind $win <Shift-1> "PieMenuDown $win $root $pie $state %X %Y"
+  bind $win <Shift-B1-Motion> "PieMenuMotion $win $root $pie $state %X %Y"
+  bind $win <Shift-ButtonRelease-1> "PieMenuUp $win $root $pie $state %X %Y"
 }
 
 
