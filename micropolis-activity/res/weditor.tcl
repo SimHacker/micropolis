@@ -110,55 +110,6 @@ frame $win.topframe.controls\
   -borderwidth 1\
   -relief raised
 
-if {0} {
-  menubutton $win.topframe.controls.update\
-    -menu $win.topframe.controls.update.m\
-    -text {Display}\
-    -font [Font $win Medium]\
-    -variable $win.postedMenu\
-    -borderwidth 1\
-    -relief flat
-  tk_bindForTraversal $win.topframe.controls.update
-  bind $win.topframe.controls.update <F10> {tk_firstMenu %W} 
-  bind $win.topframe.controls.update <Mod2-Key> {tk_traverseToMenu %W %A} 
-  bind $win.topframe.controls.update <Alt-Key> {tk_traverseToMenu %W %A} 
-  tk_menus $win $win.topframe.controls.update
-
-  SetHelp $win.topframe.controls.update Editor.Display
-
-  menu $win.topframe.controls.update.m\
-    -font [Font $win Medium]
-  tk_bindForTraversal $win.topframe.controls.update.m
-  bind $win.topframe.controls.update.m <F10> {tk_firstMenu %W} 
-  bind $win.topframe.controls.update.m <Mod2-Key> {tk_traverseToMenu %W %A} 
-  bind $win.topframe.controls.update.m <Alt-Key> {tk_traverseToMenu %W %A} 
-    $win.topframe.controls.update.m add radiobutton\
-      -label {Always}\
-      -variable Skip.$win\
-      -value 0\
-      -command "SetEditorSkip $win 0"
-    $win.topframe.controls.update.m add radiobutton\
-      -label {Often}\
-      -variable Skip.$win\
-      -value 1\
-      -command "SetEditorSkip $win 2"
-    $win.topframe.controls.update.m add radiobutton\
-      -label {Sometimes}\
-      -variable Skip.$win\
-      -value 2\
-      -command "SetEditorSkip $win 8"
-    $win.topframe.controls.update.m add radiobutton\
-      -label {Seldom}\
-      -variable Skip.$win\
-      -value 3\
-      -command "SetEditorSkip $win 64"
-    $win.topframe.controls.update.m add radiobutton\
-      -label {Rarely}\
-      -variable Skip.$win\
-      -value 4\
-      -command "SetEditorSkip $win 256"
-}
-
 menubutton $win.topframe.controls.options\
   -menu $win.topframe.controls.options.m\
   -text {Options}\
@@ -192,7 +143,7 @@ $win.topframe.controls.options.m add checkbutton\
   -label {Chalk Overlay}\
   -variable Overlay.$win\
   -command "SetEditorOverlay $win \$\{Overlay.$win\}"
-# Disabled dynamic fulter for now.
+# Disabled dynamic filter for now.
 #$win.topframe.controls.options.m add checkbutton\
 #  -label {Dynamic Filter}\
 #  -variable DynamicFilter.$win\

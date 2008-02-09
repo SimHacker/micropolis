@@ -229,23 +229,11 @@ static ModInfo modArray[] = {
     "Button5",		Button5Mask,	0,
     "Mod1",		Mod1Mask,	0,
     "M1",		Mod1Mask,	0,
-#if 0
-    // Old keys
-    "Meta",		Mod1Mask,	0,
-    "M",		Mod1Mask,	0,
-#else
-    // New keys
     "Meta",		META_MASK,	0,
     "M",		META_MASK,	0,
-#endif
     "Mod2",		Mod2Mask,	0,
     "M2",		Mod2Mask,	0,
-#if 0
-    // Old keys
-    "Alt",		Mod2Mask,	0,
-#else
     "Alt",		ALT_MASK,	0,
-#endif
     "Mod3",		Mod3Mask,	0,
     "M3",		Mod3Mask,	0,
     "Mod4",		Mod4Mask,	0,
@@ -1060,7 +1048,7 @@ Tk_BindEvent(bindingTable, eventPtr, tkwin, numObjects, objectPtr)
 	}
     
 	if (matchPtr != NULL) {
-    
+
 	    /*
 	     * %-substitution can increase the length of the command.
 	     * This code handles three cases:  (a) no substitution;
@@ -1655,15 +1643,14 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 	    } else {
 		state = 0;
 	    }
+
 	    if (patPtr->needMods != 0) {
 	        int modMask = patPtr->needMods;
-
 		if (!dispPtr->metaModMask && !dispPtr->altModMask && !dispPtr->modeModMask) {
 			int i, max;
 			XModifierKeymap *modMapPtr;
 			KeyCode *codePtr;
 			KeySym keysym;
-
 			modMapPtr = XGetModifierMapping(dispPtr->display);
 			codePtr = modMapPtr->modifiermap;
 			max = 8*modMapPtr->max_keypermod;
@@ -1684,9 +1671,11 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 				}
 			}
 		}
+
 	        if ((modMask & META_MASK) && (dispPtr->metaModMask != 0)) {
 	                modMask = (modMask & ~META_MASK) | dispPtr->metaModMask;
 	        }
+
 	        if ((modMask & ALT_MASK) && (dispPtr->altModMask != 0)) {
 	                modMask = (modMask & ~ALT_MASK) | dispPtr->altModMask;
 	        }
@@ -1694,6 +1683,7 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 	        if ((state & META_MASK) && (dispPtr->metaModMask != 0)) {
 	                state = (state & ~META_MASK) | dispPtr->metaModMask;
 	        }
+
 	        if ((state & ALT_MASK) && (dispPtr->altModMask != 0)) {
 	                state = (state & ~ALT_MASK) | dispPtr->altModMask;
 	        }
@@ -1701,13 +1691,9 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 	        if ((state & modMask) != modMask) {
 	                goto nextSequence;
 	        }
-		goto nextSequence;
+		//goto nextSequence;
 	    }
-#if 0
-	    if ((state & patPtr->hateMods) != 0) {
-		goto nextSequence;
-	    }
-#endif
+
 	    if ((patPtr->detail != 0)
 		    && (patPtr->detail != *detailPtr)) {
 		goto nextSequence;
@@ -1729,9 +1715,12 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 		    goto nextSequence;
 		}
 	    }
+
 	    patPtr++;
 	    patCount--;
+
 	    nextEvent:
+
 	    if (eventPtr == bindPtr->eventRing) {
 		eventPtr = &bindPtr->eventRing[EVENT_BUFFER_SIZE-1];
 		detailPtr = &bindPtr->detailRing[EVENT_BUFFER_SIZE-1];
@@ -1787,11 +1776,16 @@ MatchPatterns(dispPtr, bindPtr, psPtr)
 	    }
 	    goto nextSequence;	/* Tie goes to newest pattern. */
 	}
+
 	newBest:
+
 	bestPtr = psPtr;
 
-	nextSequence: continue;
+	nextSequence: 
+
+        continue;
     }
+
     return bestPtr;
 }
 
