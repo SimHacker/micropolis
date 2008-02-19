@@ -230,7 +230,7 @@ void Micropolis::UpdateGameLevel()
 {
   Callback(
     "UISetGameLevel",
-	"d", 
+    "d", 
     (int)GameLevel);
 }
 

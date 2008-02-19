@@ -71,7 +71,6 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
-#include <malloc.h>
 #include <errno.h>
 #include <math.h>
 

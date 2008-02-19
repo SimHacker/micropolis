@@ -142,7 +142,7 @@ void PythonCallbackHook(
     (int)micropolis, 
     (int)data, 
     name,
-	(params == NULL) ? "(null)" : params);
+    (params == NULL) ? "(null)" : params);
 #endif
 
   // Get the SWIG PyObject *micropolisObj wrapper from
@@ -176,87 +176,87 @@ void PythonCallbackHook(
     paramTuple,
     i,
     PyString_FromString(
-	  name));
+      name));
   i++;
 
   // Now pass the params as the subsequent parameters,
   // according to their type specified in params. 
   if (params != NULL) {
-	char ch;
-	while ((ch = *params++) != '\0') {
-	  switch (ch) {
+    char ch;
+    while ((ch = *params++) != '\0') {
+      switch (ch) {
 
-	    case 'd': {
-	      // Pass an integer. 
-	      int d =
-			va_arg(arglist, int);
+        case 'd': {
+          // Pass an integer. 
+          int d =
+            va_arg(arglist, int);
 #ifdef TRACE_CALLBACKS
-		  printf(
-		    "  int: %d\n",
-		    d);
+          printf(
+            "  int: %d\n",
+            d);
 #endif
-		  PyTuple_SetItem(
-			paramTuple,
-			i,
-		    PyInt_FromLong(
-			  (long)d));
-		  i++;
-		  break;
-	    }
+          PyTuple_SetItem(
+            paramTuple,
+            i,
+            PyInt_FromLong(
+              (long)d));
+          i++;
+          break;
+        }
 
-	    case 'f': {
-	      // Pass a float. 
-	      float f =
-			va_arg(arglist, float);
+        case 'F': {
+          // Pass a double. 
+          double d =
+            va_arg(arglist, double);
 #ifdef TRACE_CALLBACKS
-		  printf(
-		    "  float: %f\n",
-		    f);
+          printf(
+            "  double: %d\n",
+            d);
 #endif
-		  PyTuple_SetItem(
-			paramTuple,
-			i,
-		    PyFloat_FromDouble(
-			  (double)f));
-		  i++;
-		  break;
-	    }
+          PyTuple_SetItem(
+            paramTuple,
+            i,
+            PyFloat_FromDouble(
+              (double)d));
+          i++;
+          break;
+        }
 
-	    case 's': {
-	      // Pass a string.
-	      char *s =
-			va_arg(arglist, char *);
+        case 's': {
+          // Pass a string.
+          char *s =
+            va_arg(arglist, char *);
 #ifdef TRACE_CALLBACKS
-		  printf(
-		    "  string: %s\n",
-		    s);
+          printf(
+            "  string: %s\n",
+            s);
 #endif
-		  PyTuple_SetItem(
-			paramTuple,
-			i,
-		    PyString_FromString(
-			  s));
-		  i++;
-		  break;
-	    }
+          PyTuple_SetItem(
+            paramTuple,
+            i,
+            PyString_FromString(
+              s));
+          i++;
+          break;
+        }
 
-		default: {
-		  // Unrecognized type code. 
+        default: {
+          // Unrecognized type code. 
 #ifdef TRACE_CALLBACKS
-		  void *v =
-		    va_arg(arglist, void *);
-		  printf(
-		    "  ?%c?: 0x%X\n",
-			ch,
-		    (int)v);
+          void *v =
+            va_arg(arglist, void *);
+          printf(
+            "  ?%c?: 0x%X\n",
+            ch,
+            (int)v);
 #endif
-		  break;
-		}
-		
-	  }
+          break;
+        }
+        
+      }
 
-	}
-	
+    }
+    
   }
 
   // Now call the Python callback with all the parameters.   

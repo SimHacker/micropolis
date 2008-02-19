@@ -77,9 +77,8 @@ import gtk
 
 def MakeToolPie():
 
-
     ########################################################################
-    # Make zone_pie.
+    # Make pie menus.
 
 
     zone_pie = piemenu.PieMenu(
@@ -87,187 +86,209 @@ def MakeToolPie():
         fixed_radius=50,
         neutral_description="Select a zoning tool.")
 
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Commercial\nzoning tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/iccom.png',
-            icon_hilite='images/iccomhi.png'))
-
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Industrial\nzoning tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icind.png',
-            icon_hilite='images/icindhi.png'))
-
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Police station\nzoning tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icpol.png',
-            icon_hilite='images/icpolhi.png'))
-
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Query zone\ntool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icqry.png',
-            icon_hilite='images/icqryhi.png'))
-
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Fire station\nzoning tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icfire.png',
-            icon_hilite='images/icfirehi.png'))
-
-    zone_pie.add_item(
-        piemenu.PieItem(
-            description='Residential\nzoning tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icres.png',
-            icon_hilite='images/icreshi.png'))
-
-    ########################################################################
-    # Make build_pie.
-
-
     build_pie = piemenu.PieMenu(
         header="Build",
         fixed_radius=50,
         neutral_description="Select a building tool.")
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Park building tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icpark.png',
-            icon_hilite='images/icparkhi.png'))
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Seaport building tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icseap.png',
-            icon_hilite='images/icseaphi.png'))
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Nuclear power plant\nbuilding tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icnuc.png',
-            icon_hilite='images/icnuchi.png'))
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Airport building tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icairp.png',
-            icon_hilite='images/icairphi.png'))
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Coal power plant\nbuilding tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/iccoal.png',
-            icon_hilite='images/iccoalhi.png'))
-
-    build_pie.add_item(
-        piemenu.PieItem(
-            description='Stadium building tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icstad.png',
-            icon_hilite='images/icstadhi.png'))
-
-
-    ########################################################################
-    # Make tool_pie.
-
 
     tool_pie = piemenu.PieMenu(
         header="Micropolis Tools",
         fixed_radius=50,
         neutral_description="Select a Micropolis editing tool,\nor the zone or build submenu.")
 
-    tool_pie.add_item(
-        piemenu.PieItem(
-            label='Zone...',
-            description="Submenu of zoning tools.",
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            sub_pie=zone_pie))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Bulldozer editing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icdozr.png',
-            icon_hilite='images/icdozrhi.png'))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Road editing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icroad.png',
-            icon_hilite='images/icroadhi.png'))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Eraser drawing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icersr.png',
-            icon_hilite='images/icersrhi.png'))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            label='Build...',
-            description='Submenu of building tools.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            sub_pie=build_pie))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Chalk drawing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icchlk.png',
-            icon_hilite='images/icchlkhi.png'))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Rail editing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icrail.png',
-            icon_hilite='images/icrailhi.png'))
-
-    tool_pie.add_item(
-        piemenu.PieItem(
-            description='Wire editing tool.',
-            lolite_fill_color=None,
-            lolite_stroke_color=None,
-            icon='images/icwire.png',
-            icon_hilite='images/icwirehi.png'))
-
 
     ########################################################################
+    # Populate pie menus.
+
+
+    for params in (
+
+        {
+            'pie': zone_pie,
+            'description': 'Commercial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/iccom.png',
+            'icon_hilite': 'images/iccomhi.png',
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Industrial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icind.png',
+            'icon_hilite': 'images/icindhi.png',
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Police station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icpol.png',
+            'icon_hilite': 'images/icpolhi.png',
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Query zone\ntool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icqry.png',
+            'icon_hilite': 'images/icqryhi.png',
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Fire station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icfire.png',
+            'icon_hilite': 'images/icfirehi.png',
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Residential\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icres.png',
+            'icon_hilite': 'images/icreshi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Park building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icpark.png',
+            'icon_hilite': 'images/icparkhi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Seaport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icseap.png',
+            'icon_hilite': 'images/icseaphi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Nuclear power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icnuc.png',
+            'icon_hilite': 'images/icnuchi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Airport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icairp.png',
+            'icon_hilite': 'images/icairphi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Coal power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/iccoal.png',
+            'icon_hilite': 'images/iccoalhi.png',
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Stadium building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icstad.png',
+            'icon_hilite': 'images/icstadhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'label': 'Zone...',
+            'description': "Submenu of zoning tools.",
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': zone_pie,
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Bulldozer editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icdozr.png',
+            'icon_hilite': 'images/icdozrhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Road editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icroad.png',
+            'icon_hilite': 'images/icroadhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Eraser drawing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icersr.png',
+            'icon_hilite': 'images/icersrhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'label': 'Build...',
+            'description': 'Submenu of building tools.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': build_pie,
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Chalk drawing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icchlk.png',
+            'icon_hilite': 'images/icchlkhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Rail editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icrail.png',
+            'icon_hilite': 'images/icrailhi.png',
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Wire editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icwire.png',
+            'icon_hilite': 'images/icwirehi.png',
+        },
+
+    ):
+
+        apply(
+            piemenu.PieItem,
+            (),
+            params)
 
 
     return tool_pie

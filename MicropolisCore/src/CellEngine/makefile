@@ -62,10 +62,12 @@
 ########################################################################
 
 
+PYTHON=python2.5
+
 all: CELLENGINE
 
 CELLENGINE: cellengine.cpp ruletables.cpp python/cellengine_wrap.cpp
-	cd python ; python setup.py build
+	cd python ; $(PYTHON) setup.py build
 
 python/stdafx.h: cellengine.h
 
@@ -97,7 +99,7 @@ clean:
 	#rm -rf python/cellengine.py python/cellengine_wrap.cpp
 
 install: all
-	(cd python ; python setup.py install)
+	(cd python ; $(PYTHON) setup.py install)
 
 
 ########################################################################

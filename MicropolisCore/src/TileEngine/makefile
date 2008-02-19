@@ -63,10 +63,12 @@
 ########################################################################
 
 
+PYTHON=python2.5
+
 all: TILEENGINE
 
 TILEENGINE: tileengine.cpp python/tileengine_wrap.cpp
-	cd python ; python setup.py build
+	cd python ; $(PYTHON) setup.py build
 
 python/stdafx.h: tileengine.h
 
@@ -100,7 +102,7 @@ clean:
 	#rm -rf python/tileengine.py python/tileengine_wrap.cpp
 
 install: all
-	(cd python ; python setup.py install)
+	(cd python ; $(PYTHON) setup.py install)
 
 
 ########################################################################

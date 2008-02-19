@@ -88,6 +88,12 @@ setup(
       '..',
       '/usr/include/cairo',
       '/usr/include/pycairo',
+      '/opt/local/include/cairo',
+      '/opt/local/include/pycairo',
+    ],
+    library_dirs=[
+      '/opt/gtk/lib',
+      '/opt/local/lib',
     ],
     libraries=[
       'cairo',
