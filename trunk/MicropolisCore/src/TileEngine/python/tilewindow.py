@@ -88,8 +88,16 @@ import array
 
 #print "CWD", os.getcwd()
 
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\swig')
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python\\ReleaseSymbols')
+cwd = os.getcwd()
+
+for relPath in (
+  '../swig',
+  'ReleaseSymbols',
+  'build/lib.macosx-10.5-i386-2.5',
+):
+    sys.path.append(os.path.join(cwd, relPath))
+
+
 import tileengine
 
 
@@ -341,6 +349,14 @@ class TileDrawingArea(gtk.DrawingArea):
             self.tilesLoaded = True
 
 
+    def loadSurfaceFromPNG(self, fileName):
+        surface = cairo.ImageSurface.create_from_png(self.tilesFileName)
+        return (
+            surface,
+            surface.get_width(),
+            surface.get_height())
+
+
     def loadTiles(
         self,
         ctx):
@@ -348,9 +364,12 @@ class TileDrawingArea(gtk.DrawingArea):
         scale = self.scale
         sourceTileSize = int(self.sourceTileSize)
 
-        tilesSourceSurface = cairo.ImageSurface.create_from_png(self.tilesFileName)
-        tilesSourceWidth = int(tilesSourceSurface.get_width())
-        tilesSourceHeight = int(tilesSourceSurface.get_height())
+        (
+         tilesSourceSurface,
+         tilesSourceWidth,
+         tilesSourceHeight,
+        ) = self.loadSurfaceFromPNG(self.tilesFileName)
+
         tilesSourceCols = int(math.floor(tilesSourceWidth / sourceTileSize))
         tilesSourceRows = int(math.floor(tilesSourceHeight / sourceTileSize))
 
@@ -803,15 +822,16 @@ class TileDrawingArea(gtk.DrawingArea):
             zoomScale,
             zoomScale)
 
+        fudge = 0.5
         for dx, dy in (
-            (-0.5, -0.5),
-            ( 0.5, -0.5),
-            (-0.5,  0.5),
-            ( 0.5,  0.5),
-            (-0.5,  0.0),
-            ( 0.5,  0.0),
-            ( 0.0, -0.5),
-            ( 0.0,  0.5),
+            (-fudge, -fudge),
+            ( fudge, -fudge),
+            (-fudge,  fudge),
+            ( fudge,  fudge),
+            (-fudge,  0.0),
+            ( fudge,  0.0),
+            ( 0.0, -fudge),
+            ( 0.0,  fudge),
             ( 0.0,  0.0),
         ):
             tilesCtx.save()

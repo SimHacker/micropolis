@@ -62,6 +62,8 @@
 ########################################################################
 
 
+PYTHON=python2.5
+
 SOURCES = \
 	allocate.cpp \
 	animate.cpp \
@@ -94,7 +96,7 @@ SOURCES = \
 all: MICROPOLIS
 
 MICROPOLIS: $(SOURCES) python/micropolis_wrap.cpp
-	cd python ; python setup.py build
+	cd python ; $(PYTHON) setup.py build
 
 python/stdafx.h: micropolis.h
 
@@ -126,7 +128,7 @@ clean:
 	#rm -rf python/micropolis.py python/micropolis_wrap.cpp
 
 install: all
-	(cd python ; python setup.py install)
+	(cd python ; $(PYTHON) setup.py install)
 
 allocate.cpp: micropolis.h
 animate.cpp: micropolis.h

@@ -71,7 +71,6 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
-#include <malloc.h>
 #include <errno.h>
 #include <math.h>
 
@@ -388,18 +387,17 @@ public:
     {
         char *buffer =
             NULL;
-        int len =
+        Py_ssize_t len =
             0;
 
-        int n =
-            PyObject_AsReadBuffer(
-                buf,
-                (const void **)&buffer,
-                &len);
+	PyObject_AsReadBuffer(
+	    buf,
+	    (const void **)&buffer,
+	    &len);
 
         self->SetRuleTable(
             buffer, 
-            len, 
+            (int)len, 
             neigh);
 
     }

@@ -167,7 +167,7 @@ class PieItem:
         self.icon_padding = icon_padding
         self.icon_side = icon_side
         self.visible = visible
-        self.pie = pie
+        self.pie = None # Added later.
         self.sub_pie = sub_pie
         self.fixed_radius = fixed_radius
         self.linear = linear
@@ -208,6 +208,8 @@ class PieItem:
         self.icon_width = 0
         self.icon_height = 0
 
+        if pie != None:
+            pie.add_item(self)
 
     def measure(self, context, pcontext, playout):
 

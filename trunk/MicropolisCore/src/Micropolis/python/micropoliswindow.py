@@ -88,16 +88,23 @@ import array
 
 #print "CWD", os.getcwd()
 
-sys.path.append(os.getcwd() + '\\..\\swig')
-sys.path.append(os.getcwd() + '\\ReleaseSymbols')
+cwd = os.getcwd()
+
+for relPath in (
+  '../swig',
+  'ReleaseSymbols',
+  'build/lib.macosx-10.5-i386-2.5',
+  '../../TileEngine/swig',
+  '../../TileEngine/python',
+  '../../TileEngine/python/ReleaseSymbols',
+  '../../TileEngine/python/lib.macosx-10.5-i386-2.5',
+):
+    sys.path.append(os.path.join(cwd, relPath))
+
 import micropolis
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
-
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\swig')
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python')
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python\\ReleaseSymbols')
 import tileengine
 import tilewindow
 

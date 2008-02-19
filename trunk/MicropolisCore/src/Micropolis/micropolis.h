@@ -71,7 +71,6 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
-#include <malloc.h>
 #include <errno.h>
 #include <math.h>
 #include <cstdarg>
@@ -87,6 +86,10 @@
 #endif
 
 #else
+
+#ifdef __APPLE__
+#include <sys/stat.h>
+#endif
 
 #include <unistd.h>
 #include <sys/time.h>
