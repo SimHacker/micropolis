@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Tile Window, generic class for displaying tiles in a window.
+# Tile Drawing Area
 # Don Hopkins
 
 
@@ -107,12 +107,16 @@ class TileDrawingArea(gtk.DrawingArea):
         panX=0,
         panY=0,
         scale=1.0,
+        cursorVisible=True,
+        cursorX=0,
+        cursorY=0,
         cursorCol=0,
         cursorRow=0,
         cursorCols=1,
         cursorRows=1,
         cursorHotCol=0,
         cursorHotRow=0,
+        cursorDrawer=None,
         outsideBackgroundColor=(0.5, 0.5, 0.5),
         insideBackgroundColor=(0.0, 0.0, 0.0),
         **args):
@@ -135,12 +139,16 @@ class TileDrawingArea(gtk.DrawingArea):
         self.panX = panX
         self.panY = panY
         self.scale = scale
+        self.cursorVisible = cursorVisible
+        self.cursorX = cursorX
+        self.cursorY = cursorY
         self.cursorCol = cursorCol
         self.cursorRow = cursorRow
         self.cursorCols = cursorCols
         self.cursorRows = cursorRows
         self.cursorHotCol = cursorHotCol
         self.cursorHotRow = cursorHotRow
+        self.cursorDrawer = None
         self.outsideBackgroundColor = outsideBackgroundColor
         self.insideBackgroundColor = insideBackgroundColor
 
@@ -274,6 +282,8 @@ class TileDrawingArea(gtk.DrawingArea):
         panX = self.panX
         panY = self.panY
         #print "PAN", panX, panY
+
+        # TODO: take into account cursor hot spot, or precise cursor position?
 
         cursorCol = self.cursorCol
         cursorRow = self.cursorRow
@@ -874,6 +884,16 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         ctx):
 
+        if not self.cursorVisible:
+            return
+
+        cursorDrawer = self.cursorDrawer
+        if (cursorDrawer and
+            cursorDrawer(self, ctx)):
+                return
+
+        cursorX = self.cursorX
+        cursorY = self.cursorY
         cursorCol = self.cursorCol
         cursorRow = self.cursorRow
         cursorCols = self.cursorCols
@@ -948,33 +968,51 @@ class TileDrawingArea(gtk.DrawingArea):
         rows):
         
         if ((self.cursorCols == cols) and
-            (self.cursorRowsa == rows)):
+            (self.cursorRows == rows)):
             return
         
         self.cursorCols = cols
         self.cursorRows = rows
-        self.setCursorPos(self.cursorCol, self.cursorRow, True)
+        self.setCursorPos(self.cursorX, self.cursorY, True)
 
 
-    # Sets the upper left corner of the cursor, regardless of
-    # the hot spot. 
     def setCursorPos(
         self,
-        col,
-        row,
+        x,
+        y,
         forceRedraw=False):
+
+        tileSize = self.tileSize
+        col = int(math.floor(x / tileSize)) - self.cursorHotCol
+        row = int(math.floor(y / tileSize)) - self.cursorHotRow
 
         cursorRows = self.cursorRows
         cursorCols = self.cursorCols
         col = max(0, min(self.worldCols - cursorCols, col))
         row = max(0, min(self.worldRows - cursorRows, row))
 
+        if cursorCols:
+            cursorXChanged = self.cursorCol != col
+        else:
+            cursorXChanged = self.cursorX != x
+        if cursorRows:
+            cursorYChanged = self.cursorRow != row
+        else:
+            cursorYChanged = self.cursorY != y
+
+        self.cursorX = x
+        self.cursorY = y
+
         if (forceRedraw or
-            (self.cursorCol != col) or
-            (self.cursorRow != row)):
+            cursorXChanged or
+            cursorYChanged):
             self.cursorCol = col
             self.cursorRow = row
-            self.queue_draw()
+            self.cursorMoved()
+
+
+    def cursorMoved(self):
+        self.queue_draw()
 
 
     def moveCursorToMouse(
@@ -982,11 +1020,9 @@ class TileDrawingArea(gtk.DrawingArea):
         x,
         y):
 
-        tileSize = self.tileSize
-        col = int(math.floor((x - self.panX) / tileSize)) - self.cursorHotCol
-        row = int(math.floor((y - self.panY) / tileSize)) - self.cursorHotRow
-
-        self.setCursorPos(col, row)
+        self.setCursorPos(
+            x - self.panX, 
+            y - self.panY)
 
 
     def moveCursor(
@@ -997,6 +1033,8 @@ class TileDrawingArea(gtk.DrawingArea):
         col = self.cursorCol + dx
         row = self.cursorRow + dy
 
+        tileSize = self.tileSize
+        tileMiddle = int(math.floor((tileSize / 2.0) + 0.5))
         cursorCols = self.cursorCols
         cursorRows = self.cursorRows
         worldCols = self.worldCols
@@ -1012,9 +1050,12 @@ class TileDrawingArea(gtk.DrawingArea):
         if row >= (worldRows - cursorRows):
             row = (worldRows - cursorRows) - 1
 
+        x = ((col + self.cursorHotCol) * tileSize) + tileMiddle
+        y = ((row + self.cursorHotRow) * tileSize) + tileMiddle
+
         self.setCursorPos(
-            col,
-            row)
+            x,
+            y)
 
         self.revealCursor()
 
@@ -1037,9 +1078,9 @@ class TileDrawingArea(gtk.DrawingArea):
         panY = self.panY
 
         left = panX + (tileSize * cursorCol)
-        right = left + (cursorCols * tileSize)
+        right = left + (max(1, cursorCols) * tileSize)
         top = panY + (tileSize * cursorRow)
-        bottom = top + (cursorRows * tileSize)
+        bottom = top + (max(1, cursorRows) * tileSize)
 
         dx = 0
         dy = 0
@@ -1105,7 +1146,8 @@ class TileDrawingArea(gtk.DrawingArea):
         elif key == 65363:
             self.moveCursor(1, 0)
         else:
-            print "KEY", event.keyval
+            pass
+            #print "KEY", event.keyval
 
 
     def handleMotionNotify(
