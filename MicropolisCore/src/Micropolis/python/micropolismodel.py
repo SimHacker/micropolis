@@ -93,9 +93,9 @@ class MicropolisModel(micropolis.Micropolis):
             self,
             *args,
             **kwargs):
-        print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
+        #print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
         micropolis.Micropolis.__init__(self, *args, **kwargs)
-        print "MicropolisModel.__init__ done", self
+        #print "MicropolisModel.__init__ done", self
 
 
     def invokeCallback(self, micropolis, name, *params):
@@ -106,6 +106,10 @@ class MicropolisModel(micropolis.Micropolis):
         else:
             print "No handler for", name
     
+
+    def __repr__(self):
+        return "<MicropolisModel>"
+
 
     def handle_UIAutoGoto(self, micropolis, x, y):
         print "handle_UIAutoGoto(self, micropolis, x, y)", (self, micropolis, x, y)

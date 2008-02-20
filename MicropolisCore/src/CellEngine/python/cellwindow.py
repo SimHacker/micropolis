@@ -71,15 +71,7 @@
 
 import sys
 import os
-import time
 import gtk
-import gobject
-import cairo
-import pango
-import math
-import thread
-import random
-import array
 
 
 ########################################################################
@@ -90,84 +82,15 @@ import array
 cwd = os.getcwd()
 
 for relPath in (
-  '../swig',
   'ReleaseSymbols',
   'build/lib.macosx-10.5-i386-2.5',
-  '../../TileEngine/swig',
   '../../TileEngine/python',
   '../../TileEngine/python/ReleaseSymbols',
   '../../TileEngine/python/lib.macosx-10.5-i386-2.5',
 ):
-    sys.path.append(os.path.join(cwd, relPath))
+    sys.path.insert(0, os.path.join(cwd, relPath))
 
-import cellengine
-import tileengine
-import tilewindow
-
-
-########################################################################
-
-
-class CellDrawingArea(tilewindow.TileDrawingArea):
-
-
-    def __init__(
-        self,
-        engine=None,
-        **args):
-
-        args['sourceTileSize'] = 16
-        args['worldRows'] = 256
-        args['worldCols'] = 256
-
-        self.engine = engine
-
-        tilewindow.TileDrawingArea.__init__(self, **args)
-
-
-    def createEngine(self):
-
-        w = 256
-        h = 256
-
-        engine = cellengine.CellEngine()
-        self.engine = engine
-        engine.InitScreen(w, h)
-        engine.SetRect(0, 0, w, h)
-        engine.wrap = 3
-        engine.steps = 1
-        engine.frob = -4
-        engine.neighborhood = 46
-        engine.Garble()
-
-        tilewindow.TileDrawingArea.createEngine(self)
-
-
-    def configTileEngine(self, tengine):
-
-        engine = self.engine
-        tengine.setBuffer(engine.GetCellBuffer())
-        tengine.width = engine.width
-        tengine.height = engine.height
-        tengine.colBytes = 1
-        tengine.rowBytes = engine.width
-        tengine.typeCode = 'B'
-        tengine.tileMask = 0xff
-
-
-    def destroyEngine(self):
-
-        tilewindow.TileDrawingArea.destroyEngine(self)
-
-
-    def getCell(self, col, row):
-
-        return self.engine.GetCell(col, row)
-
-
-    def tickEngine(self):
-
-        self.engine.DoRule()
+from celldrawingarea import CellDrawingArea
 
 
 ########################################################################

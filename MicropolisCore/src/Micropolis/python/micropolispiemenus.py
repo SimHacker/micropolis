@@ -75,7 +75,7 @@ import gtk
 ########################################################################
 
 
-def MakeToolPie():
+def MakeToolPie(setToolAction):
 
     ########################################################################
     # Make pie menus.
@@ -110,6 +110,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/iccom.png',
             'icon_hilite': 'images/iccomhi.png',
+            'action': lambda item: setToolAction('Commercial'),
         },
 
         {
@@ -119,6 +120,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icind.png',
             'icon_hilite': 'images/icindhi.png',
+            'action': lambda item: setToolAction('Industrial'),
         },
 
         {
@@ -128,6 +130,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icpol.png',
             'icon_hilite': 'images/icpolhi.png',
+            'action': lambda item: setToolAction('PoliceStation'),
         },
 
         {
@@ -137,6 +140,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icqry.png',
             'icon_hilite': 'images/icqryhi.png',
+            'action': lambda item: setToolAction('Query'),
         },
 
         {
@@ -146,6 +150,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icfire.png',
             'icon_hilite': 'images/icfirehi.png',
+            'action': lambda item: setToolAction('FireStation'),
         },
 
         {
@@ -155,6 +160,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icres.png',
             'icon_hilite': 'images/icreshi.png',
+            'action': lambda item: setToolAction('Residential'),
         },
 
         {
@@ -164,6 +170,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icpark.png',
             'icon_hilite': 'images/icparkhi.png',
+            'action': lambda item: setToolAction('Park'),
         },
 
         {
@@ -173,6 +180,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icseap.png',
             'icon_hilite': 'images/icseaphi.png',
+            'action': lambda item: setToolAction('Seaport'),
         },
 
         {
@@ -182,6 +190,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icnuc.png',
             'icon_hilite': 'images/icnuchi.png',
+            'action': lambda item: setToolAction('NuclearPowerPlant'),
         },
 
         {
@@ -191,6 +200,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icairp.png',
             'icon_hilite': 'images/icairphi.png',
+            'action': lambda item: setToolAction('Airport'),
         },
 
         {
@@ -200,6 +210,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/iccoal.png',
             'icon_hilite': 'images/iccoalhi.png',
+            'action': lambda item: setToolAction('CoalPowerPlant'),
         },
 
         {
@@ -209,6 +220,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icstad.png',
             'icon_hilite': 'images/icstadhi.png',
+            'action': lambda item: setToolAction('Stadium'),
         },
 
         {
@@ -227,6 +239,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icdozr.png',
             'icon_hilite': 'images/icdozrhi.png',
+            'action': lambda item: setToolAction('Bulldozer'),
         },
 
         {
@@ -236,6 +249,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icroad.png',
             'icon_hilite': 'images/icroadhi.png',
+            'action': lambda item: setToolAction('Road'),
         },
 
         {
@@ -245,6 +259,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icersr.png',
             'icon_hilite': 'images/icersrhi.png',
+            'action': lambda item: setToolAction('Eraser'),
         },
 
         {
@@ -263,6 +278,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icchlk.png',
             'icon_hilite': 'images/icchlkhi.png',
+            'action': lambda item: setToolAction('Chalk'),
         },
 
         {
@@ -272,6 +288,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icrail.png',
             'icon_hilite': 'images/icrailhi.png',
+            'action': lambda item: setToolAction('Rail'),
         },
 
         {
@@ -281,6 +298,7 @@ def MakeToolPie():
             'lolite_stroke_color': None,
             'icon': 'images/icwire.png',
             'icon_hilite': 'images/icwirehi.png',
+            'action': lambda item: setToolAction('Wire'),
         },
 
     ):
@@ -307,7 +325,10 @@ def main():
 
     win.add(target)
 
-    pie = MakeToolPie()
+    def setToolAction(toolName):
+        print "setToolAction", toolName
+
+    pie = MakeToolPie(setToolAction)
     target.setPie(pie)
 
     win.resize(300, 300)
