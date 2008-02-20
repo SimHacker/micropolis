@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Window
+# Micropolis Drawing Area
 # Don Hopkins
 
 
@@ -91,6 +91,7 @@ import micropolismodel
 import micropolisutils
 import micropolispiemenus
 from tiledrawingarea import TileDrawingArea
+from micropolistool import MicropolisTool
 
 
 ########################################################################
@@ -99,16 +100,6 @@ from tiledrawingarea import TileDrawingArea
 
 def PRINT(*args):
     print args
-
-
-########################################################################
-
-
-class Tool:
-
-
-    def __init__(self, **args):
-        pass
 
 
 ########################################################################
@@ -130,8 +121,16 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         self.engine = engine
         self.toolPie = toolPie
+        self.toolIndex = -1
+        self.tool = None
 
         TileDrawingArea.__init__(self, **args)
+
+        self.reset()
+
+
+    def reset(self):
+        self.setToolName('Bulldozer')
 
 
     def createEngine(self):
@@ -235,6 +234,15 @@ class MicropolisDrawingArea(TileDrawingArea):
 
     def setToolName(self, toolName):
         print "setToolName", toolName
+        tool = MicropolisTool.getToolName(toolName)
+
+        lastTool = self.tool
+        if lastTool:
+            tool.deselect(self)
+
+        if tool:
+            tool.select(self)
+
 
     def handleButtonPress(
         self,
