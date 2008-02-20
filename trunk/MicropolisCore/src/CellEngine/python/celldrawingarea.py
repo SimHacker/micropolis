@@ -1,4 +1,4 @@
-# micropoliswindow.py
+# celldrawingarea.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Window
+# Cell Window
 # Don Hopkins
 
 
@@ -71,68 +71,79 @@
 
 import sys
 import os
-import time
-import gtk
-import gobject
-import cairo
-import pango
-import math
-import thread
-import random
-import array
 
 
 ########################################################################
 # Import our modules
 
 
-#print "CWD", os.getcwd()
-
-cwd = os.getcwd()
-
-for relPath in (
-  'ReleaseSymbols',
-  'build/lib.macosx-10.5-i386-2.5',
-  '../../TileEngine/python',
-  '../../TileEngine/python/ReleaseSymbols',
-  '../../TileEngine/python/lib.macosx-10.5-i386-2.5',
-):
-    sys.path.insert(0, os.path.join(cwd, relPath))
-
-import micropolis
-import micropolismodel
-import micropolisutils
-import micropolispiemenus
-from micropolisdrawingarea import MicropolisDrawingArea
-
-
-########################################################################
-# MicropolisWindow
-
-class MicropolisWindow(gtk.Window):
-
-
-    def __init__(self, **args):
-        gtk.Window.__init__(self, **args)
-
-        self.connect('destroy', gtk.main_quit)
-
-        self.set_title("OLPC Micropolis for Python/Cairo/Pango, by Don Hopkins")
-
-        self.da = MicropolisDrawingArea()
-        self.add(self.da)
+import cellengine
+from tiledrawingarea import TileDrawingArea
 
 
 ########################################################################
 
 
-if __name__ == '__main__':
+class CellDrawingArea(TileDrawingArea):
 
-    win = MicropolisWindow()
-    #print "WIN", win
-    win.show_all()
 
-    gtk.main()
+    def __init__(
+        self,
+        engine=None,
+        **args):
+
+        args['sourceTileSize'] = 16
+        args['worldRows'] = 256
+        args['worldCols'] = 256
+
+        self.engine = engine
+
+        TileDrawingArea.__init__(self, **args)
+
+
+    def createEngine(self):
+
+        w = 256
+        h = 256
+
+        engine = cellengine.CellEngine()
+        self.engine = engine
+        engine.InitScreen(w, h)
+        engine.SetRect(0, 0, w, h)
+        engine.wrap = 3
+        engine.steps = 1
+        engine.frob = -4
+        engine.neighborhood = 46
+        engine.Garble()
+
+        TileDrawingArea.createEngine(self)
+
+
+    def configTileEngine(self, tengine):
+
+        engine = self.engine
+        tengine.setBuffer(engine.GetCellBuffer())
+        tengine.width = engine.width
+        tengine.height = engine.height
+        tengine.colBytes = 1
+        tengine.rowBytes = engine.width
+        tengine.typeCode = 'B'
+        tengine.tileMask = 0xff
+
+
+    def destroyEngine(self):
+
+        TileDrawingArea.destroyEngine(self)
+
+
+    def getCell(self, col, row):
+
+        return self.engine.GetCell(col, row)
+
+
+    def tickEngine(self):
+
+        self.engine.DoRule()
 
 
 ########################################################################

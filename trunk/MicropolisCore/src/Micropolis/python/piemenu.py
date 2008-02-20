@@ -563,14 +563,14 @@ class PieItem:
     def handleHilite(self):
 
         # TODO: notify menu item about hilite
-        print "handleHilite", self, repr(self.label), repr(self.description)
+        #print "handleHilite", self, repr(self.label), repr(self.description)
         pass
 
 
     def handleLolite(self):
 
         # TODO: notify menu item about lolite
-        print "handleLolite", self, repr(self.label), repr(self.description)
+        #print "handleLolite", self, repr(self.label), repr(self.description)
         pass
 
 
@@ -584,7 +584,7 @@ class PieItem:
     def handleAction(self):
 
         # TODO: notify menu item about mouse motion
-        print "handleAction", self, repr(self.label), repr(self.description)
+        #print "handleAction", self, repr(self.label), repr(self.description)
 
         if self.action:
             self.action(self)
@@ -2142,28 +2142,28 @@ class PieMenu(gtk.Window):
     def handleItemChanged(self):
 
         # TODO: notify menu that item changed
-        print "handleItemChanged", self, "cur_item", self.cur_item
+        #print "handleItemChanged", self, "cur_item", self.cur_item
         pass
 
 
     def handlePopup(self):
 
         # TODO: notify menu that current item changed
-        print "handlePopup", self
+        #print "handlePopup", self
         pass
 
 
     def handlePopdown(self):
 
         # TODO: notify menu that current item changed
-        print "handlePopdown", self
+        #print "handlePopdown", self
         pass
 
 
     def handleAction(self):
 
         # TODO: notify menu that item was selected
-        print "handleAction", self, "cur_item", self.cur_item
+        #print "handleAction", self, "cur_item", self.cur_item
 
         if self.action:
             self.action(self)
@@ -2172,14 +2172,14 @@ class PieMenu(gtk.Window):
     def handleCancel(self):
 
         # TODO: notify menu that menu was canceled
-        print "handleCancel", self
+        #print "handleCancel", self
         pass
 
 
     def handleSubmenu(self):
 
         # TODO: notify menu that submenu was popped up
-        print "handleSubmenu", self
+        #print "handleSubmenu", self
         pass
 
 
@@ -2208,7 +2208,7 @@ class PieMenu(gtk.Window):
 
         item = self.visible_items[cur_item]
         
-        print "DOACTION", self, self.cur_item, item, item.label
+        #print "DOACTION", self, self.cur_item, item, item.label
 
         sub_pie = item.sub_pie
         if sub_pie:
@@ -2273,13 +2273,13 @@ class PieMenu(gtk.Window):
 
 
     def handle_key_press_event(self, widget, event, *args):
-        print "handle_key_press_event", self, widget, event, args
-        print help(event)
+        #print "handle_key_press_event", self, widget, event, args
+        #print help(event)
         pass
 
 
     def handle_key_release_event(self, widget, event, *args):
-        print "handle_key_release_event", self, widget, event, args
+        #print "handle_key_release_event", self, widget, event, args
         pass
 
 
