@@ -66,201 +66,201 @@
 
 
 ########################################################################
+# Import Modules
 
 
-class MicropolisTool:
-
-
-    allTools = {}
-
-
-    def __init__(
-        self, 
-        name=None,
-        cursorRows=1,
-        cursorCols=1,
-        cursorHotCol=0,
-        cursorHotRow=0,
-        cursorDrawer=None,
-        toolIndex=-1,
-        **args):
-
-        self.name = name
-        self.cursorRows = cursorRows
-        self.cursorCols = cursorCols
-        self.cursorHotCol = cursorHotCol
-        self.cursorHotRow = cursorHotRow
-        self.cursorDrawer = cursorDrawer
-        self.toolIndex = toolIndex
-
-        if name:
-            MicropolisTool.allTools[name] = self
-
-
-    def select(self, target):
-        target.tool = self
-        target.cursorHotCol = self.cursorHotCol
-        target.cursorHotRow = self.cursorHotRow
-        target.cursorDrawer = self.cursorDrawer
-        target.toolIndex = self.toolIndex
-
-        target.setCursorSize(
-            self.cursorCols, 
-            self.cursorRows)
-
-
-    def deselect(self, target):
-        pass
-
-
-    @classmethod
-    def getToolName(self, toolName):
-        return self.allTools.get(toolName, None)
+import tiletool
 
 
 ########################################################################
 
 
-def DrawChalkCursor(self, ctx):
-
-    cursorX = self.cursorX
-    cursorY = self.cursorY
-    panX = self.panX
-    panY = self.panY
-
-    x = cursorX + panX
-    y = cursorY + panY
-
-    ctx.save()
-
-    ctx.translate(
-        x,
-        y)
-
-    ctx.set_line_width(
-        4.0)
-
-    ctx.move_to(
-        0,
-        0)
-    ctx.line_to(
-        0,
-        -5)
-    ctx.line_to(
-        20,
-        -25)
-    ctx.line_to(
-        25,
-        -20)
-    ctx.line_to(
-        5,
-        0)
-    ctx.line_to(
-        0,
-        0)
-    ctx.close_path()
-
-    ctx.set_source_rgb(
-        1.0,
-        1.0,
-        1.0)
-
-    ctx.stroke_preserve()
-
-    ctx.set_line_width(
-        2.0)
-
-    ctx.set_source_rgb(
-        0.0,
-        0.0,
-        0.0)
-
-    ctx.stroke()
-
-    ctx.restore()
-
-    return True # Do not draw regular tile cursor.
+class MicropolisTool(tiletool.TileTool):
 
 
-def DrawEraserCursor(self, ctx):
+    pass
 
-    cursorX = self.cursorX
-    cursorY = self.cursorY
-    panX = self.panX
-    panY = self.panY
 
-    x = cursorX + panX
-    y = cursorY + panY
+########################################################################
 
-    ctx.save()
 
-    ctx.translate(
-        x,
-        y)
+class MicropolisChalkTool(MicropolisTool):
 
-    ctx.set_line_width(
-        4.0)
 
-    ctx.move_to(
-        0,
-        -10)
-    ctx.line_to(
-        10,
-        0)
-    ctx.line_to(
-        0,
-        10)
-    ctx.line_to(
-        -10,
-        0)
-    ctx.line_to(
-        00,
-        -10)
-    ctx.close_path()
+    def getCursorHotSpot(self, view):
+        return (
+            view.cursorX, 
+            view,cursorY,
+        )
 
-    ctx.set_source_rgb(
-        1.0,
-        1.0,
-        1.0)
 
-    ctx.stroke_preserve()
+    def drawCursor(self, view, ctx):
 
-    ctx.set_line_width(
-        2.0)
+        cursorX = view.cursorX
+        cursorY = view.cursorY
+        panX = view.panX
+        panY = view.panY
 
-    ctx.set_source_rgb(
-        0.0,
-        0.0,
-        0.0)
+        x = cursorX + panX
+        y = cursorY + panY
 
-    ctx.stroke()
+        ctx.save()
 
-    ctx.restore()
+        ctx.translate(
+            x,
+            y)
 
-    return True # Do not draw regular tile cursor.
+        ctx.set_line_width(
+            4.0)
+
+        ctx.move_to(
+            0,
+            0)
+        ctx.line_to(
+            0,
+            -5)
+        ctx.line_to(
+            20,
+            -25)
+        ctx.line_to(
+            25,
+            -20)
+        ctx.line_to(
+            5,
+            0)
+        ctx.line_to(
+            0,
+            0)
+        ctx.close_path()
+
+        ctx.set_source_rgb(
+            1.0,
+            1.0,
+            1.0)
+
+        ctx.stroke_preserve()
+
+        ctx.set_line_width(
+            2.0)
+
+        ctx.set_source_rgb(
+            0.0,
+            0.0,
+            0.0)
+
+        ctx.stroke()
+
+        ctx.restore()
+
+
+########################################################################
+
+
+class MicropolisEraserTool(MicropolisTool):
+
+
+    def getCursorHotSpot(self, view):
+        return (
+            view.cursorX, 
+            view,cursorY,
+        )
+
+
+    def drawCursor(self, view, ctx):
+
+        cursorX = view.cursorX
+        cursorY = view.cursorY
+        panX = view.panX
+        panY = view.panY
+
+        x = cursorX + panX
+        y = cursorY + panY
+
+        ctx.save()
+
+        ctx.translate(
+            x,
+            y)
+
+        ctx.set_line_width(
+            4.0)
+
+        ctx.move_to(
+            0,
+            -10)
+        ctx.line_to(
+            10,
+            0)
+        ctx.line_to(
+            0,
+            10)
+        ctx.line_to(
+            -10,
+            0)
+        ctx.line_to(
+            00,
+            -10)
+        ctx.close_path()
+
+        ctx.set_source_rgb(
+            1.0,
+            1.0,
+            1.0)
+
+        ctx.stroke_preserve()
+
+        ctx.set_line_width(
+            2.0)
+
+        ctx.set_source_rgb(
+            0.0,
+            0.0,
+            0.0)
+
+        ctx.stroke()
+
+        ctx.restore()
 
 
 ########################################################################
 # Define all the tools.
 
 
-MicropolisTool(
+tiletool.PanTool(
+    name='Pan',
+    cursorRows=0,
+    cursorCols=0,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    toolIndex=10,
+    iconNormal='images/icpan.png',
+    iconHilite='images/icpanhi.png',
+    iconX=0,
+    iconY=0)
+
+MicropolisChalkTool(
     name='Chalk',
     cursorRows=0,
     cursorCols=0,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=DrawChalkCursor,
-    toolIndex=10)
+    toolIndex=10,
+    iconNormal='images/icchlk.png',
+    iconHilite='images/icchlkhi.png',
+    iconX=28,
+    iconY=216)
 
-MicropolisTool(
+MicropolisEraserTool(
     name='Eraser',
     cursorRows=0,
     cursorCols=0,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=DrawEraserCursor,
-    toolIndex=11)
+    toolIndex=11,
+    iconNormal='images/icersr.png',
+    iconHilite='images/icersrhi.png',
+    iconX=66,
+    iconY=216)
 
 MicropolisTool(
     name='Query',
@@ -268,8 +268,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=0)
+    toolIndex=0,
+    iconNormal='images/icqry.png',
+    iconHilite='images/icqryhi.png',
+    iconX=47,
+    iconY=112)
 
 MicropolisTool(
     name='Bulldozer',
@@ -277,8 +280,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=7)
+    toolIndex=7,
+    iconNormal='images/icdozr.png',
+    iconHilite='images/icdozrhi.png',
+    iconX=66,
+    iconY=150)
 
 MicropolisTool(
     name='Wire',
@@ -286,8 +292,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=6)
+    toolIndex=6,
+    iconNormal='images/icwire.png',
+    iconHilite='images/icwirehi.png',
+    iconX=28,
+    iconY=150)
 
 MicropolisTool(
     name='Road',
@@ -295,8 +304,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=9)
+    toolIndex=9,
+    iconNormal='images/icroad.png',
+    iconHilite='images/icroadhi.png',
+    iconX=66,
+    iconY=188)
 
 MicropolisTool(
     name='Rail',
@@ -304,8 +316,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=8)
+    toolIndex=8,
+    iconNormal='images/icrail.png',
+    iconHilite='images/icrailhi.png',
+    iconX=6,
+    iconY=188)
 
 MicropolisTool(
     name='Park',
@@ -313,8 +328,11 @@ MicropolisTool(
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    cursorDrawer=None,
-    toolIndex=13)
+    toolIndex=13,
+    iconNormal='images/icpark.png',
+    iconHilite='images/icparkhi.png',
+    iconX=47,
+    iconY=254)
 
 MicropolisTool(
     name='Residential',
@@ -322,8 +340,11 @@ MicropolisTool(
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=0)
+    toolIndex=0,
+    iconNormal='images/icres.png',
+    iconHilite='images/icreshi.png',
+    iconX=9,
+    iconY=58)
 
 MicropolisTool(
     name='Commercial',
@@ -331,8 +352,11 @@ MicropolisTool(
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=1)
+    toolIndex=1,
+    iconNormal='images/iccom.png',
+    iconHilite='images/iccomhi.png',
+    iconX=47,
+    iconY=58)
 
 MicropolisTool(
     name='Industrial',
@@ -340,8 +364,11 @@ MicropolisTool(
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=2)
+    toolIndex=2,
+    iconNormal='images/icind.png',
+    iconHilite='images/icindhi.png',
+    iconX=85,
+    iconY=58)
 
 MicropolisTool(
     name='FireStation',
@@ -349,8 +376,11 @@ MicropolisTool(
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=3)
+    toolIndex=3,
+    iconNormal='images/icfire.png',
+    iconHilite='images/icfirehi.png',
+    iconX=9,
+    iconY=112)
 
 MicropolisTool(
     name='PoliceStation',
@@ -358,8 +388,11 @@ MicropolisTool(
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=5)
+    toolIndex=5,
+    iconNormal='images/icpol.png',
+    iconHilite='images/icpolhi.png',
+    iconX=85,
+    iconY=112)
 
 MicropolisTool(
     name='Stadium',
@@ -367,8 +400,11 @@ MicropolisTool(
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=12)
+    toolIndex=12,
+    iconNormal='images/icstad.png',
+    iconHilite='images/icstadhi.png',
+    iconX=1,
+    iconY=254)
 
 MicropolisTool(
     name='Seaport',
@@ -376,8 +412,11 @@ MicropolisTool(
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=4)
+    toolIndex=4,
+    iconNormal='images/icseap.png',
+    iconHilite='images/icseaphi.png',
+    iconX=85,
+    iconY=254)
 
 MicropolisTool(
     name='CoalPowerPlant',
@@ -385,8 +424,11 @@ MicropolisTool(
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=15)
+    toolIndex=15,
+    iconNormal='images/iccoal.png',
+    iconHilite='images/iccoalhi.png',
+    iconX=1,
+    iconY=300)
 
 MicropolisTool(
     name='NuclearPowerPlant',
@@ -394,8 +436,11 @@ MicropolisTool(
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    cursorDrawer=None,
-    toolIndex=16)
+    toolIndex=16,
+    iconNormal='images/icnuc.png',
+    iconHilite='images/icnuchi.png',
+    iconX=85,
+    iconY=300)
 
 MicropolisTool(
     name='Airport',
@@ -403,8 +448,11 @@ MicropolisTool(
     cursorCols=5,
     cursorHotCol=2,
     cursorHotRow=2,
-    cursorDrawer=None,
-    toolIndex=17)
+    toolIndex=17,
+    iconNormal='images/icairp.png',
+    iconHilite='images/icairphi.png',
+    iconX=35,
+    iconY=346)
 
 
 ########################################################################

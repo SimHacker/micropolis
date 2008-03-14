@@ -141,6 +141,7 @@ public:
   char typeCode;
   float floatOffset;
   float floatScale;
+  unsigned int tileShift;
   unsigned int tileMask;
 
 

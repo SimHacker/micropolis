@@ -76,6 +76,7 @@ setup(
   url='http://www.DonHopkins.com',
   py_modules=[
     'tileengine',
+    'tiletool',
     'tiledrawingarea',
     'tilewindow',
   ],

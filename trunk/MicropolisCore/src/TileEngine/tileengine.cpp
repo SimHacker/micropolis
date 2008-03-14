@@ -89,6 +89,7 @@ TileEngine::TileEngine() :
   typeCode('?'),
   floatOffset((float)0.0),
   floatScale((float)1.0),
+  tileShift(0),
   tileMask(~0)
 {
 }
@@ -215,6 +216,7 @@ unsigned long TileEngine::getValue(
 	Py_DECREF(result);
   }
 
+  tile <<= tileShift;
   tile &= tileMask;
 
   return tile;
