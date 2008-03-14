@@ -113,7 +113,8 @@ class CellDrawingArea(TileDrawingArea):
         engine.wrap = 3
         engine.steps = 1
         engine.frob = -4
-        engine.neighborhood = 46
+        #engine.neighborhood = 46
+        engine.neighborhood = 37
         engine.Garble()
 
         TileDrawingArea.createEngine(self)
@@ -125,8 +126,8 @@ class CellDrawingArea(TileDrawingArea):
         tengine.setBuffer(engine.GetCellBuffer())
         tengine.width = engine.width
         tengine.height = engine.height
-        tengine.colBytes = 1
-        tengine.rowBytes = engine.width
+        tengine.colBytes = engine.width
+        tengine.rowBytes = 1
         tengine.typeCode = 'B'
         tengine.tileMask = 0xff
 

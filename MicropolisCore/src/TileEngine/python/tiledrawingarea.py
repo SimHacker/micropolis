@@ -81,6 +81,7 @@ import array
 
 
 import tileengine
+import tiletool
 
 
 ########################################################################
@@ -107,18 +108,10 @@ class TileDrawingArea(gtk.DrawingArea):
         panX=0,
         panY=0,
         scale=1.0,
-        cursorVisible=True,
-        cursorX=0,
-        cursorY=0,
-        cursorCol=0,
-        cursorRow=0,
-        cursorCols=1,
-        cursorRows=1,
-        cursorHotCol=0,
-        cursorHotRow=0,
-        cursorDrawer=None,
         outsideBackgroundColor=(0.5, 0.5, 0.5),
         insideBackgroundColor=(0.0, 0.0, 0.0),
+        scrollWheelZoomScale=1.1,
+        selectedTool=None,
         **args):
 
         gtk.DrawingArea.__init__(self, **args)
@@ -139,18 +132,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self.panX = panX
         self.panY = panY
         self.scale = scale
-        self.cursorVisible = cursorVisible
-        self.cursorX = cursorX
-        self.cursorY = cursorY
-        self.cursorCol = cursorCol
-        self.cursorRow = cursorRow
-        self.cursorCols = cursorCols
-        self.cursorRows = cursorRows
-        self.cursorHotCol = cursorHotCol
-        self.cursorHotRow = cursorHotRow
-        self.cursorDrawer = None
         self.outsideBackgroundColor = outsideBackgroundColor
         self.insideBackgroundColor = insideBackgroundColor
+        self.scrollWheelZoomScale = scrollWheelZoomScale
+        self.selectedTool = selectedTool
 
         self.tilesSourceSurface = None
         self.tilesSourceWidth = None
@@ -167,9 +152,6 @@ class TileDrawingArea(gtk.DrawingArea):
         self.down = False
         self.downX = 0
         self.downY = 0
-        self.downPanX = 0
-        self.downPanY = 0
-        self.panning = False
         self.tileSize = 1
         self.buffer = None
         self.bufferWidth = 0
@@ -177,8 +159,12 @@ class TileDrawingArea(gtk.DrawingArea):
         self.windowBuffer = None
         self.windowBufferWidth = 0
         self.windowBufferHeight = 0
+        self.cursorX = 0 # TODO: get rid of cursorX and cursorY and track it in the tool instead.
+        self.cursorY = 0 # TODO: get rid of cursorX and cursorY and track it in the tool instead.
         self.mouseX = 0
         self.mouseY = 0
+        self.trackingTool = None
+        self.trackingToolTrigger = None
 
         self.timerActive = False
         self.timerId = None
@@ -207,6 +193,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.connect('focus_in_event', self.handleFocusIn)
         self.connect('focus_out_event', self.handleFocusOut)
         self.connect('key_press_event', self.handleKeyPress)
+        self.connect('key_release_event', self.handleKeyRelease)
         self.connect('motion_notify_event', self.handleMotionNotify)
         self.connect('button_press_event', self.handleButtonPress)
         self.connect('button_release_event', self.handleButtonRelease)
@@ -253,6 +240,7 @@ class TileDrawingArea(gtk.DrawingArea):
         #print "tick", self
 
         if self.running:
+            self.tickActiveTool()
             self.tickEngine()
 
         self.queue_draw()
@@ -262,10 +250,24 @@ class TileDrawingArea(gtk.DrawingArea):
         return False
 
 
+    def tickActiveTool(
+        self):
+
+        tool = self.getActiveTool()
+        if tool:
+            tool.tick(self)
+
+
     def tickEngine(
         self):
 
         pass
+
+
+    def getActiveTool(
+        self):
+
+        return self.trackingTool or self.selectedTool
 
 
     def changeScale(
@@ -285,10 +287,17 @@ class TileDrawingArea(gtk.DrawingArea):
 
         # TODO: take into account cursor hot spot, or precise cursor position?
 
-        cursorCol = self.cursorCol
-        cursorRow = self.cursorRow
-        cursorCols = self.cursorCols
-        cursorRows = self.cursorRows
+        tool = self.getActiveTool()
+        if tool:
+            cursorCol = tool.cursorCol
+            cursorRow = tool.cursorRow
+            cursorCols = tool.cursorCols
+            cursorRows = tool.cursorRows
+        else:
+            cursorCol = int(math.floor(self.cursorX / tileSize)) # TODO: get rid of cursorX and cursorY and track it in the tool instead.
+            cursorRow = int(math.floor(self.cursorY / tileSize)) # TODO: get rid of cursorX and cursorY and track it in the tool instead.
+            cursorRows = 1
+            cursorCols = 1
         #print "CURSOR", cursorCol, cursorRow, cursorCols, cursorRows
 
         cursorScreenX = panX + (cursorCol * tileSize)
@@ -319,7 +328,7 @@ class TileDrawingArea(gtk.DrawingArea):
     def setScale(
         self,
         scale):
-        
+
         if self.scale == scale:
             return
 
@@ -357,9 +366,9 @@ class TileDrawingArea(gtk.DrawingArea):
         sourceTileSize = int(self.sourceTileSize)
 
         (
-         tilesSourceSurface,
-         tilesSourceWidth,
-         tilesSourceHeight,
+            tilesSourceSurface,
+            tilesSourceWidth,
+            tilesSourceHeight,
         ) = self.loadSurfaceFromPNG(self.tilesFileName)
 
         tilesSourceCols = int(math.floor(tilesSourceWidth / sourceTileSize))
@@ -436,7 +445,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self.tileCtx = tileCtx
 
         self.makeTileMap()
-        self.revealCursor()
+
+        tool = self.getActiveTool()
+        if tool:
+            tool.revealCursor(self)
 
 
     def makeTileMap(
@@ -877,138 +889,9 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         ctx):
 
-        self.drawCursor(ctx)
-
-
-    def drawCursor(
-        self,
-        ctx):
-
-        if not self.cursorVisible:
-            return
-
-        cursorDrawer = self.cursorDrawer
-        if (cursorDrawer and
-            cursorDrawer(self, ctx)):
-                return
-
-        cursorX = self.cursorX
-        cursorY = self.cursorY
-        cursorCol = self.cursorCol
-        cursorRow = self.cursorRow
-        cursorCols = self.cursorCols
-        cursorRows = self.cursorRows
-        tileSize = self.tileSize
-        panX = self.panX
-        panY = self.panY
-
-        x = panX + (tileSize * cursorCol)
-        y = panY + (tileSize * cursorRow)
-
-        #print "drawCursor", "cursor", cursorCol, cursorRow, cursorCols, cursorRow, "size", tileSize, "pan", panX, panY, "tile", x, y
-
-        ctx.save()
-
-        ctx.translate(
-            x,
-            y)
-
-        ctx.rectangle(
-            -2,
-            -2,
-            (cursorCols * tileSize) + 4,
-            (cursorRows * tileSize) + 4)
-
-        ctx.set_line_width(
-            4.0)
-
-        ctx.set_source_rgb(
-            1.0,
-            1.0,
-            1.0)
-
-        ctx.stroke_preserve()
-
-        ctx.set_line_width(
-            2.0)
-
-        ctx.set_source_rgb(
-            0.0,
-            0.0,
-            0.0)
-
-        ctx.stroke()
-
-        self.drawCursorDetails(ctx)
-
-        ctx.restore()
-
-
-    def drawCursorDetails(self, ctx):
-        tileCode = self.getTile(
-            self.cursorCol - self.cursorHotCol,
-            self.cursorRow - self.cursorHotRow)
-
-        tileName = str(tileCode)
-        if not tileName:
-            print "Unknown tile code:", tileCode
-            return
-
-        tileDescription = "Tile #" + str(tileCode)
-        if not tileDescription:
-            print "Unknown tile name:", tileName, "tile", tileCode
-            return
-
-        #print hex(tileCode), tileName, tileDescription
-
-
-    def setCursorSize(
-        self,
-        cols,
-        rows):
-        
-        if ((self.cursorCols == cols) and
-            (self.cursorRows == rows)):
-            return
-        
-        self.cursorCols = cols
-        self.cursorRows = rows
-        self.setCursorPos(self.cursorX, self.cursorY, True)
-
-
-    def setCursorPos(
-        self,
-        x,
-        y,
-        forceRedraw=False):
-
-        tileSize = self.tileSize
-        col = int(math.floor(x / tileSize)) - self.cursorHotCol
-        row = int(math.floor(y / tileSize)) - self.cursorHotRow
-
-        cursorRows = self.cursorRows
-        cursorCols = self.cursorCols
-        col = max(0, min(self.worldCols - cursorCols, col))
-        row = max(0, min(self.worldRows - cursorRows, row))
-
-        if cursorCols:
-            cursorXChanged = self.cursorCol != col
-        else:
-            cursorXChanged = self.cursorX != x
-        if cursorRows:
-            cursorYChanged = self.cursorRow != row
-        else:
-            cursorYChanged = self.cursorY != y
-
-        self.cursorX = x
-        self.cursorY = y
-
-        if (forceRedraw or
-            cursorXChanged or
-            cursorYChanged):
-            self.cursorCol = col
-            self.cursorRow = row
-            self.cursorMoved()
+        tool = self.getActiveTool(self)
+        if tool:
+            tool.drawCursor(self, ctx)
 
 
     def cursorMoved(self):
@@ -1020,86 +903,33 @@ class TileDrawingArea(gtk.DrawingArea):
         x,
         y):
 
-        self.setCursorPos(
-            x - self.panX, 
-            y - self.panY)
+        tool = self.getActiveTool()
+        if tool:
+            tool.setCursorPos(
+                self,
+                x - self.panX, 
+                y - self.panY)
 
 
-    def moveCursor(
-        self,
-        dx,
-        dy):
-        
-        col = self.cursorCol + dx
-        row = self.cursorRow + dy
-
-        tileSize = self.tileSize
-        tileMiddle = int(math.floor((tileSize / 2.0) + 0.5))
-        cursorCols = self.cursorCols
-        cursorRows = self.cursorRows
-        worldCols = self.worldCols
-        worldRows = self.worldRows
-
-        if col < 0:
-            col = 0
-        if col >= (worldCols - cursorCols):
-            col =  (worldCols - cursorCols) - 1
-
-        if row < 0:
-            row = 0
-        if row >= (worldRows - cursorRows):
-            row = (worldRows - cursorRows) - 1
-
-        x = ((col + self.cursorHotCol) * tileSize) + tileMiddle
-        y = ((row + self.cursorHotRow) * tileSize) + tileMiddle
-
-        self.setCursorPos(
-            x,
-            y)
-
-        self.revealCursor()
+    def panBy(self, dx, dy):
+        self.panX += dx
+        self.panY += dy
+        self.queue_draw()
 
 
-    def revealCursor(
-        self):
-        
-        rect = self.get_allocation()
-        winX = rect.x
-        winY = rect.y
-        winWidth = rect.width
-        winHeight = rect.height
+    def selectToolByName(self, toolName):
+        print "selectToolByName", toolName
 
-        cursorCol = self.cursorCol
-        cursorRow = self.cursorRow
-        cursorCols = self.cursorCols
-        cursorRows = self.cursorRows
-        tileSize = self.tileSize
-        panX = self.panX
-        panY = self.panY
+        tool = tiletool.TileTool.getToolByName(toolName)
 
-        left = panX + (tileSize * cursorCol)
-        right = left + (max(1, cursorCols) * tileSize)
-        top = panY + (tileSize * cursorRow)
-        bottom = top + (max(1, cursorRows) * tileSize)
+        lastTool = self.selectedTool
+        if lastTool:
+            tool.deselect(self)
 
-        dx = 0
-        dy = 0
+        if tool:
+            tool.select(self)
 
-        if right >= (winX + winWidth):
-            dx = (winX + winWidth) - right
-        elif left < winX:
-            dx = winX - left
-
-        if bottom >= (winY + winHeight):
-            dy = (winY + winHeight) - bottom
-        elif top < winY:
-            dy = winY - top
-
-        if (dx or dy):
-            #print "Panning", dx, dy
-            self.panX += dx
-            self.panY += dy
-            self.queue_draw()
+        self.selectedTool = tool
 
 
     def handleFocusIn(
@@ -1127,6 +957,24 @@ class TileDrawingArea(gtk.DrawingArea):
 
         key = event.keyval
 
+        #print "KEYPRESS", key
+
+        if ((not self.trackingTool) and
+            (key in (65505, 65506))): # left shift, right shift
+            panTool = tiletool.TileTool.getToolByName('Pan')
+            #print "panTool", panTool
+            if panTool:
+                self.trackingToolTrigger = key
+                self.trackingTool = panTool
+                panTool.startPanning(self)
+                #print "Activated panTool", panTool
+                return
+
+        tool = self.getActiveTool()
+        if tool:
+            if tool.handleKeyDown(self, event):
+                return
+
         if key == ord('i'):
             self.changeScale(self.scale * 1.1)
         elif key == ord('I'):
@@ -1137,17 +985,24 @@ class TileDrawingArea(gtk.DrawingArea):
             self.changeScale(self.scale * 0.5)
         elif key == ord('r'):
             self.changeScale(1.0)
-        elif key == 65362:
-            self.moveCursor(0, -1)
-        elif key == 65364:
-            self.moveCursor(0, 1)
-        elif key == 65361:
-            self.moveCursor(-1, 0)
-        elif key == 65363:
-            self.moveCursor(1, 0)
         else:
             pass
             #print "KEY", event.keyval
+
+
+    def handleKeyRelease(
+        self,
+        widget,
+        event):
+
+        #print "KEYRELEASE", event.keyval
+
+        tool = self.getActiveTool()
+        if tool:
+            if tool.handleKeyUp(self, event):
+                return
+
+        key = event.keyval
 
 
     def handleMotionNotify(
@@ -1157,15 +1012,16 @@ class TileDrawingArea(gtk.DrawingArea):
 
         #print "handleMotionNotify TileDrawingArea", self, widget, event
 
-        self.updateCursorPosition(widget, event)
+        self.updateCursorPosition(event)
 
 
     def updateCursorPosition(
         self,
-        widget,
         event):
 
-        if (hasattr(event, 'is_hint') and
+        if not event:
+            x, y, state = self.window.get_pointer()
+        elif (hasattr(event, 'is_hint') and
             event.is_hint):
             x, y, state = event.window.get_pointer()
         else:
@@ -1179,30 +1035,28 @@ class TileDrawingArea(gtk.DrawingArea):
         self.moveCursorToMouse(x, y)
 
         if self.down:
-            self.handleDrag(widget, event)
+            self.handleMouseDrag(event)
+        else:
+            self.handleMousePoint(event)
 
 
-    def handleDrag(
+    def handleMouseDrag(
         self,
-        widget,
         event):
 
-        #print "handleDrag TileDrawingArea", self
+        tool = self.getActiveTool()
+        if tool:
+            tool.handleMouseDrag(self, event)
 
-        x = self.mouseX
-        y = self.mouseY
 
-        if self.panning:
-            #print "PANNING"
-            dx = x - self.downX
-            dy = y - self.downY
-            panX = self.downPanX + dx
-            panY = self.downPanY + dy
-            if ((panX != self.panX) or
-                (panY != self.panY)):
-                self.panX = panX
-                self.panY = panY
-                self.queue_draw()
+    def handleMousePoint(
+        self,
+        event):
+
+        tool = self.getActiveTool()
+        #print "handleMousePoint", tool
+        if tool:
+            tool.handleMousePoint(self, event)
 
 
     def handleButtonPress(
@@ -1210,20 +1064,14 @@ class TileDrawingArea(gtk.DrawingArea):
         widget,
         event):
 
-        #print "handleButtonPress TileDrawingArea", self
-
-        print "EVENT", event
-        #print dir(event)
-
-        self.down = True
+        self.down = true
         self.downX = event.x
         self.downY = event.y
 
-        self.panning = True
-        self.downPanX = self.panX
-        self.downPanY = self.panY
-
-        self.handleDrag(widget, event)
+        tool = self.getActiveTool()
+        #print "Active tool:", tool
+        if tool:
+            tool.handleMouseDown(self, event)
 
 
     def handleButtonRelease(
@@ -1233,11 +1081,14 @@ class TileDrawingArea(gtk.DrawingArea):
 
         #print "handleButtonRelease TileDrawingArea", self
 
-        self.handleDrag(widget, event)
+        self.handleMouseDrag(event)
 
         self.down = False
 
-        self.panning = False
+        tool = self.getActiveTool()
+        if tool:
+            tool.handleMouseUp(self, event)
+
 
     def handleMouseScroll(
 	self,
@@ -1247,8 +1098,9 @@ class TileDrawingArea(gtk.DrawingArea):
 	direction = event.direction
 		
 	if direction == gtk.gdk.SCROLL_UP:
-	    self.changeScale(self.scale * 1.1)
+	    self.changeScale(self.scale * self.scrollWheelZoomScale)
 	elif direction == gtk.gdk.SCROLL_DOWN:
-	    self.changeScale(self.scale * 0.9)
+	    self.changeScale(self.scale / self.scrollWheelZoomScale)
+
 
 ########################################################################

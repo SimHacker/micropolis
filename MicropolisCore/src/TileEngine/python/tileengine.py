@@ -79,6 +79,9 @@ class TileEngine(_object):
     __swig_setmethods__["floatScale"] = _tileengine.TileEngine_floatScale_set
     __swig_getmethods__["floatScale"] = _tileengine.TileEngine_floatScale_get
     if _newclass:floatScale = _swig_property(_tileengine.TileEngine_floatScale_get, _tileengine.TileEngine_floatScale_set)
+    __swig_setmethods__["tileShift"] = _tileengine.TileEngine_tileShift_set
+    __swig_getmethods__["tileShift"] = _tileengine.TileEngine_tileShift_get
+    if _newclass:tileShift = _swig_property(_tileengine.TileEngine_tileShift_get, _tileengine.TileEngine_tileShift_set)
     __swig_setmethods__["tileMask"] = _tileengine.TileEngine_tileMask_set
     __swig_getmethods__["tileMask"] = _tileengine.TileEngine_tileMask_get
     if _newclass:tileMask = _swig_property(_tileengine.TileEngine_tileMask_get, _tileengine.TileEngine_tileMask_set)

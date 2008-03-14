@@ -84,7 +84,8 @@ cwd = os.getcwd()
 
 for relPath in (
   'ReleaseSymbols',
-  'build/lib.macosx-10.5-i386-2.5',
+  'build/lib.macosx-10.3-i386-2.5',
+  '.',
 ):
     sys.path.insert(0, os.path.join(cwd, relPath))
 

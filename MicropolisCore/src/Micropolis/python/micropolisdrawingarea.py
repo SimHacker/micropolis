@@ -92,6 +92,7 @@ import micropolisutils
 import micropolispiemenus
 from tiledrawingarea import TileDrawingArea
 from micropolistool import MicropolisTool
+from tiletool import TileTool
 
 
 ########################################################################
@@ -121,8 +122,6 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         self.engine = engine
         self.toolPie = toolPie
-        self.toolIndex = -1
-        self.tool = None
 
         TileDrawingArea.__init__(self, **args)
 
@@ -130,7 +129,7 @@ class MicropolisDrawingArea(TileDrawingArea):
 
 
     def reset(self):
-        self.setToolName('Bulldozer')
+        self.selectToolByName('Bulldozer')
 
 
     def createEngine(self):
@@ -162,17 +161,13 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         engine.Resume()
         engine.setSpeed(2)
-        engine.setSkips(10)
-        engine.SetFunds(1000000000)
         engine.autoGo = 0
         engine.CityTax = 8
 
         # Testing...
 
-        self.cursorCols = 3
-        self.cursorRows = 3
-        self.cursorHotCol = 1
-        self.cursorHotRow = 1
+        engine.setSkips(10)
+        engine.SetFunds(1000000000)
 
         TileDrawingArea.createEngine(self)
 
@@ -183,9 +178,11 @@ class MicropolisDrawingArea(TileDrawingArea):
         tengine.setBuffer(engine.getMapBuffer())
         tengine.width = micropolis.WORLD_X
         tengine.height = micropolis.WORLD_Y
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'H'
         tengine.colBytes = 2 * micropolis.WORLD_Y
         tengine.rowBytes = 2
-        tengine.typeCode = 'H'
         tengine.tileMask = micropolis.LOMASK
 
 
@@ -207,11 +204,20 @@ class MicropolisDrawingArea(TileDrawingArea):
         ctx):
 
         self.drawSprites(ctx)
-        self.drawCursor(ctx)
+
+        self.drawChalk(ctx)
+
+        tool = self.getActiveTool()
+        if tool:
+            tool.drawCursor(self, ctx)
 
 
     def drawSprites(self, ctx):
-        pass
+        pass # TODO: drawSprites
+
+
+    def drawChalk(self, ctx):
+        pass # TODO: drawChalk
 
 
     def tickEngine(self):
@@ -227,21 +233,9 @@ class MicropolisDrawingArea(TileDrawingArea):
         if toolPie:
             return toolPie
 
-        toolPie = micropolispiemenus.MakeToolPie(lambda toolName: self.setToolName(toolName))
+        toolPie = micropolispiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
         self.toolPie = toolPie
         return toolPie
-
-
-    def setToolName(self, toolName):
-        print "setToolName", toolName
-        tool = MicropolisTool.getToolName(toolName)
-
-        lastTool = self.tool
-        if lastTool:
-            tool.deselect(self)
-
-        if tool:
-            tool.select(self)
 
 
     def handleButtonPress(
@@ -279,7 +273,7 @@ class MicropolisDrawingArea(TileDrawingArea):
 
             toolPie.popup(x, y, False)
 
-        self.handleDrag(widget, event)
+        self.handleMouseDrag(event)
 
 
 ########################################################################

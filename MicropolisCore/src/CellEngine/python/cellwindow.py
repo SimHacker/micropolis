@@ -72,6 +72,7 @@
 import sys
 import os
 import gtk
+import thread
 
 
 ########################################################################
@@ -83,10 +84,11 @@ cwd = os.getcwd()
 
 for relPath in (
   'ReleaseSymbols',
-  'build/lib.macosx-10.5-i386-2.5',
-  '../../TileEngine/python',
+  'build/lib.macosx-10.3-i386-2.5',
   '../../TileEngine/python/ReleaseSymbols',
-  '../../TileEngine/python/lib.macosx-10.5-i386-2.5',
+  '../../TileEngine/python/build/lib.macosx-10.3-i386-2.5',
+  '../../TileEngine/python',
+  '.',
 ):
     sys.path.insert(0, os.path.join(cwd, relPath))
 
@@ -116,10 +118,12 @@ class CellWindow(gtk.Window):
 if __name__ == '__main__':
 
     win = CellWindow()
-    #print "WIN", win
+    print "WIN", win
     win.show_all()
+    eng = win.da.engine
+    print "ENG", eng
 
-    gtk.main()
+    thread.start_new(gtk.main, ())
 
 
 ########################################################################

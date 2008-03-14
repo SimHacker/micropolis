@@ -3421,6 +3421,59 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_TileEngine_tileShift_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TileEngine *arg1 = (TileEngine *) 0 ;
+  unsigned int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:TileEngine_tileShift_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TileEngine, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TileEngine_tileShift_set" "', argument " "1"" of type '" "TileEngine *""'"); 
+  }
+  arg1 = reinterpret_cast< TileEngine * >(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TileEngine_tileShift_set" "', argument " "2"" of type '" "unsigned int""'");
+  } 
+  arg2 = static_cast< unsigned int >(val2);
+  if (arg1) (arg1)->tileShift = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_TileEngine_tileShift_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TileEngine *arg1 = (TileEngine *) 0 ;
+  unsigned int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:TileEngine_tileShift_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TileEngine, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TileEngine_tileShift_get" "', argument " "1"" of type '" "TileEngine *""'"); 
+  }
+  arg1 = reinterpret_cast< TileEngine * >(argp1);
+  result = (unsigned int) ((arg1)->tileShift);
+  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_TileEngine_tileMask_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   TileEngine *arg1 = (TileEngine *) 0 ;
@@ -4058,6 +4111,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"TileEngine_floatOffset_get", _wrap_TileEngine_floatOffset_get, METH_VARARGS, NULL},
 	 { (char *)"TileEngine_floatScale_set", _wrap_TileEngine_floatScale_set, METH_VARARGS, NULL},
 	 { (char *)"TileEngine_floatScale_get", _wrap_TileEngine_floatScale_get, METH_VARARGS, NULL},
+	 { (char *)"TileEngine_tileShift_set", _wrap_TileEngine_tileShift_set, METH_VARARGS, NULL},
+	 { (char *)"TileEngine_tileShift_get", _wrap_TileEngine_tileShift_get, METH_VARARGS, NULL},
 	 { (char *)"TileEngine_tileMask_set", _wrap_TileEngine_tileMask_set, METH_VARARGS, NULL},
 	 { (char *)"TileEngine_tileMask_get", _wrap_TileEngine_tileMask_get, METH_VARARGS, NULL},
 	 { (char *)"new_TileEngine", _wrap_new_TileEngine, METH_VARARGS, NULL},
