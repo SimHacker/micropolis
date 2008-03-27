@@ -441,11 +441,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\micropolisdrawingarea.py"
+					>
+				</File>
+				<File
 					RelativePath=".\micropolismodel.py"
 					>
 				</File>
 				<File
 					RelativePath=".\micropolispiemenus.py"
+					>
+				</File>
+				<File
+					RelativePath=".\micropolistool.py"
 					>
 				</File>
 				<File

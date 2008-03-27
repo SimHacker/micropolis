@@ -123,7 +123,8 @@ if __name__ == '__main__':
     eng = win.da.engine
     print "ENG", eng
 
-    thread.start_new(gtk.main, ())
+    #thread.start_new(gtk.main, ())
+    gtk.main()
 
 
 ########################################################################

@@ -79,6 +79,7 @@ setup(
     'tiletool',
     'tiledrawingarea',
     'tilewindow',
+    'piemenu',
   ],
   ext_modules=[
     Extension('_tileengine', [
