@@ -78,7 +78,10 @@ import os
 
 
 import cellengine
+import cellpiemenus
 from tiledrawingarea import TileDrawingArea
+import celltool
+from tiletool import TileTool
 
 
 ########################################################################
@@ -145,6 +148,50 @@ class CellDrawingArea(TileDrawingArea):
     def tickEngine(self):
 
         self.engine.DoRule()
+
+
+    def makeToolPie(self):
+
+        toolPie = cellpiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
+        self.toolPie = toolPie
+
+
+    def handleButtonPress(
+        self,
+        widget,
+        event):
+
+        #print "handleButtonPress CellDrawingArea", self
+
+        #print "EVENT", event
+        #print dir(event)
+
+        if event.button == 1:
+
+            self.down = True
+            self.downX = event.x
+            self.downY = event.y
+
+            self.panning = True
+            self.downPanX = self.panX
+            self.downPanY = self.panY
+
+        elif event.button == 3:
+
+            toolPie = self.getToolPie()
+
+            win_x, win_y, state = event.window.get_pointer()
+
+            #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
+            #print "WIN", win_x, win_y
+
+            x, y = event.get_root_coords()
+
+            #print "ROOT", x, y
+
+            toolPie.popup(x, y, False)
+
+        self.handleMouseDrag(event)
 
 
 ########################################################################

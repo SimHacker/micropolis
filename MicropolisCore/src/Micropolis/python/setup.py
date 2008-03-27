@@ -79,7 +79,6 @@ setup(
     'micropolisdrawingarea',
     'micropoliswindow',
     'micropoliswebserver',
-    'piemenu',
   ],
   ext_modules=[
     Extension('_micropolis', [

@@ -112,6 +112,7 @@ class TileDrawingArea(gtk.DrawingArea):
         insideBackgroundColor=(0.0, 0.0, 0.0),
         scrollWheelZoomScale=1.1,
         selectedTool=None,
+        toolPie=None,
         **args):
 
         gtk.DrawingArea.__init__(self, **args)
@@ -136,6 +137,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.insideBackgroundColor = insideBackgroundColor
         self.scrollWheelZoomScale = scrollWheelZoomScale
         self.selectedTool = selectedTool
+        self.toolPie = toolPie
 
         self.tilesSourceSurface = None
         self.tilesSourceWidth = None
@@ -477,6 +479,22 @@ class TileDrawingArea(gtk.DrawingArea):
             self.tengine = tengine
 
             self.configTileEngine(tengine)
+
+
+    def getToolPie(self):
+
+        toolPie = self.toolPie
+        if toolPie:
+            return toolPie
+
+        self.makeToolPie()
+
+        return self.toolPie
+
+
+    def makeToolPie(self):
+
+        pass
 
 
     def configTileEngine(
@@ -889,7 +907,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         ctx):
 
-        tool = self.getActiveTool(self)
+        tool = self.getActiveTool()
         if tool:
             tool.drawCursor(self, ctx)
 
@@ -1059,12 +1077,48 @@ class TileDrawingArea(gtk.DrawingArea):
             tool.handleMousePoint(self, event)
 
 
+    def handleToolPieButtonPress(
+        self,
+        widget,
+        event):
+
+        #print "handleButtonPress TileDrawingArea", self
+
+        #print "EVENT", event
+        #print dir(event)
+
+        if event.button == 1:
+
+            self.down = True
+            self.downX = event.x
+            self.downY = event.y
+
+        elif event.button == 3:
+
+            toolPie = self.getToolPie()
+
+            if toolPie:
+
+                win_x, win_y, state = event.window.get_pointer()
+
+                #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
+                #print "WIN", win_x, win_y
+
+                x, y = event.get_root_coords()
+
+                #print "ROOT", x, y
+
+                toolPie.popup(x, y, False)
+
+        self.handleMouseDrag(event)
+
+
     def handleButtonPress(
         self,
         widget,
         event):
 
-        self.down = true
+        self.down = True
         self.downX = event.x
         self.downY = event.y
 

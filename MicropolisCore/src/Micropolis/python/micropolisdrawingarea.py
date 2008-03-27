@@ -91,7 +91,7 @@ import micropolismodel
 import micropolisutils
 import micropolispiemenus
 from tiledrawingarea import TileDrawingArea
-from micropolistool import MicropolisTool
+import micropolistool
 from tiletool import TileTool
 
 
@@ -112,7 +112,6 @@ class MicropolisDrawingArea(TileDrawingArea):
     def __init__(
         self,
         engine=None,
-        toolPie=None,
         **args):
 
         args['tileCount'] = 960
@@ -121,7 +120,6 @@ class MicropolisDrawingArea(TileDrawingArea):
         args['worldRows'] = micropolis.WORLD_Y
 
         self.engine = engine
-        self.toolPie = toolPie
 
         TileDrawingArea.__init__(self, **args)
 
@@ -227,15 +225,10 @@ class MicropolisDrawingArea(TileDrawingArea):
         engine.animateTiles()
 
 
-    def getToolPie(self):
-
-        toolPie = self.toolPie
-        if toolPie:
-            return toolPie
+    def makeToolPie(self):
 
         toolPie = micropolispiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
         self.toolPie = toolPie
-        return toolPie
 
 
     def handleButtonPress(
@@ -243,7 +236,7 @@ class MicropolisDrawingArea(TileDrawingArea):
         widget,
         event):
 
-        #print "handleButtonPress MicropolisWindow", self
+        #print "handleButtonPress MicropolisDrawingArea", self
 
         #print "EVENT", event
         #print dir(event)
@@ -254,24 +247,22 @@ class MicropolisDrawingArea(TileDrawingArea):
             self.downX = event.x
             self.downY = event.y
 
-            self.panning = True
-            self.downPanX = self.panX
-            self.downPanY = self.panY
-
         elif event.button == 3:
 
             toolPie = self.getToolPie()
 
-            win_x, win_y, state = event.window.get_pointer()
+            if toolPie:
 
-            #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
-            #print "WIN", win_x, win_y
+                win_x, win_y, state = event.window.get_pointer()
 
-            x, y = event.get_root_coords()
+                #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
+                #print "WIN", win_x, win_y
 
-            #print "ROOT", x, y
+                x, y = event.get_root_coords()
 
-            toolPie.popup(x, y, False)
+                #print "ROOT", x, y
+
+                toolPie.popup(x, y, False)
 
         self.handleMouseDrag(event)
 

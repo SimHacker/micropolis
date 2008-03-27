@@ -293,7 +293,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\tiledrawingarea.py"
+					>
+				</File>
+				<File
 					RelativePath=".\tileengine.py"
+					>
+				</File>
+				<File
+					RelativePath=".\tiletool.py"
 					>
 				</File>
 				<File
