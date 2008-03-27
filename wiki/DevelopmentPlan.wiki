@@ -2,11 +2,12 @@
 
 = Notes on a development plan, in progress =
 
-I (Don Hopkins) have started translate and cleaning up the Micropolis source code. 
-It runs, but it's not yet a playable game.
-That ongoing work is checked into google code under the "Micropolis Core" branch.
+I (Don Hopkins) have cleaning up and translated the Micropolis (SimCity) source code to C++, and used SWIG to integrate it with Python. 
+It runs and animates the city on the screen, but it's not yet a playable game.
 
-It is still in progress of course -- the game is not yet playable, but you can scroll and zoom around the map, and I've hooked up the pie menus for switching tools.
+The ongoing Micropolis Core development work is checked into subversion on google code, in the "MicropolisCore" subdirectory: http://code.google.com/p/micropolis/source/browse
+
+Micropolis Core is still a work in progress, of course -- the game is not yet playable, but you can scroll and zoom around the map, and I've hooked up the pie menus for switching tools.
 
 I've been working on the editing and navigation tools -- they are not actually hooked up for editing the map yet, but the tool framework is in place.
 The TileTool base class represents an editing tool, including the tile based SimCity map editors, the ink drawing and eraser tools, and the panning tool. The TileDrawingView distributes events to the appropriate tools. There is a current editing tool, as well as a spring loaded navigation tool (for panning and zooming), which activates when you press a key. 
