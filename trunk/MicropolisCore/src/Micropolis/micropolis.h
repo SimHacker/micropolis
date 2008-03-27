@@ -2112,7 +2112,7 @@ class Micropolis {
     int x, 
     int y);
 
-  void Micropolis::AddInk(
+  void AddInk(
     Ink *ink, 
     int x, 
     int y);
