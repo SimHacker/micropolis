@@ -2,7 +2,7 @@
 
 = Notes on a development plan, in progress =
 
-I (Don Hopkins) have cleaning up and translated the Micropolis (SimCity) source code to C++, and used SWIG to integrate it with Python. 
+I (Don Hopkins) have been cleaning up and translated the Micropolis (SimCity) source code to C++, and used SWIG to integrate it with Python. 
 It runs and animates the city on the screen, but it's not yet a playable game.
 
 The ongoing Micropolis Core development work is checked into subversion on google code, in the "MicropolisCore" subdirectory: http://code.google.com/p/micropolis/source/browse
