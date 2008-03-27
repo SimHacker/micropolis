@@ -79,6 +79,12 @@ clean:
 	cd CellEngine ; make clean
 	cd Micropolis ; make clean
 
+cleanswig:
+	rm -rf *~ *.suo *.ncb build
+	cd TileEngine ; make cleanswig
+	cd CellEngine ; make cleanswig
+	cd Micropolis ; make cleanswig
+
 install: all
 	rm -rf build
 	mkdir build

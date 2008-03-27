@@ -98,8 +98,9 @@ clean:
 	rm -rf *~ *.ncb python/build
 	rm -rf swig/*~
 	rm -rf python/*~ python/*.pyc python/*.o python/*.pyd python/ReleaseSymbols python/Release python/Debug
-	# Disabled this to leave SWIG generated stuff around.
-	#rm -rf python/tileengine.py python/tileengine_wrap.cpp
+
+cleanswig: clean
+	rm -rf python/tileengine.py python/tileengine_wrap.cpp
 
 install: all
 	(cd python ; $(PYTHON) setup.py install)
