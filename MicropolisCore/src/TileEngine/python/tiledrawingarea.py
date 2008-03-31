@@ -1143,9 +1143,9 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         widget,
         event):
-                
+
         direction = event.direction
-                
+
         if direction == gtk.gdk.SCROLL_UP:
             self.changeScale(self.scale * self.scrollWheelZoomScale)
         elif direction == gtk.gdk.SCROLL_DOWN:
