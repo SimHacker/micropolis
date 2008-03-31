@@ -130,46 +130,6 @@ class MicropolisDrawingArea(TileDrawingArea):
         self.selectToolByName('Bulldozer')
 
 
-    def createEngine(self):
-
-        # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
-        engine = micropolismodel.MicropolisModel()
-        self.engine = engine
-
-        print "Created Micropolis simulator engine:", engine
-
-        # Hook the engine up so it has a handle on its Python object side. 
-        engine.userData = micropolis.GetPythonCallbackData(engine)
-
-        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
-        engine.callbackHook = micropolis.GetPythonCallbackHook()
-
-        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
-        engine.callbackData = micropolis.GetPythonCallbackData(engine.invokeCallback)
-
-        engine.ResourceDir = 'res'
-        engine.InitGame()
-
-        # Load a city file.
-        cityFileName = 'cities/haight.cty'
-        print "Loading city file:", cityFileName
-        engine.loadFile(cityFileName)
-
-        # Initialize the simulator engine.
-
-        engine.Resume()
-        engine.setSpeed(2)
-        engine.autoGo = 0
-        engine.CityTax = 8
-
-        # Testing...
-
-        engine.setSkips(10)
-        engine.SetFunds(1000000000)
-
-        TileDrawingArea.createEngine(self)
-
-
     def configTileEngine(self, tengine):
 
         engine = self.engine
@@ -182,14 +142,6 @@ class MicropolisDrawingArea(TileDrawingArea):
         tengine.colBytes = 2 * micropolis.WORLD_Y
         tengine.rowBytes = 2
         tengine.tileMask = micropolis.LOMASK
-
-
-    def destroyEngine(self):
-
-        # TODO: clean up all user pointers and callbacks. 
-        # TODO: Make sure there are no memory leaks.
-        
-        TileDrawingArea.destroyEngine(self)
 
 
     def getCell(self, col, row):
@@ -236,35 +188,9 @@ class MicropolisDrawingArea(TileDrawingArea):
         widget,
         event):
 
-        #print "handleButtonPress MicropolisDrawingArea", self
-
-        #print "EVENT", event
-        #print dir(event)
-
-        if event.button == 1:
-
-            self.down = True
-            self.downX = event.x
-            self.downY = event.y
-
-        elif event.button == 3:
-
-            toolPie = self.getToolPie()
-
-            if toolPie:
-
-                win_x, win_y, state = event.window.get_pointer()
-
-                #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
-                #print "WIN", win_x, win_y
-
-                x, y = event.get_root_coords()
-
-                #print "ROOT", x, y
-
-                toolPie.popup(x, y, False)
-
-        self.handleMouseDrag(event)
+        self.handleToolPieButtonPress(
+            widget,
+            event)
 
 
 ########################################################################

@@ -73,6 +73,7 @@ import sys
 import os
 import gtk
 import thread
+import gobject
 
 
 ########################################################################
@@ -92,6 +93,7 @@ for relPath in (
 ):
     sys.path.insert(0, os.path.join(cwd, relPath))
 
+import cellengine
 from celldrawingarea import CellDrawingArea
 
 
@@ -101,15 +103,122 @@ from celldrawingarea import CellDrawingArea
 class CellWindow(gtk.Window):
 
 
-    def __init__(self, **args):
+    def __init__(
+        self,
+        running=True,
+        timeDelay=50,
+        **args):
+
         gtk.Window.__init__(self, **args)
 
         self.connect('destroy', gtk.main_quit)
 
         self.set_title("OLPC Cellular Automata Engine for Python/Cairo, by Don Hopkins")
 
-        self.da = CellDrawingArea()
+        self.views = []
+
+        self.createEngine()
+
+        self.running = running
+        self.timeDelay = timeDelay
+        self.timerActive = False
+        self.timerId = None
+
+        self.da = \
+            CellDrawingArea(
+                engine=self.engine)
+
         self.add(self.da)
+        self.views.append(self.da)
+
+        if self.running:
+            self.startTimer()
+
+
+    def __del__(
+        self):
+
+        self.stopTimer()
+        self.destroyEngine()
+
+
+    def createEngine(self):
+
+        w = 256
+        h = 256
+
+        engine = cellengine.CellEngine()
+        self.engine = engine
+        engine.InitScreen(w, h)
+        engine.SetRect(0, 0, w, h)
+        engine.wrap = 3
+        engine.steps = 1
+        engine.frob = -4
+        #engine.neighborhood = 46
+        engine.neighborhood = 37
+        engine.Garble()
+
+
+    def destroyEngine(self):
+
+        # TODO: clean up all user pointers and callbacks. 
+        # TODO: Make sure there are no memory leaks.
+        
+        TileDrawingArea.destroyEngine(self)
+
+
+    def startTimer(
+        self):
+        
+        #print "startTimer"
+
+        if self.timerActive:
+            return
+
+        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
+        self.timerActive = True
+
+
+    def stopTimer(
+        self):
+
+        # FIXME: Is there some way to immediately cancel self.timerId? 
+
+        #print "stopTimer"
+
+        self.timerActive = False
+
+
+    def tickTimer(
+        self):
+
+        #print "tickTimer"
+
+        if not self.timerActive:
+            return False
+
+        self.stopTimer()
+
+        self.tickEngine()
+
+        for view in self.views:
+            view.tickActiveTool()
+
+        for view in self.views:
+            view.tickTimer()
+
+        if self.running:
+            self.startTimer()
+
+        return False
+
+
+    def tickEngine(self):
+
+        #print "tickEngine", self, self.engine, self.engine.DoRule
+        
+        engine = self.engine
+        engine.DoRule()
 
 
 ########################################################################

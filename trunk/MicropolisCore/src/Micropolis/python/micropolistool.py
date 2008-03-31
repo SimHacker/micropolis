@@ -78,13 +78,48 @@ import tiletool
 class MicropolisTool(tiletool.TileTool):
 
 
-    pass
+    def __init__(
+        self,
+        toolIndex=0,
+        **args):
+        
+        tiletool.TileTool.__init__(
+            self,
+            **args)
+
+        self.toolIndex = toolIndex
+
+
+    def handleMouseDown(self, view, event):
+
+        x, y = view.getEventXY(event)
+        #print "DOWN", x, y, "index", self.toolIndex, view.engine.ToolDown
+        view.engine.ToolDown(self.toolIndex, int(x * 16), int(y * 16))
+
+
+    def handleMouseDrag(self, view, event):
+
+        x, y = view.getEventXY(event)
+        #print "DRAG", x, y, "index", self.toolIndex, view.engine.ToolDrag
+        view.engine.ToolDrag(self.toolIndex, int(x * 16), int(y * 16))
+
+
+    def handleMouseUp(self, view, event):
+
+        x, y = view.getEventXY(event)
+        #print "UP", x, y
+        view.engine.ToolUp(self.toolIndex, int(x * 16), int(y * 16))
+
+
+    def tick(self, view):
+
+        pass
 
 
 ########################################################################
 
 
-class MicropolisChalkTool(MicropolisTool):
+class MicropolisChalkTool(tiletool.TileTool):
 
 
     def getCursorHotSpot(self, view):
@@ -232,7 +267,6 @@ tiletool.PanTool(
     cursorCols=0,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=10,
     iconNormal='images/icpan.png',
     iconHilite='images/icpanhi.png',
     iconX=0,
@@ -244,7 +278,6 @@ MicropolisChalkTool(
     cursorCols=0,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=10,
     iconNormal='images/icchlk.png',
     iconHilite='images/icchlkhi.png',
     iconX=28,
@@ -256,7 +289,6 @@ MicropolisEraserTool(
     cursorCols=0,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=11,
     iconNormal='images/icersr.png',
     iconHilite='images/icersrhi.png',
     iconX=66,
@@ -264,11 +296,11 @@ MicropolisEraserTool(
 
 MicropolisTool(
     name='Query',
+    toolIndex=4,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=0,
     iconNormal='images/icqry.png',
     iconHilite='images/icqryhi.png',
     iconX=47,
@@ -276,11 +308,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Bulldozer',
+    toolIndex=7,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=7,
     iconNormal='images/icdozr.png',
     iconHilite='images/icdozrhi.png',
     iconX=66,
@@ -288,11 +320,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Wire',
+    toolIndex=6,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=6,
     iconNormal='images/icwire.png',
     iconHilite='images/icwirehi.png',
     iconX=28,
@@ -300,11 +332,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Road',
+    toolIndex=9,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=9,
     iconNormal='images/icroad.png',
     iconHilite='images/icroadhi.png',
     iconX=66,
@@ -312,11 +344,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Rail',
+    toolIndex=8,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=8,
     iconNormal='images/icrail.png',
     iconHilite='images/icrailhi.png',
     iconX=6,
@@ -324,11 +356,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Park',
+    toolIndex=13,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=13,
     iconNormal='images/icpark.png',
     iconHilite='images/icparkhi.png',
     iconX=47,
@@ -336,11 +368,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Residential',
+    toolIndex=0,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=0,
     iconNormal='images/icres.png',
     iconHilite='images/icreshi.png',
     iconX=9,
@@ -348,11 +380,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Commercial',
+    toolIndex=1,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=1,
     iconNormal='images/iccom.png',
     iconHilite='images/iccomhi.png',
     iconX=47,
@@ -360,11 +392,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Industrial',
+    toolIndex=2,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=2,
     iconNormal='images/icind.png',
     iconHilite='images/icindhi.png',
     iconX=85,
@@ -372,11 +404,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='FireStation',
+    toolIndex=3,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=3,
     iconNormal='images/icfire.png',
     iconHilite='images/icfirehi.png',
     iconX=9,
@@ -384,11 +416,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='PoliceStation',
+    toolIndex=5,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=5,
     iconNormal='images/icpol.png',
     iconHilite='images/icpolhi.png',
     iconX=85,
@@ -396,11 +428,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Stadium',
+    toolIndex=12,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=12,
     iconNormal='images/icstad.png',
     iconHilite='images/icstadhi.png',
     iconX=1,
@@ -408,11 +440,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Seaport',
+    toolIndex=14,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=4,
     iconNormal='images/icseap.png',
     iconHilite='images/icseaphi.png',
     iconX=85,
@@ -420,11 +452,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='CoalPowerPlant',
+    toolIndex=15,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=15,
     iconNormal='images/iccoal.png',
     iconHilite='images/iccoalhi.png',
     iconX=1,
@@ -432,11 +464,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='NuclearPowerPlant',
+    toolIndex=16,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
     cursorHotRow=1,
-    toolIndex=16,
     iconNormal='images/icnuc.png',
     iconHilite='images/icnuchi.png',
     iconX=85,
@@ -444,11 +476,11 @@ MicropolisTool(
 
 MicropolisTool(
     name='Airport',
+    toolIndex=17,
     cursorRows=5,
     cursorCols=5,
     cursorHotCol=2,
     cursorHotRow=2,
-    toolIndex=17,
     iconNormal='images/icairp.png',
     iconHilite='images/icairphi.png',
     iconX=35,

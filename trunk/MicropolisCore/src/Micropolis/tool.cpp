@@ -139,55 +139,59 @@ int Micropolis::putDownPark(
 {
   short value, tile;
 
-  if (TotalFunds - CostOf[parkState] >= 0) {
+  if (TotalFunds - CostOf[parkState] < 0) {
+	return -2;
+  }
 
-    value = Rand(4);
+  value = Rand(4);
 
-    if (value == 4) {
-      tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
-    } else {
-      tile = (value + WOODS2) | BURNBIT | BULLBIT;
-    }
+  if (value == 4) {
+    tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
+  } else {
+    tile = (value + WOODS2) | BURNBIT | BULLBIT;
+  }
 
-    if (Map[mapH][mapV] == 0) {
-      Spend(CostOf[parkState]);
-      UpdateFunds();
-      Map[mapH][mapV] = tile;
-      return 1;
-    }
-
+  if (Map[mapH][mapV] != 0) {
     return -1;
   }
 
-  return -2;
+  Map[mapH][mapV] = 
+	tile;
+
+  Spend(CostOf[parkState]);
+  UpdateFunds();
+
+  return 1;
 }
 
 
 int Micropolis::putDownNetwork(
-  short state,
   short mapH, 
   short mapV)
 {
-  int tile = Map[mapH][mapV] & LOMASK;
+  int tile = 
+	Map[mapH][mapV] & LOMASK;
 
   if ((TotalFunds > 0) && tally(tile)) {
     Map[mapH][mapV] = tile = 0;
     Spend(1);
   }
 
-  if (tile == 0) {
-    if ((TotalFunds - CostOf[state]) >= 0) {
-
-      Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
-      Spend(CostOf[state]);
-
-      return 1;
-    } else {
-      return -2;
-    }
-  } else {
+  if (tile != 0) {
     return -1;
   }
+
+  if ((TotalFunds - CostOf[networkState]) < 0) {
+    return -2;
+  }
+
+  Map[mapH][mapV] = 
+	TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
+
+  Spend(CostOf[networkState]);
+  UpdateFunds();
+
+  return 1;
 }
 
 
@@ -381,7 +385,8 @@ void Micropolis::check3x3border(
   short xPos, yPos;
   short cnt;
 
-  xPos = xMap; yPos = yMap - 1;
+  xPos = xMap; 
+  yPos = yMap - 1;
 
   for (cnt = 0; cnt < 3; cnt++) {
     /*** this will do the upper bordering row ***/
@@ -389,7 +394,8 @@ void Micropolis::check3x3border(
     xPos++;
   }
 
-  xPos = xMap - 1; yPos = yMap;
+  xPos = xMap - 1; 
+  yPos = yMap;
 
   for (cnt = 0; cnt < 3; cnt++) {
     /*** this will do the left bordering row ***/
@@ -397,7 +403,8 @@ void Micropolis::check3x3border(
     yPos++;
   }
 
-  xPos = xMap; yPos = yMap + 3;
+  xPos = xMap; 
+  yPos = yMap + 3;
 
   for (cnt = 0; cnt < 3; cnt++) {
     /*** this will do the bottom bordering row ***/
@@ -405,7 +412,8 @@ void Micropolis::check3x3border(
     xPos++;
   }
         
-  xPos = xMap + 3; yPos = yMap;
+  xPos = xMap + 3; 
+  yPos = yMap;
 
   for (cnt = 0; cnt < 3; cnt++) {
     /*** this will do the right bordering row ***/
@@ -505,7 +513,8 @@ int Micropolis::check3x3(
 
     for (columnNum = 0; columnNum <= 2; columnNum++) {
 
-      if (columnNum == 1 && rowNum == 1) {
+      if ((columnNum == 1) &&
+		  (rowNum == 1)) {
         Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
       } else {
         Map[mapH++][mapV] = base + BNCNBIT;
@@ -536,7 +545,8 @@ void Micropolis::check4x4border(
   short xPos, yPos;
   short cnt;
 
-  xPos = xMap; yPos = yMap - 1;
+  xPos = xMap; 
+  yPos = yMap - 1;
 
   for (cnt = 0; cnt < 4; cnt++) {
     /* this will do the upper bordering row */
@@ -545,7 +555,8 @@ void Micropolis::check4x4border(
     xPos++;
   }
 
-  xPos = xMap - 1; yPos = yMap;
+  xPos = xMap - 1; 
+  yPos = yMap;
 
   for (cnt = 0; cnt < 4; cnt++) {
     /* this will do the left bordering row */
@@ -554,7 +565,8 @@ void Micropolis::check4x4border(
     yPos++;
   }
 
-  xPos = xMap; yPos = yMap + 4;
+  xPos = xMap; 
+  yPos = yMap + 4;
 
   for (cnt = 0; cnt < 4;cnt++) {
     /* this will do the bottom bordering row */
@@ -563,7 +575,8 @@ void Micropolis::check4x4border(
     xPos++;
   }
         
-  xPos = xMap + 4; yPos = yMap;
+  xPos = xMap + 4; 
+  yPos = yMap;
 
   for (cnt = 0; cnt < 4; cnt++) {
     /* this will do the right bordering row */
@@ -589,7 +602,8 @@ short Micropolis::check4x4(
   short flag;
   short cost = 0;
 
-  mapH--; mapV--;
+  mapH--; 
+  mapV--;
 
   if ((mapH < 0) || 
       (mapH > (WORLD_X - 4)) ||
@@ -609,7 +623,8 @@ short Micropolis::check4x4(
 
     for (columnNum = 0; columnNum <= 3; columnNum++) {
 
-      tileValue = Map[mapH++][mapV] & LOMASK;
+      tileValue = 
+		Map[mapH++][mapV] & LOMASK;
 
       if (autoBulldoze) {
 
@@ -659,7 +674,8 @@ short Micropolis::check4x4(
   Spend(cost);
   UpdateFunds();
 
-  mapV = v; holdMapH = h;
+  mapV = v; 
+  holdMapH = h;
 
   for (rowNum = 0; rowNum <= 3; rowNum++) {
 
@@ -667,15 +683,18 @@ short Micropolis::check4x4(
 
     for (columnNum = 0; columnNum <= 3; columnNum++) {
 
-      if (columnNum == 1 && 
-          rowNum == 1) {
-        Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-      } else if (columnNum == 1 && 
-                 rowNum == 2 && 
+      if ((columnNum == 1) && 
+          (rowNum == 1)) {
+        Map[mapH++][mapV] = 
+		  base + BNCNBIT + ZONEBIT;
+      } else if ((columnNum == 1) && 
+                 (rowNum == 2) && 
                  aniFlag) {
-        Map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
+        Map[mapH++][mapV] = 
+		  base + BNCNBIT + ANIMBIT;
       } else {
-        Map[mapH++][mapV] = base + BNCNBIT;
+        Map[mapH++][mapV] = 
+		  base + BNCNBIT;
       }
 
       base++;
@@ -702,7 +721,8 @@ void Micropolis::check6x6border(
   short xPos, yPos;
   short cnt;
 
-  xPos = xMap; yPos = yMap - 1;
+  xPos = xMap; 
+  yPos = yMap - 1;
 
   for (cnt = 0; cnt < 6; cnt++) {
     /* this will do the upper bordering row */
@@ -710,7 +730,8 @@ void Micropolis::check6x6border(
     xPos++;
   }
 
-  xPos = xMap - 1; yPos = yMap;
+  xPos = xMap - 1; 
+  yPos = yMap;
 
   for (cnt=0; cnt < 6; cnt++) {
     /* this will do the left bordering row */
@@ -718,7 +739,8 @@ void Micropolis::check6x6border(
     yPos++;
   }
 
-  xPos = xMap; yPos = yMap + 6;
+  xPos = xMap; 
+  yPos = yMap + 6;
 
   for (cnt = 0; cnt < 6; cnt++) {
     /* this will do the bottom bordering row */
@@ -726,7 +748,8 @@ void Micropolis::check6x6border(
     xPos++;
   }
         
-  xPos = xMap + 6; yPos = yMap;
+  xPos = xMap + 6; 
+  yPos = yMap;
 
   for (cnt = 0; cnt < 6; cnt++) {
     /* this will do the right bordering row */
@@ -770,7 +793,8 @@ short Micropolis::check6x6(
 
     for (columnNum = 0; columnNum <= 5; columnNum++) {
 
-      tileValue = Map[mapH++][mapV] & LOMASK;
+      tileValue = 
+		Map[mapH++][mapV] & LOMASK;
 
       if (autoBulldoze) {
 
@@ -829,10 +853,13 @@ short Micropolis::check6x6(
 
     for (columnNum = 0; columnNum <= 5; columnNum++) {
 
-      if (columnNum == 1 && rowNum == 1) {
-        Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+      if ((columnNum == 1) && 
+		  (rowNum == 1)) {
+        Map[mapH++][mapV] = 
+		  base + BNCNBIT + ZONEBIT;
       } else {
-        Map[mapH++][mapV] = base + BNCNBIT;
+        Map[mapH++][mapV] = 
+		  base + BNCNBIT;
       }
 
       base++;
@@ -1203,8 +1230,8 @@ int Micropolis::bulldozer_tool(
         break;
 
       case 4:
-        put4x4Rubble(x, y);
         MakeSound("city", "Explosion-Low");
+        put4x4Rubble(x, y);
         break;
 
       case 6: 
@@ -1619,7 +1646,7 @@ int Micropolis::network_tool(
   }
 
   result = 
-	putDownNetwork(networkState, x, y);
+	putDownNetwork(x, y);
 
   if (result == 1) {
     DidTool("Net", x, y);

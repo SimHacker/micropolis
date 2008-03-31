@@ -29869,7 +29869,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_putDownNetwork(PyObject *SWIGUNUSEDPARM(se
   Micropolis *arg1 = (Micropolis *) 0 ;
   short arg2 ;
   short arg3 ;
-  short arg4 ;
   int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -29877,14 +29876,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_putDownNetwork(PyObject *SWIGUNUSEDPARM(se
   int ecode2 = 0 ;
   short val3 ;
   int ecode3 = 0 ;
-  short val4 ;
-  int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_putDownNetwork",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Micropolis_putDownNetwork",&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_putDownNetwork" "', argument " "1"" of type '" "Micropolis *""'"); 
@@ -29900,12 +29896,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_putDownNetwork(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_putDownNetwork" "', argument " "3"" of type '" "short""'");
   } 
   arg3 = static_cast< short >(val3);
-  ecode4 = SWIG_AsVal_short(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_putDownNetwork" "', argument " "4"" of type '" "short""'");
-  } 
-  arg4 = static_cast< short >(val4);
-  result = (int)(arg1)->putDownNetwork(arg2,arg3,arg4);
+  result = (int)(arg1)->putDownNetwork(arg2,arg3);
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:

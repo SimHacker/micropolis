@@ -2166,7 +2166,6 @@ class Micropolis {
     short mapV);
 
   int putDownNetwork(
-	short state,
     short mapH, 
     short mapV);
 

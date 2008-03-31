@@ -113,15 +113,127 @@ from micropolisdrawingarea import MicropolisDrawingArea
 class MicropolisWindow(gtk.Window):
 
 
-    def __init__(self, **args):
+    def __init__(
+        self,
+        running=True,
+        timeDelay=50,
+        **args):
+        
         gtk.Window.__init__(self, **args)
 
         self.connect('destroy', gtk.main_quit)
 
         self.set_title("OLPC Micropolis for Python/Cairo/Pango, by Don Hopkins")
 
-        self.da = MicropolisDrawingArea()
+        self.views = []
+
+        self.createEngine()
+
+        self.running = running
+        self.timeDelay = timeDelay
+        self.timerActive = False
+        self.timerId = None
+
+        self.da = \
+            MicropolisDrawingArea(
+                engine=self.engine)
+
         self.add(self.da)
+        self.views.append(self.da)
+
+        if self.running:
+            self.startTimer()
+
+
+    def __del__(
+        self):
+
+        self.stopTimer()
+        self.destroyEngine()
+
+
+    def createEngine(self):
+
+        # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
+        engine = micropolismodel.MicropolisModel()
+        self.engine = engine
+
+        engine.ResourceDir = 'res'
+        engine.InitGame()
+
+        # Load a city file.
+        cityFileName = 'cities/haight.cty'
+        print "Loading city file:", cityFileName
+        engine.loadFile(cityFileName)
+
+        # Initialize the simulator engine.
+
+        engine.Resume()
+        engine.setSpeed(2)
+        engine.autoGo = 0
+        engine.CityTax = 8
+
+        # Testing...
+
+        engine.setSkips(10)
+        engine.SetFunds(1000000000)
+
+
+    def destroyEngine(self):
+
+        # TODO: clean up all user pointers and callbacks. 
+        # TODO: Make sure there are no memory leaks.
+        
+        TileDrawingArea.destroyEngine(self)
+
+
+    def startTimer(
+        self):
+        
+        if self.timerActive:
+            return
+
+        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
+        self.timerActive = True
+
+
+    def stopTimer(
+        self):
+
+        # FIXME: Is there some way to immediately cancel self.timerId? 
+
+        self.timerActive = False
+
+
+    def tickTimer(
+        self):
+
+        if not self.timerActive:
+            return False
+
+        #print "tick", self
+
+        self.stopTimer()
+
+        self.tickEngine()
+
+        for view in self.views:
+            view.tickActiveTool()
+
+        for view in self.views:
+            view.tickTimer()
+
+        if self.running:
+            self.startTimer()
+
+        return False
+
+
+    def tickEngine(self):
+
+        engine = self.engine
+        engine.sim_tick()
+        engine.animateTiles()
 
 
 ########################################################################
