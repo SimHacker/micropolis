@@ -1,4 +1,4 @@
-# celldrawingarea.py
+# celltool.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,84 +61,53 @@
 
 
 ########################################################################
-# Cell Drawing Area
+# Cell Tool
 # Don Hopkins
 
 
 ########################################################################
-# Import stuff
+# Import Modules
 
 
-import sys
-import os
-
-
-########################################################################
-# Import our modules
-
-
-import cellpiemenus
-from tiledrawingarea import TileDrawingArea
-import celltool
-from tiletool import TileTool
+import tiletool
 
 
 ########################################################################
 
 
-class CellDrawingArea(TileDrawingArea):
+class CellTool(tiletool.TileTool):
 
 
-    def __init__(
-        self,
-        engine=None,
-        **args):
-
-        args['sourceTileSize'] = 16
-        args['worldRows'] = 256
-        args['worldCols'] = 256
-
-        self.engine = engine
-
-        TileDrawingArea.__init__(self, **args)
+    pass
 
 
-    def configTileEngine(self, tengine):
-
-        engine = self.engine
-        tengine.setBuffer(engine.GetCellBuffer())
-        tengine.width = engine.width
-        tengine.height = engine.height
-        tengine.colBytes = engine.width
-        tengine.rowBytes = 1
-        tengine.typeCode = 'B'
-        tengine.tileMask = 0xff
+########################################################################
+# Define all the tools.
 
 
-    def destroyEngine(self):
+tiletool.PanTool(
+    name='Pan',
+    cursorRows=0,
+    cursorCols=0,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    toolIndex=10,
+    iconNormal='images/icpan.png',
+    iconHilite='images/icpanhi.png',
+    iconX=0,
+    iconY=0)
 
-        TileDrawingArea.destroyEngine(self)
-
-
-    def getCell(self, col, row):
-
-        return self.engine.GetCell(col, row)
-
-
-    def makeToolPie(self):
-
-        toolPie = cellpiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
-        self.toolPie = toolPie
-
-
-    def handleButtonPress(
-        self,
-        widget,
-        event):
-
-        aelf.handleToolPieButtonPress(
-            widget,
-            event)
+CellTool(
+    name='Query',
+    cursorRows=1,
+    cursorCols=1,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    toolIndex=0,
+    iconNormal='images/icquery.png',
+    iconHilite='images/icqueryhi.png',
+    iconX=0,
+    iconY=0)
 
 
 ########################################################################

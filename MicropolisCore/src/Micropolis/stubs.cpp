@@ -175,9 +175,9 @@ void Micropolis::DoStartScenario(
   int scenario)
 {
   Callback(
-	"UIStartScenario", 
-	"d", 
-	(int)scenario);
+    "UIStartScenario", 
+    "d", 
+    (int)scenario);
 }
 
 
@@ -235,10 +235,10 @@ void Micropolis::Callback(
 
   (*callbackHook)(
     this,
-	callbackData,
-	name,
-	params,
-	arglist);
+    callbackData,
+    name,
+    params,
+    arglist);
 
   va_end(arglist);
 }
@@ -314,10 +314,10 @@ void Micropolis::MakeSound(
   char *sound)
 {
   Callback(
-	"UIMakeSound",
-	"ss",
-	channel,
-	sound);
+    "UIMakeSound",
+    "ss",
+    channel,
+    sound);
 }
 
 
@@ -368,7 +368,7 @@ Ink *Micropolis::NewInk()
     ink = (Ink *)ckalloc(sizeof(Ink));
     ink->maxlength = POINT_BATCH;
     ink->points = 
-	  (InkPoint *)ckalloc(POINT_BATCH * sizeof(InkPoint));
+      (InkPoint *)ckalloc(POINT_BATCH * sizeof(InkPoint));
   }
   ink->length = 0;
   ink->color = COLOR_WHITE;
@@ -407,81 +407,81 @@ void Micropolis::AddInk(
   int dy = y - ink->last_y;
 
   if ((dx != 0) || 
-	  (dy != 0)) {
+      (dy != 0)) {
     if (ink->length > 1) {
       if ((dx == 0) &&
-	      (ink->points[ink->length - 1].x == 0) &&
-	      ((ink->points[ink->length - 1].y < 0) ?
-	       (dy < 0) : (dy > 0))) {
-	    ink->points[ink->length - 1].y += dy;
-	    goto ADJUST;
+          (ink->points[ink->length - 1].x == 0) &&
+          ((ink->points[ink->length - 1].y < 0) ?
+           (dy < 0) : (dy > 0))) {
+        ink->points[ink->length - 1].y += dy;
+        goto ADJUST;
       } else if ((dy == 0) &&
-		 (ink->points[ink->length - 1].y == 0) &&
-		 ((ink->points[ink->length - 1].x < 0) ?
-		  (dx < 0) : (dx > 0))) {
-	    ink->points[ink->length - 1].x += dx;
-	    goto ADJUST;
+         (ink->points[ink->length - 1].y == 0) &&
+         ((ink->points[ink->length - 1].x < 0) ?
+          (dx < 0) : (dx > 0))) {
+        ink->points[ink->length - 1].x += dx;
+        goto ADJUST;
       }
     }
 
     if (ink->length >= ink->maxlength) {
       ink->maxlength += POINT_BATCH;
       ink->points = 
-		(InkPoint *)realloc(
-		  (void *)ink->points,
-	      ink->maxlength * sizeof(InkPoint));
+        (InkPoint *)realloc(
+          (void *)ink->points,
+          ink->maxlength * sizeof(InkPoint));
     }
 
-	ink->points[ink->length].x = dx;
+    ink->points[ink->length].x = dx;
     ink->points[ink->length].y = dy;
     ink->length++;
 
   ADJUST:
 
-	if (x < ink->left) {
+    if (x < ink->left) {
       ink->left = x;
-	}
-
-	if (x > ink->right) {
-      ink->right = x;
-	}
-
-	if (y < ink->top) {
-      ink->top = y;
-	}
-
-	if (y > ink->bottom) {
-      ink->bottom = y;
-	}
-
-    { 
-	  int left, right, top, bottom;
-
-      if (ink->last_x < x) { 
-		left = ink->last_x; 
-		right = x; 
-	  } else { 
-		left = x; 
-		right = ink->last_x; 
-	  }
-      if (ink->last_y < y) { 
-		top = ink->last_y; 
-		bottom = y; 
-	  } else { 
-		top = y; 
-		bottom = ink->last_y; 
-	  }
-
-      left -= 5; 
-	  right += 5; 
-	  top -= 5; 
-	  bottom += 5;
-
-	  // TODO: Redraw views overlapping this change.
     }
 
-	ink->last_x = x; 
-	ink->last_y = y;
+    if (x > ink->right) {
+      ink->right = x;
+    }
+
+    if (y < ink->top) {
+      ink->top = y;
+    }
+
+    if (y > ink->bottom) {
+      ink->bottom = y;
+    }
+
+    { 
+      int left, right, top, bottom;
+
+      if (ink->last_x < x) { 
+        left = ink->last_x; 
+        right = x; 
+      } else { 
+        left = x; 
+        right = ink->last_x; 
+      }
+      if (ink->last_y < y) { 
+        top = ink->last_y; 
+        bottom = y; 
+      } else { 
+        top = y; 
+        bottom = ink->last_y; 
+      }
+
+      left -= 5; 
+      right += 5; 
+      top -= 5; 
+      bottom += 5;
+
+      // TODO: Redraw views overlapping this change.
+    }
+
+    ink->last_x = x; 
+    ink->last_y = y;
   }
 }
 

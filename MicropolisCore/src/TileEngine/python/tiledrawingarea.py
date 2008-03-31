@@ -99,7 +99,6 @@ class TileDrawingArea(gtk.DrawingArea):
         maxSurfaceSize=512,
         worldCols=256,
         worldRows=256,
-        running=True,
         renderCol=0,
         renderRow=0,
         renderCols=256,
@@ -124,7 +123,6 @@ class TileDrawingArea(gtk.DrawingArea):
         self.maxSurfaceSize = maxSurfaceSize
         self.worldRows = worldRows
         self.worldCols = worldCols
-        self.running = running
         self.renderCol = renderCol
         self.renderRow = renderRow
         self.renderCols = renderCols
@@ -168,9 +166,6 @@ class TileDrawingArea(gtk.DrawingArea):
         self.trackingTool = None
         self.trackingToolTrigger = None
 
-        self.timerActive = False
-        self.timerId = None
-
         self.tilesLoaded = False
 
         self.createEngine()
@@ -199,57 +194,22 @@ class TileDrawingArea(gtk.DrawingArea):
         self.connect('motion_notify_event', self.handleMotionNotify)
         self.connect('button_press_event', self.handleButtonPress)
         self.connect('button_release_event', self.handleButtonRelease)
-	self.connect('scroll_event', self.handleMouseScroll)
-
-        if self.running:
-            self.startTimer()
+        self.connect('scroll_event', self.handleMouseScroll)
 
 
     def __del__(
         self):
-
-        self.stopTimer()
 
         self.destroyEngine()
 
         gtk.DrawingArea.__del__(self)
 
 
-    def startTimer(
-        self):
-        
-        if self.timerActive:
-            return
-
-        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
-        self.timerActive = True
-
-
-    def stopTimer(
-        self):
-
-        # FIXME: Is there some way to immediately cancel self.timerId? 
-
-        self.timerActive = False
-
-
     def tickTimer(
         self):
         
-        if not self.timerActive:
-            return False
-
-        #print "tick", self
-
-        if self.running:
-            self.tickActiveTool()
-            self.tickEngine()
-
+        self.tickEngine()
         self.queue_draw()
-
-        self.timerActive = False
-
-        return False
 
 
     def tickActiveTool(
@@ -742,9 +702,6 @@ class TileDrawingArea(gtk.DrawingArea):
 
         ctxWindow.paint()
 
-        if self.running:
-            self.startTimer()
-
 
     # This function is called from the C++ code in self.tengine.renderTilesLazy.
     # It renders a tile, and returns a tuple with a surface index, tile x and tile y position. 
@@ -929,6 +886,41 @@ class TileDrawingArea(gtk.DrawingArea):
                 y - self.panY)
 
 
+    def getEventXY(
+        self,
+        event):
+        if (hasattr(event, 'is_hint') and
+            event.is_hint):
+            x, y, state = event.window.get_pointer()
+        else:
+            x = event.x
+            y = event.y
+
+        tileSize = self.tileSize
+
+        return (
+            (x - self.panX) / tileSize,
+            (y - self.panY) / tileSize,
+        )
+
+
+    def getEventColRow(
+        self,
+        event):
+        if (hasattr(event, 'is_hint') and
+            event.is_hint):
+            x, y, state = event.window.get_pointer()
+        else:
+            x = event.x
+            y = event.y
+
+        tileSize = self.tileSize
+        col = int((x - self.panX) / tileSize)
+        row = int((y - self.panY) / tileSize)
+
+        return (col, row)
+
+
     def panBy(self, dx, dy):
         self.panX += dx
         self.panY += dy
@@ -1040,7 +1032,7 @@ class TileDrawingArea(gtk.DrawingArea):
         if not event:
             x, y, state = self.window.get_pointer()
         elif (hasattr(event, 'is_hint') and
-            event.is_hint):
+              event.is_hint):
             x, y, state = event.window.get_pointer()
         else:
             x = event.x
@@ -1093,6 +1085,11 @@ class TileDrawingArea(gtk.DrawingArea):
             self.downX = event.x
             self.downY = event.y
 
+            tool = self.getActiveTool()
+            #print "Active tool:", tool
+            if tool:
+                tool.handleMouseDown(self, event)
+
         elif event.button == 3:
 
             toolPie = self.getToolPie()
@@ -1109,8 +1106,6 @@ class TileDrawingArea(gtk.DrawingArea):
                 #print "ROOT", x, y
 
                 toolPie.popup(x, y, False)
-
-        self.handleMouseDrag(event)
 
 
     def handleButtonPress(
@@ -1145,16 +1140,16 @@ class TileDrawingArea(gtk.DrawingArea):
 
 
     def handleMouseScroll(
-	self,
-	widget,
-	event):
-		
-	direction = event.direction
-		
-	if direction == gtk.gdk.SCROLL_UP:
-	    self.changeScale(self.scale * self.scrollWheelZoomScale)
-	elif direction == gtk.gdk.SCROLL_DOWN:
-	    self.changeScale(self.scale / self.scrollWheelZoomScale)
+        self,
+        widget,
+        event):
+                
+        direction = event.direction
+                
+        if direction == gtk.gdk.SCROLL_UP:
+            self.changeScale(self.scale * self.scrollWheelZoomScale)
+        elif direction == gtk.gdk.SCROLL_DOWN:
+            self.changeScale(self.scale / self.scrollWheelZoomScale)
 
 
 ########################################################################

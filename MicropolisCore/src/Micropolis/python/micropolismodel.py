@@ -93,13 +93,28 @@ class MicropolisModel(micropolis.Micropolis):
             self,
             *args,
             **kwargs):
-        #print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
+        print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
+
         micropolis.Micropolis.__init__(self, *args, **kwargs)
-        #print "MicropolisModel.__init__ done", self
+
+        # Hook the engine up so it has a handle on its Python object side. 
+        self.userData = micropolis.GetPythonCallbackData(self)
+        print "USERDATA"#, self.userData
+
+        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
+        self.callbackHook = micropolis.GetPythonCallbackHook()
+        print "CALLBACKHOOK"#, self.callbackHook
+
+        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
+        self._invokeCallback = self.invokeCallback # Cache to prevent GC
+        self.callbackData = micropolis.GetPythonCallbackData(self._invokeCallback)
+        print "CALLBACKDATA"#, self.callbackData
+
+        print "MicropolisModel.__init__ done", self
 
 
     def invokeCallback(self, micropolis, name, *params):
-        #print "MicropolisDrawingArea invokeCallback", "micropolis", micropolis, "name", name, "params", params
+        #print "==== MicropolisDrawingArea invokeCallback", "SELF", sys.getrefcount(self), self, "micropolis", sys.getrefcount(micropolis), micropolis, "name", name
         handler = getattr(self, 'handle_' + name, None)
         if handler:
             handler(micropolis, *params)
@@ -223,9 +238,8 @@ class MicropolisModel(micropolis.Micropolis):
         print "handle_UISetMessage(self, micropolis, str)", (self, micropolis, str)
 
 
-    def handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
-        print "handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
-
+    def handle_UISetOptions(self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
+        print "handle_UISetOptions(self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
 
     def handle_UISetSpeed(self, micropolis, speed):
         print "handle_UISetSpeed(self, micropolis, speed)", (self, micropolis, speed)

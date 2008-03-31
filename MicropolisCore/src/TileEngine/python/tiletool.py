@@ -96,7 +96,6 @@ class TileTool:
         cursorCols=1,
         cursorHotCol=0,
         cursorHotRow=0,
-        toolIndex=-1,
         iconNormal=None,
         iconHilite=None,
         iconX=0,
@@ -111,7 +110,6 @@ class TileTool:
         self.cursorCols = cursorCols
         self.cursorHotCol = cursorHotCol
         self.cursorHotRow = cursorHotRow
-        self.toolIndex = toolIndex
         self.iconNormal = iconNormal
         self.iconHilite = iconHilite
         self.iconX = iconX
@@ -347,6 +345,13 @@ class TileTool:
             return True
 
         return False
+
+
+    def applyTool(
+        self, 
+        view):
+
+		pass
 
 
     # Return True if handled.

@@ -1,4 +1,4 @@
-# celldrawingarea.py
+# cellpiemenus.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,84 +61,57 @@
 
 
 ########################################################################
-# Cell Drawing Area
-# Don Hopkins
-
-
-########################################################################
-# Import stuff
-
-
-import sys
-import os
-
-
-########################################################################
-# Import our modules
-
-
-import cellpiemenus
-from tiledrawingarea import TileDrawingArea
-import celltool
-from tiletool import TileTool
+# Cell Pie Menus.
+# By Don Hopkins.
 
 
 ########################################################################
 
 
-class CellDrawingArea(TileDrawingArea):
+import piemenu
+import gtk
 
 
-    def __init__(
-        self,
-        engine=None,
-        **args):
-
-        args['sourceTileSize'] = 16
-        args['worldRows'] = 256
-        args['worldCols'] = 256
-
-        self.engine = engine
-
-        TileDrawingArea.__init__(self, **args)
+########################################################################
 
 
-    def configTileEngine(self, tengine):
+def MakeToolPie(setToolAction):
 
-        engine = self.engine
-        tengine.setBuffer(engine.GetCellBuffer())
-        tengine.width = engine.width
-        tengine.height = engine.height
-        tengine.colBytes = engine.width
-        tengine.rowBytes = 1
-        tengine.typeCode = 'B'
-        tengine.tileMask = 0xff
+    ########################################################################
+    # Make pie menus.
 
 
-    def destroyEngine(self):
-
-        TileDrawingArea.destroyEngine(self)
-
-
-    def getCell(self, col, row):
-
-        return self.engine.GetCell(col, row)
+    tool_pie = piemenu.PieMenu(
+        header="Cell Tools",
+        fixed_radius=50,
+        neutral_description="Select a Cell tool.")
 
 
-    def makeToolPie(self):
-
-        toolPie = cellpiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
-        self.toolPie = toolPie
+    ########################################################################
+    # Populate pie menus.
 
 
-    def handleButtonPress(
-        self,
-        widget,
-        event):
+    for params in (
 
-        aelf.handleToolPieButtonPress(
-            widget,
-            event)
+        {
+            'pie': tool_pie,
+            'description': 'Query tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icquery.png',
+            'icon_hilite': 'images/icqueryhi.png',
+            'action': lambda item: setToolAction('Query'),
+        },
+
+    ):
+
+        apply(
+            piemenu.PieItem,
+            (),
+            params)
+
+
+    return tool_pie
 
 
 ########################################################################
