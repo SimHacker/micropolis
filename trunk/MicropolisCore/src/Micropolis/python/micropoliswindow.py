@@ -104,7 +104,7 @@ import micropolis
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
-from micropolisdrawingarea import MicropolisDrawingArea
+from micropolisdrawingarea import MicropolisDrawingArea, MiniMicropolisDrawingArea
 
 
 ########################################################################
@@ -115,8 +115,8 @@ class MicropolisWindow(gtk.Window):
 
     def __init__(
         self,
-        running=True,
-        timeDelay=50,
+        engine=None,
+        viewClass=MicropolisDrawingArea,
         **args):
         
         gtk.Window.__init__(self, **args)
@@ -125,115 +125,14 @@ class MicropolisWindow(gtk.Window):
 
         self.set_title("OLPC Micropolis for Python/Cairo/Pango, by Don Hopkins")
 
-        self.views = []
-
-        self.createEngine()
-
-        self.running = running
-        self.timeDelay = timeDelay
-        self.timerActive = False
-        self.timerId = None
+        self.engine = engine
 
         self.da = \
-            MicropolisDrawingArea(
+            viewClass(
                 engine=self.engine)
 
         self.add(self.da)
-        self.views.append(self.da)
-
-        if self.running:
-            self.startTimer()
-
-
-    def __del__(
-        self):
-
-        self.stopTimer()
-        self.destroyEngine()
-
-
-    def createEngine(self):
-
-        # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
-        engine = micropolismodel.MicropolisModel()
-        self.engine = engine
-
-        engine.ResourceDir = 'res'
-        engine.InitGame()
-
-        # Load a city file.
-        cityFileName = 'cities/haight.cty'
-        print "Loading city file:", cityFileName
-        engine.loadFile(cityFileName)
-
-        # Initialize the simulator engine.
-
-        engine.Resume()
-        engine.setSpeed(2)
-        engine.autoGo = 0
-        engine.CityTax = 8
-
-        # Testing...
-
-        engine.setSkips(10)
-        engine.SetFunds(1000000000)
-
-
-    def destroyEngine(self):
-
-        # TODO: clean up all user pointers and callbacks. 
-        # TODO: Make sure there are no memory leaks.
-        
-        TileDrawingArea.destroyEngine(self)
-
-
-    def startTimer(
-        self):
-        
-        if self.timerActive:
-            return
-
-        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
-        self.timerActive = True
-
-
-    def stopTimer(
-        self):
-
-        # FIXME: Is there some way to immediately cancel self.timerId? 
-
-        self.timerActive = False
-
-
-    def tickTimer(
-        self):
-
-        if not self.timerActive:
-            return False
-
-        #print "tick", self
-
-        self.stopTimer()
-
-        self.tickEngine()
-
-        for view in self.views:
-            view.tickActiveTool()
-
-        for view in self.views:
-            view.tickTimer()
-
-        if self.running:
-            self.startTimer()
-
-        return False
-
-
-    def tickEngine(self):
-
-        engine = self.engine
-        engine.sim_tick()
-        engine.animateTiles()
+        engine.addView(self.da)
 
 
 ########################################################################
@@ -241,9 +140,43 @@ class MicropolisWindow(gtk.Window):
 
 if __name__ == '__main__':
 
-    win = MicropolisWindow()
-    #print "WIN", win
-    win.show_all()
+    engine = micropolismodel.CreateTestEngine()
+
+    fudge = 0
+    width = int((120 * 4) + fudge)
+    height = int((100 * 4) + fudge)
+
+    w = width
+    h = height
+
+    x1 = 0
+    y1 = 0
+    x2 = w + 20
+    y2 = h + 40
+
+    win1 = MicropolisWindow(
+        engine=engine, 
+        viewClass=MiniMicropolisDrawingArea)
+    win1.set_default_size(width, height)
+    win1.show_all()
+
+    win2 = MicropolisWindow(engine=engine)
+    win2.set_default_size(w, h)
+    win2.move(x2, y1)
+    win2.show_all()
+    win2.da.setScale(1.0)
+
+    win3 = MicropolisWindow(engine=engine)
+    win3.set_default_size(w, h)
+    win3.move(x1, y2)
+    win3.show_all()
+    win3.da.setScale(2.0)
+
+    win4 = MicropolisWindow(engine=engine)
+    win4.set_default_size(w, h)
+    win4.move(x2, y2)
+    win4.show_all()
+    win4.da.setScale(4.0)
 
     gtk.main()
 

@@ -73,6 +73,7 @@ import sys
 import os
 import time
 import micropolis
+import gobject
 
 
 ########################################################################
@@ -91,26 +92,101 @@ class MicropolisModel(micropolis.Micropolis):
 
     def __init__(
             self,
+            running=True,
+            timeDelay=50,
             *args,
             **kwargs):
         print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
 
         micropolis.Micropolis.__init__(self, *args, **kwargs)
 
+        self.running = running
+        self.timeDelay = timeDelay
+        self.timerActive = False
+        self.timerId = None
+        self.views = []
+
+        # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
+        # So don't do that! I hope this bug in SWIG gets fixed. 
+        # TODO: Report SWIG bug, if it's not already known or fixed. 
+
         # Hook the engine up so it has a handle on its Python object side. 
         self.userData = micropolis.GetPythonCallbackData(self)
-        print "USERDATA"#, self.userData
+        #print "USERDATA"#, self.userData
 
         # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
         self.callbackHook = micropolis.GetPythonCallbackHook()
-        print "CALLBACKHOOK"#, self.callbackHook
+        #print "CALLBACKHOOK"#, self.callbackHook
 
         # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
         self.callbackData = micropolis.GetPythonCallbackData(self._invokeCallback)
-        print "CALLBACKDATA"#, self.callbackData
+        #print "CALLBACKDATA"#, self.callbackData
+
+        if self.running:
+            self.startTimer()
 
         print "MicropolisModel.__init__ done", self
+
+
+    def __del__(
+        self):
+
+        self.stopTimer()
+
+        micropolis.Micropolis.__del__(self)
+
+
+    def addView(self, view):
+        self.views.append(view)
+
+
+    def startTimer(
+        self):
+        
+        if self.timerActive:
+            return
+
+        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
+        self.timerActive = True
+
+
+    def stopTimer(
+        self):
+
+        # FIXME: Is there some way to immediately cancel self.timerId? 
+
+        self.timerActive = False
+
+
+    def tickTimer(
+        self):
+
+        if not self.timerActive:
+            return False
+
+        #print "tick", self
+
+        self.stopTimer()
+
+        self.tickEngine()
+
+        for view in self.views:
+            view.tickActiveTool()
+
+        for view in self.views:
+            view.tickTimer()
+
+        if self.running:
+            self.startTimer()
+
+        return False
+
+
+    def tickEngine(self):
+
+        self.sim_tick()
+        self.animateTiles()
 
 
     def invokeCallback(self, micropolis, name, *params):
@@ -279,6 +355,37 @@ class MicropolisModel(micropolis.Micropolis):
     
     def handle_UIWinGame(self, micropolis):
         print "handle_UIWinGame(self, micropolis)", (self, micropolis)
+
+
+########################################################################
+
+
+def CreateTestEngine():
+
+    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
+    engine = MicropolisModel()
+
+    engine.ResourceDir = 'res'
+    engine.InitGame()
+
+    # Load a city file.
+    cityFileName = 'cities/haight.cty'
+    print "Loading city file:", cityFileName
+    engine.loadFile(cityFileName)
+
+    # Initialize the simulator engine.
+
+    engine.Resume()
+    engine.setSpeed(2)
+    engine.autoGo = 0
+    engine.CityTax = 8
+
+    # Testing...
+
+    engine.setSkips(10)
+    engine.SetFunds(1000000000)
+
+    return engine
 
 
 ########################################################################
