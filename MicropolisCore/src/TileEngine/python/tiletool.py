@@ -90,8 +90,6 @@ class TileTool:
         self, 
         name=None,
         cursorVisible=True,
-        cursorCol=0,
-        cursorRow=0,
         cursorRows=1,
         cursorCols=1,
         cursorHotCol=0,
@@ -104,8 +102,6 @@ class TileTool:
 
         self.name = name
         self.cursorVisible = cursorVisible
-        self.cursorCol = cursorCol
-        self.cursorRow = cursorRow
         self.cursorRows = cursorRows
         self.cursorCols = cursorCols
         self.cursorHotCol = cursorHotCol
@@ -148,8 +144,8 @@ class TileTool:
         tileSize = view.tileSize
 
         return (
-            (self.cursorCol + self.cursorHotCol + 0.5) * tileSize,
-            (self.cursorRow + self.cursorHotRow + 0.5) * tileSize,
+            (view.cursorCol + self.cursorHotCol + 0.5) * tileSize,
+            (view.cursorRow + self.cursorHotRow + 0.5) * tileSize,
         )
 
 
@@ -163,8 +159,8 @@ class TileTool:
 
         cursorX = view.cursorX
         cursorY = view.cursorY
-        cursorCol = self.cursorCol
-        cursorRow = self.cursorRow
+        cursorCol = view.cursorCol
+        cursorRow = view.cursorRow
         cursorCols = self.cursorCols
         cursorRows = self.cursorRows
         tileSize = view.tileSize
@@ -228,11 +224,11 @@ class TileTool:
         row = max(0, min(view.worldRows - cursorRows, row))
 
         if cursorCols:
-            cursorXChanged = self.cursorCol != col
+            cursorXChanged = view.cursorCol != col
         else:
             cursorXChanged = view.cursorX != x
         if cursorRows:
-            cursorYChanged = self.cursorRow != row
+            cursorYChanged = view.cursorRow != row
         else:
             cursorYChanged = view.cursorY != y
 
@@ -242,8 +238,8 @@ class TileTool:
         if (forceRedraw or
             cursorXChanged or
             cursorYChanged):
-            self.cursorCol = col
-            self.cursorRow = row
+            view.cursorCol = col
+            view.cursorRow = row
             view.cursorMoved()
 
 
@@ -253,8 +249,8 @@ class TileTool:
         dx,
         dy):
         
-        col = self.cursorCol + dx
-        row = self.cursorRow + dy
+        col = view.cursorCol + dx
+        row = view.cursorRow + dy
 
         tileSize = view.tileSize
         tileMiddle = int(math.floor((tileSize / 2.0) + 0.5))
@@ -295,8 +291,8 @@ class TileTool:
         winWidth = rect.width
         winHeight = rect.height
 
-        cursorCol = self.cursorCol
-        cursorRow = self.cursorRow
+        cursorCol = view.cursorCol
+        cursorRow = view.cursorRow
         cursorCols = self.cursorCols
         cursorRows = self.cursorRows
         tileSize = view.tileSize

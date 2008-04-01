@@ -111,7 +111,16 @@ class TileDrawingArea(gtk.DrawingArea):
         insideBackgroundColor=(0.0, 0.0, 0.0),
         scrollWheelZoomScale=1.1,
         selectedTool=None,
+        keyable=True,
+        pannable=True,
+        panKeys=(65505, 65506,), # left shift, right shift
+        zoomable=True,
+        clickable=True,
+        clickButton=1, # left button
+        menuable=True,
+        menuButton=3, # right button
         toolPie=None,
+        showCursor=True,
         **args):
 
         gtk.DrawingArea.__init__(self, **args)
@@ -135,7 +144,16 @@ class TileDrawingArea(gtk.DrawingArea):
         self.insideBackgroundColor = insideBackgroundColor
         self.scrollWheelZoomScale = scrollWheelZoomScale
         self.selectedTool = selectedTool
+        self.keyable = keyable
+        self.pannable = pannable
+        self.panKeys = panKeys
+        self.zoomable = zoomable
+        self.clickable = clickable
+        self.clickButton = clickButton
+        self.menuable = menuable
+        self.menuButton = menuButton
         self.toolPie = toolPie
+        self.showCursor = showCursor
 
         self.tilesSourceSurface = None
         self.tilesSourceWidth = None
@@ -159,8 +177,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self.windowBuffer = None
         self.windowBufferWidth = 0
         self.windowBufferHeight = 0
-        self.cursorX = 0 # TODO: get rid of cursorX and cursorY and track it in the tool instead.
-        self.cursorY = 0 # TODO: get rid of cursorX and cursorY and track it in the tool instead.
+        self.cursorX = 0
+        self.cursorY = 0
+        self.cursorRow = 0
+        self.cursorCol = 0
         self.mouseX = 0
         self.mouseY = 0
         self.trackingTool = None
@@ -251,8 +271,8 @@ class TileDrawingArea(gtk.DrawingArea):
 
         tool = self.getActiveTool()
         if tool:
-            cursorCol = tool.cursorCol
-            cursorRow = tool.cursorRow
+            cursorCol = self.cursorCol
+            cursorRow = self.cursorRow
             cursorCols = tool.cursorCols
             cursorRows = tool.cursorRows
         else:
@@ -864,9 +884,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         ctx):
 
-        tool = self.getActiveTool()
-        if tool:
-            tool.drawCursor(self, ctx)
+        if self.showCursor:
+            tool = self.getActiveTool()
+            if tool:
+                tool.drawCursor(self, ctx)
 
 
     def cursorMoved(self):
@@ -965,12 +986,16 @@ class TileDrawingArea(gtk.DrawingArea):
         widget,
         event):
 
+        if not self.keyable:
+            return
+
         key = event.keyval
 
         #print "KEYPRESS", key
 
-        if ((not self.trackingTool) and
-            (key in (65505, 65506))): # left shift, right shift
+        if (self.pannable and
+            (not self.trackingTool) and
+            (key in self.panKeys)):
             panTool = tiletool.TileTool.getToolByName('Pan')
             #print "panTool", panTool
             if panTool:
@@ -985,25 +1010,27 @@ class TileDrawingArea(gtk.DrawingArea):
             if tool.handleKeyDown(self, event):
                 return
 
-        if key == ord('i'):
-            self.changeScale(self.scale * 1.1)
-        elif key == ord('I'):
-            self.changeScale(self.scale * 2.0)
-        elif key == ord('o'):
-            self.changeScale(self.scale * 0.9)
-        elif key == ord('O'):
-            self.changeScale(self.scale * 0.5)
-        elif key == ord('r'):
-            self.changeScale(1.0)
-        else:
-            pass
-            #print "KEY", event.keyval
+        # TODO: This might be handled by the pan tool. 
+        if self.zoomable:
+            if key == ord('i'):
+                self.changeScale(self.scale * 1.1)
+            elif key == ord('I'):
+                self.changeScale(self.scale * 2.0)
+            elif key == ord('o'):
+                self.changeScale(self.scale * 0.9)
+            elif key == ord('O'):
+                self.changeScale(self.scale * 0.5)
+            elif key == ord('r'):
+                self.changeScale(1.0)
 
 
     def handleKeyRelease(
         self,
         widget,
         event):
+
+        if not self.keyable:
+            return
 
         #print "KEYRELEASE", event.keyval
 
@@ -1054,6 +1081,9 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         event):
 
+        if not self.clickable:
+            return
+
         tool = self.getActiveTool()
         if tool:
             tool.handleMouseDrag(self, event)
@@ -1062,6 +1092,9 @@ class TileDrawingArea(gtk.DrawingArea):
     def handleMousePoint(
         self,
         event):
+
+        if not self.clickable:
+            return
 
         tool = self.getActiveTool()
         #print "handleMousePoint", tool
@@ -1079,7 +1112,8 @@ class TileDrawingArea(gtk.DrawingArea):
         #print "EVENT", event
         #print dir(event)
 
-        if event.button == 1:
+        if (self.clickable and
+            (event.button == self.clickButton)):
 
             self.down = True
             self.downX = event.x
@@ -1090,7 +1124,8 @@ class TileDrawingArea(gtk.DrawingArea):
             if tool:
                 tool.handleMouseDown(self, event)
 
-        elif event.button == 3:
+        elif (self.menuable and 
+              (event.button == self.menuButton)):
 
             toolPie = self.getToolPie()
 
@@ -1113,6 +1148,9 @@ class TileDrawingArea(gtk.DrawingArea):
         widget,
         event):
 
+        if not self.clickable:
+            return
+
         self.down = True
         self.downX = event.x
         self.downY = event.y
@@ -1130,6 +1168,9 @@ class TileDrawingArea(gtk.DrawingArea):
 
         #print "handleButtonRelease TileDrawingArea", self
 
+        if not self.clickable:
+            return
+
         self.handleMouseDrag(event)
 
         self.down = False
@@ -1143,6 +1184,9 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         widget,
         event):
+
+        if not self.zoomable:
+            return
 
         direction = event.direction
 

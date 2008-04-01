@@ -157,9 +157,10 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         self.drawChalk(ctx)
 
-        tool = self.getActiveTool()
-        if tool:
-            tool.drawCursor(self, ctx)
+        if self.showCursor:
+            tool = self.getActiveTool()
+            if tool:
+                tool.drawCursor(self, ctx)
 
 
     def drawSprites(self, ctx):
@@ -191,6 +192,252 @@ class MicropolisDrawingArea(TileDrawingArea):
         self.handleToolPieButtonPress(
             widget,
             event)
+
+
+########################################################################
+
+
+class MiniMicropolisDrawingArea(MicropolisDrawingArea):
+
+
+    def __init__(
+        self,
+        **args):
+
+        args['keyable'] = False
+        args['clickable'] = False
+        args['zoomable'] = False
+        args['pannable'] = False
+        args['menuable'] = False
+        args['showCursor'] = False
+        args['scale'] = 0.25
+
+        MicropolisDrawingArea.__init__(self, **args)
+
+        self.currentView = None
+        self.panning = False
+        self.panningView = None
+        self.panningStartCursorX = 0
+        self.panningStartCursorY = 0
+        self.panningStartPanX = 0
+        self.panningStartPanY = 0
+
+
+    def drawOverlays(self, ctx):
+
+        MicropolisDrawingArea.drawOverlays(self, ctx)
+
+        self.drawOtherViews(ctx)
+
+
+    def getViewBox(self, view):
+
+        viewRect = view.get_allocation()
+
+        x = self.panX + (((viewRect.x - view.panX) / view.tileSize) * self.tileSize)
+        y = self.panY + (((viewRect.y - view.panY) / view.tileSize) * self.tileSize)
+        width = (viewRect.width / view.tileSize) * self.tileSize
+        height = (viewRect.height / view.tileSize) * self.tileSize
+
+        return x, y, width, height
+
+
+    def drawOtherViews(self, ctx):
+
+        if self.panning:
+            currentView = self.panningView
+        else:
+            currentView = self.currentView
+
+        views = self.engine.views
+
+        for view in views:
+
+            if view == self:
+                continue
+
+            x, y, width, height = self.getViewBox(view)
+             
+            if view == currentView:
+
+                pad = 4
+
+                ctx.rectangle(
+                    x - pad,
+                    y - pad,
+                    width + (pad * 2),
+                    height + (pad * 2))
+
+
+                ctx.set_line_width(
+                    pad * 2)
+
+                ctx.set_source_rgb(
+                    0.0,
+                    0.0,
+                    1.0)
+
+                ctx.stroke_preserve()
+
+                ctx.set_line_width(
+                    pad)
+
+                ctx.set_source_rgb(
+                    1.0,
+                    1.0,
+                    0.0)
+
+                ctx.stroke()
+
+            else:
+
+                pad = 2
+
+                ctx.rectangle(
+                    x - pad,
+                    y - pad,
+                    width + (pad * 2),
+                    height + (pad * 2))
+
+                ctx.set_line_width(
+                    pad * 2)
+
+                ctx.set_source_rgb(
+                    1.0,
+                    1.0,
+                    1.0)
+
+                ctx.stroke_preserve()
+
+                ctx.set_line_width(
+                    pad)
+
+                ctx.set_source_rgb(
+                    0.0,
+                    0.0,
+                    0.0)
+
+                ctx.stroke()
+
+
+    def getCursorPosition(
+        self,
+        event):
+
+        if not event:
+            x, y, state = self.window.get_pointer()
+        elif (hasattr(event, 'is_hint') and
+              event.is_hint):
+            x, y, state = event.window.get_pointer()
+        else:
+            x = event.x
+            y = event.y
+            state = event.state
+
+        return x, y
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        x, y = self.getCursorPosition(event)
+
+        views = self.engine.views
+        found = []
+
+        for view in views:
+
+            if view == self:
+                continue
+
+            viewX, viewY, viewWidth, viewHeight = self.getViewBox(view)
+
+            if ((x >= viewX) and
+                (x < (viewX + viewWidth)) and
+                (y >= viewY) and
+                (y < (viewY + viewHeight))):
+                found.append(view)
+
+        if found:
+            self.currentView = found[-1]
+        else:
+            self.currentView = None
+
+
+    def handleButtonPress(
+        self,
+        widget,
+        event):
+
+        if not self.currentView:
+            self.panning = False
+            self.down = False
+            return
+
+        x, y = self.getCursorPosition(event)
+        view = self.currentView
+
+        self.down = True
+        self.panning = True
+        self.panningView = view
+        self.panningStartCursorX = x
+        self.panningStartCursorY = y
+        self.panningStartPanX = view.panX
+        self.panningStartPanY = view.panY
+
+
+    def handleMouseDrag(
+        self,
+        event):
+
+        if not self.panning:
+            return
+
+        x, y = self.getCursorPosition(event)
+        view = self.panningView
+
+        dx = self.panningStartCursorX - x
+        dy = self.panningStartCursorY - y
+        scale = view.tileSize / self.tileSize
+        dx *= scale
+        dy *= scale
+
+        view.panX = self.panningStartPanX + dx
+        view.panY = self.panningStartPanY + dy
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        if not self.panning:
+            return
+
+        self.handleMouseDrag(
+            event)
+
+        self.down = False
+        self.panning = False
+        self.panningView = None
+
+
+    def handleMouseScroll(
+        self,
+        widget,
+        event):
+
+        view = self.currentView
+        if not view:
+            pass
+
+        direction = event.direction
+
+        if direction == gtk.gdk.SCROLL_UP:
+            view.changeScale(view.scale * view.scrollWheelZoomScale)
+        elif direction == gtk.gdk.SCROLL_DOWN:
+            view.changeScale(view.scale / view.scrollWheelZoomScale)
 
 
 ########################################################################
