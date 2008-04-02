@@ -2,7 +2,7 @@
 
 = News =
 
-== Multiple Map Views ==
+== Multiple Map Views (April 1 2007, Don Hopkins) ==
 
 I just implemented support for multiple views and the map overview: one window has the entire map overview at 25% scale, with rectangles to show the positions of other views on the map. Editing is disabled in the map overview because it's used for panning the other views. Three more windows have different views on the map, at different scales, which you can pan and zoom around. You can pan the views by dragging the rectangles on the map overview, or pressing shift in the map window and moving the mouse, or by using the arrow keys to move the cursor off the edge of the screen. You can zoom in and out by using the mouse wheel in the map view, or while you're pointing at the rectangle for a view in the map overview, or typing into the map view "i" and "o" for in and out (a little), "I" and "O" for in and out (a lot), or typing "r" to reset to 100% scale. 
 
