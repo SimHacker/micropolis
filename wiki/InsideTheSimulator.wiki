@@ -16,23 +16,11 @@ commercial and industrial. These zones symbolize the three basic
 pillars upon which a city is based: population, industry, and
 commerce. All three are necessary for your city to grow and thrive.
 
-  * Residential Zones are where the Sims live. Here they build houses,
-apartments and community facilities such as churches and schools. Sims
-are the work force for your city's commercial and industrial zones.
+  * Residential Zones are where the Sims live. Here they build houses, apartments and community facilities such as churches and schools. Sims are the work force for your city's commercial and industrial zones.
 
-  * Industrial Zones are used to site warehouses, factories, and other
-unsightly and polluting structures which have a negative impact on
-surrounding zones. One of the major goals of planning is to separate
-these "nuisances" from the areas where people live. In this
-simulation, industrial zones represent the "basic" production of your
-city. Things produced here are sold outside the city to an "external
-market," bringing money into the city for future growth.
+  * Industrial Zones are used to site warehouses, factories, and other unsightly and polluting structures which have a negative impact on surrounding zones. One of the major goals of planning is to separate these "nuisances" from the areas where people live. In this simulation, industrial zones represent the "basic" production of your city. Things produced here are sold outside the city to an "external market," bringing money into the city for future growth.
 
-  * Commercial Zones represent the retail stores and services in your
-city, including gas stations, grocery stores, banks, and offices.
-Commercial areas are mainly dedicated to producing goods and services
-needed within your city. This is called "non-basic" production or
-production for the "internal market."
+  * Commercial Zones represent the retail stores and services in your city, including gas stations, grocery stores, banks, and offices. Commercial areas are mainly dedicated to producing goods and services needed within your city. This is called "non-basic" production or production for the "internal market."
 
 ===Population -- Residential===
 
@@ -132,23 +120,11 @@ All three departments will request a certain level of funding each
 year. You may supply all or part of the requested funds, in the
 attempt to balance safety needs and budgetary concerns.
 
-  * Police Department: Police stations lower the crime rate around a
-territory. The effective radius of your police station is related to
-the amount of funding allocated to the police department. Police
-stations cost $100 per year to fund. 
+  * Police Department: Police stations lower the crime rate around a territory. The effective radius of your police station is related to the amount of funding allocated to the police department. Police stations cost $100 per year to fund. 
 
-  * Fire Department: Fire stations prevent and extinguish fires. The
-level of funding determines the effective radius of a fire station.
-Fire stations put out fires within this radius much sooner than
-outside it, and decrease the chance that they will start in the first
-place. Fire stations cost $100 per year to fund. 
+  * Fire Department: Fire stations prevent and extinguish fires. The level of funding determines the effective radius of a fire station. Fire stations put out fires within this radius much sooner than outside it, and decrease the chance that they will start in the first place. Fire stations cost $100 per year to fund. 
 
-  * Transportation Department:When you build roads and rail systems
-you are charged for construction and yearly maintenance. The larger
-your transportation network, the more it will cost for upkeep. If you
-decide not to or are unable to pay this maintenance cost, roads will
-slowly deteriorate and become unusable. The maintenance cost for each
-piece is: Road - $1, Bridge - $4, Rail - $4, Rail tunnel - $10.
+  * Transportation Department:When you build roads and rail systems you are charged for construction and yearly maintenance. The larger your transportation network, the more it will cost for upkeep. If you decide not to or are unable to pay this maintenance cost, roads will slowly deteriorate and become unusable. The maintenance cost for each piece is: Road - $1, Bridge - $4, Rail - $4, Rail tunnel - $10.
 
 ===Power===
 
