@@ -6,7 +6,7 @@
 
   * TCL/Tk Scripting Language and Toolkit: John Ousterhout (Scriptics).
 
-  * HyperLook User Interface System: Arthur van Hoff, Doug Scoular, Don Hopkins (The Turing Institute, Ltd.)
+  * !HyperLook User Interface System: Arthur van Hoff, Doug Scoular, Don Hopkins (The Turing Institute, Ltd.)
 
   * Original Micropolis Concept and Design: Will Wright (Maxis Software)
 
