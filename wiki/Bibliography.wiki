@@ -1,4 +1,4 @@
-#summary Micropolis Bibliography/
+#summary Micropolis Bibliography
 
 =Bibliography=
 
@@ -56,9 +56,4 @@
 
 For information on city planning and related subjects, contact:
 
-{{{
-American Planning Association
-Planners Bookstore
-1313 E. 60th St. Chicago, IL 60637
-(312) 955-9100
-}}}
+American Planning Association, Planners Bookstore. 1313 E. 60th St. Chicago, IL 60637; (312) 955-9100
