@@ -4,7 +4,7 @@
 
 ==City Planning Bibliography==
 
-  * Boyer, R., and D. Savageau. Places Rated Almanac. Chicago: Rand McNally & Co., 1986.
+  * Boyer, R., and D. Savageau. Places Rated Almanac. Chicago: Rand !McNally & Co., 1986.
 
   * Callenbach, Ernest. Ecotopia. Berkeley: Banyan Tree Books, 1975.
 
@@ -56,7 +56,9 @@
 
 For information on city planning and related subjects, contact:
 
+{{{
 American Planning Association
 Planners Bookstore
 1313 E. 60th St. Chicago, IL 60637
 (312) 955-9100
+}}}
