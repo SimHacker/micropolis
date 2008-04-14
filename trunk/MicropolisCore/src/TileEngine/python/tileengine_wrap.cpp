@@ -3899,6 +3899,7 @@ SWIGINTERN PyObject *_wrap_TileEngine_renderTilesLazy(PyObject *SWIGUNUSEDPARM(s
   PyObject *arg11 = (PyObject *) 0 ;
   PyObject *arg12 = (PyObject *) 0 ;
   PyObject *arg13 = (PyObject *) 0 ;
+  PyObject *arg14 = (PyObject *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val5 ;
@@ -3926,8 +3927,9 @@ SWIGINTERN PyObject *_wrap_TileEngine_renderTilesLazy(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj10 = 0 ;
   PyObject * obj11 = 0 ;
   PyObject * obj12 = 0 ;
+  PyObject * obj13 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOO:TileEngine_renderTilesLazy",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOO:TileEngine_renderTilesLazy",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TileEngine, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "TileEngine_renderTilesLazy" "', argument " "1"" of type '" "TileEngine *""'"); 
@@ -3986,7 +3988,8 @@ SWIGINTERN PyObject *_wrap_TileEngine_renderTilesLazy(PyObject *SWIGUNUSEDPARM(s
   arg11 = obj10;
   arg12 = obj11;
   arg13 = obj12;
-  (arg1)->renderTilesLazy(arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13);
+  arg14 = obj13;
+  (arg1)->renderTilesLazy(arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12,arg13,arg14);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:

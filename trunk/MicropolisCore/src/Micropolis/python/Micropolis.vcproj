@@ -35,7 +35,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -120,7 +120,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -395,8 +395,15 @@
 						>
 						<Tool
 							Name="SWIG"
-							ScriptingLanguage="python"
-							Arguments="-I.."
+							AdditionalDependencies="micropolis-swig-python.i;..\micropolis.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseSymbols|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="micropolis-swig-python.i;..\micropolis.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -466,10 +473,6 @@
 				</File>
 				<File
 					RelativePath=".\micropoliswindow.py"
-					>
-				</File>
-				<File
-					RelativePath=".\piemenu.py"
 					>
 				</File>
 				<File

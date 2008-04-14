@@ -117,7 +117,7 @@ unsigned long TileEngine::getValue(
 	  !PyCallable_Check(tileFunction)) {
     PyErr_SetString(
       PyExc_TypeError,
-      "tileFunction must be a callable function or None");
+      "expected tileFunction to be a callable function or None");
     return 0;
   }
 
@@ -209,7 +209,7 @@ unsigned long TileEngine::getValue(
 	if (!PyNumber_Check(result)) {
       PyErr_SetString(
         PyExc_TypeError,
-        "tileFunction should return an integer");
+        "expected tileFunction to return an integer");
 	} else {
 	  tile = (unsigned long)PyInt_AsLong(result);
 	}
@@ -239,12 +239,12 @@ void TileEngine::renderTiles(
   double alpha)
 {
 
-  // The tileMap should be an array of four byte integers,
+  // The tileMap should be an array of 4 byte integers,
   // mapping virtual tiles indices to absolute tile numbers.
   if (!PySequence_Check(tileMap)) {
     PyErr_SetString(
       PyExc_TypeError,
-      "tileMap must be an array of four byte integers");
+      "expected tileMap to be an array of 4 byte integers");
     return;
   }
 
@@ -262,7 +262,7 @@ void TileEngine::renderTiles(
         &tileMapLength) != 0) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array");
+      "expected tileMap with read buffer");
     return;
   }
 
@@ -272,7 +272,7 @@ void TileEngine::renderTiles(
   if (tileMapCount != (int)tileCount) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array of 4 byte integers");
+      "expected tileMap read buffer of 4 byte integers");
     return;
   }
 
@@ -379,15 +379,16 @@ void TileEngine::renderTilesLazy(
   double alpha,
   PyObject *tileGenerator,
   PyObject *tileCache,
-  PyObject *tileCacheSurfaces)
+  PyObject *tileCacheSurfaces,
+  PyObject *tileState)
 {
 
-  // The tileMap should be an array of four byte integers,
+  // The tileMap should be an array of 4 byte integers,
   // mapping virtual tiles indices to absolute tile numbers.
   if (!PySequence_Check(tileMap)) {
     PyErr_SetString(
       PyExc_TypeError,
-      "tileMap must be an array of four byte integers");
+      "expected tileMap to be a sequence of 4 byte integers");
     return;
   }
 
@@ -405,7 +406,7 @@ void TileEngine::renderTilesLazy(
         &tileMapLength) != 0) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array");
+      "expected tileMap with read buffer");
     return;
   }
 
@@ -415,7 +416,7 @@ void TileEngine::renderTilesLazy(
   if (tileMapCount != (int)tileCount) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array of 4 byte integers");
+      "expected tileMap read buffer of 4 byte integers");
     return;
   }
 
@@ -425,13 +426,13 @@ void TileEngine::renderTilesLazy(
         tileGenerator)) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected callable tileGenerator object");
+      "expected tileGenerator callable object");
     return;
   }
 
-  // The tileCache should be an array of integers, four integers per tile.
-  // The first is a "cached" flag, the second is a surface index, the third 
-  // and fourth are a tileX and tileY position.
+  // The tileCache should be an array of integers, 4 integers per tile.
+  // The first is a "cached" flag, the second is a surface index, the 3rd
+  // and 4th are a tileX and tileY position.
 
   int *tileCacheData = 
 	NULL;
@@ -444,7 +445,7 @@ void TileEngine::renderTilesLazy(
         &tileCacheLength) != 0) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array");
+      "expected tileCache array");
     return;
   }
 
@@ -454,7 +455,7 @@ void TileEngine::renderTilesLazy(
   if ((tileMapCount * 4) != tileCacheCount) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected array of 4 byte integers, 4 per tile");
+      "expected tileCache array of 4 byte integers, 4 per tile");
     return;
   }
 
@@ -463,7 +464,17 @@ void TileEngine::renderTilesLazy(
         tileCacheSurfaces)) {
     PyErr_SetString(
       PyExc_TypeError,
-      "expected sequence");
+      "expected tileCacheSurfaces sequence");
+    return;
+  }
+
+  // The tileState parameters should be None or a list of tile state parameters.
+  if ((tileState != Py_None) &&
+	  !PySequence_Check(
+        tileState)) {
+    PyErr_SetString(
+      PyExc_TypeError,
+      "expected tileState sequence or None");
     return;
   }
 

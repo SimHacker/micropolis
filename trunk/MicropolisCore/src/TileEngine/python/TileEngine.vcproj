@@ -35,7 +35,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -122,7 +122,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -289,6 +289,10 @@
 				Name="Python Files"
 				>
 				<File
+					RelativePath=".\piemenu.py"
+					>
+				</File>
+				<File
 					RelativePath=".\setup.py"
 					>
 				</File>
@@ -349,12 +353,29 @@
 						>
 						<Tool
 							Name="SWIG"
+							AdditionalDependencies="tileengine-swig-python.i;..\tileengine.h"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\swig\tileengine.i"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="tileengine-swig-python.i;pycairo.i;..\tileengine.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseSymbols|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="tileengine-swig-python.i;pycairo.i;..\tileengine.h"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
