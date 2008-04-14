@@ -154,29 +154,34 @@ if __name__ == '__main__':
     x2 = w + 20
     y2 = h + 40
 
-    win1 = MicropolisWindow(
-        engine=engine, 
-        viewClass=MiniMicropolisDrawingArea)
-    win1.set_default_size(width, height)
-    win1.show_all()
+    if False:
+        win1 = MicropolisWindow(
+            engine=engine, 
+            viewClass=MiniMicropolisDrawingArea)
+        win1.set_default_size(width, height)
+        win1.move(x1, y1)
+        win1.show_all()
 
-    win2 = MicropolisWindow(engine=engine)
-    win2.set_default_size(w, h)
-    win2.move(x2, y1)
-    win2.show_all()
-    win2.da.setScale(1.0)
+    if True:
+        win2 = MicropolisWindow(engine=engine)
+        win2.set_default_size(w, h)
+        win2.move(x2, y1)
+        win2.show_all()
+        win2.da.setScale(1.0)
 
-    win3 = MicropolisWindow(engine=engine)
-    win3.set_default_size(w, h)
-    win3.move(x1, y2)
-    win3.show_all()
-    win3.da.setScale(2.0)
+    if False:
+        win3 = MicropolisWindow(engine=engine)
+        win3.set_default_size(w, h)
+        win3.move(x1, y2)
+        win3.show_all()
+        win3.da.setScale(2.0)
 
-    win4 = MicropolisWindow(engine=engine)
-    win4.set_default_size(w, h)
-    win4.move(x2, y2)
-    win4.show_all()
-    win4.da.setScale(4.0)
+    if False:
+        win4 = MicropolisWindow(engine=engine)
+        win4.set_default_size(w, h)
+        win4.move(x2, y2)
+        win4.show_all()
+        win4.da.setScale(4.0)
 
     gtk.main()
 

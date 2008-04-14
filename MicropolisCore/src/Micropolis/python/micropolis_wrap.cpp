@@ -2658,18 +2658,15 @@ void PythonCallbackHook(
 #endif
 
   // Get the SWIG PyObject *micropolisObj wrapper from
-  // the userData of the micropolis. If it's not defined,
-  // then somebody forgot to set the userdata, so we do
-  // nothing. 
-  PyObject *micropolisObj = 
-    NULL;
-  if (micropolis->userData != NULL) {
-    micropolisObj =
-      (PyObject *)micropolis->userData;
-  } else {
+  // the userData of the micropolis. If the userData is NULL,
+  // then somebody forgot to set the it, so we do nothing. 
+  if (micropolis->userData == NULL) {
     // We have not been hooked up yet, so do nothing.
     return;
   }
+
+  PyObject *micropolisObj = 
+    (PyObject *)micropolis->userData;
 
   // Need to increment the reference count here.
   Py_INCREF(micropolisObj);
@@ -2794,9 +2791,10 @@ CallbackFunction GetPythonCallbackHook()
 }
 
 
-// This can be used to convert any Python object into a
-// void pointer that you can store in a member that takes
-// such a type, like the userData or callbackData. 
+// This can be called from Python to "cast" any Python object 
+// into a (wrapped) void pointer that you can store in a member 
+// that takes such a type, like the userData or callbackData. 
+// Beware that this subverts the reference counting system. 
 void *GetPythonCallbackData(
   PyObject *data)
 {

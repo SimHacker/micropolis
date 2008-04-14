@@ -7,10 +7,10 @@
 		<CustomBuildRule
 			Name="SWIG"
 			DisplayName="SWIG"
-			CommandLine="[Disable] c:\swig\swig.exe [AllOptions] [AdditionalOptions] [Inputs]"
-			Outputs="..\swig\$(InputName)_wrap.cpp"
+			CommandLine="@echo SwigExe: &quot;[SwigExe]&quot;&#x0D;&#x0A;@echo ScriptingLanguage: &quot;[ScriptingLanguage]&quot;&#x0D;&#x0A;@echo CPlusPlus: &quot;[CPlusPlus]&quot;&#x0D;&#x0A;@echo SwigOutDir: &quot;[SwigOutDir]&quot;&#x0D;&#x0A;@echo InputName: &quot;$(InputName)&quot;&#x0D;&#x0A;@echo OutputSuffix: &quot;[OutputSuffix]&quot;&#x0D;&#x0A;@echo Arguments: &quot;[Arguments]&quot;&#x0D;&#x0A;@echo Inputs: &quot;[Inputs]&quot;&#x0D;&#x0A;@echo Output: &quot;[SwigOutDir]\$(InputName)[OutputSuffix]&quot;&#x0D;&#x0A;@echo DryRun: &quot;[DryRun]&quot;&#x0D;&#x0A;@echo on&#x0D;&#x0A;[DryRun] [SwigExe] [ScriptingLanguage] [CPlusPlus] -outdir [SwigOutDir] -o [SwigOutDir]\$(InputName)[OutputSuffix] [Arguments] [Inputs]&#x0D;&#x0A;@echo off&#x0D;&#x0A;"
+			Outputs="[SwigOutDir]\$(InputName)[OutputSuffix]"
 			FileExtensions="*.i"
-			ExecutionDescription="Executing tool..."
+			ExecutionDescription="Executing SWIG Build Rule..."
 			ShowOnlyRuleProperties="false"
 			>
 			<Properties>
@@ -19,7 +19,7 @@
 					DisplayName="SWIG Scripting Language"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="Specifies the name of the scripting language for SWIG to generate wrappers."
+					Description="Specifies the name of the scripting language for SWIG to generate wrappers, passed to SWIG as a command line parameter after a dash."
 					Switch="-[value]"
 					DefaultValue="lua"
 				/>
@@ -28,34 +28,52 @@
 					DisplayName="C++"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="C++"
+					Description="Specifies whether or not to use C++."
 					Switch="-c++"
 					DefaultValue="true"
 				/>
 				<StringProperty
-					Name="OutDir"
-					DisplayName="Output Directory"
+					Name="SwigOutDir"
+					DisplayName="SWIG Output Directory"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="Output Directory"
-					Switch="-outdir [value] -o [value]\$(InputName)_wrap.cpp"
+					Description="Specifies the output directory for the files SWIG generates."
+					Switch="[value]"
 					DefaultValue="."
 				/>
 				<BooleanProperty
-					Name="Disable"
-					DisplayName="Disable"
+					Name="DryRun"
+					DisplayName="Dry Run"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="Disable"
-					Switch="C:\cygwin\bin\echo DISABLED: "
+					Description="If true, then SWIG is not actually run, but the command that would have been run is echoed to the build output."
+					Switch="@echo ==== DRY RUN: "
 				/>
 				<StringProperty
 					Name="Arguments"
 					DisplayName="Arguments"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="Command Line Arguments"
+					Description="Specifies the additional command line arguments passed to SWIG."
 					Switch="[value]"
+				/>
+				<StringProperty
+					Name="SwigExe"
+					DisplayName="SWIG Executable"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Specifies the name of the SWIG executable, typically &quot;C:\swig\swig.exe&quot;."
+					Switch="[value]"
+					DefaultValue="c:\swig\swig.exe"
+				/>
+				<StringProperty
+					Name="OutputSuffix"
+					DisplayName="Output Suffix"
+					PropertyPageName="SWIG"
+					Category="SWIG"
+					Description="Specifies the output file name suffix to be used after input file name base, typically &quot;_wrap.cpp&quot;."
+					Switch="[value]"
+					DefaultValue="_wrap.cpp"
 				/>
 			</Properties>
 		</CustomBuildRule>

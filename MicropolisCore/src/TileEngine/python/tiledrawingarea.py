@@ -166,6 +166,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.tileMap = None
         self.tileCache = None
         self.tileCacheSurfaces = None
+        self.tileState = None
         self.tileCacheCount = 0
         self.down = False
         self.downX = 0
@@ -386,6 +387,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
             tilesCtx = cairo.Context(tilesSurface)
             tilesCtx.set_source_surface(tilesSourceSurface, 0, 0)
+            tilesCtx.set_antialias(cairo.ANTIALIAS_NONE)
             tilesCtx.paint()
 
             self.tileCacheSurfaces = [tilesSurface]
@@ -412,6 +414,8 @@ class TileDrawingArea(gtk.DrawingArea):
             tileSurface = tilesSourceSurface.create_similar(cairo.CONTENT_COLOR, sourceTileSize, sourceTileSize)
             tileCtx = cairo.Context(tileSurface)
 
+            tileCtx.set_antialias(cairo.ANTIALIAS_NONE)
+        
             self.tileCacheSurfaces = []
             self.tileCacheCount = 0
 
@@ -550,6 +554,7 @@ class TileDrawingArea(gtk.DrawingArea):
             self.windowBufferHeight = windowBufferHeight
 
         ctxWindowBuffer = cairo.Context(windowBuffer)
+        ctxWindowBuffer.set_antialias(cairo.ANTIALIAS_NONE)
 
         panX = self.panX
         panY = self.panY
@@ -648,7 +653,8 @@ class TileDrawingArea(gtk.DrawingArea):
                 1.0,
                 self.generateTile,
                 self.tileCache,
-                self.tileCacheSurfaces)
+                self.tileCacheSurfaces,
+                self.tileState)
             #print "renderTilesLazy END"
 
         ctxWindowBuffer.save()

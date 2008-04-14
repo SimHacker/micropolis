@@ -35,7 +35,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -122,7 +122,7 @@
 			<Tool
 				Name="SWIG"
 				ScriptingLanguage="python"
-				OutDir="..\python"
+				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
 			<Tool
@@ -359,6 +359,22 @@
 				<File
 					RelativePath="..\swig\cellengine.i"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="cellengine-swig-python.i;..\cellengine.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="ReleaseSymbols|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="cellengine-swig-python.i;..\cellengine.h"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter

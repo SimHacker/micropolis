@@ -193,7 +193,8 @@ public:
     double alpha,
     PyObject *tileGenerator,
     PyObject *tileCache,
-	PyObject *tileCacheSurfaces);
+	PyObject *tileCacheSurfaces,
+	PyObject *tileState);
 
 
   void renderPixels(
