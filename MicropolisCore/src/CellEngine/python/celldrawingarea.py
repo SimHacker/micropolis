@@ -136,7 +136,7 @@ class CellDrawingArea(TileDrawingArea):
         widget,
         event):
 
-        aelf.handleToolPieButtonPress(
+        self.handleToolPieButtonPress(
             widget,
             event)
 

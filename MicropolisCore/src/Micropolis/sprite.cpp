@@ -1775,7 +1775,8 @@ void Micropolis::OFireZone(
       Xtem = Xloc + x;
       Ytem = Yloc + y;
 
-      if ((Map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
+      if (TestBounds(Xtem, Ytem) &&
+		  ((Map[Xtem][Ytem] & LOMASK) >= ROADBASE)) {
         Map[Xtem][Ytem] |= BULLBIT;
       }
 

@@ -253,4 +253,140 @@ void Micropolis::destroyMapArrays()
 }
 
 
+void Micropolis::GetHistoryRange(
+	int historyType,
+	int historyScale,
+	short *minValResult,
+	short *maxValResult)
+{
+	if ((historyType < 0) ||
+		(historyType >= HISTORY_TYPE_COUNT) ||
+		(historyScale < 0) ||
+		(historyScale >= HISTORY_SCALE_COUNT)) {
+		*minValResult = 0;
+		*maxValResult = 0;
+		return;
+	}
+
+	short *history =
+		NULL;
+	switch (historyType) {
+		case HISTORY_TYPE_RES:
+			history = ResHis;
+			break;
+		case HISTORY_TYPE_COM:
+			history = ComHis;
+			break;
+		case HISTORY_TYPE_IND:
+			history = IndHis;
+			break;
+		case HISTORY_TYPE_MONEY:
+			history = MoneyHis;
+			break;
+		case HISTORY_TYPE_CRIME:
+			history = CrimeHis;
+			break;
+		case HISTORY_TYPE_POLLUTION:
+			history = PollutionHis;
+			break;
+		default:
+			assert(0); // Should never happen!
+			break;
+	}
+
+	int offset = 
+		0;
+	switch (historyScale) {
+		case HISTORY_SCALE_SHORT:
+			offset = 0;
+			break;
+		case HISTORY_SCALE_LONG:
+			offset = 120;
+			break;
+		default:
+			assert(0); // Should never happen!
+			break;
+	}
+
+	short minVal = 32000;
+	short maxVal = -32000;
+
+	int i;
+	for (i = 0; i < HISTORY_COUNT; i++) {
+		short val = 
+			history[i + offset];
+		if (val < minVal) {
+			minVal = val;
+		}
+		if (val > maxVal) {
+			maxVal = val;
+		}
+	}
+
+	*minValResult = minVal;
+	*maxValResult = maxVal;
+}
+
+
+short Micropolis::GetHistory(
+	int historyType,
+	int historyScale,
+	int historyIndex)
+{
+	if ((historyType < 0) ||
+		(historyType >= HISTORY_TYPE_COUNT) ||
+		(historyScale < 0) ||
+		(historyScale >= HISTORY_SCALE_COUNT) ||
+		(historyIndex < 0) ||
+		(historyIndex >= HISTORY_COUNT)) {
+		return 0;
+	}
+
+	short *history =
+		NULL;
+	switch (historyType) {
+		case HISTORY_TYPE_RES:
+			history = ResHis;
+			break;
+		case HISTORY_TYPE_COM:
+			history = ComHis;
+			break;
+		case HISTORY_TYPE_IND:
+			history = IndHis;
+			break;
+		case HISTORY_TYPE_MONEY:
+			history = MoneyHis;
+			break;
+		case HISTORY_TYPE_CRIME:
+			history = CrimeHis;
+			break;
+		case HISTORY_TYPE_POLLUTION:
+			history = PollutionHis;
+			break;
+		default:
+			assert(0); // Should never happen!
+			break;
+	}
+
+	int offset = 
+		0;
+	switch (historyScale) {
+		case HISTORY_SCALE_SHORT:
+			offset = 0;
+			break;
+		case HISTORY_SCALE_LONG:
+			offset = 120;
+			break;
+		default:
+			assert(0); // Should never happen!
+			break;
+	}
+
+	short result =
+		history[historyIndex + offset];
+
+	return result;
+}
+
+
 ////////////////////////////////////////////////////////////////////////

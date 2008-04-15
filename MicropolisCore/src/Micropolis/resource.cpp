@@ -148,7 +148,7 @@ Quad Micropolis::ResourceSize(
 char *Micropolis::ResourceName(
   char **h)
 {
-  Resource *r = (Resource *)h;
+  Resource *r = (Resource *)h;  
 
   return (r->name);
 }
@@ -214,10 +214,14 @@ void Micropolis::GetIndString(
 
   if ((num < 1) || 
       (num > st->lines)) {
-    fprintf(stderr, "Out of range string index: %d\n", num);
-    strcpy(str, "Well I'll be a monkey's uncle!");
+    fprintf(
+		stderr, 
+		"Out of range string index: %d lines: %d\n", 
+		(int)num, 
+		(int)st->lines);
+    strcpy(str, "Oops!");
   } {
-    strcpy(str, st->strings[num-1]);
+    strcpy(str, st->strings[num - 1]);
   }
 }
 

@@ -23,7 +23,11 @@
 
 '''PieMenu
 
-Pie menu component for pygtk and OLPC Sugar, by Don Hopkins.'''
+Pie menu component for Python, GTK, Cairo, Pango and OLPC Sugar.
+By Don Hopkins.
+http://www.DonHopkins.com
+http://www.PieMenu.com
+'''
 
 
 ########################################################################
@@ -76,7 +80,6 @@ def GetFont(s):
     FontCache[s] = descr
 
     return descr
-    
 
 
 ########################################################################
@@ -210,6 +213,7 @@ class PieItem:
 
         if pie != None:
             pie.add_item(self)
+
 
     def measure(self, context, pcontext, playout):
 
@@ -671,6 +675,7 @@ class PieMenu(gtk.Window):
             animate_popup_labels=True,
             animate_popup_opacity=False,
             animate_popup_background=True,
+            shape_window=True,
             **args):
 
         # Create the toplevel window
@@ -782,6 +787,7 @@ class PieMenu(gtk.Window):
         self.animate_popup_labels = animate_popup_labels
         self.animate_popup_opacity = animate_popup_opacity
         self.animate_popup_background = animate_popup_background
+        self.shape_window = shape_window
 
         self.radius = 0
         self.center_x = 0
@@ -2584,7 +2590,7 @@ def main():
 
 
     ########################################################################
-    # MAKE months_liner, months_pie.
+    # Make months_liner, months_pie.
 
 
     months = (

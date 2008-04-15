@@ -98,6 +98,7 @@ class TileTool:
         iconHilite=None,
         iconX=0,
         iconY=0,
+        scrollMargin=0,
         **args):
 
         self.name = name
@@ -110,6 +111,7 @@ class TileTool:
         self.iconHilite = iconHilite
         self.iconX = iconX
         self.iconY = iconY
+        self.scrollMargin = scrollMargin
 
         if name:
             TileTool.allTools[name] = self
@@ -261,13 +263,13 @@ class TileTool:
 
         if col < 0:
             col = 0
-        if col >= (worldCols - cursorCols):
-            col =  (worldCols - cursorCols) - 1
+        if col > (worldCols - cursorCols):
+            col =  (worldCols - cursorCols)
 
         if row < 0:
             row = 0
-        if row >= (worldRows - cursorRows):
-            row = (worldRows - cursorRows) - 1
+        if row > (worldRows - cursorRows):
+            row = (worldRows - cursorRows)
 
         x = ((col + self.cursorHotCol) * tileSize) + tileMiddle
         y = ((row + self.cursorHotRow) * tileSize) + tileMiddle
@@ -286,8 +288,6 @@ class TileTool:
         view):
         
         rect = view.get_allocation()
-        winX = rect.x
-        winY = rect.y
         winWidth = rect.width
         winHeight = rect.height
 
@@ -307,15 +307,27 @@ class TileTool:
         dx = 0
         dy = 0
 
-        if right >= (winX + winWidth):
-            dx = (winX + winWidth) - right
-        elif left < winX:
-            dx = winX - left
+        scrollMargin = max(
+            0,
+            min(
+                self.scrollMargin,
+                int(winWidth / 3),
+                int(winHeight / 3)))
 
-        if bottom >= (winY + winHeight):
-            dy = (winY + winHeight) - bottom
-        elif top < winY:
-            dy = winY - top
+        left -= scrollMargin
+        right += scrollMargin
+        top -= scrollMargin
+        bottom += scrollMargin
+
+        if right >= winWidth:
+            dx = winWidth - right
+        elif left < 0:
+            dx = -left
+
+        if bottom >= winHeight:
+            dy = winHeight - bottom
+        elif top < 0:
+            dy = -top
 
         if (dx or dy):
             #print "Panning", dx, dy
@@ -504,8 +516,6 @@ class PanTool(TileTool):
         view):
 
         winRect = view.get_allocation()
-        winX = winRect.x
-        winY = winRect.y
         winWidth = winRect.width
         winHeight = winRect.height
 
@@ -513,8 +523,6 @@ class PanTool(TileTool):
         y = view.mouseY
 
         border = self.autoScrollBorder
-
-        #print ("cur", x, y, "pan", view.panX, view.panY, "border", border, "win", winWidth, winHeight)
 
         if x < border:
             xDirection = -1

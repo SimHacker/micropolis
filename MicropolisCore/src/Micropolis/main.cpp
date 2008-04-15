@@ -140,39 +140,10 @@ void Micropolis::sim_update()
     TilesAnimated = 0;
   }
 
-  sim_update_editors();
-  
-  sim_update_maps();
-  sim_update_graphs();
-  sim_update_budgets();
-  sim_update_evaluations();
-
-  UpdateFlush();
-}
-
-
-void Micropolis::sim_update_editors()
-{
-}
-
-
-void Micropolis::sim_update_maps()
-{
-}
-
-
-void Micropolis::sim_update_graphs()
-{
-}
-
-
-void Micropolis::sim_update_budgets()
-{
-}
-
-
-void Micropolis::sim_update_evaluations()
-{
+  DoUpdateHeads();
+  graphDoer();
+  UpdateBudgetWindow();
+  scoreDoer();
 }
 
 

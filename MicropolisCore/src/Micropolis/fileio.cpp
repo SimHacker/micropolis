@@ -190,13 +190,13 @@ int Micropolis::load_file(
 
   }
 
-  if ((load_short(ResHis, HISTLEN / 2, f) == 0) ||
-      (load_short(ComHis, HISTLEN / 2, f) == 0) ||
-      (load_short(IndHis, HISTLEN / 2, f) == 0) ||
-      (load_short(CrimeHis, HISTLEN / 2, f) == 0) ||
-      (load_short(PollutionHis, HISTLEN / 2, f) == 0) ||
-      (load_short(MoneyHis, HISTLEN / 2, f) == 0) ||
-      (load_short(MiscHis, MISCHISTLEN / 2, f) == 0) ||
+  if ((load_short(ResHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(ComHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(IndHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(CrimeHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(PollutionHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(MoneyHis, HISTLEN / sizeof(short), f) == 0) ||
+      (load_short(MiscHis, MISCHISTLEN / sizeof(short), f) == 0) ||
       (load_short((&Map[0][0]), WORLD_X * WORLD_Y, f) < 0)) {
 
     /* TODO:  report error */

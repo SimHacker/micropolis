@@ -140,6 +140,20 @@
 #define HISTLEN                 480
 #define MISCHISTLEN             240
 
+#define HISTORY_COUNT			120
+
+#define HISTORY_TYPE_RES		0
+#define HISTORY_TYPE_COM		1
+#define HISTORY_TYPE_IND		2
+#define HISTORY_TYPE_MONEY		3
+#define HISTORY_TYPE_CRIME		4
+#define HISTORY_TYPE_POLLUTION	5
+#define HISTORY_TYPE_COUNT		6
+
+#define HISTORY_SCALE_SHORT		0
+#define HISTORY_SCALE_LONG		1
+#define HISTORY_SCALE_COUNT		2
+
 #define POWERMAPROW             ((WORLD_X + 15) / 16)
 
 #define POWERMAPLEN             1700 /* ??? PWRMAPSIZE */
@@ -382,6 +396,7 @@
 #define HBRDG1                  829
 #define HBRDG2                  830
 #define HBRDG3                  831
+#define HBRDG_END               832
 #define RADAR0                  832
 #define RADAR1                  833
 #define RADAR2                  834
@@ -836,6 +851,22 @@ class Micropolis {
   void initMapArrays();
 
   void destroyMapArrays();
+
+#ifdef SWIG
+%apply short *OUTPUT { short *minValResult };
+%apply short *OUTPUT { short *maxValResult };
+#endif
+
+  void GetHistoryRange(
+	int historyType,
+	int historyScale,
+	short *minValResult,
+	short *maxValResult);
+
+  short GetHistory(
+	int historyType,
+	int historyScale,
+	int historyIndex);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -1364,16 +1395,6 @@ class Micropolis {
   void sim_init();
 
   void sim_update();
-
-  void sim_update_editors();
-
-  void sim_update_maps();
-
-  void sim_update_graphs();
-
-  void sim_update_budgets();
-
-  void sim_update_evaluations();
 
   void sim_heat();
 
@@ -2089,8 +2110,6 @@ class Micropolis {
   void MakeSound(
     char *channel,
     char *sound);
-
-  void UpdateFlush();
 
   void StartMicropolisTimer();
 

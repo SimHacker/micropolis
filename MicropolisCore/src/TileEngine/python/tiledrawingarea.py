@@ -521,15 +521,11 @@ class TileDrawingArea(gtk.DrawingArea):
 
         ctxWindow = self.window.cairo_create()
 
-        self.loadGraphics(ctxWindow)
-
         winRect = self.get_allocation()
-        winX = winRect.x
-        winY = winRect.y
         winWidth = winRect.width
         winHeight = winRect.height
 
-        #print "WINRECT", winRect, winX, winY, winWidth, winHeight
+        self.loadGraphics(ctxWindow)
 
         windowBuffer = self.windowBuffer
         windowBufferWidth = self.windowBufferWidth
@@ -570,10 +566,10 @@ class TileDrawingArea(gtk.DrawingArea):
 
         #print "WORLDRIGHT", worldRight, "WORLDBOTTOM", worldBottom
 
-        worldLeftClipped = max(winX, winX + panX)
-        worldTopClipped = max(winY, winY + panY)
-        worldRightClipped = min(worldWidth + winX + panX, winX + winWidth)
-        worldBottomClipped = min(worldHeight + winY + panY, winY + winHeight)
+        worldLeftClipped = max(0, panX)
+        worldTopClipped = max(0, panY)
+        worldRightClipped = min(worldWidth + panX, winWidth)
+        worldBottomClipped = min(worldHeight + panY, winHeight)
 
         colLeft = \
             int(max(0,
@@ -661,14 +657,15 @@ class TileDrawingArea(gtk.DrawingArea):
 
         ctxWindowBuffer.set_source_surface(
             buffer,
-            winX + renderX,
-            winY + renderY)
+            renderX,
+            renderY)
 
         ctxWindowBuffer.rectangle(
-            winX + renderX,
-            winY + renderY,
+            renderX,
+            renderY,
             renderWidth,
             renderHeight)
+
         ctxWindowBuffer.clip()
 
         ctxWindowBuffer.paint()
@@ -683,7 +680,7 @@ class TileDrawingArea(gtk.DrawingArea):
         if panX > 0:
             backgroundVisible = True
             ctxWindowBuffer.rectangle(
-                winX,
+                0,
                 worldTopClipped,
                 panX,
                 worldBottomClipped - worldTopClipped)
@@ -692,7 +689,7 @@ class TileDrawingArea(gtk.DrawingArea):
         if worldRight < winWidth:
             backgroundVisible = True
             ctxWindowBuffer.rectangle(
-                winX + worldRight,
+                worldRight,
                 worldTopClipped,
                 winWidth - worldRight,
                 worldBottomClipped - worldTopClipped)
@@ -701,8 +698,8 @@ class TileDrawingArea(gtk.DrawingArea):
         if panY > 0:
             backgroundVisible = True
             ctxWindowBuffer.rectangle(
-                winX,
-                winY,
+                0,
+                0,
                 winWidth,
                 panY)
 
@@ -710,8 +707,8 @@ class TileDrawingArea(gtk.DrawingArea):
         if worldBottom < winHeight:
             backgroundVisible = True
             ctxWindowBuffer.rectangle(
-                winX,
-                worldBottom + winY,
+                0,
+                worldBottom,
                 winWidth,
                 winHeight - worldBottom)
 
@@ -948,10 +945,16 @@ class TileDrawingArea(gtk.DrawingArea):
         return (col, row)
 
 
-    def panBy(self, dx, dy):
-        self.panX += dx
-        self.panY += dy
+    def panTo(self, x, y):
+        self.panX = x
+        self.panY = y
         self.queue_draw()
+
+
+    def panBy(self, dx, dy):
+        self.panTo(
+            self.panX + dx,
+            self.panY + dy)
 
 
     def selectToolByName(self, toolName):
