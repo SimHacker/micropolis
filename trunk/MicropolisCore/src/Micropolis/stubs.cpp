@@ -321,11 +321,6 @@ void Micropolis::MakeSound(
 }
 
 
-void Micropolis::UpdateFlush()
-{
-}
-
-
 void Micropolis::StartMicropolisTimer()
 {
 }

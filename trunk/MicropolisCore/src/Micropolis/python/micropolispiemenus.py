@@ -75,7 +75,7 @@ import gtk
 ########################################################################
 
 
-def MakeToolPie(setToolAction):
+def OldMakeToolPie(setToolAction):
 
     ########################################################################
     # Make pie menus.
@@ -310,6 +310,207 @@ def MakeToolPie(setToolAction):
 
 
     return tool_pie
+
+
+########################################################################
+
+
+def MakeToolPie(setToolAction):
+
+    ########################################################################
+    # Make pie menus.
+
+
+    tool_pie = piemenu.PieMenu(
+        header="Micropolis Tools",
+        fixed_radius=25,
+        ring_radius=70,
+        max_pie_items=(8, 8, 16),
+        neutral_description="Select a Micropolis editing tool,\nor the zone or build submenu.")
+
+
+    ########################################################################
+    # Populate pie menus.
+
+
+    for params in (
+
+        # Inner Ring
+
+        { # North
+            'pie': tool_pie,
+            'description': 'Commercial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/iccom.png',
+            'icon_hilite': 'images/iccomhi.png',
+            'action': lambda item: setToolAction('Commercial'),
+        },
+
+        { # NorthEast
+            'pie': tool_pie,
+            'description': 'Industrial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icind.png',
+            'icon_hilite': 'images/icindhi.png',
+            'action': lambda item: setToolAction('Industrial'),
+        },
+
+        { # East
+            'pie': tool_pie,
+            'description': 'Road editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icroad.png',
+            'icon_hilite': 'images/icroadhi.png',
+            'action': lambda item: setToolAction('Road'),
+        },
+
+        { # SouthEast
+            'pie':tool_pie,
+            'description': 'Park building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icpark.png',
+            'icon_hilite': 'images/icparkhi.png',
+            'action': lambda item: setToolAction('Park'),
+        },
+
+        { # South
+            'pie': tool_pie,
+            'description': 'Bulldozer editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icdozr.png',
+            'icon_hilite': 'images/icdozrhi.png',
+            'action': lambda item: setToolAction('Bulldozer'),
+        },
+
+        { # SoutWest
+            'pie': tool_pie,
+            'description': 'Wire editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icwire.png',
+            'icon_hilite': 'images/icwirehi.png',
+            'action': lambda item: setToolAction('Wire'),
+        },
+
+        { # West
+            'pie': tool_pie,
+            'description': 'Rail editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icrail.png',
+            'icon_hilite': 'images/icrailhi.png',
+            'action': lambda item: setToolAction('Rail'),
+        },
+
+        { # NorthWest
+            'pie': tool_pie,
+            'description': 'Residential\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icres.png',
+            'icon_hilite': 'images/icreshi.png',
+            'action': lambda item: setToolAction('Residential'),
+        },
+
+        # Outer Ring
+
+        { # North
+            'pie': tool_pie,
+            'description': 'Query zone\ntool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icqry.png',
+            'icon_hilite': 'images/icqryhi.png',
+            'action': lambda item: setToolAction('Query'),
+        },
+
+        { # NorthWest
+            'pie': tool_pie,
+            'description': 'Police station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icpol.png',
+            'icon_hilite': 'images/icpolhi.png',
+            'action': lambda item: setToolAction('PoliceStation'),
+        },
+
+        { # West
+            'pie':tool_pie,
+            'description': 'Seaport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icseap.png',
+            'icon_hilite': 'images/icseaphi.png',
+            'action': lambda item: setToolAction('Seaport'),
+        },
+
+        { # SouthWest
+            'pie':tool_pie,
+            'description': 'Nuclear power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icnuc.png',
+            'icon_hilite': 'images/icnuchi.png',
+            'action': lambda item: setToolAction('NuclearPowerPlant'),
+        },
+
+        { # South
+            'pie':tool_pie,
+            'description': 'Airport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icairp.png',
+            'icon_hilite': 'images/icairphi.png',
+            'action': lambda item: setToolAction('Airport'),
+        },
+
+        { # SouthEast
+            'pie':tool_pie,
+            'description': 'Coal power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/iccoal.png',
+            'icon_hilite': 'images/iccoalhi.png',
+            'action': lambda item: setToolAction('CoalPowerPlant'),
+        },
+
+        { # East
+            'pie':tool_pie,
+            'description': 'Stadium building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icstad.png',
+            'icon_hilite': 'images/icstadhi.png',
+            'action': lambda item: setToolAction('Stadium'),
+        },
+
+        { # NorthEast
+            'pie': tool_pie,
+            'description': 'Fire station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/icfire.png',
+            'icon_hilite': 'images/icfirehi.png',
+            'action': lambda item: setToolAction('FireStation'),
+        },
+
+    ):
+
+        apply(
+            piemenu.PieItem,
+            (),
+            params)
+
+
+    return tool_pie
+
+
+########################################################################
 
 
 def main():

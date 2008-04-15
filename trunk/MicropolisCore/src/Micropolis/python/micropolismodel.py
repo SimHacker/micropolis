@@ -105,6 +105,11 @@ class MicropolisModel(micropolis.Micropolis):
         self.timerActive = False
         self.timerId = None
         self.views = []
+        self.graphs = []
+        self.demands = []
+        self.evaluations = []
+        self.budgets = []
+        self.evaluation = None
 
         # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
         # So don't do that! I hope this bug in SWIG gets fixed. 
@@ -139,6 +144,22 @@ class MicropolisModel(micropolis.Micropolis):
 
     def addView(self, view):
         self.views.append(view)
+
+
+    def addGraph(self, graph):
+        self.graphs.append(graph)
+
+
+    def addDemand(self, demand):
+        self.demands.append(demand)
+
+
+    def addEvaluation(self, evaluation):
+        self.evaluations.append(evaluation)
+
+
+    def addBudget(self, budget):
+        self.budgets.append(budget)
 
 
     def startTimer(
@@ -187,6 +208,7 @@ class MicropolisModel(micropolis.Micropolis):
 
         self.sim_tick()
         self.animateTiles()
+        self.sim_update()
 
 
     def invokeCallback(self, micropolis, name, *params):
@@ -251,7 +273,8 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UIMakeSound(self, micropolis, channel, sound):
-        print "handle_UIMakeSound(self, micropolis, channel, sound)", (self, micropolis, channel, sound)
+        #print "handle_UIMakeSound(self, micropolis, channel, sound)", (self, micropolis, channel, sound)
+        pass # print "SOUND", channel, sound
 
     
     def handle_UINewGame(self, micropolis):
@@ -275,11 +298,11 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UISetBudget(self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax):
-        print "handle_UISetBudget(self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)", (self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)
+        pass # print "handle_UISetBudget(self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)", (self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)
 
     
     def handle_UISetBudgetValues(self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
-        print "handle_UISetBudgetValues(self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
+        pass # print "handle_UISetBudgetValues(self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
 
     
     def handle_UISetCityName(self, micropolis, CityName):
@@ -287,21 +310,31 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UISetDate(self, micropolis, str, m, y):
-        print "handle_UISetDate(self, micropolis, str, m, d)", (self, micropolis, str, m, y)
+        #print "handle_UISetDate(self, micropolis, str, m, d)", (self, micropolis, str, m, y)
+        pass#print "DATE", str, m, y
 
     
     def handle_UISetDemand(self, micropolis, r, c, i):
-        print "handle_UISetDemand(self, micropolis, r, c, i)", (self, micropolis, r, c, i)
+        #print "handle_UISetDemand(self, micropolis, r, c, i)", (self, micropolis, r, c, i)
+        self.r = r
+        self.c = c
+        self.i = i
+        for demand in self.demands:
+            demand.update()
 
     
-    def handle_UISetEvaluation(self, micropolis, changed, score, ps0, ps1, ps2, ps3, pv0, pv1, pv2, pv3, pop, delta, assessed_dollars, cityclass, citylevel, goodyes, goodno, title):
-        print "handle_UISetEvaluation(self, micropolis, changed, score, ps0, ps1, ps2, ps3, pv0, pv1, pv2, pv3, pop, delta, assessed_dollars, cityclass, citylevel, goodyes, goodno, title)", (self, micropolis, changed, score, ps0, ps1, ps2, ps3, pv0, pv1, pv2, pv3, pop, delta, assessed_dollars, cityclass, citylevel, goodyes, goodno, title)
+    def handle_UISetEvaluation(self, micropolis, *args):
+        #print "handle_UISetEvaluation(self, micropolis, args)
+        self.evaluation = args
+        for evaluation in self.evaluations:
+            evaluation.update()
 
     
     def handle_UISetFunds(self, micropolis, funds):
-        print "handle_UISetFunds(self, micropolis, funds)", (self, micropolis, funds)
+        #print "handle_UISetFunds(self, micropolis, funds)", (self, micropolis, funds)
+        pass # print "FUNDS", funds
 
-    
+
     def handle_UISetGameLevel(self, micropolis, GameLevel):
         print "handle_UISetGameLevel(self, micropolis, GameLevel)", (self, micropolis, GameLevel)
 
@@ -311,7 +344,8 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UISetMessage(self, micropolis, str):
-        print "handle_UISetMessage(self, micropolis, str)", (self, micropolis, str)
+        #print "handle_UISetMessage(self, micropolis, str)", (self, micropolis, str)
+        print "MESSAGE", str
 
 
     def handle_UISetOptions(self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
@@ -326,7 +360,8 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UIShowPicture(self, micropolis, id):
-        print "handle_UIShowPicture(self, micropolis, id)", (self, micropolis, id)
+        #print "handle_UIShowPicture(self, micropolis, id)", (self, micropolis, id)
+        print "SHOWPICTURE", id
 
     
     def handle_UIShowZoneStatus(self, micropolis, str, s0, s1, s2, s3, s4, x, y):
@@ -350,11 +385,19 @@ class MicropolisModel(micropolis.Micropolis):
 
     
     def handle_UIUpdateBudget(self, micropolis):
-        print "handle_UIUpdateBudget(self, micropolis)", (self, micropolis)
+        #print "handle_UIUpdateBudget(self, micropolis)", (self, micropolis)
+        for budget in self.budgets:
+            budget.update()
 
     
     def handle_UIWinGame(self, micropolis):
         print "handle_UIWinGame(self, micropolis)", (self, micropolis)
+
+
+    def handle_UINewGraph(self, micropolis):
+        #print "handle_UINewGraph(self, micropolis)", (self, micropolis)
+        for graph in self.graphs:
+            graph.update()
 
 
 ########################################################################
@@ -377,13 +420,15 @@ def CreateTestEngine():
 
     engine.Resume()
     engine.setSpeed(2)
+    engine.CityTax = 8
     engine.autoGo = 0
     engine.CityTax = 8
 
     # Testing...
 
+    engine.setSkips(100)
     #engine.setSkips(10)
-    engine.setSkips(0)
+    #engine.setSkips(0)
     engine.SetFunds(1000000000)
 
     return engine

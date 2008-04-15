@@ -197,6 +197,15 @@ class MicropolisDrawingArea(TileDrawingArea):
 ########################################################################
 
 
+class EditableMicropolisDrawingArea(MicropolisDrawingArea):
+
+
+    pass
+
+
+########################################################################
+
+
 class MiniMicropolisDrawingArea(MicropolisDrawingArea):
 
 

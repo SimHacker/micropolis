@@ -104,7 +104,7 @@ import micropolis
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
-from micropolisdrawingarea import MicropolisDrawingArea, MiniMicropolisDrawingArea
+import micropolisdrawingarea
 
 
 ########################################################################
@@ -116,7 +116,7 @@ class MicropolisWindow(gtk.Window):
     def __init__(
         self,
         engine=None,
-        viewClass=MicropolisDrawingArea,
+        viewClass=micropolisdrawingarea.EditableMicropolisDrawingArea,
         **args):
         
         gtk.Window.__init__(self, **args)
@@ -133,6 +133,478 @@ class MicropolisWindow(gtk.Window):
 
         self.add(self.da)
         engine.addView(self.da)
+
+
+########################################################################
+# MicropolisControlPanel
+
+
+class MicropolisControlPanel(gtk.DrawingArea):
+
+
+    def __init__(
+        self,
+        view=None,
+        strokeColor=(0, 0, 0),
+        fillColor=(1, 1, 1),
+        fontName='Helvetica 10',
+        **args):
+
+        gtk.DrawingArea.__init__(self, **args)
+
+        self.view = view
+        self.engine = view.engine
+        self.strokeColor = strokeColor
+        self.fillColor = fillColor
+
+        self.connect('expose_event', self.handleExpose)
+
+
+    def handleExpose(
+        self,
+        widget,
+        event,
+        *args):
+
+        if args:
+            pass #print "handleExpose TileDrawingArea", self, "WIDGET", widget, "EVENT", event, "ARGS", args
+
+        self.draw(widget, event)
+
+        return False
+
+
+    def draw(
+        self,
+        widget=None,
+        event=None):
+
+        ctxWindow = self.window.cairo_create()
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        ctxWindow.rectangle(
+            0,
+            0,
+            winWidth,
+            winHeight)
+
+        ctxWindow.set_line_width(3)
+
+        ctxWindow.set_source_rgb(
+            *self.strokeColor)
+
+        ctxWindow.stroke_preserve()
+
+        ctxWindow.set_source_rgb(
+            *self.fillColor)
+
+        ctxWindow.fill()
+
+        self.drawContent(ctxWindow)
+
+
+    def drawContent(
+        self,
+        ctx):
+
+        pass
+
+
+    def update(
+        self):
+
+        self.queue_draw()
+
+
+########################################################################
+# MicropolisTopControlPanel
+
+
+class MicropolisTopControlPanel(MicropolisControlPanel):
+
+
+    def __init__(
+        self,
+        strokeColor=(0, 0, 0),
+        fillColor=(0, 1, 0),
+        **args):
+
+        MicropolisControlPanel.__init__(
+            self,
+            strokeColor=strokeColor,
+            fillColor=fillColor,
+            **args)
+
+
+########################################################################
+# MicropolisBottomControlPanel
+
+
+class MicropolisBottomControlPanel(MicropolisControlPanel):
+
+
+    def __init__(
+        self,
+        strokeColor=(0, 0, 0),
+        fillColor=(0.75, 0.75, 0.75),
+        stackVertical = False,
+        shortScaleFirst = False,
+        **args):
+
+        MicropolisControlPanel.__init__(
+            self,
+            strokeColor=strokeColor,
+            fillColor=fillColor,
+            **args)
+
+        self.stackVertical = stackVertical
+        self.shortScaleFirst = shortScaleFirst
+
+
+    def drawContent(
+        self,
+        ctx):
+
+        #print "==== DRAWCONTENT", self
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        graphColors = (
+            (0.50, 0.50, 1.00), # LIGHTGREEN
+            (0.00, 0.00, 0.50), # DARKBLUE
+            (1.00, 1.00, 0.00), # YELLOW
+            (0.00, 0.50, 0.00), # DARKGREEN
+            (1.00, 0.00, 0.00), # RED
+            (0.33, 0.42, 0.18), # OLIVE
+        )
+
+        historyCount = micropolis.HISTORY_COUNT
+        historyTypeCount = micropolis.HISTORY_TYPE_COUNT
+        historyScaleCount = micropolis.HISTORY_SCALE_COUNT
+
+        scaleWidth = int(float(winWidth) / float(historyScaleCount))
+        scaleHeight = int(float(winHeight) / float(historyScaleCount))
+        getHistory = self.engine.GetHistory
+        getHistoryRange = self.engine.GetHistoryRange
+
+        rightEdgeWidth = 20
+
+        for historyScale in range(0, historyScaleCount):
+
+            #print "historyScale", historyScale
+
+            if self.stackVertical:
+                histX = 0
+                if not self.shortScaleFirst:
+                    histY = ((historyScaleCount - 1) - historyScale) * scaleHeight
+                else:
+                    histY = historyScale * scaleHeight
+                histWidth = winWidth
+                histHeight = scaleHeight
+            else:
+                if not self.shortScaleFirst:
+                    histX = ((historyScaleCount - 1) - historyScale) * scaleWidth
+                else:
+                    histX = historyScale * scaleWidth
+                histY = 0
+                histWidth = scaleWidth
+                histHeight = winHeight
+
+            margin = 3
+
+            histX += margin
+            histY += margin
+            histWidth -= 2 * margin
+            histHeight -= 2 * margin
+
+            histWidth -= rightEdgeWidth
+
+            ctx.save()
+
+            ctx.rectangle(
+                histX,
+                histY,
+                histWidth,
+                histHeight)
+
+            ctx.set_source_rgb(
+                1.0, 1.0, 1.0)
+
+            #ctx.fill_preserve()
+            ctx.fill()
+
+            #ctx.clip()
+
+            for historyType in range(0, historyTypeCount):
+
+                historyMin, historyMax = getHistoryRange(
+                    historyType,
+                    historyScale)
+                historyRange = historyMax - historyMin
+                if historyRange == 0:
+                    historyRange = 1
+
+                for historyIndex in range(historyCount - 1, -1, -1):
+
+                    val = getHistory(
+                        historyType,
+                        historyScale,
+                        historyIndex)
+                    
+                    val -= historyMin
+
+                    x = (
+                        histX +
+                        histWidth +
+                        -(float(historyIndex) * (float(histWidth) / float(historyCount))))
+
+                    y = (
+                        histY +
+                        (float(val) * (float(histHeight) / float(historyRange))))
+
+                    if historyIndex == 0:
+                        ctx.move_to(x, y)
+                    else:
+                        ctx.line_to(x, y)
+
+                ctx.set_source_rgb(
+                    *graphColors[historyType])
+
+                ctx.stroke()
+
+                ctx.move_to(x, y)
+                ctx.line_to(x + rightEdgeWidth, y)
+
+                ctx.stroke()
+
+            ctx.restore()
+
+            ctx.rectangle(
+                histX,
+                histY,
+                histWidth,
+                histHeight)
+
+            ctx.set_source_rgb(
+                *self.strokeColor)
+
+            ctx.set_line_width(2)
+
+            ctx.stroke()
+
+
+########################################################################
+# MicropolisLeftControlPanel
+
+
+class MicropolisLeftControlPanel(MicropolisControlPanel):
+
+
+    def __init__(
+        self,
+        strokeColor=(0, 0, 0),
+        fillColor=(1, 1, 0),
+        **args):
+
+        MicropolisControlPanel.__init__(
+            self,
+            strokeColor=strokeColor,
+            fillColor=fillColor,
+            **args)
+
+
+########################################################################
+# MicropolisRightControlPanel
+
+
+class MicropolisRightControlPanel(MicropolisControlPanel):
+
+    def __init__(
+        self,
+        strokeColor=(0, 0, 0),
+        fillColor=(0, 0, 1),
+        **args):
+
+        MicropolisControlPanel.__init__(
+            self,
+            strokeColor=strokeColor,
+            fillColor=fillColor,
+            **args)
+
+
+########################################################################
+# MicropolisPanelWindow
+
+class MicropolisPanedWindow(gtk.Window):
+
+
+    def __init__(
+        self,
+        engine=None,
+        viewClass=micropolisdrawingarea.EditableMicropolisDrawingArea,
+        topControlPanelClass=MicropolisTopControlPanel,
+        bottomControlPanelClass=MicropolisBottomControlPanel,
+        leftControlPanelClass=MicropolisLeftControlPanel,
+        rightControlPanelClass=MicropolisRightControlPanel,
+        **args):
+        
+        gtk.Window.__init__(self, **args)
+
+        self.connect('destroy', gtk.main_quit)
+
+        self.connect('realize', self.handleRealize)
+        self.connect('size-allocate', self.handleResize)
+
+        self.set_title("OLPC Micropolis for Python/Cairo/Pango, by Don Hopkins")
+
+        self.firstResize = True
+
+        self.engine = engine
+
+        self.tileView = \
+            viewClass(
+                engine=self.engine)
+        self.frameCenter = gtk.Frame()
+        self.frameCenter.set_shadow_type(gtk.SHADOW_IN)
+        self.frameCenter.add(self.tileView)
+        engine.addView(self.tileView)
+
+        self.topControlPanel = \
+            topControlPanelClass(
+                view=self.tileView)
+        self.frameTop = gtk.Frame()
+        self.frameTop.set_shadow_type(gtk.SHADOW_IN)
+        self.frameTop.add(self.topControlPanel)
+        engine.addEvaluation(self.topControlPanel)
+
+        self.bottomControlPanel = \
+            bottomControlPanelClass(
+                view=self.tileView)
+        self.frameBottom = gtk.Frame()
+        self.frameBottom.set_shadow_type(gtk.SHADOW_IN)
+        self.frameBottom.add(self.bottomControlPanel)
+        engine.addGraph(self.bottomControlPanel)
+
+        self.leftControlPanel = \
+            leftControlPanelClass(
+                view=self.tileView)
+        self.frameLeft = gtk.Frame()
+        self.frameLeft.set_shadow_type(gtk.SHADOW_IN)
+        self.frameLeft.add(self.leftControlPanel)
+
+        self.rightControlPanel = \
+            rightControlPanelClass(
+                view=self.tileView)
+        self.frameRight = gtk.Frame()
+        self.frameRight.set_shadow_type(gtk.SHADOW_IN)
+        self.frameRight.add(self.rightControlPanel)
+
+        self.vpaned1 = gtk.VPaned()
+        self.vpaned2 = gtk.VPaned()
+        self.hpaned1 = gtk.HPaned()
+        self.hpaned2 = gtk.HPaned()
+
+        # Put the top level pane in this window.
+
+        self.add(
+            self.vpaned1)
+
+        # Nest the vertical and horizontal panes into a tree.
+
+        self.vpaned1.pack2(
+            self.vpaned2,
+            resize=False,
+            shrink=False)
+
+        self.vpaned2.pack1(
+            self.hpaned1,
+            resize=False,
+            shrink=False)
+
+        self.hpaned1.pack2(
+            self.hpaned2,
+            resize=False,
+            shrink=False)
+
+        # Populate the leaves of the tree with the view and control panels.
+
+        self.hpaned2.pack1(
+            self.frameCenter,
+            resize=False,
+            shrink=False)
+
+        self.vpaned1.pack1(
+            self.frameTop,
+            resize=False,
+            shrink=False)
+
+        self.vpaned2.pack2(
+            self.frameBottom,
+            resize=False,
+            shrink=False)
+
+        self.hpaned1.pack1(
+            self.frameLeft,
+            resize=False,
+            shrink=False)
+
+        self.hpaned2.pack2(
+            self.frameRight,
+            resize=False,
+            shrink=False)
+
+
+    def resizeEdges(
+        self):
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        print "WINDOW SIZE", winWidth, winHeight
+
+        extra = 4
+        padding = 14
+
+        leftEdge = 16
+        rightEdge = 16
+        topEdge = 16
+        bottomEdge = 100
+
+        self.hpaned1.set_position(leftEdge + extra)
+        self.hpaned2.set_position(winWidth - (extra + leftEdge + padding + rightEdge))
+
+        self.vpaned1.set_position(topEdge + extra)
+        self.vpaned2.set_position(winHeight - (extra + topEdge + padding + bottomEdge))
+
+        self.tileView.panTo(-100, -100)
+
+
+    def handleRealize(
+        self,
+        *args):
+
+        #print "handleRealize MicropolisPanedWindow", self, "ARGS", args
+
+        self.firstResize = True
+
+
+    def handleResize(
+        self,
+        widget,
+        event,
+        *args):
+
+        #print "handleResize MicropolisPanedWindow", self, "WIDGET", widget, "EVENT", event, "ARGS", args
+
+        if self.firstResize:
+            self.firstResize = False
+            self.resizeEdges()
 
 
 ########################################################################
@@ -154,20 +626,28 @@ if __name__ == '__main__':
     x2 = w + 20
     y2 = h + 40
 
+    if True:
+        win2 = MicropolisPanedWindow(engine=engine)
+        win2.set_default_size(500, 500)
+        win2.move(x1, y1)
+        win2.show_all()
+        win2.tileView.setScale(1.0)
+        win2.tileView.panTo(-200, -200)
+
+    if False:
+        win2 = MicropolisWindow(engine=engine)
+        win2.set_default_size(w, h)
+        win2.move(x1, y1)
+        win2.show_all()
+        win2.da.setScale(1.0)
+
     if False:
         win1 = MicropolisWindow(
             engine=engine, 
-            viewClass=MiniMicropolisDrawingArea)
+            viewClass=micropolisdrawingarea.MiniMicropolisDrawingArea)
         win1.set_default_size(width, height)
-        win1.move(x1, y1)
+        win1.move(x2, y1)
         win1.show_all()
-
-    if True:
-        win2 = MicropolisWindow(engine=engine)
-        win2.set_default_size(w, h)
-        win2.move(x2, y1)
-        win2.show_all()
-        win2.da.setScale(1.0)
 
     if False:
         win3 = MicropolisWindow(engine=engine)

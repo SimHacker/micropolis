@@ -74,6 +74,17 @@ VERT = _micropolis.VERT
 PROBNUM = _micropolis.PROBNUM
 HISTLEN = _micropolis.HISTLEN
 MISCHISTLEN = _micropolis.MISCHISTLEN
+HISTORY_COUNT = _micropolis.HISTORY_COUNT
+HISTORY_TYPE_RES = _micropolis.HISTORY_TYPE_RES
+HISTORY_TYPE_COM = _micropolis.HISTORY_TYPE_COM
+HISTORY_TYPE_IND = _micropolis.HISTORY_TYPE_IND
+HISTORY_TYPE_MONEY = _micropolis.HISTORY_TYPE_MONEY
+HISTORY_TYPE_CRIME = _micropolis.HISTORY_TYPE_CRIME
+HISTORY_TYPE_POLLUTION = _micropolis.HISTORY_TYPE_POLLUTION
+HISTORY_TYPE_COUNT = _micropolis.HISTORY_TYPE_COUNT
+HISTORY_SCALE_SHORT = _micropolis.HISTORY_SCALE_SHORT
+HISTORY_SCALE_LONG = _micropolis.HISTORY_SCALE_LONG
+HISTORY_SCALE_COUNT = _micropolis.HISTORY_SCALE_COUNT
 POWERMAPROW = _micropolis.POWERMAPROW
 POWERMAPLEN = _micropolis.POWERMAPLEN
 PWRMAPSIZE = _micropolis.PWRMAPSIZE
@@ -285,6 +296,7 @@ HBRDG0 = _micropolis.HBRDG0
 HBRDG1 = _micropolis.HBRDG1
 HBRDG2 = _micropolis.HBRDG2
 HBRDG3 = _micropolis.HBRDG3
+HBRDG_END = _micropolis.HBRDG_END
 RADAR0 = _micropolis.RADAR0
 RADAR1 = _micropolis.RADAR1
 RADAR2 = _micropolis.RADAR2
@@ -866,6 +878,8 @@ class Micropolis(_object):
     if _newclass:PowerMap = _swig_property(_micropolis.Micropolis_PowerMap_get, _micropolis.Micropolis_PowerMap_set)
     def initMapArrays(*args): return _micropolis.Micropolis_initMapArrays(*args)
     def destroyMapArrays(*args): return _micropolis.Micropolis_destroyMapArrays(*args)
+    def GetHistoryRange(*args): return _micropolis.Micropolis_GetHistoryRange(*args)
+    def GetHistory(*args): return _micropolis.Micropolis_GetHistory(*args)
     def animateTiles(*args): return _micropolis.Micropolis_animateTiles(*args)
     __swig_setmethods__["roadPercent"] = _micropolis.Micropolis_roadPercent_set
     __swig_getmethods__["roadPercent"] = _micropolis.Micropolis_roadPercent_get
@@ -1278,11 +1292,6 @@ class Micropolis(_object):
     def env_init(*args): return _micropolis.Micropolis_env_init(*args)
     def sim_init(*args): return _micropolis.Micropolis_sim_init(*args)
     def sim_update(*args): return _micropolis.Micropolis_sim_update(*args)
-    def sim_update_editors(*args): return _micropolis.Micropolis_sim_update_editors(*args)
-    def sim_update_maps(*args): return _micropolis.Micropolis_sim_update_maps(*args)
-    def sim_update_graphs(*args): return _micropolis.Micropolis_sim_update_graphs(*args)
-    def sim_update_budgets(*args): return _micropolis.Micropolis_sim_update_budgets(*args)
-    def sim_update_evaluations(*args): return _micropolis.Micropolis_sim_update_evaluations(*args)
     def sim_heat(*args): return _micropolis.Micropolis_sim_heat(*args)
     def sim_loop(*args): return _micropolis.Micropolis_sim_loop(*args)
     def sim_tick(*args): return _micropolis.Micropolis_sim_tick(*args)
@@ -1668,7 +1677,6 @@ class Micropolis(_object):
     def ResetLastKeys(*args): return _micropolis.Micropolis_ResetLastKeys(*args)
     def InitializeSound(*args): return _micropolis.Micropolis_InitializeSound(*args)
     def MakeSound(*args): return _micropolis.Micropolis_MakeSound(*args)
-    def UpdateFlush(*args): return _micropolis.Micropolis_UpdateFlush(*args)
     def StartMicropolisTimer(*args): return _micropolis.Micropolis_StartMicropolisTimer(*args)
     def StopMicropolisTimer(*args): return _micropolis.Micropolis_StopMicropolisTimer(*args)
     def getTile(*args): return _micropolis.Micropolis_getTile(*args)

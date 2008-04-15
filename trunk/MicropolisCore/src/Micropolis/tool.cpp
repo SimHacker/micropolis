@@ -880,14 +880,17 @@ short Micropolis::check6x6(
 
 
 /* search table for zone status string match */
-static short idArray[28] = {
+static short idArray[29] = {
   DIRT, RIVER, TREEBASE, RUBBLE,
   FLOOD, RADTILE, FIRE, ROADBASE,
   POWERBASE, RAILBASE, RESBASE, COMBASE,
   INDBASE, PORTBASE, AIRPORTBASE, COALBASE,
   FIRESTBASE, POLICESTBASE, STADIUMBASE, NUCLEARBASE,
-  827, 832, FOUNTAIN, INDBASE2,
-  FOOTBALLGAME1, VBRDG0, 952, 956
+  // FIXME: I think HBRDG_END should be HBRDG0...?
+  HBRDG0, RADAR0, FOUNTAIN, INDBASE2,
+  // FIXME: What are tiles 952 and 956?
+  FOOTBALLGAME1, VBRDG0, 952, 956,
+  9999, // a huge short
 };
 
 /*
@@ -905,7 +908,7 @@ static short idArray[28] = {
   Industrial, Port, AirPort, Coal Power,
   Fire Department, Police Department, Stadium, Nuclear Power, 
   Draw Bridge, Radar Dish, Fountain, Industrial,
-  49er's 38  Bears 3, Draw Bridge, Ur 238
+  49er's 38  Bears 3, Draw Bridge, Ur 238, Unknown
 */
 
 
@@ -1003,6 +1006,7 @@ void Micropolis::doZoneStatus(
 
   found = 1;
 
+  // FIXME: This has a fencepost error, I think!
   for (x = 1; x < 29; x++) {
     if (tileNum < idArray[x]) {
       found = 0;
@@ -1012,12 +1016,13 @@ void Micropolis::doZoneStatus(
 
   x--;
 
+  // FIXME: This is strange... Normalize to zero based index.
   if ((x < 1) || 
       (x > 28)) {
     x = 28;
   }
 
-  GetIndString(localStr, 219, x);
+  GetIndString(localStr, 219, x + 1);
 
   for (x = 0; x < 5; x++) {
 

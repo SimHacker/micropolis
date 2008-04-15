@@ -39,3 +39,5 @@ Callback("UIStartScenario", "d", scenario);
 Callback("UIStopEarthquake", "");
 Callback("UIUpdateBudget", "");
 Callback("UIWinGame", "");
+Callback("UINewGraph", "");
+Callback("UINewEvaluation", "");

@@ -198,12 +198,9 @@ void Micropolis::graphDoer()
   }
 
   if (NewGraph) {
-/*
-    //SimGraph *graph;
-    for (graph = sim->graph; graph != NULL; graph = graph->next) {
-      EventuallyRedrawGraph(graph);
-    }
-*/
+	Callback(
+	  "UINewGraph",
+	  "");
     NewGraph = 0;
   }
 }
