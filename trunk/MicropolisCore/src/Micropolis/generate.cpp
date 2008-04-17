@@ -80,7 +80,7 @@ void Micropolis::GenerateSomeCity(
   int r)
 {
   if (CityFileName != NULL) {
-    ckfree(CityFileName);
+    FreePtr(CityFileName);
     CityFileName = NULL;
   }
 
@@ -99,20 +99,6 @@ void Micropolis::GenerateSomeCity(
   DoSimInit();
 
   Callback("UIDidGenerateNewCity", "");
-}
-
-
-short Micropolis::ERand(
-  short limit)
-{
-  short x, z;
-
-  z = Rand(limit);
-  x = Rand(limit);
-  if (z < x) {
-    return (z);
-  }
-  return (x);
 }
 
 
@@ -150,7 +136,6 @@ void Micropolis::GenerateMap(
     DoTrees();
   }
 
-  RandomlySeedRand();
 }
 
 

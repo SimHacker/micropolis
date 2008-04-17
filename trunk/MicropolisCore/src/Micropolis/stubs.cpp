@@ -100,14 +100,14 @@ Quad Micropolis::TickCount()
 Ptr Micropolis::NewPtr(
   int size)
 {
-  return ((Ptr)calloc(size, sizeof(Byte)));
+  return (Ptr)malloc(size);
 }
 
 
 void Micropolis::FreePtr(
   void *data)
 {
-  ckfree(data);
+  free(data);
 }
 
 
@@ -149,12 +149,6 @@ void Micropolis::InitGame()
 {
   sim_skips = sim_skip = sim_paused = sim_paused_speed = heat_steps = 0;
   setSpeed(0);
-}
-
-
-void Micropolis::ReallyQuit()
-{
-  exit(0);
 }
 
 
@@ -207,13 +201,6 @@ void Micropolis::DoEarthquake()
   MakeSound("city", "Explosion-Low");
   Callback("UIStartEarthquake", "");
   ShakeNow++;
-/*
-  if (earthquake_timer_set) {
-    Tk_DeleteTimerHandler(earthquake_timer_token);
-  }
-  Tk_CreateTimerHandler(earthquake_delay, (void (*)())StopEarthquake, (ClientData) 0);
-  earthquake_timer_set = 1;
-*/
 }
 
 
@@ -225,30 +212,13 @@ void Micropolis::StopEarthquake()
 
 void Micropolis::InvalidateEditors()
 {
+  Callback("UIInvalidateEditors", "");
 }
 
 
 void Micropolis::InvalidateMaps()
 {
-}
-
-
-void *Micropolis::ckalloc(
-  int size)
-{
-  return malloc(size);
-}
-
-
-void Micropolis::ckfree(
-  void *data)
-{
-  free(data);
-}
-
-
-void Micropolis::ResetLastKeys()
-{
+  Callback("UIInvalidateMaps", "");
 }
 
 
@@ -270,16 +240,6 @@ void Micropolis::MakeSound(
 }
 
 
-void Micropolis::StartMicropolisTimer()
-{
-}
-
-
-void Micropolis::StopMicropolisTimer()
-{
-}
-
-
 int Micropolis::getTile(
     int x,
     int y)
@@ -298,147 +258,6 @@ int Micropolis::getTile(
 void *Micropolis::getMapBuffer()
 {
     return (void *)mapPtr;
-}
-
-
-Ink *Micropolis::NewInk()
-{
-  Ink *ink;
-
-  if (OldInk) {
-    ink = OldInk;
-    OldInk = OldInk->next;
-  } else {
-    ink = (Ink *)ckalloc(sizeof(Ink));
-    ink->maxlength = POINT_BATCH;
-    ink->points = 
-      (InkPoint *)ckalloc(POINT_BATCH * sizeof(InkPoint));
-  }
-  ink->length = 0;
-  ink->color = COLOR_WHITE;
-  ink->next = NULL;
-  ink->left = ink->right = ink->top = ink->bottom =
-    ink->last_x = ink->last_y = -1;
-  return (ink);
-}
-
-
-void Micropolis::FreeInk(
-  Ink *ink)
-{
-  ink->next = OldInk;
-  OldInk = ink;
-}
-
-
-void Micropolis::StartInk(
-  Ink *ink, 
-  int x, 
-  int y)
-{
-  ink->length = 1;
-  ink->left = ink->right = ink->last_x = ink->points[0].x = x;
-  ink->top = ink->bottom = ink->last_y = ink->points[0].y = y;
-}
-
-
-void Micropolis::AddInk(
-  Ink *ink, 
-  int x, 
-  int y)
-{
-  int dx = x - ink->last_x;
-  int dy = y - ink->last_y;
-
-  if ((dx != 0) || 
-      (dy != 0)) {
-    if (ink->length > 1) {
-      if ((dx == 0) &&
-          (ink->points[ink->length - 1].x == 0) &&
-          ((ink->points[ink->length - 1].y < 0) ?
-           (dy < 0) : (dy > 0))) {
-        ink->points[ink->length - 1].y += dy;
-        goto ADJUST;
-      } else if ((dy == 0) &&
-         (ink->points[ink->length - 1].y == 0) &&
-         ((ink->points[ink->length - 1].x < 0) ?
-          (dx < 0) : (dx > 0))) {
-        ink->points[ink->length - 1].x += dx;
-        goto ADJUST;
-      }
-    }
-
-    if (ink->length >= ink->maxlength) {
-      ink->maxlength += POINT_BATCH;
-      ink->points = 
-        (InkPoint *)realloc(
-          (void *)ink->points,
-          ink->maxlength * sizeof(InkPoint));
-    }
-
-    ink->points[ink->length].x = dx;
-    ink->points[ink->length].y = dy;
-    ink->length++;
-
-  ADJUST:
-
-    if (x < ink->left) {
-      ink->left = x;
-    }
-
-    if (x > ink->right) {
-      ink->right = x;
-    }
-
-    if (y < ink->top) {
-      ink->top = y;
-    }
-
-    if (y > ink->bottom) {
-      ink->bottom = y;
-    }
-
-    { 
-      int left, right, top, bottom;
-
-      if (ink->last_x < x) { 
-        left = ink->last_x; 
-        right = x; 
-      } else { 
-        left = x; 
-        right = ink->last_x; 
-      }
-      if (ink->last_y < y) { 
-        top = ink->last_y; 
-        bottom = y; 
-      } else { 
-        top = y; 
-        bottom = ink->last_y; 
-      }
-
-      left -= 5; 
-      right += 5; 
-      top -= 5; 
-      bottom += 5;
-
-      // TODO: Redraw views overlapping this change.
-    }
-
-    ink->last_x = x; 
-    ink->last_y = y;
-  }
-}
-
-
-void Micropolis::EraseOverlay()
-{
-  Ink *ink;
-
-  while (overlay) {
-    ink = overlay;
-    overlay = ink->next;
-    FreeInk(ink);
-  }
 }
 
 

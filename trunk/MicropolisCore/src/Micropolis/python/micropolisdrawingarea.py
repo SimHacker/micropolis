@@ -112,6 +112,7 @@ class MicropolisDrawingArea(TileDrawingArea):
     def __init__(
         self,
         engine=None,
+        interests=('city', 'editor'),
         **args):
 
         args['tileCount'] = 960
@@ -122,6 +123,10 @@ class MicropolisDrawingArea(TileDrawingArea):
         self.engine = engine
 
         TileDrawingArea.__init__(self, **args)
+
+        engine.expressInterest(
+            self,
+            interests)
 
         self.reset()
 

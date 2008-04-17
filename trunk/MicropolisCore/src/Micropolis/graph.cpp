@@ -199,8 +199,9 @@ void Micropolis::graphDoer()
 
   if (NewGraph) {
 	Callback(
-	  "UINewGraph",
-	  "");
+	  "UIUpdate",
+	  "s",
+	  "graph");
     NewGraph = 0;
   }
 }
@@ -224,10 +225,10 @@ void Micropolis::initGraphs()
     for (i = 0; i < HISTORIES; i++) {
 
       History10[i] = 
-        (unsigned char *)ckalloc(120);
+        (unsigned char *)NewPtr(120);
 
       History120[i] = 
-        (unsigned char *)ckalloc(120);
+        (unsigned char *)NewPtr(120);
 
     }
   }

@@ -183,6 +183,12 @@ void Micropolis::init()
   // Quad CityTime;
   CityTime = 0;
 
+  // Quad CityMonth;
+  CityMonth = 0;
+
+  // Quad CityYear;
+  CityYear = 0;
+
   // short StartingYear;
   StartingYear = 0;
 
@@ -946,15 +952,6 @@ void Micropolis::init()
   // int PendingY;
   PendingY = 0;
 
-  // Ink *OldInk;
-  OldInk = NULL;
-
-  // Ink *overlay;
-  overlay = NULL;
-
-  // Ink *track_ink;
-  track_ink = NULL;
-
   // int last_x;
   last_x = 0;
 
@@ -1047,7 +1044,6 @@ void Micropolis::destroy()
   destroyMapArrays();
 
   // TODO: Clean up all other stuff:
-  // Ink *overlay
 
 }
 

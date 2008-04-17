@@ -15,7 +15,6 @@ Callback("UILoseGame", "");
 Callback("UIMakeSound", "ss", channel, sound);
 Callback("UINewGame", "");
 Callback("UIPlayNewCity", "");
-Callback("UIPopUpMessage", "s", msg);
 Callback("UIReallyStartGame", "");
 Callback("UISaveCityAs", "");
 Callback("UISetBudget", "ssssd", flowStr, previousStr, currentStr, collectedStr, tax);
@@ -23,13 +22,11 @@ Callback("UISetBudgetValues", "ssdssdssd", roadGot, roadWant, roadPercent, polic
 Callback("UISetCityName", "s", CityName);
 Callback("UISetDate", "sdd", str, m, y);
 Callback("UISetDemand", "ddd", r, c, i);
-Callback("UISetEvaluation", "ssssssssssssssssss", changed, score, ps0, ps1, ps2, ps3, pv0, pv1, pv2, pv3, pop, delta, assessed_dollars, cityclass, citylevel, goodyes, goodno, title);
-Callback("UISetFunds", "s", dollarStr);
 Callback("UISetGameLevel", "d", GameLevel);
-Callback("UISetMapState", "d", state);
 Callback("UISetMessage", "s", str);
 Callback("UISetOptions", "dddddddd", autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
 Callback("UISetSpeed", "d", speed);
+  Should stop timer if speed == 0, and start timer if speed > 0.
 Callback("UIShowBudgetAndWait", "");
 Callback("UIShowPicture", "d", id);
 Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
@@ -39,5 +36,21 @@ Callback("UIStartScenario", "d", scenario);
 Callback("UIStopEarthquake", "");
 Callback("UIUpdateBudget", "");
 Callback("UIWinGame", "");
-Callback("UINewGraph", "");
 Callback("UINewEvaluation", "");
+Callback("UIInvalidateEditors", "");
+Callback("UIInvalidateMaps", "");
+Callback("UIUpdate", "s", name);
+  Called when an aspect of the model has changed:
+    city: after load file, load scenario, or generate city
+    map: when small overall map changes
+    editor: when large close-up map changes
+    graph: when graph changes
+    evaluation: when evaluation changes
+    budget: when budget changes
+    date: when date changes
+    funds: when funds change
+    demand: when demand changes
+    level: when level changes
+    speed: when speed changes
+    delay: when delay changes
+    option: when options change

@@ -70,15 +70,6 @@
 /////////////////////////////////////////////////////////////////////////
 
 
-char *Micropolis::dateStr[12] = {
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-};
-
-
-////////////////////////////////////////////////////////////////////////
-
-
 void Micropolis::DoUpdateHeads()
 {
   showValves();
@@ -120,6 +111,7 @@ void Micropolis::UpdateHeads()
   DoUpdateHeads();
 }
 
+
 void Micropolis::UpdateFunds()
 {
   MustUpdateFunds = 1;
@@ -128,27 +120,19 @@ void Micropolis::UpdateFunds()
 
 void Micropolis::ReallyUpdateFunds()
 {
-  char localStr[256], dollarStr[256];
-
   if (!MustUpdateFunds) {
     return;
   }
 
   MustUpdateFunds = 0;
 
-  if (TotalFunds < 0) {
-    TotalFunds = 0;
-  }
-
   if (TotalFunds != LastFunds) {
     LastFunds = TotalFunds;
-    sprintf(localStr, "%d", (int)TotalFunds);
-    makeDollarDecimalStr(localStr, dollarStr);
 
     Callback(
-      "UISetFunds",
+      "UIUpdate",
       "s",
-      dollarStr);
+      "funds");
   }
 
 }
@@ -156,6 +140,8 @@ void Micropolis::ReallyUpdateFunds()
 
 void Micropolis::doTimeStuff()
 {
+	// FIXME: Why is the condition commented out? 
+	// Figure out what it's trying to do, and replace or delete. 
 //  if ((CityTime >> 2) != LastCityTime) {
     updateDate();
 //  }
@@ -163,45 +149,32 @@ void Micropolis::doTimeStuff()
 
 
 void Micropolis::updateDate()
-{       
-  int y;
-  int m;
-  char str[256];
+{
   int megalinium = 1000000;
 
   LastCityTime = CityTime >> 2;
 
-  y = ((int)CityTime / 48) + (int)StartingYear;
-  m = ((int)CityTime % 48) >> 2;
+  CityYear = ((int)CityTime / 48) + (int)StartingYear;
+  CityMonth = ((int)CityTime % 48) >> 2;
 
-  if (y >= megalinium) {
+  if (CityYear >= megalinium) {
     SetYear(StartingYear);
-    y = StartingYear;
+    CityYear = StartingYear;
     SendMes(-40);
   }
 
   doMessage();
 
-  if ((LastCityYear != y) ||
-      (LastCityMonth != m)) {
+  if ((LastCityYear != CityYear) ||
+      (LastCityMonth != CityMonth)) {
 
-    LastCityYear = y;
-    LastCityMonth = m;
-
-    sprintf(
-      str, 
-      "%s %d", 
-      dateStr[m], 
-      (int)y);
-
-    CityDate = str;
+    LastCityYear = CityYear;
+    LastCityMonth = CityMonth;
 
     Callback(
-      "UISetDate",
-      "sdd",
-      str,
-      (int)m,
-      (int)y);
+      "UIUpdate",
+      "s",
+      "date");
   }
 }
 
@@ -325,6 +298,9 @@ void Micropolis::updateOptions()
 void Micropolis::UpdateOptionsMenu(
   int options)
 {
+  // FIXME: just notify the scripting language that the options changed, 
+  // and let it pull the values out of our members, instead of encoding 
+  // and passing the options. 
   Callback(
     "UISetOptions",
     "dddddddd",
@@ -336,6 +312,26 @@ void Micropolis::UpdateOptionsMenu(
     (options & 32) ? 1 : 0,
     (options & 64) ? 1 : 0,
     (options & 128) ? 1 : 0);
+}
+
+
+void Micropolis::UpdateUserInterface()
+{
+  // TODO: Send all pending update messages to the user interface. 
+
+  // city: after load file, load scenario, or generate city
+  // map: when small overall map changes
+  // editor: when large close-up map changes
+  // graph: when graph changes
+  // evaluation: when evaluation changes
+  // budget: when budget changes
+  // date: when date changes
+  // funds: when funds change
+  // demand: when demand changes
+  // level: when level changes
+  // speed: when speed changes
+  // delay: when delay changes
+  // option: when options change
 }
 
 

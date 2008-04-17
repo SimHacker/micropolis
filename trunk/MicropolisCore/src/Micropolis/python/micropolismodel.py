@@ -110,6 +110,7 @@ class MicropolisModel(micropolis.Micropolis):
         self.evaluations = []
         self.budgets = []
         self.evaluation = None
+        self.interests = {}
 
         # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
         # So don't do that! I hope this bug in SWIG gets fixed. 
@@ -211,11 +212,43 @@ class MicropolisModel(micropolis.Micropolis):
         self.sim_update()
 
 
-    def invokeCallback(self, micropolis, name, *params):
+    def sendUpdate(self, name, *args):
+        interests = self.interests
+        if name in interests:
+            a = interests[name]
+            for view in a:
+                view.update(name, *args)
+
+
+    def expressInterest(self, view, names):
+        interests = self.interests
+        for name in names:
+            if name not in interests:
+                a = []
+                interests[name] = a
+            else:
+                a = interests[name]
+            if view not in a:
+                a.append(view)
+
+
+    def revokeInterest(self, view, names):
+        interests = self.interests
+        for name in names:
+            if name in interests:
+                a = interest[name]
+                if view in a:
+                    a.remove(view)
+
+
+
+
+    def invokeCallback(self, micropolis, name, *args):
         #print "==== MicropolisDrawingArea invokeCallback", "SELF", sys.getrefcount(self), self, "micropolis", sys.getrefcount(micropolis), micropolis, "name", name
+        # In this case, micropolis is the same is self, so ignore it. 
         handler = getattr(self, 'handle_' + name, None)
         if handler:
-            handler(micropolis, *params)
+            handler(*args)
         else:
             print "No handler for", name
     
@@ -224,98 +257,98 @@ class MicropolisModel(micropolis.Micropolis):
         return "<MicropolisModel>"
 
 
-    def handle_UIAutoGoto(self, micropolis, x, y):
-        print "handle_UIAutoGoto(self, micropolis, x, y)", (self, micropolis, x, y)
+    def handle_UIAutoGoto(self, x, y):
+        print "handle_UIAutoGoto(self, x, y)", (self, x, y)
     
 
-    def handle_UIDidGenerateNewCity(self, micropolis):
-        print "handle_UIDidGenerateNewCity(self, micropolis)", (self, micropolis)
+    def handle_UIDidGenerateNewCity(self):
+        print "handle_UIDidGenerateNewCity(self)", (self,)
 
     
-    def handle_UIDidLoadCity(self, micropolis):
-        print "handle_UIDidLoadCity(self, micropolis)", (self, micropolis)
+    def handle_UIDidLoadCity(self):
+        print "handle_UIDidLoadCity(self)", (self,)
 
     
-    def handle_UIDidLoadScenario(self, micropolis):
-        print "handle_UIDidLoadScenario(self, micropolis)", (self, micropolis)
+    def handle_UIDidLoadScenario(self):
+        print "handle_UIDidLoadScenario(self)", (self,)
 
     
-    def handle_UIDidSaveCity(self, micropolis):
-        print "handle_UIDidSaveCity(self, micropolis)", (self, micropolis)
+    def handle_UIDidSaveCity(self):
+        print "handle_UIDidSaveCity(self)", (self,)
 
     
-    def handle_UIDidTool(self, micropolis, name, x, y):
-        print "handle_UIDidTool(self, micropolis, name, x, y)", (self, micropolis, name, x, y)
+    def handle_UIDidTool(self, name, x, y):
+        print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
 
     
-    def handle_UIDidntLoadCity(self, micropolis, msg):
-        print "handle_UIDidntLoadCity(self, micropolis, msg)", (self, micropolis, msg)
+    def handle_UIDidntLoadCity(self, msg):
+        print "handle_UIDidntLoadCity(self, msg)", (self, msg)
 
     
-    def handle_UIDidntSaveCity(self, micropolis, msg):
-        print "handle_UIDidntSaveCity(self, micropolis, msg)", (self, micropolis, msg)
+    def handle_UIDidntSaveCity(self, msg):
+        print "handle_UIDidntSaveCity(self, msg)", (self, msg)
 
     
-    def handle_UIDoPendTool(self, micropolis, tool, x, y):
-        print "handle_DoPendTool(self, micropolis, tool, x, y)", (self, micropolis, tool, x, y)
+    def handle_UIDoPendTool(self, tool, x, y):
+        print "handle_DoPendTool(self, tool, x, y)", (self, tool, x, y)
 
     
-    def handle_UIDropFireBombs(self, micropolis):
-        print "handle_DropFireBombs(self, micropolis)", (self, micropolis)
+    def handle_UIDropFireBombs(self):
+        print "handle_DropFireBombs(self)", (self,)
 
     
-    def handle_UIInitializeSound(self, micropolis):
-        print "handle_UIInitializeSound(self, micropolis)", (self, micropolis)
+    def handle_UIInitializeSound(self):
+        print "handle_UIInitializeSound(self)", (self,)
 
     
-    def handle_UILoseGame(self, micropolis):
-        print "handle_UILoseGame(self, micropolis)", (self, micropolis)
+    def handle_UILoseGame(self):
+        print "handle_UILoseGame(self)", (self,)
 
     
-    def handle_UIMakeSound(self, micropolis, channel, sound):
-        #print "handle_UIMakeSound(self, micropolis, channel, sound)", (self, micropolis, channel, sound)
+    def handle_UIMakeSound(self, channel, sound):
+        #print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound)
         pass # print "SOUND", channel, sound
 
     
-    def handle_UINewGame(self, micropolis):
-        print "handle_UINewGame(self, micropolis)", (self, micropolis)
+    def handle_UINewGame(self):
+        print "handle_UINewGame(self)", (self,)
 
     
-    def handle_UIPlayNewCity(self, micropolis):
-        print "handle_UIPlayNewCity(self, micropolis)", (self, micropolis)
+    def handle_UIPlayNewCity(self):
+        print "handle_UIPlayNewCity(self)", (self,)
 
     
-    def handle_UIPopUpMessage(self, micropolis, msg):
-        print "handle_UIPopUpMessage(self, micropolis, msg)", (self, micropolis, msg)
+    def handle_UIPopUpMessage(self, msg):
+        print "handle_UIPopUpMessage(self, msg)", (self, msg)
 
     
-    def handle_UIReallyStartGame(self, micropolis):
-        print "handle_UIReallyStartGame(self, micropolis)", (self, micropolis)
+    def handle_UIReallyStartGame(self):
+        print "handle_UIReallyStartGame(self)", (self,)
 
     
-    def handle_UISaveCityAs(self, micropolis):
-        print "handle_UISaveCityAs(self, micropolis)", (self, micropolis)
+    def handle_UISaveCityAs(self):
+        print "handle_UISaveCityAs(self)", (self,)
 
     
-    def handle_UISetBudget(self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax):
-        pass # print "handle_UISetBudget(self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)", (self, micropolis, flowStr, previousStr, currentStr, collectedStr, tax)
+    def handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax):
+        pass # print "handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax)", (self, flowStr, previousStr, currentStr, collectedStr, tax)
 
     
-    def handle_UISetBudgetValues(self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
-        pass # print "handle_UISetBudgetValues(self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, micropolis, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
+    def handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
+        pass # print "handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
 
     
-    def handle_UISetCityName(self, micropolis, CityName):
-        print "handle_UISetCityName(self, micropolis, CityName)", (self, micropolis, CityName)
+    def handle_UISetCityName(self, CityName):
+        print "handle_UISetCityName(self, CityName)", (self, CityName)
 
     
-    def handle_UISetDate(self, micropolis, str, m, y):
-        #print "handle_UISetDate(self, micropolis, str, m, d)", (self, micropolis, str, m, y)
+    def handle_UISetDate(self, str, m, y):
+        #print "handle_UISetDate(self, str, m, d)", (self, str, m, y)
         pass#print "DATE", str, m, y
 
     
-    def handle_UISetDemand(self, micropolis, r, c, i):
-        #print "handle_UISetDemand(self, micropolis, r, c, i)", (self, micropolis, r, c, i)
+    def handle_UISetDemand(self, r, c, i):
+        #print "handle_UISetDemand(self, r, c, i)", (self, r, c, i)
         self.r = r
         self.c = c
         self.i = i
@@ -323,81 +356,87 @@ class MicropolisModel(micropolis.Micropolis):
             demand.update()
 
     
-    def handle_UISetEvaluation(self, micropolis, *args):
-        #print "handle_UISetEvaluation(self, micropolis, args)
+    def handle_UISetEvaluation(self, *args):
+        #print "handle_UISetEvaluation(self, args)
         self.evaluation = args
         for evaluation in self.evaluations:
             evaluation.update()
 
     
-    def handle_UISetFunds(self, micropolis, funds):
-        #print "handle_UISetFunds(self, micropolis, funds)", (self, micropolis, funds)
+    def handle_UISetFunds(self, funds):
+        #print "handle_UISetFunds(self, funds)", (self, funds)
         pass # print "FUNDS", funds
 
 
-    def handle_UISetGameLevel(self, micropolis, GameLevel):
-        print "handle_UISetGameLevel(self, micropolis, GameLevel)", (self, micropolis, GameLevel)
+    def handle_UISetGameLevel(self, GameLevel):
+        print "handle_UISetGameLevel(self, GameLevel)", (self, GameLevel)
 
     
-    def handle_UISetMapState(self, micropolis, state):
-        print "handle_UISetMapState(self, micropolis, state)", (self, micropolis, state)
+    def handle_UISetMapState(self, state):
+        print "handle_UISetMapState(self, state)", (self, state)
 
     
-    def handle_UISetMessage(self, micropolis, str):
-        #print "handle_UISetMessage(self, micropolis, str)", (self, micropolis, str)
+    def handle_UISetMessage(self, str):
+        #print "handle_UISetMessage(self, str)", (self, str)
         print "MESSAGE", str
 
 
-    def handle_UISetOptions(self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
-        print "handle_UISetOptions(self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, micropolis, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
+    def handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
+        print "handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
 
-    def handle_UISetSpeed(self, micropolis, speed):
-        print "handle_UISetSpeed(self, micropolis, speed)", (self, micropolis, speed)
-
-    
-    def handle_UIShowBudgetAndWait(self, micropolis):
-        print "handle_UIShowBudgetAndWait(self, micropolis)", (self, micropolis)
+    def handle_UISetSpeed(self, speed):
+        print "handle_UISetSpeed(self, speed)", (self, speed)
 
     
-    def handle_UIShowPicture(self, micropolis, id):
-        #print "handle_UIShowPicture(self, micropolis, id)", (self, micropolis, id)
+    def handle_UIShowBudgetAndWait(self):
+        print "handle_UIShowBudgetAndWait(self)", (self,)
+
+    
+    def handle_UIShowPicture(self, id):
+        #print "handle_UIShowPicture(self, id)", (self, id)
         print "SHOWPICTURE", id
 
     
-    def handle_UIShowZoneStatus(self, micropolis, str, s0, s1, s2, s3, s4, x, y):
-        print "handle_UIShowZoneStatus(self, micropolis, str, s0, s1, s2, s3, s4, x, y)", (self, micropolis, str, s0, s1, s2, s3, s4, x, y)
+    def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
+        print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
 
     
-    def handle_UIStartEarthquake(self, micropolis):
-        print "handle_UIStartEarthquake(self, micropolis)", (self, micropolis)
+    def handle_UIStartEarthquake(self):
+        print "handle_UIStartEarthquake(self)", (self,)
 
     
-    def handle_UIStartLoad(self, micropolis):
-        print "handle_UIStartLoad(self, micropolis)", (self, micropolis)
+    def handle_UIStartLoad(self):
+        print "handle_UIStartLoad(self)", (self,)
 
     
-    def handle_UIStartScenario(self, micropolis, scenario):
-        print "handle_UIStartScenario(self, micropolis, scenario)", (self, micropolis, scenario)
+    def handle_UIStartScenario(self, scenario):
+        print "handle_UIStartScenario(self, scenario)", (self, scenario)
 
     
-    def handle_UIStopEarthquake(self, micropolis):
-        print "handle_UIStopEarthquake(self, micropolis)", (self, micropolis)
+    def handle_UIStopEarthquake(self):
+        print "handle_UIStopEarthquake(self)", (self,)
 
-    
-    def handle_UIUpdateBudget(self, micropolis):
-        #print "handle_UIUpdateBudget(self, micropolis)", (self, micropolis)
+
+    def handle_UIUpdateBudget(self):
+        #print "handle_UIUpdateBudget(self)", (self,)
         for budget in self.budgets:
             budget.update()
 
     
-    def handle_UIWinGame(self, micropolis):
-        print "handle_UIWinGame(self, micropolis)", (self, micropolis)
+    def handle_UIWinGame(self):
+        print "handle_UIWinGame(self)", (self,)
 
 
-    def handle_UINewGraph(self, micropolis):
-        #print "handle_UINewGraph(self, micropolis)", (self, micropolis)
+    def handle_UINewGraph(self):
+        #print "handle_UINewGraph(self)", (self,)
         for graph in self.graphs:
             graph.update()
+
+
+    def handle_UIUpdate(self, name, *args):
+        print "handle_UIUpdate(self, name, *args)", (self, name, args)
+
+        self.sendUpdate(name, *args)
 
 
 ########################################################################
@@ -427,8 +466,8 @@ def CreateTestEngine():
     # Testing...
 
     #engine.setSkips(100)
-    #engine.setSkips(10)
-    engine.setSkips(0)
+    engine.setSkips(10)
+    #engine.setSkips(0)
     engine.SetFunds(1000000000)
 
     return engine
