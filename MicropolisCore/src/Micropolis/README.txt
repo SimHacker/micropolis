@@ -206,7 +206,7 @@ Graph window
   Legend showing 8 labels for 8 colors
     Labels
       Residential: Light Green = (0.50, 0.50, 1.00)
-      Commecial: Dark Blue = (0.00, 0.00, 0.50)
+      Commercial: Dark Blue = (0.00, 0.00, 0.50)
       Industrial: Yellow = (1.00, 1.00, 0.00)
       Cash Flow: Dark Green = (0.00, 0.50, 0.00)
       Crime: Red = (1.00, 0.00, 0.00)

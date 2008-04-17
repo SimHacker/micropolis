@@ -114,6 +114,8 @@
 #define TRUE                    1
 #define FALSE                   0
 
+#define RANDOM_RANGE			0xffff
+
 #define SimWidth                120
 #define SimHeight               100
 
@@ -441,15 +443,13 @@
 #define dozeState               7
 #define rrState                 8
 #define roadState               9
-#define chalkState              10
-#define eraserState             11
-#define stadiumState            12
-#define parkState               13
-#define seaportState            14
-#define powerState              15
-#define nuclearState            16
-#define airportState            17
-#define networkState            18
+#define stadiumState            10
+#define parkState               11
+#define seaportState            12
+#define powerState              13
+#define nuclearState            14
+#define airportState            15
+#define networkState            16
 
 #define firstState              residentialState
 #define lastState               networkState
@@ -604,37 +604,6 @@ public:
 };
 
 
-class InkPoint {
-
-public:
-
-  int x;
-  int y;
-
-};
-
-
-class Ink {
-
-public:
-
-  Ink *next;
-  int x;
-  int y;
-  int color;
-  int length;
-  int maxlength;
-  InkPoint *points;
-  int left;
-  int top;
-  int right;
-  int bottom;
-  int last_x;
-  int last_y;
-
-};
-
-
 class Micropolis {
 
 
@@ -718,6 +687,10 @@ class Micropolis {
   short LVAverage;
 
   Quad CityTime;
+
+  Quad CityMonth;
+
+  Quad CityYear;
 
   short StartingYear;
 
@@ -1214,9 +1187,6 @@ class Micropolis {
   void GenerateSomeCity(
     int r);
 
-  short ERand(
-    short limit);
-
   void GenerateMap(
     int r);
 
@@ -1558,6 +1528,21 @@ class Micropolis {
   void sim_srand(
     UQuad seed);
 
+  short Rand(
+    short range);
+
+  int Rand16();
+
+  int Rand16Signed();
+
+  short ERand(
+    short limit);
+
+  void RandomlySeedRand();
+
+  void SeedRand(
+    int seed);
+
 
   ////////////////////////////////////////////////////////////////////////
   // resource.cpp
@@ -1784,18 +1769,6 @@ class Micropolis {
   void DoMeltdown(
     int SX, 
     int SY);
-
-  short Rand(
-    short range);
-
-  int Rand16();
-
-  int Rand16Signed();
-
-  void RandomlySeedRand();
-
-  void SeedRand(
-    int seed);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2048,8 +2021,6 @@ class Micropolis {
 
   void InitGame();
 
-  void ReallyQuit();
-
   void Callback(
 	const char *name,
 	const char *params,
@@ -2063,46 +2034,17 @@ class Micropolis {
 
   void InvalidateMaps();
 
-  void *ckalloc(
-    int size);
-
-  void ckfree(
-    void *data);
-
-  void ResetLastKeys();
-
   void InitializeSound();
 
   void MakeSound(
     char *channel,
     char *sound);
 
-  void StartMicropolisTimer();
-
-  void StopMicropolisTimer();
-
   int getTile(
 	int x, 
 	int y);
 
   void *getMapBuffer();
-
-  Ink *NewInk();
-
-  void FreeInk(
-    Ink *ink);
-
-  void StartInk(
-    Ink *ink, 
-    int x, 
-    int y);
-
-  void AddInk(
-    Ink *ink, 
-    int x, 
-    int y);
-
-  void EraseOverlay();
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2122,12 +2064,6 @@ class Micropolis {
   int PendingX;
 
   int PendingY;
-
-  Ink *OldInk;
-
-  Ink *overlay;
-
-  Ink *track_ink;
 
   int last_x;
 
@@ -2300,41 +2236,6 @@ class Micropolis {
     short x, 
     short y);
 
-  int ChalkTool(
-    short x, 
-    short y, 
-    short color, 
-    short first);
-
-  void ChalkStart(
-    int x, 
-    int y, 
-    int color);
-
-  void ChalkTo(
-    int x, 
-    int y);
-
-  int EraserTool(
-    short x, 
-    short y, 
-    short first);
-
-  int InkInBox(
-    Ink *ink, 
-    int left, 
-    int top, 
-    int right, 
-    int bottom);
-
-  void EraserStart(
-    int x, 
-    int y);
-
-  void EraserTo(
-    int x, 
-    int y);
-
   int do_tool(
     short state, 
     short x, 
@@ -2373,9 +2274,9 @@ class Micropolis {
 
   short PosStackN;
 
-  short SMapXStack[MAX_TRAFFIC_DISTANCE+1];
+  short SMapXStack[MAX_TRAFFIC_DISTANCE + 1];
 
-  short SMapYStack[MAX_TRAFFIC_DISTANCE+1];
+  short SMapYStack[MAX_TRAFFIC_DISTANCE + 1];
 
   short LDir;
 
@@ -2390,7 +2291,6 @@ class Micropolis {
     int Zt);
 
   void SetTrafMem();
-
 
   void PushPos();
 
@@ -2436,10 +2336,6 @@ class Micropolis {
 
   Quad LastI;
 
-  std::string CityDate;
-
-  static char *dateStr[12];
-
   
   void DoUpdateHeads();
 
@@ -2474,6 +2370,8 @@ class Micropolis {
 
   void UpdateOptionsMenu(
     int options);
+
+  void UpdateUserInterface();
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2513,9 +2411,6 @@ class Micropolis {
 
   int CurrentYear();
 
-  void DoSetMapState(
-    short state);
-
   void DoNewGame();
 
   void DoGeneratedCityImage(
@@ -2524,9 +2419,6 @@ class Micropolis {
     int pop, 
     char *cityClass, 
     int score);
-
-  void DoPopUpMessage(
-    char *msg);
 
 
   ////////////////////////////////////////////////////////////////////////

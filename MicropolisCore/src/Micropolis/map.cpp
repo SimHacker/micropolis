@@ -754,7 +754,7 @@ void Micropolis::ditherMap(
   height = view->m_height;
 
   errors = 
-    (int *)malloc(sizeof(int) * (width));
+    (int *)NewPtr(sizeof(int) * width);
 
   for (i = 0; i < width; i++) {
     errors[i] = (Rand16() & 15) - 7;
@@ -810,7 +810,7 @@ void Micropolis::ditherMap(
     }
   }
 
-  free(errors);
+  FreePtr(errors);
 */
 }
 

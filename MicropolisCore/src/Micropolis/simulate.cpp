@@ -70,12 +70,6 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-#define RANDOM_RANGE 0xffff
-
-
-////////////////////////////////////////////////////////////////////////
-
-
 /* comefrom: doEditWindow scoreDoer doMapInFront graphDoer doNilEvent */
 void Micropolis::SimFrame()
 {
@@ -1735,58 +1729,6 @@ void Micropolis::DoMeltdown(
 
   ClearMes();
   SendMesAt(-43, SX, SY);
-}
-
-
-short Micropolis::Rand(
-  short range)
-{
-  int maxMultiple, rnum;
-
-  range++;
-  maxMultiple = RANDOM_RANGE / range;
-  maxMultiple *= range;
-
-  while ((rnum = Rand16()) >= maxMultiple) ;
-
-  return (rnum % range);
-}
-
-
-int Micropolis::Rand16()
-{
-  return (sim_rand());
-}
-
-
-int Micropolis::Rand16Signed()
-{
-  int i = sim_rand();
-
-  if (i > 32767) {
-    i = 32767 - i;
-  }
-
-  return (i);
-}
-
-
-void Micropolis::RandomlySeedRand()
-{
-#ifdef _WIN32
-  SeedRand(::GetTickCount() ^ sim_rand());
-#else
-  struct timeval time;
-  gettimeofday(&time, NULL);
-  SeedRand(time.tv_usec ^ time.tv_sec ^ sim_rand());
-#endif
-}
-
-
-void Micropolis::SeedRand(
-  int seed)
-{
-  sim_srand(seed);
 }
 
 

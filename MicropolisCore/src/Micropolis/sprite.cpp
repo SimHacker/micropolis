@@ -91,10 +91,10 @@ SimSprite *Micropolis::NewSprite(
     sprite = FreeSprites;
     FreeSprites = sprite->next;
   } else {
-    sprite = (SimSprite *)ckalloc(sizeof (SimSprite));
+    sprite = (SimSprite *)NewPtr(sizeof (SimSprite));
   }
 
-  sprite->name = (char *)ckalloc((int)strlen(name) + 1);
+  sprite->name = (char *)NewPtr((int)strlen(name) + 1);
   strcpy(sprite->name, name);
   sprite->type = type;
 
@@ -262,7 +262,7 @@ void Micropolis::DestroySprite(
   }
 
   if (sprite->name != NULL) {
-    ckfree(sprite->name);
+    FreePtr(sprite->name);
     sprite->name = NULL;
   }
 

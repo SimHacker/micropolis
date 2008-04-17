@@ -44,7 +44,7 @@
 
 
 #define COPY(FROM, TO) \
-  TO = (char *)ckalloc((int)strlen(FROM) + 1); \
+  TO = (char *)NewPtr((int)strlen(FROM) + 1); \
   strcpy(TO, FROM);
 
 
@@ -192,7 +192,7 @@ void Micropolis::sim_heat()
   register int fl = heat_flow;
 
   if (CellSrc == NULL) {
-    CellSrc = (short *)ckalloc((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
+    CellSrc = (short *)NewPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
     CellDst = &Map[0][0];
   }
 

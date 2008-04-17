@@ -2477,27 +2477,25 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_Ink swig_types[0]
-#define SWIGTYPE_p_InkPoint swig_types[1]
-#define SWIGTYPE_p_Micropolis swig_types[2]
-#define SWIGTYPE_p_Resource swig_types[3]
-#define SWIGTYPE_p_SimSprite swig_types[4]
-#define SWIGTYPE_p_StringTable swig_types[5]
-#define SWIGTYPE_p_a___100_7_____3___short swig_types[6]
-#define SWIGTYPE_p_char swig_types[7]
-#define SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void swig_types[8]
-#define SWIGTYPE_p_long swig_types[9]
-#define SWIGTYPE_p_p_SimSprite swig_types[10]
-#define SWIGTYPE_p_p_char swig_types[11]
-#define SWIGTYPE_p_p_short swig_types[12]
-#define SWIGTYPE_p_p_unsigned_char swig_types[13]
-#define SWIGTYPE_p_short swig_types[14]
-#define SWIGTYPE_p_unsigned_char swig_types[15]
-#define SWIGTYPE_p_unsigned_long swig_types[16]
-#define SWIGTYPE_p_unsigned_short swig_types[17]
-#define SWIGTYPE_p_void swig_types[18]
-static swig_type_info *swig_types[20];
-static swig_module_info swig_module = {swig_types, 19, 0, 0, 0, 0};
+#define SWIGTYPE_p_Micropolis swig_types[0]
+#define SWIGTYPE_p_Resource swig_types[1]
+#define SWIGTYPE_p_SimSprite swig_types[2]
+#define SWIGTYPE_p_StringTable swig_types[3]
+#define SWIGTYPE_p_a___100_7_____3___short swig_types[4]
+#define SWIGTYPE_p_char swig_types[5]
+#define SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void swig_types[6]
+#define SWIGTYPE_p_long swig_types[7]
+#define SWIGTYPE_p_p_SimSprite swig_types[8]
+#define SWIGTYPE_p_p_char swig_types[9]
+#define SWIGTYPE_p_p_short swig_types[10]
+#define SWIGTYPE_p_p_unsigned_char swig_types[11]
+#define SWIGTYPE_p_short swig_types[12]
+#define SWIGTYPE_p_unsigned_char swig_types[13]
+#define SWIGTYPE_p_unsigned_long swig_types[14]
+#define SWIGTYPE_p_unsigned_short swig_types[15]
+#define SWIGTYPE_p_void swig_types[16]
+static swig_type_info *swig_types[18];
+static swig_module_info swig_module = {swig_types, 17, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -5254,885 +5252,6 @@ SWIGINTERN PyObject *SimSprite_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_InkPoint_x_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *arg1 = (InkPoint *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:InkPoint_x_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_InkPoint, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InkPoint_x_set" "', argument " "1"" of type '" "InkPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< InkPoint * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "InkPoint_x_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->x = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_InkPoint_x_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *arg1 = (InkPoint *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:InkPoint_x_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_InkPoint, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InkPoint_x_get" "', argument " "1"" of type '" "InkPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< InkPoint * >(argp1);
-  result = (int) ((arg1)->x);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_InkPoint_y_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *arg1 = (InkPoint *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:InkPoint_y_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_InkPoint, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InkPoint_y_set" "', argument " "1"" of type '" "InkPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< InkPoint * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "InkPoint_y_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->y = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_InkPoint_y_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *arg1 = (InkPoint *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:InkPoint_y_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_InkPoint, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "InkPoint_y_get" "', argument " "1"" of type '" "InkPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< InkPoint * >(argp1);
-  result = (int) ((arg1)->y);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_InkPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)":new_InkPoint")) SWIG_fail;
-  result = (InkPoint *)new InkPoint();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_InkPoint, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_InkPoint(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  InkPoint *arg1 = (InkPoint *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_InkPoint",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_InkPoint, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_InkPoint" "', argument " "1"" of type '" "InkPoint *""'"); 
-  }
-  arg1 = reinterpret_cast< InkPoint * >(argp1);
-  delete arg1;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *InkPoint_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O|swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_InkPoint, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
-SWIGINTERN PyObject *_wrap_Ink_next_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_next_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_next_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Ink_next_set" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  if (arg1) (arg1)->next = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_next_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  Ink *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_next_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_next_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (Ink *) ((arg1)->next);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_x_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_x_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_x_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_x_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->x = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_x_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_x_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_x_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->x);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_y_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_y_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_y_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_y_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->y = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_y_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_y_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_y_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->y);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_color_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_color_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_color_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_color_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->color = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_color_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_color_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_color_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->color);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_length_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_length_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_length_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_length_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->length = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_length_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_length_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_length_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->length);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_maxlength_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_maxlength_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_maxlength_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_maxlength_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->maxlength = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_maxlength_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_maxlength_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_maxlength_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->maxlength);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_points_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  InkPoint *arg2 = (InkPoint *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_points_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_points_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_InkPoint, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Ink_points_set" "', argument " "2"" of type '" "InkPoint *""'"); 
-  }
-  arg2 = reinterpret_cast< InkPoint * >(argp2);
-  if (arg1) (arg1)->points = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_points_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  InkPoint *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_points_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_points_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (InkPoint *) ((arg1)->points);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_InkPoint, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_left_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_left_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_left_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_left_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->left = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_left_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_left_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_left_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->left);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_top_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_top_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_top_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_top_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->top = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_top_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_top_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_top_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->top);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_right_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_right_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_right_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_right_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->right = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_right_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_right_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_right_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->right);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_bottom_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_bottom_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_bottom_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_bottom_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->bottom = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_bottom_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_bottom_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_bottom_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->bottom);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_last_x_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_last_x_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_last_x_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_last_x_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->last_x = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_last_x_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_last_x_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_last_x_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->last_x);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_last_y_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Ink_last_y_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_last_y_set" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Ink_last_y_set" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->last_y = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Ink_last_y_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Ink_last_y_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Ink_last_y_get" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  result = (int) ((arg1)->last_y);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_new_Ink(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)":new_Ink")) SWIG_fail;
-  result = (Ink *)new Ink();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_Ink(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Ink *arg1 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_Ink",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Ink, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Ink" "', argument " "1"" of type '" "Ink *""'"); 
-  }
-  arg1 = reinterpret_cast< Ink * >(argp1);
-  delete arg1;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *Ink_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O|swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_Ink, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
 SWIGINTERN PyObject *_wrap_new_Micropolis(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *result = 0 ;
@@ -7846,6 +6965,112 @@ SWIGINTERN PyObject *_wrap_Micropolis_CityTime_get(PyObject *SWIGUNUSEDPARM(self
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (Quad) ((arg1)->CityTime);
+  resultobj = SWIG_From_long(static_cast< long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_CityMonth_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  Quad arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_CityMonth_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityMonth_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_CityMonth_set" "', argument " "2"" of type '" "Quad""'");
+  } 
+  arg2 = static_cast< Quad >(val2);
+  if (arg1) (arg1)->CityMonth = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_CityMonth_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  Quad result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_CityMonth_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityMonth_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  result = (Quad) ((arg1)->CityMonth);
+  resultobj = SWIG_From_long(static_cast< long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_CityYear_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  Quad arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_CityYear_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityYear_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_CityYear_set" "', argument " "2"" of type '" "Quad""'");
+  } 
+  arg2 = static_cast< Quad >(val2);
+  if (arg1) (arg1)->CityYear = arg2;
+  
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_CityYear_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  Quad result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_CityYear_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityYear_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  result = (Quad) ((arg1)->CityYear);
   resultobj = SWIG_From_long(static_cast< long >(result));
   return resultobj;
 fail:
@@ -16919,37 +16144,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_ERand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_ERand",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ERand" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ERand" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  result = (short)(arg1)->ERand(arg2);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_GenerateMap(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -20488,6 +19682,163 @@ SWIGINTERN PyObject *_wrap_Micropolis_sim_srand(PyObject *SWIGUNUSEDPARM(self), 
   } 
   arg2 = static_cast< UQuad >(val2);
   (arg1)->sim_srand(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_Rand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  short result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_Rand",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_Rand" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  result = (short)(arg1)->Rand(arg2);
+  resultobj = SWIG_From_short(static_cast< short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_Rand16(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_Rand16",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand16" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  result = (int)(arg1)->Rand16();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_Rand16Signed(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_Rand16Signed",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand16Signed" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  result = (int)(arg1)->Rand16Signed();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_ERand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  short result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_ERand",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ERand" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ERand" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  result = (short)(arg1)->ERand(arg2);
+  resultobj = SWIG_From_short(static_cast< short >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_RandomlySeedRand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_RandomlySeedRand",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_RandomlySeedRand" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->RandomlySeedRand();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_SeedRand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_SeedRand",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SeedRand" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SeedRand" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->SeedRand(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -24046,132 +23397,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_Rand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_Rand",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_Rand" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  result = (short)(arg1)->Rand(arg2);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_Rand16(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_Rand16",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand16" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int)(arg1)->Rand16();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_Rand16Signed(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_Rand16Signed",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Rand16Signed" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int)(arg1)->Rand16Signed();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_RandomlySeedRand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_RandomlySeedRand",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_RandomlySeedRand" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->RandomlySeedRand();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_SeedRand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_SeedRand",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SeedRand" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SeedRand" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  (arg1)->SeedRand(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_spriteList_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -27407,27 +26632,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_ReallyQuit(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_ReallyQuit",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ReallyQuit" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->ReallyQuit();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_Callback__varargs__(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *varargs) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -27572,86 +26776,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_ckalloc(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  void *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_ckalloc",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ckalloc" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ckalloc" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (void *)(arg1)->ckalloc(arg2);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_ckfree(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *arg2 = (void *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_ckfree",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ckfree" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1,SWIG_as_voidptrptr(&arg2), 0, 0);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ckfree" "', argument " "2"" of type '" "void *""'"); 
-  }
-  (arg1)->ckfree(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_ResetLastKeys(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_ResetLastKeys",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ResetLastKeys" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->ResetLastKeys();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_InitializeSound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -27718,48 +26842,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_StartMicropolisTimer(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_StartMicropolisTimer",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_StartMicropolisTimer" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->StartMicropolisTimer();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_StopMicropolisTimer(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_StopMicropolisTimer",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_StopMicropolisTimer" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->StopMicropolisTimer();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_getTile(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -27816,175 +26898,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_getMapBuffer(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (void *)(arg1)->getMapBuffer();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_NewInk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_NewInk",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_NewInk" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Ink *)(arg1)->NewInk();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_FreeInk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_FreeInk",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_FreeInk" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_FreeInk" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  (arg1)->FreeInk(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_StartInk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  int arg3 ;
-  int arg4 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_StartInk",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_StartInk" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_StartInk" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_StartInk" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_StartInk" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  (arg1)->StartInk(arg2,arg3,arg4);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_AddInk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  int arg3 ;
-  int arg4 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_AddInk",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_AddInk" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_AddInk" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_AddInk" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_AddInk" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  (arg1)->AddInk(arg2,arg3,arg4);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_EraseOverlay(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_EraseOverlay",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_EraseOverlay" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->EraseOverlay();
-  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
@@ -28356,165 +27269,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_PendingY_get(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (int) ((arg1)->PendingY);
   resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_OldInk_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_OldInk_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_OldInk_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_OldInk_set" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  if (arg1) (arg1)->OldInk = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_OldInk_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_OldInk_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_OldInk_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Ink *) ((arg1)->OldInk);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_overlay_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_overlay_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_overlay_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_overlay_set" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  if (arg1) (arg1)->overlay = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_overlay_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_overlay_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_overlay_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Ink *) ((arg1)->overlay);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_track_ink_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_track_ink_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_track_ink_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_track_ink_set" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  if (arg1) (arg1)->track_ink = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_track_ink_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_track_ink_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_track_ink_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Ink *) ((arg1)->track_ink);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_Ink, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -30395,345 +29149,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_ChalkTool(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  short arg3 ;
-  short arg4 ;
-  short arg5 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  short val3 ;
-  int ecode3 = 0 ;
-  short val4 ;
-  int ecode4 = 0 ;
-  short val5 ;
-  int ecode5 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOO:Micropolis_ChalkTool",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ChalkTool" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ChalkTool" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  ecode3 = SWIG_AsVal_short(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_ChalkTool" "', argument " "3"" of type '" "short""'");
-  } 
-  arg3 = static_cast< short >(val3);
-  ecode4 = SWIG_AsVal_short(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_ChalkTool" "', argument " "4"" of type '" "short""'");
-  } 
-  arg4 = static_cast< short >(val4);
-  ecode5 = SWIG_AsVal_short(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Micropolis_ChalkTool" "', argument " "5"" of type '" "short""'");
-  } 
-  arg5 = static_cast< short >(val5);
-  result = (int)(arg1)->ChalkTool(arg2,arg3,arg4,arg5);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_ChalkStart(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  int arg4 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_ChalkStart",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ChalkStart" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ChalkStart" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_ChalkStart" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_ChalkStart" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  (arg1)->ChalkStart(arg2,arg3,arg4);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_ChalkTo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:Micropolis_ChalkTo",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ChalkTo" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_ChalkTo" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_ChalkTo" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  (arg1)->ChalkTo(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_EraserTool(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  short arg3 ;
-  short arg4 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  short val3 ;
-  int ecode3 = 0 ;
-  short val4 ;
-  int ecode4 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_EraserTool",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_EraserTool" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_EraserTool" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  ecode3 = SWIG_AsVal_short(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_EraserTool" "', argument " "3"" of type '" "short""'");
-  } 
-  arg3 = static_cast< short >(val3);
-  ecode4 = SWIG_AsVal_short(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_EraserTool" "', argument " "4"" of type '" "short""'");
-  } 
-  arg4 = static_cast< short >(val4);
-  result = (int)(arg1)->EraserTool(arg2,arg3,arg4);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_InkInBox(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  Ink *arg2 = (Ink *) 0 ;
-  int arg3 ;
-  int arg4 ;
-  int arg5 ;
-  int arg6 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  int val6 ;
-  int ecode6 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Micropolis_InkInBox",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_InkInBox" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_Ink, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_InkInBox" "', argument " "2"" of type '" "Ink *""'"); 
-  }
-  arg2 = reinterpret_cast< Ink * >(argp2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_InkInBox" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_InkInBox" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Micropolis_InkInBox" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  ecode6 = SWIG_AsVal_int(obj5, &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Micropolis_InkInBox" "', argument " "6"" of type '" "int""'");
-  } 
-  arg6 = static_cast< int >(val6);
-  result = (int)(arg1)->InkInBox(arg2,arg3,arg4,arg5,arg6);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_EraserStart(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:Micropolis_EraserStart",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_EraserStart" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_EraserStart" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_EraserStart" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  (arg1)->EraserStart(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_EraserTo(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  int arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOO:Micropolis_EraserTo",&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_EraserTo" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_EraserTo" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_EraserTo" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  (arg1)->EraserTo(arg2,arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_do_tool(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -32167,111 +30582,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_CityDate_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  std::string *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_CityDate_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityDate_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_CityDate_set" "', argument " "2"" of type '" "std::string const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Micropolis_CityDate_set" "', argument " "2"" of type '" "std::string const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  if (arg1) (arg1)->CityDate = *arg2;
-  
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_CityDate_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  std::string *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_CityDate_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityDate_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  {
-    std::string const &_result_ref =  ((arg1)->CityDate);
-    result = (std::string *) &_result_ref;
-  }
-  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN int Swig_var_Micropolis_dateStr_set(PyObject *_val) {
-  {
-    char * *inp = 0;
-    int res = SWIG_ConvertPtr(_val, SWIG_as_voidptrptr(&inp), SWIGTYPE_p_p_char,  0 );
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""Micropolis::dateStr""' of type '""char *[12]""'");
-    } else if (inp) {
-      size_t ii = 0;
-      for (; ii < (size_t)12; ++ii) Micropolis::dateStr[ii] = inp[ii];
-    } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""Micropolis::dateStr""' of type '""char *[12]""'");
-    }
-  }
-  return 0;
-fail:
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_Micropolis_dateStr_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(Micropolis::dateStr), SWIGTYPE_p_p_char,  0 );
-  return pyobj;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_dateStr_get(PyObject *SWIGUNUSEDPARM(self), PyObject *SWIGUNUSEDPARM(args)) {
-  return Swig_var_Micropolis_dateStr_get();
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_dateStr_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *value;
-  int res;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:set",&value)) return NULL;
-  res = Swig_var_Micropolis_dateStr_set(value);
-  return !res ? SWIG_Py_Void() : NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_DoUpdateHeads(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -32616,6 +30926,27 @@ SWIGINTERN PyObject *_wrap_Micropolis_UpdateOptionsMenu(PyObject *SWIGUNUSEDPARM
   } 
   arg2 = static_cast< int >(val2);
   (arg1)->UpdateOptionsMenu(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_UpdateUserInterface(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_UpdateUserInterface",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_UpdateUserInterface" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->UpdateUserInterface();
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -32969,36 +31300,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_DoSetMapState(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_DoSetMapState",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoSetMapState" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_DoSetMapState" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  (arg1)->DoSetMapState(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_DoNewGame(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -33088,39 +31389,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_DoGeneratedCityImage(PyObject *SWIGUNUSEDP
 fail:
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_DoPopUpMessage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_DoPopUpMessage",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoPopUpMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DoPopUpMessage" "', argument " "2"" of type '" "char *""'");
-  }
-  arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->DoPopUpMessage(arg2);
-  resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return resultobj;
-fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return NULL;
 }
 
@@ -34131,42 +32399,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_SimSprite", _wrap_new_SimSprite, METH_VARARGS, NULL},
 	 { (char *)"delete_SimSprite", _wrap_delete_SimSprite, METH_VARARGS, NULL},
 	 { (char *)"SimSprite_swigregister", SimSprite_swigregister, METH_VARARGS, NULL},
-	 { (char *)"InkPoint_x_set", _wrap_InkPoint_x_set, METH_VARARGS, NULL},
-	 { (char *)"InkPoint_x_get", _wrap_InkPoint_x_get, METH_VARARGS, NULL},
-	 { (char *)"InkPoint_y_set", _wrap_InkPoint_y_set, METH_VARARGS, NULL},
-	 { (char *)"InkPoint_y_get", _wrap_InkPoint_y_get, METH_VARARGS, NULL},
-	 { (char *)"new_InkPoint", _wrap_new_InkPoint, METH_VARARGS, NULL},
-	 { (char *)"delete_InkPoint", _wrap_delete_InkPoint, METH_VARARGS, NULL},
-	 { (char *)"InkPoint_swigregister", InkPoint_swigregister, METH_VARARGS, NULL},
-	 { (char *)"Ink_next_set", _wrap_Ink_next_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_next_get", _wrap_Ink_next_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_x_set", _wrap_Ink_x_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_x_get", _wrap_Ink_x_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_y_set", _wrap_Ink_y_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_y_get", _wrap_Ink_y_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_color_set", _wrap_Ink_color_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_color_get", _wrap_Ink_color_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_length_set", _wrap_Ink_length_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_length_get", _wrap_Ink_length_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_maxlength_set", _wrap_Ink_maxlength_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_maxlength_get", _wrap_Ink_maxlength_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_points_set", _wrap_Ink_points_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_points_get", _wrap_Ink_points_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_left_set", _wrap_Ink_left_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_left_get", _wrap_Ink_left_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_top_set", _wrap_Ink_top_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_top_get", _wrap_Ink_top_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_right_set", _wrap_Ink_right_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_right_get", _wrap_Ink_right_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_bottom_set", _wrap_Ink_bottom_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_bottom_get", _wrap_Ink_bottom_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_last_x_set", _wrap_Ink_last_x_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_last_x_get", _wrap_Ink_last_x_get, METH_VARARGS, NULL},
-	 { (char *)"Ink_last_y_set", _wrap_Ink_last_y_set, METH_VARARGS, NULL},
-	 { (char *)"Ink_last_y_get", _wrap_Ink_last_y_get, METH_VARARGS, NULL},
-	 { (char *)"new_Ink", _wrap_new_Ink, METH_VARARGS, NULL},
-	 { (char *)"delete_Ink", _wrap_delete_Ink, METH_VARARGS, NULL},
-	 { (char *)"Ink_swigregister", Ink_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_Micropolis", _wrap_new_Micropolis, METH_VARARGS, NULL},
 	 { (char *)"delete_Micropolis", _wrap_delete_Micropolis, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_init", _wrap_Micropolis_init, METH_VARARGS, NULL},
@@ -34233,6 +32465,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_LVAverage_get", _wrap_Micropolis_LVAverage_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CityTime_set", _wrap_Micropolis_CityTime_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CityTime_get", _wrap_Micropolis_CityTime_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityMonth_set", _wrap_Micropolis_CityMonth_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityMonth_get", _wrap_Micropolis_CityMonth_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYear_set", _wrap_Micropolis_CityYear_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYear_get", _wrap_Micropolis_CityYear_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_StartingYear_set", _wrap_Micropolis_StartingYear_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_StartingYear_get", _wrap_Micropolis_StartingYear_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_Map_set", _wrap_Micropolis_Map_set, METH_VARARGS, NULL},
@@ -34548,7 +32784,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_CreateIsland_get", _wrap_Micropolis_CreateIsland_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GenerateNewCity", _wrap_Micropolis_GenerateNewCity, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GenerateSomeCity", _wrap_Micropolis_GenerateSomeCity, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ERand", _wrap_Micropolis_ERand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GenerateMap", _wrap_Micropolis_GenerateMap, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_ClearMap", _wrap_Micropolis_ClearMap, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_ClearUnnatural", _wrap_Micropolis_ClearUnnatural, METH_VARARGS, NULL},
@@ -34685,6 +32920,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_nextRandom_get", _wrap_Micropolis_nextRandom_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_sim_rand", _wrap_Micropolis_sim_rand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_sim_srand", _wrap_Micropolis_sim_srand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand", _wrap_Micropolis_Rand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand16", _wrap_Micropolis_Rand16, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand16Signed", _wrap_Micropolis_Rand16Signed, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ERand", _wrap_Micropolis_ERand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RandomlySeedRand", _wrap_Micropolis_RandomlySeedRand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SeedRand", _wrap_Micropolis_SeedRand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_HomeDir_set", _wrap_Micropolis_HomeDir_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_HomeDir_get", _wrap_Micropolis_HomeDir_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_ResourceDir_set", _wrap_Micropolis_ResourceDir_set, METH_VARARGS, NULL},
@@ -34818,11 +33059,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_DoAirport", _wrap_Micropolis_DoAirport, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CoalSmoke", _wrap_Micropolis_CoalSmoke, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoMeltdown", _wrap_Micropolis_DoMeltdown, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Rand", _wrap_Micropolis_Rand, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Rand16", _wrap_Micropolis_Rand16, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Rand16Signed", _wrap_Micropolis_Rand16Signed, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_RandomlySeedRand", _wrap_Micropolis_RandomlySeedRand, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_SeedRand", _wrap_Micropolis_SeedRand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_spriteList_set", _wrap_Micropolis_spriteList_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_spriteList_get", _wrap_Micropolis_spriteList_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_spriteCount_set", _wrap_Micropolis_spriteCount_set, METH_VARARGS, NULL},
@@ -34930,26 +33166,15 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_DoStartScenario", _wrap_Micropolis_DoStartScenario, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DropFireBombs", _wrap_Micropolis_DropFireBombs, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_InitGame", _wrap_Micropolis_InitGame, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ReallyQuit", _wrap_Micropolis_ReallyQuit, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_Callback", _wrap_Micropolis_Callback, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoEarthquake", _wrap_Micropolis_DoEarthquake, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_StopEarthquake", _wrap_Micropolis_StopEarthquake, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_InvalidateEditors", _wrap_Micropolis_InvalidateEditors, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_InvalidateMaps", _wrap_Micropolis_InvalidateMaps, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ckalloc", _wrap_Micropolis_ckalloc, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ckfree", _wrap_Micropolis_ckfree, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ResetLastKeys", _wrap_Micropolis_ResetLastKeys, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_InitializeSound", _wrap_Micropolis_InitializeSound, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MakeSound", _wrap_Micropolis_MakeSound, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_StartMicropolisTimer", _wrap_Micropolis_StartMicropolisTimer, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_StopMicropolisTimer", _wrap_Micropolis_StopMicropolisTimer, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_getTile", _wrap_Micropolis_getTile, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_getMapBuffer", _wrap_Micropolis_getMapBuffer, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_NewInk", _wrap_Micropolis_NewInk, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_FreeInk", _wrap_Micropolis_FreeInk, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_StartInk", _wrap_Micropolis_StartInk, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_AddInk", _wrap_Micropolis_AddInk, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_EraseOverlay", _wrap_Micropolis_EraseOverlay, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_OverRide_set", _wrap_Micropolis_OverRide_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_OverRide_get", _wrap_Micropolis_OverRide_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_Expensive_set", _wrap_Micropolis_Expensive_set, METH_VARARGS, NULL},
@@ -34964,12 +33189,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_PendingX_get", _wrap_Micropolis_PendingX_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_PendingY_set", _wrap_Micropolis_PendingY_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_PendingY_get", _wrap_Micropolis_PendingY_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_OldInk_set", _wrap_Micropolis_OldInk_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_OldInk_get", _wrap_Micropolis_OldInk_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_overlay_set", _wrap_Micropolis_overlay_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_overlay_get", _wrap_Micropolis_overlay_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_track_ink_set", _wrap_Micropolis_track_ink_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_track_ink_get", _wrap_Micropolis_track_ink_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_last_x_set", _wrap_Micropolis_last_x_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_last_x_get", _wrap_Micropolis_last_x_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_last_y_set", _wrap_Micropolis_last_y_set, METH_VARARGS, NULL},
@@ -35021,13 +33240,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_seaport_tool", _wrap_Micropolis_seaport_tool, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_airport_tool", _wrap_Micropolis_airport_tool, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_network_tool", _wrap_Micropolis_network_tool, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ChalkTool", _wrap_Micropolis_ChalkTool, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ChalkStart", _wrap_Micropolis_ChalkStart, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ChalkTo", _wrap_Micropolis_ChalkTo, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_EraserTool", _wrap_Micropolis_EraserTool, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_InkInBox", _wrap_Micropolis_InkInBox, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_EraserStart", _wrap_Micropolis_EraserStart, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_EraserTo", _wrap_Micropolis_EraserTo, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_do_tool", _wrap_Micropolis_do_tool, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoTool", _wrap_Micropolis_DoTool, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_ToolDown", _wrap_Micropolis_ToolDown, METH_VARARGS, NULL},
@@ -35077,10 +33289,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_LastC_get", _wrap_Micropolis_LastC_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_LastI_set", _wrap_Micropolis_LastI_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_LastI_get", _wrap_Micropolis_LastI_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_CityDate_set", _wrap_Micropolis_CityDate_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_CityDate_get", _wrap_Micropolis_CityDate_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_dateStr_get", _wrap_Micropolis_dateStr_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_dateStr_set", _wrap_Micropolis_dateStr_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoUpdateHeads", _wrap_Micropolis_DoUpdateHeads, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_UpdateEditors", _wrap_Micropolis_UpdateEditors, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_UpdateMaps", _wrap_Micropolis_UpdateMaps, METH_VARARGS, NULL},
@@ -35096,6 +33304,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_SetDemand", _wrap_Micropolis_SetDemand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_updateOptions", _wrap_Micropolis_updateOptions, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_UpdateOptionsMenu", _wrap_Micropolis_UpdateOptionsMenu, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateUserInterface", _wrap_Micropolis_UpdateUserInterface, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_makeDollarDecimalStr", _wrap_Micropolis_makeDollarDecimalStr, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_Pause", _wrap_Micropolis_Pause, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_Resume", _wrap_Micropolis_Resume, METH_VARARGS, NULL},
@@ -35108,10 +33317,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_setAnyCityName", _wrap_Micropolis_setAnyCityName, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetYear", _wrap_Micropolis_SetYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CurrentYear", _wrap_Micropolis_CurrentYear, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DoSetMapState", _wrap_Micropolis_DoSetMapState, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoNewGame", _wrap_Micropolis_DoNewGame, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoGeneratedCityImage", _wrap_Micropolis_DoGeneratedCityImage, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DoPopUpMessage", _wrap_Micropolis_DoPopUpMessage, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoZone", _wrap_Micropolis_DoZone, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoHospChur", _wrap_Micropolis_DoHospChur, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetSmoke", _wrap_Micropolis_SetSmoke, METH_VARARGS, NULL},
@@ -35148,8 +33355,6 @@ static PyMethodDef SwigMethods[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static swig_type_info _swigt__p_Ink = {"_p_Ink", "Ink *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_InkPoint = {"_p_InkPoint", "InkPoint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Micropolis = {"_p_Micropolis", "Micropolis *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Resource = {"_p_Resource", "Resource *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SimSprite = {"_p_SimSprite", "SimSprite *", 0, 0, (void*)0, 0};
@@ -35169,8 +33374,6 @@ static swig_type_info _swigt__p_unsigned_short = {"_p_unsigned_short", "unsigned
 static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_Ink,
-  &_swigt__p_InkPoint,
   &_swigt__p_Micropolis,
   &_swigt__p_Resource,
   &_swigt__p_SimSprite,
@@ -35190,8 +33393,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_void,
 };
 
-static swig_cast_info _swigc__p_Ink[] = {  {&_swigt__p_Ink, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_InkPoint[] = {  {&_swigt__p_InkPoint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Micropolis[] = {  {&_swigt__p_Micropolis, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Resource[] = {  {&_swigt__p_Resource, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SimSprite[] = {  {&_swigt__p_SimSprite, 0, 0, 0},{0, 0, 0, 0}};
@@ -35211,8 +33412,6 @@ static swig_cast_info _swigc__p_unsigned_short[] = {  {&_swigt__p_unsigned_short
 static swig_cast_info _swigc__p_void[] = {  {&_swigt__p_void, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_Ink,
-  _swigc__p_InkPoint,
   _swigc__p_Micropolis,
   _swigc__p_Resource,
   _swigc__p_SimSprite,
@@ -35754,6 +33953,7 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "IS_INTEL",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "TRUE",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "FALSE",SWIG_From_int(static_cast< int >(0)));
+  SWIG_Python_SetConstant(d, "RANDOM_RANGE",SWIG_From_int(static_cast< int >(0xffff)));
   SWIG_Python_SetConstant(d, "SimWidth",SWIG_From_int(static_cast< int >(120)));
   SWIG_Python_SetConstant(d, "SimHeight",SWIG_From_int(static_cast< int >(100)));
   SWIG_Python_SetConstant(d, "WORLD_X",SWIG_From_int(static_cast< int >(120)));
@@ -36035,17 +34235,15 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "dozeState",SWIG_From_int(static_cast< int >(7)));
   SWIG_Python_SetConstant(d, "rrState",SWIG_From_int(static_cast< int >(8)));
   SWIG_Python_SetConstant(d, "roadState",SWIG_From_int(static_cast< int >(9)));
-  SWIG_Python_SetConstant(d, "chalkState",SWIG_From_int(static_cast< int >(10)));
-  SWIG_Python_SetConstant(d, "eraserState",SWIG_From_int(static_cast< int >(11)));
-  SWIG_Python_SetConstant(d, "stadiumState",SWIG_From_int(static_cast< int >(12)));
-  SWIG_Python_SetConstant(d, "parkState",SWIG_From_int(static_cast< int >(13)));
-  SWIG_Python_SetConstant(d, "seaportState",SWIG_From_int(static_cast< int >(14)));
-  SWIG_Python_SetConstant(d, "powerState",SWIG_From_int(static_cast< int >(15)));
-  SWIG_Python_SetConstant(d, "nuclearState",SWIG_From_int(static_cast< int >(16)));
-  SWIG_Python_SetConstant(d, "airportState",SWIG_From_int(static_cast< int >(17)));
-  SWIG_Python_SetConstant(d, "networkState",SWIG_From_int(static_cast< int >(18)));
+  SWIG_Python_SetConstant(d, "stadiumState",SWIG_From_int(static_cast< int >(10)));
+  SWIG_Python_SetConstant(d, "parkState",SWIG_From_int(static_cast< int >(11)));
+  SWIG_Python_SetConstant(d, "seaportState",SWIG_From_int(static_cast< int >(12)));
+  SWIG_Python_SetConstant(d, "powerState",SWIG_From_int(static_cast< int >(13)));
+  SWIG_Python_SetConstant(d, "nuclearState",SWIG_From_int(static_cast< int >(14)));
+  SWIG_Python_SetConstant(d, "airportState",SWIG_From_int(static_cast< int >(15)));
+  SWIG_Python_SetConstant(d, "networkState",SWIG_From_int(static_cast< int >(16)));
   SWIG_Python_SetConstant(d, "firstState",SWIG_From_int(static_cast< int >(0)));
-  SWIG_Python_SetConstant(d, "lastState",SWIG_From_int(static_cast< int >(18)));
+  SWIG_Python_SetConstant(d, "lastState",SWIG_From_int(static_cast< int >(16)));
   SWIG_Python_SetConstant(d, "STATE_CMD",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "STATE_TILES",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "STATE_OVERLAYS",SWIG_From_int(static_cast< int >(2)));
@@ -36062,6 +34260,5 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_toolSize",Swig_var_Micropolis_toolSize_get, Swig_var_Micropolis_toolSize_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_toolOffset",Swig_var_Micropolis_toolOffset_get, Swig_var_Micropolis_toolOffset_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_toolColors",Swig_var_Micropolis_toolColors_get, Swig_var_Micropolis_toolColors_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_dateStr",Swig_var_Micropolis_dateStr_get, Swig_var_Micropolis_dateStr_set);
 }
 

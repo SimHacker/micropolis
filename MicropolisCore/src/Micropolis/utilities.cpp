@@ -171,12 +171,6 @@ void Micropolis::setSpeed(
 
   SimSpeed = speed;
 
-  if (speed == 0) {
-    StopMicropolisTimer();
-  } else {
-    StartMicropolisTimer();
-  }
-
   Callback(
     "UISetSpeed",
     "d", 
@@ -240,6 +234,8 @@ void Micropolis::setCityName(
 {
   char *cp = name;
 
+  // FIXME: This actually modifies the string passed in. Kinda gross. 
+
   while (*cp) {
 
     if (!isalnum(*cp)) {
@@ -281,17 +277,7 @@ void Micropolis::SetYear(
 
 int Micropolis::CurrentYear()
 {
-  return (CityTime/48 + StartingYear);
-}
-
-
-void Micropolis::DoSetMapState(
-  short state)
-{
-  Callback(
-    "UISetMapState",
-    "d",
-    (int)state);
+  return ((CityTime / 48) + StartingYear);
 }
 
 
@@ -309,16 +295,6 @@ void Micropolis::DoGeneratedCityImage(
   int score)
 {
   /* XXX: TODO: print city */
-}
-
-
-void Micropolis::DoPopUpMessage(
-  char *msg)
-{
-  Callback(
-    "UIPopUpMessage",
-    "s", 
-    msg);
 }
 
 

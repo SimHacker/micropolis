@@ -82,27 +82,27 @@ int PendingY;
 Quad Micropolis::CostOf[] = {
     100,    100,    100,    500,
       0,    500,      5,      1,
-     20,     10,      0,      0,
-   5000,     10,   3000,   3000,
-   5000,  10000,    100,      0,
+     20,     10,   5000,     10,
+   3000,   3000,   5000,  10000,
+    100,      0,
 };
 
 
 short Micropolis::toolSize[] = {
   3, 3, 3, 3,
   1, 3, 1, 1,
-  1, 1, 0, 0,
-  4, 1, 4, 4, 
-  4, 6, 1, 0,
+  1, 1, 4, 1, 
+  4, 4, 4, 6, 
+  1, 0,
 };
 
 
 short Micropolis::toolOffset[] = {
   1, 1, 1, 1,
   0, 1, 0, 0,
-  0, 0, 0, 0,
-  1, 0, 1, 1,
-  1, 1, 0, 0,
+  0, 0, 1, 0, 
+  1, 1, 1, 1, 
+  0, 0,
 };
 
 
@@ -117,8 +117,6 @@ Quad Micropolis::toolColors[] = {
  COLOR_LIGHTBROWN | (COLOR_LIGHTBROWN << 8),    /* dozeState */
  COLOR_DARKGRAY | (COLOR_OLIVE << 8),           /* rrState */
  COLOR_DARKGRAY | (COLOR_WHITE << 8),           /* roadState */
- COLOR_LIGHTGRAY | (COLOR_LIGHTGRAY << 8),      /* chalkState */
- COLOR_DARKGRAY | (COLOR_DARKGRAY << 8),        /* eraserState */
  COLOR_LIGHTGRAY | (COLOR_LIGHTGREEN << 8),     /* stadiumState */
  COLOR_LIGHTBROWN | (COLOR_LIGHTGREEN << 8),    /* parkState */
  COLOR_LIGHTGRAY | (COLOR_LIGHTBLUE << 8),      /* seaportState */
@@ -1661,150 +1659,6 @@ int Micropolis::network_tool(
 }
 
 
-int Micropolis::ChalkTool(
-  short x, 
-  short y, 
-  short color, 
-  short first)
-{
-  if (first) {
-    ChalkStart(x, y, color);
-  } else {
-    ChalkTo(x, y);
-  }
-
-  DidTool("Chlk", x, y);
-
-  return 1;
-}
-
-
-void Micropolis::ChalkStart(
-  int x, 
-  int y, 
-  int color)
-{
-  Ink *ink;
-  Ink **ip;
-
-  for (ip = &overlay; *ip != NULL; ip = &((*ip)->next)) ;
-
-  *ip = ink = NewInk();
-  ink->x = x; ink->y = y;
-  ink->color = color;
-  StartInk(ink, x, y);
-  track_ink = ink;
-  last_x = x;
-  last_y = y;
-}
-
-
-void Micropolis::ChalkTo(
-  int x, 
-  int y)
-{
-  AddInk(track_ink, x, y);
-  last_x = x;
-  last_y = y;
-}
-
-
-int Micropolis::EraserTool(
-  short x, 
-  short y, 
-  short first)
-{
-  if (first) {
-    EraserStart(x, y);
-  } else {
-    EraserTo(x, y);
-  }
-
-  DidTool("Eraser", x, y);
-
-  return 1;
-}
-
-
-int Micropolis::InkInBox(
-  Ink *ink, 
-  int left, 
-  int top, 
-  int right, 
-  int bottom)
-{
-  if ((left <= ink->right) &&
-      (right >= ink->left) &&
-      (top <= ink->bottom) &&
-      (bottom >= ink->top)) {
-    int x, y, lx, ly, i;
-
-    if (ink->length == 1) {
-      return 1;
-    }
-
-    x = ink->x;  y = ink->y;
-    for (i = 1; i < ink->length; i++) {
-      int ileft, iright, itop, ibottom;
-
-      lx = x; ly = y;
-      x += ink->points[i].x;  y += ink->points[i].y;
-      if (x < lx) { 
-        ileft = x; iright = lx;
-      } else { 
-        ileft = lx; 
-        iright = x;
-      }
-      if (y < ly) { 
-        itop = y; 
-        ibottom = ly; 
-      } else { 
-        itop = ly; 
-        ibottom = y; 
-      }
-      if ((left <= iright) &&
-          (right >= ileft) &&
-          (top <= ibottom) &&
-          (bottom >= itop)) {
-        return 1;
-      }
-    }
-  }
-
-  return 0;
-}
-
-
-void Micropolis::EraserStart(
-  int x, 
-  int y)
-{
-  EraserTo(x, y);
-}
-
-
-void Micropolis::EraserTo(
-  int x, 
-  int y)
-{
-  Ink **ip, *ink;
-
-  for (ip = &overlay; *ip != NULL;) {
-    ink = *ip;
-    if (InkInBox(ink, x - 8, y - 8, x + 8, y + 8)) {
-
-	  // TODO: Redraw views that contain this rectangle. 
-
-      *ip = ink->next;
-
-      FreeInk(ink);
-    } else {
-      ip = &((*ip)->next);
-    }
-  }
-}
-
-
 int Micropolis::do_tool(
   short state, 
   short x, 
@@ -1853,14 +1707,6 @@ int Micropolis::do_tool(
 
   case roadState:
     result = road_tool(x >>4, y >>4);
-    break;
-
-  case chalkState:
-    result = ChalkTool(x - 5, y + 11, COLOR_WHITE, first);
-    break;
-
-  case eraserState:
-    result = EraserTool(x, y, first);
     break;
 
   case stadiumState:
@@ -1974,87 +1820,75 @@ void Micropolis::ToolDrag(
   int x, y, dx, dy, adx, ady, lx, ly, dist;
   float i, step, tx, ty, dtx, dty, rx, ry;
 
-  // TODO: fix this
-  // ViewToPixelCoords(px, py, &x, &y);
   x = px;
   y = py;
 
   tool_x = x; 
   tool_y = y;
 
-  if ((tool == chalkState) ||
-      (tool == eraserState)) {
+  dist = toolSize[tool];
 
-    do_tool(tool, x, y, 0);
-    last_x = x; 
-	last_y = y;
+  x >>= 4; 
+  y >>= 4;
+  lx = last_x >> 4;
+  ly = last_y >> 4;
 
+  dx = x - lx;
+  dy = y - ly;
+
+  if ((dx == 0) && 
+      (dy == 0)) {
+    return;
+  }
+
+  adx = ABS(dx); 
+  ady = ABS(dy);
+
+  if (adx > ady) {
+    step = (float)0.3 / adx;
   } else {
+    step = (float)0.3 / ady;
+  }
 
-    dist = toolSize[tool];
+  rx = (float)(dx < 0 ? 1 : 0);
+  ry = (float)(dy < 0 ? 1 : 0);
 
-    x >>= 4; 
-	y >>= 4;
-    lx = last_x >> 4;
-    ly = last_y >> 4;
-
-    dx = x - lx;
-    dy = y - ly;
-
-    if ((dx == 0) && 
-		(dy == 0)) {
-      return;
-    }
-
-    adx = ABS(dx); 
-	ady = ABS(dy);
-
-    if (adx > ady) {
-      step = (float)0.3 / adx;
-    } else {
-      step = (float)0.3 / ady;
-    }
-
-    rx = (float)(dx < 0 ? 1 : 0);
-    ry = (float)(dy < 0 ? 1 : 0);
-
-    if (dist == 1) {
-      for (i = 0.0; i <= 1 + step; i += step) {
-        tx = (last_x >>4) + i * dx;
-        ty = (last_y >>4) + i * dy;
-        dtx = ABS(tx - lx);
-        dty = ABS(ty - ly);
-        if ((dtx >= 1) || 
-			(dty >= 1)) {
-          // fill in corners
-          if ((dtx >= 1) && 
-			  (dty >= 1)) {
-            if (dtx > dty) {
-              do_tool(tool, ((int)(tx + rx)) <<4, ly <<4, 0);
-            } else {
-              do_tool(tool, lx <<4, ((int)(ty + ry)) <<4, 0);
-            }
+  if (dist == 1) {
+    for (i = 0.0; i <= 1 + step; i += step) {
+      tx = (last_x >>4) + i * dx;
+      ty = (last_y >>4) + i * dy;
+      dtx = ABS(tx - lx);
+      dty = ABS(ty - ly);
+      if ((dtx >= 1) || 
+		  (dty >= 1)) {
+        // fill in corners
+        if ((dtx >= 1) && 
+            (dty >= 1)) {
+          if (dtx > dty) {
+            do_tool(tool, ((int)(tx + rx)) <<4, ly <<4, 0);
+          } else {
+            do_tool(tool, lx <<4, ((int)(ty + ry)) <<4, 0);
           }
-          lx = (int)(tx + rx);
-          ly = (int)(ty + ry);
-          do_tool(tool, lx <<4, ly <<4, 0);
         }
-      }
-    } else {
-      for (i = 0.0; i <= 1 + step; i += step) {
-        tx = (last_x >>4) + i * dx;
-        ty = (last_y >>4) + i * dy;
-        dtx = ABS(tx - lx);
-        dty = ABS(ty - ly);
         lx = (int)(tx + rx);
         ly = (int)(ty + ry);
         do_tool(tool, lx <<4, ly <<4, 0);
       }
     }
-
-    last_x = (lx <<4) + 8;
-    last_y = (ly <<4) + 8;
+  } else {
+    for (i = 0.0; i <= 1 + step; i += step) {
+      tx = (last_x >>4) + i * dx;
+      ty = (last_y >>4) + i * dy;
+      dtx = ABS(tx - lx);
+      dty = ABS(ty - ly);
+      lx = (int)(tx + rx);
+      ly = (int)(ty + ry);
+      do_tool(tool, lx <<4, ly <<4, 0);
+    }
   }
+
+  last_x = (lx <<4) + 8;
+  last_y = (ly <<4) + 8;
 
   sim_skip = 0; // update editors overlapping this one
   

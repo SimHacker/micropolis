@@ -54,6 +54,7 @@ MICROPOLIS_VERSION = _micropolis.MICROPOLIS_VERSION
 IS_INTEL = _micropolis.IS_INTEL
 TRUE = _micropolis.TRUE
 FALSE = _micropolis.FALSE
+RANDOM_RANGE = _micropolis.RANDOM_RANGE
 SimWidth = _micropolis.SimWidth
 SimHeight = _micropolis.SimHeight
 WORLD_X = _micropolis.WORLD_X
@@ -335,8 +336,6 @@ wireState = _micropolis.wireState
 dozeState = _micropolis.dozeState
 rrState = _micropolis.rrState
 roadState = _micropolis.roadState
-chalkState = _micropolis.chalkState
-eraserState = _micropolis.eraserState
 stadiumState = _micropolis.stadiumState
 parkState = _micropolis.parkState
 seaportState = _micropolis.seaportState
@@ -502,81 +501,6 @@ class SimSprite(_object):
 SimSprite_swigregister = _micropolis.SimSprite_swigregister
 SimSprite_swigregister(SimSprite)
 
-class InkPoint(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, InkPoint, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, InkPoint, name)
-    __repr__ = _swig_repr
-    __swig_setmethods__["x"] = _micropolis.InkPoint_x_set
-    __swig_getmethods__["x"] = _micropolis.InkPoint_x_get
-    if _newclass:x = _swig_property(_micropolis.InkPoint_x_get, _micropolis.InkPoint_x_set)
-    __swig_setmethods__["y"] = _micropolis.InkPoint_y_set
-    __swig_getmethods__["y"] = _micropolis.InkPoint_y_get
-    if _newclass:y = _swig_property(_micropolis.InkPoint_y_get, _micropolis.InkPoint_y_set)
-    def __init__(self, *args): 
-        this = _micropolis.new_InkPoint(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _micropolis.delete_InkPoint
-    __del__ = lambda self : None;
-InkPoint_swigregister = _micropolis.InkPoint_swigregister
-InkPoint_swigregister(InkPoint)
-
-class Ink(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, Ink, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, Ink, name)
-    __repr__ = _swig_repr
-    __swig_setmethods__["next"] = _micropolis.Ink_next_set
-    __swig_getmethods__["next"] = _micropolis.Ink_next_get
-    if _newclass:next = _swig_property(_micropolis.Ink_next_get, _micropolis.Ink_next_set)
-    __swig_setmethods__["x"] = _micropolis.Ink_x_set
-    __swig_getmethods__["x"] = _micropolis.Ink_x_get
-    if _newclass:x = _swig_property(_micropolis.Ink_x_get, _micropolis.Ink_x_set)
-    __swig_setmethods__["y"] = _micropolis.Ink_y_set
-    __swig_getmethods__["y"] = _micropolis.Ink_y_get
-    if _newclass:y = _swig_property(_micropolis.Ink_y_get, _micropolis.Ink_y_set)
-    __swig_setmethods__["color"] = _micropolis.Ink_color_set
-    __swig_getmethods__["color"] = _micropolis.Ink_color_get
-    if _newclass:color = _swig_property(_micropolis.Ink_color_get, _micropolis.Ink_color_set)
-    __swig_setmethods__["length"] = _micropolis.Ink_length_set
-    __swig_getmethods__["length"] = _micropolis.Ink_length_get
-    if _newclass:length = _swig_property(_micropolis.Ink_length_get, _micropolis.Ink_length_set)
-    __swig_setmethods__["maxlength"] = _micropolis.Ink_maxlength_set
-    __swig_getmethods__["maxlength"] = _micropolis.Ink_maxlength_get
-    if _newclass:maxlength = _swig_property(_micropolis.Ink_maxlength_get, _micropolis.Ink_maxlength_set)
-    __swig_setmethods__["points"] = _micropolis.Ink_points_set
-    __swig_getmethods__["points"] = _micropolis.Ink_points_get
-    if _newclass:points = _swig_property(_micropolis.Ink_points_get, _micropolis.Ink_points_set)
-    __swig_setmethods__["left"] = _micropolis.Ink_left_set
-    __swig_getmethods__["left"] = _micropolis.Ink_left_get
-    if _newclass:left = _swig_property(_micropolis.Ink_left_get, _micropolis.Ink_left_set)
-    __swig_setmethods__["top"] = _micropolis.Ink_top_set
-    __swig_getmethods__["top"] = _micropolis.Ink_top_get
-    if _newclass:top = _swig_property(_micropolis.Ink_top_get, _micropolis.Ink_top_set)
-    __swig_setmethods__["right"] = _micropolis.Ink_right_set
-    __swig_getmethods__["right"] = _micropolis.Ink_right_get
-    if _newclass:right = _swig_property(_micropolis.Ink_right_get, _micropolis.Ink_right_set)
-    __swig_setmethods__["bottom"] = _micropolis.Ink_bottom_set
-    __swig_getmethods__["bottom"] = _micropolis.Ink_bottom_get
-    if _newclass:bottom = _swig_property(_micropolis.Ink_bottom_get, _micropolis.Ink_bottom_set)
-    __swig_setmethods__["last_x"] = _micropolis.Ink_last_x_set
-    __swig_getmethods__["last_x"] = _micropolis.Ink_last_x_get
-    if _newclass:last_x = _swig_property(_micropolis.Ink_last_x_get, _micropolis.Ink_last_x_set)
-    __swig_setmethods__["last_y"] = _micropolis.Ink_last_y_set
-    __swig_getmethods__["last_y"] = _micropolis.Ink_last_y_get
-    if _newclass:last_y = _swig_property(_micropolis.Ink_last_y_get, _micropolis.Ink_last_y_set)
-    def __init__(self, *args): 
-        this = _micropolis.new_Ink(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _micropolis.delete_Ink
-    __del__ = lambda self : None;
-Ink_swigregister = _micropolis.Ink_swigregister
-Ink_swigregister(Ink)
-
 class Micropolis(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Micropolis, name, value)
@@ -684,6 +608,12 @@ class Micropolis(_object):
     __swig_setmethods__["CityTime"] = _micropolis.Micropolis_CityTime_set
     __swig_getmethods__["CityTime"] = _micropolis.Micropolis_CityTime_get
     if _newclass:CityTime = _swig_property(_micropolis.Micropolis_CityTime_get, _micropolis.Micropolis_CityTime_set)
+    __swig_setmethods__["CityMonth"] = _micropolis.Micropolis_CityMonth_set
+    __swig_getmethods__["CityMonth"] = _micropolis.Micropolis_CityMonth_get
+    if _newclass:CityMonth = _swig_property(_micropolis.Micropolis_CityMonth_get, _micropolis.Micropolis_CityMonth_set)
+    __swig_setmethods__["CityYear"] = _micropolis.Micropolis_CityYear_set
+    __swig_getmethods__["CityYear"] = _micropolis.Micropolis_CityYear_get
+    if _newclass:CityYear = _swig_property(_micropolis.Micropolis_CityYear_get, _micropolis.Micropolis_CityYear_set)
     __swig_setmethods__["StartingYear"] = _micropolis.Micropolis_StartingYear_set
     __swig_getmethods__["StartingYear"] = _micropolis.Micropolis_StartingYear_get
     if _newclass:StartingYear = _swig_property(_micropolis.Micropolis_StartingYear_get, _micropolis.Micropolis_StartingYear_set)
@@ -1124,7 +1054,6 @@ class Micropolis(_object):
     if _newclass:CreateIsland = _swig_property(_micropolis.Micropolis_CreateIsland_get, _micropolis.Micropolis_CreateIsland_set)
     def GenerateNewCity(*args): return _micropolis.Micropolis_GenerateNewCity(*args)
     def GenerateSomeCity(*args): return _micropolis.Micropolis_GenerateSomeCity(*args)
-    def ERand(*args): return _micropolis.Micropolis_ERand(*args)
     def GenerateMap(*args): return _micropolis.Micropolis_GenerateMap(*args)
     def ClearMap(*args): return _micropolis.Micropolis_ClearMap(*args)
     def ClearUnnatural(*args): return _micropolis.Micropolis_ClearUnnatural(*args)
@@ -1302,6 +1231,12 @@ class Micropolis(_object):
     if _newclass:nextRandom = _swig_property(_micropolis.Micropolis_nextRandom_get, _micropolis.Micropolis_nextRandom_set)
     def sim_rand(*args): return _micropolis.Micropolis_sim_rand(*args)
     def sim_srand(*args): return _micropolis.Micropolis_sim_srand(*args)
+    def Rand(*args): return _micropolis.Micropolis_Rand(*args)
+    def Rand16(*args): return _micropolis.Micropolis_Rand16(*args)
+    def Rand16Signed(*args): return _micropolis.Micropolis_Rand16Signed(*args)
+    def ERand(*args): return _micropolis.Micropolis_ERand(*args)
+    def RandomlySeedRand(*args): return _micropolis.Micropolis_RandomlySeedRand(*args)
+    def SeedRand(*args): return _micropolis.Micropolis_SeedRand(*args)
     __swig_setmethods__["HomeDir"] = _micropolis.Micropolis_HomeDir_set
     __swig_getmethods__["HomeDir"] = _micropolis.Micropolis_HomeDir_get
     if _newclass:HomeDir = _swig_property(_micropolis.Micropolis_HomeDir_get, _micropolis.Micropolis_HomeDir_set)
@@ -1477,11 +1412,6 @@ class Micropolis(_object):
     def DoAirport(*args): return _micropolis.Micropolis_DoAirport(*args)
     def CoalSmoke(*args): return _micropolis.Micropolis_CoalSmoke(*args)
     def DoMeltdown(*args): return _micropolis.Micropolis_DoMeltdown(*args)
-    def Rand(*args): return _micropolis.Micropolis_Rand(*args)
-    def Rand16(*args): return _micropolis.Micropolis_Rand16(*args)
-    def Rand16Signed(*args): return _micropolis.Micropolis_Rand16Signed(*args)
-    def RandomlySeedRand(*args): return _micropolis.Micropolis_RandomlySeedRand(*args)
-    def SeedRand(*args): return _micropolis.Micropolis_SeedRand(*args)
     __swig_setmethods__["spriteList"] = _micropolis.Micropolis_spriteList_set
     __swig_getmethods__["spriteList"] = _micropolis.Micropolis_spriteList_get
     if _newclass:spriteList = _swig_property(_micropolis.Micropolis_spriteList_get, _micropolis.Micropolis_spriteList_set)
@@ -1616,26 +1546,15 @@ class Micropolis(_object):
     def DoStartScenario(*args): return _micropolis.Micropolis_DoStartScenario(*args)
     def DropFireBombs(*args): return _micropolis.Micropolis_DropFireBombs(*args)
     def InitGame(*args): return _micropolis.Micropolis_InitGame(*args)
-    def ReallyQuit(*args): return _micropolis.Micropolis_ReallyQuit(*args)
     def Callback(*args): return _micropolis.Micropolis_Callback(*args)
     def DoEarthquake(*args): return _micropolis.Micropolis_DoEarthquake(*args)
     def StopEarthquake(*args): return _micropolis.Micropolis_StopEarthquake(*args)
     def InvalidateEditors(*args): return _micropolis.Micropolis_InvalidateEditors(*args)
     def InvalidateMaps(*args): return _micropolis.Micropolis_InvalidateMaps(*args)
-    def ckalloc(*args): return _micropolis.Micropolis_ckalloc(*args)
-    def ckfree(*args): return _micropolis.Micropolis_ckfree(*args)
-    def ResetLastKeys(*args): return _micropolis.Micropolis_ResetLastKeys(*args)
     def InitializeSound(*args): return _micropolis.Micropolis_InitializeSound(*args)
     def MakeSound(*args): return _micropolis.Micropolis_MakeSound(*args)
-    def StartMicropolisTimer(*args): return _micropolis.Micropolis_StartMicropolisTimer(*args)
-    def StopMicropolisTimer(*args): return _micropolis.Micropolis_StopMicropolisTimer(*args)
     def getTile(*args): return _micropolis.Micropolis_getTile(*args)
     def getMapBuffer(*args): return _micropolis.Micropolis_getMapBuffer(*args)
-    def NewInk(*args): return _micropolis.Micropolis_NewInk(*args)
-    def FreeInk(*args): return _micropolis.Micropolis_FreeInk(*args)
-    def StartInk(*args): return _micropolis.Micropolis_StartInk(*args)
-    def AddInk(*args): return _micropolis.Micropolis_AddInk(*args)
-    def EraseOverlay(*args): return _micropolis.Micropolis_EraseOverlay(*args)
     __swig_setmethods__["OverRide"] = _micropolis.Micropolis_OverRide_set
     __swig_getmethods__["OverRide"] = _micropolis.Micropolis_OverRide_get
     if _newclass:OverRide = _swig_property(_micropolis.Micropolis_OverRide_get, _micropolis.Micropolis_OverRide_set)
@@ -1657,15 +1576,6 @@ class Micropolis(_object):
     __swig_setmethods__["PendingY"] = _micropolis.Micropolis_PendingY_set
     __swig_getmethods__["PendingY"] = _micropolis.Micropolis_PendingY_get
     if _newclass:PendingY = _swig_property(_micropolis.Micropolis_PendingY_get, _micropolis.Micropolis_PendingY_set)
-    __swig_setmethods__["OldInk"] = _micropolis.Micropolis_OldInk_set
-    __swig_getmethods__["OldInk"] = _micropolis.Micropolis_OldInk_get
-    if _newclass:OldInk = _swig_property(_micropolis.Micropolis_OldInk_get, _micropolis.Micropolis_OldInk_set)
-    __swig_setmethods__["overlay"] = _micropolis.Micropolis_overlay_set
-    __swig_getmethods__["overlay"] = _micropolis.Micropolis_overlay_get
-    if _newclass:overlay = _swig_property(_micropolis.Micropolis_overlay_get, _micropolis.Micropolis_overlay_set)
-    __swig_setmethods__["track_ink"] = _micropolis.Micropolis_track_ink_set
-    __swig_getmethods__["track_ink"] = _micropolis.Micropolis_track_ink_get
-    if _newclass:track_ink = _swig_property(_micropolis.Micropolis_track_ink_get, _micropolis.Micropolis_track_ink_set)
     __swig_setmethods__["last_x"] = _micropolis.Micropolis_last_x_set
     __swig_getmethods__["last_x"] = _micropolis.Micropolis_last_x_get
     if _newclass:last_x = _swig_property(_micropolis.Micropolis_last_x_get, _micropolis.Micropolis_last_x_set)
@@ -1725,13 +1635,6 @@ class Micropolis(_object):
     def seaport_tool(*args): return _micropolis.Micropolis_seaport_tool(*args)
     def airport_tool(*args): return _micropolis.Micropolis_airport_tool(*args)
     def network_tool(*args): return _micropolis.Micropolis_network_tool(*args)
-    def ChalkTool(*args): return _micropolis.Micropolis_ChalkTool(*args)
-    def ChalkStart(*args): return _micropolis.Micropolis_ChalkStart(*args)
-    def ChalkTo(*args): return _micropolis.Micropolis_ChalkTo(*args)
-    def EraserTool(*args): return _micropolis.Micropolis_EraserTool(*args)
-    def InkInBox(*args): return _micropolis.Micropolis_InkInBox(*args)
-    def EraserStart(*args): return _micropolis.Micropolis_EraserStart(*args)
-    def EraserTo(*args): return _micropolis.Micropolis_EraserTo(*args)
     def do_tool(*args): return _micropolis.Micropolis_do_tool(*args)
     def DoTool(*args): return _micropolis.Micropolis_DoTool(*args)
     def ToolDown(*args): return _micropolis.Micropolis_ToolDown(*args)
@@ -1797,12 +1700,6 @@ class Micropolis(_object):
     __swig_setmethods__["LastI"] = _micropolis.Micropolis_LastI_set
     __swig_getmethods__["LastI"] = _micropolis.Micropolis_LastI_get
     if _newclass:LastI = _swig_property(_micropolis.Micropolis_LastI_get, _micropolis.Micropolis_LastI_set)
-    __swig_setmethods__["CityDate"] = _micropolis.Micropolis_CityDate_set
-    __swig_getmethods__["CityDate"] = _micropolis.Micropolis_CityDate_get
-    if _newclass:CityDate = _swig_property(_micropolis.Micropolis_CityDate_get, _micropolis.Micropolis_CityDate_set)
-    __swig_setmethods__["dateStr"] = _micropolis.Micropolis_dateStr_set
-    __swig_getmethods__["dateStr"] = _micropolis.Micropolis_dateStr_get
-    if _newclass:dateStr = _swig_property(_micropolis.Micropolis_dateStr_get, _micropolis.Micropolis_dateStr_set)
     def DoUpdateHeads(*args): return _micropolis.Micropolis_DoUpdateHeads(*args)
     def UpdateEditors(*args): return _micropolis.Micropolis_UpdateEditors(*args)
     def UpdateMaps(*args): return _micropolis.Micropolis_UpdateMaps(*args)
@@ -1818,6 +1715,7 @@ class Micropolis(_object):
     def SetDemand(*args): return _micropolis.Micropolis_SetDemand(*args)
     def updateOptions(*args): return _micropolis.Micropolis_updateOptions(*args)
     def UpdateOptionsMenu(*args): return _micropolis.Micropolis_UpdateOptionsMenu(*args)
+    def UpdateUserInterface(*args): return _micropolis.Micropolis_UpdateUserInterface(*args)
     def makeDollarDecimalStr(*args): return _micropolis.Micropolis_makeDollarDecimalStr(*args)
     def Pause(*args): return _micropolis.Micropolis_Pause(*args)
     def Resume(*args): return _micropolis.Micropolis_Resume(*args)
@@ -1830,10 +1728,8 @@ class Micropolis(_object):
     def setAnyCityName(*args): return _micropolis.Micropolis_setAnyCityName(*args)
     def SetYear(*args): return _micropolis.Micropolis_SetYear(*args)
     def CurrentYear(*args): return _micropolis.Micropolis_CurrentYear(*args)
-    def DoSetMapState(*args): return _micropolis.Micropolis_DoSetMapState(*args)
     def DoNewGame(*args): return _micropolis.Micropolis_DoNewGame(*args)
     def DoGeneratedCityImage(*args): return _micropolis.Micropolis_DoGeneratedCityImage(*args)
-    def DoPopUpMessage(*args): return _micropolis.Micropolis_DoPopUpMessage(*args)
     def DoZone(*args): return _micropolis.Micropolis_DoZone(*args)
     def DoHospChur(*args): return _micropolis.Micropolis_DoHospChur(*args)
     def SetSmoke(*args): return _micropolis.Micropolis_SetSmoke(*args)

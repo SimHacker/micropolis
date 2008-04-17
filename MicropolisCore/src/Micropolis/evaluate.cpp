@@ -582,26 +582,10 @@ void Micropolis::SetEvaluation(
   evalTitle = title;
 
   Callback(
-    "UISetEvaluation",
-	"ssssssssssssssssss",
-    changed, 
-    score,
-    ps0, 
-    ps1, 
-    ps2, 
-    ps3,
-    pv0, 
-    pv1, 
-    pv2, 
-    pv3,
-    pop, 
-    delta, 
-    assessed_dollars,
-    cityclass, 
-    citylevel,
-    goodyes, 
-    goodno, 
-    title);
+	"UIUpdate",
+	"s",
+	"evaluation");
+
 }
 
 

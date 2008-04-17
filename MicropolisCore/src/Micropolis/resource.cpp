@@ -88,7 +88,7 @@ char **Micropolis::GetResource(
     r = r->next;
   }
 
-  r = (Resource *)ckalloc(sizeof(Resource));
+  r = (Resource *)NewPtr(sizeof(Resource));
 
   r->name[0] = name[0];
   r->name[1] = name[1];
@@ -108,7 +108,7 @@ char **Micropolis::GetResource(
 
   if ((stat(fname, &st) < 0) ||
       ((r->size = st.st_size) == 0) ||
-      ((r->buf = (char *)ckalloc(r->size)) == NULL) ||
+      ((r->buf = (char *)NewPtr(r->size)) == NULL) ||
       ((fp = fopen(fname, "r")) == NULL) ||
       ((int)fread(r->buf, sizeof(char), r->size, fp) != r->size)) {
     if (fp) {
@@ -186,7 +186,7 @@ void Micropolis::GetIndString(
     char *buf;
 
     st = 
-      (StringTable *)ckalloc(sizeof (StringTable));
+      (StringTable *)NewPtr(sizeof (StringTable));
     st->id = id;
     h = GetResource("stri", id);
     size = ResourceSize(h);
@@ -201,7 +201,7 @@ void Micropolis::GetIndString(
 
     st->lines = lines;
     st->strings = 
-      (char **)ckalloc(size * sizeof(char *));
+      (char **)NewPtr(size * sizeof(char *));
 
     for (i=0; i<lines; i++) {
       st->strings[i] = buf;

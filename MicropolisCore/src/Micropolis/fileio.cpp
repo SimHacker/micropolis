@@ -381,7 +381,7 @@ void Micropolis::LoadScenario(
   char *fname = NULL;
 
   if (CityFileName != NULL) {
-    ckfree(CityFileName);
+    FreePtr(CityFileName);
     CityFileName = NULL;
   }
 
@@ -494,11 +494,11 @@ int Micropolis::LoadCity(
 
   if (loadFile(filename)) {
     if (CityFileName != NULL) {
-      ckfree(CityFileName);
+      FreePtr(CityFileName);
     }
 
     CityFileName = 
-      (char *)ckalloc((int)strlen(filename) + 1);
+      (char *)NewPtr((int)strlen(filename) + 1);
 
     strcpy(CityFileName, filename);
 
@@ -515,7 +515,7 @@ int Micropolis::LoadCity(
     }
 
     filename = 
-      (char *)ckalloc((int)strlen(cp) + 1);
+      (char *)NewPtr((int)strlen(cp) + 1);
 
     strcpy(filename, cp);
 
@@ -612,14 +612,13 @@ void Micropolis::DidntSaveCity(
 void Micropolis::SaveCityAs(
   char *filename)
 {
-  char msg[256];
   char *cp;
 
   if (CityFileName != NULL) {
-    ckfree(CityFileName);
+    FreePtr(CityFileName);
   }
   CityFileName = 
-    (char *)ckalloc((int)strlen(filename) + 1);
+    (char *)NewPtr((int)strlen(filename) + 1);
   strcpy(CityFileName, filename);
 
   if (saveFile(CityFileName)) {
@@ -637,7 +636,7 @@ void Micropolis::SaveCityAs(
     }
 
     filename = 
-      (char *)ckalloc((int)strlen(cp) + 1);
+      (char *)NewPtr((int)strlen(cp) + 1);
 
     strcpy(filename, cp);
 
@@ -647,9 +646,11 @@ void Micropolis::SaveCityAs(
 
   } else {
 
+    char msg[2048];
+
     sprintf(
       msg, 
-      "Unable to save the city to the file named \"%s\". %s",
+      "Unable to save the city to the file named \"%1024s\". %512s",
       CityFileName ? CityFileName : "(null)",
       errno ? strerror(errno) : "");
 

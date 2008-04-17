@@ -77,8 +77,10 @@ void Micropolis::InitWillStuff()
 
   RandomlySeedRand();
   InitGraphMax();
+  DestroyAllSprites();
+
   RoadEffect = 32;
-  PoliceEffect = 1000;          /*added*/
+  PoliceEffect = 1000;          /* added */
   FireEffect = 1000;
   CityScore = 500;
   CityPop = -1;
@@ -89,16 +91,12 @@ void Micropolis::InitWillStuff()
   LastR = LastC = LastI = -999999;
   OverRide = 0;
   PendingTool = -1;
-
   MesNum = 0;
   MessagePort = 0;
   RoadFund = 0;
   PoliceFund = 0;
   FireFund = 0;
   ValveFlag = 1;
-
-  DestroyAllSprites();
-
   DisasterEvent = 0;
   TaxFlag = 0;
 
@@ -129,7 +127,6 @@ void Micropolis::InitWillStuff()
     }
   }
 
-  ResetLastKeys();
   DoNewGame();
   DoUpdateHeads();
 }
