@@ -70,6 +70,9 @@
 ////////////////////////////////////////////////////////////////////////
 
 
+// TODO: These strings should not be hard coded into the core simulator.
+// The scripting language should look them up in translation files. 
+
 char *Micropolis::cityClassStr[6] = {
   "VILLAGE", "TOWN", "CITY", "CAPITAL", "METROPOLIS", "MEGALOPOLIS"
 };
@@ -91,6 +94,7 @@ char *Micropolis::probStr[10] = {
 void Micropolis::CityEvaluation()
 {
   EvalValid = 0;
+
   if (TotalPop) {
     GetAssValue();
     DoPopNum();
@@ -102,6 +106,7 @@ void Micropolis::CityEvaluation()
     EvalInit();
     ChangeEval();
   }
+
   EvalValid = 1;
 }
 
@@ -276,7 +281,7 @@ short Micropolis::AverageTrf()
   TrafficAverage = 
     (short)((TrfTotal / count) * 2.4);
 
-  return(TrafficAverage);
+  return TrafficAverage;
 }
 
 
@@ -301,7 +306,7 @@ short Micropolis::GetUnemployment()
     b = 255;
   }
 
-  return (b);
+  return b;
 }
 
 
@@ -312,9 +317,9 @@ short Micropolis::GetFire()
 
   z = FirePop * 5;
   if (z > 255) {
-    return(255);
+    return 255;
   } else {
-    return(z);
+    return z;
   }
 }
 
@@ -423,7 +428,7 @@ void Micropolis::GetScore()
     z = 1000;
   }
 
-  if (z < 0 ) {
+  if (z < 0) {
     z = 0;
   }
 
@@ -454,6 +459,8 @@ void Micropolis::DoVotes()
 
 
 /* comefrom: DoSubUpDate scoreDoer */
+// TODO: The scripting language should pull these raw values out and format them,
+// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::doScoreCard()
 {
   char title[256];
@@ -533,6 +540,8 @@ void Micropolis::scoreDoer()
 }
 
 
+// TODO: The scripting language should pull these raw values out and format them,
+// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::SetEvaluation(
   const char *changed, 
   const char *score,

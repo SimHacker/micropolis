@@ -1205,9 +1205,6 @@ class Micropolis(_object):
     __swig_setmethods__["sim_paused_speed"] = _micropolis.Micropolis_sim_paused_speed_set
     __swig_getmethods__["sim_paused_speed"] = _micropolis.Micropolis_sim_paused_speed_get
     if _newclass:sim_paused_speed = _swig_property(_micropolis.Micropolis_sim_paused_speed_get, _micropolis.Micropolis_sim_paused_speed_set)
-    __swig_setmethods__["sim_tty"] = _micropolis.Micropolis_sim_tty_set
-    __swig_getmethods__["sim_tty"] = _micropolis.Micropolis_sim_tty_get
-    if _newclass:sim_tty = _swig_property(_micropolis.Micropolis_sim_tty_get, _micropolis.Micropolis_sim_tty_set)
     __swig_setmethods__["heat_steps"] = _micropolis.Micropolis_heat_steps_set
     __swig_getmethods__["heat_steps"] = _micropolis.Micropolis_heat_steps_get
     if _newclass:heat_steps = _swig_property(_micropolis.Micropolis_heat_steps_get, _micropolis.Micropolis_heat_steps_set)
@@ -1220,39 +1217,12 @@ class Micropolis(_object):
     __swig_setmethods__["heat_wrap"] = _micropolis.Micropolis_heat_wrap_set
     __swig_getmethods__["heat_wrap"] = _micropolis.Micropolis_heat_wrap_get
     if _newclass:heat_wrap = _swig_property(_micropolis.Micropolis_heat_wrap_get, _micropolis.Micropolis_heat_wrap_set)
-    __swig_setmethods__["start_time"] = _micropolis.Micropolis_start_time_set
-    __swig_getmethods__["start_time"] = _micropolis.Micropolis_start_time_get
-    if _newclass:start_time = _swig_property(_micropolis.Micropolis_start_time_get, _micropolis.Micropolis_start_time_set)
-    __swig_setmethods__["now_time"] = _micropolis.Micropolis_now_time_set
-    __swig_getmethods__["now_time"] = _micropolis.Micropolis_now_time_get
-    if _newclass:now_time = _swig_property(_micropolis.Micropolis_now_time_get, _micropolis.Micropolis_now_time_set)
-    __swig_setmethods__["beat_time"] = _micropolis.Micropolis_beat_time_set
-    __swig_getmethods__["beat_time"] = _micropolis.Micropolis_beat_time_get
-    if _newclass:beat_time = _swig_property(_micropolis.Micropolis_beat_time_get, _micropolis.Micropolis_beat_time_set)
-    __swig_setmethods__["last_now_time"] = _micropolis.Micropolis_last_now_time_set
-    __swig_getmethods__["last_now_time"] = _micropolis.Micropolis_last_now_time_get
-    if _newclass:last_now_time = _swig_property(_micropolis.Micropolis_last_now_time_get, _micropolis.Micropolis_last_now_time_set)
     __swig_setmethods__["CityFileName"] = _micropolis.Micropolis_CityFileName_set
     __swig_getmethods__["CityFileName"] = _micropolis.Micropolis_CityFileName_get
     if _newclass:CityFileName = _swig_property(_micropolis.Micropolis_CityFileName_get, _micropolis.Micropolis_CityFileName_set)
-    __swig_setmethods__["Startup"] = _micropolis.Micropolis_Startup_set
-    __swig_getmethods__["Startup"] = _micropolis.Micropolis_Startup_get
-    if _newclass:Startup = _swig_property(_micropolis.Micropolis_Startup_get, _micropolis.Micropolis_Startup_set)
-    __swig_setmethods__["StartupGameLevel"] = _micropolis.Micropolis_StartupGameLevel_set
-    __swig_getmethods__["StartupGameLevel"] = _micropolis.Micropolis_StartupGameLevel_get
-    if _newclass:StartupGameLevel = _swig_property(_micropolis.Micropolis_StartupGameLevel_get, _micropolis.Micropolis_StartupGameLevel_set)
-    __swig_setmethods__["StartupName"] = _micropolis.Micropolis_StartupName_set
-    __swig_getmethods__["StartupName"] = _micropolis.Micropolis_StartupName_get
-    if _newclass:StartupName = _swig_property(_micropolis.Micropolis_StartupName_get, _micropolis.Micropolis_StartupName_set)
-    __swig_setmethods__["WireMode"] = _micropolis.Micropolis_WireMode_set
-    __swig_getmethods__["WireMode"] = _micropolis.Micropolis_WireMode_get
-    if _newclass:WireMode = _swig_property(_micropolis.Micropolis_WireMode_get, _micropolis.Micropolis_WireMode_set)
     __swig_setmethods__["MultiPlayerMode"] = _micropolis.Micropolis_MultiPlayerMode_set
     __swig_getmethods__["MultiPlayerMode"] = _micropolis.Micropolis_MultiPlayerMode_get
     if _newclass:MultiPlayerMode = _swig_property(_micropolis.Micropolis_MultiPlayerMode_get, _micropolis.Micropolis_MultiPlayerMode_set)
-    __swig_setmethods__["SugarMode"] = _micropolis.Micropolis_SugarMode_set
-    __swig_getmethods__["SugarMode"] = _micropolis.Micropolis_SugarMode_get
-    if _newclass:SugarMode = _swig_property(_micropolis.Micropolis_SugarMode_get, _micropolis.Micropolis_SugarMode_set)
     __swig_setmethods__["TilesAnimated"] = _micropolis.Micropolis_TilesAnimated_set
     __swig_getmethods__["TilesAnimated"] = _micropolis.Micropolis_TilesAnimated_get
     if _newclass:TilesAnimated = _swig_property(_micropolis.Micropolis_TilesAnimated_get, _micropolis.Micropolis_TilesAnimated_set)
@@ -1265,30 +1235,12 @@ class Micropolis(_object):
     __swig_setmethods__["DoNotices"] = _micropolis.Micropolis_DoNotices_set
     __swig_getmethods__["DoNotices"] = _micropolis.Micropolis_DoNotices_get
     if _newclass:DoNotices = _swig_property(_micropolis.Micropolis_DoNotices_get, _micropolis.Micropolis_DoNotices_set)
-    __swig_setmethods__["Displays"] = _micropolis.Micropolis_Displays_set
-    __swig_getmethods__["Displays"] = _micropolis.Micropolis_Displays_get
-    if _newclass:Displays = _swig_property(_micropolis.Micropolis_Displays_get, _micropolis.Micropolis_Displays_set)
-    __swig_setmethods__["FirstDisplay"] = _micropolis.Micropolis_FirstDisplay_set
-    __swig_getmethods__["FirstDisplay"] = _micropolis.Micropolis_FirstDisplay_get
-    if _newclass:FirstDisplay = _swig_property(_micropolis.Micropolis_FirstDisplay_get, _micropolis.Micropolis_FirstDisplay_set)
-    __swig_setmethods__["ExitReturn"] = _micropolis.Micropolis_ExitReturn_set
-    __swig_getmethods__["ExitReturn"] = _micropolis.Micropolis_ExitReturn_get
-    if _newclass:ExitReturn = _swig_property(_micropolis.Micropolis_ExitReturn_get, _micropolis.Micropolis_ExitReturn_set)
-    __swig_setmethods__["triedToBailOnce"] = _micropolis.Micropolis_triedToBailOnce_set
-    __swig_getmethods__["triedToBailOnce"] = _micropolis.Micropolis_triedToBailOnce_get
-    if _newclass:triedToBailOnce = _swig_property(_micropolis.Micropolis_triedToBailOnce_get, _micropolis.Micropolis_triedToBailOnce_set)
     __swig_setmethods__["CellSrc"] = _micropolis.Micropolis_CellSrc_set
     __swig_getmethods__["CellSrc"] = _micropolis.Micropolis_CellSrc_get
     if _newclass:CellSrc = _swig_property(_micropolis.Micropolis_CellSrc_get, _micropolis.Micropolis_CellSrc_set)
     __swig_setmethods__["CellDst"] = _micropolis.Micropolis_CellDst_set
     __swig_getmethods__["CellDst"] = _micropolis.Micropolis_CellDst_get
     if _newclass:CellDst = _swig_property(_micropolis.Micropolis_CellDst_get, _micropolis.Micropolis_CellDst_set)
-    __swig_setmethods__["UpdateDelayed"] = _micropolis.Micropolis_UpdateDelayed_set
-    __swig_getmethods__["UpdateDelayed"] = _micropolis.Micropolis_UpdateDelayed_get
-    if _newclass:UpdateDelayed = _swig_property(_micropolis.Micropolis_UpdateDelayed_get, _micropolis.Micropolis_UpdateDelayed_set)
-    __swig_setmethods__["tkMustExit"] = _micropolis.Micropolis_tkMustExit_set
-    __swig_getmethods__["tkMustExit"] = _micropolis.Micropolis_tkMustExit_get
-    if _newclass:tkMustExit = _swig_property(_micropolis.Micropolis_tkMustExit_get, _micropolis.Micropolis_tkMustExit_set)
     def env_init(*args): return _micropolis.Micropolis_env_init(*args)
     def sim_init(*args): return _micropolis.Micropolis_sim_init(*args)
     def sim_update(*args): return _micropolis.Micropolis_sim_update(*args)
@@ -1658,7 +1610,6 @@ class Micropolis(_object):
     def TickCount(*args): return _micropolis.Micropolis_TickCount(*args)
     def NewPtr(*args): return _micropolis.Micropolis_NewPtr(*args)
     def FreePtr(*args): return _micropolis.Micropolis_FreePtr(*args)
-    def GameStarted(*args): return _micropolis.Micropolis_GameStarted(*args)
     def DoPlayNewCity(*args): return _micropolis.Micropolis_DoPlayNewCity(*args)
     def DoReallyStartGame(*args): return _micropolis.Micropolis_DoReallyStartGame(*args)
     def DoStartLoad(*args): return _micropolis.Micropolis_DoStartLoad(*args)
@@ -1673,7 +1624,6 @@ class Micropolis(_object):
     def InvalidateMaps(*args): return _micropolis.Micropolis_InvalidateMaps(*args)
     def ckalloc(*args): return _micropolis.Micropolis_ckalloc(*args)
     def ckfree(*args): return _micropolis.Micropolis_ckfree(*args)
-    def Kick(*args): return _micropolis.Micropolis_Kick(*args)
     def ResetLastKeys(*args): return _micropolis.Micropolis_ResetLastKeys(*args)
     def InitializeSound(*args): return _micropolis.Micropolis_InitializeSound(*args)
     def MakeSound(*args): return _micropolis.Micropolis_MakeSound(*args)

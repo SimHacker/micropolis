@@ -74,7 +74,12 @@
 void Micropolis::DoDisasters()
 { 
   /* Chance of disasters at lev 0 1 2 */
-  static short DisChance[3] = { 10*48, 5*48, 60}; 
+  static short DisChance[3] = { 
+	  10 * 48, // Level 0 
+	  5 * 48,  // Level 1
+	  60 // Level 2
+  }; 
+
   register short x;
 
   if (FloodCnt) {
@@ -187,6 +192,8 @@ void Micropolis::ScenarioDisaster()
 void Micropolis::MakeMeltdown()
 {
   short x, y;
+
+  // TODO: Randomize which nuke plant melts down.
 
   for (x = 0; x < (WORLD_X - 1); x++) {
     for (y = 0; y < (WORLD_Y - 1); y++) {

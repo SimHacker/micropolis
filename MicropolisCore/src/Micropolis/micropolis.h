@@ -853,6 +853,8 @@ class Micropolis {
   void destroyMapArrays();
 
 #ifdef SWIG
+// This tells SWIG that minValResult, maxValResult are output parameters,
+// which will be returned in a tuple of length two. 
 %apply short *OUTPUT { short *minValResult };
 %apply short *OUTPUT { short *maxValResult };
 #endif
@@ -1333,8 +1335,6 @@ class Micropolis {
 
   int sim_paused_speed;
 
-  int sim_tty;
-
   int heat_steps;
 
   int heat_flow;
@@ -1343,27 +1343,9 @@ class Micropolis {
 
   int heat_wrap;
 
-  struct timeval start_time;
-
-  struct timeval  now_time;
-
-  struct timeval beat_time;
-
-  struct timeval last_now_time;
-
   char *CityFileName;
 
-  int Startup;
-
-  int StartupGameLevel;
-
-  char *StartupName;
-
-  int WireMode;
-
   int MultiPlayerMode;
-
-  int SugarMode;
 
   int TilesAnimated;
 
@@ -1373,21 +1355,9 @@ class Micropolis {
 
   int DoNotices;
 
-  char *Displays;
-
-  char *FirstDisplay;
-
-  int ExitReturn;
-
-  int triedToBailOnce;
-
   short *CellSrc;
 
   short *CellDst;
-
-  int UpdateDelayed;
-
-  int tkMustExit;
 
 
   void env_init();
@@ -2065,8 +2035,6 @@ class Micropolis {
   void FreePtr(
     void *data);
 
-  void GameStarted();
-
   void DoPlayNewCity();
 
   void DoReallyStartGame();
@@ -2100,8 +2068,6 @@ class Micropolis {
 
   void ckfree(
     void *data);
-
-  void Kick();
 
   void ResetLastKeys();
 

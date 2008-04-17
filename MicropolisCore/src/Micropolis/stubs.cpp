@@ -111,48 +111,6 @@ void Micropolis::FreePtr(
 }
 
 
-void Micropolis::GameStarted()
-{
-  InvalidateMaps();
-  InvalidateEditors();
-
-#ifndef _WIN32
-  gettimeofday(&start_time, NULL);
-#endif
-
-  switch (Startup) {
-
-  case -2: /* Load a city */
-    if (LoadCity(StartupName)) {
-      DoStartLoad();
-      StartupName = NULL;
-      break;
-    }
-    StartupName = NULL;
-    // Fall through into...
-
-  case -1:
-    if (StartupName != NULL) {
-      setCityName(StartupName);
-      StartupName = NULL;
-    } else {
-      setCityName("NowHere");
-    }
-    DoPlayNewCity();
-    break;
-
-  case 0:
-    DoReallyStartGame();
-    break;
-
-  default: /* scenario number */
-    DoStartScenario(Startup);
-    break;
-
-  }
-}
-
-
 void Micropolis::DoPlayNewCity()
 {
   Callback("UIPlayNewCity", "");
@@ -286,15 +244,6 @@ void Micropolis::ckfree(
   void *data)
 {
   free(data);
-}
-
-
-void Micropolis::Kick()
-{
-  if (!UpdateDelayed) {
-    UpdateDelayed = 1;
-    //Tk_DoWhenIdle(DelayedUpdate, (ClientData) NULL);
-  }
 }
 
 

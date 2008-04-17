@@ -223,7 +223,7 @@ int Micropolis::LayDoze(
     break;
   }
 
-  Spend(1);                     /* Costs $1.00....*/
+  Spend(1);                     /* Costs $1.00.... */
 
   return 1;
 }

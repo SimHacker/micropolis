@@ -123,7 +123,6 @@ void Micropolis::UpdateHeads()
 void Micropolis::UpdateFunds()
 {
   MustUpdateFunds = 1;
-//  Kick();
 }
 
 

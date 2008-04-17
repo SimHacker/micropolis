@@ -695,6 +695,7 @@ class PieMenu(gtk.Window):
         self.connect("show", self.handle_show)
 
         d.connect("expose_event", self.handle_expose)
+        d.connect("size_allocate", self.size_allocate)
         d.connect("motion_notify_event", self.handle_motion_notify_event)
         d.connect("button_press_event", self.handle_button_press_event)
         d.connect("button_release_event", self.handle_button_release_event)
@@ -827,10 +828,14 @@ class PieMenu(gtk.Window):
         self.center_x = 0
         self.center_y = 0
         self.pinned = False
-        self.win_x = None
-        self.win_y = None
-        self.win_width = None
-        self.win_height = None
+        self.win_x = 0
+        self.win_y = 0
+        self.win_width = 1
+        self.win_height = 1
+        self.x = 0
+        self.y = 0
+        self.width = 1
+        self.height = 1
 
 
     def add_item(self, item):
@@ -903,7 +908,7 @@ class PieMenu(gtk.Window):
 
     def layout(self, rect, context, pcontext, playout):
 
-        #print "PieMenu layout", self, rect, context, pcontext, playout
+        print "PieMenu layout", self, rect, context, pcontext, playout
 
         # Just the visible items.
         visible_items = []
@@ -1404,6 +1409,7 @@ class PieMenu(gtk.Window):
         # Done laying out the pie menu. (Whew!)
 
         # FIXME: Just do this after popup?
+        print "AFTER LAYOUT", "WIDTH", self.width, "HEIGHT", self.height
         self.shapeWindow()
 
 
@@ -1482,15 +1488,35 @@ class PieMenu(gtk.Window):
 
         if ((x != self.win_x) or
             (y != self.win_y)):
-            self.move(x, y)
-            self.win_x = x
-            self.win_y = y
+            self.changePosition(x, y)
 
         if ((width != self.win_width) or
             (height != self.win_height)):
-            self.resize(width, height)
-            self.win_width = width
-            self.win_height = height
+            self.changeSize(width, height)
+
+
+    def changePosition(self, x, y):
+
+        x = int(x)
+        y = int(y)
+
+        self.win_x = x
+        self.win_y = y
+
+        self.move(x, y)
+
+
+    def changeSize(self, width, height):
+
+        print "CHANGESIZE", width, height
+
+        width = int(width)
+        height = int(height)
+
+        self.win_width = width
+        self.win_height = height
+
+        self.resize(width, height)
 
 
     def popup(self, pin_x, pin_y, pinned=False):
@@ -1507,7 +1533,8 @@ class PieMenu(gtk.Window):
             self.footer = self.neutral_description
 
         self.invalidate()
-        self.queue_draw()
+        self.shapeWindow()
+        self.redraw()
         
         self.show_all()
 
@@ -1571,7 +1598,14 @@ class PieMenu(gtk.Window):
         pcontext = widget.create_pango_context()
         playout = pango.Layout(pcontext)
 
+        self.shapeWindow()
+
         rect = self.get_allocation()
+
+        print "DRAW", "allocation", rect.width, rect.height, "win", self.win_width, self.win_height
+
+        #rect.width = int(self.win_width)
+        #rect.height = int(self.win_height)
 
         self.validate(rect, context, pcontext, playout)
 
@@ -1956,6 +1990,10 @@ class PieMenu(gtk.Window):
         self.layoutSelf()
 
 
+    def redraw(self):
+        self.d.queue_draw()
+
+
     def trackMouseMove(self, cx, cy):
 
         cur_x = self.cur_x
@@ -2129,7 +2167,7 @@ class PieMenu(gtk.Window):
                 it.enter_time = now
                 it.handleHilite()
 
-            self.queue_draw()
+            self.redraw()
 
             self.handleItemChanged()
 
@@ -2228,8 +2266,16 @@ class PieMenu(gtk.Window):
 
 
     def handle_show(self, widget):
-        #print "handle_show", self, widget
-        pass
+
+        print "handle_show", self, widget
+
+
+    def handle_size_allocate(self, widget, rect):
+
+        r = self.get_allocation()
+        print "handle_size_allocate", self, "rect", rect.width, rect.height, "allocation", r.width, r.height
+
+        self.d.queue_draw()
 
 
     def handle_motion_notify_event(self, widget, event, *args):
@@ -2298,12 +2344,6 @@ class PieMenuDrawingArea(gtk.DrawingArea):
     def __init__(self):
 
         gtk.DrawingArea.__init__(self)
-
-
-    def handle_expose(self, widget, event):
-
-        self.parent.handle_expose(widget, event)
-        return False
 
 
 ########################################################################
@@ -2696,7 +2736,7 @@ def main():
     target.setPie(root_pie)
     #target.setPie(compass_pie)
 
-    win.resize(300, 300)
+    win.changeSize(300, 300)
 
     win.show_all()
 

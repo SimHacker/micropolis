@@ -345,6 +345,8 @@ class MicropolisBottomControlPanel(MicropolisControlPanel):
                 historyMin, historyMax = getHistoryRange(
                     historyType,
                     historyScale)
+                historyMin = 0
+                historyMax = 500
                 historyRange = historyMax - historyMin
                 if historyRange == 0:
                     historyRange = 1

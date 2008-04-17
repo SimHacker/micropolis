@@ -464,10 +464,6 @@ void Micropolis::LoadScenario(
   setSpeed(3);
   CityTax = 7;
 
-#ifndef _WIN32
-  gettimeofday(&start_time, NULL);
-#endif
-
   load_file(
     fname, 
     ResourceDir);
@@ -481,7 +477,6 @@ void Micropolis::LoadScenario(
   DoInitialEval = 0;
   DoSimInit();
   DidLoadScenario();
-  Kick();
 }
 
 
@@ -525,10 +520,6 @@ int Micropolis::LoadCity(
     strcpy(filename, cp);
 
     setCityName(filename);
-
-#ifndef _WIN32
-    gettimeofday(&start_time, NULL);
-#endif
 
     InvalidateMaps();
     InvalidateEditors();
