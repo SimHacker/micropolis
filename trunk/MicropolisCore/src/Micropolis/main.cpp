@@ -112,8 +112,6 @@ void Micropolis::sim_init()
   sim_paused = 0;
   sim_loops = 0;
   InitSimLoad = 2;
-  tkMustExit = 0;
-  ExitReturn = 0;
 
   InitializeSound();
   initMapArrays();
@@ -125,7 +123,7 @@ void Micropolis::sim_init()
   ClearMap();
   InitWillStuff();
   SetFunds(5000);
-  SetGameLevelFunds(StartupGameLevel);
+  SetGameLevelFunds(0);
   setSpeed(0);
   setSkips(0);
 }

@@ -211,6 +211,11 @@ noMoney:
 
   if ((!autoBudget) || fromMenu) {
 
+    // FIXME: This might have blocked on the Mac, but now it's asynchronous.
+	// Make sure the stuff we do just afterwards is intended to be done immediately
+	// and is not supposed to wait until after the budget dialog is dismissed. 
+    // Otherwise don't do it after this and arrange for it to happen when the 
+    // modal budget dialog is dismissed. 
     ShowBudgetWindowAndStartWaiting();
 
     if (!fromMenu) {
@@ -269,6 +274,8 @@ void Micropolis::drawBudgetWindow()
 }
 
 
+// TODO: The scripting language should pull these raw values out and format them,
+// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::ReallyDrawBudgetWindow()
 {
   short cashFlow, cashFlow2;
@@ -320,6 +327,8 @@ void Micropolis::drawCurrPercents()
 }
 
 
+// TODO: The scripting language should pull these raw values out and format them,
+// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::ReallyDrawCurrPercents()
 {
   char num[256];
@@ -355,6 +364,8 @@ void Micropolis::ReallyDrawCurrPercents()
 }
 
 
+// TODO: The scripting language should pull these raw values out and format them,
+// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::UpdateBudgetWindow()
 {
   if (MustDrawCurrPercents) {

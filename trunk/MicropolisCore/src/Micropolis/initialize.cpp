@@ -95,7 +95,6 @@ void Micropolis::InitWillStuff()
   RoadFund = 0;
   PoliceFund = 0;
   FireFund = 0;
-  UpdateDelayed = 0;
   ValveFlag = 1;
 
   DestroyAllSprites();

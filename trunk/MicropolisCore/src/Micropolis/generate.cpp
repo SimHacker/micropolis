@@ -84,10 +84,6 @@ void Micropolis::GenerateSomeCity(
     CityFileName = NULL;
   }
 
-#ifndef _WIN32
-  gettimeofday(&start_time, NULL);
-#endif
-
   GenerateMap(r);
   ScenarioID = 0;
   CityTime = 0;
@@ -103,8 +99,6 @@ void Micropolis::GenerateSomeCity(
   DoSimInit();
 
   Callback("UIDidGenerateNewCity", "");
-
-  Kick();
 }
 
 

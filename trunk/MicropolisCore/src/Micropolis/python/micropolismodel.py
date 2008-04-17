@@ -426,9 +426,9 @@ def CreateTestEngine():
 
     # Testing...
 
-    engine.setSkips(100)
+    #engine.setSkips(100)
     #engine.setSkips(10)
-    #engine.setSkips(0)
+    engine.setSkips(0)
     engine.SetFunds(1000000000)
 
     return engine

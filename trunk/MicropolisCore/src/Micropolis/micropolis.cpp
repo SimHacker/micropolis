@@ -585,9 +585,6 @@ void Micropolis::init()
   // int sim_paused_speed;
   sim_paused_speed = 3;
 
-  // int sim_tty;
-  sim_tty = 0;
-
   // int heat_steps;
   heat_steps = 0;
 
@@ -600,38 +597,11 @@ void Micropolis::init()
   // int heat_wrap;
   heat_wrap = 3;
 
-  // struct timeval start_time;
-  memset(&start_time, 0, sizeof(timeval));
-
-  // struct timeval  now_time;
-  memset(&now_time, 0, sizeof(timeval));
-
-  // struct timeval beat_time;
-  memset(&beat_time, 0, sizeof(timeval));
-
-  // struct timeval last_now_time;
-  memset(&last_now_time, 0, sizeof(timeval));
-
   // char *CityFileName;
   CityFileName = NULL;
 
-  // int Startup;
-  Startup = 0;
-
-  // int StartupGameLevel;
-  StartupGameLevel = 0;
-
-  // char *StartupName;
-  StartupName = NULL;
-
-  // int WireMode;
-  WireMode = 0;
-
   // int MultiPlayerMode;
   MultiPlayerMode = 0;
-
-  // int SugarMode;
-  SugarMode = 0;
 
   // int TilesAnimated;
   TilesAnimated = 0;
@@ -645,29 +615,11 @@ void Micropolis::init()
   // int DoNotices;
   DoNotices = 1;
 
-  // char *Displays;
-  Displays = NULL;
-
-  // char *FirstDisplay;
-  FirstDisplay = NULL;
-
-  // int ExitReturn;
-  ExitReturn = 0;
-
-  // int triedToBailOnce;
-  triedToBailOnce = 0;
-
   // short *CellSrc;
   CellSrc = NULL;
 
   // short *CellDst;
   CellDst = NULL;
-
-  // int UpdateDelayed;
-  UpdateDelayed = 0;
-
-  // int tkMustExit;
-  tkMustExit = 0;
 
 
   ////////////////////////////////////////////////////////////////////////
