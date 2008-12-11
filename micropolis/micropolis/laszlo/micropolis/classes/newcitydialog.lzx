@@ -1,0 +1,44 @@
+<library>
+
+
+    <!-- New City Dialog -->
+
+
+    <class name="newcitydialog">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>New City Dialog</text>
+
+
+<!--
+
+New City
+  Load City
+  Generate City
+  Scenario
+    Dullsville 1900, Boredom
+    San Francsico 1906, Earthquake
+    Hamburg 1944, Bombing
+    Bern 1965, Traffic
+    Tokyo 1957, Monster Attack
+    Rio de Janeiro 2047, Coastal Flooding
+    Boston 2010, Nuclear Meltdown
+    Detroit 1972, Crime
+  Next/Previous
+  City Name
+  Description
+  Difficulty: Easy, Medium, Hard
+  Play
+
+-->
+
+
+    </class>
+
+
+</library>

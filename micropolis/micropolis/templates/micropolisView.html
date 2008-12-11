@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+>
+
+    <head>
+        <title>Micropolis Eduverse</title>
+        <link
+	    rel="Stylesheet" 
+	    href="/static/css/micropolis.css"
+	/>
+        <script
+	    type="text/javascript" 
+	    src="/static/javascript/jquery.js"
+	></script>
+        <script
+	    type="text/javascript" 
+	    src="/static/javascript/micropolis.js"
+	></script>
+	<script
+	    type="text/javascript"
+	    src="/lps-4.2b3/lps/includes/embed-compressed.js" 
+	></script>
+    </head>
+
+    <body>
+
+        <h1><a href="/index">Micropolis Eduverse</a></h1>
+
+	<?python
+	    from micropolisengine import WORLD_X, WORLD_Y
+	    
+	    rowStep = max(1, int(rows / 2))
+	    colStep = max(1, int(cols / 2))
+
+	    right = WORLD_X - cols
+	    bottom = WORLD_Y - rows
+	    
+	    colLeft = max(0, min(col - colStep, right))
+	    colRight = max(0, min(col + colStep, right))
+	    rowUp = max(0, min(row - rowStep, bottom))
+	    rowDown = max(0, min(row + rowStep, bottom))
+
+	?>
+
+<py:if test="False">
+	<table>
+	    <tr>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colLeft != col) and (rowUp != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colLeft}&amp;row=${rowUp}&amp;cols=${cols}&amp;rows=${rows}"
+		    >NW</a>
+		</td>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(rowUp != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${col}&amp;row=${rowUp}&amp;cols=${cols}&amp;rows=${rows}"
+		    >N</a>
+		</td>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colRight != col) and (rowUp != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colRight}&amp;row=${rowUp}&amp;cols=${cols}&amp;rows=${rows}"
+		    >NE</a>
+		</td>
+	    </tr>
+	    <tr>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colLeft != col)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colLeft}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+		    >W</a>
+		</td>
+		<td align="center" valign="middle">
+		    <img
+		        src="/micropolisGetTilesImage?col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+			border="0"
+		    />
+		</td>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colRight != col)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colRight}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+		    >E</a>
+		</td>
+	    </tr>
+	    <tr>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colLeft != col) and (rowDown != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colLeft}&amp;row=${rowDown}&amp;cols=${cols}&amp;rows=${rows}"
+		    >SW</a>
+		</td>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(rowDown != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${col}&amp;row=${rowDown}&amp;cols=${cols}&amp;rows=${rows}"
+		    >S</a>
+		</td>
+		<td align="center" valign="middle">
+		    <a
+		        py:if="(colRight != col) and (rowDown != row)"
+			class="width:100%; height:100%"
+			href="/micropolisView?ticks=${ticks}&amp;col=${colRight}&amp;row=${rowDown}&amp;cols=${cols}&amp;rows=${rows}"
+		    >SE</a>
+		</td>
+	    </tr>
+	</table>
+</py:if>
+
+	<script><![CDATA[
+	    lz.embed.swf({
+		url: '/lps-4.2b3/micropolis/micropolis/micropolis.lzx?lzt=swf&lzr=swf8',
+		bgcolor: '#ffffff',
+		width: '100%',
+		height: '400',
+		id: 'lzapp',
+		accessible: 'false'
+	    });
+	]]></script>
+
+
+	<hr/>
+
+	<p>
+	    <b>Disasters:</b>
+	    <span
+	        py:for="disaster in ['Earthquake', 'Flood', 'Meltdown', 'BailOut']"
+	    >
+	        <a href="/micropolisView?command=Disaster&amp;disaster=${disaster}&amp;ticks=${ticks}&amp;col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}">${disaster}</a>
+	    </span>
+	    <br/>
+
+	    <b>Tax Rate:</b>
+	    <span
+	        py:for="rate in range(0, 21)"
+	    >
+	        <b
+		    py:strip="rate != m.CityTax"
+		>
+		    <a
+			py:strip="rate == m.CityTax"
+			href="/micropolisView?command=SetTaxRate&amp;rate=${str(rate)}&amp;ticks=${ticks}&amp;col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+		    >${str(rate)}%</a>
+		</b>
+	    </span>
+	    <br/>
+
+	    <b>Ticks:</b>
+	    <span
+	        py:for="t in [1, 10, 100, 1000, 10000]"
+	    >
+	        <b
+		    py:strip="t != ticks"
+		>
+		    <a
+			py:strip="t == ticks"
+			href="/micropolisView?ticks=${t}&amp;col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}">${t}</a>
+	        </b>
+	    </span>
+	    <br/>
+
+	    <b><a
+		href="/micropolisView?ticks=${ticks}&amp;col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+	    >Simulate</a></b>
+	    <br/>
+
+	</p>
+
+	<hr/>
+
+	<p>
+            <b>Micropolis City Evaluation, ${m.getCityDate()}</b>
+	    <br/>
+            Score: ${m.evalScore},
+	    Changed: ${m.evalChanged},
+	    Class: ${m.evalCityClass},
+	    Level: ${m.evalCityLevel},
+	    Tax Rate: ${m.CityTax}%
+	    <br/>
+            Demand:
+	    Residential: ${m.LastR},
+	    Commercial: ${m.LastR},
+	    Industrial: ${m.LastI}
+	    <br/>
+            Funds: $$${m.TotalFunds},
+	    Assessed: ${m.evalAssessedDollars},
+	    Population: ${m.evalPop},
+	    Delta: ${m.evalDelta}
+	    <br/>
+            Survey: Is the Mayor doing a good job? 
+	    Yes: ${m.evalGoodYes}, No: ${m.evalGoodNo}<br/>
+            Problems:
+	    ${m.evalPs0}
+	    ${m.evalPv0}
+	    ${m.evalPs1}
+	    ${m.evalPv1}
+	    ${m.evalPs2}
+	    ${m.evalPv2}
+	    ${m.evalPs3}
+	    ${m.evalPv3}
+	</p>
+
+	<hr/>
+
+	<p>
+	  <b>Load city:</b>
+	  <span
+	      py:for="cityName in sorted(CityNames.keys())"
+	  >
+	      <a href="/micropolisView?command=LoadCity&amp;city=${cityName}&amp;ticks=${ticks}&amp;col=${col}&amp;row=${rowUp}&amp;cols=${cols}&amp;rows=${rows}
+">${cityName}</a>
+	  </span>
+	</p>
+
+	<hr/>
+
+	<center>
+	    To support this project, please:
+	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick"/>
+		<input type="hidden" name="business" value="dhopkins@DonHopkins.com"/>
+		<input type="hidden" name="no_note" value="1"/>
+		<input type="hidden" name="currency_code" value="USD"/>
+		<input type="hidden" name="tax" value="0"/>
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!"/>
+	    </form>
+	</center>
+
+    </body>
+
+</html>

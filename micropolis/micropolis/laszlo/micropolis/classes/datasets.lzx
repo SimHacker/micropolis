@@ -1,0 +1,165 @@
+<library>
+
+
+    <!-- Datasets -->
+
+
+    <dataset name="ds_session"
+        autoload="false"
+    />
+
+
+    <dataset name="ds_tick"
+        autoload="false"
+	querytype="post"
+    />
+
+
+    <dataset name="ds_disasters">
+	<disasters>
+	    <disaster
+		name="Monster"
+	    ><command name="disaster" disaster="monster"/></disaster>
+	    <disaster
+		name="Fire"
+	    ><command name="disaster" disaster="fire"/></disaster>
+	    <disaster
+		name="Flood"
+	    ><command name="disaster" disaster="flood"/></disaster>
+	    <disaster
+		name="Meltdown"
+	    ><command name="disaster" disaster="meltdown"/></disaster>
+	    <disaster
+		name="Tornado"
+	    ><command name="disaster" disaster="tornado"/></disaster>
+	    <disaster
+		name="Earthquake"
+	    ><command name="disaster" disaster="earthquake"/></disaster>
+	</disasters>
+    </dataset>
+
+
+    <dataset name="ds_scenarios">
+	<scenarios>
+	    <scenario
+		name="Dullsville"
+		year="1900"
+		description="Boredom"
+	    ><command name="loadScenario" scenario="1"/></scenario>
+	    <scenario
+		name="San Francsico"
+		year="1906"
+		description="Earthquake"
+	    ><command name="loadScenario" scenario="2"/></scenario>
+	    <scenario
+		name="Hamburg"
+		year="1944"
+		description="Bombing"
+	    ><command name="loadScenario" scenario="3"/></scenario>
+	    <scenario
+		name="Bern"
+		year="1965"
+		description="Traffic"
+	    ><command name="loadScenario" scenario="4"/></scenario>
+	    <scenario
+		name="Tokyo"
+		year="1957"
+		description="Monster Attack"
+	    ><command name="loadScenario" scenario="5"/></scenario>
+	    <scenario
+		name="Detroit"
+		year="1972"
+		description="Crime"
+	    ><command name="loadScenario" scenario="6"/></scenario>
+	    <scenario
+		name="Boston"
+		year="2010"
+		description="Nuclear Meltdown"
+	    ><command name="loadScenario" scenario="7"/></scenario>
+	    <scenario
+		name="Rio de Janeiro"
+		year="2047"
+		description="Coastal Flooding"
+	    ><command name="loadScenario" scenario="8"/></scenario>
+        </scenarios>
+    </dataset>
+
+    <dataset name="ds_cities">
+	<cities>
+	    <city
+		name="about"
+	    ><command name="loadCity" city="about"/></city>
+	    <city
+		name="badnews"
+	    ><command name="loadCity" city="badnews"/></city>
+	    <city
+		name="bluebird"
+	    ><command name="loadCity" city="bluebird"/></city>
+	    <city
+		name="bruce"
+	    ><command name="loadCity" city="bruce"/></city>
+	    <city
+		name="deadwood"
+	    ><command name="loadCity" city="deadwood"/></city>
+	    <city
+		name="finnigan"
+	    ><command name="loadCity" city="finnigan"/></city>
+	    <city
+		name="freds"
+	    ><command name="loadCity" city="freds"/></city>
+	    <city
+		name="haight"
+	    ><command name="loadCity" city="haight"/></city>
+	    <city
+		name="happisle"
+	    ><command name="loadCity" city="happisle"/></city>
+	    <city
+		name="joffburg"
+	    ><command name="loadCity" city="joffburg"/></city>
+	    <city
+		name="kamakura"
+	    ><command name="loadCity" city="kamakura"/></city>
+	    <city
+		name="kobe"
+	    ><command name="loadCity" city="kobe"/></city>
+	    <city
+		name="kowloon"
+	    ><command name="loadCity" city="kowloon"/></city>
+	    <city
+		name="kyoto"
+	    ><command name="loadCity" city="kyoto"/></city>
+	    <city
+		name="linecity"
+	    ><command name="loadCity" city="linecity"/></city>
+	    <city
+		name="med_isle"
+	    ><command name="loadCity" cit="medy_isle"/></city>
+	    <city
+		name="ndulls"
+	    ><command name="loadCity" city="ndulls"/></city>
+	    <city
+		name="neatmap"
+	    ><command name="loadCity" city="neatmap"/></city>
+	    <city
+		name="radial"
+	    ><command name="loadCity" city="radial"/></city>
+	    <city
+		name="senri"
+	    ><command name="loadCity" city="senri"/></city>
+	    <city
+		name="southpac"
+	    ><command name="loadCity" city="southpac"/></city>
+	    <city
+		name="splats"
+	    ><command name="loadCity" city="splats"/></city>
+	    <city
+		name="wetcity"
+	    ><command name="loadCity" city="wetcity"/></city>
+	    <city
+		name="yokohama"
+	    ><command name="loadCity" city="yokohama"/></city>
+	</cities>
+    </dataset>
+
+
+</library>

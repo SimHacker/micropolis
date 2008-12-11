@@ -1,0 +1,23 @@
+<library>
+
+
+    <!-- Includes -->
+
+
+    <include href="resources.lzx"/>
+    <include href="datasets.lzx"/>
+    <include href="global.lzx"/>
+    <include href="tile.lzx"/>
+    <include href="tileview.lzx"/>
+    <include href="budgetview.lzx"/>
+    <include href="controlpanel.lzx"/>
+    <include href="editorview.lzx"/>
+    <include href="evaluationview.lzx"/>
+    <include href="graphview.lzx"/>
+    <include href="mapview.lzx"/>
+    <include href="messageview.lzx"/>
+    <include href="newcitydialog.lzx"/>
+    <include href="appview.lzx"/>
+
+
+</library>

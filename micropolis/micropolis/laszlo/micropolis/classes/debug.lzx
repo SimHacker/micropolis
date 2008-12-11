@@ -1,0 +1,18 @@
+<library>
+
+
+  <!-- Debugging -->
+
+
+  <debug x="150" y="500" width="700" height="300"/>
+
+
+  <method event="oninit"><![CDATA[
+      if (Debug) {
+        Debug.showInternalProperties = true;
+      } // if
+    ]]>
+  </method>
+
+
+</library>

@@ -1,0 +1,46 @@
+<library>
+
+
+    <!-- Map View -->
+
+
+    <class name="mapview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Map View</text>
+
+
+<!--
+
+Map
+  Scroll Rectangle
+  Legend
+  Overlays
+    Zones
+      All
+      Residential
+      Commercial
+      Industrial
+      Transportation
+    Overlays
+      Population Density
+      Rate of Growth
+      Land Value
+      Crime Rate
+      Pollution Density
+      Traffic Density
+      Fire Coverage
+      Police Coverage
+
+-->
+
+
+    </class>
+
+
+</library>

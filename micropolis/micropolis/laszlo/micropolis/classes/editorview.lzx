@@ -1,0 +1,46 @@
+<library>
+
+
+    <!-- Editor View -->
+
+
+    <class name="editorview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Editor View</text>
+
+
+<!--
+
+Editor
+  Editing Tool (cursor)
+  Scrolling
+  Zooming
+  Pie Menu (tool selection)
+  Palette (hide/show)
+    Residential
+    Commercial
+    Industrial
+    Query Zone
+    Fire Department
+    Police Department
+    Road
+    Railroad
+    Stadium
+    Seaport
+    Airport
+    Nuclear Power
+    Coal Power
+
+-->
+
+
+    </class>
+
+
+</library>

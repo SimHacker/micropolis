@@ -1,0 +1,10 @@
+<canvas
+    title="Micropolis"
+    width="100%"
+    height="1000%"
+    proxied="false"
+>
+
+    <include href="../classes/main.lzx"/>
+
+</canvas>

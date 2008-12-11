@@ -1,0 +1,19 @@
+<library>
+
+
+    <!-- Main -->
+
+
+    <include href="includes.lzx"/>
+
+
+    <!-- Applicaton View -->
+
+    <appview id="gApp"
+	name="app"
+	width="${parent.width}"
+	height="${parent.height}"
+    />
+
+
+</library>

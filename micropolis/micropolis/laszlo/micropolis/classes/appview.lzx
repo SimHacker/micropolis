@@ -1,0 +1,226 @@
+<library>
+
+
+    <!-- Application View -->
+
+
+    <class name="appview">
+
+
+	<attribute name="tickDelay" value="10"/>
+	<attribute name="tickActive" value="false"/>
+	<attribute name="tickDelegate" value="null"/>
+	<attribute name="ticks" value="0"/>
+	<attribute name="tickers" value="[]"/>
+	<attribute name="panelWidth" value="200"/>
+	<attribute name="commandQueue" value="[]"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    ds_session.setAttribute("src", "/micropolisSessionStart");
+	    ds_session.doRequest();
+	  ]]>
+	</handler>
+
+
+	<method name="startSession" args="sessionID"><![CDATA[
+	    this.setAttribute("sessionID", sessionID);
+	    this.tickStart();
+	  ]]>
+	</method>
+
+
+	<method name="addTicker" args="ticker"><![CDATA[
+	    this.tickers.push(ticker);
+	  ]]>
+	</method>
+
+
+	<method name="removeTicker" args="ticker"><![CDATA[
+	    // TODO
+	  ]]>
+	</method>
+
+
+	<method name="tickStart"><![CDATA[
+	    if (this.tickActive) {
+		Debug.write("tickStart already started");
+	        return;
+	    }
+	    if (!this.tickDelegate) {
+		this.tickDelegate = new lz.Delegate(this, 'tick');
+	    }
+	    var t = lz.Timer.addTimer(this.tickDelegate, this.tickDelay);
+	    this.tickActive = true;
+	    //Debug.write("tickStart", this, this.tickDelegate, this.tickDelay, t);
+	  ]]>
+        </method>
+
+
+	<method name="tickContinue" args="soon"><![CDATA[
+	    //Debug.write("tickContinue", soon);
+	    if (!this.tickDelegate) {
+		this.tickDelegate = new lz.Delegate(this, 'tick');
+	    }
+	    lz.Timer.resetTimer(this.tickDelegate, soon ? this.tickDelaySoon : this.tickDelay);
+	    this.tickActive = true;
+	    //Debug.write("tickContinue");
+	  ]]>
+	</method>
+
+
+	<method name="tickStop"><![CDATA[
+	    if (!this.tickActive) {
+		return;
+	    }
+	    lz.Timer.removeTimer(this.tickDelegate);
+	  ]]>
+        </method>
+
+
+	<method name="tick"><![CDATA[
+	    var tickers = this.tickers;
+	    var i;
+	    var n;
+	    for (i = 0; i < n; i++) {
+		tickers[i].tick();
+	    }
+
+	    var body = "";
+	    body += "<tick>";
+	    
+	    var commandQueue = this.commandQueue;
+	    this.commandQueue = [];
+	    if (commandQueue && commandQueue.length > 0) {
+		body += "<commands>";
+		var command;
+		var n = commandQueue.length;
+		var i;
+		for (i = 0; i < n; i++) {
+		    var command = commandQueue[i];
+		    body += command;
+		}
+		body += "</commands>";
+	    }
+
+	    body += "</tick>";
+
+	    Debug.write(body);
+
+
+	    var ref =
+		gApp.ticks;
+
+	    var params = {
+		col: tv.viewCol,
+		row: tv.viewRow,
+		cols: tv.viewCols,
+		rows: tv.viewRows,
+		ref: ref,
+		sessionID: this.sessionID,
+		rand: Math.random(),
+		body: body
+	    };
+
+	    ds_tick.setAttribute("src", "/micropolisTick");
+	    ds_tick.setQueryParams(params);
+	    ds_tick.setAttribute("querytype", "post");
+	    ds_tick.doRequest();
+
+	    this.ticks++;
+
+	  ]]>
+        </method>
+
+
+	<method name="sendCommand" args="command"><![CDATA[
+	    Debug.write("sendCommand", command);
+	    this.commandQueue.push(command);
+	  ]]>
+	</method>
+
+
+	<node id="sessionData"
+	    datapath="ds_session:/session"
+	>
+
+
+	    <attribute name="sessionID" type="string" value="$path{'@sessionID'}"/>
+
+
+	    <handler name="ondata"><![CDATA[
+		Debug.write("ds_session", this.sessionID);
+		classroot.startSession(this.sessionID);
+	      ]]>
+	    </handler>
+
+
+	</node>
+
+
+	<node id="tickData"
+	    datapath="ds_tick:/tick"
+	>
+
+
+	    <attribute name="ref" value="$path{'@ref'}"/>
+
+
+	    <handler name="ondata"><![CDATA[
+		//Debug.write("ds_tick");
+	        classroot.tickContinue(false);
+	      ]]>
+	    </handler>
+
+
+	</node>
+
+
+	<view
+	    x="0"
+	    y="0"
+	    width="${classroot.panelWidth}"
+	    height="${parent.height}"
+	>
+
+	    <view
+		width="${parent.width - 20}"
+	    >
+
+		<simplelayout axis="y"/>
+
+		<controlpanel
+		    width="${parent.width}"
+		/>
+
+		<evaluationview
+		    width="${parent.width}"
+		/>
+
+		<graphview
+		    width="${parent.width}"
+		/>
+
+		<mapview
+		    width="${parent.width}"
+		/>
+
+	    </view>
+
+	    <vscrollbar/>
+
+	</view>
+
+        <tileview id="tv"
+	    x="${parent.panelWidth}"
+	    y="0"
+	    width="${parent.width - parent.panelWidth}"
+	    height="${parent.height}"
+	    bgcolor="0xCC7F66"
+        />
+
+
+    </class>
+
+
+</library>
