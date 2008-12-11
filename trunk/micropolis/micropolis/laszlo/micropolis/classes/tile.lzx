@@ -1,0 +1,14 @@
+<library>
+
+
+    <!-- Tile -->
+
+
+    <class name="tile"
+	resource="micropolis_tiles_rsrc"
+    >
+
+    </class>
+
+
+</library>

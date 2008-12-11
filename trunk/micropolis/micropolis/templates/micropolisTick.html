@@ -1,0 +1,23 @@
+<tick
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    ref="${ref}"
+>
+    <tiles
+        py:if="tiles"
+	col="${col}"
+	row="${row}"
+	cols="${cols}"
+	rows="${rows}"
+	format="${format}"
+    >${tiles}</tiles>
+    <messages
+        py:if="messages"
+    >
+        <message
+            py:for="message in messages"
+	    name="${message['name']}"
+	>${message['body']}</message>
+    </messages>
+</tick>

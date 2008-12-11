@@ -1,0 +1,36 @@
+<library>
+
+
+    <!-- Budget View -->
+
+
+    <class name="budgetview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Budget View</text>
+
+
+<!--
+
+Budget
+  Tax Rate (slider, rate)
+  Fire Funds (funding, request, slider)
+  Police Funds (funding, request, slider)
+  Road Funds (funding, request, slider)
+  Taxes Collected
+  Cash Flow
+  Previous Funds
+  Current Funds
+
+-->
+
+
+    </class>
+
+
+</library>

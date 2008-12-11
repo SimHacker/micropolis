@@ -1,0 +1,32 @@
+<library>
+
+
+    <!-- Message View -->
+
+
+    <class name="messageview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Message View</text>
+
+
+<!--
+
+Messages
+  Message View
+  Illustration
+  City View
+  Answer Buttons
+
+-->
+
+
+    </class>
+
+
+</library>

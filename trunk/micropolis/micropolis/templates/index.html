@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:py="http://genshi.edgewall.org/"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+>
+
+    <head>
+        <title>Micropolis Eduverse</title>
+        <link
+	    rel="Stylesheet" 
+	    href="/static/css/micropolis.css"
+	/>
+        <script
+	    type="text/javascript" 
+	    src="/static/javascript/jquery.js"
+	></script>
+        <script
+	    type="text/javascript" 
+	    src="/static/javascript/micropolis.js"
+	></script>
+    </head>
+
+    <body>
+
+	<center>
+	    <h1>Micropolis Eduverse</h1>
+            <h2>
+	        <a href="/micropolisView">
+		    Click Here For The
+		    <br/>
+		    Micropolis Live City View
+		</a>
+		<br/>
+		<?python
+		    from micropolisengine import WORLD_X, WORLD_Y
+		    import random
+
+		    cols = 40
+		    rows = 15
+		    col = random.randint(0, WORLD_X - cols)
+		    row = random.randint(0, WORLD_Y - rows)
+		?>
+		<img
+		    src="/micropolisGetTilesImage?col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
+		    border="0"
+		/>
+	    </h2>
+
+	</center>
+
+	<h2>What is Micropolis Eduverse?</h2>
+
+	<p>
+	    "<b>Micropolis</b>" is the name of the open source GPLv3
+	    version of SimCity, the city simulation game originally
+	    designed by Will Wright and published by Maxis /
+	    Electronic Arts.
+	</p>
+
+	<p>
+	    EA has generously relicensed the original SimCity classic
+	    source code under the terms of the 
+	    <a href="http://gplv3.fsf.org">Gnu General Public License, version 3</a>.
+	    The source code is published on the
+	    <a href="http://code.google.com/p/micropolis/">Micropolis City Simulator Google Code Project</a>.
+	</p>
+
+	<p>
+	    "<b>Micropolis Eduverse</b>" is a web based version of
+	    Micropolis, being developed with an educational focus.
+	</p>
+
+	<h2>Micropolis Eduverse Information</h2>
+
+	<ul>
+	    <li>
+		<h3><a href="/static/html/vision.html">Micropolis Eduverse Vision</a></h3>
+		<blockquote>
+		    <p>
+			 Micropolis, the open source version of
+			 SimCity, is a fun, engaging game, that helps
+			 teach kids about science, language,
+			 mathematics, art and politics. Its goal is to
+			 fulfill SimCity's potential as a microworld
+			 for children's learning and exploration.
+		    </p>
+		    <em>
+			"One of the most wonderful possibilities about this
+			venture is that it will bring together very fluent
+			designers from many worlds of computing (more worlds
+			than usually combine to make a game) in the service of
+			the children. We should really try to pull this off!"
+		    </em>
+		    <br/>
+		    <b>
+			-<a href="http://www.donhopkins.com/drupal/node/145">Alan Kay</a>,
+			on developing an educational, programmable version of SimCity.
+		    </b>
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="/static/html/history.html">History of Micropolis (SimCity)</a></h3>
+		<blockquote>
+		     Will Wright wrote the original SimCity city simulation game, first released in 1989. On January 10, 2008 the SimCity source code was released under the free software GPL 3 license under the name Micropolis. 
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="/static/html/future.html">Future of Micropolis (Micropolis Eduverse)</a></h3>
+		<blockquote>
+		     Now that it's GPL, the Micropolis code can be ported to many different systems, including Linux, Mac, and Windows guis, as well as web servers and embedded devices! And it can be improved and extended to make it a better educational tool and open source programming example. 
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="/static/html/plan.html">Micropolis Eduverse Development Plan</a></h3>
+		<blockquote>
+		     We have a realistic roadmap and sound appropriate open source technology for developing an open, educationally focused, online version of SimCity.
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="/static/html/donhopkins.html">About Don Hopkins</a></h3>
+		<blockquote>
+		    <a href="http://en.wikipedia.org/wiki/Don_Hopkins">Don Hopkins</a>
+		    has worked with the SimCity source code for 16
+		    years, ported to code to numerous platforms, and
+		    developed a colaborative multi player user
+		    interface to SimCity. He is committed to a long
+		    term vision of developing an open source
+		    educational software platform, and has written
+		    about his own and other peoples ideas on his
+		    <a href="http://www.DonHopkins.com">web site</a>.
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="/static/html/opensource.html">Open Source Technology</a></h3>
+		<blockquote>
+		    <p>
+			We are systematically building on the shoulders of giants, by using a carefully chosen stack of proven, best of breed, actively developed and supported, open source software.
+		    </p>
+		    <p>
+			We are purposefully developing modular, reusable open source software components that other people can learn from, and freely use for their own purposes.
+		    </p>
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="http://code.google.com/p/micropolis">Google Code Project: Micropolis City Simulator</a></h3>
+		<ul>
+		    <li>
+		      <a href="http://code.google.com/p/micropolis/wiki/ThePlan">Long term plan for developing Micropolis</a>
+		    </li>
+		    <li>
+		      <a href="http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/Micropolis">MicropolisCore city simulator source code</a>
+		    </li>
+		</ul>
+	    </li>
+	    <li>
+	        <h3><a href="/static/html/alankay.html">Discussions with Alan Kay about Educational Software</a></h3>
+		<blockquote>
+		    <em>
+		        "The best way to predict the future is to invent it."
+		    </em>
+		    <br/>
+		    <b>
+			-<a href="http://en.wikipedia.org/wiki/Alan_Kay">Alan Kay</a>,
+			OOP and GUI pioneer
+		    </b>
+		</blockquote>
+		<blockquote>
+		    <em>
+			"One of the most wonderful possibilities about this
+			venture is that it will bring together very fluent
+			designers from many worlds of computing (more worlds
+			than usually combine to make a game) in the service of
+			the children. We should really try to pull this off!"
+		    </em>
+		    <br/>
+		    <b>
+		        -<a href="http://www.donhopkins.com/drupal/node/145">Alan Kay</a>, 
+		        on developing an educational, programmable version of SimCity.
+		    </b>
+		</blockquote>
+		<ul>
+		    <li>
+		        <a href="/static/html/alankay.html#node145">SimCity Rules</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node140">Discussion with Alan Kay about Visual Programming</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node139">Discussion with Alan Kay about Robot Odyssey</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node137">OLPC Visual Programming Language Discussion with Guido van Rossum and Alan Kay</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node134">Alan Kay's ideas about SimCity for OLPC</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node135">Responding to Alan Kay's criticisms of SimCity</a>
+		    </li>
+		    <li>
+			<a href="/static/html/alankay.html#node132">Alan Kay on Programming Languages</a>
+		    </li>
+		</ul>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/9">SimCity Designer Will Wright on Designing User Interfaces to Simulation Games</a></h3>
+		<blockquote>
+		    <p>
+			Will Wright, the designer of SimCity, SimEarth, SimAnt, and other popular games from Maxis, gave a talk at Terry Winnograd's user interface class at Stanford, in 1996 (before the release of The Sims in 2000). At the end of the talk, he demonstrated an early version of The Sims, called Dollhouse at the time. I attended the talk and took notes, on which this article elaborates. I was fascinated by Dollhouse, and subsequently went to work with Will Wright at Maxis for three years. We finally released it as The Sims in 2000, after several name changes: TDS (Tactical Domestic Simulator), Project-X (everybody has one of those), Jefferson (after the president, not the sitcom), happy fun house (or some other forgetable Japanese placism).
+		    </p>
+		    <p>
+			At the talk, he reflected on the design of simulators and user interfaces in SimCity, SimEarth, and SimAnt. He demonstrated several of his games, including his current project, Dollhouse. [Later released as The Sims, becoming the top selling PC game of all time.]
+		    </p>
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/10">The Sims Exchange</a></h3>
+		<blockquote>
+		    <p>
+		        At Will Wright's talk for Terry Winnograd's User Interface class in 1996:
+		    </p>
+		    <blockquote>
+		        There was some interesting discussion about using SimCity as a medium for story telling: encouraging people to imagine far beyond the bounds of what the computer is able to simulate. You can build cities to empathise with, and tell stories about them, about their people, culture, buildings, and history. A class of students could label different parts of a city, and each person could tell a story about a different part, that interacted with the stories going on in neighboring parts of the city. Then they could make a web site with the downloadable city, and an image map of the whole city, linking to all the stories on web pages, with screen snapshots of their neighborhoods, and lots of hypertext links between each story. This way each student could colaborate with several others to write a web of interconnected stories, all about the same city!
+		    </blockquote>
+		    <p>
+		        That pretty well sums up what The Sims Exchange is all about -- like a specialized blog built around a simulation game with built-in storytelling and content creation tools, for publishing stories as well as live downloadable user created game content:
+		    </p>
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/131">History and Future of OLPC SimCity / Micropolis</a></h3>
+		<blockquote>
+		    A summary of where the SimCity/Micropolis code came from and where it's going, and the story behind the name.
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/129">SimCity for OLPC (One Laptop Per Child): Applying Papert's Ideas About Constructionist Education and Teaching Kids to Program</a></h3>
+		<blockquote>
+		    Here are some ideas about applying Seymour Papert's philosophy of "Constructionist Education" to SimCity, by integrating it with the OLPC's "Sugar" user interface and Python-based scripting system. 
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="http://www.donhopkins.com/drupal/node/142">Redesigning the SimCity User Interface for the OLPC</a></h3>
+		<blockquote>
+		     Simplify the SimCity interface and make it easier for kids to use it with the game controller, in a way that will support multi player interaction.
+		</blockquote>
+	    </li>
+	    <li>
+		<h3><a href="http://www.donhopkins.com/drupal/node/141">Ideas about OLPC SimCity GUI, Turtle Graphics, and Cellular Automata</a></h3>
+		<blockquote>
+		    SimCity in Python will be totally programmable in Python, so what should we program it to do? And how can we refactor it into general purpose, reusable components?
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node?page=7">Sims Content Catalog in Laszlo and Python</a></h3>
+		<blockquote>
+		    This is a large project I'm developing in OpenLaszlo: creating a rich web application for browsing, searching, exploring, collecting, personalizing, shopping and downloading Sims content. 
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/22">Sims Proposals and Documentation</a></h3>
+		<blockquote>
+		    <p>
+			 Here are some proposals and documents I've written, describing the work I've done and projects I've proposed with The Sims character animation system, plug-in objects and tools. After four years, a great deal of useful information has been reverse-engineered by independent third-party developers and open source projects like The Sims Technical Library. I hope these ideas will inspire more tool developers to contribute their programming skills to the Sims community. 
+		    </p>
+		</blockquote>
+		<ul>
+		    <li>
+			<h3><a href="http://www.donhopkins.com/drupal/node/16">A Proposal to Develop Third Party Content Authoring Tools for The Sims</a></h3>
+			<blockquote>
+			     This is a propsal I wrote to Maxis after The Sims was released in March 2000, outlining some of my ideas for third party content authoring tools that I could develop. This led to The Sims Transmogrifier, but it touches on several other interesting tools and projects that Maxis never got around to. 
+			</blockquote>
+		    </li>
+		    <li>
+			<h3><a href="http://www.donhopkins.com/drupal/node/24">Educational Multi Player SimCity for Linux Proposal</a></h3>
+			<blockquote>
+			    Back in March 2002, Maxis told me they were interested in supporting the educational use of products like SimCity. Earlier, I had developed a multi player version of SimCity, which runs on Linux/X11, and was scriptable in TCL. Educators and researchers from Columbia University, MIT, IBM, Xerox and other educational and commercial institutions were excited about gaining access to this version of SimCity, and adapting it to teach and stimulate students' interest in urban planning, computer simulation and game programming. 
+			</blockquote>
+		    </li>
+		</ul>
+	    </li>
+
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/11">RugOMatic Documentation and Tutorial: Drag-and-Drop Sims Objects</a></h3>
+		<blockquote>
+		    <p>
+			The Sims RugOMatic lets you quickly and easily create rugs for The Sims, with your own pictures and descriptions! Simply 'drag and drop' a picture, name, price and description into RugOMatic, and press the 'Weave My Rug' button. RugOMatic automatically manufactures a new rug, with a text description that you can read in the game!
+		    </p>
+		    <p>
+			RugOMatic also writes a web page describing your rug, including the name, price, description, a picture preview, and a link to the downloadable "iff" object file, to help you keep track of your objects, and share them with other people on the web. 
+		    </p>
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/drupal/node/8">From Barbie to Mortal Kombat: Further Reflections, By Henry Jenkins</a></h3>
+		<blockquote>
+		    <p>
+		        This is an interesting paper by Henry Jenkins that discusses how games appeal to girls, comparing the "Games for Girls" approach of Brenda Laural at Purple Moon, with the "System Simulation" approach of Will Wright at Maxis.
+		    </p>
+		    <p>
+		        Before I went to Maxis to work on The Sims with Will Wright, I worked at Interval Research. I saw the research and work that Brenda Laurel was doing on games for girls, before Purple Moon spun off from Interval. I found it very interesting and enlightened, and hoped it would be successful. It's illuminating to compare the two approaches, and I think this article makes some great points by doing that. 
+		    </p>
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.youtube.com/watch?v=EpKhh10K-j0">OLPC SimCity Demo Video</a></h3>
+		<blockquote>
+		    Demo of the Linux version of Multi Player SimCity for X11. Ported to Unix, optimized for Linux and demonstrated by Don Hopkins. 
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/home/movies/SimCityNetDemo.mov">SimCityNet Demo Video</a></h3>
+		<blockquote>
+		    Demo of the Linux version of Multi Player SimCity for X11. Ported to Unix, optimized for Linux and demonstrated by Don Hopkins. 
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/home/movies/X11SimCityDemo.mov">X11 SimCity Demo Video</a></h3>
+		<blockquote>
+		    Demo of Pie Menus in SimCity for X11. Ported to Unix and demonstrated by Don Hopkins. 
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/home/movies/CellularSimCity.mov">Cellular SimCity</a></h3>
+		<blockquote>
+		    Cellular Automata in SimCityNet on Unix. Interactive performance computer art.
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.donhopkins.com/home/movies/HyperLookDemo.mov">HperLook SimCity Demo</a></h3>
+		<blockquote>
+		    Demonstration of SimCity running under the HyperLook user interface development system, based on NeWS PostScript. Includes a demonstration of editing HyperLook graphics and user interfaces, the HyperLook Cellular Automata Machine, and the HyperLook Happy Tool. Also shows The NeWS Toolkit applications PizzaTool and RasterRap. RasterRap developed by Chris White and modified by Don Hopkins at Sun. HyperLook developed by Arthur van Hoff and Don Hopkins at the Turing Institute. SimCity ported to Unix and HyperLook by Don Hopkins. HyperLook Cellular Automata Machine, Happy Tool, The NeWS Toolkit, PizzaTool developed by Don Hopkins. Demonstration, transcript and close captioning by Don Hopkins. Camera and interview by Abbe Don. Taped at the San Francisco Exploratorium. 
+		</blockquote>
+	    </li>
+	    <li>
+	        <h3><a href="http://www.DonHopkins.com/home/resume.html">Resume of Don Hopkins</a></h3>
+	    </li>
+	</ul>
+
+	<hr/>
+
+	<center>
+	    To support this project, please:
+	    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick"/>
+		<input type="hidden" name="business" value="dhopkins@DonHopkins.com"/>
+		<input type="hidden" name="no_note" value="1"/>
+		<input type="hidden" name="currency_code" value="USD"/>
+		<input type="hidden" name="tax" value="0"/>
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!"/>
+	    </form>
+	</center>
+
+    </body>
+
+</html>

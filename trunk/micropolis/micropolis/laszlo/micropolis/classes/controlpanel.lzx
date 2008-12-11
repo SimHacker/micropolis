@@ -1,0 +1,162 @@
+<library>
+
+
+    <!-- Control Panel -->
+
+
+    <class name="controlpanel">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Micropolis Control Panel</text>
+
+	<text
+	    resize="true"
+	>Disasters</text>
+
+	<view
+	    width="${parent.width}"
+	>
+	    <wrappinglayout/>
+
+	    <button 
+		datapath="ds_disasters:/disasters/disaster"
+		text="$path{'@name'}"
+		onclick="gApp.sendCommand(this.data.childNodes[0].serialize())"
+	    />
+
+	</view>
+
+	<view
+	    width="${parent.width}"
+	    clip="true"
+	>
+
+	    <view
+		width="${parent.width}"
+		clip="true"
+	    >
+
+		<simplelayout axis="y"/>
+
+		<text
+		    resize="true"
+		>Scenarios</text>
+
+		<view
+		    width="${parent.width}"
+		>
+
+		    <simplelayout axis="y"/>
+
+		    <button 
+			datapath="ds_scenarios:/scenarios/scenario"
+			onclick="gApp.sendCommand(this.data.childNodes[0].serialize())"
+			text="${this.cityName + ' ' + this.cityYear + ':\n' + this.cityDescription}"
+		    >
+			<attribute name="cityName" value="$path{'@name'}"/>
+			<attribute name="cityYear" value="$path{'@year'}"/>
+			<attribute name="cityDescription" value="$path{'@description'}"/>
+		    </button>
+
+		</view>
+
+		<text
+		    resize="true"
+		>Cities</text>
+
+		<view
+		    width="${parent.width}"
+		>
+
+		    <wrappinglayout/>
+
+		    <button 
+			datapath="ds_cities:/cities/city"
+			text="$path{'@name'}"
+			onclick="gApp.sendCommand(this.data.childNodes[0].serialize())"
+		    />
+
+		</view>
+
+	    </view>
+
+	</view>
+
+<!--
+
+Control Panel
+  SimCity
+    About
+    New City
+    Quit
+  Options
+    Disasters
+    Sound
+  Disasters
+    Monster
+    Fire
+    Flood
+    Meltdown
+    Tornado
+    Earthquake
+  Speed
+    Pause
+    Slow
+    Medium
+    Fast
+  Date
+  Funds
+  Tax Rate
+  Demand Gauge
+  History Graph
+  Message Log
+
+Evaluation
+  Public Opinion
+    Is the mayor doing a good job? (%yes, %no)
+    Worst Problems (top 4 problems and percentages)
+  Statistics
+    Net Migration
+    Assessed Value
+    Category
+    Game Level
+  Overall City Score
+    Current Score
+    Annual Change
+
+Messages
+  City View
+  Answer Buttons
+
+Graph
+  10/120 Years
+  Residential
+  Commercial
+  Industrial
+  Money
+  Crime
+  Pollution
+  
+
+Budget
+  Tax Rate (slider, rate)
+  Fire Funds (funding, request, slider)
+  Police Funds (funding, request, slider)
+  Road Funds (funding, request, slider)
+  Taxes Collected
+  Cash Flow
+  Previous Funds
+  Current Funds
+
+-->
+
+
+    </class>
+
+
+</library>

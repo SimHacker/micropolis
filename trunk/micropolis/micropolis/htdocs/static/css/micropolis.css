@@ -1,0 +1,10 @@
+/*
+ * Style sheet for Micropolis web application.
+ * By Don Hopkins.
+ */
+
+.t {
+  width: 16px;
+  height: 16px;
+  background-image: url(/static/images/micropolis_tiles.png)
+}
