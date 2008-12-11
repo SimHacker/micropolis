@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Micropolis"
+	Name="MicropolisEngine"
 	ProjectGUID="{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}"
-	RootNamespace="Micropolis"
+	RootNamespace="MicropolisEngine"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -68,7 +68,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolis.pyd"
+				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolisengine.pyd"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="c:\Python25\libs"
 				GenerateDebugInformation="true"
@@ -158,7 +158,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolis.pyd"
+				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolisengine.pyd"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="c:\Python25\libs"
 				GenerateDebugInformation="true"
@@ -198,7 +198,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Micropolis"
+			Name="MicropolisEngine"
 			>
 			<Filter
 				Name="Header Files"
@@ -464,7 +464,7 @@
 				Name="SWIG Files"
 				>
 				<File
-					RelativePath="..\swig\micropolis-swig-python.i"
+					RelativePath="..\swig\micropolisengine-swig-python.i"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -484,14 +484,14 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\swig\micropolis.i"
+					RelativePath="..\swig\micropolisengine.i"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
 							Name="SWIG"
-							AdditionalDependencies="micropolis-swig-python.i;..\micropolis.h"
+							AdditionalDependencies="micropolisengine-swig-python.i;..\micropolis.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -499,7 +499,7 @@
 						>
 						<Tool
 							Name="SWIG"
-							AdditionalDependencies="micropolis-swig-python.i;..\micropolis.h"
+							AdditionalDependencies="micropolisengine-swig-python.i;..\micropolis.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -516,7 +516,7 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath=".\micropolis_wrap.cpp"
+					RelativePath=".\micropolisengine_wrap.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -540,7 +540,7 @@
 				Name="Python Files"
 				>
 				<File
-					RelativePath=".\micropolis.py"
+					RelativePath=".\micropolisengine.py"
 					>
 				</File>
 				<File

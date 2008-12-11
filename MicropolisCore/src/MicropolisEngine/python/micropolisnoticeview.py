@@ -1,4 +1,4 @@
-# Makefile for MicropolisCore
+# micropolisnoticeview.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -58,106 +58,51 @@
 # WARRANTIES OR THE LIMITATIONS ON THE APPLICABLE STATUTORY RIGHTS OF A
 # CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS AND LIMITATIONS MAY
 # NOT APPLY TO YOU.
-#
+
+
 ########################################################################
+# Micropolis Notice View
+# Don Hopkins
 
 
-PYTHON=python2.5
-
-SOURCES = \
-	allocate.cpp \
-	animate.cpp \
-	budget.cpp \
-	connect.cpp \
-	disasters.cpp \
-	evaluate.cpp \
-	fileio.cpp \
-	generate.cpp \
-	graph.cpp \
-	initialize.cpp \
-	main.cpp \
-	map.cpp \
-	message.cpp \
-	micropolis.cpp \
-	power.cpp \
-	random.cpp \
-	resource.cpp \
-	scan.cpp \
-	simulate.cpp \
-	sprite.cpp \
-	stubs.cpp \
-	tool.cpp \
-	traffic.cpp \
-	update.cpp \
-	utilities.cpp \
-	zone.cpp
+########################################################################
+# Import stuff
 
 
-all: MICROPOLIS
+import gtk
+import cairo
+import pango
+import micropolisengine
+import micropolisview
 
-MICROPOLIS: $(SOURCES) python/micropolis_wrap.cpp
-	cd python ; $(PYTHON) setup.py build
 
-python/stdafx.h: micropolis.h
+########################################################################
+# MicropolisNoticeView
 
-micropolis.h:
 
-$(SOURCES): python/stdafx.h micropolis.h
+class MicropolisNoticeView(micropolisview.MicropolisView):
 
-swig/micropolis.i: swig/micropolis-swig-python.i micropolis.h
 
-swig/micropolis-swig-python.i: micropolis.h
+    def __init__(
+        self,
+        **args):
 
-swig/micropolis.py: swig/micropolis.i
+        micropolisview.MicropolisView.__init__(
+            self,
+            aspect='notice',
+            interests=('city', 'notice',),
+            **args)
 
-python/micropoliswindow.py:
 
-python/micropolis_wrap.cpp: swig/micropolis.i micropolis.h
-	swig \
-		-python \
-		-c++ \
-		-outdir python \
-		-o python/micropolis_wrap.cpp \
-		swig/micropolis.i
+    def drawContent(
+        self,
+        ctx):
 
-clean:
-	rm -rf *~ *.ncb python/build 
-	rm -rf swig/*~
-	rm -rf python/*~ python/*.pyc python/*.o python/*.pyd python/ReleaseSymbols python/Release python/Debug
+        #print "==== MicropolisNoticeView DRAWCONTENT", self
 
-cleanswig: clean
-	rm -rf python/micropolis.py python/micropolis_wrap.cpp
-
-install: all
-	(cd python ; $(PYTHON) setup.py install)
-
-allocate.cpp: micropolis.h
-animate.cpp: micropolis.h
-budget.cpp: micropolis.h
-connect.cpp: micropolis.h
-disasters.cpp: micropolis.h
-evaluate.cpp: micropolis.h
-evaluation.cpp: micropolis.h
-fileio.cpp: micropolis.h
-generate.cpp: micropolis.h
-graph.cpp: micropolis.h
-initialize.cpp: micropolis.h
-main.cpp: micropolis.h
-map.cpp: micropolis.h
-message.cpp: micropolis.h
-micropolis.cpp: micropolis.h
-power.cpp: micropolis.h
-random.cpp: micropolis.h
-resource.cpp: micropolis.h
-scan.cpp: micropolis.h
-simulate.cpp: micropolis.h
-sprite.cpp: micropolis.h
-stubs.cpp: micropolis.h
-tool.cpp: micropolis.h
-traffic.cpp: micropolis.h
-update.cpp: micropolis.h
-utilities.cpp: micropolis.h
-zone.cpp: micropolis.h
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
 
 
 ########################################################################

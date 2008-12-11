@@ -100,7 +100,7 @@ for relPath in (
 ):
     sys.path.insert(0, os.path.join(cwd, relPath))
 
-import micropolis
+import micropolisengine
 import micropolismodel
 import micropolisutils
 import micropolispiemenus

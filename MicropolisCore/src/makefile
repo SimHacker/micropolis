@@ -64,33 +64,33 @@
 SUBDIRS = \
 	TileEngine \
 	CellEngine \
-	Micropolis
+	MicropolisEngine
 
 ########################################################################
 
 all:
 	cd TileEngine ; make
 	cd CellEngine ; make
-	cd Micropolis ; make
+	cd MicropolisEngine ; make
 
 clean:
 	rm -rf *~ *.suo *.ncb build
 	cd TileEngine ; make clean
 	cd CellEngine ; make clean
-	cd Micropolis ; make clean
+	cd MicropolisEngine ; make clean
 
 cleanswig:
 	rm -rf *~ *.suo *.ncb build
 	cd TileEngine ; make cleanswig
 	cd CellEngine ; make cleanswig
-	cd Micropolis ; make cleanswig
+	cd MicropolisEngine ; make cleanswig
 
 install: all
 	rm -rf build
 	mkdir build
 	cd TileEngine ; make install
 	cd CellEngine ; make install
-	cd Micropolis ; make install
+	cd MicropolisEngine ; make install
 
 tar: all
 	tar cfz Micropolis-build.tgz build

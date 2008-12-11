@@ -1,5 +1,5 @@
-# Makefile for MicropolisCore python interface
-# 
+# micropolisevaluationview.py
+#
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
 # Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
@@ -59,26 +59,81 @@
 # CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS AND LIMITATIONS MAY
 # NOT APPLY TO YOU.
 
-########################################################################
-
-DESTDIR = ../../build
-
-PYFILES = \
-	micrpoliswindow.py \
-	micropolisutils.py \
-	micropoliswebserver.py \
-	piemenu.py \
-	../swig/micropolis.py
 
 ########################################################################
+# Micropolis Evaluation View
+# Don Hopkins
 
-all:
-	echo TODO
 
-clean:
-	rm -rf *~ *.pyc *.o *.pyd 'Release Symbols' 'Release' 'Debug'
+########################################################################
+# Import stuff
 
-install: all
-	cp -r images *.pyd $(PYFILES) $(DESTDIR)
+
+import gtk
+import cairo
+import pango
+import micropolisengine
+import micropolisview
+
+
+########################################################################
+# MicropolisEvaluationView
+
+
+class MicropolisEvaluationView(micropolisview.MicropolisView):
+
+
+    def __init__(
+        self,
+        **args):
+
+        micropolisview.MicropolisView.__init__(
+            self,
+            aspect='evaluation',
+            interests=('city', 'evaluation',),
+            **args)
+
+
+    def update(
+        self,
+        name,
+        *args):
+
+        print "EVALUATION UPDATE", self, name, args
+
+        engine = self.engine
+
+        print "evalChanged", engine.evalChanged
+        print "evalScore", engine.evalScore
+        print "evalPs0", engine.evalPs0
+        print "evalPs1", engine.evalPs1
+        print "evalPs2", engine.evalPs2
+        print "evalPs3", engine.evalPs3
+        print "evalPv0", engine.evalPv0
+        print "evalPv1", engine.evalPv1
+        print "evalPv2", engine.evalPv2
+        print "evalPv3", engine.evalPv3
+        print "evalPop", engine.evalPop
+        print "evalDelta", engine.evalDelta
+        print "evalAssessedDollars", engine.evalAssessedDollars
+        print "evalCityClass", engine.evalCityClass
+        print "evalCityLevel", engine.evalCityLevel
+        print "evalGoodYes", engine.evalGoodYes
+        print "evalGoodNo", engine.evalGoodNo
+        print "evalTitle", engine.evalTitle
+
+        self.queue_draw()
+
+
+    def drawContent(
+        self,
+        ctx):
+
+        #print "==== MicropolisEvaluationView DRAWCONTENT", self
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
 
 ########################################################################

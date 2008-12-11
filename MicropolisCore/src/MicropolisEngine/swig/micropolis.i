@@ -1,4 +1,4 @@
-/* micropolis.i
+/* micropolisengine.i
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -64,9 +64,9 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-%module micropolis
+%module micropolisengine
 
-%include "micropolis-swig-python.i"
+%include "micropolisengine-swig-python.i"
 
 %include "micropolis.h"
 

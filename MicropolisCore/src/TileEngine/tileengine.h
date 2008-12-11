@@ -161,10 +161,12 @@ public:
 
 
   unsigned long getValue(
-	int row,
-	int col,
-	PyObject *tileFunction = NULL);
-  
+    int col,
+    int row,
+    PyObject *tileFunction = NULL,
+    const int *tileMapData = NULL,
+    unsigned int tileMapCount = 0);
+
 
   void renderTiles(
     cairo_t *ctx,
@@ -183,7 +185,7 @@ public:
 
   void renderTilesLazy(
     cairo_t *ctx,
-	PyObject *tileFunction,
+    PyObject *tileFunction,
     PyObject *tileMap,
     int tileSize,
     int renderCol,
@@ -193,19 +195,30 @@ public:
     double alpha,
     PyObject *tileGenerator,
     PyObject *tileCache,
-	PyObject *tileCacheSurfaces,
-	PyObject *tileState);
+    PyObject *tileCacheSurfaces,
+    PyObject *tileState);
 
 
   void renderPixels(
     cairo_surface_t *destSurf,
     cairo_surface_t *cmapSurf,
-	PyObject *tileFunction,
+    PyObject *tileFunction,
     PyObject *tileMap,
     int renderCol,
     int renderRow,
     int renderCols,
     int renderRows);
+
+
+  PyObject *getTileData(
+    PyObject *tileFunction,
+    PyObject *tileMap,
+    int col,
+    int row,
+    int cols,
+    int rows,
+    int code,
+    PyObject *tileViewCache);
 
 
   ////////////////////////////////////////////////////////////////////////
