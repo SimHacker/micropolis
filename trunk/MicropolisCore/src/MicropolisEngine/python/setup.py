@@ -61,28 +61,28 @@
 
 
 ########################################################################
-# Micropolis setup file.
+# MicropolisEngine setup file.
 # Don Hopkins
 
 
 from distutils.core import *
 
 setup(
-  name='Micropolis',
+  name='MicropolisEngine',
   version='1.0',
   description='Micropolis City Simulator Engine',
   author='Will Wright, Don Hopkins',
   author_email='dhopkins@DonHopkins.com',
   url='http://www.DonHopkins.com',
   py_modules=[
-    'micropolis',
+    'micropolisengine',
     'micropolisdrawingarea',
     'micropoliswindow',
     'micropoliswebserver',
   ],
   ext_modules=[
-    Extension('_micropolis', [
-      'micropolis_wrap.cpp',
+    Extension('_micropolisengine', [
+      'micropolisengine_wrap.cpp',
       '../allocate.cpp',
       '../animate.cpp',
       '../budget.cpp',
@@ -113,6 +113,7 @@ setup(
     include_dirs=[
       '.',
       '..',
+      '/usr/local/include',
     ]),
   ]
 )

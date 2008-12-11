@@ -1,4 +1,4 @@
-# micropoliswebserver.py
+# micropolisstatusview.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Web Server
+# Micropolis Status View
 # Don Hopkins
 
 
@@ -69,161 +69,40 @@
 # Import stuff
 
 
-import sys
-import os
-import time
-import math
-import posixpath
-import BaseHTTPServer
-import urllib
-import urlparse
-import cgi
-import shutil
-import mimetypes
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+import gtk
+import cairo
+import pango
+import micropolisengine
+import micropolisview
 
 
 ########################################################################
-# Import our modules
+# MicropolisStatusView
 
 
-print "CWD:", os.getcwd()
-
-
-sys.path.append(os.getcwd() + '\\..\\swig')
-sys.path.append(os.getcwd() + '\\Release Symbols')
-import micropolis
-import micropolisutils
-
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\swig')
-sys.path.append(os.getcwd() + '\\..\\..\\TileEngine\\python\\Release Symbols')
-import tileengine
-
-
-########################################################################
-# Globals
-
-
-__version__ = "0.9"
-
-
-########################################################################
-# MicropolisWebServer class
-
-
-class MicropolisHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-
-    server_version = "MicropolisHTTP/" + __version__
-
-    def __init__(
-            self, 
-            *args,
-            **params):
-
-        print "__INIT__ MicropolisHTTPRequestHandler", "SELF", self, "ARGS", args, "PARAMS", params
-
-        BaseHTTPServer.BaseHTTPRequestHandler.__init__(
-            self,
-            *args,
-            **params)
-
-
-    def do_GET(self):
-        """Serve a GET request."""
-        path = self.path
-        print "do_GET", self, "path", path
-
-        server = self.server
-        m = server.m
-        view = server.view
-        
-        now = time.time()
-        fracTime = now - math.floor(now)
-        m.flagBlink = fracTime < 0.5
-
-        m.sim_tick()
-        m.animateTiles()
-
-        content = (
-            """<html><head><title>Micropolis</title></head><body>\n""" +
-            view.renderSummaryAsHtml() +
-            view.renderClippedTilesAsHtml() +
-            """\n</body><html>"""
-        )
-
-        self.send_response(200)
-
-        contentType = "text/html"
-        self.send_header("Content-Type", contentType)
-
-        contentLength = len(content)
-        self.send_header("Content-Length", str(contentLength))
-
-        self.end_headers()
-
-        f = self.wfile
-        f.write(content)
-        f.flush()
-
-
-########################################################################
-# MicropolisWebServer class
-
-
-class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
+class MicropolisStatusView(micropolisview.MicropolisView):
 
 
     def __init__(
-            self, 
-            *args,
-            **params):
+        self,
+        **args):
 
-        print "__INIT__ MicropolisHTTPServer", "SELF", self, "ARGS", args, "PARAMS", params
-
-        BaseHTTPServer.HTTPServer.__init__(
+        micropolisview.MicropolisView.__init__(
             self,
-            *args,
-            **params)
-
-        m = micropolis.Micropolis()
-        self.m = m
-        print "Created Micropolis simulator engine:", m
-
-        m.ResourceDir = 'res'
-        m.InitGame()
-
-        # Load a city file.
-        cityFileName = 'cities/haight.cty'
-        print "Loading city file:", cityFileName
-        m.loadFile(cityFileName)
-
-        # Initialize the simulator engine.
-
-        m.Resume()
-        m.setSpeed(2)
-        m.setSkips(1000)
-        m.SetFunds(1000000000)
-        m.autoGo = 0
-        m.CityTax = 12
-
-        view = micropolisutils.MicropolisView(m)
-        self.view = view
+            aspect='status',
+            interests=('city', 'budget', 'date', 'funds', 'demand', 'level', 'speed', 'delay', 'option',),
+            **args)
 
 
-########################################################################
+    def drawContent(
+        self,
+        ctx):
 
+        #print "==== MicropolisStatusView DRAWCONTENT", self
 
-def test(HandlerClass = MicropolisHTTPRequestHandler,
-         ServerClass = MicropolisHTTPServer):
-    print "Starting web server:", HandlerClass, ServerClass
-    BaseHTTPServer.test(HandlerClass, ServerClass)
-
-
-if __name__ == '__main__':
-    test()
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
 
 
 ########################################################################

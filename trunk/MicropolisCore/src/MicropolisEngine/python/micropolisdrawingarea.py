@@ -86,7 +86,7 @@ import array
 # Import our modules
 
 
-import micropolis
+import micropolisengine
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
@@ -117,8 +117,8 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         args['tileCount'] = 960
         args['sourceTileSize'] = 16
-        args['worldCols'] = micropolis.WORLD_X
-        args['worldRows'] = micropolis.WORLD_Y
+        args['worldCols'] = micropolisengine.WORLD_X
+        args['worldRows'] = micropolisengine.WORLD_Y
 
         self.engine = engine
 
@@ -139,14 +139,14 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         engine = self.engine
         tengine.setBuffer(engine.getMapBuffer())
-        tengine.width = micropolis.WORLD_X
-        tengine.height = micropolis.WORLD_Y
+        tengine.width = micropolisengine.WORLD_X
+        tengine.height = micropolisengine.WORLD_Y
 
         # Unsigned short tile values, in column major order.
         tengine.typeCode = 'H'
-        tengine.colBytes = 2 * micropolis.WORLD_Y
+        tengine.colBytes = 2 * micropolisengine.WORLD_Y
         tengine.rowBytes = 2
-        tengine.tileMask = micropolis.LOMASK
+        tengine.tileMask = micropolisengine.LOMASK
 
 
     def getCell(self, col, row):

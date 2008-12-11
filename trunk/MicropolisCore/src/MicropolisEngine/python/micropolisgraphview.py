@@ -72,7 +72,7 @@
 import gtk
 import cairo
 import pango
-import micropolis
+import micropolisengine
 import micropolisview
 
 
@@ -118,7 +118,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
     def __init__(
         self,
-        historyScale=micropolis.HISTORY_SCALE_LONG,
+        historyScale=micropolisengine.HISTORY_SCALE_LONG,
         historyTypes=[0, 1, 2, 4, 5],
         **args):
 
@@ -153,9 +153,9 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         getHistory = engine.GetHistory
         getHistoryRange = engine.GetHistoryRange
 
-        historyCount = micropolis.HISTORY_COUNT
-        historyTypeCount = micropolis.HISTORY_TYPE_COUNT
-        historyScaleCount = micropolis.HISTORY_SCALE_COUNT
+        historyCount = micropolisengine.HISTORY_COUNT
+        historyTypeCount = micropolisengine.HISTORY_TYPE_COUNT
+        historyScaleCount = micropolisengine.HISTORY_SCALE_COUNT
 
         winRect = self.get_allocation()
         winWidth = winRect.width
@@ -267,9 +267,9 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             scaleWidth,
             scaleHeight)
 
-        if historyScale == micropolis.HISTORY_SCALE_SHORT:
+        if historyScale == micropolisengine.HISTORY_SCALE_SHORT:
             rgb = (0.5, 1, 0.5)
-        elif historyScale == micropolis.HISTORY_SCALE_LONG:
+        elif historyScale == micropolisengine.HISTORY_SCALE_LONG:
             rgb = (0.5, 0.5, 1)
         else:
             print "Invalid historyScale:", historyScale
@@ -369,11 +369,11 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         sx = float(histWidth) / 120.0
 
-        if historyScale == micropolis.HISTORY_SCALE_SHORT:
+        if historyScale == micropolisengine.HISTORY_SCALE_SHORT:
 
             r = range(120 - cityMonth, -1, -12)
 
-        elif historyScale == micropolis.HISTORY_SCALE_LONG:
+        elif historyScale == micropolisengine.HISTORY_SCALE_LONG:
 
             sx /= 10
             past = 10 * (cityYear % 10)

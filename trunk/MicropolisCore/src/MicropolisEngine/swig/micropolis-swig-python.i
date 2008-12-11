@@ -1,4 +1,4 @@
-/* micropolis-swig-python.i
+/* micropolisengine-swig-python.i
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -81,7 +81,8 @@ void *GetPythonCallbackData(PyObject *data);
 %{
 
 ////////////////////////////////////////////////////////////////////////
-// Headers inserted into micropolis_wrap.cpp, from micropolis-swig-python.i
+// Headers inserted into micropolisengine_wrap.cpp, 
+// from micropolisengine-swig-python.i
 
 
 #include "micropolis.h"
@@ -294,6 +295,20 @@ void *GetPythonCallbackData(
 
 
 %}
+
+
+////////////////////////////////////////////////////////////////////////
+// Micropoplis extension methods.
+
+%extend Micropolis {
+
+
+    // None now, but here is where they go. 
+    // Write a regular function that takes no "self" parameter, 
+    // but then use "self" to refer to the Micropolis object. 
+
+
+};
 
 
 ////////////////////////////////////////////////////////////////////////

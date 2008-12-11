@@ -89,6 +89,9 @@ setup(
     include_dirs=[
       '.',
       '..',
+      '/usr/local/include',
+      '/usr/local/include/cairo',
+      '/usr/local/include/pycairo',
       '/usr/include/cairo',
       '/usr/include/pycairo',
       '/opt/local/include/cairo',

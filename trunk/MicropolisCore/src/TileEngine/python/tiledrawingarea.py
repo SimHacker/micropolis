@@ -334,7 +334,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
 
     def loadSurfaceFromPNG(self, fileName):
-        surface = cairo.ImageSurface.create_from_png(self.tilesFileName)
+        surface = cairo.ImageSurface.create_from_png(fileName)
         return (
             surface,
             surface.get_width(),

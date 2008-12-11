@@ -72,7 +72,7 @@
 import sys
 import os
 import time
-import micropolis
+import micropolisengine
 
 
 ########################################################################
@@ -80,6 +80,42 @@ import micropolis
 
 
 __version__ = "0.9"
+
+
+########################################################################
+# NiceMicropolis Class
+
+
+class NiceMicropolis(Micropolis):
+
+
+    def __init__(self, *args, **kw):
+        super(NiceMicropolis, self).__init__(*args, **kw)
+
+
+    # TODO: Internationalize
+    def getMonthName(self, monthIndex):
+        return [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ][monthIndex];
+
+
+    def getCityDate(self):
+        return (
+            self.getMonthName(self.cityMonth) +
+            ' ' +
+            str(self.CityYear))
 
 
 ########################################################################
@@ -93,8 +129,8 @@ class MicropolisView:
             m=None,
             x=0,
             y=0,
-            width=micropolis.WORLD_X,
-            height=micropolis.WORLD_Y,
+            width=micropolisengine.WORLD_X,
+            height=micropolisengine.WORLD_Y,
             **args):
         self.m = m
         self.x = x
@@ -107,8 +143,8 @@ class MicropolisView:
 
         left = max(self.x, 0)
         top = max(self.y, 0)
-        right = min(self.x + self.width, micropolis.WORLD_X)
-        bottom = min(self.y + self.height, micropolis.WORLD_Y)
+        right = min(self.x + self.width, micropolisengine.WORLD_X)
+        bottom = min(self.y + self.height, micropolisengine.WORLD_Y)
 
         w = right - left
         h = bottom - top
@@ -118,7 +154,7 @@ class MicropolisView:
         if (w != 0) and (h != 0):
 
             getTile = self.m.GetTile
-            lowMask = micropolis.LOMASK
+            lowMask = micropolisengine.LOMASK
             flagsMask = ~lowMask
 
             for y in range(top, bottom):
@@ -195,14 +231,10 @@ class MicropolisView:
                 ))
 
         def onTile(x, y, tile, flags):
-            tileUrl = \
-                "http://localhost/micropolis/tiles/tile%04d.png" % (
-                    tile,
-                )
             out.append(
-                """<td width="16" class="tile" style="background-position: 0px %dpx">%s</td>""" % (
-                    -16 * tile,
-                    "", # str(tile),
+                """<td width="16" class="tile" style="background-position: %dpx %dpx"/>""" % (
+                    -16 * (tile % 16),
+                    -16 * (tile / 16),
                 ))
 
         def onRowEnd(y, w, h):

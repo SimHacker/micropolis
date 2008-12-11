@@ -72,7 +72,7 @@
 import sys
 import os
 import time
-import micropolis
+import micropolisengine
 import gobject
 
 
@@ -87,7 +87,7 @@ __version__ = "0.9"
 # MicropolisModel Class
 
 
-class MicropolisModel(micropolis.Micropolis):
+class MicropolisModel(micropolisengine.Micropolis):
 
 
     def __init__(
@@ -96,9 +96,9 @@ class MicropolisModel(micropolis.Micropolis):
             timeDelay=50,
             *args,
             **kwargs):
-        print "MicropolisModel.__init__", self, "calling micropolis.Micropolis.__init__", micropolis.Micropolis.__init__, args, kwargs
+        print "MicropolisModel.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
 
-        micropolis.Micropolis.__init__(self, *args, **kwargs)
+        micropolisengine.Micropolis.__init__(self, *args, **kwargs)
 
         self.running = running
         self.timeDelay = timeDelay
@@ -117,16 +117,16 @@ class MicropolisModel(micropolis.Micropolis):
         # TODO: Report SWIG bug, if it's not already known or fixed. 
 
         # Hook the engine up so it has a handle on its Python object side. 
-        self.userData = micropolis.GetPythonCallbackData(self)
+        self.userData = micropolisengine.GetPythonCallbackData(self)
         #print "USERDATA"#, self.userData
 
         # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
-        self.callbackHook = micropolis.GetPythonCallbackHook()
+        self.callbackHook = micropolisengine.GetPythonCallbackHook()
         #print "CALLBACKHOOK"#, self.callbackHook
 
         # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
-        self.callbackData = micropolis.GetPythonCallbackData(self._invokeCallback)
+        self.callbackData = micropolisengine.GetPythonCallbackData(self._invokeCallback)
         #print "CALLBACKDATA"#, self.callbackData
 
         if self.running:
@@ -140,7 +140,7 @@ class MicropolisModel(micropolis.Micropolis):
 
         self.stopTimer()
 
-        micropolis.Micropolis.__del__(self)
+        micropolisengine.Micropolis.__del__(self)
 
 
     def addView(self, view):
