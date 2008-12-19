@@ -2,17 +2,9 @@
 
 
     <!-- Editor View -->
-
-
-    <class name="editorview">
-
-
-	<simplelayout axis="y"/>
-
-
-	<text
-	    resize="true"
-	>Editor View</text>
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
 
 
 <!--
@@ -38,6 +30,17 @@ Editor
     Coal Power
 
 -->
+
+
+    <class name="editorview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Editor View</text>
 
 
     </class>

@@ -2,17 +2,9 @@
 
 
     <!-- Evaluation View -->
-
-
-    <class name="evaluationview">
-
-
-	<simplelayout axis="y"/>
-
-
-	<text
-	    resize="true"
-	>Evaluation View</text>
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
 
 
 <!--
@@ -31,6 +23,31 @@ Evaluation
     Annual Change
 
 -->
+
+
+    <class name="evaluationview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Evaluation"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
 
 
     </class>

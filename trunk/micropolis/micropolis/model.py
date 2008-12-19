@@ -1,3 +1,14 @@
+########################################################################
+# model.py
+# TurboGears SQLAlchemy model classes.
+# Written for Micropolis by Don Hopkins.
+# Licensed under GPLv3.
+
+
+########################################################################
+# Import modules.
+
+
 from datetime import datetime
 import pkg_resources
 pkg_resources.require("SQLAlchemy>=0.4.0")
@@ -12,26 +23,9 @@ from sqlalchemy import String, Unicode, Integer, DateTime
 from turbogears import identity
 
 
-# your data tables
+########################################################################
+# Identity schema.
 
-# your_table = Table('yourtable', metadata,
-#     Column('my_id', Integer, primary_key=True)
-# )
-
-
-# your model classes
-
-
-# class YourDataClass(object):
-#     pass
-
-
-# set up mappers between your data tables and classes
-
-# mapper(YourDataClass, your_table)
-
-
-# the identity schema
 
 visits_table = Table('visit', metadata,
     Column('visit_key', String(40), primary_key=True),
@@ -81,7 +75,8 @@ group_permission_table = Table('group_permission', metadata,
 )
 
 
-# the identity model
+########################################################################
+# The identity model.
 
 
 class Visit(object):
@@ -159,7 +154,9 @@ class Permission(object):
     pass
 
 
-# set up mappers between identity tables and classes
+########################################################################
+# Set up mappers between identity tables and classes.
+
 
 mapper(Visit, visits_table)
 
@@ -176,3 +173,6 @@ mapper(Group, groups_table,
 mapper(Permission, permissions_table,
         properties=dict(groups=relation(Group,
                 secondary=group_permission_table, backref='permissions')))
+
+
+########################################################################

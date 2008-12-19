@@ -1,0 +1,87 @@
+<library>
+
+
+    <!-- Horizontal Resize Bar -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="hresizebar"
+	x="$once{-this.overhang}"
+	y="$once{this.defaulty}"
+	width="${parent.width + (2 * this.overhang)}"
+	height="5"
+	pixellock="true"
+	bgcolor="${(this.dragging || this.pointing) ? this.hilitecolor : this.normalcolor}"
+	onmouseover="this.setAttribute('pointing', true)"
+	onmouseout="this.setAttribute('pointing', false)"
+	onmousedown="this.startdrag()"
+	onmouseup="this.stopdrag()"
+	onclick="this.togglepos()"
+    >
+
+
+	<attribute name="miny" value="0"/>
+	<attribute name="maxy" value="1000000"/>
+	<attribute name="defaulty" value="0"/>
+	<attribute name="starty" value="0"/>
+	<attribute name="overhang" value="0"/>
+	<attribute name="dragging" value="false"/>
+	<attribute name="pointing" value="false"/>
+	<attribute name="trackvar" value="null"/>
+	<attribute name="normalcolor" value="0x006699"/>
+	<attribute name="hilitecolor" value="0x99ffff"/>
+
+
+	<method name="startdrag"><![CDATA[
+	    this.setAttribute("dragging", true);
+	    this.starty = this.y;
+	    this.dragger.apply();
+	  ]]>
+	</method>
+
+
+	<method name="stopdrag"><![CDATA[
+	    this.setAttribute("dragging", false);
+	    this.dragger.remove();
+	  ]]>
+	</method>
+
+
+	<method name="togglepos"><![CDATA[
+	    if (this.y == this.starty) {
+	      if (this.y == 0) {
+		this.animate("y", this.defaulty, 500);
+	      } else {
+		this.animate("y", 0, 500);
+	      } // if
+	    } // if
+	  ]]>
+	</method>
+
+
+	<handler name="ony"><![CDATA[
+	    var trackvar = this.trackvar;
+	    var val, newval;
+	    //Debug.write("hresizebar ony", this, "trackvar", trackvar, "y", this.y);
+	    if ((trackvar != "") &&
+		((val = gApp[trackvar]) != (newval = this.y))) {
+	      gApp.setAttribute(trackvar, newval);
+	    } // if
+	  ]]>
+	</handler>
+
+
+	<dragstate
+	  name="dragger" 
+	  drag_axis="y"
+	  drag_min_y="${this.miny}"
+	  drag_max_y="${this.maxy}"
+	/>
+
+
+    </class>
+
+
+</library>

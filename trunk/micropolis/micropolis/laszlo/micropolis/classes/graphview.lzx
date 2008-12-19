@@ -2,17 +2,9 @@
 
 
     <!-- Graph View -->
-
-
-    <class name="graphview">
-
-
-	<simplelayout axis="y"/>
-
-
-	<text
-	    resize="true"
-	>Graph View</text>
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
 
 
 <!--
@@ -27,6 +19,31 @@ Graph
   Pollution
   
 -->
+
+
+    <class name="graphview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Graph"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
 
 
     </class>

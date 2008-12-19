@@ -729,7 +729,7 @@ class TileDrawingArea(gtk.DrawingArea):
     # This function is called from the C++ code in self.tengine.renderTilesLazy.
     # It renders a tile, and returns a tuple with a surface index, tile x and tile y position. 
     # This function is totally in charge of the scaled tile cache, and can implement a variety 
-    # variety of different policies. 
+    # of different policies. 
     def generateTile(
         self,
         tile):
