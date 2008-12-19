@@ -832,7 +832,7 @@ PyObject *TileEngine::getTileData(
       (unsigned int)PySequence_Size(tileViewCache);
     Py_ssize_t tileViewCacheLength = 
       0;
-    printf("tileViewCacheCount %d width %d height %d width*height %d\n", tileViewCacheCount, width, height, width * height);
+    //printf("tileViewCacheCount %d width %d height %d width*height %d\n", tileViewCacheCount, width, height, width * height);
     if ((tileViewCacheCount != (width * height)) ||
 	(PyObject_AsWriteBuffer(
 	   tileViewCache,

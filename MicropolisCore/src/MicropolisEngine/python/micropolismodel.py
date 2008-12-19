@@ -241,8 +241,6 @@ class MicropolisModel(micropolisengine.Micropolis):
                     a.remove(view)
 
 
-
-
     def invokeCallback(self, micropolis, name, *args):
         #print "==== MicropolisDrawingArea invokeCallback", "SELF", sys.getrefcount(self), self, "micropolis", sys.getrefcount(micropolis), micropolis, "name", name
         # In this case, micropolis is the same is self, so ignore it. 

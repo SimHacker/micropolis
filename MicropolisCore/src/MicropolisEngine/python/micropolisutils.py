@@ -69,9 +69,7 @@
 # Import stuff
 
 
-import sys
-import os
-import time
+import sys, os, time, array
 import micropolisengine
 
 

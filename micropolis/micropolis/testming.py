@@ -1,8 +1,23 @@
+########################################################################
+# testming.py
+# Convert tiles to swf files with Ming.
+# Written for Micropolis by Don Hopkins.
+# Licensed under GPLv3.
+
+
+########################################################################
+# Import modules.
+
+
 import ming
 import math
 import cairo
 import tempfile
 import os
+
+
+
+########################################################################
 
 
 def makeTiles(
@@ -64,10 +79,11 @@ def makeTiles(
     movie.save(swfFileName)
 
 
-def main():
-    makeTiles()
+########################################################################
 
 
 if __name__ == '__main__':
-    main()
+    makeTiles()
 
+
+########################################################################

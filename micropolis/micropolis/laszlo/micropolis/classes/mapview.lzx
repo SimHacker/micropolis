@@ -2,17 +2,9 @@
 
 
     <!-- Map View -->
-
-
-    <class name="mapview">
-
-
-	<simplelayout axis="y"/>
-
-
-	<text
-	    resize="true"
-	>Map View</text>
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
 
 
 <!--
@@ -38,6 +30,31 @@ Map
       Police Coverage
 
 -->
+
+
+    <class name="mapview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Map"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
 
 
     </class>
