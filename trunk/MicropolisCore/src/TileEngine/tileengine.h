@@ -61,6 +61,9 @@
  * NOT APPLY TO YOU.
  */
 
+/** @file tileengine.h
+ * Tile Engine include file
+ */
 
 ////////////////////////////////////////////////////////////////////////
 // Includes

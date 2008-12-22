@@ -212,7 +212,7 @@ private:
       // success code
       if (SWIG_IsNewObj(res) {
         ...
-        delete *ptr;
+	delete *ptr;
       } else {
         ...
       }
@@ -225,17 +225,17 @@ private:
    requires also to SWIG_ConvertPtr to return new result values, as
 
       int SWIG_ConvertPtr(obj, ptr,...) {         
-        if (<obj is ok>) {                             
-          if (<need new object>) {                     
+        if (<obj is ok>) {			       
+          if (<need new object>) {		       
             *ptr = <ptr to new allocated object>; 
-            return SWIG_NEWOBJ;                
-          } else {                                     
-            *ptr = <ptr to old object>;        
-            return SWIG_OLDOBJ;                
-          }                                    
-        } else {                                       
-          return SWIG_BADOBJ;                  
-        }                                              
+            return SWIG_NEWOBJ;		       
+          } else {				       
+            *ptr = <ptr to old object>;	       
+            return SWIG_OLDOBJ;		       
+          } 				       
+        } else {				       
+          return SWIG_BADOBJ;		       
+        }					       
       }
 
    Of course, returning the plain '0(success)/-1(fail)' still works, but you can be
@@ -317,32 +317,32 @@ typedef struct swig_type_info *(*swig_dycast_func)(void **);
 
 /* Structure to store inforomation on one type */
 typedef struct swig_type_info {
-  const char             *name;                 /* mangled name of this type */
-  const char             *str;                  /* human readable name of this type */
-  swig_dycast_func        dcast;                /* dynamic cast function down a hierarchy */
-  struct swig_cast_info  *cast;                 /* linked list of types that can cast into this type */
-  void                   *clientdata;           /* language specific type data */
-  int                    owndata;               /* flag if the structure owns the clientdata */
+  const char             *name;			/* mangled name of this type */
+  const char             *str;			/* human readable name of this type */
+  swig_dycast_func        dcast;		/* dynamic cast function down a hierarchy */
+  struct swig_cast_info  *cast;			/* linked list of types that can cast into this type */
+  void                   *clientdata;		/* language specific type data */
+  int                    owndata;		/* flag if the structure owns the clientdata */
 } swig_type_info;
 
 /* Structure to store a type and conversion function used for casting */
 typedef struct swig_cast_info {
-  swig_type_info         *type;                 /* pointer to type that is equivalent to this type */
-  swig_converter_func     converter;            /* function to cast the void pointers */
-  struct swig_cast_info  *next;                 /* pointer to next cast in linked list */
-  struct swig_cast_info  *prev;                 /* pointer to the previous cast */
+  swig_type_info         *type;			/* pointer to type that is equivalent to this type */
+  swig_converter_func     converter;		/* function to cast the void pointers */
+  struct swig_cast_info  *next;			/* pointer to next cast in linked list */
+  struct swig_cast_info  *prev;			/* pointer to the previous cast */
 } swig_cast_info;
 
 /* Structure used to store module information
  * Each module generates one structure like this, and the runtime collects
  * all of these structures and stores them in a circularly linked list.*/
 typedef struct swig_module_info {
-  swig_type_info         **types;               /* Array of pointers to swig_type_info structures that are in this module */
-  size_t                 size;                  /* Number of types in this module */
-  struct swig_module_info *next;                /* Pointer to next element in circularly linked list */
-  swig_type_info         **type_initial;        /* Array of initially generated type structures */
-  swig_cast_info         **cast_initial;        /* Array of initially generated casting structures */
-  void                    *clientdata;          /* Language specific module data */
+  swig_type_info         **types;		/* Array of pointers to swig_type_info structures that are in this module */
+  size_t                 size;		        /* Number of types in this module */
+  struct swig_module_info *next;		/* Pointer to next element in circularly linked list */
+  swig_type_info         **type_initial;	/* Array of initially generated type structures */
+  swig_cast_info         **cast_initial;	/* Array of initially generated casting structures */
+  void                    *clientdata;		/* Language specific module data */
 } swig_module_info;
 
 /* 
@@ -354,7 +354,7 @@ typedef struct swig_module_info {
 */
 SWIGRUNTIME int
 SWIG_TypeNameComp(const char *f1, const char *l1,
-                  const char *f2, const char *l2) {
+		  const char *f2, const char *l2) {
   for (;(f1 != l1) && (f2 != l2); ++f1, ++f2) {
     while ((*f1 == ' ') && (f1 != l1)) ++f1;
     while ((*f2 == ' ') && (f2 != l2)) ++f2;
@@ -503,7 +503,7 @@ SWIG_TypeClientData(swig_type_info *ti, void *clientdata) {
     if (!cast->converter) {
       swig_type_info *tc = cast->type;
       if (!tc->clientdata) {
-        SWIG_TypeClientData(tc, clientdata);
+	SWIG_TypeClientData(tc, clientdata);
       }
     }    
     cast = cast->next;
@@ -526,32 +526,32 @@ SWIG_TypeNewClientData(swig_type_info *ti, void *clientdata) {
 SWIGRUNTIME swig_type_info *
 SWIG_MangledTypeQueryModule(swig_module_info *start, 
                             swig_module_info *end, 
-                            const char *name) {
+		            const char *name) {
   swig_module_info *iter = start;
   do {
     if (iter->size) {
       register size_t l = 0;
       register size_t r = iter->size - 1;
       do {
-        /* since l+r >= 0, we can (>> 1) instead (/ 2) */
-        register size_t i = (l + r) >> 1; 
-        const char *iname = iter->types[i]->name;
-        if (iname) {
-          register int compare = strcmp(name, iname);
-          if (compare == 0) {       
-            return iter->types[i];
-          } else if (compare < 0) {
-            if (i) {
-              r = i - 1;
-            } else {
-              break;
-            }
-          } else if (compare > 0) {
-            l = i + 1;
-          }
-        } else {
-          break; /* should never happen */
-        }
+	/* since l+r >= 0, we can (>> 1) instead (/ 2) */
+	register size_t i = (l + r) >> 1; 
+	const char *iname = iter->types[i]->name;
+	if (iname) {
+	  register int compare = strcmp(name, iname);
+	  if (compare == 0) {	    
+	    return iter->types[i];
+	  } else if (compare < 0) {
+	    if (i) {
+	      r = i - 1;
+	    } else {
+	      break;
+	    }
+	  } else if (compare > 0) {
+	    l = i + 1;
+	  }
+	} else {
+	  break; /* should never happen */
+	}
       } while (l <= r);
     }
     iter = iter->next;
@@ -571,7 +571,7 @@ SWIG_MangledTypeQueryModule(swig_module_info *start,
 SWIGRUNTIME swig_type_info *
 SWIG_TypeQueryModule(swig_module_info *start, 
                      swig_module_info *end, 
-                     const char *name) {
+		     const char *name) {
   /* STEP 1: Search the name field using binary search */
   swig_type_info *ret = SWIG_MangledTypeQueryModule(start, end, name);
   if (ret) {
@@ -583,8 +583,8 @@ SWIG_TypeQueryModule(swig_module_info *start,
     do {
       register size_t i = 0;
       for (; i < iter->size; ++i) {
-        if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
-          return iter->types[i];
+	if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
+	  return iter->types[i];
       }
       iter = iter->next;
     } while (iter != end);
@@ -698,18 +698,18 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #endif
 
 /*  Errors in SWIG */
-#define  SWIG_UnknownError         -1 
-#define  SWIG_IOError              -2 
-#define  SWIG_RuntimeError         -3 
-#define  SWIG_IndexError           -4 
-#define  SWIG_TypeError            -5 
-#define  SWIG_DivisionByZero       -6 
-#define  SWIG_OverflowError        -7 
-#define  SWIG_SyntaxError          -8 
-#define  SWIG_ValueError           -9 
-#define  SWIG_SystemError          -10
-#define  SWIG_AttributeError       -11
-#define  SWIG_MemoryError          -12 
+#define  SWIG_UnknownError    	   -1 
+#define  SWIG_IOError        	   -2 
+#define  SWIG_RuntimeError   	   -3 
+#define  SWIG_IndexError     	   -4 
+#define  SWIG_TypeError      	   -5 
+#define  SWIG_DivisionByZero 	   -6 
+#define  SWIG_OverflowError  	   -7 
+#define  SWIG_SyntaxError    	   -8 
+#define  SWIG_ValueError     	   -9 
+#define  SWIG_SystemError    	   -10
+#define  SWIG_AttributeError 	   -11
+#define  SWIG_MemoryError    	   -12 
 #define  SWIG_NullReferenceError   -13
 
 
@@ -1024,10 +1024,10 @@ typedef struct swig_const_info {
 #define SWIG_NewClientData(obj)                         PySwigClientData_New(obj)
 
 #define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj                            
-#define SWIG_SetErrorMsg                                SWIG_Python_SetErrorMsg                            
-#define SWIG_ErrorType(code)                            SWIG_Python_ErrorType(code)                        
-#define SWIG_Error(code, msg)                           SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
-#define SWIG_fail                                       goto fail                                          
+#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg				   
+#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)                        
+#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
+#define SWIG_fail                        		goto fail					   
 
 
 /* Runtime API implementation */
@@ -1114,7 +1114,7 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, int min, int max, PyOb
       return 1;
     } else {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none", 
-                   name, (min == max ? "" : "at least "), min);
+		   name, (min == max ? "" : "at least "), min);
       return 0;
     }
   }  
@@ -1125,19 +1125,19 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, int min, int max, PyOb
     register int l = PyTuple_GET_SIZE(args);
     if (l < min) {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
-                   name, (min == max ? "" : "at least "), min, l);
+		   name, (min == max ? "" : "at least "), min, l);
       return 0;
     } else if (l > max) {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
-                   name, (min == max ? "" : "at most "), max, l);
+		   name, (min == max ? "" : "at most "), max, l);
       return 0;
     } else {
       register int i;
       for (i = 0; i < l; ++i) {
-        objs[i] = PyTuple_GET_ITEM(args, i);
+	objs[i] = PyTuple_GET_ITEM(args, i);
       }
       for (; l < max; ++l) {
-        objs[l] = 0;
+	objs[l] = 0;
       }
       return i + 1;
     }    
@@ -1146,9 +1146,9 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, int min, int max, PyOb
 
 /* A functor is a function object with one single object argument */
 #if PY_VERSION_HEX >= 0x02020000
-#define SWIG_Python_CallFunctor(functor, obj)           PyObject_CallFunctionObjArgs(functor, obj, NULL);
+#define SWIG_Python_CallFunctor(functor, obj)	        PyObject_CallFunctionObjArgs(functor, obj, NULL);
 #else
-#define SWIG_Python_CallFunctor(functor, obj)           PyObject_CallFunction(functor, "O", obj);
+#define SWIG_Python_CallFunctor(functor, obj)	        PyObject_CallFunction(functor, "O", obj);
 #endif
 
 /*
@@ -1265,11 +1265,11 @@ PySwigClientData_New(PyObject* obj)
       data->newraw = PyObject_GetAttrString(data->klass, (char *)"__new__");
 #endif
       if (data->newraw) {
-        Py_INCREF(data->newraw);
-        data->newargs = PyTuple_New(1);
-        PyTuple_SetItem(data->newargs, 0, obj);
+	Py_INCREF(data->newraw);
+	data->newargs = PyTuple_New(1);
+	PyTuple_SetItem(data->newargs, 0, obj);
       } else {
-        data->newargs = obj;
+	data->newargs = obj;
       }
       Py_INCREF(data->newargs);
     }
@@ -1329,8 +1329,8 @@ PySwigObject_format(const char* fmt, PySwigObject *v)
     if (PyTuple_SetItem(args, 0, PySwigObject_long(v)) == 0) {
       PyObject *ofmt = PyString_FromString(fmt);
       if (ofmt) {
-        res = PyString_Format(ofmt,args);
-        Py_DECREF(ofmt);
+	res = PyString_Format(ofmt,args);
+	Py_DECREF(ofmt);
       }
       Py_DECREF(args);
     }
@@ -1435,14 +1435,14 @@ PySwigObject_dealloc(PyObject *v)
       /* destroy is always a VARARGS method */
       PyObject *res;
       if (data->delargs) {
-        /* we need to create a temporal object to carry the destroy operation */
-        PyObject *tmp = PySwigObject_New(sobj->ptr, ty, 0);
-        res = SWIG_Python_CallFunctor(destroy, tmp);
-        Py_DECREF(tmp);
+	/* we need to create a temporal object to carry the destroy operation */
+	PyObject *tmp = PySwigObject_New(sobj->ptr, ty, 0);
+	res = SWIG_Python_CallFunctor(destroy, tmp);
+	Py_DECREF(tmp);
       } else {
-        PyCFunction meth = PyCFunction_GET_FUNCTION(destroy);
-        PyObject *mself = PyCFunction_GET_SELF(destroy);
-        res = ((*meth)(mself, v));
+	PyCFunction meth = PyCFunction_GET_FUNCTION(destroy);
+	PyObject *mself = PyCFunction_GET_SELF(destroy);
+	res = ((*meth)(mself, v));
       }
       Py_XDECREF(res);
     } else {
@@ -1531,17 +1531,17 @@ PySwigObject_own(PyObject *v, PyObject *args)
       PyObject *obj = PyBool_FromLong(sobj->own);
       if (val) {
 #ifdef METH_NOARGS
-        if (PyObject_IsTrue(val)) {
-          PySwigObject_acquire(v);
-        } else {
-          PySwigObject_disown(v);
-        }
+	if (PyObject_IsTrue(val)) {
+	  PySwigObject_acquire(v);
+	} else {
+	  PySwigObject_disown(v);
+	}
 #else
-        if (PyObject_IsTrue(val)) {
-          PySwigObject_acquire(v,args);
-        } else {
-          PySwigObject_disown(v,args);
-        }
+	if (PyObject_IsTrue(val)) {
+	  PySwigObject_acquire(v,args);
+	} else {
+	  PySwigObject_disown(v,args);
+	}
 #endif
       } 
       return obj;
@@ -1596,12 +1596,12 @@ _PySwigObject_type(void) {
     (unaryfunc)0,  /*nb_positive*/
     (unaryfunc)0,  /*nb_absolute*/
     (inquiry)0,    /*nb_nonzero*/
-    0,             /*nb_invert*/
-    0,             /*nb_lshift*/
-    0,             /*nb_rshift*/
-    0,             /*nb_and*/
-    0,             /*nb_xor*/
-    0,             /*nb_or*/
+    0,		   /*nb_invert*/
+    0,		   /*nb_lshift*/
+    0,		   /*nb_rshift*/
+    0,		   /*nb_and*/
+    0,		   /*nb_xor*/
+    0,		   /*nb_or*/
     (coercion)0,   /*nb_coerce*/
     (unaryfunc)PySwigObject_long, /*nb_int*/
     (unaryfunc)PySwigObject_long, /*nb_long*/
@@ -1620,63 +1620,63 @@ _PySwigObject_type(void) {
   if (!type_init) {
     const PyTypeObject tmp
       = {
-        PyObject_HEAD_INIT(NULL)
-        0,                                  /* ob_size */
-        (char *)"PySwigObject",             /* tp_name */
-        sizeof(PySwigObject),               /* tp_basicsize */
-        0,                                  /* tp_itemsize */
-        (destructor)PySwigObject_dealloc,   /* tp_dealloc */
-        (printfunc)PySwigObject_print,      /* tp_print */
+	PyObject_HEAD_INIT(NULL)
+	0,				    /* ob_size */
+	(char *)"PySwigObject",		    /* tp_name */
+	sizeof(PySwigObject),		    /* tp_basicsize */
+	0,			            /* tp_itemsize */
+	(destructor)PySwigObject_dealloc,   /* tp_dealloc */
+	(printfunc)PySwigObject_print,	    /* tp_print */
 #if PY_VERSION_HEX < 0x02020000
-        (getattrfunc)PySwigObject_getattr,  /* tp_getattr */ 
+	(getattrfunc)PySwigObject_getattr,  /* tp_getattr */ 
 #else
-        (getattrfunc)0,                     /* tp_getattr */ 
+	(getattrfunc)0,			    /* tp_getattr */ 
 #endif
-        (setattrfunc)0,                     /* tp_setattr */ 
-        (cmpfunc)PySwigObject_compare,      /* tp_compare */ 
-        (reprfunc)PySwigObject_repr,        /* tp_repr */    
-        &PySwigObject_as_number,            /* tp_as_number */
-        0,                                  /* tp_as_sequence */
-        0,                                  /* tp_as_mapping */
-        (hashfunc)0,                        /* tp_hash */
-        (ternaryfunc)0,                     /* tp_call */
-        (reprfunc)PySwigObject_str,         /* tp_str */
-        PyObject_GenericGetAttr,            /* tp_getattro */
-        0,                                  /* tp_setattro */
-        0,                                  /* tp_as_buffer */
-        Py_TPFLAGS_DEFAULT,                 /* tp_flags */
-        swigobject_doc,                     /* tp_doc */        
-        0,                                  /* tp_traverse */
-        0,                                  /* tp_clear */
-        0,                                  /* tp_richcompare */
-        0,                                  /* tp_weaklistoffset */
+	(setattrfunc)0,			    /* tp_setattr */ 
+	(cmpfunc)PySwigObject_compare,	    /* tp_compare */ 
+	(reprfunc)PySwigObject_repr,	    /* tp_repr */    
+	&PySwigObject_as_number,	    /* tp_as_number */
+	0,				    /* tp_as_sequence */
+	0,				    /* tp_as_mapping */
+	(hashfunc)0,			    /* tp_hash */
+	(ternaryfunc)0,			    /* tp_call */
+	(reprfunc)PySwigObject_str,	    /* tp_str */
+	PyObject_GenericGetAttr,            /* tp_getattro */
+	0,				    /* tp_setattro */
+	0,		                    /* tp_as_buffer */
+	Py_TPFLAGS_DEFAULT,	            /* tp_flags */
+	swigobject_doc, 	            /* tp_doc */        
+	0,                                  /* tp_traverse */
+	0,                                  /* tp_clear */
+	0,                                  /* tp_richcompare */
+	0,                                  /* tp_weaklistoffset */
 #if PY_VERSION_HEX >= 0x02020000
-        0,                                  /* tp_iter */
-        0,                                  /* tp_iternext */
-        swigobject_methods,                 /* tp_methods */ 
-        0,                                  /* tp_members */
-        0,                                  /* tp_getset */             
-        0,                                  /* tp_base */               
-        0,                                  /* tp_dict */               
-        0,                                  /* tp_descr_get */          
-        0,                                  /* tp_descr_set */          
-        0,                                  /* tp_dictoffset */         
-        0,                                  /* tp_init */               
-        0,                                  /* tp_alloc */              
-        0,                                  /* tp_new */                
-        0,                                  /* tp_free */          
+	0,                                  /* tp_iter */
+	0,                                  /* tp_iternext */
+	swigobject_methods,		    /* tp_methods */ 
+	0,			            /* tp_members */
+	0,				    /* tp_getset */	    	
+	0,			            /* tp_base */	        
+	0,				    /* tp_dict */	    	
+	0,				    /* tp_descr_get */  	
+	0,				    /* tp_descr_set */  	
+	0,				    /* tp_dictoffset */ 	
+	0,				    /* tp_init */	    	
+	0,				    /* tp_alloc */	    	
+	0,			            /* tp_new */	    	
+	0,	                            /* tp_free */	   
         0,                                  /* tp_is_gc */  
-        0,                                  /* tp_bases */   
-        0,                                  /* tp_mro */
-        0,                                  /* tp_cache */   
-        0,                                  /* tp_subclasses */
-        0,                                  /* tp_weaklist */
+	0,				    /* tp_bases */   
+	0,				    /* tp_mro */
+	0,				    /* tp_cache */   
+ 	0,				    /* tp_subclasses */
+	0,				    /* tp_weaklist */
 #endif
 #if PY_VERSION_HEX >= 0x02030000
-        0,                                  /* tp_del */
+	0,                                  /* tp_del */
 #endif
 #ifdef COUNT_ALLOCS
-        0,0,0,0                             /* tp_alloc -> tp_next */
+	0,0,0,0                             /* tp_alloc -> tp_next */
 #endif
       };
     pyswigobject_type = tmp;
@@ -1787,59 +1787,59 @@ _PySwigPacked_type(void) {
   if (!type_init) {
     const PyTypeObject tmp
       = {
-        PyObject_HEAD_INIT(NULL)
-        0,                                  /* ob_size */       
-        (char *)"PySwigPacked",             /* tp_name */       
-        sizeof(PySwigPacked),               /* tp_basicsize */  
-        0,                                  /* tp_itemsize */   
-        (destructor)PySwigPacked_dealloc,   /* tp_dealloc */    
-        (printfunc)PySwigPacked_print,      /* tp_print */      
-        (getattrfunc)0,                     /* tp_getattr */    
-        (setattrfunc)0,                     /* tp_setattr */    
-        (cmpfunc)PySwigPacked_compare,      /* tp_compare */    
-        (reprfunc)PySwigPacked_repr,        /* tp_repr */       
-        0,                                  /* tp_as_number */  
-        0,                                  /* tp_as_sequence */
-        0,                                  /* tp_as_mapping */ 
-        (hashfunc)0,                        /* tp_hash */       
-        (ternaryfunc)0,                     /* tp_call */       
-        (reprfunc)PySwigPacked_str,         /* tp_str */        
-        PyObject_GenericGetAttr,            /* tp_getattro */
-        0,                                  /* tp_setattro */
-        0,                                  /* tp_as_buffer */
-        Py_TPFLAGS_DEFAULT,                 /* tp_flags */
-        swigpacked_doc,                     /* tp_doc */
-        0,                                  /* tp_traverse */
-        0,                                  /* tp_clear */
-        0,                                  /* tp_richcompare */
-        0,                                  /* tp_weaklistoffset */
+	PyObject_HEAD_INIT(NULL)
+	0,				    /* ob_size */	
+	(char *)"PySwigPacked",		    /* tp_name */	
+	sizeof(PySwigPacked),		    /* tp_basicsize */	
+	0,				    /* tp_itemsize */	
+	(destructor)PySwigPacked_dealloc,   /* tp_dealloc */	
+	(printfunc)PySwigPacked_print,	    /* tp_print */   	
+	(getattrfunc)0,			    /* tp_getattr */ 	
+	(setattrfunc)0,			    /* tp_setattr */ 	
+	(cmpfunc)PySwigPacked_compare,	    /* tp_compare */ 	
+	(reprfunc)PySwigPacked_repr,	    /* tp_repr */    	
+	0,	                            /* tp_as_number */	
+	0,				    /* tp_as_sequence */
+	0,				    /* tp_as_mapping */	
+	(hashfunc)0,			    /* tp_hash */	
+	(ternaryfunc)0,			    /* tp_call */	
+	(reprfunc)PySwigPacked_str,	    /* tp_str */	
+	PyObject_GenericGetAttr,            /* tp_getattro */
+	0,				    /* tp_setattro */
+	0,		                    /* tp_as_buffer */
+	Py_TPFLAGS_DEFAULT,	            /* tp_flags */
+	swigpacked_doc, 	            /* tp_doc */
+	0,                                  /* tp_traverse */
+	0,                                  /* tp_clear */
+	0,                                  /* tp_richcompare */
+	0,                                  /* tp_weaklistoffset */
 #if PY_VERSION_HEX >= 0x02020000
-        0,                                  /* tp_iter */
-        0,                                  /* tp_iternext */
-        0,                                  /* tp_methods */ 
-        0,                                  /* tp_members */
-        0,                                  /* tp_getset */             
-        0,                                  /* tp_base */               
-        0,                                  /* tp_dict */               
-        0,                                  /* tp_descr_get */          
-        0,                                  /* tp_descr_set */          
-        0,                                  /* tp_dictoffset */         
-        0,                                  /* tp_init */               
-        0,                                  /* tp_alloc */              
-        0,                                  /* tp_new */                
-        0,                                  /* tp_free */          
+	0,                                  /* tp_iter */
+	0,                                  /* tp_iternext */
+	0,		                    /* tp_methods */ 
+	0,			            /* tp_members */
+	0,				    /* tp_getset */	    	
+	0,			            /* tp_base */	        
+	0,				    /* tp_dict */	    	
+	0,				    /* tp_descr_get */  	
+	0,				    /* tp_descr_set */  	
+	0,				    /* tp_dictoffset */ 	
+	0,				    /* tp_init */	    	
+	0,				    /* tp_alloc */	    	
+	0,			            /* tp_new */	    	
+	0, 	                            /* tp_free */	   
         0,                                  /* tp_is_gc */  
-        0,                                  /* tp_bases */   
-        0,                                  /* tp_mro */
-        0,                                  /* tp_cache */   
-        0,                                  /* tp_subclasses */
-        0,                                  /* tp_weaklist */
+	0,				    /* tp_bases */   
+	0,				    /* tp_mro */
+	0,				    /* tp_cache */   
+ 	0,				    /* tp_subclasses */
+	0,				    /* tp_weaklist */
 #endif
 #if PY_VERSION_HEX >= 0x02030000
-        0,                                  /* tp_del */
+	0,                                  /* tp_del */
 #endif
 #ifdef COUNT_ALLOCS
-        0,0,0,0                             /* tp_alloc -> tp_next */
+	0,0,0,0                             /* tp_alloc -> tp_next */
 #endif
       };
     pyswigpacked_type = tmp;
@@ -1913,22 +1913,22 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
     } else {
       PyObject **dictptr = _PyObject_GetDictPtr(pyobj);
       if (dictptr != NULL) {
-        PyObject *dict = *dictptr;
-        obj = dict ? PyDict_GetItem(dict, SWIG_This()) : 0;
+	PyObject *dict = *dictptr;
+	obj = dict ? PyDict_GetItem(dict, SWIG_This()) : 0;
       } else {
 #ifdef PyWeakref_CheckProxy
-        if (PyWeakref_CheckProxy(pyobj)) {
-          PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
-          return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
-        }
+	if (PyWeakref_CheckProxy(pyobj)) {
+	  PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
+	  return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
+	}
 #endif
-        obj = PyObject_GetAttr(pyobj,SWIG_This());
-        if (obj) {
-          Py_DECREF(obj);
-        } else {
-          if (PyErr_Occurred()) PyErr_Clear();
-          return 0;
-        }
+	obj = PyObject_GetAttr(pyobj,SWIG_This());
+	if (obj) {
+	  Py_DECREF(obj);
+	} else {
+	  if (PyErr_Occurred()) PyErr_Clear();
+	  return 0;
+	}
       }
     }
 #else
@@ -1942,7 +1942,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 #endif
     if (obj && !PySwigObject_Check(obj)) {
       /* a PyObject is called 'this', try to get the 'real this'
-         PySwigObject from it */ 
+	 PySwigObject from it */ 
       return SWIG_Python_GetSwigThis(obj);
     }
     return (PySwigObject *)obj;
@@ -1977,67 +1977,67 @@ SWIG_Python_ConvertPtrAndOwn(PyObject *obj, void **ptr, swig_type_info *ty, int 
     while (sobj) {
       void *vptr = sobj->ptr;
       if (ty) {
-        swig_type_info *to = sobj->ty;
-        if (to == ty) {
-          /* no type cast needed */
-          if (ptr) *ptr = vptr;
-          break;
-        } else {
-          swig_cast_info *tc = SWIG_TypeCheck(to->name,ty);
-          if (!tc) {
-            sobj = (PySwigObject *)sobj->next;
-          } else {
-            if (ptr) *ptr = SWIG_TypeCast(tc,vptr);
-            break;
-          }
-        }
+	swig_type_info *to = sobj->ty;
+	if (to == ty) {
+	  /* no type cast needed */
+	  if (ptr) *ptr = vptr;
+	  break;
+	} else {
+	  swig_cast_info *tc = SWIG_TypeCheck(to->name,ty);
+	  if (!tc) {
+	    sobj = (PySwigObject *)sobj->next;
+	  } else {
+	    if (ptr) *ptr = SWIG_TypeCast(tc,vptr);
+	    break;
+	  }
+	}
       } else {
-        if (ptr) *ptr = vptr;
-        break;
+	if (ptr) *ptr = vptr;
+	break;
       }
     }
     if (sobj) {
       if (own) *own = sobj->own;
       if (flags & SWIG_POINTER_DISOWN) {
-        sobj->own = 0;
+	sobj->own = 0;
       }
       return SWIG_OK;
     } else {
       int res = SWIG_ERROR;
       if (flags & SWIG_POINTER_IMPLICIT_CONV) {
-        PySwigClientData *data = ty ? (PySwigClientData *) ty->clientdata : 0;
-        if (data && !data->implicitconv) {
-          PyObject *klass = data->klass;
-          if (klass) {
-            PyObject *impconv;
-            data->implicitconv = 1; /* avoid recursion and call 'explicit' constructors*/
-            impconv = SWIG_Python_CallFunctor(klass, obj);
-            data->implicitconv = 0;
-            if (PyErr_Occurred()) {
-              PyErr_Clear();
-              impconv = 0;
-            }
-            if (impconv) {
-              PySwigObject *iobj = SWIG_Python_GetSwigThis(impconv);
-              if (iobj) {
-                void *vptr;
-                res = SWIG_Python_ConvertPtrAndOwn((PyObject*)iobj, &vptr, ty, 0, 0);
-                if (SWIG_IsOK(res)) {
-                  if (ptr) {
-                    *ptr = vptr;
-                    /* transfer the ownership to 'ptr' */
-                    iobj->own = 0;
-                    res = SWIG_AddCast(res);
-                    res = SWIG_AddNewMask(res);
-                  } else {
-                    res = SWIG_AddCast(res);                
-                  }
-                }
-              }
-              Py_DECREF(impconv);
-            }
-          }
-        }
+	PySwigClientData *data = ty ? (PySwigClientData *) ty->clientdata : 0;
+	if (data && !data->implicitconv) {
+	  PyObject *klass = data->klass;
+	  if (klass) {
+	    PyObject *impconv;
+	    data->implicitconv = 1; /* avoid recursion and call 'explicit' constructors*/
+	    impconv = SWIG_Python_CallFunctor(klass, obj);
+	    data->implicitconv = 0;
+	    if (PyErr_Occurred()) {
+	      PyErr_Clear();
+	      impconv = 0;
+	    }
+	    if (impconv) {
+	      PySwigObject *iobj = SWIG_Python_GetSwigThis(impconv);
+	      if (iobj) {
+		void *vptr;
+		res = SWIG_Python_ConvertPtrAndOwn((PyObject*)iobj, &vptr, ty, 0, 0);
+		if (SWIG_IsOK(res)) {
+		  if (ptr) {
+		    *ptr = vptr;
+		    /* transfer the ownership to 'ptr' */
+		    iobj->own = 0;
+		    res = SWIG_AddCast(res);
+		    res = SWIG_AddNewMask(res);
+		  } else {
+		    res = SWIG_AddCast(res);		    
+		  }
+		}
+	      }
+	      Py_DECREF(impconv);
+	    }
+	  }
+	}
       }
       return res;
     }
@@ -2108,12 +2108,12 @@ SWIG_Python_NewShadowInstance(PySwigClientData *data, PyObject *swig_this)
 #if !defined(SWIG_PYTHON_SLOW_GETSET_THIS)
       PyObject **dictptr = _PyObject_GetDictPtr(inst);
       if (dictptr != NULL) {
-        PyObject *dict = *dictptr;
-        if (dict == NULL) {
-          dict = PyDict_New();
-          *dictptr = dict;
-          PyDict_SetItem(dict, SWIG_This(), swig_this);
-        }
+	PyObject *dict = *dictptr;
+	if (dict == NULL) {
+	  dict = PyDict_New();
+	  *dictptr = dict;
+	  PyDict_SetItem(dict, SWIG_This(), swig_this);
+	}
       }
 #else
       PyObject *key = SWIG_This();
@@ -2210,8 +2210,8 @@ SWIG_Python_NewPointerObj(void *ptr, swig_type_info *type, int flags) {
     if (clientdata && !(flags & SWIG_POINTER_NOSHADOW)) {
       PyObject *inst = SWIG_Python_NewShadowInstance(clientdata, robj);
       if (inst) {
-        Py_DECREF(robj);
-        robj = inst;
+	Py_DECREF(robj);
+	robj = inst;
       }
     }
     return robj;
@@ -2242,7 +2242,7 @@ SWIG_Python_GetModule(void) {
     type_pointer = SWIG_ReturnGlobalTypeList((void *)0);
 #else
     type_pointer = PyCObject_Import((char*)"swig_runtime_data" SWIG_RUNTIME_VERSION,
-                                    (char*)"type_pointer" SWIG_TYPE_TABLE_NAME);
+				    (char*)"type_pointer" SWIG_TYPE_TABLE_NAME);
     if (PyErr_Occurred()) {
       PyErr_Clear();
       type_pointer = (void *)0;
@@ -2261,12 +2261,12 @@ PyModule_AddObject(PyObject *m, char *name, PyObject *o)
   PyObject *dict;
   if (!PyModule_Check(m)) {
     PyErr_SetString(PyExc_TypeError,
-                    "PyModule_AddObject() needs module as first arg");
+		    "PyModule_AddObject() needs module as first arg");
     return SWIG_ERROR;
   }
   if (!o) {
     PyErr_SetString(PyExc_TypeError,
-                    "PyModule_AddObject() needs non-NULL value");
+		    "PyModule_AddObject() needs non-NULL value");
     return SWIG_ERROR;
   }
   
@@ -2274,7 +2274,7 @@ PyModule_AddObject(PyObject *m, char *name, PyObject *o)
   if (dict == NULL) {
     /* Internal error -- modules must have a dict! */
     PyErr_Format(PyExc_SystemError, "module '%s' has no __dict__",
-                 PyModule_GetName(m));
+		 PyModule_GetName(m));
     return SWIG_ERROR;
   }
   if (PyDict_SetItemString(dict, name, o))
@@ -2305,7 +2305,7 @@ SWIG_Python_SetModule(swig_module_info *swig_module) {
   static PyMethodDef swig_empty_runtime_method_table[] = { {NULL, NULL, 0, NULL} };/* Sentinel */
 
   PyObject *module = Py_InitModule((char*)"swig_runtime_data" SWIG_RUNTIME_VERSION,
-                                   swig_empty_runtime_method_table);
+				   swig_empty_runtime_method_table);
   PyObject *pointer = PyCObject_FromVoidPtr((void *) swig_module, SWIG_Python_DestroyModule);
   if (pointer && module) {
     PyModule_AddObject(module, (char*)"type_pointer" SWIG_TYPE_TABLE_NAME, pointer);
@@ -2363,9 +2363,9 @@ SWIG_Python_AddErrMesg(const char* mesg, int infront)
       Py_XINCREF(type);
       PyErr_Clear();
       if (infront) {
-        PyErr_Format(type, "%s %s", mesg, PyString_AsString(old_str));
+	PyErr_Format(type, "%s %s", mesg, PyString_AsString(old_str));
       } else {
-        PyErr_Format(type, "%s %s", PyString_AsString(old_str), mesg);
+	PyErr_Format(type, "%s %s", PyString_AsString(old_str), mesg);
       }
       Py_DECREF(old_str);
     }
@@ -2404,26 +2404,26 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
     if (obj && PySwigObject_Check(obj)) {
       const char *otype = (const char *) PySwigObject_GetDesc(obj);
       if (otype) {
-        PyErr_Format(PyExc_TypeError, "a '%s' is expected, 'PySwigObject(%s)' is received",
-                     type, otype);
-        return;
+	PyErr_Format(PyExc_TypeError, "a '%s' is expected, 'PySwigObject(%s)' is received",
+		     type, otype);
+	return;
       }
     } else 
 #endif      
     {
       const char *otype = (obj ? obj->ob_type->tp_name : 0); 
       if (otype) {
-        PyObject *str = PyObject_Str(obj);
-        const char *cstr = str ? PyString_AsString(str) : 0;
-        if (cstr) {
-          PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s(%s)' is received",
-                       type, otype, cstr);
-        } else {
-          PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s' is received",
-                       type, otype);
-        }
-        Py_XDECREF(str);
-        return;
+	PyObject *str = PyObject_Str(obj);
+	const char *cstr = str ? PyString_AsString(str) : 0;
+	if (cstr) {
+	  PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s(%s)' is received",
+		       type, otype, cstr);
+	} else {
+	  PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s' is received",
+		       type, otype);
+	}
+	Py_XDECREF(str);
+	return;
       }
     }   
     PyErr_Format(PyExc_TypeError, "a '%s' is expected", type);
@@ -2813,7 +2813,7 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
     if (size > INT_MAX) {
       swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
       return pchar_descriptor ? 
-        SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+	SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
     } else {
       return PyString_FromStringAndSize(carray, static_cast< int >(size));
     }
@@ -2848,30 +2848,30 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
     PyString_AsStringAndSize(obj, &cstr, &len);
     if (cptr)  {
       if (alloc) {
-        /* 
-           In python the user should not be able to modify the inner
-           string representation. To warranty that, if you define
-           SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
-           buffer is always returned.
+	/* 
+	   In python the user should not be able to modify the inner
+	   string representation. To warranty that, if you define
+	   SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
+	   buffer is always returned.
 
-           The default behavior is just to return the pointer value,
-           so, be careful.
-        */ 
+	   The default behavior is just to return the pointer value,
+	   so, be careful.
+	*/ 
 #if defined(SWIG_PYTHON_SAFE_CSTRINGS)
-        if (*alloc != SWIG_OLDOBJ) 
+	if (*alloc != SWIG_OLDOBJ) 
 #else
-        if (*alloc == SWIG_NEWOBJ) 
+	if (*alloc == SWIG_NEWOBJ) 
 #endif
-          {
-            *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
-            *alloc = SWIG_NEWOBJ;
-          }
-        else {
-          *cptr = cstr;
-          *alloc = SWIG_OLDOBJ;
-        }
+	  {
+	    *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
+	    *alloc = SWIG_NEWOBJ;
+	  }
+	else {
+	  *cptr = cstr;
+	  *alloc = SWIG_OLDOBJ;
+	}
       } else {
-        *cptr = PyString_AsString(obj);
+	*cptr = PyString_AsString(obj);
       }
     }
     if (psize) *psize = len + 1;
@@ -2881,10 +2881,10 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
     if (pchar_descriptor) {
       void* vptr = 0;
       if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
-        if (cptr) *cptr = (char *) vptr;
-        if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
-        if (alloc) *alloc = SWIG_OLDOBJ;
-        return SWIG_OK;
+	if (cptr) *cptr = (char *) vptr;
+	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
+	if (alloc) *alloc = SWIG_OLDOBJ;
+	return SWIG_OK;
       }
     }
   }
@@ -2927,10 +2927,10 @@ SWIG_AsVal_double (PyObject *obj, double *val)
     if (!dispatch) {
       long v = PyLong_AsLong(obj);
       if (!PyErr_Occurred()) {
-        if (val) *val = v;
-        return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
+	if (val) *val = v;
+	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
       } else {
-        PyErr_Clear();
+	PyErr_Clear();
       }
     }
   }
@@ -3004,8 +3004,8 @@ SWIG_AsVal_long (PyObject *obj, long* val)
       double d;
       int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
       if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
-        if (val) *val = (long)(d);
-        return res;
+	if (val) *val = (long)(d);
+	return res;
       }
     }
   }
@@ -3023,12 +3023,12 @@ SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
     if ((csize == size + 1) && cptr && !(cptr[csize-1])) --csize;
     if (csize <= size) {
       if (val) {
-        if (csize) memcpy(val, cptr, csize*sizeof(char));
-        if (csize < size) memset(val + csize, 0, (size - csize)*sizeof(char));
+	if (csize) memcpy(val, cptr, csize*sizeof(char));
+	if (csize < size) memset(val + csize, 0, (size - csize)*sizeof(char));
       }
       if (alloc == SWIG_NEWOBJ) {
-        delete[] cptr;
-        res = SWIG_DelNewMask(res);
+	delete[] cptr;
+	res = SWIG_DelNewMask(res);
       }      
       return res;
     }
@@ -3040,13 +3040,13 @@ SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
 
 #include <limits.h>
 #ifndef LLONG_MIN
-# define LLONG_MIN      LONG_LONG_MIN
+# define LLONG_MIN	LONG_LONG_MIN
 #endif
 #ifndef LLONG_MAX
-# define LLONG_MAX      LONG_LONG_MAX
+# define LLONG_MAX	LONG_LONG_MAX
 #endif
 #ifndef ULLONG_MAX
-# define ULLONG_MAX     ULONG_LONG_MAX
+# define ULLONG_MAX	ULONG_LONG_MAX
 #endif
 
 
@@ -3149,8 +3149,8 @@ SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val)
       double d;
       int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
       if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
-        if (val) *val = (unsigned long)(d);
-        return res;
+	if (val) *val = (unsigned long)(d);
+	return res;
       }
     }
   }
@@ -30021,968 +30021,968 @@ SWIGINTERN PyObject *Micropolis_swigregister(PyObject *SWIGUNUSEDPARM(self), PyO
 }
 
 static PyMethodDef SwigMethods[] = {
-         { (char *)"GetPythonCallbackHook", _wrap_GetPythonCallbackHook, METH_VARARGS, NULL},
-         { (char *)"GetPythonCallbackData", _wrap_GetPythonCallbackData, METH_VARARGS, NULL},
-         { (char *)"Resource_buf_set", _wrap_Resource_buf_set, METH_VARARGS, NULL},
-         { (char *)"Resource_buf_get", _wrap_Resource_buf_get, METH_VARARGS, NULL},
-         { (char *)"Resource_size_set", _wrap_Resource_size_set, METH_VARARGS, NULL},
-         { (char *)"Resource_size_get", _wrap_Resource_size_get, METH_VARARGS, NULL},
-         { (char *)"Resource_name_set", _wrap_Resource_name_set, METH_VARARGS, NULL},
-         { (char *)"Resource_name_get", _wrap_Resource_name_get, METH_VARARGS, NULL},
-         { (char *)"Resource_id_set", _wrap_Resource_id_set, METH_VARARGS, NULL},
-         { (char *)"Resource_id_get", _wrap_Resource_id_get, METH_VARARGS, NULL},
-         { (char *)"Resource_next_set", _wrap_Resource_next_set, METH_VARARGS, NULL},
-         { (char *)"Resource_next_get", _wrap_Resource_next_get, METH_VARARGS, NULL},
-         { (char *)"new_Resource", _wrap_new_Resource, METH_VARARGS, NULL},
-         { (char *)"delete_Resource", _wrap_delete_Resource, METH_VARARGS, NULL},
-         { (char *)"Resource_swigregister", Resource_swigregister, METH_VARARGS, NULL},
-         { (char *)"StringTable_id_set", _wrap_StringTable_id_set, METH_VARARGS, NULL},
-         { (char *)"StringTable_id_get", _wrap_StringTable_id_get, METH_VARARGS, NULL},
-         { (char *)"StringTable_lines_set", _wrap_StringTable_lines_set, METH_VARARGS, NULL},
-         { (char *)"StringTable_lines_get", _wrap_StringTable_lines_get, METH_VARARGS, NULL},
-         { (char *)"StringTable_strings_set", _wrap_StringTable_strings_set, METH_VARARGS, NULL},
-         { (char *)"StringTable_strings_get", _wrap_StringTable_strings_get, METH_VARARGS, NULL},
-         { (char *)"StringTable_next_set", _wrap_StringTable_next_set, METH_VARARGS, NULL},
-         { (char *)"StringTable_next_get", _wrap_StringTable_next_get, METH_VARARGS, NULL},
-         { (char *)"new_StringTable", _wrap_new_StringTable, METH_VARARGS, NULL},
-         { (char *)"delete_StringTable", _wrap_delete_StringTable, METH_VARARGS, NULL},
-         { (char *)"StringTable_swigregister", StringTable_swigregister, METH_VARARGS, NULL},
-         { (char *)"SimSprite_next_set", _wrap_SimSprite_next_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_next_get", _wrap_SimSprite_next_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_name_set", _wrap_SimSprite_name_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_name_get", _wrap_SimSprite_name_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_type_set", _wrap_SimSprite_type_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_type_get", _wrap_SimSprite_type_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_frame_set", _wrap_SimSprite_frame_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_frame_get", _wrap_SimSprite_frame_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_set", _wrap_SimSprite_x_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_get", _wrap_SimSprite_x_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_set", _wrap_SimSprite_y_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_get", _wrap_SimSprite_y_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_width_set", _wrap_SimSprite_width_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_width_get", _wrap_SimSprite_width_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_height_set", _wrap_SimSprite_height_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_height_get", _wrap_SimSprite_height_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_offset_set", _wrap_SimSprite_x_offset_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_offset_get", _wrap_SimSprite_x_offset_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_offset_set", _wrap_SimSprite_y_offset_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_offset_get", _wrap_SimSprite_y_offset_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_hot_set", _wrap_SimSprite_x_hot_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_x_hot_get", _wrap_SimSprite_x_hot_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_hot_set", _wrap_SimSprite_y_hot_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_y_hot_get", _wrap_SimSprite_y_hot_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_orig_x_set", _wrap_SimSprite_orig_x_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_orig_x_get", _wrap_SimSprite_orig_x_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_orig_y_set", _wrap_SimSprite_orig_y_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_orig_y_get", _wrap_SimSprite_orig_y_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dest_x_set", _wrap_SimSprite_dest_x_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dest_x_get", _wrap_SimSprite_dest_x_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dest_y_set", _wrap_SimSprite_dest_y_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dest_y_get", _wrap_SimSprite_dest_y_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_count_set", _wrap_SimSprite_count_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_count_get", _wrap_SimSprite_count_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_sound_count_set", _wrap_SimSprite_sound_count_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_sound_count_get", _wrap_SimSprite_sound_count_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dir_set", _wrap_SimSprite_dir_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_dir_get", _wrap_SimSprite_dir_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_new_dir_set", _wrap_SimSprite_new_dir_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_new_dir_get", _wrap_SimSprite_new_dir_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_step_set", _wrap_SimSprite_step_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_step_get", _wrap_SimSprite_step_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_flag_set", _wrap_SimSprite_flag_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_flag_get", _wrap_SimSprite_flag_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_control_set", _wrap_SimSprite_control_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_control_get", _wrap_SimSprite_control_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_turn_set", _wrap_SimSprite_turn_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_turn_get", _wrap_SimSprite_turn_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_accel_set", _wrap_SimSprite_accel_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_accel_get", _wrap_SimSprite_accel_get, METH_VARARGS, NULL},
-         { (char *)"SimSprite_speed_set", _wrap_SimSprite_speed_set, METH_VARARGS, NULL},
-         { (char *)"SimSprite_speed_get", _wrap_SimSprite_speed_get, METH_VARARGS, NULL},
-         { (char *)"new_SimSprite", _wrap_new_SimSprite, METH_VARARGS, NULL},
-         { (char *)"delete_SimSprite", _wrap_delete_SimSprite, METH_VARARGS, NULL},
-         { (char *)"SimSprite_swigregister", SimSprite_swigregister, METH_VARARGS, NULL},
-         { (char *)"new_Micropolis", _wrap_new_Micropolis, METH_VARARGS, NULL},
-         { (char *)"delete_Micropolis", _wrap_delete_Micropolis, METH_VARARGS, NULL},
-         { (char *)"Micropolis_init", _wrap_Micropolis_init, METH_VARARGS, NULL},
-         { (char *)"Micropolis_destroy", _wrap_Micropolis_destroy, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapX_set", _wrap_Micropolis_SMapX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapX_get", _wrap_Micropolis_SMapX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapY_set", _wrap_Micropolis_SMapY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapY_get", _wrap_Micropolis_SMapY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CChr_set", _wrap_Micropolis_CChr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CChr_get", _wrap_Micropolis_CChr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CChr9_set", _wrap_Micropolis_CChr9_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CChr9_get", _wrap_Micropolis_CChr9_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadTotal_set", _wrap_Micropolis_RoadTotal_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadTotal_get", _wrap_Micropolis_RoadTotal_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RailTotal_set", _wrap_Micropolis_RailTotal_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RailTotal_get", _wrap_Micropolis_RailTotal_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FirePop_set", _wrap_Micropolis_FirePop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FirePop_get", _wrap_Micropolis_FirePop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResPop_set", _wrap_Micropolis_ResPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResPop_get", _wrap_Micropolis_ResPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComPop_set", _wrap_Micropolis_ComPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComPop_get", _wrap_Micropolis_ComPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndPop_set", _wrap_Micropolis_IndPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndPop_get", _wrap_Micropolis_IndPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalPop_set", _wrap_Micropolis_TotalPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalPop_get", _wrap_Micropolis_TotalPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastTotalPop_set", _wrap_Micropolis_LastTotalPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastTotalPop_get", _wrap_Micropolis_LastTotalPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResZPop_set", _wrap_Micropolis_ResZPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResZPop_get", _wrap_Micropolis_ResZPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComZPop_set", _wrap_Micropolis_ComZPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComZPop_get", _wrap_Micropolis_ComZPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndZPop_set", _wrap_Micropolis_IndZPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndZPop_get", _wrap_Micropolis_IndZPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalZPop_set", _wrap_Micropolis_TotalZPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalZPop_get", _wrap_Micropolis_TotalZPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HospPop_set", _wrap_Micropolis_HospPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HospPop_get", _wrap_Micropolis_HospPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ChurchPop_set", _wrap_Micropolis_ChurchPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ChurchPop_get", _wrap_Micropolis_ChurchPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StadiumPop_set", _wrap_Micropolis_StadiumPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StadiumPop_get", _wrap_Micropolis_StadiumPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolicePop_set", _wrap_Micropolis_PolicePop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolicePop_get", _wrap_Micropolis_PolicePop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireStPop_set", _wrap_Micropolis_FireStPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireStPop_get", _wrap_Micropolis_FireStPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CoalPop_set", _wrap_Micropolis_CoalPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CoalPop_get", _wrap_Micropolis_CoalPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NuclearPop_set", _wrap_Micropolis_NuclearPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NuclearPop_get", _wrap_Micropolis_NuclearPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PortPop_set", _wrap_Micropolis_PortPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PortPop_get", _wrap_Micropolis_PortPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_APortPop_set", _wrap_Micropolis_APortPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_APortPop_get", _wrap_Micropolis_APortPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NeedHosp_set", _wrap_Micropolis_NeedHosp_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NeedHosp_get", _wrap_Micropolis_NeedHosp_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NeedChurch_set", _wrap_Micropolis_NeedChurch_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NeedChurch_get", _wrap_Micropolis_NeedChurch_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeAverage_set", _wrap_Micropolis_CrimeAverage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeAverage_get", _wrap_Micropolis_CrimeAverage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolluteAverage_set", _wrap_Micropolis_PolluteAverage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolluteAverage_get", _wrap_Micropolis_PolluteAverage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LVAverage_set", _wrap_Micropolis_LVAverage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LVAverage_get", _wrap_Micropolis_LVAverage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityTime_set", _wrap_Micropolis_CityTime_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityTime_get", _wrap_Micropolis_CityTime_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityMonth_set", _wrap_Micropolis_CityMonth_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityMonth_get", _wrap_Micropolis_CityMonth_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityYear_set", _wrap_Micropolis_CityYear_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityYear_get", _wrap_Micropolis_CityYear_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StartingYear_set", _wrap_Micropolis_StartingYear_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StartingYear_get", _wrap_Micropolis_StartingYear_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Map_set", _wrap_Micropolis_Map_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Map_get", _wrap_Micropolis_Map_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResHisMax_set", _wrap_Micropolis_ResHisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResHisMax_get", _wrap_Micropolis_ResHisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Res2HisMax_set", _wrap_Micropolis_Res2HisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Res2HisMax_get", _wrap_Micropolis_Res2HisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComHisMax_set", _wrap_Micropolis_ComHisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComHisMax_get", _wrap_Micropolis_ComHisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Com2HisMax_set", _wrap_Micropolis_Com2HisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Com2HisMax_get", _wrap_Micropolis_Com2HisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndHisMax_set", _wrap_Micropolis_IndHisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndHisMax_get", _wrap_Micropolis_IndHisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Ind2HisMax_set", _wrap_Micropolis_Ind2HisMax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Ind2HisMax_get", _wrap_Micropolis_Ind2HisMax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CensusChanged_set", _wrap_Micropolis_CensusChanged_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CensusChanged_get", _wrap_Micropolis_CensusChanged_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MessagePort_set", _wrap_Micropolis_MessagePort_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MessagePort_get", _wrap_Micropolis_MessagePort_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesX_set", _wrap_Micropolis_MesX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesX_get", _wrap_Micropolis_MesX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesY_set", _wrap_Micropolis_MesY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesY_get", _wrap_Micropolis_MesY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadSpend_set", _wrap_Micropolis_RoadSpend_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadSpend_get", _wrap_Micropolis_RoadSpend_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceSpend_set", _wrap_Micropolis_PoliceSpend_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceSpend_get", _wrap_Micropolis_PoliceSpend_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireSpend_set", _wrap_Micropolis_FireSpend_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireSpend_get", _wrap_Micropolis_FireSpend_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadFund_set", _wrap_Micropolis_RoadFund_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadFund_get", _wrap_Micropolis_RoadFund_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceFund_set", _wrap_Micropolis_PoliceFund_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceFund_get", _wrap_Micropolis_PoliceFund_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireFund_set", _wrap_Micropolis_FireFund_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireFund_get", _wrap_Micropolis_FireFund_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadEffect_set", _wrap_Micropolis_RoadEffect_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadEffect_get", _wrap_Micropolis_RoadEffect_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceEffect_set", _wrap_Micropolis_PoliceEffect_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceEffect_get", _wrap_Micropolis_PoliceEffect_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireEffect_set", _wrap_Micropolis_FireEffect_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireEffect_get", _wrap_Micropolis_FireEffect_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TaxFund_set", _wrap_Micropolis_TaxFund_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TaxFund_get", _wrap_Micropolis_TaxFund_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityTax_set", _wrap_Micropolis_CityTax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityTax_get", _wrap_Micropolis_CityTax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TaxFlag_set", _wrap_Micropolis_TaxFlag_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TaxFlag_get", _wrap_Micropolis_TaxFlag_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PopDensity_set", _wrap_Micropolis_PopDensity_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PopDensity_get", _wrap_Micropolis_PopDensity_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrfDensity_set", _wrap_Micropolis_TrfDensity_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrfDensity_get", _wrap_Micropolis_TrfDensity_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PollutionMem_set", _wrap_Micropolis_PollutionMem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PollutionMem_get", _wrap_Micropolis_PollutionMem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LandValueMem_set", _wrap_Micropolis_LandValueMem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LandValueMem_get", _wrap_Micropolis_LandValueMem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMem_set", _wrap_Micropolis_CrimeMem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMem_get", _wrap_Micropolis_CrimeMem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem_set", _wrap_Micropolis_tem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem_get", _wrap_Micropolis_tem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem2_set", _wrap_Micropolis_tem2_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem2_get", _wrap_Micropolis_tem2_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TerrainMem_set", _wrap_Micropolis_TerrainMem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TerrainMem_get", _wrap_Micropolis_TerrainMem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Qtem_set", _wrap_Micropolis_Qtem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Qtem_get", _wrap_Micropolis_Qtem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RateOGMem_set", _wrap_Micropolis_RateOGMem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RateOGMem_get", _wrap_Micropolis_RateOGMem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireStMap_set", _wrap_Micropolis_FireStMap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireStMap_get", _wrap_Micropolis_FireStMap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceMap_set", _wrap_Micropolis_PoliceMap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceMap_get", _wrap_Micropolis_PoliceMap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceMapEffect_set", _wrap_Micropolis_PoliceMapEffect_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PoliceMapEffect_get", _wrap_Micropolis_PoliceMapEffect_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireRate_set", _wrap_Micropolis_FireRate_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireRate_get", _wrap_Micropolis_FireRate_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComRate_set", _wrap_Micropolis_ComRate_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComRate_get", _wrap_Micropolis_ComRate_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_STem_set", _wrap_Micropolis_STem_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_STem_get", _wrap_Micropolis_STem_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_terrainBase_set", _wrap_Micropolis_terrainBase_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_terrainBase_get", _wrap_Micropolis_terrainBase_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_qTemBase_set", _wrap_Micropolis_qTemBase_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_qTemBase_get", _wrap_Micropolis_qTemBase_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem1Base_set", _wrap_Micropolis_tem1Base_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem1Base_get", _wrap_Micropolis_tem1Base_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem2Base_set", _wrap_Micropolis_tem2Base_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tem2Base_get", _wrap_Micropolis_tem2Base_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_popPtr_set", _wrap_Micropolis_popPtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_popPtr_get", _wrap_Micropolis_popPtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_trfPtr_set", _wrap_Micropolis_trfPtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_trfPtr_get", _wrap_Micropolis_trfPtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_polPtr_set", _wrap_Micropolis_polPtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_polPtr_get", _wrap_Micropolis_polPtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_landPtr_set", _wrap_Micropolis_landPtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_landPtr_get", _wrap_Micropolis_landPtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_crimePtr_set", _wrap_Micropolis_crimePtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_crimePtr_get", _wrap_Micropolis_crimePtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_mapPtr_set", _wrap_Micropolis_mapPtr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_mapPtr_get", _wrap_Micropolis_mapPtr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResHis_set", _wrap_Micropolis_ResHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResHis_get", _wrap_Micropolis_ResHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComHis_set", _wrap_Micropolis_ComHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComHis_get", _wrap_Micropolis_ComHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndHis_set", _wrap_Micropolis_IndHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndHis_get", _wrap_Micropolis_IndHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MoneyHis_set", _wrap_Micropolis_MoneyHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MoneyHis_get", _wrap_Micropolis_MoneyHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PollutionHis_set", _wrap_Micropolis_PollutionHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PollutionHis_get", _wrap_Micropolis_PollutionHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeHis_set", _wrap_Micropolis_CrimeHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeHis_get", _wrap_Micropolis_CrimeHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MiscHis_set", _wrap_Micropolis_MiscHis_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MiscHis_get", _wrap_Micropolis_MiscHis_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerMap_set", _wrap_Micropolis_PowerMap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerMap_get", _wrap_Micropolis_PowerMap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_initMapArrays", _wrap_Micropolis_initMapArrays, METH_VARARGS, NULL},
-         { (char *)"Micropolis_destroyMapArrays", _wrap_Micropolis_destroyMapArrays, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetHistoryRange", _wrap_Micropolis_GetHistoryRange, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetHistory", _wrap_Micropolis_GetHistory, METH_VARARGS, NULL},
-         { (char *)"Micropolis_animateTiles", _wrap_Micropolis_animateTiles, METH_VARARGS, NULL},
-         { (char *)"Micropolis_roadPercent_set", _wrap_Micropolis_roadPercent_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_roadPercent_get", _wrap_Micropolis_roadPercent_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_policePercent_set", _wrap_Micropolis_policePercent_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_policePercent_get", _wrap_Micropolis_policePercent_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_firePercent_set", _wrap_Micropolis_firePercent_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_firePercent_get", _wrap_Micropolis_firePercent_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_roadValue_set", _wrap_Micropolis_roadValue_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_roadValue_get", _wrap_Micropolis_roadValue_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_policeValue_set", _wrap_Micropolis_policeValue_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_policeValue_get", _wrap_Micropolis_policeValue_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_fireValue_set", _wrap_Micropolis_fireValue_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_fireValue_get", _wrap_Micropolis_fireValue_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustDrawCurrPercents_set", _wrap_Micropolis_MustDrawCurrPercents_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustDrawCurrPercents_get", _wrap_Micropolis_MustDrawCurrPercents_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustDrawBudgetWindow_set", _wrap_Micropolis_MustDrawBudgetWindow_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustDrawBudgetWindow_get", _wrap_Micropolis_MustDrawBudgetWindow_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitFundingLevel", _wrap_Micropolis_InitFundingLevel, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBudget", _wrap_Micropolis_DoBudget, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBudgetFromMenu", _wrap_Micropolis_DoBudgetFromMenu, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBudgetNow", _wrap_Micropolis_DoBudgetNow, METH_VARARGS, NULL},
-         { (char *)"Micropolis_drawBudgetWindow", _wrap_Micropolis_drawBudgetWindow, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ReallyDrawBudgetWindow", _wrap_Micropolis_ReallyDrawBudgetWindow, METH_VARARGS, NULL},
-         { (char *)"Micropolis_drawCurrPercents", _wrap_Micropolis_drawCurrPercents, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ReallyDrawCurrPercents", _wrap_Micropolis_ReallyDrawCurrPercents, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateBudgetWindow", _wrap_Micropolis_UpdateBudgetWindow, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateBudget", _wrap_Micropolis_UpdateBudget, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ShowBudgetWindowAndStartWaiting", _wrap_Micropolis_ShowBudgetWindowAndStartWaiting, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetBudget", _wrap_Micropolis_SetBudget, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetBudgetValues", _wrap_Micropolis_SetBudgetValues, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ConnecTile", _wrap_Micropolis_ConnecTile, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LayDoze", _wrap_Micropolis_LayDoze, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LayRoad", _wrap_Micropolis_LayRoad, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LayRail", _wrap_Micropolis_LayRail, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LayWire", _wrap_Micropolis_LayWire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FixZone", _wrap_Micropolis_FixZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FixSingle", _wrap_Micropolis_FixSingle, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FloodCnt_set", _wrap_Micropolis_FloodCnt_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FloodCnt_get", _wrap_Micropolis_FloodCnt_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoDisasters", _wrap_Micropolis_DoDisasters, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScenarioDisaster", _wrap_Micropolis_ScenarioDisaster, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeMeltdown", _wrap_Micropolis_MakeMeltdown, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireBomb", _wrap_Micropolis_FireBomb, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeEarthquake", _wrap_Micropolis_MakeEarthquake, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetFire", _wrap_Micropolis_SetFire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeFire", _wrap_Micropolis_MakeFire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Vulnerable", _wrap_Micropolis_Vulnerable, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeFlood", _wrap_Micropolis_MakeFlood, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoFlood", _wrap_Micropolis_DoFlood, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityYes_set", _wrap_Micropolis_CityYes_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityYes_get", _wrap_Micropolis_CityYes_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityNo_set", _wrap_Micropolis_CityNo_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityNo_get", _wrap_Micropolis_CityNo_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemTable_set", _wrap_Micropolis_ProblemTable_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemTable_get", _wrap_Micropolis_ProblemTable_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemVotes_set", _wrap_Micropolis_ProblemVotes_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemVotes_get", _wrap_Micropolis_ProblemVotes_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemOrder_set", _wrap_Micropolis_ProblemOrder_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ProblemOrder_get", _wrap_Micropolis_ProblemOrder_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityPop_set", _wrap_Micropolis_CityPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityPop_get", _wrap_Micropolis_CityPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_deltaCityPop_set", _wrap_Micropolis_deltaCityPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_deltaCityPop_get", _wrap_Micropolis_deltaCityPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityAssValue_set", _wrap_Micropolis_CityAssValue_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityAssValue_get", _wrap_Micropolis_CityAssValue_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityClass_set", _wrap_Micropolis_CityClass_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityClass_get", _wrap_Micropolis_CityClass_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityScore_set", _wrap_Micropolis_CityScore_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityScore_get", _wrap_Micropolis_CityScore_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_deltaCityScore_set", _wrap_Micropolis_deltaCityScore_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_deltaCityScore_get", _wrap_Micropolis_deltaCityScore_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafficAverage_set", _wrap_Micropolis_TrafficAverage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafficAverage_get", _wrap_Micropolis_TrafficAverage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_cityClassStr_get", _wrap_Micropolis_cityClassStr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_cityClassStr_set", _wrap_Micropolis_cityClassStr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_cityLevelStr_get", _wrap_Micropolis_cityLevelStr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_cityLevelStr_set", _wrap_Micropolis_cityLevelStr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_probStr_get", _wrap_Micropolis_probStr_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_probStr_set", _wrap_Micropolis_probStr_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityEvaluation", _wrap_Micropolis_CityEvaluation, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalInit", _wrap_Micropolis_EvalInit, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetAssValue", _wrap_Micropolis_GetAssValue, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoPopNum", _wrap_Micropolis_DoPopNum, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoProblems", _wrap_Micropolis_DoProblems, METH_VARARGS, NULL},
-         { (char *)"Micropolis_VoteProblems", _wrap_Micropolis_VoteProblems, METH_VARARGS, NULL},
-         { (char *)"Micropolis_AverageTrf", _wrap_Micropolis_AverageTrf, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetUnemployment", _wrap_Micropolis_GetUnemployment, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetFire", _wrap_Micropolis_GetFire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetScore", _wrap_Micropolis_GetScore, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoVotes", _wrap_Micropolis_DoVotes, METH_VARARGS, NULL},
-         { (char *)"Micropolis_doScoreCard", _wrap_Micropolis_doScoreCard, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ChangeEval", _wrap_Micropolis_ChangeEval, METH_VARARGS, NULL},
-         { (char *)"Micropolis_scoreDoer", _wrap_Micropolis_scoreDoer, METH_VARARGS, NULL},
-         { (char *)"Micropolis_load_file", _wrap_Micropolis_load_file, METH_VARARGS, NULL},
-         { (char *)"Micropolis_loadFile", _wrap_Micropolis_loadFile, METH_VARARGS, NULL},
-         { (char *)"Micropolis_saveFile", _wrap_Micropolis_saveFile, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LoadScenario", _wrap_Micropolis_LoadScenario, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidLoadScenario", _wrap_Micropolis_DidLoadScenario, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LoadCity", _wrap_Micropolis_LoadCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidLoadCity", _wrap_Micropolis_DidLoadCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidntLoadCity", _wrap_Micropolis_DidntLoadCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SaveCity", _wrap_Micropolis_SaveCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSaveCityAs", _wrap_Micropolis_DoSaveCityAs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidSaveCity", _wrap_Micropolis_DidSaveCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidntSaveCity", _wrap_Micropolis_DidntSaveCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SaveCityAs", _wrap_Micropolis_SaveCityAs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_XStart_set", _wrap_Micropolis_XStart_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_XStart_get", _wrap_Micropolis_XStart_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_YStart_set", _wrap_Micropolis_YStart_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_YStart_get", _wrap_Micropolis_YStart_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MapX_set", _wrap_Micropolis_MapX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MapX_get", _wrap_Micropolis_MapX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MapY_set", _wrap_Micropolis_MapY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MapY_get", _wrap_Micropolis_MapY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Dir_set", _wrap_Micropolis_Dir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Dir_get", _wrap_Micropolis_Dir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastDir_set", _wrap_Micropolis_LastDir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastDir_get", _wrap_Micropolis_LastDir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TreeLevel_set", _wrap_Micropolis_TreeLevel_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TreeLevel_get", _wrap_Micropolis_TreeLevel_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LakeLevel_set", _wrap_Micropolis_LakeLevel_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LakeLevel_get", _wrap_Micropolis_LakeLevel_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CurveLevel_set", _wrap_Micropolis_CurveLevel_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CurveLevel_get", _wrap_Micropolis_CurveLevel_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CreateIsland_set", _wrap_Micropolis_CreateIsland_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CreateIsland_get", _wrap_Micropolis_CreateIsland_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateNewCity", _wrap_Micropolis_GenerateNewCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateSomeCity", _wrap_Micropolis_GenerateSomeCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateMap", _wrap_Micropolis_GenerateMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ClearMap", _wrap_Micropolis_ClearMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ClearUnnatural", _wrap_Micropolis_ClearUnnatural, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeNakedIsland", _wrap_Micropolis_MakeNakedIsland, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeIsland", _wrap_Micropolis_MakeIsland, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeLakes", _wrap_Micropolis_MakeLakes, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetRandStart", _wrap_Micropolis_GetRandStart, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MoveMap", _wrap_Micropolis_MoveMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TreeSplash", _wrap_Micropolis_TreeSplash, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoTrees", _wrap_Micropolis_DoTrees, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothRiver", _wrap_Micropolis_SmoothRiver, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IsTree", _wrap_Micropolis_IsTree, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothTrees", _wrap_Micropolis_SmoothTrees, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoRivers", _wrap_Micropolis_DoRivers, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBRiv", _wrap_Micropolis_DoBRiv, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSRiv", _wrap_Micropolis_DoSRiv, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PutOnMap", _wrap_Micropolis_PutOnMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_BRivPlop", _wrap_Micropolis_BRivPlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SRivPlop", _wrap_Micropolis_SRivPlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothWater", _wrap_Micropolis_SmoothWater, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewGraph_set", _wrap_Micropolis_NewGraph_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewGraph_get", _wrap_Micropolis_NewGraph_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_History10_set", _wrap_Micropolis_History10_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_History10_get", _wrap_Micropolis_History10_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_History120_set", _wrap_Micropolis_History120_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_History120_get", _wrap_Micropolis_History120_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistoryInitialized_set", _wrap_Micropolis_HistoryInitialized_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistoryInitialized_get", _wrap_Micropolis_HistoryInitialized_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Graph10Max_set", _wrap_Micropolis_Graph10Max_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Graph10Max_get", _wrap_Micropolis_Graph10Max_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Graph120Max_set", _wrap_Micropolis_Graph120Max_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Graph120Max_get", _wrap_Micropolis_Graph120Max_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GraphUpdateTime_set", _wrap_Micropolis_GraphUpdateTime_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GraphUpdateTime_get", _wrap_Micropolis_GraphUpdateTime_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistName_get", _wrap_Micropolis_HistName_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistName_set", _wrap_Micropolis_HistName_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistColor_get", _wrap_Micropolis_HistColor_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HistColor_set", _wrap_Micropolis_HistColor_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_drawMonth", _wrap_Micropolis_drawMonth, METH_VARARGS, NULL},
-         { (char *)"Micropolis_doAllGraphs", _wrap_Micropolis_doAllGraphs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ChangeCensus", _wrap_Micropolis_ChangeCensus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_graphDoer", _wrap_Micropolis_graphDoer, METH_VARARGS, NULL},
-         { (char *)"Micropolis_initGraphs", _wrap_Micropolis_initGraphs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitGraphMax", _wrap_Micropolis_InitGraphMax, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitWillStuff", _wrap_Micropolis_InitWillStuff, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResetMapState", _wrap_Micropolis_ResetMapState, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResetEditorState", _wrap_Micropolis_ResetEditorState, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MicropolisVersion_set", _wrap_Micropolis_MicropolisVersion_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MicropolisVersion_get", _wrap_Micropolis_MicropolisVersion_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_loops_set", _wrap_Micropolis_sim_loops_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_loops_get", _wrap_Micropolis_sim_loops_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_delay_set", _wrap_Micropolis_sim_delay_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_delay_get", _wrap_Micropolis_sim_delay_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_skips_set", _wrap_Micropolis_sim_skips_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_skips_get", _wrap_Micropolis_sim_skips_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_skip_set", _wrap_Micropolis_sim_skip_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_skip_get", _wrap_Micropolis_sim_skip_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_paused_set", _wrap_Micropolis_sim_paused_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_paused_get", _wrap_Micropolis_sim_paused_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_paused_speed_set", _wrap_Micropolis_sim_paused_speed_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_paused_speed_get", _wrap_Micropolis_sim_paused_speed_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_steps_set", _wrap_Micropolis_heat_steps_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_steps_get", _wrap_Micropolis_heat_steps_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_flow_set", _wrap_Micropolis_heat_flow_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_flow_get", _wrap_Micropolis_heat_flow_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_rule_set", _wrap_Micropolis_heat_rule_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_rule_get", _wrap_Micropolis_heat_rule_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_wrap_set", _wrap_Micropolis_heat_wrap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_heat_wrap_get", _wrap_Micropolis_heat_wrap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityFileName_set", _wrap_Micropolis_CityFileName_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityFileName_get", _wrap_Micropolis_CityFileName_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MultiPlayerMode_set", _wrap_Micropolis_MultiPlayerMode_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MultiPlayerMode_get", _wrap_Micropolis_MultiPlayerMode_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TilesAnimated_set", _wrap_Micropolis_TilesAnimated_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TilesAnimated_get", _wrap_Micropolis_TilesAnimated_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoAnimation_set", _wrap_Micropolis_DoAnimation_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoAnimation_get", _wrap_Micropolis_DoAnimation_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoMessages_set", _wrap_Micropolis_DoMessages_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoMessages_get", _wrap_Micropolis_DoMessages_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoNotices_set", _wrap_Micropolis_DoNotices_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoNotices_get", _wrap_Micropolis_DoNotices_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CellSrc_set", _wrap_Micropolis_CellSrc_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CellSrc_get", _wrap_Micropolis_CellSrc_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CellDst_set", _wrap_Micropolis_CellDst_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CellDst_get", _wrap_Micropolis_CellDst_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_env_init", _wrap_Micropolis_env_init, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_init", _wrap_Micropolis_sim_init, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_update", _wrap_Micropolis_sim_update, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_heat", _wrap_Micropolis_sim_heat, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_loop", _wrap_Micropolis_sim_loop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_tick", _wrap_Micropolis_sim_tick, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityPop_set", _wrap_Micropolis_LastCityPop_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityPop_get", _wrap_Micropolis_LastCityPop_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCategory_set", _wrap_Micropolis_LastCategory_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCategory_get", _wrap_Micropolis_LastCategory_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastPicNum_set", _wrap_Micropolis_LastPicNum_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastPicNum_get", _wrap_Micropolis_LastPicNum_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoGo_set", _wrap_Micropolis_autoGo_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoGo_get", _wrap_Micropolis_autoGo_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HaveLastMessage_set", _wrap_Micropolis_HaveLastMessage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HaveLastMessage_get", _wrap_Micropolis_HaveLastMessage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastMessage_set", _wrap_Micropolis_LastMessage_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastMessage_get", _wrap_Micropolis_LastMessage_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SendMessages", _wrap_Micropolis_SendMessages, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CheckGrowth", _wrap_Micropolis_CheckGrowth, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoScenarioScore", _wrap_Micropolis_DoScenarioScore, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ClearMes", _wrap_Micropolis_ClearMes, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SendMes", _wrap_Micropolis_SendMes, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SendMesAt", _wrap_Micropolis_SendMesAt, METH_VARARGS, NULL},
-         { (char *)"Micropolis_doMessage", _wrap_Micropolis_doMessage, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoAutoGoto", _wrap_Micropolis_DoAutoGoto, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetMessageField", _wrap_Micropolis_SetMessageField, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoShowPicture", _wrap_Micropolis_DoShowPicture, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoLoseGame", _wrap_Micropolis_DoLoseGame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoWinGame", _wrap_Micropolis_DoWinGame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackNum_set", _wrap_Micropolis_PowerStackNum_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackNum_get", _wrap_Micropolis_PowerStackNum_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackX_set", _wrap_Micropolis_PowerStackX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackX_get", _wrap_Micropolis_PowerStackX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackY_set", _wrap_Micropolis_PowerStackY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PowerStackY_get", _wrap_Micropolis_PowerStackY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MaxPower_set", _wrap_Micropolis_MaxPower_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MaxPower_get", _wrap_Micropolis_MaxPower_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NumPower_set", _wrap_Micropolis_NumPower_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NumPower_get", _wrap_Micropolis_NumPower_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MoveMapSim", _wrap_Micropolis_MoveMapSim, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TestForCond", _wrap_Micropolis_TestForCond, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoPowerScan", _wrap_Micropolis_DoPowerScan, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PushPowerStack", _wrap_Micropolis_PushPowerStack, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PullPowerStack", _wrap_Micropolis_PullPowerStack, METH_VARARGS, NULL},
-         { (char *)"Micropolis_nextRandom_set", _wrap_Micropolis_nextRandom_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_nextRandom_get", _wrap_Micropolis_nextRandom_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_rand", _wrap_Micropolis_sim_rand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_sim_srand", _wrap_Micropolis_sim_srand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Rand", _wrap_Micropolis_Rand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Rand16", _wrap_Micropolis_Rand16, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Rand16Signed", _wrap_Micropolis_Rand16Signed, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ERand", _wrap_Micropolis_ERand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RandomlySeedRand", _wrap_Micropolis_RandomlySeedRand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SeedRand", _wrap_Micropolis_SeedRand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HomeDir_set", _wrap_Micropolis_HomeDir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HomeDir_get", _wrap_Micropolis_HomeDir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResourceDir_set", _wrap_Micropolis_ResourceDir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResourceDir_get", _wrap_Micropolis_ResourceDir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_KeyDir_set", _wrap_Micropolis_KeyDir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_KeyDir_get", _wrap_Micropolis_KeyDir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HostName_set", _wrap_Micropolis_HostName_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_HostName_get", _wrap_Micropolis_HostName_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Resources_set", _wrap_Micropolis_Resources_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Resources_get", _wrap_Micropolis_Resources_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StringTables_set", _wrap_Micropolis_StringTables_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StringTables_get", _wrap_Micropolis_StringTables_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetResource", _wrap_Micropolis_GetResource, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ReleaseResource", _wrap_Micropolis_ReleaseResource, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResourceSize", _wrap_Micropolis_ResourceSize, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResourceName", _wrap_Micropolis_ResourceName, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResourceID", _wrap_Micropolis_ResourceID, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetIndString", _wrap_Micropolis_GetIndString, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewMap_set", _wrap_Micropolis_NewMap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewMap_get", _wrap_Micropolis_NewMap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewMapFlags_set", _wrap_Micropolis_NewMapFlags_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewMapFlags_get", _wrap_Micropolis_NewMapFlags_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCx_set", _wrap_Micropolis_CCx_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCx_get", _wrap_Micropolis_CCx_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCy_set", _wrap_Micropolis_CCy_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCy_get", _wrap_Micropolis_CCy_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCx2_set", _wrap_Micropolis_CCx2_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCx2_get", _wrap_Micropolis_CCx2_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCy2_set", _wrap_Micropolis_CCy2_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CCy2_get", _wrap_Micropolis_CCy2_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolMaxX_set", _wrap_Micropolis_PolMaxX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolMaxX_get", _wrap_Micropolis_PolMaxX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolMaxY_set", _wrap_Micropolis_PolMaxY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolMaxY_get", _wrap_Micropolis_PolMaxY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMaxX_set", _wrap_Micropolis_CrimeMaxX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMaxX_get", _wrap_Micropolis_CrimeMaxX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMaxY_set", _wrap_Micropolis_CrimeMaxY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeMaxY_get", _wrap_Micropolis_CrimeMaxY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DonDither_set", _wrap_Micropolis_DonDither_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DonDither_get", _wrap_Micropolis_DonDither_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireAnalysis", _wrap_Micropolis_FireAnalysis, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PopDenScan", _wrap_Micropolis_PopDenScan, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetPDen", _wrap_Micropolis_GetPDen, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PTLScan", _wrap_Micropolis_PTLScan, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetPValue", _wrap_Micropolis_GetPValue, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetDisCC", _wrap_Micropolis_GetDisCC, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeScan", _wrap_Micropolis_CrimeScan, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothTerrain", _wrap_Micropolis_SmoothTerrain, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSmooth", _wrap_Micropolis_DoSmooth, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSmooth2", _wrap_Micropolis_DoSmooth2, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ClrTemArray", _wrap_Micropolis_ClrTemArray, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothFSMap", _wrap_Micropolis_SmoothFSMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SmoothPSMap", _wrap_Micropolis_SmoothPSMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DistIntMarket", _wrap_Micropolis_DistIntMarket, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ValveFlag_set", _wrap_Micropolis_ValveFlag_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ValveFlag_get", _wrap_Micropolis_ValveFlag_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeRamp_set", _wrap_Micropolis_CrimeRamp_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrimeRamp_get", _wrap_Micropolis_CrimeRamp_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolluteRamp_set", _wrap_Micropolis_PolluteRamp_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PolluteRamp_get", _wrap_Micropolis_PolluteRamp_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RValve_set", _wrap_Micropolis_RValve_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RValve_get", _wrap_Micropolis_RValve_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CValve_set", _wrap_Micropolis_CValve_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CValve_get", _wrap_Micropolis_CValve_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IValve_set", _wrap_Micropolis_IValve_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IValve_get", _wrap_Micropolis_IValve_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResCap_set", _wrap_Micropolis_ResCap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResCap_get", _wrap_Micropolis_ResCap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComCap_set", _wrap_Micropolis_ComCap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComCap_get", _wrap_Micropolis_ComCap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndCap_set", _wrap_Micropolis_IndCap_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndCap_get", _wrap_Micropolis_IndCap_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CashFlow_set", _wrap_Micropolis_CashFlow_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CashFlow_get", _wrap_Micropolis_CashFlow_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EMarket_set", _wrap_Micropolis_EMarket_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EMarket_get", _wrap_Micropolis_EMarket_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DisasterEvent_set", _wrap_Micropolis_DisasterEvent_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DisasterEvent_get", _wrap_Micropolis_DisasterEvent_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DisasterWait_set", _wrap_Micropolis_DisasterWait_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DisasterWait_get", _wrap_Micropolis_DisasterWait_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScoreType_set", _wrap_Micropolis_ScoreType_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScoreType_get", _wrap_Micropolis_ScoreType_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScoreWait_set", _wrap_Micropolis_ScoreWait_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScoreWait_get", _wrap_Micropolis_ScoreWait_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PwrdZCnt_set", _wrap_Micropolis_PwrdZCnt_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PwrdZCnt_get", _wrap_Micropolis_PwrdZCnt_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_unPwrdZCnt_set", _wrap_Micropolis_unPwrdZCnt_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_unPwrdZCnt_get", _wrap_Micropolis_unPwrdZCnt_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewPower_set", _wrap_Micropolis_NewPower_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewPower_get", _wrap_Micropolis_NewPower_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_AvCityTax_set", _wrap_Micropolis_AvCityTax_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_AvCityTax_get", _wrap_Micropolis_AvCityTax_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Scycle_set", _wrap_Micropolis_Scycle_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Scycle_get", _wrap_Micropolis_Scycle_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Fcycle_set", _wrap_Micropolis_Fcycle_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Fcycle_get", _wrap_Micropolis_Fcycle_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Spdcycle_set", _wrap_Micropolis_Spdcycle_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Spdcycle_get", _wrap_Micropolis_Spdcycle_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoInitialEval_set", _wrap_Micropolis_DoInitialEval_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoInitialEval_get", _wrap_Micropolis_DoInitialEval_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MeltX_set", _wrap_Micropolis_MeltX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MeltX_get", _wrap_Micropolis_MeltX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MeltY_set", _wrap_Micropolis_MeltY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MeltY_get", _wrap_Micropolis_MeltY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimFrame", _wrap_Micropolis_SimFrame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Simulate", _wrap_Micropolis_Simulate, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSimInit", _wrap_Micropolis_DoSimInit, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoNilPower", _wrap_Micropolis_DoNilPower, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DecTrafficMem", _wrap_Micropolis_DecTrafficMem, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DecROGMem", _wrap_Micropolis_DecROGMem, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitSimMemory", _wrap_Micropolis_InitSimMemory, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimLoadInit", _wrap_Micropolis_SimLoadInit, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetCommonInits", _wrap_Micropolis_SetCommonInits, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetValves", _wrap_Micropolis_SetValves, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ClearCensus", _wrap_Micropolis_ClearCensus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TakeCensus", _wrap_Micropolis_TakeCensus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Take2Census", _wrap_Micropolis_Take2Census, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CollectTax", _wrap_Micropolis_CollectTax, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateFundEffects", _wrap_Micropolis_UpdateFundEffects, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MapScan", _wrap_Micropolis_MapScan, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoRail", _wrap_Micropolis_DoRail, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoRadTile", _wrap_Micropolis_DoRadTile, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoRoad", _wrap_Micropolis_DoRoad, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBridge", _wrap_Micropolis_DoBridge, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetBoatDis", _wrap_Micropolis_GetBoatDis, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoFire", _wrap_Micropolis_DoFire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FireZone", _wrap_Micropolis_FireZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RepairZone", _wrap_Micropolis_RepairZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoSPZone", _wrap_Micropolis_DoSPZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DrawStadium", _wrap_Micropolis_DrawStadium, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoAirport", _wrap_Micropolis_DoAirport, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CoalSmoke", _wrap_Micropolis_CoalSmoke, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoMeltdown", _wrap_Micropolis_DoMeltdown, METH_VARARGS, NULL},
-         { (char *)"Micropolis_spriteList_set", _wrap_Micropolis_spriteList_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_spriteList_get", _wrap_Micropolis_spriteList_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_spriteCount_set", _wrap_Micropolis_spriteCount_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_spriteCount_get", _wrap_Micropolis_spriteCount_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FreeSprites_set", _wrap_Micropolis_FreeSprites_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FreeSprites_get", _wrap_Micropolis_FreeSprites_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GlobalSprites_set", _wrap_Micropolis_GlobalSprites_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GlobalSprites_get", _wrap_Micropolis_GlobalSprites_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrashX_set", _wrap_Micropolis_CrashX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrashX_get", _wrap_Micropolis_CrashX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrashY_set", _wrap_Micropolis_CrashY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CrashY_get", _wrap_Micropolis_CrashY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_absDist_set", _wrap_Micropolis_absDist_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_absDist_get", _wrap_Micropolis_absDist_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Cycle_set", _wrap_Micropolis_Cycle_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Cycle_get", _wrap_Micropolis_Cycle_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewSprite", _wrap_Micropolis_NewSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitSprite", _wrap_Micropolis_InitSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DestroyAllSprites", _wrap_Micropolis_DestroyAllSprites, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DestroySprite", _wrap_Micropolis_DestroySprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetSprite", _wrap_Micropolis_GetSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeSprite", _wrap_Micropolis_MakeSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeNewSprite", _wrap_Micropolis_MakeNewSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DrawObjects", _wrap_Micropolis_DrawObjects, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DrawSprite", _wrap_Micropolis_DrawSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetChar", _wrap_Micropolis_GetChar, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TurnTo", _wrap_Micropolis_TurnTo, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TryOther", _wrap_Micropolis_TryOther, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SpriteNotInBounds", _wrap_Micropolis_SpriteNotInBounds, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetDir", _wrap_Micropolis_GetDir, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetDis", _wrap_Micropolis_GetDis, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CheckSpriteCollision", _wrap_Micropolis_CheckSpriteCollision, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MoveObjects", _wrap_Micropolis_MoveObjects, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoTrainSprite", _wrap_Micropolis_DoTrainSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoCopterSprite", _wrap_Micropolis_DoCopterSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoAirplaneSprite", _wrap_Micropolis_DoAirplaneSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoShipSprite", _wrap_Micropolis_DoShipSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoMonsterSprite", _wrap_Micropolis_DoMonsterSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoTornadoSprite", _wrap_Micropolis_DoTornadoSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoExplosionSprite", _wrap_Micropolis_DoExplosionSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoBusSprite", _wrap_Micropolis_DoBusSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CanDriveOn", _wrap_Micropolis_CanDriveOn, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ExplodeSprite", _wrap_Micropolis_ExplodeSprite, METH_VARARGS, NULL},
-         { (char *)"Micropolis_checkWet", _wrap_Micropolis_checkWet, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Destroy", _wrap_Micropolis_Destroy, METH_VARARGS, NULL},
-         { (char *)"Micropolis_OFireZone", _wrap_Micropolis_OFireZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_StartFire", _wrap_Micropolis_StartFire, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateTrain", _wrap_Micropolis_GenerateTrain, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateBus", _wrap_Micropolis_GenerateBus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateShip", _wrap_Micropolis_GenerateShip, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeShipHere", _wrap_Micropolis_MakeShipHere, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeMonster", _wrap_Micropolis_MakeMonster, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MonsterHere", _wrap_Micropolis_MonsterHere, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GenerateCopter", _wrap_Micropolis_GenerateCopter, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GeneratePlane", _wrap_Micropolis_GeneratePlane, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeTornado", _wrap_Micropolis_MakeTornado, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeExplosion", _wrap_Micropolis_MakeExplosion, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeExplosionAt", _wrap_Micropolis_MakeExplosionAt, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalFunds_set", _wrap_Micropolis_TotalFunds_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TotalFunds_get", _wrap_Micropolis_TotalFunds_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PunishCnt_set", _wrap_Micropolis_PunishCnt_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PunishCnt_get", _wrap_Micropolis_PunishCnt_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoBulldoze_set", _wrap_Micropolis_autoBulldoze_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoBulldoze_get", _wrap_Micropolis_autoBulldoze_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoBudget_set", _wrap_Micropolis_autoBudget_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_autoBudget_get", _wrap_Micropolis_autoBudget_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastMesTime_set", _wrap_Micropolis_LastMesTime_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastMesTime_get", _wrap_Micropolis_LastMesTime_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GameLevel_set", _wrap_Micropolis_GameLevel_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GameLevel_get", _wrap_Micropolis_GameLevel_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitSimLoad_set", _wrap_Micropolis_InitSimLoad_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitSimLoad_get", _wrap_Micropolis_InitSimLoad_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScenarioID_set", _wrap_Micropolis_ScenarioID_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ScenarioID_get", _wrap_Micropolis_ScenarioID_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimSpeed_set", _wrap_Micropolis_SimSpeed_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimSpeed_get", _wrap_Micropolis_SimSpeed_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimMetaSpeed_set", _wrap_Micropolis_SimMetaSpeed_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SimMetaSpeed_get", _wrap_Micropolis_SimMetaSpeed_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UserSoundOn_set", _wrap_Micropolis_UserSoundOn_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UserSoundOn_get", _wrap_Micropolis_UserSoundOn_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityName_set", _wrap_Micropolis_CityName_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CityName_get", _wrap_Micropolis_CityName_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NoDisasters_set", _wrap_Micropolis_NoDisasters_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NoDisasters_get", _wrap_Micropolis_NoDisasters_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesNum_set", _wrap_Micropolis_MesNum_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MesNum_get", _wrap_Micropolis_MesNum_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalChanged_set", _wrap_Micropolis_EvalChanged_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalChanged_get", _wrap_Micropolis_EvalChanged_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_flagBlink_set", _wrap_Micropolis_flagBlink_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_flagBlink_get", _wrap_Micropolis_flagBlink_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_callbackHook_set", _wrap_Micropolis_callbackHook_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_callbackHook_get", _wrap_Micropolis_callbackHook_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_callbackData_set", _wrap_Micropolis_callbackData_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_callbackData_get", _wrap_Micropolis_callbackData_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_userData_set", _wrap_Micropolis_userData_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_userData_get", _wrap_Micropolis_userData_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Spend", _wrap_Micropolis_Spend, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetFunds", _wrap_Micropolis_SetFunds, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TickCount", _wrap_Micropolis_TickCount, METH_VARARGS, NULL},
-         { (char *)"Micropolis_NewPtr", _wrap_Micropolis_NewPtr, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FreePtr", _wrap_Micropolis_FreePtr, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoPlayNewCity", _wrap_Micropolis_DoPlayNewCity, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoReallyStartGame", _wrap_Micropolis_DoReallyStartGame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoStartLoad", _wrap_Micropolis_DoStartLoad, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoStartScenario", _wrap_Micropolis_DoStartScenario, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DropFireBombs", _wrap_Micropolis_DropFireBombs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitGame", _wrap_Micropolis_InitGame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Callback", _wrap_Micropolis_Callback, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoEarthquake", _wrap_Micropolis_DoEarthquake, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InvalidateEditors", _wrap_Micropolis_InvalidateEditors, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InvalidateMaps", _wrap_Micropolis_InvalidateMaps, METH_VARARGS, NULL},
-         { (char *)"Micropolis_InitializeSound", _wrap_Micropolis_InitializeSound, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeSound", _wrap_Micropolis_MakeSound, METH_VARARGS, NULL},
-         { (char *)"Micropolis_getTile", _wrap_Micropolis_getTile, METH_VARARGS, NULL},
-         { (char *)"Micropolis_getMapBuffer", _wrap_Micropolis_getMapBuffer, METH_VARARGS, NULL},
-         { (char *)"Micropolis_OverRide_set", _wrap_Micropolis_OverRide_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_OverRide_get", _wrap_Micropolis_OverRide_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Expensive_set", _wrap_Micropolis_Expensive_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Expensive_get", _wrap_Micropolis_Expensive_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Players_set", _wrap_Micropolis_Players_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Players_get", _wrap_Micropolis_Players_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Votes_set", _wrap_Micropolis_Votes_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Votes_get", _wrap_Micropolis_Votes_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingTool_set", _wrap_Micropolis_PendingTool_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingTool_get", _wrap_Micropolis_PendingTool_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingX_set", _wrap_Micropolis_PendingX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingX_get", _wrap_Micropolis_PendingX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingY_set", _wrap_Micropolis_PendingY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PendingY_get", _wrap_Micropolis_PendingY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_last_x_set", _wrap_Micropolis_last_x_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_last_x_get", _wrap_Micropolis_last_x_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_last_y_set", _wrap_Micropolis_last_y_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_last_y_get", _wrap_Micropolis_last_y_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tool_x_set", _wrap_Micropolis_tool_x_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tool_x_get", _wrap_Micropolis_tool_x_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tool_y_set", _wrap_Micropolis_tool_y_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tool_y_get", _wrap_Micropolis_tool_y_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CostOf_get", _wrap_Micropolis_CostOf_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CostOf_set", _wrap_Micropolis_CostOf_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolSize_get", _wrap_Micropolis_toolSize_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolSize_set", _wrap_Micropolis_toolSize_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolOffset_get", _wrap_Micropolis_toolOffset_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolOffset_set", _wrap_Micropolis_toolOffset_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolColors_get", _wrap_Micropolis_toolColors_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_toolColors_set", _wrap_Micropolis_toolColors_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_putDownPark", _wrap_Micropolis_putDownPark, METH_VARARGS, NULL},
-         { (char *)"Micropolis_putDownNetwork", _wrap_Micropolis_putDownNetwork, METH_VARARGS, NULL},
-         { (char *)"Micropolis_checkBigZone", _wrap_Micropolis_checkBigZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_tally", _wrap_Micropolis_tally, METH_VARARGS, NULL},
-         { (char *)"Micropolis_checkSize", _wrap_Micropolis_checkSize, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check3x3border", _wrap_Micropolis_check3x3border, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check3x3", _wrap_Micropolis_check3x3, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check4x4border", _wrap_Micropolis_check4x4border, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check4x4", _wrap_Micropolis_check4x4, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check6x6border", _wrap_Micropolis_check6x6border, METH_VARARGS, NULL},
-         { (char *)"Micropolis_check6x6", _wrap_Micropolis_check6x6, METH_VARARGS, NULL},
-         { (char *)"Micropolis_getDensityStr", _wrap_Micropolis_getDensityStr, METH_VARARGS, NULL},
-         { (char *)"Micropolis_doZoneStatus", _wrap_Micropolis_doZoneStatus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoShowZoneStatus", _wrap_Micropolis_DoShowZoneStatus, METH_VARARGS, NULL},
-         { (char *)"Micropolis_put3x3Rubble", _wrap_Micropolis_put3x3Rubble, METH_VARARGS, NULL},
-         { (char *)"Micropolis_put4x4Rubble", _wrap_Micropolis_put4x4Rubble, METH_VARARGS, NULL},
-         { (char *)"Micropolis_put6x6Rubble", _wrap_Micropolis_put6x6Rubble, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DidTool", _wrap_Micropolis_DidTool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_query_tool", _wrap_Micropolis_query_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_bulldozer_tool", _wrap_Micropolis_bulldozer_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_road_tool", _wrap_Micropolis_road_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_rail_tool", _wrap_Micropolis_rail_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_wire_tool", _wrap_Micropolis_wire_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_park_tool", _wrap_Micropolis_park_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_residential_tool", _wrap_Micropolis_residential_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_commercial_tool", _wrap_Micropolis_commercial_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_industrial_tool", _wrap_Micropolis_industrial_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_police_dept_tool", _wrap_Micropolis_police_dept_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_fire_dept_tool", _wrap_Micropolis_fire_dept_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_stadium_tool", _wrap_Micropolis_stadium_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_coal_power_plant_tool", _wrap_Micropolis_coal_power_plant_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_nuclear_power_plant_tool", _wrap_Micropolis_nuclear_power_plant_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_seaport_tool", _wrap_Micropolis_seaport_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_airport_tool", _wrap_Micropolis_airport_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_network_tool", _wrap_Micropolis_network_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_do_tool", _wrap_Micropolis_do_tool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoTool", _wrap_Micropolis_DoTool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ToolDown", _wrap_Micropolis_ToolDown, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ToolUp", _wrap_Micropolis_ToolUp, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ToolDrag", _wrap_Micropolis_ToolDrag, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoPendTool", _wrap_Micropolis_DoPendTool, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PosStackN_set", _wrap_Micropolis_PosStackN_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PosStackN_get", _wrap_Micropolis_PosStackN_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapXStack_set", _wrap_Micropolis_SMapXStack_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapXStack_get", _wrap_Micropolis_SMapXStack_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapYStack_set", _wrap_Micropolis_SMapYStack_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SMapYStack_get", _wrap_Micropolis_SMapYStack_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LDir_set", _wrap_Micropolis_LDir_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LDir_get", _wrap_Micropolis_LDir_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Zsource_set", _wrap_Micropolis_Zsource_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Zsource_get", _wrap_Micropolis_Zsource_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafMaxX_set", _wrap_Micropolis_TrafMaxX_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafMaxX_get", _wrap_Micropolis_TrafMaxX_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafMaxY_set", _wrap_Micropolis_TrafMaxY_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TrafMaxY_get", _wrap_Micropolis_TrafMaxY_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeTraf", _wrap_Micropolis_MakeTraf, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetTrafMem", _wrap_Micropolis_SetTrafMem, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PushPos", _wrap_Micropolis_PushPos, METH_VARARGS, NULL},
-         { (char *)"Micropolis_PullPos", _wrap_Micropolis_PullPos, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FindPRoad", _wrap_Micropolis_FindPRoad, METH_VARARGS, NULL},
-         { (char *)"Micropolis_FindPTele", _wrap_Micropolis_FindPTele, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TryDrive", _wrap_Micropolis_TryDrive, METH_VARARGS, NULL},
-         { (char *)"Micropolis_TryGo", _wrap_Micropolis_TryGo, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetFromMap", _wrap_Micropolis_GetFromMap, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DriveDone", _wrap_Micropolis_DriveDone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RoadTest", _wrap_Micropolis_RoadTest, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustUpdateFunds_set", _wrap_Micropolis_MustUpdateFunds_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustUpdateFunds_get", _wrap_Micropolis_MustUpdateFunds_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustUpdateOptions_set", _wrap_Micropolis_MustUpdateOptions_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MustUpdateOptions_get", _wrap_Micropolis_MustUpdateOptions_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityTime_set", _wrap_Micropolis_LastCityTime_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityTime_get", _wrap_Micropolis_LastCityTime_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityYear_set", _wrap_Micropolis_LastCityYear_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityYear_get", _wrap_Micropolis_LastCityYear_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityMonth_set", _wrap_Micropolis_LastCityMonth_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastCityMonth_get", _wrap_Micropolis_LastCityMonth_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastFunds_set", _wrap_Micropolis_LastFunds_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastFunds_get", _wrap_Micropolis_LastFunds_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastR_set", _wrap_Micropolis_LastR_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastR_get", _wrap_Micropolis_LastR_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastC_set", _wrap_Micropolis_LastC_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastC_get", _wrap_Micropolis_LastC_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastI_set", _wrap_Micropolis_LastI_set, METH_VARARGS, NULL},
-         { (char *)"Micropolis_LastI_get", _wrap_Micropolis_LastI_get, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoUpdateHeads", _wrap_Micropolis_DoUpdateHeads, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateEditors", _wrap_Micropolis_UpdateEditors, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateMaps", _wrap_Micropolis_UpdateMaps, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateGraphs", _wrap_Micropolis_UpdateGraphs, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateEvaluation", _wrap_Micropolis_UpdateEvaluation, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateHeads", _wrap_Micropolis_UpdateHeads, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateFunds", _wrap_Micropolis_UpdateFunds, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ReallyUpdateFunds", _wrap_Micropolis_ReallyUpdateFunds, METH_VARARGS, NULL},
-         { (char *)"Micropolis_doTimeStuff", _wrap_Micropolis_doTimeStuff, METH_VARARGS, NULL},
-         { (char *)"Micropolis_updateDate", _wrap_Micropolis_updateDate, METH_VARARGS, NULL},
-         { (char *)"Micropolis_showValves", _wrap_Micropolis_showValves, METH_VARARGS, NULL},
-         { (char *)"Micropolis_drawValve", _wrap_Micropolis_drawValve, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetDemand", _wrap_Micropolis_SetDemand, METH_VARARGS, NULL},
-         { (char *)"Micropolis_updateOptions", _wrap_Micropolis_updateOptions, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateOptionsMenu", _wrap_Micropolis_UpdateOptionsMenu, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateUserInterface", _wrap_Micropolis_UpdateUserInterface, METH_VARARGS, NULL},
-         { (char *)"Micropolis_makeDollarDecimalStr", _wrap_Micropolis_makeDollarDecimalStr, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Pause", _wrap_Micropolis_Pause, METH_VARARGS, NULL},
-         { (char *)"Micropolis_Resume", _wrap_Micropolis_Resume, METH_VARARGS, NULL},
-         { (char *)"Micropolis_setSpeed", _wrap_Micropolis_setSpeed, METH_VARARGS, NULL},
-         { (char *)"Micropolis_setSkips", _wrap_Micropolis_setSkips, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetGameLevelFunds", _wrap_Micropolis_SetGameLevelFunds, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetGameLevel", _wrap_Micropolis_SetGameLevel, METH_VARARGS, NULL},
-         { (char *)"Micropolis_UpdateGameLevel", _wrap_Micropolis_UpdateGameLevel, METH_VARARGS, NULL},
-         { (char *)"Micropolis_setCityName", _wrap_Micropolis_setCityName, METH_VARARGS, NULL},
-         { (char *)"Micropolis_setAnyCityName", _wrap_Micropolis_setAnyCityName, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetYear", _wrap_Micropolis_SetYear, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CurrentYear", _wrap_Micropolis_CurrentYear, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoNewGame", _wrap_Micropolis_DoNewGame, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoGeneratedCityImage", _wrap_Micropolis_DoGeneratedCityImage, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoZone", _wrap_Micropolis_DoZone, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoHospChur", _wrap_Micropolis_DoHospChur, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetSmoke", _wrap_Micropolis_SetSmoke, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoIndustrial", _wrap_Micropolis_DoIndustrial, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoCommercial", _wrap_Micropolis_DoCommercial, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoResidential", _wrap_Micropolis_DoResidential, METH_VARARGS, NULL},
-         { (char *)"Micropolis_MakeHosp", _wrap_Micropolis_MakeHosp, METH_VARARGS, NULL},
-         { (char *)"Micropolis_GetCRVal", _wrap_Micropolis_GetCRVal, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoResIn", _wrap_Micropolis_DoResIn, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoComIn", _wrap_Micropolis_DoComIn, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoIndIn", _wrap_Micropolis_DoIndIn, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IncROG", _wrap_Micropolis_IncROG, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoResOut", _wrap_Micropolis_DoResOut, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoComOut", _wrap_Micropolis_DoComOut, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoIndOut", _wrap_Micropolis_DoIndOut, METH_VARARGS, NULL},
-         { (char *)"Micropolis_RZPop", _wrap_Micropolis_RZPop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_CZPop", _wrap_Micropolis_CZPop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IZPop", _wrap_Micropolis_IZPop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_BuildHouse", _wrap_Micropolis_BuildHouse, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ResPlop", _wrap_Micropolis_ResPlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ComPlop", _wrap_Micropolis_ComPlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_IndPlop", _wrap_Micropolis_IndPlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalLot", _wrap_Micropolis_EvalLot, METH_VARARGS, NULL},
-         { (char *)"Micropolis_ZonePlop", _wrap_Micropolis_ZonePlop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalRes", _wrap_Micropolis_EvalRes, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalCom", _wrap_Micropolis_EvalCom, METH_VARARGS, NULL},
-         { (char *)"Micropolis_EvalInd", _wrap_Micropolis_EvalInd, METH_VARARGS, NULL},
-         { (char *)"Micropolis_DoFreePop", _wrap_Micropolis_DoFreePop, METH_VARARGS, NULL},
-         { (char *)"Micropolis_SetZPower", _wrap_Micropolis_SetZPower, METH_VARARGS, NULL},
-         { (char *)"Micropolis_swigregister", Micropolis_swigregister, METH_VARARGS, NULL},
-         { NULL, NULL, 0, NULL }
+	 { (char *)"GetPythonCallbackHook", _wrap_GetPythonCallbackHook, METH_VARARGS, NULL},
+	 { (char *)"GetPythonCallbackData", _wrap_GetPythonCallbackData, METH_VARARGS, NULL},
+	 { (char *)"Resource_buf_set", _wrap_Resource_buf_set, METH_VARARGS, NULL},
+	 { (char *)"Resource_buf_get", _wrap_Resource_buf_get, METH_VARARGS, NULL},
+	 { (char *)"Resource_size_set", _wrap_Resource_size_set, METH_VARARGS, NULL},
+	 { (char *)"Resource_size_get", _wrap_Resource_size_get, METH_VARARGS, NULL},
+	 { (char *)"Resource_name_set", _wrap_Resource_name_set, METH_VARARGS, NULL},
+	 { (char *)"Resource_name_get", _wrap_Resource_name_get, METH_VARARGS, NULL},
+	 { (char *)"Resource_id_set", _wrap_Resource_id_set, METH_VARARGS, NULL},
+	 { (char *)"Resource_id_get", _wrap_Resource_id_get, METH_VARARGS, NULL},
+	 { (char *)"Resource_next_set", _wrap_Resource_next_set, METH_VARARGS, NULL},
+	 { (char *)"Resource_next_get", _wrap_Resource_next_get, METH_VARARGS, NULL},
+	 { (char *)"new_Resource", _wrap_new_Resource, METH_VARARGS, NULL},
+	 { (char *)"delete_Resource", _wrap_delete_Resource, METH_VARARGS, NULL},
+	 { (char *)"Resource_swigregister", Resource_swigregister, METH_VARARGS, NULL},
+	 { (char *)"StringTable_id_set", _wrap_StringTable_id_set, METH_VARARGS, NULL},
+	 { (char *)"StringTable_id_get", _wrap_StringTable_id_get, METH_VARARGS, NULL},
+	 { (char *)"StringTable_lines_set", _wrap_StringTable_lines_set, METH_VARARGS, NULL},
+	 { (char *)"StringTable_lines_get", _wrap_StringTable_lines_get, METH_VARARGS, NULL},
+	 { (char *)"StringTable_strings_set", _wrap_StringTable_strings_set, METH_VARARGS, NULL},
+	 { (char *)"StringTable_strings_get", _wrap_StringTable_strings_get, METH_VARARGS, NULL},
+	 { (char *)"StringTable_next_set", _wrap_StringTable_next_set, METH_VARARGS, NULL},
+	 { (char *)"StringTable_next_get", _wrap_StringTable_next_get, METH_VARARGS, NULL},
+	 { (char *)"new_StringTable", _wrap_new_StringTable, METH_VARARGS, NULL},
+	 { (char *)"delete_StringTable", _wrap_delete_StringTable, METH_VARARGS, NULL},
+	 { (char *)"StringTable_swigregister", StringTable_swigregister, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_next_set", _wrap_SimSprite_next_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_next_get", _wrap_SimSprite_next_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_name_set", _wrap_SimSprite_name_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_name_get", _wrap_SimSprite_name_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_type_set", _wrap_SimSprite_type_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_type_get", _wrap_SimSprite_type_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_frame_set", _wrap_SimSprite_frame_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_frame_get", _wrap_SimSprite_frame_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_set", _wrap_SimSprite_x_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_get", _wrap_SimSprite_x_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_set", _wrap_SimSprite_y_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_get", _wrap_SimSprite_y_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_width_set", _wrap_SimSprite_width_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_width_get", _wrap_SimSprite_width_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_height_set", _wrap_SimSprite_height_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_height_get", _wrap_SimSprite_height_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_offset_set", _wrap_SimSprite_x_offset_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_offset_get", _wrap_SimSprite_x_offset_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_offset_set", _wrap_SimSprite_y_offset_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_offset_get", _wrap_SimSprite_y_offset_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_hot_set", _wrap_SimSprite_x_hot_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_x_hot_get", _wrap_SimSprite_x_hot_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_hot_set", _wrap_SimSprite_y_hot_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_y_hot_get", _wrap_SimSprite_y_hot_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_orig_x_set", _wrap_SimSprite_orig_x_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_orig_x_get", _wrap_SimSprite_orig_x_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_orig_y_set", _wrap_SimSprite_orig_y_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_orig_y_get", _wrap_SimSprite_orig_y_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dest_x_set", _wrap_SimSprite_dest_x_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dest_x_get", _wrap_SimSprite_dest_x_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dest_y_set", _wrap_SimSprite_dest_y_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dest_y_get", _wrap_SimSprite_dest_y_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_count_set", _wrap_SimSprite_count_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_count_get", _wrap_SimSprite_count_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_sound_count_set", _wrap_SimSprite_sound_count_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_sound_count_get", _wrap_SimSprite_sound_count_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dir_set", _wrap_SimSprite_dir_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_dir_get", _wrap_SimSprite_dir_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_new_dir_set", _wrap_SimSprite_new_dir_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_new_dir_get", _wrap_SimSprite_new_dir_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_step_set", _wrap_SimSprite_step_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_step_get", _wrap_SimSprite_step_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_flag_set", _wrap_SimSprite_flag_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_flag_get", _wrap_SimSprite_flag_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_control_set", _wrap_SimSprite_control_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_control_get", _wrap_SimSprite_control_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_turn_set", _wrap_SimSprite_turn_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_turn_get", _wrap_SimSprite_turn_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_accel_set", _wrap_SimSprite_accel_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_accel_get", _wrap_SimSprite_accel_get, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_speed_set", _wrap_SimSprite_speed_set, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_speed_get", _wrap_SimSprite_speed_get, METH_VARARGS, NULL},
+	 { (char *)"new_SimSprite", _wrap_new_SimSprite, METH_VARARGS, NULL},
+	 { (char *)"delete_SimSprite", _wrap_delete_SimSprite, METH_VARARGS, NULL},
+	 { (char *)"SimSprite_swigregister", SimSprite_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_Micropolis", _wrap_new_Micropolis, METH_VARARGS, NULL},
+	 { (char *)"delete_Micropolis", _wrap_delete_Micropolis, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_init", _wrap_Micropolis_init, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_destroy", _wrap_Micropolis_destroy, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapX_set", _wrap_Micropolis_SMapX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapX_get", _wrap_Micropolis_SMapX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapY_set", _wrap_Micropolis_SMapY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapY_get", _wrap_Micropolis_SMapY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CChr_set", _wrap_Micropolis_CChr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CChr_get", _wrap_Micropolis_CChr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CChr9_set", _wrap_Micropolis_CChr9_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CChr9_get", _wrap_Micropolis_CChr9_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadTotal_set", _wrap_Micropolis_RoadTotal_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadTotal_get", _wrap_Micropolis_RoadTotal_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RailTotal_set", _wrap_Micropolis_RailTotal_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RailTotal_get", _wrap_Micropolis_RailTotal_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FirePop_set", _wrap_Micropolis_FirePop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FirePop_get", _wrap_Micropolis_FirePop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResPop_set", _wrap_Micropolis_ResPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResPop_get", _wrap_Micropolis_ResPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComPop_set", _wrap_Micropolis_ComPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComPop_get", _wrap_Micropolis_ComPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndPop_set", _wrap_Micropolis_IndPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndPop_get", _wrap_Micropolis_IndPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalPop_set", _wrap_Micropolis_TotalPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalPop_get", _wrap_Micropolis_TotalPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastTotalPop_set", _wrap_Micropolis_LastTotalPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastTotalPop_get", _wrap_Micropolis_LastTotalPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResZPop_set", _wrap_Micropolis_ResZPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResZPop_get", _wrap_Micropolis_ResZPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComZPop_set", _wrap_Micropolis_ComZPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComZPop_get", _wrap_Micropolis_ComZPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndZPop_set", _wrap_Micropolis_IndZPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndZPop_get", _wrap_Micropolis_IndZPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalZPop_set", _wrap_Micropolis_TotalZPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalZPop_get", _wrap_Micropolis_TotalZPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HospPop_set", _wrap_Micropolis_HospPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HospPop_get", _wrap_Micropolis_HospPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ChurchPop_set", _wrap_Micropolis_ChurchPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ChurchPop_get", _wrap_Micropolis_ChurchPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StadiumPop_set", _wrap_Micropolis_StadiumPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StadiumPop_get", _wrap_Micropolis_StadiumPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolicePop_set", _wrap_Micropolis_PolicePop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolicePop_get", _wrap_Micropolis_PolicePop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireStPop_set", _wrap_Micropolis_FireStPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireStPop_get", _wrap_Micropolis_FireStPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CoalPop_set", _wrap_Micropolis_CoalPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CoalPop_get", _wrap_Micropolis_CoalPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NuclearPop_set", _wrap_Micropolis_NuclearPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NuclearPop_get", _wrap_Micropolis_NuclearPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PortPop_set", _wrap_Micropolis_PortPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PortPop_get", _wrap_Micropolis_PortPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_APortPop_set", _wrap_Micropolis_APortPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_APortPop_get", _wrap_Micropolis_APortPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NeedHosp_set", _wrap_Micropolis_NeedHosp_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NeedHosp_get", _wrap_Micropolis_NeedHosp_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NeedChurch_set", _wrap_Micropolis_NeedChurch_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NeedChurch_get", _wrap_Micropolis_NeedChurch_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeAverage_set", _wrap_Micropolis_CrimeAverage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeAverage_get", _wrap_Micropolis_CrimeAverage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolluteAverage_set", _wrap_Micropolis_PolluteAverage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolluteAverage_get", _wrap_Micropolis_PolluteAverage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LVAverage_set", _wrap_Micropolis_LVAverage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LVAverage_get", _wrap_Micropolis_LVAverage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityTime_set", _wrap_Micropolis_CityTime_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityTime_get", _wrap_Micropolis_CityTime_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityMonth_set", _wrap_Micropolis_CityMonth_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityMonth_get", _wrap_Micropolis_CityMonth_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYear_set", _wrap_Micropolis_CityYear_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYear_get", _wrap_Micropolis_CityYear_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StartingYear_set", _wrap_Micropolis_StartingYear_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StartingYear_get", _wrap_Micropolis_StartingYear_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Map_set", _wrap_Micropolis_Map_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Map_get", _wrap_Micropolis_Map_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResHisMax_set", _wrap_Micropolis_ResHisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResHisMax_get", _wrap_Micropolis_ResHisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Res2HisMax_set", _wrap_Micropolis_Res2HisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Res2HisMax_get", _wrap_Micropolis_Res2HisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComHisMax_set", _wrap_Micropolis_ComHisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComHisMax_get", _wrap_Micropolis_ComHisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Com2HisMax_set", _wrap_Micropolis_Com2HisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Com2HisMax_get", _wrap_Micropolis_Com2HisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndHisMax_set", _wrap_Micropolis_IndHisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndHisMax_get", _wrap_Micropolis_IndHisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Ind2HisMax_set", _wrap_Micropolis_Ind2HisMax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Ind2HisMax_get", _wrap_Micropolis_Ind2HisMax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CensusChanged_set", _wrap_Micropolis_CensusChanged_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CensusChanged_get", _wrap_Micropolis_CensusChanged_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MessagePort_set", _wrap_Micropolis_MessagePort_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MessagePort_get", _wrap_Micropolis_MessagePort_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesX_set", _wrap_Micropolis_MesX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesX_get", _wrap_Micropolis_MesX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesY_set", _wrap_Micropolis_MesY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesY_get", _wrap_Micropolis_MesY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadSpend_set", _wrap_Micropolis_RoadSpend_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadSpend_get", _wrap_Micropolis_RoadSpend_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceSpend_set", _wrap_Micropolis_PoliceSpend_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceSpend_get", _wrap_Micropolis_PoliceSpend_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireSpend_set", _wrap_Micropolis_FireSpend_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireSpend_get", _wrap_Micropolis_FireSpend_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadFund_set", _wrap_Micropolis_RoadFund_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadFund_get", _wrap_Micropolis_RoadFund_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceFund_set", _wrap_Micropolis_PoliceFund_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceFund_get", _wrap_Micropolis_PoliceFund_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireFund_set", _wrap_Micropolis_FireFund_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireFund_get", _wrap_Micropolis_FireFund_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadEffect_set", _wrap_Micropolis_RoadEffect_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadEffect_get", _wrap_Micropolis_RoadEffect_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceEffect_set", _wrap_Micropolis_PoliceEffect_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceEffect_get", _wrap_Micropolis_PoliceEffect_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireEffect_set", _wrap_Micropolis_FireEffect_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireEffect_get", _wrap_Micropolis_FireEffect_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TaxFund_set", _wrap_Micropolis_TaxFund_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TaxFund_get", _wrap_Micropolis_TaxFund_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityTax_set", _wrap_Micropolis_CityTax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityTax_get", _wrap_Micropolis_CityTax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TaxFlag_set", _wrap_Micropolis_TaxFlag_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TaxFlag_get", _wrap_Micropolis_TaxFlag_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PopDensity_set", _wrap_Micropolis_PopDensity_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PopDensity_get", _wrap_Micropolis_PopDensity_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrfDensity_set", _wrap_Micropolis_TrfDensity_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrfDensity_get", _wrap_Micropolis_TrfDensity_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PollutionMem_set", _wrap_Micropolis_PollutionMem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PollutionMem_get", _wrap_Micropolis_PollutionMem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LandValueMem_set", _wrap_Micropolis_LandValueMem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LandValueMem_get", _wrap_Micropolis_LandValueMem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMem_set", _wrap_Micropolis_CrimeMem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMem_get", _wrap_Micropolis_CrimeMem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem_set", _wrap_Micropolis_tem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem_get", _wrap_Micropolis_tem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem2_set", _wrap_Micropolis_tem2_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem2_get", _wrap_Micropolis_tem2_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TerrainMem_set", _wrap_Micropolis_TerrainMem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TerrainMem_get", _wrap_Micropolis_TerrainMem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Qtem_set", _wrap_Micropolis_Qtem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Qtem_get", _wrap_Micropolis_Qtem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RateOGMem_set", _wrap_Micropolis_RateOGMem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RateOGMem_get", _wrap_Micropolis_RateOGMem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireStMap_set", _wrap_Micropolis_FireStMap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireStMap_get", _wrap_Micropolis_FireStMap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceMap_set", _wrap_Micropolis_PoliceMap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceMap_get", _wrap_Micropolis_PoliceMap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceMapEffect_set", _wrap_Micropolis_PoliceMapEffect_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PoliceMapEffect_get", _wrap_Micropolis_PoliceMapEffect_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireRate_set", _wrap_Micropolis_FireRate_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireRate_get", _wrap_Micropolis_FireRate_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComRate_set", _wrap_Micropolis_ComRate_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComRate_get", _wrap_Micropolis_ComRate_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_STem_set", _wrap_Micropolis_STem_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_STem_get", _wrap_Micropolis_STem_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_terrainBase_set", _wrap_Micropolis_terrainBase_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_terrainBase_get", _wrap_Micropolis_terrainBase_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_qTemBase_set", _wrap_Micropolis_qTemBase_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_qTemBase_get", _wrap_Micropolis_qTemBase_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem1Base_set", _wrap_Micropolis_tem1Base_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem1Base_get", _wrap_Micropolis_tem1Base_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem2Base_set", _wrap_Micropolis_tem2Base_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tem2Base_get", _wrap_Micropolis_tem2Base_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_popPtr_set", _wrap_Micropolis_popPtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_popPtr_get", _wrap_Micropolis_popPtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_trfPtr_set", _wrap_Micropolis_trfPtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_trfPtr_get", _wrap_Micropolis_trfPtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_polPtr_set", _wrap_Micropolis_polPtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_polPtr_get", _wrap_Micropolis_polPtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_landPtr_set", _wrap_Micropolis_landPtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_landPtr_get", _wrap_Micropolis_landPtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_crimePtr_set", _wrap_Micropolis_crimePtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_crimePtr_get", _wrap_Micropolis_crimePtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_mapPtr_set", _wrap_Micropolis_mapPtr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_mapPtr_get", _wrap_Micropolis_mapPtr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResHis_set", _wrap_Micropolis_ResHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResHis_get", _wrap_Micropolis_ResHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComHis_set", _wrap_Micropolis_ComHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComHis_get", _wrap_Micropolis_ComHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndHis_set", _wrap_Micropolis_IndHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndHis_get", _wrap_Micropolis_IndHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MoneyHis_set", _wrap_Micropolis_MoneyHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MoneyHis_get", _wrap_Micropolis_MoneyHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PollutionHis_set", _wrap_Micropolis_PollutionHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PollutionHis_get", _wrap_Micropolis_PollutionHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeHis_set", _wrap_Micropolis_CrimeHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeHis_get", _wrap_Micropolis_CrimeHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MiscHis_set", _wrap_Micropolis_MiscHis_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MiscHis_get", _wrap_Micropolis_MiscHis_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerMap_set", _wrap_Micropolis_PowerMap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerMap_get", _wrap_Micropolis_PowerMap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_initMapArrays", _wrap_Micropolis_initMapArrays, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_destroyMapArrays", _wrap_Micropolis_destroyMapArrays, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetHistoryRange", _wrap_Micropolis_GetHistoryRange, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetHistory", _wrap_Micropolis_GetHistory, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_animateTiles", _wrap_Micropolis_animateTiles, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_roadPercent_set", _wrap_Micropolis_roadPercent_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_roadPercent_get", _wrap_Micropolis_roadPercent_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_policePercent_set", _wrap_Micropolis_policePercent_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_policePercent_get", _wrap_Micropolis_policePercent_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_firePercent_set", _wrap_Micropolis_firePercent_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_firePercent_get", _wrap_Micropolis_firePercent_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_roadValue_set", _wrap_Micropolis_roadValue_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_roadValue_get", _wrap_Micropolis_roadValue_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_policeValue_set", _wrap_Micropolis_policeValue_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_policeValue_get", _wrap_Micropolis_policeValue_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_fireValue_set", _wrap_Micropolis_fireValue_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_fireValue_get", _wrap_Micropolis_fireValue_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustDrawCurrPercents_set", _wrap_Micropolis_MustDrawCurrPercents_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustDrawCurrPercents_get", _wrap_Micropolis_MustDrawCurrPercents_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustDrawBudgetWindow_set", _wrap_Micropolis_MustDrawBudgetWindow_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustDrawBudgetWindow_get", _wrap_Micropolis_MustDrawBudgetWindow_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitFundingLevel", _wrap_Micropolis_InitFundingLevel, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBudget", _wrap_Micropolis_DoBudget, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBudgetFromMenu", _wrap_Micropolis_DoBudgetFromMenu, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBudgetNow", _wrap_Micropolis_DoBudgetNow, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_drawBudgetWindow", _wrap_Micropolis_drawBudgetWindow, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ReallyDrawBudgetWindow", _wrap_Micropolis_ReallyDrawBudgetWindow, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_drawCurrPercents", _wrap_Micropolis_drawCurrPercents, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ReallyDrawCurrPercents", _wrap_Micropolis_ReallyDrawCurrPercents, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateBudgetWindow", _wrap_Micropolis_UpdateBudgetWindow, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateBudget", _wrap_Micropolis_UpdateBudget, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ShowBudgetWindowAndStartWaiting", _wrap_Micropolis_ShowBudgetWindowAndStartWaiting, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetBudget", _wrap_Micropolis_SetBudget, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetBudgetValues", _wrap_Micropolis_SetBudgetValues, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ConnecTile", _wrap_Micropolis_ConnecTile, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LayDoze", _wrap_Micropolis_LayDoze, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LayRoad", _wrap_Micropolis_LayRoad, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LayRail", _wrap_Micropolis_LayRail, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LayWire", _wrap_Micropolis_LayWire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FixZone", _wrap_Micropolis_FixZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FixSingle", _wrap_Micropolis_FixSingle, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FloodCnt_set", _wrap_Micropolis_FloodCnt_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FloodCnt_get", _wrap_Micropolis_FloodCnt_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoDisasters", _wrap_Micropolis_DoDisasters, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScenarioDisaster", _wrap_Micropolis_ScenarioDisaster, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeMeltdown", _wrap_Micropolis_MakeMeltdown, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireBomb", _wrap_Micropolis_FireBomb, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeEarthquake", _wrap_Micropolis_MakeEarthquake, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetFire", _wrap_Micropolis_SetFire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeFire", _wrap_Micropolis_MakeFire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Vulnerable", _wrap_Micropolis_Vulnerable, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeFlood", _wrap_Micropolis_MakeFlood, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoFlood", _wrap_Micropolis_DoFlood, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYes_set", _wrap_Micropolis_CityYes_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityYes_get", _wrap_Micropolis_CityYes_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityNo_set", _wrap_Micropolis_CityNo_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityNo_get", _wrap_Micropolis_CityNo_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemTable_set", _wrap_Micropolis_ProblemTable_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemTable_get", _wrap_Micropolis_ProblemTable_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemVotes_set", _wrap_Micropolis_ProblemVotes_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemVotes_get", _wrap_Micropolis_ProblemVotes_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemOrder_set", _wrap_Micropolis_ProblemOrder_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ProblemOrder_get", _wrap_Micropolis_ProblemOrder_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityPop_set", _wrap_Micropolis_CityPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityPop_get", _wrap_Micropolis_CityPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_deltaCityPop_set", _wrap_Micropolis_deltaCityPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_deltaCityPop_get", _wrap_Micropolis_deltaCityPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityAssValue_set", _wrap_Micropolis_CityAssValue_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityAssValue_get", _wrap_Micropolis_CityAssValue_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityClass_set", _wrap_Micropolis_CityClass_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityClass_get", _wrap_Micropolis_CityClass_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityScore_set", _wrap_Micropolis_CityScore_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityScore_get", _wrap_Micropolis_CityScore_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_deltaCityScore_set", _wrap_Micropolis_deltaCityScore_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_deltaCityScore_get", _wrap_Micropolis_deltaCityScore_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafficAverage_set", _wrap_Micropolis_TrafficAverage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafficAverage_get", _wrap_Micropolis_TrafficAverage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityClassStr_get", _wrap_Micropolis_cityClassStr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityClassStr_set", _wrap_Micropolis_cityClassStr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityLevelStr_get", _wrap_Micropolis_cityLevelStr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityLevelStr_set", _wrap_Micropolis_cityLevelStr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_probStr_get", _wrap_Micropolis_probStr_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_probStr_set", _wrap_Micropolis_probStr_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityEvaluation", _wrap_Micropolis_CityEvaluation, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalInit", _wrap_Micropolis_EvalInit, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetAssValue", _wrap_Micropolis_GetAssValue, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoPopNum", _wrap_Micropolis_DoPopNum, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoProblems", _wrap_Micropolis_DoProblems, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_VoteProblems", _wrap_Micropolis_VoteProblems, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_AverageTrf", _wrap_Micropolis_AverageTrf, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetUnemployment", _wrap_Micropolis_GetUnemployment, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetFire", _wrap_Micropolis_GetFire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetScore", _wrap_Micropolis_GetScore, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoVotes", _wrap_Micropolis_DoVotes, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_doScoreCard", _wrap_Micropolis_doScoreCard, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ChangeEval", _wrap_Micropolis_ChangeEval, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_scoreDoer", _wrap_Micropolis_scoreDoer, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_load_file", _wrap_Micropolis_load_file, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_loadFile", _wrap_Micropolis_loadFile, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_saveFile", _wrap_Micropolis_saveFile, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LoadScenario", _wrap_Micropolis_LoadScenario, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidLoadScenario", _wrap_Micropolis_DidLoadScenario, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LoadCity", _wrap_Micropolis_LoadCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidLoadCity", _wrap_Micropolis_DidLoadCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidntLoadCity", _wrap_Micropolis_DidntLoadCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SaveCity", _wrap_Micropolis_SaveCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSaveCityAs", _wrap_Micropolis_DoSaveCityAs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidSaveCity", _wrap_Micropolis_DidSaveCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidntSaveCity", _wrap_Micropolis_DidntSaveCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SaveCityAs", _wrap_Micropolis_SaveCityAs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_XStart_set", _wrap_Micropolis_XStart_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_XStart_get", _wrap_Micropolis_XStart_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_YStart_set", _wrap_Micropolis_YStart_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_YStart_get", _wrap_Micropolis_YStart_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MapX_set", _wrap_Micropolis_MapX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MapX_get", _wrap_Micropolis_MapX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MapY_set", _wrap_Micropolis_MapY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MapY_get", _wrap_Micropolis_MapY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Dir_set", _wrap_Micropolis_Dir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Dir_get", _wrap_Micropolis_Dir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastDir_set", _wrap_Micropolis_LastDir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastDir_get", _wrap_Micropolis_LastDir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TreeLevel_set", _wrap_Micropolis_TreeLevel_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TreeLevel_get", _wrap_Micropolis_TreeLevel_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LakeLevel_set", _wrap_Micropolis_LakeLevel_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LakeLevel_get", _wrap_Micropolis_LakeLevel_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CurveLevel_set", _wrap_Micropolis_CurveLevel_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CurveLevel_get", _wrap_Micropolis_CurveLevel_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CreateIsland_set", _wrap_Micropolis_CreateIsland_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CreateIsland_get", _wrap_Micropolis_CreateIsland_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateNewCity", _wrap_Micropolis_GenerateNewCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateSomeCity", _wrap_Micropolis_GenerateSomeCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateMap", _wrap_Micropolis_GenerateMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ClearMap", _wrap_Micropolis_ClearMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ClearUnnatural", _wrap_Micropolis_ClearUnnatural, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeNakedIsland", _wrap_Micropolis_MakeNakedIsland, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeIsland", _wrap_Micropolis_MakeIsland, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeLakes", _wrap_Micropolis_MakeLakes, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetRandStart", _wrap_Micropolis_GetRandStart, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MoveMap", _wrap_Micropolis_MoveMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TreeSplash", _wrap_Micropolis_TreeSplash, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoTrees", _wrap_Micropolis_DoTrees, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothRiver", _wrap_Micropolis_SmoothRiver, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IsTree", _wrap_Micropolis_IsTree, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothTrees", _wrap_Micropolis_SmoothTrees, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoRivers", _wrap_Micropolis_DoRivers, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBRiv", _wrap_Micropolis_DoBRiv, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSRiv", _wrap_Micropolis_DoSRiv, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PutOnMap", _wrap_Micropolis_PutOnMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_BRivPlop", _wrap_Micropolis_BRivPlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SRivPlop", _wrap_Micropolis_SRivPlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothWater", _wrap_Micropolis_SmoothWater, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewGraph_set", _wrap_Micropolis_NewGraph_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewGraph_get", _wrap_Micropolis_NewGraph_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_History10_set", _wrap_Micropolis_History10_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_History10_get", _wrap_Micropolis_History10_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_History120_set", _wrap_Micropolis_History120_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_History120_get", _wrap_Micropolis_History120_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistoryInitialized_set", _wrap_Micropolis_HistoryInitialized_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistoryInitialized_get", _wrap_Micropolis_HistoryInitialized_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Graph10Max_set", _wrap_Micropolis_Graph10Max_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Graph10Max_get", _wrap_Micropolis_Graph10Max_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Graph120Max_set", _wrap_Micropolis_Graph120Max_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Graph120Max_get", _wrap_Micropolis_Graph120Max_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GraphUpdateTime_set", _wrap_Micropolis_GraphUpdateTime_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GraphUpdateTime_get", _wrap_Micropolis_GraphUpdateTime_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistName_get", _wrap_Micropolis_HistName_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistName_set", _wrap_Micropolis_HistName_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistColor_get", _wrap_Micropolis_HistColor_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HistColor_set", _wrap_Micropolis_HistColor_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_drawMonth", _wrap_Micropolis_drawMonth, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_doAllGraphs", _wrap_Micropolis_doAllGraphs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ChangeCensus", _wrap_Micropolis_ChangeCensus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_graphDoer", _wrap_Micropolis_graphDoer, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_initGraphs", _wrap_Micropolis_initGraphs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitGraphMax", _wrap_Micropolis_InitGraphMax, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitWillStuff", _wrap_Micropolis_InitWillStuff, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResetMapState", _wrap_Micropolis_ResetMapState, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResetEditorState", _wrap_Micropolis_ResetEditorState, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MicropolisVersion_set", _wrap_Micropolis_MicropolisVersion_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MicropolisVersion_get", _wrap_Micropolis_MicropolisVersion_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_loops_set", _wrap_Micropolis_sim_loops_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_loops_get", _wrap_Micropolis_sim_loops_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_delay_set", _wrap_Micropolis_sim_delay_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_delay_get", _wrap_Micropolis_sim_delay_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_skips_set", _wrap_Micropolis_sim_skips_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_skips_get", _wrap_Micropolis_sim_skips_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_skip_set", _wrap_Micropolis_sim_skip_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_skip_get", _wrap_Micropolis_sim_skip_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_paused_set", _wrap_Micropolis_sim_paused_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_paused_get", _wrap_Micropolis_sim_paused_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_paused_speed_set", _wrap_Micropolis_sim_paused_speed_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_paused_speed_get", _wrap_Micropolis_sim_paused_speed_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_steps_set", _wrap_Micropolis_heat_steps_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_steps_get", _wrap_Micropolis_heat_steps_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_flow_set", _wrap_Micropolis_heat_flow_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_flow_get", _wrap_Micropolis_heat_flow_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_rule_set", _wrap_Micropolis_heat_rule_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_rule_get", _wrap_Micropolis_heat_rule_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_wrap_set", _wrap_Micropolis_heat_wrap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_heat_wrap_get", _wrap_Micropolis_heat_wrap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityFileName_set", _wrap_Micropolis_CityFileName_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityFileName_get", _wrap_Micropolis_CityFileName_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MultiPlayerMode_set", _wrap_Micropolis_MultiPlayerMode_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MultiPlayerMode_get", _wrap_Micropolis_MultiPlayerMode_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TilesAnimated_set", _wrap_Micropolis_TilesAnimated_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TilesAnimated_get", _wrap_Micropolis_TilesAnimated_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoAnimation_set", _wrap_Micropolis_DoAnimation_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoAnimation_get", _wrap_Micropolis_DoAnimation_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoMessages_set", _wrap_Micropolis_DoMessages_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoMessages_get", _wrap_Micropolis_DoMessages_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoNotices_set", _wrap_Micropolis_DoNotices_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoNotices_get", _wrap_Micropolis_DoNotices_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CellSrc_set", _wrap_Micropolis_CellSrc_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CellSrc_get", _wrap_Micropolis_CellSrc_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CellDst_set", _wrap_Micropolis_CellDst_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CellDst_get", _wrap_Micropolis_CellDst_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_env_init", _wrap_Micropolis_env_init, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_init", _wrap_Micropolis_sim_init, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_update", _wrap_Micropolis_sim_update, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_heat", _wrap_Micropolis_sim_heat, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_loop", _wrap_Micropolis_sim_loop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_tick", _wrap_Micropolis_sim_tick, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityPop_set", _wrap_Micropolis_LastCityPop_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityPop_get", _wrap_Micropolis_LastCityPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCategory_set", _wrap_Micropolis_LastCategory_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCategory_get", _wrap_Micropolis_LastCategory_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastPicNum_set", _wrap_Micropolis_LastPicNum_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastPicNum_get", _wrap_Micropolis_LastPicNum_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoGo_set", _wrap_Micropolis_autoGo_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoGo_get", _wrap_Micropolis_autoGo_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HaveLastMessage_set", _wrap_Micropolis_HaveLastMessage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HaveLastMessage_get", _wrap_Micropolis_HaveLastMessage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastMessage_set", _wrap_Micropolis_LastMessage_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastMessage_get", _wrap_Micropolis_LastMessage_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SendMessages", _wrap_Micropolis_SendMessages, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CheckGrowth", _wrap_Micropolis_CheckGrowth, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoScenarioScore", _wrap_Micropolis_DoScenarioScore, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ClearMes", _wrap_Micropolis_ClearMes, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SendMes", _wrap_Micropolis_SendMes, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SendMesAt", _wrap_Micropolis_SendMesAt, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_doMessage", _wrap_Micropolis_doMessage, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoAutoGoto", _wrap_Micropolis_DoAutoGoto, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetMessageField", _wrap_Micropolis_SetMessageField, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoShowPicture", _wrap_Micropolis_DoShowPicture, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoLoseGame", _wrap_Micropolis_DoLoseGame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoWinGame", _wrap_Micropolis_DoWinGame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackNum_set", _wrap_Micropolis_PowerStackNum_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackNum_get", _wrap_Micropolis_PowerStackNum_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackX_set", _wrap_Micropolis_PowerStackX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackX_get", _wrap_Micropolis_PowerStackX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackY_set", _wrap_Micropolis_PowerStackY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PowerStackY_get", _wrap_Micropolis_PowerStackY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MaxPower_set", _wrap_Micropolis_MaxPower_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MaxPower_get", _wrap_Micropolis_MaxPower_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NumPower_set", _wrap_Micropolis_NumPower_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NumPower_get", _wrap_Micropolis_NumPower_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MoveMapSim", _wrap_Micropolis_MoveMapSim, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TestForCond", _wrap_Micropolis_TestForCond, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoPowerScan", _wrap_Micropolis_DoPowerScan, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PushPowerStack", _wrap_Micropolis_PushPowerStack, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PullPowerStack", _wrap_Micropolis_PullPowerStack, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_nextRandom_set", _wrap_Micropolis_nextRandom_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_nextRandom_get", _wrap_Micropolis_nextRandom_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_rand", _wrap_Micropolis_sim_rand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_sim_srand", _wrap_Micropolis_sim_srand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand", _wrap_Micropolis_Rand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand16", _wrap_Micropolis_Rand16, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Rand16Signed", _wrap_Micropolis_Rand16Signed, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ERand", _wrap_Micropolis_ERand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RandomlySeedRand", _wrap_Micropolis_RandomlySeedRand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SeedRand", _wrap_Micropolis_SeedRand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HomeDir_set", _wrap_Micropolis_HomeDir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HomeDir_get", _wrap_Micropolis_HomeDir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResourceDir_set", _wrap_Micropolis_ResourceDir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResourceDir_get", _wrap_Micropolis_ResourceDir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_KeyDir_set", _wrap_Micropolis_KeyDir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_KeyDir_get", _wrap_Micropolis_KeyDir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HostName_set", _wrap_Micropolis_HostName_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_HostName_get", _wrap_Micropolis_HostName_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Resources_set", _wrap_Micropolis_Resources_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Resources_get", _wrap_Micropolis_Resources_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StringTables_set", _wrap_Micropolis_StringTables_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StringTables_get", _wrap_Micropolis_StringTables_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetResource", _wrap_Micropolis_GetResource, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ReleaseResource", _wrap_Micropolis_ReleaseResource, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResourceSize", _wrap_Micropolis_ResourceSize, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResourceName", _wrap_Micropolis_ResourceName, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResourceID", _wrap_Micropolis_ResourceID, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetIndString", _wrap_Micropolis_GetIndString, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewMap_set", _wrap_Micropolis_NewMap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewMap_get", _wrap_Micropolis_NewMap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewMapFlags_set", _wrap_Micropolis_NewMapFlags_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewMapFlags_get", _wrap_Micropolis_NewMapFlags_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCx_set", _wrap_Micropolis_CCx_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCx_get", _wrap_Micropolis_CCx_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCy_set", _wrap_Micropolis_CCy_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCy_get", _wrap_Micropolis_CCy_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCx2_set", _wrap_Micropolis_CCx2_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCx2_get", _wrap_Micropolis_CCx2_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCy2_set", _wrap_Micropolis_CCy2_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CCy2_get", _wrap_Micropolis_CCy2_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolMaxX_set", _wrap_Micropolis_PolMaxX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolMaxX_get", _wrap_Micropolis_PolMaxX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolMaxY_set", _wrap_Micropolis_PolMaxY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolMaxY_get", _wrap_Micropolis_PolMaxY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMaxX_set", _wrap_Micropolis_CrimeMaxX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMaxX_get", _wrap_Micropolis_CrimeMaxX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMaxY_set", _wrap_Micropolis_CrimeMaxY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeMaxY_get", _wrap_Micropolis_CrimeMaxY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DonDither_set", _wrap_Micropolis_DonDither_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DonDither_get", _wrap_Micropolis_DonDither_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireAnalysis", _wrap_Micropolis_FireAnalysis, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PopDenScan", _wrap_Micropolis_PopDenScan, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetPDen", _wrap_Micropolis_GetPDen, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PTLScan", _wrap_Micropolis_PTLScan, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetPValue", _wrap_Micropolis_GetPValue, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetDisCC", _wrap_Micropolis_GetDisCC, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeScan", _wrap_Micropolis_CrimeScan, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothTerrain", _wrap_Micropolis_SmoothTerrain, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSmooth", _wrap_Micropolis_DoSmooth, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSmooth2", _wrap_Micropolis_DoSmooth2, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ClrTemArray", _wrap_Micropolis_ClrTemArray, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothFSMap", _wrap_Micropolis_SmoothFSMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SmoothPSMap", _wrap_Micropolis_SmoothPSMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DistIntMarket", _wrap_Micropolis_DistIntMarket, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ValveFlag_set", _wrap_Micropolis_ValveFlag_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ValveFlag_get", _wrap_Micropolis_ValveFlag_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeRamp_set", _wrap_Micropolis_CrimeRamp_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrimeRamp_get", _wrap_Micropolis_CrimeRamp_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolluteRamp_set", _wrap_Micropolis_PolluteRamp_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PolluteRamp_get", _wrap_Micropolis_PolluteRamp_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RValve_set", _wrap_Micropolis_RValve_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RValve_get", _wrap_Micropolis_RValve_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CValve_set", _wrap_Micropolis_CValve_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CValve_get", _wrap_Micropolis_CValve_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IValve_set", _wrap_Micropolis_IValve_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IValve_get", _wrap_Micropolis_IValve_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResCap_set", _wrap_Micropolis_ResCap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResCap_get", _wrap_Micropolis_ResCap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComCap_set", _wrap_Micropolis_ComCap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComCap_get", _wrap_Micropolis_ComCap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndCap_set", _wrap_Micropolis_IndCap_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndCap_get", _wrap_Micropolis_IndCap_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CashFlow_set", _wrap_Micropolis_CashFlow_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CashFlow_get", _wrap_Micropolis_CashFlow_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EMarket_set", _wrap_Micropolis_EMarket_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EMarket_get", _wrap_Micropolis_EMarket_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DisasterEvent_set", _wrap_Micropolis_DisasterEvent_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DisasterEvent_get", _wrap_Micropolis_DisasterEvent_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DisasterWait_set", _wrap_Micropolis_DisasterWait_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DisasterWait_get", _wrap_Micropolis_DisasterWait_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScoreType_set", _wrap_Micropolis_ScoreType_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScoreType_get", _wrap_Micropolis_ScoreType_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScoreWait_set", _wrap_Micropolis_ScoreWait_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScoreWait_get", _wrap_Micropolis_ScoreWait_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PwrdZCnt_set", _wrap_Micropolis_PwrdZCnt_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PwrdZCnt_get", _wrap_Micropolis_PwrdZCnt_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_unPwrdZCnt_set", _wrap_Micropolis_unPwrdZCnt_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_unPwrdZCnt_get", _wrap_Micropolis_unPwrdZCnt_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewPower_set", _wrap_Micropolis_NewPower_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewPower_get", _wrap_Micropolis_NewPower_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_AvCityTax_set", _wrap_Micropolis_AvCityTax_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_AvCityTax_get", _wrap_Micropolis_AvCityTax_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Scycle_set", _wrap_Micropolis_Scycle_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Scycle_get", _wrap_Micropolis_Scycle_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Fcycle_set", _wrap_Micropolis_Fcycle_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Fcycle_get", _wrap_Micropolis_Fcycle_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Spdcycle_set", _wrap_Micropolis_Spdcycle_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Spdcycle_get", _wrap_Micropolis_Spdcycle_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoInitialEval_set", _wrap_Micropolis_DoInitialEval_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoInitialEval_get", _wrap_Micropolis_DoInitialEval_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MeltX_set", _wrap_Micropolis_MeltX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MeltX_get", _wrap_Micropolis_MeltX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MeltY_set", _wrap_Micropolis_MeltY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MeltY_get", _wrap_Micropolis_MeltY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimFrame", _wrap_Micropolis_SimFrame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Simulate", _wrap_Micropolis_Simulate, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSimInit", _wrap_Micropolis_DoSimInit, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoNilPower", _wrap_Micropolis_DoNilPower, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DecTrafficMem", _wrap_Micropolis_DecTrafficMem, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DecROGMem", _wrap_Micropolis_DecROGMem, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitSimMemory", _wrap_Micropolis_InitSimMemory, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimLoadInit", _wrap_Micropolis_SimLoadInit, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetCommonInits", _wrap_Micropolis_SetCommonInits, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetValves", _wrap_Micropolis_SetValves, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ClearCensus", _wrap_Micropolis_ClearCensus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TakeCensus", _wrap_Micropolis_TakeCensus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Take2Census", _wrap_Micropolis_Take2Census, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CollectTax", _wrap_Micropolis_CollectTax, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateFundEffects", _wrap_Micropolis_UpdateFundEffects, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MapScan", _wrap_Micropolis_MapScan, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoRail", _wrap_Micropolis_DoRail, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoRadTile", _wrap_Micropolis_DoRadTile, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoRoad", _wrap_Micropolis_DoRoad, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBridge", _wrap_Micropolis_DoBridge, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetBoatDis", _wrap_Micropolis_GetBoatDis, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoFire", _wrap_Micropolis_DoFire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FireZone", _wrap_Micropolis_FireZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RepairZone", _wrap_Micropolis_RepairZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoSPZone", _wrap_Micropolis_DoSPZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DrawStadium", _wrap_Micropolis_DrawStadium, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoAirport", _wrap_Micropolis_DoAirport, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CoalSmoke", _wrap_Micropolis_CoalSmoke, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoMeltdown", _wrap_Micropolis_DoMeltdown, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_spriteList_set", _wrap_Micropolis_spriteList_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_spriteList_get", _wrap_Micropolis_spriteList_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_spriteCount_set", _wrap_Micropolis_spriteCount_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_spriteCount_get", _wrap_Micropolis_spriteCount_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FreeSprites_set", _wrap_Micropolis_FreeSprites_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FreeSprites_get", _wrap_Micropolis_FreeSprites_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GlobalSprites_set", _wrap_Micropolis_GlobalSprites_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GlobalSprites_get", _wrap_Micropolis_GlobalSprites_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrashX_set", _wrap_Micropolis_CrashX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrashX_get", _wrap_Micropolis_CrashX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrashY_set", _wrap_Micropolis_CrashY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CrashY_get", _wrap_Micropolis_CrashY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_absDist_set", _wrap_Micropolis_absDist_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_absDist_get", _wrap_Micropolis_absDist_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Cycle_set", _wrap_Micropolis_Cycle_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Cycle_get", _wrap_Micropolis_Cycle_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewSprite", _wrap_Micropolis_NewSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitSprite", _wrap_Micropolis_InitSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DestroyAllSprites", _wrap_Micropolis_DestroyAllSprites, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DestroySprite", _wrap_Micropolis_DestroySprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetSprite", _wrap_Micropolis_GetSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeSprite", _wrap_Micropolis_MakeSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeNewSprite", _wrap_Micropolis_MakeNewSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DrawObjects", _wrap_Micropolis_DrawObjects, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DrawSprite", _wrap_Micropolis_DrawSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetChar", _wrap_Micropolis_GetChar, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TurnTo", _wrap_Micropolis_TurnTo, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TryOther", _wrap_Micropolis_TryOther, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SpriteNotInBounds", _wrap_Micropolis_SpriteNotInBounds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetDir", _wrap_Micropolis_GetDir, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetDis", _wrap_Micropolis_GetDis, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CheckSpriteCollision", _wrap_Micropolis_CheckSpriteCollision, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MoveObjects", _wrap_Micropolis_MoveObjects, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoTrainSprite", _wrap_Micropolis_DoTrainSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoCopterSprite", _wrap_Micropolis_DoCopterSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoAirplaneSprite", _wrap_Micropolis_DoAirplaneSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoShipSprite", _wrap_Micropolis_DoShipSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoMonsterSprite", _wrap_Micropolis_DoMonsterSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoTornadoSprite", _wrap_Micropolis_DoTornadoSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoExplosionSprite", _wrap_Micropolis_DoExplosionSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoBusSprite", _wrap_Micropolis_DoBusSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CanDriveOn", _wrap_Micropolis_CanDriveOn, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ExplodeSprite", _wrap_Micropolis_ExplodeSprite, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_checkWet", _wrap_Micropolis_checkWet, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Destroy", _wrap_Micropolis_Destroy, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_OFireZone", _wrap_Micropolis_OFireZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_StartFire", _wrap_Micropolis_StartFire, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateTrain", _wrap_Micropolis_GenerateTrain, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateBus", _wrap_Micropolis_GenerateBus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateShip", _wrap_Micropolis_GenerateShip, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeShipHere", _wrap_Micropolis_MakeShipHere, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeMonster", _wrap_Micropolis_MakeMonster, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MonsterHere", _wrap_Micropolis_MonsterHere, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GenerateCopter", _wrap_Micropolis_GenerateCopter, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GeneratePlane", _wrap_Micropolis_GeneratePlane, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeTornado", _wrap_Micropolis_MakeTornado, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeExplosion", _wrap_Micropolis_MakeExplosion, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeExplosionAt", _wrap_Micropolis_MakeExplosionAt, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalFunds_set", _wrap_Micropolis_TotalFunds_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TotalFunds_get", _wrap_Micropolis_TotalFunds_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PunishCnt_set", _wrap_Micropolis_PunishCnt_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PunishCnt_get", _wrap_Micropolis_PunishCnt_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoBulldoze_set", _wrap_Micropolis_autoBulldoze_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoBulldoze_get", _wrap_Micropolis_autoBulldoze_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoBudget_set", _wrap_Micropolis_autoBudget_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_autoBudget_get", _wrap_Micropolis_autoBudget_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastMesTime_set", _wrap_Micropolis_LastMesTime_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastMesTime_get", _wrap_Micropolis_LastMesTime_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GameLevel_set", _wrap_Micropolis_GameLevel_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GameLevel_get", _wrap_Micropolis_GameLevel_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitSimLoad_set", _wrap_Micropolis_InitSimLoad_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitSimLoad_get", _wrap_Micropolis_InitSimLoad_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScenarioID_set", _wrap_Micropolis_ScenarioID_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ScenarioID_get", _wrap_Micropolis_ScenarioID_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimSpeed_set", _wrap_Micropolis_SimSpeed_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimSpeed_get", _wrap_Micropolis_SimSpeed_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimMetaSpeed_set", _wrap_Micropolis_SimMetaSpeed_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SimMetaSpeed_get", _wrap_Micropolis_SimMetaSpeed_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UserSoundOn_set", _wrap_Micropolis_UserSoundOn_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UserSoundOn_get", _wrap_Micropolis_UserSoundOn_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityName_set", _wrap_Micropolis_CityName_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CityName_get", _wrap_Micropolis_CityName_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NoDisasters_set", _wrap_Micropolis_NoDisasters_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NoDisasters_get", _wrap_Micropolis_NoDisasters_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesNum_set", _wrap_Micropolis_MesNum_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MesNum_get", _wrap_Micropolis_MesNum_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalChanged_set", _wrap_Micropolis_EvalChanged_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalChanged_get", _wrap_Micropolis_EvalChanged_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_flagBlink_set", _wrap_Micropolis_flagBlink_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_flagBlink_get", _wrap_Micropolis_flagBlink_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_callbackHook_set", _wrap_Micropolis_callbackHook_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_callbackHook_get", _wrap_Micropolis_callbackHook_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_callbackData_set", _wrap_Micropolis_callbackData_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_callbackData_get", _wrap_Micropolis_callbackData_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_userData_set", _wrap_Micropolis_userData_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_userData_get", _wrap_Micropolis_userData_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Spend", _wrap_Micropolis_Spend, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetFunds", _wrap_Micropolis_SetFunds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TickCount", _wrap_Micropolis_TickCount, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_NewPtr", _wrap_Micropolis_NewPtr, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FreePtr", _wrap_Micropolis_FreePtr, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoPlayNewCity", _wrap_Micropolis_DoPlayNewCity, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoReallyStartGame", _wrap_Micropolis_DoReallyStartGame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoStartLoad", _wrap_Micropolis_DoStartLoad, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoStartScenario", _wrap_Micropolis_DoStartScenario, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DropFireBombs", _wrap_Micropolis_DropFireBombs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitGame", _wrap_Micropolis_InitGame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Callback", _wrap_Micropolis_Callback, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoEarthquake", _wrap_Micropolis_DoEarthquake, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InvalidateEditors", _wrap_Micropolis_InvalidateEditors, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InvalidateMaps", _wrap_Micropolis_InvalidateMaps, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_InitializeSound", _wrap_Micropolis_InitializeSound, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeSound", _wrap_Micropolis_MakeSound, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_getTile", _wrap_Micropolis_getTile, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_getMapBuffer", _wrap_Micropolis_getMapBuffer, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_OverRide_set", _wrap_Micropolis_OverRide_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_OverRide_get", _wrap_Micropolis_OverRide_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Expensive_set", _wrap_Micropolis_Expensive_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Expensive_get", _wrap_Micropolis_Expensive_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Players_set", _wrap_Micropolis_Players_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Players_get", _wrap_Micropolis_Players_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Votes_set", _wrap_Micropolis_Votes_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Votes_get", _wrap_Micropolis_Votes_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingTool_set", _wrap_Micropolis_PendingTool_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingTool_get", _wrap_Micropolis_PendingTool_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingX_set", _wrap_Micropolis_PendingX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingX_get", _wrap_Micropolis_PendingX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingY_set", _wrap_Micropolis_PendingY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PendingY_get", _wrap_Micropolis_PendingY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_last_x_set", _wrap_Micropolis_last_x_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_last_x_get", _wrap_Micropolis_last_x_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_last_y_set", _wrap_Micropolis_last_y_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_last_y_get", _wrap_Micropolis_last_y_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tool_x_set", _wrap_Micropolis_tool_x_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tool_x_get", _wrap_Micropolis_tool_x_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tool_y_set", _wrap_Micropolis_tool_y_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tool_y_get", _wrap_Micropolis_tool_y_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CostOf_get", _wrap_Micropolis_CostOf_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CostOf_set", _wrap_Micropolis_CostOf_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolSize_get", _wrap_Micropolis_toolSize_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolSize_set", _wrap_Micropolis_toolSize_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolOffset_get", _wrap_Micropolis_toolOffset_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolOffset_set", _wrap_Micropolis_toolOffset_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolColors_get", _wrap_Micropolis_toolColors_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_toolColors_set", _wrap_Micropolis_toolColors_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_putDownPark", _wrap_Micropolis_putDownPark, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_putDownNetwork", _wrap_Micropolis_putDownNetwork, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_checkBigZone", _wrap_Micropolis_checkBigZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_tally", _wrap_Micropolis_tally, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_checkSize", _wrap_Micropolis_checkSize, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check3x3border", _wrap_Micropolis_check3x3border, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check3x3", _wrap_Micropolis_check3x3, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check4x4border", _wrap_Micropolis_check4x4border, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check4x4", _wrap_Micropolis_check4x4, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check6x6border", _wrap_Micropolis_check6x6border, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_check6x6", _wrap_Micropolis_check6x6, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_getDensityStr", _wrap_Micropolis_getDensityStr, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_doZoneStatus", _wrap_Micropolis_doZoneStatus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoShowZoneStatus", _wrap_Micropolis_DoShowZoneStatus, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_put3x3Rubble", _wrap_Micropolis_put3x3Rubble, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_put4x4Rubble", _wrap_Micropolis_put4x4Rubble, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_put6x6Rubble", _wrap_Micropolis_put6x6Rubble, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DidTool", _wrap_Micropolis_DidTool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_query_tool", _wrap_Micropolis_query_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_bulldozer_tool", _wrap_Micropolis_bulldozer_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_road_tool", _wrap_Micropolis_road_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_rail_tool", _wrap_Micropolis_rail_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_wire_tool", _wrap_Micropolis_wire_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_park_tool", _wrap_Micropolis_park_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_residential_tool", _wrap_Micropolis_residential_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_commercial_tool", _wrap_Micropolis_commercial_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_industrial_tool", _wrap_Micropolis_industrial_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_police_dept_tool", _wrap_Micropolis_police_dept_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_fire_dept_tool", _wrap_Micropolis_fire_dept_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_stadium_tool", _wrap_Micropolis_stadium_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_coal_power_plant_tool", _wrap_Micropolis_coal_power_plant_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_nuclear_power_plant_tool", _wrap_Micropolis_nuclear_power_plant_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_seaport_tool", _wrap_Micropolis_seaport_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_airport_tool", _wrap_Micropolis_airport_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_network_tool", _wrap_Micropolis_network_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_do_tool", _wrap_Micropolis_do_tool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoTool", _wrap_Micropolis_DoTool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ToolDown", _wrap_Micropolis_ToolDown, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ToolUp", _wrap_Micropolis_ToolUp, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ToolDrag", _wrap_Micropolis_ToolDrag, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoPendTool", _wrap_Micropolis_DoPendTool, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PosStackN_set", _wrap_Micropolis_PosStackN_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PosStackN_get", _wrap_Micropolis_PosStackN_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapXStack_set", _wrap_Micropolis_SMapXStack_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapXStack_get", _wrap_Micropolis_SMapXStack_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapYStack_set", _wrap_Micropolis_SMapYStack_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SMapYStack_get", _wrap_Micropolis_SMapYStack_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LDir_set", _wrap_Micropolis_LDir_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LDir_get", _wrap_Micropolis_LDir_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Zsource_set", _wrap_Micropolis_Zsource_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Zsource_get", _wrap_Micropolis_Zsource_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafMaxX_set", _wrap_Micropolis_TrafMaxX_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafMaxX_get", _wrap_Micropolis_TrafMaxX_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafMaxY_set", _wrap_Micropolis_TrafMaxY_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TrafMaxY_get", _wrap_Micropolis_TrafMaxY_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeTraf", _wrap_Micropolis_MakeTraf, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetTrafMem", _wrap_Micropolis_SetTrafMem, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PushPos", _wrap_Micropolis_PushPos, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_PullPos", _wrap_Micropolis_PullPos, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FindPRoad", _wrap_Micropolis_FindPRoad, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_FindPTele", _wrap_Micropolis_FindPTele, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TryDrive", _wrap_Micropolis_TryDrive, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_TryGo", _wrap_Micropolis_TryGo, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetFromMap", _wrap_Micropolis_GetFromMap, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DriveDone", _wrap_Micropolis_DriveDone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RoadTest", _wrap_Micropolis_RoadTest, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustUpdateFunds_set", _wrap_Micropolis_MustUpdateFunds_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustUpdateFunds_get", _wrap_Micropolis_MustUpdateFunds_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustUpdateOptions_set", _wrap_Micropolis_MustUpdateOptions_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MustUpdateOptions_get", _wrap_Micropolis_MustUpdateOptions_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityTime_set", _wrap_Micropolis_LastCityTime_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityTime_get", _wrap_Micropolis_LastCityTime_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityYear_set", _wrap_Micropolis_LastCityYear_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityYear_get", _wrap_Micropolis_LastCityYear_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityMonth_set", _wrap_Micropolis_LastCityMonth_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastCityMonth_get", _wrap_Micropolis_LastCityMonth_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastFunds_set", _wrap_Micropolis_LastFunds_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastFunds_get", _wrap_Micropolis_LastFunds_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastR_set", _wrap_Micropolis_LastR_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastR_get", _wrap_Micropolis_LastR_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastC_set", _wrap_Micropolis_LastC_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastC_get", _wrap_Micropolis_LastC_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastI_set", _wrap_Micropolis_LastI_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_LastI_get", _wrap_Micropolis_LastI_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoUpdateHeads", _wrap_Micropolis_DoUpdateHeads, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateEditors", _wrap_Micropolis_UpdateEditors, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateMaps", _wrap_Micropolis_UpdateMaps, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateGraphs", _wrap_Micropolis_UpdateGraphs, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateEvaluation", _wrap_Micropolis_UpdateEvaluation, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateHeads", _wrap_Micropolis_UpdateHeads, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateFunds", _wrap_Micropolis_UpdateFunds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ReallyUpdateFunds", _wrap_Micropolis_ReallyUpdateFunds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_doTimeStuff", _wrap_Micropolis_doTimeStuff, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_updateDate", _wrap_Micropolis_updateDate, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_showValves", _wrap_Micropolis_showValves, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_drawValve", _wrap_Micropolis_drawValve, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetDemand", _wrap_Micropolis_SetDemand, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_updateOptions", _wrap_Micropolis_updateOptions, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateOptionsMenu", _wrap_Micropolis_UpdateOptionsMenu, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateUserInterface", _wrap_Micropolis_UpdateUserInterface, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_makeDollarDecimalStr", _wrap_Micropolis_makeDollarDecimalStr, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Pause", _wrap_Micropolis_Pause, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_Resume", _wrap_Micropolis_Resume, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setSpeed", _wrap_Micropolis_setSpeed, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setSkips", _wrap_Micropolis_setSkips, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetGameLevelFunds", _wrap_Micropolis_SetGameLevelFunds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetGameLevel", _wrap_Micropolis_SetGameLevel, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_UpdateGameLevel", _wrap_Micropolis_UpdateGameLevel, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setCityName", _wrap_Micropolis_setCityName, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setAnyCityName", _wrap_Micropolis_setAnyCityName, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetYear", _wrap_Micropolis_SetYear, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CurrentYear", _wrap_Micropolis_CurrentYear, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoNewGame", _wrap_Micropolis_DoNewGame, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoGeneratedCityImage", _wrap_Micropolis_DoGeneratedCityImage, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoZone", _wrap_Micropolis_DoZone, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoHospChur", _wrap_Micropolis_DoHospChur, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetSmoke", _wrap_Micropolis_SetSmoke, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoIndustrial", _wrap_Micropolis_DoIndustrial, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoCommercial", _wrap_Micropolis_DoCommercial, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoResidential", _wrap_Micropolis_DoResidential, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_MakeHosp", _wrap_Micropolis_MakeHosp, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_GetCRVal", _wrap_Micropolis_GetCRVal, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoResIn", _wrap_Micropolis_DoResIn, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoComIn", _wrap_Micropolis_DoComIn, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoIndIn", _wrap_Micropolis_DoIndIn, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IncROG", _wrap_Micropolis_IncROG, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoResOut", _wrap_Micropolis_DoResOut, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoComOut", _wrap_Micropolis_DoComOut, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoIndOut", _wrap_Micropolis_DoIndOut, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_RZPop", _wrap_Micropolis_RZPop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_CZPop", _wrap_Micropolis_CZPop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IZPop", _wrap_Micropolis_IZPop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_BuildHouse", _wrap_Micropolis_BuildHouse, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ResPlop", _wrap_Micropolis_ResPlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ComPlop", _wrap_Micropolis_ComPlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_IndPlop", _wrap_Micropolis_IndPlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalLot", _wrap_Micropolis_EvalLot, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_ZonePlop", _wrap_Micropolis_ZonePlop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalRes", _wrap_Micropolis_EvalRes, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalCom", _wrap_Micropolis_EvalCom, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_EvalInd", _wrap_Micropolis_EvalInd, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_DoFreePop", _wrap_Micropolis_DoFreePop, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetZPower", _wrap_Micropolis_SetZPower, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_swigregister", Micropolis_swigregister, METH_VARARGS, NULL},
+	 { NULL, NULL, 0, NULL }
 };
 
 

@@ -62,9 +62,10 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-// cellengine.cpp
-// Cellular Automata Machine Engine
-// By Don Hopkins
+/** @file cellengine.cpp
+ * Cellular Automata Machine Engine
+ * @author Don Hopkins
+ */
 
 
 #include "stdafx.h"
@@ -73,17 +74,18 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-// TODO:
-// generalized parameterized heat diffusion
-// bit mask of neighbors to add (9 bits)
-// shift count (power of two division)
-// frob offset (overall heat gain)
-// pass in different masks and shifts to implement symetric 8 and 4
-// neighbor heats, as well as vertical, horizontal, diagonal, and
-// asymetric heat flow fields
-// logical operations
-// add pixels
-// map pixels
+/**
+ * @todo generalized parameterized heat diffusion
+ * @todo bit mask of neighbors to add (9 bits)
+ * @todo shift count (power of two division)
+ * @todo frob offset (overall heat gain)
+ * @todo pass in different masks and shifts to implement symetric 8 and 4
+ * @todo neighbor heats, as well as vertical, horizontal, diagonal, and
+ * @todo asymetric heat flow fields
+ * @todo logical operations
+ * @todo add pixels
+ * @todo map pixels
+ */
 
 
 ////////////////////////////////////////////////////////////////////////

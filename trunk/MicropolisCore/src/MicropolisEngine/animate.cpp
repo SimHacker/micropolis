@@ -61,6 +61,9 @@
  * NOT APPLY TO YOU.
  */
 
+/** @file animate.cpp
+ * Animate Tiles, for Unix Micropolis.
+ */
 
 ////////////////////////////////////////////////////////////////////////
 
