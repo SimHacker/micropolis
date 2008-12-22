@@ -1,10 +1,20 @@
 
 
 Callback("UIAutoGoto", "dd", x, y);
+  Useful. 
+
 Callback("UIDidGenerateNewCity", "");
+  UI notification.
+
 Callback("UIDidLoadCity", "");
+  UI notification.
+
 Callback("UIDidLoadScenario", "");
+  UI notification.
+
 Callback("UIDidSaveCity", "");
+  UI notification.
+
 Callback("UIDidTool", "sdd", name, x, y);
 Callback("UIDidntLoadCity", "s", msg);
 Callback("UIDidntSaveCity", "s", msg);
@@ -33,7 +43,7 @@ Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
 Callback("UIStartEarthquake", "");
 Callback("UIStartLoad", "");
 Callback("UIStartScenario", "d", scenario);
-Callback("UIStopEarthquake", "");
+Callback("UIStopEarthquake", "d", magnitude);
 Callback("UIUpdateBudget", "");
 Callback("UIWinGame", "");
 Callback("UINewEvaluation", "");

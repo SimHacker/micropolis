@@ -109,8 +109,7 @@ void Micropolis::drawMonth(
 void Micropolis::doAllGraphs()
 {
   float scaleValue;
-
-  AllMax = 0;
+  short AllMax = 0;
 
   if (ResHisMax > AllMax) {
     AllMax = ResHisMax;
@@ -211,26 +210,8 @@ void Micropolis::initGraphs()
 {
   int i;
 
-/*
-  SimGraph *graph;
-
-  for (graph = sim->graph; graph != NULL; graph = graph->next) {
-    graph->range = 10;
-    graph->mask = ALL_HISTORIES;
-  }
-*/
-
   if (!HistoryInitialized) {
     HistoryInitialized = 1;
-    for (i = 0; i < HISTORIES; i++) {
-
-      History10[i] = 
-        (unsigned char *)NewPtr(120);
-
-      History120[i] = 
-        (unsigned char *)NewPtr(120);
-
-    }
   }
 }
 

@@ -196,6 +196,7 @@ putDownNetwork(SimView *view, short mapH, short mapV)
 }
 
 
+// TODO: Make this table driven, to enable plug-in zones. 
 short
 checkBigZone(short id, short *deltaHPtr, short *deltaVPtr)
 {

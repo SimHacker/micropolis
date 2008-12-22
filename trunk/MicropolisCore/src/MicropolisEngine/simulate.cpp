@@ -492,13 +492,42 @@ void Micropolis::SetCommonInits()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::SetValves()
 {
+  float temp;
+  register short z;
+
+  // FIXME: Break the tax table out into configurable parameters. 
   static short TaxTable[21] = {
     200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
-    -150, -200, -250, -300, -350, -400, -450, -500, -550, -600 };
+    -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
+  };
+
+  // TODO: Make configurable parameters.
+  short ResPopDenom = 8;
+  float BirthRate = 0.02;
+  float MaxLaborBase = 1.3;
+  float IntMarketDenom = 3.7;
+  float ExtMarketParamEasy = 1.2;
+  float ExtMarketParamMedium = 1.1;
+  float ExtMarketParamHard = 0.98;
+  float MinPjIndPop = 5.0;
+  float DefaltRratio = 1.3;
+  float MaxRratio = 2;
+  float MaxCratio = 2;
+  float MaxIratio = 2;
+  short MaxTax = 20;
+  float TaxTableScale = 600;
+  short MaxRValve = 2000;
+  short MinRValve = -2000;
+  short MaxCValve = 1500;
+  short MinCValve = -1500;
+  short MaxIValve = 1500;
+  short MinIValve = -1500;
+
+  // FIXME: Break the interestng values out into public member 
+  // variables so the user interface can display them.
   float Employment, Migration, Births, LaborBase, IntMarket;
-  float Rratio, Cratio, Iratio, temp;
+  float Rratio, Cratio, Iratio;
   float NormResPop, PjResPop, PjComPop, PjIndPop;
-  register short z;
 
   MiscHis[1] = (short)EMarket;
   MiscHis[2] = ResPop;
@@ -517,13 +546,13 @@ void Micropolis::SetValves()
   MiscHis[17] = CityScore;
 
   NormResPop = 
-    (float)ResPop / (float)8.0;
+    (float)ResPop / (float)ResPopDenom;
   LastTotalPop = 
     TotalPop;
   TotalPop = 
     (short)(NormResPop + ComPop + IndPop);
 
-  if (NormResPop) {
+  if (ResPop) {
     Employment = 
       ((ComHis[1] + IndHis[1]) / NormResPop);
   } else {
@@ -534,7 +563,7 @@ void Micropolis::SetValves()
   Migration = 
     NormResPop * (Employment - 1);
   Births = 
-    (float)NormResPop * (float)0.02;     /* Birth Rate  */
+    NormResPop * BirthRate;
   PjResPop = 
     NormResPop + Migration + Births;   /* Projected Res.Pop  */
 
@@ -547,22 +576,16 @@ void Micropolis::SetValves()
     LaborBase = 1;
   }
 
-  if (LaborBase > (float)1.3) {
-    LaborBase = (float)1.3;
+  if (LaborBase > MaxLaborBase) {
+    LaborBase = MaxLaborBase;
   }
 
   if (LaborBase < 0) {
     LaborBase = 0;  /* LB > 1 - .1  */
   }
 
-  // XXX: What does this do??! 
-  for (z = 0; z < 2; z++) {
-    temp = 
-      (float)(ResHis[z] + ComHis[z] + IndHis[z]);
-  }
-
   IntMarket = 
-    (float)(NormResPop + ComPop + IndPop) / (float)3.7;
+    (float)(NormResPop + ComPop + IndPop) / IntMarketDenom;
 
   PjComPop = 
     IntMarket * LaborBase;                     
@@ -573,15 +596,15 @@ void Micropolis::SetValves()
   switch (z)  {
 
   case 0:
-    temp = (float)1.2;
+    temp = ExtMarketParamEasy;
     break;
 
   case 1:
-    temp = (float)1.1;
+    temp = ExtMarketParamMedium;
     break;
 
   case 2:
-    temp = (float)0.98;
+    temp = ExtMarketParamHard;
     break;
 
   }
@@ -589,8 +612,8 @@ void Micropolis::SetValves()
   PjIndPop = 
     IndPop * LaborBase * temp;
 
-  if (PjIndPop < 5) {
-    PjIndPop = 5;
+  if (PjIndPop < MinPjIndPop) {
+    PjIndPop = MinPjIndPop;
   }
 
   if (NormResPop) {
@@ -599,7 +622,7 @@ void Micropolis::SetValves()
       (float)NormResPop; /* projected -vs- actual */
   } else {
     Rratio = 
-      (float)1.3;
+      DefaultRratio;
   }
 
   if (ComPop) {
@@ -619,91 +642,91 @@ void Micropolis::SetValves()
       (float)PjIndPop;
   }
 
-  if (Rratio > 2) {
-    Rratio = 2;
+  if (Rratio > MaxRratio) {
+    Rratio = MaxRratio;
   }
 
-  if (Cratio > 2) {
-    Cratio = 2;
+  if (Cratio > MaxCratio) {
+    Cratio = MaxCratio;
   }
 
-  if (Iratio > 2) {
-    Iratio = 2;
+  if (Iratio > MaxIratio) {
+    Iratio = MaxIratio;
   }
 
   z = 
     CityTax + GameLevel;
 
-  if (z > 20) {
-    z = 20;
+  if (z > MaxTax) {
+    z = MaxTax;
   }
 
   Rratio = 
-    ((Rratio - 1) * 600) + TaxTable[z]; /* global tax/Glevel effects */
+    ((Rratio - 1) * TaxTableScale) + TaxTable[z]; /* global tax/Glevel effects */
   Cratio = 
-    ((Cratio - 1) * 600) + TaxTable[z];
+    ((Cratio - 1) * TaxTableScale) + TaxTable[z];
   Iratio = 
-    ((Iratio - 1) * 600) + TaxTable[z];
+    ((Iratio - 1) * TaxTableScale) + TaxTable[z];
 
   if (Rratio > 0) {
     /* ratios are velocity changes to valves  */
-    if (RValve <  2000) {
+    if (RValve < MaxRValve) {
       RValve += (short)Rratio;
     }
   }
 
   if (Rratio < 0) {
-    if (RValve > -2000) {
+    if (RValve > MinRValve) {
       RValve += (short)Rratio;
     }
   }
 
   if (Cratio > 0) {
-    if (CValve <  1500) {
+    if (CValve <  MaxCValve) {
       CValve += (short)Cratio;
     }
   }
 
   if (Cratio < 0) {
-    if (CValve > -1500) {
+    if (CValve > MinCValve) {
       CValve += (short)Cratio;
     }
   }
 
   if (Iratio > 0) {
-    if (IValve <  1500) {
+    if (IValve <  MaxIValve) {
       IValve += (short)Iratio;
     }
   }
 
   if (Iratio < 0) {
-    if (IValve > -1500) {
+    if (IValve > MinIValve) {
       IValve += (short)Iratio;
     }
   }
 
-  if (RValve >  2000) {
+  if (RValve > MaxRValve) {
     RValve =  2000;
   }
 
-  if (RValve < -2000) {
+  if (RValve < MinRValve) {
     RValve = -2000;
   }
 
-  if (CValve >  1500) {
-    CValve =  1500;
+  if (CValve > MaxCValve) {
+    CValve =  MaxCValve;
   }
 
-  if (CValve < -1500) {
-    CValve = -1500;
+  if (CValve < MinCValve) {
+    CValve = MinCValve;
   }
 
-  if (IValve >  1500) {
-    IValve =  1500;
+  if (IValve > MaxIValve) {
+    IValve = MaxIValve;
   }
 
-  if (IValve < -1500) {
-    IValve = -1500;
+  if (IValve < MinIValve) {
+    IValve = MinIValve;
   }
 
   if ((ResCap) && (RValve > 0)) {
@@ -763,6 +786,9 @@ void Micropolis::ClearCensus()
 /* comefrom: Simulate */
 void Micropolis::TakeCensus()
 {
+  // TODO: Make configurable parameters.
+  int ResPopDenom = 8;
+
   short x;
 
   /* put census#s in Historical Graphs and scroll data  */
@@ -772,18 +798,21 @@ void Micropolis::TakeCensus()
 
   for (x = 118; x >= 0; x--)    {
 
-    if ((ResHis[x + 1] = ResHis[x]) > ResHisMax) {
+    if (ResHis[x] > ResHisMax) {
       ResHisMax = ResHis[x];
     }
 
-    if ((ComHis[x + 1] = ComHis[x]) > ComHisMax) {
+    if (ComHis[x] > ComHisMax) {
       ComHisMax = ComHis[x];
     }
 
-    if ((IndHis[x + 1] = IndHis[x]) > IndHisMax) {
+    if (IntHis[x] > IndHisMax) {
       IndHisMax = IndHis[x];
     }
 
+    ResHis[x + 1] = ResHis[x];
+    ComHis[x + 1] = ComHis[x];
+    IndHis[x + 1] = IndHis[x];
     CrimeHis[x + 1] = CrimeHis[x];
     PollutionHis[x + 1] = PollutionHis[x];
     MoneyHis[x + 1] = MoneyHis[x];
@@ -800,7 +829,7 @@ void Micropolis::TakeCensus()
     Graph10Max = IndHisMax;
   }
 
-  ResHis[0] = ResPop / 8;
+  ResHis[0] = ResPop / ResPopDenom;
   ComHis[0] = ComPop;
   IndHis[0] = IndPop;
 
@@ -832,27 +861,29 @@ void Micropolis::TakeCensus()
 
   ChangeCensus();
 
-  if (HospPop < (ResPop >>8)) {
+  short ResPopScaled = ResPop >> 8;
+
+  if (HospPop < ResPopScaled) {
     NeedHosp = TRUE;
   }
 
-  if (HospPop > (ResPop >>8)) {
+  if (HospPop > ResPopScaled) {
     NeedHosp = -1;
   }
 
-  if (HospPop == (ResPop >>8)) {
+  if (HospPop == ResPopScaled) {
     NeedHosp = FALSE;
   }
 
-  if (ChurchPop < (ResPop >>8)) {
+  if (ChurchPop < ResPopScaled) {
     NeedChurch = TRUE;
   }
 
-  if (ChurchPop > (ResPop >>8)) {
+  if (ChurchPop > ResPopScaled) {
     NeedChurch = -1;
   }
 
-  if (ChurchPop == (ResPop >>8)) {
+  if (ChurchPop == ResPopScaled) {
     NeedChurch = FALSE;
   }
 }
@@ -861,6 +892,9 @@ void Micropolis::TakeCensus()
 /* comefrom: Simulate */
 void Micropolis::Take2Census()
 {
+  // TODO: Make configurable parameters.
+  int ResPopDenom = 8;
+
   /* Long Term Graphs */
   short x;
 
@@ -870,22 +904,24 @@ void Micropolis::Take2Census()
 
   for (x = 238; x >= 120; x--)  {
 
-    if ((ResHis[x + 1] = ResHis[x]) > Res2HisMax) {
+    if (ResHis[x] > Res2HisMax) {
       Res2HisMax = ResHis[x];
     }
 
-    if ((ComHis[x + 1] = ComHis[x]) > Com2HisMax) {
+    if (ComHis[x] > Com2HisMax) {
       Com2HisMax = ComHis[x];
     }
 
-    if ((IndHis[x + 1] = IndHis[x]) > Ind2HisMax) {
+    if (IntHis[x] > Ind2HisMax) {
       Ind2HisMax = IndHis[x];
     }
 
+    ResHis[x + 1] = ResHis[x];
+    ComHis[x + 1] = ComHis[x];
+    IndHis[x + 1] = IndHis[x];
     CrimeHis[x + 1] = CrimeHis[x];
     PollutionHis[x + 1] = PollutionHis[x];
     MoneyHis[x + 1] = MoneyHis[x];
-
   }
 
   Graph120Max = Res2HisMax;
@@ -898,7 +934,7 @@ void Micropolis::Take2Census()
     Graph120Max = Ind2HisMax;
   }
 
-  ResHis[120] = ResPop / 8;
+  ResHis[120] = ResPop / ResPopDenom;
   ComHis[120] = ComPop;
   IndHis[120] = IndPop;
   CrimeHis[120] = CrimeHis[0] ;
@@ -911,15 +947,20 @@ void Micropolis::Take2Census()
 /* comefrom: Simulate */
 void Micropolis::CollectTax()
 {       
+  short z;
+
+  // TODO: Break out so the user interface can configure this.
   static float RLevels[3] = { (float)0.7, (float)0.9, (float)1.2 };
   static float FLevels[3] = { (float)1.4, (float)1.2, (float)0.8 };
-  short z;
 
   CashFlow = 0;
 
-  if (!TaxFlag) { /* if the Tax Port is clear  */
-    /* XXX: do something with z */
-    z = AvCityTax / 48;  /* post */
+  // FIXME: Apparently TaxFlag is never set to true in MicropolisEngine 
+  // or the TCL code, so this always runs.
+  // TODO: Check old Mac code to see if it's ever set, and why.
+  if (!TaxFlag) { // If the Tax Port is clear
+    // XXX: do something with z
+    z = AvCityTax / 48;  // post release
     AvCityTax = 0;                      
     PoliceFund = 
       PolicePop * 100;
@@ -931,11 +972,13 @@ void Micropolis::CollectTax()
       (long)((((Quad)TotalPop * LVAverage) / 120) *
              CityTax * 
              FLevels[GameLevel]);
-    if (TotalPop) {     /* if there are people to tax  */
+    if (TotalPop) {
+      // If there are people to tax.
       CashFlow = 
         (short)(TaxFund - (PoliceFund + FireFund + RoadFund));
       DoBudget();
     } else {
+      // Nobody lives here.
       RoadEffect = 32;
       PoliceEffect = 1000;
       FireEffect = 1000;
@@ -1125,7 +1168,7 @@ void Micropolis::DoRoad()
   }
 
   Density = 
-    (TrfDensity[SMapX >>1][SMapY >>1]) >>6;  /* Set Traf Density  */
+    (TrfDensity[SMapX >>1][SMapY >>1]) >>6;  /* Set Traf Density */
 
   if (Density > 1) {
     Density--;
@@ -1297,11 +1340,13 @@ int Micropolis::GetBoatDis()
     if ((sprite->type == SHI) &&
         (sprite->frame != 0)) {
 
-      if ((dx = sprite->x + sprite->x_hot - mx) < 0) {
+      dx = sprite->x + sprite->x_hot - mx;
+      if (dx < 0) {
         dx = -dx;
       }
 
-      if ((dy = sprite->y + sprite->y_hot - my) < 0) {
+      dy = sprite->y + sprite->y_hot - my;
+      if (dy < 0) {
         dy = -dy;
       }
 
@@ -1478,7 +1523,7 @@ void Micropolis::RepairZone(
 void Micropolis::DoSPZone(
   short PwrOn)
 {
-  static short MltdwnTab[3] = { 30000, 20000, 10000 };  /* simadj */
+  static short MltdwnTab[3] = { 30000, 20000, 10000 }; /* simadj */
   register int z;
 
   switch (CChr9) {

@@ -93,8 +93,6 @@ char *Micropolis::probStr[10] = {
 /* comefrom: SpecialInit Simulate */
 void Micropolis::CityEvaluation()
 {
-  EvalValid = 0;
-
   if (TotalPop) {
     GetAssValue();
     DoPopNum();
@@ -106,8 +104,6 @@ void Micropolis::CityEvaluation()
     EvalInit();
     ChangeEval();
   }
-
-  EvalValid = 1;
 }
 
 
@@ -125,7 +121,6 @@ void Micropolis::EvalInit()
   CityClass = z;
   CityScore = 500; 
   deltaCityScore = z;
-  EvalValid = 1;
   for (x = 0; x < PROBNUM; x++) {
     ProblemVotes[x] = z;
   }
@@ -196,6 +191,7 @@ void Micropolis::DoProblems()
   register short x, z;
   short ThisProb = 0;
   short Max = 0;
+  short ProblemTaken[PROBNUM];
 
   for (z = 0; z < PROBNUM; z++) {
     ProblemTable[z] = 0;
@@ -459,69 +455,33 @@ void Micropolis::DoVotes()
 
 
 /* comefrom: DoSubUpDate scoreDoer */
-// TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out. 
 void Micropolis::doScoreCard()
 {
-  char title[256];
-  char goodyes[32];
-  char goodno[32];
-  char prob0[32];
-  char prob1[32];
-  char prob2[32];
-  char prob3[32];
-  char pop[32];
-  char delta[32];
-  char assessed[32];
-  char assessed_dollars[32];
-  char score[32];
-  char changed[32];
+  Callback(
+	"UIUpdate",
+	"s",
+	"evaluation");
 
-  /* send /EvaluationTitle /SetValue [ (titleStr year) ] */
-  /* send /GoodJobPercents /SetValue [ (CityYes%) (CityNo%) ] */
-  /* send /WorstProblemPercents /SetValue [ (ProblemVotes[0]%) ... ] */
-  /* send /WorstProblemNames /SetValue [ (probStr[ProblemOrder[0]) ... ] */
-  /*    put ^chars around first problem name to make it bold */
-  /* send /Statistics /SetValue
-          [ (CityPop) (deltaCityPop) () (CityAssValue)
-            (cityClassStr[CityClass]) (cityLevelStr[GameLevel]) ] */
-  /* send /CurrentScore /SetValue [ (CityScore) ] */
-  /* send /AnnualChange /SetValue [ (deltaCityScore) ] */
+  // The user interface should pull these raw values out and format
+  // them. The simulator core used to format them and push them out,
+  // but the user interface should pull them out and format them
+  // itself.
 
-  sprintf(title, "City Evaluation  %d", (int)CurrentYear());
-  sprintf(goodyes, "%d%%", (int)CityYes);
-  sprintf(goodno, "%d%%", (int)CityNo);
-  sprintf(prob0, "%d%%", (int)ProblemVotes[ProblemOrder[0]]);
-  sprintf(prob1, "%d%%", (int)ProblemVotes[ProblemOrder[1]]);
-  sprintf(prob2, "%d%%", (int)ProblemVotes[ProblemOrder[2]]);
-  sprintf(prob3, "%d%%", (int)ProblemVotes[ProblemOrder[3]]);
-  sprintf(pop, "%d", (int)CityPop);
-  sprintf(delta, "%d", (int)deltaCityPop);
-  sprintf(assessed, "%d", (int)CityAssValue);
-  makeDollarDecimalStr(assessed, assessed_dollars);
-
-  sprintf(score, "%d", (int)CityScore);
-  sprintf(changed, "%d", (int)deltaCityScore);
-
-  SetEvaluation(
-    changed, 
-    score,
-    ProblemVotes[ProblemOrder[0]] ? probStr[ProblemOrder[0]] : " ",
-    ProblemVotes[ProblemOrder[1]] ? probStr[ProblemOrder[1]] : " ",
-    ProblemVotes[ProblemOrder[2]] ? probStr[ProblemOrder[2]] : " ",
-    ProblemVotes[ProblemOrder[3]] ? probStr[ProblemOrder[3]] : " ",
-    ProblemVotes[ProblemOrder[0]] ? prob0 : " ",
-    ProblemVotes[ProblemOrder[1]] ? prob1 : " ",
-    ProblemVotes[ProblemOrder[2]] ? prob2 : " ",
-    ProblemVotes[ProblemOrder[3]] ? prob3 : " ",
-    pop, 
-    delta, 
-    assessed_dollars,
-    cityClassStr[CityClass], 
-    cityLevelStr[GameLevel],
-    goodyes, 
-    goodno, 
-    title);
+  // City Evaluation ${FormatYear(CurrentYear())}
+  // Public Opinion
+  //   Is the mayor doing a good job?
+  //     Yes: ${FormatPercent(CityYes)}
+  //     No: ${FormatPercent(CityNo)}
+  //   What are the worst problems?
+  //     for i in range(0, 4), while ProblemOrder[i]:
+  //     ${probStr[ProblemOrder[i]]}: ${FormatPercent(ProblemVotes[ProblemOrder[i]])}
+  // Statistics
+  //   Population: ${FormatNumber?(pop)}
+  //   Net Migration: ${FormatNumber(CityPop)}
+  //   (last year): ${FormatNumber(deltaCityPop)}
+  //   Assessed Value: ${FormatMoney(CityAssValue))
+  //   Category: ${cityClassStr[CityClass]}
+  //   Game Level: ${cityLevelStr[GameLevel]}
 }
 
 
@@ -537,55 +497,6 @@ void Micropolis::scoreDoer()
     doScoreCard();
     EvalChanged = 0;
   }
-}
-
-
-// TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out. 
-void Micropolis::SetEvaluation(
-  const char *changed, 
-  const char *score,
-  const char *ps0, 
-  const char *ps1, 
-  const char *ps2, 
-  const char *ps3,
-  const char *pv0, 
-  const char *pv1, 
-  const char *pv2, 
-  const char *pv3,
-  const char *pop, 
-  const char *delta, 
-  const char *assessed_dollars, 
-  const char *cityclass, 
-  const char *citylevel, 
-  const char *goodyes, 
-  const char *goodno, 
-  const char *title)
-{
-  evalChanged = changed;
-  evalScore = score;
-  evalPs0 = ps0;
-  evalPs1 = ps1;
-  evalPs2 = ps2;
-  evalPs3 = ps3;
-  evalPv0 = pv0;
-  evalPv1 = pv1;
-  evalPv2 = pv2;
-  evalPv3 = pv3;
-  evalPop = pop;
-  evalDelta = delta;
-  evalAssessedDollars = assessed_dollars;
-  evalCityClass = cityclass;
-  evalCityLevel = citylevel;
-  evalGoodYes = goodyes;
-  evalGoodNo = goodno;
-  evalTitle = title;
-
-  Callback(
-	"UIUpdate",
-	"s",
-	"evaluation");
-
 }
 
 

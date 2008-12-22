@@ -121,9 +121,9 @@ void Micropolis::PopDenScan()
     }
   }
 
-  DoSmooth();                   /* T1 -> T2 */
-  DoSmooth2();                  /* T2 -> T1 */
-  DoSmooth();                   /* T1 -> T2 */
+  DoSmooth(); // tem -> tem2
+  DoSmooth2(); // tem2 -> tem
+  DoSmooth(); // tem -> tem2
 
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
@@ -185,6 +185,7 @@ void Micropolis::PTLScan()
   register int x, y, z, dis;
   int Plevel, LVflag, loc, zx, zy, Mx, My, pnum, LVnum, pmax;
 
+  // Qtem is a map of development density, smoothed into terrainMap.
   for (x = 0; x < QWX; x++) {
     for (y = 0; y < QWY; y++) {
       Qtem[x][y] = 0;
@@ -203,7 +204,7 @@ void Micropolis::PTLScan()
 
       for (Mx = zx; Mx <= zx + 1; Mx++) {
         for (My = zy; My <= zy + 1; My++) {
-      loc = (Map[Mx][My] & LOMASK);
+          loc = (Map[Mx][My] & LOMASK);
           if (loc) {
             if (loc < RUBBLE) {
               Qtem[x >>1][y >>1] += 15; /* inc terrainMem */
@@ -217,7 +218,7 @@ void Micropolis::PTLScan()
         }
       }
 
-/* XXX ???
+/* XXX ??? This might have to do with the radiation tile returning -40. 
       if (Plevel < 0) {
         Plevel = 250;
       }
@@ -257,8 +258,8 @@ void Micropolis::PTLScan()
     LVAverage = 0;
   }
 
-  DoSmooth();
-  DoSmooth2();
+  DoSmooth(); // tem -> temp2
+  DoSmooth2(); // tem2 -> tem
 
   pmax = 0;
   pnum = 0;
@@ -269,7 +270,7 @@ void Micropolis::PTLScan()
       z = tem[x][y];
       PollutionMem[x][y] = z;
 
-      if (z) {                          /*  get pollute average  */
+      if (z) { /*  get pollute average  */
         pnum++;
         ptot += z;
         /* find max pol for monster  */
@@ -491,24 +492,13 @@ void Micropolis::DoSmooth()
 
     for (x = 0; x < HWLDX; x++) {
       for (; y != HWLDY && y != -1; y += dir) {
-/*
-        z += 
+        z +=
           tem[(x == 0) ? x : (x - 1)][y] +
           tem[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
           tem[x][(y == 0) ? (0) : (y - 1)] +
           tem[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
           tem[x][y];
-        tem2[x][y] = 
-          (unsigned char)(((unsigned int)z) >>2);
-        z &= 0x3;
-*/
-        z += 
-          tem[(x == 0) ? x : (x - 1)][y] +
-          tem[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
-          tem[x][(y == 0) ? (0) : (y - 1)] +
-          tem[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
-          tem[x][y];
-        tem2[x][y] = 
+        tem2[x][y] =
           (unsigned char)(((unsigned int)z) >>2);
         z &= 3;
       }
@@ -553,24 +543,13 @@ void Micropolis::DoSmooth2()
 
     for (x = 0; x < HWLDX; x++) {
       for (; y != HWLDY && y != -1; y += dir) {
-/*
-        z += 
-          tem2[(x == 0) ? x : (x - 1)][y] +
-          tem2[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
-          tem2[x][(y == 0) ? (0) : (y - 1)] +
-          tem2[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
-          tem2[x][y];
-        tem[x][y] = 
-          (unsigned char)(z >>2);
-        z &= 0x3;
-*/
         z +=
           tem2[(x == 0) ? x : (x - 1)][y] +
           tem2[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
           tem2[x][(y == 0) ? (0) : (y - 1)] +
           tem2[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
           tem2[x][y];
-        tem[x][y] = 
+        tem[x][y] =
           (unsigned char)(((unsigned char)z) >>2);
         z &= 3;
       }

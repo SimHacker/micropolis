@@ -117,7 +117,6 @@ void Micropolis::sim_init()
   initMapArrays();
   initGraphs();
   InitFundingLevel();
-  StopEarthquake();
   ResetMapState();
   ResetEditorState();
   ClearMap();

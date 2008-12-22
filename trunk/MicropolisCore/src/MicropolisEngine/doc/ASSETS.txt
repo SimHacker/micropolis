@@ -1,0 +1,6 @@
+Sound:
+  NeWS and TCL/Tk sound servers supported playing sounds back at different rates, and repeating. 
+
+  Sound effects for tools. 
+    Currently playing vocal vowles at different pitches. 
+    

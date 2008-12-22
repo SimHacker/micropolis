@@ -344,8 +344,6 @@ void Micropolis::MakeFlood()
             Map[xx][yy] = FLOOD;
             FloodCnt = 30;
             SendMesAt(-42, xx, yy);
-            FloodX = xx; 
-            FloodY = yy;
             return;
           }
         }

@@ -459,8 +459,6 @@ void Micropolis::LoadScenario(
   }
 
   setAnyCityName(name);
-  InvalidateMaps();
-  InvalidateEditors();
   setSpeed(3);
   CityTax = 7;
 
@@ -521,8 +519,6 @@ int Micropolis::LoadCity(
 
     setCityName(filename);
 
-    InvalidateMaps();
-    InvalidateEditors();
     DidLoadCity();
 
     return (1);
