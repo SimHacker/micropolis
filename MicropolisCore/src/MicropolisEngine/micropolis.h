@@ -61,6 +61,9 @@
  * NOT APPLY TO YOU.
  */
 
+/** @file micropolis.h
+ * Micropolis include file
+ */
 
 ////////////////////////////////////////////////////////////////////////
 // Includes

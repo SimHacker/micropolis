@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////
-// Perlin Noise Generator Class
-// Adapted from Intel's optimized C code by Don Hopkins. 
+/** @file perlinnoise.h Perlin Noise Generator Class
+ * Adapted from Intel's optimized C code by Don Hopkins.
+ */
 
 
 #ifndef _PERLIN_NOISE_H_

@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////
-// linuxcompat.h
+/* @file linuxcompat.h */
 
 #ifndef _LINUXCOMPAT_H_
 #define _LINUXCOMPAT_H_ 1

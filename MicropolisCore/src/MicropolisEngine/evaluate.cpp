@@ -60,6 +60,7 @@
  * NOT APPLY TO YOU.
  */
 
+/** @file evaluate.cpp */
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -70,8 +71,10 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-// TODO: These strings should not be hard coded into the core simulator.
-// The scripting language should look them up in translation files.
+/**
+ * @todo: These strings should not be hard coded into the core simulator.
+ *        The scripting language should look them up in translation files.
+ */
 
 char *Micropolis::cityClassStr[6] = {
   "VILLAGE", "TOWN", "CITY", "CAPITAL", "METROPOLIS", "MEGALOPOLIS"

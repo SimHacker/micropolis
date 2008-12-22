@@ -61,6 +61,9 @@
  * NOT APPLY TO YOU.
  */
 
+/** @file resource.cpp
+ * Get resources (from files)
+ */
 
 ////////////////////////////////////////////////////////////////////////
 

@@ -95,4 +95,7 @@ install: all
 tar: all
 	tar cfz Micropolis-build.tgz build
 
+doxygen:
+	doxygen Doxyfile
+
 ########################################################################
