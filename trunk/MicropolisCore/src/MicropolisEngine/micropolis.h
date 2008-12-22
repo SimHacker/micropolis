@@ -485,6 +485,17 @@ enum CityVotingProblems {
     PROBNUM = 10,
 };
 
+/** Available classes of cities */
+enum CityClass {
+    CC_VILLAGE,     ///< Village
+    CC_TOWN,        ///< Town, > 2000 citizens
+    CC_CITY,        ///< City, > 10000 citizens
+    CC_CAPITAL,     ///< Capital, > 50000 citizens
+    CC_METROPOLIS,  ///< Metropolis, > 100000 citizens
+    CC_MEGALOPOLIS, ///< Megalopolis, > 500000 citizens
+
+    CC_NUM_CITIES,  ///< Number of city classes
+};
 
 ////////////////////////////////////////////////////////////////////////
 // Macros
@@ -1148,21 +1159,21 @@ public:
    *
    * Percentage of people who think the mayor is doing a good job.
    */
-  short CityYes;
+  short cityYes;
 
   /**
    * No Votes.
    *
    * Percentage of people who think the mayor is doing a bad job.
    */
-  short CityNo;
+  short cityNo;
 
   /**
    * Problem table.
    *
    * Score for each problem, higher the more severe the problem is.
    */
-  short ProblemTable[PROBNUM];
+  short problemTable[PROBNUM];
 
 
   /**
@@ -1170,7 +1181,7 @@ public:
    *
    * The number of votes for each problem.
    */
-  short ProblemVotes[PROBNUM];
+  short problemVotes[PROBNUM];
 
  /**
   * Order of taken problems.
@@ -1178,19 +1189,19 @@ public:
   * Contains index of ProblemTable of taken problems, in decreasing order.
   * @note Value CVP_NUMPROBLEMS means that the entry is not used
   */
-  short ProblemOrder[CVP_NUMTAKEN];
+  short problemOrder[CVP_NUMTAKEN];
 
   /**
    * City population.
    *
    * Depends of ResPop, ComPop and IndPop.
    */
-  Quad CityPop;
+  Quad cityPop;
 
   /**
    * Change in the city population.
    *
-   * Depends on last CityPop.
+   * Depends on last cityPop.
    */
   Quad deltaCityPop;
 
@@ -1201,7 +1212,7 @@ public:
    * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
    * their respective values.
    */
-  Quad CityAssValue;
+  Quad cityAssValue;
 
   /**
    * City class. 
@@ -1209,7 +1220,7 @@ public:
    * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
    * Affected by city population.
    */
-  short CityClass;
+  short cityClass;
 
   /**
    * City score.
@@ -1220,7 +1231,7 @@ public:
    * population, delta city population, fires, tax rate, and unpowered
    * zones.
    */
-  short CityScore;
+  short cityScore;
 
   /**
    * Change in the city score. 
@@ -1234,28 +1245,7 @@ public:
    *
    * Depends on average traffic density of tiles with non-zero land value.
    */
-  short TrafficAverage;
-
-  /**
-   * Array of city class names.
-   *
-   * TODO: Remove from simulator and make translatable.
-   */
-  static char *cityClassStr[6];
-
-  /**
-   * Array of city level names.
-   *
-   * @todo Remove from simulator and make translatable.
-   */
-  static char *cityLevelStr[3];
-
-  /**
-   * Array of problem names.
-   *
-   * @todo Remove from simulator and make translatable.
-   */
-  static char *probStr[10];
+  short trafficAverage;
 
 
   void CityEvaluation();
@@ -1654,7 +1644,7 @@ public:
 public:
 
 
-  Quad LastCityPop;
+  Quad lastCityPop;
 
   short LastCategory;
 
@@ -2652,7 +2642,7 @@ public:
     char *name,
     int time,
     int pop,
-    char *cityClass,
+    char *cityClassName,
     int score);
 
 

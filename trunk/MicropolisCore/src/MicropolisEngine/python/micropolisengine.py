@@ -360,6 +360,13 @@ CVP_FIRE = _micropolisengine.CVP_FIRE
 CVP_NUMPROBLEMS = _micropolisengine.CVP_NUMPROBLEMS
 CVP_NUMTAKEN = _micropolisengine.CVP_NUMTAKEN
 PROBNUM = _micropolisengine.PROBNUM
+CC_VILLAGE = _micropolisengine.CC_VILLAGE
+CC_TOWN = _micropolisengine.CC_TOWN
+CC_CITY = _micropolisengine.CC_CITY
+CC_CAPITAL = _micropolisengine.CC_CAPITAL
+CC_METROPOLIS = _micropolisengine.CC_METROPOLIS
+CC_MEGALOPOLIS = _micropolisengine.CC_MEGALOPOLIS
+CC_NUM_CITIES = _micropolisengine.CC_NUM_CITIES
 class Resource(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Resource, name, value)
@@ -859,51 +866,42 @@ class Micropolis(_object):
     def Vulnerable(*args): return _micropolisengine.Micropolis_Vulnerable(*args)
     def MakeFlood(*args): return _micropolisengine.Micropolis_MakeFlood(*args)
     def DoFlood(*args): return _micropolisengine.Micropolis_DoFlood(*args)
-    __swig_setmethods__["CityYes"] = _micropolisengine.Micropolis_CityYes_set
-    __swig_getmethods__["CityYes"] = _micropolisengine.Micropolis_CityYes_get
-    if _newclass:CityYes = _swig_property(_micropolisengine.Micropolis_CityYes_get, _micropolisengine.Micropolis_CityYes_set)
-    __swig_setmethods__["CityNo"] = _micropolisengine.Micropolis_CityNo_set
-    __swig_getmethods__["CityNo"] = _micropolisengine.Micropolis_CityNo_get
-    if _newclass:CityNo = _swig_property(_micropolisengine.Micropolis_CityNo_get, _micropolisengine.Micropolis_CityNo_set)
-    __swig_setmethods__["ProblemTable"] = _micropolisengine.Micropolis_ProblemTable_set
-    __swig_getmethods__["ProblemTable"] = _micropolisengine.Micropolis_ProblemTable_get
-    if _newclass:ProblemTable = _swig_property(_micropolisengine.Micropolis_ProblemTable_get, _micropolisengine.Micropolis_ProblemTable_set)
-    __swig_setmethods__["ProblemVotes"] = _micropolisengine.Micropolis_ProblemVotes_set
-    __swig_getmethods__["ProblemVotes"] = _micropolisengine.Micropolis_ProblemVotes_get
-    if _newclass:ProblemVotes = _swig_property(_micropolisengine.Micropolis_ProblemVotes_get, _micropolisengine.Micropolis_ProblemVotes_set)
-    __swig_setmethods__["ProblemOrder"] = _micropolisengine.Micropolis_ProblemOrder_set
-    __swig_getmethods__["ProblemOrder"] = _micropolisengine.Micropolis_ProblemOrder_get
-    if _newclass:ProblemOrder = _swig_property(_micropolisengine.Micropolis_ProblemOrder_get, _micropolisengine.Micropolis_ProblemOrder_set)
-    __swig_setmethods__["CityPop"] = _micropolisengine.Micropolis_CityPop_set
-    __swig_getmethods__["CityPop"] = _micropolisengine.Micropolis_CityPop_get
-    if _newclass:CityPop = _swig_property(_micropolisengine.Micropolis_CityPop_get, _micropolisengine.Micropolis_CityPop_set)
+    __swig_setmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_set
+    __swig_getmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_get
+    if _newclass:cityYes = _swig_property(_micropolisengine.Micropolis_cityYes_get, _micropolisengine.Micropolis_cityYes_set)
+    __swig_setmethods__["cityNo"] = _micropolisengine.Micropolis_cityNo_set
+    __swig_getmethods__["cityNo"] = _micropolisengine.Micropolis_cityNo_get
+    if _newclass:cityNo = _swig_property(_micropolisengine.Micropolis_cityNo_get, _micropolisengine.Micropolis_cityNo_set)
+    __swig_setmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_set
+    __swig_getmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_get
+    if _newclass:problemTable = _swig_property(_micropolisengine.Micropolis_problemTable_get, _micropolisengine.Micropolis_problemTable_set)
+    __swig_setmethods__["problemVotes"] = _micropolisengine.Micropolis_problemVotes_set
+    __swig_getmethods__["problemVotes"] = _micropolisengine.Micropolis_problemVotes_get
+    if _newclass:problemVotes = _swig_property(_micropolisengine.Micropolis_problemVotes_get, _micropolisengine.Micropolis_problemVotes_set)
+    __swig_setmethods__["problemOrder"] = _micropolisengine.Micropolis_problemOrder_set
+    __swig_getmethods__["problemOrder"] = _micropolisengine.Micropolis_problemOrder_get
+    if _newclass:problemOrder = _swig_property(_micropolisengine.Micropolis_problemOrder_get, _micropolisengine.Micropolis_problemOrder_set)
+    __swig_setmethods__["cityPop"] = _micropolisengine.Micropolis_cityPop_set
+    __swig_getmethods__["cityPop"] = _micropolisengine.Micropolis_cityPop_get
+    if _newclass:cityPop = _swig_property(_micropolisengine.Micropolis_cityPop_get, _micropolisengine.Micropolis_cityPop_set)
     __swig_setmethods__["deltaCityPop"] = _micropolisengine.Micropolis_deltaCityPop_set
     __swig_getmethods__["deltaCityPop"] = _micropolisengine.Micropolis_deltaCityPop_get
     if _newclass:deltaCityPop = _swig_property(_micropolisengine.Micropolis_deltaCityPop_get, _micropolisengine.Micropolis_deltaCityPop_set)
-    __swig_setmethods__["CityAssValue"] = _micropolisengine.Micropolis_CityAssValue_set
-    __swig_getmethods__["CityAssValue"] = _micropolisengine.Micropolis_CityAssValue_get
-    if _newclass:CityAssValue = _swig_property(_micropolisengine.Micropolis_CityAssValue_get, _micropolisengine.Micropolis_CityAssValue_set)
-    __swig_setmethods__["CityClass"] = _micropolisengine.Micropolis_CityClass_set
-    __swig_getmethods__["CityClass"] = _micropolisengine.Micropolis_CityClass_get
-    if _newclass:CityClass = _swig_property(_micropolisengine.Micropolis_CityClass_get, _micropolisengine.Micropolis_CityClass_set)
-    __swig_setmethods__["CityScore"] = _micropolisengine.Micropolis_CityScore_set
-    __swig_getmethods__["CityScore"] = _micropolisengine.Micropolis_CityScore_get
-    if _newclass:CityScore = _swig_property(_micropolisengine.Micropolis_CityScore_get, _micropolisengine.Micropolis_CityScore_set)
+    __swig_setmethods__["cityAssValue"] = _micropolisengine.Micropolis_cityAssValue_set
+    __swig_getmethods__["cityAssValue"] = _micropolisengine.Micropolis_cityAssValue_get
+    if _newclass:cityAssValue = _swig_property(_micropolisengine.Micropolis_cityAssValue_get, _micropolisengine.Micropolis_cityAssValue_set)
+    __swig_setmethods__["cityClass"] = _micropolisengine.Micropolis_cityClass_set
+    __swig_getmethods__["cityClass"] = _micropolisengine.Micropolis_cityClass_get
+    if _newclass:cityClass = _swig_property(_micropolisengine.Micropolis_cityClass_get, _micropolisengine.Micropolis_cityClass_set)
+    __swig_setmethods__["cityScore"] = _micropolisengine.Micropolis_cityScore_set
+    __swig_getmethods__["cityScore"] = _micropolisengine.Micropolis_cityScore_get
+    if _newclass:cityScore = _swig_property(_micropolisengine.Micropolis_cityScore_get, _micropolisengine.Micropolis_cityScore_set)
     __swig_setmethods__["deltaCityScore"] = _micropolisengine.Micropolis_deltaCityScore_set
     __swig_getmethods__["deltaCityScore"] = _micropolisengine.Micropolis_deltaCityScore_get
     if _newclass:deltaCityScore = _swig_property(_micropolisengine.Micropolis_deltaCityScore_get, _micropolisengine.Micropolis_deltaCityScore_set)
-    __swig_setmethods__["TrafficAverage"] = _micropolisengine.Micropolis_TrafficAverage_set
-    __swig_getmethods__["TrafficAverage"] = _micropolisengine.Micropolis_TrafficAverage_get
-    if _newclass:TrafficAverage = _swig_property(_micropolisengine.Micropolis_TrafficAverage_get, _micropolisengine.Micropolis_TrafficAverage_set)
-    __swig_setmethods__["cityClassStr"] = _micropolisengine.Micropolis_cityClassStr_set
-    __swig_getmethods__["cityClassStr"] = _micropolisengine.Micropolis_cityClassStr_get
-    if _newclass:cityClassStr = _swig_property(_micropolisengine.Micropolis_cityClassStr_get, _micropolisengine.Micropolis_cityClassStr_set)
-    __swig_setmethods__["cityLevelStr"] = _micropolisengine.Micropolis_cityLevelStr_set
-    __swig_getmethods__["cityLevelStr"] = _micropolisengine.Micropolis_cityLevelStr_get
-    if _newclass:cityLevelStr = _swig_property(_micropolisengine.Micropolis_cityLevelStr_get, _micropolisengine.Micropolis_cityLevelStr_set)
-    __swig_setmethods__["probStr"] = _micropolisengine.Micropolis_probStr_set
-    __swig_getmethods__["probStr"] = _micropolisengine.Micropolis_probStr_get
-    if _newclass:probStr = _swig_property(_micropolisengine.Micropolis_probStr_get, _micropolisengine.Micropolis_probStr_set)
+    __swig_setmethods__["trafficAverage"] = _micropolisengine.Micropolis_trafficAverage_set
+    __swig_getmethods__["trafficAverage"] = _micropolisengine.Micropolis_trafficAverage_get
+    if _newclass:trafficAverage = _swig_property(_micropolisengine.Micropolis_trafficAverage_get, _micropolisengine.Micropolis_trafficAverage_set)
     def CityEvaluation(*args): return _micropolisengine.Micropolis_CityEvaluation(*args)
     def EvalInit(*args): return _micropolisengine.Micropolis_EvalInit(*args)
     def DoPopNum(*args): return _micropolisengine.Micropolis_DoPopNum(*args)
@@ -1082,9 +1080,9 @@ class Micropolis(_object):
     def sim_heat(*args): return _micropolisengine.Micropolis_sim_heat(*args)
     def sim_loop(*args): return _micropolisengine.Micropolis_sim_loop(*args)
     def sim_tick(*args): return _micropolisengine.Micropolis_sim_tick(*args)
-    __swig_setmethods__["LastCityPop"] = _micropolisengine.Micropolis_LastCityPop_set
-    __swig_getmethods__["LastCityPop"] = _micropolisengine.Micropolis_LastCityPop_get
-    if _newclass:LastCityPop = _swig_property(_micropolisengine.Micropolis_LastCityPop_get, _micropolisengine.Micropolis_LastCityPop_set)
+    __swig_setmethods__["lastCityPop"] = _micropolisengine.Micropolis_lastCityPop_set
+    __swig_getmethods__["lastCityPop"] = _micropolisengine.Micropolis_lastCityPop_get
+    if _newclass:lastCityPop = _swig_property(_micropolisengine.Micropolis_lastCityPop_get, _micropolisengine.Micropolis_lastCityPop_set)
     __swig_setmethods__["LastCategory"] = _micropolisengine.Micropolis_LastCategory_set
     __swig_getmethods__["LastCategory"] = _micropolisengine.Micropolis_LastCategory_get
     if _newclass:LastCategory = _swig_property(_micropolisengine.Micropolis_LastCategory_get, _micropolisengine.Micropolis_LastCategory_set)

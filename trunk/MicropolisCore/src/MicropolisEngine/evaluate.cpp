@@ -78,24 +78,20 @@
  *        The scripting language should look them up in translation files.
  */
 
-char *Micropolis::cityClassStr[6] = {
-  "VILLAGE", "TOWN", "CITY", "CAPITAL", "METROPOLIS", "MEGALOPOLIS"
-};
+// City Classes:
+// "VILLAGE", "TOWN", "CITY", "CAPITAL", "METROPOLIS", "MEGALOPOLIS"
 
-char *Micropolis::cityLevelStr[3] = {
-  "Easy", "Medium", "Hard"
-};
+// City Levels:
+// "Easy", "Medium", "Hard"
 
-char *Micropolis::probStr[PROBNUM] = {
-  "CRIME", "POLLUTION", "HOUSING COSTS", "TAXES",
-  "TRAFFIC", "UNEMPLOYMENT", "FIRES"
-};
+// City Problems:
+//  "CRIME", "POLLUTION", "HOUSING COSTS", "TAXES", "TRAFFIC", "UNEMPLOYMENT", "FIRES"
 
 
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: SpecialInit Simulate */
+/** Evaluate city */
 void Micropolis::CityEvaluation()
 {
   if (TotalPop) {
@@ -115,19 +111,19 @@ void Micropolis::CityEvaluation()
 /* comefrom: CityEvaluation SetCommonInits */
 void Micropolis::EvalInit()
 {
-  CityYes = 0;
-  CityNo = 0;
-  CityPop = 0;
+  cityYes = 0;
+  cityNo = 0;
+  cityPop = 0;
   deltaCityPop = 0;
-  CityAssValue = 0;
-  CityClass = 0;
-  CityScore = 500;
+  cityAssValue = 0;
+  cityClass = CC_VILLAGE;
+  cityScore = 500;
   deltaCityScore = 0;
   for (int i = 0; i < PROBNUM; i++) {
-    ProblemVotes[i] = 0;
+    problemVotes[i] = 0;
   }
   for (int i = 0; i < 4; i++) {
-    ProblemOrder[i] = 0;
+    problemOrder[i] = 0;
   }
 }
 
@@ -147,42 +143,42 @@ void Micropolis::getAssValue()
   z += APortPop * 10000;
   z += CoalPop * 3000;
   z += NuclearPop * 6000;
-  CityAssValue = z * 1000;
+  cityAssValue = z * 1000;
 }
 
 
-/* comefrom: CityEvaluation */
+/**
+ * Compute city population and city classification
+ * @see cityPop cityClass
+ */
 void Micropolis::DoPopNum()
 {
-  Quad OldCityPop;
+  Quad oldCityPop = cityPop;
 
-  OldCityPop =
-    CityPop;
-  CityPop =
-    ((ResPop) + (ComPop * 8L) + (IndPop *8L)) * 20L;
+  cityPop = (ResPop + (ComPop + IndPop) * 8L) * 20L;
 
-  if (OldCityPop == -1) {
-    OldCityPop = CityPop;
+  if (oldCityPop == -1) {
+    oldCityPop = cityPop;
   }
 
-  deltaCityPop =
-    CityPop - OldCityPop;
+  deltaCityPop = cityPop - oldCityPop;
 
-  CityClass = 0;        /* village */
-  if (CityPop > 2000) {
-    CityClass++;        /* town */
+  // Compute cityClass
+  cityClass = CC_VILLAGE;
+  if (cityPop > 2000) {
+    cityClass = CC_TOWN;
   }
-  if (CityPop > 10000) {
-    CityClass++;        /* city */
+  if (cityPop > 10000) {
+    cityClass = CC_CITY;
   }
-  if (CityPop > 50000) {
-    CityClass++;        /* capital */
+  if (cityPop > 50000) {
+    cityClass = CC_CAPITAL;
   }
-  if (CityPop > 100000) {
-    CityClass++;        /* metropolis */
+  if (cityPop > 100000) {
+    cityClass = CC_METROPOLIS;
   }
-  if (CityPop > 500000) {
-    CityClass++;        /* megalopolis */
+  if (cityPop > 500000) {
+    cityClass = CC_MEGALOPOLIS;
   }
 }
 
@@ -194,16 +190,16 @@ void Micropolis::DoProblems()
 
   for (int z = 0; z < PROBNUM; z++) {
     problemTaken[z] = false;
-    ProblemTable[z] = 0;
+    problemTable[z] = 0;
   }
 
-  ProblemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
-  ProblemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
-  ProblemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
-  ProblemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
-  ProblemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
-  ProblemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
-  ProblemTable[CVP_FIRE]         = GetFire();             /* Fire */
+  problemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
+  problemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
+  problemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
+  problemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
+  problemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
+  problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
+  problemTable[CVP_FIRE]         = GetFire();             /* Fire */
   voteProblems();
 
   for (int z = 0; z < 4; z++) {
@@ -211,18 +207,18 @@ void Micropolis::DoProblems()
     int maxVotes = 0;
     int bestProblem = CVP_NUMPROBLEMS;
     for (int i = 0; i < CVP_NUMPROBLEMS; i++) {
-      if ((ProblemVotes[i] > maxVotes) && (!problemTaken[i])) {
+      if ((problemVotes[i] > maxVotes) && (!problemTaken[i])) {
         bestProblem = i;
-        maxVotes = ProblemVotes[i];
+        maxVotes = problemVotes[i];
       }
     }
 
     if (maxVotes > 0) {
       problemTaken[bestProblem] = true;
-      ProblemOrder[z] = bestProblem;
+      problemOrder[z] = bestProblem;
     } else {
-      ProblemOrder[z] = CVP_NUMPROBLEMS;
-      ProblemTable[CVP_NUMPROBLEMS] = 0; // FIXME: Why are we doing this?
+      problemOrder[z] = CVP_NUMPROBLEMS;
+      problemTable[CVP_NUMPROBLEMS] = 0; // FIXME: Why are we doing this?
     }
   }
 }
@@ -231,14 +227,14 @@ void Micropolis::DoProblems()
 /**
  * Vote on the problems of the city
  *
- * @post ProblemVotes contains the vote counts
+ * @post problemVotes contains the vote counts
  */
 void Micropolis::voteProblems()
 {
   int x, z, count;
 
   for (z = 0; z < PROBNUM; z++) {
-    ProblemVotes[z] = 0;
+    problemVotes[z] = 0;
   }
 
   x = 0;
@@ -246,8 +242,8 @@ void Micropolis::voteProblems()
   count = 0;
   while ((z < 100) &&
          (count < 600)) {
-    if (Rand(300) < ProblemTable[x]) {
-      ProblemVotes[x]++;
+    if (Rand(300) < problemTable[x]) {
+      problemVotes[x]++;
       z++;
     }
     x++;
@@ -276,10 +272,10 @@ short Micropolis::AverageTrf()
     }
   }
 
-  TrafficAverage =
+  trafficAverage =
     (short)((TrfTotal / count) * 2.4);
 
-  return TrafficAverage;
+  return trafficAverage;
 }
 
 
@@ -326,14 +322,15 @@ short Micropolis::GetFire()
 void Micropolis::GetScore()
 {
   register int x, z;
-  short OldCityScore;
+  short oldCityScore;
   float SM, TM;
 
-  OldCityScore = CityScore;
+  oldCityScore = cityScore;
   x = 0;
 
+
   for (z = 0; z < 7; z++) {
-    x += ProblemTable[z];       /* add 7 probs */
+    x += problemTable[z];       /* add 7 probs */
   }
 
   x = x / 3;                    /* 7 + 2 average */
@@ -390,21 +387,21 @@ void Micropolis::GetScore()
 
   SM = 1.0;
 
-  if ((CityPop == 0) ||
+  if ((cityPop == 0) ||
       (deltaCityPop == 0)) {
     SM =
       1.0;
-  } else if (deltaCityPop == CityPop) {
+  } else if (deltaCityPop == cityPop) {
     SM =
       1.0;
   } else if (deltaCityPop > 0) {
     SM =
-      ((float)deltaCityPop / CityPop) +
+      ((float)deltaCityPop / cityPop) +
       (float)1.0;
   } else if (deltaCityPop < 0) {
     SM =
       (float)0.95 +
-      ((float) deltaCityPop / (CityPop - deltaCityPop));
+      ((float) deltaCityPop / (cityPop - deltaCityPop));
   }
 
   z = (int)(z * SM);
@@ -430,11 +427,12 @@ void Micropolis::GetScore()
     z = 0;
   }
 
-  CityScore =
-    (CityScore + z) / 2;
+  cityScore =
+    (cityScore + z) / 2;
 
   deltaCityScore =
-    CityScore - OldCityScore;
+    cityScore - oldCityScore;
+
 }
 
 
@@ -443,14 +441,14 @@ void Micropolis::DoVotes()
 {
   register int z;
 
-  CityYes = 0;
-  CityNo = 0;
+  cityYes = 0;
+  cityNo = 0;
 
   for (z = 0; z < 100; z++) {
-    if (Rand(1000) < CityScore) {
-      CityYes++;
+    if (Rand(1000) < cityScore) {
+      cityYes++;
     } else {
-      CityNo++;
+      cityNo++;
     }
   }
 }
@@ -472,17 +470,17 @@ void Micropolis::doScoreCard()
   // City Evaluation ${FormatYear(CurrentYear())}
   // Public Opinion
   //   Is the mayor doing a good job?
-  //     Yes: ${FormatPercent(CityYes)}
-  //     No: ${FormatPercent(CityNo)}
+  //     Yes: ${FormatPercent(cityYes)}
+  //     No: ${FormatPercent(cityNo)}
   //   What are the worst problems?
-  //     for i in range(0, 4), while ProblemOrder[i]:
-  //     ${probStr[ProblemOrder[i]]}: ${FormatPercent(ProblemVotes[ProblemOrder[i]])}
+  //     for i in range(0, 4), while problemOrder[i]:
+  //     ${probStr[problemOrder[i]]}: ${FormatPercent(problemVotes[problemOrder[i]])}
   // Statistics
   //   Population: ${FormatNumber?(pop)}
-  //   Net Migration: ${FormatNumber(CityPop)}
+  //   Net Migration: ${FormatNumber(cityPop)}
   //   (last year): ${FormatNumber(deltaCityPop)}
-  //   Assessed Value: ${FormatMoney(CityAssValue))
-  //   Category: ${cityClassStr[CityClass]}
+  //   Assessed Value: ${FormatMoney(cityAssValue))
+  //   Category: ${cityClassStr[cityClass]}
   //   Game Level: ${cityLevelStr[GameLevel]}
 }
 

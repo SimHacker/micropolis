@@ -292,7 +292,7 @@ void Micropolis::DoGeneratedCityImage(
   char *name,
   int time,
   int pop,
-  char *cityClass,
+  char *cityClassName,
   int score)
 {
   /* XXX: TODO: print city */
