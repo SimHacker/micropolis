@@ -3166,6 +3166,31 @@ SWIG_From_unsigned_SS_long  (unsigned long value)
     PyLong_FromUnsignedLong(value) : PyInt_FromLong(static_cast< long >(value)); 
 }
 
+
+SWIGINTERN int
+SWIG_AsVal_bool (PyObject *obj, bool *val)
+{
+  if (obj == Py_True) {
+    if (val) *val = true;
+    return SWIG_OK;
+  } else if (obj == Py_False) {
+    if (val) *val = false;
+    return SWIG_OK;
+  } else {
+    long v = 0;
+    int res = SWIG_AddCast(SWIG_AsVal_long (obj, val ? &v : 0));
+    if (SWIG_IsOK(res) && val) *val = v ? true : false;
+    return res;
+  }
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_bool  (bool value)
+{
+  return PyBool_FromLong(value ? 1 : 0);
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -20228,10 +20253,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_DoInitialEval_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
+  bool arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  short val2 ;
+  bool val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -20242,11 +20267,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_DoInitialEval_set(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoInitialEval_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_DoInitialEval_set" "', argument " "2"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_DoInitialEval_set" "', argument " "2"" of type '" "bool""'");
   } 
-  arg2 = static_cast< short >(val2);
+  arg2 = static_cast< bool >(val2);
   if (arg1) (arg1)->DoInitialEval = arg2;
   
   resultobj = SWIG_Py_Void();
@@ -20259,7 +20284,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_DoInitialEval_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -20270,8 +20295,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_DoInitialEval_get(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoInitialEval_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->DoInitialEval);
-  resultobj = SWIG_From_short(static_cast< short >(result));
+  result = (bool) ((arg1)->DoInitialEval);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;

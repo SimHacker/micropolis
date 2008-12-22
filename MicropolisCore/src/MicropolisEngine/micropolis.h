@@ -1916,7 +1916,7 @@ public:
 
   short Spdcycle;
 
-  short DoInitialEval;
+  bool DoInitialEval; ///< Need to perform initial city evaluation
 
   short MeltX;
 
