@@ -140,8 +140,6 @@
 #define HORIZ                   1
 #define VERT                    0
 
-#define PROBNUM                 10
-
 #define HISTLEN                 480
 #define MISCHISTLEN             240
 
@@ -467,6 +465,25 @@
 #define MAX_TRAFFIC_DISTANCE    30
 
 
+/**
+ * Problems in the city where citizens vote on
+ * @todo Eliminate PROBNUM
+ */
+enum CityVotingProblems {
+    CVP_CRIME,        ///< Crime
+    CVP_POLLUTION,    ///< Pollution
+    CVP_HOUSING,      ///< Housing
+    CVP_TAXES,        ///< Taxes
+    CVP_TRAFFIC,      ///< Traffic
+    CVP_UNEMPLOYMENT, ///< Unemployment
+    CVP_FIRE,         ///< Fire
+
+    CVP_NUMPROBLEMS,  ///< Number of problems
+
+    PROBNUM = 10,
+};
+
+
 ////////////////////////////////////////////////////////////////////////
 // Macros
 
@@ -607,7 +624,7 @@ public:
 
 };
 
-
+/** Main simulator class */
 class Micropolis {
 
 
