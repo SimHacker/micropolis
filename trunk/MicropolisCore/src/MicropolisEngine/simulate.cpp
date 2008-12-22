@@ -130,7 +130,7 @@ void Micropolis::Simulate(
         Scycle = 0;     /* this is cosmic */
       }
       if (DoInitialEval) {
-        DoInitialEval = 0;
+        DoInitialEval = false;
         CityEvaluation();
       }
       CityTime++;
@@ -268,7 +268,7 @@ void Micropolis::DoSimInit()
   doAllGraphs();
   NewGraph = 1;
   TotalPop = 1;
-  DoInitialEval = 1;
+  DoInitialEval = true;
 }
 
 

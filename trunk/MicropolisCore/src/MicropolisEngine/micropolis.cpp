@@ -785,8 +785,7 @@ void Micropolis::init()
   // short Spdcycle;
   Spdcycle = 0;
 
-  // short DoInitialEval;
-  DoInitialEval = 0;
+  DoInitialEval = false;
 
   // short MeltX;
   MeltX = 0;

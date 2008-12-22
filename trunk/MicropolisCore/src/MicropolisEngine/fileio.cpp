@@ -294,7 +294,7 @@ int Micropolis::loadFile(
   InitWillStuff();
   ScenarioID = 0;
   InitSimLoad = 1;
-  DoInitialEval = 0;
+  DoInitialEval = false;
   DoSimInit();
   InvalidateEditors();
   InvalidateMaps();
@@ -473,7 +473,7 @@ void Micropolis::LoadScenario(
   InvalidateEditors();
   InvalidateMaps();
   InitSimLoad = 1;
-  DoInitialEval = 0;
+  DoInitialEval = false;
   DoSimInit();
   DidLoadScenario();
 }
