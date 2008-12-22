@@ -67,6 +67,8 @@
 
 #include "stdafx.h"
 
+#include <cassert>
+
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +99,7 @@ char *Micropolis::probStr[PROBNUM] = {
 void Micropolis::CityEvaluation()
 {
   if (TotalPop) {
-    GetAssValue();
+    getAssValue();
     DoPopNum();
     DoProblems();
     GetScore();
@@ -113,28 +115,25 @@ void Micropolis::CityEvaluation()
 /* comefrom: CityEvaluation SetCommonInits */
 void Micropolis::EvalInit()
 {
-  register short x, z;
-
-  z = 0;
-  CityYes = z;
-  CityNo = z;
-  CityPop = z;
-  deltaCityPop = z;
-  CityAssValue = z;
-  CityClass = z;
+  CityYes = 0;
+  CityNo = 0;
+  CityPop = 0;
+  deltaCityPop = 0;
+  CityAssValue = 0;
+  CityClass = 0;
   CityScore = 500;
-  deltaCityScore = z;
-  for (x = 0; x < PROBNUM; x++) {
-    ProblemVotes[x] = z;
+  deltaCityScore = 0;
+  for (int i = 0; i < PROBNUM; i++) {
+    ProblemVotes[i] = 0;
   }
-  for (x = 0; x < 4; x++) {
-    ProblemOrder[x] = z;
+  for (int i = 0; i < 4; i++) {
+    ProblemOrder[i] = 0;
   }
 }
 
 
 /* comefrom: CityEvaluation */
-void Micropolis::GetAssValue()
+void Micropolis::getAssValue()
 {
   Quad z;
 
