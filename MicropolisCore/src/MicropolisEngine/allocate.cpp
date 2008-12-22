@@ -73,7 +73,6 @@
 void Micropolis::initMapArrays()
 {
   short i;
-  unsigned short *auxPtr, *temp1;
 
   if (!mapPtr) {
     mapPtr = (unsigned short *)NewPtr(
@@ -81,11 +80,8 @@ void Micropolis::initMapArrays()
       WORLD_X * WORLD_Y);
   }
 
-  auxPtr = mapPtr;
-
   for (i = 0; i < WORLD_X; i++) {
-    temp1 = auxPtr + i * WORLD_Y;
-    Map[i] = (short *)temp1;
+    Map[i] = (short *)(mapPtr + (i * WORLD_Y));
   }
 
   popPtr = NewPtr(HWLDX * HWLDY);
@@ -97,24 +93,16 @@ void Micropolis::initMapArrays()
   tem1Base = NewPtr(HWLDX * HWLDY);
   tem2Base = NewPtr(HWLDX * HWLDY);
 
-  auxPopPtr = popPtr;
-  auxTrfPtr = trfPtr;
-  auxPolPtr = polPtr;
-  auxLandPtr = landPtr;
-  auxCrimePtr = crimePtr;
-
   for (i = 0; i < HWLDX; i++) {
-    PopDensity[i] = (Byte *)auxPopPtr + (i * HWLDY);
-    TrfDensity[i] = (Byte *)auxTrfPtr + (i * HWLDY);
-    PollutionMem[i] = (Byte *)auxPolPtr + (i * HWLDY);
-    LandValueMem[i] = (Byte *)auxLandPtr + (i * HWLDY);
-    CrimeMem[i] = (Byte *)auxCrimePtr + (i * HWLDY);
+    PopDensity[i] = (Byte *)popPtr + (i * HWLDY);
+    TrfDensity[i] = (Byte *)trfPtr + (i * HWLDY);
+    PollutionMem[i] = (Byte *)polPtr + (i * HWLDY);
+    LandValueMem[i] = (Byte *)landPtr + (i * HWLDY);
+    CrimeMem[i] = (Byte *)crimePtr + (i * HWLDY);
 
     tem[i] = (Byte *)tem1Base + (i * HWLDY);
     tem2[i] = (Byte *)tem2Base + (i * HWLDY);
   }
-
-  brettPtr = (Ptr)&PopDensity[0][0];
 
   terrainBase = NewPtr(QWX * QWY);
   qTemBase = NewPtr(QWX * QWY);
@@ -180,12 +168,6 @@ void Micropolis::destroyMapArrays()
     tem2Base = NULL;
   }
 
-  auxPopPtr = NULL;
-  auxTrfPtr = NULL;
-  auxPolPtr = NULL;
-  auxLandPtr = NULL;
-  auxCrimePtr = NULL;
-
   memset(PopDensity, 0, sizeof(Byte *) * HWLDX);
   memset(TrfDensity, 0, sizeof(Byte *) * HWLDX);
   memset(PollutionMem, 0, sizeof(Byte *) * HWLDX);
@@ -194,8 +176,6 @@ void Micropolis::destroyMapArrays()
   memset(tem, 0, sizeof(Byte *) * HWLDX);
   memset(tem2, 0, sizeof(Byte *) * HWLDX);
   memset(tem2, 0, sizeof(Byte *) * HWLDX);
-
-  brettPtr = NULL;
 
   if (terrainBase) {
     FreePtr(terrainBase);

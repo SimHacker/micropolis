@@ -98,6 +98,8 @@ void Micropolis::GenerateSomeCity(
   UpdateFunds();
   DoSimInit();
 
+  sim_update();
+
   Callback("UIDidGenerateNewCity", "");
 }
 
@@ -332,18 +334,18 @@ void Micropolis::SmoothRiver()
     7 + BULLBIT,  9 + BULLBIT,      5 + BULLBIT,      2 };
 
   short bitindex, z, Xtem, Ytem;
-  register short temp, MapX, MapY;
+  register short temp, x, y;
 
-  for (MapX = 0; MapX < WORLD_X; MapX++) {
-    for (MapY = 0; MapY < WORLD_Y; MapY++) {
+  for (x = 0; x < WORLD_X; x++) {
+    for (y = 0; y < WORLD_Y; y++) {
 
-      if (Map[MapX][MapY] == REDGE) {
+      if (Map[x][y] == REDGE) {
         bitindex = 0;
 
         for (z = 0; z < 4; z++) {
           bitindex = bitindex << 1;
-          Xtem = MapX + DX[z];
-          Ytem = MapY + DY[z];
+          Xtem = x + DX[z];
+          Ytem = y + DY[z];
           if (TestBounds(Xtem, Ytem) &&
               ((Map[Xtem][Ytem] & LOMASK) != DIRT) &&
               (((Map[Xtem][Ytem]&LOMASK) < WOODS_LOW) ||
@@ -360,7 +362,7 @@ void Micropolis::SmoothRiver()
           temp++;
         }
 
-        Map[MapX][MapY] = temp;
+        Map[x][y] = temp;
       }
     }
   }
@@ -388,16 +390,16 @@ void Micropolis::SmoothTrees()
                               0,  32, 0,  33,
                               30, 31, 29, 37 };
   short bitindex, z, Xtem, Ytem;
-  register short temp, MapX, MapY;
+  register short temp, x, y;
 
-  for (MapX = 0; MapX < WORLD_X; MapX++) {
-    for (MapY = 0; MapY < WORLD_Y; MapY++) {
-      if (IsTree(Map[MapX][MapY])) {
+  for (x = 0; x < WORLD_X; x++) {
+    for (y = 0; y < WORLD_Y; y++) {
+      if (IsTree(Map[x][y])) {
         bitindex = 0;
         for (z = 0; z < 4; z++) {
           bitindex = bitindex << 1;
-          Xtem = MapX + DX[z];
-          Ytem = MapY + DY[z];
+          Xtem = x + DX[z];
+          Ytem = y + DY[z];
           if (TestBounds(Xtem, Ytem) &&
               IsTree(Map[Xtem][Ytem])) {
             bitindex++;
@@ -406,13 +408,13 @@ void Micropolis::SmoothTrees()
         temp = TEdTab[bitindex & 15];
         if (temp) {
           if (temp != WOODS) {
-            if ((MapX + MapY) & 1) {
+            if ((x + y) & 1) {
               temp = temp - 8;
             }
           }
-          Map[MapX][MapY] = temp + BLBNBIT;
+          Map[x][y] = temp + BLBNBIT;
         } else {
-          Map[MapX][MapY] = temp;
+          Map[x][y] = temp;
         }
       }
     }

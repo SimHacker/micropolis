@@ -506,8 +506,9 @@
          TILE_IS_RUBBLE(tile))
 
 #define NeutralizeRoad(tile) \
-        if (((tile &= LOMASK) >= 64) && \
-            ((tile & LOMASK) <= 207)) { \
+		tile &= LOMASK; \
+        if ((tile >= 64) && \
+            (tile <= 207)) { \
           tile = (tile & 0x000F) + 64; \
         }
 
@@ -626,198 +627,306 @@ class Micropolis {
   // allocate.cpp
 
 
+  // Map scan X position. 
+  // Used all over.
   short SMapX;
 
+  // Map scan Y position.
+  // Used all over.
   short SMapY;
 
+  // Tile at SMapX, SMapY, raw.
+  // Used all over.
   short CChr;
 
+  // Tile at SMapX, SMapY, masked with TILEMASK.
+  // Used all over.
   short CChr9;
 
+  // Total number of roads counted. More for bridges and high traffic density roads.
   short RoadTotal;
 
+  // Total number of rails. No penalty for bridges or high traffic density. 
   short RailTotal;
 
+  // Number of fires.
   short FirePop;
 
+  // Residential zone population. Depends on level of zone development. 
   short ResPop;
 
+  // Commercial zone population. Depends on level of zone development. 
   short ComPop;
 
+  // Industrial zone population. Depends on level of zone development. 
   short IndPop;
 
+  // Total population including residential pop / 8 plus industrial pop plus commercial pop.
   short TotalPop;
 
+  // Last total population. Not used?
   short LastTotalPop;
 
+  // Residential zone population.
   short ResZPop;
 
+  // Commercial zone population.
   short ComZPop;
 
+  // Industrial zone population.
   short IndZPop;
 
+  // Total zone population.
   short TotalZPop;
 
+  // Hospital population.
   short HospPop;
 
+  // Church population.
   short ChurchPop;
 
+  // Stadium population.
   short StadiumPop;
 
+  // Police population.
   short PolicePop;
 
+  // Fire station population.
   short FireStPop;
 
+  // Coal power plant population.
   short CoalPop;
 
+  // Nuclear power plant population.
   short NuclearPop;
 
+  // Seaport population.
   short PortPop;
 
+  // Airport population.
   short APortPop;
 
+  // Need hospital? 0 if no, 1 if yes, -1 if too many.
   short NeedHosp;
 
+  // Need church? 0 if no, 1 if yes, -1 if too many.
   short NeedChurch;
 
+  // Average crime. 
+  // Affected by land value, population density, police station distance.
   short CrimeAverage;
 
+  // Average pollution.
+  // Affected by PollutionMem, which is effected by traffic, fire, 
+  // radioactivity, industrial zones, seaports, airports, power plants. 
   short PolluteAverage;
 
+  // Land value average. 
+  // Affected by distance from city center, development density
+  // (terrainMem), pollution, and crime. 
   short LVAverage;
 
+  // City time tick counter. 48 ticks per year.
+  // Four ticks per 12 months, so one tick is about a week (7.6 days).
   Quad CityTime;
 
+  // City month, 4 ticks per month.
   Quad CityMonth;
 
+  // City year, (CityTime / 48) + StartingYear.
   Quad CityYear;
 
+  // City starting year.
   short StartingYear;
 
+  // Two-dimensional array of map tiles. Map[0 <= x < 120][0 <= y < 100]
   short *Map[WORLD_X];
 
+  // 10 year residential history maximum valu. 
   short ResHisMax;
 
+  // 120 year residential history maximum value.
   short Res2HisMax;
 
+  // 10 year commercial history maximum valu. 
   short ComHisMax;
 
+  // 120 year commercial history maximum value.
   short Com2HisMax;
 
+  // 10 year industrial history maximum valu. 
   short IndHisMax;
 
+  // 120 year industrial history maximum value.
   short Ind2HisMax;
 
+  // Census changed flag. Need to redraw census dependent stuff.
+  // Set by ChangeCensus, UpdateGraphs, TakeCensus, Take2Census, loadFile.
   short CensusChanged;
 
+  // Message number to display asynchronously.
+  // Clean this up to use a simpler interface, and a queue.
+  // Might need to collapse some messages.
   short MessagePort;
 
+  // Message X location.
   short MesX;
 
+  // Message Y location.
   short MesY;
 
+  // Spending on roads. 
   Quad RoadSpend;
 
+  // Spending on police stations.
   short PoliceSpend;
 
+  // Spending on fire stations.
   short FireSpend;
 
+  // Requested funds for roads.
+  // Depends on number of roads, rails, and game level.
   Quad RoadFund;
 
+  // Requested funds for police stations.
+  // Depends on police station population.
   short PoliceFund;
 
+  // Requested funds for fire stations.
+  // Depends on fire station population.
   short FireFund;
 
+  // Radio of road spending over road funding, times 32.
   short RoadEffect;
 
+  // Radio of police spending over road funding, times 32.
   short PoliceEffect;
 
+  // Radio of fire spending over road funding, times 32.
   short FireEffect;
 
+  // Funds from taxes.
+  // Depends on total population, average land value, city tax, and game level.
   Quad TaxFund; 
 
+  // City tax rate.
   short CityTax;
 
+  // Tax port flag. Apparently never used. CollectTax checks it. 
+  // FIXME: Apparently TaxFlag is never set to true in MicropolisEngine or the TCL code.
+  // TODO: Check old Mac code to see if it's ever set.
   short TaxFlag;
 
+  // Population density map.
   Byte *PopDensity[HWLDX];
 
+  // Traffic map.
   Byte *TrfDensity[HWLDX];
 
+  // Pollution map.
   Byte *PollutionMem[HWLDX];
 
+  // Land value mep.
   Byte *LandValueMem[HWLDX];
 
+  // Crime map.
   Byte *CrimeMem[HWLDX];
 
+  // Temporary map. 
+  // Used to smooth population density, pollution.
   Byte *tem[HWLDX];
 
+  // Temporary map 2. 
+  // Used to smooth population density, pollution.
   Byte *tem2[HWLDX];
 
   Byte *TerrainMem[QWX];
 
+  // Temporary map Q. 
+  // Used to smooth development density, for TerrainMem.
   Byte *Qtem[QWX];
 
+  // Rate of growth map.
+  // Affected by DecROGMem, incROG called by zones. 
+  // Decreased by fire explosions from sprites, fire spreading.
+  // Doesn't seem to actually feed back into the simulation. Output only. 
   short RateOGMem[SmX][SmY];
 
+  // Fire station map. 
+  // Affected by fire stations, powered, fire funding ratio, road access.
+  // Affects how long fires burn.
   short FireStMap[SmX][SmY];
 
+  // Police station map. 
+  // Affected by police stations, powered, police funding ratio, road access.
+  // Affects crime rate. 
   short PoliceMap[SmX][SmY];
-
+  
+  // Copy of police station map to display.
   short PoliceMapEffect[SmX][SmY];
 
+  // Copy of fire station map to display.
   short FireRate[SmX][SmY];
 
+  // Commercial rate map. 
+  // Depends on distance to city center. Effects commercial zone evaluation.
   short ComRate[SmX][SmY];
 
+  // Temporary array for smoothing fire and police station maps.
   short STem[SmX][SmY];
 
+  // Memory for TerrainMem array.
   Ptr terrainBase;
 
+  // Memory for Qtem array.
   Ptr qTemBase;
 
+  // Memory for tem array.
   Ptr tem1Base;
 
+  // Memory for tem2 array.
   Ptr tem2Base;
 
+  // Memory for PopDensity array.
   Ptr popPtr;
 
+  // Memory for TrfDensity array.
   Ptr trfPtr;
 
+  // Memory for PollutionMem array.
   Ptr polPtr;
 
+  // Memory for LandValueMem array.
   Ptr landPtr;
 
+  // Memory for CrimeMem array.
   Ptr crimePtr;
 
-  Ptr auxPopPtr;
-
-  Ptr auxTrfPtr;
-
-  Ptr auxPolPtr;
-
-  Ptr auxLandPtr;
-
-  Ptr auxCrimePtr;
-
-  Ptr brettPtr;
-
+  // Memory for Map array.
   unsigned short *mapPtr;
 
+  // Residential population history.
   short *ResHis;
 
+  // Commercial population history.
   short *ComHis;
 
+  // Industrial population history.
   short *IndHis;
 
+  // Money history.
   short *MoneyHis;
 
+  // Pollution history.
   short *PollutionHis;
 
+  // Crime history.
   short *CrimeHis;
 
+  // Memory used to save miscelaneous game values in save file.
   short *MiscHis;
 
+  // Power distribution bitmap.
   short *PowerMap;
 
 
@@ -855,26 +964,35 @@ class Micropolis {
   // budget.cpp
 
 
+  // Percentage of requested road costs to funding level.
+  // Affected by road funds slider and budgetary constraints.
   float roadPercent;
 
+  // Percentage of requested police station costs to funding level.
+  // Affected by road funds slider and budgetary constraints.
   float policePercent;
 
+  // Percentage of requested fire station costs to funding level.
+  // Affected by road funds slider and budgetary constraints.
   float firePercent;
 
+  // Amount of road funding granted. 
   Quad roadValue;
 
+  // Amount of police funding granted. 
   Quad policeValue;
 
+  // Amount of fire station funding granted. 
   Quad fireValue;
 
-  Quad roadMaxValue;
-
-  Quad policeMaxValue;
-
-  Quad fireMaxValue;
-
+  // Flag set when drawCurrPercents called.
+  // Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
+  // FIXME: Clean this up.
   int MustDrawCurrPercents;
 
+  // Flag set when drawBudgetWindow called.
+  // Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
+  // FIXME: Clean this up.
   int MustDrawBudgetWindow;
 
 
@@ -962,13 +1080,8 @@ class Micropolis {
   // disasters.cpp
 
 
-  short ShakeNow;
-
+  // Count of passes through DoDisasters to spread flooding.
   short FloodCnt;
-
-  short FloodX;
-
-  short FloodY;
 
 
   void DoDisasters();
@@ -996,77 +1109,69 @@ class Micropolis {
   // evaluate.cpp
 
 
-  short EvalValid;
-
+  // Percentage of people who think the mayor is doing a good job.
   short CityYes;
 
+  // Percentage of people who think the mayor is doing a bad job.
   short CityNo;
 
+  // Table of score for each problem.
+  // These are the severities of each problem.
   short ProblemTable[PROBNUM];
 
-  short ProblemTaken[PROBNUM];
+  // Table of votes for each problem.
+  // These are the votes for each problem.
+  short ProblemVotes[PROBNUM];
 
-  short ProblemVotes[PROBNUM]; /* these are the votes for each  */
+  // Array of indices of top problems, sorted by votes.
+  short ProblemOrder[4];
 
-  short ProblemOrder[4]; /* sorted index to above  */
-
+  // City population.
+  // Depends of ResPop, ComPop and IndPop.
   Quad CityPop;
 
+  // Change in the city population.
+  // Depends on last CityPop.
   Quad deltaCityPop;
 
+  // City assessed value. 
+  // Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop, 
+  // StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
+  // their respective values.
   Quad CityAssValue;
 
-  short CityClass; /*  0..5  */
+  // City class. 
+  // 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
+  // Affected by city population.
+  short CityClass;
 
+  // City score.
+  // Affected by average of problems, residential cap, commercial cap,
+  // industrial cap, road effect, police effect, fire effect,
+  // residential valve, commercial valve, industrial valve, city
+  // population, delta city population, fires, tax rate, and unpowered
+  // zones.
   short CityScore;
 
+  // Change in the city score. 
+  // Depends on city score.
   short deltaCityScore;
 
-  short AverageCityScore;
-
+  // Average traffic. 
+  // Depends on average traffic density of tiles with non-zero land value.
   short TrafficAverage;
 
+  // Array of city class names. 
+  // TODO: Remove from simulator and make translatable.
   static char *cityClassStr[6];
 
+  // Array of city level names.
+  // TODO: Remove from simulator and make translatable.
   static char *cityLevelStr[3];
 
+  // Array of problem names. 
+  // TODO: Remove from simulator and make translatable.
   static char *probStr[10];
-
-  std::string evalChanged;
-
-  std::string evalScore;
-
-  std::string evalPs0;
-
-  std::string evalPs1;
-
-  std::string evalPs2;
-
-  std::string evalPs3;
-
-  std::string evalPv0;
-
-  std::string evalPv1;
-
-  std::string evalPv2;
-
-  std::string evalPv3;
-
-  std::string evalPop;
-
-  std::string evalDelta;
-
-  std::string evalAssessedDollars;
-
-  std::string evalCityClass;
-
-  std::string evalCityLevel;
-
-  std::string evalGoodYes;
-
-  std::string evalGoodNo;
-
-  std::string evalTitle;
 
   void CityEvaluation();
 
@@ -1095,26 +1200,6 @@ class Micropolis {
   void ChangeEval();
 
   void scoreDoer();
-
-  void SetEvaluation(
-    const char *changed, 
-    const char *score,
-    const char *ps0, 
-    const char *ps1, 
-    const char *ps2, 
-    const char *ps3,
-    const char *pv0, 
-    const char *pv1, 
-    const char *pv2, 
-    const char *pv3,
-    const char *pop, 
-    const char *delta, 
-    const char *assessed_dollars, 
-    const char *cityclass, 
-    const char *citylevel, 
-    const char *goodyes, 
-    const char *goodno, 
-    const char *title);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -1161,25 +1246,51 @@ class Micropolis {
   // generate.cpp
 
 
+  // It would be nice to open up the terrain generator, and make its features available incrementally as city building tools. 
+  // The user should be able to place water and trees, and it should dynamically smooth the edges. 
+  // The user interface could restrict the user to only drawing terrain before any zones were built, 
+  // but it would be best if the terrain editing tools worked properly when there were zones built
+  // (by automatically bulldozing zones whose underlying terrain it's modifying).
+
+  // Starting X location of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short XStart;
 
+  // Starting Y location of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short YStart;
 
+  // Current X location of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short MapX;
 
+  // Current Y location of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short MapY;
 
+  // Current direction of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short Dir;
 
+  // Last direction of the terrain generator. 
+  // Only used internally by the terrain generator. Should be private. 
   short LastDir;
 
-  int TreeLevel; /* level for tree creation */
+  // Controls the level of tree creation. 
+  // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
+  int TreeLevel;
 
-  int LakeLevel; /* level for lake creation */
+  // Controls the level of lake creation. 
+  // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
+  int LakeLevel;
 
-  int CurveLevel; /* level for river curviness */
+  // Controls the level of river curviness. 
+  // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
+  int CurveLevel;
 
-  int CreateIsland; /* -1 => 10%, 0 => never, 1 => always */
+  // Controls how often to create an island. 
+  // -1 => 10% chance of island, 0 => never create island, 1 => always create island
+  int CreateIsland;
 
 
   void GenerateNewCity() ;
@@ -1240,14 +1351,17 @@ class Micropolis {
   // graph.cpp
 
 
+  // Flag that tells if there is a new graph to draw. 
+  // This should be replaced by a general purpose view updating system.
   short NewGraph;
 
-  short AllMax;
-
+  // 10 year history graphs.
   unsigned char *History10[HISTORIES];
 
+  // 120 year history graphs.
   unsigned char *History120[HISTORIES];
 
+  //
   int HistoryInitialized;
 
   short Graph10Max;
@@ -2027,8 +2141,6 @@ class Micropolis {
 	...);
 
   void DoEarthquake();
-
-  void StopEarthquake();
 
   void InvalidateEditors();
 

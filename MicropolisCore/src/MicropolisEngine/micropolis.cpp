@@ -195,6 +195,14 @@ void Micropolis::init()
   // short *Map[WORLD_X];
   memset(Map, 0, sizeof(short *) * WORLD_X);
 
+  int i;
+  for (i = 0; i < HISTORIES; i++) {
+
+    free(History10[i]);
+    free(History120[i]);
+
+  }
+
   // short ResHisMax;
   ResHisMax = 0;
 
@@ -336,24 +344,6 @@ void Micropolis::init()
   // Ptr crimePtr;
   crimePtr = NULL;
 
-  // Ptr auxPopPtr;
-  auxPopPtr = NULL;
-
-  // Ptr auxTrfPtr;
-  auxTrfPtr = NULL;
-
-  // Ptr auxPolPtr;
-  auxPolPtr = NULL;
-
-  // Ptr auxLandPtr;
-  auxLandPtr = NULL;
-
-  // Ptr auxCrimePtr;
-  auxCrimePtr = NULL;
-
-  // Ptr brettPtr;
-  brettPtr = NULL;
-
   // unsigned short *mapPtr;
   mapPtr = NULL;
 
@@ -408,15 +398,6 @@ void Micropolis::init()
   // Quad fireValue;
   fireValue = 0;
 
-  // Quad roadMaxValue;
-  roadMaxValue = 0;
-
-  // Quad policeMaxValue;
-  policeMaxValue = 0;
-
-  // Quad fireMaxValue;
-  fireMaxValue = 0;
-
   // int MustDrawCurrPercents;
   MustDrawCurrPercents = 0;
 
@@ -432,25 +413,13 @@ void Micropolis::init()
   // disasters.cpp
 
 
-  // short ShakeNow;
-  ShakeNow = 0;
-
   // short FloodCnt;
   FloodCnt = 0;
-
-  // short FloodX;
-  FloodX = 0;
-
-  // short FloodY;
-  FloodY = 0;
 
 
   ////////////////////////////////////////////////////////////////////////
   // evaluate.cpp
 
-
-  // short EvalValid;
-  EvalValid = 0;
 
   // short CityYes;
   CityYes = 0;
@@ -460,9 +429,6 @@ void Micropolis::init()
 
   // short ProblemTable[PROBNUM];
   memset(ProblemTable, 0, sizeof(short) * PROBNUM);
-
-  // short ProblemTaken[PROBNUM];
-  memset(ProblemTaken, 0, sizeof(short) * PROBNUM);
 
   // short ProblemVotes[PROBNUM]; /* these are the votes for each  */
   memset(ProblemVotes, 0, sizeof(short) * PROBNUM);
@@ -487,9 +453,6 @@ void Micropolis::init()
 
   // short deltaCityScore;
   deltaCityScore = 0;
-
-  // short AverageCityScore;
-  AverageCityScore = 0;
 
   // short TrafficAverage;
   TrafficAverage = 0;
@@ -541,18 +504,17 @@ void Micropolis::init()
   // short NewGraph;
   NewGraph = 0;
 
-  // short AllMax;
-  AllMax = 0;
+  int i;
+  for (i = 0; i < HISTORIES; i++) {
 
-  // unsigned char *History10[HISTORIES];
-  memset(History10, 0, sizeof(unsigned char *) * HISTORIES);
+    History10[i] = 
+      (unsigned char *)NewPtr(120);
 
-  // unsigned char *History120[HISTORIES];
-  memset(History120, 0, sizeof(unsigned char *) * HISTORIES);
+    History120[i] = 
+      (unsigned char *)NewPtr(120);
 
-  // int HistoryInitialized;
-  HistoryInitialized = 0;
-
+  }
+ 
   // short Graph10Max;
   Graph10Max = 0;
 
@@ -973,10 +935,10 @@ void Micropolis::init()
   PosStackN = 0;
 
   // short SMapXStack[MAX_TRAFFIC_DISTANCE+1];
-  memset(SMapXStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE+1));
+  memset(SMapXStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
   // short SMapYStack[MAX_TRAFFIC_DISTANCE+1];
-  memset(SMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE+1));
+  memset(SMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
   // short LDir;
   LDir = 0;
@@ -1044,7 +1006,7 @@ void Micropolis::destroy()
   destroyMapArrays();
 
   // TODO: Clean up all other stuff:
-
+ 
 }
 
 

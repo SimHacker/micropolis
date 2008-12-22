@@ -201,13 +201,6 @@ void Micropolis::DoEarthquake()
   MakeSound("city", "Explosion-Low");
   int magnitude = Rand(10) + 3;
   Callback("UIStartEarthquake", "d", magnitude);
-  ShakeNow++;
-}
-
-
-void Micropolis::StopEarthquake()
-{
-  Callback("UIStopEarthquake", "");
 }
 
 

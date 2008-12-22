@@ -113,37 +113,64 @@ void Micropolis::DoBudgetNow(
 
   if (yumDuckets > total) {
 
+	// Enough yumDuckets to fully fund fire, police and road.
+
     fireValue = fireInt;
     policeValue = policeInt;
     roadValue = roadInt;
 
+	// FIXME: Why are we not subtracting from yumDuckets what we
+	// spend, like the code below is doing?
+
   } else if (total > 0) {
 
+	assert(yumDuckets <= total);
+
+	// Not enough yumDuckets to fund everything. 
+	// First spend on roads, then on fire, then on police.
+
     if (yumDuckets > roadInt) {
+
+	  // Enough yumDuckets to fully fund roads.
 
       roadValue = roadInt;
       yumDuckets -= roadInt;
 
       if (yumDuckets > fireInt) {
 
+		// Enough yumDuckets to fully fund fire. 
+
         fireValue = fireInt;
         yumDuckets -= fireInt;
 
         if (yumDuckets > policeInt) {
+
+		  // Enough yumDuckets to fully fund police. 
+		  // Hey what are we doing here? Should never get here. 
+		  // We tested for yumDuckets > total above
+		  // (where total = fireInt + policeInt + roadInt), 
+		  // so this should never happen.
 
           policeValue = policeInt;
           yumDuckets -= policeInt;
 
         } else {
 
+		  // Fuly funded roads and fire. 
+		  // Partially fund police. 
+
           policeValue = yumDuckets;
 
           if (yumDuckets > 0) {
+
+			// Scale back police percentage to available cash.
 
             policePercent = 
               ((float)yumDuckets) / ((float)PoliceFund);
 
           } else {
+
+			// Exactly nothing left, so scale back police percentage to zero.
 
             policePercent = 0.0;
 
@@ -151,16 +178,25 @@ void Micropolis::DoBudgetNow(
         }
       } else {
 
+		// Not enough yumDuckets to fully fund fire. 
+
         fireValue = yumDuckets;
+
+		// No police after funding roads and fire.
+
         policeValue = 0;
         policePercent = 0.0;
 
         if (yumDuckets > 0) {
 
+		  // Scale back fire percentage to available cash.
+
           firePercent = 
             ((float)yumDuckets) / ((float)FireFund);
 
         } else {
+
+		  // Exactly nothing left, so scale back fire percentage to zero.
 
           firePercent = 0.0;
 
@@ -170,27 +206,40 @@ void Micropolis::DoBudgetNow(
 
     } else {
 
+	  // Not enough yumDuckets to fully fund roads.
+
       roadValue = yumDuckets;
 
-      if (yumDuckets > 0) {
-
-        roadPercent = 
-          ((float)yumDuckets) / ((float)RoadFund);
-
-      } else {
-
-        roadPercent = 0.0;
-
-      }
+	  // No fire or police after funding roads.
 
       fireValue = 0;
       policeValue = 0;
       firePercent = 0.0;
       policePercent = 0.0;
 
+      if (yumDuckets > 0) {
+
+		// Scale back road percentage to available cash.
+
+        roadPercent = 
+          ((float)yumDuckets) / ((float)RoadFund);
+
+      } else {
+
+		// Exactly nothing left, so scale back road percentage to zero.
+
+        roadPercent = 0.0;
+
+      }
+
     }
 
   } else {
+
+	assert(yumDuckets == total);
+	assert(total == 0);
+
+	// Zero funding, so no values but full percentages.
 
     fireValue = 0;
     policeValue = 0;
@@ -200,10 +249,6 @@ void Micropolis::DoBudgetNow(
     roadPercent = 1.0;
 
   }
-
-  fireMaxValue = FireFund;
-  policeMaxValue = PoliceFund;
-  roadMaxValue = RoadFund;
 
   drawCurrPercents();
 
@@ -217,6 +262,8 @@ noMoney:
     // Otherwise don't do it after this and arrange for it to happen when the 
     // modal budget dialog is dismissed. 
     ShowBudgetWindowAndStartWaiting();
+
+	// FIXME: Only do this AFTER the budget window is accepted.
 
     if (!fromMenu) {
 
@@ -239,7 +286,12 @@ noMoney:
 
   } else { /* autoBudget & !fromMenu */
 
-    if ((yumDuckets) > total) {
+	// FIXME: Not sure yumDuckets is the right value here. It gets the
+	// amount spent subtracted from it above in some cases, but not if
+	// we are fully funded. I think we want to use the original value
+	// of yumDuckets, which is TaxFund + TotalFunds.
+
+    if (yumDuckets > total) {
 
       Quad moreDough = 
         (Quad)(TaxFund - total);
@@ -335,22 +387,22 @@ void Micropolis::ReallyDrawCurrPercents()
   char fireWant[256], policeWant[256], roadWant[256];
   char fireGot[256], policeGot[256], roadGot[256];
 
-  sprintf(num, "%d", (int)fireMaxValue);
+  sprintf(num, "%d", (int)FireFund);
   makeDollarDecimalStr(num, fireWant);
 
-  sprintf(num, "%d", (int)policeMaxValue);
+  sprintf(num, "%d", (int)PoliceFund);
   makeDollarDecimalStr(num, policeWant);
 
-  sprintf(num, "%d", (int)roadMaxValue);
+  sprintf(num, "%d", (int)RoadFund);
   makeDollarDecimalStr(num, roadWant);
 
-  sprintf(num, "%d", (int)(fireMaxValue * firePercent));
+  sprintf(num, "%d", (int)(FireFund * firePercent));
   makeDollarDecimalStr(num, fireGot);
 
-  sprintf(num, "%d", (int)(policeMaxValue * policePercent));
+  sprintf(num, "%d", (int)(PoliceFund * policePercent));
   makeDollarDecimalStr(num, policeGot);
 
-  sprintf(num, "%d", (int)(roadMaxValue * roadPercent));
+  sprintf(num, "%d", (int)(RoadFund * roadPercent));
   makeDollarDecimalStr(num, roadGot);
 
   SetBudgetValues(

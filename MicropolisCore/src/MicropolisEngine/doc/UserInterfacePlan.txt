@@ -7,12 +7,19 @@ Here are some notes about hooking up a user interface.
 
 In general, the philosophy is to tell the scriptinging engine that something has changed by sending a callback message out, without any parameters. 
 (The code may not currently be doing that, but that's how it should work.)
+
 Then the script handler can pull the parameters out of the simulator itself, instead of being passed the parameters in the callback. 
 This is so that the script can delay updating until the next time it paints the screen, consolidating a bunch of changes into one refresh. 
+
 That avoides the overhead of converting and formatting values that don't end up getting used. 
 Also, we want to defer all formatting to the scripting language, instead of formatting in the core simulator, so the script can internationalize the numbers and text. 
+
 Likewise, the simulator should not have any strings hard wired into it -- all those should be looked up by the scripting language, in translation files. 
 To conserve power on the OLPC, the script might want to schedule an update at the next round timer tick, so all the updates happen at once. 
+
+There are a bunch of flags for things like the evaluation changing, the graph changing, etc. 
+These should be replaced by incrementing revision numbers, so the views can skip updates, 
+and only update if the version number has changed. 
 
 Parts of the simulator that update the user interface:
 
@@ -24,12 +31,12 @@ Budget
     collectedStr
     tax
   SetBudgetValues
-	roadGot
-	roadWant
-	policeGot
-	policeWant
-	fireGot
-	fireWant
+        roadGot
+        roadWant
+        policeGot
+        policeWant
+        fireGot
+        fireWant
   ShowBudgetWindowAndStartWaiting
 
 Evaluation
@@ -53,13 +60,13 @@ Evaluation
     goodno: XXX%
     title: City Evaluation [YEAR]
   probStr
-	Crime
-	Pollution
-	Housing Costs
-	Taxes
-	Traffic
-	Unemployment
-	Fires
+        Crime
+        Pollution
+        Housing Costs
+        Taxes
+        Traffic
+        Unemployment
+        Fires
   cityClassStr
     Village
     Town
@@ -131,8 +138,8 @@ Control Menus (visible while game playing, or disabled as appropriate)
     Budget
     Evaluation
     Graph
-	New Editor
-	New Map
+        New Editor
+        New Map
 
 Date Display
   Click to pause
@@ -190,10 +197,10 @@ Evaluation Window
     Problem 4: XXX%
   Statistics
     Population: XXX
-	Net Migration: XXX (last year)
-	Assessed Value: XXX
-	Category: XXX
-	Game Level: XXX
+        Net Migration: XXX (last year)
+        Assessed Value: XXX
+        Category: XXX
+        Game Level: XXX
   Overall City Score (0 - 1000)
     Current Score: XXX
     Annual Change: XXX
@@ -224,7 +231,7 @@ Edit Window
     Auto Goto
     Hide Panel
     Show Overlay (for layers and chalk)
-	Dynamic Filter (for dynamic zone finder: "frob-o-matic")
+      Dynamic Filter (for dynamic zone finder: "frob-o-matic")
 
 Map Window
   Shows draggable location(s) of edit window(s)

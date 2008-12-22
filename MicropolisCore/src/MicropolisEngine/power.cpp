@@ -134,23 +134,12 @@ short Micropolis::TestForCond(
   ysave = SMapY;
 
   if (MoveMapSim(TFDir)) {
-    /* TestPowerBit was taking a lot of time so I swapped the & order -Don */
-#if 0
-    if ((Map[SMapX][SMapY] & CONDBIT) &&
-        (!TestPowerBit()))
-#else
     if ((Map[SMapX][SMapY] & CONDBIT) &&
         (CChr9 != NUCLEAR) &&
         (CChr9 != POWERPLANT) &&
-        (
-#if 0
-         (PowerWrd = (SMapX >>4) + (SMapY <<3)),
-#else
-         (PowerWrd = POWERWORD(SMapX, SMapY)),
-#endif
+        ((PowerWrd = POWERWORD(SMapX, SMapY)),
          ((PowerWrd > PWRMAPSIZE) ||
           ((PowerMap[PowerWrd] & (1 << (SMapX & 15))) == 0))))
-#endif
     {
       SMapX = xsave;
       SMapY = ysave;
