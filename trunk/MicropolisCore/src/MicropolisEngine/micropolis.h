@@ -480,6 +480,8 @@ enum CityVotingProblems {
 
     CVP_NUMPROBLEMS,  ///< Number of problems
 
+    CVP_NUMTAKEN,     ///< Number of problems taken
+
     PROBNUM = 10,
 };
 
@@ -628,7 +630,7 @@ public:
 class Micropolis {
 
 
- public:
+public:
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -645,6 +647,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // allocate.cpp
+
+public:
 
 
   // Map scan X position. 
@@ -976,12 +980,16 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // animate.cpp
 
+public:
+
 
   void animateTiles();
 
 
   ////////////////////////////////////////////////////////////////////////
   // budget.cpp
+
+public:
 
 
   // Percentage of requested road costs to funding level.
@@ -1058,6 +1066,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // connect.cpp
 
+public:
+
 
   int ConnecTile(
     short x,
@@ -1099,6 +1109,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // disasters.cpp
 
+public:
+
 
   // Count of passes through DoDisasters to spread flooding.
   short FloodCnt;
@@ -1128,70 +1140,123 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // evaluate.cpp
 
+public:
 
-  // Percentage of people who think the mayor is doing a good job.
+
+  /**
+   * Yes votes.
+   *
+   * Percentage of people who think the mayor is doing a good job.
+   */
   short CityYes;
 
-  // Percentage of people who think the mayor is doing a bad job.
+  /**
+   * No Votes.
+   *
+   * Percentage of people who think the mayor is doing a bad job.
+   */
   short CityNo;
 
-  // Table of score for each problem.
-  // These are the severities of each problem.
+  /**
+   * Problem table.
+   *
+   * Score for each problem, higher the more severe the problem is.
+   */
   short ProblemTable[PROBNUM];
 
-  // Table of votes for each problem.
-  // These are the votes for each problem.
+
+  /**
+   * Problem votes.
+   *
+   * The number of votes for each problem.
+   */
   short ProblemVotes[PROBNUM];
 
-  // Array of indices of top problems, sorted by votes.
-  short ProblemOrder[4];
+ /**
+  * Order of taken problems.
+  *
+  * Contains index of ProblemTable of taken problems, in decreasing order.
+  * @note Value CVP_NUMPROBLEMS means that the entry is not used
+  */
+  short ProblemOrder[CVP_NUMTAKEN];
 
-  // City population.
-  // Depends of ResPop, ComPop and IndPop.
+  /**
+   * City population.
+   *
+   * Depends of ResPop, ComPop and IndPop.
+   */
   Quad CityPop;
 
-  // Change in the city population.
-  // Depends on last CityPop.
+  /**
+   * Change in the city population.
+   *
+   * Depends on last CityPop.
+   */
   Quad deltaCityPop;
 
-  // City assessed value. 
-  // Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop, 
-  // StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
-  // their respective values.
+  /**
+   * City assessed value. 
+   *
+   * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop, 
+   * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
+   * their respective values.
+   */
   Quad CityAssValue;
 
-  // City class. 
-  // 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
-  // Affected by city population.
+  /**
+   * City class. 
+   *
+   * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
+   * Affected by city population.
+   */
   short CityClass;
 
-  // City score.
-  // Affected by average of problems, residential cap, commercial cap,
-  // industrial cap, road effect, police effect, fire effect,
-  // residential valve, commercial valve, industrial valve, city
-  // population, delta city population, fires, tax rate, and unpowered
-  // zones.
+  /**
+   * City score.
+   *
+   * Affected by average of problems, residential cap, commercial cap,
+   * industrial cap, road effect, police effect, fire effect,
+   * residential valve, commercial valve, industrial valve, city
+   * population, delta city population, fires, tax rate, and unpowered
+   * zones.
+   */
   short CityScore;
 
-  // Change in the city score. 
-  // Depends on city score.
+  /**
+   * Change in the city score. 
+   *
+   * Depends on city score.
+   */
   short deltaCityScore;
 
-  // Average traffic. 
-  // Depends on average traffic density of tiles with non-zero land value.
+  /**
+   * Average traffic.
+   *
+   * Depends on average traffic density of tiles with non-zero land value.
+   */
   short TrafficAverage;
 
-  // Array of city class names. 
-  // TODO: Remove from simulator and make translatable.
+  /**
+   * Array of city class names.
+   *
+   * TODO: Remove from simulator and make translatable.
+   */
   static char *cityClassStr[6];
 
-  // Array of city level names.
-  // TODO: Remove from simulator and make translatable.
+  /**
+   * Array of city level names.
+   *
+   * @todo Remove from simulator and make translatable.
+   */
   static char *cityLevelStr[3];
 
-  // Array of problem names. 
-  // TODO: Remove from simulator and make translatable.
+  /**
+   * Array of problem names.
+   *
+   * @todo Remove from simulator and make translatable.
+   */
   static char *probStr[10];
+
 
   void CityEvaluation();
 
@@ -1203,7 +1268,7 @@ class Micropolis {
 
   void DoProblems();
 
-  void VoteProblems();
+  void voteProblems();
 
   short AverageTrf();
 
@@ -1224,6 +1289,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // fileio.cpp
+
+public:
 
 
   int load_file(
@@ -1264,6 +1331,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // generate.cpp
+
+public:
 
 
   // It would be nice to open up the terrain generator, and make its features available incrementally as city building tools. 
@@ -1370,6 +1439,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // graph.cpp
 
+public:
+
 
   // Flag that tells if there is a new graph to draw. 
   // This should be replaced by a general purpose view updating system.
@@ -1414,6 +1485,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // initialize.cpp
 
+public:
+
 
   void InitWillStuff();
 
@@ -1424,6 +1497,9 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // main.cpp
+
+public:
+
 
   char *MicropolisVersion;
 
@@ -1480,6 +1556,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // map.cpp
+
+public:
 
 
 #if 0
@@ -1573,6 +1651,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // message.cpp
 
+public:
+
 
   Quad LastCityPop;
 
@@ -1625,6 +1705,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // power.cpp
 
+public:
+
 
   int PowerStackNum;
 
@@ -1653,6 +1735,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // random.cpp
 
+public:
+
 
   UQuad nextRandom;
 
@@ -1680,6 +1764,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // resource.cpp
+
+public:
 
 
   char *HomeDir;
@@ -1720,6 +1806,9 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // scan.cpp
+
+public:
+
 
   short NewMap;
 
@@ -1779,6 +1868,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // simulate.cpp
+
+public:
 
 
   short ValveFlag;
@@ -1907,6 +1998,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // sprite.cpp
+
+public:
 
 
   SimSprite *spriteList;
@@ -2083,6 +2176,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // stubs.cpp
 
+public:
+
 
   Quad TotalFunds;
 
@@ -2181,6 +2276,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // tool.cpp
+
+public:
 
 
   int OverRide;
@@ -2403,6 +2500,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // traffic.cpp
 
+public:
+
 
   short PosStackN;
 
@@ -2448,6 +2547,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // update.cpp
+
+public:
 
 
   short MustUpdateFunds;
@@ -2509,6 +2610,8 @@ class Micropolis {
   ////////////////////////////////////////////////////////////////////////
   // utilities.cpp
 
+public:
+
 
   void makeDollarDecimalStr(
     char *numStr,
@@ -2555,6 +2658,8 @@ class Micropolis {
 
   ////////////////////////////////////////////////////////////////////////
   // zone.cpp
+
+public:
 
 
   void DoZone();

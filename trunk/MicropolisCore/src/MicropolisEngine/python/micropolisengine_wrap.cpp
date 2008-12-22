@@ -12124,15 +12124,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_ProblemOrder_set(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemOrder_set" "', argument " "2"" of type '" "short [4]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemOrder_set" "', argument " "2"" of type '" "short [CVP_NUMTAKEN]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)4; ++ii) arg1->ProblemOrder[ii] = arg2[ii];
+      for (; ii < (size_t)CVP_NUMTAKEN; ++ii) arg1->ProblemOrder[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemOrder""' of type '""short [4]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemOrder""' of type '""short [CVP_NUMTAKEN]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -12766,20 +12766,20 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_VoteProblems(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_voteProblems(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_VoteProblems",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_voteProblems",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_VoteProblems" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_voteProblems" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->VoteProblems();
+  (arg1)->voteProblems();
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30376,7 +30376,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_GetAssValue", _wrap_Micropolis_GetAssValue, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoPopNum", _wrap_Micropolis_DoPopNum, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoProblems", _wrap_Micropolis_DoProblems, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_VoteProblems", _wrap_Micropolis_VoteProblems, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_voteProblems", _wrap_Micropolis_voteProblems, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_AverageTrf", _wrap_Micropolis_AverageTrf, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GetUnemployment", _wrap_Micropolis_GetUnemployment, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GetFire", _wrap_Micropolis_GetFire, METH_VARARGS, NULL},
@@ -31890,6 +31890,7 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "CVP_UNEMPLOYMENT",SWIG_From_int(static_cast< int >(CVP_UNEMPLOYMENT)));
   SWIG_Python_SetConstant(d, "CVP_FIRE",SWIG_From_int(static_cast< int >(CVP_FIRE)));
   SWIG_Python_SetConstant(d, "CVP_NUMPROBLEMS",SWIG_From_int(static_cast< int >(CVP_NUMPROBLEMS)));
+  SWIG_Python_SetConstant(d, "CVP_NUMTAKEN",SWIG_From_int(static_cast< int >(CVP_NUMTAKEN)));
   SWIG_Python_SetConstant(d, "PROBNUM",SWIG_From_int(static_cast< int >(PROBNUM)));
   PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_cityClassStr",Micropolis_cityClassStr_get, Micropolis_cityClassStr_set);

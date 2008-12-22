@@ -84,7 +84,7 @@ char *Micropolis::cityLevelStr[3] = {
   "Easy", "Medium", "Hard"
 };
 
-char *Micropolis::probStr[10] = {
+char *Micropolis::probStr[PROBNUM] = {
   "CRIME", "POLLUTION", "HOUSING COSTS", "TAXES",
   "TRAFFIC", "UNEMPLOYMENT", "FIRES"
 };
@@ -191,13 +191,13 @@ void Micropolis::DoPopNum()
 /** Evaluate problems of the city, take votes, and decide the most important ones */
 void Micropolis::DoProblems()
 {
-  register short x, z;
-  short ThisProb = 0;
-  short Max = 0;
+  bool problemTaken[PROBNUM]; // Which problems are taken?
 
-  for (z = 0; z < PROBNUM; z++) {
+  for (int z = 0; z < PROBNUM; z++) {
+    problemTaken[z] = false;
     ProblemTable[z] = 0;
   }
+
   ProblemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
   ProblemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
   ProblemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
@@ -205,29 +205,25 @@ void Micropolis::DoProblems()
   ProblemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
   ProblemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
   ProblemTable[CVP_FIRE]         = GetFire();             /* Fire */
-  VoteProblems();
+  voteProblems();
 
-  bool problemTaken[PROBNUM];
-  for (z = 0; z < PROBNUM; z++) {
-    problemTaken[z] = false;
-  }
-
-  for (z = 0; z < 4; z++) {
+  for (int z = 0; z < 4; z++) {
     // Find biggest problem not taken yet
-    Max = 0;
-    for (x = 0; x < CVP_NUMPROBLEMS; x++) {
-      if ((ProblemVotes[x] > Max) && (!problemTaken[x])) {
-        ThisProb = x;
-        Max = ProblemVotes[x];
+    int maxVotes = 0;
+    int bestProblem = CVP_NUMPROBLEMS;
+    for (int i = 0; i < CVP_NUMPROBLEMS; i++) {
+      if ((ProblemVotes[i] > maxVotes) && (!problemTaken[i])) {
+        bestProblem = i;
+        maxVotes = ProblemVotes[i];
       }
     }
 
-    if (Max) {
-      problemTaken[ThisProb] = true;
-      ProblemOrder[z] = ThisProb;
+    if (maxVotes > 0) {
+      problemTaken[bestProblem] = true;
+      ProblemOrder[z] = bestProblem;
     } else {
       ProblemOrder[z] = CVP_NUMPROBLEMS;
-      ProblemTable[CVP_NUMPROBLEMS] = 0;
+      ProblemTable[CVP_NUMPROBLEMS] = 0; // FIXME: Why are we doing this?
     }
   }
 }
@@ -238,7 +234,7 @@ void Micropolis::DoProblems()
  *
  * @post ProblemVotes contains the vote counts
  */
-void Micropolis::VoteProblems()
+void Micropolis::voteProblems()
 {
   int x, z, count;
 
