@@ -510,7 +510,7 @@ void Micropolis::SetValves()
   float ExtMarketParamMedium = 1.1;
   float ExtMarketParamHard = 0.98;
   float MinPjIndPop = 5.0;
-  float DefaltRratio = 1.3;
+  float DefaultRratio = 1.3;
   float MaxRratio = 2;
   float MaxCratio = 2;
   float MaxIratio = 2;
@@ -806,7 +806,7 @@ void Micropolis::TakeCensus()
       ComHisMax = ComHis[x];
     }
 
-    if (IntHis[x] > IndHisMax) {
+    if (IndHis[x] > IndHisMax) {
       IndHisMax = IndHis[x];
     }
 
@@ -912,7 +912,7 @@ void Micropolis::Take2Census()
       Com2HisMax = ComHis[x];
     }
 
-    if (IntHis[x] > Ind2HisMax) {
+    if (IndHis[x] > Ind2HisMax) {
       Ind2HisMax = IndHis[x];
     }
 
