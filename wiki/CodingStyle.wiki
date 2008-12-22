@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Coding style for Micropolis: Python, C++, OpenLaszlo, JavaScript, XML.
 
 = Introduction =
 
@@ -62,3 +62,14 @@ Put the "/>" after the last attribute on its own line.
 This makes it easier to copy and paste attributes around with line oriented editing commands, without having to do a lot of cursor motion and precise selection. 
 
 == JavaScript ==
+
+Apply the C++ coding style guidelines as appropriate. 
+
+Be careful about using "this" in callbacks. 
+Use "makeCallback" (or whatever it's called, using apply or call to bind "this"), instead of the old "var me = this;" hack. 
+
+Never use "with". 
+
+When accessing values up in general purpose dictionaries (as opposed to actual objects), use foo['key'] instead of foo.key, to be explicit about it being a dictionary as opposed to an object. Use foo.key to access keys of objects, not foo['key']. (Except when accessing a dynamic key like foo[dynamicKey], of course). 
+
+OpenLaszlo JavaScript does not currently support try/catch. But you can use it in browser JavaScript. 
