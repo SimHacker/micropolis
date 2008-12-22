@@ -217,7 +217,7 @@ void Micropolis::SendMessages()
     break;
 
   case 63:
-    if (TrafficAverage > 60) {
+    if (trafficAverage > 60) {
       SendMes(-12);
     }
     break;
@@ -229,33 +229,33 @@ void Micropolis::SendMessages()
 /* comefrom: SendMessages */
 void Micropolis::CheckGrowth()
 {
-  Quad ThisCityPop;
+  Quad thisCityPop;
   short z;
 
   if (!(CityTime & 3)) {
     z = 0;
-    ThisCityPop =
+    thisCityPop =
       ((ResPop) + (ComPop * 8) + (IndPop * 8)) * 20;
 
-    if (LastCityPop) {
+    if (lastCityPop) {
 
-      if ((LastCityPop < 2000) && (ThisCityPop >= 2000)) {
+      if ((lastCityPop < 2000) && (thisCityPop >= 2000)) {
         z = 35;
       }
 
-      if ((LastCityPop < 10000) && (ThisCityPop >= 10000)) {
+      if ((lastCityPop < 10000) && (thisCityPop >= 10000)) {
         z = 36;
       }
 
-      if ((LastCityPop < 50000L) && (ThisCityPop >= 50000L)) {
+      if ((lastCityPop < 50000L) && (thisCityPop >= 50000L)) {
         z = 37;
       }
 
-      if ((LastCityPop < 100000L) && (ThisCityPop >= 100000L)) {
+      if ((lastCityPop < 100000L) && (thisCityPop >= 100000L)) {
         z = 38;
       }
 
-      if ((LastCityPop < 500000L) && (ThisCityPop >= 500000L)) {
+      if ((lastCityPop < 500000L) && (thisCityPop >= 500000L)) {
         z = 39;
       }
 
@@ -268,7 +268,7 @@ void Micropolis::CheckGrowth()
       }
     }
 
-    LastCityPop = ThisCityPop;
+    lastCityPop = thisCityPop;
   }
 }
 
@@ -284,31 +284,31 @@ void Micropolis::DoScenarioScore(
   switch(type) {
 
   case 1:       /* Dullsville */
-    if (CityClass >= 4) {
+    if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
   case 2:       /* San Francisco */
-    if (CityClass >= 4) {
+    if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
   case 3:       /* Hamburg */
-    if (CityClass >= 4) {
+    if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
   case 4:       /* Bern */
-    if (TrafficAverage < 80) {
+    if (trafficAverage < 80) {
       z = -100;
     }
     break;
 
   case 5:       /* Tokyo */
-    if (CityScore > 500) {
+    if (cityScore > 500) {
       z = -100;
     }
     break;
@@ -320,13 +320,13 @@ void Micropolis::DoScenarioScore(
     break;
 
   case 7:       /* Boston */
-    if (CityScore > 500) {
+    if (cityScore > 500) {
       z = -100;
     }
     break;
 
   case 8:       /* Rio de Janeiro */
-    if (CityScore > 500) {
+    if (cityScore > 500) {
       z = -100;
     }
     break;

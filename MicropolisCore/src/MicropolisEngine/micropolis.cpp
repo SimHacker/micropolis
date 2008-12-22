@@ -422,38 +422,38 @@ void Micropolis::init()
   // evaluate.cpp
 
 
-  // short CityYes;
-  CityYes = 0;
+  // short cityYes;
+  cityYes = 0;
 
-  // short CityNo;
-  CityNo = 0;
+  // short cityNo;
+  cityNo = 0;
 
-  // short ProblemVotes[PROBNUM]; /* these are the votes for each  */
-  memset(ProblemVotes, 0, sizeof(short) * PROBNUM);
+  // short problemVotes[PROBNUM]; /* these are the votes for each  */
+  memset(problemVotes, 0, sizeof(short) * PROBNUM);
 
   // short ProblemOrder[CVP_NUMTAKEN]; /* sorted index to above  */
-  memset(ProblemOrder, 0, sizeof(short) * CVP_NUMTAKEN);
+  memset(problemOrder, 0, sizeof(short) * CVP_NUMTAKEN);
 
-  // Quad CityPop;
-  CityPop = 0;
+  // Quad cityPop;
+  cityPop = 0;
 
   // Quad deltaCityPop;
   deltaCityPop = 0;
 
-  // Quad CityAssValue;
-  CityAssValue = 0;
+  // Quad cityAssValue;
+  cityAssValue = 0;
 
-  // short CityClass; /*  0..5  */
-  CityClass = 0;
+  // CityClass cityClass;
+  cityClass = CC_VILLAGE;
 
-  // short CityScore;
-  CityScore = 0;
+  // short cityScore;
+  cityScore = 0;
 
   // short deltaCityScore;
   deltaCityScore = 0;
 
-  // short TrafficAverage;
-  TrafficAverage = 0;
+  // short trafficAverage;
+  trafficAverage = 0;
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -608,8 +608,8 @@ void Micropolis::init()
   // message.cpp
 
 
-  // Quad LastCityPop;
-  LastCityPop = 0;
+  // Quad lastCityPop;
+  lastCityPop = 0;
 
   // short LastCategory;
   LastCategory = 0;

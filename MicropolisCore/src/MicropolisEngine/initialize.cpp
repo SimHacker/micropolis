@@ -83,8 +83,8 @@ void Micropolis::InitWillStuff()
   RoadEffect = 32;
   PoliceEffect = 1000;          /* added */
   FireEffect = 1000;
-  CityScore = 500;
-  CityPop = -1;
+  cityScore = 500;
+  cityPop = -1;
   LastCityTime = -1;
   LastCityYear = -1;
   LastCityMonth = -1;

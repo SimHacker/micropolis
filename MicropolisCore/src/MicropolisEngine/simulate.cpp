@@ -427,16 +427,15 @@ void Micropolis::SimLoadInit()
 
   SetCommonInits();
 
-  CityClass = MiscHis[16];
-  CityScore = MiscHis[17];
-
-  if ((CityClass > 5) ||
-      (CityClass < 0)) {
-    CityClass = 0;
+  // Load cityClass
+  cityClass = (CityClass)(MiscHis[16]);
+  if (cityClass > CC_MEGALOPOLIS || cityClass < CC_VILLAGE) {
+    cityClass = CC_VILLAGE;
   }
-  if ((CityScore > 999) ||
-      (CityScore < 1)) {
-    CityScore = 500;
+
+  cityScore = MiscHis[17];
+  if (cityScore > 999 || cityScore < 1) {
+    cityScore = 500;
   }
 
   ResCap = 0;
@@ -543,8 +542,8 @@ void Micropolis::SetValves()
   MiscHis[13] = CrimeAverage;
   MiscHis[14] = PolluteAverage;
   MiscHis[15] = GameLevel;
-  MiscHis[16] = CityClass;
-  MiscHis[17] = CityScore;
+  MiscHis[16] = (short)cityClass;
+  MiscHis[17] = cityScore;
 
   NormResPop = 
     (float)ResPop / (float)ResPopDenom;
