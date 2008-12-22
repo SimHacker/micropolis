@@ -358,6 +358,7 @@ CVP_TRAFFIC = _micropolisengine.CVP_TRAFFIC
 CVP_UNEMPLOYMENT = _micropolisengine.CVP_UNEMPLOYMENT
 CVP_FIRE = _micropolisengine.CVP_FIRE
 CVP_NUMPROBLEMS = _micropolisengine.CVP_NUMPROBLEMS
+CVP_NUMTAKEN = _micropolisengine.CVP_NUMTAKEN
 PROBNUM = _micropolisengine.PROBNUM
 class Resource(_object):
     __swig_setmethods__ = {}
@@ -908,7 +909,7 @@ class Micropolis(_object):
     def GetAssValue(*args): return _micropolisengine.Micropolis_GetAssValue(*args)
     def DoPopNum(*args): return _micropolisengine.Micropolis_DoPopNum(*args)
     def DoProblems(*args): return _micropolisengine.Micropolis_DoProblems(*args)
-    def VoteProblems(*args): return _micropolisengine.Micropolis_VoteProblems(*args)
+    def voteProblems(*args): return _micropolisengine.Micropolis_voteProblems(*args)
     def AverageTrf(*args): return _micropolisengine.Micropolis_AverageTrf(*args)
     def GetUnemployment(*args): return _micropolisengine.Micropolis_GetUnemployment(*args)
     def GetFire(*args): return _micropolisengine.Micropolis_GetFire(*args)
