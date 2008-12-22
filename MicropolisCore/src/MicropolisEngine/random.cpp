@@ -44,7 +44,7 @@
 
 int Micropolis::sim_rand()
 {
-  // TODO: Use Wolfram's fast cellular automata pseudo random number generator. 
+  // TODO: Use Wolfram's fast cellular automata pseudo random number generator.
 
   nextRandom = nextRandom * 1103515245 + 12345;
   return ((nextRandom % (0x10000 <<8)) >>8);
@@ -81,8 +81,8 @@ int Micropolis::Rand16()
 
 int Micropolis::Rand16Signed()
 {
-  int i = 
-	  Rand16();
+  int i =
+          Rand16();
 
   if (i > 0x7fff) {
     i = 0x7fff - i;

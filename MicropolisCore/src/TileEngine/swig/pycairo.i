@@ -72,16 +72,16 @@
 
     // Check to make sure PyObject "$input" is a cairo.Context object.
     if (!PyObject_TypeCheck(
-	    $input,
-	    &PycairoContext_Type)) {
+            $input,
+            &PycairoContext_Type)) {
         SWIG_exception_fail(
-	    SWIG_TypeError,
-	    "expected cairo.Context"); 
+            SWIG_TypeError,
+            "expected cairo.Context"); 
     }
 
     // Convert the pycairo cairo.Context wrapper "$input" to a cairo_t "$1". 
     $1 =
-	PycairoContext_GET(
+        PycairoContext_GET(
             $input);
 
 }
@@ -92,10 +92,10 @@
 
     // Convert the cairo_t "$1" to a cairo.Context wrapper "$result".
     $result = 
-	PycairoContext_FromContext(
-	    $1,
-	    NULL, // type: NULL defaults to cairo.Context
-	    NULL); // base: NULL means no base object
+        PycairoContext_FromContext(
+            $1,
+            NULL, // type: NULL defaults to cairo.Context
+            NULL); // base: NULL means no base object
 
 }
 
@@ -106,16 +106,16 @@
 
     // Check to make sure PyObject "$input" is a cairo.Context object.
     if (!PyObject_TypeCheck(
-	    $input,
-	    &PycairoSurface_Type)) {
+            $input,
+            &PycairoSurface_Type)) {
         SWIG_exception_fail(
-	    SWIG_TypeError,
-	    "expected cairo.Surface"); 
+            SWIG_TypeError,
+            "expected cairo.Surface"); 
     }
 
     // Convert the pycairo cairo.Surface wrapper "$input" to a cairo_surface_t "$1". 
     $1 =
-	PycairoSurface_GET(
+        PycairoSurface_GET(
             $input);
 
 }
@@ -126,10 +126,10 @@
 
     // Convert the cairo_surface_t "$1" to a cairo.Surface wrapper "$result".
     $result = 
-	PycairoSurface_FromSurface(
-	    $1,
-	    NULL, // type: NULL defaults to cairo.Surface
-	    NULL); // base: NULL means no base object
+        PycairoSurface_FromSurface(
+            $1,
+            NULL, // type: NULL defaults to cairo.Surface
+            NULL); // base: NULL means no base object
 
 }
 

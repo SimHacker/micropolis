@@ -22,7 +22,7 @@ long totalFunds;
 short RValve, CValve, IValve;
 ** map window
 short *PowerMap;
-Byte *PopDensity[HWLDX];		/* 2X2 Maps  60 x 50 */
+Byte *PopDensity[HWLDX];                /* 2X2 Maps  60 x 50 */
 Byte *TrfDensity[HWLDX];
 Byte *PollutionMem[HWLDX];
 Byte *LandValueMem[HWLDX];

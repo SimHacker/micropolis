@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -69,7 +69,7 @@
 
 #if 0
 ////////////////////////////////////////////////////////////////////////
-// Disabled this small map drawing, filtering and overlaying code. 
+// Disabled this small map drawing, filtering and overlaying code.
 // Going to re-implement it in the tile engine and Python.
 
 
@@ -86,13 +86,13 @@
 
 /*
 
-static short valMap[] = { 
+static short valMap[] = {
   -1, COLOR_LIGHTGRAY, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED,
   COLOR_DARKGREEN, COLOR_LIGHTGREEN, COLOR_ORANGE, COLOR_YELLOW
 };
 
 
-static short valGrayMap[] = { 
+static short valGrayMap[] = {
   -1, 31, 127, 191, 255,
   223, 255, 31, 0
 };
@@ -237,7 +237,7 @@ void Micropolis::drawCom(
 {
   DRAW_BEGIN
     if ((tile > COMLAST) ||
-        ((tile >= LVRAIL6) && 
+        ((tile >= LVRAIL6) &&
          (tile < COMBASE))) {
       tile = DIRT;
     }
@@ -298,14 +298,14 @@ void Micropolis::drawPower(
     conductive = 127;
   }
 
-  mp = 
+  mp =
     &Map[0][0];
-  imageBase = 
+  imageBase =
     view->x->color ? view->data : view->data8;
 
   for (col = 0; col < WORLD_X; col++) {
 
-    image = 
+    image =
       imageBase + (3 * pixelBytes * col);
 
     for (row = 0; row < WORLD_Y; row++) {
@@ -330,7 +330,7 @@ void Micropolis::drawPower(
       }
 
       if (pix < 0) {
-        mem = 
+        mem =
           (UQuad *)&view->smalltiles[tile * 4 * 4 * pixelBytes];
         ROW3
       } else {
@@ -345,10 +345,10 @@ void Micropolis::drawPower(
           image[0] = image[1] = image[2] = pix;
           image += lineBytes;
           break;
-          
+
         case 15:
         case 16:
-          { 
+          {
             unsigned short *p;
             p = (unsigned short *)image;
             p[0] = p[1] = p[2] = pix;
@@ -361,10 +361,10 @@ void Micropolis::drawPower(
             image += lineBytes;
           }
           break;
-          
+
         case 24:
         case 32:
-          { 
+          {
             int x, y;
             for (y = 0; y < 3; y++) {
               unsigned char *img =
@@ -381,11 +381,11 @@ void Micropolis::drawPower(
             } // for y
           }
           break;
-          
+
         default:
           assert(0); /* Undefined depth */
           break;
-          
+
         }
       }
     }
@@ -394,7 +394,7 @@ void Micropolis::drawPower(
 
 
 int Micropolis::dynamicFilter(
-  int col, 
+  int col,
   int row)
 {
   int r = row >>1;
@@ -481,7 +481,7 @@ void Micropolis::drawPopDensity(
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(PopDensity[x][y]),
         x * 6,
         y * 6,
@@ -521,11 +521,11 @@ void Micropolis::drawRateOfGrowth(
         }
       }
       maybeDrawRect(
-        view, 
+        view,
         val,
-        x * 24, 
-        y * 24, 
-        24, 
+        x * 24,
+        y * 24,
+        24,
         24);
     }
   }
@@ -543,11 +543,11 @@ void Micropolis::drawTrafMap(
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(TrfDensity[x][y]),
-        x * 6, 
-        y * 6, 
-        6, 
+        x * 6,
+        y * 6,
+        6,
         6);
     }
   }
@@ -564,14 +564,14 @@ void Micropolis::drawPolMap(
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(10 + PollutionMem[x][y]),
-        x * 6, 
-        y * 6, 
-        6, 
+        x * 6,
+        y * 6,
+        6,
         6);
     }
-  } 
+  }
 }
 
 
@@ -585,11 +585,11 @@ void Micropolis::drawCrimeMap(
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(CrimeMem[x][y]),
-        x * 6, 
-        y * 6, 
-        6, 
+        x * 6,
+        y * 6,
+        6,
         6);
     }
   }
@@ -606,11 +606,11 @@ void Micropolis::drawLandMap(
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(LandValueMem[x][y]),
-        x * 6, 
-        y * 6, 
-        6, 
+        x * 6,
+        y * 6,
+        6,
         6);
     }
   }
@@ -626,11 +626,11 @@ void Micropolis::drawFireRadius(
   for (x = 0; x < SmY; x++) {
     for (y = 0; y < SmY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(FireRate[x][y]),
-        x * 24, 
-        y * 24, 
-        24, 
+        x * 24,
+        y * 24,
+        24,
         24);
     }
   }
@@ -646,11 +646,11 @@ void Micropolis::drawPoliceRadius(
   for (x = 0; x < SmX; x++) {
     for (y = 0; y < SmY; y++) {
       maybeDrawRect(
-        view, 
+        view,
         GetCI(PoliceMapEffect[x][y]),
-        x * 24, 
-        y * 24, 
-        24, 
+        x * 24,
+        y * 24,
+        24,
         24);
     }
   }
@@ -730,7 +730,7 @@ void Micropolis::MemDrawMap(
     ditherMap(view);
     XSetForeground(view->x->dpy, view->x->gc, view->pixels[COLOR_BLACK]);
     XSetBackground(view->x->dpy, view->x->gc, view->pixels[COLOR_WHITE]);
-    XPutImage(view->x->dpy, view->pixmap, view->x->gc, view->image, 
+    XPutImage(view->x->dpy, view->pixmap, view->x->gc, view->image,
               0, 0, 0, 0, view->m_width, view->m_height);
   }
 */
@@ -750,10 +750,10 @@ void Micropolis::ditherMap(
   unsigned char *image8 = view->data8;
   int *errors;
 
-  width = view->m_width; 
+  width = view->m_width;
   height = view->m_height;
 
-  errors = 
+  errors =
     (int *)NewPtr(sizeof(int) * width);
 
   for (i = 0; i < width; i++) {
@@ -763,7 +763,7 @@ void Micropolis::ditherMap(
   err = (Rand16() & 15) - 7;
 
   for (y = 0; y < height; y += 2) {
-    unsigned char *i1 = image1; 
+    unsigned char *i1 = image1;
     unsigned char *i8 = image8;
 
     image1 += line_bytes1;
@@ -816,11 +816,11 @@ void Micropolis::ditherMap(
 
 
 void Micropolis::maybeDrawRect(
-  SimView *view, 
+  SimView *view,
   int val,
-  int x, 
-  int y, 
-  int w, 
+  int x,
+  int y,
+  int w,
   int h)
 {
   if (val == VAL_NONE) {
@@ -838,12 +838,12 @@ void Micropolis::maybeDrawRect(
 
 
 void Micropolis::drawRect(
-  SimView *view, 
-  int pixel, 
+  SimView *view,
+  int pixel,
   int solid,
-  int x, 
-  int y, 
-  int w, 
+  int x,
+  int y,
+  int w,
   int h)
 {
 /*
@@ -855,7 +855,7 @@ void Micropolis::drawRect(
     }
     x = 0;
   } else if (x > W) {
-    x = 0; 
+    x = 0;
     w = 0;
   }
   if (x + w > W) {
@@ -867,7 +867,7 @@ void Micropolis::drawRect(
     }
     y = 0;
   } else if (y > H) {
-    y = 0; 
+    y = 0;
     h = 0;
   }
   if (y + h > H) {
@@ -880,9 +880,9 @@ void Micropolis::drawRect(
       view->x->color ? view->data : view->data8;
 
     // In the case of black and white, we use an 8 bit buffer and dither it.
-    int pixelBytes = 
+    int pixelBytes =
       view->x->color ? view->pixel_bytes : 1;
-    Quad line = 
+    Quad line =
       view->x->color ? view->line_bytes : view->line_bytes8;
 
     unsigned char *image =
@@ -892,9 +892,9 @@ void Micropolis::drawRect(
 
     case 1:
       {
-        unsigned char *data = 
+        unsigned char *data =
           view->data8;
-        unsigned char *image = 
+        unsigned char *image =
           &data[(line * y) + (x * pixelBytes)];
 
         if (solid) {
@@ -923,11 +923,11 @@ void Micropolis::drawRect(
 
     case 2:
       {
-        unsigned short *data = 
+        unsigned short *data =
           (unsigned short *)view->data;
         unsigned short *image;
         line >>= 1; // Convert from byte offset to short offset
-        image = 
+        image =
           &data[(line * y) + x];
 
         if (solid) {
@@ -958,13 +958,13 @@ void Micropolis::drawRect(
     case 3:
     case 4:
       {
-        unsigned char *data = 
+        unsigned char *data =
           (unsigned char *)view->data;
         unsigned char *image;
         int bitmapPad = view->x->small_tile_image->bitmap_pad;
         int rowBytes = view->x->small_tile_image->bytes_per_line;
         line = rowBytes >> 1; // Convert from byte offset to short offset
-        image = 
+        image =
           &data[(line * y) + x];
 
         if (solid) {

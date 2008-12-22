@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -82,12 +82,12 @@ void Micropolis::SimFrame()
     Spdcycle = 0;
   }
 
-  if ((SimSpeed == 1) && 
+  if ((SimSpeed == 1) &&
       (Spdcycle % 5)) {
     return;
   }
 
-  if ((SimSpeed == 2) && 
+  if ((SimSpeed == 2) &&
       (Spdcycle % 3)) {
     return;
   }
@@ -231,7 +231,7 @@ void Micropolis::Simulate(
       if (!(Scycle % SpdFir[x])) {
         FireAnalysis();
       }
-      DoDisasters();    
+      DoDisasters();
       break;
 
   }
@@ -298,7 +298,7 @@ void Micropolis::DecTrafficMem()
 
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
-	  z = TrfDensity[x][y];
+          z = TrfDensity[x][y];
       if (z) {
         if (z > 24) {
           if (z > 200) {
@@ -347,7 +347,7 @@ void Micropolis::DecROGMem()
 
 /* comefrom: DoSimInit */
 void Micropolis::InitSimMemory()
-{       
+{
   register short x, z;
 
   z = 0;
@@ -377,9 +377,9 @@ void Micropolis::InitSimMemory()
   ScoreType = 0;
 
   /* This clears powermem */
-  PowerStackNum = z;            
+  PowerStackNum = z;
   DoPowerScan();
-  NewPower = 1; /* post rel */  
+  NewPower = 1; /* post rel */
 
   InitSimLoad = 0;
 }
@@ -388,9 +388,9 @@ void Micropolis::InitSimMemory()
 /* comefrom: DoSimInit */
 void Micropolis::SimLoadInit()
 {
-  static short DisTab[9] = 
+  static short DisTab[9] =
     { 0, 2, 10, 5, 20, 3, 5, 5, 2 * 48};
-  static short ScoreWaitTab[9] = 
+  static short ScoreWaitTab[9] =
     { 0, 30 * 48, 5 * 48, 5 * 48, 10 * 48,
       5 * 48, 10 * 48, 5 * 48, 10 * 48 };
   register int z;
@@ -429,11 +429,11 @@ void Micropolis::SimLoadInit()
   CityClass = MiscHis[16];
   CityScore = MiscHis[17];
 
-  if ((CityClass > 5) || 
+  if ((CityClass > 5) ||
       (CityClass < 0)) {
     CityClass = 0;
   }
-  if ((CityScore > 999) || 
+  if ((CityScore > 999) ||
       (CityScore < 1)) {
     CityScore = 500;
   }
@@ -442,7 +442,7 @@ void Micropolis::SimLoadInit()
   ComCap = 0;
   IndCap = 0;
 
-  AvCityTax = 
+  AvCityTax =
     (short)((CityTime % 48) * 7);  /* post */
 
   for (z = 0; z < PWRMAPSIZE; z++) {
@@ -609,7 +609,7 @@ void Micropolis::SetValves()
 
   }
 
-  PjIndPop = 
+  PjIndPop =
     IndPop * LaborBase * temp;
 
   if (PjIndPop < MinPjIndPop) {
@@ -990,7 +990,7 @@ void Micropolis::CollectTax()
 void Micropolis::UpdateFundEffects()
 {
   if (RoadFund) {
-    RoadEffect = 
+    RoadEffect =
       (short)(((float)RoadSpend /
                (float)RoadFund) *
               32.0);
@@ -999,18 +999,18 @@ void Micropolis::UpdateFundEffects()
   }
 
   if (PoliceFund) {
-    PoliceEffect = 
+    PoliceEffect =
       (short)(((float)PoliceSpend /
-               (float)PoliceFund) * 
+               (float)PoliceFund) *
               1000.0);
   } else {
     PoliceEffect = 1000;
   }
 
   if (FireFund) {
-    FireEffect = 
+    FireEffect =
       (short)(((float)FireSpend /
-               (float)FireFund) * 
+               (float)FireFund) *
               1000.0);
   } else {
     FireEffect = 1000;
@@ -1022,14 +1022,14 @@ void Micropolis::UpdateFundEffects()
 
 /* comefrom: Simulate DoSimInit */
 void Micropolis::MapScan(
-  int x1, 
+  int x1,
   int x2)
 {
   register short x, y;
 
   for (x = x1; x < x2; x++) {
     for (y = 0; y < WORLD_Y; y++) {
-	  CChr = Map[x][y];
+          CChr = Map[x][y];
       if (CChr) {
 
         CChr9 = CChr & LOMASK;  /* Mask off status bits  */
@@ -1152,7 +1152,7 @@ void Micropolis::DoRoad()
   }
 
   if (!(CChr & BURNBIT)) { /* If Bridge */
-    RoadTotal += 4;                     
+    RoadTotal += 4;
     if (DoBridge()) {
       return;
     }
@@ -1254,7 +1254,7 @@ int Micropolis::DoBridge()
     return (TRUE);
   }
 
-  if ((GetBoatDis() < 300) || 
+  if ((GetBoatDis() < 300) ||
       (!(Rand16() & 7))) {
 
     if (CChr9 & 1) {
@@ -1351,7 +1351,7 @@ int Micropolis::GetBoatDis()
       }
 
       dx += dy;
-      
+
       if (dx < dist) {
         dist = dx;
       }
@@ -1394,7 +1394,7 @@ void Micropolis::DoFire()
 
           }
 
-          Map[Xtem][Ytem] = 
+          Map[Xtem][Ytem] =
             FIRE + (Rand16() & 3) + ANIMBIT;
 
         }
@@ -1420,7 +1420,7 @@ void Micropolis::DoFire()
 
   if (!Rand(Rate)) {
 
-    Map[SMapX][SMapY] = 
+    Map[SMapX][SMapY] =
       RUBBLE + (Rand16() & 3) + BULLBIT;
 
   }
@@ -1429,8 +1429,8 @@ void Micropolis::DoFire()
 
 /* comefrom: DoFire MakeFlood */
 void Micropolis::FireZone(
-  int Xloc, 
-  int Yloc, 
+  int Xloc,
+  int Yloc,
   int ch)
 {
   register short Xtem, Ytem;
@@ -1474,7 +1474,7 @@ void Micropolis::FireZone(
 
 /* comefrom: DoSPZone DoHospChur */
 void Micropolis::RepairZone(
-  short ZCent, 
+  short ZCent,
   short zsize)
 {
   short cnt;
@@ -1506,10 +1506,10 @@ void Micropolis::RepairZone(
 
         ThCh = ThCh & LOMASK;
 
-        if ((ThCh < RUBBLE) || 
+        if ((ThCh < RUBBLE) ||
             (ThCh >= ROADBASE)) {
 
-          Map[xx][yy] = 
+          Map[xx][yy] =
             ZCent - 3 - zsize + cnt + CONDBIT + BURNBIT;
 
         }
@@ -1643,14 +1643,14 @@ void Micropolis::DoSPZone(
 
       if ((Map[SMapX + 1][SMapY - 1] & LOMASK) == RADAR) {
 
-        Map[SMapX + 1][SMapY - 1] = 
+        Map[SMapX + 1][SMapY - 1] =
           RADAR + ANIMBIT + CONDBIT + BURNBIT;
 
       }
 
     } else {
 
-      Map[SMapX + 1][SMapY - 1] = 
+      Map[SMapX + 1][SMapY - 1] =
         RADAR + CONDBIT + BURNBIT;
 
     }
@@ -1713,7 +1713,7 @@ void Micropolis::DoAirport()
 
 /* comefrom: DoSPZone */
 void Micropolis::CoalSmoke(
-  int mx, 
+  int mx,
   int my)
 {
   static short SmTb[4] = { COALSMOKE1, COALSMOKE2, COALSMOKE3, COALSMOKE4 };
@@ -1730,12 +1730,12 @@ void Micropolis::CoalSmoke(
 
 /* comefrom: DoSPZone MakeMeltdown */
 void Micropolis::DoMeltdown(
-  int SX, 
+  int SX,
   int SY)
 {
   register int x, y, z, t;
 
-  MeltX = SX; 
+  MeltX = SX;
   MeltY = SY;
 
   MakeExplosion(SX - 1, SY - 1);
@@ -1745,7 +1745,7 @@ void Micropolis::DoMeltdown(
 
   for (x = (SX - 1); x < (SX + 3); x++) {
     for (y = (SY - 1); y < (SY + 3); y++) {
-      Map[x][y] = 
+      Map[x][y] =
         FIRE + (Rand16() & 3) + ANIMBIT;
     }
   }

@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -114,13 +114,13 @@ void PrimeRandoms()
 
     long i;
     for (i = 0; i < RANDOMS_COUNT; i++) {
-        randoms[i] ^= 
+        randoms[i] ^=
 #ifdef MACOS
-            Random() ^ 
+            Random() ^
             (Random() >> 4) ^
             (Random() << 4);
 #else
-            rand() ^ 
+            rand() ^
             (rand() >> 4) ^
             (rand() >> 8) ^
             (rand() << 4);
@@ -133,7 +133,7 @@ void PrimeRandoms()
 
 
 void FeedRandom(
-	long food)
+    long food)
 {
     randomWrite--;
     if (randomWrite < 0) {
@@ -151,7 +151,7 @@ long Rand32()
     if (randomRead >= RANDOMS_COUNT) {
         randomRead = 0;
     }
-    
+
     long result = randoms[randomRead];
 
     // TODO: make a better hasher
@@ -194,10 +194,10 @@ class SoundEvent {
 public:
 
     SoundEvent(
-		long xx, 
-        long yy, 
-        long ww, 
-        long hh, 
+        long xx,
+        long yy,
+        long ww,
+        long hh,
         long ss) :
         x(xx),
         y(yy),
@@ -214,7 +214,7 @@ public:
     }
 
     static void Queue(
-		long xx,
+        long xx,
         long yy,
         long ww,
         long hh,
@@ -228,7 +228,7 @@ public:
                hh,
                ss));
     }
-  
+
     static void ClearQueue()
     {
         queue.erase(
@@ -238,13 +238,13 @@ public:
 
     void Play(float vol)
     {
-        float speed = 
+        float speed =
             (float)0.2 +
-            (((float)2.0 * 
-              (float)(h - y) / 
+            (((float)2.0 *
+              (float)(h - y) /
               (float)h));
-        float pan = ((float)2.0 * 
-                     (float)x / 
+        float pan = ((float)2.0 *
+                     (float)x /
                      (float)w) - (float)1.0;
 #ifdef TODO
         PlayWave(
@@ -278,8 +278,8 @@ public:
     static void PlayQueue()
     {
         if (queue.size() > 0) {
-            float vol = (float)0.75 + 
-                        ((float)0.25 * 
+            float vol = (float)0.75 +
+                        ((float)0.25 *
                          (float)sqrt((float)1.0 / queue.size()));
             PlayReverse(vol);
             ClearQueue();
@@ -412,21 +412,21 @@ CellEngine::~CellEngine()
         rectList = NULL;
     }
 
-	if (screenMem != NULL) {
-		delete [] screenMem;
-		screenMem = NULL;
-	}
+    if (screenMem != NULL) {
+        delete [] screenMem;
+        screenMem = NULL;
+    }
 
 }
 
 
 void CellEngine::InitScreen(
-	long ww, 
+    long ww,
     long hh)
 {
-	if (screenMem != NULL) {
-		delete [] screenMem;
-	}
+    if (screenMem != NULL) {
+        delete [] screenMem;
+    }
 
     screenWidth = ww;
     screenHeight = hh;
@@ -438,7 +438,7 @@ void CellEngine::InitScreen(
 
 
 void CellEngine::SetRect(
-	long xx,
+    long xx,
     long yy,
     long ww,
     long hh)
@@ -459,7 +459,7 @@ void CellEngine::SetRect(
 
     if ((backMem == NULL) ||
         (backSize < size)) {
-        
+
         if (backMem != NULL) {
             delete [] backMem;
         }
@@ -483,20 +483,20 @@ void CellEngine::SetRect(
 
 
 void CellEngine::SetPos(
-	long xx,
+    long xx,
     long yy)
 {
     x = xx;
     y = yy;
-    frontMem = 
-		screenMem + 
-		xx + 
-		(screenRowBytes * yy);
+    frontMem =
+        screenMem +
+        xx +
+        (screenRowBytes * yy);
 }
 
 
 void CellEngine::SetSize(
-	long ww,
+    long ww,
     long hh)
 {
     SetRect(x, y, ww, hh);
@@ -553,18 +553,18 @@ long CellEngine::OnScreen()
 void CellEngine::Garble()
 {
 
-	if (!OnScreen()) {
-		return;
-	}
+    if (!OnScreen()) {
+        return;
+    }
 
     long xx, yy;
     Byte *image = frontMem;
 
-    for (yy = 0; 
-         yy < height; 
+    for (yy = 0;
+         yy < height;
          yy++, image += screenRowBytes) {
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
             image[xx] ^= (char)(Rand16() >> 4);
         }
@@ -573,7 +573,7 @@ void CellEngine::Garble()
 
 
 void CellEngine::GarbleRect(
-	long xx,
+    long xx,
     long yy,
     long ww,
     long hh)
@@ -581,9 +581,9 @@ void CellEngine::GarbleRect(
     Byte *image;
     long x0, y0, x1, y1;
 
-	if (!OnScreen()) {
-		return;
-	}
+    if (!OnScreen()) {
+        return;
+    }
 
     if (xx < 0) x0 = 0; else x0 = xx;
     if (yy < 0) y0 = 0; else y0 = yy;
@@ -596,8 +596,8 @@ void CellEngine::GarbleRect(
         for (yy = y0;
              yy < y1;
              yy++, image += screenRowBytes) {
-            for (xx = x0; 
-                 xx < x1; 
+            for (xx = x0;
+                 xx < x1;
                  xx++) {
                 image[xx] ^= (char)(Rand16() >> 4);
             }
@@ -607,21 +607,21 @@ void CellEngine::GarbleRect(
 
 
 void CellEngine::Fill(
-	Byte c)
+    Byte c)
 {
-	if (!OnScreen()) {
-		return;
-	}
+    if (!OnScreen()) {
+        return;
+    }
 
     Byte *image = frontMem;
 
     long yy;
-    for (yy = 0; 
-         yy < height; 
+    for (yy = 0;
+         yy < height;
          yy++, image += screenRowBytes) {
         long xx;
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
             image[xx] = c;
         }
@@ -630,18 +630,18 @@ void CellEngine::Fill(
 
 
 void CellEngine::FillRect(
-	Byte c, 
-    long xx, 
-    long yy, 
-    long ww, 
+    Byte c,
+    long xx,
+    long yy,
+    long ww,
     long hh)
 {
     Byte *image;
     long x0, y0, x1, y1;
 
-	if (!OnScreen()) {
-		return;
-	}
+    if (!OnScreen()) {
+        return;
+    }
 
     if (xx < 0) x0 = 0; else x0 = xx;
     if (yy < 0) y0 = 0; else y0 = yy;
@@ -654,8 +654,8 @@ void CellEngine::FillRect(
         for (yy = y0;
              yy < y1;
              yy++, image += screenRowBytes) {
-            for (xx = x0; 
-                 xx < x1; 
+            for (xx = x0;
+                 xx < x1;
                  xx++) {
                 image[xx] = c;
             }
@@ -680,9 +680,9 @@ void CellEngine::ResetMask()
 
 
 void CellEngine::SetMask(
-	long ww,
+    long ww,
     long hh,
-    Byte *data, 
+    Byte *data,
     long rb)
 {
     maskMem = data;
@@ -733,13 +733,13 @@ void CellEngine::UpdateClip()
                 } else { // if (wasInside)
                     if (isInside) {
                         wasInside = 1;
-                        
+
                         curRect = rectCount++;
 
                         if (rectCount > rectBufSize) {
                             long i;
                             RECT *newRects;
-                            
+
                             rectBufSize += 256;
                             newRects = new RECT[rectBufSize];
                             for (i = 0; i < curRect; i++) {
@@ -754,7 +754,7 @@ void CellEngine::UpdateClip()
                         r->top = yy;
                         r->right = xx + 1;
                         r->bottom = yy + 1;
-                        
+
                         aboveRect = -1;
 
                         {   long i;
@@ -878,7 +878,7 @@ void CellEngine::LoadRuleData(
 
 
 void CellEngine::LoadStaticRuleData(
-	const char *stream)
+    const char *stream)
 {
     QUAD magic;
 
@@ -941,9 +941,9 @@ int CellEngine::CountRules()
 
 
 const char *CellEngine::GetRuleName(
-	int i)
+    int i)
 {
-    if ((i < 0) || 
+    if ((i < 0) ||
         (i >= CountRules())) {
         return NULL;
     } // if
@@ -953,9 +953,9 @@ const char *CellEngine::GetRuleName(
 
 
 const char *CellEngine::GetRuleData(
-	int i)
+    int i)
 {
-    if ((i < 0) || 
+    if ((i < 0) ||
         (i >= CountRules())) {
         return NULL;
     } // if
@@ -991,7 +991,7 @@ long CellEngine::DoPhysics()
             events |= EVENT_BOUNCE_RIGHT;
         } // if
     } // if
-    
+
     yy = yy + dyy;
     if (yy < 0) {
         yy = 0;
@@ -1019,9 +1019,9 @@ long CellEngine::DoPhysics()
         if (rumble) {
             do {
                 if (rumble > 0) {
-                    if (events & (EVENT_BOUNCE_LEFT | 
+                    if (events & (EVENT_BOUNCE_LEFT |
                                   EVENT_BOUNCE_RIGHT |
-                                  EVENT_BOUNCE_TOP | 
+                                  EVENT_BOUNCE_TOP |
                                   EVENT_BOUNCE_BOTTOM)) {
                         dxx += (Rand16() % ((2 * rumble) + 1)) - rumble;
                         dyy += (Rand16() % ((2 * rumble) + 1)) - rumble;
@@ -1033,11 +1033,11 @@ long CellEngine::DoPhysics()
                         } // if
                     } // if
                 } else {
-                    if (events & (EVENT_BOUNCE_LEFT | 
+                    if (events & (EVENT_BOUNCE_LEFT |
                                   EVENT_BOUNCE_RIGHT)) {
                         dxx += (Rand16() % ((-2 * rumble) + 1)) + rumble;
                     } // if
-                    if (events & (EVENT_BOUNCE_TOP | 
+                    if (events & (EVENT_BOUNCE_TOP |
                                   EVENT_BOUNCE_BOTTOM)) {
                         dyy += (Rand16() % ((-2 * rumble) + 1)) + rumble;
                     } // if
@@ -1081,8 +1081,8 @@ done:
 
     if (!OnScreen()) goto done;
 
-    for (step = 0; 
-         step < steps; 
+    for (step = 0;
+         step < steps;
          step++) {
 
         CopyToBack();
@@ -1095,7 +1095,7 @@ done:
         PumpToFront();
 
     } // for step
-    
+
     return step;
 }
 
@@ -1107,12 +1107,12 @@ void CellEngine::PostRule()
 
 ////////////////////////////////////////////////////////////////////////
 //
-// Before applying a rule, we copy the front buffer to the back buffer. 
-// The back buffer is two pixels wider and taller than the front buffer, 
-// so that we can handle the edge conditions efficiently. 
+// Before applying a rule, we copy the front buffer to the back buffer.
+// The back buffer is two pixels wider and taller than the front buffer,
+// so that we can handle the edge conditions efficiently.
 // The main cellular automata loops do not need to worry about the special case
 // at the edges, because we pre-wrap a one pixel wide perimeter around the back
-// buffer before applying the rule. 
+// buffer before applying the rule.
 //
 //  0   ff  f0 f1 ... fe ff     f0
 //
@@ -1156,7 +1156,7 @@ void CellEngine::PostRule()
 //      abcd    0909
 //      eFGh   <6565>
 //      iJKl   <0909>
-//      mnop    6565 
+//      mnop    6565
 //  3       copy front to back, and wrap edges
 //      abcd    KJKJ
 //      eFGh=> <GFGF>
@@ -1178,7 +1178,7 @@ void CellEngine::CopyToBack()
 {
     long yy;
     Byte *f = frontMem;
-    Byte *p = backMem + 
+    Byte *p = backMem +
               backBorder +
               (backBorder * backRowBytes);
 
@@ -1189,7 +1189,7 @@ void CellEngine::CopyToBack()
         break;
 
     case 1:
-        // copy front to back, no wrap, 
+        // copy front to back, no wrap,
         // don't change back perimeter
         for (yy = 0; yy < height; yy++) {
             memcpy(p, f, width);
@@ -1207,7 +1207,7 @@ void CellEngine::CopyToBack()
             f += screenRowBytes;
         } // for
         f = frontMem;
-        p = backMem + 
+        p = backMem +
             backBorder +
             (backBorder * backRowBytes);
         memcpy(&p[(-1 * backRowBytes) - 1],
@@ -1228,7 +1228,7 @@ void CellEngine::CopyToBack()
             f += screenRowBytes;
         } // for
         f = frontMem;
-        p = backMem + 
+        p = backMem +
             backBorder +
             (backBorder * backRowBytes);
         memcpy(&p[(-1 * backRowBytes) - 1],
@@ -1249,7 +1249,7 @@ void CellEngine::CopyToBack()
             f += screenRowBytes;
         } // for
         f = frontMem;
-        p = backMem + 
+        p = backMem +
             backBorder +
             (backBorder * backRowBytes);
         memcpy(&p[(-1 * backRowBytes) - 1],
@@ -1289,17 +1289,17 @@ void CellEngine::CopyToBack()
                         ? (0)
                         : (-screenRowBytes);
                 bottom = bottom
-                        ? ((height - 1) * screenRowBytes)   
+                        ? ((height - 1) * screenRowBytes)
                         : (height * screenRowBytes);
 
-                p[-backRowBytes - 1] = 
+                p[-backRowBytes - 1] =
                     f[left + top];
 
                 memcpy(p - backRowBytes,
-                       f + top, 
+                       f + top,
                        width);
 
-                p[-backRowBytes + width] = 
+                p[-backRowBytes + width] =
                     f[right + top];
 
                 p[(height * backRowBytes) - 1] =
@@ -1335,7 +1335,7 @@ void CellEngine::CopyToBack()
             f += screenRowBytes;
         } // for
         f = frontMem;
-        p = backMem + 
+        p = backMem +
             backBorder +
             (backBorder * backRowBytes);
         memcpy(&p[(-1 * backRowBytes) - 2],
@@ -1521,17 +1521,17 @@ void CellEngine::PumpToFront()
     default:
         break;
   } // switch neighborhood
-  
+
   phase = !phase;
   ticks++;
 }
 
 
 Byte CellEngine::GetCell(
-    int col, 
+    int col,
     int row)
 {
-  if ((col < 0) || 
+  if ((col < 0) ||
       (col >= width) ||
       (row < 0) ||
       (row >= height) ||
@@ -1547,11 +1547,11 @@ Byte CellEngine::GetCell(
 
 
 void CellEngine::SetCell(
-    int col, 
+    int col,
     int row,
     Byte cell)
 {
-  if ((col < 0) || 
+  if ((col < 0) ||
       (col >= width) ||
       (row < 0) ||
       (row >= height) ||
@@ -1566,7 +1566,7 @@ void CellEngine::SetCell(
 
 void *CellEngine::GetCellBuffer()
 {
-	return (void *)frontMem;
+    return (void *)frontMem;
 }
 
 
@@ -1574,9 +1574,9 @@ void CellEngine::n_moore_a()
 {
     if (rule == NULL) return;
 
-    // 0    1    2    3    4    5    6    7    8     9     
-    // c    c'   se   sw   ne   nw   e    w    s     n     
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 
+    // 0    1    2    3    4    5    6    7    8     9
+    // c    c'   se   sw   ne   nw   e    w    s     n
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200
 
 #define MOORE_A ( \
      ((nw & 1) << 5) |  \
@@ -1604,9 +1604,9 @@ void CellEngine::n_moore_ab()
 {
     if (rule == NULL) return;
 
-    // 0    1    2    3    4    5    6    7    8     9     10    11    
-    // c    c'   se   sw   ne   nw   e    w    s     n     &c    &c'   
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 0x400 0x800 
+    // 0    1    2    3    4    5    6    7    8     9     10    11
+    // c    c'   se   sw   ne   nw   e    w    s     n     &c    &c'
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 0x400 0x800
 
 #define MOORE_AB ( \
     MOORE_A | \
@@ -1627,9 +1627,9 @@ void CellEngine::n_vonn_neumann()
 {
     if (rule == NULL) return;
 
-    // 0    1    2    3    4    5    6    7    8     9     
-    // c    c'   e'   w'   s'   n'   e    w    s     n     
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 
+    // 0    1    2    3    4    5    6    7    8     9
+    // c    c'   e'   w'   s'   n'   e    w    s     n
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200
 
 #define VON_NEUMANN ( \
     ((c & 3) << 0) | \
@@ -1659,9 +1659,9 @@ void CellEngine::n_margolis()
 
     register Byte i;
 
-    // 0    1    2    3    4    5    6    7    8    9      
-    // c    c'   cw   ccw  opp  cw'  ccw' opp'             
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 
+    // 0    1    2    3    4    5    6    7    8    9
+    // c    c'   cw   ccw  opp  cw'  ccw' opp'
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200
 
 #define MARGOLIS_ODD ( \
     /* c c' */ \
@@ -1720,9 +1720,9 @@ void CellEngine::n_margolis_ph()
 
     register Byte i;
 
-    // 0    1    2    3    4    5    6    7    8    9      
-    // c    c'   cw   ccw  opp  cw'  ccw' opp' pha   pha'  
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 
+    // 0    1    2    3    4    5    6    7    8    9
+    // c    c'   cw   ccw  opp  cw'  ccw' opp' pha   pha'
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200
 
 #define MARGOLIS_ODD_PH ( \
     MARGOLIS_ODD | \
@@ -1757,9 +1757,9 @@ void CellEngine::n_margolis_hv()
 
     register Byte i;
 
-    // 0    1    2    3    4    5    6    7    8    9      
-    // c    c'   cw   ccw  opp  cw'  ccw' opp' horz  vert  
-    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200 
+    // 0    1    2    3    4    5    6    7    8    9
+    // c    c'   cw   ccw  opp  cw'  ccw' opp' horz  vert
+    // 0x1  0x2  0x4  0x8  0x10 0x20 0x40 0x80 0x100 0x200
 
 #define MARGOLIS_ODD_HV ( \
     MARGOLIS_ODD | \
@@ -1858,7 +1858,7 @@ void CellEngine::n_lheat()
 {
 #define LHEAT \
     (Byte)((n + w + e + s + frob) >> 2)
-    
+
     CAM_MASKED_REG_LOOP(LHEAT)
 }
 
@@ -1869,7 +1869,7 @@ void CellEngine::n_ldheat()
 
 #define LDHEAT \
     (Byte)((last = (n + w + e + s + frob + (last & 3))), (last >> 2))
-    
+
     CAM_MASKED_REG_LOOP(LDHEAT)
 }
 
@@ -1993,7 +1993,7 @@ void CellEngine::n_torben()
 {
     long sum;
 
-    // 0 0 0 1 0 1 0 1 1 1 
+    // 0 0 0 1 0 1 0 1 1 1
 
 #define TORBEN ( \
     ((((sum = SUM9REG(1)) > 6) || (sum == 5) || (sum == 3)) ? 1 : 0) | \
@@ -2007,8 +2007,8 @@ void CellEngine::n_torben2()
 {
     long sum;
 
-    // 0 0 0 1 0 1 0 1 1 1 
-    // 0 0 1 0 1 0 1 0 1 1 
+    // 0 0 0 1 0 1 0 1 1 1
+    // 0 0 1 0 1 0 1 0 1 1
 
 #define TORBEN2 ( \
     ((((sum = SUM9REG(1)) > 6) || (sum == 3) || (sum == 4)) ? 1 : 0) | \
@@ -2022,7 +2022,7 @@ void CellEngine::n_torben3()
 {
     long sum;
 
-    // 0 0 0 1 1 0 0 1 1 1 
+    // 0 0 0 1 1 0 0 1 1 1
 
 #define TORBEN3 ((TORBEN) ^ (TORBEN2))
 
@@ -2034,7 +2034,7 @@ void CellEngine::n_torben4()
 {
     long sum;
 
-    // 1 0 0 0 1 0 1 1 1 0 
+    // 1 0 0 0 1 0 1 1 1 0
 
 #define TORBEN4 ( \
     ((((sum = SUM9REG(1)) == 0) || \
@@ -2052,13 +2052,13 @@ void CellEngine::n_ball()
 {
     // This spatio temporal phase synchronization is busted.
     // It stays in synch for vertical and horizontal movement,
-    // but gets out of phase for diagonal movement, 
+    // but gets out of phase for diagonal movement,
     // and I can't figure out how to keep it in phase
-    // regardless of position. 
+    // regardless of position.
     char p = ((phase ^ x ^ y) & 1);
     long xx, yy, r = Rand16();
     Byte *front = frontMem;
-    Byte *back = backMem + 
+    Byte *back = backMem +
                  (backBorder - 1) +
                  ((backBorder - 1) * backRowBytes);
 
@@ -2066,17 +2066,17 @@ void CellEngine::n_ball()
         back += 1 + backRowBytes;
     }
 
-    for (yy = p + (height >>1); 
-         yy > 0; 
+    for (yy = p + (height >>1);
+         yy > 0;
          yy--) {
-        for (xx = p + (width >>1); 
-             xx > 0; 
+        for (xx = p + (width >>1);
+             xx > 0;
              xx--) {
             Byte nw = back[0],              nw0 = nw >> 6,
                  ne = back[1],              ne0 = ne >> 6,
                  sw = back[backRowBytes],   sw0 = sw >> 6,
                  se = back[backRowBytes+1], se0 = se >> 6;
-  
+
 //          r += nw + ne + sw + sw; r >>= 1;
             r += (nw0&1) + (ne0&1) + (sw0&1) + (se0&1); r >>= 1;
 
@@ -2100,44 +2100,44 @@ void CellEngine::n_ball()
                 case 0:
                 case 3:
                 case 4:
-                    // same 
+                    // same
                     back[0] = nw; back[1] = ne;
-                    back[backRowBytes] = sw; 
+                    back[backRowBytes] = sw;
                     back[backRowBytes+1] = se;
                     break;
 
                 case 1:
-                    // reflect 
+                    // reflect
                     back[0] = se; back[1] = sw;
-                    back[backRowBytes] = ne; 
+                    back[backRowBytes] = ne;
                     back[backRowBytes+1] = nw;
                     break;
 
                 case 2:
-                    // turn 
-                    switch (((nw0&1) <<3) | 
-                            ((ne0&1) <<2) | 
-                            ((sw0&1) <<1) | 
+                    // turn
+                    switch (((nw0&1) <<3) |
+                            ((ne0&1) <<2) |
+                            ((sw0&1) <<1) |
                             (se0&1)) {
 
                     case 6:
                     case 9:
                         if (r&1) {
-                            // clockwise 
+                            // clockwise
                             back[0] = sw; back[1] = nw;
-                            back[backRowBytes] = se; 
+                            back[backRowBytes] = se;
                             back[backRowBytes+1] = ne;
                         } else {
-                            // counterclockwise 
+                            // counterclockwise
                             back[0] = ne; back[1] = se;
-                            back[backRowBytes] = nw; 
+                            back[backRowBytes] = nw;
                             back[backRowBytes+1] = sw;
                         }
                         break;
 
                     default:
                           back[0] = nw; back[1] = ne;
-                          back[backRowBytes] = sw; 
+                          back[backRowBytes] = sw;
                           back[backRowBytes+1] = se;
                           break;
 
@@ -2153,13 +2153,13 @@ void CellEngine::n_ball()
         back += (backRowBytes * 2) - width - (p * 2);
     }
 
-    back = backMem + 
+    back = backMem +
            backBorder +
            (backBorder * backRowBytes);
     front = frontMem;
 
-    for (yy = height; 
-         yy > 0; 
+    for (yy = height;
+         yy > 0;
          yy--) {
         memcpy(front, back, width);
         back += backRowBytes;
@@ -2180,7 +2180,7 @@ void CellEngine::n_ball()
 void CellEngine::n_fdheat()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -2191,7 +2191,7 @@ void CellEngine::n_fdheat()
 
     total = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -2206,9 +2206,9 @@ void CellEngine::n_fdheat()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -2284,7 +2284,7 @@ void CellEngine::n_fdheat()
     mov eax, DWORD PTR [ecx].frontMem
     mov DWORD PTR [front], eax
 
-// 1847 :   QUAD *back = (QUAD *)(backMem + 
+// 1847 :   QUAD *back = (QUAD *)(backMem +
 // 1848 :                         (backBorder - 1) +
 // 1849 :                         ((backBorder - 1) * backRowBytes));
 
@@ -2343,7 +2343,7 @@ void CellEngine::n_fdheat()
     mov DWORD PTR [xsteps], edx
 
 // 1855 :   long yy;
-// 1856 : 
+// 1856 :
 // 1857 :   total = 0;
 
 //  mov ecx, DWORD PTR [this]
@@ -2353,8 +2353,8 @@ void CellEngine::n_fdheat()
     mov eax, DWORD PTR [ecx].frob
     mov [frob], eax
 
-// 1858 : 
-// 1859 :   for (yy = height; 
+// 1858 :
+// 1859 :   for (yy = height;
 
 //  mov ecx, DWORD PTR [this]
     mov eax, DWORD PTR [ecx]cellEngine.height
@@ -2392,7 +2392,7 @@ _L76116:
     mov DWORD PTR [error], 0
 
 // 1868 :           long xx;
-// 1869 : 
+// 1869 :
 // 1870 :       b2 = back[0];
 
     mov eax, DWORD PTR [back]
@@ -2422,13 +2422,13 @@ _L76116:
     add eax, 4
     mov DWORD PTR [back], eax
 
-// 1874 :  
-// 1875 :           for (xx = xsteps; 
+// 1874 :
+// 1875 :           for (xx = xsteps;
 
     mov eax, DWORD PTR [xsteps]
     mov DWORD PTR [xx], eax
 
-// 1876 :            xx > 0; 
+// 1876 :            xx > 0;
 // 1877 :            xx--) {
 
     jmp SHORT _L76127
@@ -2446,7 +2446,7 @@ _L76127:
 
     mov DWORD PTR [cells], 0
 
-// 1879 : 
+// 1879 :
 // 1880 :               b1 = b2; b2 = back[0];
 
     mov edx, DWORD PTR [b2]
@@ -2480,7 +2480,7 @@ _L76127:
     add eax, 4
     mov DWORD PTR [back], eax
 
-// 1884 : 
+// 1884 :
 // 1885 :               FDHEAT( BYTE0(b1), BYTE1(b1), BYTE2(b1),
 // 1886 :                   BYTE0(c1), BYTE1(c1), BYTE2(c1),
 // 1887 :                   BYTE0(d1), BYTE1(d1), BYTE2(d1) );
@@ -2541,7 +2541,7 @@ _L76127:
     or  ecx, edx
     mov DWORD PTR [cells], ecx
 
-// 1890 : 
+// 1890 :
 // 1891 :               FDHEAT( BYTE1(b1), BYTE2(b1), BYTE3(b1),
 // 1892 :                   BYTE1(c1), BYTE2(c1), BYTE3(c1),
 // 1893 :                   BYTE1(d1), BYTE2(d1), BYTE3(d1) );
@@ -2607,7 +2607,7 @@ _L76127:
     or  edx, eax
     mov DWORD PTR [cells], edx
 
-// 1896 : 
+// 1896 :
 // 1897 :               FDHEAT( BYTE2(b1), BYTE3(b1), BYTE0(b2),
 // 1898 :                   BYTE2(c1), BYTE3(c1), BYTE0(c2),
 // 1899 :                   BYTE2(d1), BYTE3(d1), BYTE0(d2) );
@@ -2670,7 +2670,7 @@ _L76127:
     or  eax, ecx
     mov DWORD PTR [cells], eax
 
-// 1902 : 
+// 1902 :
 // 1903 :               FDHEAT( BYTE3(b1), BYTE0(b2), BYTE1(b2),
 // 1904 :                   BYTE3(c1), BYTE0(c2), BYTE1(c2),
 // 1905 :                   BYTE3(d1), BYTE0(d2), BYTE1(d2) );
@@ -2734,7 +2734,7 @@ _L76127:
     or  ecx, edx
     mov DWORD PTR [cells], ecx
 
-// 1908 : 
+// 1908 :
 // 1909 :           *front = cells;
 
     mov eax, DWORD PTR [front]
@@ -2779,7 +2779,7 @@ _L76118:
 void CellEngine::n_fabcdheat()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long frobby = frob;
@@ -2792,14 +2792,14 @@ void CellEngine::n_fabcdheat()
 
     total = 0;
 
-    // flip frob with the spatio-temporal phase, 
-    // since interlaced checkerboards 
-    // exchange places each step. 
+    // flip frob with the spatio-temporal phase,
+    // since interlaced checkerboards
+    // exchange places each step.
     if ((phase ^ x ^ y) & 1) {
         frobby = -frobby;
     }
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -2819,9 +2819,9 @@ void CellEngine::n_fabcdheat()
         c2 = back[backline];
         d2 = back[nextbackline];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -2974,7 +2974,7 @@ void CellEngine::n_fabcdheat()
 void CellEngine::n_risca()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -2985,7 +2985,7 @@ void CellEngine::n_risca()
     long yy;
     long leftover = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -2998,10 +2998,10 @@ void CellEngine::n_risca()
         c2 = back[backline];
         d2 = back[nextbackline];
         back++;
- 
+
         long xx;
-        for (xx = xsteps; 
-             xx > 0; 
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, sum, cells = 0;
 
@@ -3061,7 +3061,7 @@ void CellEngine::n_heaco()
         (sum | ((c&1) << 1) | \
          (((c&3) == 0) && \
           (SUM8REG(1) == 2))))
-    
+
     CAM_MASKED_REG_LOOP(HEACO)
 }
 
@@ -3071,7 +3071,7 @@ void CellEngine::n_heaco()
 // frob is 1, -1, 2, or -2. It averages the center cell
 // with the average of the 8 neighbors, so it's thicker
 // than dheat, which does not look at the center cell,
-// just the average of the 8 neighbors. 
+// just the average of the 8 neighbors.
 
 #define MARBLE(nw, n, ne, w, c, e, sw, s, se) \
     error += ((c << 3) + nw + n + ne + w + frob + e + sw + s + se); \
@@ -3081,7 +3081,7 @@ void CellEngine::n_heaco()
 void CellEngine::n_marble()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3107,8 +3107,8 @@ void CellEngine::n_marble()
         d2 = back[backline << 1];
         back++;
 
-        for (xx = xsteps; 
-             xx > 0; 
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3148,12 +3148,12 @@ void CellEngine::n_marble()
 }
 
 
-// This is the smooth, undithered version of marble. 
+// This is the smooth, undithered version of marble.
 // It does not exhibit the marbling behavior, which
 // seems to be dampened out because of the accuracy
-// lost by not dithering the leftover fractional heat. 
+// lost by not dithering the leftover fractional heat.
 // It's still interesting as a thick version of the
-// smooth angular undithered heat diffusion. 
+// smooth angular undithered heat diffusion.
 
 #define SMARBLE(nw, n, ne, w, c, e, sw, s, se) \
     result = ((c << 3) + nw + n + ne + w + frob + e + sw + s + se) >> 4;
@@ -3161,7 +3161,7 @@ void CellEngine::n_marble()
 void CellEngine::n_smarble()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3171,8 +3171,8 @@ void CellEngine::n_smarble()
     long yy;
 
     total = 0;
-    
-    for (yy = height; 
+
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -3187,8 +3187,8 @@ void CellEngine::n_smarble()
         d2 = back[backline << 1];
         back++;
 
-        for (xx = xsteps; 
-             xx > 0; 
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3228,13 +3228,13 @@ void CellEngine::n_smarble()
 }
 
 
-// This is a flaming version of marble, which diffuses 
+// This is a flaming version of marble, which diffuses
 // heat upward so it looks like a flame. Think of heat
-// diffusion as repeated bluring, or an iterative 
-// convulution kernel. Normally, all the neighbors are 
-// averaged with equal weights. In this case, we ignore 
-// the nw, n, and ne neighbors, and look at the sw, s, 
-// and se neighbors twice, so heat flows to the north. 
+// diffusion as repeated bluring, or an iterative
+// convulution kernel. Normally, all the neighbors are
+// averaged with equal weights. In this case, we ignore
+// the nw, n, and ne neighbors, and look at the sw, s,
+// and se neighbors twice, so heat flows to the north.
 
 #define FARBLE(nw, n, ne, w, c, e, sw, s, se) \
     error += ((c << 3) + sw + se + w + frob + e + sw + s + s + se); \
@@ -3244,7 +3244,7 @@ void CellEngine::n_smarble()
 void CellEngine::n_farble()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3254,8 +3254,8 @@ void CellEngine::n_farble()
     long yy;
 
     total = 0;
-    
-    for (yy = height; 
+
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -3270,9 +3270,9 @@ void CellEngine::n_farble()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3312,15 +3312,15 @@ void CellEngine::n_farble()
 }
 
 
-// This is a wavy version of flaming marble. 
+// This is a wavy version of flaming marble.
 // We define four different convolution kernels, that diffuse
 // the heat in different directions (nw, n, ne, and side to side),
-// and select between then based on the phase (0 to 3). 
-// What defines the phase? 
+// and select between then based on the phase (0 to 3).
+// What defines the phase?
 // There are several interesting defintions.
 // Generally, we don't want to change phase too often, and we
 // want to do it in interesting patterns so the heat flows nicely.
-// The right shifting lowers the frequency of the phase changes. 
+// The right shifting lowers the frequency of the phase changes.
 // The anding with 3 is because there are only 4 phases.
 // (y >> 2) & 3:
 //      Vertically driven phase.
@@ -3329,12 +3329,12 @@ void CellEngine::n_farble()
 //      Vertically and horizontally driven phase.
 //      Sheared diamond synchronized waves.
 // ((x + y + c) >> 2) & 3:
-//      Vertically, horizontally, and smoothly varying 
+//      Vertically, horizontally, and smoothly varying
 //      temperature driven phase.
 //      Diamonds smoothly shifting phase with the heat contours.
 //      Interesting feedback driving heat flow direction by heat.
 //
-// OOPS: There's a bug in the following code that I'm preserving 
+// OOPS: There's a bug in the following code that I'm preserving
 // since it still looks nice. I meant to type "xx" instead of "x",
 // and "yy" instead of "y", because x and y are the position of the
 // upper left corner, not the cell. GARBLEBUG is the old buggy one,
@@ -3361,7 +3361,7 @@ void CellEngine::n_farble()
 void CellEngine::n_garblebug()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3372,7 +3372,7 @@ void CellEngine::n_garblebug()
 
     total = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -3387,9 +3387,9 @@ void CellEngine::n_garblebug()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3450,7 +3450,7 @@ void CellEngine::n_garblebug()
 void CellEngine::n_garble()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3461,7 +3461,7 @@ void CellEngine::n_garble()
 
     total = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -3476,9 +3476,9 @@ void CellEngine::n_garble()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3529,7 +3529,7 @@ void CellEngine::n_garble()
 void CellEngine::n_twoheats()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -3540,7 +3540,7 @@ void CellEngine::n_twoheats()
 
     total = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -3555,9 +3555,9 @@ void CellEngine::n_twoheats()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -3600,7 +3600,7 @@ void CellEngine::n_twoheats()
 void CellEngine::n_spin()
 {
     Byte *front = frontMem;
-    Byte *back = backMem + 
+    Byte *back = backMem +
                  (backBorder - 1) +
                  ((backBorder - 1) * backRowBytes);
     Byte *f = front;
@@ -3615,12 +3615,12 @@ void CellEngine::n_spin()
     float cx = (float)width / (float)2.0;
     float cy = (float)height / (float)2.0;
 
-    for (yy = 0; 
+    for (yy = 0;
          yy < height;
          f += screenRowBytes,
          yy++) {
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
             float x1, y1;
             long x2, y2;
@@ -3631,7 +3631,7 @@ void CellEngine::n_spin()
             x2 = (long)floor(1.5 + (x1 * dx) + (y1 * dy) + cx);
             y2 = (long)floor(1.5 + (y1 * dx) - (x1 * dy) + cy);
 
-            if ((x2 >= 0) && 
+            if ((x2 >= 0) &&
                 (x2 < width) &&
                 (y2 >= 0) &&
                 (y2 < height)) {
@@ -3739,8 +3739,8 @@ Byte RandDir(Byte x)
 void CellEngine::n_driven()
 {
     Byte *front = frontMem;
-    Byte *back = backMem + 
-                 backBorder + 
+    Byte *back = backMem +
+                 backBorder +
                  (backBorder * backRowBytes);
     Byte *f = front, *b = back;
     long xx, yy;
@@ -3770,8 +3770,8 @@ void CellEngine::n_driven()
         s = b[-1 + backRowBytes];
         se = b[backRowBytes];
 
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
             // .. .. NN .. ..
             // .. nw  n NE ..
@@ -3797,27 +3797,27 @@ void CellEngine::n_driven()
                         ((ISABCD(e) && (DIR(e) == DIR_W)) ? 2 : 0) +
                         ((ISABCD(s) && (DIR(s) == DIR_N)) ? 4 : 0) +
                         ((ISABCD(w) && (DIR(w) == DIR_E)) ? 8 : 0)) {
-                
+
                 case 1:
                     f[xx] = RandDir(n);
                     break;
-                
+
                 case 2:
                     f[xx] = RandDir(e);
                     break;
-                
+
                 case 4:
                     f[xx] = RandDir(s);
                     break;
-                
+
                 case 8:
                     f[xx] = RandDir(w);
                     break;
-                
+
                 default:
                     // stay the same
                     break;
-                
+
                 }
             } else if (ISPLASMA(c)) {
                 heat += (Byte)frob;
@@ -3845,7 +3845,7 @@ void CellEngine::n_driven()
                         if (ISMIRROR(n) || ISPLASMA(n)) {
                             f[xx] = RandDir(ABCD(Rand8()) | PAYLOAD(c));
 #ifdef DOSOUND
-                            SoundEvent::Queue(xx, yy, width, height, 
+                            SoundEvent::Queue(xx, yy, width, height,
                                               ((c >> 2) & 0x0f) |
                                               ((n & 3) << 4));
 #endif
@@ -3862,7 +3862,7 @@ void CellEngine::n_driven()
                         }
                         break;
                     }
-                
+
                 case DIR_S:
                     {
                         Byte ss;
@@ -3870,7 +3870,7 @@ void CellEngine::n_driven()
                         if (ISMIRROR(s) || ISPLASMA(s)) {
                             f[xx] = RandDir(ABCD(Rand8()) | PAYLOAD(c));
 #ifdef DOSOUND
-                            SoundEvent::Queue(xx, yy, width, height, 
+                            SoundEvent::Queue(xx, yy, width, height,
                                               ((c >> 2) & 0x0f) |
                                               ((s & 3) << 4));
 #endif
@@ -3887,13 +3887,13 @@ void CellEngine::n_driven()
                         }
                         break;
                     }
-                
+
                 case DIR_W:
                     {
                         if (ISMIRROR(w) || ISPLASMA(w)) {
                             f[xx] = RandDir(ABCD(Rand8()) | PAYLOAD(c));
 #ifdef DOSOUND
-                            SoundEvent::Queue(xx, yy, width, height, 
+                            SoundEvent::Queue(xx, yy, width, height,
                                               ((c >> 2) & 0x0f) |
                                               ((w & 3) << 4));
 #endif
@@ -3909,13 +3909,13 @@ void CellEngine::n_driven()
                         }
                         break;
                     }
-                
+
                 case DIR_E:
                     {
                         if (ISMIRROR(e) || ISPLASMA(e)) {
                             f[xx] = RandDir(ABCD(Rand8()) | PAYLOAD(c));
 #ifdef DOSOUND
-                            SoundEvent::Queue(xx, yy, width, height, 
+                            SoundEvent::Queue(xx, yy, width, height,
                                               ((c >> 2) & 0x0f) |
                                               ((e & 3) << 4));
 #endif
@@ -4001,8 +4001,8 @@ void CellEngine::n_driven()
 void CellEngine::n_daft()
 {
     Byte *front = frontMem;
-    Byte *back = backMem + 
-                 backBorder + 
+    Byte *back = backMem +
+                 backBorder +
                  (backBorder * backRowBytes);
     Byte *f = front, *b = back;
     long xx, yy;
@@ -4031,8 +4031,8 @@ void CellEngine::n_daft()
         s = b[-1 + backRowBytes];
         se = b[backRowBytes];
 
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
             // .. .. NN .. ..
             // .. nw  n NE ..
@@ -4279,7 +4279,7 @@ void CellEngine::n_glassbonds()
 {
 
     // 0    1    2    3
-    // c    cw   ccw  opp             
+    // c    cw   ccw  opp
     // 0x1  0x2  0x4  0x8
 
 #define MARG \
@@ -4357,7 +4357,7 @@ void CellEngine::n_glassbonds()
 
 
 // 0    1    2    3
-// c    cw   ccw  opp             
+// c    cw   ccw  opp
 // 0x1  0x2  0x4  0x8
 
 // cw opp   2 8
@@ -4461,10 +4461,10 @@ FUNCTION JCRule(Oldstate,NW,N,NE,W,Self,E,SW,S,SE:integer):integer;
 CONST
      RN=127; L=2; U=2; K=2; Y=2;
 VAR     EightSum,NewState:integer;
-BEGIN  {Function}     
+BEGIN  {Function}
     EightSum:=NW+N+NE+E+SE+S+SW+W;     ]
     NewState:=0;
-     IF (OldState=0) AND 
+     IF (OldState=0) AND
          (L<=EightSum) AND (EightSum<=U) THEN
         NewState:=1;
     IF (OldState=1) THEN
@@ -4472,7 +4472,7 @@ BEGIN  {Function}
            NewState:=1
         ELSE
            NewState:=2;
-    IF NOT(odd(OldState)) AND 
+    IF NOT(odd(OldState)) AND
        (0<OldState)AND(OldState<2*RN) THEN
         NewState:=OldState+2;
      JCRule:=NewState
@@ -4507,15 +4507,15 @@ void CellEngine::n_faders()
 }
 
 
-// This is a wavy version of flaming marble. 
+// This is a wavy version of flaming marble.
 // We define four different convolution kernels, that diffuse
 // the heat in different directions (nw, n, ne, and side to side),
-// and select between then based on the phase (0 to 3). 
-// What defines the phase? 
+// and select between then based on the phase (0 to 3).
+// What defines the phase?
 // There are several interesting defintions.
 // Generally, we don't want to change phase too often, and we
 // want to do it in interesting patterns so the heat flows nicely.
-// The right shifting lowers the frequency of the phase changes. 
+// The right shifting lowers the frequency of the phase changes.
 // The anding with 3 is because there are only 4 phases.
 // (y >> 2) & 3:
 //      Vertically driven phase.
@@ -4524,7 +4524,7 @@ void CellEngine::n_faders()
 //      Vertically and horizontally driven phase.
 //      Sheared diamond synchronized waves.
 // ((x + y + c) >> 2) & 3:
-//      Vertically, horizontally, and smoothly varying 
+//      Vertically, horizontally, and smoothly varying
 //      temperature driven phase.
 //      Diamonds smoothly shifting phase with the heat contours.
 //      Interesting feedback driving heat flow direction by heat.
@@ -4564,7 +4564,7 @@ void CellEngine::n_faders()
 void CellEngine::n_harble()
 {
     QUAD *front = (QUAD *)frontMem;
-    QUAD *back = (QUAD *)(backMem + 
+    QUAD *back = (QUAD *)(backMem +
                           (backBorder - 1) +
                           ((backBorder - 1) * backRowBytes));
     long backline = backRowBytes >> 2;
@@ -4575,7 +4575,7 @@ void CellEngine::n_harble()
 
     total = 0;
 
-    for (yy = height; 
+    for (yy = height;
          yy > 0;
          back += backstride,
          front += frontstride,
@@ -4590,9 +4590,9 @@ void CellEngine::n_harble()
         c2 = back[backline];
         d2 = back[backline << 1];
         back++;
- 
-        for (xx = xsteps; 
-             xx > 0; 
+
+        for (xx = xsteps;
+             xx > 0;
              xx--) {
             long result, cells = 0;
 
@@ -4647,12 +4647,12 @@ void CellEngine::n_harble()
 #define random2(i)  (((i * i) & 65535) >> 2)
 
 static void C_Noise(
-    long u_init, 
-    long v_init, 
-    long du, 
-    long dv, 
-    long ddu, 
-    long ddv, 
+    long u_init,
+    long v_init,
+    long du,
+    long dv,
+    long ddu,
+    long ddv,
     unsigned char *screen_buffer,
     unsigned int count)
 {
@@ -4683,7 +4683,7 @@ static void C_Noise(
   unsigned short u_16bit, v_16bit;
   signed   short rx1, ry1;
   signed   short sx, sy;
-  signed   long color_p0, color_p1, color_p2, color_p3;                
+  signed   long color_p0, color_p1, color_p2, color_p3;
   signed   long color_y0, color_y1;
 
   // Inner loop for the scan line.  "count" pixels will be drawn.
@@ -4698,13 +4698,13 @@ static void C_Noise(
     //  |     |          p2 = (bx0, by1)   |    Coordinate System
     //  p2---p3          p3 = (bx1, by1)   V
     // The u, v point in 2D texture space is bounded by this rectangle.
-    
-    // Goal: determine the color of the points p0, p1, p2, p3.  
+
+    // Goal: determine the color of the points p0, p1, p2, p3.
     // Then the color of the point (u, v) will be found by linear interpolation.
 
     // First step:  Get the 2D coordinates of the points p0, p1, p2, p3.
 
-    // Same as Perlin's original code except floating point 
+    // Same as Perlin's original code except floating point
     // is converted over to fixed integer.
 
     // Process the x component.
@@ -4741,7 +4741,7 @@ static void C_Noise(
     sy = (((ry0 * ry0) >> 1) * ((1536 - (ry0 << 2)))) >> 16;
 
     // Now, for each point p0, p1, p2, p3 in the square above, image having
-    // a unit gradiant vector pointing in any random direction.  This step 
+    // a unit gradiant vector pointing in any random direction.  This step
     // attaches a unit gradiant vector to each point of the square.  This is
     // done by precalculating 256, random, uniform, unit vectors.  Then to attach
     // the gradiant vector to a point, an index into the array is needed.  The
@@ -4797,17 +4797,17 @@ static void C_Noise(
     // Output is from -256 to +256, so a 256 color offset is added and
     // the final result is divided by 2.  (>>1).  (0 <= next_color < 256).
 
-    // Same as Perlin's original code except the output is 
+    // Same as Perlin's original code except the output is
     // converted from fixed point to regular integer.  Also
     // since the output ranges from -256 to +256, a 256 offest
     // is added to make the range from 0 to 511.  This offset
     // is the 65536 value.  Then the 0 to 511 is scaled down.
     // to a range of 0 to 255.
 
-    color = 
+    color =
         (unsigned char)
-            ((color_y0 + 
-              65536 + 
+            ((color_y0 +
+              65536 +
               (sy * ((color_y1 - color_y0) >> 8))
              ) >> 9);
 
@@ -4835,7 +4835,7 @@ void CellEngine::n_perlin()
     long ddu = pointcx;
     long ddv = pointcy;
 
-    for (yy = 0; 
+    for (yy = 0;
          yy < height;
          front += screenRowBytes,
          yy++) {
@@ -4867,15 +4867,15 @@ inline unsigned char MARG_RULE_DIFFUSION(
     unsigned char p)
 {
     unsigned char result = 0;
-    unsigned char wall = 
+    unsigned char wall =
         (c | cw | ccw | opp) & 2;
     if (wall) {
         if (c & 3) {
             result = 2;
         } // if
     } else {
-        result = 
-            (((r & 1) ? cw : ccw) & 1) | 
+        result =
+            (((r & 1) ? cw : ccw) & 1) |
             (c & 2);
     } // if
 
@@ -4896,7 +4896,7 @@ unsigned char MARG_RULE_GAS(
         ((c & 1) == (opp & 1)) &&
         ((cw & 1) == (ccw & 1)) &&
         ((c & 1) != (cw & 1));
-    unsigned char frozen = 
+    unsigned char frozen =
         (c | cw | ccw | opp) & 2;
     if (frozen) {
         if (c & 3) {
@@ -4932,7 +4932,7 @@ void CellEngine::n_dendrite()
         } else {
             se = data;
             sw = se + (width - 1);
-            ne = data + 
+            ne = data +
                  ((yy == 0)
                     ? ((height - 1) * screenRowBytes)
                     : (-screenRowBytes));
@@ -4956,40 +4956,40 @@ void CellEngine::n_dendrite()
                 ((nw0 & 1) == (ne0 & 1)) &&
                 ((sw0 & 1) == (se0 & 1)) &&
                 ((nw0 & 1) != (sw0 & 1));
-            unsigned char frozen = 
+            unsigned char frozen =
                 (nw0 | ne0 | sw0 | se0) & 128;
             unsigned char nw1, ne1, sw1, se1;
             // nw  ne
             // sw  se
             if (frozen) {
                 int t = ticks >> 4;
-                nw1 = 
-                    (nw0 == 0) 
-                        ? 0 
-                        : ((nw0 & 128) 
+                nw1 =
+                    (nw0 == 0)
+                        ? 0
+                        : ((nw0 & 128)
                             ? nw0
                             : (t | 128));
-                ne1 = 
-                    (ne0 == 0) 
-                        ? 0 
-                        : ((ne0 & 128) 
+                ne1 =
+                    (ne0 == 0)
+                        ? 0
+                        : ((ne0 & 128)
                             ? ne0
                             : (t | 128));
-                sw1 = 
-                    (sw0 == 0) 
-                        ? 0 
-                        : ((sw0 & 128) 
+                sw1 =
+                    (sw0 == 0)
+                        ? 0
+                        : ((sw0 & 128)
                             ? sw0
                             : (t | 128));
-                se1 = 
-                    (se0 == 0) 
-                        ? 0 
-                        : ((se0 & 128) 
+                se1 =
+                    (se0 == 0)
+                        ? 0
+                        : ((se0 & 128)
                             ? se0
                             : (t | 128));
 
 #if 1
-                int count = 
+                int count =
                     ((nw1 & 128) + (ne1 & 128) +
                      (sw1 & 128) + (se1 & 128)) >> 7;
 
@@ -5085,7 +5085,7 @@ void CellEngine::n_dendrite()
             int segas =  ((se1 > 0) && (se1 < 128));
             int gasses = nwgas + negas + swgas + segas;
             if (gasses > 1) {
-                int total = 
+                int total =
                     (nwgas ? nw1 : 0) +
                     (negas ? ne1 : 0) +
                     (swgas ? sw1 : 0) +
@@ -5096,7 +5096,7 @@ void CellEngine::n_dendrite()
                 } // if
                 int avg =
                     (total / gasses) & 127;
-                leftover = 
+                leftover =
                     total % gasses;
                 while (avg <= 0) avg += 127;
                 if (nwgas) nw1 = avg;
@@ -5307,7 +5307,7 @@ int jvnInitialized = 0;
 char *codeToName[256];
 
 
-/* Return 1 if pointed by an excited special transmission state, 
+/* Return 1 if pointed by an excited special transmission state,
    else returns 0. */
 int sp(Byte right, Byte up, Byte left, Byte down)
 {
@@ -5320,7 +5320,7 @@ int sp(Byte right, Byte up, Byte left, Byte down)
 }
 
 
-/* Return 1 if pointed by an excited ordinary transmission state, 
+/* Return 1 if pointed by an excited ordinary transmission state,
    else returns 0. */
 int op(Byte right, Byte up, Byte left, Byte down)
 {
@@ -5333,7 +5333,7 @@ int op(Byte right, Byte up, Byte left, Byte down)
 }
 
 
-/* Return 1 if pointed by an excited transmission state (ordinary or special), 
+/* Return 1 if pointed by an excited transmission state (ordinary or special),
    else returns 0. */
 int osp(Byte right, Byte up, Byte left, Byte down)
 {
@@ -5463,14 +5463,14 @@ void CellEngine::n_jvn29()
             codeToName[i] = 0;
         } // for i
         for (i = 0; i < jvnStates; i++) {
-            codeToName[States[i].code] = 
+            codeToName[States[i].code] =
                 States[i].name;
         } // for i
     } // if
 
     Byte *front = frontMem;
-    Byte *back = backMem + 
-                 backBorder + 
+    Byte *back = backMem +
+                 backBorder +
                  (backBorder * backRowBytes);
     Byte *f = front, *b = back;
     long xx, yy;
@@ -5485,8 +5485,8 @@ void CellEngine::n_jvn29()
         state = b[-1];
         right = b[0];
 
-        for (xx = 0; 
-             xx < width; 
+        for (xx = 0;
+             xx < width;
              xx++) {
 
             up = b[xx + -backRowBytes];

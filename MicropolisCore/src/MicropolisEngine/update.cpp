@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -140,8 +140,8 @@ void Micropolis::ReallyUpdateFunds()
 
 void Micropolis::doTimeStuff()
 {
-	// FIXME: Why is the condition commented out? 
-	// Figure out what it's trying to do, and replace or delete. 
+        // FIXME: Why is the condition commented out?
+        // Figure out what it's trying to do, and replace or delete.
 //  if ((CityTime >> 2) != LastCityTime) {
     updateDate();
 //  }
@@ -236,15 +236,15 @@ void Micropolis::drawValve()
 
 
 void Micropolis::SetDemand(
-  double r, 
-  double c, 
+  double r,
+  double c,
   double i)
 {
   Callback(
     "UISetDemand",
     "ddd",
-    (int)(r / 100), 
-    (int)(c / 100), 
+    (int)(r / 100),
+    (int)(c / 100),
     (int)(i / 100));
 }
 
@@ -298,17 +298,17 @@ void Micropolis::updateOptions()
 void Micropolis::UpdateOptionsMenu(
   int options)
 {
-  // FIXME: just notify the scripting language that the options changed, 
-  // and let it pull the values out of our members, instead of encoding 
-  // and passing the options. 
+  // FIXME: just notify the scripting language that the options changed,
+  // and let it pull the values out of our members, instead of encoding
+  // and passing the options.
   Callback(
     "UISetOptions",
     "dddddddd",
-    (options & 1) ? 1 : 0, 
+    (options & 1) ? 1 : 0,
     (options & 2) ? 1 : 0,
-    (options & 4) ? 1 : 0, 
+    (options & 4) ? 1 : 0,
     (options & 8) ? 1 : 0,
-    (options & 16) ? 1 : 0, 
+    (options & 16) ? 1 : 0,
     (options & 32) ? 1 : 0,
     (options & 64) ? 1 : 0,
     (options & 128) ? 1 : 0);
@@ -317,7 +317,7 @@ void Micropolis::UpdateOptionsMenu(
 
 void Micropolis::UpdateUserInterface()
 {
-  // TODO: Send all pending update messages to the user interface. 
+  // TODO: Send all pending update messages to the user interface.
 
   // city: after load file, load scenario, or generate city
   // map: when small overall map changes

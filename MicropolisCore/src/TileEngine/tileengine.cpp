@@ -266,22 +266,22 @@ void TileEngine::renderTiles(
     Py_ssize_t tileMapLength = 
       0;
     if (PyObject_AsReadBuffer(
-	  tileMap,
-	  (const void **)&tileMapData,
-	  &tileMapLength) != 0) {
+          tileMap,
+          (const void **)&tileMapData,
+          &tileMapLength) != 0) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap with read buffer");
+        PyExc_TypeError,
+        "expected tileMap with read buffer");
       return;
     }
 
     int tileMapDataCount = 
-	(int)tileMapLength / sizeof(unsigned int);
+        (int)tileMapLength / sizeof(unsigned int);
 
     if (tileMapDataCount != (int)tileMapCount) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap read buffer of 4 byte integers");
+        PyExc_TypeError,
+        "expected tileMap read buffer of 4 byte integers");
       return;
     }
   }
@@ -310,8 +310,8 @@ void TileEngine::renderTiles(
           col,
           row,
           tileFunction,
-	  tileMapData,
-	  tileMapCount);
+          tileMapData,
+          tileMapCount);
 
       double x = 
         col * tileSize;
@@ -416,22 +416,22 @@ void TileEngine::renderTilesLazy(
     Py_ssize_t tileMapLength = 
       0;
     if (PyObject_AsReadBuffer(
-	  tileMap,
-	  (const void **)&tileMapData,
-	  &tileMapLength) != 0) {
+          tileMap,
+          (const void **)&tileMapData,
+          &tileMapLength) != 0) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap with read buffer");
+        PyExc_TypeError,
+        "expected tileMap with read buffer");
       return;
     }
 
     int tileMapDataCount = 
-	(int)tileMapLength / sizeof(unsigned int);
+        (int)tileMapLength / sizeof(unsigned int);
 
     if (tileMapDataCount != (int)tileMapCount) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap read buffer of 4 byte integers");
+        PyExc_TypeError,
+        "expected tileMap read buffer of 4 byte integers");
       return;
     }
   }
@@ -505,8 +505,8 @@ void TileEngine::renderTilesLazy(
           col,
           row,
           tileFunction,
-	  tileMapData,
-	  tileMapCount);
+          tileMapData,
+          tileMapCount);
 
       double x = 
         col * tileSize;
@@ -698,22 +698,22 @@ void TileEngine::renderPixels(
     Py_ssize_t tileMapLength = 
       0;
     if (PyObject_AsReadBuffer(
-	  tileMap,
-	  (const void **)&tileMapData,
-	  &tileMapLength) != 0) {
+          tileMap,
+          (const void **)&tileMapData,
+          &tileMapLength) != 0) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap with read buffer");
+        PyExc_TypeError,
+        "expected tileMap with read buffer");
       return;
     }
 
     int tileMapDataCount = 
-	(int)tileMapLength / sizeof(unsigned int);
+        (int)tileMapLength / sizeof(unsigned int);
 
     if (tileMapDataCount != (int)tileMapCount) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap read buffer of 4 byte integers");
+        PyExc_TypeError,
+        "expected tileMap read buffer of 4 byte integers");
       return;
     }
   }
@@ -746,8 +746,8 @@ void TileEngine::renderPixels(
           col,
           row,
           tileFunction,
-	  tileMapData,
-	  tileMapCount);
+          tileMapData,
+          tileMapCount);
 
       int sourceX = 
         tile % cmapWidth;
@@ -802,23 +802,23 @@ PyObject *TileEngine::getTileData(
     Py_ssize_t tileMapLength = 
       0;
     if (PyObject_AsReadBuffer(
-	  tileMap,
-	  (const void **)&tileMapData,
-	  &tileMapLength) != 0) {
+          tileMap,
+          (const void **)&tileMapData,
+          &tileMapLength) != 0) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap with read buffer");
+        PyExc_TypeError,
+        "expected tileMap with read buffer");
       Py_INCREF(Py_None);
       return Py_None;
     }
 
     int tileMapDataCount = 
-	(int)tileMapLength / sizeof(unsigned int);
+        (int)tileMapLength / sizeof(unsigned int);
 
     if (tileMapDataCount != (int)tileMapCount) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileMap read buffer of 4 byte integers");
+        PyExc_TypeError,
+        "expected tileMap read buffer of 4 byte integers");
       Py_INCREF(Py_None);
       return Py_None;
     }
@@ -834,13 +834,13 @@ PyObject *TileEngine::getTileData(
       0;
     //printf("tileViewCacheCount %d width %d height %d width*height %d\n", tileViewCacheCount, width, height, width * height);
     if ((tileViewCacheCount != (width * height)) ||
-	(PyObject_AsWriteBuffer(
-	   tileViewCache,
-	   (void **)&tileViewCacheData,
-	   &tileViewCacheLength) != 0)) {
+        (PyObject_AsWriteBuffer(
+           tileViewCache,
+           (void **)&tileViewCacheData,
+           &tileViewCacheLength) != 0)) {
       PyErr_SetString(
-	PyExc_TypeError,
-	"expected tileViewCache with write buffer");
+        PyExc_TypeError,
+        "expected tileViewCache with write buffer");
       Py_INCREF(Py_None);
       return Py_None;
     }
@@ -862,16 +862,16 @@ PyObject *TileEngine::getTileData(
       unsigned short *dst = (unsigned short *)buf;
 
       for (r = 0; r < rows; r++) {
-	for (c = 0; c < cols; c++) {
-	  int tile = 
-	    getValue(
-		col + c, 
-		row + r, 
-		tileFunction, 
-		tileMapData, 
-		tileMapCount);
-	  *dst++ = tile;
-	}
+        for (c = 0; c < cols; c++) {
+          int tile = 
+            getValue(
+                col + c, 
+                row + r, 
+                tileFunction, 
+                tileMapData, 
+                tileMapCount);
+          *dst++ = tile;
+        }
       }
       break;
     }
@@ -882,19 +882,19 @@ PyObject *TileEngine::getTileData(
       unsigned short *dst = (unsigned short *)buf;
 
       for (r = 0; r < rows; r++) {
-	for (c = 0; c < cols; c++) {
-	  int tile = 
-	    getValue(
-		col + c, 
-		row + r, 
-		tileFunction, 
-		tileMapData, 
-		tileMapCount);
-	  tile =
-	    ((tile << 8) & 0xff00) |
-	    ((tile >> 8) & 0x00ff);
-	  *dst++ = tile;
-	}
+        for (c = 0; c < cols; c++) {
+          int tile = 
+            getValue(
+                col + c, 
+                row + r, 
+                tileFunction, 
+                tileMapData, 
+                tileMapCount);
+          tile =
+            ((tile << 8) & 0xff00) |
+            ((tile >> 8) & 0x00ff);
+          *dst++ = tile;
+        }
       }
       break;
     }
@@ -905,19 +905,19 @@ PyObject *TileEngine::getTileData(
       unsigned short *dst = (unsigned short *)buf;
 
       for (r = 0; r < rows; r++) {
-	for (c = 0; c < cols; c++) {
-	  int tile = 
-	    getValue(
-		col + c, 
-		row + r, 
-		tileFunction, 
-		tileMapData, 
-		tileMapCount);
-	  int low = tile & 63;
-	  int high = (tile >> 6) & 63;
-	  tile = codeString[low] | (codeString[high] << 8);
-	  *dst++ = tile;
-	}
+        for (c = 0; c < cols; c++) {
+          int tile = 
+            getValue(
+                col + c, 
+                row + r, 
+                tileFunction, 
+                tileMapData, 
+                tileMapCount);
+          int low = tile & 63;
+          int high = (tile >> 6) & 63;
+          tile = codeString[low] | (codeString[high] << 8);
+          *dst++ = tile;
+        }
       }
       break;
     }
@@ -932,64 +932,64 @@ PyObject *TileEngine::getTileData(
       int offset = 0;
       int skip = 0;
       while ((tileIndex < tileIndexMax) &&
-	     (offset < bufSize)) {
-	int c = tileIndex % cols;
-	int r = tileIndex / cols;
-	int tile = 
-	  getValue(
-	      col + c, 
-	      row + r, 
-	      tileFunction,
-	      tileMapData, 
-	      tileMapCount);
-	int tileCacheOffset = 
-	  (col + c) + ((row + r) * width);
-	int curTile =
-	  (tileViewCacheData == NULL)
-	    ? -1
-	    : tileViewCacheData[tileCacheOffset];
-	if (tile == curTile) {
-	  skip++;
-	} else {
-	  if (skip) {
-	    if (skip == 1) {
-	      *dst++ = '.';
-	      offset++;
-	    } else if (skip == 2) {
-	      *dst++ = '.';
-	      *dst++ = '.';
-	      offset += 2;
-	    } else if (skip < (64 + 2)) {
-	      int val = skip - 2;
-	      *dst++ = '!';
-	      *dst++ = codeString[val];
-	      offset += 2;
-	    } else if (skip < (4096 + 2)) {
-	      int val = skip - 2;
-	      *dst++ = '@';
-	      *dst++ = codeString[val & 63];
-	      *dst++ = codeString[(val >> 6) & 63];
-	      offset += 3;
-	    } else {
-	      int val = skip - 2;
-	      *dst++ = '#';
-	      *dst++ = codeString[val & 63];
-	      *dst++ = codeString[(val >> 6) & 63];
-	      *dst++ = codeString[(val >> 12) & 63];
-	      offset += 4;
-	    }
-	    skip = 0;
-	  }
-	  if (tileViewCacheData != NULL) {
-	    tileViewCacheData[tileCacheOffset] = tile;
-	  }
-	  int low = tile & 63;
-	  int high = (tile >> 6) & 63;
-	  *dst++ = codeString[low];
-	  *dst++ = codeString[high];
-	  offset += 2;
-	}
-	tileIndex++;
+             (offset < bufSize)) {
+        int c = tileIndex % cols;
+        int r = tileIndex / cols;
+        int tile = 
+          getValue(
+              col + c, 
+              row + r, 
+              tileFunction,
+              tileMapData, 
+              tileMapCount);
+        int tileCacheOffset = 
+          (col + c) + ((row + r) * width);
+        int curTile =
+          (tileViewCacheData == NULL)
+            ? -1
+            : tileViewCacheData[tileCacheOffset];
+        if (tile == curTile) {
+          skip++;
+        } else {
+          if (skip) {
+            if (skip == 1) {
+              *dst++ = '.';
+              offset++;
+            } else if (skip == 2) {
+              *dst++ = '.';
+              *dst++ = '.';
+              offset += 2;
+            } else if (skip < (64 + 2)) {
+              int val = skip - 2;
+              *dst++ = '!';
+              *dst++ = codeString[val];
+              offset += 2;
+            } else if (skip < (4096 + 2)) {
+              int val = skip - 2;
+              *dst++ = '@';
+              *dst++ = codeString[val & 63];
+              *dst++ = codeString[(val >> 6) & 63];
+              offset += 3;
+            } else {
+              int val = skip - 2;
+              *dst++ = '#';
+              *dst++ = codeString[val & 63];
+              *dst++ = codeString[(val >> 6) & 63];
+              *dst++ = codeString[(val >> 12) & 63];
+              offset += 4;
+            }
+            skip = 0;
+          }
+          if (tileViewCacheData != NULL) {
+            tileViewCacheData[tileCacheOffset] = tile;
+          }
+          int low = tile & 63;
+          int high = (tile >> 6) & 63;
+          *dst++ = codeString[low];
+          *dst++ = codeString[high];
+          offset += 2;
+        }
+        tileIndex++;
       }
       bufSize = offset;
       break;

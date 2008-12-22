@@ -6,39 +6,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -114,7 +114,7 @@
 #define TRUE                    1
 #define FALSE                   0
 
-#define RANDOM_RANGE			0xffff
+#define RANDOM_RANGE                    0xffff
 
 #define SimWidth                120
 #define SimHeight               100
@@ -142,19 +142,19 @@
 #define HISTLEN                 480
 #define MISCHISTLEN             240
 
-#define HISTORY_COUNT			120
+#define HISTORY_COUNT                   120
 
-#define HISTORY_TYPE_RES		0
-#define HISTORY_TYPE_COM		1
-#define HISTORY_TYPE_IND		2
-#define HISTORY_TYPE_MONEY		3
-#define HISTORY_TYPE_CRIME		4
-#define HISTORY_TYPE_POLLUTION	5
-#define HISTORY_TYPE_COUNT		6
+#define HISTORY_TYPE_RES                0
+#define HISTORY_TYPE_COM                1
+#define HISTORY_TYPE_IND                2
+#define HISTORY_TYPE_MONEY              3
+#define HISTORY_TYPE_CRIME              4
+#define HISTORY_TYPE_POLLUTION  5
+#define HISTORY_TYPE_COUNT              6
 
-#define HISTORY_SCALE_SHORT		0
-#define HISTORY_SCALE_LONG		1
-#define HISTORY_SCALE_COUNT		2
+#define HISTORY_SCALE_SHORT             0
+#define HISTORY_SCALE_LONG              1
+#define HISTORY_SCALE_COUNT             2
 
 #define POWERMAPROW             ((WORLD_X + 15) / 16)
 
@@ -165,7 +165,7 @@
 #define PWRMAPSIZE              (POWERMAPROW * WORLD_Y)
 #define PWRSTKSIZE              ((WORLD_X * WORLD_Y) / 4)
 
-#define POINT_BATCH				32
+#define POINT_BATCH                             32
 
 #define ALMAP                   0 /* all */
 #define REMAP                   1 /* residential */
@@ -360,7 +360,7 @@
 #define COMBASE                 423
 #define COMCLR                  427
 #define CZB                     436
-#define COMLAST					609
+#define COMLAST                                 609
 #define INDBASE                 612
 #define INDCLR                  616
 #define LASTIND                 620
@@ -415,7 +415,7 @@
 #define TINYEXP                 860
 #define SOMETINYEXP             864
 #define LASTTINYEXP             867
-#define TINYEXPLAST				883
+#define TINYEXPLAST                             883
 #define COALSMOKE1              916
 #define COALSMOKE2              920
 #define COALSMOKE3              924
@@ -429,7 +429,7 @@
 
 #define TILE_COUNT              960
 
-/* 
+/*
  * These describe the wand values, the object dragged around on the screen.
  */
 
@@ -506,7 +506,7 @@
          TILE_IS_RUBBLE(tile))
 
 #define NeutralizeRoad(tile) \
-		tile &= LOMASK; \
+                tile &= LOMASK; \
         if ((tile >= 64) && \
             (tile <= 207)) { \
           tile = (tile & 0x000F) + 64; \
@@ -532,8 +532,8 @@ typedef long Quad;
 
 typedef unsigned long UQuad;
 
-// This is the signature of the scripting language independent 
-// callback function. 
+// This is the signature of the scripting language independent
+// callback function.
 typedef void (*CallbackFunction)(
   Micropolis *micropolis,
   void *data,
@@ -936,21 +936,21 @@ class Micropolis {
 
 #ifdef SWIG
 // This tells SWIG that minValResult, maxValResult are output parameters,
-// which will be returned in a tuple of length two. 
+// which will be returned in a tuple of length two.
 %apply short *OUTPUT { short *minValResult };
 %apply short *OUTPUT { short *maxValResult };
 #endif
 
   void GetHistoryRange(
-	int historyType,
-	int historyScale,
-	short *minValResult,
-	short *maxValResult);
+        int historyType,
+        int historyScale,
+        short *minValResult,
+        short *maxValResult);
 
   short GetHistory(
-	int historyType,
-	int historyScale,
-	int historyIndex);
+        int historyType,
+        int historyScale,
+        int historyIndex);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -1020,18 +1020,18 @@ class Micropolis {
   void ShowBudgetWindowAndStartWaiting();
 
   void SetBudget(
-    char *flowStr, 
+    char *flowStr,
     char *previousStr,
-    char *currentStr, 
-    char *collectedStr, 
+    char *currentStr,
+    char *collectedStr,
     short tax);
 
   void SetBudgetValues(
-    char *roadGot, 
+    char *roadGot,
     char *roadWant,
-    char *policeGot, 
+    char *policeGot,
     char *policeWant,
-    char *fireGot, 
+    char *fireGot,
     char *fireWant);
 
 
@@ -1040,39 +1040,39 @@ class Micropolis {
 
 
   int ConnecTile(
-    short x, 
-    short y, 
-    short *TileAdrPtr, 
+    short x,
+    short y,
+    short *TileAdrPtr,
     short Command);
 
   int LayDoze(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
   int LayRoad(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
   int LayRail(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
   int LayWire(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
   void FixZone(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
   void FixSingle(
-    int x, 
-    int y, 
+    int x,
+    int y,
     short *TileAdrPtr);
 
 
@@ -1207,7 +1207,7 @@ class Micropolis {
 
 
   int load_file(
-    char *filename, 
+    char *filename,
     char *dir);
 
   int loadFile(
@@ -1317,7 +1317,7 @@ class Micropolis {
     short dir);
 
   void TreeSplash(
-    short xloc, 
+    short xloc,
     short yloc);
 
   void DoTrees();
@@ -1336,8 +1336,8 @@ class Micropolis {
   void DoSRiv();
 
   void PutOnMap(
-    short Mchar, 
-    short Xoff, 
+    short Mchar,
+    short Xoff,
     short Yoff);
 
   void BRivPlop();
@@ -1376,8 +1376,8 @@ class Micropolis {
 
 
   void drawMonth(
-    short *hist, 
-    unsigned char *s, 
+    short *hist,
+    unsigned char *s,
     float scale);
 
   void doAllGraphs();
@@ -1464,7 +1464,7 @@ class Micropolis {
 
 #if 0
   ////////////////////////////////////////////////////////////////////////
-  // Disabled this small map drawing, filtering and overlaying code. 
+  // Disabled this small map drawing, filtering and overlaying code.
   // Going to re-implement it in the tile engine and Python.
 
 
@@ -1490,7 +1490,7 @@ class Micropolis {
     SimView *view);
 
   int dynamicFilter(
-    int col, 
+    int col,
     int row);
 
   void drawDynamic(
@@ -1530,20 +1530,20 @@ class Micropolis {
     SimView *view);
 
   void maybeDrawRect(
-    SimView *view, 
+    SimView *view,
     int val,
-    int x, 
-    int y, 
-    int w, 
+    int x,
+    int y,
+    int w,
     int h);
 
   void drawRect(
-    SimView *view, 
-    int pixel, 
+    SimView *view,
+    int pixel,
     int solid,
-    int x, 
-    int y, 
-    int w, 
+    int x,
+    int y,
+    int w,
     int h);
 
 
@@ -1580,15 +1580,15 @@ class Micropolis {
     int Mnum);
 
   void SendMesAt(
-    short Mnum, 
-    short x, 
+    short Mnum,
+    short x,
     short y);
 
   void doMessage();
 
   void DoAutoGoto(
-    short x, 
-    short y, 
+    short x,
+    short y,
     char *msg);
 
   void SetMessageField(
@@ -1676,7 +1676,7 @@ class Micropolis {
 
 
   char **GetResource(
-    char *name, 
+    char *name,
     Quad id);
 
   void ReleaseResource(
@@ -1692,8 +1692,8 @@ class Micropolis {
     char **h);
 
   void GetIndString(
-    char *str, 
-    int id, 
+    char *str,
+    int id,
     short num);
 
 
@@ -1737,7 +1737,7 @@ class Micropolis {
     int loc);
 
   int GetDisCC(
-    int x, 
+    int x,
     int y);
 
   void CrimeScan();
@@ -1844,7 +1844,7 @@ class Micropolis {
   void UpdateFundEffects();
 
   void MapScan(
-    int x1, 
+    int x1,
     int x2);
 
   void DoRail();
@@ -1860,12 +1860,12 @@ class Micropolis {
   void DoFire();
 
   void FireZone(
-    int Xloc, 
-    int Yloc, 
+    int Xloc,
+    int Yloc,
     int ch);
 
   void RepairZone(
-    short ZCent, 
+    short ZCent,
     short zsize);
 
   void DoSPZone(
@@ -1877,11 +1877,11 @@ class Micropolis {
   void DoAirport();
 
   void CoalSmoke(
-    int mx, 
+    int mx,
     int my);
 
   void DoMeltdown(
-    int SX, 
+    int SX,
     int SY);
 
 
@@ -1907,14 +1907,14 @@ class Micropolis {
 
 
   SimSprite *NewSprite(
-    char *name, 
-    int type, 
-    int x, 
+    char *name,
+    int type,
+    int x,
     int y);
 
   void InitSprite(
-    SimSprite *sprite, 
-    int x, 
+    SimSprite *sprite,
+    int x,
     int y);
 
   void DestroyAllSprites();
@@ -1926,13 +1926,13 @@ class Micropolis {
     int type);
 
   SimSprite *MakeSprite(
-    int type, 
-    int x, 
+    int type,
+    int x,
     int y);
 
   SimSprite *MakeNewSprite(
-    int type, 
-    int x, 
+    int type,
+    int x,
     int y);
 
   void DrawObjects();
@@ -1941,35 +1941,35 @@ class Micropolis {
     SimSprite *sprite);
 
   short GetChar(
-    int x, 
+    int x,
     int y);
 
   short TurnTo(
-    int p, 
+    int p,
     int d);
 
   short TryOther(
-    int Tpoo, 
-    int Told, 
+    int Tpoo,
+    int Told,
     int Tnew);
 
   short SpriteNotInBounds(
     SimSprite *sprite);
 
   short GetDir(
-    int orgX, 
-    int orgY, 
-    int desX, 
+    int orgX,
+    int orgY,
+    int desX,
     int desY);
 
   short GetDis(
-    int x1, 
-    int y1, 
-    int x2, 
+    int x1,
+    int y1,
+    int x2,
     int y2);
 
   int CheckSpriteCollision(
-    SimSprite *s1, 
+    SimSprite *s1,
     SimSprite *s2);
 
   void MoveObjects();
@@ -1999,7 +1999,7 @@ class Micropolis {
     SimSprite *sprite);
 
   int CanDriveOn(
-    int x, 
+    int x,
     int y);
 
   void ExplodeSprite(
@@ -2009,54 +2009,54 @@ class Micropolis {
     int x);
 
   void Destroy(
-    int ox, 
+    int ox,
     int oy);
 
   void OFireZone(
-    int Xloc, 
-    int Yloc, 
+    int Xloc,
+    int Yloc,
     int ch);
 
   void StartFire(
-    int x, 
+    int x,
     int y);
 
   void GenerateTrain(
-    int x, 
+    int x,
     int y);
 
   void GenerateBus(
-    int x, 
+    int x,
     int y);
 
   void GenerateShip();
 
   void MakeShipHere(
-    int x, 
+    int x,
     int y);
 
   void MakeMonster();
 
   void MonsterHere(
-    int x, 
+    int x,
     int y);
 
   void GenerateCopter(
-    int x, 
+    int x,
     int y);
 
   void GeneratePlane(
-    int x, 
+    int x,
     int y);
 
   void MakeTornado();
 
   void MakeExplosion(
-    int x, 
+    int x,
     int y);
 
   void MakeExplosionAt(
-    int x, 
+    int x,
     int y);
 
 
@@ -2096,11 +2096,11 @@ class Micropolis {
 
   short flagBlink;
 
-  // Hook into scripting language to send callbacks. 
+  // Hook into scripting language to send callbacks.
   // (i.e. a function that calls back into the Python interpreter.)
   CallbackFunction callbackHook;
 
-  // Hook for scripting language to store scripted callback function. 
+  // Hook for scripting language to store scripted callback function.
   // (i.e. a callable Python object.)
   void *callbackData;
 
@@ -2136,9 +2136,9 @@ class Micropolis {
   void InitGame();
 
   void Callback(
-	const char *name,
-	const char *params,
-	...);
+        const char *name,
+        const char *params,
+        ...);
 
   void DoEarthquake();
 
@@ -2153,8 +2153,8 @@ class Micropolis {
     char *sound);
 
   int getTile(
-	int x, 
-	int y);
+        int x,
+        int y);
 
   void *getMapBuffer();
 
@@ -2195,16 +2195,16 @@ class Micropolis {
 
 
   int putDownPark(
-    short mapH, 
+    short mapH,
     short mapV);
 
   int putDownNetwork(
-    short mapH, 
+    short mapH,
     short mapV);
 
   short checkBigZone(
-    short id, 
-    short *deltaHPtr, 
+    short id,
+    short *deltaHPtr,
     short *deltaVPtr);
 
   short tally(
@@ -2214,169 +2214,169 @@ class Micropolis {
     short temp);
 
   void check3x3border(
-    short xMap, 
+    short xMap,
     short yMap);
 
   int check3x3(
-    short mapH, 
-    short mapV, 
-    short base, 
+    short mapH,
+    short mapV,
+    short base,
     short tool);
 
   void check4x4border(
-    short xMap, 
+    short xMap,
     short yMap);
 
   short check4x4(
-    short mapH, 
-    short mapV, 
-    short base, 
-    short aniFlag, 
+    short mapH,
+    short mapV,
+    short base,
+    short aniFlag,
     short tool);
 
   void check6x6border(
-    short xMap, 
+    short xMap,
     short yMap);
 
   short check6x6(
-    short mapH, 
-    short mapV, 
-    short base, 
+    short mapH,
+    short mapV,
+    short base,
     short tool);
 
   int getDensityStr(
-    short catNo, 
-    short mapH, 
+    short catNo,
+    short mapH,
     short mapV);
 
   void doZoneStatus(
-    short mapH, 
+    short mapH,
     short mapV);
 
   void DoShowZoneStatus(
-    char *str, 
-    char *s0, 
-    char *s1, 
-    char *s2, 
-    char *s3, 
+    char *str,
+    char *s0,
+    char *s1,
+    char *s2,
+    char *s3,
     char *s4,
-    int x, 
+    int x,
     int y);
 
   void put3x3Rubble(
-    short x, 
+    short x,
     short y);
 
   void put4x4Rubble(
-    short x, 
+    short x,
     short y);
 
   void put6x6Rubble(
-    short x, 
+    short x,
     short y);
 
   void DidTool(
-    char *name, 
-    short x, 
+    char *name,
+    short x,
     short y);
 
   int query_tool(
-    short x, 
+    short x,
     short y);
 
   int bulldozer_tool(
-    short x, 
+    short x,
     short y);
 
   int road_tool(
-    short x, 
+    short x,
     short y);
 
   int rail_tool(
-    short x, 
+    short x,
     short y);
 
   int wire_tool(
-    short x, 
+    short x,
     short y);
 
   int park_tool(
-    short x, 
+    short x,
     short y);
 
   int residential_tool(
-    short x, 
+    short x,
     short y);
 
   int commercial_tool(
-    short x, 
+    short x,
     short y);
 
   int industrial_tool(
-    short x, 
+    short x,
     short y);
 
   int police_dept_tool(
-    short x, 
+    short x,
     short y);
 
   int fire_dept_tool(
-    short x, 
+    short x,
     short y);
 
   int stadium_tool(
-    short x, 
+    short x,
     short y);
 
   int coal_power_plant_tool(
-    short x, 
+    short x,
     short y);
 
   int nuclear_power_plant_tool(
-    short x, 
+    short x,
     short y);
 
   int seaport_tool(
-    short x, 
+    short x,
     short y);
 
   int airport_tool(
-    short x, 
+    short x,
     short y);
 
   int network_tool(
-    short x, 
+    short x,
     short y);
 
   int do_tool(
-    short state, 
-    short x, 
-    short y, 
+    short state,
+    short x,
+    short y,
     short first);
 
   void DoTool(
-    short tool, 
-    short x, 
+    short tool,
+    short x,
     short y);
 
   void ToolDown(
-	short tool,
-    int x, 
+        short tool,
+    int x,
     int y);
 
   void ToolUp(
-	short tool,
-    int x, 
+        short tool,
+    int x,
     int y);
 
   void ToolDrag(
-	short tool,
-    int px, 
+        short tool,
+    int px,
     int py);
 
   void DoPendTool(
-    int tool, 
-    int x, 
+    int tool,
+    int x,
     int y);
 
 
@@ -2448,7 +2448,7 @@ class Micropolis {
 
   Quad LastI;
 
-  
+
   void DoUpdateHeads();
 
   void UpdateEditors();
@@ -2474,8 +2474,8 @@ class Micropolis {
   void drawValve();
 
   void SetDemand(
-    double r, 
-    double c, 
+    double r,
+    double c,
     double i);
 
   void updateOptions();
@@ -2491,7 +2491,7 @@ class Micropolis {
 
 
   void makeDollarDecimalStr(
-    char *numStr, 
+    char *numStr,
     char *dollarStr);
 
   void Pause();
@@ -2526,10 +2526,10 @@ class Micropolis {
   void DoNewGame();
 
   void DoGeneratedCityImage(
-    char *name, 
-    int time, 
-    int pop, 
-    char *cityClass, 
+    char *name,
+    int time,
+    int pop,
+    char *cityClass,
     int score);
 
 
@@ -2558,30 +2558,30 @@ class Micropolis {
   short GetCRVal();
 
   void DoResIn(
-    int pop, 
+    int pop,
     int value);
 
   void DoComIn(
-    int pop, 
+    int pop,
     int value);
 
   void DoIndIn(
-    int pop, 
+    int pop,
     int value);
 
   void IncROG(
     int amount);
 
   void DoResOut(
-    int pop, 
+    int pop,
     int value);
 
   void DoComOut(
-    int pop, 
+    int pop,
     int value);
 
   void DoIndOut(
-    int pop, 
+    int pop,
     int value);
 
   short RZPop(
@@ -2597,19 +2597,19 @@ class Micropolis {
     int value);
 
   void ResPlop(
-    int Den, 
+    int Den,
     int Value);
 
   void ComPlop(
-    int Den, 
+    int Den,
     int Value);
 
   void IndPlop(
-    int Den, 
+    int Den,
     int Value);
 
   short EvalLot(
-    int x, 
+    int x,
     int y);
 
   short ZonePlop(

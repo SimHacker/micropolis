@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -85,8 +85,8 @@ unsigned char Micropolis::HistColor[] = {
 
 
 void Micropolis::drawMonth(
-  short *hist, 
-  unsigned char *s, 
+  short *hist,
+  unsigned char *s,
   float scale)
 {
   register short val;
@@ -100,7 +100,7 @@ void Micropolis::drawMonth(
     if (val > 255) {
       val = 255;
     }
-    s[119 - x] = 
+    s[119 - x] =
       (unsigned char)val;
   }
 }
@@ -128,8 +128,8 @@ void Micropolis::doAllGraphs()
   }
 
   if (AllMax) {
-    scaleValue = 
-      (float)128.0 / 
+    scaleValue =
+      (float)128.0 /
       (float)AllMax;
   } else {
     scaleValue = 1.0;
@@ -163,11 +163,11 @@ void Micropolis::doAllGraphs()
   }
 
   if (AllMax) {
-    scaleValue = 
-      (float)128.0 / 
+    scaleValue =
+      (float)128.0 /
       (float)AllMax;
   } else {
-    scaleValue = 
+    scaleValue =
       (float)1.0;
   }
 
@@ -197,10 +197,10 @@ void Micropolis::graphDoer()
   }
 
   if (NewGraph) {
-	Callback(
-	  "UIUpdate",
-	  "s",
-	  "graph");
+        Callback(
+          "UIUpdate",
+          "s",
+          "graph");
     NewGraph = 0;
   }
 }
@@ -208,8 +208,6 @@ void Micropolis::graphDoer()
 
 void Micropolis::initGraphs()
 {
-  int i;
-
   if (!HistoryInitialized) {
     HistoryInitialized = 1;
   }
@@ -254,11 +252,11 @@ void Micropolis::InitGraphMax()
   }
 
   Graph10Max = ResHisMax;
-  
+
   if (ComHisMax > Graph10Max) {
     Graph10Max = ComHisMax;
   }
-  
+
   if (IndHisMax > Graph10Max) {
     Graph10Max = IndHisMax;
   }
@@ -266,7 +264,7 @@ void Micropolis::InitGraphMax()
   Res2HisMax = 0;
   Com2HisMax = 0;
   Ind2HisMax = 0;
-  
+
   for (x = 238; x >= 120; x--) {
 
     if (ResHis[x] > Res2HisMax) {

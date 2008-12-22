@@ -177,17 +177,17 @@ Keep and export logs of simulation values
     associate geo-coded opml nodes with features on the map like 
     zones, buildings, streets, neighborhoods
       use opml nodes to give names to features, 
-	take notes about them, 
-	attach pictures to them,
-	write stories about them,
+        take notes about them, 
+        attach pictures to them,
+        write stories about them,
       support overlapping features, so roads can cross, 
       and each tile can belong to any number of features.
     allow users to plant signs on the map, like micropolis 2000. 
       represent signs with an opml node. 
         signs can contains arbitrary opml outlines
           with links to other opml nodes
-	    like a sign at a crossroad, linked to the nodes representing each road, 
-	    and the regions of the city that the roads bring you to.
+            like a sign at a crossroad, linked to the nodes representing each road, 
+            and the regions of the city that the roads bring you to.
       use opml to write a city guide
       attach chalk overlays and signs to opml nodes so you can show and hide them hierarchically
 
