@@ -1,0 +1,57 @@
+C++ coding style:
+
+- Functions/Methods:
+  - Functions/methods use CamelCase names.
+  - Private/local functions/meyhods use camelCase, except for the first letter.
+  - Try to give functions/methods a name with at least two words (so they are
+    different from variables).
+
+- Variables:
+  - Variables are lowercase_only, with an underscore connecting the words.
+  - Globals start with an _underscore_character.
+  - Do not use 'register' (compilers are much smarter about assigning variables
+    to registers).
+
+- Constants:
+  - Constants are written in UPPER_CASE with an underscore character between
+    words.
+  - Related constants should have a short common prefix.
+  - Single constants are declared with "static const <type> MY_CONSTANT = <value>;"
+  - Groups of related constants are declared with an enum.
+  - Use decimal notation for values.
+  - Use hexadecimal notation for bitmasks (or better, express the mask as a
+    computation).
+  - End with "_BIT" in the name for bit positions.
+
+- Layout:
+  - Indentation should be 4 at each level.
+  - No TAB characters.
+  - No white space at end of the line.
+  - Lines should mostly fit in 80 columns.
+
+  - Put a space between the keyword "if", "while", and "for" and the opening
+    bracket of the expression.
+  - Use space around operators ("1 + 2" instead of "1+2") and assignment
+    ("x = 1" instead of "x=1").
+
+- Expressions:
+  - Avoid assignments in expressions (compilers will shuffle them into the
+    expression if that is better).
+  - Be explicit in comparisons, "if (ptr == NULL)" and "if (val != 0)".
+  - No brackets when not needed.
+
+  - Avoid floating point computations.
+
+- Documentation:
+  - Document everything with Doxygen.
+
+
+
+Not decided:
+
+- Comment style.
+- Use of "this" in methods.
+- Use "0" instead of "NULL" ("0" is the official C++ NULL value, but "NULL" seems
+  clearer).
+
+- Python coding style (maybe simply use PEP-008)
