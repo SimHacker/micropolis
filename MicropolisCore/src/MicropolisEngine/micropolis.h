@@ -1262,11 +1262,11 @@ public:
 
   void EvalInit();
 
-  void GetAssValue();
-
   void DoPopNum();
 
   void DoProblems();
+
+  void getAssValue();
 
   void voteProblems();
 

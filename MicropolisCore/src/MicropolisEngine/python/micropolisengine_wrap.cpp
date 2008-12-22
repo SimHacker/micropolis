@@ -12728,27 +12728,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_GetAssValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_GetAssValue",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_GetAssValue" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->GetAssValue();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_DoPopNum(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -12784,6 +12763,27 @@ SWIGINTERN PyObject *_wrap_Micropolis_DoProblems(PyObject *SWIGUNUSEDPARM(self),
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   (arg1)->DoProblems();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_getAssValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_getAssValue",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_getAssValue" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->getAssValue();
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30398,9 +30398,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_probStr_set", _wrap_Micropolis_probStr_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CityEvaluation", _wrap_Micropolis_CityEvaluation, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_EvalInit", _wrap_Micropolis_EvalInit, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_GetAssValue", _wrap_Micropolis_GetAssValue, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoPopNum", _wrap_Micropolis_DoPopNum, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoProblems", _wrap_Micropolis_DoProblems, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_getAssValue", _wrap_Micropolis_getAssValue, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_voteProblems", _wrap_Micropolis_voteProblems, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_AverageTrf", _wrap_Micropolis_AverageTrf, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GetUnemployment", _wrap_Micropolis_GetUnemployment, METH_VARARGS, NULL},
