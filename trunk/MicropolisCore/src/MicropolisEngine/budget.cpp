@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -98,79 +98,79 @@ void Micropolis::DoBudgetFromMenu()
 void Micropolis::DoBudgetNow(
   int fromMenu)
 {
-  Quad fireInt = 
+  Quad fireInt =
     (int)(((float)FireFund) * firePercent);
-  Quad policeInt = 
+  Quad policeInt =
     (int)(((float)PoliceFund) * policePercent);
-  Quad roadInt = 
+  Quad roadInt =
     (int)(((float)RoadFund) * roadPercent);
 
-  Quad total = 
+  Quad total =
     fireInt + policeInt + roadInt;
 
-  Quad yumDuckets = 
+  Quad yumDuckets =
     TaxFund + TotalFunds;
 
   if (yumDuckets > total) {
 
-	// Enough yumDuckets to fully fund fire, police and road.
+        // Enough yumDuckets to fully fund fire, police and road.
 
     fireValue = fireInt;
     policeValue = policeInt;
     roadValue = roadInt;
 
-	// FIXME: Why are we not subtracting from yumDuckets what we
-	// spend, like the code below is doing?
+        // FIXME: Why are we not subtracting from yumDuckets what we
+        // spend, like the code below is doing?
 
   } else if (total > 0) {
 
-	assert(yumDuckets <= total);
+        assert(yumDuckets <= total);
 
-	// Not enough yumDuckets to fund everything. 
-	// First spend on roads, then on fire, then on police.
+        // Not enough yumDuckets to fund everything. 
+        // First spend on roads, then on fire, then on police.
 
     if (yumDuckets > roadInt) {
 
-	  // Enough yumDuckets to fully fund roads.
+          // Enough yumDuckets to fully fund roads.
 
       roadValue = roadInt;
       yumDuckets -= roadInt;
 
       if (yumDuckets > fireInt) {
 
-		// Enough yumDuckets to fully fund fire. 
+                // Enough yumDuckets to fully fund fire. 
 
         fireValue = fireInt;
         yumDuckets -= fireInt;
 
         if (yumDuckets > policeInt) {
 
-		  // Enough yumDuckets to fully fund police. 
-		  // Hey what are we doing here? Should never get here. 
-		  // We tested for yumDuckets > total above
-		  // (where total = fireInt + policeInt + roadInt), 
-		  // so this should never happen.
+                  // Enough yumDuckets to fully fund police. 
+                  // Hey what are we doing here? Should never get here. 
+                  // We tested for yumDuckets > total above
+                  // (where total = fireInt + policeInt + roadInt), 
+                  // so this should never happen.
 
           policeValue = policeInt;
           yumDuckets -= policeInt;
 
         } else {
 
-		  // Fuly funded roads and fire. 
-		  // Partially fund police. 
+                  // Fuly funded roads and fire. 
+                  // Partially fund police. 
 
           policeValue = yumDuckets;
 
           if (yumDuckets > 0) {
 
-			// Scale back police percentage to available cash.
+                        // Scale back police percentage to available cash.
 
-            policePercent = 
+            policePercent =
               ((float)yumDuckets) / ((float)PoliceFund);
 
           } else {
 
-			// Exactly nothing left, so scale back police percentage to zero.
+                        // Exactly nothing left, so scale back police percentage to zero.
 
             policePercent = 0.0;
 
@@ -178,25 +178,25 @@ void Micropolis::DoBudgetNow(
         }
       } else {
 
-		// Not enough yumDuckets to fully fund fire. 
+                // Not enough yumDuckets to fully fund fire. 
 
         fireValue = yumDuckets;
 
-		// No police after funding roads and fire.
+                // No police after funding roads and fire.
 
         policeValue = 0;
         policePercent = 0.0;
 
         if (yumDuckets > 0) {
 
-		  // Scale back fire percentage to available cash.
+                  // Scale back fire percentage to available cash.
 
-          firePercent = 
+          firePercent =
             ((float)yumDuckets) / ((float)FireFund);
 
         } else {
 
-		  // Exactly nothing left, so scale back fire percentage to zero.
+                  // Exactly nothing left, so scale back fire percentage to zero.
 
           firePercent = 0.0;
 
@@ -206,11 +206,11 @@ void Micropolis::DoBudgetNow(
 
     } else {
 
-	  // Not enough yumDuckets to fully fund roads.
+          // Not enough yumDuckets to fully fund roads.
 
       roadValue = yumDuckets;
 
-	  // No fire or police after funding roads.
+          // No fire or police after funding roads.
 
       fireValue = 0;
       policeValue = 0;
@@ -219,14 +219,14 @@ void Micropolis::DoBudgetNow(
 
       if (yumDuckets > 0) {
 
-		// Scale back road percentage to available cash.
+                // Scale back road percentage to available cash.
 
-        roadPercent = 
+        roadPercent =
           ((float)yumDuckets) / ((float)RoadFund);
 
       } else {
 
-		// Exactly nothing left, so scale back road percentage to zero.
+                // Exactly nothing left, so scale back road percentage to zero.
 
         roadPercent = 0.0;
 
@@ -236,10 +236,10 @@ void Micropolis::DoBudgetNow(
 
   } else {
 
-	assert(yumDuckets == total);
-	assert(total == 0);
+        assert(yumDuckets == total);
+        assert(total == 0);
 
-	// Zero funding, so no values but full percentages.
+        // Zero funding, so no values but full percentages.
 
     fireValue = 0;
     policeValue = 0;
@@ -257,13 +257,13 @@ noMoney:
   if ((!autoBudget) || fromMenu) {
 
     // FIXME: This might have blocked on the Mac, but now it's asynchronous.
-	// Make sure the stuff we do just afterwards is intended to be done immediately
-	// and is not supposed to wait until after the budget dialog is dismissed. 
-    // Otherwise don't do it after this and arrange for it to happen when the 
-    // modal budget dialog is dismissed. 
+        // Make sure the stuff we do just afterwards is intended to be done immediately
+        // and is not supposed to wait until after the budget dialog is dismissed.
+    // Otherwise don't do it after this and arrange for it to happen when the
+    // modal budget dialog is dismissed.
     ShowBudgetWindowAndStartWaiting();
 
-	// FIXME: Only do this AFTER the budget window is accepted.
+        // FIXME: Only do this AFTER the budget window is accepted.
 
     if (!fromMenu) {
 
@@ -271,10 +271,10 @@ noMoney:
       PoliceSpend = (short)policeValue;
       RoadSpend = (short)roadValue;
 
-      total = 
+      total =
         FireSpend + PoliceSpend + RoadSpend;
-      
-      Quad moreDough = 
+
+      Quad moreDough =
         (Quad)(TaxFund - total);
       Spend(-moreDough);
 
@@ -286,21 +286,21 @@ noMoney:
 
   } else { /* autoBudget & !fromMenu */
 
-	// FIXME: Not sure yumDuckets is the right value here. It gets the
-	// amount spent subtracted from it above in some cases, but not if
-	// we are fully funded. I think we want to use the original value
-	// of yumDuckets, which is TaxFund + TotalFunds.
+        // FIXME: Not sure yumDuckets is the right value here. It gets the
+        // amount spent subtracted from it above in some cases, but not if
+        // we are fully funded. I think we want to use the original value
+        // of yumDuckets, which is TaxFund + TotalFunds.
 
     if (yumDuckets > total) {
 
-      Quad moreDough = 
+      Quad moreDough =
         (Quad)(TaxFund - total);
       Spend(-moreDough);
-      
+
       FireSpend = FireFund;
       PoliceSpend = PoliceFund;
       RoadSpend = RoadFund;
-      
+
       drawBudgetWindow();
       drawCurrPercents();
       DoUpdateHeads();
@@ -327,16 +327,16 @@ void Micropolis::drawBudgetWindow()
 
 
 // TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out. 
+// instead of the simulator core formatting them and pushing them out.
 void Micropolis::ReallyDrawBudgetWindow()
 {
   short cashFlow, cashFlow2;
   char numStr[256], dollarStr[256], collectedStr[256],
        flowStr[256], previousStr[256], currentStr[256];
 
-  cashFlow = 
+  cashFlow =
     (short)(TaxFund - fireValue - policeValue - roadValue);
-  
+
   cashFlow2 = cashFlow;
 
   if (cashFlow < 0)   {
@@ -364,10 +364,10 @@ void Micropolis::ReallyDrawBudgetWindow()
   makeDollarDecimalStr(numStr, collectedStr);
 
   SetBudget(
-    flowStr, 
-    previousStr, 
-    currentStr, 
-    collectedStr, 
+    flowStr,
+    previousStr,
+    currentStr,
+    collectedStr,
     CityTax);
 
 }
@@ -380,7 +380,7 @@ void Micropolis::drawCurrPercents()
 
 
 // TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out. 
+// instead of the simulator core formatting them and pushing them out.
 void Micropolis::ReallyDrawCurrPercents()
 {
   char num[256];
@@ -406,18 +406,18 @@ void Micropolis::ReallyDrawCurrPercents()
   makeDollarDecimalStr(num, roadGot);
 
   SetBudgetValues(
-    roadGot, 
-    roadWant, 
-    policeGot, 
-    policeWant, 
-    fireGot, 
+    roadGot,
+    roadWant,
+    policeGot,
+    policeWant,
+    fireGot,
     fireWant);
 
 }
 
 
 // TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out. 
+// instead of the simulator core formatting them and pushing them out.
 void Micropolis::UpdateBudgetWindow()
 {
   if (MustDrawCurrPercents) {
@@ -450,42 +450,42 @@ void Micropolis::ShowBudgetWindowAndStartWaiting()
 
 
 void Micropolis::SetBudget(
-  char *flowStr, 
+  char *flowStr,
   char *previousStr,
-  char *currentStr, 
-  char *collectedStr, 
+  char *currentStr,
+  char *collectedStr,
   short tax)
 {
   Callback(
     "UISetBudget",
-	"ssssd",
-    flowStr, 
-    previousStr, 
-    currentStr, 
-    collectedStr, 
+        "ssssd",
+    flowStr,
+    previousStr,
+    currentStr,
+    collectedStr,
     (int)tax);
 }
 
 
 void Micropolis::SetBudgetValues(
-  char *roadGot, 
+  char *roadGot,
   char *roadWant,
-  char *policeGot, 
+  char *policeGot,
   char *policeWant,
-  char *fireGot, 
+  char *fireGot,
   char *fireWant)
 {
   Callback(
     "UISetBudgetValues",
     "ssdssdssd",
-    roadGot, 
-    roadWant, 
+    roadGot,
+    roadWant,
     (int)(roadPercent * 100),
-    policeGot, 
-    policeWant, 
+    policeGot,
+    policeWant,
     (int)(policePercent * 100),
-    fireGot, 
-    fireWant, 
+    fireGot,
+    fireWant,
     (int)(firePercent * 100));
 }
 

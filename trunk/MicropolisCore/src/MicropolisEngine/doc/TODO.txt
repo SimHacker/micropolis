@@ -33,7 +33,7 @@ Integrate map view and editor view with seamless zooming.
 Need a way to blink the unpowered tiles.
 
 Make sure the explosion decays into a static dirt tile and animates properly in the client.
-				   
+                                   
 Clean up and rationalize callbacks.
 Make a generic update notification system. 
 Don't try formatting, converting and passing parameters, if they can be read from the simulator. 

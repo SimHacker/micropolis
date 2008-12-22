@@ -67,41 +67,41 @@ Core Ideas:
       Integrate the current TCL/Tk version of Micropolis to run as a simple activity within Sugar. 
 
         Restructure the multi-window TCL/Tk code to run in a single full screen window.
-	Implement a simple activity-oriented tiled window management interface. 
-	Disable advanced features like multiple editor and map windows, 
-	that require more sophisticated window management. 
-	Instead of using a traditional multi-window management approach, 
+        Implement a simple activity-oriented tiled window management interface. 
+        Disable advanced features like multiple editor and map windows, 
+        that require more sophisticated window management. 
+        Instead of using a traditional multi-window management approach, 
 
         Make a simple wrapper around it that makes it appear in the Sugar user interface as an activity, like eToys does.
 
       Long term:
 
-	Implement activity specific modes that reconfigure the user inteface (like Eclipse "perspectives").
-	  - build/edit oriented interface
-	  - query/analysis oriented interface
-	  - financial oriented interface
-	  - communication/coordination oriented interface
-	  - dynamic zone finder analysis
-	  - grid of several overall map views, each configured to show a different overlay. 
-	  - grid of several close-up map views, each centered on a different parts of the city (or tracking a player's cursor)
+        Implement activity specific modes that reconfigure the user inteface (like Eclipse "perspectives").
+          - build/edit oriented interface
+          - query/analysis oriented interface
+          - financial oriented interface
+          - communication/coordination oriented interface
+          - dynamic zone finder analysis
+          - grid of several overall map views, each configured to show a different overlay. 
+          - grid of several close-up map views, each centered on a different parts of the city (or tracking a player's cursor)
         
-	Collaboration: Enhance multi player mode to support sharing activities.
-	  Both publishing your game for others to clone and play themselves (massively single player, like Spore),
-	  and letting others join in your game (like the current cooperative multi-player mode)). 
-	  Multi player inte
+        Collaboration: Enhance multi player mode to support sharing activities.
+          Both publishing your game for others to clone and play themselves (massively single player, like Spore),
+          and letting others join in your game (like the current cooperative multi-player mode)). 
+          Multi player inte
 
-	Expression: Enhance chat, journaling, storytelling, and personalization aspects of the game. 
+        Expression: Enhance chat, journaling, storytelling, and personalization aspects of the game. 
 
-	Journaling: Record all events (both user edits and simulation events), chat messages and drawings.
-	  Checkpoint the game state, and implement the ability to deterministically replay time stamped 
-	  editing events into the simulation, so you can fast forward and rewind from any checkpoint to 
-	  any step of the simulation. 
-	  Enable players to write newspaper articles about the cities, with live links to a snapshot 
-	  of the simulation and a place on the map, related to the story. Other players could browse
-	  their published newspapers about the history of a city, and jump into that history at any time
-	  from any story. 
+        Journaling: Record all events (both user edits and simulation events), chat messages and drawings.
+          Checkpoint the game state, and implement the ability to deterministically replay time stamped 
+          editing events into the simulation, so you can fast forward and rewind from any checkpoint to 
+          any step of the simulation. 
+          Enable players to write newspaper articles about the cities, with live links to a snapshot 
+          of the simulation and a place on the map, related to the story. Other players could browse
+          their published newspapers about the history of a city, and jump into that history at any time
+          from any story. 
 
-	Iteration: Checkpoint game save files, allowing players to rewind history, and try "what-if" experiments. 
+        Iteration: Checkpoint game save files, allowing players to rewind history, and try "what-if" experiments. 
 
   Presence is Always Present
 
@@ -118,9 +118,9 @@ Core Ideas:
       enable and disable different overlays, save overlays with the map, add text to overlays, etc.
       Implement location based chat, by overlaying people icons and chat bubbles on the map. 
         Each player has a people icon "cursor" that they can move around the map (which follows 
-	their selected editing cursor), and their chat messages show up in bubbles overlayed on the map.
-	When you select an editing tool, you can type what you're doing with the tool, 
-	other people will be able to watch you, and make comments on what you're doing.
+        their selected editing cursor), and their chat messages show up in bubbles overlayed on the map.
+        When you select an editing tool, you can type what you're doing with the tool, 
+        other people will be able to watch you, and make comments on what you're doing.
 
     Long term:
 

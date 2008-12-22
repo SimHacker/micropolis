@@ -222,7 +222,7 @@ template <typename T> T SwigValueInit() {
       // success code
       if (SWIG_IsNewObj(res) {
         ...
-	delete *ptr;
+        delete *ptr;
       } else {
         ...
       }
@@ -235,17 +235,17 @@ template <typename T> T SwigValueInit() {
    requires also to SWIG_ConvertPtr to return new result values, as
 
       int SWIG_ConvertPtr(obj, ptr,...) {         
-        if (<obj is ok>) {			       
-          if (<need new object>) {		       
+        if (<obj is ok>) {                             
+          if (<need new object>) {                     
             *ptr = <ptr to new allocated object>; 
-            return SWIG_NEWOBJ;		       
-          } else {				       
-            *ptr = <ptr to old object>;	       
-            return SWIG_OLDOBJ;		       
-          } 				       
-        } else {				       
-          return SWIG_BADOBJ;		       
-        }					       
+            return SWIG_NEWOBJ;                
+          } else {                                     
+            *ptr = <ptr to old object>;        
+            return SWIG_OLDOBJ;                
+          }                                    
+        } else {                                       
+          return SWIG_BADOBJ;                  
+        }                                              
       }
 
    Of course, returning the plain '0(success)/-1(fail)' still works, but you can be
@@ -327,32 +327,32 @@ typedef struct swig_type_info *(*swig_dycast_func)(void **);
 
 /* Structure to store inforomation on one type */
 typedef struct swig_type_info {
-  const char             *name;			/* mangled name of this type */
-  const char             *str;			/* human readable name of this type */
-  swig_dycast_func        dcast;		/* dynamic cast function down a hierarchy */
-  struct swig_cast_info  *cast;			/* linked list of types that can cast into this type */
-  void                   *clientdata;		/* language specific type data */
-  int                    owndata;		/* flag if the structure owns the clientdata */
+  const char             *name;                 /* mangled name of this type */
+  const char             *str;                  /* human readable name of this type */
+  swig_dycast_func        dcast;                /* dynamic cast function down a hierarchy */
+  struct swig_cast_info  *cast;                 /* linked list of types that can cast into this type */
+  void                   *clientdata;           /* language specific type data */
+  int                    owndata;               /* flag if the structure owns the clientdata */
 } swig_type_info;
 
 /* Structure to store a type and conversion function used for casting */
 typedef struct swig_cast_info {
-  swig_type_info         *type;			/* pointer to type that is equivalent to this type */
-  swig_converter_func     converter;		/* function to cast the void pointers */
-  struct swig_cast_info  *next;			/* pointer to next cast in linked list */
-  struct swig_cast_info  *prev;			/* pointer to the previous cast */
+  swig_type_info         *type;                 /* pointer to type that is equivalent to this type */
+  swig_converter_func     converter;            /* function to cast the void pointers */
+  struct swig_cast_info  *next;                 /* pointer to next cast in linked list */
+  struct swig_cast_info  *prev;                 /* pointer to the previous cast */
 } swig_cast_info;
 
 /* Structure used to store module information
  * Each module generates one structure like this, and the runtime collects
  * all of these structures and stores them in a circularly linked list.*/
 typedef struct swig_module_info {
-  swig_type_info         **types;		/* Array of pointers to swig_type_info structures that are in this module */
-  size_t                 size;		        /* Number of types in this module */
-  struct swig_module_info *next;		/* Pointer to next element in circularly linked list */
-  swig_type_info         **type_initial;	/* Array of initially generated type structures */
-  swig_cast_info         **cast_initial;	/* Array of initially generated casting structures */
-  void                    *clientdata;		/* Language specific module data */
+  swig_type_info         **types;               /* Array of pointers to swig_type_info structures that are in this module */
+  size_t                 size;                  /* Number of types in this module */
+  struct swig_module_info *next;                /* Pointer to next element in circularly linked list */
+  swig_type_info         **type_initial;        /* Array of initially generated type structures */
+  swig_cast_info         **cast_initial;        /* Array of initially generated casting structures */
+  void                    *clientdata;          /* Language specific module data */
 } swig_module_info;
 
 /* 
@@ -364,7 +364,7 @@ typedef struct swig_module_info {
 */
 SWIGRUNTIME int
 SWIG_TypeNameComp(const char *f1, const char *l1,
-		  const char *f2, const char *l2) {
+                  const char *f2, const char *l2) {
   for (;(f1 != l1) && (f2 != l2); ++f1, ++f2) {
     while ((*f1 == ' ') && (f1 != l1)) ++f1;
     while ((*f2 == ' ') && (f2 != l2)) ++f2;
@@ -513,7 +513,7 @@ SWIG_TypeClientData(swig_type_info *ti, void *clientdata) {
     if (!cast->converter) {
       swig_type_info *tc = cast->type;
       if (!tc->clientdata) {
-	SWIG_TypeClientData(tc, clientdata);
+        SWIG_TypeClientData(tc, clientdata);
       }
     }    
     cast = cast->next;
@@ -536,32 +536,32 @@ SWIG_TypeNewClientData(swig_type_info *ti, void *clientdata) {
 SWIGRUNTIME swig_type_info *
 SWIG_MangledTypeQueryModule(swig_module_info *start, 
                             swig_module_info *end, 
-		            const char *name) {
+                            const char *name) {
   swig_module_info *iter = start;
   do {
     if (iter->size) {
       register size_t l = 0;
       register size_t r = iter->size - 1;
       do {
-	/* since l+r >= 0, we can (>> 1) instead (/ 2) */
-	register size_t i = (l + r) >> 1; 
-	const char *iname = iter->types[i]->name;
-	if (iname) {
-	  register int compare = strcmp(name, iname);
-	  if (compare == 0) {	    
-	    return iter->types[i];
-	  } else if (compare < 0) {
-	    if (i) {
-	      r = i - 1;
-	    } else {
-	      break;
-	    }
-	  } else if (compare > 0) {
-	    l = i + 1;
-	  }
-	} else {
-	  break; /* should never happen */
-	}
+        /* since l+r >= 0, we can (>> 1) instead (/ 2) */
+        register size_t i = (l + r) >> 1; 
+        const char *iname = iter->types[i]->name;
+        if (iname) {
+          register int compare = strcmp(name, iname);
+          if (compare == 0) {       
+            return iter->types[i];
+          } else if (compare < 0) {
+            if (i) {
+              r = i - 1;
+            } else {
+              break;
+            }
+          } else if (compare > 0) {
+            l = i + 1;
+          }
+        } else {
+          break; /* should never happen */
+        }
       } while (l <= r);
     }
     iter = iter->next;
@@ -581,7 +581,7 @@ SWIG_MangledTypeQueryModule(swig_module_info *start,
 SWIGRUNTIME swig_type_info *
 SWIG_TypeQueryModule(swig_module_info *start, 
                      swig_module_info *end, 
-		     const char *name) {
+                     const char *name) {
   /* STEP 1: Search the name field using binary search */
   swig_type_info *ret = SWIG_MangledTypeQueryModule(start, end, name);
   if (ret) {
@@ -593,8 +593,8 @@ SWIG_TypeQueryModule(swig_module_info *start,
     do {
       register size_t i = 0;
       for (; i < iter->size; ++i) {
-	if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
-	  return iter->types[i];
+        if (iter->types[i]->str && (SWIG_TypeEquiv(iter->types[i]->str, name)))
+          return iter->types[i];
       }
       iter = iter->next;
     } while (iter != end);
@@ -708,18 +708,18 @@ SWIG_UnpackDataName(const char *c, void *ptr, size_t sz, const char *name) {
 #endif
 
 /*  Errors in SWIG */
-#define  SWIG_UnknownError    	   -1 
-#define  SWIG_IOError        	   -2 
-#define  SWIG_RuntimeError   	   -3 
-#define  SWIG_IndexError     	   -4 
-#define  SWIG_TypeError      	   -5 
-#define  SWIG_DivisionByZero 	   -6 
-#define  SWIG_OverflowError  	   -7 
-#define  SWIG_SyntaxError    	   -8 
-#define  SWIG_ValueError     	   -9 
-#define  SWIG_SystemError    	   -10
-#define  SWIG_AttributeError 	   -11
-#define  SWIG_MemoryError    	   -12 
+#define  SWIG_UnknownError         -1 
+#define  SWIG_IOError              -2 
+#define  SWIG_RuntimeError         -3 
+#define  SWIG_IndexError           -4 
+#define  SWIG_TypeError            -5 
+#define  SWIG_DivisionByZero       -6 
+#define  SWIG_OverflowError        -7 
+#define  SWIG_SyntaxError          -8 
+#define  SWIG_ValueError           -9 
+#define  SWIG_SystemError          -10
+#define  SWIG_AttributeError       -11
+#define  SWIG_MemoryError          -12 
 #define  SWIG_NullReferenceError   -13
 
 
@@ -1034,10 +1034,10 @@ typedef struct swig_const_info {
 #define SWIG_NewClientData(obj)                         PySwigClientData_New(obj)
 
 #define SWIG_SetErrorObj                                SWIG_Python_SetErrorObj                            
-#define SWIG_SetErrorMsg                        	SWIG_Python_SetErrorMsg				   
-#define SWIG_ErrorType(code)                    	SWIG_Python_ErrorType(code)                        
-#define SWIG_Error(code, msg)            		SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
-#define SWIG_fail                        		goto fail					   
+#define SWIG_SetErrorMsg                                SWIG_Python_SetErrorMsg                            
+#define SWIG_ErrorType(code)                            SWIG_Python_ErrorType(code)                        
+#define SWIG_Error(code, msg)                           SWIG_Python_SetErrorMsg(SWIG_ErrorType(code), msg) 
+#define SWIG_fail                                       goto fail                                          
 
 
 /* Runtime API implementation */
@@ -1124,7 +1124,7 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
       return 1;
     } else {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got none", 
-		   name, (min == max ? "" : "at least "), (int)min);
+                   name, (min == max ? "" : "at least "), (int)min);
       return 0;
     }
   }  
@@ -1135,19 +1135,19 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
     register Py_ssize_t l = PyTuple_GET_SIZE(args);
     if (l < min) {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
-		   name, (min == max ? "" : "at least "), (int)min, (int)l);
+                   name, (min == max ? "" : "at least "), (int)min, (int)l);
       return 0;
     } else if (l > max) {
       PyErr_Format(PyExc_TypeError, "%s expected %s%d arguments, got %d", 
-		   name, (min == max ? "" : "at most "), (int)max, (int)l);
+                   name, (min == max ? "" : "at most "), (int)max, (int)l);
       return 0;
     } else {
       register int i;
       for (i = 0; i < l; ++i) {
-	objs[i] = PyTuple_GET_ITEM(args, i);
+        objs[i] = PyTuple_GET_ITEM(args, i);
       }
       for (; l < max; ++l) {
-	objs[l] = 0;
+        objs[l] = 0;
       }
       return i + 1;
     }    
@@ -1156,9 +1156,9 @@ SWIG_Python_UnpackTuple(PyObject *args, const char *name, Py_ssize_t min, Py_ssi
 
 /* A functor is a function object with one single object argument */
 #if PY_VERSION_HEX >= 0x02020000
-#define SWIG_Python_CallFunctor(functor, obj)	        PyObject_CallFunctionObjArgs(functor, obj, NULL);
+#define SWIG_Python_CallFunctor(functor, obj)           PyObject_CallFunctionObjArgs(functor, obj, NULL);
 #else
-#define SWIG_Python_CallFunctor(functor, obj)	        PyObject_CallFunction(functor, "O", obj);
+#define SWIG_Python_CallFunctor(functor, obj)           PyObject_CallFunction(functor, "O", obj);
 #endif
 
 /*
@@ -1275,11 +1275,11 @@ PySwigClientData_New(PyObject* obj)
       data->newraw = PyObject_GetAttrString(data->klass, (char *)"__new__");
 #endif
       if (data->newraw) {
-	Py_INCREF(data->newraw);
-	data->newargs = PyTuple_New(1);
-	PyTuple_SetItem(data->newargs, 0, obj);
+        Py_INCREF(data->newraw);
+        data->newargs = PyTuple_New(1);
+        PyTuple_SetItem(data->newargs, 0, obj);
       } else {
-	data->newargs = obj;
+        data->newargs = obj;
       }
       Py_INCREF(data->newargs);
     }
@@ -1339,8 +1339,8 @@ PySwigObject_format(const char* fmt, PySwigObject *v)
     if (PyTuple_SetItem(args, 0, PySwigObject_long(v)) == 0) {
       PyObject *ofmt = PyString_FromString(fmt);
       if (ofmt) {
-	res = PyString_Format(ofmt,args);
-	Py_DECREF(ofmt);
+        res = PyString_Format(ofmt,args);
+        Py_DECREF(ofmt);
       }
       Py_DECREF(args);
     }
@@ -1445,14 +1445,14 @@ PySwigObject_dealloc(PyObject *v)
       /* destroy is always a VARARGS method */
       PyObject *res;
       if (data->delargs) {
-	/* we need to create a temporal object to carry the destroy operation */
-	PyObject *tmp = PySwigObject_New(sobj->ptr, ty, 0);
-	res = SWIG_Python_CallFunctor(destroy, tmp);
-	Py_DECREF(tmp);
+        /* we need to create a temporal object to carry the destroy operation */
+        PyObject *tmp = PySwigObject_New(sobj->ptr, ty, 0);
+        res = SWIG_Python_CallFunctor(destroy, tmp);
+        Py_DECREF(tmp);
       } else {
-	PyCFunction meth = PyCFunction_GET_FUNCTION(destroy);
-	PyObject *mself = PyCFunction_GET_SELF(destroy);
-	res = ((*meth)(mself, v));
+        PyCFunction meth = PyCFunction_GET_FUNCTION(destroy);
+        PyObject *mself = PyCFunction_GET_SELF(destroy);
+        res = ((*meth)(mself, v));
       }
       Py_XDECREF(res);
     } else {
@@ -1541,17 +1541,17 @@ PySwigObject_own(PyObject *v, PyObject *args)
       PyObject *obj = PyBool_FromLong(sobj->own);
       if (val) {
 #ifdef METH_NOARGS
-	if (PyObject_IsTrue(val)) {
-	  PySwigObject_acquire(v);
-	} else {
-	  PySwigObject_disown(v);
-	}
+        if (PyObject_IsTrue(val)) {
+          PySwigObject_acquire(v);
+        } else {
+          PySwigObject_disown(v);
+        }
 #else
-	if (PyObject_IsTrue(val)) {
-	  PySwigObject_acquire(v,args);
-	} else {
-	  PySwigObject_disown(v,args);
-	}
+        if (PyObject_IsTrue(val)) {
+          PySwigObject_acquire(v,args);
+        } else {
+          PySwigObject_disown(v,args);
+        }
 #endif
       } 
       return obj;
@@ -1606,12 +1606,12 @@ _PySwigObject_type(void) {
     (unaryfunc)0,  /*nb_positive*/
     (unaryfunc)0,  /*nb_absolute*/
     (inquiry)0,    /*nb_nonzero*/
-    0,		   /*nb_invert*/
-    0,		   /*nb_lshift*/
-    0,		   /*nb_rshift*/
-    0,		   /*nb_and*/
-    0,		   /*nb_xor*/
-    0,		   /*nb_or*/
+    0,             /*nb_invert*/
+    0,             /*nb_lshift*/
+    0,             /*nb_rshift*/
+    0,             /*nb_and*/
+    0,             /*nb_xor*/
+    0,             /*nb_or*/
     (coercion)0,   /*nb_coerce*/
     (unaryfunc)PySwigObject_long, /*nb_int*/
     (unaryfunc)PySwigObject_long, /*nb_long*/
@@ -1632,63 +1632,63 @@ _PySwigObject_type(void) {
   if (!type_init) {
     const PyTypeObject tmp
       = {
-	PyObject_HEAD_INIT(NULL)
-	0,				    /* ob_size */
-	(char *)"PySwigObject",		    /* tp_name */
-	sizeof(PySwigObject),		    /* tp_basicsize */
-	0,			            /* tp_itemsize */
-	(destructor)PySwigObject_dealloc,   /* tp_dealloc */
-	(printfunc)PySwigObject_print,	    /* tp_print */
+        PyObject_HEAD_INIT(NULL)
+        0,                                  /* ob_size */
+        (char *)"PySwigObject",             /* tp_name */
+        sizeof(PySwigObject),               /* tp_basicsize */
+        0,                                  /* tp_itemsize */
+        (destructor)PySwigObject_dealloc,   /* tp_dealloc */
+        (printfunc)PySwigObject_print,      /* tp_print */
 #if PY_VERSION_HEX < 0x02020000
-	(getattrfunc)PySwigObject_getattr,  /* tp_getattr */ 
+        (getattrfunc)PySwigObject_getattr,  /* tp_getattr */ 
 #else
-	(getattrfunc)0,			    /* tp_getattr */ 
+        (getattrfunc)0,                     /* tp_getattr */ 
 #endif
-	(setattrfunc)0,			    /* tp_setattr */ 
-	(cmpfunc)PySwigObject_compare,	    /* tp_compare */ 
-	(reprfunc)PySwigObject_repr,	    /* tp_repr */    
-	&PySwigObject_as_number,	    /* tp_as_number */
-	0,				    /* tp_as_sequence */
-	0,				    /* tp_as_mapping */
-	(hashfunc)0,			    /* tp_hash */
-	(ternaryfunc)0,			    /* tp_call */
-	(reprfunc)PySwigObject_str,	    /* tp_str */
-	PyObject_GenericGetAttr,            /* tp_getattro */
-	0,				    /* tp_setattro */
-	0,		                    /* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT,	            /* tp_flags */
-	swigobject_doc, 	            /* tp_doc */        
-	0,                                  /* tp_traverse */
-	0,                                  /* tp_clear */
-	0,                                  /* tp_richcompare */
-	0,                                  /* tp_weaklistoffset */
+        (setattrfunc)0,                     /* tp_setattr */ 
+        (cmpfunc)PySwigObject_compare,      /* tp_compare */ 
+        (reprfunc)PySwigObject_repr,        /* tp_repr */    
+        &PySwigObject_as_number,            /* tp_as_number */
+        0,                                  /* tp_as_sequence */
+        0,                                  /* tp_as_mapping */
+        (hashfunc)0,                        /* tp_hash */
+        (ternaryfunc)0,                     /* tp_call */
+        (reprfunc)PySwigObject_str,         /* tp_str */
+        PyObject_GenericGetAttr,            /* tp_getattro */
+        0,                                  /* tp_setattro */
+        0,                                  /* tp_as_buffer */
+        Py_TPFLAGS_DEFAULT,                 /* tp_flags */
+        swigobject_doc,                     /* tp_doc */        
+        0,                                  /* tp_traverse */
+        0,                                  /* tp_clear */
+        0,                                  /* tp_richcompare */
+        0,                                  /* tp_weaklistoffset */
 #if PY_VERSION_HEX >= 0x02020000
-	0,                                  /* tp_iter */
-	0,                                  /* tp_iternext */
-	swigobject_methods,		    /* tp_methods */ 
-	0,			            /* tp_members */
-	0,				    /* tp_getset */	    	
-	0,			            /* tp_base */	        
-	0,				    /* tp_dict */	    	
-	0,				    /* tp_descr_get */  	
-	0,				    /* tp_descr_set */  	
-	0,				    /* tp_dictoffset */ 	
-	0,				    /* tp_init */	    	
-	0,				    /* tp_alloc */	    	
-	0,			            /* tp_new */	    	
-	0,	                            /* tp_free */	   
+        0,                                  /* tp_iter */
+        0,                                  /* tp_iternext */
+        swigobject_methods,                 /* tp_methods */ 
+        0,                                  /* tp_members */
+        0,                                  /* tp_getset */             
+        0,                                  /* tp_base */               
+        0,                                  /* tp_dict */               
+        0,                                  /* tp_descr_get */          
+        0,                                  /* tp_descr_set */          
+        0,                                  /* tp_dictoffset */         
+        0,                                  /* tp_init */               
+        0,                                  /* tp_alloc */              
+        0,                                  /* tp_new */                
+        0,                                  /* tp_free */          
         0,                                  /* tp_is_gc */  
-	0,				    /* tp_bases */   
-	0,				    /* tp_mro */
-	0,				    /* tp_cache */   
- 	0,				    /* tp_subclasses */
-	0,				    /* tp_weaklist */
+        0,                                  /* tp_bases */   
+        0,                                  /* tp_mro */
+        0,                                  /* tp_cache */   
+        0,                                  /* tp_subclasses */
+        0,                                  /* tp_weaklist */
 #endif
 #if PY_VERSION_HEX >= 0x02030000
-	0,                                  /* tp_del */
+        0,                                  /* tp_del */
 #endif
 #ifdef COUNT_ALLOCS
-	0,0,0,0                             /* tp_alloc -> tp_next */
+        0,0,0,0                             /* tp_alloc -> tp_next */
 #endif
       };
     pyswigobject_type = tmp;
@@ -1799,59 +1799,59 @@ _PySwigPacked_type(void) {
   if (!type_init) {
     const PyTypeObject tmp
       = {
-	PyObject_HEAD_INIT(NULL)
-	0,				    /* ob_size */	
-	(char *)"PySwigPacked",		    /* tp_name */	
-	sizeof(PySwigPacked),		    /* tp_basicsize */	
-	0,				    /* tp_itemsize */	
-	(destructor)PySwigPacked_dealloc,   /* tp_dealloc */	
-	(printfunc)PySwigPacked_print,	    /* tp_print */   	
-	(getattrfunc)0,			    /* tp_getattr */ 	
-	(setattrfunc)0,			    /* tp_setattr */ 	
-	(cmpfunc)PySwigPacked_compare,	    /* tp_compare */ 	
-	(reprfunc)PySwigPacked_repr,	    /* tp_repr */    	
-	0,	                            /* tp_as_number */	
-	0,				    /* tp_as_sequence */
-	0,				    /* tp_as_mapping */	
-	(hashfunc)0,			    /* tp_hash */	
-	(ternaryfunc)0,			    /* tp_call */	
-	(reprfunc)PySwigPacked_str,	    /* tp_str */	
-	PyObject_GenericGetAttr,            /* tp_getattro */
-	0,				    /* tp_setattro */
-	0,		                    /* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT,	            /* tp_flags */
-	swigpacked_doc, 	            /* tp_doc */
-	0,                                  /* tp_traverse */
-	0,                                  /* tp_clear */
-	0,                                  /* tp_richcompare */
-	0,                                  /* tp_weaklistoffset */
+        PyObject_HEAD_INIT(NULL)
+        0,                                  /* ob_size */       
+        (char *)"PySwigPacked",             /* tp_name */       
+        sizeof(PySwigPacked),               /* tp_basicsize */  
+        0,                                  /* tp_itemsize */   
+        (destructor)PySwigPacked_dealloc,   /* tp_dealloc */    
+        (printfunc)PySwigPacked_print,      /* tp_print */      
+        (getattrfunc)0,                     /* tp_getattr */    
+        (setattrfunc)0,                     /* tp_setattr */    
+        (cmpfunc)PySwigPacked_compare,      /* tp_compare */    
+        (reprfunc)PySwigPacked_repr,        /* tp_repr */       
+        0,                                  /* tp_as_number */  
+        0,                                  /* tp_as_sequence */
+        0,                                  /* tp_as_mapping */ 
+        (hashfunc)0,                        /* tp_hash */       
+        (ternaryfunc)0,                     /* tp_call */       
+        (reprfunc)PySwigPacked_str,         /* tp_str */        
+        PyObject_GenericGetAttr,            /* tp_getattro */
+        0,                                  /* tp_setattro */
+        0,                                  /* tp_as_buffer */
+        Py_TPFLAGS_DEFAULT,                 /* tp_flags */
+        swigpacked_doc,                     /* tp_doc */
+        0,                                  /* tp_traverse */
+        0,                                  /* tp_clear */
+        0,                                  /* tp_richcompare */
+        0,                                  /* tp_weaklistoffset */
 #if PY_VERSION_HEX >= 0x02020000
-	0,                                  /* tp_iter */
-	0,                                  /* tp_iternext */
-	0,		                    /* tp_methods */ 
-	0,			            /* tp_members */
-	0,				    /* tp_getset */	    	
-	0,			            /* tp_base */	        
-	0,				    /* tp_dict */	    	
-	0,				    /* tp_descr_get */  	
-	0,				    /* tp_descr_set */  	
-	0,				    /* tp_dictoffset */ 	
-	0,				    /* tp_init */	    	
-	0,				    /* tp_alloc */	    	
-	0,			            /* tp_new */	    	
-	0, 	                            /* tp_free */	   
+        0,                                  /* tp_iter */
+        0,                                  /* tp_iternext */
+        0,                                  /* tp_methods */ 
+        0,                                  /* tp_members */
+        0,                                  /* tp_getset */             
+        0,                                  /* tp_base */               
+        0,                                  /* tp_dict */               
+        0,                                  /* tp_descr_get */          
+        0,                                  /* tp_descr_set */          
+        0,                                  /* tp_dictoffset */         
+        0,                                  /* tp_init */               
+        0,                                  /* tp_alloc */              
+        0,                                  /* tp_new */                
+        0,                                  /* tp_free */          
         0,                                  /* tp_is_gc */  
-	0,				    /* tp_bases */   
-	0,				    /* tp_mro */
-	0,				    /* tp_cache */   
- 	0,				    /* tp_subclasses */
-	0,				    /* tp_weaklist */
+        0,                                  /* tp_bases */   
+        0,                                  /* tp_mro */
+        0,                                  /* tp_cache */   
+        0,                                  /* tp_subclasses */
+        0,                                  /* tp_weaklist */
 #endif
 #if PY_VERSION_HEX >= 0x02030000
-	0,                                  /* tp_del */
+        0,                                  /* tp_del */
 #endif
 #ifdef COUNT_ALLOCS
-	0,0,0,0                             /* tp_alloc -> tp_next */
+        0,0,0,0                             /* tp_alloc -> tp_next */
 #endif
       };
     pyswigpacked_type = tmp;
@@ -1925,22 +1925,22 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
     } else {
       PyObject **dictptr = _PyObject_GetDictPtr(pyobj);
       if (dictptr != NULL) {
-	PyObject *dict = *dictptr;
-	obj = dict ? PyDict_GetItem(dict, SWIG_This()) : 0;
+        PyObject *dict = *dictptr;
+        obj = dict ? PyDict_GetItem(dict, SWIG_This()) : 0;
       } else {
 #ifdef PyWeakref_CheckProxy
-	if (PyWeakref_CheckProxy(pyobj)) {
-	  PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
-	  return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
-	}
+        if (PyWeakref_CheckProxy(pyobj)) {
+          PyObject *wobj = PyWeakref_GET_OBJECT(pyobj);
+          return wobj ? SWIG_Python_GetSwigThis(wobj) : 0;
+        }
 #endif
-	obj = PyObject_GetAttr(pyobj,SWIG_This());
-	if (obj) {
-	  Py_DECREF(obj);
-	} else {
-	  if (PyErr_Occurred()) PyErr_Clear();
-	  return 0;
-	}
+        obj = PyObject_GetAttr(pyobj,SWIG_This());
+        if (obj) {
+          Py_DECREF(obj);
+        } else {
+          if (PyErr_Occurred()) PyErr_Clear();
+          return 0;
+        }
       }
     }
 #else
@@ -1954,7 +1954,7 @@ SWIG_Python_GetSwigThis(PyObject *pyobj)
 #endif
     if (obj && !PySwigObject_Check(obj)) {
       /* a PyObject is called 'this', try to get the 'real this'
-	 PySwigObject from it */ 
+         PySwigObject from it */ 
       return SWIG_Python_GetSwigThis(obj);
     }
     return (PySwigObject *)obj;
@@ -1989,67 +1989,67 @@ SWIG_Python_ConvertPtrAndOwn(PyObject *obj, void **ptr, swig_type_info *ty, int 
     while (sobj) {
       void *vptr = sobj->ptr;
       if (ty) {
-	swig_type_info *to = sobj->ty;
-	if (to == ty) {
-	  /* no type cast needed */
-	  if (ptr) *ptr = vptr;
-	  break;
-	} else {
-	  swig_cast_info *tc = SWIG_TypeCheck(to->name,ty);
-	  if (!tc) {
-	    sobj = (PySwigObject *)sobj->next;
-	  } else {
-	    if (ptr) *ptr = SWIG_TypeCast(tc,vptr);
-	    break;
-	  }
-	}
+        swig_type_info *to = sobj->ty;
+        if (to == ty) {
+          /* no type cast needed */
+          if (ptr) *ptr = vptr;
+          break;
+        } else {
+          swig_cast_info *tc = SWIG_TypeCheck(to->name,ty);
+          if (!tc) {
+            sobj = (PySwigObject *)sobj->next;
+          } else {
+            if (ptr) *ptr = SWIG_TypeCast(tc,vptr);
+            break;
+          }
+        }
       } else {
-	if (ptr) *ptr = vptr;
-	break;
+        if (ptr) *ptr = vptr;
+        break;
       }
     }
     if (sobj) {
       if (own) *own = sobj->own;
       if (flags & SWIG_POINTER_DISOWN) {
-	sobj->own = 0;
+        sobj->own = 0;
       }
       return SWIG_OK;
     } else {
       int res = SWIG_ERROR;
       if (flags & SWIG_POINTER_IMPLICIT_CONV) {
-	PySwigClientData *data = ty ? (PySwigClientData *) ty->clientdata : 0;
-	if (data && !data->implicitconv) {
-	  PyObject *klass = data->klass;
-	  if (klass) {
-	    PyObject *impconv;
-	    data->implicitconv = 1; /* avoid recursion and call 'explicit' constructors*/
-	    impconv = SWIG_Python_CallFunctor(klass, obj);
-	    data->implicitconv = 0;
-	    if (PyErr_Occurred()) {
-	      PyErr_Clear();
-	      impconv = 0;
-	    }
-	    if (impconv) {
-	      PySwigObject *iobj = SWIG_Python_GetSwigThis(impconv);
-	      if (iobj) {
-		void *vptr;
-		res = SWIG_Python_ConvertPtrAndOwn((PyObject*)iobj, &vptr, ty, 0, 0);
-		if (SWIG_IsOK(res)) {
-		  if (ptr) {
-		    *ptr = vptr;
-		    /* transfer the ownership to 'ptr' */
-		    iobj->own = 0;
-		    res = SWIG_AddCast(res);
-		    res = SWIG_AddNewMask(res);
-		  } else {
-		    res = SWIG_AddCast(res);		    
-		  }
-		}
-	      }
-	      Py_DECREF(impconv);
-	    }
-	  }
-	}
+        PySwigClientData *data = ty ? (PySwigClientData *) ty->clientdata : 0;
+        if (data && !data->implicitconv) {
+          PyObject *klass = data->klass;
+          if (klass) {
+            PyObject *impconv;
+            data->implicitconv = 1; /* avoid recursion and call 'explicit' constructors*/
+            impconv = SWIG_Python_CallFunctor(klass, obj);
+            data->implicitconv = 0;
+            if (PyErr_Occurred()) {
+              PyErr_Clear();
+              impconv = 0;
+            }
+            if (impconv) {
+              PySwigObject *iobj = SWIG_Python_GetSwigThis(impconv);
+              if (iobj) {
+                void *vptr;
+                res = SWIG_Python_ConvertPtrAndOwn((PyObject*)iobj, &vptr, ty, 0, 0);
+                if (SWIG_IsOK(res)) {
+                  if (ptr) {
+                    *ptr = vptr;
+                    /* transfer the ownership to 'ptr' */
+                    iobj->own = 0;
+                    res = SWIG_AddCast(res);
+                    res = SWIG_AddNewMask(res);
+                  } else {
+                    res = SWIG_AddCast(res);                
+                  }
+                }
+              }
+              Py_DECREF(impconv);
+            }
+          }
+        }
       }
       return res;
     }
@@ -2120,12 +2120,12 @@ SWIG_Python_NewShadowInstance(PySwigClientData *data, PyObject *swig_this)
 #if !defined(SWIG_PYTHON_SLOW_GETSET_THIS)
       PyObject **dictptr = _PyObject_GetDictPtr(inst);
       if (dictptr != NULL) {
-	PyObject *dict = *dictptr;
-	if (dict == NULL) {
-	  dict = PyDict_New();
-	  *dictptr = dict;
-	  PyDict_SetItem(dict, SWIG_This(), swig_this);
-	}
+        PyObject *dict = *dictptr;
+        if (dict == NULL) {
+          dict = PyDict_New();
+          *dictptr = dict;
+          PyDict_SetItem(dict, SWIG_This(), swig_this);
+        }
       }
 #else
       PyObject *key = SWIG_This();
@@ -2222,8 +2222,8 @@ SWIG_Python_NewPointerObj(void *ptr, swig_type_info *type, int flags) {
     if (clientdata && !(flags & SWIG_POINTER_NOSHADOW)) {
       PyObject *inst = SWIG_Python_NewShadowInstance(clientdata, robj);
       if (inst) {
-	Py_DECREF(robj);
-	robj = inst;
+        Py_DECREF(robj);
+        robj = inst;
       }
     }
     return robj;
@@ -2254,7 +2254,7 @@ SWIG_Python_GetModule(void) {
     type_pointer = SWIG_ReturnGlobalTypeList((void *)0);
 #else
     type_pointer = PyCObject_Import((char*)"swig_runtime_data" SWIG_RUNTIME_VERSION,
-				    (char*)"type_pointer" SWIG_TYPE_TABLE_NAME);
+                                    (char*)"type_pointer" SWIG_TYPE_TABLE_NAME);
     if (PyErr_Occurred()) {
       PyErr_Clear();
       type_pointer = (void *)0;
@@ -2273,12 +2273,12 @@ PyModule_AddObject(PyObject *m, char *name, PyObject *o)
   PyObject *dict;
   if (!PyModule_Check(m)) {
     PyErr_SetString(PyExc_TypeError,
-		    "PyModule_AddObject() needs module as first arg");
+                    "PyModule_AddObject() needs module as first arg");
     return SWIG_ERROR;
   }
   if (!o) {
     PyErr_SetString(PyExc_TypeError,
-		    "PyModule_AddObject() needs non-NULL value");
+                    "PyModule_AddObject() needs non-NULL value");
     return SWIG_ERROR;
   }
   
@@ -2286,7 +2286,7 @@ PyModule_AddObject(PyObject *m, char *name, PyObject *o)
   if (dict == NULL) {
     /* Internal error -- modules must have a dict! */
     PyErr_Format(PyExc_SystemError, "module '%s' has no __dict__",
-		 PyModule_GetName(m));
+                 PyModule_GetName(m));
     return SWIG_ERROR;
   }
   if (PyDict_SetItemString(dict, name, o))
@@ -2317,7 +2317,7 @@ SWIG_Python_SetModule(swig_module_info *swig_module) {
   static PyMethodDef swig_empty_runtime_method_table[] = { {NULL, NULL, 0, NULL} };/* Sentinel */
 
   PyObject *module = Py_InitModule((char*)"swig_runtime_data" SWIG_RUNTIME_VERSION,
-				   swig_empty_runtime_method_table);
+                                   swig_empty_runtime_method_table);
   PyObject *pointer = PyCObject_FromVoidPtr((void *) swig_module, SWIG_Python_DestroyModule);
   if (pointer && module) {
     PyModule_AddObject(module, (char*)"type_pointer" SWIG_TYPE_TABLE_NAME, pointer);
@@ -2375,9 +2375,9 @@ SWIG_Python_AddErrMesg(const char* mesg, int infront)
       Py_XINCREF(type);
       PyErr_Clear();
       if (infront) {
-	PyErr_Format(type, "%s %s", mesg, PyString_AsString(old_str));
+        PyErr_Format(type, "%s %s", mesg, PyString_AsString(old_str));
       } else {
-	PyErr_Format(type, "%s %s", PyString_AsString(old_str), mesg);
+        PyErr_Format(type, "%s %s", PyString_AsString(old_str), mesg);
       }
       Py_DECREF(old_str);
     }
@@ -2416,26 +2416,26 @@ SWIG_Python_TypeError(const char *type, PyObject *obj)
     if (obj && PySwigObject_Check(obj)) {
       const char *otype = (const char *) PySwigObject_GetDesc(obj);
       if (otype) {
-	PyErr_Format(PyExc_TypeError, "a '%s' is expected, 'PySwigObject(%s)' is received",
-		     type, otype);
-	return;
+        PyErr_Format(PyExc_TypeError, "a '%s' is expected, 'PySwigObject(%s)' is received",
+                     type, otype);
+        return;
       }
     } else 
 #endif      
     {
       const char *otype = (obj ? obj->ob_type->tp_name : 0); 
       if (otype) {
-	PyObject *str = PyObject_Str(obj);
-	const char *cstr = str ? PyString_AsString(str) : 0;
-	if (cstr) {
-	  PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s(%s)' is received",
-		       type, otype, cstr);
-	} else {
-	  PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s' is received",
-		       type, otype);
-	}
-	Py_XDECREF(str);
-	return;
+        PyObject *str = PyObject_Str(obj);
+        const char *cstr = str ? PyString_AsString(str) : 0;
+        if (cstr) {
+          PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s(%s)' is received",
+                       type, otype, cstr);
+        } else {
+          PyErr_Format(PyExc_TypeError, "a '%s' is expected, '%s' is received",
+                       type, otype);
+        }
+        Py_XDECREF(str);
+        return;
       }
     }   
     PyErr_Format(PyExc_TypeError, "a '%s' is expected", type);
@@ -2641,10 +2641,10 @@ SWIG_AsVal_double (PyObject *obj, double *val)
     if (!dispatch) {
       long v = PyLong_AsLong(obj);
       if (!PyErr_Occurred()) {
-	if (val) *val = v;
-	return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
+        if (val) *val = v;
+        return SWIG_AddCast(SWIG_AddCast(SWIG_OK));
       } else {
-	PyErr_Clear();
+        PyErr_Clear();
       }
     }
   }
@@ -2718,8 +2718,8 @@ SWIG_AsVal_long (PyObject *obj, long* val)
       double d;
       int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
       if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, LONG_MIN, LONG_MAX)) {
-	if (val) *val = (long)(d);
-	return res;
+        if (val) *val = (long)(d);
+        return res;
       }
     }
   }
@@ -2764,7 +2764,7 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
     if (size > INT_MAX) {
       swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
       return pchar_descriptor ? 
-	SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+        SWIG_NewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
     } else {
       return PyString_FromStringAndSize(carray, static_cast< int >(size));
     }
@@ -2789,30 +2789,30 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
     PyString_AsStringAndSize(obj, &cstr, &len);
     if (cptr)  {
       if (alloc) {
-	/* 
-	   In python the user should not be able to modify the inner
-	   string representation. To warranty that, if you define
-	   SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
-	   buffer is always returned.
+        /* 
+           In python the user should not be able to modify the inner
+           string representation. To warranty that, if you define
+           SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
+           buffer is always returned.
 
-	   The default behavior is just to return the pointer value,
-	   so, be careful.
-	*/ 
+           The default behavior is just to return the pointer value,
+           so, be careful.
+        */ 
 #if defined(SWIG_PYTHON_SAFE_CSTRINGS)
-	if (*alloc != SWIG_OLDOBJ) 
+        if (*alloc != SWIG_OLDOBJ) 
 #else
-	if (*alloc == SWIG_NEWOBJ) 
+        if (*alloc == SWIG_NEWOBJ) 
 #endif
-	  {
-	    *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
-	    *alloc = SWIG_NEWOBJ;
-	  }
-	else {
-	  *cptr = cstr;
-	  *alloc = SWIG_OLDOBJ;
-	}
+          {
+            *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
+            *alloc = SWIG_NEWOBJ;
+          }
+        else {
+          *cptr = cstr;
+          *alloc = SWIG_OLDOBJ;
+        }
       } else {
-	*cptr = PyString_AsString(obj);
+        *cptr = PyString_AsString(obj);
       }
     }
     if (psize) *psize = len + 1;
@@ -2822,10 +2822,10 @@ SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
     if (pchar_descriptor) {
       void* vptr = 0;
       if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
-	if (cptr) *cptr = (char *) vptr;
-	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
-	if (alloc) *alloc = SWIG_OLDOBJ;
-	return SWIG_OK;
+        if (cptr) *cptr = (char *) vptr;
+        if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
+        if (alloc) *alloc = SWIG_OLDOBJ;
+        return SWIG_OK;
       }
     }
   }
@@ -2912,8 +2912,8 @@ SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val)
       double d;
       int res = SWIG_AddCast(SWIG_AsVal_double (obj,&d));
       if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
-	if (val) *val = (unsigned long)(d);
-	return res;
+        if (val) *val = (unsigned long)(d);
+        return res;
       }
     }
   }
@@ -2958,10 +2958,10 @@ SWIGINTERN void CellEngine_SetRuleBuffer(CellEngine *self,PyObject *buf,int neig
         Py_ssize_t len =
             0;
 
-	PyObject_AsReadBuffer(
-	    buf,
-	    (const void **)&buffer,
-	    &len);
+        PyObject_AsReadBuffer(
+            buf,
+            (const void **)&buffer,
+            &len);
 
         self->SetRuleTable(
             buffer, 
@@ -9366,256 +9366,256 @@ SWIGINTERN PyObject *CellEngine_swigregister(PyObject *SWIGUNUSEDPARM(self), PyO
 }
 
 static PyMethodDef SwigMethods[] = {
-	 { (char *)"RECT_left_set", _wrap_RECT_left_set, METH_VARARGS, NULL},
-	 { (char *)"RECT_left_get", _wrap_RECT_left_get, METH_VARARGS, NULL},
-	 { (char *)"RECT_right_set", _wrap_RECT_right_set, METH_VARARGS, NULL},
-	 { (char *)"RECT_right_get", _wrap_RECT_right_get, METH_VARARGS, NULL},
-	 { (char *)"RECT_top_set", _wrap_RECT_top_set, METH_VARARGS, NULL},
-	 { (char *)"RECT_top_get", _wrap_RECT_top_get, METH_VARARGS, NULL},
-	 { (char *)"RECT_bottom_set", _wrap_RECT_bottom_set, METH_VARARGS, NULL},
-	 { (char *)"RECT_bottom_get", _wrap_RECT_bottom_get, METH_VARARGS, NULL},
-	 { (char *)"new_RECT", _wrap_new_RECT, METH_VARARGS, NULL},
-	 { (char *)"delete_RECT", _wrap_delete_RECT, METH_VARARGS, NULL},
-	 { (char *)"RECT_swigregister", RECT_swigregister, METH_VARARGS, NULL},
-	 { (char *)"Rand32", _wrap_Rand32, METH_VARARGS, NULL},
-	 { (char *)"Rand16", _wrap_Rand16, METH_VARARGS, NULL},
-	 { (char *)"Rand8", _wrap_Rand8, METH_VARARGS, NULL},
-	 { (char *)"PrimeRandoms", _wrap_PrimeRandoms, METH_VARARGS, NULL},
-	 { (char *)"FeedRandom", _wrap_FeedRandom, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_name_set", _wrap_CellEngine_name_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_name_get", _wrap_CellEngine_name_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenMem_set", _wrap_CellEngine_screenMem_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenMem_get", _wrap_CellEngine_screenMem_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenWidth_set", _wrap_CellEngine_screenWidth_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenWidth_get", _wrap_CellEngine_screenWidth_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenHeight_set", _wrap_CellEngine_screenHeight_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenHeight_get", _wrap_CellEngine_screenHeight_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenRowBytes_set", _wrap_CellEngine_screenRowBytes_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_screenRowBytes_get", _wrap_CellEngine_screenRowBytes_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backMem_set", _wrap_CellEngine_backMem_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backMem_get", _wrap_CellEngine_backMem_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backSize_set", _wrap_CellEngine_backSize_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backSize_get", _wrap_CellEngine_backSize_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backRowBytes_set", _wrap_CellEngine_backRowBytes_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backRowBytes_get", _wrap_CellEngine_backRowBytes_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backWidth_set", _wrap_CellEngine_backWidth_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backWidth_get", _wrap_CellEngine_backWidth_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backHeight_set", _wrap_CellEngine_backHeight_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backHeight_get", _wrap_CellEngine_backHeight_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backBorder_set", _wrap_CellEngine_backBorder_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_backBorder_get", _wrap_CellEngine_backBorder_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_frontMem_set", _wrap_CellEngine_frontMem_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_frontMem_get", _wrap_CellEngine_frontMem_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskMem_set", _wrap_CellEngine_maskMem_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskMem_get", _wrap_CellEngine_maskMem_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskRowBytes_set", _wrap_CellEngine_maskRowBytes_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskRowBytes_get", _wrap_CellEngine_maskRowBytes_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskWidth_set", _wrap_CellEngine_maskWidth_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskWidth_get", _wrap_CellEngine_maskWidth_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskHeight_set", _wrap_CellEngine_maskHeight_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskHeight_get", _wrap_CellEngine_maskHeight_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_masked_set", _wrap_CellEngine_masked_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_masked_get", _wrap_CellEngine_masked_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_neighborhood_set", _wrap_CellEngine_neighborhood_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_neighborhood_get", _wrap_CellEngine_neighborhood_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rule_set", _wrap_CellEngine_rule_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rule_get", _wrap_CellEngine_rule_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleStatic_set", _wrap_CellEngine_ruleStatic_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleStatic_get", _wrap_CellEngine_ruleStatic_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleSize_set", _wrap_CellEngine_ruleSize_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleSize_get", _wrap_CellEngine_ruleSize_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleName_set", _wrap_CellEngine_ruleName_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ruleName_get", _wrap_CellEngine_ruleName_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_x_set", _wrap_CellEngine_x_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_x_get", _wrap_CellEngine_x_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_y_set", _wrap_CellEngine_y_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_y_get", _wrap_CellEngine_y_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_dx_set", _wrap_CellEngine_dx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_dx_get", _wrap_CellEngine_dx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_dy_set", _wrap_CellEngine_dy_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_dy_get", _wrap_CellEngine_dy_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_width_set", _wrap_CellEngine_width_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_width_get", _wrap_CellEngine_width_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_height_set", _wrap_CellEngine_height_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_height_get", _wrap_CellEngine_height_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_idealWidth_set", _wrap_CellEngine_idealWidth_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_idealWidth_get", _wrap_CellEngine_idealWidth_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_idealHeight_set", _wrap_CellEngine_idealHeight_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_idealHeight_get", _wrap_CellEngine_idealHeight_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_phase_set", _wrap_CellEngine_phase_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_phase_get", _wrap_CellEngine_phase_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ticks_set", _wrap_CellEngine_ticks_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ticks_get", _wrap_CellEngine_ticks_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_wrap_set", _wrap_CellEngine_wrap_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_wrap_get", _wrap_CellEngine_wrap_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_steps_set", _wrap_CellEngine_steps_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_steps_get", _wrap_CellEngine_steps_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_frob_set", _wrap_CellEngine_frob_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_frob_get", _wrap_CellEngine_frob_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rumble_set", _wrap_CellEngine_rumble_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rumble_get", _wrap_CellEngine_rumble_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rumblemax_set", _wrap_CellEngine_rumblemax_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rumblemax_get", _wrap_CellEngine_rumblemax_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_hubba_set", _wrap_CellEngine_hubba_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_hubba_get", _wrap_CellEngine_hubba_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_inflation_set", _wrap_CellEngine_inflation_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_inflation_get", _wrap_CellEngine_inflation_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_high_set", _wrap_CellEngine_high_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_high_get", _wrap_CellEngine_high_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_low_set", _wrap_CellEngine_low_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_low_get", _wrap_CellEngine_low_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskClip_set", _wrap_CellEngine_maskClip_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_maskClip_get", _wrap_CellEngine_maskClip_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_moveImage_set", _wrap_CellEngine_moveImage_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_moveImage_get", _wrap_CellEngine_moveImage_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numbera_set", _wrap_CellEngine_numbera_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numbera_get", _wrap_CellEngine_numbera_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numberb_set", _wrap_CellEngine_numberb_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numberb_get", _wrap_CellEngine_numberb_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numberc_set", _wrap_CellEngine_numberc_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_numberc_get", _wrap_CellEngine_numberc_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_anglea_set", _wrap_CellEngine_anglea_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_anglea_get", _wrap_CellEngine_anglea_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_angleb_set", _wrap_CellEngine_angleb_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_angleb_get", _wrap_CellEngine_angleb_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_anglec_set", _wrap_CellEngine_anglec_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_anglec_get", _wrap_CellEngine_anglec_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointax_set", _wrap_CellEngine_pointax_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointax_get", _wrap_CellEngine_pointax_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointay_set", _wrap_CellEngine_pointay_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointay_get", _wrap_CellEngine_pointay_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointbx_set", _wrap_CellEngine_pointbx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointbx_get", _wrap_CellEngine_pointbx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointby_set", _wrap_CellEngine_pointby_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointby_get", _wrap_CellEngine_pointby_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointcx_set", _wrap_CellEngine_pointcx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointcx_get", _wrap_CellEngine_pointcx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointcy_set", _wrap_CellEngine_pointcy_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_pointcy_get", _wrap_CellEngine_pointcy_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_clipRects_set", _wrap_CellEngine_clipRects_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_clipRects_get", _wrap_CellEngine_clipRects_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rectList_set", _wrap_CellEngine_rectList_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_rectList_get", _wrap_CellEngine_rectList_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_skips_set", _wrap_CellEngine_skips_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_skips_get", _wrap_CellEngine_skips_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_skip_set", _wrap_CellEngine_skip_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_skip_get", _wrap_CellEngine_skip_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_total_set", _wrap_CellEngine_total_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_total_get", _wrap_CellEngine_total_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_tracking_set", _wrap_CellEngine_tracking_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_tracking_get", _wrap_CellEngine_tracking_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_action_set", _wrap_CellEngine_action_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_action_get", _wrap_CellEngine_action_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_downx_set", _wrap_CellEngine_downx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_downx_get", _wrap_CellEngine_downx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_downy_set", _wrap_CellEngine_downy_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_downy_get", _wrap_CellEngine_downy_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_grabx_set", _wrap_CellEngine_grabx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_grabx_get", _wrap_CellEngine_grabx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_graby_set", _wrap_CellEngine_graby_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_graby_get", _wrap_CellEngine_graby_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_lastx_set", _wrap_CellEngine_lastx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_lastx_get", _wrap_CellEngine_lastx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_lasty_set", _wrap_CellEngine_lasty_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_lasty_get", _wrap_CellEngine_lasty_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_saveskips_set", _wrap_CellEngine_saveskips_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_saveskips_get", _wrap_CellEngine_saveskips_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_still_set", _wrap_CellEngine_still_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_still_get", _wrap_CellEngine_still_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_gravx_set", _wrap_CellEngine_gravx_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_gravx_get", _wrap_CellEngine_gravx_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_gravy_set", _wrap_CellEngine_gravy_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_gravy_get", _wrap_CellEngine_gravy_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_grabbable_set", _wrap_CellEngine_grabbable_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_grabbable_get", _wrap_CellEngine_grabbable_get, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_data_set", _wrap_CellEngine_data_set, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_data_get", _wrap_CellEngine_data_get, METH_VARARGS, NULL},
-	 { (char *)"new_CellEngine", _wrap_new_CellEngine, METH_VARARGS, NULL},
-	 { (char *)"delete_CellEngine", _wrap_delete_CellEngine, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_Init", _wrap_CellEngine_Init, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_InitScreen", _wrap_CellEngine_InitScreen, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetRect", _wrap_CellEngine_SetRect, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetPos", _wrap_CellEngine_SetPos, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetSize", _wrap_CellEngine_SetSize, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ForceOnScreen", _wrap_CellEngine_ForceOnScreen, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_OnScreen", _wrap_CellEngine_OnScreen, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_Garble", _wrap_CellEngine_Garble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_GarbleRect", _wrap_CellEngine_GarbleRect, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_Fill", _wrap_CellEngine_Fill, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_FillRect", _wrap_CellEngine_FillRect, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_ResetMask", _wrap_CellEngine_ResetMask, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetMask", _wrap_CellEngine_SetMask, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_UpdateClip", _wrap_CellEngine_UpdateClip, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_LoadRule", _wrap_CellEngine_LoadRule, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_LoadRuleData", _wrap_CellEngine_LoadRuleData, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_LoadStaticRuleData", _wrap_CellEngine_LoadStaticRuleData, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetRuleTable", _wrap_CellEngine_SetRuleTable, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_CountRules", _wrap_CellEngine_CountRules, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_GetRuleName", _wrap_CellEngine_GetRuleName, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_GetRuleData", _wrap_CellEngine_GetRuleData, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_DoPhysics", _wrap_CellEngine_DoPhysics, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_DoRule", _wrap_CellEngine_DoRule, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_PostRule", _wrap_CellEngine_PostRule, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_CopyToBack", _wrap_CellEngine_CopyToBack, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_PumpToFront", _wrap_CellEngine_PumpToFront, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_GetCell", _wrap_CellEngine_GetCell, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetCell", _wrap_CellEngine_SetCell, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_GetCellBuffer", _wrap_CellEngine_GetCellBuffer, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_moore_a", _wrap_CellEngine_n_moore_a, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_moore_ab", _wrap_CellEngine_n_moore_ab, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_vonn_neumann", _wrap_CellEngine_n_vonn_neumann, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_margolis", _wrap_CellEngine_n_margolis, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_margolis_ph", _wrap_CellEngine_n_margolis_ph, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_margolis_hv", _wrap_CellEngine_n_margolis_hv, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_life", _wrap_CellEngine_n_life, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_brain", _wrap_CellEngine_n_brain, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_heat", _wrap_CellEngine_n_heat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_dheat", _wrap_CellEngine_n_dheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_lheat", _wrap_CellEngine_n_lheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_ldheat", _wrap_CellEngine_n_ldheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_abdheat", _wrap_CellEngine_n_abdheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_abcdheat", _wrap_CellEngine_n_abcdheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_edheat", _wrap_CellEngine_n_edheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_ranch", _wrap_CellEngine_n_ranch, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_anneal", _wrap_CellEngine_n_anneal, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_anneal4", _wrap_CellEngine_n_anneal4, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_anneal8", _wrap_CellEngine_n_anneal8, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_eco", _wrap_CellEngine_n_eco, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_torben", _wrap_CellEngine_n_torben, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_torben2", _wrap_CellEngine_n_torben2, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_torben3", _wrap_CellEngine_n_torben3, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_torben4", _wrap_CellEngine_n_torben4, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_ball", _wrap_CellEngine_n_ball, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_fdheat", _wrap_CellEngine_n_fdheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_fabcdheat", _wrap_CellEngine_n_fabcdheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_risca", _wrap_CellEngine_n_risca, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_insert", _wrap_CellEngine_n_insert, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_heaco", _wrap_CellEngine_n_heaco, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_marble", _wrap_CellEngine_n_marble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_smarble", _wrap_CellEngine_n_smarble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_farble", _wrap_CellEngine_n_farble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_garble", _wrap_CellEngine_n_garble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_garblebug", _wrap_CellEngine_n_garblebug, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_twoheats", _wrap_CellEngine_n_twoheats, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_spin", _wrap_CellEngine_n_spin, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_driven", _wrap_CellEngine_n_driven, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_daft", _wrap_CellEngine_n_daft, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_spinsonly", _wrap_CellEngine_n_spinsonly, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_spinsbank", _wrap_CellEngine_n_spinsbank, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_spinsheat", _wrap_CellEngine_n_spinsheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_spinglass", _wrap_CellEngine_n_spinglass, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_glassbonds", _wrap_CellEngine_n_glassbonds, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_glassheat", _wrap_CellEngine_n_glassheat, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_faders", _wrap_CellEngine_n_faders, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_harble", _wrap_CellEngine_n_harble, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_perlin", _wrap_CellEngine_n_perlin, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_dendrite", _wrap_CellEngine_n_dendrite, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_vanneal", _wrap_CellEngine_n_vanneal, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_vanneal8", _wrap_CellEngine_n_vanneal8, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_n_jvn29", _wrap_CellEngine_n_jvn29, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_SetRuleBuffer", _wrap_CellEngine_SetRuleBuffer, METH_VARARGS, NULL},
-	 { (char *)"CellEngine_swigregister", CellEngine_swigregister, METH_VARARGS, NULL},
-	 { NULL, NULL, 0, NULL }
+         { (char *)"RECT_left_set", _wrap_RECT_left_set, METH_VARARGS, NULL},
+         { (char *)"RECT_left_get", _wrap_RECT_left_get, METH_VARARGS, NULL},
+         { (char *)"RECT_right_set", _wrap_RECT_right_set, METH_VARARGS, NULL},
+         { (char *)"RECT_right_get", _wrap_RECT_right_get, METH_VARARGS, NULL},
+         { (char *)"RECT_top_set", _wrap_RECT_top_set, METH_VARARGS, NULL},
+         { (char *)"RECT_top_get", _wrap_RECT_top_get, METH_VARARGS, NULL},
+         { (char *)"RECT_bottom_set", _wrap_RECT_bottom_set, METH_VARARGS, NULL},
+         { (char *)"RECT_bottom_get", _wrap_RECT_bottom_get, METH_VARARGS, NULL},
+         { (char *)"new_RECT", _wrap_new_RECT, METH_VARARGS, NULL},
+         { (char *)"delete_RECT", _wrap_delete_RECT, METH_VARARGS, NULL},
+         { (char *)"RECT_swigregister", RECT_swigregister, METH_VARARGS, NULL},
+         { (char *)"Rand32", _wrap_Rand32, METH_VARARGS, NULL},
+         { (char *)"Rand16", _wrap_Rand16, METH_VARARGS, NULL},
+         { (char *)"Rand8", _wrap_Rand8, METH_VARARGS, NULL},
+         { (char *)"PrimeRandoms", _wrap_PrimeRandoms, METH_VARARGS, NULL},
+         { (char *)"FeedRandom", _wrap_FeedRandom, METH_VARARGS, NULL},
+         { (char *)"CellEngine_name_set", _wrap_CellEngine_name_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_name_get", _wrap_CellEngine_name_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenMem_set", _wrap_CellEngine_screenMem_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenMem_get", _wrap_CellEngine_screenMem_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenWidth_set", _wrap_CellEngine_screenWidth_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenWidth_get", _wrap_CellEngine_screenWidth_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenHeight_set", _wrap_CellEngine_screenHeight_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenHeight_get", _wrap_CellEngine_screenHeight_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenRowBytes_set", _wrap_CellEngine_screenRowBytes_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_screenRowBytes_get", _wrap_CellEngine_screenRowBytes_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backMem_set", _wrap_CellEngine_backMem_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backMem_get", _wrap_CellEngine_backMem_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backSize_set", _wrap_CellEngine_backSize_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backSize_get", _wrap_CellEngine_backSize_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backRowBytes_set", _wrap_CellEngine_backRowBytes_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backRowBytes_get", _wrap_CellEngine_backRowBytes_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backWidth_set", _wrap_CellEngine_backWidth_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backWidth_get", _wrap_CellEngine_backWidth_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backHeight_set", _wrap_CellEngine_backHeight_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backHeight_get", _wrap_CellEngine_backHeight_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backBorder_set", _wrap_CellEngine_backBorder_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_backBorder_get", _wrap_CellEngine_backBorder_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_frontMem_set", _wrap_CellEngine_frontMem_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_frontMem_get", _wrap_CellEngine_frontMem_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskMem_set", _wrap_CellEngine_maskMem_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskMem_get", _wrap_CellEngine_maskMem_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskRowBytes_set", _wrap_CellEngine_maskRowBytes_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskRowBytes_get", _wrap_CellEngine_maskRowBytes_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskWidth_set", _wrap_CellEngine_maskWidth_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskWidth_get", _wrap_CellEngine_maskWidth_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskHeight_set", _wrap_CellEngine_maskHeight_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskHeight_get", _wrap_CellEngine_maskHeight_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_masked_set", _wrap_CellEngine_masked_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_masked_get", _wrap_CellEngine_masked_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_neighborhood_set", _wrap_CellEngine_neighborhood_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_neighborhood_get", _wrap_CellEngine_neighborhood_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rule_set", _wrap_CellEngine_rule_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rule_get", _wrap_CellEngine_rule_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleStatic_set", _wrap_CellEngine_ruleStatic_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleStatic_get", _wrap_CellEngine_ruleStatic_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleSize_set", _wrap_CellEngine_ruleSize_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleSize_get", _wrap_CellEngine_ruleSize_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleName_set", _wrap_CellEngine_ruleName_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ruleName_get", _wrap_CellEngine_ruleName_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_x_set", _wrap_CellEngine_x_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_x_get", _wrap_CellEngine_x_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_y_set", _wrap_CellEngine_y_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_y_get", _wrap_CellEngine_y_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_dx_set", _wrap_CellEngine_dx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_dx_get", _wrap_CellEngine_dx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_dy_set", _wrap_CellEngine_dy_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_dy_get", _wrap_CellEngine_dy_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_width_set", _wrap_CellEngine_width_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_width_get", _wrap_CellEngine_width_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_height_set", _wrap_CellEngine_height_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_height_get", _wrap_CellEngine_height_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_idealWidth_set", _wrap_CellEngine_idealWidth_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_idealWidth_get", _wrap_CellEngine_idealWidth_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_idealHeight_set", _wrap_CellEngine_idealHeight_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_idealHeight_get", _wrap_CellEngine_idealHeight_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_phase_set", _wrap_CellEngine_phase_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_phase_get", _wrap_CellEngine_phase_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ticks_set", _wrap_CellEngine_ticks_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ticks_get", _wrap_CellEngine_ticks_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_wrap_set", _wrap_CellEngine_wrap_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_wrap_get", _wrap_CellEngine_wrap_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_steps_set", _wrap_CellEngine_steps_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_steps_get", _wrap_CellEngine_steps_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_frob_set", _wrap_CellEngine_frob_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_frob_get", _wrap_CellEngine_frob_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rumble_set", _wrap_CellEngine_rumble_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rumble_get", _wrap_CellEngine_rumble_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rumblemax_set", _wrap_CellEngine_rumblemax_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rumblemax_get", _wrap_CellEngine_rumblemax_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_hubba_set", _wrap_CellEngine_hubba_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_hubba_get", _wrap_CellEngine_hubba_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_inflation_set", _wrap_CellEngine_inflation_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_inflation_get", _wrap_CellEngine_inflation_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_high_set", _wrap_CellEngine_high_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_high_get", _wrap_CellEngine_high_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_low_set", _wrap_CellEngine_low_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_low_get", _wrap_CellEngine_low_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskClip_set", _wrap_CellEngine_maskClip_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_maskClip_get", _wrap_CellEngine_maskClip_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_moveImage_set", _wrap_CellEngine_moveImage_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_moveImage_get", _wrap_CellEngine_moveImage_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numbera_set", _wrap_CellEngine_numbera_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numbera_get", _wrap_CellEngine_numbera_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numberb_set", _wrap_CellEngine_numberb_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numberb_get", _wrap_CellEngine_numberb_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numberc_set", _wrap_CellEngine_numberc_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_numberc_get", _wrap_CellEngine_numberc_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_anglea_set", _wrap_CellEngine_anglea_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_anglea_get", _wrap_CellEngine_anglea_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_angleb_set", _wrap_CellEngine_angleb_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_angleb_get", _wrap_CellEngine_angleb_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_anglec_set", _wrap_CellEngine_anglec_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_anglec_get", _wrap_CellEngine_anglec_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointax_set", _wrap_CellEngine_pointax_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointax_get", _wrap_CellEngine_pointax_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointay_set", _wrap_CellEngine_pointay_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointay_get", _wrap_CellEngine_pointay_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointbx_set", _wrap_CellEngine_pointbx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointbx_get", _wrap_CellEngine_pointbx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointby_set", _wrap_CellEngine_pointby_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointby_get", _wrap_CellEngine_pointby_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointcx_set", _wrap_CellEngine_pointcx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointcx_get", _wrap_CellEngine_pointcx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointcy_set", _wrap_CellEngine_pointcy_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_pointcy_get", _wrap_CellEngine_pointcy_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_clipRects_set", _wrap_CellEngine_clipRects_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_clipRects_get", _wrap_CellEngine_clipRects_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rectList_set", _wrap_CellEngine_rectList_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_rectList_get", _wrap_CellEngine_rectList_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_skips_set", _wrap_CellEngine_skips_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_skips_get", _wrap_CellEngine_skips_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_skip_set", _wrap_CellEngine_skip_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_skip_get", _wrap_CellEngine_skip_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_total_set", _wrap_CellEngine_total_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_total_get", _wrap_CellEngine_total_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_tracking_set", _wrap_CellEngine_tracking_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_tracking_get", _wrap_CellEngine_tracking_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_action_set", _wrap_CellEngine_action_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_action_get", _wrap_CellEngine_action_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_downx_set", _wrap_CellEngine_downx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_downx_get", _wrap_CellEngine_downx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_downy_set", _wrap_CellEngine_downy_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_downy_get", _wrap_CellEngine_downy_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_grabx_set", _wrap_CellEngine_grabx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_grabx_get", _wrap_CellEngine_grabx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_graby_set", _wrap_CellEngine_graby_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_graby_get", _wrap_CellEngine_graby_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_lastx_set", _wrap_CellEngine_lastx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_lastx_get", _wrap_CellEngine_lastx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_lasty_set", _wrap_CellEngine_lasty_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_lasty_get", _wrap_CellEngine_lasty_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_saveskips_set", _wrap_CellEngine_saveskips_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_saveskips_get", _wrap_CellEngine_saveskips_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_still_set", _wrap_CellEngine_still_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_still_get", _wrap_CellEngine_still_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_gravx_set", _wrap_CellEngine_gravx_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_gravx_get", _wrap_CellEngine_gravx_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_gravy_set", _wrap_CellEngine_gravy_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_gravy_get", _wrap_CellEngine_gravy_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_grabbable_set", _wrap_CellEngine_grabbable_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_grabbable_get", _wrap_CellEngine_grabbable_get, METH_VARARGS, NULL},
+         { (char *)"CellEngine_data_set", _wrap_CellEngine_data_set, METH_VARARGS, NULL},
+         { (char *)"CellEngine_data_get", _wrap_CellEngine_data_get, METH_VARARGS, NULL},
+         { (char *)"new_CellEngine", _wrap_new_CellEngine, METH_VARARGS, NULL},
+         { (char *)"delete_CellEngine", _wrap_delete_CellEngine, METH_VARARGS, NULL},
+         { (char *)"CellEngine_Init", _wrap_CellEngine_Init, METH_VARARGS, NULL},
+         { (char *)"CellEngine_InitScreen", _wrap_CellEngine_InitScreen, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetRect", _wrap_CellEngine_SetRect, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetPos", _wrap_CellEngine_SetPos, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetSize", _wrap_CellEngine_SetSize, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ForceOnScreen", _wrap_CellEngine_ForceOnScreen, METH_VARARGS, NULL},
+         { (char *)"CellEngine_OnScreen", _wrap_CellEngine_OnScreen, METH_VARARGS, NULL},
+         { (char *)"CellEngine_Garble", _wrap_CellEngine_Garble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_GarbleRect", _wrap_CellEngine_GarbleRect, METH_VARARGS, NULL},
+         { (char *)"CellEngine_Fill", _wrap_CellEngine_Fill, METH_VARARGS, NULL},
+         { (char *)"CellEngine_FillRect", _wrap_CellEngine_FillRect, METH_VARARGS, NULL},
+         { (char *)"CellEngine_ResetMask", _wrap_CellEngine_ResetMask, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetMask", _wrap_CellEngine_SetMask, METH_VARARGS, NULL},
+         { (char *)"CellEngine_UpdateClip", _wrap_CellEngine_UpdateClip, METH_VARARGS, NULL},
+         { (char *)"CellEngine_LoadRule", _wrap_CellEngine_LoadRule, METH_VARARGS, NULL},
+         { (char *)"CellEngine_LoadRuleData", _wrap_CellEngine_LoadRuleData, METH_VARARGS, NULL},
+         { (char *)"CellEngine_LoadStaticRuleData", _wrap_CellEngine_LoadStaticRuleData, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetRuleTable", _wrap_CellEngine_SetRuleTable, METH_VARARGS, NULL},
+         { (char *)"CellEngine_CountRules", _wrap_CellEngine_CountRules, METH_VARARGS, NULL},
+         { (char *)"CellEngine_GetRuleName", _wrap_CellEngine_GetRuleName, METH_VARARGS, NULL},
+         { (char *)"CellEngine_GetRuleData", _wrap_CellEngine_GetRuleData, METH_VARARGS, NULL},
+         { (char *)"CellEngine_DoPhysics", _wrap_CellEngine_DoPhysics, METH_VARARGS, NULL},
+         { (char *)"CellEngine_DoRule", _wrap_CellEngine_DoRule, METH_VARARGS, NULL},
+         { (char *)"CellEngine_PostRule", _wrap_CellEngine_PostRule, METH_VARARGS, NULL},
+         { (char *)"CellEngine_CopyToBack", _wrap_CellEngine_CopyToBack, METH_VARARGS, NULL},
+         { (char *)"CellEngine_PumpToFront", _wrap_CellEngine_PumpToFront, METH_VARARGS, NULL},
+         { (char *)"CellEngine_GetCell", _wrap_CellEngine_GetCell, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetCell", _wrap_CellEngine_SetCell, METH_VARARGS, NULL},
+         { (char *)"CellEngine_GetCellBuffer", _wrap_CellEngine_GetCellBuffer, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_moore_a", _wrap_CellEngine_n_moore_a, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_moore_ab", _wrap_CellEngine_n_moore_ab, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_vonn_neumann", _wrap_CellEngine_n_vonn_neumann, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_margolis", _wrap_CellEngine_n_margolis, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_margolis_ph", _wrap_CellEngine_n_margolis_ph, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_margolis_hv", _wrap_CellEngine_n_margolis_hv, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_life", _wrap_CellEngine_n_life, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_brain", _wrap_CellEngine_n_brain, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_heat", _wrap_CellEngine_n_heat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_dheat", _wrap_CellEngine_n_dheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_lheat", _wrap_CellEngine_n_lheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_ldheat", _wrap_CellEngine_n_ldheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_abdheat", _wrap_CellEngine_n_abdheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_abcdheat", _wrap_CellEngine_n_abcdheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_edheat", _wrap_CellEngine_n_edheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_ranch", _wrap_CellEngine_n_ranch, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_anneal", _wrap_CellEngine_n_anneal, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_anneal4", _wrap_CellEngine_n_anneal4, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_anneal8", _wrap_CellEngine_n_anneal8, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_eco", _wrap_CellEngine_n_eco, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_torben", _wrap_CellEngine_n_torben, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_torben2", _wrap_CellEngine_n_torben2, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_torben3", _wrap_CellEngine_n_torben3, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_torben4", _wrap_CellEngine_n_torben4, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_ball", _wrap_CellEngine_n_ball, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_fdheat", _wrap_CellEngine_n_fdheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_fabcdheat", _wrap_CellEngine_n_fabcdheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_risca", _wrap_CellEngine_n_risca, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_insert", _wrap_CellEngine_n_insert, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_heaco", _wrap_CellEngine_n_heaco, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_marble", _wrap_CellEngine_n_marble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_smarble", _wrap_CellEngine_n_smarble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_farble", _wrap_CellEngine_n_farble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_garble", _wrap_CellEngine_n_garble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_garblebug", _wrap_CellEngine_n_garblebug, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_twoheats", _wrap_CellEngine_n_twoheats, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_spin", _wrap_CellEngine_n_spin, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_driven", _wrap_CellEngine_n_driven, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_daft", _wrap_CellEngine_n_daft, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_spinsonly", _wrap_CellEngine_n_spinsonly, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_spinsbank", _wrap_CellEngine_n_spinsbank, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_spinsheat", _wrap_CellEngine_n_spinsheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_spinglass", _wrap_CellEngine_n_spinglass, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_glassbonds", _wrap_CellEngine_n_glassbonds, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_glassheat", _wrap_CellEngine_n_glassheat, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_faders", _wrap_CellEngine_n_faders, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_harble", _wrap_CellEngine_n_harble, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_perlin", _wrap_CellEngine_n_perlin, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_dendrite", _wrap_CellEngine_n_dendrite, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_vanneal", _wrap_CellEngine_n_vanneal, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_vanneal8", _wrap_CellEngine_n_vanneal8, METH_VARARGS, NULL},
+         { (char *)"CellEngine_n_jvn29", _wrap_CellEngine_n_jvn29, METH_VARARGS, NULL},
+         { (char *)"CellEngine_SetRuleBuffer", _wrap_CellEngine_SetRuleBuffer, METH_VARARGS, NULL},
+         { (char *)"CellEngine_swigregister", CellEngine_swigregister, METH_VARARGS, NULL},
+         { NULL, NULL, 0, NULL }
 };
 
 

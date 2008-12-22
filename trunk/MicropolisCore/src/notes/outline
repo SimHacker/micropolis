@@ -313,29 +313,29 @@ BUGS:
       /DoSetWandState
     Cursor outline showing where tool will operate
       color codes for tools
-        query		gray
-        bulldozer	brown
-	road		black white
-	wire		black yellow
-	rail		black brown
-	park		brown green
-	residential	green
-	commercial	blue
-	industrial	yellow
-	police		brown blue
-	fire		brown red
-	stadium		gray green
-	coal		gray yellow
-	seaport		gray blue
-	airport		gray white
-	nuclear		gray yellow
-	monster		orange
-	helicopter	red
+        query           gray
+        bulldozer       brown
+        road            black white
+        wire            black yellow
+        rail            black brown
+        park            brown green
+        residential     green
+        commercial      blue
+        industrial      yellow
+        police          brown blue
+        fire            brown red
+        stadium         gray green
+        coal            gray yellow
+        seaport         gray blue
+        airport         gray white
+        nuclear         gray yellow
+        monster         orange
+        helicopter      red
 
-	draw (colored pen)
+        draw (colored pen)
 
-	
-	
+        
+        
     Panning with arrow keys
     Panning by dragging
     Dynamic panning & bouncing
@@ -390,13 +390,13 @@ BUGS:
       Generate New Terrain, Use This Map (buttons)
     City Map
       Map State Icons (exclusive settings)
-	Zone Type (menu)
-	Population Type (menu)
-	Service Type (menu)
-	/OnInit
-	/SetMapState /SetZoneType /SetPopNRate /SetPoliceRadius
+        Zone Type (menu)
+        Population Type (menu)
+        Service Type (menu)
+        /OnInit
+        /SetMapState /SetZoneType /SetPopNRate /SetPoliceRadius
       Legend
-	Max/Min / +/- / none (picture)
+        Max/Min / +/- / none (picture)
 *** messages
   /InitGame { % - => -
 
@@ -457,19 +457,19 @@ BUGS:
 
 
 Dullsville
-	Philip Glass, Powaqqatsi, That Place
+        Philip Glass, Powaqqatsi, That Place
 San_Francisco
-	Grateful Dead, Fire on the Mountain
-	Philip Glass, Powaqqatsi, Serra Pelada
+        Grateful Dead, Fire on the Mountain
+        Philip Glass, Powaqqatsi, Serra Pelada
 Hamburg
-	Yello, Oh Yeah
+        Yello, Oh Yeah
 Bern
-	Yello, RubberBandMan
-	Philip Glass, Powaqqatsi, CAUGHT!
+        Yello, RubberBandMan
+        Philip Glass, Powaqqatsi, CAUGHT!
 Tokyo
-	Percussions D'Asie
-	Philip Glass, Powaqqatsi, Serra Pelada
+        Percussions D'Asie
+        Philip Glass, Powaqqatsi, Serra Pelada
 Detroit
 Boston
 Rio_de_Janeiro
-	Philip Glass, Powaqqatsi, From Egypt
+        Philip Glass, Powaqqatsi, From Egypt

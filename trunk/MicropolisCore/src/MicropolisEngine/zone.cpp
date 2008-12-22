@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -90,7 +90,7 @@ void Micropolis::DoZone()
     return;
   }
 
-  if (CChr9 < HOSPITAL) {       
+  if (CChr9 < HOSPITAL) {
     DoResidential(ZonePwrFlg);
     return;
   }
@@ -403,7 +403,7 @@ short Micropolis::GetCRVal()
 
 
 void Micropolis::DoResIn(
-  int pop, 
+  int pop,
   int value)
 {
   short z;
@@ -440,7 +440,7 @@ void Micropolis::DoResIn(
 
 
 void Micropolis::DoComIn(
-  int pop, 
+  int pop,
   int value)
 {
   register short z;
@@ -460,7 +460,7 @@ void Micropolis::DoComIn(
 
 
 void Micropolis::DoIndIn(
-  int pop, 
+  int pop,
   int value)
 {
   if (pop < 4) {
@@ -478,7 +478,7 @@ void Micropolis::IncROG(
 
 
 void Micropolis::DoResOut(
-  int pop, 
+  int pop,
   int value)
 {
   static short Brdr[9] = {0,3,6,1,4,7,2,5,8};
@@ -505,7 +505,7 @@ void Micropolis::DoResOut(
             y >= 0 && y < WORLD_Y) {
 
           if ((Map[x][y] & LOMASK) != FREEZ) {
-            Map[x][y] = 
+            Map[x][y] =
               LHTHR + value + Rand(2) + BLBNCNBIT;
           }
 
@@ -530,7 +530,7 @@ void Micropolis::DoResOut(
           loc = Map[x][y] & LOMASK;
 
           if ((loc >= LHTHR) && (loc <= HHTHR)) {
-            Map[x][y] = 
+            Map[x][y] =
               Brdr[z] + BLBNCNBIT + FREEZ - 4;
             return;
           }
@@ -548,7 +548,7 @@ void Micropolis::DoResOut(
 
 
 void Micropolis::DoComOut(
-  int pop, 
+  int pop,
   int value)
 {
   if (pop > 1) {
@@ -565,7 +565,7 @@ void Micropolis::DoComOut(
 
 
 void Micropolis::DoIndOut(
-  int pop, 
+  int pop,
   int value)
 {
   if (pop > 1) {
@@ -662,7 +662,7 @@ void Micropolis::BuildHouse(
     int yy = SMapY + ZeY[BestLoc];
 
     if (TestBounds(xx, yy)) {
-      Map[xx][yy] = 
+      Map[xx][yy] =
         HOUSE + BLBNCNBIT + Rand(2) + (value * 3);
     }
 
@@ -671,7 +671,7 @@ void Micropolis::BuildHouse(
 
 
 void Micropolis::ResPlop(
-  int Den, 
+  int Den,
   int Value)
 {
   short base;
@@ -682,29 +682,29 @@ void Micropolis::ResPlop(
 
 
 void Micropolis::ComPlop(
-  int Den, 
+  int Den,
   int Value)
 {
   short base;
-        
+
   base = (((Value * 5) + Den) * 9) + CZB - 4;
   ZonePlop(base);
 }
 
 
 void Micropolis::IndPlop(
-  int Den, 
+  int Den,
   int Value)
 {
   short base;
-        
+
   base = (((Value * 4) + Den) * 9) + (IZB - 4);
   ZonePlop (base);
 }
 
 
 short Micropolis::EvalLot(
-  int x, 
+  int x,
   int y)
 {
   short z, score;
@@ -724,7 +724,7 @@ short Micropolis::EvalLot(
     int xx = x + DX[z];
     int yy = y + DY[z];
 
-    if (TestBounds(xx, yy) && 
+    if (TestBounds(xx, yy) &&
         (Map[xx][yy] != DIRT) &&
         ((Map[xx][yy] & LOMASK) <= LASTROAD)) {
       score++;          /* look for road */
@@ -846,7 +846,7 @@ short Micropolis::DoFreePop()
 
         loc = Map[x][y] & LOMASK;
 
-        if ((loc >= LHTHR) && 
+        if ((loc >= LHTHR) &&
             (loc <= HHTHR)) {
           count++;
         }

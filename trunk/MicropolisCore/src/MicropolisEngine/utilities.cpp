@@ -5,39 +5,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -70,10 +70,10 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: drawTaxesCollected incBoxValue decBoxValue drawCurrentFunds 
+/* comefrom: drawTaxesCollected incBoxValue decBoxValue drawCurrentFunds
              drawActualBox UpdateFunds updateCurrentCost */
 void Micropolis::makeDollarDecimalStr(
-  char *numStr, 
+  char *numStr,
   char *dollarStr)
 {
   register short leftMostSet;
@@ -109,19 +109,19 @@ void Micropolis::makeDollarDecimalStr(
     if (leftMostSet == 0) {
       leftMostSet = 3;
     }
-    
+
     numOfCommas = (numOfDigits - 1) / 3;
-    
+
     /* add 1 for the dollar sign */
     numOfChars = numOfDigits + numOfCommas + 1;
-    
+
     dollarStr[numOfChars] = 0;
-    
+
     dollarStr[dollarIndex++] = '$';
-    
+
     for (x = 1; x <= leftMostSet; x++) {
       dollarStr[dollarIndex++] = numStr[numIndex++];
-    }           
+    }
 
     for (x = 1; x <= numOfCommas; x++) {
       dollarStr[dollarIndex++] = ',';
@@ -173,7 +173,7 @@ void Micropolis::setSpeed(
 
   Callback(
     "UISetSpeed",
-    "d", 
+    "d",
     (int)(sim_paused ? 0 : SimMetaSpeed));
 
 }
@@ -224,7 +224,7 @@ void Micropolis::UpdateGameLevel()
 {
   Callback(
     "UISetGameLevel",
-    "d", 
+    "d",
     (int)GameLevel);
 }
 
@@ -234,7 +234,7 @@ void Micropolis::setCityName(
 {
   char *cp = name;
 
-  // FIXME: This actually modifies the string passed in. Kinda gross. 
+  // FIXME: This actually modifies the string passed in. Kinda gross.
 
   while (*cp) {
 
@@ -288,10 +288,10 @@ void Micropolis::DoNewGame()
 
 
 void Micropolis::DoGeneratedCityImage(
-  char *name, 
-  int time, 
-  int pop, 
-  char *cityClass, 
+  char *name,
+  int time,
+  int pop,
+  char *cityClass,
   int score)
 {
   /* XXX: TODO: print city */

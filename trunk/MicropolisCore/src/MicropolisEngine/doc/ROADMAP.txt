@@ -172,10 +172,10 @@ Resources:
 
       sound.tcl
         Code loaded by sound server, 
-	which runs in another process,
-	and is controlled via the TCL "send" command. 
-	No longer used. 
-	Sound should be built into Micropolis, using a modern standard sound library (and file formats). 
+        which runs in another process,
+        and is controlled via the TCL "send" command. 
+        No longer used. 
+        Sound should be built into Micropolis, using a modern standard sound library (and file formats). 
 
 Base Libraries:
 
@@ -189,7 +189,7 @@ Base Libraries:
     Free software.
     Modified for unix porting, multiple display support, various extensions and bug fixes.
     See src/notes/to.ouster (message about multiple display support),
-	src/notes/TkVersion (description of origin and changes in tk)
+        src/notes/TkVersion (description of origin and changes in tk)
 
   src/tclx
     Useful extensions to TCL/Tk.

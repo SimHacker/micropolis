@@ -6,39 +6,39 @@
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
  * you need assistance with this program, you may contact:
  *   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.  You should have received a
  * copy of the GNU General Public License along with this program.  If
  * not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *             ADDITIONAL TERMS per GNU GPL Section 7
- * 
+ *
  * No trademark or publicity rights are granted.  This license does NOT
  * give you any right, title or interest in the trademark SimCity or any
  * other Electronic Arts trademark.  You may not distribute any
  * modification of this program using the trademark SimCity or claim any
  * affliation or association with Electronic Arts Inc. or its employees.
- * 
+ *
  * Any propagation or conveyance of this program must include this
  * copyright notice and these terms.
- * 
+ *
  * If you convey this program (or any modifications of it) and assume
  * contractual liability for the program to recipients of it, you agree
  * to indemnify Electronic Arts for any liability that those contractual
  * assumptions impose on Electronic Arts.
- * 
+ *
  * You may not misrepresent the origins of this program; modified
  * versions of the program must be marked as such and not identified as
  * the original program.
- * 
+ *
  * This disclaimer supplements the one included in the General Public
  * License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
  * PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -73,12 +73,12 @@
 
 static short aniTile[1024] = {
     0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
-    16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31, 
+    16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
     32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
     48,  49,  50,  51,  52,  53,  54,  55,
-    /* Fire */                              
+    /* Fire */
                                             57,  58,  59,  60,  61,  62,  63,  56,
-    /* No Traffic */                    
+    /* No Traffic */
     64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
     /* Light Traffic */
     128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,

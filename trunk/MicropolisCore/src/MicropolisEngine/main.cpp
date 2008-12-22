@@ -130,7 +130,7 @@ void Micropolis::sim_init()
 
 void Micropolis::sim_update()
 {
-  flagBlink = 
+  flagBlink =
     ((TickCount() % 60) < 30) ? 1 : -1;
 
   if (SimSpeed && !heat_steps) {
@@ -236,7 +236,7 @@ void Micropolis::sim_heat()
       src += SRCCOL;
       dst += DSTCOL;
     }
-    memcpy(CellSrc,CellSrc + (SRCCOL * WORLD_X), 
+    memcpy(CellSrc,CellSrc + (SRCCOL * WORLD_X),
       SRCCOL * sizeof (short));
     memcpy(CellSrc + SRCCOL * (WORLD_X + 1), CellSrc + SRCCOL,
       SRCCOL * sizeof (short));
@@ -354,9 +354,9 @@ void Micropolis::sim_tick()
 {
   if (SimSpeed) {
     int i;
-	for (i = 0; i < sim_skips; i++) {
-	  sim_loop(1);
-	}
+        for (i = 0; i < sim_skips; i++) {
+          sim_loop(1);
+        }
   }
 }
 
