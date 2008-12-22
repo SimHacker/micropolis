@@ -12006,15 +12006,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_ProblemTable_set(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemTable_set" "', argument " "2"" of type '" "short [10]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemTable_set" "', argument " "2"" of type '" "short [PROBNUM]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)10; ++ii) arg1->ProblemTable[ii] = arg2[ii];
+      for (; ii < (size_t)PROBNUM; ++ii) arg1->ProblemTable[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemTable""' of type '""short [10]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemTable""' of type '""short [PROBNUM]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -12065,15 +12065,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_ProblemVotes_set(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemVotes_set" "', argument " "2"" of type '" "short [10]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_ProblemVotes_set" "', argument " "2"" of type '" "short [PROBNUM]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)10; ++ii) arg1->ProblemVotes[ii] = arg2[ii];
+      for (; ii < (size_t)PROBNUM; ++ii) arg1->ProblemVotes[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemVotes""' of type '""short [10]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ProblemVotes""' of type '""short [PROBNUM]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -31604,7 +31604,6 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "NIL",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "HORIZ",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "VERT",SWIG_From_int(static_cast< int >(0)));
-  SWIG_Python_SetConstant(d, "PROBNUM",SWIG_From_int(static_cast< int >(10)));
   SWIG_Python_SetConstant(d, "HISTLEN",SWIG_From_int(static_cast< int >(480)));
   SWIG_Python_SetConstant(d, "MISCHISTLEN",SWIG_From_int(static_cast< int >(240)));
   SWIG_Python_SetConstant(d, "HISTORY_COUNT",SWIG_From_int(static_cast< int >(120)));
@@ -31883,6 +31882,15 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "STATE_GRAPHS",SWIG_From_int(static_cast< int >(3)));
   SWIG_Python_SetConstant(d, "ISLAND_RADIUS",SWIG_From_int(static_cast< int >(18)));
   SWIG_Python_SetConstant(d, "MAX_TRAFFIC_DISTANCE",SWIG_From_int(static_cast< int >(30)));
+  SWIG_Python_SetConstant(d, "CVP_CRIME",SWIG_From_int(static_cast< int >(CVP_CRIME)));
+  SWIG_Python_SetConstant(d, "CVP_POLLUTION",SWIG_From_int(static_cast< int >(CVP_POLLUTION)));
+  SWIG_Python_SetConstant(d, "CVP_HOUSING",SWIG_From_int(static_cast< int >(CVP_HOUSING)));
+  SWIG_Python_SetConstant(d, "CVP_TAXES",SWIG_From_int(static_cast< int >(CVP_TAXES)));
+  SWIG_Python_SetConstant(d, "CVP_TRAFFIC",SWIG_From_int(static_cast< int >(CVP_TRAFFIC)));
+  SWIG_Python_SetConstant(d, "CVP_UNEMPLOYMENT",SWIG_From_int(static_cast< int >(CVP_UNEMPLOYMENT)));
+  SWIG_Python_SetConstant(d, "CVP_FIRE",SWIG_From_int(static_cast< int >(CVP_FIRE)));
+  SWIG_Python_SetConstant(d, "CVP_NUMPROBLEMS",SWIG_From_int(static_cast< int >(CVP_NUMPROBLEMS)));
+  SWIG_Python_SetConstant(d, "PROBNUM",SWIG_From_int(static_cast< int >(PROBNUM)));
   PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_cityClassStr",Micropolis_cityClassStr_get, Micropolis_cityClassStr_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_cityLevelStr",Micropolis_cityLevelStr_get, Micropolis_cityLevelStr_set);

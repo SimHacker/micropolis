@@ -188,55 +188,59 @@ void Micropolis::DoPopNum()
 }
 
 
-/* comefrom: CityEvaluation */
+/** Evaluate problems of the city, take votes, and decide the most important ones */
 void Micropolis::DoProblems()
 {
   register short x, z;
   short ThisProb = 0;
   short Max = 0;
-  short ProblemTaken[PROBNUM];
 
   for (z = 0; z < PROBNUM; z++) {
     ProblemTable[z] = 0;
   }
-  ProblemTable[0] = CrimeAverage;               /* Crime */
-  ProblemTable[1] = PolluteAverage;             /* Pollution */
-  ProblemTable[2] = (short)(LVAverage * .7);    /* Housing */
-  ProblemTable[3] = CityTax * 10;               /* Taxes */
-  ProblemTable[4] = AverageTrf();               /* Traffic */
-  ProblemTable[5] = GetUnemployment();          /* Unemployment */
-  ProblemTable[6] = GetFire();                  /* Fire */
+  ProblemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
+  ProblemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
+  ProblemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
+  ProblemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
+  ProblemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
+  ProblemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
+  ProblemTable[CVP_FIRE]         = GetFire();             /* Fire */
   VoteProblems();
 
+  bool problemTaken[PROBNUM];
   for (z = 0; z < PROBNUM; z++) {
-    ProblemTaken[z] = 0;
+    problemTaken[z] = false;
   }
 
   for (z = 0; z < 4; z++) {
+    // Find biggest problem not taken yet
     Max = 0;
-
-    for (x = 0; x < 7; x++) {
-      if ((ProblemVotes[x] > Max) && (!ProblemTaken[x])) {
+    for (x = 0; x < CVP_NUMPROBLEMS; x++) {
+      if ((ProblemVotes[x] > Max) && (!problemTaken[x])) {
         ThisProb = x;
         Max = ProblemVotes[x];
       }
     }
 
     if (Max) {
-      ProblemTaken[ThisProb] = 1;
+      problemTaken[ThisProb] = true;
       ProblemOrder[z] = ThisProb;
     } else {
-      ProblemOrder[z] = 7;
-      ProblemTable[7] = 0;
+      ProblemOrder[z] = CVP_NUMPROBLEMS;
+      ProblemTable[CVP_NUMPROBLEMS] = 0;
     }
   }
 }
 
 
-/* comefrom: DoProblems */
+/**
+ * Vote on the problems of the city
+ *
+ * @post ProblemVotes contains the vote counts
+ */
 void Micropolis::VoteProblems()
 {
-  register int x, z, count;
+  int x, z, count;
 
   for (z = 0; z < PROBNUM; z++) {
     ProblemVotes[z] = 0;

@@ -428,9 +428,6 @@ void Micropolis::init()
   // short CityNo;
   CityNo = 0;
 
-  // short ProblemTable[PROBNUM];
-  memset(ProblemTable, 0, sizeof(short) * PROBNUM);
-
   // short ProblemVotes[PROBNUM]; /* these are the votes for each  */
   memset(ProblemVotes, 0, sizeof(short) * PROBNUM);
 
