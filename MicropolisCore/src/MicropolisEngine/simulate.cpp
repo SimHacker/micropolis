@@ -471,9 +471,9 @@ void Micropolis::SimLoadInit()
     ScoreType = SC_NONE;
   }
 
-  RoadEffect = 32;
-  PoliceEffect = 1000; /*post*/
-  FireEffect = 1000;
+  RoadEffect   = MAX_ROAD_EFFECT;
+  PoliceEffect = MAX_POLICESTATION_EFFECT;
+  FireEffect   = MAX_FIRESTATION_EFFECT;
   InitSimLoad = 0;
 }
 
@@ -482,9 +482,9 @@ void Micropolis::SimLoadInit()
 void Micropolis::SetCommonInits()
 {
   EvalInit();
-  RoadEffect = 32;
-  PoliceEffect = 1000;
-  FireEffect = 1000;
+  RoadEffect   = MAX_ROAD_EFFECT;
+  PoliceEffect = MAX_POLICESTATION_EFFECT;
+  FireEffect   = MAX_FIRESTATION_EFFECT;
   TaxFlag = 0;
   TaxFund = 0;
 
@@ -950,78 +950,88 @@ void Micropolis::Take2Census()
 }
 
 
-/* comefrom: Simulate */
+/** Collect taxes
+ * @bug Function seems to be doing different things depending on
+ *      Micropolis::TotalPop value. With an non-empty city it does fund
+ *      calculations. For an empty city, it immediately sets effects of
+ *      funding, which seems inconsistent at least, and may be wrong
+ * @bug If Micropolis::TaxFlag is set, no variable is touched which seems
+ *      non-robust at least
+ */
 void Micropolis::CollectTax()
 {       
   short z;
 
-  // TODO: Break out so the user interface can configure this.
-  static float RLevels[3] = { (float)0.7, (float)0.9, (float)1.2 };
-  static float FLevels[3] = { (float)1.4, (float)1.2, (float)0.8 };
+  /*
+   * @todo Break out so the user interface can configure this.
+   */
+  static float RLevels[3] = { 0.7, 0.9, 1.2 };
+  static float FLevels[3] = { 1.4, 1.2, 0.8 };
 
   CashFlow = 0;
 
-  // FIXME: Apparently TaxFlag is never set to true in MicropolisEngine 
-  // or the TCL code, so this always runs.
-  // TODO: Check old Mac code to see if it's ever set, and why.
+  /*
+   * @todo Apparently TaxFlag is never set to true in MicropolisEngine 
+   *       or the TCL code, so this always runs.
+   * @todo Check old Mac code to see if it's ever set, and why.
+   */
+
   if (!TaxFlag) { // If the Tax Port is clear
+
     // XXX: do something with z
     z = AvCityTax / 48;  // post release
+
     AvCityTax = 0;                      
-    PoliceFund = 
-      PolicePop * 100;
-    FireFund = 
-      FireStPop * 100;
-    RoadFund = 
-      (long)((RoadTotal + (RailTotal * 2)) * RLevels[GameLevel]);
-    TaxFund = 
-      (long)((((Quad)TotalPop * LVAverage) / 120) *
-             CityTax * 
-             FLevels[GameLevel]);
-    if (TotalPop) {
-      // If there are people to tax.
-      CashFlow = 
-        (short)(TaxFund - (PoliceFund + FireFund + RoadFund));
+
+    PoliceFund = PolicePop * 100;
+    FireFund = FireStPop * 100;
+    RoadFund = (long)((RoadTotal + (RailTotal * 2)) * RLevels[GameLevel]);
+    TaxFund = (long)((((Quad)TotalPop * LVAverage) / 120) * CityTax * FLevels[GameLevel]);
+
+    if (TotalPop > 0) {
+      /* There are people to tax. */
+      CashFlow = (short)(TaxFund - (PoliceFund + FireFund + RoadFund));
       DoBudget();
     } else {
-      // Nobody lives here.
-      RoadEffect = 32;
-      PoliceEffect = 1000;
-      FireEffect = 1000;
+      /* Nobody lives here. */
+      RoadEffect   = MAX_ROAD_EFFECT;
+      PoliceEffect = MAX_POLICESTATION_EFFECT;
+      FireEffect   = MAX_FIRESTATION_EFFECT;
     }
   }
 }
 
 
+/**
+ * Update effects of (possibly reduced) funding
+ *
+ * It updates effects with respect to roads, police, and fire.
+ * @note This function should probably not be used when Micropolis::TotalPop is
+ *       clear (ie with an empty) city. See also bugs of Micropolis::CollectTax()
+ */
 void Micropolis::UpdateFundEffects()
 {
-  if (RoadFund) {
-    RoadEffect =
-      (short)(((float)RoadSpend /
-               (float)RoadFund) *
-              32.0);
-  } else {
-    RoadEffect = 32;
+  // Compute road effects of funding
+  RoadEffect = MAX_ROAD_EFFECT;
+  if (RoadFund > 0) {
+    // Multiply with funding fraction
+    RoadEffect *= (float)RoadSpend / (float)RoadFund;
   }
-
-  if (PoliceFund) {
-    PoliceEffect =
-      (short)(((float)PoliceSpend /
-               (float)PoliceFund) *
-              1000.0);
-  } else {
-    PoliceEffect = 1000;
+  
+  // Compute police station effects of funding
+  PoliceEffect = MAX_POLICESTATION_EFFECT;
+  if (PoliceFund > 0) {
+    // Multiply with funding fraction
+    PoliceEffect *= (float)PoliceSpend / (float)PoliceFund;
   }
-
-  if (FireFund) {
-    FireEffect =
-      (short)(((float)FireSpend /
-               (float)FireFund) *
-              1000.0);
-  } else {
-    FireEffect = 1000;
+  
+  // Compute fire station effects of funding
+  FireEffect = MAX_FIRESTATION_EFFECT;
+  if (FireFund > 0) {
+    // Multiply with funding fraction
+    FireEffect *= (float)FireSpend / (float)FireFund;
   }
-
+  
   drawCurrPercents();
 }
 
@@ -1104,10 +1114,11 @@ void Micropolis::DoRail()
 
   GenerateTrain(SMapX, SMapY);
 
-  if (RoadEffect < 30) {
-    /* Deteriorating Rail  */
+  if (RoadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
+    // RoadEffect < 15/16 of max road, enable deteriorating rail
     if (!(Rand16() & 511)) {
       if (!(CChr & CONDBIT)) {
+        assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(Rand16() & 31)' makes no sense
         if (RoadEffect < (Rand16() & 31)) {
           if (CChr9 < (RAILBASE + 2)) {
             Map[SMapX][SMapY] = RIVER;
@@ -1126,7 +1137,7 @@ void Micropolis::DoRail()
 void Micropolis::DoRadTile()
 {
   if (!(Rand16() & 4095)) {
-    Map[SMapX][SMapY] = 0; /* Radioactive decay */
+    Map[SMapX][SMapY] = DIRT; /* Radioactive decay */
   }
 }
 
@@ -1141,10 +1152,11 @@ void Micropolis::DoRoad()
 
   /* GenerateBus(SMapX, SMapY); */
 
-  if (RoadEffect < 30) {
-    /* Deteriorating Roads */
+  if (RoadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
+    // RoadEffect < 15/16 of max road, enable deteriorating road
     if (!(Rand16() & 511)) {
       if (!(CChr & CONDBIT)) {
+        assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(Rand16() & 31)' makes no sense
         if (RoadEffect < (Rand16() & 31)) {
           if (((CChr9 & 15) < 2) || ((CChr9 & 15) == 15)) {
             Map[SMapX][SMapY] = RIVER;
@@ -1575,7 +1587,7 @@ void Micropolis::DoSPZone(
     if (PwrOn) {
       z = FireEffect;                   /* if powered get effect  */
     } else {
-      z = FireEffect >>1;               /* from the funding ratio  */
+      z = FireEffect / 2;               /* from the funding ratio  */
     }
 
     if (!FindPRoad()) {
@@ -1597,7 +1609,7 @@ void Micropolis::DoSPZone(
     if (PwrOn) {
       z = PoliceEffect;
     } else {
-      z = PoliceEffect >>1;
+      z = PoliceEffect / 2;
     }
 
     if (!FindPRoad()) {
