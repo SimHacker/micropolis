@@ -374,8 +374,8 @@ void Micropolis::InitSimMemory()
   IndCap = z;
 
   EMarket = 6.0;
-  DisasterEvent = 0;
-  ScoreType = 0;
+  DisasterEvent = SC_NONE;
+  ScoreType = SC_NONE;
 
   /* This clears powermem */
   PowerStackNum = z;
@@ -389,9 +389,12 @@ void Micropolis::InitSimMemory()
 /* comefrom: DoSimInit */
 void Micropolis::SimLoadInit()
 {
-  static short DisTab[9] =
+  // Disaster delay table for each scenario
+  static const short DisTab[9] =
     { 0, 2, 10, 5, 20, 3, 5, 5, 2 * 48};
-  static short ScoreWaitTab[9] =
+
+  // Time to wait before score calculation for each scenario
+  static const short ScoreWaitTab[9] =
     { 0, 30 * 48, 5 * 48, 5 * 48, 10 * 48,
       5 * 48, 10 * 48, 5 * 48, 10 * 48 };
   register int z;
@@ -451,18 +454,21 @@ void Micropolis::SimLoadInit()
 
   DoNilPower();
 
-  if (ScenarioID > 8) {
-    ScenarioID = 0;
+  if (ScenarioID >= SC_COUNT) {
+    ScenarioID = SC_NONE;
   }
 
-  if (ScenarioID) {
+  if (ScenarioID != SC_NONE) {
+    assert(LENGTH_OF(DisTab) == SC_COUNT);
+    assert(LENGTH_OF(ScoreWaitTab) == SC_COUNT);
+
     DisasterEvent = ScenarioID;
     DisasterWait = DisTab[DisasterEvent];
     ScoreType = DisasterEvent;
     ScoreWait = ScoreWaitTab[DisasterEvent];
   } else {
-    DisasterEvent = 0;
-    ScoreType = 0;
+    DisasterEvent = SC_NONE;
+    ScoreType = SC_NONE;
   }
 
   RoadEffect = 32;

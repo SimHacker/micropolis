@@ -87,7 +87,7 @@ void Micropolis::DoDisasters()
       FloodCnt--;
   }
 
-  if (DisasterEvent) {
+  if (DisasterEvent != SC_NONE) {
     ScenarioDisaster();
   }
 
@@ -142,49 +142,53 @@ void Micropolis::ScenarioDisaster()
 
   switch (DisasterEvent) {
 
-    case 1:                     /* Dullsville */
+    case SC_DULLSVILLE:
       break;
 
-    case 2:                     /* San Francisco */
+    case SC_SAN_FRANCISCO:
       if (DisasterWait == 1) {
         MakeEarthquake();
       }
       break;
 
-    case 3:                     /* Hamburg */
+    case SC_HAMBURG:
       DropFireBombs();
       break;
 
-    case 4:                     /* Bern */
+    case SC_BERN:
       break;
 
-    case 5:                     /* Tokyo */
+    case SC_TOKYO:
       if (DisasterWait == 1) {
         MakeMonster();
       }
       break;
 
-    case 6:                     /* Detroit */
+    case SC_DETROIT:
       break;
 
-    case 7:                     /* Boston */
+    case SC_BOSTON:
       if (DisasterWait == 1) {
         MakeMeltdown();
       }
       break;
 
-    case 8:                     /* Rio */
+    case SC_RIO:
       if ((DisasterWait % 24) == 0) {
         MakeFlood();
       }
       break;
+
+    default:
+      NOT_REACHED();
+      break; // Never used
 
   }
 
   if (DisasterWait) {
     DisasterWait--;
   } else {
-    DisasterEvent = 0;
+    DisasterEvent = SC_NONE;
   }
 }
 

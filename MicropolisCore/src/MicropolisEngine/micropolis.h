@@ -463,6 +463,25 @@
 #define ISLAND_RADIUS           18
 
 ///////////////////////////////////////////////////
+// Scenarios
+
+/** Available scenarios */
+enum Scenario {
+    SC_NONE,           ///< No scenario (free playing)
+
+    SC_DULLSVILLE,     ///< Dullsville (boredom)
+    SC_SAN_FRANCISCO,  ///< San francisco (earth quake)
+    SC_HAMBURG,        ///< Hamburg (fire bombs)
+    SC_BERN,           ///< Bern (traffic)
+    SC_TOKYO,          ///< Tokyo (godzilla)
+    SC_DETROIT,        ///< Detroit (crime)
+    SC_BOSTON,         ///< Boston (nuclear meltdown)
+    SC_RIO,            ///< Rio (flooding)
+
+    SC_COUNT,          ///< Number of scenarios
+};
+
+///////////////////////////////////////////////////
 // Directions
 
 /** Directions on the map */
@@ -602,6 +621,20 @@ static inline bool TestBounds(int wx, int wy)
             (tile <= 207)) { \
           tile = (tile & 0x000F) + 64; \
         }
+
+/**
+ * Compute length of array
+ * @param array Array to get length from
+ * @note Macro only works for statically allocated arrays
+ */
+#define LENGTH_OF(array) (sizeof(array) / sizeof((array)[0]))
+
+/**
+ * Give a fatal error and exit
+ */
+#define NOT_REACHED() not_reached(__LINE__, __FILE__)
+
+void not_reached(int line, char *fname);
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -1351,8 +1384,7 @@ public:
   int saveFile(
     char *filename);
 
-  void LoadScenario(
-    short s);
+  void LoadScenario(Scenario s);
 
   void DidLoadScenario();
 
@@ -1734,8 +1766,7 @@ public:
 
   void CheckGrowth();
 
-  void DoScenarioScore(
-    int type);
+  void DoScenarioScore(Scenario type);
 
   void ClearMes();
 
@@ -1957,11 +1988,11 @@ public:
 
   float EMarket;
 
-  short DisasterEvent;
+  Scenario DisasterEvent; ///< The disaster for which a count-down is running
 
   short DisasterWait;
 
-  short ScoreType;
+  Scenario ScoreType;     ///< The type of score table to use
 
   short ScoreWait;
 
@@ -2267,7 +2298,7 @@ public:
 
   short InitSimLoad;
 
-  short ScenarioID;
+  Scenario ScenarioID; ///< Scenario being played
 
   short SimSpeed;
 

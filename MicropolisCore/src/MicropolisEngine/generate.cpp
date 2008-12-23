@@ -86,7 +86,7 @@ void Micropolis::GenerateSomeCity(
   }
 
   GenerateMap(r);
-  ScenarioID = 0;
+  ScenarioID = SC_NONE;
   CityTime = 0;
   InitSimLoad = 2;
   DoInitialEval = false;

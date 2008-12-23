@@ -78,7 +78,7 @@ void Micropolis::SendMessages()
   short PowerPop;
   float TM;
 
-  if ((ScenarioID) && (ScoreType) && (ScoreWait)) {
+  if (ScenarioID > SC_NONE && ScoreType > SC_NONE && (ScoreWait)) {
     ScoreWait--;
     if (!ScoreWait) {
       DoScenarioScore(ScoreType);
@@ -273,62 +273,67 @@ void Micropolis::CheckGrowth()
 }
 
 
-/* comefrom: SendMessages */
-void Micropolis::DoScenarioScore(
-  int type)
+/**
+ * Compute score for each scenario
+ * @param type Scenario used
+ * @note Parameter \a type may not be \c SC_NONE
+ */
+void Micropolis::DoScenarioScore(Scenario type)
 {
-  short z;
-
-  z = -200;     /* you lose */
+  short z = -200;     /* you lose */
 
   switch(type) {
 
-  case 1:       /* Dullsville */
+  case SC_DULLSVILLE:
     if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
-  case 2:       /* San Francisco */
+  case SC_SAN_FRANCISCO:
     if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
-  case 3:       /* Hamburg */
+  case SC_HAMBURG:
     if (cityClass >= CC_METROPOLIS) {
       z = -100;
     }
     break;
 
-  case 4:       /* Bern */
+  case SC_BERN:
     if (trafficAverage < 80) {
       z = -100;
     }
     break;
 
-  case 5:       /* Tokyo */
+  case SC_TOKYO:
     if (cityScore > 500) {
       z = -100;
     }
     break;
 
-  case 6:       /* Detroit */
+  case SC_DETROIT:
     if (CrimeAverage < 60) {
       z = -100;
     }
     break;
 
-  case 7:       /* Boston */
+  case SC_BOSTON:
     if (cityScore > 500) {
       z = -100;
     }
     break;
 
-  case 8:       /* Rio de Janeiro */
+  case SC_RIO:
     if (cityScore > 500) {
       z = -100;
     }
+    break;
+
+  default:
+    NOT_REACHED();
     break;
 
   }
