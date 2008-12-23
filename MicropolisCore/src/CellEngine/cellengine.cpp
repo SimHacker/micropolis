@@ -81,7 +81,7 @@
  * @todo frob offset (overall heat gain)
  * @todo pass in different masks and shifts to implement symetric 8 and 4
  * @todo neighbor heats, as well as vertical, horizontal, diagonal, and
- * @todo asymetric heat flow fields
+ *       asymetric heat flow fields
  * @todo logical operations
  * @todo add pixels
  * @todo map pixels

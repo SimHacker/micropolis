@@ -100,7 +100,7 @@ void Micropolis::sim_init()
   CityTime = 50;
   NoDisasters = 0;
   PunishCnt = 0;
-  autoBulldoze = 1;
+  autoBulldoze = true; // Enable auto bulldoze
   autoBudget = 1;
   MesNum = 0;
   LastMesTime = 0;

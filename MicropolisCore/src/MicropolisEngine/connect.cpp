@@ -115,8 +115,7 @@ int Micropolis::ConnecTile(
   if ((Command >= 2) &&
       (Command <= 4)) {
 
-    if ((autoBulldoze != 0) &&
-        (TotalFunds > 0)) {
+    if (autoBulldoze && TotalFunds > 0) {
 
       Tile =
         (*TileAdrPtr);

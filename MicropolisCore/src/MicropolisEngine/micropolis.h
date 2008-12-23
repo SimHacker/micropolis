@@ -2231,7 +2231,13 @@ public:
 
   short PunishCnt;
 
-  short autoBulldoze;
+  /**
+   * Enable auto-bulldoze
+   *
+   * When enabled, the game will silently clear tiles when the user
+   * builds something on non-clear and bulldozable tiles
+   */
+  bool autoBulldoze;
 
   short autoBudget;
 
