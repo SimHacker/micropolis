@@ -109,22 +109,22 @@ short Micropolis::toolOffset[] = {
 
 Quad Micropolis::toolColors[] = {
  COLOR_LIGHTGREEN | (COLOR_LIGHTGREEN << 8),    /* residentialState */
- COLOR_LIGHTBLUE | (COLOR_LIGHTBLUE << 8),      /* commercialState */
- COLOR_YELLOW | (COLOR_YELLOW << 8),            /* industrialState */
+ COLOR_LIGHTBLUE  | (COLOR_LIGHTBLUE << 8),     /* commercialState */
+ COLOR_YELLOW     | (COLOR_YELLOW << 8),        /* industrialState */
  COLOR_LIGHTGREEN | (COLOR_RED << 8),           /* fireState */
- COLOR_ORANGE | (COLOR_ORANGE << 8),            /* queryState */
+ COLOR_ORANGE     | (COLOR_ORANGE << 8),        /* queryState */
  COLOR_LIGHTGREEN | (COLOR_LIGHTBLUE << 8),     /* policeState */
- COLOR_DARKGRAY | (COLOR_YELLOW << 8),          /* wireState */
+ COLOR_DARKGRAY   | (COLOR_YELLOW << 8),        /* wireState */
  COLOR_LIGHTBROWN | (COLOR_LIGHTBROWN << 8),    /* dozeState */
- COLOR_DARKGRAY | (COLOR_OLIVE << 8),           /* rrState */
- COLOR_DARKGRAY | (COLOR_WHITE << 8),           /* roadState */
- COLOR_LIGHTGRAY | (COLOR_LIGHTGREEN << 8),     /* stadiumState */
+ COLOR_DARKGRAY   | (COLOR_OLIVE << 8),         /* rrState */
+ COLOR_DARKGRAY   | (COLOR_WHITE << 8),         /* roadState */
+ COLOR_LIGHTGRAY  | (COLOR_LIGHTGREEN << 8),    /* stadiumState */
  COLOR_LIGHTBROWN | (COLOR_LIGHTGREEN << 8),    /* parkState */
- COLOR_LIGHTGRAY | (COLOR_LIGHTBLUE << 8),      /* seaportState */
- COLOR_LIGHTGRAY | (COLOR_YELLOW << 8),         /* powerState */
- COLOR_LIGHTGRAY | (COLOR_YELLOW << 8),         /* nuclearState */
- COLOR_LIGHTGRAY | (COLOR_LIGHTBROWN << 8),     /* airportState */
- COLOR_LIGHTGRAY | (COLOR_RED << 8),            /* networkState */
+ COLOR_LIGHTGRAY  | (COLOR_LIGHTBLUE << 8),     /* seaportState */
+ COLOR_LIGHTGRAY  | (COLOR_YELLOW << 8),        /* powerState */
+ COLOR_LIGHTGRAY  | (COLOR_YELLOW << 8),        /* nuclearState */
+ COLOR_LIGHTGRAY  | (COLOR_LIGHTBROWN << 8),    /* airportState */
+ COLOR_LIGHTGRAY  | (COLOR_RED << 8),           /* networkState */
 };
 
 
@@ -150,7 +150,7 @@ int Micropolis::putDownPark(
     tile = (value + WOODS2) | BURNBIT | BULLBIT;
   }
 
-  if (Map[mapH][mapV] != 0) {
+  if (Map[mapH][mapV] != DIRT) {
     return -1;
   }
 
@@ -168,8 +168,7 @@ int Micropolis::putDownNetwork(
   short mapH,
   short mapV)
 {
-  int tile =
-        Map[mapH][mapV] & LOMASK;
+  int tile = Map[mapH][mapV] & LOMASK;
 
   if ((TotalFunds > 0) && tally(tile)) {
     Map[mapH][mapV] = tile = 0;
@@ -184,8 +183,7 @@ int Micropolis::putDownNetwork(
     return -2;
   }
 
-  Map[mapH][mapV] =
-        TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
+  Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
   Spend(CostOf[networkState]);
   UpdateFunds();
@@ -330,47 +328,38 @@ short Micropolis::checkBigZone(
 
 }
 
-
-short Micropolis::tally(
-  short tileValue)
+/**
+ * Can the tile be auto-bulldozed?
+ * @param tileValue Value of the tile
+ * @return \c True if the tile can be auto-bulldozed, else \c false
+ */
+bool Micropolis::tally(short tileValue)
 {
-  /* can we autobulldoze this tile? */
-  if (((tileValue >= FIRSTRIVEDGE) &&
-       (tileValue <= LASTRUBBLE)) ||
-      ((tileValue >= (POWERBASE + 2)) &&
-       (tileValue <= (POWERBASE + 12))) ||
-      ((tileValue >= TINYEXP) &&
-       (tileValue <= (LASTTINYEXP + 2)))) { /* ??? */
-    return (1);
-  } else {
-    return (0);
-  }
+  return (tileValue >= FIRSTRIVEDGE  && tileValue <= LASTRUBBLE) ||
+         (tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
+         (tileValue >= TINYEXP       && tileValue <= LASTTINYEXP + 2);
 }
 
-
-short Micropolis::checkSize(
-  short temp)
+/**
+ * Return the size of the zone that the tile belongs to
+ * @param tile_value Value of the tile in the zone
+ * @return Size if it is a known tile value, else \c 0
+ */
+short Micropolis::checkSize(short tile_value)
 {
   /* check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept */
-  if (((temp >= (RESBASE - 1)) &&
-      (temp  <= (PORTBASE - 1))) ||
-      ((temp >= (LASTPOWERPLANT + 1)) &&
-      (temp <= (POLICESTATION + 4)))) {
-
-    return (3);
-
-  } else if (((temp >= PORTBASE) &&
-              (temp <= LASTPORT)) ||
-             ((temp >= COALBASE) &&
-              (temp <= LASTPOWERPLANT)) ||
-             ((temp >= STADIUMBASE) &&
-              (temp <= LASTZONE))) {
-
-    return (4);
-
+  if ((tile_value >= RESBASE - 1        && tile_value <= PORTBASE - 1) ||
+      (tile_value >= LASTPOWERPLANT + 1 && tile_value <= POLICESTATION + 4)) {
+    return 3;
   }
 
-  return (0);
+  if ((tile_value >= PORTBASE    && tile_value <= LASTPORT) ||
+      (tile_value >= COALBASE    && tile_value <= LASTPOWERPLANT) ||
+      (tile_value >= STADIUMBASE && tile_value <= LASTZONE)) {
+    return 4;
+  }
+
+  return 0;
 }
 
 
@@ -438,10 +427,8 @@ int Micropolis::check3x3(
 
   mapH--; mapV--;
 
-  if ((mapH < 0) ||
-      (mapH > (WORLD_X - 3)) ||
-      (mapV < 0) ||
-      (mapV > (WORLD_Y - 3))) {
+  // Tool partly sticking outside world boundaries?
+  if (mapH < 0 || mapH > WORLD_X - 3 || mapV < 0 || mapV > WORLD_Y - 3) {
     return -1;
   }
 
@@ -1076,98 +1063,32 @@ void Micropolis::DoShowZoneStatus(
 }
 
 
-/* comefrom: processWand */
-void Micropolis::put3x3Rubble(
-  short x,
-  short y)
+/**
+ * Make a \a size by \a size tiles square of rubble
+ * @param x    Horizontal position of the left-most tile
+ * @param y    Vertical position of the left-most tile
+ * @param size Size of the rubble square
+ */
+void Micropolis::putRubble(int x, int y, int size)
 {
-  register int xx, yy, zz;
+    for (int xx = x; xx < x + size; xx++) {
+        for (int yy = y; yy < y + size; yy++)  {
 
-  for (xx = x - 1; xx < x + 2; xx++) {
-    for (yy = y - 1; yy < y + 2; yy++)  {
+            if (TestBounds(xx, yy)) {
+                int tile = Map[xx][yy] & LOMASK;
 
-      if (TestBounds(xx, yy)) {
-
-        zz = Map[xx][yy] & LOMASK;
-
-        if ((zz != RADTILE) &&
-            (zz != DIRT)) {
-
-          Map[xx][yy] =
-            (DoAnimation
-             ? (TINYEXP + Rand(2))
-             : SOMETINYEXP) |
-            ANIMBIT | BULLBIT;
-
+                if (tile != RADTILE && tile != DIRT) {
+                    tile = (DoAnimation ? (TINYEXP + Rand(2)) : SOMETINYEXP);
+                    Map[xx][yy] = tile | ANIMBIT | BULLBIT;
+                }
+            }
         }
-      }
     }
-  }
-}
-
-
-/* comefrom: processWand */
-void Micropolis::put4x4Rubble(
-  short x,
-  short y)
-{
-  register int xx, yy, zz;
-
-  for (xx = x - 1; xx < x + 3; xx++) {
-    for (yy = y - 1; yy < y + 3; yy++) {
-
-      if (TestBounds(xx, yy)) {
-
-        zz = Map[xx][yy] & LOMASK;
-
-        if ((zz != RADTILE) &&
-            (zz != DIRT)) {
-
-          Map[xx][yy] =
-            (DoAnimation
-             ? (TINYEXP + Rand(2))
-             : SOMETINYEXP) |
-            ANIMBIT | BULLBIT;
-
-        }
-      }
-    }
-  }
-}
-
-
-/* comefrom: processWand */
-void Micropolis::put6x6Rubble(
-  short x,
-  short y)
-{
-  register int xx, yy, zz;
-
-  for (xx = x - 1; xx < x + 5; xx++) {
-    for (yy = y - 1; yy < y + 5; yy++)  {
-
-      if (TestBounds(xx, yy)) {
-
-        zz = Map[xx][yy] & LOMASK;
-
-        if ((zz != RADTILE) &&
-            (zz != DIRT)) {
-
-          Map[xx][yy] =
-            (DoAnimation
-             ? (TINYEXP + Rand(2))
-             : SOMETINYEXP) |
-            ANIMBIT | BULLBIT;
-
-        }
-      }
-    }
-  }
 }
 
 
 void Micropolis::DidTool(
-  char *name,
+  const char *name,
   short x,
   short y)
 {
@@ -1188,10 +1109,7 @@ int Micropolis::query_tool(
   short x,
   short y)
 {
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1201,7 +1119,7 @@ int Micropolis::query_tool(
   return 1;
 }
 
-
+/** @bug case 6 is never returned from checkSize() */
 int Micropolis::bulldozer_tool(
   short x,
   short y)
@@ -1210,10 +1128,7 @@ int Micropolis::bulldozer_tool(
   short zoneSize, deltaH, deltaV;
   int result = 1;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1230,18 +1145,18 @@ int Micropolis::bulldozer_tool(
 
       case 3:
         MakeSound("city", "Explosion-High");
-        put3x3Rubble(x, y);
+        putRubble(x - 1, y - 1, 3);
         break;
 
       case 4:
         MakeSound("city", "Explosion-Low");
-        put4x4Rubble(x, y);
+        putRubble(x - 1, y - 1, 4);
         break;
 
       case 6:
         MakeSound("city", "Explosion-High");
         MakeSound("city", "Explosion-Low");
-        put6x6Rubble(x, y);
+        putRubble(x - 1, y - 1, 6);
         break;
 
       default:
@@ -1265,13 +1180,13 @@ int Micropolis::bulldozer_tool(
 
       case 4:
         MakeSound("city", "Explosion-Low");
-        put4x4Rubble(x + deltaH, y + deltaV);
+        putRubble(x + deltaH - 1, y + deltaV - 1, 4);
         break;
 
       case 6:
         MakeSound("city", "Explosion-High");
         MakeSound("city", "Explosion-Low");
-        put6x6Rubble(x + deltaH, y + deltaV);
+        putRubble(x + deltaH - 1, y + deltaV - 1, 6);
         break;
 
       }
@@ -1280,9 +1195,7 @@ int Micropolis::bulldozer_tool(
 
   } else {
 
-    if (temp == RIVER ||
-        temp == REDGE ||
-        temp == CHANNEL) {
+    if (temp == RIVER || temp == REDGE || temp == CHANNEL) {
 
       if (TotalFunds >= 6) {
 
@@ -1310,17 +1223,14 @@ int Micropolis::bulldozer_tool(
   return result;
 }
 
-
+/** @todo Generalize TestBounds for different upper bounds */
 int Micropolis::road_tool(
   short x,
   short y)
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1341,10 +1251,7 @@ int Micropolis::rail_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1365,10 +1272,7 @@ int Micropolis::wire_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1389,10 +1293,7 @@ int Micropolis::park_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1412,10 +1313,7 @@ int Micropolis::residential_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1435,10 +1333,7 @@ int Micropolis::commercial_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1458,10 +1353,7 @@ int Micropolis::industrial_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1481,10 +1373,7 @@ int Micropolis::police_dept_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1504,10 +1393,7 @@ int Micropolis::fire_dept_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1527,10 +1413,7 @@ int Micropolis::stadium_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1550,10 +1433,7 @@ int Micropolis::coal_power_plant_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1573,10 +1453,7 @@ int Micropolis::nuclear_power_plant_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1596,10 +1473,7 @@ int Micropolis::seaport_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1619,10 +1493,7 @@ int Micropolis::airport_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
@@ -1642,10 +1513,7 @@ int Micropolis::network_tool(
 {
   int result;
 
-  if ((x < 0) ||
-      (x > (WORLD_X - 1)) ||
-      (y < 0) ||
-      (y > (WORLD_Y - 1))) {
+  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
     return -1;
   }
 
