@@ -833,9 +833,7 @@ void Micropolis::init()
   PunishCnt = 0;
 
   autoBulldoze = false; // Disable auto-bulldoze
-
-  // short autoBudget;
-  autoBudget = 0;
+  autoBudget = false;   // Disable auto-budget
 
   // Quad LastMesTime;
   LastMesTime = 0;
