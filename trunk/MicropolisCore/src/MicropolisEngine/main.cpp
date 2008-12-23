@@ -89,7 +89,7 @@ void Micropolis::env_init()
 
 void Micropolis::sim_init()
 {
-  UserSoundOn = 1;
+  UserSoundOn = true; // Enable sound
   MustUpdateOptions = 1;
   HaveLastMessage = false; // No message seen yet
   ScenarioID = 0;

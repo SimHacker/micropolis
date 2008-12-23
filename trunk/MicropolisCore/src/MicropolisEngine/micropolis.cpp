@@ -852,8 +852,7 @@ void Micropolis::init()
   // short SimMetaSpeed;
   SimMetaSpeed = 0;
 
-  // short UserSoundOn;
-  UserSoundOn = 0;
+  UserSoundOn = false; // Disable sound
 
   // char *CityName;
   CityName = NULL;

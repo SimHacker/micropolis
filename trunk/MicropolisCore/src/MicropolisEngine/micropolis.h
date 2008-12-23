@@ -2269,7 +2269,7 @@ public:
 
   short SimMetaSpeed;
 
-  short UserSoundOn;
+  bool UserSoundOn; ///< Enable sound
 
   char *CityName;
 
