@@ -3223,6 +3223,34 @@ fail:
 }
 
 
+SWIGINTERN int WORLD_X_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_X is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *WORLD_X_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_X));
+  return pyobj;
+}
+
+
+SWIGINTERN int WORLD_Y_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_Y is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *WORLD_Y_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_Y));
+  return pyobj;
+}
+
+
 SWIGINTERN PyObject *_wrap_ReverseDirection(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Direction arg1 ;
@@ -7224,15 +7252,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_Map_set(PyObject *SWIGUNUSEDPARM(self), Py
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_Map_set" "', argument " "2"" of type '" "short *[120]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_Map_set" "', argument " "2"" of type '" "short *[WORLD_X]""'"); 
   } 
   arg2 = reinterpret_cast< short ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)120; ++ii) arg1->Map[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_X; ++ii) arg1->Map[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""Map""' of type '""short *[120]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""Map""' of type '""short *[WORLD_X]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -14979,13 +15007,12 @@ SWIGINTERN PyObject *_wrap_Micropolis_MicropolisVersion_set(PyObject *SWIGUNUSED
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_MicropolisVersion_set" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_MicropolisVersion_set" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  if (arg1->MicropolisVersion) delete[] arg1->MicropolisVersion;
   if (arg2) {
-    size_t size = strlen(reinterpret_cast< const char * >(arg2)) + 1;
-    arg1->MicropolisVersion = (char *)reinterpret_cast< char* >(memcpy((new char[size]), reinterpret_cast< const char * >(arg2), sizeof(char)*(size)));
+    size_t size = strlen(reinterpret_cast< const char * >(reinterpret_cast< const char * >(arg2))) + 1;
+    arg1->MicropolisVersion = (char const *)reinterpret_cast< char* >(memcpy((new char[size]), arg2, sizeof(char)*(size)));
   } else {
     arg1->MicropolisVersion = 0;
   }
@@ -16862,15 +16889,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_PowerStackX_set(PyObject *SWIGUNUSEDPARM(s
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_PowerStackX_set" "', argument " "2"" of type '" "short [((120*100)/4)]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_PowerStackX_set" "', argument " "2"" of type '" "short [((WORLD_X*WORLD_Y)/4)]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)((120*100)/4); ++ii) arg1->PowerStackX[ii] = arg2[ii];
+      for (; ii < (size_t)((WORLD_X*WORLD_Y)/4); ++ii) arg1->PowerStackX[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""PowerStackX""' of type '""short [((120*100)/4)]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""PowerStackX""' of type '""short [((WORLD_X*WORLD_Y)/4)]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -16921,15 +16948,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_PowerStackY_set(PyObject *SWIGUNUSEDPARM(s
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_PowerStackY_set" "', argument " "2"" of type '" "short [((120*100)/4)]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_PowerStackY_set" "', argument " "2"" of type '" "short [((WORLD_X*WORLD_Y)/4)]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)((120*100)/4); ++ii) arg1->PowerStackY[ii] = arg2[ii];
+      for (; ii < (size_t)((WORLD_X*WORLD_Y)/4); ++ii) arg1->PowerStackY[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""PowerStackY""' of type '""short [((120*100)/4)]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""PowerStackY""' of type '""short [((WORLD_X*WORLD_Y)/4)]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -31171,18 +31198,15 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "RANDOM_RANGE",SWIG_From_int(static_cast< int >(0xffff)));
   SWIG_Python_SetConstant(d, "SimWidth",SWIG_From_int(static_cast< int >(120)));
   SWIG_Python_SetConstant(d, "SimHeight",SWIG_From_int(static_cast< int >(100)));
-  SWIG_Python_SetConstant(d, "WORLD_X",SWIG_From_int(static_cast< int >(120)));
-  SWIG_Python_SetConstant(d, "WORLD_Y",SWIG_From_int(static_cast< int >(100)));
+  PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_X",WORLD_X_get, WORLD_X_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_Y",WORLD_Y_get, WORLD_Y_set);
   SWIG_Python_SetConstant(d, "HWLDX",SWIG_From_int(static_cast< int >((120 >> 1))));
   SWIG_Python_SetConstant(d, "HWLDY",SWIG_From_int(static_cast< int >((100 >> 1))));
   SWIG_Python_SetConstant(d, "QWX",SWIG_From_int(static_cast< int >((120 >> 2))));
   SWIG_Python_SetConstant(d, "QWY",SWIG_From_int(static_cast< int >((100 >> 2))));
   SWIG_Python_SetConstant(d, "SmX",SWIG_From_int(static_cast< int >((120 >> 3))));
   SWIG_Python_SetConstant(d, "SmY",SWIG_From_int(static_cast< int >(((100+7) >> 3))));
-  SWIG_Python_SetConstant(d, "EDITOR_W",SWIG_From_int(static_cast< int >((120*16))));
-  SWIG_Python_SetConstant(d, "EDITOR_H",SWIG_From_int(static_cast< int >((100*16))));
-  SWIG_Python_SetConstant(d, "MAP_W",SWIG_From_int(static_cast< int >((120*3))));
-  SWIG_Python_SetConstant(d, "MAP_H",SWIG_From_int(static_cast< int >((100*3))));
   SWIG_Python_SetConstant(d, "NIL",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "HORIZ",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "VERT",SWIG_From_int(static_cast< int >(0)));
@@ -31199,10 +31223,7 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "HISTORY_SCALE_SHORT",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "HISTORY_SCALE_LONG",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "HISTORY_SCALE_COUNT",SWIG_From_int(static_cast< int >(2)));
-  SWIG_Python_SetConstant(d, "POWERMAPROW",SWIG_From_int(static_cast< int >(((120+15)/16))));
   SWIG_Python_SetConstant(d, "POWERMAPLEN",SWIG_From_int(static_cast< int >(1700)));
-  SWIG_Python_SetConstant(d, "PWRMAPSIZE",SWIG_From_int(static_cast< int >((((120+15)/16) *100))));
-  SWIG_Python_SetConstant(d, "PWRSTKSIZE",SWIG_From_int(static_cast< int >(((120*100)/4))));
   SWIG_Python_SetConstant(d, "POINT_BATCH",SWIG_From_int(static_cast< int >(32)));
   SWIG_Python_SetConstant(d, "ALMAP",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "REMAP",SWIG_From_int(static_cast< int >(1)));
@@ -31239,17 +31260,6 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "COLOR_MEDIUMGRAY",SWIG_From_int(static_cast< int >(13)));
   SWIG_Python_SetConstant(d, "COLOR_DARKGRAY",SWIG_From_int(static_cast< int >(14)));
   SWIG_Python_SetConstant(d, "COLOR_BLACK",SWIG_From_int(static_cast< int >(15)));
-  SWIG_Python_SetConstant(d, "PWRBIT",SWIG_From_int(static_cast< int >(32768)));
-  SWIG_Python_SetConstant(d, "CONDBIT",SWIG_From_int(static_cast< int >(16384)));
-  SWIG_Python_SetConstant(d, "BURNBIT",SWIG_From_int(static_cast< int >(8192)));
-  SWIG_Python_SetConstant(d, "BULLBIT",SWIG_From_int(static_cast< int >(4096)));
-  SWIG_Python_SetConstant(d, "ANIMBIT",SWIG_From_int(static_cast< int >(2048)));
-  SWIG_Python_SetConstant(d, "ZONEBIT",SWIG_From_int(static_cast< int >(1024)));
-  SWIG_Python_SetConstant(d, "ALLBITS",SWIG_From_int(static_cast< int >(64512)));
-  SWIG_Python_SetConstant(d, "LOMASK",SWIG_From_int(static_cast< int >(1023)));
-  SWIG_Python_SetConstant(d, "BLBNBIT",SWIG_From_int(static_cast< int >((4096+8192))));
-  SWIG_Python_SetConstant(d, "BLBNCNBIT",SWIG_From_int(static_cast< int >((4096+8192+16384))));
-  SWIG_Python_SetConstant(d, "BNCNBIT",SWIG_From_int(static_cast< int >((8192+16384))));
   SWIG_Python_SetConstant(d, "TRA",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "COP",SWIG_From_int(static_cast< int >(2)));
   SWIG_Python_SetConstant(d, "AIR",SWIG_From_int(static_cast< int >(3)));
@@ -31267,178 +31277,189 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "POLLUTION_HIST",SWIG_From_int(static_cast< int >(5)));
   SWIG_Python_SetConstant(d, "HISTORIES",SWIG_From_int(static_cast< int >(6)));
   SWIG_Python_SetConstant(d, "ALL_HISTORIES",SWIG_From_int(static_cast< int >(((1 << 6) -1))));
-  SWIG_Python_SetConstant(d, "DIRT",SWIG_From_int(static_cast< int >(0)));
-  SWIG_Python_SetConstant(d, "RIVER",SWIG_From_int(static_cast< int >(2)));
-  SWIG_Python_SetConstant(d, "WATER_LOW",SWIG_From_int(static_cast< int >(2)));
-  SWIG_Python_SetConstant(d, "REDGE",SWIG_From_int(static_cast< int >(3)));
-  SWIG_Python_SetConstant(d, "CHANNEL",SWIG_From_int(static_cast< int >(4)));
-  SWIG_Python_SetConstant(d, "FIRSTRIVEDGE",SWIG_From_int(static_cast< int >(5)));
-  SWIG_Python_SetConstant(d, "LASTRIVEDGE",SWIG_From_int(static_cast< int >(20)));
-  SWIG_Python_SetConstant(d, "WATER_HIGH",SWIG_From_int(static_cast< int >(20)));
-  SWIG_Python_SetConstant(d, "TREEBASE",SWIG_From_int(static_cast< int >(21)));
-  SWIG_Python_SetConstant(d, "WOODS_LOW",SWIG_From_int(static_cast< int >(21)));
-  SWIG_Python_SetConstant(d, "LASTTREE",SWIG_From_int(static_cast< int >(36)));
-  SWIG_Python_SetConstant(d, "WOODS",SWIG_From_int(static_cast< int >(37)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH1",SWIG_From_int(static_cast< int >(38)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH2",SWIG_From_int(static_cast< int >(39)));
-  SWIG_Python_SetConstant(d, "WOODS_HIGH",SWIG_From_int(static_cast< int >(39)));
-  SWIG_Python_SetConstant(d, "WOODS2",SWIG_From_int(static_cast< int >(40)));
-  SWIG_Python_SetConstant(d, "WOODS3",SWIG_From_int(static_cast< int >(41)));
-  SWIG_Python_SetConstant(d, "WOODS4",SWIG_From_int(static_cast< int >(42)));
-  SWIG_Python_SetConstant(d, "WOODS5",SWIG_From_int(static_cast< int >(43)));
-  SWIG_Python_SetConstant(d, "RUBBLE",SWIG_From_int(static_cast< int >(44)));
-  SWIG_Python_SetConstant(d, "LASTRUBBLE",SWIG_From_int(static_cast< int >(47)));
-  SWIG_Python_SetConstant(d, "FLOOD",SWIG_From_int(static_cast< int >(48)));
-  SWIG_Python_SetConstant(d, "LASTFLOOD",SWIG_From_int(static_cast< int >(51)));
-  SWIG_Python_SetConstant(d, "RADTILE",SWIG_From_int(static_cast< int >(52)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH3",SWIG_From_int(static_cast< int >(53)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH4",SWIG_From_int(static_cast< int >(54)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH5",SWIG_From_int(static_cast< int >(55)));
-  SWIG_Python_SetConstant(d, "FIRE",SWIG_From_int(static_cast< int >(56)));
-  SWIG_Python_SetConstant(d, "FIREBASE",SWIG_From_int(static_cast< int >(56)));
-  SWIG_Python_SetConstant(d, "LASTFIRE",SWIG_From_int(static_cast< int >(63)));
-  SWIG_Python_SetConstant(d, "ROADBASE",SWIG_From_int(static_cast< int >(64)));
-  SWIG_Python_SetConstant(d, "HBRIDGE",SWIG_From_int(static_cast< int >(64)));
-  SWIG_Python_SetConstant(d, "VBRIDGE",SWIG_From_int(static_cast< int >(65)));
-  SWIG_Python_SetConstant(d, "ROADS",SWIG_From_int(static_cast< int >(66)));
-  SWIG_Python_SetConstant(d, "ROADS2",SWIG_From_int(static_cast< int >(67)));
-  SWIG_Python_SetConstant(d, "ROADS3",SWIG_From_int(static_cast< int >(68)));
-  SWIG_Python_SetConstant(d, "ROADS4",SWIG_From_int(static_cast< int >(69)));
-  SWIG_Python_SetConstant(d, "ROADS5",SWIG_From_int(static_cast< int >(70)));
-  SWIG_Python_SetConstant(d, "ROADS6",SWIG_From_int(static_cast< int >(71)));
-  SWIG_Python_SetConstant(d, "ROADS7",SWIG_From_int(static_cast< int >(72)));
-  SWIG_Python_SetConstant(d, "ROADS8",SWIG_From_int(static_cast< int >(73)));
-  SWIG_Python_SetConstant(d, "ROADS9",SWIG_From_int(static_cast< int >(74)));
-  SWIG_Python_SetConstant(d, "ROADS10",SWIG_From_int(static_cast< int >(75)));
-  SWIG_Python_SetConstant(d, "INTERSECTION",SWIG_From_int(static_cast< int >(76)));
-  SWIG_Python_SetConstant(d, "HROADPOWER",SWIG_From_int(static_cast< int >(77)));
-  SWIG_Python_SetConstant(d, "VROADPOWER",SWIG_From_int(static_cast< int >(78)));
-  SWIG_Python_SetConstant(d, "BRWH",SWIG_From_int(static_cast< int >(79)));
-  SWIG_Python_SetConstant(d, "LTRFBASE",SWIG_From_int(static_cast< int >(80)));
-  SWIG_Python_SetConstant(d, "BRWV",SWIG_From_int(static_cast< int >(95)));
-  SWIG_Python_SetConstant(d, "BRWXXX1",SWIG_From_int(static_cast< int >(111)));
-  SWIG_Python_SetConstant(d, "BRWXXX2",SWIG_From_int(static_cast< int >(127)));
-  SWIG_Python_SetConstant(d, "BRWXXX3",SWIG_From_int(static_cast< int >(143)));
-  SWIG_Python_SetConstant(d, "HTRFBASE",SWIG_From_int(static_cast< int >(144)));
-  SWIG_Python_SetConstant(d, "BRWXXX4",SWIG_From_int(static_cast< int >(159)));
-  SWIG_Python_SetConstant(d, "BRWXXX5",SWIG_From_int(static_cast< int >(175)));
-  SWIG_Python_SetConstant(d, "BRWXXX6",SWIG_From_int(static_cast< int >(191)));
-  SWIG_Python_SetConstant(d, "LASTROAD",SWIG_From_int(static_cast< int >(206)));
-  SWIG_Python_SetConstant(d, "BRWXXX7",SWIG_From_int(static_cast< int >(207)));
-  SWIG_Python_SetConstant(d, "POWERBASE",SWIG_From_int(static_cast< int >(208)));
-  SWIG_Python_SetConstant(d, "HPOWER",SWIG_From_int(static_cast< int >(208)));
-  SWIG_Python_SetConstant(d, "VPOWER",SWIG_From_int(static_cast< int >(209)));
-  SWIG_Python_SetConstant(d, "LHPOWER",SWIG_From_int(static_cast< int >(210)));
-  SWIG_Python_SetConstant(d, "LVPOWER",SWIG_From_int(static_cast< int >(211)));
-  SWIG_Python_SetConstant(d, "LVPOWER2",SWIG_From_int(static_cast< int >(212)));
-  SWIG_Python_SetConstant(d, "LVPOWER3",SWIG_From_int(static_cast< int >(213)));
-  SWIG_Python_SetConstant(d, "LVPOWER4",SWIG_From_int(static_cast< int >(214)));
-  SWIG_Python_SetConstant(d, "LVPOWER5",SWIG_From_int(static_cast< int >(215)));
-  SWIG_Python_SetConstant(d, "LVPOWER6",SWIG_From_int(static_cast< int >(216)));
-  SWIG_Python_SetConstant(d, "LVPOWER7",SWIG_From_int(static_cast< int >(217)));
-  SWIG_Python_SetConstant(d, "LVPOWER8",SWIG_From_int(static_cast< int >(218)));
-  SWIG_Python_SetConstant(d, "LVPOWER9",SWIG_From_int(static_cast< int >(219)));
-  SWIG_Python_SetConstant(d, "LVPOWER10",SWIG_From_int(static_cast< int >(220)));
-  SWIG_Python_SetConstant(d, "RAILHPOWERV",SWIG_From_int(static_cast< int >(221)));
-  SWIG_Python_SetConstant(d, "RAILVPOWERH",SWIG_From_int(static_cast< int >(222)));
-  SWIG_Python_SetConstant(d, "LASTPOWER",SWIG_From_int(static_cast< int >(222)));
-  SWIG_Python_SetConstant(d, "UNUSED_TRASH6",SWIG_From_int(static_cast< int >(223)));
-  SWIG_Python_SetConstant(d, "RAILBASE",SWIG_From_int(static_cast< int >(224)));
-  SWIG_Python_SetConstant(d, "HRAIL",SWIG_From_int(static_cast< int >(224)));
-  SWIG_Python_SetConstant(d, "VRAIL",SWIG_From_int(static_cast< int >(225)));
-  SWIG_Python_SetConstant(d, "LHRAIL",SWIG_From_int(static_cast< int >(226)));
-  SWIG_Python_SetConstant(d, "LVRAIL",SWIG_From_int(static_cast< int >(227)));
-  SWIG_Python_SetConstant(d, "LVRAIL2",SWIG_From_int(static_cast< int >(228)));
-  SWIG_Python_SetConstant(d, "LVRAIL3",SWIG_From_int(static_cast< int >(229)));
-  SWIG_Python_SetConstant(d, "LVRAIL4",SWIG_From_int(static_cast< int >(230)));
-  SWIG_Python_SetConstant(d, "LVRAIL5",SWIG_From_int(static_cast< int >(231)));
-  SWIG_Python_SetConstant(d, "LVRAIL6",SWIG_From_int(static_cast< int >(232)));
-  SWIG_Python_SetConstant(d, "LVRAIL7",SWIG_From_int(static_cast< int >(233)));
-  SWIG_Python_SetConstant(d, "LVRAIL8",SWIG_From_int(static_cast< int >(234)));
-  SWIG_Python_SetConstant(d, "LVRAIL9",SWIG_From_int(static_cast< int >(235)));
-  SWIG_Python_SetConstant(d, "LVRAIL10",SWIG_From_int(static_cast< int >(236)));
-  SWIG_Python_SetConstant(d, "HRAILROAD",SWIG_From_int(static_cast< int >(237)));
-  SWIG_Python_SetConstant(d, "VRAILROAD",SWIG_From_int(static_cast< int >(238)));
-  SWIG_Python_SetConstant(d, "LASTRAIL",SWIG_From_int(static_cast< int >(238)));
-  SWIG_Python_SetConstant(d, "ROADVPOWERH",SWIG_From_int(static_cast< int >(239)));
-  SWIG_Python_SetConstant(d, "RESBASE",SWIG_From_int(static_cast< int >(240)));
-  SWIG_Python_SetConstant(d, "FREEZ",SWIG_From_int(static_cast< int >(244)));
-  SWIG_Python_SetConstant(d, "HOUSE",SWIG_From_int(static_cast< int >(249)));
-  SWIG_Python_SetConstant(d, "LHTHR",SWIG_From_int(static_cast< int >(249)));
-  SWIG_Python_SetConstant(d, "HHTHR",SWIG_From_int(static_cast< int >(260)));
-  SWIG_Python_SetConstant(d, "RZB",SWIG_From_int(static_cast< int >(265)));
-  SWIG_Python_SetConstant(d, "HOSPITAL",SWIG_From_int(static_cast< int >(409)));
-  SWIG_Python_SetConstant(d, "CHURCH",SWIG_From_int(static_cast< int >(418)));
-  SWIG_Python_SetConstant(d, "COMBASE",SWIG_From_int(static_cast< int >(423)));
-  SWIG_Python_SetConstant(d, "COMCLR",SWIG_From_int(static_cast< int >(427)));
-  SWIG_Python_SetConstant(d, "CZB",SWIG_From_int(static_cast< int >(436)));
-  SWIG_Python_SetConstant(d, "COMLAST",SWIG_From_int(static_cast< int >(609)));
-  SWIG_Python_SetConstant(d, "INDBASE",SWIG_From_int(static_cast< int >(612)));
-  SWIG_Python_SetConstant(d, "INDCLR",SWIG_From_int(static_cast< int >(616)));
-  SWIG_Python_SetConstant(d, "LASTIND",SWIG_From_int(static_cast< int >(620)));
-  SWIG_Python_SetConstant(d, "IND1",SWIG_From_int(static_cast< int >(621)));
-  SWIG_Python_SetConstant(d, "IZB",SWIG_From_int(static_cast< int >(625)));
-  SWIG_Python_SetConstant(d, "IND2",SWIG_From_int(static_cast< int >(641)));
-  SWIG_Python_SetConstant(d, "IND3",SWIG_From_int(static_cast< int >(644)));
-  SWIG_Python_SetConstant(d, "IND4",SWIG_From_int(static_cast< int >(649)));
-  SWIG_Python_SetConstant(d, "IND5",SWIG_From_int(static_cast< int >(650)));
-  SWIG_Python_SetConstant(d, "IND6",SWIG_From_int(static_cast< int >(676)));
-  SWIG_Python_SetConstant(d, "IND7",SWIG_From_int(static_cast< int >(677)));
-  SWIG_Python_SetConstant(d, "IND8",SWIG_From_int(static_cast< int >(686)));
-  SWIG_Python_SetConstant(d, "IND9",SWIG_From_int(static_cast< int >(689)));
-  SWIG_Python_SetConstant(d, "PORTBASE",SWIG_From_int(static_cast< int >(693)));
-  SWIG_Python_SetConstant(d, "PORT",SWIG_From_int(static_cast< int >(698)));
-  SWIG_Python_SetConstant(d, "LASTPORT",SWIG_From_int(static_cast< int >(708)));
-  SWIG_Python_SetConstant(d, "AIRPORTBASE",SWIG_From_int(static_cast< int >(709)));
-  SWIG_Python_SetConstant(d, "RADAR",SWIG_From_int(static_cast< int >(711)));
-  SWIG_Python_SetConstant(d, "AIRPORT",SWIG_From_int(static_cast< int >(716)));
-  SWIG_Python_SetConstant(d, "COALBASE",SWIG_From_int(static_cast< int >(745)));
-  SWIG_Python_SetConstant(d, "POWERPLANT",SWIG_From_int(static_cast< int >(750)));
-  SWIG_Python_SetConstant(d, "LASTPOWERPLANT",SWIG_From_int(static_cast< int >(760)));
-  SWIG_Python_SetConstant(d, "FIRESTBASE",SWIG_From_int(static_cast< int >(761)));
-  SWIG_Python_SetConstant(d, "FIRESTATION",SWIG_From_int(static_cast< int >(765)));
-  SWIG_Python_SetConstant(d, "POLICESTBASE",SWIG_From_int(static_cast< int >(770)));
-  SWIG_Python_SetConstant(d, "POLICESTATION",SWIG_From_int(static_cast< int >(774)));
-  SWIG_Python_SetConstant(d, "STADIUMBASE",SWIG_From_int(static_cast< int >(779)));
-  SWIG_Python_SetConstant(d, "STADIUM",SWIG_From_int(static_cast< int >(784)));
-  SWIG_Python_SetConstant(d, "FULLSTADIUM",SWIG_From_int(static_cast< int >(800)));
-  SWIG_Python_SetConstant(d, "NUCLEARBASE",SWIG_From_int(static_cast< int >(811)));
-  SWIG_Python_SetConstant(d, "NUCLEAR",SWIG_From_int(static_cast< int >(816)));
-  SWIG_Python_SetConstant(d, "LASTZONE",SWIG_From_int(static_cast< int >(826)));
-  SWIG_Python_SetConstant(d, "LIGHTNINGBOLT",SWIG_From_int(static_cast< int >(827)));
-  SWIG_Python_SetConstant(d, "HBRDG0",SWIG_From_int(static_cast< int >(828)));
-  SWIG_Python_SetConstant(d, "HBRDG1",SWIG_From_int(static_cast< int >(829)));
-  SWIG_Python_SetConstant(d, "HBRDG2",SWIG_From_int(static_cast< int >(830)));
-  SWIG_Python_SetConstant(d, "HBRDG3",SWIG_From_int(static_cast< int >(831)));
-  SWIG_Python_SetConstant(d, "HBRDG_END",SWIG_From_int(static_cast< int >(832)));
-  SWIG_Python_SetConstant(d, "RADAR0",SWIG_From_int(static_cast< int >(832)));
-  SWIG_Python_SetConstant(d, "RADAR1",SWIG_From_int(static_cast< int >(833)));
-  SWIG_Python_SetConstant(d, "RADAR2",SWIG_From_int(static_cast< int >(834)));
-  SWIG_Python_SetConstant(d, "RADAR3",SWIG_From_int(static_cast< int >(835)));
-  SWIG_Python_SetConstant(d, "RADAR4",SWIG_From_int(static_cast< int >(836)));
-  SWIG_Python_SetConstant(d, "RADAR5",SWIG_From_int(static_cast< int >(837)));
-  SWIG_Python_SetConstant(d, "RADAR6",SWIG_From_int(static_cast< int >(838)));
-  SWIG_Python_SetConstant(d, "RADAR7",SWIG_From_int(static_cast< int >(839)));
-  SWIG_Python_SetConstant(d, "FOUNTAIN",SWIG_From_int(static_cast< int >(840)));
-  SWIG_Python_SetConstant(d, "INDBASE2",SWIG_From_int(static_cast< int >(844)));
-  SWIG_Python_SetConstant(d, "TELEBASE",SWIG_From_int(static_cast< int >(844)));
-  SWIG_Python_SetConstant(d, "TELELAST",SWIG_From_int(static_cast< int >(851)));
-  SWIG_Python_SetConstant(d, "SMOKEBASE",SWIG_From_int(static_cast< int >(852)));
-  SWIG_Python_SetConstant(d, "TINYEXP",SWIG_From_int(static_cast< int >(860)));
-  SWIG_Python_SetConstant(d, "SOMETINYEXP",SWIG_From_int(static_cast< int >(864)));
-  SWIG_Python_SetConstant(d, "LASTTINYEXP",SWIG_From_int(static_cast< int >(867)));
-  SWIG_Python_SetConstant(d, "TINYEXPLAST",SWIG_From_int(static_cast< int >(883)));
-  SWIG_Python_SetConstant(d, "COALSMOKE1",SWIG_From_int(static_cast< int >(916)));
-  SWIG_Python_SetConstant(d, "COALSMOKE2",SWIG_From_int(static_cast< int >(920)));
-  SWIG_Python_SetConstant(d, "COALSMOKE3",SWIG_From_int(static_cast< int >(924)));
-  SWIG_Python_SetConstant(d, "COALSMOKE4",SWIG_From_int(static_cast< int >(928)));
-  SWIG_Python_SetConstant(d, "FOOTBALLGAME1",SWIG_From_int(static_cast< int >(932)));
-  SWIG_Python_SetConstant(d, "FOOTBALLGAME2",SWIG_From_int(static_cast< int >(940)));
-  SWIG_Python_SetConstant(d, "VBRDG0",SWIG_From_int(static_cast< int >(948)));
-  SWIG_Python_SetConstant(d, "VBRDG1",SWIG_From_int(static_cast< int >(949)));
-  SWIG_Python_SetConstant(d, "VBRDG2",SWIG_From_int(static_cast< int >(950)));
-  SWIG_Python_SetConstant(d, "VBRDG3",SWIG_From_int(static_cast< int >(951)));
-  SWIG_Python_SetConstant(d, "TILE_COUNT",SWIG_From_int(static_cast< int >(960)));
+  SWIG_Python_SetConstant(d, "PWRBIT",SWIG_From_int(static_cast< int >(PWRBIT)));
+  SWIG_Python_SetConstant(d, "CONDBIT",SWIG_From_int(static_cast< int >(CONDBIT)));
+  SWIG_Python_SetConstant(d, "BURNBIT",SWIG_From_int(static_cast< int >(BURNBIT)));
+  SWIG_Python_SetConstant(d, "BULLBIT",SWIG_From_int(static_cast< int >(BULLBIT)));
+  SWIG_Python_SetConstant(d, "ANIMBIT",SWIG_From_int(static_cast< int >(ANIMBIT)));
+  SWIG_Python_SetConstant(d, "ZONEBIT",SWIG_From_int(static_cast< int >(ZONEBIT)));
+  SWIG_Python_SetConstant(d, "ALLBITS",SWIG_From_int(static_cast< int >(ALLBITS)));
+  SWIG_Python_SetConstant(d, "LOMASK",SWIG_From_int(static_cast< int >(LOMASK)));
+  SWIG_Python_SetConstant(d, "BLBNBIT",SWIG_From_int(static_cast< int >(BLBNBIT)));
+  SWIG_Python_SetConstant(d, "BLBNCNBIT",SWIG_From_int(static_cast< int >(BLBNCNBIT)));
+  SWIG_Python_SetConstant(d, "BNCNBIT",SWIG_From_int(static_cast< int >(BNCNBIT)));
+  SWIG_Python_SetConstant(d, "DIRT",SWIG_From_int(static_cast< int >(DIRT)));
+  SWIG_Python_SetConstant(d, "RIVER",SWIG_From_int(static_cast< int >(RIVER)));
+  SWIG_Python_SetConstant(d, "REDGE",SWIG_From_int(static_cast< int >(REDGE)));
+  SWIG_Python_SetConstant(d, "CHANNEL",SWIG_From_int(static_cast< int >(CHANNEL)));
+  SWIG_Python_SetConstant(d, "FIRSTRIVEDGE",SWIG_From_int(static_cast< int >(FIRSTRIVEDGE)));
+  SWIG_Python_SetConstant(d, "LASTRIVEDGE",SWIG_From_int(static_cast< int >(LASTRIVEDGE)));
+  SWIG_Python_SetConstant(d, "WATER_LOW",SWIG_From_int(static_cast< int >(WATER_LOW)));
+  SWIG_Python_SetConstant(d, "WATER_HIGH",SWIG_From_int(static_cast< int >(WATER_HIGH)));
+  SWIG_Python_SetConstant(d, "TREEBASE",SWIG_From_int(static_cast< int >(TREEBASE)));
+  SWIG_Python_SetConstant(d, "WOODS_LOW",SWIG_From_int(static_cast< int >(WOODS_LOW)));
+  SWIG_Python_SetConstant(d, "LASTTREE",SWIG_From_int(static_cast< int >(LASTTREE)));
+  SWIG_Python_SetConstant(d, "WOODS",SWIG_From_int(static_cast< int >(WOODS)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH1",SWIG_From_int(static_cast< int >(UNUSED_TRASH1)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH2",SWIG_From_int(static_cast< int >(UNUSED_TRASH2)));
+  SWIG_Python_SetConstant(d, "WOODS_HIGH",SWIG_From_int(static_cast< int >(WOODS_HIGH)));
+  SWIG_Python_SetConstant(d, "WOODS2",SWIG_From_int(static_cast< int >(WOODS2)));
+  SWIG_Python_SetConstant(d, "WOODS3",SWIG_From_int(static_cast< int >(WOODS3)));
+  SWIG_Python_SetConstant(d, "WOODS4",SWIG_From_int(static_cast< int >(WOODS4)));
+  SWIG_Python_SetConstant(d, "WOODS5",SWIG_From_int(static_cast< int >(WOODS5)));
+  SWIG_Python_SetConstant(d, "RUBBLE",SWIG_From_int(static_cast< int >(RUBBLE)));
+  SWIG_Python_SetConstant(d, "LASTRUBBLE",SWIG_From_int(static_cast< int >(LASTRUBBLE)));
+  SWIG_Python_SetConstant(d, "FLOOD",SWIG_From_int(static_cast< int >(FLOOD)));
+  SWIG_Python_SetConstant(d, "LASTFLOOD",SWIG_From_int(static_cast< int >(LASTFLOOD)));
+  SWIG_Python_SetConstant(d, "RADTILE",SWIG_From_int(static_cast< int >(RADTILE)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH3",SWIG_From_int(static_cast< int >(UNUSED_TRASH3)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH4",SWIG_From_int(static_cast< int >(UNUSED_TRASH4)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH5",SWIG_From_int(static_cast< int >(UNUSED_TRASH5)));
+  SWIG_Python_SetConstant(d, "FIRE",SWIG_From_int(static_cast< int >(FIRE)));
+  SWIG_Python_SetConstant(d, "FIREBASE",SWIG_From_int(static_cast< int >(FIREBASE)));
+  SWIG_Python_SetConstant(d, "LASTFIRE",SWIG_From_int(static_cast< int >(LASTFIRE)));
+  SWIG_Python_SetConstant(d, "HBRIDGE",SWIG_From_int(static_cast< int >(HBRIDGE)));
+  SWIG_Python_SetConstant(d, "ROADBASE",SWIG_From_int(static_cast< int >(ROADBASE)));
+  SWIG_Python_SetConstant(d, "VBRIDGE",SWIG_From_int(static_cast< int >(VBRIDGE)));
+  SWIG_Python_SetConstant(d, "ROADS",SWIG_From_int(static_cast< int >(ROADS)));
+  SWIG_Python_SetConstant(d, "ROADS2",SWIG_From_int(static_cast< int >(ROADS2)));
+  SWIG_Python_SetConstant(d, "ROADS3",SWIG_From_int(static_cast< int >(ROADS3)));
+  SWIG_Python_SetConstant(d, "ROADS4",SWIG_From_int(static_cast< int >(ROADS4)));
+  SWIG_Python_SetConstant(d, "ROADS5",SWIG_From_int(static_cast< int >(ROADS5)));
+  SWIG_Python_SetConstant(d, "ROADS6",SWIG_From_int(static_cast< int >(ROADS6)));
+  SWIG_Python_SetConstant(d, "ROADS7",SWIG_From_int(static_cast< int >(ROADS7)));
+  SWIG_Python_SetConstant(d, "ROADS8",SWIG_From_int(static_cast< int >(ROADS8)));
+  SWIG_Python_SetConstant(d, "ROADS9",SWIG_From_int(static_cast< int >(ROADS9)));
+  SWIG_Python_SetConstant(d, "ROADS10",SWIG_From_int(static_cast< int >(ROADS10)));
+  SWIG_Python_SetConstant(d, "INTERSECTION",SWIG_From_int(static_cast< int >(INTERSECTION)));
+  SWIG_Python_SetConstant(d, "HROADPOWER",SWIG_From_int(static_cast< int >(HROADPOWER)));
+  SWIG_Python_SetConstant(d, "VROADPOWER",SWIG_From_int(static_cast< int >(VROADPOWER)));
+  SWIG_Python_SetConstant(d, "BRWH",SWIG_From_int(static_cast< int >(BRWH)));
+  SWIG_Python_SetConstant(d, "LTRFBASE",SWIG_From_int(static_cast< int >(LTRFBASE)));
+  SWIG_Python_SetConstant(d, "BRWV",SWIG_From_int(static_cast< int >(BRWV)));
+  SWIG_Python_SetConstant(d, "BRWXXX1",SWIG_From_int(static_cast< int >(BRWXXX1)));
+  SWIG_Python_SetConstant(d, "BRWXXX2",SWIG_From_int(static_cast< int >(BRWXXX2)));
+  SWIG_Python_SetConstant(d, "BRWXXX3",SWIG_From_int(static_cast< int >(BRWXXX3)));
+  SWIG_Python_SetConstant(d, "HTRFBASE",SWIG_From_int(static_cast< int >(HTRFBASE)));
+  SWIG_Python_SetConstant(d, "BRWXXX4",SWIG_From_int(static_cast< int >(BRWXXX4)));
+  SWIG_Python_SetConstant(d, "BRWXXX5",SWIG_From_int(static_cast< int >(BRWXXX5)));
+  SWIG_Python_SetConstant(d, "BRWXXX6",SWIG_From_int(static_cast< int >(BRWXXX6)));
+  SWIG_Python_SetConstant(d, "LASTROAD",SWIG_From_int(static_cast< int >(LASTROAD)));
+  SWIG_Python_SetConstant(d, "BRWXXX7",SWIG_From_int(static_cast< int >(BRWXXX7)));
+  SWIG_Python_SetConstant(d, "HPOWER",SWIG_From_int(static_cast< int >(HPOWER)));
+  SWIG_Python_SetConstant(d, "VPOWER",SWIG_From_int(static_cast< int >(VPOWER)));
+  SWIG_Python_SetConstant(d, "LHPOWER",SWIG_From_int(static_cast< int >(LHPOWER)));
+  SWIG_Python_SetConstant(d, "LVPOWER",SWIG_From_int(static_cast< int >(LVPOWER)));
+  SWIG_Python_SetConstant(d, "LVPOWER2",SWIG_From_int(static_cast< int >(LVPOWER2)));
+  SWIG_Python_SetConstant(d, "LVPOWER3",SWIG_From_int(static_cast< int >(LVPOWER3)));
+  SWIG_Python_SetConstant(d, "LVPOWER4",SWIG_From_int(static_cast< int >(LVPOWER4)));
+  SWIG_Python_SetConstant(d, "LVPOWER5",SWIG_From_int(static_cast< int >(LVPOWER5)));
+  SWIG_Python_SetConstant(d, "LVPOWER6",SWIG_From_int(static_cast< int >(LVPOWER6)));
+  SWIG_Python_SetConstant(d, "LVPOWER7",SWIG_From_int(static_cast< int >(LVPOWER7)));
+  SWIG_Python_SetConstant(d, "LVPOWER8",SWIG_From_int(static_cast< int >(LVPOWER8)));
+  SWIG_Python_SetConstant(d, "LVPOWER9",SWIG_From_int(static_cast< int >(LVPOWER9)));
+  SWIG_Python_SetConstant(d, "LVPOWER10",SWIG_From_int(static_cast< int >(LVPOWER10)));
+  SWIG_Python_SetConstant(d, "RAILHPOWERV",SWIG_From_int(static_cast< int >(RAILHPOWERV)));
+  SWIG_Python_SetConstant(d, "RAILVPOWERH",SWIG_From_int(static_cast< int >(RAILVPOWERH)));
+  SWIG_Python_SetConstant(d, "POWERBASE",SWIG_From_int(static_cast< int >(POWERBASE)));
+  SWIG_Python_SetConstant(d, "LASTPOWER",SWIG_From_int(static_cast< int >(LASTPOWER)));
+  SWIG_Python_SetConstant(d, "UNUSED_TRASH6",SWIG_From_int(static_cast< int >(UNUSED_TRASH6)));
+  SWIG_Python_SetConstant(d, "HRAIL",SWIG_From_int(static_cast< int >(HRAIL)));
+  SWIG_Python_SetConstant(d, "VRAIL",SWIG_From_int(static_cast< int >(VRAIL)));
+  SWIG_Python_SetConstant(d, "LHRAIL",SWIG_From_int(static_cast< int >(LHRAIL)));
+  SWIG_Python_SetConstant(d, "LVRAIL",SWIG_From_int(static_cast< int >(LVRAIL)));
+  SWIG_Python_SetConstant(d, "LVRAIL2",SWIG_From_int(static_cast< int >(LVRAIL2)));
+  SWIG_Python_SetConstant(d, "LVRAIL3",SWIG_From_int(static_cast< int >(LVRAIL3)));
+  SWIG_Python_SetConstant(d, "LVRAIL4",SWIG_From_int(static_cast< int >(LVRAIL4)));
+  SWIG_Python_SetConstant(d, "LVRAIL5",SWIG_From_int(static_cast< int >(LVRAIL5)));
+  SWIG_Python_SetConstant(d, "LVRAIL6",SWIG_From_int(static_cast< int >(LVRAIL6)));
+  SWIG_Python_SetConstant(d, "LVRAIL7",SWIG_From_int(static_cast< int >(LVRAIL7)));
+  SWIG_Python_SetConstant(d, "LVRAIL8",SWIG_From_int(static_cast< int >(LVRAIL8)));
+  SWIG_Python_SetConstant(d, "LVRAIL9",SWIG_From_int(static_cast< int >(LVRAIL9)));
+  SWIG_Python_SetConstant(d, "LVRAIL10",SWIG_From_int(static_cast< int >(LVRAIL10)));
+  SWIG_Python_SetConstant(d, "HRAILROAD",SWIG_From_int(static_cast< int >(HRAILROAD)));
+  SWIG_Python_SetConstant(d, "VRAILROAD",SWIG_From_int(static_cast< int >(VRAILROAD)));
+  SWIG_Python_SetConstant(d, "RAILBASE",SWIG_From_int(static_cast< int >(RAILBASE)));
+  SWIG_Python_SetConstant(d, "LASTRAIL",SWIG_From_int(static_cast< int >(LASTRAIL)));
+  SWIG_Python_SetConstant(d, "ROADVPOWERH",SWIG_From_int(static_cast< int >(ROADVPOWERH)));
+  SWIG_Python_SetConstant(d, "RESBASE",SWIG_From_int(static_cast< int >(RESBASE)));
+  SWIG_Python_SetConstant(d, "FREEZ",SWIG_From_int(static_cast< int >(FREEZ)));
+  SWIG_Python_SetConstant(d, "HOUSE",SWIG_From_int(static_cast< int >(HOUSE)));
+  SWIG_Python_SetConstant(d, "LHTHR",SWIG_From_int(static_cast< int >(LHTHR)));
+  SWIG_Python_SetConstant(d, "HHTHR",SWIG_From_int(static_cast< int >(HHTHR)));
+  SWIG_Python_SetConstant(d, "RZB",SWIG_From_int(static_cast< int >(RZB)));
+  SWIG_Python_SetConstant(d, "HOSPITAL",SWIG_From_int(static_cast< int >(HOSPITAL)));
+  SWIG_Python_SetConstant(d, "CHURCH",SWIG_From_int(static_cast< int >(CHURCH)));
+  SWIG_Python_SetConstant(d, "COMBASE",SWIG_From_int(static_cast< int >(COMBASE)));
+  SWIG_Python_SetConstant(d, "COMCLR",SWIG_From_int(static_cast< int >(COMCLR)));
+  SWIG_Python_SetConstant(d, "CZB",SWIG_From_int(static_cast< int >(CZB)));
+  SWIG_Python_SetConstant(d, "COMLAST",SWIG_From_int(static_cast< int >(COMLAST)));
+  SWIG_Python_SetConstant(d, "INDBASE",SWIG_From_int(static_cast< int >(INDBASE)));
+  SWIG_Python_SetConstant(d, "INDCLR",SWIG_From_int(static_cast< int >(INDCLR)));
+  SWIG_Python_SetConstant(d, "LASTIND",SWIG_From_int(static_cast< int >(LASTIND)));
+  SWIG_Python_SetConstant(d, "IND1",SWIG_From_int(static_cast< int >(IND1)));
+  SWIG_Python_SetConstant(d, "IZB",SWIG_From_int(static_cast< int >(IZB)));
+  SWIG_Python_SetConstant(d, "IND2",SWIG_From_int(static_cast< int >(IND2)));
+  SWIG_Python_SetConstant(d, "IND3",SWIG_From_int(static_cast< int >(IND3)));
+  SWIG_Python_SetConstant(d, "IND4",SWIG_From_int(static_cast< int >(IND4)));
+  SWIG_Python_SetConstant(d, "IND5",SWIG_From_int(static_cast< int >(IND5)));
+  SWIG_Python_SetConstant(d, "IND6",SWIG_From_int(static_cast< int >(IND6)));
+  SWIG_Python_SetConstant(d, "IND7",SWIG_From_int(static_cast< int >(IND7)));
+  SWIG_Python_SetConstant(d, "IND8",SWIG_From_int(static_cast< int >(IND8)));
+  SWIG_Python_SetConstant(d, "IND9",SWIG_From_int(static_cast< int >(IND9)));
+  SWIG_Python_SetConstant(d, "PORTBASE",SWIG_From_int(static_cast< int >(PORTBASE)));
+  SWIG_Python_SetConstant(d, "PORT",SWIG_From_int(static_cast< int >(PORT)));
+  SWIG_Python_SetConstant(d, "LASTPORT",SWIG_From_int(static_cast< int >(LASTPORT)));
+  SWIG_Python_SetConstant(d, "AIRPORTBASE",SWIG_From_int(static_cast< int >(AIRPORTBASE)));
+  SWIG_Python_SetConstant(d, "RADAR",SWIG_From_int(static_cast< int >(RADAR)));
+  SWIG_Python_SetConstant(d, "AIRPORT",SWIG_From_int(static_cast< int >(AIRPORT)));
+  SWIG_Python_SetConstant(d, "COALBASE",SWIG_From_int(static_cast< int >(COALBASE)));
+  SWIG_Python_SetConstant(d, "POWERPLANT",SWIG_From_int(static_cast< int >(POWERPLANT)));
+  SWIG_Python_SetConstant(d, "LASTPOWERPLANT",SWIG_From_int(static_cast< int >(LASTPOWERPLANT)));
+  SWIG_Python_SetConstant(d, "FIRESTBASE",SWIG_From_int(static_cast< int >(FIRESTBASE)));
+  SWIG_Python_SetConstant(d, "FIRESTATION",SWIG_From_int(static_cast< int >(FIRESTATION)));
+  SWIG_Python_SetConstant(d, "POLICESTBASE",SWIG_From_int(static_cast< int >(POLICESTBASE)));
+  SWIG_Python_SetConstant(d, "POLICESTATION",SWIG_From_int(static_cast< int >(POLICESTATION)));
+  SWIG_Python_SetConstant(d, "STADIUMBASE",SWIG_From_int(static_cast< int >(STADIUMBASE)));
+  SWIG_Python_SetConstant(d, "STADIUM",SWIG_From_int(static_cast< int >(STADIUM)));
+  SWIG_Python_SetConstant(d, "FULLSTADIUM",SWIG_From_int(static_cast< int >(FULLSTADIUM)));
+  SWIG_Python_SetConstant(d, "NUCLEARBASE",SWIG_From_int(static_cast< int >(NUCLEARBASE)));
+  SWIG_Python_SetConstant(d, "NUCLEAR",SWIG_From_int(static_cast< int >(NUCLEAR)));
+  SWIG_Python_SetConstant(d, "LASTZONE",SWIG_From_int(static_cast< int >(LASTZONE)));
+  SWIG_Python_SetConstant(d, "LIGHTNINGBOLT",SWIG_From_int(static_cast< int >(LIGHTNINGBOLT)));
+  SWIG_Python_SetConstant(d, "HBRDG0",SWIG_From_int(static_cast< int >(HBRDG0)));
+  SWIG_Python_SetConstant(d, "HBRDG1",SWIG_From_int(static_cast< int >(HBRDG1)));
+  SWIG_Python_SetConstant(d, "HBRDG2",SWIG_From_int(static_cast< int >(HBRDG2)));
+  SWIG_Python_SetConstant(d, "HBRDG3",SWIG_From_int(static_cast< int >(HBRDG3)));
+  SWIG_Python_SetConstant(d, "HBRDG_END",SWIG_From_int(static_cast< int >(HBRDG_END)));
+  SWIG_Python_SetConstant(d, "RADAR0",SWIG_From_int(static_cast< int >(RADAR0)));
+  SWIG_Python_SetConstant(d, "RADAR1",SWIG_From_int(static_cast< int >(RADAR1)));
+  SWIG_Python_SetConstant(d, "RADAR2",SWIG_From_int(static_cast< int >(RADAR2)));
+  SWIG_Python_SetConstant(d, "RADAR3",SWIG_From_int(static_cast< int >(RADAR3)));
+  SWIG_Python_SetConstant(d, "RADAR4",SWIG_From_int(static_cast< int >(RADAR4)));
+  SWIG_Python_SetConstant(d, "RADAR5",SWIG_From_int(static_cast< int >(RADAR5)));
+  SWIG_Python_SetConstant(d, "RADAR6",SWIG_From_int(static_cast< int >(RADAR6)));
+  SWIG_Python_SetConstant(d, "RADAR7",SWIG_From_int(static_cast< int >(RADAR7)));
+  SWIG_Python_SetConstant(d, "FOUNTAIN",SWIG_From_int(static_cast< int >(FOUNTAIN)));
+  SWIG_Python_SetConstant(d, "INDBASE2",SWIG_From_int(static_cast< int >(INDBASE2)));
+  SWIG_Python_SetConstant(d, "TELEBASE",SWIG_From_int(static_cast< int >(TELEBASE)));
+  SWIG_Python_SetConstant(d, "TELELAST",SWIG_From_int(static_cast< int >(TELELAST)));
+  SWIG_Python_SetConstant(d, "SMOKEBASE",SWIG_From_int(static_cast< int >(SMOKEBASE)));
+  SWIG_Python_SetConstant(d, "TINYEXP",SWIG_From_int(static_cast< int >(TINYEXP)));
+  SWIG_Python_SetConstant(d, "SOMETINYEXP",SWIG_From_int(static_cast< int >(SOMETINYEXP)));
+  SWIG_Python_SetConstant(d, "LASTTINYEXP",SWIG_From_int(static_cast< int >(LASTTINYEXP)));
+  SWIG_Python_SetConstant(d, "TINYEXPLAST",SWIG_From_int(static_cast< int >(TINYEXPLAST)));
+  SWIG_Python_SetConstant(d, "COALSMOKE1",SWIG_From_int(static_cast< int >(COALSMOKE1)));
+  SWIG_Python_SetConstant(d, "COALSMOKE2",SWIG_From_int(static_cast< int >(COALSMOKE2)));
+  SWIG_Python_SetConstant(d, "COALSMOKE3",SWIG_From_int(static_cast< int >(COALSMOKE3)));
+  SWIG_Python_SetConstant(d, "COALSMOKE4",SWIG_From_int(static_cast< int >(COALSMOKE4)));
+  SWIG_Python_SetConstant(d, "FOOTBALLGAME1",SWIG_From_int(static_cast< int >(FOOTBALLGAME1)));
+  SWIG_Python_SetConstant(d, "FOOTBALLGAME2",SWIG_From_int(static_cast< int >(FOOTBALLGAME2)));
+  SWIG_Python_SetConstant(d, "VBRDG0",SWIG_From_int(static_cast< int >(VBRDG0)));
+  SWIG_Python_SetConstant(d, "VBRDG1",SWIG_From_int(static_cast< int >(VBRDG1)));
+  SWIG_Python_SetConstant(d, "VBRDG2",SWIG_From_int(static_cast< int >(VBRDG2)));
+  SWIG_Python_SetConstant(d, "VBRDG3",SWIG_From_int(static_cast< int >(VBRDG3)));
+  SWIG_Python_SetConstant(d, "TILE_COUNT",SWIG_From_int(static_cast< int >(TILE_COUNT)));
   SWIG_Python_SetConstant(d, "residentialState",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "commercialState",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "industrialState",SWIG_From_int(static_cast< int >(2)));
@@ -31483,7 +31504,6 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "ZT_INDUSTRIAL",SWIG_From_int(static_cast< int >(ZT_INDUSTRIAL)));
   SWIG_Python_SetConstant(d, "ZT_RESIDENTIAL",SWIG_From_int(static_cast< int >(ZT_RESIDENTIAL)));
   SWIG_Python_SetConstant(d, "ZT_NUM_DESTINATIONS",SWIG_From_int(static_cast< int >(ZT_NUM_DESTINATIONS)));
-  PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
   SWIG_addvarlink(SWIG_globals(),(char*)"MAX_TRAFFIC_DISTANCE",MAX_TRAFFIC_DISTANCE_get, MAX_TRAFFIC_DISTANCE_set);
   SWIG_Python_SetConstant(d, "CVP_CRIME",SWIG_From_int(static_cast< int >(CVP_CRIME)));
   SWIG_Python_SetConstant(d, "CVP_POLLUTION",SWIG_From_int(static_cast< int >(CVP_POLLUTION)));
