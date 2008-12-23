@@ -1214,13 +1214,11 @@ public:
 public:
 
 
-  // Count of passes through DoDisasters to spread flooding.
+  /**
+   * Size of flooding disaster.
+   */
   short FloodCnt;
 
-
-  void DoDisasters();
-
-  void ScenarioDisaster();
 
   void MakeMeltdown();
 
@@ -1228,13 +1226,19 @@ public:
 
   void MakeEarthquake();
 
-  void SetFire();
-
   void MakeFire();
 
-  int Vulnerable(int tem);
-
   void MakeFlood();
+
+private:
+
+  void DoDisasters();
+
+  void ScenarioDisaster();
+
+  void SetFire();
+
+  bool Vulnerable(int tem);
 
   void DoFlood();
 

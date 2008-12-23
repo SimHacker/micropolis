@@ -71,20 +71,18 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: Simulate */
+/** Let disasters happen */
 void Micropolis::DoDisasters()
 {
   /* Chance of disasters at lev 0 1 2 */
-  static short DisChance[3] = {
-          10 * 48, // Level 0
-          5 * 48,  // Level 1
-          60 // Level 2
+  static const short DisChance[3] = {
+    10 * 48, // Level 0
+    5 * 48,  // Level 1
+    60 // Level 2
   };
 
-  register short x;
-
   if (FloodCnt) {
-      FloodCnt--;
+    FloodCnt--;
   }
 
   if (DisasterEvent != SC_NONE) {
@@ -95,7 +93,7 @@ void Micropolis::DoDisasters()
     return;
   }
 
-  x = GameLevel;
+  short x = GameLevel;
   if (x > 2) {
     x = 0;
   }
@@ -105,27 +103,31 @@ void Micropolis::DoDisasters()
 
     case 0:
     case 1:
-      SetFire();
+      SetFire();  // 2/9 chance a fire breaks out
       break;
 
     case 2:
     case 3:
-      MakeFlood();
+      MakeFlood(); // 2/9 chance for a flood
       break;
 
     case 4:
+      // 1/9 chance nothing happens (was airplane crash, 
+      // which EA removed after 9/11, and requested it be 
+      // removed from this code)
       break;
 
     case 5:
-      MakeTornado();
+      MakeTornado(); // 1/9 chance tornado
       break;
 
     case 6:
-      MakeEarthquake();
+      MakeEarthquake(); // 1/9 chance earthquake
       break;
 
     case 7:
     case 8:
+      // 2/9 chance godzilla arrives in a dirty town
       if (PolluteAverage > /* 80 */ 60) {
         MakeMonster();
       }
@@ -136,7 +138,7 @@ void Micropolis::DoDisasters()
 }
 
 
-/* comefrom: DoDisasters */
+/** Let disasters of the scenario happen */
 void Micropolis::ScenarioDisaster()
 {
 
@@ -193,16 +195,16 @@ void Micropolis::ScenarioDisaster()
 }
 
 
-/* comefrom: ScenarioDisaster */
+/**
+ * Make a nuclear power plant melt
+ * @todo Randomize which nuke plant melts down.
+ */
 void Micropolis::MakeMeltdown()
 {
   short x, y;
 
-  // TODO: Randomize which nuke plant melts down.
-
   for (x = 0; x < (WORLD_X - 1); x++) {
     for (y = 0; y < (WORLD_Y - 1); y++) {
-      /* TILE_IS_NUCLEAR(Map[x][y]) */
       if ((Map[x][y] & LOMASK) == NUCLEAR) {
         DoMeltdown(x, y);
         return;
@@ -211,7 +213,7 @@ void Micropolis::MakeMeltdown()
   }
 }
 
-
+/** Let a fire bomb explode at a random location */
 void Micropolis::FireBomb()
 {
   CrashX = Rand(WORLD_X - 1);
@@ -222,32 +224,27 @@ void Micropolis::FireBomb()
 }
 
 
-/* comefrom: DoDisasters ScenarioDisaster */
+/** Change random tiles to fire or dirt as result of the earthquake */
 void Micropolis::MakeEarthquake()
 {
-  register short x, y, z;
-  short time;
+  short x, y, z;
 
   DoEarthquake();
 
   SendMesAt(-23, CCx, CCy);
-  time =
-    Rand(700) + 300;
+  short time = Rand(700) + 300; // strength/duration of the earthquake
 
   for (z = 0; z < time; z++)  {
     x = Rand(WORLD_X - 1);
     y = Rand(WORLD_Y - 1);
 
-    if ((x < 0) || (x > (WORLD_X - 1)) ||
-        (y < 0) || (y > (WORLD_Y - 1))) {
-      continue;
-    }
 
-    /* TILE_IS_VULNERABLE(Map[x][y]) */
     if (Vulnerable(Map[x][y])) {
-      if (z & 0x3) {
+
+      if ((z & 0x3) != 0) { // 3 of 4 times reduce to rubble
         Map[x][y] = (RUBBLE + BULLBIT) + (Rand16() & 3);
       } else {
+        // 1 of 4 times start fire
         Map[x][y] = (FIRE + ANIMBIT) + (Rand16() & 7);
       }
     }
@@ -255,10 +252,10 @@ void Micropolis::MakeEarthquake()
 }
 
 
-/* comefrom: DoDisasters */
+/** Start a fire at a random place, random disaster or scenario */
 void Micropolis::SetFire()
 {
-  register short x, y, z;
+  short x, y, z;
 
   x = Rand(WORLD_X - 1);
   y = Rand(WORLD_Y - 1);
@@ -267,10 +264,8 @@ void Micropolis::SetFire()
   /* TILE_IS_ARSONABLE(z) */
   if (!(z & ZONEBIT)) {
     z = z & LOMASK;
-    if ((z > LHTHR) &&
-        (z < LASTZONE)) {
-      Map[x][y] =
-        FIRE + ANIMBIT + (Rand16() & 7);
+    if (z > LHTHR && z < LASTZONE) {
+      Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
       CrashX = x;
       CrashY = y;
       SendMesAt(-20, x, y);
@@ -279,7 +274,7 @@ void Micropolis::SetFire()
 }
 
 
-/* comefrom: DoDisasters */
+/** Start a fire at a random place, requested by user */
 void Micropolis::MakeFire()
 {
   short t, x, y, z;
@@ -293,8 +288,7 @@ void Micropolis::MakeFire()
     if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
       z = z & LOMASK;
       if ((z > 21) && (z < LASTZONE)) {
-        Map[x][y] =
-          FIRE + ANIMBIT + (Rand16() & 7);
+        Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
         SendMesAt(20, x, y);
         return;
       }
@@ -303,49 +297,48 @@ void Micropolis::MakeFire()
 }
 
 
-/* comefrom: MakeEarthquake */
-int Micropolis::Vulnerable(int tem)
+/**
+ * Is tile vulnerable for an earthquake?
+ * @param tem Tile data
+ * @return Function returns \c true if tile is vulnerable, and \c false if not
+ */
+bool Micropolis::Vulnerable(int tem)
 {
-  register int tem2;
+  int tem2 = tem & LOMASK;
 
-  tem2 = tem & LOMASK;
-
-  if ((tem2 < RESBASE) ||
-      (tem2 > LASTZONE) ||
-      (tem & ZONEBIT)) {
-    return (FALSE);
+  if (tem2 < RESBASE || tem2 > LASTZONE || (tem & ZONEBIT)) {
+    return false;
   }
-
-  return (TRUE);
+  
+  return true;
 }
 
 
-/* comefrom: DoDisasters ScenarioDisaster */
+/**
+ * Flood many tiles
+ * @todo Use Direction and some form of XYPosition class here
+ */
 void Micropolis::MakeFlood()
 {
-  static short Dx[4] = {  0,  1,  0,  -1 };
-  static short Dy[4] = { -1,  0,  1,   0 };
-  register short xx, yy, c;
+  static const short Dx[4] = {  0,  1,  0,  -1 };
+  static const short Dy[4] = { -1,  0,  1,   0 };
+  short xx, yy, c;
   short z, t, x, y;
 
   for (z = 0; z < 300; z++) {
     x = Rand(WORLD_X - 1);
     y = Rand(WORLD_Y - 1);
-    c = Map[x][y] & LOMASK; /* XXX: & LOMASK */
+    c = Map[x][y] & LOMASK;
 
-    /* TILE_IS_RIVER_EDGE(c) */
-    if ((c > CHANNEL) &&
-        (c <= WATER_HIGH)) { /* if riveredge  */
+    if (c > CHANNEL && c <= WATER_HIGH) { /* if riveredge  */
       for (t = 0; t < 4; t++) {
         xx = x + Dx[t];
         yy = y + Dy[t];
         if (TestBounds(xx, yy)) {
           c = Map[xx][yy];
 
-          /* TILE_IS_FLOODABLE(c) */
-          if ((c == DIRT) || 
-              ((c & BULLBIT) && 
-               (c & BURNBIT))) {
+          /* tile is floodable */
+          if (c == DIRT || ((c & (BULLBIT | BURNBIT)) == (BULLBIT | BURNBIT))) {
             Map[xx][yy] = FLOOD;
             FloodCnt = 30;
             SendMesAt(-42, xx, yy);
@@ -358,16 +351,19 @@ void Micropolis::MakeFlood()
 }
 
 
-/* comefrom: MapScan */
+/**
+ * Flood around the (SMapX, SMapY) tile
+ * @todo Use Direction and some form of XYPosition class here
+ */
 void Micropolis::DoFlood()
 {
-  static short Dx[4] = {  0,  1,  0, -1 };
-  static short Dy[4] = { -1,  0,  1,  0 };
+  static const short Dx[4] = {  0,  1,  0, -1 };
+  static const short Dy[4] = { -1,  0,  1,  0 };
   register short z, c, xx, yy, t;
 
   if (FloodCnt) {
     for (z = 0; z < 4; z++) {
-      if (!(Rand16() & 7)) {
+      if ((Rand16() & 7) == 0) { // 12.5% chance
         xx = SMapX + Dx[z];
         yy = SMapY + Dy[z];
         if (TestBounds(xx, yy)) {
@@ -375,21 +371,17 @@ void Micropolis::DoFlood()
           t = c & LOMASK;
 
           /* TILE_IS_FLOODABLE2(c) */
-          if ((c & BURNBIT) ||
-              (c == 0) ||
-              ((t >= WOODS5) &&
-               (t < FLOOD))) {
-            if (c & ZONEBIT) {
+          if ((c & BURNBIT) || c == DIRT || (t >= WOODS5 && t < FLOOD)) {
+            if ((c & ZONEBIT) != 0) {
               FireZone(xx, yy, c);
             }
-            Map[xx][yy] =
-              FLOOD + Rand(2);
+            Map[xx][yy] = FLOOD + Rand(2);
           }
         }
       }
     }
   } else {
-    if (!(Rand16() & 15)) {
+    if ((Rand16() & 15) == 0) { // 1/16 chance
       Map[SMapX][SMapY] = DIRT;
     }
   }
