@@ -498,14 +498,27 @@ enum CityClass {
 };
 
 ////////////////////////////////////////////////////////////////////////
+// Inline functions
+
+
+/**
+ * Check that the given coordinate is within world bounds
+ * @param wx World x coordinate
+ * @param wy World y coordinate
+ * @return Boolean indicating (wx, wy) is inside the world bounds
+ */
+static inline bool TestBounds(int wx, int wy)
+{
+    return (wx >= 0 && wx < WORLD_X && wy >= 0 && wy < WORLD_Y);
+}
+
+
+////////////////////////////////////////////////////////////////////////
 // Macros
 
 
 #define ABS(x) \
         (((x) < 0) ? (-(x)) : (x))
-
-#define TestBounds(x, y) \
-        (((x) >= 0) && ((x) < WORLD_X) && ((y) >= 0) && ((y) < WORLD_Y))
 
 #define TILE_IS_NUCLEAR(tile) \
         ((tile & LOMASK) == NUCLEAR)
