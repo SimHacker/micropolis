@@ -228,8 +228,8 @@ void Micropolis::InitializeSound()
 
 
 void Micropolis::MakeSound(
-  char *channel,
-  char *sound)
+  const char *channel,
+  const char *sound)
 {
   Callback(
     "UIMakeSound",

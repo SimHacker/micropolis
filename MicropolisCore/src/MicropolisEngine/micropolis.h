@@ -361,7 +361,7 @@
 #define COMBASE                 423
 #define COMCLR                  427
 #define CZB                     436
-#define COMLAST                                 609
+#define COMLAST                 609
 #define INDBASE                 612
 #define INDCLR                  616
 #define LASTIND                 620
@@ -416,7 +416,7 @@
 #define TINYEXP                 860
 #define SOMETINYEXP             864
 #define LASTTINYEXP             867
-#define TINYEXPLAST                             883
+#define TINYEXPLAST             883
 #define COALSMOKE1              916
 #define COALSMOKE2              920
 #define COALSMOKE3              924
@@ -2378,8 +2378,8 @@ public:
   void InitializeSound();
 
   void MakeSound(
-    char *channel,
-    char *sound);
+    const char *channel,
+    const char *sound);
 
   int getTile(
         int x,
@@ -2438,12 +2438,6 @@ public:
     short *deltaHPtr,
     short *deltaVPtr);
 
-  short tally(
-    short tileValue);
-
-  short checkSize(
-    short temp);
-
   void check3x3border(
     short xMap,
     short yMap);
@@ -2494,20 +2488,8 @@ public:
     int x,
     int y);
 
-  void put3x3Rubble(
-    short x,
-    short y);
-
-  void put4x4Rubble(
-    short x,
-    short y);
-
-  void put6x6Rubble(
-    short x,
-    short y);
-
   void DidTool(
-    char *name,
+    const char *name,
     short x,
     short y);
 
@@ -2610,6 +2592,13 @@ public:
     int x,
     int y);
 
+private:
+
+  bool tally(short tileValue);
+
+  short checkSize(short tile_value);
+
+  void putRubble(int x, int y, int size);
 
   ////////////////////////////////////////////////////////////////////////
   // traffic.cpp
