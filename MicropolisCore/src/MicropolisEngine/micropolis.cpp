@@ -936,8 +936,7 @@ void Micropolis::init()
   // short SMapYStack[MAX_TRAFFIC_DISTANCE+1];
   memset(SMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
-  // short LDir;
-  LDir = 0;
+  LDir = DIR_INVALID;
 
   Zsource = ZT_COMMERCIAL;
 

@@ -60,7 +60,9 @@
  * NOT APPLY TO YOU.
  */
 
-/** @file traffic.cpp */
+/** @file traffic.cpp Traffic generation
+ * @todo Introduce a XY position class that can be passed around
+ */
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -69,10 +71,6 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-
-
-/* Traffic Generation */
-
 
 /**
  * Find a connection over a road from the current place to a specified zone type
@@ -213,14 +211,19 @@ bool Micropolis::FindPRoad()
 }
 
 
-short Micropolis::FindPTele()
+/**
+ * Find a telecomm connection at the perimeter
+ * @return Indication that a telecomm connection has been found
+ * @pre  SMapX and SMapY contain the starting coordinates
+ */
+bool Micropolis::FindPTele()
 {
   /* look for telecommunication on edges of zone */
-  static short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
-  static short PerimY[12] = {-2,-2,-2,-1, 0, 1, 2, 2, 2, 1, 0,-1};
-  register short tx, ty, z, tile;
+  static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
+  static const short PerimY[12] = {-2,-2,-2,-1, 0, 1, 2, 2, 2, 1, 0,-1};
+  short tx, ty, tile;
 
-  for (z = 0; z < 12; z++) {
+  for (short z = 0; z < 12; z++) {
 
     tx = SMapX + PerimX[z];
     ty = SMapY + PerimY[z];
@@ -228,11 +231,8 @@ short Micropolis::FindPTele()
     if (TestBounds(tx, ty)) {
 
       tile = Map[tx][ty] & LOMASK;
-
-      if ((tile >= TELEBASE) &&
-          (tile <= TELELAST)) {
+      if (tile >= TELEBASE && tile <= TELELAST)
         return (TRUE);
-      }
     }
   }
 
@@ -245,12 +245,13 @@ short Micropolis::FindPTele()
  * @return Was drive succesful?
  * @post Position stack (SMapXStack, SMapYStack, PosStackN)
  *       is filled with some intermediate positions of the drive
+ * @todo Find out why the stack is popped, but SMapX and sMapY are not updated
  */
 bool Micropolis::TryDrive()
 {
   short dist;
 
-  LDir = 5;
+  LDir = DIR_INVALID;
   for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
     if (TryGo(dist)) {                /* if it got a road */
@@ -276,9 +277,10 @@ bool Micropolis::TryDrive()
 
 
 /* comefrom: TryDrive */
-bool Micropolis::TryGo(int z)
+bool Micropolis::TryGo(int dist)
 {
-  short x, rdir, realdir;
+  short x, rdir;
+  Direction realdir;
 
 #if 0
   rdir = Rand(3); /* XXX: Heaviest user of Rand */
@@ -288,7 +290,7 @@ bool Micropolis::TryGo(int z)
 
   for (x = rdir; x < (rdir + 4); x++) { /* for the 4 directions */
 
-    realdir = x & 3;
+    realdir = (Direction)(x & 3);
 
     if (realdir == LDir) {
       continue; /* skip last direction */
@@ -296,9 +298,9 @@ bool Micropolis::TryGo(int z)
 
     if (RoadTest(GetFromMap(realdir))) {
       MoveMapSim(realdir);
-      LDir = (realdir + 2) & 3;
+      LDir = ReverseDirection(realdir);
 
-      if (z & 1) {
+      if (dist & 1) {
         /* save pos every other move */
         PushPos();
       }
@@ -311,42 +313,46 @@ bool Micropolis::TryGo(int z)
 }
 
 
-/* comefrom: TryGo DriveDone */
-short Micropolis::GetFromMap(
-  int x)
+/**
+ * Get neighbouring tile from the map.
+ * @param d Direction of neighbouring tile
+ * @return The tile in the indicated direction. If tile is off-world or an
+ *         incorrect direction is given, \c DIRT is returned.
+ */
+short Micropolis::GetFromMap(Direction d)
 {
-  switch (x) {
+  switch (d) {
 
-  case 0:
+  case DIR_NORTH:
     if (SMapY > 0) {
-      return (Map[SMapX][SMapY - 1] & LOMASK);
+      return Map[SMapX][SMapY - 1] & LOMASK;
     }
 
-    return (FALSE);
+    return DIRT;
 
-  case 1:
+  case DIR_WEST:
     if (SMapX < (WORLD_X - 1)) {
-      return (Map[SMapX + 1][SMapY] & LOMASK);
+      return Map[SMapX + 1][SMapY] & LOMASK;
     }
 
-    return (FALSE);
+    return DIRT;
 
-  case 2:
+  case DIR_SOUTH:
     if (SMapY < (WORLD_Y - 1)) {
-      return (Map[SMapX][SMapY + 1] & LOMASK);
+      return Map[SMapX][SMapY + 1] & LOMASK;
     }
 
-    return (FALSE);
+    return DIRT;
 
-  case 3:
+  case DIR_EAST:
     if (SMapX > 0) {
-      return (Map[SMapX - 1][SMapY] & LOMASK);
+      return Map[SMapX - 1][SMapY] & LOMASK;
     }
 
-    return (FALSE);
+    return DIRT;
 
   default:
-    return (FALSE);
+    return DIRT;
 
   }
 }
@@ -401,26 +407,22 @@ bool Micropolis::DriveDone()
 }
 
 
-/* comefrom: TryGo FindPRoad */
-short Micropolis::RoadTest(
-  int x)
+/**
+ * Can the given tile be used as road?
+ * @param t Tile
+ * @return Indication that you can drive on the given tile
+ */
+bool Micropolis::RoadTest(int t)
 {
-  x = x & LOMASK;
+  t = t & LOMASK;
 
-  if (x < ROADBASE) {
-    return (FALSE);
-  }
+  if (t < ROADBASE || t > LASTRAIL)
+    return false;
 
-  if (x > LASTRAIL) {
-    return (FALSE);
-  }
+  if (t >= POWERBASE && t < LASTPOWER)
+    return false;
 
-  if ((x >= POWERBASE) &&
-      (x < LASTPOWER)) {
-    return (FALSE);
-  }
-
-  return (TRUE);
+  return true;
 }
 
 
