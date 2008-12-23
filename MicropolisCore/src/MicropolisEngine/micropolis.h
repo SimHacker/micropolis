@@ -2245,7 +2245,12 @@ public:
    */
   bool autoBulldoze;
 
-  short autoBudget;
+  /**
+   * Enable auto budget
+   *
+   * When enabled, the program will perform budgetting of the city
+   */
+  bool autoBudget;
 
   Quad LastMesTime;
 

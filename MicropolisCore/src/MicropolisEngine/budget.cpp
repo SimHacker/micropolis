@@ -255,7 +255,7 @@ void Micropolis::DoBudgetNow(
 
 noMoney:
 
-  if ((!autoBudget) || fromMenu) {
+  if (!autoBudget || fromMenu) {
 
     // FIXME: This might have blocked on the Mac, but now it's asynchronous.
         // Make sure the stuff we do just afterwards is intended to be done immediately
@@ -308,7 +308,7 @@ noMoney:
 
     } else {
 
-      autoBudget = 0; /* force autobudget */
+      autoBudget = false; /* force autobudget */
       MustUpdateOptions = 1;
       ClearMes();
       SendMes(29);

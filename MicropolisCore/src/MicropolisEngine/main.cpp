@@ -101,7 +101,7 @@ void Micropolis::sim_init()
   NoDisasters = false; // Enable disasters
   PunishCnt = 0;
   autoBulldoze = true; // Enable auto bulldoze
-  autoBudget = 1;
+  autoBudget   = true; // Enable auto-budget
   MesNum = 0;
   LastMesTime = 0;
   flagBlink = 1;
