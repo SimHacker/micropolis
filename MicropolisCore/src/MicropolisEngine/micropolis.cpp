@@ -939,8 +939,7 @@ void Micropolis::init()
   // short LDir;
   LDir = 0;
 
-  // short Zsource;
-  Zsource = 0;
+  Zsource = ZT_COMMERCIAL;
 
   // short TrafMaxX;
   TrafMaxX = 0;

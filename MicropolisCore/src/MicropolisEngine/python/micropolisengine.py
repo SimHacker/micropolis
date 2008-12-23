@@ -349,7 +349,10 @@ STATE_TILES = _micropolisengine.STATE_TILES
 STATE_OVERLAYS = _micropolisengine.STATE_OVERLAYS
 STATE_GRAPHS = _micropolisengine.STATE_GRAPHS
 ISLAND_RADIUS = _micropolisengine.ISLAND_RADIUS
-MAX_TRAFFIC_DISTANCE = _micropolisengine.MAX_TRAFFIC_DISTANCE
+ZT_COMMERCIAL = _micropolisengine.ZT_COMMERCIAL
+ZT_INDUSTRIAL = _micropolisengine.ZT_INDUSTRIAL
+ZT_RESIDENTIAL = _micropolisengine.ZT_RESIDENTIAL
+ZT_NUM_DESTINATIONS = _micropolisengine.ZT_NUM_DESTINATIONS
 CVP_CRIME = _micropolisengine.CVP_CRIME
 CVP_POLLUTION = _micropolisengine.CVP_POLLUTION
 CVP_HOUSING = _micropolisengine.CVP_HOUSING
@@ -367,6 +370,7 @@ CC_CAPITAL = _micropolisengine.CC_CAPITAL
 CC_METROPOLIS = _micropolisengine.CC_METROPOLIS
 CC_MEGALOPOLIS = _micropolisengine.CC_MEGALOPOLIS
 CC_NUM_CITIES = _micropolisengine.CC_NUM_CITIES
+TestBounds = _micropolisengine.TestBounds
 class Resource(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Resource, name, value)
@@ -396,6 +400,8 @@ class Resource(_object):
     __del__ = lambda self : None;
 Resource_swigregister = _micropolisengine.Resource_swigregister
 Resource_swigregister(Resource)
+cvar = _micropolisengine.cvar
+MAX_TRAFFIC_DISTANCE = cvar.MAX_TRAFFIC_DISTANCE
 
 class StringTable(_object):
     __swig_setmethods__ = {}
@@ -1556,9 +1562,6 @@ class Micropolis(_object):
     __swig_setmethods__["LDir"] = _micropolisengine.Micropolis_LDir_set
     __swig_getmethods__["LDir"] = _micropolisengine.Micropolis_LDir_get
     if _newclass:LDir = _swig_property(_micropolisengine.Micropolis_LDir_get, _micropolisengine.Micropolis_LDir_set)
-    __swig_setmethods__["Zsource"] = _micropolisengine.Micropolis_Zsource_set
-    __swig_getmethods__["Zsource"] = _micropolisengine.Micropolis_Zsource_get
-    if _newclass:Zsource = _swig_property(_micropolisengine.Micropolis_Zsource_get, _micropolisengine.Micropolis_Zsource_set)
     __swig_setmethods__["TrafMaxX"] = _micropolisengine.Micropolis_TrafMaxX_set
     __swig_getmethods__["TrafMaxX"] = _micropolisengine.Micropolis_TrafMaxX_get
     if _newclass:TrafMaxX = _swig_property(_micropolisengine.Micropolis_TrafMaxX_get, _micropolisengine.Micropolis_TrafMaxX_set)
@@ -1574,7 +1577,6 @@ class Micropolis(_object):
     def TryDrive(*args): return _micropolisengine.Micropolis_TryDrive(*args)
     def TryGo(*args): return _micropolisengine.Micropolis_TryGo(*args)
     def GetFromMap(*args): return _micropolisengine.Micropolis_GetFromMap(*args)
-    def DriveDone(*args): return _micropolisengine.Micropolis_DriveDone(*args)
     def RoadTest(*args): return _micropolisengine.Micropolis_RoadTest(*args)
     __swig_setmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_set
     __swig_getmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_get
@@ -1664,7 +1666,6 @@ class Micropolis(_object):
     def SetZPower(*args): return _micropolisengine.Micropolis_SetZPower(*args)
 Micropolis_swigregister = _micropolisengine.Micropolis_swigregister
 Micropolis_swigregister(Micropolis)
-cvar = _micropolisengine.cvar
 
 
 

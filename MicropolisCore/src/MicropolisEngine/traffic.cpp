@@ -74,21 +74,25 @@
 /* Traffic Generation */
 
 
-/* comefrom: DoIndustrial DoCommercial DoResidential */
-short Micropolis::MakeTraf(
-  int Zt)
+/**
+ * Find a connection over a road from the current place to a specified zone type
+ * @param dest Zone type to go to
+ * @return \c 1 if connection found, \c 0 if not found,
+ *         \c -1 if no connection to road found
+ */
+short Micropolis::MakeTraf(ZoneType dest)
 {
   short xtem, ytem;
 
-  xtem = SMapX;
-  ytem = SMapY;
-  Zsource = Zt;
-  PosStackN = 0;
+  xtem = SMapX; // Temporarily save SMapX
+  ytem = SMapY; // Temporarily save SMapY
+  Zsource = dest;
+  PosStackN = 0; // Clear position stack
 
 #if 0
   if ((!Rand(2)) && FindPTele()) {
 /* printf("Telecommute!\n"); */
-    return (TRUE);
+    return 1;
   }
 #endif
 
@@ -98,15 +102,15 @@ short Micropolis::MakeTraf(
       SetTrafMem();             /* if sucessful, inc trafdensity */
       SMapX = xtem;
       SMapY = ytem;
-      return (TRUE);            /* traffic passed */
+      return 1;            /* traffic passed */
     }
 
     SMapX = xtem;
     SMapY = ytem;
 
-    return (FALSE);             /* traffic failed */
+    return 0;             /* traffic failed */
   } else {
-    return (-1);             /* no road found */
+    return -1;             /* no road found */
   }
 }
 
@@ -116,6 +120,7 @@ void Micropolis::SetTrafMem()
 {
   register short x, z;
 
+  /* For each saved position of the drive */
   for (x = PosStackN; x > 0; x--) {
 
     PullPos();
@@ -156,7 +161,7 @@ void Micropolis::SetTrafMem()
 }
 
 
-/* comefrom: TryGo */
+/** Push current position (SMapX, SMapY) onto position stack */
 void Micropolis::PushPos()
 {
   PosStackN++;
@@ -165,7 +170,7 @@ void Micropolis::PushPos()
 }
 
 
-/* comefrom: SetTrafMem */
+/** Pull top-most position from stack and store in SMapX and SMapY */
 void Micropolis::PullPos()
 {
   SMapX = SMapXStack[PosStackN];
@@ -174,15 +179,20 @@ void Micropolis::PullPos()
 }
 
 
-/* comefrom: DoSPZone MakeTraf */
-short Micropolis::FindPRoad()
+/**
+ * Find a connection to a road at the perimeter
+ * @return Indication that a connection has been found
+ * @pre  SMapX and SMapY contain the starting coordinates
+ * @post If a connection is found, it is stored in SMapX and SMapY
+ */
+bool Micropolis::FindPRoad()
 {
   /* look for road on edges of zone */
-  static short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
-  static short PerimY[12] = {-2,-2,-2,-1, 0, 1, 2, 2, 2, 1, 0,-1};
-  register short tx, ty, z;
+  static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
+  static const short PerimY[12] = {-2,-2,-2,-1, 0, 1, 2, 2, 2, 1, 0,-1};
+  short tx, ty;
 
-  for (z = 0; z < 12; z++) {
+  for (short z = 0; z < 12; z++) {
 
     tx = SMapX + PerimX[z];
     ty = SMapY + PerimY[z];
@@ -194,12 +204,12 @@ short Micropolis::FindPRoad()
         SMapX = tx;
         SMapY = ty;
 
-        return (TRUE);
+        return true;
       }
     }
   }
 
-  return (FALSE);
+  return false;
 }
 
 
@@ -230,39 +240,43 @@ short Micropolis::FindPTele()
 }
 
 
-/* comefrom: MakeTraf */
-short Micropolis::TryDrive()
+/**
+ * Try to drive to a destination.
+ * @return Was drive succesful?
+ * @post Position stack (SMapXStack, SMapYStack, PosStackN)
+ *       is filled with some intermediate positions of the drive
+ */
+bool Micropolis::TryDrive()
 {
-  short z;
+  short dist;
 
   LDir = 5;
-  for (z = 0; z < MAX_TRAFFIC_DISTANCE; z++) {  /* Maximum distance to try */
+  for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
-    if (TryGo(z)) {                     /* if it got a road */
+    if (TryGo(dist)) {                /* if it got a road */
 
-      if (DriveDone()) {                /* if destination is reached */
-        return (TRUE);                  /* pass */
+      if (DriveDone()) {              /* if destination is reached */
+        return true;                  /* pass */
       }
 
     } else {
 
-      if (PosStackN) {                  /* deadend , backup */
+      if (PosStackN > 0) {            /* deadend , backup */
         PosStackN--;
-        z += 3;
+        dist += 3;
       } else {
-        return (FALSE);                 /* give up at start  */
+        return false;                 /* give up at start  */
       }
 
     }
   }
 
-  return (FALSE);                       /* gone maxdis */
+  return false;                       /* gone maxdis */
 }
 
 
 /* comefrom: TryDrive */
-short Micropolis::TryGo(
-  int z)
+bool Micropolis::TryGo(int z)
 {
   short x, rdir, realdir;
 
@@ -289,11 +303,11 @@ short Micropolis::TryGo(
         PushPos();
       }
 
-      return (TRUE);
+      return true;
     }
   }
 
-  return (FALSE);
+  return false;
 }
 
 
@@ -338,56 +352,52 @@ short Micropolis::GetFromMap(
 }
 
 
-/* comefrom: TryDrive */
-short Micropolis::DriveDone()
+/**
+ * Has the journey arrived at its destination?
+ * @return Indication that destination has been reached
+ * @pre Zsource contains the zone type to drive to
+ */
+bool Micropolis::DriveDone()
 {
-  static short TARGL[3] = {COMBASE, LHTHR, LHTHR};
-  static short TARGH[3] = {NUCLEAR, PORT, COMBASE};     /* for destinations */
-  register short z, l, h;
+  /* commercial, industrial, residential destinations */
+  static const short TARGL[ZT_NUM_DESTINATIONS] = {COMBASE, LHTHR, LHTHR};
+  static const short TARGH[ZT_NUM_DESTINATIONS] = {NUCLEAR, PORT, COMBASE};
 
-/* unwound -Don */
-#if 0
-  for (x = 0; x < 4; x++) {     /* R>C C>I I>R  */
-    z = GetFromMap(x);
-    if ((z >= TARGL[Zsource]) &&
-        (z <= TARGH[Zsource])) {
-      return (TRUE);
-    }
-  }
-#else
-  l = TARGL[Zsource];
-  h = TARGH[Zsource];
+  // To prevent it changing without adapting the above arrays
+  assert(ZT_NUM_DESTINATIONS == 3);
+
+  short l = TARGL[Zsource]; // Lowest acceptable tile value
+  short h = TARGH[Zsource]; // Highest acceptable tile value
 
   if (SMapY > 0) {
-    z = Map[SMapX][SMapY - 1] & LOMASK;
+    short z = Map[SMapX][SMapY - 1] & LOMASK;
     if ((z >= l) && (z <= h)) {
-      return (TRUE);
+      return true;
     }
   }
 
   if (SMapX < (WORLD_X - 1)) {
-    z = Map[SMapX + 1][SMapY] & LOMASK;
+    short z = Map[SMapX + 1][SMapY] & LOMASK;
     if ((z >= l) && (z <= h)) {
-      return (TRUE);
+      return true;
     }
   }
 
   if (SMapY < (WORLD_Y - 1)) {
-    z = Map[SMapX][SMapY + 1] & LOMASK;
+    short z = Map[SMapX][SMapY + 1] & LOMASK;
     if ((z >= l) && (z <= h)) {
-      return (TRUE);
+      return true;
     }
   }
 
   if (SMapX > 0) {
-    z = Map[SMapX - 1][SMapY] & LOMASK;
+    short z = Map[SMapX - 1][SMapY] & LOMASK;
     if ((z >= l) && (z <= h)) {
-      return (TRUE);
+      return true;
     }
   }
-#endif
 
-  return (FALSE);
+  return false;
 }
 
 

@@ -218,7 +218,8 @@ void Micropolis::DoIndustrial(
   IndPop += tpop;
 
   if (tpop > Rand(5)) {
-    TrfGood = MakeTraf(2);
+    /* Try driving from industrial to residential */
+    TrfGood = MakeTraf(ZT_RESIDENTIAL);
   } else {
     TrfGood = TRUE;
   }
@@ -262,7 +263,8 @@ void Micropolis::DoCommercial(
   ComPop += tpop;
 
   if (tpop > Rand(5)) {
-    TrfGood = MakeTraf(1);
+    /* Try driving from commercial to industrial */
+    TrfGood = MakeTraf(ZT_INDUSTRIAL);
   } else {
     TrfGood = TRUE;
   }
@@ -317,7 +319,8 @@ void Micropolis::DoResidential(
   ResPop += tpop;
 
   if (tpop > Rand(35)) {
-    TrfGood = MakeTraf(0);
+    /* Try driving from residential to commercial */
+    TrfGood = MakeTraf(ZT_COMMERCIAL);
   } else {
     TrfGood = TRUE;
   }
