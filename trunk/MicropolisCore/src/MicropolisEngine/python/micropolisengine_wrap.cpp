@@ -2840,59 +2840,16 @@ SWIG_From_int  (int value)
 }
 
 
-SWIGINTERN int
-SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
-{
-  if (PyString_Check(obj)) {
-    char *cstr; Py_ssize_t len;
-    PyString_AsStringAndSize(obj, &cstr, &len);
-    if (cptr)  {
-      if (alloc) {
-	/* 
-	   In python the user should not be able to modify the inner
-	   string representation. To warranty that, if you define
-	   SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
-	   buffer is always returned.
-
-	   The default behavior is just to return the pointer value,
-	   so, be careful.
-	*/ 
-#if defined(SWIG_PYTHON_SAFE_CSTRINGS)
-	if (*alloc != SWIG_OLDOBJ) 
-#else
-	if (*alloc == SWIG_NEWOBJ) 
+#include <limits.h>
+#ifndef LLONG_MIN
+# define LLONG_MIN	LONG_LONG_MIN
 #endif
-	  {
-	    *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
-	    *alloc = SWIG_NEWOBJ;
-	  }
-	else {
-	  *cptr = cstr;
-	  *alloc = SWIG_OLDOBJ;
-	}
-      } else {
-	*cptr = PyString_AsString(obj);
-      }
-    }
-    if (psize) *psize = len + 1;
-    return SWIG_OK;
-  } else {
-    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
-    if (pchar_descriptor) {
-      void* vptr = 0;
-      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
-	if (cptr) *cptr = (char *) vptr;
-	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
-	if (alloc) *alloc = SWIG_OLDOBJ;
-	return SWIG_OK;
-      }
-    }
-  }
-  return SWIG_TypeError;
-}
-
-
-
+#ifndef LLONG_MAX
+# define LLONG_MAX	LONG_LONG_MAX
+#endif
+#ifndef ULLONG_MAX
+# define ULLONG_MAX	ULONG_LONG_MAX
+#endif
 
 
 SWIGINTERN int
@@ -3015,6 +2972,84 @@ SWIG_AsVal_long (PyObject *obj, long* val)
 
 
 SWIGINTERN int
+SWIG_AsVal_int (PyObject * obj, int *val)
+{
+  long v;
+  int res = SWIG_AsVal_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v < INT_MIN || v > INT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< int >(v);
+    }
+  }  
+  return res;
+}
+
+
+SWIGINTERNINLINE PyObject*
+  SWIG_From_bool  (bool value)
+{
+  return PyBool_FromLong(value ? 1 : 0);
+}
+
+
+SWIGINTERN int
+SWIG_AsCharPtrAndSize(PyObject *obj, char** cptr, size_t* psize, int *alloc)
+{
+  if (PyString_Check(obj)) {
+    char *cstr; Py_ssize_t len;
+    PyString_AsStringAndSize(obj, &cstr, &len);
+    if (cptr)  {
+      if (alloc) {
+	/* 
+	   In python the user should not be able to modify the inner
+	   string representation. To warranty that, if you define
+	   SWIG_PYTHON_SAFE_CSTRINGS, a new/copy of the python string
+	   buffer is always returned.
+
+	   The default behavior is just to return the pointer value,
+	   so, be careful.
+	*/ 
+#if defined(SWIG_PYTHON_SAFE_CSTRINGS)
+	if (*alloc != SWIG_OLDOBJ) 
+#else
+	if (*alloc == SWIG_NEWOBJ) 
+#endif
+	  {
+	    *cptr = reinterpret_cast< char* >(memcpy((new char[len + 1]), cstr, sizeof(char)*(len + 1)));
+	    *alloc = SWIG_NEWOBJ;
+	  }
+	else {
+	  *cptr = cstr;
+	  *alloc = SWIG_OLDOBJ;
+	}
+      } else {
+	*cptr = PyString_AsString(obj);
+      }
+    }
+    if (psize) *psize = len + 1;
+    return SWIG_OK;
+  } else {
+    swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+    if (pchar_descriptor) {
+      void* vptr = 0;
+      if (SWIG_ConvertPtr(obj, &vptr, pchar_descriptor, 0) == SWIG_OK) {
+	if (cptr) *cptr = (char *) vptr;
+	if (psize) *psize = vptr ? (strlen((char *)vptr) + 1) : 0;
+	if (alloc) *alloc = SWIG_OLDOBJ;
+	return SWIG_OK;
+      }
+    }
+  }
+  return SWIG_TypeError;
+}
+
+
+
+
+
+SWIGINTERN int
 SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
 { 
   char* cptr = 0; size_t csize = 0; int alloc = SWIG_OLDOBJ;
@@ -3035,34 +3070,6 @@ SWIG_AsCharArray(PyObject * obj, char *val, size_t size)
     if (alloc == SWIG_NEWOBJ) delete[] cptr;
   }
   return SWIG_TypeError;
-}
-
-
-#include <limits.h>
-#ifndef LLONG_MIN
-# define LLONG_MIN	LONG_LONG_MIN
-#endif
-#ifndef LLONG_MAX
-# define LLONG_MAX	LONG_LONG_MAX
-#endif
-#ifndef ULLONG_MAX
-# define ULLONG_MAX	ULONG_LONG_MAX
-#endif
-
-
-SWIGINTERN int
-SWIG_AsVal_int (PyObject * obj, int *val)
-{
-  long v;
-  int res = SWIG_AsVal_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v < INT_MIN || v > INT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< int >(v);
-    }
-  }  
-  return res;
 }
 
 
@@ -3184,13 +3191,6 @@ SWIG_AsVal_bool (PyObject *obj, bool *val)
   }
 }
 
-
-SWIGINTERNINLINE PyObject*
-  SWIG_From_bool  (bool value)
-{
-  return PyBool_FromLong(value ? 1 : 0);
-}
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -3217,6 +3217,51 @@ SWIGINTERN PyObject *_wrap_GetPythonCallbackData(PyObject *SWIGUNUSEDPARM(self),
   arg1 = obj0;
   result = (void *)GetPythonCallbackData(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN int MAX_TRAFFIC_DISTANCE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable MAX_TRAFFIC_DISTANCE is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *MAX_TRAFFIC_DISTANCE_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(MAX_TRAFFIC_DISTANCE));
+  return pyobj;
+}
+
+
+SWIGINTERN PyObject *_wrap_TestBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  bool result;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:TestBounds",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "TestBounds" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "TestBounds" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bool)TestBounds(arg1,arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -27121,15 +27166,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_SMapXStack_set(PyObject *SWIGUNUSEDPARM(se
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SMapXStack_set" "', argument " "2"" of type '" "short [30+1]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SMapXStack_set" "', argument " "2"" of type '" "short [MAX_TRAFFIC_DISTANCE+1]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)30+1; ++ii) arg1->SMapXStack[ii] = arg2[ii];
+      for (; ii < (size_t)MAX_TRAFFIC_DISTANCE+1; ++ii) arg1->SMapXStack[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""SMapXStack""' of type '""short [30+1]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""SMapXStack""' of type '""short [MAX_TRAFFIC_DISTANCE+1]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -27180,15 +27225,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_SMapYStack_set(PyObject *SWIGUNUSEDPARM(se
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SMapYStack_set" "', argument " "2"" of type '" "short [30+1]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SMapYStack_set" "', argument " "2"" of type '" "short [MAX_TRAFFIC_DISTANCE+1]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)30+1; ++ii) arg1->SMapYStack[ii] = arg2[ii];
+      for (; ii < (size_t)MAX_TRAFFIC_DISTANCE+1; ++ii) arg1->SMapYStack[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""SMapYStack""' of type '""short [30+1]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""SMapYStack""' of type '""short [MAX_TRAFFIC_DISTANCE+1]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -27266,59 +27311,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_LDir_get(PyObject *SWIGUNUSEDPARM(self), P
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (short) ((arg1)->LDir);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_Zsource_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_Zsource_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Zsource_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_Zsource_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->Zsource = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_Zsource_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_Zsource_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Zsource_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->Zsource);
   resultobj = SWIG_From_short(static_cast< short >(result));
   return resultobj;
 fail:
@@ -27435,7 +27427,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_MakeTraf(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
+  ZoneType arg2 ;
   short result;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -27452,9 +27444,9 @@ SWIGINTERN PyObject *_wrap_Micropolis_MakeTraf(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_MakeTraf" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_MakeTraf" "', argument " "2"" of type '" "ZoneType""'");
   } 
-  arg2 = static_cast< int >(val2);
+  arg2 = static_cast< ZoneType >(val2);
   result = (short)(arg1)->MakeTraf(arg2);
   resultobj = SWIG_From_short(static_cast< short >(result));
   return resultobj;
@@ -27529,7 +27521,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_FindPRoad(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -27540,8 +27532,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_FindPRoad(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_FindPRoad" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short)(arg1)->FindPRoad();
-  resultobj = SWIG_From_short(static_cast< short >(result));
+  result = (bool)(arg1)->FindPRoad();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -27573,7 +27565,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_TryDrive(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -27584,8 +27576,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_TryDrive(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_TryDrive" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short)(arg1)->TryDrive();
-  resultobj = SWIG_From_short(static_cast< short >(result));
+  result = (bool)(arg1)->TryDrive();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -27596,7 +27588,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_TryGo(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int arg2 ;
-  short result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
@@ -27615,8 +27607,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_TryGo(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_TryGo" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  result = (short)(arg1)->TryGo(arg2);
-  resultobj = SWIG_From_short(static_cast< short >(result));
+  result = (bool)(arg1)->TryGo(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -27647,28 +27639,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_GetFromMap(PyObject *SWIGUNUSEDPARM(self),
   } 
   arg2 = static_cast< int >(val2);
   result = (short)(arg1)->GetFromMap(arg2);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_DriveDone(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_DriveDone",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DriveDone" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short)(arg1)->DriveDone();
   resultobj = SWIG_From_short(static_cast< short >(result));
   return resultobj;
 fail:
@@ -29922,6 +29892,7 @@ SWIGINTERN PyObject *Micropolis_swigregister(PyObject *SWIGUNUSEDPARM(self), PyO
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"GetPythonCallbackHook", _wrap_GetPythonCallbackHook, METH_VARARGS, NULL},
 	 { (char *)"GetPythonCallbackData", _wrap_GetPythonCallbackData, METH_VARARGS, NULL},
+	 { (char *)"TestBounds", _wrap_TestBounds, METH_VARARGS, NULL},
 	 { (char *)"Resource_buf_set", _wrap_Resource_buf_set, METH_VARARGS, NULL},
 	 { (char *)"Resource_buf_get", _wrap_Resource_buf_get, METH_VARARGS, NULL},
 	 { (char *)"Resource_size_set", _wrap_Resource_size_set, METH_VARARGS, NULL},
@@ -30780,8 +30751,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_SMapYStack_get", _wrap_Micropolis_SMapYStack_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_LDir_set", _wrap_Micropolis_LDir_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_LDir_get", _wrap_Micropolis_LDir_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Zsource_set", _wrap_Micropolis_Zsource_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Zsource_get", _wrap_Micropolis_Zsource_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_TrafMaxX_set", _wrap_Micropolis_TrafMaxX_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_TrafMaxX_get", _wrap_Micropolis_TrafMaxX_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_TrafMaxY_set", _wrap_Micropolis_TrafMaxY_set, METH_VARARGS, NULL},
@@ -30795,7 +30764,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_TryDrive", _wrap_Micropolis_TryDrive, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_TryGo", _wrap_Micropolis_TryGo, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_GetFromMap", _wrap_Micropolis_GetFromMap, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DriveDone", _wrap_Micropolis_DriveDone, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_RoadTest", _wrap_Micropolis_RoadTest, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MustUpdateFunds_set", _wrap_Micropolis_MustUpdateFunds_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MustUpdateFunds_get", _wrap_Micropolis_MustUpdateFunds_get, METH_VARARGS, NULL},
@@ -31774,7 +31742,12 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "STATE_OVERLAYS",SWIG_From_int(static_cast< int >(2)));
   SWIG_Python_SetConstant(d, "STATE_GRAPHS",SWIG_From_int(static_cast< int >(3)));
   SWIG_Python_SetConstant(d, "ISLAND_RADIUS",SWIG_From_int(static_cast< int >(18)));
-  SWIG_Python_SetConstant(d, "MAX_TRAFFIC_DISTANCE",SWIG_From_int(static_cast< int >(30)));
+  SWIG_Python_SetConstant(d, "ZT_COMMERCIAL",SWIG_From_int(static_cast< int >(ZT_COMMERCIAL)));
+  SWIG_Python_SetConstant(d, "ZT_INDUSTRIAL",SWIG_From_int(static_cast< int >(ZT_INDUSTRIAL)));
+  SWIG_Python_SetConstant(d, "ZT_RESIDENTIAL",SWIG_From_int(static_cast< int >(ZT_RESIDENTIAL)));
+  SWIG_Python_SetConstant(d, "ZT_NUM_DESTINATIONS",SWIG_From_int(static_cast< int >(ZT_NUM_DESTINATIONS)));
+  PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_TRAFFIC_DISTANCE",MAX_TRAFFIC_DISTANCE_get, MAX_TRAFFIC_DISTANCE_set);
   SWIG_Python_SetConstant(d, "CVP_CRIME",SWIG_From_int(static_cast< int >(CVP_CRIME)));
   SWIG_Python_SetConstant(d, "CVP_POLLUTION",SWIG_From_int(static_cast< int >(CVP_POLLUTION)));
   SWIG_Python_SetConstant(d, "CVP_HOUSING",SWIG_From_int(static_cast< int >(CVP_HOUSING)));
@@ -31792,7 +31765,6 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "CC_METROPOLIS",SWIG_From_int(static_cast< int >(CC_METROPOLIS)));
   SWIG_Python_SetConstant(d, "CC_MEGALOPOLIS",SWIG_From_int(static_cast< int >(CC_MEGALOPOLIS)));
   SWIG_Python_SetConstant(d, "CC_NUM_CITIES",SWIG_From_int(static_cast< int >(CC_NUM_CITIES)));
-  PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_HistName",Micropolis_HistName_get, Micropolis_HistName_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_HistColor",Micropolis_HistColor_get, Micropolis_HistColor_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"Micropolis_CostOf",Micropolis_CostOf_get, Micropolis_CostOf_set);

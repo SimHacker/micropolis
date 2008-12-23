@@ -462,8 +462,29 @@
 
 #define ISLAND_RADIUS           18
 
-#define MAX_TRAFFIC_DISTANCE    30
 
+///////////////////////////////////////////////////
+// Zones
+
+/** Available zone types */
+enum ZoneType {
+    ZT_COMMERCIAL,       ///< Commercial zone
+    ZT_INDUSTRIAL,       ///< Industrial zone
+    ZT_RESIDENTIAL,      ///< Residential zone
+
+    ZT_NUM_DESTINATIONS, ///< Number of available zones
+};
+
+
+///////////////////////////////////////////////////
+// Traffic
+
+/** Maximal number of map tiles to drive, looking for a destination */
+static const int MAX_TRAFFIC_DISTANCE = 30;
+
+
+///////////////////////////////////////////////////
+// City problems
 
 /**
  * Problems in the city where citizens vote on
@@ -2505,24 +2526,19 @@ public:
 
 public:
 
-
-  short PosStackN;
-
-  short SMapXStack[MAX_TRAFFIC_DISTANCE + 1];
-
-  short SMapYStack[MAX_TRAFFIC_DISTANCE + 1];
+  /* Position stack */
+  short PosStackN; ///< Position stack top pointer, points to top position
+  short SMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
+  short SMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
 
   short LDir;
-
-  short Zsource;
 
   short TrafMaxX;
 
   short TrafMaxY;
 
 
-  short MakeTraf(
-    int Zt);
+  short MakeTraf(ZoneType dest);
 
   void SetTrafMem();
 
@@ -2530,22 +2546,25 @@ public:
 
   void PullPos();
 
-  short FindPRoad();
+  bool FindPRoad();
 
   short FindPTele();
 
-  short TryDrive();
+  bool TryDrive();
 
-  short TryGo(
-    int z);
+  bool TryGo(int z);
 
   short GetFromMap(
     int x);
 
-  short DriveDone();
-
   short RoadTest(
     int x);
+
+private:
+
+  ZoneType Zsource; ///< Destination of traffic
+
+  bool DriveDone();
 
 
   ////////////////////////////////////////////////////////////////////////
