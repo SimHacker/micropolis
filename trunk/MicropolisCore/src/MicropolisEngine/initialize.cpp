@@ -98,7 +98,7 @@ void Micropolis::InitWillStuff()
   PoliceFund = 0;
   FireFund = 0;
   ValveFlag = 1;
-  DisasterEvent = 0;
+  DisasterEvent = SC_NONE;
   TaxFlag = 0;
 
   for (x = 0; x < HWLDX; x++) {

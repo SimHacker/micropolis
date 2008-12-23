@@ -92,7 +92,7 @@ void Micropolis::sim_init()
   UserSoundOn = true; // Enable sound
   MustUpdateOptions = 1;
   HaveLastMessage = false; // No message seen yet
-  ScenarioID = 0;
+  ScenarioID = SC_NONE;
   StartingYear = 1900;
   sim_skips = sim_skip = 0;
   autoGo = true;  // Enable auto-goto

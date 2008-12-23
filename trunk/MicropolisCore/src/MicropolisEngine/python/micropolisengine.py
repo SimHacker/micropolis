@@ -349,6 +349,23 @@ STATE_TILES = _micropolisengine.STATE_TILES
 STATE_OVERLAYS = _micropolisengine.STATE_OVERLAYS
 STATE_GRAPHS = _micropolisengine.STATE_GRAPHS
 ISLAND_RADIUS = _micropolisengine.ISLAND_RADIUS
+SC_NONE = _micropolisengine.SC_NONE
+SC_DULLSVILLE = _micropolisengine.SC_DULLSVILLE
+SC_SAN_FRANCISCO = _micropolisengine.SC_SAN_FRANCISCO
+SC_HAMBURG = _micropolisengine.SC_HAMBURG
+SC_BERN = _micropolisengine.SC_BERN
+SC_TOKYO = _micropolisengine.SC_TOKYO
+SC_DETROIT = _micropolisengine.SC_DETROIT
+SC_BOSTON = _micropolisengine.SC_BOSTON
+SC_RIO = _micropolisengine.SC_RIO
+SC_COUNT = _micropolisengine.SC_COUNT
+DIR_NORTH = _micropolisengine.DIR_NORTH
+DIR_WEST = _micropolisengine.DIR_WEST
+DIR_SOUTH = _micropolisengine.DIR_SOUTH
+DIR_EAST = _micropolisengine.DIR_EAST
+DIR_DIR4 = _micropolisengine.DIR_DIR4
+DIR_INVALID = _micropolisengine.DIR_INVALID
+ReverseDirection = _micropolisengine.ReverseDirection
 ZT_COMMERCIAL = _micropolisengine.ZT_COMMERCIAL
 ZT_INDUSTRIAL = _micropolisengine.ZT_INDUSTRIAL
 ZT_RESIDENTIAL = _micropolisengine.ZT_RESIDENTIAL
@@ -371,6 +388,7 @@ CC_METROPOLIS = _micropolisengine.CC_METROPOLIS
 CC_MEGALOPOLIS = _micropolisengine.CC_MEGALOPOLIS
 CC_NUM_CITIES = _micropolisengine.CC_NUM_CITIES
 TestBounds = _micropolisengine.TestBounds
+not_reached = _micropolisengine.not_reached
 class Resource(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Resource, name, value)
@@ -1577,7 +1595,6 @@ class Micropolis(_object):
     def TryDrive(*args): return _micropolisengine.Micropolis_TryDrive(*args)
     def TryGo(*args): return _micropolisengine.Micropolis_TryGo(*args)
     def GetFromMap(*args): return _micropolisengine.Micropolis_GetFromMap(*args)
-    def RoadTest(*args): return _micropolisengine.Micropolis_RoadTest(*args)
     __swig_setmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_set
     __swig_getmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_get
     if _newclass:MustUpdateFunds = _swig_property(_micropolisengine.Micropolis_MustUpdateFunds_get, _micropolisengine.Micropolis_MustUpdateFunds_set)

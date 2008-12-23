@@ -292,7 +292,7 @@ int Micropolis::loadFile(
 
   /* set the scenario id to 0 */
   InitWillStuff();
-  ScenarioID = 0;
+  ScenarioID = SC_NONE;
   InitSimLoad = 1;
   DoInitialEval = false;
   DoSimInit();
@@ -374,9 +374,12 @@ int Micropolis::saveFile(
   return(1);
 }
 
-
-void Micropolis::LoadScenario(
-  short s)
+/**
+ * Load a scenario
+ * @param s Scenario to load
+ * @note \a s cannot be \c SC_NONE
+ */
+void Micropolis::LoadScenario(Scenario s)
 {
   char *name = NULL;
   char *fname = NULL;
@@ -388,74 +391,77 @@ void Micropolis::LoadScenario(
 
   SetGameLevel(0);
 
-  if ((s < 1) || (s > 8)) {
-    s = 1;
+  if (s < SC_DULLSVILLE || s > SC_RIO) {
+    s = SC_DULLSVILLE;
   }
 
   switch (s) {
-  case 1:
+  case SC_DULLSVILLE:
     name = "Dullsville";
     fname = "snro.111";
-    ScenarioID = 1;
+    ScenarioID = SC_DULLSVILLE;
     CityTime =
       ((1900 - 1900) * 48) + 2;
     SetFunds(5000);
     break;
-  case 2:
+  case SC_SAN_FRANCISCO:
     name = "San Francisco";
     fname = "snro.222";
-    ScenarioID = 2;
+    ScenarioID = SC_SAN_FRANCISCO;
     CityTime =
       ((1906 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 3:
+  case SC_HAMBURG:
     name = "Hamburg";
     fname = "snro.333";
-    ScenarioID = 3;
+    ScenarioID = SC_HAMBURG;
     CityTime =
       ((1944 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 4:
+  case SC_BERN:
     name = "Bern";
     fname = "snro.444";
-    ScenarioID = 4;
+    ScenarioID = SC_BERN;
     CityTime =
       ((1965 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 5:
+  case SC_TOKYO:
     name = "Tokyo";
     fname = "snro.555";
-    ScenarioID = 5;
+    ScenarioID = SC_TOKYO;
     CityTime =
       ((1957 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 6:
+  case SC_DETROIT:
     name = "Detroit";
     fname = "snro.666";
-    ScenarioID = 6;
+    ScenarioID = SC_DETROIT;
     CityTime =
       ((1972 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 7:
+  case SC_BOSTON:
     name = "Boston";
     fname = "snro.777";
-    ScenarioID = 7;
+    ScenarioID = SC_BOSTON;
     CityTime =
       ((2010 - 1900) * 48) + 2;
     SetFunds(20000);
     break;
-  case 8:
+  case SC_RIO:
     name = "Rio de Janeiro";
     fname = "snro.888";
-    ScenarioID = 8;
+    ScenarioID = SC_RIO;
     CityTime =
       ((2047 - 1900) * 48) + 2;
     SetFunds(20000);
+    break;
+  default:
+    NOT_REACHED();
     break;
   }
 

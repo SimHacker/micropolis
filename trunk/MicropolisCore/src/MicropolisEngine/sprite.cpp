@@ -858,8 +858,7 @@ void Micropolis::DoShipSprite(
 
     if ((Rand16() & 3) == 1) {
 
-      if ((ScenarioID == 2) && /* San Francisco */
-          (Rand(10) < 5)) {
+      if (ScenarioID == SC_SAN_FRANCISCO && Rand(10) < 5) {
         MakeSound("city", "HonkHonk-Low -speed 80");
       } else {
         MakeSound("city", "HonkHonk-Low");

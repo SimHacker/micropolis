@@ -70,6 +70,21 @@
 
 ////////////////////////////////////////////////////////////////////////
 
+/**
+ * Give a fatal error and exit the program
+ * @param line  Source line number of the fatal error
+ * @param fname Filename of the source file
+ * @return Does not return to the caller
+ */
+void not_reached(int line, char *fname)
+{
+    fprintf(stderr, "Code unexpectedly executed at line %d, at file %s\n", line, fname);
+    exit(1);
+}
+
+
+////////////////////////////////////////////////////////////////////////
+
 
 Micropolis::Micropolis()
 {
@@ -749,14 +764,12 @@ void Micropolis::init()
   // float EMarket;
   EMarket = (float)4.0;
 
-  // short DisasterEvent;
-  DisasterEvent = 0;
+  DisasterEvent = SC_NONE;
 
   // short DisasterWait;
   DisasterWait = 0;
 
-  // short ScoreType;
-  ScoreType = 0;
+  ScoreType = SC_NONE;
 
   // short ScoreWait;
   ScoreWait = 0;
@@ -842,8 +855,7 @@ void Micropolis::init()
   // short InitSimLoad;
   InitSimLoad = 0;
 
-  // short ScenarioID;
-  ScenarioID = 0;
+  ScenarioID = SC_NONE;
 
   // short SimSpeed;
   SimSpeed = 0;
