@@ -462,6 +462,30 @@
 
 #define ISLAND_RADIUS           18
 
+///////////////////////////////////////////////////
+// Directions
+
+/** Directions on the map */
+enum Direction {
+    DIR_NORTH, ///< North (0, -1)
+    DIR_WEST,  ///< West  (-1, 0)
+    DIR_SOUTH, ///< South (0, +1)
+    DIR_EAST,  ///< East  (+1, 0)
+
+    DIR_DIR4,
+
+    DIR_INVALID ///< Invalid direction (to 'nowhere')
+};
+
+/**
+ * Return reverse direction
+ * @param d Direction to reverse
+ * @return Reversed direction
+ */
+static inline Direction ReverseDirection(Direction d)
+{
+    return (Direction)((d + 2) & 0x3);
+}
 
 ///////////////////////////////////////////////////
 // Zones
@@ -2531,7 +2555,7 @@ public:
   short SMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
   short SMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
 
-  short LDir;
+  Direction LDir; ///< Last moved direction
 
   short TrafMaxX;
 
@@ -2548,23 +2572,22 @@ public:
 
   bool FindPRoad();
 
-  short FindPTele();
+  bool FindPTele();
 
   bool TryDrive();
 
-  bool TryGo(int z);
+  bool TryGo(int dist);
 
-  short GetFromMap(
-    int x);
-
-  short RoadTest(
-    int x);
+  short GetFromMap(Direction d);
 
 private:
 
   ZoneType Zsource; ///< Destination of traffic
 
+
   bool DriveDone();
+
+  bool RoadTest(int tile);
 
 
   ////////////////////////////////////////////////////////////////////////
