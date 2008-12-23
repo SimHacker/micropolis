@@ -619,8 +619,7 @@ void Micropolis::init()
 
   autoGo = false;
 
-  // short HaveLastMessage;
-  HaveLastMessage = 0;
+  HaveLastMessage = false;
 
   // char LastMessage[256];
   memset(LastMessage, 0, sizeof(char) * 256);

@@ -525,10 +525,9 @@ void Micropolis::DoAutoGoto(
 void Micropolis::SetMessageField(
   char *str)
 {
-  if (!HaveLastMessage ||
-      strcmp(LastMessage, str)) {
+  if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
     strcpy(LastMessage, str);
-    HaveLastMessage = 1;
+    HaveLastMessage = true;
 
         Callback(
           "UISetMessage",
