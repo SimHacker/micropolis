@@ -234,7 +234,7 @@ int Micropolis::loadFile(
   HALF_SWAP_LONGS(&n, 1);
   CityTime = n;
 
-  autoBulldoze = MiscHis[52];   /* flag for autoBulldoze */
+  autoBulldoze = (MiscHis[52] != 0);   // flag for autoBulldoze
   autoBudget = MiscHis[53];     /* flag for autoBudget */
   autoGo = MiscHis[54];         /* flag for autoGo */
   UserSoundOn = MiscHis[55];    /* flag for the sound on/off */
@@ -328,7 +328,7 @@ int Micropolis::saveFile(
   (*(Quad *)(MiscHis + 8)) =
     n;
 
-  MiscHis[52] = autoBulldoze;   /* flag for autoBulldoze */
+  MiscHis[52] = autoBulldoze;   // flag for autoBulldoze
   MiscHis[53] = autoBudget;     /* flag for autoBudget */
   MiscHis[54] = autoGo;         /* flag for autoGo */
   MiscHis[55] = UserSoundOn;    /* flag for the sound on/off */

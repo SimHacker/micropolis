@@ -833,8 +833,7 @@ void Micropolis::init()
   // short PunishCnt;
   PunishCnt = 0;
 
-  // short autoBulldoze;
-  autoBulldoze = 0;
+  autoBulldoze = false; // Disable auto-bulldoze
 
   // short autoBudget;
   autoBudget = 0;
