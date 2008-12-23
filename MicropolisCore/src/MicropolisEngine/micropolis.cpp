@@ -615,10 +615,9 @@ void Micropolis::init()
   LastCategory = 0;
 
   // short LastPicNum;
-  LastPicNum = 0
-;
-  // short autoGo;
-  autoGo = 0;
+  LastPicNum = 0;
+
+  autoGo = false;
 
   // short HaveLastMessage;
   HaveLastMessage = 0;
