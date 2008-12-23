@@ -544,8 +544,7 @@ void Micropolis::init()
   // int sim_skip;
   sim_skip = 0;
 
-  // int sim_paused;
-  sim_paused = 0;
+  sim_paused = false; // Simulation is running
 
   // int sim_paused_speed;
   sim_paused_speed = 3;

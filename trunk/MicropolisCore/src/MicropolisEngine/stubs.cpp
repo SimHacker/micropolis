@@ -148,7 +148,11 @@ void Micropolis::DropFireBombs()
 
 void Micropolis::InitGame()
 {
-  sim_skips = sim_skip = sim_paused = sim_paused_speed = heat_steps = 0;
+  sim_paused = false; // Simulation is running.
+  sim_paused_speed = 0;
+  sim_skip = 0;
+  sim_skips = 0;
+  heat_steps = 0; // Disable cellular automata machine.
   setSpeed(0);
 }
 

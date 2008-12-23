@@ -1559,7 +1559,11 @@ public:
 
   int sim_skip;
 
-  int sim_paused;
+  /**
+   * Simulation is paused
+   * @todo Variable has reversed logic, maybe use sim_running instead?
+   */
+  bool sim_paused;
 
   int sim_paused_speed;
 
