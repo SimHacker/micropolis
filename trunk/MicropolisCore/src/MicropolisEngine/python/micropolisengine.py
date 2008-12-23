@@ -413,6 +413,9 @@ cvar = _micropolisengine.cvar
 WORLD_X = cvar.WORLD_X
 WORLD_Y = cvar.WORLD_Y
 MAX_TRAFFIC_DISTANCE = cvar.MAX_TRAFFIC_DISTANCE
+MAX_ROAD_EFFECT = cvar.MAX_ROAD_EFFECT
+MAX_POLICESTATION_EFFECT = cvar.MAX_POLICESTATION_EFFECT
+MAX_FIRESTATION_EFFECT = cvar.MAX_FIRESTATION_EFFECT
 
 class StringTable(_object):
     __swig_setmethods__ = {}

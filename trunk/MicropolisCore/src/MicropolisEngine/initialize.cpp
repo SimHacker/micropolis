@@ -80,9 +80,9 @@ void Micropolis::InitWillStuff()
   InitGraphMax();
   DestroyAllSprites();
 
-  RoadEffect = 32;
-  PoliceEffect = 1000;          /* added */
-  FireEffect = 1000;
+  RoadEffect = MAX_ROAD_EFFECT;
+  PoliceEffect = MAX_POLICESTATION_EFFECT;
+  FireEffect = MAX_FIRESTATION_EFFECT;
   cityScore = 500;
   cityPop = -1;
   LastCityTime = -1;

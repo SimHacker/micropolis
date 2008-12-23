@@ -99,18 +99,13 @@ void Micropolis::DoBudgetFromMenu()
 void Micropolis::DoBudgetNow(
   int fromMenu)
 {
-  Quad fireInt =
-    (int)(((float)FireFund) * firePercent);
-  Quad policeInt =
-    (int)(((float)PoliceFund) * policePercent);
-  Quad roadInt =
-    (int)(((float)RoadFund) * roadPercent);
+  Quad fireInt   = (int)(FireFund   * firePercent);
+  Quad policeInt = (int)(PoliceFund * policePercent);
+  Quad roadInt   = (int)(RoadFund   * roadPercent);
 
-  Quad total =
-    fireInt + policeInt + roadInt;
+  Quad total = fireInt + policeInt + roadInt;
 
-  Quad yumDuckets =
-    TaxFund + TotalFunds;
+  Quad yumDuckets = TaxFund + TotalFunds;
 
   if (yumDuckets > total) {
 

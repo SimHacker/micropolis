@@ -321,18 +321,20 @@ short Micropolis::GetFire()
 /* comefrom: CityEvaluation */
 void Micropolis::GetScore()
 {
-  register int x, z;
+  int x, z;
   short oldCityScore;
   float SM, TM;
 
   oldCityScore = cityScore;
   x = 0;
 
-
-  for (z = 0; z < 7; z++) {
+  for (z = 0; z < CVP_NUMPROBLEMS; z++) {
     x += problemTable[z];       /* add 7 probs */
   }
 
+  /*
+   * @todo Should this expression depend on CVP_NUMPROBLEMS?
+   */
   x = x / 3;                    /* 7 + 2 average */
 
   if (x > 256) {
@@ -361,16 +363,18 @@ void Micropolis::GetScore()
     z = (int)(z * .85);
   }
 
-  if (RoadEffect < 32)  {
-    z = (int)(z - (32 - RoadEffect));
+  if (RoadEffect < MAX_ROAD_EFFECT)  {
+    z -= MAX_ROAD_EFFECT - RoadEffect;
   }
 
-  if (PoliceEffect < 1000) {
-    z = (int)(z * (.9 + (PoliceEffect / 10000.1)));
+  if (PoliceEffect < MAX_POLICESTATION_EFFECT) {
+    // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
+    z = (int)(z * (0.9 + (PoliceEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
   }
 
-  if (FireEffect < 1000) {
-    z = (int)(z * (.9 + (FireEffect / 10000.1)));
+  if (FireEffect < MAX_FIRESTATION_EFFECT) {
+    // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
+    z = (int)(z * (0.9 + (FireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
   }
 
   if (RValve < -1000) {

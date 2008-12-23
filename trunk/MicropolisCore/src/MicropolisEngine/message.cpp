@@ -181,13 +181,13 @@ void Micropolis::SendMessages()
     break;
 
   case 45:
-    if ((TotalPop > 60) && (FireStPop == 0)) {
+    if (TotalPop > 60 && FireStPop == 0) {
       SendMes(13);
     }
     break;
 
   case 48:
-    if ((TotalPop > 60) && (PolicePop == 0)) {
+    if (TotalPop > 60 && PolicePop == 0) {
       SendMes(14);
     }
     break;
@@ -199,19 +199,22 @@ void Micropolis::SendMessages()
     break;
 
   case 54:
-    if ((RoadEffect < 20) && (RoadTotal > 30)) {
+    // If RoadEffect < 5/8 of max effect
+    if (RoadEffect < (5 * MAX_ROAD_EFFECT / 8) && RoadTotal > 30) {
       SendMes(17);
     }
     break;
 
   case 57:
-    if ((FireEffect < 700) && (TotalPop > 20)) {
+    // If FireEffect < 0.7 of max effect
+    if (FireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && TotalPop > 20) {
       SendMes(18);
     }
     break;
 
   case 60:
-    if ((PoliceEffect < 700) && (TotalPop > 20)) {
+    // If PoliceEffect < 0.7 of max effect
+    if (PoliceEffect < (7 * MAX_POLICESTATION_EFFECT / 10) && TotalPop > 20) {
       SendMes(19);
     }
     break;

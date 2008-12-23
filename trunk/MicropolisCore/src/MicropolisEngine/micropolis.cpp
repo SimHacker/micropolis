@@ -267,14 +267,9 @@ void Micropolis::init()
   // short FireFund;
   FireFund = 0;
 
-  // short RoadEffect;
-  RoadEffect = 0;
-
-  // short PoliceEffect;
+  RoadEffect   = 0;
   PoliceEffect = 0;
-
-  // short FireEffect;
-  FireEffect = 0;
+  FireEffect   = 0;
 
   // Quad TaxFund;
   TaxFund = 0;

@@ -638,6 +638,21 @@ enum ZoneType {
 /** Maximal number of map tiles to drive, looking for a destination */
 static const int MAX_TRAFFIC_DISTANCE = 30;
 
+/**
+ * Maximal value of Micropolis::RoadEffect
+ */
+static const int MAX_ROAD_EFFECT = 32;
+
+/**
+ * Maximal value of Micropolis::PoliceEffect
+ */
+static const int MAX_POLICESTATION_EFFECT = 1000;
+
+/**
+ * Maximal value of Micropolis::FireEffect
+ */
+static const int MAX_FIRESTATION_EFFECT = 1000;
+
 
 ///////////////////////////////////////////////////
 // City problems
@@ -1466,35 +1481,59 @@ public:
 public:
 
 
-  // Percentage of requested road costs to funding level.
-  // Affected by road funds slider and budgetary constraints.
+  /**
+   * Percentage of requested road and rail costs to funding level.
+   *
+   * Value between \c 0 and #MAX_ROAD_EFFECT.
+   * Affected by road funds slider and budgetary constraints.
+   */
   float roadPercent;
 
-  // Percentage of requested police station costs to funding level.
-  // Affected by road funds slider and budgetary constraints.
+  /**
+   * Percentage of requested police station costs to funding level.
+   *
+   * Value between \c 0 and #MAX_POLICESTATION_EFFECT.
+   * Affected by road funds slider and budgetary constraints.
+   */
   float policePercent;
 
-  // Percentage of requested fire station costs to funding level.
-  // Affected by road funds slider and budgetary constraints.
+  /**
+   * Percentage of requested fire station costs to funding level.
+   *
+   * Value between \c 0 and #MAX_FIRESTATION_EFFECT.
+   * Affected by road funds slider and budgetary constraints.
+   */
   float firePercent;
 
-  // Amount of road funding granted.
+  /**
+   * Amount of road funding granted.
+   */
   Quad roadValue;
 
-  // Amount of police funding granted.
+  /**
+   * Amount of police funding granted.
+   */
   Quad policeValue;
 
-  // Amount of fire station funding granted.
+  /**
+   * Amount of fire station funding granted.
+   */
   Quad fireValue;
 
-  // Flag set when drawCurrPercents called.
-  // Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
-  // FIXME: Clean this up.
+  /**
+   * Flag set when drawCurrPercents called.
+   *
+   * Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
+   * @todo Clean this up.
+   */
   int MustDrawCurrPercents;
 
-  // Flag set when drawBudgetWindow called.
-  // Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
-  // FIXME: Clean this up.
+  /**
+   * Flag set when drawBudgetWindow called.
+   *
+   * Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
+   * @todo Clean this up.
+   */
   int MustDrawBudgetWindow;
 
 

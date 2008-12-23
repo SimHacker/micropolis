@@ -3287,6 +3287,48 @@ SWIGINTERN PyObject *MAX_TRAFFIC_DISTANCE_get(void) {
 }
 
 
+SWIGINTERN int MAX_ROAD_EFFECT_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable MAX_ROAD_EFFECT is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *MAX_ROAD_EFFECT_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(MAX_ROAD_EFFECT));
+  return pyobj;
+}
+
+
+SWIGINTERN int MAX_POLICESTATION_EFFECT_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable MAX_POLICESTATION_EFFECT is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *MAX_POLICESTATION_EFFECT_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(MAX_POLICESTATION_EFFECT));
+  return pyobj;
+}
+
+
+SWIGINTERN int MAX_FIRESTATION_EFFECT_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable MAX_FIRESTATION_EFFECT is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *MAX_FIRESTATION_EFFECT_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(MAX_FIRESTATION_EFFECT));
+  return pyobj;
+}
+
+
 SWIGINTERN PyObject *_wrap_TestBounds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -31505,6 +31547,9 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "ZT_RESIDENTIAL",SWIG_From_int(static_cast< int >(ZT_RESIDENTIAL)));
   SWIG_Python_SetConstant(d, "ZT_NUM_DESTINATIONS",SWIG_From_int(static_cast< int >(ZT_NUM_DESTINATIONS)));
   SWIG_addvarlink(SWIG_globals(),(char*)"MAX_TRAFFIC_DISTANCE",MAX_TRAFFIC_DISTANCE_get, MAX_TRAFFIC_DISTANCE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_ROAD_EFFECT",MAX_ROAD_EFFECT_get, MAX_ROAD_EFFECT_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_POLICESTATION_EFFECT",MAX_POLICESTATION_EFFECT_get, MAX_POLICESTATION_EFFECT_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_FIRESTATION_EFFECT",MAX_FIRESTATION_EFFECT_get, MAX_FIRESTATION_EFFECT_set);
   SWIG_Python_SetConstant(d, "CVP_CRIME",SWIG_From_int(static_cast< int >(CVP_CRIME)));
   SWIG_Python_SetConstant(d, "CVP_POLLUTION",SWIG_From_int(static_cast< int >(CVP_POLLUTION)));
   SWIG_Python_SetConstant(d, "CVP_HOUSING",SWIG_From_int(static_cast< int >(CVP_HOUSING)));
