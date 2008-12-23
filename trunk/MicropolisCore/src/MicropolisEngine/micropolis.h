@@ -2263,7 +2263,12 @@ public:
 
   char *CityName;
 
-  short NoDisasters;
+  /**
+   * Disable disasters
+   * @todo Variable has reverse logic,
+   *       we should use AllowDisasters or EnableDisasters instead
+   */
+  bool NoDisasters;
 
   short MesNum;
 

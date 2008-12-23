@@ -98,7 +98,7 @@ void Micropolis::sim_init()
   autoGo = true;  // Enable auto-goto
   CityTax = 7;
   CityTime = 50;
-  NoDisasters = 0;
+  NoDisasters = false; // Enable disasters
   PunishCnt = 0;
   autoBulldoze = true; // Enable auto bulldoze
   autoBudget = 1;
