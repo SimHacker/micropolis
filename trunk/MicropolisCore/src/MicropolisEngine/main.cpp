@@ -95,7 +95,7 @@ void Micropolis::sim_init()
   ScenarioID = 0;
   StartingYear = 1900;
   sim_skips = sim_skip = 0;
-  autoGo = 1;
+  autoGo = true;  // Enable auto-goto
   CityTax = 7;
   CityTime = 50;
   NoDisasters = 0;

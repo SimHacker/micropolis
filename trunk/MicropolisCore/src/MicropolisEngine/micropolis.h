@@ -1708,7 +1708,13 @@ public:
 
   short LastPicNum;
 
-  short autoGo;
+  /**
+   * Enable auto goto
+   *
+   * When enabled and an important event happens, the map display will jump to
+   * the location of the event
+   */
+  bool autoGo;
 
   short HaveLastMessage;
 
