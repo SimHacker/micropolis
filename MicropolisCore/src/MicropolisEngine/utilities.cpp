@@ -134,21 +134,27 @@ void Micropolis::makeDollarDecimalStr(
   }
 }
 
-
+/**
+ * Pause a simulation
+ * @see Resume
+ */
 void Micropolis::Pause()
 {
   if (!sim_paused) {
     sim_paused_speed = SimMetaSpeed;
     setSpeed(0);
-    sim_paused = 1;
+    sim_paused = true;
   }
 }
 
-
+/**
+ * Resume simulation after pausing it
+ * @see Pause
+ */
 void Micropolis::Resume()
 {
   if (sim_paused) {
-    sim_paused = 0;
+    sim_paused = false;
     setSpeed(sim_paused_speed);
   }
 }
