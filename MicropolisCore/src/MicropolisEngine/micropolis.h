@@ -122,8 +122,18 @@
 #define SimWidth                120
 #define SimHeight               100
 
-#define WORLD_X                 SimWidth
-#define WORLD_Y                 SimHeight
+/**
+ * Size of the world in horizontal direction
+ * @note Must be <= 128 due to PowerMap bitmap
+ *       (where 1 row is assumed to be less or equal to 8 words)
+ */
+static const int WORLD_X = SimWidth;
+
+/**
+ * Size of the world in vertical direction
+ */
+static const int WORLD_Y = SimHeight;
+
 #define HWLDX                   (SimWidth >>1)
 #define HWLDY                   (SimHeight >>1)
 #define QWX                     (SimWidth >>2)
@@ -214,20 +224,6 @@
 #define COLOR_DARKGRAY          14
 #define COLOR_BLACK             15
 
-/* Status Bits */
-
-#define PWRBIT                  32768   /*20    bit 15  */
-#define CONDBIT                 16384   /*10    bit 14  */
-#define BURNBIT                 8192    /*8     bit 13  */
-#define BULLBIT                 4096    /*4     bit 12  */
-#define ANIMBIT                 2048    /*2     bit 11  */
-#define ZONEBIT                 1024    /*1     bit 10  */
-#define ALLBITS                 64512   /*  mask for upper 6 bits       */
-#define LOMASK                  1023    /*      mask for low 10 bits    */
-
-#define BLBNBIT                 (BULLBIT+BURNBIT)
-#define BLBNCNBIT               (BULLBIT+BURNBIT+CONDBIT)
-#define BNCNBIT                 (BURNBIT+CONDBIT)
 
 /* Object & Sound Numbers */
 
@@ -254,181 +250,298 @@
 #define HISTORIES               6
 #define ALL_HISTORIES           ((1 <<HISTORIES) - 1)
 
-/* Character Mapping */
+///////////////////////////////////////////////////
+// Tiles
 
-#define DIRT                    0
-#define RIVER                   2
-#define WATER_LOW               RIVER /* 2 */
-#define REDGE                   3
-#define CHANNEL                 4
-#define FIRSTRIVEDGE            5
-#define LASTRIVEDGE             20
-#define WATER_HIGH              LASTRIVEDGE /* 20 */
-#define TREEBASE                21
-#define WOODS_LOW               TREEBASE /* 21 */
-#define LASTTREE                36
-#define WOODS                   37
-#define UNUSED_TRASH1           38
-#define UNUSED_TRASH2           39
-#define WOODS_HIGH              UNUSED_TRASH2 /* 39 */
-#define WOODS2                  40
-#define WOODS3                  41
-#define WOODS4                  42
-#define WOODS5                  43
-#define RUBBLE                  44
-#define LASTRUBBLE              47
-#define FLOOD                   48
-#define LASTFLOOD               51
-#define RADTILE                 52
-#define UNUSED_TRASH3           53
-#define UNUSED_TRASH4           54
-#define UNUSED_TRASH5           55
-#define FIRE                    56
-#define FIREBASE                56
-#define LASTFIRE                63
-#define ROADBASE                64
-#define HBRIDGE                 64
-#define VBRIDGE                 65
-#define ROADS                   66
-#define ROADS2                  67
-#define ROADS3                  68
-#define ROADS4                  69
-#define ROADS5                  70
-#define ROADS6                  71
-#define ROADS7                  72
-#define ROADS8                  73
-#define ROADS9                  74
-#define ROADS10                 75
-#define INTERSECTION            76
-#define HROADPOWER              77
-#define VROADPOWER              78
-#define BRWH                    79
-#define LTRFBASE                80
-#define BRWV                    95
-#define BRWXXX1                 111
-#define BRWXXX2                 127
-#define BRWXXX3                 143
-#define HTRFBASE                144
-#define BRWXXX4                 159
-#define BRWXXX5                 175
-#define BRWXXX6                 191
-#define LASTROAD                206
-#define BRWXXX7                 207
-#define POWERBASE               208
-#define HPOWER                  208
-#define VPOWER                  209
-#define LHPOWER                 210
-#define LVPOWER                 211
-#define LVPOWER2                212
-#define LVPOWER3                213
-#define LVPOWER4                214
-#define LVPOWER5                215
-#define LVPOWER6                216
-#define LVPOWER7                217
-#define LVPOWER8                218
-#define LVPOWER9                219
-#define LVPOWER10               220
-#define RAILHPOWERV             221
-#define RAILVPOWERH             222
-#define LASTPOWER               222
-#define UNUSED_TRASH6           223
-#define RAILBASE                224
-#define HRAIL                   224
-#define VRAIL                   225
-#define LHRAIL                  226
-#define LVRAIL                  227
-#define LVRAIL2                 228
-#define LVRAIL3                 229
-#define LVRAIL4                 230
-#define LVRAIL5                 231
-#define LVRAIL6                 232
-#define LVRAIL7                 233
-#define LVRAIL8                 234
-#define LVRAIL9                 235
-#define LVRAIL10                236
-#define HRAILROAD               237
-#define VRAILROAD               238
-#define LASTRAIL                238
-#define ROADVPOWERH             239 /* bogus? */
-#define RESBASE                 240
-#define FREEZ                   244
-#define HOUSE                   249
-#define LHTHR                   249
-#define HHTHR                   260
-#define RZB                     265
-#define HOSPITAL                409
-#define CHURCH                  418
-#define COMBASE                 423
-#define COMCLR                  427
-#define CZB                     436
-#define COMLAST                 609
-#define INDBASE                 612
-#define INDCLR                  616
-#define LASTIND                 620
-#define IND1                    621
-#define IZB                     625
-#define IND2                    641
-#define IND3                    644
-#define IND4                    649
-#define IND5                    650
-#define IND6                    676
-#define IND7                    677
-#define IND8                    686
-#define IND9                    689
-#define PORTBASE                693
-#define PORT                    698
-#define LASTPORT                708
-#define AIRPORTBASE             709
-#define RADAR                   711
-#define AIRPORT                 716
-#define COALBASE                745
-#define POWERPLANT              750
-#define LASTPOWERPLANT          760
-#define FIRESTBASE              761
-#define FIRESTATION             765
-#define POLICESTBASE            770
-#define POLICESTATION           774
-#define STADIUMBASE             779
-#define STADIUM                 784
-#define FULLSTADIUM             800
-#define NUCLEARBASE             811
-#define NUCLEAR                 816
-#define LASTZONE                826
-#define LIGHTNINGBOLT           827
-#define HBRDG0                  828
-#define HBRDG1                  829
-#define HBRDG2                  830
-#define HBRDG3                  831
-#define HBRDG_END               832
-#define RADAR0                  832
-#define RADAR1                  833
-#define RADAR2                  834
-#define RADAR3                  835
-#define RADAR4                  836
-#define RADAR5                  837
-#define RADAR6                  838
-#define RADAR7                  839
-#define FOUNTAIN                840
-#define INDBASE2                844
-#define TELEBASE                844
-#define TELELAST                851
-#define SMOKEBASE               852
-#define TINYEXP                 860
-#define SOMETINYEXP             864
-#define LASTTINYEXP             867
-#define TINYEXPLAST             883
-#define COALSMOKE1              916
-#define COALSMOKE2              920
-#define COALSMOKE3              924
-#define COALSMOKE4              928
-#define FOOTBALLGAME1           932
-#define FOOTBALLGAME2           940
-#define VBRDG0                  948
-#define VBRDG1                  949
-#define VBRDG2                  950
-#define VBRDG3                  951
+/**
+ * Status bits of a map tile
+ * @see MapTile MapCharacters
+ * @todo #ALLBITS should end with MASK
+ * @todo Decide what to do with #ANIMBIT (since sim-backend shouldn't do animation)
+ */
+enum MapTileBits {
+    PWRBIT  = 0x8000, ///< bit 15, tile has power
+    CONDBIT = 0x4000, ///< bit 14
+    BURNBIT = 0x2000, ///< bit 13
+    BULLBIT = 0x1000, ///< bit 12, tile is bulldozable
+    ANIMBIT = 0x0800, ///< bit 11, tile is animated
+    ZONEBIT = 0x0400, ///< bit 10
 
-#define TILE_COUNT              960
+    /// Mask for the bits-part of the tile
+    ALLBITS = ZONEBIT | ANIMBIT | BULLBIT | BURNBIT | CONDBIT | PWRBIT,
+    LOMASK = 0x03ff, ///< Mask for the #MapTileCharacters part of the tile
+
+    BLBNBIT   = BULLBIT | BURNBIT,
+    BLBNCNBIT = BULLBIT | BURNBIT | CONDBIT,
+    BNCNBIT   =           BURNBIT | CONDBIT,
+};
+
+/**
+ * Characters of the map tiles, the lower 10 bits (0--9).
+ * @see LOMASK MapTileBitmasks
+ * @todo Add TILE_ prefix
+ * @todo Make LOW/BASE and LAST/HIGH consistent everywhere?
+ * @todo Figure out what sprite groups really exist (maybe we can learn more by
+ *       examining the actual sprites, and/or by using hexadecimal or bite-wise
+ *       notation?)
+ * @todo Add comments for each sprite (0--1023)
+ */
+enum MapTileCharacters {
+    DIRT           = 0, ///< Clear tile
+    // sprite 1 ?
+
+    /* Water */
+    RIVER          = 2,
+    REDGE          = 3,
+    CHANNEL        = 4,
+    FIRSTRIVEDGE   = 5,
+    // sprite 6 -- 19 ?
+    LASTRIVEDGE    = 20,
+    WATER_LOW      = RIVER,       ///< First water sprite
+    WATER_HIGH     = LASTRIVEDGE, ///< Last water sprite (inclusive)
+
+    TREEBASE       = 21,
+    WOODS_LOW      = TREEBASE,
+    LASTTREE       = 36,
+    WOODS          = 37,
+    UNUSED_TRASH1  = 38,
+    UNUSED_TRASH2  = 39,
+    WOODS_HIGH     = UNUSED_TRASH2, // Why is an 'UNUSED' sprite used?
+    WOODS2         = 40,
+    WOODS3         = 41,
+    WOODS4         = 42,
+    WOODS5         = 43,
+    RUBBLE         = 44,
+    // sprite 45, 46 ?
+    LASTRUBBLE     = 47,
+    FLOOD          = 48,
+    // sprite 49, 50 ?
+    LASTFLOOD      = 51,
+
+    RADTILE        = 52, ///< Radio-active contaminated tile
+
+    UNUSED_TRASH3  = 53,
+    UNUSED_TRASH4  = 54,
+    UNUSED_TRASH5  = 55,
+
+    /* Fire */
+    FIRE           = 56,
+    FIREBASE       = FIRE,
+    // sprite 57 -- 62 ?
+    LASTFIRE       = 63,
+
+    HBRIDGE        = 64, ///< Horizontal bridge
+    ROADBASE       = HBRIDGE,
+    VBRIDGE        = 65, ///< Vertical bridge
+    ROADS          = 66,
+    ROADS2         = 67,
+    ROADS3         = 68,
+    ROADS4         = 69,
+    ROADS5         = 70,
+    ROADS6         = 71,
+    ROADS7         = 72,
+    ROADS8         = 73,
+    ROADS9         = 74,
+    ROADS10        = 75,
+    INTERSECTION   = 76,
+    HROADPOWER     = 77,
+    VROADPOWER     = 78,
+    BRWH           = 79,
+    LTRFBASE       = 80, ///< First sprite with low traffic
+    // sprite 81 -- 94 ?
+    BRWV           = 95,
+    // sprite 96 -- 110 ?
+    BRWXXX1        = 111,
+    // sprite 96 -- 110 ?
+    BRWXXX2        = 127,
+    // sprite 96 -- 110 ?
+    BRWXXX3        = 143,
+    HTRFBASE       = 144, ///< First sprite with high traffic
+    // sprite 145 -- 158 ?
+    BRWXXX4        = 159,
+    // sprite 160 -- 174 ?
+    BRWXXX5        = 175,
+    // sprite 176 -- 190 ?
+    BRWXXX6        = 191,
+    // sprite 192 -- 205 ?
+    LASTROAD       = 206,
+    BRWXXX7        = 207,
+
+    /* Power lines */
+    HPOWER         = 208,
+    VPOWER         = 209,
+    LHPOWER        = 210,
+    LVPOWER        = 211,
+    LVPOWER2       = 212,
+    LVPOWER3       = 213,
+    LVPOWER4       = 214,
+    LVPOWER5       = 215,
+    LVPOWER6       = 216,
+    LVPOWER7       = 217,
+    LVPOWER8       = 218,
+    LVPOWER9       = 219,
+    LVPOWER10      = 220,
+    RAILHPOWERV    = 221, ///< Horizontal rail, vertical power
+    RAILVPOWERH    = 222, ///< Vertical rail, horizontal power
+    POWERBASE      = HPOWER,
+    LASTPOWER      = RAILVPOWERH,
+
+    UNUSED_TRASH6  = 223,
+
+    /* Rail */
+    HRAIL          = 224,
+    VRAIL          = 225,
+    LHRAIL         = 226,
+    LVRAIL         = 227,
+    LVRAIL2        = 228,
+    LVRAIL3        = 229,
+    LVRAIL4        = 230,
+    LVRAIL5        = 231,
+    LVRAIL6        = 232,
+    LVRAIL7        = 233,
+    LVRAIL8        = 234,
+    LVRAIL9        = 235,
+    LVRAIL10       = 236,
+    HRAILROAD      = 237,
+    VRAILROAD      = 238,
+    RAILBASE       = HRAIL,
+    LASTRAIL       = 238,
+
+    ROADVPOWERH    = 239, /* bogus? */
+
+    RESBASE        = 240,
+    // sprite 241 -- 243 ?
+    FREEZ          = 244,
+    // sprite 245 -- 248 ?
+    HOUSE          = 249,
+    LHTHR          = HOUSE,
+    // sprite 249 -- 259 ?
+    HHTHR          = 260,
+    // sprite 261 -- 264 ?
+    RZB            = 265,
+    // sprite 266 -- 408 ?
+    HOSPITAL       = 409,
+    // sprite 410 -- 417 ?
+    CHURCH         = 418,
+    // sprite 419 -- 422 ?
+    COMBASE        = 423,
+    // sprite 424 -- 426 ?
+    COMCLR         = 427,
+    // sprite 428 -- 435 ?
+    CZB            = 436,
+    // sprite 437 -- 608 ?
+    COMLAST        = 609,
+    // sprite 610, 611 ?
+    INDBASE        = 612,
+    // sprite 613 -- 615 ?
+    INDCLR         = 616,
+    // sprite 617 -- 619 ?
+    LASTIND        = 620,
+    IND1           = 621,
+    // sprite 622 -- 624 ?
+    IZB            = 625,
+    // sprite 626 -- 640 ?
+    IND2           = 641,
+    // sprite 642, 643 ?
+    IND3           = 644,
+    // sprite 645 -- 648 ?
+    IND4           = 649,
+    IND5           = 650,
+    // sprite 651 -- 675 ?
+    IND6           = 676,
+    IND7           = 677,
+    // sprite 678 -- 685 ?
+    IND8           = 686,
+    // sprite 687, 688 ?
+    IND9           = 689,
+    // sprite 690 -- 692 ?
+    PORTBASE       = 693,
+    // sprite 694 -- 697 ?
+    PORT           = 698,
+    // sprite 699 -- 707 ?
+    LASTPORT       = 708,
+    AIRPORTBASE    = 709,
+    // sprite 710 ?
+    RADAR          = 711,
+    // sprite 712 -- 715 ?
+    AIRPORT        = 716,
+    // sprite 717 -- 744 ?
+    COALBASE       = 745,
+    // sprite 746 -- 749 ?
+    POWERPLANT     = 750,
+    // sprite 751 -- 759 ?
+    LASTPOWERPLANT = 760, // Why is NUCLEAR further down?
+
+    FIRESTBASE     = 761,
+    // sprite 762 -- 764 ?
+    FIRESTATION    = 765,
+    // sprite 766 -- 769 ?
+    POLICESTBASE   = 770,
+    // sprite 771 -- 773 ?
+    POLICESTATION  = 774,
+    // sprite 775 -- 778 ?
+    STADIUMBASE    = 779,
+    // sprite 780 -- 783 ?
+    STADIUM        = 784,
+    // sprite 785 -- 799 ?
+    FULLSTADIUM    = 800,
+    // sprite 801 -- 810 ?
+    NUCLEARBASE    = 811,
+    // sprite 812 -- 815 ?
+    NUCLEAR        = 816, ///< Nuclear power plant
+    // sprite 817 -- 825 ?
+    LASTZONE       = 826,
+    LIGHTNINGBOLT  = 827,
+    HBRDG0         = 828,
+    HBRDG1         = 829,
+    HBRDG2         = 830,
+    HBRDG3         = 831,
+    HBRDG_END      = 832,
+    RADAR0         = 832,
+    RADAR1         = 833,
+    RADAR2         = 834,
+    RADAR3         = 835,
+    RADAR4         = 836,
+    RADAR5         = 837,
+    RADAR6         = 838,
+    RADAR7         = 839,
+    FOUNTAIN       = 840,
+    // sprite 841 -- 843 ?
+    INDBASE2       = 844,
+    TELEBASE       = 844,
+    // sprite 845 -- 850 ?
+    TELELAST       = 851,
+    SMOKEBASE      = 852,
+    // sprite 853 -- 859 ?
+    TINYEXP        = 860,
+    // sprite 861 -- 863 ?
+    SOMETINYEXP    = 864,
+    // sprite 865 -- 866 ?
+    LASTTINYEXP    = 867,
+    // sprite 868 -- 882 ?
+    TINYEXPLAST    = 883,
+    // sprite 884 -- 915 ?
+    COALSMOKE1     = 916,
+    // sprite 917 -- 919 ?
+    COALSMOKE2     = 920,
+    // sprite 921 -- 923 ?
+    COALSMOKE3     = 924,
+    // sprite 925 -- 927 ?
+    COALSMOKE4     = 928,
+    // sprite 929 -- 931 ?
+    FOOTBALLGAME1  = 932,
+    // sprite 933 -- 939 ?
+    FOOTBALLGAME2  = 940,
+    // sprite 941 -- 947 ?
+    VBRDG0         = 948,
+    VBRDG1         = 949,
+    VBRDG2         = 950,
+    VBRDG3         = 951,
+    // sprite 952 -- 959 ?
+
+    TILE_COUNT     = 960,
+};
+
 
 /*
  * These describe the wand values, the object dragged around on the screen.
@@ -728,7 +841,12 @@ public:
 
 };
 
-/** Main simulator class */
+/**
+ * Main simulator class
+ * @todo Modify Micropolis::roadPercent, Micropolis::policePercent, and
+ *       Micropolis::firePercent to hold real percentage from \c 0 to \c 100
+ *       instead of a floating point fraction
+ */
 class Micropolis {
 
 
@@ -753,306 +871,560 @@ public:
 public:
 
 
-  // Map scan X position. 
-  // Used all over.
+  /**
+   * Communication variable with map scan x position.
+   *
+   * Used all over.
+   */
   short SMapX;
 
-  // Map scan Y position.
-  // Used all over.
+
+  /**
+   * Communication variable with map scan y position.
+   *
+   * Used all over.
+   */
   short SMapY;
 
-  // Tile at SMapX, SMapY, raw.
-  // Used all over.
+  /**
+   * Tile at SMapX, SMapY, raw.
+   *
+   * Used all over.
+   */
   short CChr;
 
-  // Tile at SMapX, SMapY, masked with TILEMASK.
-  // Used all over.
+  /**
+   * Tile at SMapX, SMapY, masked with TILEMASK.
+   *
+   * Used all over.
+   */
   short CChr9;
 
-  // Total number of roads counted. More for bridges and high traffic density roads.
+  /**
+   * Number of road tiles in the game.
+   *
+   * Bridges count as 4 tiles, and high density traffic counts as
+   * 2 tiles.
+   */
   short RoadTotal;
 
-  // Total number of rails. No penalty for bridges or high traffic density. 
+  /**
+   * Total number of rails.
+   *
+   * No penalty for bridges or high traffic density.
+   */
   short RailTotal;
 
-  // Number of fires.
+  /**
+   * Number of fires.
+   */
   short FirePop;
 
-  // Residential zone population. Depends on level of zone development. 
+  /**
+   * Residential zone population.
+   *
+   * Depends on level of zone development.
+   */
   short ResPop;
 
-  // Commercial zone population. Depends on level of zone development. 
+  /**
+   * Commercial zone population.
+   *
+   * Depends on level of zone development.
+   */
   short ComPop;
 
-  // Industrial zone population. Depends on level of zone development. 
+  /**
+   * Industrial zone population.
+   *
+   * Depends on level of zone development.
+   */
   short IndPop;
 
-  // Total population including residential pop / 8 plus industrial pop plus commercial pop.
+  /**
+   * Total population.
+   *
+   * Includes residential pop / 8 plus industrial pop plus commercial
+   * pop.
+   */
   short TotalPop;
 
-  // Last total population. Not used?
+  /**
+   * Last total population.
+   *
+   * Not used?
+   */
   short LastTotalPop;
 
-  // Residential zone population.
+  /**
+   * Residential zone population.
+   */
   short ResZPop;
 
-  // Commercial zone population.
+  /**
+   * Commercial zone population.
+   */
   short ComZPop;
 
-  // Industrial zone population.
+  /**
+   * Industrial zone population.
+   */
   short IndZPop;
 
-  // Total zone population.
+  /**
+   * Total zone population.
+   */
   short TotalZPop;
 
-  // Hospital population.
+  /**
+   * Hospital population.
+   */
   short HospPop;
 
-  // Church population.
+  /**
+   * Church population.
+   */
   short ChurchPop;
 
-  // Stadium population.
+  /**
+   * Stadium population.
+   */
   short StadiumPop;
 
-  // Police population.
+  /**
+   * Police station population.
+   */
   short PolicePop;
 
-  // Fire station population.
+  /**
+   * Fire station population.
+   */
   short FireStPop;
 
-  // Coal power plant population.
+  /**
+   * Coal power plant population.
+   */
   short CoalPop;
 
-  // Nuclear power plant population.
+  /**
+   * Nuclear power plant population.
+   */
   short NuclearPop;
 
-  // Seaport population.
+  /**
+   * Seaport population.
+   */
   short PortPop;
 
-  // Airport population.
+  /**
+   * Airport population.
+   */
   short APortPop;
 
-  // Need hospital? 0 if no, 1 if yes, -1 if too many.
+  /**
+   * Need hospital?
+   *
+   * 0 if no, 1 if yes, -1 if too many.
+   */
   short NeedHosp;
 
-  // Need church? 0 if no, 1 if yes, -1 if too many.
+  /**
+   * Need church?
+   *
+   * 0 if no, 1 if yes, -1 if too many.
+   */
   short NeedChurch;
 
-  // Average crime. 
-  // Affected by land value, population density, police station distance.
+  /**
+   * Average crime.
+   *
+   * Affected by land value, population density, police station
+   * distance.
+   */
   short CrimeAverage;
 
-  // Average pollution.
-  // Affected by PollutionMem, which is effected by traffic, fire, 
-  // radioactivity, industrial zones, seaports, airports, power plants. 
+  /**
+   * Average pollution.
+   *
+   * Affected by PollutionMem, which is effected by traffic, fire,
+   * radioactivity, industrial zones, seaports, airports, power
+   * plants.
+   */
   short PolluteAverage;
 
-  // Land value average. 
-  // Affected by distance from city center, development density
-  // (terrainMem), pollution, and crime. 
+  /**
+   * Land value average.
+   *
+   * Affected by distance from city center, development density
+   * (terrainMem), pollution, and crime.
+   */
   short LVAverage;
 
-  // City time tick counter. 48 ticks per year.
-  // Four ticks per 12 months, so one tick is about a week (7.6 days).
+  /** @name Dates */
+  //@{
+
+  /**
+
+   * City time tick counter. 48 ticks per year.
+   *
+   * Four ticks per 12 months, so one tick is about a week (7.6 days).
+   */
   Quad CityTime;
 
-  // City month, 4 ticks per month.
+  /**
+   * City month, 4 ticks per month.
+   */
   Quad CityMonth;
 
-  // City year, (CityTime / 48) + StartingYear.
+  /**
+   * City year, (CityTime / 48) + StartingYear.
+   */
   Quad CityYear;
 
-  // City starting year.
+  /**
+   * City starting year.
+   */
   short StartingYear;
 
-  // Two-dimensional array of map tiles. Map[0 <= x < 120][0 <= y < 100]
+  //@}
+
+  /* Maps */
+
+  /**
+   * Two-dimensional array of map tiles.
+   *
+   * Map[0 <= x < 120][0 <= y < 100]
+   */
   short *Map[WORLD_X];
 
-  // 10 year residential history maximum valu. 
+  /**
+   * 10 year residential history maximum value.
+   */
   short ResHisMax;
 
-  // 120 year residential history maximum value.
+  /**
+   * 120 year residential history maximum value.
+   */
   short Res2HisMax;
 
-  // 10 year commercial history maximum valu. 
+  /**
+   * 10 year commercial history maximum value.
+   */
   short ComHisMax;
 
-  // 120 year commercial history maximum value.
+  /**
+   * 120 year commercial history maximum value.
+   */
   short Com2HisMax;
 
-  // 10 year industrial history maximum valu. 
+  /**
+   * 10 year industrial history maximum value.
+   */
   short IndHisMax;
 
-  // 120 year industrial history maximum value.
+  /**
+   * 120 year industrial history maximum value.
+   */
   short Ind2HisMax;
 
-  // Census changed flag. Need to redraw census dependent stuff.
-  // Set by ChangeCensus, UpdateGraphs, TakeCensus, Take2Census, loadFile.
+  /**
+   * Census changed flag.
+   *
+   * Need to redraw census dependent stuff. Set by ChangeCensus,
+   * UpdateGraphs, TakeCensus, Take2Census, loadFile.
+   */
   short CensusChanged;
 
-  // Message number to display asynchronously.
-  // Clean this up to use a simpler interface, and a queue.
-  // Might need to collapse some messages.
+  /**
+   * Message number to display asynchronously.
+   *
+   * Clean this up to use a simpler interface, and a queue.
+   * Might need to collapse some messages.
+   */
   short MessagePort;
 
-  // Message X location.
+  /**
+   * Message X location.
+   */
   short MesX;
 
-  // Message Y location.
+  /**
+   * Message Y location.
+   */
   short MesY;
 
-  // Spending on roads. 
+  /** @name Budget */
+  //@{
+
+  /**
+   * Spending on roads.
+   */
   Quad RoadSpend;
 
-  // Spending on police stations.
+  /**
+   * Spending on police stations.
+   */
   short PoliceSpend;
 
-  // Spending on fire stations.
+  /**
+   * Spending on fire stations.
+   */
   short FireSpend;
 
-  // Requested funds for roads.
-  // Depends on number of roads, rails, and game level.
+  /**
+   * Requested funds for roads.
+   *
+   * Depends on number of roads, rails, and game level.
+   */
   Quad RoadFund;
 
-  // Requested funds for police stations.
-  // Depends on police station population.
+  /**
+   * Requested funds for police stations.
+   *
+   * Depends on police station population.
+   */
   short PoliceFund;
 
-  // Requested funds for fire stations.
-  // Depends on fire station population.
+  /**
+   * Requested funds for fire stations.
+   *
+   * Depends on fire station population.
+   */
   short FireFund;
 
-  // Radio of road spending over road funding, times 32.
+  /**
+   * Radio of road spending over road funding, times 32.
+   */
   short RoadEffect;
 
-  // Radio of police spending over road funding, times 32.
+  /**
+   * Radio of police spending over road funding, times 32.
+   */
   short PoliceEffect;
 
-  // Radio of fire spending over road funding, times 32.
+  /**
+   * Radio of fire spending over road funding, times 32.
+   */
   short FireEffect;
 
-  // Funds from taxes.
-  // Depends on total population, average land value, city tax, and game level.
-  Quad TaxFund; 
+  /**
+   * Funds from taxes.
+   *
+   * Depends on total population, average land value, city tax, and
+   * game level.
+   */
+  Quad TaxFund;
 
-  // City tax rate.
+  /**
+   * City tax rate.
+   */
   short CityTax;
 
-  // Tax port flag. Apparently never used. CollectTax checks it. 
-  // FIXME: Apparently TaxFlag is never set to true in MicropolisEngine or the TCL code.
-  // TODO: Check old Mac code to see if it's ever set.
+  /**
+   * Tax port flag.
+   *
+   * Apparently never used. CollectTax checks it.
+   *
+   * @todo Apparently TaxFlag is never set to true in MicropolisEngine
+   *       or the TCL code.
+   * @todo Don should check old Mac code to see if it's ever set.
+   * @todo Variable is always \c 0. Decide whether to keep it, and if yes,
+   *       create means to modify its value
+   * @todo It looks like a boolean. If we keep it, modify accordingly
+   */
   short TaxFlag;
 
-  // Population density map.
+  //@}
+
+  /**
+   * Population density map.
+   */
   Byte *PopDensity[HWLDX];
 
-  // Traffic map.
+  /**
+   * Traffic map.
+   */
   Byte *TrfDensity[HWLDX];
 
-  // Pollution map.
+  /**
+   * Pollution map.
+   */
   Byte *PollutionMem[HWLDX];
 
-  // Land value mep.
+  /**
+   * Land value mep.
+   */
   Byte *LandValueMem[HWLDX];
 
-  // Crime map.
+  /**
+   * Crime map.
+   */
   Byte *CrimeMem[HWLDX];
 
-  // Temporary map. 
-  // Used to smooth population density, pollution.
+  /**
+   * Temporary map.
+   *
+   * Used to smooth population density, pollution.
+   */
   Byte *tem[HWLDX];
 
-  // Temporary map 2. 
-  // Used to smooth population density, pollution.
+  /**
+   * Temporary map 2.
+   *
+   * Used to smooth population density, pollution.
+   */
   Byte *tem2[HWLDX];
 
+  /**
+   * Terrain development  density map.
+   *
+   * Used to calculate land value.
+   */
   Byte *TerrainMem[QWX];
 
-  // Temporary map Q. 
-  // Used to smooth development density, for TerrainMem.
+  /**
+   * Temporary map Q.
+   *
+   * Used to smooth development density, for TerrainMem.
+   */
   Byte *Qtem[QWX];
 
-  // Rate of growth map.
-  // Affected by DecROGMem, incROG called by zones. 
-  // Decreased by fire explosions from sprites, fire spreading.
-  // Doesn't seem to actually feed back into the simulation. Output only. 
+  /**
+   * Rate of growth map.
+   *
+   * Affected by DecROGMem, incROG called by zones. Decreased by fire
+   * explosions from sprites, fire spreading. Doesn't seem to
+   * actually feed back into the simulation. Output only.
+   */
   short RateOGMem[SmX][SmY];
 
-  // Fire station map. 
-  // Affected by fire stations, powered, fire funding ratio, road access.
-  // Affects how long fires burn.
+  /**
+   * Fire station map.
+   *
+   * Affected by fire stations, powered, fire funding ratio, road
+   * access. Affects how long fires burn.
+   */
   short FireStMap[SmX][SmY];
 
-  // Police station map. 
-  // Affected by police stations, powered, police funding ratio, road access.
-  // Affects crime rate. 
+  /**
+   * Police station map.
+   *
+   * Affected by police stations, powered, police funding ratio, road
+   * access. Affects crime rate.
+   */
   short PoliceMap[SmX][SmY];
-  
-  // Copy of police station map to display.
+
+  /**
+   * Copy of police station map to display.
+   */
   short PoliceMapEffect[SmX][SmY];
 
-  // Copy of fire station map to display.
+  /**
+   * Copy of fire station map to display.
+   */
   short FireRate[SmX][SmY];
 
-  // Commercial rate map. 
-  // Depends on distance to city center. Effects commercial zone evaluation.
+  /**
+   * Commercial rate map.
+   *
+   * Depends on distance to city center. Effects commercial zone
+   * evaluation.
+   */
   short ComRate[SmX][SmY];
 
-  // Temporary array for smoothing fire and police station maps.
+  /**
+   * Temporary array for smoothing fire and police station maps.
+   */
   short STem[SmX][SmY];
 
-  // Memory for TerrainMem array.
+  /**
+   * Memory for TerrainMem array.
+   */
   Ptr terrainBase;
 
-  // Memory for Qtem array.
+  /**
+   * Memory for Qtem array.
+   */
   Ptr qTemBase;
 
-  // Memory for tem array.
+  /**
+   * Memory for tem array.
+   */
   Ptr tem1Base;
 
-  // Memory for tem2 array.
+  /**
+   * Memory for tem2 array.
+   */
   Ptr tem2Base;
 
-  // Memory for PopDensity array.
+  /**
+   * Memory for PopDensity array.
+   */
   Ptr popPtr;
 
-  // Memory for TrfDensity array.
+  /**
+   * Memory for TrfDensity array.
+   */
   Ptr trfPtr;
 
-  // Memory for PollutionMem array.
+  /**
+   * Memory for PollutionMem array.
+   */
   Ptr polPtr;
 
-  // Memory for LandValueMem array.
+  /**
+   * Memory for LandValueMem array.
+   */
   Ptr landPtr;
 
-  // Memory for CrimeMem array.
+  /**
+   * Memory for CrimeMem array.
+   */
   Ptr crimePtr;
 
-  // Memory for Map array.
+  /**
+   * Memory for Map array.
+   */
   unsigned short *mapPtr;
 
-  // Residential population history.
+  /**
+   * Residential population history.
+   */
   short *ResHis;
 
-  // Commercial population history.
+  /**
+   * Commercial population history.
+   */
   short *ComHis;
 
-  // Industrial population history.
+  /**
+   * Industrial population history.
+   */
   short *IndHis;
 
-  // Money history.
+  /**
+   * Money history.
+   */
   short *MoneyHis;
 
-  // Pollution history.
+  /**
+   * Pollution history.
+   */
   short *PollutionHis;
 
-  // Crime history.
+  /**
+   * Crime history.
+   */
   short *CrimeHis;
 
-  // Memory used to save miscelaneous game values in save file.
+  /**
+   * Memory used to save miscelaneous game values in save file.
+   */
   short *MiscHis;
 
-  // Power distribution bitmap.
+  /**
+   * Power distribution bitmap.
+   */
   short *PowerMap;
 
 
@@ -1106,13 +1478,13 @@ public:
   // Affected by road funds slider and budgetary constraints.
   float firePercent;
 
-  // Amount of road funding granted. 
+  // Amount of road funding granted.
   Quad roadValue;
 
-  // Amount of police funding granted. 
+  // Amount of police funding granted.
   Quad policeValue;
 
-  // Amount of fire station funding granted. 
+  // Amount of fire station funding granted.
   Quad fireValue;
 
   // Flag set when drawCurrPercents called.
@@ -1301,16 +1673,16 @@ public:
   Quad deltaCityPop;
 
   /**
-   * City assessed value. 
+   * City assessed value.
    *
-   * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop, 
+   * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop,
    * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
    * their respective values.
    */
   Quad cityAssValue;
 
   /**
-   * City class. 
+   * City class.
    *
    * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
    * Affected by city population.
@@ -1329,7 +1701,7 @@ public:
   short cityScore;
 
   /**
-   * Change in the city score. 
+   * Change in the city score.
    *
    * Depends on city score.
    */
@@ -1419,49 +1791,49 @@ public:
 public:
 
 
-  // It would be nice to open up the terrain generator, and make its features available incrementally as city building tools. 
-  // The user should be able to place water and trees, and it should dynamically smooth the edges. 
-  // The user interface could restrict the user to only drawing terrain before any zones were built, 
+  // It would be nice to open up the terrain generator, and make its features available incrementally as city building tools.
+  // The user should be able to place water and trees, and it should dynamically smooth the edges.
+  // The user interface could restrict the user to only drawing terrain before any zones were built,
   // but it would be best if the terrain editing tools worked properly when there were zones built
   // (by automatically bulldozing zones whose underlying terrain it's modifying).
 
-  // Starting X location of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Starting X location of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short XStart;
 
-  // Starting Y location of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Starting Y location of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short YStart;
 
-  // Current X location of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Current X location of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short MapX;
 
-  // Current Y location of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Current Y location of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short MapY;
 
-  // Current direction of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Current direction of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short Dir;
 
-  // Last direction of the terrain generator. 
-  // Only used internally by the terrain generator. Should be private. 
+  // Last direction of the terrain generator.
+  // Only used internally by the terrain generator. Should be private.
   short LastDir;
 
-  // Controls the level of tree creation. 
+  // Controls the level of tree creation.
   // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
   int TreeLevel;
 
-  // Controls the level of lake creation. 
+  // Controls the level of lake creation.
   // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
   int LakeLevel;
 
-  // Controls the level of river curviness. 
+  // Controls the level of river curviness.
   // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
   int CurveLevel;
 
-  // Controls how often to create an island. 
+  // Controls how often to create an island.
   // -1 => 10% chance of island, 0 => never create island, 1 => always create island
   int CreateIsland;
 
@@ -1526,7 +1898,7 @@ public:
 public:
 
 
-  // Flag that tells if there is a new graph to draw. 
+  // Flag that tells if there is a new graph to draw.
   // This should be replaced by a general purpose view updating system.
   short NewGraph;
 
@@ -1585,7 +1957,7 @@ public:
 public:
 
 
-  char *MicropolisVersion;
+  const char *MicropolisVersion;
 
   int sim_loops;
 
@@ -1812,9 +2184,12 @@ public:
 
   short PowerStackY[PWRSTKSIZE];
 
+  /**
+   * Maximal power that the combined coal and nuclear power plants can deliver
+   * @see NumPower CoalPop NuclearPop
+   */
   Quad MaxPower;
-
-  Quad NumPower;
+  Quad NumPower; ///< Amount of power used
 
 
   int MoveMapSim(
@@ -2298,6 +2673,10 @@ public:
 
   Quad LastMesTime;
 
+  /**
+   * Difficulty level of the game (0..2)
+   * @todo Rename to game_level and create a GameLevel enum
+   */
   short GameLevel;
 
   short InitSimLoad;
