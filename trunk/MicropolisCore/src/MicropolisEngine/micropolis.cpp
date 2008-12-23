@@ -76,7 +76,7 @@
  * @param fname Filename of the source file
  * @return Does not return to the caller
  */
-void not_reached(int line, char *fname)
+void not_reached(int line, const char *fname)
 {
     fprintf(stderr, "Code unexpectedly executed at line %d, at file %s\n", line, fname);
     exit(1);

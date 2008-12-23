@@ -634,7 +634,7 @@ static inline bool TestBounds(int wx, int wy)
  */
 #define NOT_REACHED() not_reached(__LINE__, __FILE__)
 
-void not_reached(int line, char *fname);
+void not_reached(int line, const char *fname);
 
 
 ////////////////////////////////////////////////////////////////////////
