@@ -861,8 +861,7 @@ void Micropolis::init()
   // char *CityName;
   CityName = NULL;
 
-  // short NoDisasters;
-  NoDisasters = 0;
+  NoDisasters = false; // Enable disasters
 
   // short MesNum;
   MesNum = 0;
