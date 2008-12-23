@@ -237,7 +237,7 @@ int Micropolis::loadFile(
   autoBulldoze = (MiscHis[52] != 0);   // flag for autoBulldoze
   autoBudget   = (MiscHis[53] != 0);   // flag for autoBudget
   autoGo       = (MiscHis[54] != 0);   // flag for auto-goto
-  UserSoundOn = MiscHis[55];    /* flag for the sound on/off */
+  UserSoundOn  = (MiscHis[55] != 0);   // flag for the sound on/off
   CityTax = MiscHis[56];
   SimSpeed = MiscHis[57];
   ChangeCensus();
@@ -331,7 +331,7 @@ int Micropolis::saveFile(
   MiscHis[52] = autoBulldoze;   // flag for autoBulldoze
   MiscHis[53] = autoBudget;     // flag for autoBudget
   MiscHis[54] = autoGo;         // flag for auto-goto
-  MiscHis[55] = UserSoundOn;    /* flag for the sound on/off */
+  MiscHis[55] = UserSoundOn;    // flag for the sound on/off
   MiscHis[57] = SimSpeed;
   MiscHis[56] = CityTax;        /* post release */
 
