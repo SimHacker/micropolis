@@ -91,7 +91,7 @@ void Micropolis::sim_init()
 {
   UserSoundOn = 1;
   MustUpdateOptions = 1;
-  HaveLastMessage = 0;
+  HaveLastMessage = false; // No message seen yet
   ScenarioID = 0;
   StartingYear = 1900;
   sim_skips = sim_skip = 0;

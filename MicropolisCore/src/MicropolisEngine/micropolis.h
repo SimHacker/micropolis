@@ -1716,7 +1716,12 @@ public:
    */
   bool autoGo;
 
-  short HaveLastMessage;
+  /**
+   * Do we have a valid message in LastMessage?
+   * @todo Remove the variable by using LastMessage instead (for example the
+   *       empty string)
+   */
+  bool HaveLastMessage;
 
   char LastMessage[256];
 
