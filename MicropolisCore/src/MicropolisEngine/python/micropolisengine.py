@@ -880,16 +880,11 @@ class Micropolis(_object):
     __swig_setmethods__["FloodCnt"] = _micropolisengine.Micropolis_FloodCnt_set
     __swig_getmethods__["FloodCnt"] = _micropolisengine.Micropolis_FloodCnt_get
     if _newclass:FloodCnt = _swig_property(_micropolisengine.Micropolis_FloodCnt_get, _micropolisengine.Micropolis_FloodCnt_set)
-    def DoDisasters(*args): return _micropolisengine.Micropolis_DoDisasters(*args)
-    def ScenarioDisaster(*args): return _micropolisengine.Micropolis_ScenarioDisaster(*args)
     def MakeMeltdown(*args): return _micropolisengine.Micropolis_MakeMeltdown(*args)
     def FireBomb(*args): return _micropolisengine.Micropolis_FireBomb(*args)
     def MakeEarthquake(*args): return _micropolisengine.Micropolis_MakeEarthquake(*args)
-    def SetFire(*args): return _micropolisengine.Micropolis_SetFire(*args)
     def MakeFire(*args): return _micropolisengine.Micropolis_MakeFire(*args)
-    def Vulnerable(*args): return _micropolisengine.Micropolis_Vulnerable(*args)
     def MakeFlood(*args): return _micropolisengine.Micropolis_MakeFlood(*args)
-    def DoFlood(*args): return _micropolisengine.Micropolis_DoFlood(*args)
     __swig_setmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_set
     __swig_getmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_get
     if _newclass:cityYes = _swig_property(_micropolisengine.Micropolis_cityYes_get, _micropolisengine.Micropolis_cityYes_set)

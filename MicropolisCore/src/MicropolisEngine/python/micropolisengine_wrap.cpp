@@ -11786,48 +11786,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_DoDisasters(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_DoDisasters",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoDisasters" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->DoDisasters();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_ScenarioDisaster(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_ScenarioDisaster",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_ScenarioDisaster" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->ScenarioDisaster();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_MakeMeltdown(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -11891,27 +11849,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_SetFire(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_SetFire",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SetFire" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->SetFire();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_MakeFire(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -11933,37 +11870,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_Vulnerable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  int result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_Vulnerable",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_Vulnerable" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_Vulnerable" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  result = (int)(arg1)->Vulnerable(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_MakeFlood(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -11978,27 +11884,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_MakeFlood(PyObject *SWIGUNUSEDPARM(self), 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   (arg1)->MakeFlood();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_DoFlood(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_DoFlood",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoFlood" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->DoFlood();
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -30227,16 +30112,11 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_FixSingle", _wrap_Micropolis_FixSingle, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_FloodCnt_set", _wrap_Micropolis_FloodCnt_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_FloodCnt_get", _wrap_Micropolis_FloodCnt_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DoDisasters", _wrap_Micropolis_DoDisasters, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_ScenarioDisaster", _wrap_Micropolis_ScenarioDisaster, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MakeMeltdown", _wrap_Micropolis_MakeMeltdown, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_FireBomb", _wrap_Micropolis_FireBomb, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MakeEarthquake", _wrap_Micropolis_MakeEarthquake, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_SetFire", _wrap_Micropolis_SetFire, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MakeFire", _wrap_Micropolis_MakeFire, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_Vulnerable", _wrap_Micropolis_Vulnerable, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_MakeFlood", _wrap_Micropolis_MakeFlood, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DoFlood", _wrap_Micropolis_DoFlood, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityYes_set", _wrap_Micropolis_cityYes_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityYes_get", _wrap_Micropolis_cityYes_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityNo_set", _wrap_Micropolis_cityNo_set, METH_VARARGS, NULL},
