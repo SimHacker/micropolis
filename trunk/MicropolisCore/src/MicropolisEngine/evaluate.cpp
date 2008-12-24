@@ -123,8 +123,8 @@ void Micropolis::EvalInit()
   for (int i = 0; i < PROBNUM; i++) {
     problemVotes[i] = 0;
   }
-  for (int i = 0; i < 4; i++) {
-    problemOrder[i] = 0;
+  for (int i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
+    problemOrder[i] = CVP_NUMPROBLEMS;
   }
 }
 
@@ -212,7 +212,7 @@ void Micropolis::DoProblems()
   problemTable[CVP_FIRE]         = GetFire();             /* Fire */
   voteProblems();
 
-  for (int z = 0; z < 4; z++) {
+  for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
     // Find biggest problem not taken yet
     int maxVotes = 0;
     int bestProblem = CVP_NUMPROBLEMS;
@@ -448,12 +448,11 @@ void Micropolis::doScoreCard()
   //     Yes: ${FormatPercent(cityYes)}
   //     No: ${FormatPercent(100 - cityYes)}
   //   What are the worst problems?
-  //     for i in range(0, 4), while problemOrder[i] < CVP_NUMPROBLEMS:
+  //     for i in range(0, CVP_PROBLEM_COMPLAINTS), while problemOrder[i] < CVP_NUMPROBLEMS:
   //     ${probStr[problemOrder[i]]}: ${FormatPercent(problemVotes[problemOrder[i]])}
   // Statistics
-  //   Population: ${FormatNumber?(pop)}
-  //   Net Migration: ${FormatNumber(cityPop)}
-  //   (last year): ${FormatNumber(deltaCityPop)}
+  //   Population: ${FormatNumber(cityPop)}
+  //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
   //   Assessed Value: ${FormatMoney(cityAssValue))
   //   Category: ${cityClassStr[cityClass]}
   //   Game Level: ${cityLevelStr[GameLevel]}
@@ -471,6 +470,44 @@ void Micropolis::scoreDoer()
   if (evalChanged) {
     doScoreCard();
     evalChanged = false;
+  }
+}
+
+
+int Micropolis::countProblems()
+{
+  int i;
+  for (i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
+    if (problemOrder[i] == CVP_NUMPROBLEMS) {
+      break;
+    }
+  }
+  return i;
+}
+
+
+int Micropolis::getProblemNumber(
+  int i)
+{
+  if ((i < 0) ||
+      (i >= CVP_PROBLEM_COMPLAINTS) ||
+      (problemOrder[i] == CVP_NUMPROBLEMS)) {
+    return -1;
+  } else {
+    return problemOrder[i];
+  }
+}
+
+
+int Micropolis::getProblemVotes(
+  int i)
+{
+  if ((i < 0) ||
+      (i >= CVP_PROBLEM_COMPLAINTS) ||
+      (problemOrder[i] == CVP_NUMPROBLEMS)) {
+    return -1;
+  } else {
+    return problemVotes[problemOrder[i]];
   }
 }
 

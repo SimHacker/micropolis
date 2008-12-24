@@ -71,15 +71,15 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-char *Micropolis::HistName[] = {
-  "Residential", "Commercial", "Industrial",
-  "Cash Flow", "Crime", "Pollution"
-};
+//char *Micropolis::HistName[] = {
+//  "Residential", "Commercial", "Industrial",
+//  "Cash Flow", "Crime", "Pollution"
+//};
 
-unsigned char Micropolis::HistColor[] = {
-  COLOR_LIGHTGREEN, COLOR_DARKBLUE, COLOR_YELLOW,
-  COLOR_DARKGREEN, COLOR_RED, COLOR_OLIVE
-};
+//unsigned char Micropolis::HistColor[] = {
+//  COLOR_LIGHTGREEN, COLOR_DARKBLUE, COLOR_YELLOW,
+//  COLOR_DARKGREEN, COLOR_RED, COLOR_OLIVE
+//};
 
 
 ////////////////////////////////////////////////////////////////////////
