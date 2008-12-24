@@ -295,23 +295,17 @@ short Micropolis::AverageTrf()
  */
 short Micropolis::GetUnemployment()
 {
-  float r;
-  short b;
+  short b = (ComPop + IndPop) * 8;
 
-  b = (ComPop + IndPop) * 8;
-
-  if (b) {
-    r = ((float)ResPop) / b;
-  } else {
+  if (b == 0) {
     return 0;
   }
 
-  b = (short)((r - 1) * 255);
-  if (b > 255) {
-    b = 255;
-  }
+  // Ratio total people / working. At least 1.
+  float r = ((float)ResPop) / b;
 
-  return b;
+  b = (short)((r - 1) * 255); // (r - 1) is the fraction unemployed people
+  return min(b, (short)255);
 }
 
 
@@ -332,7 +326,6 @@ void Micropolis::GetScore()
 {
   int x, z;
   short oldCityScore;
-  float SM, TM;
 
   oldCityScore = cityScore;
   x = 0;
@@ -387,31 +380,29 @@ void Micropolis::GetScore()
     z = (int)(z * .85);
   }
 
-  SM = 1.0;
-
+  float SM = 1.0;
   if (cityPop == 0 || deltaCityPop == 0) {
-    SM = 1.0;
+    SM = 1.0; // there is nobody or no migration happened
+
   } else if (deltaCityPop == cityPop) {
-    SM = 1.0;
+    SM = 1.0; // city sprang into existence or doubled in size
+
   } else if (deltaCityPop > 0) {
     SM = ((float)deltaCityPop / cityPop) + 1.0f;
+
   } else if (deltaCityPop < 0) {
     SM = 0.95f + ((float)deltaCityPop / (cityPop - deltaCityPop));
   }
 
   z = (int)(z * SM);
-  z = z - GetFire();            /* dec score for fires */
-  z = z - CityTax;
+  z = z - GetFire() - CityTax; // dec score for fires and taxes
 
-  TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
-
-  if (TM) {
-    SM = PwrdZCnt / TM;
+  float TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
+  if (TM > 0.0) {
+    z = (int)(z * (float)(PwrdZCnt / TM));
   } else {
-    SM = 1.0;
   }
 
-  z = (int)(z * SM);
   z = clamp(z, 0, 1000);
 
   cityScore = (cityScore + z) / 2;
