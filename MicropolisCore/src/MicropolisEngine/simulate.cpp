@@ -546,7 +546,7 @@ void Micropolis::SetValves()
   LastTotalPop = TotalPop;
   TotalPop = NormResPop + ComPop + IndPop;
 
-  if (ResPop) {
+  if (ResPop > 0) {
     Employment = (ComHis[1] + IndHis[1]) / NormResPop;
   } else {
     Employment = 1;
@@ -558,7 +558,7 @@ void Micropolis::SetValves()
 
   float temp = ComHis[1] + IndHis[1];
 
-  if (temp) {
+  if (temp > 0.0) {
     LaborBase = (ResHis[1] / temp);
   } else {
     LaborBase = 1;
@@ -583,18 +583,18 @@ void Micropolis::SetValves()
     PjIndPop = MinPjIndPop;
   }
 
-  if (NormResPop) {
+  if (NormResPop > 0) {
     Rratio = (float)PjResPop / (float)NormResPop; /* projected -vs- actual */
   } else {
     Rratio = DefaultRratio;
   }
 
-  if (ComPop) {
+  if (ComPop > 0) {
     Cratio = (float)PjComPop / (float)ComPop;
   } else {
     Cratio = (float)PjComPop;
   }
-  if (IndPop) {
+  if (IndPop > 0) {
     Iratio = (float)PjIndPop / (float)IndPop;
   } else {
     Iratio = (float)PjIndPop;
@@ -1099,11 +1099,11 @@ void Micropolis::DoRoad()
 
   if (RoadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
     // RoadEffect < 15/16 of max road, enable deteriorating road
-    if (!(Rand16() & 511)) {
+    if ((Rand16() & 511) == 0) {
       if (!(CChr & CONDBIT)) {
         assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(Rand16() & 31)' makes no sense
         if (RoadEffect < (Rand16() & 31)) {
-          if (((CChr9 & 15) < 2) || ((CChr9 & 15) == 15)) {
+          if ((CChr9 & 15) < 2 || (CChr9 & 15) == 15) {
             Map[SMapX][SMapY] = RIVER;
           } else {
             Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
@@ -1114,8 +1114,8 @@ void Micropolis::DoRoad()
     }
   }
 
-  if (!(CChr & BURNBIT)) { /* If Bridge */
-    RoadTotal += 4;
+  if ((CChr & BURNBIT) == 0) { /* If Bridge */
+    RoadTotal += 4; // Bridge counts as 4 road tiles
     if (DoBridge()) {
       return;
     }
@@ -1140,7 +1140,7 @@ void Micropolis::DoRoad()
     z = ((CChr9 - ROADBASE) & 15) + DenTab[Density];
     z += CChr & (ALLBITS - ANIMBIT);
 
-    if (Density) {
+    if (Density > 0) {
       z += ANIMBIT;
     }
 
