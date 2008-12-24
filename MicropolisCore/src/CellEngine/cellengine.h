@@ -66,6 +66,8 @@
 // Includes
 
 
+#include <Python.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -96,8 +98,6 @@
 #include <string>
 #include <vector>
 #include <map>
-
-#include <Python.h>
 
 #include "linuxcompat.h"
 
@@ -428,7 +428,7 @@ public:
 
 #ifdef MACOS
 
-#define SWAPLONG(x) 0
+#define SWAPLONG(x) x
 
 #define BYTE0(x) ((x>>24)&0xff)
 #define BYTE1(x) ((x>>16)&0xff)
@@ -442,11 +442,11 @@ public:
 
 #else
 
-#define SWAPLONG(x) \
-    ((x = ((x <<24) & 0xff000000) | \
-          ((x <<8)  & 0x00ff0000) | \
-          ((x >>8)  & 0x0000ff00) | \
-          ((x >>24) & 0x000000ff)), 0)
+#define SWAPLONG(x) ( \
+    ((x <<24) & 0xff000000) | \
+    ((x <<8)  & 0x00ff0000) | \
+    ((x >>8)  & 0x0000ff00) | \
+    ((x >>24) & 0x000000ff))
 
 #define BYTE3(x) ((x>>24)&0xff)
 #define BYTE2(x) ((x>>16)&0xff)

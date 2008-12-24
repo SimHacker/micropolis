@@ -851,16 +851,16 @@ void CellEngine::LoadRuleData(
         // XXX: Make this byte order independent!!!
 
         magic = *(long *)stream;
-        SWAPLONG(magic);
+        magic = SWAPLONG(magic);
         if (magic != (QUAD)0xCAC0CAC0) return;
         stream += sizeof(long);
 
         neighborhood = *(long *)stream;
-        SWAPLONG(neighborhood);
+        neighborhood = SWAPLONG(neighborhood);
         stream += sizeof(long);
 
         ruleSize = *(long *)stream;
-        SWAPLONG(ruleSize);
+        ruleSize = SWAPLONG(ruleSize);
         stream += sizeof(long);
     }
 
@@ -892,16 +892,16 @@ void CellEngine::LoadStaticRuleData(
         // XXX: Make this byte order independent!!!
 
         magic = *(long *)stream;
-        SWAPLONG(magic);
+        magic = SWAPLONG(magic);
         if (magic != (LONG)0xCAC0CAC0) return;
         stream += sizeof(long);
 
         neighborhood = *(long *)stream;
-        SWAPLONG(neighborhood);
+        neighborhood = SWAPLONG(neighborhood);
         stream += sizeof(long);
 
         ruleSize = *(long *)stream;
-        SWAPLONG(ruleSize);
+        ruleSize = SWAPLONG(ruleSize);
         stream += sizeof(long);
     }
 

@@ -283,7 +283,7 @@ short Micropolis::AverageTrf()
     }
   }
 
-  trafficAverage = (TrfTotal / count) * 2.4;
+  trafficAverage = (short)((TrfTotal / count) * 2.4);
 
   return trafficAverage;
 }
@@ -306,7 +306,7 @@ short Micropolis::GetUnemployment()
     return 0;
   }
 
-  b = (r - 1) * 255;
+  b = (short)((r - 1) * 255);
   if (b > 255) {
     b = 255;
   }
