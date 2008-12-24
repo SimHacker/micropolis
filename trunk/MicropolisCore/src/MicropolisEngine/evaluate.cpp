@@ -212,13 +212,14 @@ void Micropolis::DoProblems()
       }
     }
 
-    if (maxVotes > 0) {
+    // bestProblem == CVP_NUMPROBLEMS means no problem found
+    problemOrder[z] = bestProblem;
+    if (bestProblem < CVP_NUMPROBLEMS) {
       problemTaken[bestProblem] = true;
-      problemOrder[z] = bestProblem;
-    } else {
-      problemOrder[z] = CVP_NUMPROBLEMS;
-      problemTable[CVP_NUMPROBLEMS] = 0; // FIXME: Why are we doing this?
     }
+    // else: No problem found.
+    //       Repeating the procedure will give the same result.
+    //       Optimize by filling all remaining entries, and breaking out
   }
 }
 
@@ -460,7 +461,7 @@ void Micropolis::doScoreCard()
   //     Yes: ${FormatPercent(cityYes)}
   //     No: ${FormatPercent(100 - cityYes)}
   //   What are the worst problems?
-  //     for i in range(0, 4), while problemOrder[i]:
+  //     for i in range(0, 4), while problemOrder[i] < CVP_NUMPROBLEMS:
   //     ${probStr[problemOrder[i]]}: ${FormatPercent(problemVotes[problemOrder[i]])}
   // Statistics
   //   Population: ${FormatNumber?(pop)}
