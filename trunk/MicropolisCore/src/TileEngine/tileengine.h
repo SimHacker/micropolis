@@ -69,6 +69,8 @@
 // Includes
 
 
+#include <Python.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -100,7 +102,6 @@
 #include <vector>
 #include <map>
 
-#include <Python.h>
 #include <cairo.h>
 #include <pycairo.h>
 

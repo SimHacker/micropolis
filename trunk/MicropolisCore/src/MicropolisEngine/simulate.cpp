@@ -544,7 +544,7 @@ void Micropolis::SetValves()
 
   NormResPop = (float)ResPop / (float)ResPopDenom;
   LastTotalPop = TotalPop;
-  TotalPop = NormResPop + ComPop + IndPop;
+  TotalPop = (short)(NormResPop + ComPop + IndPop);
 
   if (ResPop > 0) {
     Employment = (ComHis[1] + IndHis[1]) / NormResPop;
