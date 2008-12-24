@@ -1935,14 +1935,17 @@ void CellEngine::n_anneal()
 
 void CellEngine::n_anneal4()
 {
-    long sum = 0;
+    long sum0 = 0;
+    long sum1 = 0;
+    long sum2 = 0;
+    long sum3 = 0;
 
 #define ANNEAL4 ( \
-    ((((sum = (SUM9REG(1) >> 0)) > 5) || (sum == 4)) ? 1 : 0) | \
-    ((((sum = (SUM9REG(2) >> 1)) > 5) || (sum == 4)) ? 2 : 0) | \
-    ((((sum = (SUM9REG(4) >> 2)) > 5) || (sum == 4)) ? 4 : 0) | \
-    ((((sum = (SUM9REG(8) >> 3)) > 5) || (sum == 4)) ? 8 : 0) | \
-    ((c&0x0f) << 4))
+    ((((sum0 = (SUM9REG(1) >> 0)) > 5) || (sum0 == 4)) ? 1 : 0) | \
+    ((((sum1 = (SUM9REG(2) >> 1)) > 5) || (sum1 == 4)) ? 2 : 0) | \
+    ((((sum2 = (SUM9REG(4) >> 2)) > 5) || (sum2 == 4)) ? 4 : 0) | \
+    ((((sum3 = (SUM9REG(8) >> 3)) > 5) || (sum3 == 4)) ? 8 : 0) | \
+    ((c & 0x0f) << 4))
 
     CAM_MASKED_REG_LOOP(ANNEAL4)
 }
@@ -1950,17 +1953,24 @@ void CellEngine::n_anneal4()
 
 void CellEngine::n_anneal8()
 {
-    long sum = 0;
+    long sum0 = 0;
+    long sum1 = 0;
+    long sum2 = 0;
+    long sum3 = 0;
+    long sum4 = 0;
+    long sum5 = 0;
+    long sum6 = 0;
+    long sum7 = 0;
 
 #define ANNEAL8 ( \
-    ((((sum = (SUM9REG(1) >> 0)) > 5) || (sum == 4)) ? 1 : 0) | \
-    ((((sum = (SUM9REG(2) >> 1)) > 5) || (sum == 4)) ? 2 : 0) | \
-    ((((sum = (SUM9REG(4) >> 2)) > 5) || (sum == 4)) ? 4 : 0) | \
-    ((((sum = (SUM9REG(8) >> 3)) > 5) || (sum == 4)) ? 8 : 0) | \
-    ((((sum = (SUM9REG(16) >> 4)) > 5) || (sum == 4)) ? 16 : 0) | \
-    ((((sum = (SUM9REG(32) >> 5)) > 5) || (sum == 4)) ? 32 : 0) | \
-    ((((sum = (SUM9REG(64) >> 6)) > 5) || (sum == 4)) ? 64 : 0) | \
-    ((((sum = (SUM9REG(128) >> 7)) > 5) || (sum == 4)) ? 128 : 0))
+    ((((sum0 = (SUM9REG(1) >> 0)) > 5) || (sum0 == 4)) ? 1 : 0) | \
+    ((((sum1 = (SUM9REG(2) >> 1)) > 5) || (sum1 == 4)) ? 2 : 0) | \
+    ((((sum2 = (SUM9REG(4) >> 2)) > 5) || (sum2 == 4)) ? 4 : 0) | \
+    ((((sum3 = (SUM9REG(8) >> 3)) > 5) || (sum3 == 4)) ? 8 : 0) | \
+    ((((sum4 = (SUM9REG(16) >> 4)) > 5) || (sum4 == 4)) ? 16 : 0) | \
+    ((((sum5 = (SUM9REG(32) >> 5)) > 5) || (sum5 == 4)) ? 32 : 0) | \
+    ((((sum6 = (SUM9REG(64) >> 6)) > 5) || (sum6 == 4)) ? 64 : 0) | \
+    ((((sum7 = (SUM9REG(128) >> 7)) > 5) || (sum7 == 4)) ? 128 : 0))
 
     CAM_MASKED_REG_LOOP(ANNEAL8)
 }
@@ -1993,13 +2003,13 @@ void CellEngine::n_eco()
 
 void CellEngine::n_torben()
 {
-    long sum;
+    long sum1;
 
     // 0 0 0 1 0 1 0 1 1 1
 
 #define TORBEN ( \
-    ((((sum = SUM9REG(1)) > 6) || (sum == 5) || (sum == 3)) ? 1 : 0) | \
-    ((c&0x7f) << 1))
+    ((((sum1 = SUM9REG(1)) > 6) || (sum1 == 5) || (sum1 == 3)) ? 1 : 0) | \
+    ((c & 0x7f) << 1))
 
     CAM_MASKED_REG_LOOP(TORBEN)
 }
@@ -2007,14 +2017,14 @@ void CellEngine::n_torben()
 
 void CellEngine::n_torben2()
 {
-    long sum;
+    long sum2;
 
     // 0 0 0 1 0 1 0 1 1 1
     // 0 0 1 0 1 0 1 0 1 1
 
 #define TORBEN2 ( \
-    ((((sum = SUM9REG(1)) > 6) || (sum == 3) || (sum == 4)) ? 1 : 0) | \
-    ((c&0x7f) << 1))
+    ((((sum2 = SUM9REG(1)) > 6) || (sum2 == 3) || (sum2 == 4)) ? 1 : 0) | \
+    ((c & 0x7f) << 1))
 
     CAM_MASKED_REG_LOOP(TORBEN2)
 }
@@ -2022,7 +2032,8 @@ void CellEngine::n_torben2()
 
 void CellEngine::n_torben3()
 {
-    long sum;
+    long sum1;
+    long sum2;
 
     // 0 0 0 1 1 0 0 1 1 1
 
@@ -5150,7 +5161,14 @@ void CellEngine::n_vanneal()
 
 void CellEngine::n_vanneal8()
 {
-    long sum;
+    long sum0;
+    long sum1;
+    long sum2;
+    long sum3;
+    long sum4;
+    long sum5;
+    long sum6;
+    long sum7;
 
     if (total < hubba) {
         inflation = 1;
@@ -5163,14 +5181,14 @@ void CellEngine::n_vanneal8()
     total = 0;
 
 #define VANNEAL8 ( \
-    ((((sum = inflation + SUM9REG(1)) > 5) || (sum == 4)) ? (total++, 1) : 0) | \
-    ((((sum = inflation + (SUM9REG(2) >> 1)) > 5) || (sum == 4)) ? (total++, 2) : 0) | \
-    ((((sum = inflation + (SUM9REG(4) >> 2)) > 5) || (sum == 4)) ? (total++, 4) : 0) | \
-    ((((sum = inflation + (SUM9REG(8) >> 3)) > 5) || (sum == 4)) ? (total++, 8) : 0) | \
-    ((((sum = inflation + (SUM9REG(16) >> 4)) > 5) || (sum == 4)) ? (total++, 16) : 0) | \
-    ((((sum = inflation + (SUM9REG(32) >> 5)) > 5) || (sum == 4)) ? (total++, 32) : 0) | \
-    ((((sum = inflation + (SUM9REG(64) >> 6)) > 5) || (sum == 4)) ? (total++, 64) : 0) | \
-    ((((sum = inflation + (SUM9REG(128) >> 7)) > 5) || (sum == 4)) ? (total++, 128) : 0))
+    ((((sum0 = inflation + SUM9REG(1)) > 5) || (sum0 == 4)) ? (total++, 1) : 0) | \
+    ((((sum1 = inflation + (SUM9REG(2) >> 1)) > 5) || (sum1 == 4)) ? (total++, 2) : 0) | \
+    ((((sum2 = inflation + (SUM9REG(4) >> 2)) > 5) || (sum2 == 4)) ? (total++, 4) : 0) | \
+    ((((sum3 = inflation + (SUM9REG(8) >> 3)) > 5) || (sum3 == 4)) ? (total++, 8) : 0) | \
+    ((((sum4 = inflation + (SUM9REG(16) >> 4)) > 5) || (sum4 == 4)) ? (total++, 16) : 0) | \
+    ((((sum5 = inflation + (SUM9REG(32) >> 5)) > 5) || (sum5 == 4)) ? (total++, 32) : 0) | \
+    ((((sum6 = inflation + (SUM9REG(64) >> 6)) > 5) || (sum6 == 4)) ? (total++, 64) : 0) | \
+    ((((sum7 = inflation + (SUM9REG(128) >> 7)) > 5) || (sum7 == 4)) ? (total++, 128) : 0))
 
     CAM_MASKED_REG_LOOP(VANNEAL8)
 }
