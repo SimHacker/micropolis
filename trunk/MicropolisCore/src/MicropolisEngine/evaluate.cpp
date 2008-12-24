@@ -321,14 +321,7 @@ short Micropolis::GetUnemployment()
  */
 short Micropolis::GetFire()
 {
-  short z;
-
-  z = FirePop * 5;
-  if (z > 255) {
-    return 255;
-  } else {
-    return z;
-  }
+  return min(FirePop * 5, 255);
 }
 
 
@@ -352,20 +345,9 @@ void Micropolis::GetScore()
    * @todo Should this expression depend on CVP_NUMPROBLEMS?
    */
   x = x / 3;                    /* 7 + 2 average */
+  x = min(x, 256);
 
-  if (x > 256) {
-    x = 256;
-  }
-
-  z = (256 - x) * 4;
-
-  if (z > 1000) {
-    z = 1000;
-  }
-
-  if (z < 0) {
-    z = 0;
-  }
+  z = clamp((256 - x) * 4, 0, 1000);
 
   if (ResCap) {
     z = (int)(z * .85);
@@ -430,19 +412,11 @@ void Micropolis::GetScore()
   }
 
   z = (int)(z * SM);
-
-  if (z > 1000) {
-    z = 1000;
-  }
-
-  if (z < 0) {
-    z = 0;
-  }
+  z = clamp(z, 0, 1000);
 
   cityScore = (cityScore + z) / 2;
 
   deltaCityScore = cityScore - oldCityScore;
-
 }
 
 

@@ -492,8 +492,8 @@ void Micropolis::SetCommonInits()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::SetValves()
 {
-  // FIXME: Break the tax table out into configurable parameters. 
-  static short TaxTable[21] = {
+  // FIXME: Break the tax table out into configurable parameters.
+  static const short TaxTable[21] = {
     200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
     -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
   };
@@ -520,7 +520,7 @@ void Micropolis::SetValves()
   short MaxIValve = 1500;
   short MinIValve = -1500;
 
-  // FIXME: Break the interestng values out into public member 
+  // FIXME: Break the interestng values out into public member
   // variables so the user interface can display them.
   float Employment, Migration, Births, LaborBase, IntMarket;
   float Rratio, Cratio, Iratio;
@@ -556,32 +556,22 @@ void Micropolis::SetValves()
   Births = NormResPop * BirthRate;
   PjResPop = NormResPop + Migration + Births;   /* Projected Res.Pop  */
 
+  // Compute LaborBase
   float temp = ComHis[1] + IndHis[1];
-
   if (temp > 0.0) {
     LaborBase = (ResHis[1] / temp);
   } else {
     LaborBase = 1;
   }
-
-  if (LaborBase > MaxLaborBase) {
-    LaborBase = MaxLaborBase;
-  }
-
-  if (LaborBase < 0) {
-    LaborBase = 0;  /* LB > 1 - .1  */
-  }
+  LaborBase = clamp(LaborBase, 0.0f, MaxLaborBase);
 
   IntMarket = (float)(NormResPop + ComPop + IndPop) / IntMarketDenom;
 
-  PjComPop = IntMarket * LaborBase;                     
+  PjComPop = IntMarket * LaborBase;
 
   assert(GameLevel >= 0 && GameLevel < 3); // easy, medium, hard
   PjIndPop = IndPop * LaborBase * extMarkerParamTable[GameLevel];
-
-  if (PjIndPop < MinPjIndPop) {
-    PjIndPop = MinPjIndPop;
-  }
+  PjIndPop = max(PjIndPop, MinPjIndPop);
 
   if (NormResPop > 0) {
     Rratio = (float)PjResPop / (float)NormResPop; /* projected -vs- actual */
@@ -600,30 +590,17 @@ void Micropolis::SetValves()
     Iratio = (float)PjIndPop;
   }
 
-  if (Rratio > MaxRratio) {
-    Rratio = MaxRratio;
-  }
+  Rratio = min(Rratio, MaxRratio);
+  Cratio = min(Cratio, MaxCratio);
+  Rratio = min(Iratio, MaxIratio);
 
-  if (Cratio > MaxCratio) {
-    Cratio = MaxCratio;
-  }
-
-  if (Iratio > MaxIratio) {
-    Iratio = MaxIratio;
-  }
-
-  short z = CityTax + GameLevel;
-
-  if (z > MaxTax) {
-    z = MaxTax;
-  }
-
+  short z = min((short)(CityTax + GameLevel), MaxTax);
   Rratio = ((Rratio - 1) * TaxTableScale) + TaxTable[z]; /* global tax/Glevel effects */
   Cratio = ((Cratio - 1) * TaxTableScale) + TaxTable[z];
   Iratio = ((Iratio - 1) * TaxTableScale) + TaxTable[z];
 
+  /* ratios are velocity changes to valves  */
   if (Rratio > 0) {
-    /* ratios are velocity changes to valves  */
     if (RValve < MaxRValve) {
       RValve += (short)Rratio;
     }
@@ -631,7 +608,7 @@ void Micropolis::SetValves()
 
   if (Rratio < 0) {
     if (RValve > MinRValve) {
-      RValve += (short)Rratio;
+      RValve += (short)Rratio; // XXX Why bother about minimal valve value when adding?
     }
   }
 
@@ -643,7 +620,7 @@ void Micropolis::SetValves()
 
   if (Cratio < 0) {
     if (CValve > MinCValve) {
-      CValve += (short)Cratio;
+      CValve += (short)Cratio; // XXX Why bother about minimal valve value when adding?
     }
   }
 
@@ -655,33 +632,13 @@ void Micropolis::SetValves()
 
   if (Iratio < 0) {
     if (IValve > MinIValve) {
-      IValve += (short)Iratio;
+      IValve += (short)Iratio; // XXX Why bother about minimal valve value when adding?
     }
   }
 
-  if (RValve > MaxRValve) {
-    RValve =  2000;
-  }
-
-  if (RValve < MinRValve) {
-    RValve = -2000;
-  }
-
-  if (CValve > MaxCValve) {
-    CValve =  MaxCValve;
-  }
-
-  if (CValve < MinCValve) {
-    CValve = MinCValve;
-  }
-
-  if (IValve > MaxIValve) {
-    IValve = MaxIValve;
-  }
-
-  if (IValve < MinIValve) {
-    IValve = MinIValve;
-  }
+  RValve = clamp(RValve, MinRValve, MaxRValve);
+  CValve = clamp(CValve, MinCValve, MaxCValve);
+  IValve = clamp(IValve, MinIValve, MaxIValve);
 
   if ((ResCap) && (RValve > 0)) {
     RValve = 0; /* Stad, Prt, Airprt  */
@@ -904,7 +861,7 @@ void Micropolis::Take2Census()
  *      non-robust at least
  */
 void Micropolis::CollectTax()
-{       
+{
   short z;
 
   /*
@@ -916,7 +873,7 @@ void Micropolis::CollectTax()
   CashFlow = 0;
 
   /*
-   * @todo Apparently TaxFlag is never set to true in MicropolisEngine 
+   * @todo Apparently TaxFlag is never set to true in MicropolisEngine
    *       or the TCL code, so this always runs.
    * @todo Check old Mac code to see if it's ever set, and why.
    */
@@ -926,7 +883,7 @@ void Micropolis::CollectTax()
     // XXX: do something with z
     z = AvCityTax / 48;  // post release
 
-    AvCityTax = 0;                      
+    AvCityTax = 0;
 
     PoliceFund = PolicePop * 100;
     FireFund = FireStPop * 100;
@@ -962,21 +919,21 @@ void Micropolis::UpdateFundEffects()
     // Multiply with funding fraction
     RoadEffect = (short)((float)RoadEffect * (float)RoadSpend / (float)RoadFund);
   }
-  
+
   // Compute police station effects of funding
   PoliceEffect = MAX_POLICESTATION_EFFECT;
   if (PoliceFund > 0) {
     // Multiply with funding fraction
     PoliceEffect = (short)((float)PoliceEffect * (float)PoliceSpend / (float)PoliceFund);
   }
-  
+
   // Compute fire station effects of funding
   FireEffect = MAX_FIRESTATION_EFFECT;
   if (FireFund > 0) {
     // Multiply with funding fraction
     FireEffect = (short)((float)FireEffect * (float)FireSpend / (float)FireFund);
   }
-  
+
   drawCurrPercents();
 }
 
