@@ -337,6 +337,7 @@ class WebMicropolis(micropolisengine.Micropolis):
 
         # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
+        print "self._invokeCallback", self._invokeCallback
         self.callbackData = micropolisengine.GetPythonCallbackData(self._invokeCallback)
         #print "CALLBACKDATA" #, self.callbackData # SWIG crashes when it prints this
 
@@ -729,41 +730,46 @@ class WebMicropolis(micropolisengine.Micropolis):
         print "handle_UIUpdate(self, aspect)", (self, aspect)
 
         if aspect == "funds":
+
             self.sendSessions({
                 'message': "UIUpdateFunds",
                 'funds': self.TotalFunds,
             })
+
         elif aspect == "date":
+
             self.sendSessions({
                 'message': "UIUpdateDate",
                 'cityTime': self.CityTime,
             })
+
         elif aspect == "graph":
+
             self.sendSessions({
                 'message': "UIUpdateGraph",
                 # TODO
             })
+
         elif aspect == "evaluation":
+
+            problems = []
+            for i in range(0, self.countProblems()):
+                problems.append((
+                    self.getProblemNumber(i),
+                    self.getProblemVotes(i)))
+
             self.sendSessions({
                 'message': "UIUpdateEvaluation",
-                'evalChanged': self.evalChanged,
-                'evalScore': self.evalScore,
-                'evalPs0': self.evalPs0,
-                'evalPs1': self.evalPs1,
-                'evalPs2': self.evalPs2,
-                'evalPs3': self.evalPs3,
-                'evalPv0': self.evalPv0,
-                'evalPv1': self.evalPv1,
-                'evalPv2': self.evalPv2,
-                'evalPv3': self.evalPv3,
-                'evalPop': self.evalPop,
-                'evalDelta': self.evalDelta,
-                'evalAssessedDollars': self.evalAssessedDollars,
-                'evalCityClass': self.evalCityClass,
-                'evalCityLevel': self.evalCityLevel,
-                'evalGoodYes': self.evalGoodYes,
-                'evalGoodNo': self.evalGoodNo,
-                'evalTitle': self.evalTitle,
+                'currentYear': self.CurrentYear(),
+                'cityYes': self.cityYes,
+                'cityScore': self.cityScore,
+                'deltaCityScore': self.deltaCityScore,
+                'cityPop': self.cityPop,
+                'deltaCityPop': self.deltaCityPop,
+                'cityAssValue': self.cityAssValue,
+                'cityClass': self.cityClass,
+                'gameLevel': self.GameLevel,
+                'problems': problems,
             })
 
 

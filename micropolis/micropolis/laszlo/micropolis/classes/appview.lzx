@@ -279,14 +279,14 @@
             }
             var t = lz.Timer.addTimer(this.tickDelegate, this.tickDelay);
             this.tickActive = true;
-            //Debug.write("tickStart", this, this.tickDelegate, this.tickDelay, t);
+            Debug.write("tickStart", this, this.tickDelegate, this.tickDelay, t, lz.Timer, lz.Timer.timerList);
           ]]>
         </method>
 
 
         <method name="tickContinue" args="soon"><![CDATA[
             // This is a bit confused, and violates DRY. Refactor tickStart and tickContinue.
-            //Debug.write("tickContinue", soon);
+            Debug.write("tickContinue", soon);
             if (!this.tickDelegate) {
                 this.tickDelegate = new lz.Delegate(this, 'tick');
             }
@@ -298,6 +298,7 @@
 
 
         <method name="tickStop"><![CDATA[
+Debug.write("TICKSTOP", this);
             if (!this.tickActive) {
                 return;
             }
@@ -307,6 +308,7 @@
 
 
         <method name="tick"><![CDATA[
+Debug.write("TICK", this);
             var i, n;
             var body = "";
             body += "<tick>";
