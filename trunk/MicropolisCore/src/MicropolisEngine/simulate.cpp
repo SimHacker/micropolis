@@ -349,36 +349,33 @@ void Micropolis::DecROGMem()
 /* comefrom: DoSimInit */
 void Micropolis::InitSimMemory()
 {
-  register short x, z;
-
-  z = 0;
   SetCommonInits();
 
-  for (x = 0; x < 240; x++)  {
-    ResHis[x] = z;
-    ComHis[x] = z;
-    IndHis[x] = z;
+  for (short x = 0; x < 240; x++)  {
+    ResHis[x] = 0;
+    ComHis[x] = 0;
+    IndHis[x] = 0;
     MoneyHis[x] = 128;
-    CrimeHis[x] = z;
-    PollutionHis[x] = z;
+    CrimeHis[x] = 0;
+    PollutionHis[x] = 0;
   }
 
-  CrimeRamp = z;
-  PolluteRamp = z;
-  TotalPop = z;
-  RValve = z;
-  CValve = z;
-  IValve = z;
-  ResCap = z;
-  ComCap = z;
-  IndCap = z;
+  CrimeRamp = 0;
+  PolluteRamp = 0;
+  TotalPop = 0;
+  RValve = 0;
+  CValve = 0;
+  IValve = 0;
+  ResCap = 0;
+  ComCap = 0;
+  IndCap = 0;
 
   EMarket = 6.0;
   DisasterEvent = SC_NONE;
   ScoreType = SC_NONE;
 
   /* This clears powermem */
-  PowerStackNum = z;
+  PowerStackNum = 0;
   DoPowerScan();
   NewPower = 1; /* post rel */
 
@@ -397,9 +394,7 @@ void Micropolis::SimLoadInit()
   static const short ScoreWaitTab[9] =
     { 0, 30 * 48, 5 * 48, 5 * 48, 10 * 48,
       5 * 48, 10 * 48, 5 * 48, 10 * 48 };
-  register int z;
 
-  z = 0;
   EMarket = (float)MiscHis[1];
   ResPop = MiscHis[2];
   ComPop = MiscHis[3];
@@ -448,7 +443,7 @@ void Micropolis::SimLoadInit()
   AvCityTax =
     (short)((CityTime % 48) * 7);  /* post */
 
-  for (z = 0; z < PWRMAPSIZE; z++) {
+  for (int z = 0; z < PWRMAPSIZE; z++) {
     PowerMap[z] = ~0; /* set power Map */
   }
 
@@ -754,35 +749,32 @@ void Micropolis::SetValves()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::ClearCensus()
 {
-  register short x, y, z;
+  PwrdZCnt = 0;
+  unPwrdZCnt = 0;
+  FirePop = 0;
+  RoadTotal = 0;
+  RailTotal = 0;
+  ResPop = 0;
+  ComPop = 0;
+  IndPop = 0;
+  ResZPop = 0;
+  ComZPop = 0;
+  IndZPop = 0;
+  HospPop = 0;
+  ChurchPop = 0;
+  PolicePop = 0;
+  FireStPop = 0;
+  StadiumPop = 0;
+  CoalPop = 0;
+  NuclearPop = 0;
+  PortPop = 0;
+  APortPop = 0;
+  PowerStackNum = 0;            /* Reset before Mapscan */
 
-  z = 0;
-  PwrdZCnt = z;
-  unPwrdZCnt = z;
-  FirePop = z;
-  RoadTotal = z;
-  RailTotal = z;
-  ResPop = z;
-  ComPop = z;
-  IndPop = z;
-  ResZPop = z;
-  ComZPop = z;
-  IndZPop = z;
-  HospPop = z;
-  ChurchPop = z;
-  PolicePop = z;
-  FireStPop = z;
-  StadiumPop = z;
-  CoalPop = z;
-  NuclearPop = z;
-  PortPop = z;
-  APortPop = z;
-  PowerStackNum = z;            /* Reset before Mapscan */
-
-  for (x = 0; x < SmX; x++) {
-    for (y = 0; y < SmY; y++) {
-      FireStMap[x][y] = z;
-      PoliceMap[x][y] = z;
+  for (short x = 0; x < SmX; x++) {
+    for (short y = 0; y < SmY; y++) {
+      FireStMap[x][y] = 0;
+      PoliceMap[x][y] = 0;
     }
   }
 
