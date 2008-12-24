@@ -350,7 +350,7 @@ class Root(controllers.RootController):
         session = self.getSession(sessionID)
 
         # FIXME: should get this from the post reqest body, but that doesn't work.
-        print "BODY", body
+        #print "BODY", body
         tick = StringToElement(body)
         try:
             tick = StringToElement(body)
@@ -410,18 +410,19 @@ class Root(controllers.RootController):
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         ctx = cairo.Context(surface)
 
-        tengine = self.tengine
+        game = self.game
+        tengine = game.tengine
 
         alpha = 1.0
 
         tengine.renderTiles(
             ctx,
-            self.tilesSurface,
-            self.tilesWidth,
-            self.tilesHeight,
+            game.tilesSurface,
+            game.tilesWidth,
+            game.tilesHeight,
             None,
-            self.tileMap,
-            self.tileSize,
+            game.tileMap,
+            game.tileSize,
             col,
             row,
             cols,
