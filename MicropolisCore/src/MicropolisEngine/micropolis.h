@@ -704,6 +704,48 @@ static inline bool TestBounds(int wx, int wy)
     return (wx >= 0 && wx < WORLD_X && wy >= 0 && wy < WORLD_Y);
 }
 
+/**
+ * Compute minimal value.
+ * @param a First value.
+ * @parem b Second value.
+ * @return Minimum of \a a and \a b.
+ */
+template <typename T>
+static inline T min(const T a, const T b)
+{
+    return (a < b) ? a : b;
+}
+
+/**
+ * Compute maximal value.
+ * @param a First value.
+ * @parem b Second value.
+ * @return Maximum of \a a and \a b.
+ */
+template <typename T>
+static inline T max(const T a, const T b)
+{
+    return (a > b) ? a : b;
+}
+
+/**
+ * Clamp value between lower and upper bound.
+ * @param val   Value.
+ * @parem lower Lower bound (inclusive).
+ * @parem upper Upper bound (inclusive).
+ * @return \a val, limited to the range given by the lower and upper bound.
+ */
+template <typename T>
+static inline T clamp(const T val, const T lower, const T upper)
+{
+    if (val < lower) {
+        return lower;
+    }
+    if (val > upper) {
+        return upper;
+    }
+    return val;
+}
 
 ////////////////////////////////////////////////////////////////////////
 // Macros
