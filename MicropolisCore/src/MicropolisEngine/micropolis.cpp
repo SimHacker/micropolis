@@ -211,14 +211,6 @@ void Micropolis::init()
   // short *Map[WORLD_X];
   memset(Map, 0, sizeof(short *) * WORLD_X);
 
-  int i;
-  for (i = 0; i < HISTORIES; i++) {
-
-    free(History10[i]);
-    free(History120[i]);
-
-  }
-
   // short ResHisMax;
   ResHisMax = 0;
 
@@ -509,7 +501,7 @@ void Micropolis::init()
   // short NewGraph;
   NewGraph = 0;
 
-  for (i = 0; i < HISTORIES; i++) {
+  for (int i = 0; i < HISTORIES; i++) {
 
     History10[i] = 
       (unsigned char *)NewPtr(120);

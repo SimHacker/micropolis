@@ -884,9 +884,6 @@ class Micropolis(_object):
     __swig_setmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_set
     __swig_getmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_get
     if _newclass:cityYes = _swig_property(_micropolisengine.Micropolis_cityYes_get, _micropolisengine.Micropolis_cityYes_set)
-    __swig_setmethods__["cityNo"] = _micropolisengine.Micropolis_cityNo_set
-    __swig_getmethods__["cityNo"] = _micropolisengine.Micropolis_cityNo_get
-    if _newclass:cityNo = _swig_property(_micropolisengine.Micropolis_cityNo_get, _micropolisengine.Micropolis_cityNo_set)
     __swig_setmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_set
     __swig_getmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_get
     if _newclass:problemTable = _swig_property(_micropolisengine.Micropolis_problemTable_get, _micropolisengine.Micropolis_problemTable_set)
@@ -1439,9 +1436,9 @@ class Micropolis(_object):
     __swig_setmethods__["MesNum"] = _micropolisengine.Micropolis_MesNum_set
     __swig_getmethods__["MesNum"] = _micropolisengine.Micropolis_MesNum_get
     if _newclass:MesNum = _swig_property(_micropolisengine.Micropolis_MesNum_get, _micropolisengine.Micropolis_MesNum_set)
-    __swig_setmethods__["EvalChanged"] = _micropolisengine.Micropolis_EvalChanged_set
-    __swig_getmethods__["EvalChanged"] = _micropolisengine.Micropolis_EvalChanged_get
-    if _newclass:EvalChanged = _swig_property(_micropolisengine.Micropolis_EvalChanged_get, _micropolisengine.Micropolis_EvalChanged_set)
+    __swig_setmethods__["evalChanged"] = _micropolisengine.Micropolis_evalChanged_set
+    __swig_getmethods__["evalChanged"] = _micropolisengine.Micropolis_evalChanged_get
+    if _newclass:evalChanged = _swig_property(_micropolisengine.Micropolis_evalChanged_get, _micropolisengine.Micropolis_evalChanged_set)
     __swig_setmethods__["flagBlink"] = _micropolisengine.Micropolis_flagBlink_set
     __swig_getmethods__["flagBlink"] = _micropolisengine.Micropolis_flagBlink_get
     if _newclass:flagBlink = _swig_property(_micropolisengine.Micropolis_flagBlink_get, _micropolisengine.Micropolis_flagBlink_set)
