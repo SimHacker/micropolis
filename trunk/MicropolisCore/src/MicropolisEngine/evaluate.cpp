@@ -271,8 +271,7 @@ short Micropolis::AverageTrf()
     }
   }
 
-  trafficAverage =
-    (short)((TrfTotal / count) * 2.4);
+  trafficAverage = (TrfTotal / count) * 2.4;
 
   return trafficAverage;
 }
@@ -284,17 +283,15 @@ short Micropolis::GetUnemployment()
   float r;
   short b;
 
-  b =
-    (ComPop + IndPop) << 3;
+  b = (ComPop + IndPop) * 8;
 
   if (b) {
     r = ((float)ResPop) / b;
   } else {
-    return (0);
+    return 0;
   }
 
-  b =
-    (short)((r - 1) * 255);
+  b = (r - 1) * 255;
   if (b > 255) {
     b = 255;
   }
@@ -390,29 +387,21 @@ void Micropolis::GetScore()
 
   SM = 1.0;
 
-  if ((cityPop == 0) ||
-      (deltaCityPop == 0)) {
-    SM =
-      1.0;
+  if (cityPop == 0 || deltaCityPop == 0) {
+    SM = 1.0;
   } else if (deltaCityPop == cityPop) {
-    SM =
-      1.0;
+    SM = 1.0;
   } else if (deltaCityPop > 0) {
-    SM =
-      ((float)deltaCityPop / cityPop) +
-      (float)1.0;
+    SM = ((float)deltaCityPop / cityPop) + 1.0f;
   } else if (deltaCityPop < 0) {
-    SM =
-      (float)0.95 +
-      ((float) deltaCityPop / (cityPop - deltaCityPop));
+    SM = 0.95f + ((float)deltaCityPop / (cityPop - deltaCityPop));
   }
 
   z = (int)(z * SM);
   z = z - GetFire();            /* dec score for fires */
   z = z - CityTax;
 
-  TM =
-    (float)(unPwrdZCnt + PwrdZCnt);   /* dec score for unpowered zones */
+  TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
 
   if (TM) {
     SM = PwrdZCnt / TM;
@@ -430,11 +419,9 @@ void Micropolis::GetScore()
     z = 0;
   }
 
-  cityScore =
-    (cityScore + z) / 2;
+  cityScore = (cityScore + z) / 2;
 
-  deltaCityScore =
-    cityScore - oldCityScore;
+  deltaCityScore = cityScore - oldCityScore;
 
 }
 

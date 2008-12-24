@@ -440,8 +440,7 @@ void Micropolis::SimLoadInit()
   ComCap = 0;
   IndCap = 0;
 
-  AvCityTax =
-    (short)((CityTime % 48) * 7);  /* post */
+  AvCityTax = (CityTime % 48) * 7;  /* post */
 
   for (int z = 0; z < PWRMAPSIZE; z++) {
     PowerMap[z] = ~0; /* set power Map */
@@ -546,30 +545,21 @@ void Micropolis::SetValves()
   MiscHis[16] = (short)cityClass;
   MiscHis[17] = cityScore;
 
-  NormResPop = 
-    (float)ResPop / (float)ResPopDenom;
-  LastTotalPop = 
-    TotalPop;
-  TotalPop = 
-    (short)(NormResPop + ComPop + IndPop);
+  NormResPop = (float)ResPop / (float)ResPopDenom;
+  LastTotalPop = TotalPop;
+  TotalPop = NormResPop + ComPop + IndPop;
 
   if (ResPop) {
-    Employment = 
-      ((ComHis[1] + IndHis[1]) / NormResPop);
+    Employment = (ComHis[1] + IndHis[1]) / NormResPop;
   } else {
-    Employment = 
-      1;
+    Employment = 1;
   }
 
-  Migration = 
-    NormResPop * (Employment - 1);
-  Births = 
-    NormResPop * BirthRate;
-  PjResPop = 
-    NormResPop + Migration + Births;   /* Projected Res.Pop  */
+  Migration = NormResPop * (Employment - 1);
+  Births = NormResPop * BirthRate;
+  PjResPop = NormResPop + Migration + Births;   /* Projected Res.Pop  */
 
-  temp = 
-    (float)(ComHis[1] + IndHis[1]);
+  temp = ComHis[1] + IndHis[1];
 
   if (temp) {
     LaborBase = (ResHis[1] / temp);
@@ -585,11 +575,9 @@ void Micropolis::SetValves()
     LaborBase = 0;  /* LB > 1 - .1  */
   }
 
-  IntMarket = 
-    (float)(NormResPop + ComPop + IndPop) / IntMarketDenom;
+  IntMarket = (float)(NormResPop + ComPop + IndPop) / IntMarketDenom;
 
-  PjComPop = 
-    IntMarket * LaborBase;                     
+  PjComPop = IntMarket * LaborBase;                     
 
   z = GameLevel;                        /* New ExtMarket */
   temp = 1;
@@ -610,37 +598,27 @@ void Micropolis::SetValves()
 
   }
 
-  PjIndPop =
-    IndPop * LaborBase * temp;
+  PjIndPop = IndPop * LaborBase * temp;
 
   if (PjIndPop < MinPjIndPop) {
     PjIndPop = MinPjIndPop;
   }
 
   if (NormResPop) {
-    Rratio = 
-      (float)PjResPop / 
-      (float)NormResPop; /* projected -vs- actual */
+    Rratio = (float)PjResPop / (float)NormResPop; /* projected -vs- actual */
   } else {
-    Rratio = 
-      DefaultRratio;
+    Rratio = DefaultRratio;
   }
 
   if (ComPop) {
-    Cratio = 
-      (float)PjComPop / 
-      (float)ComPop;
+    Cratio = (float)PjComPop / (float)ComPop;
   } else {
-    Cratio = 
-      (float)PjComPop;
+    Cratio = (float)PjComPop;
   }
   if (IndPop) {
-    Iratio = 
-      (float)PjIndPop / 
-      (float)IndPop;
+    Iratio = (float)PjIndPop / (float)IndPop;
   } else {
-    Iratio = 
-      (float)PjIndPop;
+    Iratio = (float)PjIndPop;
   }
 
   if (Rratio > MaxRratio) {
@@ -655,19 +633,15 @@ void Micropolis::SetValves()
     Iratio = MaxIratio;
   }
 
-  z = 
-    CityTax + GameLevel;
+  z = CityTax + GameLevel;
 
   if (z > MaxTax) {
     z = MaxTax;
   }
 
-  Rratio = 
-    ((Rratio - 1) * TaxTableScale) + TaxTable[z]; /* global tax/Glevel effects */
-  Cratio = 
-    ((Cratio - 1) * TaxTableScale) + TaxTable[z];
-  Iratio = 
-    ((Iratio - 1) * TaxTableScale) + TaxTable[z];
+  Rratio = ((Rratio - 1) * TaxTableScale) + TaxTable[z]; /* global tax/Glevel effects */
+  Cratio = ((Cratio - 1) * TaxTableScale) + TaxTable[z];
+  Iratio = ((Iratio - 1) * TaxTableScale) + TaxTable[z];
 
   if (Rratio > 0) {
     /* ratios are velocity changes to valves  */
@@ -1177,8 +1151,7 @@ void Micropolis::DoRoad()
     tden = 2;
   }
 
-  Density = 
-    (TrfDensity[SMapX >>1][SMapY >>1]) >>6;  /* Set Traf Density */
+  Density = (TrfDensity[SMapX >>1][SMapY >>1]) >>6;  /* Set Traf Density */
 
   if (Density > 1) {
     Density--;
@@ -1404,8 +1377,7 @@ void Micropolis::DoFire()
 
           }
 
-          Map[Xtem][Ytem] =
-            FIRE + (Rand16() & 3) + ANIMBIT;
+          Map[Xtem][Ytem] = FIRE + (Rand16() & 3) + ANIMBIT;
 
         }
       }
@@ -1430,8 +1402,7 @@ void Micropolis::DoFire()
 
   if (!Rand(Rate)) {
 
-    Map[SMapX][SMapY] =
-      RUBBLE + (Rand16() & 3) + BULLBIT;
+    Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
 
   }
 }
@@ -1516,11 +1487,9 @@ void Micropolis::RepairZone(
 
         ThCh = ThCh & LOMASK;
 
-        if ((ThCh < RUBBLE) ||
-            (ThCh >= ROADBASE)) {
+        if (ThCh < RUBBLE || ThCh >= ROADBASE) {
 
-          Map[xx][yy] =
-            ZCent - 3 - zsize + cnt + CONDBIT + BURNBIT;
+          Map[xx][yy] = ZCent - 3 - zsize + cnt + CONDBIT + BURNBIT;
 
         }
       }
@@ -1653,15 +1622,13 @@ void Micropolis::DoSPZone(
 
       if ((Map[SMapX + 1][SMapY - 1] & LOMASK) == RADAR) {
 
-        Map[SMapX + 1][SMapY - 1] =
-          RADAR + ANIMBIT + CONDBIT + BURNBIT;
+        Map[SMapX + 1][SMapY - 1] = RADAR + ANIMBIT + CONDBIT + BURNBIT;
 
       }
 
     } else {
 
-      Map[SMapX + 1][SMapY - 1] =
-        RADAR + CONDBIT + BURNBIT;
+      Map[SMapX + 1][SMapY - 1] = RADAR + CONDBIT + BURNBIT;
 
     }
 
@@ -1755,8 +1722,7 @@ void Micropolis::DoMeltdown(
 
   for (x = (SX - 1); x < (SX + 3); x++) {
     for (y = (SY - 1); y < (SY + 3); y++) {
-      Map[x][y] =
-        FIRE + (Rand16() & 3) + ANIMBIT;
+      Map[x][y] = FIRE + (Rand16() & 3) + ANIMBIT;
     }
   }
 
