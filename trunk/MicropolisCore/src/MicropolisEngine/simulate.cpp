@@ -960,21 +960,21 @@ void Micropolis::UpdateFundEffects()
   RoadEffect = MAX_ROAD_EFFECT;
   if (RoadFund > 0) {
     // Multiply with funding fraction
-    RoadEffect *= (float)RoadSpend / (float)RoadFund;
+    RoadEffect = (short)((float)RoadEffect * (float)RoadSpend / (float)RoadFund);
   }
   
   // Compute police station effects of funding
   PoliceEffect = MAX_POLICESTATION_EFFECT;
   if (PoliceFund > 0) {
     // Multiply with funding fraction
-    PoliceEffect *= (float)PoliceSpend / (float)PoliceFund;
+    PoliceEffect = (short)((float)PoliceEffect * (float)PoliceSpend / (float)PoliceFund);
   }
   
   // Compute fire station effects of funding
   FireEffect = MAX_FIRESTATION_EFFECT;
   if (FireFund > 0) {
     // Multiply with funding fraction
-    FireEffect *= (float)FireSpend / (float)FireFund;
+    FireEffect = (short)((float)FireEffect * (float)FireSpend / (float)FireFund);
   }
   
   drawCurrPercents();

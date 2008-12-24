@@ -231,6 +231,11 @@ void Micropolis::destroyMapArrays()
     PowerMap = NULL;
   }
 
+  for (int i = 0; i < HISTORIES; i++) {
+    free(History10[i]);
+    free(History120[i]);
+  }
+
 }
 
 
