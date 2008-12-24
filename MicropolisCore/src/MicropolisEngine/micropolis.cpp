@@ -865,7 +865,7 @@ void Micropolis::init()
   // short MesNum;
   MesNum = 0;
 
-  EvalChanged = false;
+  evalChanged = false;
 
   // short flagBlink;
   flagBlink = 0;

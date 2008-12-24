@@ -487,15 +487,15 @@ void Micropolis::doScoreCard()
 
 void Micropolis::ChangeEval()
 {
-  EvalChanged = true;
+  evalChanged = true;
 }
 
 
 void Micropolis::scoreDoer()
 {
-  if (EvalChanged) {
+  if (evalChanged) {
     doScoreCard();
-    EvalChanged = false;
+    evalChanged = false;
   }
 }
 
