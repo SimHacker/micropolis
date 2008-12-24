@@ -1668,13 +1668,6 @@ public:
   short cityYes;
 
   /**
-   * No Votes.
-   *
-   * Percentage of people who think the mayor is doing a bad job.
-   */
-  short cityNo;
-
-  /**
    * Problem table.
    *
    * Score for each problem, higher the more severe the problem is.

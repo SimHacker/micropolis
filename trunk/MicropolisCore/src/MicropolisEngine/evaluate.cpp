@@ -112,7 +112,6 @@ void Micropolis::CityEvaluation()
 void Micropolis::EvalInit()
 {
   cityYes = 0;
-  cityNo = 0;
   cityPop = 0;
   deltaCityPop = 0;
   cityAssValue = 0;
@@ -446,13 +445,10 @@ void Micropolis::DoVotes()
   register int z;
 
   cityYes = 0;
-  cityNo = 0;
 
   for (z = 0; z < 100; z++) {
     if (Rand(1000) < cityScore) {
       cityYes++;
-    } else {
-      cityNo++;
     }
   }
 }
@@ -475,7 +471,7 @@ void Micropolis::doScoreCard()
   // Public Opinion
   //   Is the mayor doing a good job?
   //     Yes: ${FormatPercent(cityYes)}
-  //     No: ${FormatPercent(cityNo)}
+  //     No: ${FormatPercent(100 - cityYes)}
   //   What are the worst problems?
   //     for i in range(0, 4), while problemOrder[i]:
   //     ${probStr[problemOrder[i]]}: ${FormatPercent(problemVotes[problemOrder[i]])}
