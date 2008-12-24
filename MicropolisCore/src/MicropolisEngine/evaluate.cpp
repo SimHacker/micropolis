@@ -108,7 +108,9 @@ void Micropolis::CityEvaluation()
 }
 
 
-/* comefrom: CityEvaluation SetCommonInits */
+/**
+ * Initialize evaluation variables
+ */
 void Micropolis::EvalInit()
 {
   cityYes = 0;
@@ -127,7 +129,10 @@ void Micropolis::EvalInit()
 }
 
 
-/* comefrom: CityEvaluation */
+/**
+ * Assess value of the city
+ * @post #cityAssValue contains the total city value
+ */
 void Micropolis::getAssValue()
 {
   Quad z;
@@ -182,7 +187,13 @@ void Micropolis::DoPopNum()
 }
 
 
-/** Evaluate problems of the city, take votes, and decide the most important ones */
+/**
+ * Evaluate problems of the city, take votes, and decide which are the most
+ * important ones.
+ * @post #problemTable contains severity of each problem,
+ *       #problemVotes contains votes of each problem
+ *       #problemTaken contains (in decreasing order) which problem are the worst
+ */
 void Micropolis::DoProblems()
 {
   bool problemTaken[PROBNUM]; // Which problems are taken?
@@ -252,7 +263,10 @@ void Micropolis::voteProblems()
 }
 
 
-/* comefrom: DoProblems */
+/**
+ * Compute average traffic in the city.
+ * @return Value representing how large the traffic problem is.
+ */
 short Micropolis::AverageTrf()
 {
   Quad TrfTotal;
@@ -275,7 +289,10 @@ short Micropolis::AverageTrf()
 }
 
 
-/* comefrom: DoProblems */
+/**
+ * Compute severity of unemployment
+ * @return Value representing the severity of unemployment problems
+ */
 short Micropolis::GetUnemployment()
 {
   float r;
@@ -298,7 +315,10 @@ short Micropolis::GetUnemployment()
 }
 
 
-/* comefrom: DoProblems GetScore */
+/**
+ * Compute severity of fire
+ * @return Value representing the severity of fire problems
+ */
 short Micropolis::GetFire()
 {
   short z;
@@ -312,7 +332,9 @@ short Micropolis::GetFire()
 }
 
 
-/* comefrom: CityEvaluation */
+/**
+ * Compute total score
+ */
 void Micropolis::GetScore()
 {
   int x, z;
@@ -424,7 +446,10 @@ void Micropolis::GetScore()
 }
 
 
-/* comefrom: CityEvaluation */
+/**
+ * Vote whether the mayor is doing a good job
+ * @post #cityYes contains the number of 'yes' votes
+ */
 void Micropolis::DoVotes()
 {
   register int z;
@@ -439,7 +464,7 @@ void Micropolis::DoVotes()
 }
 
 
-/* comefrom: DoSubUpDate scoreDoer */
+/** Push new score to the user */
 void Micropolis::doScoreCard()
 {
   Callback(
@@ -469,7 +494,7 @@ void Micropolis::doScoreCard()
   //   Game Level: ${cityLevelStr[GameLevel]}
 }
 
-
+/** Request that new score is displayed to the user */
 void Micropolis::ChangeEval()
 {
   evalChanged = true;
