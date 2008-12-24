@@ -662,17 +662,19 @@ static const int MAX_FIRESTATION_EFFECT = 1000;
  * @todo Eliminate PROBNUM
  */
 enum CityVotingProblems {
-    CVP_CRIME,        ///< Crime
-    CVP_POLLUTION,    ///< Pollution
-    CVP_HOUSING,      ///< Housing
-    CVP_TAXES,        ///< Taxes
-    CVP_TRAFFIC,      ///< Traffic
-    CVP_UNEMPLOYMENT, ///< Unemployment
-    CVP_FIRE,         ///< Fire
+    CVP_CRIME,                    ///< Crime
+    CVP_POLLUTION,                ///< Pollution
+    CVP_HOUSING,                  ///< Housing
+    CVP_TAXES,                    ///< Taxes
+    CVP_TRAFFIC,                  ///< Traffic
+    CVP_UNEMPLOYMENT,             ///< Unemployment
+    CVP_FIRE,                     ///< Fire
 
-    CVP_NUMPROBLEMS,  ///< Number of problems
+    CVP_NUMPROBLEMS,              ///< Number of problems
 
-    CVP_NUMTAKEN,     ///< Number of problems taken
+    CVP_NUMTAKEN,                 ///< Number of problems taken
+
+    CVP_PROBLEM_COMPLAINTS = 4,   ///< Number of problems to complain about.
 
     PROBNUM = 10,
 };
@@ -1716,7 +1718,6 @@ public:
    */
   short problemTable[PROBNUM];
 
-
   /**
    * Problem votes.
    *
@@ -1724,12 +1725,12 @@ public:
    */
   short problemVotes[PROBNUM];
 
- /**
-  * Order of taken problems.
-  *
-  * Contains index of ProblemTable of taken problems, in decreasing order.
-  * @note Value CVP_NUMPROBLEMS means that the entry is not used
-  */
+  /**
+   * Order of taken problems.
+   *
+   * Contains index of ProblemTable of taken problems, in decreasing order.
+   * @note Value CVP_NUMPROBLEMS means that the entry is not used
+   */
   short problemOrder[CVP_NUMTAKEN];
 
   /**
@@ -1817,6 +1818,13 @@ public:
 
   void scoreDoer();
 
+  int countProblems();
+
+  int getProblemNumber(
+    int i);
+
+  int getProblemVotes(
+    int i);
 
   ////////////////////////////////////////////////////////////////////////
   // fileio.cpp
@@ -1991,10 +1999,6 @@ public:
 
   int GraphUpdateTime;
 
-  static char *HistName[];
-
-  static unsigned char HistColor[];
-
 
   void drawMonth(
     short *hist,
@@ -2030,8 +2034,6 @@ public:
 
 public:
 
-
-  const char *MicropolisVersion;
 
   int sim_loops;
 
@@ -2069,10 +2071,17 @@ public:
 
   int DoNotices;
 
+
+ private:
+
   short *CellSrc;
 
   short *CellDst;
 
+
+public:
+
+  const char *getMicropolisVersion();
 
   void env_init();
 
@@ -2868,14 +2877,6 @@ public:
   int tool_x;
 
   int tool_y;
-
-  static Quad CostOf[];
-
-  static short toolSize[];
-
-  static short toolOffset[];
-
-  static Quad toolColors[];
 
 
   int putDownPark(

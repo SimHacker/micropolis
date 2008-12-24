@@ -71,16 +71,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-int OverRide = 0;
-int Expensive = 1000;
-int Players = 1;
-int Votes = 0;
-int PendingTool = -1;
-int PendingX;
-int PendingY;
-
-
-Quad Micropolis::CostOf[] = {
+static short gCostOf[] = {
     100,    100,    100,    500,
       0,    500,      5,      1,
      20,     10,   5000,     10,
@@ -89,7 +80,7 @@ Quad Micropolis::CostOf[] = {
 };
 
 
-short Micropolis::toolSize[] = {
+static short gToolSize[] = {
   3, 3, 3, 3,
   1, 3, 1, 1,
   1, 1, 4, 1,
@@ -98,38 +89,8 @@ short Micropolis::toolSize[] = {
 };
 
 
-short Micropolis::toolOffset[] = {
-  1, 1, 1, 1,
-  0, 1, 0, 0,
-  0, 0, 1, 0,
-  1, 1, 1, 1,
-  0, 0,
-};
-
-
-Quad Micropolis::toolColors[] = {
- COLOR_LIGHTGREEN | (COLOR_LIGHTGREEN << 8),    /* residentialState */
- COLOR_LIGHTBLUE  | (COLOR_LIGHTBLUE << 8),     /* commercialState */
- COLOR_YELLOW     | (COLOR_YELLOW << 8),        /* industrialState */
- COLOR_LIGHTGREEN | (COLOR_RED << 8),           /* fireState */
- COLOR_ORANGE     | (COLOR_ORANGE << 8),        /* queryState */
- COLOR_LIGHTGREEN | (COLOR_LIGHTBLUE << 8),     /* policeState */
- COLOR_DARKGRAY   | (COLOR_YELLOW << 8),        /* wireState */
- COLOR_LIGHTBROWN | (COLOR_LIGHTBROWN << 8),    /* dozeState */
- COLOR_DARKGRAY   | (COLOR_OLIVE << 8),         /* rrState */
- COLOR_DARKGRAY   | (COLOR_WHITE << 8),         /* roadState */
- COLOR_LIGHTGRAY  | (COLOR_LIGHTGREEN << 8),    /* stadiumState */
- COLOR_LIGHTBROWN | (COLOR_LIGHTGREEN << 8),    /* parkState */
- COLOR_LIGHTGRAY  | (COLOR_LIGHTBLUE << 8),     /* seaportState */
- COLOR_LIGHTGRAY  | (COLOR_YELLOW << 8),        /* powerState */
- COLOR_LIGHTGRAY  | (COLOR_YELLOW << 8),        /* nuclearState */
- COLOR_LIGHTGRAY  | (COLOR_LIGHTBROWN << 8),    /* airportState */
- COLOR_LIGHTGRAY  | (COLOR_RED << 8),           /* networkState */
-};
-
-
-/*************************************************************************/
-/* UTILITIES */
+////////////////////////////////////////////////////////////////////////
+// Utilities
 
 
 int Micropolis::putDownPark(
@@ -138,7 +99,7 @@ int Micropolis::putDownPark(
 {
   short value, tile;
 
-  if (TotalFunds - CostOf[parkState] < 0) {
+  if (TotalFunds - gCostOf[parkState] < 0) {
         return -2;
   }
 
@@ -157,7 +118,7 @@ int Micropolis::putDownPark(
   Map[mapH][mapV] =
         tile;
 
-  Spend(CostOf[parkState]);
+  Spend(gCostOf[parkState]);
   UpdateFunds();
 
   return 1;
@@ -179,13 +140,13 @@ int Micropolis::putDownNetwork(
     return -1;
   }
 
-  if ((TotalFunds - CostOf[networkState]) < 0) {
+  if ((TotalFunds - gCostOf[networkState]) < 0) {
     return -2;
   }
 
   Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
-  Spend(CostOf[networkState]);
+  Spend(gCostOf[networkState]);
   UpdateFunds();
 
   return 1;
@@ -475,7 +436,7 @@ int Micropolis::check3x3(
     return -1;
   }
 
-  cost += (short)CostOf[tool];
+  cost += (short)gCostOf[tool];
 
   if ((TotalFunds - cost) < 0) {
     return -2;
@@ -644,7 +605,7 @@ short Micropolis::check4x4(
     return -1;
   }
 
-  cost += (short)CostOf[tool];
+  cost += (short)gCostOf[tool];
 
   if ((TotalFunds - cost) < 0) {
     return -2;
@@ -814,7 +775,7 @@ short Micropolis::check6x6(
     return -1;
   }
 
-  cost += (short)CostOf[tool];
+  cost += (short)gCostOf[tool];
 
   if ((TotalFunds - cost) < 0) {
     return -2;
@@ -1695,7 +1656,7 @@ void Micropolis::ToolDrag(
   tool_x = x;
   tool_y = y;
 
-  dist = toolSize[tool];
+  dist = gToolSize[tool];
 
   x >>= 4;
   y >>= 4;

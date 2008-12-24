@@ -61,6 +61,12 @@
   }
 
 
+const char *Micropolis::getMicropolisVersion()
+{
+  return MICROPOLIS_VERSION;
+}
+
+
 void Micropolis::env_init()
 {
   char dir[4096];

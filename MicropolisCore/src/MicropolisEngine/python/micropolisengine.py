@@ -370,6 +370,7 @@ CVP_UNEMPLOYMENT = _micropolisengine.CVP_UNEMPLOYMENT
 CVP_FIRE = _micropolisengine.CVP_FIRE
 CVP_NUMPROBLEMS = _micropolisengine.CVP_NUMPROBLEMS
 CVP_NUMTAKEN = _micropolisengine.CVP_NUMTAKEN
+CVP_PROBLEM_COMPLAINTS = _micropolisengine.CVP_PROBLEM_COMPLAINTS
 PROBNUM = _micropolisengine.PROBNUM
 CC_VILLAGE = _micropolisengine.CC_VILLAGE
 CC_TOWN = _micropolisengine.CC_TOWN
@@ -928,6 +929,9 @@ class Micropolis(_object):
     def doScoreCard(*args): return _micropolisengine.Micropolis_doScoreCard(*args)
     def ChangeEval(*args): return _micropolisengine.Micropolis_ChangeEval(*args)
     def scoreDoer(*args): return _micropolisengine.Micropolis_scoreDoer(*args)
+    def countProblems(*args): return _micropolisengine.Micropolis_countProblems(*args)
+    def getProblemNumber(*args): return _micropolisengine.Micropolis_getProblemNumber(*args)
+    def getProblemVotes(*args): return _micropolisengine.Micropolis_getProblemVotes(*args)
     def load_file(*args): return _micropolisengine.Micropolis_load_file(*args)
     def loadFile(*args): return _micropolisengine.Micropolis_loadFile(*args)
     def saveFile(*args): return _micropolisengine.Micropolis_saveFile(*args)
@@ -1014,12 +1018,6 @@ class Micropolis(_object):
     __swig_setmethods__["GraphUpdateTime"] = _micropolisengine.Micropolis_GraphUpdateTime_set
     __swig_getmethods__["GraphUpdateTime"] = _micropolisengine.Micropolis_GraphUpdateTime_get
     if _newclass:GraphUpdateTime = _swig_property(_micropolisengine.Micropolis_GraphUpdateTime_get, _micropolisengine.Micropolis_GraphUpdateTime_set)
-    __swig_setmethods__["HistName"] = _micropolisengine.Micropolis_HistName_set
-    __swig_getmethods__["HistName"] = _micropolisengine.Micropolis_HistName_get
-    if _newclass:HistName = _swig_property(_micropolisengine.Micropolis_HistName_get, _micropolisengine.Micropolis_HistName_set)
-    __swig_setmethods__["HistColor"] = _micropolisengine.Micropolis_HistColor_set
-    __swig_getmethods__["HistColor"] = _micropolisengine.Micropolis_HistColor_get
-    if _newclass:HistColor = _swig_property(_micropolisengine.Micropolis_HistColor_get, _micropolisengine.Micropolis_HistColor_set)
     def drawMonth(*args): return _micropolisengine.Micropolis_drawMonth(*args)
     def doAllGraphs(*args): return _micropolisengine.Micropolis_doAllGraphs(*args)
     def ChangeCensus(*args): return _micropolisengine.Micropolis_ChangeCensus(*args)
@@ -1029,9 +1027,6 @@ class Micropolis(_object):
     def InitWillStuff(*args): return _micropolisengine.Micropolis_InitWillStuff(*args)
     def ResetMapState(*args): return _micropolisengine.Micropolis_ResetMapState(*args)
     def ResetEditorState(*args): return _micropolisengine.Micropolis_ResetEditorState(*args)
-    __swig_setmethods__["MicropolisVersion"] = _micropolisengine.Micropolis_MicropolisVersion_set
-    __swig_getmethods__["MicropolisVersion"] = _micropolisengine.Micropolis_MicropolisVersion_get
-    if _newclass:MicropolisVersion = _swig_property(_micropolisengine.Micropolis_MicropolisVersion_get, _micropolisengine.Micropolis_MicropolisVersion_set)
     __swig_setmethods__["sim_loops"] = _micropolisengine.Micropolis_sim_loops_set
     __swig_getmethods__["sim_loops"] = _micropolisengine.Micropolis_sim_loops_get
     if _newclass:sim_loops = _swig_property(_micropolisengine.Micropolis_sim_loops_get, _micropolisengine.Micropolis_sim_loops_set)
@@ -1080,12 +1075,7 @@ class Micropolis(_object):
     __swig_setmethods__["DoNotices"] = _micropolisengine.Micropolis_DoNotices_set
     __swig_getmethods__["DoNotices"] = _micropolisengine.Micropolis_DoNotices_get
     if _newclass:DoNotices = _swig_property(_micropolisengine.Micropolis_DoNotices_get, _micropolisengine.Micropolis_DoNotices_set)
-    __swig_setmethods__["CellSrc"] = _micropolisengine.Micropolis_CellSrc_set
-    __swig_getmethods__["CellSrc"] = _micropolisengine.Micropolis_CellSrc_get
-    if _newclass:CellSrc = _swig_property(_micropolisengine.Micropolis_CellSrc_get, _micropolisengine.Micropolis_CellSrc_set)
-    __swig_setmethods__["CellDst"] = _micropolisengine.Micropolis_CellDst_set
-    __swig_getmethods__["CellDst"] = _micropolisengine.Micropolis_CellDst_get
-    if _newclass:CellDst = _swig_property(_micropolisengine.Micropolis_CellDst_get, _micropolisengine.Micropolis_CellDst_set)
+    def getMicropolisVersion(*args): return _micropolisengine.Micropolis_getMicropolisVersion(*args)
     def env_init(*args): return _micropolisengine.Micropolis_env_init(*args)
     def sim_init(*args): return _micropolisengine.Micropolis_sim_init(*args)
     def sim_update(*args): return _micropolisengine.Micropolis_sim_update(*args)
@@ -1503,18 +1493,6 @@ class Micropolis(_object):
     __swig_setmethods__["tool_y"] = _micropolisengine.Micropolis_tool_y_set
     __swig_getmethods__["tool_y"] = _micropolisengine.Micropolis_tool_y_get
     if _newclass:tool_y = _swig_property(_micropolisengine.Micropolis_tool_y_get, _micropolisengine.Micropolis_tool_y_set)
-    __swig_setmethods__["CostOf"] = _micropolisengine.Micropolis_CostOf_set
-    __swig_getmethods__["CostOf"] = _micropolisengine.Micropolis_CostOf_get
-    if _newclass:CostOf = _swig_property(_micropolisengine.Micropolis_CostOf_get, _micropolisengine.Micropolis_CostOf_set)
-    __swig_setmethods__["toolSize"] = _micropolisengine.Micropolis_toolSize_set
-    __swig_getmethods__["toolSize"] = _micropolisengine.Micropolis_toolSize_get
-    if _newclass:toolSize = _swig_property(_micropolisengine.Micropolis_toolSize_get, _micropolisengine.Micropolis_toolSize_set)
-    __swig_setmethods__["toolOffset"] = _micropolisengine.Micropolis_toolOffset_set
-    __swig_getmethods__["toolOffset"] = _micropolisengine.Micropolis_toolOffset_get
-    if _newclass:toolOffset = _swig_property(_micropolisengine.Micropolis_toolOffset_get, _micropolisengine.Micropolis_toolOffset_set)
-    __swig_setmethods__["toolColors"] = _micropolisengine.Micropolis_toolColors_set
-    __swig_getmethods__["toolColors"] = _micropolisengine.Micropolis_toolColors_get
-    if _newclass:toolColors = _swig_property(_micropolisengine.Micropolis_toolColors_get, _micropolisengine.Micropolis_toolColors_set)
     def putDownPark(*args): return _micropolisengine.Micropolis_putDownPark(*args)
     def putDownNetwork(*args): return _micropolisengine.Micropolis_putDownNetwork(*args)
     def checkBigZone(*args): return _micropolisengine.Micropolis_checkBigZone(*args)

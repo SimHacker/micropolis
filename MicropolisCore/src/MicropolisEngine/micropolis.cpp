@@ -528,9 +528,6 @@ void Micropolis::init()
   ////////////////////////////////////////////////////////////////////////
   // main.cpp
 
-  // char *MicropolisVersion;
-  MicropolisVersion = MICROPOLIS_VERSION;
-
   // int sim_loops;
   sim_loops = 0;
 
