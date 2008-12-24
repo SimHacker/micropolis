@@ -2732,7 +2732,7 @@ public:
 
   short MesNum;
 
-  bool EvalChanged; ///< The evaluation window should be shown to the user
+  bool evalChanged; ///< The evaluation window should be shown to the user
 
   short flagBlink;
 
