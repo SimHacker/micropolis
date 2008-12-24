@@ -231,26 +231,23 @@ void Micropolis::DoProblems()
  */
 void Micropolis::voteProblems()
 {
-  int x, z, count;
-
-  for (z = 0; z < PROBNUM; z++) {
+  for (int z = 0; z < PROBNUM; z++) {
     problemVotes[z] = 0;
   }
 
-  x = 0;
-  z = 0;
-  count = 0;
-  while ((z < 100) &&
-         (count < 600)) {
-    if (Rand(300) < problemTable[x]) {
-      problemVotes[x]++;
-      z++;
+  int problem = 0; // Problem to vote for
+  int voteCount = 0; // Number of votes
+  int loopCount = 0; // Number of attempts
+  while (voteCount < 100 && loopCount < 600) {
+    if (Rand(300) < problemTable[problem]) {
+      problemVotes[problem]++;
+      voteCount++;
     }
-    x++;
-    if (x > PROBNUM) {
-      x = 0;
+    problem++;
+    if (problem > PROBNUM) {
+      problem = 0;
     }
-    count++;
+    loopCount++;
   }
 }
 
