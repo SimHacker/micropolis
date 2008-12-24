@@ -492,13 +492,13 @@ void Micropolis::SetCommonInits()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::SetValves()
 {
-  float temp;
-  register short z;
-
   // FIXME: Break the tax table out into configurable parameters. 
   static short TaxTable[21] = {
     200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
     -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
+  };
+  static const float extMarkerParamTable[3] = {  // indexed on GameLevel
+    1.2f, 1.1f, 0.98f
   };
 
   // TODO: Make configurable parameters.
@@ -506,9 +506,6 @@ void Micropolis::SetValves()
   float BirthRate = 0.02;
   float MaxLaborBase = 1.3;
   float IntMarketDenom = 3.7;
-  float ExtMarketParamEasy = 1.2;
-  float ExtMarketParamMedium = 1.1;
-  float ExtMarketParamHard = 0.98;
   float MinPjIndPop = 5.0;
   float DefaultRratio = 1.3;
   float MaxRratio = 2;
@@ -559,7 +556,7 @@ void Micropolis::SetValves()
   Births = NormResPop * BirthRate;
   PjResPop = NormResPop + Migration + Births;   /* Projected Res.Pop  */
 
-  temp = ComHis[1] + IndHis[1];
+  float temp = ComHis[1] + IndHis[1];
 
   if (temp) {
     LaborBase = (ResHis[1] / temp);
@@ -579,26 +576,8 @@ void Micropolis::SetValves()
 
   PjComPop = IntMarket * LaborBase;                     
 
-  z = GameLevel;                        /* New ExtMarket */
-  temp = 1;
-
-  switch (z)  {
-
-  case 0:
-    temp = ExtMarketParamEasy;
-    break;
-
-  case 1:
-    temp = ExtMarketParamMedium;
-    break;
-
-  case 2:
-    temp = ExtMarketParamHard;
-    break;
-
-  }
-
-  PjIndPop = IndPop * LaborBase * temp;
+  assert(GameLevel >= 0 && GameLevel < 3); // easy, medium, hard
+  PjIndPop = IndPop * LaborBase * extMarkerParamTable[GameLevel];
 
   if (PjIndPop < MinPjIndPop) {
     PjIndPop = MinPjIndPop;
@@ -633,7 +612,7 @@ void Micropolis::SetValves()
     Iratio = MaxIratio;
   }
 
-  z = CityTax + GameLevel;
+  short z = CityTax + GameLevel;
 
   if (z > MaxTax) {
     z = MaxTax;
