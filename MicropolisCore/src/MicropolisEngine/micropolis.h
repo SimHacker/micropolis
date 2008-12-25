@@ -3294,8 +3294,7 @@ public:
     int x,
     int y);
 
-  short ZonePlop(
-    int base);
+  bool ZonePlop(int base);
 
   short EvalRes(
     int traf);

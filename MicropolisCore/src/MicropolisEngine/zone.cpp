@@ -701,7 +701,7 @@ void Micropolis::IndPlop(
   short base;
 
   base = (((Value * 4) + Den) * 9) + (IZB - 4);
-  ZonePlop (base);
+  ZonePlop(base);
 }
 
 
@@ -737,13 +737,11 @@ short Micropolis::EvalLot(
   return (score);
 }
 
-
-short Micropolis::ZonePlop(
-  int base)
+bool Micropolis::ZonePlop(int base)
 {
   short z, x;
-  static short Zx[9] = {-1, 0, 1,-1, 0, 1,-1, 0, 1};
-  static short Zy[9] = {-1,-1,-1, 0, 0, 0, 1, 1, 1};
+  static const short Zx[9] = {-1, 0, 1,-1, 0, 1,-1, 0, 1};
+  static const short Zy[9] = {-1,-1,-1, 0, 0, 0, 1, 1, 1};
 
   for (z = 0; z < 9; z++) {             /* check for fire  */
     int xx = SMapX + Zx[z];
@@ -753,7 +751,7 @@ short Micropolis::ZonePlop(
       x = Map[xx][yy] & LOMASK;
 
       if ((x >= FLOOD) && (x < ROADBASE)) {
-        return (FALSE);
+        return false;
       }
 
     }
@@ -775,7 +773,7 @@ short Micropolis::ZonePlop(
   SetZPower();
   Map[SMapX][SMapY] |= ZONEBIT + BULLBIT;
 
-  return TRUE;
+  return true;
 }
 
 
