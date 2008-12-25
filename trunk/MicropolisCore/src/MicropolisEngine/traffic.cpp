@@ -366,11 +366,11 @@ short Micropolis::GetFromMap(Direction d)
 bool Micropolis::DriveDone()
 {
   /* commercial, industrial, residential destinations */
-  static const short TARGL[ZT_NUM_DESTINATIONS] = {COMBASE, LHTHR, LHTHR};
-  static const short TARGH[ZT_NUM_DESTINATIONS] = {NUCLEAR, PORT, COMBASE};
+  static const short TARGL[3] = {COMBASE, LHTHR, LHTHR};
+  static const short TARGH[3] = {NUCLEAR, PORT, COMBASE};
 
-  // To prevent it changing without adapting the above arrays
-  assert(ZT_NUM_DESTINATIONS == 3);
+  assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGL));
+  assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGH));
 
   short l = TARGL[Zsource]; // Lowest acceptable tile value
   short h = TARGH[Zsource]; // Highest acceptable tile value

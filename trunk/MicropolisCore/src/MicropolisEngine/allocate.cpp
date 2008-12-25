@@ -276,7 +276,7 @@ void Micropolis::GetHistoryRange(
                         history = PollutionHis;
                         break;
                 default:
-                        assert(0); // Should never happen!
+                        NOT_REACHED();
                         break;
         }
 
@@ -290,7 +290,7 @@ void Micropolis::GetHistoryRange(
                         offset = 120;
                         break;
                 default:
-                        assert(0); // Should never happen!
+                        NOT_REACHED();
                         break;
         }
 
@@ -350,7 +350,7 @@ short Micropolis::GetHistory(
                         history = PollutionHis;
                         break;
                 default:
-                        assert(0); // Should never happen!
+                        NOT_REACHED();
                         break;
         }
 
@@ -364,7 +364,7 @@ short Micropolis::GetHistory(
                         offset = 120;
                         break;
                 default:
-                        assert(0); // Should never happen!
+                        NOT_REACHED();
                         break;
         }
 

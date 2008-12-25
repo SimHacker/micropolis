@@ -418,8 +418,8 @@ void Micropolis::SimLoadInit()
   }
 
   // Set game level
-  if (gameLevel > 2 || gameLevel < 0) {
-    gameLevel = 0;
+  if (gameLevel > LEVEL_LAST || gameLevel < LEVEL_FIRST) {
+    gameLevel = LEVEL_FIRST;
   }
   SetGameLevel(gameLevel);
 
@@ -492,9 +492,10 @@ void Micropolis::SetValves()
     200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
     -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
   };
-  static const float extMarkerParamTable[3] = {  // indexed on GameLevel
+  static const float extMarkerParamTable[3] = {
     1.2f, 1.1f, 0.98f
   };
+  assert(LEVEL_COUNT == LENGTH_OF(extMarkerParamTable));
 
   // TODO: Make configurable parameters.
   short ResPopDenom = 8;
@@ -515,7 +516,7 @@ void Micropolis::SetValves()
   short MaxIValve = 1500;
   short MinIValve = -1500;
 
-  // FIXME: Break the interestng values out into public member
+  // FIXME: Break the interesting values out into public member
   // variables so the user interface can display them.
   float Employment, Migration, Births, LaborBase, IntMarket;
   float Rratio, Cratio, Iratio;
@@ -564,7 +565,7 @@ void Micropolis::SetValves()
 
   PjComPop = IntMarket * LaborBase;
 
-  assert(gameLevel >= 0 && gameLevel < 3); // easy, medium, hard
+  assert(gameLevel >= LEVEL_FIRST && gameLevel <= LEVEL_LAST);
   PjIndPop = IndPop * LaborBase * extMarkerParamTable[gameLevel];
   PjIndPop = max(PjIndPop, MinPjIndPop);
 
@@ -863,8 +864,11 @@ void Micropolis::CollectTax()
   /*
    * @todo Break out so the user interface can configure this.
    */
-  static float RLevels[3] = { 0.7, 0.9, 1.2 };
-  static float FLevels[3] = { 1.4, 1.2, 0.8 };
+  static const float RLevels[3] = { 0.7, 0.9, 1.2 };
+  static const float FLevels[3] = { 1.4, 1.2, 0.8 };
+
+  assert(LEVEL_COUNT == LENGTH_OF(RLevels));
+  assert(LEVEL_COUNT == LENGTH_OF(FLevels));
 
   CashFlow = 0;
 
@@ -1434,8 +1438,9 @@ void Micropolis::RepairZone(
 void Micropolis::DoSPZone(
   short PwrOn)
 {
-  static short MltdwnTab[3] = { 30000, 20000, 10000 }; /* simadj */
-  register int z;
+  // Bigger numbers reduce chance of nuclear melt down
+  static const short MeltdownTable[3] = { 30000, 20000, 10000 };
+  int z;
 
   switch (CChr9) {
 
@@ -1454,7 +1459,9 @@ void Micropolis::DoSPZone(
 
   case NUCLEAR:
 
-    if (!NoDisasters && !Rand(MltdwnTab[gameLevel])) {
+    assert(LEVEL_COUNT == LENGTH_OF(MeltdownTable));
+
+    if (!NoDisasters && !Rand(MeltdownTable[gameLevel])) {
       DoMeltdown(SMapX, SMapY);
       return;
     }

@@ -193,36 +193,38 @@ void Micropolis::setSkips(
   sim_skip = 0;
 }
 
-
-void Micropolis::SetGameLevelFunds(
-  short level)
+/**
+ * Set the game level and initial funds.
+ * @param level New game level.
+ */
+void Micropolis::SetGameLevelFunds(GameLevel level)
 {
   switch (level) {
 
   default:
-  case 0:
+  case LEVEL_EASY:
     SetFunds(20000);
-    SetGameLevel(0);
+    SetGameLevel(LEVEL_EASY);
     break;
 
-  case 1:
+  case LEVEL_MEDIUM:
     SetFunds(10000);
-    SetGameLevel(1);
+    SetGameLevel(LEVEL_MEDIUM);
     break;
 
-  case 2:
+  case LEVEL_HARD:
     SetFunds(5000);
-    SetGameLevel(2);
+    SetGameLevel(LEVEL_HARD);
     break;
-
   }
 }
 
 /** Set/change the game level.
  * @param level New game level.
  */
-void Micropolis::SetGameLevel(short level)
+void Micropolis::SetGameLevel(GameLevel level)
 {
+  assert(level >= LEVEL_FIRST && level <= LEVEL_LAST);
   gameLevel = level;
   UpdateGameLevel();
 }
