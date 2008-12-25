@@ -672,8 +672,6 @@ enum CityVotingProblems {
 
     CVP_NUMPROBLEMS,              ///< Number of problems
 
-    CVP_NUMTAKEN,                 ///< Number of problems taken
-
     CVP_PROBLEM_COMPLAINTS = 4,   ///< Number of problems to complain about.
 
     PROBNUM = 10,
@@ -1731,7 +1729,7 @@ public:
    * Contains index of ProblemTable of taken problems, in decreasing order.
    * @note Value CVP_NUMPROBLEMS means that the entry is not used
    */
-  short problemOrder[CVP_NUMTAKEN];
+  short problemOrder[CVP_PROBLEM_COMPLAINTS];
 
   /**
    * City population.
