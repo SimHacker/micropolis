@@ -407,7 +407,7 @@ void Micropolis::SimLoadInit()
   LVAverage = MiscHis[12];
   CrimeAverage = MiscHis[13];
   PolluteAverage = MiscHis[14];
-  gameLevel = MiscHis[15];
+  gameLevel = (GameLevel)MiscHis[15];
 
   if (CityTime < 0) {
     CityTime = 0;
