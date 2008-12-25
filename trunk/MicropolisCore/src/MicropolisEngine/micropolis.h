@@ -110,48 +110,47 @@
 // Constants
 
 
-#define MICROPOLIS_VERSION      "5.0"
+#define MICROPOLIS_VERSION              "5.0"
 
-#define IS_INTEL                1
+#define IS_INTEL                        1
 
-#define TRUE                    1
-#define FALSE                   0
+#define TRUE                            1
+#define FALSE                           0
 
 #define RANDOM_RANGE                    0xffff
-
-#define SimWidth                120
-#define SimHeight               100
 
 /**
  * Size of the world in horizontal direction
  * @note Must be <= 128 due to PowerMap bitmap
  *       (where 1 row is assumed to be less or equal to 8 words)
  */
-static const int WORLD_X = SimWidth;
+static const int WORLD_X =              120;
 
 /**
  * Size of the world in vertical direction
  */
-static const int WORLD_Y = SimHeight;
+static const int WORLD_Y =              100;
 
-#define HWLDX                   (SimWidth >>1)
-#define HWLDY                   (SimHeight >>1)
-#define QWX                     (SimWidth >>2)
-#define QWY                     (SimHeight >>2)
-#define SmX                     (SimWidth >>3)
-#define SmY                     ((SimHeight + 7) >>3)
+#define HWLDX                           (WORLD_X >>1)
+#define HWLDY                           (WORLD_Y >>1)
+#define QWX                             (WORLD_X >>2)
+#define QWY                             (WORLD_Y >>2)
+#define SmX                             (WORLD_X >>3)
+#define SmY                             ((WORLD_Y + 7) >>3)
 
-#define EDITOR_W                (WORLD_X * 16)
-#define EDITOR_H                (WORLD_Y * 16)
-#define MAP_W                   (WORLD_X * 3)
-#define MAP_H                   (WORLD_Y * 3)
+#define EDITOR_W                        (WORLD_X * 16)
+#define EDITOR_H                        (WORLD_Y * 16)
+#define MAP_W                           (WORLD_X * 3)
+#define MAP_H                           (WORLD_Y * 3)
 
-#define NIL                     0
-#define HORIZ                   1
-#define VERT                    0
+#define NIL                             0
+#define HORIZ                           1
+#define VERT                            0
 
-#define HISTLEN                 480
-#define MISCHISTLEN             240
+#define HISTLEN                         480
+#define MISCHISTLEN                     240
+
+#define ISLAND_RADIUS                   18
 
 #define HISTORY_COUNT                   120
 
@@ -160,95 +159,74 @@ static const int WORLD_Y = SimHeight;
 #define HISTORY_TYPE_IND                2
 #define HISTORY_TYPE_MONEY              3
 #define HISTORY_TYPE_CRIME              4
-#define HISTORY_TYPE_POLLUTION  5
+#define HISTORY_TYPE_POLLUTION          5
 #define HISTORY_TYPE_COUNT              6
 
 #define HISTORY_SCALE_SHORT             0
 #define HISTORY_SCALE_LONG              1
 #define HISTORY_SCALE_COUNT             2
 
-#define POWERMAPROW             ((WORLD_X + 15) / 16)
+#define POWERMAPROW                     ((WORLD_X + 15) / 16)
 
-#define POWERMAPLEN             1700 /* ??? PWRMAPSIZE */
-#define POWERWORD(x, y)         (((x) >>4) + ((y) <<3))
+#define POWERMAPLEN                     1700 /* ??? PWRMAPSIZE */
+#define POWERWORD(x, y)                 (((x) >>4) + ((y) <<3))
 
-#define SETPOWERBIT(x, y)       PowerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
-#define PWRMAPSIZE              (POWERMAPROW * WORLD_Y)
-#define PWRSTKSIZE              ((WORLD_X * WORLD_Y) / 4)
+#define SETPOWERBIT(x, y)               PowerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
+#define PWRMAPSIZE                      (POWERMAPROW * WORLD_Y)
+#define PWRSTKSIZE                      ((WORLD_X * WORLD_Y) / 4)
 
-#define POINT_BATCH                             32
+#define ALMAP                           0 /* all */
+#define REMAP                           1 /* residential */
+#define COMAP                           2 /* commercial */
+#define INMAP                           3 /* industrial */
 
-#define ALMAP                   0 /* all */
-#define REMAP                   1 /* residential */
-#define COMAP                   2 /* commercial */
-#define INMAP                   3 /* industrial */
+#define PRMAP                           4 /* power */
+#define RDMAP                           5 /* road */
 
-#define PRMAP                   4 /* power */
-#define RDMAP                   5 /* road */
+#define PDMAP                           6 /* population density */
+#define RGMAP                           7 /* rate of growth */
 
-#define PDMAP                   6 /* population density */
-#define RGMAP                   7 /* rate of growth */
+#define TDMAP                           8 /* traffic density */
+#define PLMAP                           9 /* pollution */
+#define CRMAP                           10 /* crime */
+#define LVMAP                           11 /* land value */
 
-#define TDMAP                   8 /* traffic density */
-#define PLMAP                   9 /* pollution */
-#define CRMAP                   10 /* crime */
-#define LVMAP                   11 /* land value */
+#define FIMAP                           12 /* fire radius */
+#define POMAP                           13 /* police radius */
+#define DYMAP                           14 /* dynamic */
 
-#define FIMAP                   12 /* fire radius */
-#define POMAP                   13 /* police radius */
-#define DYMAP                   14 /* dynamic */
-
-#define NMAPS                   15
+#define NMAPS                           15
 
 /* These adjust frequency in Simulate() */
 
-#define VALVERATE               2
-#define CENSUSRATE              4
-#define TAXFREQ                 48
-
-/* These are names of the 16 colors */
-#define COLOR_WHITE             0
-#define COLOR_YELLOW            1
-#define COLOR_ORANGE            2
-#define COLOR_RED               3
-#define COLOR_DARKRED           4
-#define COLOR_DARKBLUE          5
-#define COLOR_LIGHTBLUE         6
-#define COLOR_BROWN             7
-#define COLOR_LIGHTGREEN        8
-#define COLOR_DARKGREEN         9
-#define COLOR_OLIVE             10
-#define COLOR_LIGHTBROWN        11
-#define COLOR_LIGHTGRAY         12
-#define COLOR_MEDIUMGRAY        13
-#define COLOR_DARKGRAY          14
-#define COLOR_BLACK             15
-
+#define VALVERATE                       2
+#define CENSUSRATE                      4
+#define TAXFREQ                         48
 
 /* Object & Sound Numbers */
 
-#define TRA                     1
-#define COP                     2
-#define AIR                     3
-#define SHI                     4
-#define GOD                     5
-#define TOR                     6
-#define EXP                     7
-#define BUS                     8
+#define TRA                             1
+#define COP                             2
+#define AIR                             3
+#define SHI                             4
+#define GOD                             5
+#define TOR                             6
+#define EXP                             7
+#define BUS                             8
 
 /* Max # of Objects */
 
-#define OBJN                    9
+#define OBJN                            9
 
 /* Graph Histories */
-#define RES_HIST                0
-#define COM_HIST                1
-#define IND_HIST                2
-#define MONEY_HIST              3
-#define CRIME_HIST              4
-#define POLLUTION_HIST          5
-#define HISTORIES               6
-#define ALL_HISTORIES           ((1 <<HISTORIES) - 1)
+#define RES_HIST                        0
+#define COM_HIST                        1
+#define IND_HIST                        2
+#define MONEY_HIST                      3
+#define CRIME_HIST                      4
+#define POLLUTION_HIST                  5
+#define HISTORIES                       6
+#define ALL_HISTORIES                   ((1 <<HISTORIES) - 1)
 
 ///////////////////////////////////////////////////
 // Tiles
@@ -547,33 +525,30 @@ enum MapTileCharacters {
  * These describe the wand values, the object dragged around on the screen.
  */
 
-#define residentialState        0
-#define commercialState         1
-#define industrialState         2
-#define fireState               3
-#define queryState              4
-#define policeState             5
-#define wireState               6
-#define dozeState               7
-#define rrState                 8
-#define roadState               9
-#define stadiumState            10
-#define parkState               11
-#define seaportState            12
-#define powerState              13
-#define nuclearState            14
-#define airportState            15
-#define networkState            16
+enum EditingTool {
+    TOOL_RESIDENTIAL,
+    TOOL_COMMERCIAL,
+    TOOL_INDUSTRIAL,
+    TOOL_FIRESTATION,
+    TOOL_POLICESTATION,
+    TOOL_QUERY,
+    TOOL_WIRE,
+    TOOL_BULLDOZER,
+    TOOL_RAILROAD,
+    TOOL_ROAD,
+    TOOL_STADIUM,
+    TOOL_PARK,
+    TOOL_SEAPORT,
+    TOOL_COALPOWER,
+    TOOL_NUCLEARPOWER,
+    TOOL_AIRPORT,
+    TOOL_NETWORK,
 
-#define firstState              residentialState
-#define lastState               networkState
+    TOOL_COUNT,
+    TOOL_FIRST = TOOL_RESIDENTIAL,
+    TOOL_LAST = TOOL_NETWORK,
+};
 
-#define STATE_CMD               0
-#define STATE_TILES             1
-#define STATE_OVERLAYS          2
-#define STATE_GRAPHS            3
-
-#define ISLAND_RADIUS           18
 
 ///////////////////////////////////////////////////
 // Scenarios
@@ -1930,6 +1905,9 @@ public:
   // -1 => 10% chance of island, 0 => never create island, 1 => always create island
   int CreateIsland;
 
+  // Controls the radius of islands.
+  int IslandRadius;
+
 
   void GenerateNewCity() ;
 
@@ -2859,203 +2837,99 @@ public:
 public:
 
 
-  int OverRide;
+  int last_x; ///< Get rid of this.
 
-  int Expensive;
+  int last_y; ///< Get rid of this.
 
-  int Players;
+  int tool_x; ///< Get rid of this.
 
-  int Votes;
-
-  int PendingTool;
-
-  int PendingX;
-
-  int PendingY;
-
-  int last_x;
-
-  int last_y;
-
-  int tool_x;
-
-  int tool_y;
+  int tool_y; ///< Get rid of this.
 
 
-  int putDownPark(
-    short mapH,
-    short mapV);
+  int putDownPark(short mapH, short mapV);
 
-  int putDownNetwork(
-    short mapH,
-    short mapV);
+  int putDownNetwork(short mapH, short mapV);
 
   short checkBigZone(
-    short id,
-    short *deltaHPtr,
-    short *deltaVPtr);
+    short id, short *deltaHPtr, short *deltaVPtr);
 
-  void check3x3border(
-    short xMap,
-    short yMap);
+  void check3x3border(short xMap, short yMap);
 
   int check3x3(
-    short mapH,
-    short mapV,
-    short base,
-    short tool);
+    short mapH, short mapV, 
+    short base, short tool);
 
-  void check4x4border(
-    short xMap,
-    short yMap);
+  void check4x4border(short xMap, short yMap);
 
   short check4x4(
-    short mapH,
-    short mapV,
-    short base,
-    short aniFlag,
-    short tool);
+    short mapH, short mapV, 
+    short base, short aniFlag, short tool);
 
-  void check6x6border(
-    short xMap,
-    short yMap);
+  void check6x6border(short xMap, short yMap);
 
-  short check6x6(
-    short mapH,
-    short mapV,
-    short base,
-    short tool);
+  short check6x6(short mapH, short mapV, short base, short tool);
 
-  int getDensityStr(
-    short catNo,
-    short mapH,
-    short mapV);
+  int getDensityStr(short catNo, short mapH, short mapV);
 
-  void doZoneStatus(
-    short mapH,
-    short mapV);
+  void doZoneStatus(short mapH, short mapV);
 
-  void DoShowZoneStatus(
-    char *str,
-    char *s0,
-    char *s1,
-    char *s2,
-    char *s3,
-    char *s4,
-    int x,
-    int y);
+  void doShowZoneStatus(
+    char *str, 
+    char *s0, char *s1, char *s2, char *s3, char *s4, 
+    int x, int y);
 
-  void DidTool(
-    const char *name,
-    short x,
-    short y);
+  void didTool(const char *name, short x, short y);
 
-  int query_tool(
-    short x,
-    short y);
+  int queryTool(short x, short y);
 
-  int bulldozer_tool(
-    short x,
-    short y);
+  int bulldozerTool(short x, short y);
 
-  int road_tool(
-    short x,
-    short y);
+  int roadTool(short x, short y);
 
-  int rail_tool(
-    short x,
-    short y);
+  int railroadTool(short x, short y);
 
-  int wire_tool(
-    short x,
-    short y);
+  int wireTool(short x, short y);
 
-  int park_tool(
-    short x,
-    short y);
+  int parkTool(short x, short y);
 
-  int residential_tool(
-    short x,
-    short y);
+  int residentialTool(short x, short y);
 
-  int commercial_tool(
-    short x,
-    short y);
+  int commercialTool(short x, short y);
 
-  int industrial_tool(
-    short x,
-    short y);
+  int industrialTool(short x, short y);
 
-  int police_dept_tool(
-    short x,
-    short y);
+  int policeStationTool(short x, short y);
 
-  int fire_dept_tool(
-    short x,
-    short y);
+  int fireStationTool(short x, short y);
 
-  int stadium_tool(
-    short x,
-    short y);
+  int stadiumTool(short x, short y);
 
-  int coal_power_plant_tool(
-    short x,
-    short y);
+  int coalPowerTool(short x, short y);
 
-  int nuclear_power_plant_tool(
-    short x,
-    short y);
+  int nuclearPowerTool(short x, short y);
 
-  int seaport_tool(
-    short x,
-    short y);
+  int seaportTool(short x, short y);
 
-  int airport_tool(
-    short x,
-    short y);
+  int airportTool(short x, short y);
 
-  int network_tool(
-    short x,
-    short y);
+  int networkTool(short x, short y);
 
-  int do_tool(
-    short state,
-    short x,
-    short y,
-    short first);
+  int doTool(EditingTool tool, short x, short y, bool first);
 
-  void DoTool(
-    short tool,
-    short x,
-    short y);
+  void toolDown(EditingTool tool, short x, short y);
 
-  void ToolDown(
-        short tool,
-    int x,
-    int y);
+  void toolUp(EditingTool tool, short x, short y);
 
-  void ToolUp(
-        short tool,
-    int x,
-    int y);
-
-  void ToolDrag(
-        short tool,
-    int px,
-    int py);
-
-  void DoPendTool(
-    int tool,
-    int x,
-    int y);
+  void toolDrag(EditingTool tool, short px, short py);
 
 private:
 
   bool tally(short tileValue);
 
-  short checkSize(short tile_value);
+  short checkSize(short tileValue);
 
   void putRubble(int x, int y, int size);
+
 
   ////////////////////////////////////////////////////////////////////////
   // traffic.cpp

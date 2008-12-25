@@ -359,7 +359,7 @@ class TileTool:
         self, 
         view):
 
-                pass
+        pass
 
 
     # Return True if handled.

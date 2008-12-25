@@ -493,6 +493,9 @@ void Micropolis::init()
   // int CreateIsland; /* -1 => 10%, 0 => never, 1 => always */
   CreateIsland = -1;
 
+  // int IslandRadius;
+  CreateIsland = ISLAND_RADIUS;
+
 
   ////////////////////////////////////////////////////////////////////////
   // graph.cpp
@@ -871,27 +874,6 @@ void Micropolis::init()
   ////////////////////////////////////////////////////////////////////////
   //  tool.cpp
 
-
-  // int OverRide;
-  OverRide = 0;
-
-  // int Expensive;
-  Expensive = 1000;
-
-  // int Players;
-  Players = 1;
-
-  // int Votes;
-  Votes = 0;
-
-  // int PendingTool;
-  PendingTool = -1;
-
-  // int PendingX;
-  PendingX = 0;
-
-  // int PendingY;
-  PendingY = 0;
 
   // int last_x;
   last_x = 0;

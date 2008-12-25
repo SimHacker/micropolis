@@ -187,8 +187,6 @@ class MicropolisModel(micropolisengine.Micropolis):
         if not self.timerActive:
             return False
 
-        #print "tick", self
-
         self.stopTimer()
 
         self.tickEngine()
@@ -208,7 +206,7 @@ class MicropolisModel(micropolisengine.Micropolis):
     def tickEngine(self):
 
         self.sim_tick()
-        self.animateTiles()
+        #self.animateTiles()
         self.sim_update()
 
 
@@ -246,7 +244,9 @@ class MicropolisModel(micropolisengine.Micropolis):
         # In this case, micropolis is the same is self, so ignore it. 
         handler = getattr(self, 'handle_' + name, None)
         if handler:
+            print "Calling handler", handler, args
             handler(*args)
+            #print "Called handler."
         else:
             print "No handler for", name
     
@@ -399,8 +399,8 @@ class MicropolisModel(micropolisengine.Micropolis):
         print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
 
     
-    def handle_UIStartEarthquake(self):
-        print "handle_UIStartEarthquake(self)", (self,)
+    def handle_UIStartEarthquake(self, magnitude):
+        print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
 
     
     def handle_UIStartLoad(self):
@@ -411,10 +411,6 @@ class MicropolisModel(micropolisengine.Micropolis):
         print "handle_UIStartScenario(self, scenario)", (self, scenario)
 
     
-    def handle_UIStopEarthquake(self):
-        print "handle_UIStopEarthquake(self)", (self,)
-
-
     def handle_UIUpdateBudget(self):
         #print "handle_UIUpdateBudget(self)", (self,)
         for budget in self.budgets:
@@ -463,7 +459,7 @@ def CreateTestEngine():
 
     # Testing...
 
-    #engine.setSkips(100)
+    #engine.setSkips(1000)
     engine.setSkips(10)
     #engine.setSkips(0)
     engine.SetFunds(1000000000)

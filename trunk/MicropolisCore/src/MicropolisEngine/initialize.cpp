@@ -90,8 +90,6 @@ void Micropolis::InitWillStuff()
   LastCityMonth = -1;
   LastFunds = -1;
   LastR = LastC = LastI = -999999;
-  OverRide = 0;
-  PendingTool = -1;
   MesNum = 0;
   MessagePort = 0;
   RoadFund = 0;

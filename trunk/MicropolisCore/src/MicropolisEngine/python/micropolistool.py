@@ -69,7 +69,7 @@
 # Import Modules
 
 
-import micropolis
+import micropolisengine
 import tiletool
 
 
@@ -95,21 +95,21 @@ class MicropolisTool(tiletool.TileTool):
 
         x, y = view.getEventXY(event)
         #print "DOWN", x, y, "index", self.toolIndex, view.engine.ToolDown
-        view.engine.ToolDown(self.toolIndex, int(x * 16), int(y * 16))
+        view.engine.toolDown(self.toolIndex, int(x * 16), int(y * 16))
 
 
     def handleMouseDrag(self, view, event):
 
         x, y = view.getEventXY(event)
         #print "DRAG", x, y, "index", self.toolIndex, view.engine.ToolDrag
-        view.engine.ToolDrag(self.toolIndex, int(x * 16), int(y * 16))
+        view.engine.toolDrag(self.toolIndex, int(x * 16), int(y * 16))
 
 
     def handleMouseUp(self, view, event):
 
         x, y = view.getEventXY(event)
         #print "UP", x, y
-        view.engine.ToolUp(self.toolIndex, int(x * 16), int(y * 16))
+        view.engine.toolUp(self.toolIndex, int(x * 16), int(y * 16))
 
 
     def tick(self, view):
@@ -297,7 +297,7 @@ MicropolisEraserTool(
 
 MicropolisTool(
     name='Query',
-    toolIndex=micropolisengine.queryState,
+    toolIndex=micropolisengine.TOOL_QUERY,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -309,7 +309,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Bulldozer',
-    toolIndex=micropolisengine.dozeState,
+    toolIndex=micropolisengine.TOOL_BULLDOZER,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -321,7 +321,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Wire',
-    toolIndex=micropolisengine.wireState,
+    toolIndex=micropolisengine.TOOL_WIRE,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -333,7 +333,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Road',
-    toolIndex=micropolisengine.roadState,
+    toolIndex=micropolisengine.TOOL_ROAD,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -345,7 +345,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Rail',
-    toolIndex=micropolisengine.rrState,
+    toolIndex=micropolisengine.TOOL_RAILROAD,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -357,7 +357,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Park',
-    toolIndex=micropolisengine.parkState,
+    toolIndex=micropolisengine.TOOL_PARK,
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
@@ -369,7 +369,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Residential',
-    toolIndex=micropolisengine.residentialState,
+    toolIndex=micropolisengine.TOOL_RESIDENTIAL,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
@@ -381,7 +381,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Commercial',
-    toolIndex=micropolisengine.commercialState,
+    toolIndex=micropolisengine.TOOL_COMMERCIAL,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
@@ -393,7 +393,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Industrial',
-    toolIndex=micropolisengine.industrialState,
+    toolIndex=micropolisengine.TOOL_INDUSTRIAL,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
@@ -405,7 +405,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='FireStation',
-    toolIndex=micropolisengine.fireState,
+    toolIndex=micropolisengine.TOOL_FIRESTATION,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
@@ -417,7 +417,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='PoliceStation',
-    toolIndex=micropolisengine.policeState,
+    toolIndex=micropolisengine.TOOL_POLICESTATION,
     cursorRows=3,
     cursorCols=3,
     cursorHotCol=1,
@@ -429,7 +429,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Stadium',
-    toolIndex=micropolisengine.stadiumState,
+    toolIndex=micropolisengine.TOOL_STADIUM,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
@@ -441,7 +441,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Seaport',
-    toolIndex=micropolisengine.seaportState,
+    toolIndex=micropolisengine.TOOL_SEAPORT,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
@@ -453,7 +453,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='CoalPowerPlant',
-    toolIndex=micropolisengine.powerState,
+    toolIndex=micropolisengine.TOOL_COALPOWER,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
@@ -465,7 +465,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='NuclearPowerPlant',
-    toolIndex=micropolisengine.nuclearState,
+    toolIndex=micropolisengine.TOOL_NUCLEARPOWER,
     cursorRows=4,
     cursorCols=4,
     cursorHotCol=1,
@@ -477,7 +477,7 @@ MicropolisTool(
 
 MicropolisTool(
     name='Airport',
-    toolIndex=micropolisengine.airportState,
+    toolIndex=micropolisengine.TOOL_AIRPORT,
     cursorRows=6,
     cursorCols=6,
     cursorHotCol=1,

@@ -84,7 +84,7 @@ __version__ = "0.9"
 # NiceMicropolis Class
 
 
-class NiceMicropolis(Micropolis):
+class NiceMicropolis(micropolisengine.Micropolis):
 
 
     def __init__(self, *args, **kw):

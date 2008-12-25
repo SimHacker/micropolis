@@ -69,6 +69,8 @@
 
 
 #if 0
+
+
 ////////////////////////////////////////////////////////////////////////
 // Disabled this small map drawing, filtering and overlaying code.
 // Going to re-implement it in the tile engine and Python.
@@ -83,6 +85,25 @@
 #define VAL_VERYPLUS    6
 #define VAL_MINUS       7
 #define VAL_VERYMINUS   8
+
+
+/* These are names of the 16 colors */
+#define COLOR_WHITE             0
+#define COLOR_YELLOW            1
+#define COLOR_ORANGE            2
+#define COLOR_RED               3
+#define COLOR_DARKRED           4
+#define COLOR_DARKBLUE          5
+#define COLOR_LIGHTBLUE         6
+#define COLOR_BROWN             7
+#define COLOR_LIGHTGREEN        8
+#define COLOR_DARKGREEN         9
+#define COLOR_OLIVE             10
+#define COLOR_LIGHTBROWN        11
+#define COLOR_LIGHTGRAY         12
+#define COLOR_MEDIUMGRAY        13
+#define COLOR_DARKGRAY          14
+#define COLOR_BLACK             15
 
 
 /*
