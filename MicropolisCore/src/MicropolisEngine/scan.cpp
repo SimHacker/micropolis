@@ -134,7 +134,7 @@ void Micropolis::PopDenScan()
 
   DistIntMarket();              /* set ComRate w/ (/ComMap) */
 
-  if (Ztot) {                   /* Find Center of Mass for City */
+  if (Ztot > 0) {               /* Find Center of Mass for City */
     CCx = (short)(Xtot / Ztot);
     CCy = (short)(Ytot / Ztot);
   } else {
@@ -144,7 +144,9 @@ void Micropolis::PopDenScan()
 
   CCx2 = CCx >>1;
   CCy2 = CCy >>1;
-  NewMapFlags[DYMAP] = NewMapFlags[PDMAP] = NewMapFlags[RGMAP] = 1;
+  NewMapFlags[DYMAP] = 1;
+  NewMapFlags[PDMAP] = 1;
+  NewMapFlags[RGMAP] = 1;
 }
 
 
@@ -275,9 +277,7 @@ void Micropolis::PTLScan()
         pnum++;
         ptot += z;
         /* find max pol for monster  */
-        if ((z > pmax) ||
-            ((z == pmax) &&
-             (!(Rand16() & 3)))) {
+        if (z > pmax || (z == pmax && (Rand16() & 3) == 0)) {
           pmax = z;
           PolMaxX = x <<1;
           PolMaxY = y <<1;
@@ -293,81 +293,84 @@ void Micropolis::PTLScan()
 
   SmoothTerrain();
 
-  NewMapFlags[DYMAP] = NewMapFlags[PLMAP] = NewMapFlags[LVMAP] = 1;
+  NewMapFlags[DYMAP] = 1;
+  NewMapFlags[PLMAP] = 1;
+  NewMapFlags[LVMAP] = 1;
 }
 
 
-/* comefrom: PTLScan */
-int Micropolis::GetPValue(
-  int loc)
+/**
+ * Return pollution of a tile value
+ * @param loc Tile character
+ * @return Value of the pollution (0..255, bigger is worse)
+ */
+int Micropolis::GetPValue(int loc)
 {
   if (loc < POWERBASE) {
 
     if (loc >= HTRFBASE) {
-      return (/* 25 */ 75);     /* heavy traf  */
+      return /* 25 */ 75;     /* heavy traf  */
     }
 
     if (loc >= LTRFBASE) {
-      return (/* 10 */ 50);     /* light traf  */
+      return /* 10 */ 50;     /* light traf  */
     }
 
     if (loc <  ROADBASE) {
 
       if (loc > FIREBASE) {
-        return (/* 60 */ 90);
+        return /* 60 */ 90;
       }
 
       /* XXX: Why negative pollution from radiation? */
       if (loc >= RADTILE) {
-        return (/* -40 */ 255); /* radioactivity  */
+        return /* -40 */ 255; /* radioactivity  */
       }
 
     }
-    return (0);
+    return 0;
   }
 
   if (loc <= LASTIND) {
-    return (0);
+    return 0;
   }
 
   if (loc < PORTBASE) {
-    return (50);        /* Ind  */
+    return 50;        /* Ind  */
   }
 
   if (loc <= LASTPOWERPLANT) {
-    return (/* 60 */ 100);      /* prt, aprt, cpp */
+    return /* 60 */ 100;      /* prt, aprt, cpp */
   }
 
-  return (0);
+  return 0;
 }
 
 
-/* comefrom: PTLScan DistIntMarket */
-int Micropolis::GetDisCC(
-  int x,
-  int y)
+/**
+ * Compute Manhattan distance from given position to (#CCx2, #CCy2).
+ * @param x X coordinate of given position.
+ * @param y Y coordinate of given position.
+ * @return Manhattan distance (\c dx+dy ) between both positions.
+ * @note For long distances (> 32), value 32 is returned.
+ */
+int Micropolis::GetDisCC(int x, int y)
 {
-  short xdis, ydis, z;
+  int xDis, yDis;
 
   if (x > CCx2) {
-    xdis = x - CCx2;
+    xDis = x - CCx2;
   } else {
-    xdis = CCx2 - x;
+    xDis = CCx2 - x;
   }
 
   if (y > CCy2) {
-    ydis = y - CCy2;
+    yDis = y - CCy2;
   } else {
-    ydis = CCy2 - y;
+    yDis = CCy2 - y;
   }
 
-  z = (xdis + ydis);
-
-  if (z > 32) {
-    return (32);
-  } else {
-    return (z);
-  }
+  return min(xDis + yDis, 32);
 }
 
 
@@ -398,18 +401,12 @@ void Micropolis::CrimeScan()
           z = 300;
         }
         z -= PoliceMap[x >>2][y >>2];
-        if (z > 250) {
-          z = 250;
-        }
-        if (z < 0) {
-          z = 0;
-        }
+        z = clamp(z, (short)0, (short)250);
         CrimeMem[x][y] = (Byte)z;
         totz += z;
 
-        if ((z > cmax) ||
-            ((z == cmax) &&
-             (!(Rand16() & 3)))) {
+        // Update new crime hot-spot
+        if (z > cmax || (z == cmax && (Rand16() & 3) == 0)) {
           cmax = z;
           CrimeMaxX = x <<1;
           CrimeMaxY = y <<1;
@@ -421,7 +418,7 @@ void Micropolis::CrimeScan()
     }
   }
 
-  if (numz) {
+  if (numz > 0) {
     CrimeAverage = (short)(totz / numz);
   } else {
     CrimeAverage = 0;
@@ -433,7 +430,9 @@ void Micropolis::CrimeScan()
     }
   }
 
-  NewMapFlags[DYMAP] = NewMapFlags[CRMAP] = NewMapFlags[POMAP] = 1;
+  NewMapFlags[DYMAP] = 1;
+  NewMapFlags[CRMAP] = 1;
+  NewMapFlags[POMAP] = 1;
 }
 
 
@@ -451,8 +450,7 @@ void Micropolis::SmoothTerrain()
           Qtem[x][(y == 0) ? (0) : (y - 1)] +
           Qtem[x][(y == (QWY - 1)) ? y : (y + 1)] +
           (Qtem[x][y] <<2);
-        TerrainMem[x][y] =
-          (unsigned char)(((unsigned)z) >>3);
+        TerrainMem[x][y] = (unsigned char)(((unsigned)z) >>3);
         z &= 0x7;
       }
       dir = -dir;
@@ -476,8 +474,7 @@ void Micropolis::SmoothTerrain()
         if (y < (QWY - 1)) {
           z += Qtem[x][y + 1];
         }
-        TerrainMem[x][y] =
-          (unsigned char)((z >>2) + Qtem[x][y]) >>1;
+        TerrainMem[x][y] = (unsigned char)((z >>2) + Qtem[x][y]) >>1;
       }
     }
   }
@@ -499,8 +496,7 @@ void Micropolis::DoSmooth()
           tem[x][(y == 0) ? (0) : (y - 1)] +
           tem[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
           tem[x][y];
-        tem2[x][y] =
-          (unsigned char)(((unsigned int)z) >>2);
+        tem2[x][y] = (unsigned char)(((unsigned int)z) >>2);
         z &= 3;
       }
       dir = -dir;
@@ -550,8 +546,7 @@ void Micropolis::DoSmooth2()
           tem2[x][(y == 0) ? (0) : (y - 1)] +
           tem2[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
           tem2[x][y];
-        tem[x][y] =
-          (unsigned char)(((unsigned char)z) >>2);
+        tem[x][y] = (unsigned char)(((unsigned char)z) >>2);
         z &= 3;
       }
       dir = -dir;
@@ -589,12 +584,11 @@ void Micropolis::DoSmooth2()
 /* comefrom: PopDenScan */
 void Micropolis::ClrTemArray()
 {
-  register short x, y, z;
+  register short x, y;
 
-  z = 0;
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
-      tem[x][y] = (Byte)z;
+      tem[x][y] = (Byte)0;
     }
   }
 }
@@ -608,13 +602,13 @@ void Micropolis::SmoothFSMap()
   for (x = 0; x < SmX; x++) {
     for (y = 0; y < SmY; y++) {
       edge = 0;
-      if (x) {
+      if (x > 0) {
         edge += FireStMap[x - 1][y];
       }
       if (x < (SmX - 1)) {
         edge += FireStMap[x + 1][y];
       }
-      if (y) {
+      if (y > 0) {
         edge += FireStMap[x][y - 1];
       }
       if (y < (SmY - 1)) {
@@ -640,13 +634,13 @@ void Micropolis::SmoothPSMap()
   for (x = 0; x < SmX; x++) {
     for (y = 0; y < SmY; y++) {
       edge = 0;
-      if (x) {
+      if (x > 0) {
         edge += PoliceMap[x - 1][y];
       }
       if (x < (SmX - 1)) {
         edge += PoliceMap[x + 1][y];
       }
-      if (y) {
+      if (y> 0) {
         edge += PoliceMap[x][y - 1];
       }
       if (y < (SmY - 1)) {
@@ -664,16 +658,19 @@ void Micropolis::SmoothPSMap()
 }
 
 
-/* comefrom: PopDenScan */
+/**
+ * Compute distance to city center for the entire map.
+ * @see ComRate
+ */
 void Micropolis::DistIntMarket()
 {
   register short x, y, z;
 
   for (x = 0; x < SmX; x++) {
     for (y = 0; y < SmY; y++) {
-      z = GetDisCC(x <<2,y <<2);
-      z = z <<2;
-      z = 64 - z;
+      z = GetDisCC(x * 4,y * 4); // 0..32
+      z = z * 4;  // 0..128
+      z = 64 - z; // 64..-64
       ComRate[x][y] = z;
     }
   }
