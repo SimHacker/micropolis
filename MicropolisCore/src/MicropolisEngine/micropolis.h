@@ -915,6 +915,7 @@ public:
  * @todo Modify Micropolis::roadPercent, Micropolis::policePercent, and
  *       Micropolis::firePercent to hold real percentage from \c 0 to \c 100
  *       instead of a floating point fraction
+ * @todo Micropolis::CrimeMaxX and Micropolis::CrimeMaxY seem unused.
  */
 class Micropolis {
 
@@ -1146,7 +1147,7 @@ public:
   Quad CityMonth;
 
   /**
-   * City year, (CityTime / 48) + StartingYear.
+   * City year, (Micropolis::CityTime / 48) + Micropolis::StartingYear.
    */
   Quad CityYear;
 
@@ -1396,7 +1397,7 @@ public:
   /**
    * Commercial rate map.
    *
-   * Depends on distance to city center. Effects commercial zone
+   * Depends on distance to city center. Affects commercial zone
    * evaluation.
    */
   short ComRate[SmX][SmY];
@@ -2380,21 +2381,17 @@ public:
 
   short NewMapFlags[NMAPS];
 
-  short CCx;
+  short CCx; ///< X coordinate of city center
+  short CCy; ///< Y coordinate of city center
 
-  short CCy;
+  short CCx2; ///< X coordinate of city center divided by 2
+  short CCy2; ///< Y coordinate of city center divided by 2
 
-  short CCx2;
+  short PolMaxX; ///< X coordinate of most polluted area
+  short PolMaxY; ///< Y coordinate of most polluted area
 
-  short CCy2;
-
-  short PolMaxX;
-
-  short PolMaxY;
-
-  short CrimeMaxX;
-
-  short CrimeMaxY;
+  short CrimeMaxX; ///< X coordinate of most criminal area
+  short CrimeMaxY; ///< Y coordinate of most criminal area
 
   Quad DonDither;
 
