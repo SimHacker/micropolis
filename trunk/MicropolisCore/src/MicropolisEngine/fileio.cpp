@@ -389,7 +389,7 @@ void Micropolis::LoadScenario(Scenario s)
     CityFileName = NULL;
   }
 
-  SetGameLevel(0);
+  SetGameLevel(LEVEL_EASY);
 
   if (s < SC_DULLSVILLE || s > SC_RIO) {
     s = SC_DULLSVILLE;

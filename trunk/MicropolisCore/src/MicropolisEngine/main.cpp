@@ -129,7 +129,7 @@ void Micropolis::sim_init()
   ClearMap();
   InitWillStuff();
   SetFunds(5000);
-  SetGameLevelFunds(0);
+  SetGameLevelFunds(LEVEL_EASY);
   setSpeed(0);
   setSkips(0);
 }
