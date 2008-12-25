@@ -608,7 +608,7 @@ void Micropolis::SetValves()
 
   if (Rratio < 0) {
     if (RValve > MinRValve) {
-      RValve += (short)Rratio; // XXX Why bother about minimal valve value when adding?
+      RValve += (short)Rratio; // Adding a negative number
     }
   }
 
@@ -620,7 +620,7 @@ void Micropolis::SetValves()
 
   if (Cratio < 0) {
     if (CValve > MinCValve) {
-      CValve += (short)Cratio; // XXX Why bother about minimal valve value when adding?
+      CValve += (short)Cratio; // Adding a negative number
     }
   }
 
@@ -632,7 +632,7 @@ void Micropolis::SetValves()
 
   if (Iratio < 0) {
     if (IValve > MinIValve) {
-      IValve += (short)Iratio; // XXX Why bother about minimal valve value when adding?
+      IValve += (short)Iratio; // Adding a negative number
     }
   }
 
