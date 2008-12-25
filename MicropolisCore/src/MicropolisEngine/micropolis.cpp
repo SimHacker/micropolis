@@ -430,8 +430,8 @@ void Micropolis::init()
   // short problemVotes[PROBNUM]; /* these are the votes for each  */
   memset(problemVotes, 0, sizeof(short) * PROBNUM);
 
-  // short ProblemOrder[CVP_NUMTAKEN]; /* sorted index to above  */
-  memset(problemOrder, 0, sizeof(short) * CVP_NUMTAKEN);
+  // short problemOrder[CVP_PROBLEM_COMPLAINTS]; /* sorted index to above  */
+  memset(problemOrder, 0, sizeof(short) * CVP_PROBLEM_COMPLAINTS);
 
   // Quad cityPop;
   cityPop = 0;
