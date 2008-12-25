@@ -2756,9 +2756,9 @@ public:
 
   /**
    * Difficulty level of the game (0..2)
-   * @todo Rename to game_level and create a GameLevel enum
+   * @todo Rename to gameLevel and create a GameLevel enum
    */
-  short GameLevel;
+  short gameLevel;
 
   short InitSimLoad;
 

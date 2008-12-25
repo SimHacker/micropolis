@@ -455,7 +455,7 @@ void Micropolis::doScoreCard()
   //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
   //   Assessed Value: ${FormatMoney(cityAssValue))
   //   Category: ${cityClassStr[cityClass]}
-  //   Game Level: ${cityLevelStr[GameLevel]}
+  //   Game Level: ${cityLevelStr[gameLevel]}
 }
 
 /** Request that new score is displayed to the user */

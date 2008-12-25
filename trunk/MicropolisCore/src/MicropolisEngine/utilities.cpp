@@ -218,21 +218,22 @@ void Micropolis::SetGameLevelFunds(
   }
 }
 
-
-void Micropolis::SetGameLevel(
-  short level)
+/** Set/change the game level.
+ * @param level New game level.
+ */
+void Micropolis::SetGameLevel(short level)
 {
-  GameLevel = level;
+  gameLevel = level;
   UpdateGameLevel();
 }
 
-
+/** Report to the front-end that a new game level has been set. */
 void Micropolis::UpdateGameLevel()
 {
   Callback(
     "UISetGameLevel",
     "d",
-    (int)GameLevel);
+    (int)gameLevel);
 }
 
 
