@@ -93,7 +93,7 @@ void Micropolis::DoDisasters()
     return;
   }
 
-  short x = GameLevel;
+  short x = gameLevel;
   if (x > 2) {
     x = 0;
   }
@@ -112,8 +112,8 @@ void Micropolis::DoDisasters()
       break;
 
     case 4:
-      // 1/9 chance nothing happens (was airplane crash, 
-      // which EA removed after 9/11, and requested it be 
+      // 1/9 chance nothing happens (was airplane crash,
+      // which EA removed after 9/11, and requested it be
       // removed from this code)
       break;
 

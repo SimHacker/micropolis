@@ -407,7 +407,7 @@ void Micropolis::SimLoadInit()
   LVAverage = MiscHis[12];
   CrimeAverage = MiscHis[13];
   PolluteAverage = MiscHis[14];
-  GameLevel = MiscHis[15];
+  gameLevel = MiscHis[15];
 
   if (CityTime < 0) {
     CityTime = 0;
@@ -417,11 +417,11 @@ void Micropolis::SimLoadInit()
     EMarket = 4.0;
   }
 
-  if ((GameLevel > 2) || (GameLevel < 0)) {
-    GameLevel = 0;
+  // Set game level
+  if (gameLevel > 2 || gameLevel < 0) {
+    gameLevel = 0;
   }
-
-  SetGameLevel(GameLevel);
+  SetGameLevel(gameLevel);
 
   SetCommonInits();
 
@@ -481,11 +481,6 @@ void Micropolis::SetCommonInits()
   FireEffect   = MAX_FIRESTATION_EFFECT;
   TaxFlag = 0;
   TaxFund = 0;
-
-/*
-  if ((GameLevel > 2) || (GameLevel < 0)) GameLevel = 0;
-  setGameLevel(GameLevel);
-*/
 }
 
 
@@ -538,7 +533,7 @@ void Micropolis::SetValves()
   MiscHis[12] = LVAverage;
   MiscHis[13] = CrimeAverage;
   MiscHis[14] = PolluteAverage;
-  MiscHis[15] = GameLevel;
+  MiscHis[15] = gameLevel;
   MiscHis[16] = (short)cityClass;
   MiscHis[17] = cityScore;
 
@@ -569,8 +564,8 @@ void Micropolis::SetValves()
 
   PjComPop = IntMarket * LaborBase;
 
-  assert(GameLevel >= 0 && GameLevel < 3); // easy, medium, hard
-  PjIndPop = IndPop * LaborBase * extMarkerParamTable[GameLevel];
+  assert(gameLevel >= 0 && gameLevel < 3); // easy, medium, hard
+  PjIndPop = IndPop * LaborBase * extMarkerParamTable[gameLevel];
   PjIndPop = max(PjIndPop, MinPjIndPop);
 
   if (NormResPop > 0) {
@@ -594,8 +589,9 @@ void Micropolis::SetValves()
   Cratio = min(Cratio, MaxCratio);
   Rratio = min(Iratio, MaxIratio);
 
-  short z = min((short)(CityTax + GameLevel), MaxTax);
-  Rratio = ((Rratio - 1) * TaxTableScale) + TaxTable[z]; /* global tax/Glevel effects */
+  /* global tax and game level effects */
+  short z = min((short)(CityTax + gameLevel), MaxTax);
+  Rratio = ((Rratio - 1) * TaxTableScale) + TaxTable[z];
   Cratio = ((Cratio - 1) * TaxTableScale) + TaxTable[z];
   Iratio = ((Iratio - 1) * TaxTableScale) + TaxTable[z];
 
@@ -887,8 +883,8 @@ void Micropolis::CollectTax()
 
     PoliceFund = PolicePop * 100;
     FireFund = FireStPop * 100;
-    RoadFund = (long)((RoadTotal + (RailTotal * 2)) * RLevels[GameLevel]);
-    TaxFund = (long)((((Quad)TotalPop * LVAverage) / 120) * CityTax * FLevels[GameLevel]);
+    RoadFund = (long)((RoadTotal + (RailTotal * 2)) * RLevels[gameLevel]);
+    TaxFund = (long)((((Quad)TotalPop * LVAverage) / 120) * CityTax * FLevels[gameLevel]);
 
     if (TotalPop > 0) {
       /* There are people to tax. */
@@ -1458,7 +1454,7 @@ void Micropolis::DoSPZone(
 
   case NUCLEAR:
 
-    if (!NoDisasters && !Rand(MltdwnTab[GameLevel])) {
+    if (!NoDisasters && !Rand(MltdwnTab[gameLevel])) {
       DoMeltdown(SMapX, SMapY);
       return;
     }
