@@ -10,7 +10,7 @@
     <class name="appview">
 
 
-        <attribute name="tickDelay" value="100"/>
+        <attribute name="tickDelay" value="50"/>
         <attribute name="tickActive" value="false"/>
         <attribute name="tickDelegate" value="null"/>
         <attribute name="ticks" value="1"/>
@@ -279,14 +279,12 @@
             }
             var t = lz.Timer.addTimer(this.tickDelegate, this.tickDelay);
             this.tickActive = true;
-            Debug.write("tickStart", this, this.tickDelegate, this.tickDelay, t, lz.Timer, lz.Timer.timerList);
           ]]>
         </method>
 
 
         <method name="tickContinue" args="soon"><![CDATA[
             // This is a bit confused, and violates DRY. Refactor tickStart and tickContinue.
-            Debug.write("tickContinue", soon);
             if (!this.tickDelegate) {
                 this.tickDelegate = new lz.Delegate(this, 'tick');
             }
@@ -298,7 +296,6 @@
 
 
         <method name="tickStop"><![CDATA[
-Debug.write("TICKSTOP", this);
             if (!this.tickActive) {
                 return;
             }
@@ -307,8 +304,7 @@ Debug.write("TICKSTOP", this);
         </method>
 
 
-        <method name="tick"><![CDATA[
-Debug.write("TICK", this);
+        <method name="tick" args="ignore"><![CDATA[
             var i, n;
             var body = "";
             body += "<tick>";
@@ -338,7 +334,6 @@ Debug.write("TICK", this);
             body += "</tick>";
 
             //Debug.write(body);
-
 
             var ref =
                 this.ticks;
