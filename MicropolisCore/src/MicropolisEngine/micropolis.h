@@ -689,6 +689,18 @@ enum CityClass {
     CC_NUM_CITIES,  ///< Number of city classes
 };
 
+/** Game levels */
+enum GameLevel {
+    LEVEL_EASY,   ///< Simple game level
+    LEVEL_MEDIUM, ///< Intermediate game level
+    LEVEL_HARD,   ///< Difficult game level
+
+    LEVEL_COUNT,  ///< Number of game levels
+
+    LEVEL_FIRST = LEVEL_EASY, ///< First game level value
+    LEVEL_LAST  = LEVEL_HARD, ///< Last game level value
+};
+
 ////////////////////////////////////////////////////////////////////////
 // Inline functions
 
@@ -2754,11 +2766,7 @@ public:
 
   Quad LastMesTime;
 
-  /**
-   * Difficulty level of the game (0..2)
-   * @todo Rename to gameLevel and create a GameLevel enum
-   */
-  short gameLevel;
+  GameLevel gameLevel; ///< Difficulty level of the game (0..2)
 
   short InitSimLoad;
 
@@ -3179,11 +3187,8 @@ public:
   void setSkips(
     int skips);
 
-  void SetGameLevelFunds(
-    short level);
-
-  void SetGameLevel(
-    short level);
+  void SetGameLevel(GameLevel level);
+  void SetGameLevelFunds(GameLevel level);
 
   void UpdateGameLevel();
 

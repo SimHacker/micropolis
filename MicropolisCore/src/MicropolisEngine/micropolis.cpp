@@ -830,8 +830,7 @@ void Micropolis::init()
   // Quad LastMesTime;
   LastMesTime = 0;
 
-  // short gameLevel;
-  gameLevel = 0;
+  gameLevel = LEVEL_EASY;
 
   // short InitSimLoad;
   InitSimLoad = 0;

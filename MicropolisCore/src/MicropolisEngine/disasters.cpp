@@ -76,10 +76,11 @@ void Micropolis::DoDisasters()
 {
   /* Chance of disasters at lev 0 1 2 */
   static const short DisChance[3] = {
-    10 * 48, // Level 0
-    5 * 48,  // Level 1
-    60 // Level 2
+    10 * 48, // Game level 0
+    5 * 48,  // Game level 1
+    60 // Game level 2
   };
+  assert(LEVEL_COUNT == LENGTH_OF(DisChance));
 
   if (FloodCnt) {
     FloodCnt--;
@@ -93,9 +94,9 @@ void Micropolis::DoDisasters()
     return;
   }
 
-  short x = gameLevel;
-  if (x > 2) {
-    x = 0;
+  int x = gameLevel;
+  if (x > LEVEL_LAST) {
+    x = LEVEL_EASY;
   }
 
   if (!Rand(DisChance[x])) {
