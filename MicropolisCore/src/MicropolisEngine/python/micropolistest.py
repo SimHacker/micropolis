@@ -1,4 +1,4 @@
-# micropolisevaluationview.py
+# micropolistest.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,60 +61,105 @@
 
 
 ########################################################################
-# Micropolis Evaluation View
+# Micropolis Test
 # Don Hopkins
 
 
 ########################################################################
-# Import stuff
+# Import standard Python modules.
 
 
+import sys, os
 import gtk
-import cairo
-import pango
-import micropolisengine
-import micropolisview
 
 
 ########################################################################
-# MicropolisEvaluationView
+# Set up the path for development, to load the latest compiled code 
+# from the build directory and the fresh python code from its place 
+# in the source tree.
 
 
-class MicropolisEvaluationView(micropolisview.MicropolisView):
+#print "CWD", os.getcwd()
+
+cwd = os.getcwd()
+
+for relPath in (
+  'ReleaseSymbols',
+  'build/lib.macosx-10.5-i386-2.5',
+  '../../TileEngine/python/ReleaseSymbols',
+  '../../TileEngine/python/build/lib.macosx-10.5-i386-2.5',
+  '../../TileEngine/python',
+  '.',
+):
+    sys.path.insert(0, os.path.join(cwd, relPath))
 
 
-    def __init__(
-        self,
-        **args):
-
-        micropolisview.MicropolisView.__init__(
-            self,
-            aspect='evaluation',
-            interests=('city', 'evaluation',),
-            **args)
+########################################################################
+# Import our modules
 
 
-    def update(
-        self,
-        name,
-        *args):
-
-        print "EVALUATION UPDATE", self, name, args
-
-        engine = self.engine
-
-        self.queue_draw()
+import micropolismodel
+import micropoliswindow
+import micropolisdrawingarea
 
 
-    def drawContent(
-        self,
-        ctx):
+########################################################################
 
-        #print "==== MicropolisEvaluationView DRAWCONTENT", self
 
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
+if __name__ == '__main__':
+
+    engine = micropolismodel.CreateTestEngine()
+
+    fudge = 0
+    width = int((120 * 4) + fudge)
+    height = int((100 * 4) + fudge)
+
+    w = width
+    h = height
+
+    x1 = 0
+    y1 = 0
+    x2 = w + 20
+    y2 = h + 40
+
+    if True:
+        win2 = micropoliswindow.MicropolisPanedWindow(engine=engine)
+        win2.set_default_size(800, 800)
+        win2.move(x1, y1)
+        win2.show_all()
+        win2.tileView.setScale(1.0)
+        win2.tileView.panTo(-200, -200)
+
+    if False:
+        win2 = micropoliswindow.MicropolisWindow(engine=engine)
+        win2.set_default_size(w, h)
+        win2.move(x1, y1)
+        win2.show_all()
+        win2.da.setScale(1.0)
+
+    if False:
+        win1 = micropoliswindow.MicropolisWindow(
+            engine=engine, 
+            tileViewClass=micropolisdrawingarea.MiniMicropolisDrawingArea)
+        win1.set_default_size(width, height)
+        win1.move(x2, y1)
+        win1.show_all()
+
+    if False:
+        win3 = micropoliswindow.MicropolisWindow(engine=engine)
+        win3.set_default_size(w, h)
+        win3.move(x1, y2)
+        win3.show_all()
+        win3.da.setScale(2.0)
+
+    if False:
+        win4 = micropoliswindow.MicropolisWindow(engine=engine)
+        win4.set_default_size(w, h)
+        win4.move(x2, y2)
+        win4.show_all()
+        win4.da.setScale(4.0)
+
+    gtk.main()
 
 
 ########################################################################

@@ -86,20 +86,6 @@ import array
 # Import our modules
 
 
-#print "CWD", os.getcwd()
-
-cwd = os.getcwd()
-
-for relPath in (
-  'ReleaseSymbols',
-  'build/lib.macosx-10.3-i386-2.5',
-  '../../TileEngine/python/ReleaseSymbols',
-  '../../TileEngine/python/build/lib.macosx-10.3-i386-2.5',
-  '../../TileEngine/python',
-  '.',
-):
-    sys.path.insert(0, os.path.join(cwd, relPath))
-
 import micropolisengine
 import micropolismodel
 import micropolisutils
@@ -109,6 +95,7 @@ import micropolisgraphview
 import micropolisevaluationview
 import micropolisstatusview
 import micropolisnoticeview
+
 
 ########################################################################
 # MicropolisWindow
@@ -306,65 +293,6 @@ class MicropolisPanedWindow(gtk.Window):
         if self.firstResize:
             self.firstResize = False
             self.resizeEdges()
-
-
-########################################################################
-
-
-if __name__ == '__main__':
-
-    engine = micropolismodel.CreateTestEngine()
-
-    fudge = 0
-    width = int((120 * 4) + fudge)
-    height = int((100 * 4) + fudge)
-
-    w = width
-    h = height
-
-    x1 = 0
-    y1 = 0
-    x2 = w + 20
-    y2 = h + 40
-
-    if True:
-        win2 = MicropolisPanedWindow(engine=engine)
-        win2.set_default_size(800, 800)
-        win2.move(x1, y1)
-        win2.show_all()
-        win2.tileView.setScale(1.0)
-        win2.tileView.panTo(-200, -200)
-
-    if False:
-        win2 = MicropolisWindow(engine=engine)
-        win2.set_default_size(w, h)
-        win2.move(x1, y1)
-        win2.show_all()
-        win2.da.setScale(1.0)
-
-    if False:
-        win1 = MicropolisWindow(
-            engine=engine, 
-            tileViewClass=micropolisdrawingarea.MiniMicropolisDrawingArea)
-        win1.set_default_size(width, height)
-        win1.move(x2, y1)
-        win1.show_all()
-
-    if False:
-        win3 = MicropolisWindow(engine=engine)
-        win3.set_default_size(w, h)
-        win3.move(x1, y2)
-        win3.show_all()
-        win3.da.setScale(2.0)
-
-    if False:
-        win4 = MicropolisWindow(engine=engine)
-        win4.set_default_size(w, h)
-        win4.move(x2, y2)
-        win4.show_all()
-        win4.da.setScale(4.0)
-
-    gtk.main()
 
 
 ########################################################################

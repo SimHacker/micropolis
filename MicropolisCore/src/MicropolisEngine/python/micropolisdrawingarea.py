@@ -138,7 +138,9 @@ class MicropolisDrawingArea(TileDrawingArea):
     def configTileEngine(self, tengine):
 
         engine = self.engine
-        tengine.setBuffer(engine.getMapBuffer())
+        buffer = engine.getMapBuffer()
+        print "Map buffer", buffer
+        tengine.setBuffer(buffer)
         tengine.width = micropolisengine.WORLD_X
         tengine.height = micropolisengine.WORLD_Y
 

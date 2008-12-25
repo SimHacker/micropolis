@@ -72,20 +72,20 @@
 
 
 static short gCostOf[] = {
-    100,    100,    100,    500,
-      0,    500,      5,      1,
-     20,     10,   5000,     10,
-   3000,   3000,   5000,  10000,
-    100,      0,
+     100,    100,    100,    500,
+     500,      0,      5,      1,
+      20,     10,   5000,     10,
+    3000,   3000,   5000,  10000,
+     100,      0,
 };
 
 
 static short gToolSize[] = {
-  3, 3, 3, 3,
-  1, 3, 1, 1,
-  1, 1, 4, 1,
-  4, 4, 4, 6,
-  1, 0,
+    3, 3, 3, 3,
+    3, 1, 1, 1,
+    1, 1, 4, 1,
+    4, 4, 4, 6,
+    1, 0,
 };
 
 
@@ -93,200 +93,181 @@ static short gToolSize[] = {
 // Utilities
 
 
-int Micropolis::putDownPark(
-  short mapH,
-  short mapV)
+int Micropolis::putDownPark(short mapH, short mapV)
 {
-  short value, tile;
+    short value, tile;
 
-  if (TotalFunds - gCostOf[parkState] < 0) {
-        return -2;
-  }
+    if (TotalFunds - gCostOf[TOOL_PARK] < 0) return -2;
 
-  value = Rand(4);
+    value = Rand(4);
 
-  if (value == 4) {
-    tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
-  } else {
-    tile = (value + WOODS2) | BURNBIT | BULLBIT;
-  }
+    if (value == 4) {
+        tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
+    } else {
+        tile = (value + WOODS2) | BURNBIT | BULLBIT;
+    }
 
-  if (Map[mapH][mapV] != DIRT) {
-    return -1;
-  }
+    if (Map[mapH][mapV] != DIRT) return -1;
 
-  Map[mapH][mapV] =
-        tile;
+    Map[mapH][mapV] = tile;
 
-  Spend(gCostOf[parkState]);
-  UpdateFunds();
+    Spend(gCostOf[TOOL_PARK]);
+    UpdateFunds();
 
-  return 1;
+    return 1;
 }
 
 
-int Micropolis::putDownNetwork(
-  short mapH,
-  short mapV)
+int Micropolis::putDownNetwork(short mapH, short mapV)
 {
-  int tile = Map[mapH][mapV] & LOMASK;
+    int tile = Map[mapH][mapV] & LOMASK;
 
-  if ((TotalFunds > 0) && tally(tile)) {
-    Map[mapH][mapV] = tile = 0;
-    Spend(1);
-  }
+    if ((TotalFunds > 0) && tally(tile)) {
+        Map[mapH][mapV] = tile = 0;
+        Spend(1);
+    }
 
-  if (tile != 0) {
-    return -1;
-  }
+    if (tile != 0) return -1;
 
-  if ((TotalFunds - gCostOf[networkState]) < 0) {
-    return -2;
-  }
+    if ((TotalFunds - gCostOf[TOOL_NETWORK]) < 0) return -2;
 
-  Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
+    Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
-  Spend(gCostOf[networkState]);
-  UpdateFunds();
+    Spend(gCostOf[TOOL_NETWORK]);
+    UpdateFunds();
 
-  return 1;
+    return 1;
 }
 
 
 short Micropolis::checkBigZone(
-  short id,
-  short *deltaHPtr,
-  short *deltaVPtr)
+    short id, short *deltaHPtr, short *deltaVPtr)
 {
-  switch (id) {
+    // @todo Make this table driven.
 
-  case POWERPLANT:      /* check coal plant */
-  case PORT:            /* check sea port */
-  case NUCLEAR:         /* check nuc plant */
-  case STADIUM:         /* check stadium */
-    *deltaHPtr = 0;
-    *deltaVPtr = 0;
-    return (4);
+    switch (id) {
 
-  case POWERPLANT + 1:  /* check coal plant */
-  case COALSMOKE3:      /* check coal plant, smoke */
-  case COALSMOKE3 + 1:  /* check coal plant, smoke */
-  case COALSMOKE3 + 2:  /* check coal plant, smoke */
-  case PORT + 1:        /* check sea port */
-  case NUCLEAR + 1:     /* check nuc plant */
-  case STADIUM + 1:     /* check stadium */
-    *deltaHPtr = -1;
-    *deltaVPtr = 0;
-    return (4);
+    case POWERPLANT:      /* check coal plant */
+    case PORT:            /* check sea port */
+    case NUCLEAR:         /* check nuc plant */
+    case STADIUM:         /* check stadium */
+        *deltaHPtr = 0;
+        *deltaVPtr = 0;
+        return 4;
 
-  case POWERPLANT + 4:  /* check coal plant */
-  case PORT + 4:        /* check sea port */
-  case NUCLEAR + 4:     /* check nuc plant */
-  case STADIUM + 4:     /* check stadium */
-    *deltaHPtr = 0;
-    *deltaVPtr = -1;
-    return (4);
+    case POWERPLANT + 1:  /* check coal plant */
+    case COALSMOKE3:      /* check coal plant, smoke */
+    case COALSMOKE3 + 1:  /* check coal plant, smoke */
+    case COALSMOKE3 + 2:  /* check coal plant, smoke */
+    case PORT + 1:        /* check sea port */
+    case NUCLEAR + 1:     /* check nuc plant */
+    case STADIUM + 1:     /* check stadium */
+        *deltaHPtr = -1;
+        *deltaVPtr = 0;
+        return 4;
 
-  case POWERPLANT + 5:  /* check coal plant */
-  case PORT + 5:        /* check sea port */
-  case NUCLEAR + 5:     /* check nuc plant */
-  case STADIUM + 5:     /* check stadium */
-    *deltaHPtr = -1;
-    *deltaVPtr = -1;
-    return (4);
+    case POWERPLANT + 4:  /* check coal plant */
+    case PORT + 4:        /* check sea port */
+    case NUCLEAR + 4:     /* check nuc plant */
+    case STADIUM + 4:     /* check stadium */
+        *deltaHPtr = 0;
+        *deltaVPtr = -1;
+        return 4;
 
-    /* check airport */
-    /*** first row ***/
-  case AIRPORT:
-    *deltaHPtr = 0;
-    *deltaVPtr = 0;
-    return (6);
+    case POWERPLANT + 5:  /* check coal plant */
+    case PORT + 5:        /* check sea port */
+    case NUCLEAR + 5:     /* check nuc plant */
+    case STADIUM + 5:     /* check stadium */
+        *deltaHPtr = -1;
+        *deltaVPtr = -1;
+        return 4;
 
-  case AIRPORT + 1:
-    *deltaHPtr = -1;
-    *deltaVPtr = 0;
-    return (6);
+    case AIRPORT:         /* check airport */
+        *deltaHPtr = 0;
+        *deltaVPtr = 0;
+        return 6;
 
-  case AIRPORT + 2:
-    *deltaHPtr = -2;
-    *deltaVPtr = 0;
-    return (6);
+    case AIRPORT + 1:
+        *deltaHPtr = -1;
+        *deltaVPtr = 0;
+        return 6;
 
-  case AIRPORT + 3:
-    *deltaHPtr = -3;
-    *deltaVPtr = 0;
-    return (6);
+    case AIRPORT + 2:
+        *deltaHPtr = -2;
+        *deltaVPtr = 0;
+        return 6;
 
-    /*** second row ***/
-  case AIRPORT + 6:
-    *deltaHPtr = 0;
-    *deltaVPtr = -1;
-    return (6);
+    case AIRPORT + 3:
+        *deltaHPtr = -3;
+        *deltaVPtr = 0;
+        return 6;
 
-  case AIRPORT + 7:
-    *deltaHPtr = -1;
-    *deltaVPtr = -1;
-    return (6);
+    case AIRPORT + 6:
+        *deltaHPtr = 0;
+        *deltaVPtr = -1;
+        return 6;
 
-  case AIRPORT + 8:
-    *deltaHPtr = -2;
-    *deltaVPtr = -1;
-    return (6);
+    case AIRPORT + 7:
+        *deltaHPtr = -1;
+        *deltaVPtr = -1;
+        return 6;
 
-  case AIRPORT + 9:
-    *deltaHPtr = -3;
-    *deltaVPtr = -1;
-    return (6);
+    case AIRPORT + 8:
+        *deltaHPtr = -2;
+        *deltaVPtr = -1;
+        return 6;
 
-    /*** third row ***/
-  case AIRPORT + 12:
-    *deltaHPtr = 0;
-    *deltaVPtr = -2;
-    return (6);
+    case AIRPORT + 9:
+        *deltaHPtr = -3;
+        *deltaVPtr = -1;
+        return 6;
 
-  case AIRPORT + 13:
-    *deltaHPtr = -1;
-    *deltaVPtr = -2;
-    return (6);
+    case AIRPORT + 12:
+        *deltaHPtr = 0;
+        *deltaVPtr = -2;
+        return 6;
 
-  case AIRPORT + 14:
-    *deltaHPtr = -2;
-    *deltaVPtr = -2;
-    return (6);
+    case AIRPORT + 13:
+        *deltaHPtr = -1;
+        *deltaVPtr = -2;
+        return 6;
 
-  case AIRPORT + 15:
-    *deltaHPtr = -3;
-    *deltaVPtr = -2;
-    return (6);
+    case AIRPORT + 14:
+        *deltaHPtr = -2;
+        *deltaVPtr = -2;
+        return 6;
 
-    /*** fourth row ***/
-  case AIRPORT + 18:
-    *deltaHPtr = 0;
-    *deltaVPtr = -3;
-    return (6);
+    case AIRPORT + 15:
+        *deltaHPtr = -3;
+        *deltaVPtr = -2;
+        return 6;
 
-  case AIRPORT + 19:
-    *deltaHPtr = -1;
-    *deltaVPtr = -3;
-    return (6);
+    case AIRPORT + 18:
+        *deltaHPtr = 0;
+        *deltaVPtr = -3;
+        return 6;
 
-  case AIRPORT + 20:
-    *deltaHPtr = -2;
-    *deltaVPtr = -3;
-    return (6);
+    case AIRPORT + 19:
+        *deltaHPtr = -1;
+        *deltaVPtr = -3;
+        return 6;
 
-  case AIRPORT + 21:
-    *deltaHPtr = -3;
-    *deltaVPtr = -3;
-    return (6);
+    case AIRPORT + 20:
+        *deltaHPtr = -2;
+        *deltaVPtr = -3;
+        return 6;
 
-  default:
-    *deltaHPtr = 0;
-    *deltaVPtr = 0;
-    return (0);
+    case AIRPORT + 21:
+        *deltaHPtr = -3;
+        *deltaVPtr = -3;
+        return 6;
 
-  }
+    default:
+        *deltaHPtr = 0;
+        *deltaVPtr = 0;
+        return 0;
 
+    }
 }
 
 /**
@@ -296,9 +277,9 @@ short Micropolis::checkBigZone(
  */
 bool Micropolis::tally(short tileValue)
 {
-  return (tileValue >= FIRSTRIVEDGE  && tileValue <= LASTRUBBLE) ||
-         (tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
-         (tileValue >= TINYEXP       && tileValue <= LASTTINYEXP + 2);
+    return (tileValue >= FIRSTRIVEDGE  && tileValue <= LASTRUBBLE) ||
+           (tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
+           (tileValue >= TINYEXP       && tileValue <= LASTTINYEXP + 2);
 }
 
 /**
@@ -306,520 +287,452 @@ bool Micropolis::tally(short tileValue)
  * @param tile_value Value of the tile in the zone
  * @return Size if it is a known tile value, else \c 0
  */
-short Micropolis::checkSize(short tile_value)
+short Micropolis::checkSize(short tileValue)
 {
-  /* check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept */
-  if ((tile_value >= RESBASE - 1        && tile_value <= PORTBASE - 1) ||
-      (tile_value >= LASTPOWERPLANT + 1 && tile_value <= POLICESTATION + 4)) {
-    return 3;
-  }
+    /* check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept */
+    if ((tileValue >= RESBASE - 1        && tileValue <= PORTBASE - 1) ||
+        (tileValue >= LASTPOWERPLANT + 1 && tileValue <= POLICESTATION + 4)) {
+        return 3;
+    }
 
-  if ((tile_value >= PORTBASE    && tile_value <= LASTPORT) ||
-      (tile_value >= COALBASE    && tile_value <= LASTPOWERPLANT) ||
-      (tile_value >= STADIUMBASE && tile_value <= LASTZONE)) {
-    return 4;
-  }
+    if ((tileValue >= PORTBASE    && tileValue <= LASTPORT) ||
+        (tileValue >= COALBASE    && tileValue <= LASTPOWERPLANT) ||
+        (tileValue >= STADIUMBASE && tileValue <= LASTZONE)) {
+        return 4;
+    }
 
-  return 0;
+    return 0;
 }
 
 
 /* 3x3 */
 
 
-void Micropolis::check3x3border(
-  short xMap,
-  short yMap)
+void Micropolis::check3x3border(short xMap, short yMap)
 {
-  short xPos, yPos;
-  short cnt;
+    short xPos, yPos;
+    short cnt;
 
-  xPos = xMap;
-  yPos = yMap - 1;
+    xPos = xMap;
+    yPos = yMap - 1;
 
-  for (cnt = 0; cnt < 3; cnt++) {
-    /*** this will do the upper bordering row ***/
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 3; cnt++) {
+        /* this will do the upper bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        xPos++;
+    }
 
-  xPos = xMap - 1;
-  yPos = yMap;
+    xPos = xMap - 1;
+    yPos = yMap;
 
-  for (cnt = 0; cnt < 3; cnt++) {
-    /*** this will do the left bordering row ***/
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    yPos++;
-  }
+    for (cnt = 0; cnt < 3; cnt++) {
+        /* this will do the left bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        yPos++;
+    }
 
-  xPos = xMap;
-  yPos = yMap + 3;
+    xPos = xMap;
+    yPos = yMap + 3;
 
-  for (cnt = 0; cnt < 3; cnt++) {
-    /*** this will do the bottom bordering row ***/
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 3; cnt++) {
+        /* this will do the bottom bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        xPos++;
+    }
 
-  xPos = xMap + 3;
-  yPos = yMap;
+    xPos = xMap + 3;
+    yPos = yMap;
 
-  for (cnt = 0; cnt < 3; cnt++) {
-    /*** this will do the right bordering row ***/
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    yPos++;
-  }
+    for (cnt = 0; cnt < 3; cnt++) {
+        /* this will do the right bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        yPos++;
+    }
 
 }
 
 
 int Micropolis::check3x3(
-  short mapH,
-  short mapV,
-  short base,
-  short tool)
+    short mapH, short mapV, 
+    short base, short tool)
 {
-  register short rowNum, columnNum;
-  register short holdMapH, holdMapV;
-  short xPos, yPos;
-  short cost = 0;
-  short tileValue;
-  short flag;
+    short rowNum, columnNum;
+    short holdMapH, holdMapV;
+    short xPos, yPos;
+    short cost = 0;
+    short tileValue;
+    short flag;
 
-  mapH--; mapV--;
+    mapH--; mapV--;
 
-  // Tool partly sticking outside world boundaries?
-  if (mapH < 0 || mapH > WORLD_X - 3 || mapV < 0 || mapV > WORLD_Y - 3) {
-    return -1;
-  }
-
-  xPos = holdMapH = mapH;
-  yPos = holdMapV = mapV;
-
-  flag = 1;
-
-  for (rowNum = 0; rowNum <= 2; rowNum++) {
-
-    mapH = holdMapH;
-
-    for (columnNum = 0; columnNum <= 2; columnNum++) {
-
-      tileValue = Map[mapH++][mapV] & LOMASK;
-
-      if (autoBulldoze) {
-
-        /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-        if (tileValue != DIRT) {
-
-          if (tally(tileValue)) {
-            cost++;
-          } else {
-            flag = 0;
-          }
-
-        }
-
-      } else {
-
-        /* check and see if the tile is clear or not  */
-        if (tileValue != 0) {
-          flag = 0;
-        }
-
-      }
+    // Tool partly sticking outside world boundaries?
+    if (mapH < 0 || mapH > WORLD_X - 3 || mapV < 0 || mapV > WORLD_Y - 3) {
+        return -1;
     }
 
-    mapV++;
-  }
+    xPos = holdMapH = mapH;
+    yPos = holdMapV = mapV;
 
-  if (flag == 0) {
-    return -1;
-  }
+    flag = 1;
 
-  cost += (short)gCostOf[tool];
+    for (rowNum = 0; rowNum <= 2; rowNum++) {
 
-  if ((TotalFunds - cost) < 0) {
-    return -2;
-  }
+        mapH = holdMapH;
 
-  if ((Players > 1) &&
-      (OverRide == 0) &&
-      (cost >= Expensive)) {
-    return -3;
-  }
+        for (columnNum = 0; columnNum <= 2; columnNum++) {
 
-  /* take care of the money situtation here */
-  Spend(cost);
-  UpdateFunds();
+            tileValue = Map[mapH++][mapV] & LOMASK;
 
-  mapV = holdMapV;
+            if (autoBulldoze) {
 
-  for (rowNum = 0; rowNum <= 2; rowNum++) {
+                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
+                if (tileValue != DIRT) {
 
-    mapH = holdMapH;
+                    if (tally(tileValue)) {
+                        cost++;
+                    } else {
+                        flag = 0;
+                    }
 
-    for (columnNum = 0; columnNum <= 2; columnNum++) {
+                }
 
-      if ((columnNum == 1) &&
-                  (rowNum == 1)) {
-        Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-      } else {
-        Map[mapH++][mapV] = base + BNCNBIT;
-      }
+            } else {
 
-      base++;
+                /* check and see if the tile is clear or not  */
+                if (tileValue != 0) flag = 0;
 
+            }
+        }
+
+        mapV++;
     }
 
-    mapV++;
+    if (flag == 0) return -1;
 
-  }
+    cost += (short)gCostOf[tool];
 
-  check3x3border(xPos, yPos);
+    if ((TotalFunds - cost) < 0) return -2;
 
-  return 1;
+    /* take care of the money situtation here */
+    Spend(cost);
+    UpdateFunds();
+
+    mapV = holdMapV;
+
+    for (rowNum = 0; rowNum <= 2; rowNum++) {
+
+      mapH = holdMapH;
+
+      for (columnNum = 0; columnNum <= 2; columnNum++) {
+
+        if ((columnNum == 1) &&
+            (rowNum == 1)) {
+          Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+        } else {
+          Map[mapH++][mapV] = base + BNCNBIT;
+        }
+
+        base++;
+      }
+
+      mapV++;
+    }
+
+    check3x3border(xPos, yPos);
+
+    return 1;
 }
 
 
 /* 4x4 */
 
 
-void Micropolis::check4x4border(
-  short xMap,
-  short yMap)
+void Micropolis::check4x4border(short xMap, short yMap)
 {
-  short *tilePtr;
-  short xPos, yPos;
-  short cnt;
+    short *tilePtr;
+    short xPos, yPos;
+    short cnt;
 
-  xPos = xMap;
-  yPos = yMap - 1;
+    xPos = xMap;
+    yPos = yMap - 1;
 
-  for (cnt = 0; cnt < 4; cnt++) {
-    /* this will do the upper bordering row */
-    tilePtr = &Map[xPos][yPos];
-    ConnecTile(xPos, yPos, tilePtr, 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 4; cnt++) {
+        /* this will do the upper bordering row */
+        tilePtr = &Map[xPos][yPos];
+        ConnecTile(xPos, yPos, tilePtr, 0);
+        xPos++;
+    }
 
-  xPos = xMap - 1;
-  yPos = yMap;
+    xPos = xMap - 1;
+    yPos = yMap;
 
-  for (cnt = 0; cnt < 4; cnt++) {
-    /* this will do the left bordering row */
-    tilePtr = &Map[xPos][yPos];
-    ConnecTile(xPos, yPos, tilePtr, 0);
-    yPos++;
-  }
+    for (cnt = 0; cnt < 4; cnt++) {
+        /* this will do the left bordering row */
+        tilePtr = &Map[xPos][yPos];
+        ConnecTile(xPos, yPos, tilePtr, 0);
+        yPos++;
+    }
 
-  xPos = xMap;
-  yPos = yMap + 4;
+    xPos = xMap;
+    yPos = yMap + 4;
 
-  for (cnt = 0; cnt < 4;cnt++) {
-    /* this will do the bottom bordering row */
-    tilePtr = &Map[xPos][yPos];
-    ConnecTile(xPos, yPos, tilePtr, 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 4;cnt++) {
+        /* this will do the bottom bordering row */
+        tilePtr = &Map[xPos][yPos];
+        ConnecTile(xPos, yPos, tilePtr, 0);
+        xPos++;
+    }
 
-  xPos = xMap + 4;
-  yPos = yMap;
+    xPos = xMap + 4;
+    yPos = yMap;
 
-  for (cnt = 0; cnt < 4; cnt++) {
-    /* this will do the right bordering row */
-    tilePtr = &Map[xPos][yPos];
-    ConnecTile(xPos, yPos, tilePtr, 0);
-    yPos++;
-  }
+    for (cnt = 0; cnt < 4; cnt++) {
+        /* this will do the right bordering row */
+        tilePtr = &Map[xPos][yPos];
+        ConnecTile(xPos, yPos, tilePtr, 0);
+        yPos++;
+    }
 }
 
 
 short Micropolis::check4x4(
-  short mapH,
-  short mapV,
-  short base,
-  short aniFlag,
-  short tool)
+    short mapH, short mapV,
+    short base, short aniFlag, short tool)
 {
-  register short rowNum, columnNum;
-  short h, v;
-  short holdMapH;
-  short xMap, yMap;
-  short tileValue;
-  short flag;
-  short cost = 0;
+    short rowNum, columnNum;
+    short h, v;
+    short holdMapH;
+    short xMap, yMap;
+    short tileValue;
+    short flag;
+    short cost = 0;
 
-  mapH--;
-  mapV--;
+    mapH--;
+    mapV--;
 
-  if ((mapH < 0) ||
-      (mapH > (WORLD_X - 4)) ||
-      (mapV < 0) ||
-      (mapV > (WORLD_Y - 4))) {
-    return -1;
-  }
+    if ((mapH < 0) ||
+        (mapH > (WORLD_X - 4)) ||
+        (mapV < 0) ||
+        (mapV > (WORLD_Y - 4))) {
+        return -1;
+    }
 
-  h = xMap = holdMapH = mapH;
-  v = yMap = mapV;
+    h = xMap = holdMapH = mapH;
+    v = yMap = mapV;
 
-  flag = 1;
+    flag = 1;
 
-  for (rowNum = 0; rowNum <= 3; rowNum++) {
+    for (rowNum = 0; rowNum <= 3; rowNum++) {
 
-    mapH = holdMapH;
+        mapH = holdMapH;
 
-    for (columnNum = 0; columnNum <= 3; columnNum++) {
+        for (columnNum = 0; columnNum <= 3; columnNum++) {
 
-      tileValue =
-                Map[mapH++][mapV] & LOMASK;
+            tileValue = Map[mapH++][mapV] & LOMASK;
 
-      if (autoBulldoze) {
+            if (autoBulldoze) {
 
-        /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-        if (tileValue != DIRT) {
+                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
+                if (tileValue != DIRT) {
 
-          if (tally(tileValue)) {
-            cost++;
-          } else {
-            flag = 0;
-          }
+                    if (tally(tileValue)) {
+                        cost++;
+                    } else {
+                        flag = 0;
+                    }
+
+                }
+
+            } else {
+
+                /* check and see if the tile is clear or not  */
+                if (tileValue != 0) flag = 0;
+
+            }
 
         }
 
-      } else {
+        mapV++;
+    }
 
-        /* check and see if the tile is clear or not  */
-        if (tileValue != 0) {
-          flag = 0;
+    if (flag == 0) return -1;
+
+    cost += (short)gCostOf[tool];
+
+    if ((TotalFunds - cost) < 0) return -2;
+
+    /* take care of the money situtation here */
+    Spend(cost);
+    UpdateFunds();
+
+    mapV = v;
+    holdMapH = h;
+
+    for (rowNum = 0; rowNum <= 3; rowNum++) {
+
+        mapH = holdMapH;
+
+        for (columnNum = 0; columnNum <= 3; columnNum++) {
+
+            if ((columnNum == 1) && (rowNum == 1)) {
+                Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+            } else if ((columnNum == 1) && (rowNum == 2) && aniFlag) {
+                Map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
+            } else {
+                Map[mapH++][mapV] = base + BNCNBIT;
+            }
+
+            base++;
         }
 
-      }
-
+        mapV++;
     }
 
-    mapV++;
+    check4x4border(xMap, yMap);
 
-  }
-
-  if (flag == 0) {
-    return -1;
-  }
-
-  cost += (short)gCostOf[tool];
-
-  if ((TotalFunds - cost) < 0) {
-    return -2;
-  }
-
-  if ((Players > 1) &&
-      (OverRide == 0) &&
-      (cost >= Expensive)) {
-    return -3;
-  }
-
-  /* take care of the money situtation here */
-  Spend(cost);
-  UpdateFunds();
-
-  mapV = v;
-  holdMapH = h;
-
-  for (rowNum = 0; rowNum <= 3; rowNum++) {
-
-    mapH = holdMapH;
-
-    for (columnNum = 0; columnNum <= 3; columnNum++) {
-
-      if ((columnNum == 1) &&
-          (rowNum == 1)) {
-        Map[mapH++][mapV] =
-                  base + BNCNBIT + ZONEBIT;
-      } else if ((columnNum == 1) &&
-                 (rowNum == 2) &&
-                 aniFlag) {
-        Map[mapH++][mapV] =
-                  base + BNCNBIT + ANIMBIT;
-      } else {
-        Map[mapH++][mapV] =
-                  base + BNCNBIT;
-      }
-
-      base++;
-
-    }
-
-    mapV++;
-
-  }
-
-  check4x4border(xMap, yMap);
-
-  return 1;
+    return 1;
 }
 
 
 /* 6x6 */
 
 
-void Micropolis::check6x6border(
-  short xMap,
-  short yMap)
+void Micropolis::check6x6border(short xMap, short yMap)
 {
-  short xPos, yPos;
-  short cnt;
+    short xPos, yPos;
+    short cnt;
 
-  xPos = xMap;
-  yPos = yMap - 1;
+    xPos = xMap;
+    yPos = yMap - 1;
 
-  for (cnt = 0; cnt < 6; cnt++) {
-    /* this will do the upper bordering row */
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 6; cnt++) {
+        /* this will do the upper bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        xPos++;
+    }
 
-  xPos = xMap - 1;
-  yPos = yMap;
+    xPos = xMap - 1;
+    yPos = yMap;
 
-  for (cnt=0; cnt < 6; cnt++) {
-    /* this will do the left bordering row */
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    yPos++;
-  }
+    for (cnt=0; cnt < 6; cnt++) {
+        /* this will do the left bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        yPos++;
+    }
 
-  xPos = xMap;
-  yPos = yMap + 6;
+    xPos = xMap;
+    yPos = yMap + 6;
 
-  for (cnt = 0; cnt < 6; cnt++) {
-    /* this will do the bottom bordering row */
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    xPos++;
-  }
+    for (cnt = 0; cnt < 6; cnt++) {
+        /* this will do the bottom bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        xPos++;
+    }
 
-  xPos = xMap + 6;
-  yPos = yMap;
+    xPos = xMap + 6;
+    yPos = yMap;
 
-  for (cnt = 0; cnt < 6; cnt++) {
-    /* this will do the right bordering row */
-    ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-    yPos++;
-  }
+    for (cnt = 0; cnt < 6; cnt++) {
+        /* this will do the right bordering row */
+        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        yPos++;
+    }
 
 }
 
 
 short Micropolis::check6x6(
-  short mapH,
-  short mapV,
-  short base,
-  short tool)
+  short mapH, short mapV,
+  short base, short tool)
 {
-  register short rowNum, columnNum;
-  short h, v;
-  short holdMapH;
-  short xMap, yMap;
-  short flag;
-  short tileValue;
-  short cost = 0;
+    short rowNum, columnNum;
+    short h, v;
+    short holdMapH;
+    short xMap, yMap;
+    short flag;
+    short tileValue;
+    short cost = 0;
 
-  mapH--; mapV--;
-  if ((mapH < 0) ||
-      (mapH > (WORLD_X - 6)) ||
-      (mapV < 0) ||
-      (mapV > (WORLD_Y - 6))) {
-    return -1;
-  }
+    mapH--; mapV--;
+    if ((mapH < 0) ||
+        (mapH > (WORLD_X - 6)) ||
+        (mapV < 0) ||
+        (mapV > (WORLD_Y - 6))) {
+        return -1;
+    }
 
-  h = xMap = holdMapH = mapH;
-  v = yMap = mapV;
+    h = xMap = holdMapH = mapH;
+    v = yMap = mapV;
 
-  flag = 1;
+    flag = 1;
 
-  for (rowNum = 0; rowNum <= 5; rowNum++) {
+    for (rowNum = 0; rowNum <= 5; rowNum++) {
 
-    mapH = holdMapH;
+        mapH = holdMapH;
 
-    for (columnNum = 0; columnNum <= 5; columnNum++) {
+        for (columnNum = 0; columnNum <= 5; columnNum++) {
 
-      tileValue =
-                Map[mapH++][mapV] & LOMASK;
+            tileValue = Map[mapH++][mapV] & LOMASK;
 
-      if (autoBulldoze) {
+            if (autoBulldoze) {
 
-        /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-        if (tileValue != DIRT) {
+                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
+                if (tileValue != DIRT) {
 
-          if (tally(tileValue)) {
-            cost++;
-          } else {
-            flag = 0;
-          }
+                    if (tally(tileValue)) {
+                        cost++;
+                    } else {
+                        flag = 0;
+                    }
+
+                }
+
+            } else {
+
+              /* check and see if the tile is clear or not  */
+              if (tileValue != DIRT) flag = 0;
+
+            }
 
         }
 
-      } else {
+        mapV++;
+    }
 
-        /* check and see if the tile is clear or not  */
-        if (tileValue != DIRT) {
-          flag = 0;
+    if (flag == 0) return -1;
+
+    cost += (short)gCostOf[tool];
+
+    if ((TotalFunds - cost) < 0) return -2;
+
+    /* take care of the money situtation here */
+    Spend(cost);
+    UpdateFunds();
+
+    mapV = v;
+    holdMapH = h;
+
+    for (rowNum = 0; rowNum <= 5; rowNum++) {
+
+        mapH = holdMapH;
+
+        for (columnNum = 0; columnNum <= 5; columnNum++) {
+
+            if ((columnNum == 1) && (rowNum == 1)) {
+                Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+            } else {
+                Map[mapH++][mapV] = base + BNCNBIT;
+            }
+
+            base++;
         }
 
-      }
-
+        mapV++;
     }
 
-    mapV++;
+    check6x6border(xMap, yMap);
 
-  }
-
-  if (flag == 0) {
-    return -1;
-  }
-
-  cost += (short)gCostOf[tool];
-
-  if ((TotalFunds - cost) < 0) {
-    return -2;
-  }
-
-  if ((Players > 1) &&
-      (OverRide == 0) &&
-      (cost >= Expensive)) {
-    return -3;
-  }
-
-  /* take care of the money situtation here */
-  Spend(cost);
-  UpdateFunds();
-
-  mapV = v;
-  holdMapH = h;
-
-  for (rowNum = 0; rowNum <= 5; rowNum++) {
-
-    mapH = holdMapH;
-
-    for (columnNum = 0; columnNum <= 5; columnNum++) {
-
-      if ((columnNum == 1) &&
-                  (rowNum == 1)) {
-        Map[mapH++][mapV] =
-                  base + BNCNBIT + ZONEBIT;
-      } else {
-        Map[mapH++][mapV] =
-                  base + BNCNBIT;
-      }
-
-      base++;
-
-    }
-
-    mapV++;
-
-  }
-
-  check6x6border(xMap, yMap);
-
-  return 1;
+    return 1;
 }
 
 
@@ -828,199 +741,142 @@ short Micropolis::check6x6(
 
 /* search table for zone status string match */
 static short idArray[29] = {
-  DIRT, RIVER, TREEBASE, RUBBLE,
-  FLOOD, RADTILE, FIRE, ROADBASE,
-  POWERBASE, RAILBASE, RESBASE, COMBASE,
-  INDBASE, PORTBASE, AIRPORTBASE, COALBASE,
-  FIRESTBASE, POLICESTBASE, STADIUMBASE, NUCLEARBASE,
-  // FIXME: I think HBRDG_END should be HBRDG0...?
-  HBRDG0, RADAR0, FOUNTAIN, INDBASE2,
-  // FIXME: What are tiles 952 and 956?
-  FOOTBALLGAME1, VBRDG0, 952, 956,
-  9999, // a huge short
+    DIRT, RIVER, TREEBASE, RUBBLE,
+    FLOOD, RADTILE, FIRE, ROADBASE,
+    POWERBASE, RAILBASE, RESBASE, COMBASE,
+    INDBASE, PORTBASE, AIRPORTBASE, COALBASE,
+    FIRESTBASE, POLICESTBASE, STADIUMBASE, NUCLEARBASE,
+    // FIXME: I think HBRDG_END should be HBRDG0...?
+    HBRDG0, RADAR0, FOUNTAIN, INDBASE2,
+    // FIXME: What are tiles 952 and 956?
+    FOOTBALLGAME1, VBRDG0, 952, 956,
+    9999, // a huge short
 };
 
 /*
-  0, 2, 21, 44,
-  48, 52, 53, 64,
-  208, 224, 240, 423,
-  612, 693, 709, 745,
-  761, 770, 779, 811,
-  827, 832, 840, 844,
-  932, 948, 952, 956
+    0, 2, 21, 44,
+    48, 52, 53, 64,
+    208, 224, 240, 423,
+    612, 693, 709, 745,
+    761, 770, 779, 811,
+    827, 832, 840, 844,
+    932, 948, 952, 956
 
-  Clear, Water, Trees, Rubble,
-  Flood, Radioactive Waste, Fire, Road,
-  Power, Rail, Residential, Commercial,
-  Industrial, Port, AirPort, Coal Power,
-  Fire Department, Police Department, Stadium, Nuclear Power,
-  Draw Bridge, Radar Dish, Fountain, Industrial,
-  49er's 38  Bears 3, Draw Bridge, Ur 238, Unknown
+    Clear, Water, Trees, Rubble,
+    Flood, Radioactive Waste, Fire, Road,
+    Power, Rail, Residential, Commercial,
+    Industrial, Port, AirPort, Coal Power,
+    Fire Department, Police Department, Stadium, Nuclear Power,
+    Draw Bridge, Radar Dish, Fountain, Industrial,
+    49er's 38  Bears 3, Draw Bridge, Ur 238, Unknown
 */
 
 
-int Micropolis::getDensityStr(
-  short catNo,
-  short mapH,
-  short mapV)
+int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
 {
-  int z;
+    int z;
 
-  switch(catNo) {
+    switch (catNo) {
 
-  case 0:
-  default:
-    z = PopDensity[mapH >>1][mapV >>1];
-    z = z >> 6;
-    z = z & 3;
+    case 0:
+    default:
+        z = PopDensity[mapH >>1][mapV >>1];
+        z = z >> 6;
+        z = z & 3;
+        return z;
 
-    return (z);
+    case 1:
+        z = LandValueMem[mapH >>1][mapV >>1];
+        if (z < 30) return 4;
+        if (z < 80) return 5;
+        if (z < 150) return 6;
+        return 7;
 
-  case 1:
-    z = LandValueMem[mapH >>1][mapV >>1];
+    case 2:
+        z = CrimeMem[mapH >>1][mapV >>1];
+        z = z >> 6;
+        z = z & 3;
+        return z + 8;
 
-    if (z < 30) {
-      return (4);
+    case 3:
+        z = PollutionMem[mapH >>1][mapV >>1];
+        if ((z < 64) && (z > 0)) return 13;
+        z = z >> 6;
+        z = z & 3;
+        return z + 12;
+
+    case 4:
+        z = RateOGMem[mapH >>3][mapV >>3];
+        if (z < 0) return 16;
+        if (z == 0) return 17;
+        if (z > 100) return 19;
+        return 18;
+
     }
-
-    if (z < 80) {
-      return (5);
-    }
-
-    if (z < 150) {
-      return (6);
-    }
-
-    return (7);
-
-  case 2:
-    z = CrimeMem[mapH >>1][mapV >>1];
-    z = z >> 6;
-    z = z & 3;
-
-    return (z + 8);
-
-  case 3:
-    z = PollutionMem[mapH >>1][mapV >>1];
-
-    if ((z < 64) && (z > 0)) {
-      return (13);
-    }
-
-    z = z >> 6;
-    z = z & 3;
-
-    return (z + 12);
-
-  case 4:
-    z = RateOGMem[mapH >>3][mapV >>3];
-
-    if (z < 0) {
-      return (16);
-    }
-
-    if (z == 0) {
-      return (17);
-    }
-
-    if (z > 100) {
-      return (19);
-    }
-
-    return (18);
-
-  }
 }
 
 
-void Micropolis::doZoneStatus(
-  short mapH,
-  short mapV)
+void Micropolis::doZoneStatus(short mapH, short mapV)
 {
-  char localStr[256];
-  char statusStr[5][256];
-  short id;
-  short x;
-  short tileNum;
-  short found;
+    char localStr[256];
+    char statusStr[5][256];
 
-  tileNum = Map[mapH][mapV] & LOMASK;
+    short tileNum = Map[mapH][mapV] & LOMASK;
 
-  if (tileNum >= COALSMOKE1 &&
-      tileNum < FOOTBALLGAME1) {
-    tileNum = COALBASE;
-  }
-
-  found = 1;
-
-  // FIXME: This has a fencepost error, I think!
-  for (x = 1; x < 29; x++) {
-    if (tileNum < idArray[x]) {
-      found = 0;
-      break;
-    }
-  }
-
-  x--;
-
-  // FIXME: This is strange... Normalize to zero based index.
-  if ((x < 1) ||
-      (x > 28)) {
-    x = 28;
-  }
-
-  GetIndString(localStr, 219, x + 1);
-
-  for (x = 0; x < 5; x++) {
-
-    id = getDensityStr(x, mapH, mapV);
-    id++;
-
-    if (id <= 0) {
-      id = 1;
+    if (tileNum >= COALSMOKE1 && tileNum < FOOTBALLGAME1) {
+      tileNum = COALBASE;
     }
 
-    if (id > 20) {
-      id = 20;
+    // FIXME: This has a fencepost error, I think!
+    short i;
+    for (i = 1; i < 29; i++) {
+        if (tileNum < idArray[i]) {
+            break;
+        }
     }
 
-    GetIndString(statusStr[x], 202, id);
+    i--;
 
-  }
+    // FIXME: This is strange... Normalize to zero based index.
+    if ((i < 1) || (i > 28)) {
+      i = 28;
+    }
 
-  DoShowZoneStatus(
-    localStr,
-    statusStr[0],
-    statusStr[1],
-    statusStr[2],
-    statusStr[3],
-    statusStr[4],
-    mapH,
-    mapV);
+    GetIndString(localStr, 219, i + 1);
+
+    for (i = 0; i < 5; i++) {
+        short id = clamp(getDensityStr(i, mapH, mapV) + 1, 1, 20);
+        GetIndString(statusStr[i], 202, id);
+    }
+
+    doShowZoneStatus(
+        localStr,
+        statusStr[0],
+        statusStr[1],
+        statusStr[2],
+        statusStr[3],
+        statusStr[4],
+        mapH,
+        mapV);
 }
 
 
-void Micropolis::DoShowZoneStatus(
+void Micropolis::doShowZoneStatus(
   char *str,
-  char *s0,
-  char *s1,
-  char *s2,
-  char *s3,
-  char *s4,
-  int x,
-  int y)
+  char *s0, char *s1, char *s2, char *s3, char *s4,
+  int x, int y)
 {
-  Callback(
-    "UIShowZoneStatus",
-    "ssssssdd",
-    str,
-    s0,
-    s1,
-    s2,
-    s3,
-    s4,
-    (int)x,
-    (int)y);
+    Callback(
+        "UIShowZoneStatus",
+        "ssssssdd",
+        str,
+        s0,
+        s1,
+        s2,
+        s3,
+        s4,
+        x,
+        y);
 }
 
 
@@ -1048,695 +904,583 @@ void Micropolis::putRubble(int x, int y, int size)
 }
 
 
-void Micropolis::DidTool(
-  const char *name,
-  short x,
-  short y)
+void Micropolis::didTool(const char *name, short x, short y)
 {
-  Callback(
-    "UIDidTool",
-    "sdd",
-    name,
-    (int)x,
-    (int)y);
+    Callback(
+        "UIDidTool",
+        "sdd",
+        name,
+        (int)x,
+        (int)y);
 }
 
 
-/************************************************************************/
-/* TOOLS */
+////////////////////////////////////////////////////////////////////////
+// Tools
 
 
-int Micropolis::query_tool(
-  short x,
-  short y)
+int Micropolis::queryTool(short x, short y)
 {
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  doZoneStatus(x, y);
-  DidTool("Qry", x, y);
+    doZoneStatus(x, y);
+    didTool("Qry", x, y);
 
-  return 1;
+    return 1;
 }
+
 
 /** @bug case 6 is never returned from checkSize() */
-int Micropolis::bulldozer_tool(
-  short x,
-  short y)
+int Micropolis::bulldozerTool(short x, short y)
 {
-  unsigned short currTile, temp;
-  short zoneSize, deltaH, deltaV;
-  int result = 1;
+    unsigned short currTile, temp;
+    short zoneSize, deltaH, deltaV;
+    int result = 1;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
-
-  currTile = Map[x][y];
-  temp = currTile & LOMASK;
-
-  if (currTile & ZONEBIT) { /* zone center bit is set */
-
-    if (TotalFunds > 0) {
-
-      Spend(1);
-
-      switch (checkSize(temp)) {
-
-      case 3:
-        MakeSound("city", "Explosion-High");
-        putRubble(x - 1, y - 1, 3);
-        break;
-
-      case 4:
-        MakeSound("city", "Explosion-Low");
-        putRubble(x - 1, y - 1, 4);
-        break;
-
-      case 6:
-        MakeSound("city", "Explosion-High");
-        MakeSound("city", "Explosion-Low");
-        putRubble(x - 1, y - 1, 6);
-        break;
-
-      default:
-        break;
-
-      }
-
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
     }
 
-  } else if ((zoneSize = checkBigZone(temp, &deltaH, &deltaV))) {
+    currTile = Map[x][y];
+    temp = currTile & LOMASK;
 
-    if (TotalFunds > 0) {
+    if (currTile & ZONEBIT) { /* zone center bit is set */
 
-      Spend(1);
+        if (TotalFunds > 0) {
 
-      switch (zoneSize) {
+            Spend(1);
 
-      case 3:
-        MakeSound("city", "Explosion-High");
-        break;
+            switch (checkSize(temp)) {
 
-      case 4:
-        MakeSound("city", "Explosion-Low");
-        putRubble(x + deltaH - 1, y + deltaV - 1, 4);
-        break;
+            case 3:
+                MakeSound("city", "Explosion-High");
+                putRubble(x - 1, y - 1, 3);
+                break;
 
-      case 6:
-        MakeSound("city", "Explosion-High");
-        MakeSound("city", "Explosion-Low");
-        putRubble(x + deltaH - 1, y + deltaV - 1, 6);
-        break;
+            case 4:
+                MakeSound("city", "Explosion-Low");
+                putRubble(x - 1, y - 1, 4);
+                break;
 
-      }
+            case 6:
+                MakeSound("city", "Explosion-High");
+                MakeSound("city", "Explosion-Low");
+                putRubble(x - 1, y - 1, 6);
+                break;
 
-    }
+            default:
+                break;
 
-  } else {
+            }
 
-    if (temp == RIVER || temp == REDGE || temp == CHANNEL) {
-
-      if (TotalFunds >= 6) {
-
-        result = ConnecTile(x, y, &Map[x][y], 1);
-
-        if (temp != (Map[x][y] & LOMASK)) {
-          Spend(5);
         }
 
-      } else {
-        result = 0;
-      }
+    } else if ((zoneSize = checkBigZone(temp, &deltaH, &deltaV))) {
+
+        if (TotalFunds > 0) {
+
+            Spend(1);
+
+            switch (zoneSize) {
+
+            case 3:
+                MakeSound("city", "Explosion-High");
+                break;
+
+            case 4:
+                MakeSound("city", "Explosion-Low");
+                putRubble(x + deltaH - 1, y + deltaV - 1, 4);
+                break;
+
+            case 6:
+                MakeSound("city", "Explosion-High");
+                MakeSound("city", "Explosion-Low");
+                putRubble(x + deltaH - 1, y + deltaV - 1, 6);
+                break;
+
+            }
+
+        }
+
     } else {
-      result = ConnecTile(x, y, &Map[x][y], 1);
+
+        if (temp == RIVER || temp == REDGE || temp == CHANNEL) {
+
+            if (TotalFunds >= 6) {
+
+                result = ConnecTile(x, y, &Map[x][y], 1);
+
+                if (temp != (Map[x][y] & LOMASK)) {
+                  Spend(5);
+                }
+
+            } else {
+                result = 0;
+            }
+        } else {
+            result = ConnecTile(x, y, &Map[x][y], 1);
+        }
+
     }
 
-  }
+    UpdateFunds();
 
-  UpdateFunds();
+    if (result == 1) {
+        didTool("Dozr", x, y);
+    }
 
-  if (result == 1) {
-    DidTool("Dozr", x, y);
-  }
-
-  return result;
+    return result;
 }
+
 
 /** @todo Generalize TestBounds for different upper bounds */
-int Micropolis::road_tool(
-  short x,
-  short y)
+int Micropolis::roadTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = ConnecTile(x, y, &Map[x][y], 2);
-  UpdateFunds();
+    result = ConnecTile(x, y, &Map[x][y], 2);
+    UpdateFunds();
 
-  if (result == 1) {
-    DidTool("Road", x, y);
-  }
+    if (result == 1) {
+        didTool("Road", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::rail_tool(
-  short x,
-  short y)
+int Micropolis::railroadTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = ConnecTile(x, y, &Map[x][y], 3);
-  UpdateFunds();
+    result = ConnecTile(x, y, &Map[x][y], 3);
+    UpdateFunds();
 
-  if (result == 1) {
-    DidTool("Rail", x, y);
-  }
+    if (result == 1) {
+        didTool("Rail", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::wire_tool(
-  short x,
-  short y)
+int Micropolis::wireTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = ConnecTile(x, y, &Map[x][y], 4);
-  UpdateFunds();
+    result = ConnecTile(x, y, &Map[x][y], 4);
+    UpdateFunds();
 
-  if (result == 1) {
-    DidTool("Wire", x, y);
-  }
+    if (result == 1) {
+        didTool("Wire", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::park_tool(
-  short x,
-  short y)
+int Micropolis::parkTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = putDownPark(x, y);
+    result = putDownPark(x, y);
 
-  if (result == 1) {
-    DidTool("Park", x, y);
-  }
+    if (result == 1) {
+        didTool("Park", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::residential_tool(
-  short x,
-  short y)
+int Micropolis::residentialTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check3x3(x, y, RESBASE, residentialState);
+    result = check3x3(x, y, RESBASE, TOOL_RESIDENTIAL);
 
-  if (result == 1) {
-    DidTool("Res", x, y);
-  }
+    if (result == 1) {
+        didTool("Res", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::commercial_tool(
-  short x,
-  short y)
+int Micropolis::commercialTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check3x3(x, y, COMBASE, commercialState);
+    result = check3x3(x, y, COMBASE, TOOL_COMMERCIAL);
 
-  if (result == 1) {
-    DidTool("Com", x, y);
-  }
+    if (result == 1) {
+        didTool("Com", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::industrial_tool(
-  short x,
-  short y)
+int Micropolis::industrialTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check3x3(x, y, INDBASE, industrialState);
+    result = check3x3(x, y, INDBASE, TOOL_INDUSTRIAL);
 
-  if (result == 1) {
-    DidTool("Ind", x, y);
-  }
+    if (result == 1) {
+        didTool("Ind", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::police_dept_tool(
-  short x,
-  short y)
+int Micropolis::policeStationTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check3x3(x, y, POLICESTBASE, policeState);
+    result = check3x3(x, y, POLICESTBASE, TOOL_POLICESTATION);
 
-  if (result == 1) {
-    DidTool("Pol", x, y);
-  }
+    if (result == 1) {
+        didTool("Pol", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::fire_dept_tool(
-  short x,
-  short y)
+int Micropolis::fireStationTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check3x3(x, y, FIRESTBASE, fireState);
+    result = check3x3(x, y, FIRESTBASE, TOOL_FIRESTATION);
 
-  if (result == 1) {
-    DidTool("Fire", x, y);
-  }
+    if (result == 1) {
+        didTool("Fire", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::stadium_tool(
-  short x,
-  short y)
+int Micropolis::stadiumTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check4x4(x, y, STADIUMBASE, 0, stadiumState);
+    result = check4x4(x, y, STADIUMBASE, 0, TOOL_STADIUM);
 
-  if (result == 1) {
-    DidTool("Stad", x, y);
-  }
+    if (result == 1) {
+        didTool("Stad", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::coal_power_plant_tool(
-  short x,
-  short y)
+int Micropolis::coalPowerTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check4x4(x, y, COALBASE, 1, powerState);
+    result = check4x4(x, y, COALBASE, 1, TOOL_COALPOWER);
 
-  if (result == 1) {
-    DidTool("Coal", x, y);
-  }
+    if (result == 1) {
+        didTool("Coal", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::nuclear_power_plant_tool(
-  short x,
-  short y)
+int Micropolis::nuclearPowerTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check4x4(x, y, NUCLEARBASE, 1, nuclearState);
+    result = check4x4(x, y, NUCLEARBASE, 1, TOOL_NUCLEARPOWER);
 
-  if (result == 1) {
-    DidTool("Nuc", x, y);
-  }
+    if (result == 1) {
+        didTool("Nuc", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::seaport_tool(
-  short x,
-  short y)
+int Micropolis::seaportTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check4x4(x, y, PORTBASE, 0, seaportState);
+    result = check4x4(x, y, PORTBASE, 0, TOOL_SEAPORT);
 
-  if (result == 1) {
-    DidTool("Seap", x, y);
-  }
+    if (result == 1) {
+        didTool("Seap", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::airport_tool(
-  short x,
-  short y)
+int Micropolis::airportTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result = check6x6(x, y, AIRPORTBASE, airportState);
+    result = check6x6(x, y, AIRPORTBASE, TOOL_AIRPORT);
 
-  if (result == 1) {
-    DidTool("Airp", x, y);
-  }
+    if (result == 1) {
+        didTool("Airp", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::network_tool(
-  short x,
-  short y)
+int Micropolis::networkTool(short x, short y)
 {
-  int result;
+    int result;
 
-  if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
-    return -1;
-  }
+    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+        return -1;
+    }
 
-  result =
+    result =
         putDownNetwork(x, y);
 
-  if (result == 1) {
-    DidTool("Net", x, y);
-  }
+    if (result == 1) {
+        didTool("Net", x, y);
+    }
 
-  return result;
+    return result;
 }
 
 
-int Micropolis::do_tool(
-  short state,
-  short x,
-  short y,
-  short first)
+int Micropolis::doTool(EditingTool tool, short x, short y, bool first)
 {
-  int result = 0;
+    short tileX = x >>4;
+    short tileY = y >>4;
 
-  switch (state) {
+    switch (tool) {
 
-  case residentialState:
-    result = residential_tool(x >>4, y >>4);
-    break;
+    case TOOL_RESIDENTIAL:
+        return residentialTool(tileX, tileY);
 
-  case commercialState:
-    result = commercial_tool(x >>4, y >>4);
-    break;
+    case TOOL_COMMERCIAL:
+        return commercialTool(tileX, tileY);
 
-  case industrialState:
-    result = industrial_tool(x >>4, y >>4);
-    break;
+    case TOOL_INDUSTRIAL:
+        return industrialTool(tileX, tileY);
 
-  case fireState:
-    result = fire_dept_tool(x >>4, y >>4);
-    break;
+    case TOOL_FIRESTATION:
+        return fireStationTool(tileX, tileY);
 
-  case queryState:
-    result = query_tool(x >>4, y >>4);
-    break;
+    case TOOL_POLICESTATION:
+        return policeStationTool(tileX, tileY);
 
-  case policeState:
-    result = police_dept_tool(x >>4, y >>4);
-    break;
+    case TOOL_QUERY:
+        return queryTool(tileX, tileY);
 
-  case wireState:
-    result = wire_tool(x >>4, y >>4);
-    break;
+    case TOOL_WIRE:
+        return wireTool(tileX, tileY);
 
-  case dozeState:
-    result = bulldozer_tool(x >>4, y >>4);
-    break;
+    case TOOL_BULLDOZER:
+        return bulldozerTool(tileX, tileY);
 
-  case rrState:
-    result = rail_tool(x >>4, y >>4);
-    break;
+    case TOOL_RAILROAD:
+        return railroadTool(tileX, tileY);
 
-  case roadState:
-    result = road_tool(x >>4, y >>4);
-    break;
+    case TOOL_ROAD:
+        return roadTool(tileX, tileY);
 
-  case stadiumState:
-    result = stadium_tool(x >>4, y >>4);
-    break;
+    case TOOL_STADIUM:
+        return stadiumTool(tileX, tileY);
 
-  case parkState:
-    result = park_tool(x >>4, y >>4);
-    break;
+    case TOOL_PARK:
+        return parkTool(tileX, tileY);
 
-  case seaportState:
-    result = seaport_tool(x >>4, y >>4);
-    break;
+    case TOOL_SEAPORT:
+        return seaportTool(tileX, tileY);
 
-  case powerState:
-    result = coal_power_plant_tool(x >>4, y >>4);
-    break;
+    case TOOL_COALPOWER:
+        return coalPowerTool(tileX, tileY);
 
-  case nuclearState:
-    result = nuclear_power_plant_tool(x >>4, y >>4);
-    break;
+    case TOOL_NUCLEARPOWER:
+        return nuclearPowerTool(tileX, tileY);
 
-  case airportState:
-    result = airport_tool(x >>4, y >>4);
-    break;
+    case TOOL_AIRPORT:
+        return airportTool(tileX, tileY);
 
-  case networkState:
-    result = network_tool(x >>4, y >>4);
-    break;
+    case TOOL_NETWORK:
+        return networkTool(tileX, tileY);
 
-  default:
-    result = 0;
-    break;
+    default:
+        return 0;
 
-  }
-
-  return result;
+    }
 }
 
 
-void Micropolis::DoTool(
-  short tool,
-  short x,
-  short y)
+void Micropolis::toolDown(EditingTool tool, short x, short y)
 {
-  int result;
+    int result;
 
-  result = do_tool(tool, x <<4, y <<4, 1);
+    // @todo The last coorinates should be passed from the tool so the 
+    //       simulator is stateless and can support multiple tools 
+    //       drawing at once. Get rid of last_x and last_y.
+    last_x = x;
+    last_y = y;
 
-  if (result == -1) {
-    ClearMes();
-    SendMes(34);
-    MakeSound("edit", "UhUh");
-  } else if (result == -2) {
-    ClearMes();
-    SendMes(33);
-    MakeSound("edit", "Sorry");
-  }
+    result = doTool(tool, x <<4, y <<4, true);
 
-  sim_skip = 0;
-  InvalidateEditors();
+    if (result == -1) {
+        ClearMes();
+        SendMes(34);
+        MakeSound("edit", "UhUh");
+    } else if (result == -2) {
+        ClearMes();
+        SendMes(33);
+        MakeSound("edit", "Sorry");
+    }
+
+    sim_skip = 0;
+    InvalidateEditors();
 }
 
 
-void Micropolis::ToolDown(
-  short tool,
-  int x,
-  int y)
+void Micropolis::toolUp(EditingTool tool, short x, short y)
 {
-  int result;
-
-  // TODO: fix this
-  //ViewToPixelCoords(x, y, &x, &y);
-  last_x = x;
-  last_y = y;
-
-  result = do_tool(tool, x, y, 1);
-
-  if (result == -1) {
-    ClearMes();
-    SendMes(34);
-    MakeSound("edit", "UhUh");
-  } else if (result == -2) {
-    ClearMes();
-    SendMes(33);
-    MakeSound("edit", "Sorry");
-  } else if (result == -3) {
-    DoPendTool(tool, x >>4, y >>4);
-  }
-
-  sim_skip = 0;
-
-  // TODO: update views
+    toolDrag(tool, x, y);
 }
 
 
-void Micropolis::ToolUp(
-  short tool,
-  int x,
-  int y)
+void Micropolis::toolDrag(EditingTool tool, short px, short py)
 {
-  ToolDrag(tool, x, y);
-}
+    short x, y, dx, dy, adx, ady, lx, ly, dist;
+    float i, step, tx, ty, dtx, dty, rx, ry;
 
+    x = px;
+    y = py;
 
-void Micropolis::ToolDrag(
-  short tool,
-  int px,
-  int py)
-{
-  int x, y, dx, dy, adx, ady, lx, ly, dist;
-  float i, step, tx, ty, dtx, dty, rx, ry;
+    tool_x = x;
+    tool_y = y;
 
-  x = px;
-  y = py;
+    dist = gToolSize[tool];
 
-  tool_x = x;
-  tool_y = y;
+    x >>= 4;
+    y >>= 4;
+    lx = last_x >> 4;
+    ly = last_y >> 4;
 
-  dist = gToolSize[tool];
+    dx = x - lx;
+    dy = y - ly;
 
-  x >>= 4;
-  y >>= 4;
-  lx = last_x >> 4;
-  ly = last_y >> 4;
+    if ((dx == 0) && (dy == 0)) return;
 
-  dx = x - lx;
-  dy = y - ly;
+    adx = ABS(dx);
+    ady = ABS(dy);
 
-  if ((dx == 0) &&
-      (dy == 0)) {
-    return;
-  }
+    if (adx > ady) {
+        step = (float)0.3 / adx;
+    } else {
+        step = (float)0.3 / ady;
+    }
 
-  adx = ABS(dx);
-  ady = ABS(dy);
+    rx = (float)(dx < 0 ? 1 : 0);
+    ry = (float)(dy < 0 ? 1 : 0);
 
-  if (adx > ady) {
-    step = (float)0.3 / adx;
-  } else {
-    step = (float)0.3 / ady;
-  }
-
-  rx = (float)(dx < 0 ? 1 : 0);
-  ry = (float)(dy < 0 ? 1 : 0);
-
-  if (dist == 1) {
-    for (i = 0.0; i <= 1 + step; i += step) {
-      tx = (last_x >>4) + i * dx;
-      ty = (last_y >>4) + i * dy;
-      dtx = ABS(tx - lx);
-      dty = ABS(ty - ly);
-      if ((dtx >= 1) ||
-                  (dty >= 1)) {
-        // fill in corners
-        if ((dtx >= 1) &&
-            (dty >= 1)) {
-          if (dtx > dty) {
-            do_tool(tool, ((int)(tx + rx)) <<4, ly <<4, 0);
-          } else {
-            do_tool(tool, lx <<4, ((int)(ty + ry)) <<4, 0);
-          }
+    if (dist == 1) {
+        for (i = 0.0; i <= 1 + step; i += step) {
+            tx = (last_x >>4) + i * dx;
+            ty = (last_y >>4) + i * dy;
+            dtx = ABS(tx - lx);
+            dty = ABS(ty - ly);
+            if ((dtx >= 1) || (dty >= 1)) {
+                // fill in corners
+                if ((dtx >= 1) && (dty >= 1)) {
+                    if (dtx > dty) {
+                        doTool(tool, ((int)(tx + rx)) <<4, ly <<4, false);
+                    } else {
+                        doTool(tool, lx <<4, ((int)(ty + ry)) <<4, false);
+                    }
+                }
+                lx = (int)(tx + rx);
+                ly = (int)(ty + ry);
+                doTool(tool, lx <<4, ly <<4, false);
+            }
         }
-        lx = (int)(tx + rx);
-        ly = (int)(ty + ry);
-        do_tool(tool, lx <<4, ly <<4, 0);
-      }
+    } else {
+        for (i = 0.0; i <= 1 + step; i += step) {
+            tx = (last_x >>4) + i * dx;
+            ty = (last_y >>4) + i * dy;
+            dtx = ABS(tx - lx);
+            dty = ABS(ty - ly);
+            lx = (int)(tx + rx);
+            ly = (int)(ty + ry);
+            doTool(tool, lx <<4, ly <<4, false);
+        }
     }
-  } else {
-    for (i = 0.0; i <= 1 + step; i += step) {
-      tx = (last_x >>4) + i * dx;
-      ty = (last_y >>4) + i * dy;
-      dtx = ABS(tx - lx);
-      dty = ABS(ty - ly);
-      lx = (int)(tx + rx);
-      ly = (int)(ty + ry);
-      do_tool(tool, lx <<4, ly <<4, 0);
-    }
-  }
 
-  last_x = (lx <<4) + 8;
-  last_y = (ly <<4) + 8;
+    last_x = (lx <<4) + 8;
+    last_y = (ly <<4) + 8;
 
-  sim_skip = 0; // update editors overlapping this one
+    sim_skip = 0; // update editors overlapping this one
 
-  // TODO: update views
-}
-
-
-void Micropolis::DoPendTool(
-  int tool,
-  int x,
-  int y)
-{
-  Callback(
-    "UIDoPendTool",
-    "ddd",
-    tool,
-    x,
-    y);
+    InvalidateEditors();
 }
 
 

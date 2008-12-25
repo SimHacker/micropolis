@@ -55,19 +55,12 @@ IS_INTEL = _micropolisengine.IS_INTEL
 TRUE = _micropolisengine.TRUE
 FALSE = _micropolisengine.FALSE
 RANDOM_RANGE = _micropolisengine.RANDOM_RANGE
-SimWidth = _micropolisengine.SimWidth
-SimHeight = _micropolisengine.SimHeight
-HWLDX = _micropolisengine.HWLDX
-HWLDY = _micropolisengine.HWLDY
-QWX = _micropolisengine.QWX
-QWY = _micropolisengine.QWY
-SmX = _micropolisengine.SmX
-SmY = _micropolisengine.SmY
 NIL = _micropolisengine.NIL
 HORIZ = _micropolisengine.HORIZ
 VERT = _micropolisengine.VERT
 HISTLEN = _micropolisengine.HISTLEN
 MISCHISTLEN = _micropolisengine.MISCHISTLEN
+ISLAND_RADIUS = _micropolisengine.ISLAND_RADIUS
 HISTORY_COUNT = _micropolisengine.HISTORY_COUNT
 HISTORY_TYPE_RES = _micropolisengine.HISTORY_TYPE_RES
 HISTORY_TYPE_COM = _micropolisengine.HISTORY_TYPE_COM
@@ -80,7 +73,6 @@ HISTORY_SCALE_SHORT = _micropolisengine.HISTORY_SCALE_SHORT
 HISTORY_SCALE_LONG = _micropolisengine.HISTORY_SCALE_LONG
 HISTORY_SCALE_COUNT = _micropolisengine.HISTORY_SCALE_COUNT
 POWERMAPLEN = _micropolisengine.POWERMAPLEN
-POINT_BATCH = _micropolisengine.POINT_BATCH
 ALMAP = _micropolisengine.ALMAP
 REMAP = _micropolisengine.REMAP
 COMAP = _micropolisengine.COMAP
@@ -100,22 +92,6 @@ NMAPS = _micropolisengine.NMAPS
 VALVERATE = _micropolisengine.VALVERATE
 CENSUSRATE = _micropolisengine.CENSUSRATE
 TAXFREQ = _micropolisengine.TAXFREQ
-COLOR_WHITE = _micropolisengine.COLOR_WHITE
-COLOR_YELLOW = _micropolisengine.COLOR_YELLOW
-COLOR_ORANGE = _micropolisengine.COLOR_ORANGE
-COLOR_RED = _micropolisengine.COLOR_RED
-COLOR_DARKRED = _micropolisengine.COLOR_DARKRED
-COLOR_DARKBLUE = _micropolisengine.COLOR_DARKBLUE
-COLOR_LIGHTBLUE = _micropolisengine.COLOR_LIGHTBLUE
-COLOR_BROWN = _micropolisengine.COLOR_BROWN
-COLOR_LIGHTGREEN = _micropolisengine.COLOR_LIGHTGREEN
-COLOR_DARKGREEN = _micropolisengine.COLOR_DARKGREEN
-COLOR_OLIVE = _micropolisengine.COLOR_OLIVE
-COLOR_LIGHTBROWN = _micropolisengine.COLOR_LIGHTBROWN
-COLOR_LIGHTGRAY = _micropolisengine.COLOR_LIGHTGRAY
-COLOR_MEDIUMGRAY = _micropolisengine.COLOR_MEDIUMGRAY
-COLOR_DARKGRAY = _micropolisengine.COLOR_DARKGRAY
-COLOR_BLACK = _micropolisengine.COLOR_BLACK
 TRA = _micropolisengine.TRA
 COP = _micropolisengine.COP
 AIR = _micropolisengine.AIR
@@ -316,30 +292,26 @@ VBRDG1 = _micropolisengine.VBRDG1
 VBRDG2 = _micropolisengine.VBRDG2
 VBRDG3 = _micropolisengine.VBRDG3
 TILE_COUNT = _micropolisengine.TILE_COUNT
-residentialState = _micropolisengine.residentialState
-commercialState = _micropolisengine.commercialState
-industrialState = _micropolisengine.industrialState
-fireState = _micropolisengine.fireState
-queryState = _micropolisengine.queryState
-policeState = _micropolisengine.policeState
-wireState = _micropolisengine.wireState
-dozeState = _micropolisengine.dozeState
-rrState = _micropolisengine.rrState
-roadState = _micropolisengine.roadState
-stadiumState = _micropolisengine.stadiumState
-parkState = _micropolisengine.parkState
-seaportState = _micropolisengine.seaportState
-powerState = _micropolisengine.powerState
-nuclearState = _micropolisengine.nuclearState
-airportState = _micropolisengine.airportState
-networkState = _micropolisengine.networkState
-firstState = _micropolisengine.firstState
-lastState = _micropolisengine.lastState
-STATE_CMD = _micropolisengine.STATE_CMD
-STATE_TILES = _micropolisengine.STATE_TILES
-STATE_OVERLAYS = _micropolisengine.STATE_OVERLAYS
-STATE_GRAPHS = _micropolisengine.STATE_GRAPHS
-ISLAND_RADIUS = _micropolisengine.ISLAND_RADIUS
+TOOL_RESIDENTIAL = _micropolisengine.TOOL_RESIDENTIAL
+TOOL_COMMERCIAL = _micropolisengine.TOOL_COMMERCIAL
+TOOL_INDUSTRIAL = _micropolisengine.TOOL_INDUSTRIAL
+TOOL_FIRESTATION = _micropolisengine.TOOL_FIRESTATION
+TOOL_POLICESTATION = _micropolisengine.TOOL_POLICESTATION
+TOOL_QUERY = _micropolisengine.TOOL_QUERY
+TOOL_WIRE = _micropolisengine.TOOL_WIRE
+TOOL_BULLDOZER = _micropolisengine.TOOL_BULLDOZER
+TOOL_RAILROAD = _micropolisengine.TOOL_RAILROAD
+TOOL_ROAD = _micropolisengine.TOOL_ROAD
+TOOL_STADIUM = _micropolisengine.TOOL_STADIUM
+TOOL_PARK = _micropolisengine.TOOL_PARK
+TOOL_SEAPORT = _micropolisengine.TOOL_SEAPORT
+TOOL_COALPOWER = _micropolisengine.TOOL_COALPOWER
+TOOL_NUCLEARPOWER = _micropolisengine.TOOL_NUCLEARPOWER
+TOOL_AIRPORT = _micropolisengine.TOOL_AIRPORT
+TOOL_NETWORK = _micropolisengine.TOOL_NETWORK
+TOOL_COUNT = _micropolisengine.TOOL_COUNT
+TOOL_FIRST = _micropolisengine.TOOL_FIRST
+TOOL_LAST = _micropolisengine.TOOL_LAST
 SC_NONE = _micropolisengine.SC_NONE
 SC_DULLSVILLE = _micropolisengine.SC_DULLSVILLE
 SC_SAN_FRANCISCO = _micropolisengine.SC_SAN_FRANCISCO
@@ -369,7 +341,6 @@ CVP_TRAFFIC = _micropolisengine.CVP_TRAFFIC
 CVP_UNEMPLOYMENT = _micropolisengine.CVP_UNEMPLOYMENT
 CVP_FIRE = _micropolisengine.CVP_FIRE
 CVP_NUMPROBLEMS = _micropolisengine.CVP_NUMPROBLEMS
-CVP_NUMTAKEN = _micropolisengine.CVP_NUMTAKEN
 CVP_PROBLEM_COMPLAINTS = _micropolisengine.CVP_PROBLEM_COMPLAINTS
 PROBNUM = _micropolisengine.PROBNUM
 CC_VILLAGE = _micropolisengine.CC_VILLAGE
@@ -379,6 +350,12 @@ CC_CAPITAL = _micropolisengine.CC_CAPITAL
 CC_METROPOLIS = _micropolisengine.CC_METROPOLIS
 CC_MEGALOPOLIS = _micropolisengine.CC_MEGALOPOLIS
 CC_NUM_CITIES = _micropolisengine.CC_NUM_CITIES
+LEVEL_EASY = _micropolisengine.LEVEL_EASY
+LEVEL_MEDIUM = _micropolisengine.LEVEL_MEDIUM
+LEVEL_HARD = _micropolisengine.LEVEL_HARD
+LEVEL_COUNT = _micropolisengine.LEVEL_COUNT
+LEVEL_FIRST = _micropolisengine.LEVEL_FIRST
+LEVEL_LAST = _micropolisengine.LEVEL_LAST
 TestBounds = _micropolisengine.TestBounds
 not_reached = _micropolisengine.not_reached
 class Resource(_object):
@@ -975,6 +952,9 @@ class Micropolis(_object):
     __swig_setmethods__["CreateIsland"] = _micropolisengine.Micropolis_CreateIsland_set
     __swig_getmethods__["CreateIsland"] = _micropolisengine.Micropolis_CreateIsland_get
     if _newclass:CreateIsland = _swig_property(_micropolisengine.Micropolis_CreateIsland_get, _micropolisengine.Micropolis_CreateIsland_set)
+    __swig_setmethods__["IslandRadius"] = _micropolisengine.Micropolis_IslandRadius_set
+    __swig_getmethods__["IslandRadius"] = _micropolisengine.Micropolis_IslandRadius_get
+    if _newclass:IslandRadius = _swig_property(_micropolisengine.Micropolis_IslandRadius_get, _micropolisengine.Micropolis_IslandRadius_set)
     def GenerateNewCity(*args): return _micropolisengine.Micropolis_GenerateNewCity(*args)
     def GenerateSomeCity(*args): return _micropolisengine.Micropolis_GenerateSomeCity(*args)
     def GenerateMap(*args): return _micropolisengine.Micropolis_GenerateMap(*args)
@@ -1399,9 +1379,9 @@ class Micropolis(_object):
     __swig_setmethods__["LastMesTime"] = _micropolisengine.Micropolis_LastMesTime_set
     __swig_getmethods__["LastMesTime"] = _micropolisengine.Micropolis_LastMesTime_get
     if _newclass:LastMesTime = _swig_property(_micropolisengine.Micropolis_LastMesTime_get, _micropolisengine.Micropolis_LastMesTime_set)
-    __swig_setmethods__["GameLevel"] = _micropolisengine.Micropolis_GameLevel_set
-    __swig_getmethods__["GameLevel"] = _micropolisengine.Micropolis_GameLevel_get
-    if _newclass:GameLevel = _swig_property(_micropolisengine.Micropolis_GameLevel_get, _micropolisengine.Micropolis_GameLevel_set)
+    __swig_setmethods__["gameLevel"] = _micropolisengine.Micropolis_gameLevel_set
+    __swig_getmethods__["gameLevel"] = _micropolisengine.Micropolis_gameLevel_get
+    if _newclass:gameLevel = _swig_property(_micropolisengine.Micropolis_gameLevel_get, _micropolisengine.Micropolis_gameLevel_set)
     __swig_setmethods__["InitSimLoad"] = _micropolisengine.Micropolis_InitSimLoad_set
     __swig_getmethods__["InitSimLoad"] = _micropolisengine.Micropolis_InitSimLoad_get
     if _newclass:InitSimLoad = _swig_property(_micropolisengine.Micropolis_InitSimLoad_get, _micropolisengine.Micropolis_InitSimLoad_set)
@@ -1460,27 +1440,6 @@ class Micropolis(_object):
     def MakeSound(*args): return _micropolisengine.Micropolis_MakeSound(*args)
     def getTile(*args): return _micropolisengine.Micropolis_getTile(*args)
     def getMapBuffer(*args): return _micropolisengine.Micropolis_getMapBuffer(*args)
-    __swig_setmethods__["OverRide"] = _micropolisengine.Micropolis_OverRide_set
-    __swig_getmethods__["OverRide"] = _micropolisengine.Micropolis_OverRide_get
-    if _newclass:OverRide = _swig_property(_micropolisengine.Micropolis_OverRide_get, _micropolisengine.Micropolis_OverRide_set)
-    __swig_setmethods__["Expensive"] = _micropolisengine.Micropolis_Expensive_set
-    __swig_getmethods__["Expensive"] = _micropolisengine.Micropolis_Expensive_get
-    if _newclass:Expensive = _swig_property(_micropolisengine.Micropolis_Expensive_get, _micropolisengine.Micropolis_Expensive_set)
-    __swig_setmethods__["Players"] = _micropolisengine.Micropolis_Players_set
-    __swig_getmethods__["Players"] = _micropolisengine.Micropolis_Players_get
-    if _newclass:Players = _swig_property(_micropolisengine.Micropolis_Players_get, _micropolisengine.Micropolis_Players_set)
-    __swig_setmethods__["Votes"] = _micropolisengine.Micropolis_Votes_set
-    __swig_getmethods__["Votes"] = _micropolisengine.Micropolis_Votes_get
-    if _newclass:Votes = _swig_property(_micropolisengine.Micropolis_Votes_get, _micropolisengine.Micropolis_Votes_set)
-    __swig_setmethods__["PendingTool"] = _micropolisengine.Micropolis_PendingTool_set
-    __swig_getmethods__["PendingTool"] = _micropolisengine.Micropolis_PendingTool_get
-    if _newclass:PendingTool = _swig_property(_micropolisengine.Micropolis_PendingTool_get, _micropolisengine.Micropolis_PendingTool_set)
-    __swig_setmethods__["PendingX"] = _micropolisengine.Micropolis_PendingX_set
-    __swig_getmethods__["PendingX"] = _micropolisengine.Micropolis_PendingX_get
-    if _newclass:PendingX = _swig_property(_micropolisengine.Micropolis_PendingX_get, _micropolisengine.Micropolis_PendingX_set)
-    __swig_setmethods__["PendingY"] = _micropolisengine.Micropolis_PendingY_set
-    __swig_getmethods__["PendingY"] = _micropolisengine.Micropolis_PendingY_get
-    if _newclass:PendingY = _swig_property(_micropolisengine.Micropolis_PendingY_get, _micropolisengine.Micropolis_PendingY_set)
     __swig_setmethods__["last_x"] = _micropolisengine.Micropolis_last_x_set
     __swig_getmethods__["last_x"] = _micropolisengine.Micropolis_last_x_get
     if _newclass:last_x = _swig_property(_micropolisengine.Micropolis_last_x_get, _micropolisengine.Micropolis_last_x_set)
@@ -1504,31 +1463,29 @@ class Micropolis(_object):
     def check6x6(*args): return _micropolisengine.Micropolis_check6x6(*args)
     def getDensityStr(*args): return _micropolisengine.Micropolis_getDensityStr(*args)
     def doZoneStatus(*args): return _micropolisengine.Micropolis_doZoneStatus(*args)
-    def DoShowZoneStatus(*args): return _micropolisengine.Micropolis_DoShowZoneStatus(*args)
-    def DidTool(*args): return _micropolisengine.Micropolis_DidTool(*args)
-    def query_tool(*args): return _micropolisengine.Micropolis_query_tool(*args)
-    def bulldozer_tool(*args): return _micropolisengine.Micropolis_bulldozer_tool(*args)
-    def road_tool(*args): return _micropolisengine.Micropolis_road_tool(*args)
-    def rail_tool(*args): return _micropolisengine.Micropolis_rail_tool(*args)
-    def wire_tool(*args): return _micropolisengine.Micropolis_wire_tool(*args)
-    def park_tool(*args): return _micropolisengine.Micropolis_park_tool(*args)
-    def residential_tool(*args): return _micropolisengine.Micropolis_residential_tool(*args)
-    def commercial_tool(*args): return _micropolisengine.Micropolis_commercial_tool(*args)
-    def industrial_tool(*args): return _micropolisengine.Micropolis_industrial_tool(*args)
-    def police_dept_tool(*args): return _micropolisengine.Micropolis_police_dept_tool(*args)
-    def fire_dept_tool(*args): return _micropolisengine.Micropolis_fire_dept_tool(*args)
-    def stadium_tool(*args): return _micropolisengine.Micropolis_stadium_tool(*args)
-    def coal_power_plant_tool(*args): return _micropolisengine.Micropolis_coal_power_plant_tool(*args)
-    def nuclear_power_plant_tool(*args): return _micropolisengine.Micropolis_nuclear_power_plant_tool(*args)
-    def seaport_tool(*args): return _micropolisengine.Micropolis_seaport_tool(*args)
-    def airport_tool(*args): return _micropolisengine.Micropolis_airport_tool(*args)
-    def network_tool(*args): return _micropolisengine.Micropolis_network_tool(*args)
-    def do_tool(*args): return _micropolisengine.Micropolis_do_tool(*args)
-    def DoTool(*args): return _micropolisengine.Micropolis_DoTool(*args)
-    def ToolDown(*args): return _micropolisengine.Micropolis_ToolDown(*args)
-    def ToolUp(*args): return _micropolisengine.Micropolis_ToolUp(*args)
-    def ToolDrag(*args): return _micropolisengine.Micropolis_ToolDrag(*args)
-    def DoPendTool(*args): return _micropolisengine.Micropolis_DoPendTool(*args)
+    def doShowZoneStatus(*args): return _micropolisengine.Micropolis_doShowZoneStatus(*args)
+    def didTool(*args): return _micropolisengine.Micropolis_didTool(*args)
+    def queryTool(*args): return _micropolisengine.Micropolis_queryTool(*args)
+    def bulldozerTool(*args): return _micropolisengine.Micropolis_bulldozerTool(*args)
+    def roadTool(*args): return _micropolisengine.Micropolis_roadTool(*args)
+    def railroadTool(*args): return _micropolisengine.Micropolis_railroadTool(*args)
+    def wireTool(*args): return _micropolisengine.Micropolis_wireTool(*args)
+    def parkTool(*args): return _micropolisengine.Micropolis_parkTool(*args)
+    def residentialTool(*args): return _micropolisengine.Micropolis_residentialTool(*args)
+    def commercialTool(*args): return _micropolisengine.Micropolis_commercialTool(*args)
+    def industrialTool(*args): return _micropolisengine.Micropolis_industrialTool(*args)
+    def policeStationTool(*args): return _micropolisengine.Micropolis_policeStationTool(*args)
+    def fireStationTool(*args): return _micropolisengine.Micropolis_fireStationTool(*args)
+    def stadiumTool(*args): return _micropolisengine.Micropolis_stadiumTool(*args)
+    def coalPowerTool(*args): return _micropolisengine.Micropolis_coalPowerTool(*args)
+    def nuclearPowerTool(*args): return _micropolisengine.Micropolis_nuclearPowerTool(*args)
+    def seaportTool(*args): return _micropolisengine.Micropolis_seaportTool(*args)
+    def airportTool(*args): return _micropolisengine.Micropolis_airportTool(*args)
+    def networkTool(*args): return _micropolisengine.Micropolis_networkTool(*args)
+    def doTool(*args): return _micropolisengine.Micropolis_doTool(*args)
+    def toolDown(*args): return _micropolisengine.Micropolis_toolDown(*args)
+    def toolUp(*args): return _micropolisengine.Micropolis_toolUp(*args)
+    def toolDrag(*args): return _micropolisengine.Micropolis_toolDrag(*args)
     __swig_setmethods__["PosStackN"] = _micropolisengine.Micropolis_PosStackN_set
     __swig_getmethods__["PosStackN"] = _micropolisengine.Micropolis_PosStackN_get
     if _newclass:PosStackN = _swig_property(_micropolisengine.Micropolis_PosStackN_get, _micropolisengine.Micropolis_PosStackN_set)
@@ -1604,8 +1561,8 @@ class Micropolis(_object):
     def Resume(*args): return _micropolisengine.Micropolis_Resume(*args)
     def setSpeed(*args): return _micropolisengine.Micropolis_setSpeed(*args)
     def setSkips(*args): return _micropolisengine.Micropolis_setSkips(*args)
-    def SetGameLevelFunds(*args): return _micropolisengine.Micropolis_SetGameLevelFunds(*args)
     def SetGameLevel(*args): return _micropolisengine.Micropolis_SetGameLevel(*args)
+    def SetGameLevelFunds(*args): return _micropolisengine.Micropolis_SetGameLevelFunds(*args)
     def UpdateGameLevel(*args): return _micropolisengine.Micropolis_UpdateGameLevel(*args)
     def setCityName(*args): return _micropolisengine.Micropolis_setCityName(*args)
     def setAnyCityName(*args): return _micropolisengine.Micropolis_setAnyCityName(*args)

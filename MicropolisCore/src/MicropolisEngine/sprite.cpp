@@ -1533,7 +1533,7 @@ printf("drive from tile %d %d to %d %d\n",
 
       /* can't drive forward into a new tile */
       if (speed == 8) {
-        bulldozer_tool(tx, ty);
+        bulldozerTool(tx, ty);
       } else {
       }
 
