@@ -71,7 +71,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: Simulate */
+/** Check progress of the user, and send him messages about it. */
 void Micropolis::SendMessages()
 {
     short PowerPop;
@@ -225,7 +225,13 @@ void Micropolis::SendMessages()
 }
 
 
-/* comefrom: SendMessages */
+/**
+ * Detect a change in city class, and produce a message if the player has
+ * reached the next class.
+ * @todo Replace magic population numbers with constants in a table.
+ * @todo City class detection seems duplicated. Find other instances, and merge
+ *       them to a single function.
+ */
 void Micropolis::CheckGrowth()
 {
     Quad thisCityPop;
@@ -352,56 +358,72 @@ void Micropolis::ClearMes()
 }
 
 
-/* comefrom: MakeEarthquake MakeFire MakeFire MakeFlood SendMessages
-             CheckGrowth DoScenarioScore DoPowerScan */
-int Micropolis::SendMes(int Mnum)
+/**
+ * Setup a message for the front-end to display
+ * @param mesgNum Message number of the message to display
+ * @return Setup succeeded (there was no other message/picture displayed)
+ */
+bool Micropolis::SendMes(int mesgNum)
 {
-    if (Mnum < 0) {
-        if (Mnum != LastPicNum) {
-            MessagePort = Mnum;
+    if (mesgNum < 0) {
+        if (mesgNum != LastPicNum) {
+            MessagePort = mesgNum;
             MesX = 0;
             MesY = 0;
-            LastPicNum = Mnum;
-            return 1;
+            LastPicNum = mesgNum;
+            return true;
         }
     } else {
-        if (!(MessagePort)) {
-            MessagePort = Mnum;
+        if (MessagePort == 0) {
+            MessagePort = mesgNum;
             MesX = 0;
             MesY = 0;
-            return 1;
+            return true;
         }
     }
 
-    return 0;
+    return false;
 }
 
 
-/* comefrom: DoExplosion DoCopter ExplodeObject */
-void Micropolis::SendMesAt(short Mnum, short x, short y)
+/**
+ * Send the user a message of an event that happens at a particular position
+ * in the city.
+ * @param mesgNum Message number of the message to display.
+ * @param x       X coordinate of the position of the event.
+ * @param y       Y coordinate of the position of the event.
+ * @todo Merge Micropolis::SendMes() and Micropolis::SendMesAt().
+ */
+void Micropolis::SendMesAt(short mesgNum, short x, short y)
 {
-    if (SendMes(Mnum)) {
+    if (SendMes(mesgNum)) {
         MesX = x;
         MesY = y;
     }
 }
 
-
+/**
+ * Forward the message from Micropolis::MessagePort to the front-end.
+ *
+ * Convert the message number to text and display it. Also add a sound if
+ * appropiate.
+ * @todo A picture (that is, a negative value in Micropolis::MessagePort)
+ *       causes 2 messages to be send. A picture, immediately followed by a
+ *       text message. Why not do this in one step?
+ */
 void Micropolis::doMessage()
 {
     char messageStr[256];
     short pictId;
-    short firstTime;
 
     messageStr[0] = 0;
 
-    if (MessagePort) {
+    if (MessagePort != 0) {
         MesNum = MessagePort;
         MessagePort = 0;
         LastMesTime = TickCount();
-        firstTime = 1;
+        doMakeSound((MesNum < 0) ? -MesNum : MesNum);
     } else {
-        firstTime = 0;
         if (MesNum == 0) {
             return;
         }
@@ -414,10 +436,59 @@ void Micropolis::doMessage()
         }
     }
 
-    if (firstTime) {
 
-        switch ((MesNum < 0) ? -MesNum : MesNum) {
+    if (MesNum >= 0) {
+        if (MesNum == 0) {
+            return;
+        }
 
+        if (MesNum > 60) {
+            MesNum = 0;
+            return;
+        }
+
+        GetIndString(messageStr, 301, MesNum);
+
+        if (autoGo && (MesX != 0 || MesY != 0)) {
+            DoAutoGoto(MesX, MesY, messageStr);
+            MesX = 0;
+            MesY = 0;
+        } else {
+            SetMessageField(messageStr);
+        }
+
+    } else { /* picture message */
+
+        pictId = -(MesNum);
+
+        if (pictId < 43) {
+            GetIndString(messageStr, 301, pictId);
+        } else {
+            messageStr[0] = '\0';
+        }
+
+        DoShowPicture(pictId);
+
+        MessagePort = pictId; /* resend text message */
+
+        if (autoGo && (MesX != 0 || MesY != 0)) {
+
+            DoAutoGoto(MesX, MesY, messageStr);
+            MesX = 0;
+            MesY = 0;
+        }
+    }
+}
+
+/**
+ * Make a sound for message \a mesNum if appropiate.
+ * @param mesNum Message number displayed
+ */
+void Micropolis::doMakeSound(int mesgNum)
+{
+    assert(mesgNum >= 0);
+
+    switch (mesgNum) {
         case 12:
             if (Rand(5) == 1) {
                 MakeSound("city", "HonkHonk-Med");
@@ -457,53 +528,8 @@ void Micropolis::doMessage()
         case  44:
             MakeSound("city", "Siren");
             break;
-
-        }
-    }
-
-    if (MesNum >= 0) {
-        if (MesNum == 0) {
-            return;
-        }
-
-        if (MesNum > 60) {
-            MesNum = 0;
-            return;
-        }
-
-        GetIndString(messageStr, 301, MesNum);
-
-        if (autoGo && (MesX || MesY)) {
-            DoAutoGoto(MesX, MesY, messageStr);
-            MesX = 0;
-            MesY = 0;
-        } else {
-            SetMessageField(messageStr);
-        }
-
-    } else { /* picture message */
-
-        pictId = -(MesNum);
-
-        if (pictId < 43) {
-            GetIndString(messageStr, 301, pictId);
-        } else {
-            messageStr[0] = '\0';
-        }
-
-        DoShowPicture(pictId);
-
-        MessagePort = pictId; /* resend text message */
-
-        if (autoGo && (MesX || MesY)) {
-
-            DoAutoGoto(MesX, MesY, messageStr);
-            MesX = 0;
-            MesY = 0;
-        }
     }
 }
-
 
 /**
  * Tell the front-end that it should perform an auto-goto
@@ -518,6 +544,10 @@ void Micropolis::DoAutoGoto(short x, short y, char *msg)
 }
 
 
+/**
+ * Display message to the user
+ * @param str Text message
+ */
 void Micropolis::SetMessageField(char *str)
 {
     if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
