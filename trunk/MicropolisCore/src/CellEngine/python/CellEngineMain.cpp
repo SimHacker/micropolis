@@ -13,7 +13,7 @@ BOOL APIENTRY DllMain(
     DWORD  ul_reason_for_call,
     LPVOID lpReserved)
 {
-    return TRUE;
+    return 1;
 }
 
 #ifdef _MANAGED

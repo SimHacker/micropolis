@@ -232,11 +232,11 @@ bool Micropolis::FindPTele()
 
       tile = Map[tx][ty] & LOMASK;
       if (tile >= TELEBASE && tile <= TELELAST)
-        return (TRUE);
+        return true;
     }
   }
 
-  return (FALSE);
+  return false;
 }
 
 

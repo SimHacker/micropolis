@@ -72,62 +72,60 @@
 
 
 /* comefrom: TestForCond DoPowerScan TryGo */
-int Micropolis::MoveMapSim(
-  short MDir)
+bool Micropolis::MoveMapSim(short MDir)
 {
   switch (MDir) {
 
   case 0:
     if (SMapY > 0) {
       SMapY--;
-      return (TRUE);
+      return true;
     }
     if (SMapY < 0) {
       SMapY = 0;
     }
-    return (FALSE);
+    return false;
 
   case 1:
     if (SMapX < (WORLD_X - 1)) {
       SMapX++;
-      return (TRUE);
+      return true;
     }
     if (SMapX > (WORLD_X - 1)) {
       SMapX = WORLD_X - 1;
     }
-    return (FALSE);
+    return false;
   case 2:
     if (SMapY < (WORLD_Y - 1)) {
       SMapY++;
-      return (TRUE);
+      return true;
     }
     if (SMapY > (WORLD_Y - 1)) {
       SMapY = WORLD_Y - 1;
     }
-    return (FALSE);
+    return false;
 
   case 3:
     if (SMapX > 0) {
       SMapX--;
-      return (TRUE);
+      return true;
     }
     if (SMapX < 0) {
       SMapX = 0;
     }
-    return (FALSE);
+    return false;
 
   case 4:
-    return (TRUE);
+    return true;
 
   }
 
-  return (FALSE);
+  return false;
 }
 
 
 /* comefrom: DoPowerScan */
-short Micropolis::TestForCond(
-  short TFDir)
+bool Micropolis::TestForCond(short TFDir)
 {
   register int xsave, ysave, PowerWrd;
 
@@ -144,13 +142,13 @@ short Micropolis::TestForCond(
     {
       SMapX = xsave;
       SMapY = ysave;
-      return (TRUE);
+      return true;
     }
   }
 
   SMapX = xsave;
   SMapY = ysave;
-  return (FALSE);
+  return false;
 }
 
 

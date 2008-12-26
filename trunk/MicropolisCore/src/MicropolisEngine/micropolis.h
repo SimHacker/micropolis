@@ -114,9 +114,6 @@
 
 #define IS_INTEL                        1
 
-#define TRUE                            1
-#define FALSE                           0
-
 #define RANDOM_RANGE                    0xffff
 
 /**
@@ -1940,8 +1937,7 @@ public:
 
   void SmoothRiver();
 
-  int IsTree(
-    int cell);
+  bool IsTree(int cell);
 
   void SmoothTrees();
 
@@ -2254,11 +2250,9 @@ public:
   Quad NumPower; ///< Amount of power used
 
 
-  int MoveMapSim(
-    short MDir);
+  bool MoveMapSim(short MDir);
 
-  short TestForCond(
-    short TFDir);
+  bool TestForCond(short TFDir);
 
   void DoPowerScan();
 
@@ -2495,7 +2489,7 @@ public:
 
   void DoRoad();
 
-  int DoBridge();
+  bool DoBridge();
 
   int GetBoatDis();
 

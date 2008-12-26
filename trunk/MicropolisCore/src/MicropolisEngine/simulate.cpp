@@ -769,7 +769,7 @@ void Micropolis::TakeCensus()
   short ResPopScaled = ResPop >> 8;
 
   if (HospPop < ResPopScaled) {
-    NeedHosp = TRUE;
+    NeedHosp = 1;
   }
 
   if (HospPop > ResPopScaled) {
@@ -777,11 +777,11 @@ void Micropolis::TakeCensus()
   }
 
   if (HospPop == ResPopScaled) {
-    NeedHosp = FALSE;
+    NeedHosp = 0;
   }
 
   if (ChurchPop < ResPopScaled) {
-    NeedChurch = TRUE;
+    NeedChurch = 1;
   }
 
   if (ChurchPop > ResPopScaled) {
@@ -789,7 +789,7 @@ void Micropolis::TakeCensus()
   }
 
   if (ChurchPop == ResPopScaled) {
-    NeedChurch = FALSE;
+    NeedChurch = 0;
   }
 }
 
@@ -1107,7 +1107,7 @@ void Micropolis::DoRoad()
 
 
 /* comefrom: MapScan */
-int Micropolis::DoBridge()
+bool Micropolis::DoBridge()
 {
   static short HDx[7] = { -2,  2, -2, -1,  0,  1,  2 };
   static short HDy[7] = { -1, -1,  0,  0,  0,  0,  0 };
@@ -1147,7 +1147,7 @@ int Micropolis::DoBridge()
       }
     }
 
-    return (TRUE);
+    return true;
   }
 
   if (CChr9 == BRWH) { /*  Horizontal bridge close  */
@@ -1170,7 +1170,7 @@ int Micropolis::DoBridge()
         }
       }
     }
-    return (TRUE);
+    return true;
   }
 
   if ((GetBoatDis() < 300) ||
@@ -1200,12 +1200,12 @@ int Micropolis::DoBridge()
             }
           }
 
-          return (TRUE);
+          return true;
 
         }
       }
 
-      return (FALSE);
+      return false;
 
     } else {
 
@@ -1232,17 +1232,17 @@ int Micropolis::DoBridge()
             }
           }
 
-          return (TRUE);
+          return true;
 
         }
       }
 
-      return (FALSE);
+      return false;
 
     }
   }
 
-  return (FALSE);
+  return false;
 }
 
 

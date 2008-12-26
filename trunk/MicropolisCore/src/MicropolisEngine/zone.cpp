@@ -221,7 +221,7 @@ void Micropolis::DoIndustrial(
     /* Try driving from industrial to residential */
     TrfGood = MakeTraf(ZT_RESIDENTIAL);
   } else {
-    TrfGood = TRUE;
+    TrfGood = 1;
   }
 
   if (TrfGood == -1) {
@@ -266,7 +266,7 @@ void Micropolis::DoCommercial(
     /* Try driving from commercial to industrial */
     TrfGood = MakeTraf(ZT_INDUSTRIAL);
   } else {
-    TrfGood = TRUE;
+    TrfGood = 1;
   }
 
   if (TrfGood == -1) {
@@ -322,7 +322,7 @@ void Micropolis::DoResidential(
     /* Try driving from residential to commercial */
     TrfGood = MakeTraf(ZT_COMMERCIAL);
   } else {
-    TrfGood = TRUE;
+    TrfGood = 1;
   }
 
   if (TrfGood == -1) {
@@ -369,13 +369,13 @@ void Micropolis::MakeHosp()
 {
   if (NeedHosp > 0) {
     ZonePlop(HOSPITAL - 4);
-    NeedHosp = FALSE;
+    NeedHosp = 0;
     return;
   }
 
   if (NeedChurch > 0) {
     ZonePlop(CHURCH - 4);
-    NeedChurch = FALSE;
+    NeedChurch = 0;
     return;
   }
 }
