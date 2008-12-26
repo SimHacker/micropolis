@@ -74,66 +74,62 @@
 /* comefrom: Simulate */
 void Micropolis::SendMessages()
 {
-  register int z;
   short PowerPop;
   float TM;
 
-  if (ScenarioID > SC_NONE && ScoreType > SC_NONE && (ScoreWait)) {
+  // Running a scenario, and waiting it to 'end' so we can give a score
+  if (ScenarioID > SC_NONE && ScoreType > SC_NONE && ScoreWait > 0) {
     ScoreWait--;
-    if (!ScoreWait) {
+    if (ScoreWait == 0) {
       DoScenarioScore(ScoreType);
     }
   }
 
   CheckGrowth();
 
-  TotalZPop =
-    ResZPop + ComZPop + IndZPop;
-  PowerPop =
-    NuclearPop + CoalPop;
+  TotalZPop = ResZPop + ComZPop + IndZPop;
+  PowerPop = NuclearPop + CoalPop;
 
-  z = CityTime & 63;
-
-  switch(z) {
+  switch(CityTime & 63) {
 
   case 1:
-    if ((TotalZPop >>2) >= ResZPop) {
+    if (TotalZPop / 4 >= ResZPop) {
       SendMes(1); /* need Res */
     }
     break;
 
   case 5:
-    if ((TotalZPop >>3) >= ComZPop) {
+    if (TotalZPop / 8 >= ComZPop) {
       SendMes(2); /* need Com */
     }
     break;
 
   case 10:
-    if ((TotalZPop >>3) >= IndZPop) {
+    if (TotalZPop / 8 >= IndZPop) {
       SendMes(3); /* need Ind */
     }
     break;
 
   case 14:
-    if ((TotalZPop > 10) && ((TotalZPop <<1) > RoadTotal)) {
+    if (TotalZPop > 10 && TotalZPop * 2 > RoadTotal) {
       SendMes(4);
     }
     break;
 
   case 18:
-    if ((TotalZPop > 50) && (TotalZPop > RailTotal)) {
+    if (TotalZPop > 50 && TotalZPop > RailTotal) {
       SendMes(5);
     }
     break;
 
   case 22:
-    if ((TotalZPop > 10) && (PowerPop == 0)) {
+    if (TotalZPop > 10 && PowerPop == 0) {
       SendMes(6); /* need Power */
     }
     break;
 
   case 26:
-    if ((ResPop > 500) && (StadiumPop == 0)) {
+    if (ResPop > 500 && StadiumPop == 0) {
       SendMes(7); /* need Stad */
       ResCap = 1;
     } else {
@@ -142,7 +138,7 @@ void Micropolis::SendMessages()
     break;
 
   case 28:
-    if ((IndPop > 70) && (PortPop == 0)) {
+    if (IndPop > 70 && PortPop == 0) {
       SendMes(8);
       IndCap = 1;
     } else {
@@ -151,7 +147,7 @@ void Micropolis::SendMessages()
     break;
 
   case 30:
-    if ((ComPop > 100) && (APortPop == 0)) {
+    if (ComPop > 100 && APortPop == 0) {
       SendMes(9);
       ComCap = 1;
     } else {
@@ -161,8 +157,8 @@ void Micropolis::SendMessages()
 
   case 32:
     TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
-    if (TM) {
-      if ((PwrdZCnt / TM) < 0.7) {
+    if (TM > 0) {
+      if (PwrdZCnt / TM < 0.7) {
         SendMes(15);
       }
     }
@@ -235,40 +231,37 @@ void Micropolis::CheckGrowth()
   Quad thisCityPop;
   short z;
 
-  if (!(CityTime & 3)) {
+  if ((CityTime & 3) == 0) {
     z = 0;
-    thisCityPop =
-      ((ResPop) + (ComPop * 8) + (IndPop * 8)) * 20;
+    thisCityPop = (ResPop + (ComPop + IndPop) * 8) * 20;
 
-    if (lastCityPop) {
+    if (lastCityPop > 0) {
 
-      if ((lastCityPop < 2000) && (thisCityPop >= 2000)) {
+      if (lastCityPop < 2000 && thisCityPop >= 2000) {
         z = 35;
       }
 
-      if ((lastCityPop < 10000) && (thisCityPop >= 10000)) {
+      if (lastCityPop < 10000 && thisCityPop >= 10000) {
         z = 36;
       }
 
-      if ((lastCityPop < 50000L) && (thisCityPop >= 50000L)) {
+      if (lastCityPop < 50000L && thisCityPop >= 50000L) {
         z = 37;
       }
 
-      if ((lastCityPop < 100000L) && (thisCityPop >= 100000L)) {
+      if (lastCityPop < 100000L && thisCityPop >= 100000L) {
         z = 38;
       }
 
-      if ((lastCityPop < 500000L) && (thisCityPop >= 500000L)) {
+      if (lastCityPop < 500000L && thisCityPop >= 500000L) {
         z = 39;
       }
 
     }
 
-    if (z) {
-      if (z != LastCategory) {
+    if (z > 0 && z != LastCategory) {
         SendMes(-z);
         LastCategory = z;
-      }
     }
 
     lastCityPop = thisCityPop;
@@ -362,8 +355,7 @@ void Micropolis::ClearMes()
 
 /* comefrom: MakeEarthquake MakeFire MakeFire MakeFlood SendMessages
              CheckGrowth DoScenarioScore DoPowerScan */
-int Micropolis::SendMes(
-  int Mnum)
+int Micropolis::SendMes(int Mnum)
 {
   if (Mnum < 0) {
     if (Mnum != LastPicNum) {
@@ -387,10 +379,7 @@ int Micropolis::SendMes(
 
 
 /* comefrom: DoExplosion DoCopter ExplodeObject */
-void Micropolis::SendMesAt(
-  short Mnum,
-  short x,
-  short y)
+void Micropolis::SendMesAt(short Mnum, short x, short y)
 {
   if (SendMes(Mnum)) {
     MesX = x;
@@ -420,7 +409,7 @@ void Micropolis::doMessage()
     if (MesNum < 0) {
       MesNum = -MesNum;
       LastMesTime = TickCount();
-    } else if ((TickCount() - LastMesTime) > (60 * 30)) {
+    } else if (TickCount() - LastMesTime > 60 * 30) {
       MesNum = 0;
       return;
     }
@@ -517,10 +506,14 @@ void Micropolis::doMessage()
 }
 
 
-void Micropolis::DoAutoGoto(
-  short x,
-  short y,
-  char *msg)
+/**
+ * Tell the front-end that it should perform an auto-goto
+ * @param x   X position at the map
+ * @param y   Y position at the map
+ * @param msg Message
+ * @todo \a msg parameter is not used!
+ */
+void Micropolis::DoAutoGoto(short x, short y, char *msg)
 {
   Callback(
         "UIAutoGoto",
@@ -530,8 +523,7 @@ void Micropolis::DoAutoGoto(
 }
 
 
-void Micropolis::SetMessageField(
-  char *str)
+void Micropolis::SetMessageField(char *str)
 {
   if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
     strcpy(LastMessage, str);
@@ -545,8 +537,11 @@ void Micropolis::SetMessageField(
 }
 
 
-void Micropolis::DoShowPicture(
-  short id)
+/**
+ * Tell the front-end to display a picture
+ * @param id Identification of the picture to show
+ */
+void Micropolis::DoShowPicture(short id)
 {
   Callback(
         "UIShowPicture",
@@ -555,12 +550,14 @@ void Micropolis::DoShowPicture(
 }
 
 
+/** Tell the front-end that the player has lost the game */
 void Micropolis::DoLoseGame()
 {
   Callback("UILoseGame", "");
 }
 
 
+/** Tell the front-end that the player has won the game */
 void Micropolis::DoWinGame()
 {
   Callback("UIWinGame", "");
