@@ -74,198 +74,198 @@
 /* comefrom: Simulate */
 void Micropolis::SendMessages()
 {
-  short PowerPop;
-  float TM;
+    short PowerPop;
+    float TM;
 
-  // Running a scenario, and waiting it to 'end' so we can give a score
-  if (ScenarioID > SC_NONE && ScoreType > SC_NONE && ScoreWait > 0) {
-    ScoreWait--;
-    if (ScoreWait == 0) {
-      DoScenarioScore(ScoreType);
+    // Running a scenario, and waiting it to 'end' so we can give a score
+    if (ScenarioID > SC_NONE && ScoreType > SC_NONE && ScoreWait > 0) {
+        ScoreWait--;
+        if (ScoreWait == 0) {
+            DoScenarioScore(ScoreType);
+        }
     }
-  }
 
-  CheckGrowth();
+    CheckGrowth();
 
-  TotalZPop = ResZPop + ComZPop + IndZPop;
-  PowerPop = NuclearPop + CoalPop;
+    TotalZPop = ResZPop + ComZPop + IndZPop;
+    PowerPop = NuclearPop + CoalPop;
 
-  switch(CityTime & 63) {
+    switch(CityTime & 63) {
 
-  case 1:
-    if (TotalZPop / 4 >= ResZPop) {
-      SendMes(1); /* need Res */
+    case 1:
+        if (TotalZPop / 4 >= ResZPop) {
+            SendMes(1); /* need Res */
+        }
+        break;
+
+    case 5:
+        if (TotalZPop / 8 >= ComZPop) {
+            SendMes(2); /* need Com */
+        }
+        break;
+
+    case 10:
+        if (TotalZPop / 8 >= IndZPop) {
+            SendMes(3); /* need Ind */
+        }
+        break;
+
+    case 14:
+        if (TotalZPop > 10 && TotalZPop * 2 > RoadTotal) {
+            SendMes(4);
+        }
+        break;
+
+    case 18:
+        if (TotalZPop > 50 && TotalZPop > RailTotal) {
+            SendMes(5);
+        }
+        break;
+
+    case 22:
+        if (TotalZPop > 10 && PowerPop == 0) {
+            SendMes(6); /* need Power */
+        }
+        break;
+
+    case 26:
+        if (ResPop > 500 && StadiumPop == 0) {
+            SendMes(7); /* need Stad */
+            ResCap = 1;
+        } else {
+            ResCap = 0;
+        }
+        break;
+
+    case 28:
+        if (IndPop > 70 && PortPop == 0) {
+            SendMes(8);
+            IndCap = 1;
+        } else {
+            IndCap = 0;
+        }
+        break;
+
+    case 30:
+        if (ComPop > 100 && APortPop == 0) {
+            SendMes(9);
+            ComCap = 1;
+        } else {
+            ComCap = 0;
+        }
+        break;
+
+    case 32:
+        TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
+        if (TM > 0) {
+            if (PwrdZCnt / TM < 0.7) {
+                SendMes(15);
+            }
+        }
+        break;
+
+    case 35:
+        if (PolluteAverage > /* 80 */ 60) {
+            SendMes(-10);
+        }
+        break;
+
+    case 42:
+        if (CrimeAverage > 100) {
+            SendMes(-11);
+        }
+        break;
+
+    case 45:
+        if (TotalPop > 60 && FireStPop == 0) {
+            SendMes(13);
+        }
+        break;
+
+    case 48:
+        if (TotalPop > 60 && PolicePop == 0) {
+            SendMes(14);
+        }
+        break;
+
+    case 51:
+        if (CityTax > 12) {
+            SendMes(16);
+        }
+        break;
+
+    case 54:
+        // If RoadEffect < 5/8 of max effect
+        if (RoadEffect < (5 * MAX_ROAD_EFFECT / 8) && RoadTotal > 30) {
+            SendMes(17);
+        }
+        break;
+
+    case 57:
+        // If FireEffect < 0.7 of max effect
+        if (FireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && TotalPop > 20) {
+            SendMes(18);
+        }
+        break;
+
+    case 60:
+        // If PoliceEffect < 0.7 of max effect
+        if (PoliceEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
+                                                        && TotalPop > 20) {
+            SendMes(19);
+        }
+        break;
+
+    case 63:
+        if (trafficAverage > 60) {
+            SendMes(-12);
+        }
+        break;
     }
-    break;
-
-  case 5:
-    if (TotalZPop / 8 >= ComZPop) {
-      SendMes(2); /* need Com */
-    }
-    break;
-
-  case 10:
-    if (TotalZPop / 8 >= IndZPop) {
-      SendMes(3); /* need Ind */
-    }
-    break;
-
-  case 14:
-    if (TotalZPop > 10 && TotalZPop * 2 > RoadTotal) {
-      SendMes(4);
-    }
-    break;
-
-  case 18:
-    if (TotalZPop > 50 && TotalZPop > RailTotal) {
-      SendMes(5);
-    }
-    break;
-
-  case 22:
-    if (TotalZPop > 10 && PowerPop == 0) {
-      SendMes(6); /* need Power */
-    }
-    break;
-
-  case 26:
-    if (ResPop > 500 && StadiumPop == 0) {
-      SendMes(7); /* need Stad */
-      ResCap = 1;
-    } else {
-      ResCap = 0;
-    }
-    break;
-
-  case 28:
-    if (IndPop > 70 && PortPop == 0) {
-      SendMes(8);
-      IndCap = 1;
-    } else {
-      IndCap = 0;
-    }
-    break;
-
-  case 30:
-    if (ComPop > 100 && APortPop == 0) {
-      SendMes(9);
-      ComCap = 1;
-    } else {
-      ComCap = 0;
-    }
-    break;
-
-  case 32:
-    TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
-    if (TM > 0) {
-      if (PwrdZCnt / TM < 0.7) {
-        SendMes(15);
-      }
-    }
-    break;
-
-  case 35:
-    if (PolluteAverage > /* 80 */ 60) {
-      SendMes(-10);
-    }
-    break;
-
-  case 42:
-    if (CrimeAverage > 100) {
-      SendMes(-11);
-    }
-    break;
-
-  case 45:
-    if (TotalPop > 60 && FireStPop == 0) {
-      SendMes(13);
-    }
-    break;
-
-  case 48:
-    if (TotalPop > 60 && PolicePop == 0) {
-      SendMes(14);
-    }
-    break;
-
-  case 51:
-    if (CityTax > 12) {
-      SendMes(16);
-    }
-    break;
-
-  case 54:
-    // If RoadEffect < 5/8 of max effect
-    if (RoadEffect < (5 * MAX_ROAD_EFFECT / 8) && RoadTotal > 30) {
-      SendMes(17);
-    }
-    break;
-
-  case 57:
-    // If FireEffect < 0.7 of max effect
-    if (FireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && TotalPop > 20) {
-      SendMes(18);
-    }
-    break;
-
-  case 60:
-    // If PoliceEffect < 0.7 of max effect
-    if (PoliceEffect < (7 * MAX_POLICESTATION_EFFECT / 10) && TotalPop > 20) {
-      SendMes(19);
-    }
-    break;
-
-  case 63:
-    if (trafficAverage > 60) {
-      SendMes(-12);
-    }
-    break;
-  }
-
 }
 
 
 /* comefrom: SendMessages */
 void Micropolis::CheckGrowth()
 {
-  Quad thisCityPop;
-  short z;
+    Quad thisCityPop;
+    short z;
 
-  if ((CityTime & 3) == 0) {
-    z = 0;
-    thisCityPop = (ResPop + (ComPop + IndPop) * 8) * 20;
+    if ((CityTime & 3) == 0) {
+        z = 0;
+        thisCityPop = (ResPop + (ComPop + IndPop) * 8) * 20;
 
-    if (lastCityPop > 0) {
+        if (lastCityPop > 0) {
 
-      if (lastCityPop < 2000 && thisCityPop >= 2000) {
-        z = 35;
-      }
+            if (lastCityPop < 2000 && thisCityPop >= 2000) {
+                z = 35;
+            }
 
-      if (lastCityPop < 10000 && thisCityPop >= 10000) {
-        z = 36;
-      }
+            if (lastCityPop < 10000 && thisCityPop >= 10000) {
+                z = 36;
+            }
 
-      if (lastCityPop < 50000L && thisCityPop >= 50000L) {
-        z = 37;
-      }
+            if (lastCityPop < 50000L && thisCityPop >= 50000L) {
+                z = 37;
+            }
 
-      if (lastCityPop < 100000L && thisCityPop >= 100000L) {
-        z = 38;
-      }
+            if (lastCityPop < 100000L && thisCityPop >= 100000L) {
+                z = 38;
+            }
 
-      if (lastCityPop < 500000L && thisCityPop >= 500000L) {
-        z = 39;
-      }
+            if (lastCityPop < 500000L && thisCityPop >= 500000L) {
+                z = 39;
+            }
 
+        }
+
+        if (z > 0 && z != LastCategory) {
+                SendMes(-z);
+                LastCategory = z;
+        }
+
+        lastCityPop = thisCityPop;
     }
-
-    if (z > 0 && z != LastCategory) {
-        SendMes(-z);
-        LastCategory = z;
-    }
-
-    lastCityPop = thisCityPop;
-  }
 }
 
 
@@ -276,80 +276,79 @@ void Micropolis::CheckGrowth()
  */
 void Micropolis::DoScenarioScore(Scenario type)
 {
-  short z = -200;     /* you lose */
+    short z = -200;     /* you lose */
 
-  switch(type) {
+    switch(type) {
 
-  case SC_DULLSVILLE:
-    if (cityClass >= CC_METROPOLIS) {
-      z = -100;
+    case SC_DULLSVILLE:
+        if (cityClass >= CC_METROPOLIS) {
+            z = -100;
+        }
+        break;
+
+    case SC_SAN_FRANCISCO:
+        if (cityClass >= CC_METROPOLIS) {
+            z = -100;
+        }
+        break;
+
+    case SC_HAMBURG:
+        if (cityClass >= CC_METROPOLIS) {
+            z = -100;
+        }
+        break;
+
+    case SC_BERN:
+        if (trafficAverage < 80) {
+            z = -100;
+        }
+        break;
+
+    case SC_TOKYO:
+        if (cityScore > 500) {
+            z = -100;
+        }
+        break;
+
+    case SC_DETROIT:
+        if (CrimeAverage < 60) {
+            z = -100;
+        }
+        break;
+
+    case SC_BOSTON:
+        if (cityScore > 500) {
+            z = -100;
+        }
+        break;
+
+    case SC_RIO:
+        if (cityScore > 500) {
+            z = -100;
+        }
+        break;
+
+    default:
+        NOT_REACHED();
+        break;
+
     }
-    break;
 
-  case SC_SAN_FRANCISCO:
-    if (cityClass >= CC_METROPOLIS) {
-      z = -100;
+    ClearMes();
+    SendMes(z);
+
+    if (z == -200) {
+        DoLoseGame();
     }
-    break;
-
-  case SC_HAMBURG:
-    if (cityClass >= CC_METROPOLIS) {
-      z = -100;
-    }
-    break;
-
-  case SC_BERN:
-    if (trafficAverage < 80) {
-      z = -100;
-    }
-    break;
-
-  case SC_TOKYO:
-    if (cityScore > 500) {
-      z = -100;
-    }
-    break;
-
-  case SC_DETROIT:
-    if (CrimeAverage < 60) {
-      z = -100;
-    }
-    break;
-
-  case SC_BOSTON:
-    if (cityScore > 500) {
-      z = -100;
-    }
-    break;
-
-  case SC_RIO:
-    if (cityScore > 500) {
-      z = -100;
-    }
-    break;
-
-  default:
-    NOT_REACHED();
-    break;
-
-  }
-
-  ClearMes();
-  SendMes(z);
-
-  if (z == -200) {
-    DoLoseGame();
-  }
-
 }
 
-
+/** Remove any pending message and picture */
 void Micropolis::ClearMes()
 {
-  MessagePort = 0;
-  MesX = 0;
-  MesY = 0;
-  LastPicNum = 0;
+    MessagePort = 0;
+    MesX = 0;
+    MesY = 0;
+    LastPicNum = 0;
 }
 
 
@@ -357,152 +356,152 @@ void Micropolis::ClearMes()
              CheckGrowth DoScenarioScore DoPowerScan */
 int Micropolis::SendMes(int Mnum)
 {
-  if (Mnum < 0) {
-    if (Mnum != LastPicNum) {
-      MessagePort = Mnum;
-      MesX = 0;
-      MesY = 0;
-      LastPicNum = Mnum;
-      return 1;
+    if (Mnum < 0) {
+        if (Mnum != LastPicNum) {
+            MessagePort = Mnum;
+            MesX = 0;
+            MesY = 0;
+            LastPicNum = Mnum;
+            return 1;
+        }
+    } else {
+        if (!(MessagePort)) {
+            MessagePort = Mnum;
+            MesX = 0;
+            MesY = 0;
+            return 1;
+        }
     }
-  } else {
-    if (!(MessagePort)) {
-      MessagePort = Mnum;
-      MesX = 0;
-      MesY = 0;
-      return 1;
-    }
-  }
 
-  return 0;
+    return 0;
 }
 
 
 /* comefrom: DoExplosion DoCopter ExplodeObject */
 void Micropolis::SendMesAt(short Mnum, short x, short y)
 {
-  if (SendMes(Mnum)) {
-    MesX = x;
-    MesY = y;
-  }
+    if (SendMes(Mnum)) {
+        MesX = x;
+        MesY = y;
+    }
 }
 
 
 void Micropolis::doMessage()
 {
-  char messageStr[256];
-  short pictId;
-  short firstTime;
+    char messageStr[256];
+    short pictId;
+    short firstTime;
 
-  messageStr[0] = 0;
+    messageStr[0] = 0;
 
-  if (MessagePort) {
-    MesNum = MessagePort;
-    MessagePort = 0;
-    LastMesTime = TickCount();
-    firstTime = 1;
-  } else {
-    firstTime = 0;
-    if (MesNum == 0) {
-      return;
-    }
-    if (MesNum < 0) {
-      MesNum = -MesNum;
-      LastMesTime = TickCount();
-    } else if (TickCount() - LastMesTime > 60 * 30) {
-      MesNum = 0;
-      return;
-    }
-  }
-
-  if (firstTime) {
-
-    switch ((MesNum < 0) ? -MesNum : MesNum) {
-
-    case 12:
-      if (Rand(5) == 1) {
-        MakeSound("city", "HonkHonk-Med");
-      } else if (Rand(5) == 1) {
-        MakeSound("city", "HonkHonk-Low");
-      } else if (Rand(5) == 1) {
-        MakeSound("city", "HonkHonk-High");
-      }
-      break;
-
-    case 11:
-    case 20:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-      MakeSound("city", "Siren");
-      break;
-
-    case  21:
-      MakeSound("city", "Monster -speed [MonsterSpeed]");
-      break;
-
-    case 30:
-      MakeSound("city", "Explosion-Low");
-      MakeSound("city", "Siren");
-      break;
-
-    case  43:
-      MakeSound("city", "Explosion-High");
-      MakeSound("city", "Explosion-Low");
-      MakeSound("city", "Siren");
-      break;
-
-    case  44:
-      MakeSound("city", "Siren");
-      break;
-
-    }
-  }
-
-  if (MesNum >= 0) {
-    if (MesNum == 0) {
-      return;
-    }
-
-    if (MesNum > 60) {
-      MesNum = 0;
-      return;
-    }
-
-    GetIndString(messageStr, 301, MesNum);
-
-    if (autoGo && (MesX || MesY)) {
-      DoAutoGoto(MesX, MesY, messageStr);
-      MesX = 0;
-      MesY = 0;
+    if (MessagePort) {
+        MesNum = MessagePort;
+        MessagePort = 0;
+        LastMesTime = TickCount();
+        firstTime = 1;
     } else {
-      SetMessageField(messageStr);
+        firstTime = 0;
+        if (MesNum == 0) {
+            return;
+        }
+        if (MesNum < 0) {
+            MesNum = -MesNum;
+            LastMesTime = TickCount();
+        } else if (TickCount() - LastMesTime > 60 * 30) {
+            MesNum = 0;
+            return;
+        }
     }
 
-  } else { /* picture message */
+    if (firstTime) {
 
-    pictId = -(MesNum);
+        switch ((MesNum < 0) ? -MesNum : MesNum) {
 
-    if (pictId < 43) {
-      GetIndString(messageStr, 301, pictId);
-    } else {
-      messageStr[0] = '\0';
+        case 12:
+            if (Rand(5) == 1) {
+                MakeSound("city", "HonkHonk-Med");
+            } else if (Rand(5) == 1) {
+                MakeSound("city", "HonkHonk-Low");
+            } else if (Rand(5) == 1) {
+                MakeSound("city", "HonkHonk-High");
+            }
+            break;
+
+        case 11:
+        case 20:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+            MakeSound("city", "Siren");
+            break;
+
+        case  21:
+            MakeSound("city", "Monster -speed [MonsterSpeed]");
+            break;
+
+        case 30:
+            MakeSound("city", "Explosion-Low");
+            MakeSound("city", "Siren");
+            break;
+
+        case  43:
+            MakeSound("city", "Explosion-High");
+            MakeSound("city", "Explosion-Low");
+            MakeSound("city", "Siren");
+            break;
+
+        case  44:
+            MakeSound("city", "Siren");
+            break;
+
+        }
     }
 
-    DoShowPicture(pictId);
+    if (MesNum >= 0) {
+        if (MesNum == 0) {
+            return;
+        }
 
-    MessagePort = pictId; /* resend text message */
+        if (MesNum > 60) {
+            MesNum = 0;
+            return;
+        }
 
-    if (autoGo && (MesX || MesY)) {
+        GetIndString(messageStr, 301, MesNum);
 
-      DoAutoGoto(MesX, MesY, messageStr);
-      MesX = 0;
-      MesY = 0;
+        if (autoGo && (MesX || MesY)) {
+            DoAutoGoto(MesX, MesY, messageStr);
+            MesX = 0;
+            MesY = 0;
+        } else {
+            SetMessageField(messageStr);
+        }
+
+    } else { /* picture message */
+
+        pictId = -(MesNum);
+
+        if (pictId < 43) {
+            GetIndString(messageStr, 301, pictId);
+        } else {
+            messageStr[0] = '\0';
+        }
+
+        DoShowPicture(pictId);
+
+        MessagePort = pictId; /* resend text message */
+
+        if (autoGo && (MesX || MesY)) {
+
+            DoAutoGoto(MesX, MesY, messageStr);
+            MesX = 0;
+            MesY = 0;
+        }
     }
-  }
 }
 
 
@@ -515,25 +514,18 @@ void Micropolis::doMessage()
  */
 void Micropolis::DoAutoGoto(short x, short y, char *msg)
 {
-  Callback(
-        "UIAutoGoto",
-        "dd",
-        (int)x,
-        (int)y);
+    Callback("UIAutoGoto", "dd", (int)x, (int)y);
 }
 
 
 void Micropolis::SetMessageField(char *str)
 {
-  if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
-    strcpy(LastMessage, str);
-    HaveLastMessage = true;
+    if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
+        strcpy(LastMessage, str);
+        HaveLastMessage = true;
 
-        Callback(
-          "UISetMessage",
-          "s",
-          str);
-  }
+        Callback("UISetMessage", "s", str);
+    }
 }
 
 
@@ -543,24 +535,21 @@ void Micropolis::SetMessageField(char *str)
  */
 void Micropolis::DoShowPicture(short id)
 {
-  Callback(
-        "UIShowPicture",
-        "d",
-        (int)id);
+    Callback("UIShowPicture", "d", (int)id);
 }
 
 
 /** Tell the front-end that the player has lost the game */
 void Micropolis::DoLoseGame()
 {
-  Callback("UILoseGame", "");
+    Callback("UILoseGame", "");
 }
 
 
 /** Tell the front-end that the player has won the game */
 void Micropolis::DoWinGame()
 {
-  Callback("UIWinGame", "");
+    Callback("UIWinGame", "");
 }
 
 
