@@ -13,7 +13,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
                                          )
 {
-    return TRUE;
+    return 1;
 }
 
 #ifdef _MANAGED

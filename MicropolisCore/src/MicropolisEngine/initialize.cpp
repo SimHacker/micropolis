@@ -91,7 +91,7 @@ void Micropolis::InitWillStuff()
   LastFunds = -1;
   LastR = LastC = LastI = -999999;
   MesNum = 0;
-  MessagePort = 0;
+  messagePort = 0;
   RoadFund = 0;
   PoliceFund = 0;
   FireFund = 0;

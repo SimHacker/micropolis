@@ -370,15 +370,13 @@ void Micropolis::SmoothRiver()
 }
 
 
-int Micropolis::IsTree(
-  int cell)
+bool Micropolis::IsTree(int cell)
 {
-  if (((cell & LOMASK) >= WOODS_LOW) &&
-      ((cell & LOMASK) <= WOODS_HIGH)) {
-    return TRUE;
+  if ((cell & LOMASK) >= WOODS_LOW && (cell & LOMASK) <= WOODS_HIGH) {
+    return true;
   }
 
-  return FALSE;
+  return false;
 }
 
 
@@ -513,7 +511,7 @@ void Micropolis::PutOnMap(
   Xloc = MapX + Xoff;
   Yloc = MapY + Yoff;
 
-  if (TestBounds(Xloc, Yloc) == FALSE) {
+  if (!TestBounds(Xloc, Yloc)) {
     return;
   }
 
