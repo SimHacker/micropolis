@@ -2186,11 +2186,10 @@ public:
 public:
 
 
-  Quad lastCityPop;
+  Quad lastCityPop;   ///< Population of last city class check. @see CheckGrowth
+  short LastCategory; ///< City class of last city class check. @see CheckGrowth
 
-  short LastCategory;
-
-  short LastPicNum;
+  short LastPicNum; ///< Last picture displayed to the user
 
   /**
    * Enable auto goto
@@ -2207,7 +2206,7 @@ public:
    */
   bool HaveLastMessage;
 
-  char LastMessage[256];
+  char LastMessage[256]; ///< Last message displayed to the user
 
 
   void SendMessages();
@@ -2218,29 +2217,20 @@ public:
 
   void ClearMes();
 
-  int SendMes(
-    int Mnum);
+  bool SendMes(int Mnum);
 
-  void SendMesAt(
-    short Mnum,
-    short x,
-    short y);
+  void SendMesAt(short Mnum, short x, short y);
 
   void doMessage();
+  void doMakeSound(int mesgNum);
 
-  void DoAutoGoto(
-    short x,
-    short y,
-    char *msg);
+  void DoAutoGoto(short x, short y, char *msg);
 
-  void SetMessageField(
-    char *str);
+  void SetMessageField(char *str);
 
-  void DoShowPicture(
-    short id);
+  void DoShowPicture(short id);
 
   void DoLoseGame();
-
   void DoWinGame();
 
 
