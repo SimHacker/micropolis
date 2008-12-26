@@ -232,14 +232,11 @@ void Micropolis::init()
   // short CensusChanged;
   CensusChanged = 0;
 
-  // short MessagePort;
-  MessagePort = 0;
+  // short messagePort;
+  messagePort = 0;
 
-  // short MesX;
-  MesX = 0;
-
-  // short MesY;
-  MesY = 0;
+  mesX = 0;
+  mesY = 0;
 
   // Quad RoadSpend;
   RoadSpend = 0;

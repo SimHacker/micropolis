@@ -1186,17 +1186,17 @@ public:
    * Clean this up to use a simpler interface, and a queue.
    * Might need to collapse some messages.
    */
-  short MessagePort;
+  short messagePort;
 
   /**
    * Message X location.
    */
-  short MesX;
+  short mesX;
 
   /**
    * Message Y location.
    */
-  short MesY;
+  short mesY;
 
   /** @name Budget */
   //@{

@@ -351,9 +351,9 @@ void Micropolis::DoScenarioScore(Scenario type)
 /** Remove any pending message and picture */
 void Micropolis::ClearMes()
 {
-    MessagePort = 0;
-    MesX = 0;
-    MesY = 0;
+    messagePort = 0;
+    mesX = 0;
+    mesY = 0;
     LastPicNum = 0;
 }
 
@@ -367,17 +367,17 @@ bool Micropolis::SendMes(int mesgNum)
 {
     if (mesgNum < 0) {
         if (mesgNum != LastPicNum) {
-            MessagePort = mesgNum;
-            MesX = 0;
-            MesY = 0;
+            messagePort = mesgNum;
+            mesX = 0;
+            mesY = 0;
             LastPicNum = mesgNum;
             return true;
         }
     } else {
-        if (MessagePort == 0) {
-            MessagePort = mesgNum;
-            MesX = 0;
-            MesY = 0;
+        if (messagePort == 0) {
+            messagePort = mesgNum;
+            mesX = 0;
+            mesY = 0;
             return true;
         }
     }
@@ -397,17 +397,17 @@ bool Micropolis::SendMes(int mesgNum)
 void Micropolis::SendMesAt(short mesgNum, short x, short y)
 {
     if (SendMes(mesgNum)) {
-        MesX = x;
-        MesY = y;
+        mesX = x;
+        mesY = y;
     }
 }
 
 /**
- * Forward the message from Micropolis::MessagePort to the front-end.
+ * Forward the message from Micropolis::messagePort to the front-end.
  *
  * Convert the message number to text and display it. Also add a sound if
  * appropiate.
- * @todo A picture (that is, a negative value in Micropolis::MessagePort)
+ * @todo A picture (that is, a negative value in Micropolis::messagePort)
  *       causes 2 messages to be send. A picture, immediately followed by a
  *       text message. Why not do this in one step?
  */
@@ -418,9 +418,9 @@ void Micropolis::doMessage()
 
     messageStr[0] = 0;
 
-    if (MessagePort != 0) {
-        MesNum = MessagePort;
-        MessagePort = 0;
+    if (messagePort != 0) {
+        MesNum = messagePort;
+        messagePort = 0;
         LastMesTime = TickCount();
         doMakeSound((MesNum < 0) ? -MesNum : MesNum);
     } else {
@@ -449,10 +449,10 @@ void Micropolis::doMessage()
 
         GetIndString(messageStr, 301, MesNum);
 
-        if (autoGo && (MesX != 0 || MesY != 0)) {
-            DoAutoGoto(MesX, MesY, messageStr);
-            MesX = 0;
-            MesY = 0;
+        if (autoGo && (mesX != 0 || mesY != 0)) {
+            DoAutoGoto(mesX, mesY, messageStr);
+            mesX = 0;
+            mesY = 0;
         } else {
             SetMessageField(messageStr);
         }
@@ -469,13 +469,13 @@ void Micropolis::doMessage()
 
         DoShowPicture(pictId);
 
-        MessagePort = pictId; /* resend text message */
+        messagePort = pictId; /* resend text message */
 
-        if (autoGo && (MesX != 0 || MesY != 0)) {
+        if (autoGo && (mesX != 0 || mesY != 0)) {
 
-            DoAutoGoto(MesX, MesY, messageStr);
-            MesX = 0;
-            MesY = 0;
+            DoAutoGoto(mesX, mesY, messageStr);
+            mesX = 0;
+            mesY = 0;
         }
     }
 }

@@ -113,9 +113,9 @@ void Micropolis::sim_init()
   flagBlink = 1;
   SimSpeed = 3;
   ChangeEval();
-  MessagePort = 0;
-  MesX = 0;
-  MesY = 0;
+  messagePort = 0;
+  mesX = 0;
+  mesY = 0;
   sim_paused = false; // Simumaltion is running
   sim_loops = 0;
   InitSimLoad = 2;
