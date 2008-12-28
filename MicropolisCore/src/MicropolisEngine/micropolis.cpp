@@ -776,12 +776,6 @@ void Micropolis::init()
 
   DoInitialEval = false;
 
-  // short MeltX;
-  MeltX = 0;
-
-  // short MeltY;
-  MeltY = 0;
-
 
   ////////////////////////////////////////////////////////////////////////
   // sprite.cpp
