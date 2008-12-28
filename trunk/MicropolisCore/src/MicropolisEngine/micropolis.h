@@ -2240,10 +2240,10 @@ public:
    */
   //@{
 
-  int PowerStackNum; ///< Stack counter, points to to-most item.
+  int powerStackNum; ///< Stack counter, points to top-most item.
 
-  short PowerStackX[PWRSTKSIZE]; ///< X coordinates at the stack stack.
-  short PowerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
+  short powerStackX[PWRSTKSIZE]; ///< X coordinates at the power stack.
+  short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
 
 
   void DoPowerScan();

@@ -624,14 +624,12 @@ void Micropolis::init()
   // power.cpp
 
 
-  // int PowerStackNum;
-  PowerStackNum = 0;
+  powerStackNum = 0;
 
-  // short PowerStackX[PWRSTKSIZE];
-  memset(PowerStackX, 0, sizeof(short) * PWRSTKSIZE);
-
-  // short PowerStackY[PWRSTKSIZE];
-  memset(PowerStackY, 0, sizeof(short) * PWRSTKSIZE);
+  // short powerStackX[PWRSTKSIZE];
+  // short powerStackY[PWRSTKSIZE];
+  memset(powerStackX, 0, sizeof(short) * PWRSTKSIZE);
+  memset(powerStackY, 0, sizeof(short) * PWRSTKSIZE);
 
   // Quad MaxPower;
   MaxPower = 0;
