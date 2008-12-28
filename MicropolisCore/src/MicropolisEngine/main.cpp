@@ -105,7 +105,6 @@ void Micropolis::sim_init()
   CityTax = 7;
   CityTime = 50;
   NoDisasters = false; // Enable disasters
-  PunishCnt = 0;
   autoBulldoze = true; // Enable auto bulldoze
   autoBudget   = true; // Enable auto-budget
   MesNum = 0;
