@@ -2692,7 +2692,7 @@ public:
 public:
 
 
-  Quad TotalFunds;
+  Quad TotalFunds; ///< Funds of the player
 
   short PunishCnt;
 
