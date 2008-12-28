@@ -191,8 +191,8 @@ void Micropolis::DoPopNum()
  * Evaluate problems of the city, take votes, and decide which are the most
  * important ones.
  * @post #problemTable contains severity of each problem,
- *       #problemVotes contains votes of each problem
- *       #problemTaken contains (in decreasing order) which problem are the worst
+ *       #problemVotes contains votes of each problem,
+ *       #problemOrder contains (in decreasing order) the worst problems.
  */
 void Micropolis::DoProblems()
 {

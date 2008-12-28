@@ -482,7 +482,7 @@ void Micropolis::doMessage()
 
 /**
  * Make a sound for message \a mesNum if appropiate.
- * @param mesNum Message number displayed
+ * @param mesgNum Message number displayed
  */
 void Micropolis::doMakeSound(int mesgNum)
 {

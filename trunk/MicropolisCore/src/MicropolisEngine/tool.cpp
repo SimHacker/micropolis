@@ -271,9 +271,9 @@ short Micropolis::checkBigZone(
 }
 
 /**
- * Can the tile be auto-bulldozed?
- * @param tileValue Value of the tile
- * @return \c True if the tile can be auto-bulldozed, else \c false
+ * Can the tile be auto-bulldozed?.
+ * @param tileValue Value of the tile.
+ * @return \c True if the tile can be auto-bulldozed, else \c false.
  */
 bool Micropolis::tally(short tileValue)
 {
@@ -283,13 +283,13 @@ bool Micropolis::tally(short tileValue)
 }
 
 /**
- * Return the size of the zone that the tile belongs to
- * @param tile_value Value of the tile in the zone
- * @return Size if it is a known tile value, else \c 0
+ * Return the size of the zone that the tile belongs to.
+ * @param tileValue Value of the tile in the zone.
+ * @return Size of the zone if it is a known tile value, else \c 0.
  */
 short Micropolis::checkSize(short tileValue)
 {
-    /* check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept */
+    // check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept
     if ((tileValue >= RESBASE - 1        && tileValue <= PORTBASE - 1) ||
         (tileValue >= LASTPOWERPLANT + 1 && tileValue <= POLICESTATION + 4)) {
         return 3;
