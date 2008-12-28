@@ -80,51 +80,51 @@
  */
 bool Micropolis::MoveMapSim(Direction mDir)
 {
-  switch (mDir) {
+    switch (mDir) {
 
-  case DIR_NORTH:
-    if (SMapY > 0) {
-      SMapY--;
-      return true;
-    }
-    if (SMapY < 0) {
-      SMapY = 0;
-    }
-    return false;
+        case DIR_NORTH:
+            if (SMapY > 0) {
+                SMapY--;
+                return true;
+            }
+            if (SMapY < 0) {
+                SMapY = 0;
+            }
+            return false;
 
-  case DIR_WEST:
-    if (SMapX < WORLD_X - 1) {
-      SMapX++;
-      return true;
-    }
-    if (SMapX > WORLD_X - 1) {
-      SMapX = WORLD_X - 1;
-    }
-    return false;
-  case DIR_SOUTH:
-    if (SMapY < WORLD_Y - 1) {
-      SMapY++;
-      return true;
-    }
-    if (SMapY > WORLD_Y - 1) {
-      SMapY = WORLD_Y - 1;
-    }
-    return false;
+        case DIR_WEST:
+            if (SMapX < WORLD_X - 1) {
+                SMapX++;
+                return true;
+            }
+            if (SMapX > WORLD_X - 1) {
+                SMapX = WORLD_X - 1;
+            }
+            return false;
+        case DIR_SOUTH:
+            if (SMapY < WORLD_Y - 1) {
+                SMapY++;
+                return true;
+            }
+            if (SMapY > WORLD_Y - 1) {
+                SMapY = WORLD_Y - 1;
+            }
+            return false;
 
-  case DIR_EAST:
-    if (SMapX > 0) {
-      SMapX--;
-      return true;
-    }
-    if (SMapX < 0) {
-      SMapX = 0;
-    }
-    return false;
+        case DIR_EAST:
+            if (SMapX > 0) {
+                SMapX--;
+                return true;
+            }
+            if (SMapX < 0) {
+                SMapX = 0;
+            }
+            return false;
 
-  default:
-    NOT_REACHED();
-    return false; // Never reached, but keeps the compiler happy
-  }
+        default:
+            NOT_REACHED();
+            return false; // Never reached, but keeps the compiler happy
+    }
 }
 
 
@@ -137,26 +137,26 @@ bool Micropolis::MoveMapSim(Direction mDir)
  */
 bool Micropolis::TestForCond(Direction tfDir)
 {
-  int xsave, ysave;
+    int xsave, ysave;
 
-  xsave = SMapX;
-  ysave = SMapY;
+    xsave = SMapX;
+    ysave = SMapY;
 
-  if (MoveMapSim(tfDir)) {
-    if ((Map[SMapX][SMapY] & CONDBIT) == CONDBIT
-        && CChr9 != NUCLEAR && CChr9 != POWERPLANT) {
-      int powerWord = POWERWORD(SMapX, SMapY);
-      if (powerWord > PWRMAPSIZE
-          || (PowerMap[powerWord] & (1 << (SMapX & 15))) == 0) {
-        SMapX = xsave;
-        SMapY = ysave;
-        return true;
-      }
+    if (MoveMapSim(tfDir)) {
+        if ((Map[SMapX][SMapY] & CONDBIT) == CONDBIT
+                            && CChr9 != NUCLEAR && CChr9 != POWERPLANT) {
+            int powerWord = POWERWORD(SMapX, SMapY);
+            if (powerWord > PWRMAPSIZE
+                    || (PowerMap[powerWord] & (1 << (SMapX & 15))) == 0) {
+                SMapX = xsave;
+                SMapY = ysave;
+                return true;
+            }
+        }
     }
-  }
-  SMapX = xsave;
-  SMapY = ysave;
-  return false;
+    SMapX = xsave;
+    SMapY = ysave;
+    return false;
 }
 
 
@@ -167,42 +167,42 @@ bool Micropolis::TestForCond(Direction tfDir)
  */
 void Micropolis::DoPowerScan()
 {
-  short ADir;
-  register int ConNum, Dir, x;
+    short ADir;
+    int ConNum, Dir;
 
-  for (x = 0; x < PWRMAPSIZE; x++) {
-    PowerMap[x] = 0;    /* ClearPowerMem */
-  }
+    for (int x = 0; x < PWRMAPSIZE; x++) {
+        PowerMap[x] = 0;    /* ClearPowerMem */
+    }
 
-  MaxPower = CoalPop * 700L + NuclearPop * 2000L; /* post release */
-  NumPower = 0;
+    MaxPower = CoalPop * 700L + NuclearPop * 2000L; /* post release */
+    NumPower = 0;
 
-  while (powerStackNum > 0) {
-    PullPowerStack();
-    ADir = 4;
-    do {
-      if (++NumPower > MaxPower) {
-        SendMes(40);
-        return;
-      }
-      if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
-        MoveMapSim((Direction)ADir);
-      }
-      SETPOWERBIT(SMapX, SMapY);
-      ConNum = 0;
-      Dir = 0;
-      while ((Dir < 4) && (ConNum < 2)) {
-        if (TestForCond((Direction)Dir)) {
-          ConNum++;
-          ADir = Dir;
-        }
-        Dir++;
-      }
-      if (ConNum > 1) {
-        PushPowerStack();
-      }
-    } while (ConNum);
-  }
+    while (powerStackNum > 0) {
+        PullPowerStack();
+        ADir = 4;
+        do {
+            if (++NumPower > MaxPower) {
+                SendMes(40);
+                return;
+            }
+            if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
+                MoveMapSim((Direction)ADir);
+            }
+            SETPOWERBIT(SMapX, SMapY);
+            ConNum = 0;
+            Dir = 0;
+            while ((Dir < 4) && (ConNum < 2)) {
+                if (TestForCond((Direction)Dir)) {
+                    ConNum++;
+                    ADir = Dir;
+                }
+                Dir++;
+            }
+            if (ConNum > 1) {
+                PushPowerStack();
+            }
+        } while (ConNum);
+    }
 }
 
 
@@ -212,11 +212,11 @@ void Micropolis::DoPowerScan()
  */
 void Micropolis::PushPowerStack()
 {
-  if (powerStackNum < (PWRSTKSIZE - 2)) {
-    powerStackNum++;
-    powerStackX[powerStackNum] = SMapX;
-    powerStackY[powerStackNum] = SMapY;
-   }
+    if (powerStackNum < (PWRSTKSIZE - 2)) {
+        powerStackNum++;
+        powerStackX[powerStackNum] = SMapX;
+        powerStackY[powerStackNum] = SMapY;
+    }
 }
 
 
@@ -227,11 +227,11 @@ void Micropolis::PushPowerStack()
  */
 void Micropolis::PullPowerStack()
 {
-  if (powerStackNum > 0)  {
-    SMapX = powerStackX[powerStackNum];
-    SMapY = powerStackY[powerStackNum];
-    powerStackNum--;
-  }
+    if (powerStackNum > 0)  {
+        SMapX = powerStackX[powerStackNum];
+        SMapY = powerStackY[powerStackNum];
+        powerStackNum--;
+    }
 }
 
 
