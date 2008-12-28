@@ -74,60 +74,60 @@
 /** Reset many game state variables */
 void Micropolis::InitWillStuff()
 {
-  short x, y;
+    short x, y;
 
-  RandomlySeedRand();
-  InitGraphMax();
-  DestroyAllSprites();
+    RandomlySeedRand();
+    InitGraphMax();
+    DestroyAllSprites();
 
-  RoadEffect = MAX_ROAD_EFFECT;
-  PoliceEffect = MAX_POLICESTATION_EFFECT;
-  FireEffect = MAX_FIRESTATION_EFFECT;
-  cityScore = 500;
-  cityPop = -1;
-  LastCityTime = -1;
-  LastCityYear = -1;
-  LastCityMonth = -1;
-  LastFunds = -1;
-  LastR = LastC = LastI = -999999;
-  MesNum = 0;
-  messagePort = 0;
-  RoadFund = 0;
-  PoliceFund = 0;
-  FireFund = 0;
-  ValveFlag = 1;
-  DisasterEvent = SC_NONE;
-  TaxFlag = 0;
+    RoadEffect = MAX_ROAD_EFFECT;
+    PoliceEffect = MAX_POLICESTATION_EFFECT;
+    FireEffect = MAX_FIRESTATION_EFFECT;
+    cityScore = 500;
+    cityPop = -1;
+    LastCityTime = -1;
+    LastCityYear = -1;
+    LastCityMonth = -1;
+    LastFunds = -1;
+    LastR = LastC = LastI = -999999;
+    MesNum = 0;
+    messagePort = 0;
+    RoadFund = 0;
+    PoliceFund = 0;
+    FireFund = 0;
+    ValveFlag = 1;
+    DisasterEvent = SC_NONE;
+    TaxFlag = 0;
 
-  for (x = 0; x < HWLDX; x++) {
-    for (y = 0; y < HWLDY; y++) {
-      PopDensity[x][y] = 0;
-      TrfDensity[x][y] = 0;
-      PollutionMem[x][y] = 0;
-      LandValueMem[x][y] = 0;
-      CrimeMem[x][y] = 0;
+    for (x = 0; x < HWLDX; x++) {
+        for (y = 0; y < HWLDY; y++) {
+            PopDensity[x][y] = 0;
+            TrfDensity[x][y] = 0;
+            PollutionMem[x][y] = 0;
+            LandValueMem[x][y] = 0;
+            CrimeMem[x][y] = 0;
+        }
     }
-  }
 
-  for (x = 0; x < QWX; x++) {
-    for (y = 0; y < QWY; y++) {
-      TerrainMem[x][y] = 0;
+    for (x = 0; x < QWX; x++) {
+        for (y = 0; y < QWY; y++) {
+            TerrainMem[x][y] = 0;
+        }
     }
-  }
 
-  for (x = 0; x < SmX; x++) {
-    for (y = 0; y < SmY; y++) {
-      RateOGMem[x][y] = 0;
-      FireRate[x][y] = 0;
-      ComRate[x][y] = 0;
-      PoliceMap[x][y] = 0;
-      PoliceMapEffect[x][y] = 0;
-      FireRate[x][y] = 0;
+    for (x = 0; x < SmX; x++) {
+        for (y = 0; y < SmY; y++) {
+            RateOGMem[x][y] = 0;
+            FireRate[x][y] = 0;
+            ComRate[x][y] = 0;
+            PoliceMap[x][y] = 0;
+            PoliceMapEffect[x][y] = 0;
+            FireRate[x][y] = 0;
+        }
     }
-  }
 
-  DoNewGame();
-  DoUpdateHeads();
+    DoNewGame();
+    DoUpdateHeads();
 }
 
 
@@ -139,11 +139,11 @@ void Micropolis::InitWillStuff()
 void Micropolis::ResetMapState()
 {
 /*
-  SimView *view;
+    SimView *view;
 
-  for (view = sim->map; view != NULL; view = view->next) {
-    view->map_state = ALMAP;
-  }
+    for (view = sim->map; view != NULL; view = view->next) {
+        view->map_state = ALMAP;
+    }
 */
 }
 
@@ -156,12 +156,12 @@ void Micropolis::ResetMapState()
 void Micropolis::ResetEditorState()
 {
 /*
-  SimView *view;
+    SimView *view;
 
-  for (view = sim->editor; view != NULL; view = view->next) {
-    view->tool_state = dozeState;
-    view->tool_state_save = -1;
-  }
+    for (view = sim->editor; view != NULL; view = view->next) {
+        view->tool_state = dozeState;
+        view->tool_state_save = -1;
+    }
 */
 }
 
