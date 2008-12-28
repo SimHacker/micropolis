@@ -375,7 +375,7 @@ void Micropolis::InitSimMemory()
   ScoreType = SC_NONE;
 
   /* This clears powermem */
-  PowerStackNum = 0;
+  powerStackNum = 0;
   DoPowerScan();
   NewPower = 1; /* post rel */
 
@@ -676,7 +676,7 @@ void Micropolis::ClearCensus()
   NuclearPop = 0;
   PortPop = 0;
   APortPop = 0;
-  PowerStackNum = 0;            /* Reset before Mapscan */
+  powerStackNum = 0;            /* Reset before Mapscan */
 
   for (short x = 0; x < SmX; x++) {
     for (short y = 0; y < SmY; y++) {
