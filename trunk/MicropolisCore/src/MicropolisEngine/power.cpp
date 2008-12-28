@@ -71,12 +71,18 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: TestForCond DoPowerScan TryGo */
-bool Micropolis::MoveMapSim(short MDir)
+/**
+ * Move (Micropolis::SMapX, Micropolis::SMapY) in direction \a mDir.
+ * @param mDir Direction to move in.
+ * @return Movement was succesfull.
+ * @note Also silently moves (Micropolis::SMapX, Micropolis::SMapY)
+ *       back onto the map in the reverse direction if off-map.
+ */
+bool Micropolis::MoveMapSim(Direction mDir)
 {
-  switch (MDir) {
+  switch (mDir) {
 
-  case 0:
+  case DIR_NORTH:
     if (SMapY > 0) {
       SMapY--;
       return true;
@@ -86,26 +92,26 @@ bool Micropolis::MoveMapSim(short MDir)
     }
     return false;
 
-  case 1:
-    if (SMapX < (WORLD_X - 1)) {
+  case DIR_WEST:
+    if (SMapX < WORLD_X - 1) {
       SMapX++;
       return true;
     }
-    if (SMapX > (WORLD_X - 1)) {
+    if (SMapX > WORLD_X - 1) {
       SMapX = WORLD_X - 1;
     }
     return false;
-  case 2:
-    if (SMapY < (WORLD_Y - 1)) {
+  case DIR_SOUTH:
+    if (SMapY < WORLD_Y - 1) {
       SMapY++;
       return true;
     }
-    if (SMapY > (WORLD_Y - 1)) {
+    if (SMapY > WORLD_Y - 1) {
       SMapY = WORLD_Y - 1;
     }
     return false;
 
-  case 3:
+  case DIR_EAST:
     if (SMapX > 0) {
       SMapX--;
       return true;
@@ -115,44 +121,50 @@ bool Micropolis::MoveMapSim(short MDir)
     }
     return false;
 
-  case 4:
-    return true;
-
+  default:
+    NOT_REACHED();
+    return false; // Never reached, but keeps the compiler happy
   }
-
-  return false;
 }
 
 
-/* comefrom: DoPowerScan */
-bool Micropolis::TestForCond(short TFDir)
+/**
+ * Check whether from position (Micropolis::SMapX, Micropolis::SMapY) in the
+ * direction \a tfDir for a conducting tile that has no power.
+ * @param tfDir Direction to investigate.
+ * @return Unpowered tile has been found in the indicated direction.
+ * @bug Returning \c true for \c powerWord>PWRMAPSIZE looks wrong.
+ */
+bool Micropolis::TestForCond(Direction tfDir)
 {
-  register int xsave, ysave, PowerWrd;
+  int xsave, ysave;
 
   xsave = SMapX;
   ysave = SMapY;
 
-  if (MoveMapSim(TFDir)) {
-    if ((Map[SMapX][SMapY] & CONDBIT) &&
-        (CChr9 != NUCLEAR) &&
-        (CChr9 != POWERPLANT) &&
-        ((PowerWrd = POWERWORD(SMapX, SMapY)),
-         ((PowerWrd > PWRMAPSIZE) ||
-          ((PowerMap[PowerWrd] & (1 << (SMapX & 15))) == 0))))
-    {
-      SMapX = xsave;
-      SMapY = ysave;
-      return true;
+  if (MoveMapSim(tfDir)) {
+    if ((Map[SMapX][SMapY] & CONDBIT) == CONDBIT
+        && CChr9 != NUCLEAR && CChr9 != POWERPLANT) {
+      int powerWord = POWERWORD(SMapX, SMapY);
+      if (powerWord > PWRMAPSIZE
+          || (PowerMap[powerWord] & (1 << (SMapX & 15))) == 0) {
+        SMapX = xsave;
+        SMapY = ysave;
+        return true;
+      }
     }
   }
-
   SMapX = xsave;
   SMapY = ysave;
   return false;
 }
 
 
-/* comefrom: Simulate SpecialInit InitSimMemory */
+/**
+ * Scan the map for powered tiles, and copy them to the Micropolis::PowerMap
+ * array.
+ * Also warn the user about using too much power ('buy another power plant').
+ */
 void Micropolis::DoPowerScan()
 {
   short ADir;
@@ -162,8 +174,7 @@ void Micropolis::DoPowerScan()
     PowerMap[x] = 0;    /* ClearPowerMem */
   }
 
-  MaxPower =
-    (CoalPop * 700L) + (NuclearPop * 2000L); /* post release */
+  MaxPower = CoalPop * 700L + NuclearPop * 2000L; /* post release */
   NumPower = 0;
 
   while (PowerStackNum) {
@@ -174,17 +185,14 @@ void Micropolis::DoPowerScan()
         SendMes(40);
         return;
       }
-      MoveMapSim(ADir);
-/* inlined -Don */
-#if 0
-      SetPowerBit();
-#else
+      if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
+        MoveMapSim((Direction)ADir);
+      }
       SETPOWERBIT(SMapX, SMapY);
-#endif
       ConNum = 0;
       Dir = 0;
       while ((Dir < 4) && (ConNum < 2)) {
-        if (TestForCond(Dir)) {
+        if (TestForCond((Direction)Dir)) {
           ConNum++;
           ADir = Dir;
         }
@@ -198,7 +206,10 @@ void Micropolis::DoPowerScan()
 }
 
 
-/* comefrom: DoPowerScan DoSPZone */
+/**
+ * Push the (Micropolis::SMapX, Micropolis::SMapY) pair onto the power stack.
+ * @see PowerStackNum, PushPowerStackX, PushPowerStackY
+ */
 void Micropolis::PushPowerStack()
 {
   if (PowerStackNum < (PWRSTKSIZE - 2)) {
@@ -209,7 +220,11 @@ void Micropolis::PushPowerStack()
 }
 
 
-/* comefrom: DoPowerScan */
+/**
+ * Pull a position from the power stack and store it in Micropolis::SMapX and
+ * Micropolis::SMapY.
+ * @see PowerStackNum, PushPowerStackX, PushPowerStackY
+ */
 void Micropolis::PullPowerStack()
 {
   if (PowerStackNum > 0)  {
