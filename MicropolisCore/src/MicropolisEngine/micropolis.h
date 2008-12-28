@@ -823,32 +823,31 @@ typedef void (*CallbackFunction)(
 ////////////////////////////////////////////////////////////////////////
 // Classes
 
-
+/** Resource of the game (a file with data loaded in memory). */
 class Resource {
 
 public:
 
-  char *buf;
-  Quad size;
-  char name[4];
-  Quad id;
-  Resource *next;
-
+  char *buf; ///< Pointer to loaded file data.
+  Quad size; ///< Size of the loaded file data.
+  char name[4]; ///< Name of the resource (not zero-terminated).
+  Quad id; ///< Identification of the resource.
+  Resource *next; ///< Pointer to next #Resource.
 };
 
-
+/** Table of strings. */
 class StringTable {
 
 public:
 
-  Quad id;
-  int lines;
-  char **strings;
-  StringTable *next;
-
+  Quad id; ///< Identification of the string table.
+  int lines; ///< Number of lines in the table.
+  char **strings; ///< Array of pointers to start of each line.
+  StringTable *next; ///< Pointer to next #StringTable.
 };
 
 
+/** Sprite in the simulator. */
 class SimSprite {
 
 public:
@@ -879,7 +878,6 @@ public:
   int turn;
   int accel;
   int speed;
-
 };
 
 /**
@@ -2306,37 +2304,20 @@ public:
 
   char *HomeDir;
 
+  /** Name of the sub-directory where the resources are loacted. */
   char *ResourceDir;
 
   char *KeyDir;
 
   char *HostName;
 
-  Resource *Resources;
+  Resource *Resources; ///< Linked list of loaded resources
+  StringTable *StringTables; ///< Linked list of loaded string tables
 
-  StringTable *StringTables;
 
+  Resource *GetResource(const char *name, Quad id);
 
-  char **GetResource(
-    char *name,
-    Quad id);
-
-  void ReleaseResource(
-    char **r);
-
-  Quad ResourceSize(
-    char **h);
-
-  char *ResourceName(
-    char **h);
-
-  Quad ResourceID(
-    char **h);
-
-  void GetIndString(
-    char *str,
-    int id,
-    short num);
+  void GetIndString(char *str, int id, short num);
 
 
 
