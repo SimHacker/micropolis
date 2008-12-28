@@ -73,159 +73,163 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-
-char **Micropolis::GetResource(
-  char *name,
-  Quad id)
+/**
+ * Find the resource with the given name and identification.
+ * @param name Name of the resource (a 4 character string)
+ * @param id   Identification of the resource.
+ * @return Pointer to the resource.
+ * @bug Function is not safely handling strings.
+ * @bug File handling is not safe across platforms (text-mode may modify data).
+ * @todo What is the point of a \c Quad \a id when we cast it to an \c int ?
+ */
+Resource *Micropolis::GetResource(const char *name, Quad id)
 {
-  Resource *r = Resources;
-  char fname[256];
-  struct stat st;
-  FILE *fp = NULL;
+    Resource *r = Resources;
+    char fname[256];
 
-  while (r != NULL) {
-    if ((r->id == id) &&
-        (strncmp(r->name, name, 4) == 0)) {
-      return ((char **)&r->buf);
+    while (r != NULL) {
+        if (r->id == id && strncmp(r->name, name, 4) == 0) {
+            return r;
+        }
+        r = r->next;
     }
-    r = r->next;
-  }
 
-  r = (Resource *)NewPtr(sizeof(Resource));
+    // Resource not found, load it from disk
 
-  r->name[0] = name[0];
-  r->name[1] = name[1];
-  r->name[2] = name[2];
-  r->name[3] = name[3];
-  r->id = id;
+    // Allocate memory for the resource administration itself
+    r = (Resource *)NewPtr(sizeof(Resource));
+    assert(r != NULL);
 
-  sprintf(
-    fname,
-    "%s/%c%c%c%c.%d",
-    ResourceDir,
-    r->name[0],
-    r->name[1],
-    r->name[2],
-    r->name[3],
-    (int)r->id);
+    // XXX Not safe
+    r->name[0] = name[0];
+    r->name[1] = name[1];
+    r->name[2] = name[2];
+    r->name[3] = name[3];
+    r->id = id;
 
-  if ((stat(fname, &st) < 0) ||
-      ((r->size = st.st_size) == 0) ||
-      ((r->buf = (char *)NewPtr(r->size)) == NULL) ||
-      ((fp = fopen(fname, "r")) == NULL) ||
-      ((int)fread(r->buf, sizeof(char), r->size, fp) != r->size)) {
-    if (fp) {
-      fclose(fp);
+    // Load the file into memory
+
+    // XXX Not safe (overflow, non-printable chars)
+    sprintf(fname, "%s/%c%c%c%c.%d", ResourceDir,
+                        r->name[0], r->name[1], r->name[2], r->name[3],
+                        (int)r->id);
+
+    struct stat st;
+    FILE *fp = NULL;
+
+    if (stat(fname, &st) < 0) {  // File cannot be found/loaded
+        goto loadFailed;
     }
+    if (st.st_size == 0) { // File is empty
+        goto loadFailed;
+    }
+
+    r->size = st.st_size;
+    r->buf = (char *)NewPtr(r->size);
+    if (r->buf == NULL) { // No memory allocated
+        goto loadFailed;
+    }
+
+    // XXX Opening in text-mode
+    fp = fopen(fname, "r"); // Open file for reading
+    if (fp == NULL) {
+        goto loadFailed;
+    }
+
+    // File succesfully opened. Below here we must always close the file!!
+
+    // XXX This may break due to use of text-mode
+    if ((int)fread(r->buf, sizeof(char), r->size, fp) != r->size) {
+        fclose(fp);
+        goto loadFailed;
+    }
+
+    // File-load ok !!
+    fclose(fp);
+
+    r->next = Resources;
+    Resources = r;
+
+    return r;
+
+
+
+loadFailed:
+    // Load failed, print an error and quit
     r->buf = NULL;
     r->size = 0;
     fprintf(stderr, "Can't find resource file \"%s\"!\n", fname);
     perror("GetResource");
-    return(NULL);
-  }
-
-  fclose(fp);
-
-  r->next = Resources;
-  Resources = r;
-
-  return ((char **)&r->buf);
+    return NULL;
 }
 
-
-void Micropolis::ReleaseResource(
-  char **r)
+/**
+ * Get the text of a message.
+ * @param str Destination of the text (usually 256 characters long).
+ * @param id  Identification of the resource.
+ * @param num Number of the string in the resource.
+ * @bug Make the function safe (should never overwrite data outside \a str,
+ *      handle case where last line of file is not terminated with new-line)
+ * @bug Out of range \a num seems not correctly handled (\c strcpy(str,"Oops")
+ *      is overwritten at least. Maybe use an \c assert() instead?).
+ * @todo Why do we copy the text? Can we not return its address instead?
+ */
+void Micropolis::GetIndString(char *str, int id, short num)
 {
-}
+    StringTable *tp, *st;
 
-
-Quad Micropolis::ResourceSize(
-  char **h)
-{
-  Resource *r = (Resource *)h;
-
-  return (r->size);
-}
-
-
-char *Micropolis::ResourceName(
-  char **h)
-{
-  Resource *r = (Resource *)h;
-
-  return (r->name);
-}
-
-
-Quad Micropolis::ResourceID(
-  char **h)
-{
-  Resource *r = (Resource *)h;
-
-  return (r->id);
-}
-
-
-void Micropolis::GetIndString(
-  char *str,
-  int id,
-  short num)
-{
-  StringTable **tp, *st = NULL;
-  char **h;
-
-  tp = &StringTables;
-
-  while (*tp) {
-    if ((*tp)->id == id) {
-      st = *tp;
-      break;
-    }
-    tp = &((*tp)->next);
-  }
-
-  if (!st) {
-    Quad i, lines, size;
-    char *buf;
-
-    st =
-      (StringTable *)NewPtr(sizeof (StringTable));
-    st->id = id;
-    h = GetResource("stri", id);
-    size = ResourceSize(h);
-    buf = (char *)*h;
-
-    for (i = 0, lines = 0; i < size; i++) {
-      if (buf[i] == '\n') {
-        buf[i] = 0;
-        lines++;
-      }
+    // Try to find requested string table in already loaded files.
+    tp = StringTables;
+    st = NULL;
+    while (tp != NULL) {
+        if (tp->id == id) {
+            st = tp;
+            break;
+        }
+        tp = tp->next;
     }
 
-    st->lines = lines;
-    st->strings =
-      (char **)NewPtr(size * sizeof(char *));
+    if (st == NULL) {
+        // String table is not loaded yet -> get it
 
-    for (i=0; i<lines; i++) {
-      st->strings[i] = buf;
-      buf += strlen(buf) + 1;
+        // Create new string table
+        st = (StringTable *)NewPtr(sizeof(StringTable));
+        assert(st != NULL);
+
+        st->id = id;
+        Resource *r = GetResource("stri", id);
+        Quad size = r->size;
+        char *buf = r->buf;
+
+        // Count number of lines in loaded file, terminate each line
+        Quad lines = 0;
+        for (Quad i = 0; i < size; i++) {
+            if (buf[i] == '\n') {
+                buf[i] = '\0';
+                lines++;
+            }
+        }
+
+        // XXX What about termnination of last line?
+
+        st->lines = lines;
+        st->strings = (char **)NewPtr(size * sizeof(char *));
+        assert(st->strings != NULL);
+
+        // Store starting points of texts in st->strings array
+        for (Quad i = 0; i < lines; i++) {
+            st->strings[i] = buf;
+            buf += strlen(buf) + 1;
+        }
+
+        st->next = StringTables;
+        StringTables = st;
     }
 
-    st->next = StringTables;
-    StringTables = st;
-  }
+    // st points to the (possibly just loaded) string table
+    assert(num >= 1 && num <= st->lines); // Stay in range of the file
 
-  if ((num < 1) ||
-      (num > st->lines)) {
-    fprintf(
-                stderr,
-                "Out of range string index: %d lines: %d\n",
-                (int)num,
-                (int)st->lines);
-    strcpy(str, "Oops!");
-  } {
     strcpy(str, st->strings[num - 1]);
-  }
 }
 
 
