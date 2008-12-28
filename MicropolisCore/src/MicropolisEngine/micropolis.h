@@ -236,7 +236,7 @@ static const int WORLD_Y =              100;
  */
 enum MapTileBits {
     PWRBIT  = 0x8000, ///< bit 15, tile has power
-    CONDBIT = 0x4000, ///< bit 14
+    CONDBIT = 0x4000, ///< bit 14. tile can conduct electricity
     BURNBIT = 0x2000, ///< bit 13
     BULLBIT = 0x1000, ///< bit 12, tile is bulldozable
     ANIMBIT = 0x0800, ///< bit 11, tile is animated
@@ -2235,30 +2235,37 @@ public:
 
 public:
 
-
-  int PowerStackNum;
-
-  short PowerStackX[PWRSTKSIZE];
-
-  short PowerStackY[PWRSTKSIZE];
-
-  /**
-   * Maximal power that the combined coal and nuclear power plants can deliver
-   * @see NumPower CoalPop NuclearPop
+  /** @name Power stack
+   * Stack used to find powered tiles by tracking conductive tiles.
    */
-  Quad MaxPower;
-  Quad NumPower; ///< Amount of power used
+  //@{
 
+  int PowerStackNum; ///< Stack counter, points to to-most item.
 
-  bool MoveMapSim(short MDir);
+  short PowerStackX[PWRSTKSIZE]; ///< X coordinates at the stack stack.
+  short PowerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
 
-  bool TestForCond(short TFDir);
 
   void DoPowerScan();
+
+  bool TestForCond(Direction TFDir);
 
   void PushPowerStack();
 
   void PullPowerStack();
+
+  //@}
+
+  /**
+   * Maximal power that the combined coal and nuclear power plants can deliver.
+   * @see NumPower CoalPop NuclearPop
+   */
+  Quad MaxPower;
+  Quad NumPower; ///< Amount of power used.
+
+
+  bool MoveMapSim(Direction mDir);
+
 
 
   ////////////////////////////////////////////////////////////////////////
