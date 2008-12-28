@@ -2694,8 +2694,6 @@ public:
 
   Quad TotalFunds; ///< Funds of the player
 
-  short PunishCnt;
-
   /**
    * Enable auto-bulldoze
    *

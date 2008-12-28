@@ -819,9 +819,6 @@ void Micropolis::init()
   // Quad TotalFunds;
   TotalFunds = 0;
 
-  // short PunishCnt;
-  PunishCnt = 0;
-
   autoBulldoze = false; // Disable auto-bulldoze
   autoBudget = false;   // Disable auto-budget
 
