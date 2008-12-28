@@ -2447,9 +2447,6 @@ public:
 
   bool DoInitialEval; ///< Need to perform initial city evaluation.
 
-  short MeltX; ///< X coordinate of the nuclear melt down. @todo Not used.
-  short MeltY; ///< Y coordinate of the nuclear melt down. @todo Not used.
-
 
   void SimFrame();
 

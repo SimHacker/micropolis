@@ -1643,9 +1643,6 @@ void Micropolis::CoalSmoke(int mx, int my)
  */
 void Micropolis::DoMeltdown(int SX, int SY)
 {
-  MeltX = SX;
-  MeltY = SY;
-
   MakeExplosion(SX - 1, SY - 1);
   MakeExplosion(SX - 1, SY + 2);
   MakeExplosion(SX + 2, SY - 1);
