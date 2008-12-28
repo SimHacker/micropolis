@@ -77,7 +77,7 @@
  */
 void Micropolis::Spend(int dollars)
 {
-  SetFunds(TotalFunds - dollars);
+    SetFunds(TotalFunds - dollars);
 }
 
 
@@ -90,8 +90,8 @@ void Micropolis::Spend(int dollars)
  */
 void Micropolis::SetFunds(int dollars)
 {
-  TotalFunds = dollars;
-  UpdateFunds();
+    TotalFunds = dollars;
+    UpdateFunds();
 }
 
 
@@ -104,11 +104,11 @@ void Micropolis::SetFunds(int dollars)
 Quad Micropolis::TickCount()
 {
 #ifdef _WIN32
-  return (::GetTickCount() * 60) / 1000;
+    return (::GetTickCount() * 60) / 1000;
 #else
-  struct timeval time;
-  gettimeofday(&time, 0);
-  return (Quad)((time.tv_sec / 60) + (time.tv_usec * 1000000 / 60));
+    struct timeval time;
+    gettimeofday(&time, 0);
+    return (Quad)((time.tv_sec / 60) + (time.tv_usec * 1000000 / 60));
 #endif
 }
 
@@ -120,7 +120,7 @@ Quad Micropolis::TickCount()
  */
 Ptr Micropolis::NewPtr(int size)
 {
-  return (Ptr)malloc(size);
+    return (Ptr)malloc(size);
 }
 
 /**
@@ -129,28 +129,28 @@ Ptr Micropolis::NewPtr(int size)
  */
 void Micropolis::FreePtr(void *data)
 {
-  free(data);
+    free(data);
 }
 
 
 /** @bug Function is never called. */
 void Micropolis::DoPlayNewCity()
 {
-  Callback("UIPlayNewCity", "");
+    Callback("UIPlayNewCity", "");
 }
 
 
 /** @bug Function is never called. */
 void Micropolis::DoReallyStartGame()
 {
-  Callback("UIReallyStartGame", "");
+    Callback("UIReallyStartGame", "");
 }
 
 
 /** @bug Function is never called. */
 void Micropolis::DoStartLoad()
 {
-  Callback("UIStartLoad", "");
+    Callback("UIStartLoad", "");
 }
 
 
@@ -162,14 +162,14 @@ void Micropolis::DoStartLoad()
  */
 void Micropolis::DoStartScenario(int scenario)
 {
-  Callback( "UIStartScenario", "d", (int)scenario);
+    Callback( "UIStartScenario", "d", (int)scenario);
 }
 
 
 /** Tell the front-end that fire bombs are being dropped. */
 void Micropolis::DropFireBombs()
 {
-  Callback("UIDropFireBombs", "");
+    Callback("UIDropFireBombs", "");
 }
 
 
@@ -180,12 +180,12 @@ void Micropolis::DropFireBombs()
  */
 void Micropolis::InitGame()
 {
-  sim_paused = false; // Simulation is running.
-  sim_paused_speed = 0;
-  sim_skip = 0;
-  sim_skips = 0;
-  heat_steps = 0; // Disable cellular automata machine.
-  setSpeed(0);
+    sim_paused = false; // Simulation is running.
+    sim_paused_speed = 0;
+    sim_skip = 0;
+    sim_skips = 0;
+    heat_steps = 0; // Disable cellular automata machine.
+    setSpeed(0);
 }
 
 /**
@@ -214,16 +214,16 @@ void Micropolis::InitGame()
  */
 void Micropolis::Callback(const char *name, const char *params, ...)
 {
-  if (callbackHook == NULL) {
-    return;
-  }
+    if (callbackHook == NULL) {
+        return;
+    }
 
-  va_list arglist;
-  va_start(arglist, params); // beginning after last named argument: params
+    va_list arglist;
+    va_start(arglist, params); // beginning after last named argument: params
 
-  (*callbackHook)(this, callbackData, name, params, arglist);
+    (*callbackHook)(this, callbackData, name, params, arglist);
 
-  va_end(arglist);
+    va_end(arglist);
 }
 
 
@@ -233,24 +233,24 @@ void Micropolis::Callback(const char *name, const char *params, ...)
  */
 void Micropolis::DoEarthquake()
 {
-  MakeSound("city", "Explosion-Low");
+    MakeSound("city", "Explosion-Low");
 
-  int magnitude = Rand(10) + 3;
-  Callback("UIStartEarthquake", "d", magnitude);
+    int magnitude = Rand(10) + 3;
+    Callback("UIStartEarthquake", "d", magnitude);
 }
 
 
 /** Tell the front-end that the editors are not valid any more */
 void Micropolis::InvalidateEditors()
 {
-  Callback("UIInvalidateEditors", "");
+    Callback("UIInvalidateEditors", "");
 }
 
 
 /** Tell the front-end that the maps are not valid any more */
 void Micropolis::InvalidateMaps()
 {
-  Callback("UIInvalidateMaps", "");
+    Callback("UIInvalidateMaps", "");
 }
 
 /**
@@ -259,7 +259,7 @@ void Micropolis::InvalidateMaps()
  */
 void Micropolis::InitializeSound()
 {
-  Callback("UIInitializeSound", "");
+    Callback("UIInitializeSound", "");
 }
 
 /**
@@ -271,7 +271,7 @@ void Micropolis::InitializeSound()
  */
 void Micropolis::MakeSound(const char *channel, const char *sound)
 {
-  Callback( "UIMakeSound", "ss", channel, sound);
+    Callback( "UIMakeSound", "ss", channel, sound);
 }
 
 
