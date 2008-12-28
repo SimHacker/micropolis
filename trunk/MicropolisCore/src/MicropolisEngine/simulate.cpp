@@ -272,7 +272,10 @@ void Micropolis::DoSimInit()
 }
 
 
-/* comefrom: SimLoadInit */
+/**
+ * Copy bits from PowerMap to the #PWRBIT in the map for all zones in the
+ * world.
+ */
 void Micropolis::DoNilPower()
 {
   register short x, y, z;
@@ -977,7 +980,7 @@ void Micropolis::MapScan(
           }
 
           if (NewPower && (CChr & CONDBIT)) {
-            SetZPower();
+            SetZPower(); // Set PWRBIT from PowerMap
           }
 
           if ((CChr9 >= ROADBASE) &&
@@ -1035,10 +1038,10 @@ void Micropolis::DoRail()
 }
 
 
-/* comefrom: MapScan */
+/** Handle decay of radio-active tile */
 void Micropolis::DoRadTile()
 {
-  if (!(Rand16() & 4095)) {
+  if ((Rand16() & 4095) == 0) {
     Map[SMapX][SMapY] = DIRT; /* Radioactive decay */
   }
 }
@@ -1146,7 +1149,6 @@ bool Micropolis::DoBridge()
         }
       }
     }
-
     return true;
   }
 
@@ -1199,12 +1201,10 @@ bool Micropolis::DoBridge()
               }
             }
           }
-
           return true;
 
         }
       }
-
       return false;
 
     } else {
@@ -1231,14 +1231,12 @@ bool Micropolis::DoBridge()
               }
             }
           }
-
           return true;
 
         }
       }
 
       return false;
-
     }
   }
 
@@ -1246,9 +1244,13 @@ bool Micropolis::DoBridge()
 }
 
 
+/**
+ * Compute distance to nearest boat.
+ * @return Distance to nearest boat.
+ */
 int Micropolis::GetBoatDis()
 {
-  register int dist, mx, my, dx, dy;
+  int dist, mx, my, sprDist;
   SimSprite *sprite;
 
   dist = 99999;
@@ -1256,74 +1258,57 @@ int Micropolis::GetBoatDis()
   my = (SMapY <<4) + 8;
 
   for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
-    if ((sprite->type == SHI) &&
-        (sprite->frame != 0)) {
+    if (sprite->type == SHI && sprite->frame != 0) {
 
-      dx = sprite->x + sprite->x_hot - mx;
-      if (dx < 0) {
-        dx = -dx;
-      }
+      sprDist = absoluteValue(sprite->x + sprite->x_hot - mx)
+                + absoluteValue(sprite->y + sprite->y_hot - my);
 
-      dy = sprite->y + sprite->y_hot - my;
-      if (dy < 0) {
-        dy = -dy;
-      }
-
-      dx += dy;
-
-      if (dx < dist) {
-        dist = dx;
-      }
-
+      dist = min(dist, sprDist);
     }
   }
-  return (dist);
+  return dist;
 }
 
 
-/* comefrom: MapScan */
+/**
+ * Handle tile being on fire
+ * @todo Needs a notion of iterative neighbour tiles computing
+ */
 void Micropolis::DoFire()
 {
-  static short DX[4] = { -1,  0,  1,  0 };
-  static short DY[4] = {  0, -1,  0,  1 };
-  register short z, Xtem, Ytem, Rate, c;
+  static const short DX[4] = { -1,  0,  1,  0 };
+  static const short DY[4] = {  0, -1,  0,  1 };
 
-  for (z = 0; z < 4; z++) {
+  // Try to set neighbouring tiles on fire as well
+  for (short z = 0; z < 4; z++) {
 
-    if (!(Rand16() & 7)) {
+    if ((Rand16() & 7) == 0) {
 
-      Xtem = SMapX + DX[z];
-      Ytem = SMapY + DY[z];
+      short Xtem = SMapX + DX[z];
+      short Ytem = SMapY + DY[z];
 
       if (TestBounds(Xtem, Ytem)) {
 
-        c = Map[Xtem][Ytem];
+        short c = Map[Xtem][Ytem];
+        if ((c & (BURNBIT | ZONEBIT)) == (BURNBIT | ZONEBIT)) {
+          // Neighbour is a zone and burnable
+          FireZone(Xtem, Ytem, c);
 
-        if (c & BURNBIT) {
-
-          if (c & ZONEBIT) {
-
-            FireZone(Xtem, Ytem, c);
-
-            if ((c & LOMASK) > IZB) { /* Explode */
-
+          if ((c & LOMASK) > IZB) { /* Explode */
               MakeExplosionAt((Xtem <<4) + 8, (Ytem <<4) + 8);
-
-            }
-
           }
-
-          Map[Xtem][Ytem] = FIRE + (Rand16() & 3) + ANIMBIT;
-
         }
+
+        Map[Xtem][Ytem] = FIRE + (Rand16() & 3) + ANIMBIT;
       }
     }
   }
 
-  Rate = 10;
-  z = FireRate[SMapX >>3][SMapY >>3];
+  // Compute likelyhood of fire running out of fuel
+  short Rate = 10; // Likelyhood of extinguishing (bigger means less chance)
+  short z = FireRate[SMapX >>3][SMapY >>3];
 
-  if (z) {
+  if (z > 0) {
     Rate = 3;
 
     if (z > 20) {
@@ -1336,22 +1321,26 @@ void Micropolis::DoFire()
 
   }
 
-  if (!Rand(Rate)) {
-
+  // Decide whether to put out the fire.
+  if (Rand(Rate) == 0) {
     Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
 
   }
 }
 
 
-/* comefrom: DoFire MakeFlood */
-void Micropolis::FireZone(
-  int Xloc,
-  int Yloc,
-  int ch)
+/**
+ * Handle a zone on fire.
+ *
+ * Decreases rate of growth of the zone, and makes remaining tiles bulldozable.
+ *
+ * @param Xloc X coordinate of the zone.
+ * @param Yloc Y coordinate of the zone.
+ * @param ch   Character of the zone.
+ */
+void Micropolis::FireZone(int Xloc, int Yloc, int ch)
 {
-  register short Xtem, Ytem;
-  short x, y, XYmax;
+  short XYmax;
 
   RateOGMem[Xloc >>3][Yloc >>3] -= 20;
 
@@ -1367,15 +1356,14 @@ void Micropolis::FireZone(
     }
   }
 
-  for (x = -1; x < XYmax; x++) {
+  // Make remaining tiles of the zone bulldozable
+  for (short x = -1; x < XYmax; x++) {
+    for (short y = -1; y < XYmax; y++) {
 
-    for (y = -1; y < XYmax; y++) {
+      short Xtem = Xloc + x;
+      short Ytem = Yloc + y;
 
-      Xtem = Xloc + x;
-      Ytem = Yloc + y;
-
-      if ((Xtem < 0) || (Xtem > (WORLD_X - 1)) ||
-          (Ytem < 0) || (Ytem > (WORLD_Y - 1))) {
+      if (Xtem < 0 || Xtem > WORLD_X - 1 || Ytem < 0 || Ytem > WORLD_Y - 1) {
         continue;
       }
 
@@ -1389,13 +1377,15 @@ void Micropolis::FireZone(
 }
 
 
-/* comefrom: DoSPZone DoHospChur */
-void Micropolis::RepairZone(
-  short ZCent,
-  short zsize)
+/**
+ * Repair a zone at (#SMapX, #SMapY).
+ * @param ZCent Value of the center tile.
+ * @param zsize Size of the zone (in both directions).
+ */
+void Micropolis::RepairZone(short ZCent, short zsize)
 {
   short cnt;
-  register short x, y, ThCh;
+  short x, y, ThCh;
 
   zsize--;
   cnt = 0;
@@ -1424,9 +1414,7 @@ void Micropolis::RepairZone(
         ThCh = ThCh & LOMASK;
 
         if (ThCh < RUBBLE || ThCh >= ROADBASE) {
-
           Map[xx][yy] = ZCent - 3 - zsize + cnt + CONDBIT + BURNBIT;
-
         }
       }
     }
@@ -1434,13 +1422,14 @@ void Micropolis::RepairZone(
 }
 
 
-/* comefrom: DoZone */
-void Micropolis::DoSPZone(
-  short PwrOn)
+/**
+ * Manage special zones.
+ * @param pwrOn Zone is powered.
+ */
+void Micropolis::DoSPZone(bool pwrOn)
 {
   // Bigger numbers reduce chance of nuclear melt down
   static const short MeltdownTable[3] = { 30000, 20000, 10000 };
-  int z;
 
   switch (CChr9) {
 
@@ -1448,7 +1437,7 @@ void Micropolis::DoSPZone(
 
     CoalPop++;
 
-    if (!(CityTime & 7)) {
+    if ((CityTime & 7) == 0) {
       RepairZone(POWERPLANT, 4); /* post */
     }
 
@@ -1468,7 +1457,7 @@ void Micropolis::DoSPZone(
 
     NuclearPop++;
 
-    if (!(CityTime & 7)) {
+    if ((CityTime & 7) == 0) {
       RepairZone(NUCLEAR, 4); /* post */
     }
 
@@ -1476,7 +1465,8 @@ void Micropolis::DoSPZone(
 
     return;
 
-  case FIRESTATION:
+  case FIRESTATION: {
+    int z;
 
     FireStPop++;
 
@@ -1484,21 +1474,22 @@ void Micropolis::DoSPZone(
       RepairZone(FIRESTATION, 3); /* post */
     }
 
-    if (PwrOn) {
+    if (pwrOn) {
       z = FireEffect;                   /* if powered get effect  */
     } else {
       z = FireEffect / 2;               /* from the funding ratio  */
     }
 
     if (!FindPRoad()) {
-      z = z >>1;                        /* post FD's need roads  */
+      z = z / 2;                        /* post FD's need roads  */
     }
 
     FireStMap[SMapX >>3][SMapY >>3] += z;
 
     return;
-
-  case POLICESTATION:
+  }
+  case POLICESTATION: {
+    int z;
 
     PolicePop++;
 
@@ -1506,21 +1497,21 @@ void Micropolis::DoSPZone(
       RepairZone(POLICESTATION, 3); /* post */
     }
 
-    if (PwrOn) {
+    if (pwrOn) {
       z = PoliceEffect;
     } else {
       z = PoliceEffect / 2;
     }
 
     if (!FindPRoad()) {
-      z = z >>1; /* post PD's need roads */
+      z = z / 2; /* post PD's need roads */
     }
 
     PoliceMap[SMapX >>3][SMapY >>3] += z;
 
     return;
-
-  case STADIUM:
+  }
+  case STADIUM:  // Empty stadium
 
     StadiumPop++;
 
@@ -1528,8 +1519,9 @@ void Micropolis::DoSPZone(
       RepairZone(STADIUM, 4);
     }
 
-    if (PwrOn) {
-      if (!((CityTime + SMapX + SMapY) & 31)) { /* post release */
+    if (pwrOn) {
+      // Every now and then, display a match
+      if (((CityTime + SMapX + SMapY) & 31) == 0) {
         DrawStadium(FULLSTADIUM);
         Map[SMapX + 1][SMapY] = FOOTBALLGAME1 + ANIMBIT;
         Map[SMapX + 1][SMapY + 1] = FOOTBALLGAME2 + ANIMBIT;
@@ -1538,12 +1530,12 @@ void Micropolis::DoSPZone(
 
     return;
 
- case FULLSTADIUM:
+ case FULLSTADIUM:  // Full stadium
 
     StadiumPop++;
 
-    if (!((CityTime + SMapX + SMapY) & 7)) {
-      /* post release */
+    if (((CityTime + SMapX + SMapY) & 7) == 0) {
+      // Stop the match
       DrawStadium(STADIUM);
     }
 
@@ -1553,25 +1545,20 @@ void Micropolis::DoSPZone(
 
     APortPop++;
 
-    if (!(CityTime & 7)) {
+    if ((CityTime & 7) == 0) {
       RepairZone(AIRPORT, 6);
     }
 
-    if (PwrOn) { /* post */
-
+    // If powered, display a rotating radar
+    if (pwrOn) {
       if ((Map[SMapX + 1][SMapY - 1] & LOMASK) == RADAR) {
-
         Map[SMapX + 1][SMapY - 1] = RADAR + ANIMBIT + CONDBIT + BURNBIT;
-
       }
-
     } else {
-
       Map[SMapX + 1][SMapY - 1] = RADAR + CONDBIT + BURNBIT;
-
     }
 
-    if (PwrOn) {
+    if (pwrOn) { // Handle the airport only if there is power
       DoAirport();
     }
 
@@ -1585,8 +1572,8 @@ void Micropolis::DoSPZone(
       RepairZone(PORT, 4);
     }
 
-    if (PwrOn &&
-        (GetSprite(SHI) == NULL)) {
+    // If port has power and there is no ship, generate one
+    if (pwrOn && GetSprite(SHI) == NULL) {
       GenerateShip();
     }
 
@@ -1595,11 +1582,13 @@ void Micropolis::DoSPZone(
 }
 
 
-/* comefrom: DoSPZone */
-void Micropolis::DrawStadium(
-  int z)
+/**
+ * Draw the stadium.
+ * @param z Base character.
+ */
+void Micropolis::DrawStadium(int z)
 {
-  register int x, y;
+  int x, y;
 
   z = z - 5;
 
@@ -1613,44 +1602,47 @@ void Micropolis::DrawStadium(
 }
 
 
-/* comefrom: DoSPZone */
+/** Generate a airplane or helicopter every now and then. */
 void Micropolis::DoAirport()
 {
-  if (!(Rand(5))) {
+  if (Rand(5) == 0) {
     GeneratePlane(SMapX, SMapY);
     return;
   }
 
-  if (!(Rand(12))) {
+  if (Rand(12) == 0) {
     GenerateCopter(SMapX, SMapY);
   }
 }
 
 
-/* comefrom: DoSPZone */
-void Micropolis::CoalSmoke(
-  int mx,
-  int my)
+/**
+ * Draw coal smoke tiles around given position (of a coal power plant).
+ * @param mx X coordinate of the position.
+ * @param my Y coordinate of the position.
+ */
+void Micropolis::CoalSmoke(int mx, int my)
 {
-  static short SmTb[4] = { COALSMOKE1, COALSMOKE2, COALSMOKE3, COALSMOKE4 };
-  static short dx[4] = {  1,  2,  1,  2 };
-  static short dy[4] = { -1, -1,  0,  0 };
-  register short x;
+  static const short SmTb[4] = { COALSMOKE1, COALSMOKE2,
+                                 COALSMOKE3, COALSMOKE4 };
+  static const short dx[4] = {  1,  2,  1,  2 };
+  static const short dy[4] = { -1, -1,  0,  0 };
+  short x;
 
   for (x = 0; x < 4; x++) {
     Map[mx + dx[x]][my + dy[x]] =
-      SmTb[x] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT;
+                            SmTb[x] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT;
   }
 }
 
 
-/* comefrom: DoSPZone MakeMeltdown */
-void Micropolis::DoMeltdown(
-  int SX,
-  int SY)
+/**
+ * Perform a nuclear melt-down disaster
+ * @param SX X coordinate of the disaster
+ * @param SY Y coordinate of the disaster
+ */
+void Micropolis::DoMeltdown(int SX, int SY)
 {
-  register int x, y, z, t;
-
   MeltX = SX;
   MeltY = SY;
 
@@ -1659,34 +1651,36 @@ void Micropolis::DoMeltdown(
   MakeExplosion(SX + 2, SY - 1);
   MakeExplosion(SX + 2, SY + 2);
 
-  for (x = (SX - 1); x < (SX + 3); x++) {
-    for (y = (SY - 1); y < (SY + 3); y++) {
+  // Whole power plant is at fire
+  for (int x = SX - 1; x < SX + 3; x++) {
+    for (int y = SY - 1; y < SY + 3; y++) {
       Map[x][y] = FIRE + (Rand16() & 3) + ANIMBIT;
     }
   }
 
-  for (z = 0; z < 200; z++)  {
+  // and lots of radiation tiles around the plant
+  for (int z = 0; z < 200; z++)  {
 
-    x = SX - 20 + Rand(40);
-    y = SY - 15 + Rand(30);
+    int x = SX - 20 + Rand(40);
+    int y = SY - 15 + Rand(30);
 
-    if ((x < 0) || (x >= WORLD_X) ||
-        (y < 0) || (y >= WORLD_Y)) {
+    if (!TestBounds(x, y)) { // Ignore off-map positions
       continue;
     }
 
-    t = Map[x][y];
+    int t = Map[x][y];
 
     if (t & ZONEBIT) {
-      continue;
+      continue; // Ignore zones
     }
 
-    if ((t & BURNBIT) || (t == 0)) {
-      Map[x][y] = RADTILE;
+    if ((t & BURNBIT) || t == DIRT) {
+      Map[x][y] = RADTILE; // Make tile radio-active
     }
 
   }
 
+  // Report disaster to the user
   ClearMes();
   SendMesAt(-43, SX, SY);
 }

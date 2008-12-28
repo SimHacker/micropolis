@@ -74,9 +74,7 @@
 
 void Micropolis::DoZone()
 {
-  short ZonePwrFlg;
-
-  ZonePwrFlg = SetZPower();     /* Set Power Bit in Map from PowerMap */
+  bool ZonePwrFlg = SetZPower(); // Set Power Bit in Map from PowerMap
 
   if (ZonePwrFlg) {
     PwrdZCnt++;
@@ -860,44 +858,26 @@ short Micropolis::DoFreePop()
 }
 
 
-short Micropolis::SetZPower()
+/**
+ * Set #PWRBIT in the #Map at #SMapX and #SMapY based on the corresponding bit
+ * in the #PowerMap.
+ * @return Does the tile have power?
+ */
+bool Micropolis::SetZPower()
 {
-  /* set bit in MapWord depending on powermap  */
-  Quad PowerWrd;
-
-  /* TestPowerBit was taking alot of time so I inlined it. -Don */
-
-#if 0
-
-  short z;
-
-  if (z = TestPowerBit()) {
+  if (CChr9 == NUCLEAR || CChr9 == POWERPLANT) {
     Map[SMapX][SMapY] = CChr | PWRBIT;
-  } else {
-    Map[SMapX][SMapY] = CChr & (~PWRBIT);
-  }
-  return (z);
-
-#else
-
-  if ((CChr9 == NUCLEAR) ||
-      (CChr9 == POWERPLANT) ||
-      (
-#if 1
-       (PowerWrd = POWERWORD(SMapX, SMapY)),
-#else
-       (PowerWrd = (SMapX >>4) + (SMapY <<3)),
-#endif
-       ((PowerWrd < PWRMAPSIZE) &&
-        (PowerMap[PowerWrd] & (1 << (SMapX & 15)))))) {
-    Map[SMapX][SMapY] = CChr | PWRBIT;
-    return 1;
-  } else {
-    Map[SMapX][SMapY] = CChr & (~PWRBIT);
-    return 0;
+    return true;
   }
 
-#endif
+  Quad PowerWrd = POWERWORD(SMapX, SMapY);
+  if (PowerWrd < PWRMAPSIZE && (PowerMap[PowerWrd] & (1 << (SMapX & 15)))) {
+    Map[SMapX][SMapY] = CChr | PWRBIT;
+    return true;
+  } else {
+    Map[SMapX][SMapY] = CChr & (~PWRBIT);
+    return false;
+  }
 }
 
 

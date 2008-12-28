@@ -240,7 +240,7 @@ enum MapTileBits {
     BURNBIT = 0x2000, ///< bit 13
     BULLBIT = 0x1000, ///< bit 12, tile is bulldozable
     ANIMBIT = 0x0800, ///< bit 11, tile is animated
-    ZONEBIT = 0x0400, ///< bit 10
+    ZONEBIT = 0x0400, ///< bit 10, tile is a zone
 
     /// Mask for the bits-part of the tile
     ALLBITS = ZONEBIT | ANIMBIT | BULLBIT | BURNBIT | CONDBIT | PWRBIT,
@@ -731,6 +731,19 @@ static inline T clamp(const T val, const T lower, const T upper)
     return val;
 }
 
+/**
+ * Compute absolute value.
+ * @param val Input value.
+ * @return Absolute value of \a val.
+ */
+static inline int absoluteValue(int val)
+{
+    if (val < 0) {
+        return -val;
+    }
+    return val;
+}
+
 ////////////////////////////////////////////////////////////////////////
 // Macros
 
@@ -854,20 +867,20 @@ public:
 
   SimSprite *next;
   char *name;
-  int type;
-  int frame;
-  int x;
-  int y;
+  int type; ///< Type of the sprite (TRA -- BUS).
+  int frame; ///< ?? (non-zero normally on an active sprite)??
+  int x; ///< X coordinate of the sprite?
+  int y; ///< Y coordinate of the sprite?
   int width;
   int height;
   int x_offset;
   int y_offset;
-  int x_hot;
-  int y_hot;
+  int x_hot; ///< Offset of the hot-spot of the sprite relative to #x?
+  int y_hot; ///< Offset of the hot-spot of the sprite relative to #y?
   int orig_x;
   int orig_y;
-  int dest_x;
-  int dest_y;
+  int dest_x; ///< Destination X coordinate of the sprite.
+  int dest_y; ///< Destination Y coordinate of the sprite.
   int count;
   int sound_count;
   int dir;
@@ -1341,16 +1354,22 @@ public:
   /**
    * Fire station map.
    *
+   * Effectivity of fire control in this area.
+   *
    * Affected by fire stations, powered, fire funding ratio, road
    * access. Affects how long fires burn.
+   * @see #FireEffect
    */
   short FireStMap[SmX][SmY];
 
   /**
    * Police station map.
    *
+   * Effectivity of police in fighting crime.
+   *
    * Affected by police stations, powered, police funding ratio, road
    * access. Affects crime rate.
+   * @see #PoliceEffect
    */
   short PoliceMap[SmX][SmY];
 
@@ -2408,16 +2427,13 @@ public:
   float EMarket;
 
   Scenario DisasterEvent; ///< The disaster for which a count-down is running
+  short DisasterWait; ///< Count-down timer for the disaster
 
-  short DisasterWait;
+  Scenario ScoreType; ///< The type of score table to use
+  short ScoreWait; ///< Time to wait before computing the scoew
 
-  Scenario ScoreType;     ///< The type of score table to use
-
-  short ScoreWait;
-
-  short PwrdZCnt;
-
-  short unPwrdZCnt;
+  short PwrdZCnt; ///< Number of powered tiles in all zone
+  short unPwrdZCnt; ///< Number of unpowered tiles in all zones
 
   short NewPower; /* post */
 
@@ -2429,11 +2445,10 @@ public:
 
   short Spdcycle;
 
-  bool DoInitialEval; ///< Need to perform initial city evaluation
+  bool DoInitialEval; ///< Need to perform initial city evaluation.
 
-  short MeltX;
-
-  short MeltY;
+  short MeltX; ///< X coordinate of the nuclear melt down. @todo Not used.
+  short MeltY; ///< Y coordinate of the nuclear melt down. @todo Not used.
 
 
   void SimFrame();
@@ -2488,25 +2503,20 @@ public:
     int Yloc,
     int ch);
 
-  void RepairZone(
-    short ZCent,
-    short zsize);
 
-  void DoSPZone(
-    short PwrOn);
+private:
 
-  void DrawStadium(
-    int z);
+  void RepairZone(short ZCent, short zsize);
+
+  void DoSPZone(bool PwrOn);
+
+  void DrawStadium(int z);
 
   void DoAirport();
 
-  void CoalSmoke(
-    int mx,
-    int my);
+  void CoalSmoke(int mx, int my);
 
-  void DoMeltdown(
-    int SX,
-    int SY);
+  void DoMeltdown(int SX, int SY);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -3148,7 +3158,7 @@ public:
 
   short DoFreePop();
 
-  short SetZPower();
+  bool SetZPower();
 
 
   ////////////////////////////////////////////////////////////////////////
