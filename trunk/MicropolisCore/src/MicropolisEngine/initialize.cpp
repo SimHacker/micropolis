@@ -71,10 +71,10 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: loadFile bootUp main doMessage */
+/** Reset many game state variables */
 void Micropolis::InitWillStuff()
 {
-  register short x, y;
+  short x, y;
 
   RandomlySeedRand();
   InitGraphMax();
@@ -131,6 +131,11 @@ void Micropolis::InitWillStuff()
 }
 
 
+/**
+ * Reset all maps in the simulator.
+ * @note Function is empty
+ * @todo What should be done with this empty function?
+ */
 void Micropolis::ResetMapState()
 {
 /*
@@ -143,6 +148,11 @@ void Micropolis::ResetMapState()
 }
 
 
+/**
+ * Reset all tools in the simulator editor.
+ * @note Function is empty
+ * @todo What should be done with this empty function?
+ */
 void Micropolis::ResetEditorState()
 {
 /*
