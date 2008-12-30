@@ -263,8 +263,8 @@ Animations:
 852: x354 x355 x356 x357 x358 x359 x35a x35b:  Smoking chimneys (0,0)
 860: x35c x35d x35e x35f x360 x361 x362 x363:  Explosion
 ???  x364 x365 x366 x367:                      ?? (Black and white animation)
-???  x368 x369 x36a x36b x36c x36d x36e x36f: x370 x371 x372 x373
-                                              ?? (Black and white animation)
+???  x368 x369 x36a x36b x36c x36d x36e x36f
+     x370 x371 x372 x373:                      ?? (Black and white animation)
 
 884: x374 x375 x376 x377: Animation industry (top right)
 888: x378 x379 x37a x37b: Animation industry (right)
@@ -285,3 +285,17 @@ Animations:
 952: x3b8 x3b9 x3ba x3bb:                     Radio-active tile animation
 956: x3bc x3bd x3be x3bf:                     Not used (blank tiles)
 
+
+Duplicate tiles:
+================
+A simple file compare revealed the following duplicates:
+
+x002 x004 x04f x05f x06f x07f x08f x09f x0af x0bf x0cf
+x02d x363
+x321 x3a6
+x325 x3b1 x3b2
+x334 x3b8
+x368 x372
+x369 x371
+x36a x370
+x3bc x3bd x3be x3bf
