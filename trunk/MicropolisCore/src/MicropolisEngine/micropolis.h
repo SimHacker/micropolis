@@ -2827,22 +2827,11 @@ public:
 
   int putDownNetwork(short mapH, short mapV);
 
-  short checkBigZone(
-    short id, short *deltaHPtr, short *deltaVPtr);
+  short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
-  void check3x3border(short xMap, short yMap);
+  int check3x3(short mapH, short mapV, short base, short tool);
 
-  int check3x3(
-    short mapH, short mapV, 
-    short base, short tool);
-
-  void check4x4border(short xMap, short yMap);
-
-  short check4x4(
-    short mapH, short mapV, 
-    short base, short aniFlag, short tool);
-
-  void check6x6border(short xMap, short yMap);
+  short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
 
   short check6x6(short mapH, short mapV, short base, short tool);
 
@@ -2850,10 +2839,8 @@ public:
 
   void doZoneStatus(short mapH, short mapV);
 
-  void doShowZoneStatus(
-    char *str, 
-    char *s0, char *s1, char *s2, char *s3, char *s4, 
-    int x, int y);
+  void doShowZoneStatus(char *str, char *s0, char *s1, char *s2,
+                        char *s3, char *s4, int x, int y);
 
   void didTool(const char *name, short x, short y);
 
@@ -2904,6 +2891,9 @@ private:
   bool tally(short tileValue);
 
   short checkSize(short tileValue);
+
+  void checkBorder(short xMap, short yMap, int size);
+
 
   void putRubble(int x, int y, int size);
 

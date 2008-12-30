@@ -325,11 +325,13 @@ short Micropolis::checkSize(short tileValue)
     return 0;
 }
 
-
-/* 3x3 */
-
-
-void Micropolis::check3x3border(short xMap, short yMap)
+/**
+ * Check and connect a new zone around the border.
+ * @param xMap X coordinate of top-left tile.
+ * @param yMap Y coordinate of top-left tile.
+ * @param size Square size of the new zone.
+ */
+void Micropolis::checkBorder(short xMap, short yMap, int size)
 {
     short xPos, yPos;
     short cnt;
@@ -337,7 +339,7 @@ void Micropolis::check3x3border(short xMap, short yMap)
     xPos = xMap;
     yPos = yMap - 1;
 
-    for (cnt = 0; cnt < 3; cnt++) {
+    for (cnt = 0; cnt < size; cnt++) {
         /* this will do the upper bordering row */
         ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
         xPos++;
@@ -346,31 +348,32 @@ void Micropolis::check3x3border(short xMap, short yMap)
     xPos = xMap - 1;
     yPos = yMap;
 
-    for (cnt = 0; cnt < 3; cnt++) {
+    for (cnt = 0; cnt < size; cnt++) {
         /* this will do the left bordering row */
         ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
         yPos++;
     }
 
     xPos = xMap;
-    yPos = yMap + 3;
+    yPos = yMap + size;
 
-    for (cnt = 0; cnt < 3; cnt++) {
+    for (cnt = 0; cnt < size; cnt++) {
         /* this will do the bottom bordering row */
         ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
         xPos++;
     }
 
-    xPos = xMap + 3;
+    xPos = xMap + size;
     yPos = yMap;
 
-    for (cnt = 0; cnt < 3; cnt++) {
+    for (cnt = 0; cnt < size; cnt++) {
         /* this will do the right bordering row */
         ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
         yPos++;
     }
-
 }
+
+/* 3x3 */
 
 
 int Micropolis::check3x3(
@@ -459,61 +462,13 @@ int Micropolis::check3x3(
       mapV++;
     }
 
-    check3x3border(xPos, yPos);
+    checkBorder(xPos, yPos, 3);
 
     return 1;
 }
 
 
 /* 4x4 */
-
-
-void Micropolis::check4x4border(short xMap, short yMap)
-{
-    short *tilePtr;
-    short xPos, yPos;
-    short cnt;
-
-    xPos = xMap;
-    yPos = yMap - 1;
-
-    for (cnt = 0; cnt < 4; cnt++) {
-        /* this will do the upper bordering row */
-        tilePtr = &Map[xPos][yPos];
-        ConnecTile(xPos, yPos, tilePtr, 0);
-        xPos++;
-    }
-
-    xPos = xMap - 1;
-    yPos = yMap;
-
-    for (cnt = 0; cnt < 4; cnt++) {
-        /* this will do the left bordering row */
-        tilePtr = &Map[xPos][yPos];
-        ConnecTile(xPos, yPos, tilePtr, 0);
-        yPos++;
-    }
-
-    xPos = xMap;
-    yPos = yMap + 4;
-
-    for (cnt = 0; cnt < 4;cnt++) {
-        /* this will do the bottom bordering row */
-        tilePtr = &Map[xPos][yPos];
-        ConnecTile(xPos, yPos, tilePtr, 0);
-        xPos++;
-    }
-
-    xPos = xMap + 4;
-    yPos = yMap;
-
-    for (cnt = 0; cnt < 4; cnt++) {
-        /* this will do the right bordering row */
-        tilePtr = &Map[xPos][yPos];
-        ConnecTile(xPos, yPos, tilePtr, 0);
-        yPos++;
-    }
-}
 
 
 short Micropolis::check4x4(
@@ -609,57 +564,13 @@ short Micropolis::check4x4(
         mapV++;
     }
 
-    check4x4border(xMap, yMap);
+    checkBorder(xMap, yMap, 4);
 
     return 1;
 }
 
 
 /* 6x6 */
-
-
-void Micropolis::check6x6border(short xMap, short yMap)
-{
-    short xPos, yPos;
-    short cnt;
-
-    xPos = xMap;
-    yPos = yMap - 1;
-
-    for (cnt = 0; cnt < 6; cnt++) {
-        /* this will do the upper bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-        xPos++;
-    }
-
-    xPos = xMap - 1;
-    yPos = yMap;
-
-    for (cnt=0; cnt < 6; cnt++) {
-        /* this will do the left bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-        yPos++;
-    }
-
-    xPos = xMap;
-    yPos = yMap + 6;
-
-    for (cnt = 0; cnt < 6; cnt++) {
-        /* this will do the bottom bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-        xPos++;
-    }
-
-    xPos = xMap + 6;
-    yPos = yMap;
-
-    for (cnt = 0; cnt < 6; cnt++) {
-        /* this will do the right bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
-        yPos++;
-    }
-
-}
 
 
 short Micropolis::check6x6(
@@ -751,7 +662,7 @@ short Micropolis::check6x6(
         mapV++;
     }
 
-    check6x6border(xMap, yMap);
+    checkBorder(xMap, yMap);
 
     return 1;
 }
