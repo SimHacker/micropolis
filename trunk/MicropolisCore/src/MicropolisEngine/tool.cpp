@@ -66,12 +66,13 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
 
 
-static short gCostOf[] = {
+static const short gCostOf[] = {
      100,    100,    100,    500,
      500,      0,      5,      1,
       20,     10,   5000,     10,
@@ -80,7 +81,7 @@ static short gCostOf[] = {
 };
 
 
-static short gToolSize[] = {
+static const short gToolSize[] = {
     3, 3, 3, 3,
     3, 1, 1, 1,
     1, 1, 4, 1,
@@ -92,7 +93,13 @@ static short gToolSize[] = {
 ////////////////////////////////////////////////////////////////////////
 // Utilities
 
-
+/**
+ * Put a park down at the give tile.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @return Build result (-2 = no money, -1 = cannot build, 1 = built).
+ * @todo Add auto-bulldoze? (seems to be missing).
+ */
 int Micropolis::putDownPark(short mapH, short mapV)
 {
     short value, tile;
@@ -117,19 +124,27 @@ int Micropolis::putDownPark(short mapH, short mapV)
     return 1;
 }
 
-
+/**
+ * Put down a communication network.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @return Build result (-2 = no money, -1 = cannot build, 1 = built).
+ * @todo Auto-bulldoze deducts always 1.
+ * @todo Auto-bulldoze costs should be pulled from a table/constant.
+ */
 int Micropolis::putDownNetwork(short mapH, short mapV)
 {
     int tile = Map[mapH][mapV] & LOMASK;
 
-    if ((TotalFunds > 0) && tally(tile)) {
-        Map[mapH][mapV] = tile = 0;
+    if (TotalFunds > 0 && tally(tile)) {
+        Map[mapH][mapV] = DIRT;
+        tile = DIRT;
         Spend(1);
     }
 
-    if (tile != 0) return -1;
+    if (tile != DIRT) return -1;
 
-    if ((TotalFunds - gCostOf[TOOL_NETWORK]) < 0) return -2;
+    if (TotalFunds - gCostOf[TOOL_NETWORK] < 0) return -2;
 
     Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
@@ -140,11 +155,17 @@ int Micropolis::putDownNetwork(short mapH, short mapV)
 }
 
 
-short Micropolis::checkBigZone(
-    short id, short *deltaHPtr, short *deltaVPtr)
+/**
+ * Compute where the 'center' (at (1,1)) of the zone is, depending on where the
+ * user clicked.
+ * @param id Tile character value of the tile that the user clicked on.
+ * @param deltaHPtr Pointer where horizontal position correction is written to.
+ * @param deltaVPtr Pointer where vertical position correction is written to.
+ * @return Size of the zone clicked at (or \c 0 if clicked outside zone).
+ * @todo Make this table driven.
+ */
+short Micropolis::checkBigZone(short id, short *deltaHPtr, short *deltaVPtr)
 {
-    // @todo Make this table driven.
-
     switch (id) {
 
     case POWERPLANT:      /* check coal plant */
@@ -772,6 +793,19 @@ static short idArray[29] = {
 */
 
 
+/**
+ * Get string index for a status report on tile \a mapH, \a mapV on a
+ * given status category.
+ * @param catNo Category number:
+ *  0: population density
+ *  1: land value.
+ *  2: crime rate.
+ *  3: pollution.
+ *  4: growth rate.
+ * @param mapH  X coordinate of the tile.
+ * @param mapV  Y coordinate of the tile.
+ * @return Index into stri.202 file.
+ */
 int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
 {
     int z;
@@ -783,42 +817,47 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
         z = PopDensity[mapH >>1][mapV >>1];
         z = z >> 6;
         z = z & 3;
-        return z;
+        return z + STR202_POPULATIONDENSITY_LOW;
 
     case 1:
         z = LandValueMem[mapH >>1][mapV >>1];
-        if (z < 30) return 4;
-        if (z < 80) return 5;
-        if (z < 150) return 6;
-        return 7;
+        if (z < 30) return STR202_LANDVALUE_SLUM;
+        if (z < 80) return STR202_LANDVALUE_LOWER_CLASS;
+        if (z < 150) return STR202_LANDVALUE_MIDDLE_CLASS;
+        return STR202_LANDVALUE_HIGH_CLASS;
 
     case 2:
         z = CrimeMem[mapH >>1][mapV >>1];
         z = z >> 6;
         z = z & 3;
-        return z + 8;
+        return z + STR202_CRIME_NONE;
 
     case 3:
         z = PollutionMem[mapH >>1][mapV >>1];
         if ((z < 64) && (z > 0)) return 13;
         z = z >> 6;
         z = z & 3;
-        return z + 12;
+        return z + STR202_POLLUTION_NONE;
 
     case 4:
         z = RateOGMem[mapH >>3][mapV >>3];
-        if (z < 0) return 16;
-        if (z == 0) return 17;
-        if (z > 100) return 19;
-        return 18;
+        if (z < 0) return STR202_GROWRATE_DECLINING;
+        if (z == 0) return STR202_GROWRATE_STABLE;
+        if (z > 100) return STR202_GROWRATE_FASTGROWTH;
+        return STR202_GROWRATE_SLOWGROWTH;
 
     }
 }
 
-
+/**
+ * Report about the status of a tile.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @bug Program breaks for status on 'dirt'
+ */
 void Micropolis::doZoneStatus(short mapH, short mapV)
 {
-    char localStr[256];
+    char localStr[256]; // Textual version of the category the tile belongs to
     char statusStr[5][256];
 
     short tileNum = Map[mapH][mapV] & LOMASK;
@@ -827,7 +866,8 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
       tileNum = COALBASE;
     }
 
-    // FIXME: This has a fencepost error, I think!
+    // Find the category where the tile belongs to
+    // Note: If 'tileNum < idArray[i]', it belongs to category i-1
     short i;
     for (i = 1; i < 29; i++) {
         if (tileNum < idArray[i]) {
@@ -836,12 +876,19 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
     }
 
     i--;
+    // i contains the category that the tile belongs to (in theory 0..27).
+    // However, it is 0..26, since 956 is the first unused tile
+
+    // Code below looks buggy, 0 is a valid value (namely 'dirt'), and upper
+    // limit is not correctly checked either ('stri.219' has only 27 lines).
 
     // FIXME: This is strange... Normalize to zero based index.
-    if ((i < 1) || (i > 28)) {
-      i = 28;
+    if (i < 1 || i > 28) {
+      i = 28;  // This breaks the program (when you click 'dirt')
     }
 
+    // Obtain the string of the tile category.
+    // 'stri.219' has only 27 lines, so 0 <= i <= 26 is acceptable.
     GetIndString(localStr, 219, i + 1);
 
     for (i = 0; i < 5; i++) {
@@ -849,34 +896,24 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
         GetIndString(statusStr[i], 202, id);
     }
 
-    doShowZoneStatus(
-        localStr,
-        statusStr[0],
-        statusStr[1],
-        statusStr[2],
-        statusStr[3],
-        statusStr[4],
-        mapH,
-        mapV);
+    doShowZoneStatus(localStr, statusStr[0], statusStr[1], statusStr[2],
+                    statusStr[3], statusStr[4], mapH, mapV);
 }
 
-
-void Micropolis::doShowZoneStatus(
-  char *str,
-  char *s0, char *s1, char *s2, char *s3, char *s4,
-  int x, int y)
+/** Tell front-end to report on status of a tile.
+ * @param str Category of the tile.
+ * @param s0  Population density text.
+ * @param s1  Land value text.
+ * @param s2  Crime rate text.
+ * @param s3  Pollution text.
+ * @param s4  Grow rate text.
+ * @param x   X coordinate of the tile.
+ * @param y   Y coordinate of the tile.
+ */
+void Micropolis::doShowZoneStatus(char *str, char *s0, char *s1, char *s2, char *s3, char *s4,
+                                    int x, int y)
 {
-    Callback(
-        "UIShowZoneStatus",
-        "ssssssdd",
-        str,
-        s0,
-        s1,
-        s2,
-        s3,
-        s4,
-        x,
-        y);
+    Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
 }
 
 
@@ -904,14 +941,15 @@ void Micropolis::putRubble(int x, int y, int size)
 }
 
 
+/**
+ * Report to the front-end that a tool was used.
+ * @param name: Name of the tool.
+ * @param x     X coordinate of where the tool was applied.
+ * @param y     Y coordinate of where the tool was applied.
+ */
 void Micropolis::didTool(const char *name, short x, short y)
 {
-    Callback(
-        "UIDidTool",
-        "sdd",
-        name,
-        (int)x,
-        (int)y);
+    Callback("UIDidTool", "sdd", name, (int)x, (int)y);
 }
 
 
@@ -919,6 +957,12 @@ void Micropolis::didTool(const char *name, short x, short y)
 // Tools
 
 
+/**
+ * Do query tool.
+ * @param x X coordinate of the position of the tool application.
+ * @param y Y coordinate of the position of the tool application.
+ * @return (-1 = outside map, 1=ok)
+ */
 int Micropolis::queryTool(short x, short y)
 {
     if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
@@ -1379,8 +1423,8 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
 {
     int result;
 
-    // @todo The last coorinates should be passed from the tool so the 
-    //       simulator is stateless and can support multiple tools 
+    // @todo The last coordinates should be passed from the tool so the
+    //       simulator is stateless and can support multiple tools
     //       drawing at once. Get rid of last_x and last_y.
     last_x = x;
     last_y = y;
