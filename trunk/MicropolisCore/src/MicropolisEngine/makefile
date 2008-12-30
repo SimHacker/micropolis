@@ -100,10 +100,6 @@ MICROPOLISENGINE: $(SOURCES) python/micropolisengine_wrap.cpp
 
 python/stdafx.h: micropolis.h
 
-micropolis.h:
-
-$(SOURCES): python/stdafx.h micropolis.h
-
 swig/micropolisengine.i: swig/micropolisengine-swig-python.i micropolis.h
 
 swig/micropolisengine-swig-python.i: micropolis.h
@@ -131,33 +127,33 @@ cleanswig: clean
 install: all
 	(cd python ; $(PYTHON) setup.py install)
 
-allocate.cpp: micropolis.h
-animate.cpp: micropolis.h
-budget.cpp: micropolis.h
-connect.cpp: micropolis.h
-disasters.cpp: micropolis.h
-evaluate.cpp: micropolis.h
-evaluation.cpp: micropolis.h
-fileio.cpp: micropolis.h
-generate.cpp: micropolis.h
-graph.cpp: micropolis.h
-initialize.cpp: micropolis.h
-main.cpp: micropolis.h
-map.cpp: micropolis.h
-message.cpp: micropolis.h
-micropolis.cpp: micropolis.h
-power.cpp: micropolis.h
-random.cpp: micropolis.h
-resource.cpp: micropolis.h
-scan.cpp: micropolis.h
-simulate.cpp: micropolis.h
-sprite.cpp: micropolis.h
-stubs.cpp: micropolis.h
-tool.cpp: micropolis.h
-traffic.cpp: micropolis.h
-update.cpp: micropolis.h
-utilities.cpp: micropolis.h
-zone.cpp: micropolis.h
+allocate.cpp: python/stdafx.h micropolis.h
+animate.cpp: python/stdafx.h micropolis.h
+budget.cpp: python/stdafx.h micropolis.h
+connect.cpp: python/stdafx.h micropolis.h
+disasters.cpp: python/stdafx.h micropolis.h
+evaluate.cpp: python/stdafx.h micropolis.h
+evaluation.cpp: python/stdafx.h micropolis.h
+fileio.cpp: python/stdafx.h micropolis.h
+generate.cpp: python/stdafx.h micropolis.h
+graph.cpp: python/stdafx.h micropolis.h
+initialize.cpp: python/stdafx.h micropolis.h
+main.cpp: python/stdafx.h micropolis.h
+map.cpp: python/stdafx.h micropolis.h
+message.cpp: python/stdafx.h micropolis.h
+micropolis.cpp: python/stdafx.h micropolis.h
+power.cpp: python/stdafx.h micropolis.h
+random.cpp: python/stdafx.h micropolis.h
+resource.cpp: python/stdafx.h micropolis.h
+scan.cpp: python/stdafx.h micropolis.h
+simulate.cpp: python/stdafx.h micropolis.h
+sprite.cpp: python/stdafx.h micropolis.h
+stubs.cpp: python/stdafx.h micropolis.h
+tool.cpp: python/stdafx.h micropolis.h
+traffic.cpp: python/stdafx.h micropolis.h
+update.cpp: python/stdafx.h micropolis.h
+utilities.cpp: python/stdafx.h micropolis.h
+zone.cpp: python/stdafx.h micropolis.h
 
 
 ########################################################################
