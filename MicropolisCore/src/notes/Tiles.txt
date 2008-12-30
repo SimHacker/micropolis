@@ -1,0 +1,287 @@
+Analysis of MicropolisCore/images/tiles.xpm
+===========================================
+Image is 16 pixels wide, and 960*16 pixels high. Each 16x16 unit is one tile.
+Tile N is copied at (0, N*16)--(16, N*16 + 16) exclusive from the tiles.xpm
+image. Values N are shown below in hexadecimal notation, with an 'x' in front.
+Decimal values are always 3 digits long (they are prefixed with leading 0's if
+needed). The decimal values are derived from the hexadecimal values. In case
+of conflict, the hexadecimal values should be trusted.
+
+Below, tiles are roughly grouped together.
+
+
+000: x000 x001: Dirt
+002: x002 x003: Water
+
+Coast:
+004: x004:      Water (copy of x002??)
+     x005 x006: Coast N
+     x007 x008: Coast NE
+     x009 x00a: Coast E
+     x00b x00c: Coast SE
+     x00d x00e: Coast S
+     x00f x010: Coast SW
+     x011 x012: Coast W
+     x013 x014: Coast NW
+
+021: x015: Trees (dirt N)
+     x016: Trees (dirt NE)
+     x017: Trees (dirt E)
+     x018: Trees (dirt SE)
+     x019: Trees (dirt S)
+     x01a: Trees (dirt SW)
+     x01b: Trees (dirt W)
+     x01c: Trees (dirt NW)
+     x01d: Trees (dirt N)
+     x01e: Trees (dirt NE)
+     x01f: Trees (dirt E)
+     x020: Trees (dirt SE)
+     x021: Trees (dirt S)
+     x022: Trees (dirt SW)
+     x023: Trees (dirt W)
+     x024: Trees (dirt NW)
+     x025: Trees (no dirt)
+
+038: x026 x027: ???
+
+040: x028 x029 x02a x02b: Trees (with bit of dirt in the middle)
+
+044: x02c x02d x02e x02f: Rubble (dirt with black dots)
+
+048: x030 x031 x032 x033: Water (with white dots, ocean??)
+
+052: x034 x035 x036 x037: Nuclear explosion?
+     (x034 is sort-of radio-active tile,
+      others are black and white dots, 0x026 also looks to belong here)
+
+056: x038 x039 x03a x03b x03c x03d x03e x03f: Fire animation
+
+064: x040: Horizontal (fixed or closed) road bridge
+065: x041: Vertical (fixed or closed) road bridge
+
+Road on dirt:
+066: x042: Road WE
+     x043: Road NS
+     x044: Road NE
+     x045: Road SE
+     x046: Road SW
+     x047: Road NW
+     x048: Road crossing NWE
+     x049: Road crossing NSE
+     x04a: Road crossing SWE
+     x04b: Road crossing NSW
+     x04c: Road crossing NSWE
+     x04d: Road WE, power NS
+     x04e: Road NS, power WE
+
+x04f: Water
+
+Tiles x050-x05f
+      x060-x06f
+      x070-x07f
+      x080-x08f
+      each set of 16 as 0x040-x04f, but with light traffic animation
+
+080: x050 x051 x052 x053 x054 x055 x056 x057
+     x058 x059 x05a x05b x05c x05d x05e x05f
+
+096: x060 x061 x062 x063 x064 x065 x066 x067
+     x068 x069 x06a x06b x06c x06d x06e x06f
+
+112: x070 x071 x072 x073 x074 x075 x076 x077
+     x078 x079 x07a x07b x07c x07d x07e x07f
+
+128: x080 x081 x082 x083 x084 x085 x086 x087
+     x088 x089 x08a x08b x08c x08d x08e x08f
+
+Tiles x090-x09f
+      x0a0-x0af
+      x0b0-x0bf
+      x0c0-x0cf
+      each set of 16 as 0x40-0x4f, buth with heavy traffic animation
+
+144: x090 x091 x092 x093 x094 x095 x096 x097
+     x098 x099 x09a x09b x09c x09d x09e x09f
+
+160: x0a0 x0a1 x0a2 x0a3 x0a4 x0a5 x0a6 x0a7
+     x0a8 x0a9 x0aa x0ab x0ac x0ad x0ae x0af
+
+176: x0b0 x0b1 x0b2 x0b3 x0b4 x0b5 x0b6 x0b7
+     x0b8 x0b9 x0ba x0bb x0bc x0bd x0be x0bf
+
+192: x0c0 x0c1 x0c2 x0c3 x0c4 x0c5 x0c6 x0c7
+     x0c8 x0c9 x0ca x0cb x0cc x0cd x0ce x0cf
+
+208: x0d0: Power NS under water
+     x0d1: Power WE under water
+     x0d2: Power WE over dirt
+     x0d3: Power NS over dirt
+     x0d4: Power NE over dirt
+     x0d5: Power SE over dirt
+     x0d6: Power SW over dirt
+     x0d7: Power NW over dirt
+     x0d8: Power NWE over dirt
+     x0d9: Power NSE over dirt
+     x0da: Power SWE over dirt
+     x0db: Power NSW over dirt
+     x0dc: Power NSWE over dirt
+     x0dd: Rail WE, power NS over dirt
+     x0de: Rail NS, power WE over dirt
+
+     x0df: ?? (blank tile)
+
+224: x0e0: Rail WE under water
+     x0e1: Rail NS under water
+
+     x0e2: Rail WE over dirt
+     x0e3: Rail NS over dirt
+     x0e4: Rail NE over dirt
+     x0e5: Rail SE over dirt
+     x0e6: Rail SW over dirt
+     x0e7: Rail NW over dirt
+     x0e8: Rail NWE over dirt
+     x0e9: Rail NSE over dirt
+     x0ea: Rail SWE over dirt
+     x0eb: Rail NSW over dirt
+     x0ec: Rail NSWE over dirt
+     x0ed: Rail WE, road NS, over dirt
+     x0ee: Rail NS, road WE, over dirt
+
+     x0ef: ?? (vertical road, horizontal power lines?)
+
+Residential (3x3):
+240: x0f0 x0f1 x0f2  x0f3 x0f4 x0f5  x0f6 x0f7 x0f8:  Empty residential
+
+Single tile houses (from small to big)
+249: x0f9 x0fa x0fb x0fc x0fd x0fe x0ff x100 x101 x102 x103 x104
+
+Residential:
+261: x105 x106 x107  x108 x109 x10a  x10b x10c x10d
+270: x10e x10f x110  x111 x112 x113  x114 x115 x116
+279: x117 x118 x119  x11a x11b x11c  x11d x11e x11f
+288: x120 x121 x122  x123 x124 x125  x126 x127 x128
+297: x129 x12a x12b  x12c x12d x12e  x12f x130 x131
+306: x132 x133 x134  x135 x136 x137  x138 x139 x13a
+315: x13b x13c x13d  x13e x13f x140  x141 x142 x143
+324: x144 x145 x146  x147 x148 x149  x14a x14b x14c
+333: x14d x14e x14f  x150 x151 x152  x153 x154 x155
+342: x156 x157 x158  x159 x15a x15b  x15c x15d x15e
+351: x15f x160 x161  x162 x163 x164  x165 x166 x167
+360: x168 x169 x16a  x16b x16c x16d  x16e x16f x170
+369: x171 x172 x173  x174 x175 x176  x177 x178 x179
+378: x17a x17b x17c  x17d x17e x17f  x180 x181 x182
+387: x183 x184 x185  x186 x187 x188  x189 x18a x18b
+396: x18c x18d x18e  x18f x190 x191  x192 x193 x194
+
+405: x195 x196 x197  x198 x199 x19a  x19b x19c x19d:   Hospital
+414: x19e x19f x1a0  x1a1 x1a2 x1a3  x1a4 x1a5 x1a6:   Church
+
+Commercial buildings:
+423: x1a7 x1a8 x1a9  x1aa x1ab x1ac  x1ad x1ae x1af:   Empty
+432: x1b0 x1b1 x1b2  x1b3 x1b4 x1b5  x1b6 x1b7 x1b8
+441: x1b9 x1ba x1bb  x1bc x1bd x1be  x1bf x1c0 x1c1
+450: x1c2 x1c3 x1c4  x1c5 x1c6 x1c7  x1c8 x1c9 x1ca
+459: x1cb x1cc x1cd  x1ce x1cf x1d0  x1d1 x1d2 x1d3
+468: x1d4 x1d5 x1d6  x1d7 x1d8 x1d9  x1da x1db x1dc
+477: x1dd x1de x1df  x1e0 x1e1 x1e2  x1e3 x1e4 x1e5
+486: x1e6 x1e7 x1e8  x1e9 x1ea x1eb  x1ec x1ed x1ee
+495: x1ef x1f0 x1f1  x1f2 x1f3 x1f4  x1f5 x1f6 x1f7
+504: x1f8 x1f9 x1fa  x1fb x1fc x1fd  x1fe x1ff x200
+513: x201 x202 x203  x204 x205 x206  x207 x208 x209
+522: x20a x20b x20c  x20d x20e x20f  x210 x211 x212
+531: x213 x214 x215  x216 x217 x218  x219 x21a x21b
+540: x21c x21d x21e  x21f x220 x221  x222 x223 x224
+549: x225 x226 x227  x228 x229 x22a  x22b x22c x22d
+558: x22e x22f x230  x231 x232 x233  x234 x235 x236
+567: x237 x238 x239  x23a x23b x23c  x23d x23e x23f
+576: x240 x241 x242  x243 x244 x245  x246 x247 x248
+585: x249 x24a x24b  x24c x24d x24e  x24f x250 x251
+594: x252 x253 x254  x255 x256 x257  x258 x259 x25a
+603: x25b x25c x25d  x25e x25f x260  x261 x262 x263
+
+Industrial buildings:
+612: x264 x265 x266  x267 x268 x269  x26a x26b x26c: Empty
+621: x26d x26e x26f  x270 x271 x272  x273 x274 x275
+630: x276 x277 x278  x279 x27a x27b  x27c x27d x27e
+639: x27f x280 x281  x282 x283 x284  x285 x286 x287
+648: x288 x289 x28a  x28b x28c x28d  x28e x28f x290
+657: x291 x292 x293  x294 x295 x296  x297 x298 x299
+666: x29a x29b x29c  x29d x29e x29f  x2a0 x2a1 x2a2
+675: x2a3 x2a4 x2a5  x2a6 x2a7 x2a8  x2a9 x2aa x2ab
+684: x2ac x2ad x2ae  x2af x2b0 x2b1  x2b2 x2b3 x2b4
+
+Port (4x4):
+693: x2b5 x2b6 x2b7 x2b8
+     x2b9 x2ba x2bb x2bc
+     x2bd x2be x2bf x2c0
+     x2c1 x2c2 x2c3 x2c4
+
+Airport (6x6):
+709: x2c5 x2c6 x2c7 x2c8 x2c9 x2ca
+     x2cb x2cc x2cd x2ce x2cf x2d0
+     x2d1 x2d2 x2d3 x2d4 x2d5 x2d6
+     x2d7 x2d8 x2d9 x2da x2db x2dc
+     x2dd x2de x2df x2e0 x2e1 x2e2
+     x2e3 x2e4 x2e5 x2e6 x2e7 x2e8
+
+Coal power plant (4x4):
+745: x2e9 x2ea x2eb x2ec
+     x2ed x2ee x2ef x2f0
+     x2f1 x2f2 x2f3 x2f4
+     x2f5 x2f6 x2f7 x2f8
+
+761: x2f9 x2fa x2fb  x2fc x2fd x2fe  x2ff x300 x301:   Fire station
+770: x302 x303 x304  x305 x306 x307  x308 x309 x30a:   Police station
+
+Empty stadium (4x4):
+779: x30b x30c x30d x30e
+     x30f x310 x311 x312
+     x313 x314 x315 x316
+     x317 x318 x319 x31a
+
+Filled stadium (4x4):
+795: x31b x31c x31d x31e
+     x31f x320 x321 x322
+     x323 x324 x325 x326
+     x327 x328 x329 x32a
+
+Nuclear power plant (4x4):
+811: x32b x32c x32d x32e
+     x32f x330 x331 x332
+     x333 x334 x335 x336
+     x337 x338 x339 x33a
+
+827: x33b               Lack of power (flashlight with red cross through it)
+828: x33c x33d          Left open bridge
+830: x33e x33f          Right open bridge
+
+Animations:
+
+832: x340 x341 x342 x343 x344 x345 x346 x347:  Rotating radar (at top)
+840: x348 x349 x34a x34b:                      Fountain
+844: x34c x34d x34e x34f x350 x351 x352 x353:  Rotating radar (elsewhere)
+852: x354 x355 x356 x357 x358 x359 x35a x35b:  Smoking chimneys (0,0)
+860: x35c x35d x35e x35f x360 x361 x362 x363:  Explosion
+???  x364 x365 x366 x367:                      ?? (Black and white animation)
+???  x368 x369 x36a x36b x36c x36d x36e x36f: x370 x371 x372 x373
+                                              ?? (Black and white animation)
+
+884: x374 x375 x376 x377: Animation industry (top right)
+888: x378 x379 x37a x37b: Animation industry (right)
+892: x37c x37d x37e x37f: Animation industry (middle)
+896: x380 x381 x382 x383: Animation industry (right middle)
+900: x384 x385 x386 x387: Animation industry (top)
+904: x388 x389 x38a x38b: Animation industry (top right)
+908: x38c x38d x38e x38f: Animation industry (top right)
+912: x390 x391 x392 x393: Animation industry (right)
+916: x394 x395 x396 x397: Animation industry (top)
+920: x398 x399 x39a x39b: Animation industry (top right)
+924: x39c x39d x39e x39f: Animation industry (middle)
+928: x3a0 x3a1 x3a2 x3a3: Animation industry (right)
+932: x3a4 x3a5 x3a6 x3a7 x3a8 x3a9 x3aa x3ab: Sparks?? (top part of green box)
+940: x3ac x3ad x3ae x3af x3b0 x3b1 x3b2 x3b3: Sparks?? (bottom part of green box)
+948: x3b4 x3b5:                               North open bridge
+950: x3b6 x3b7:                               South open bridge
+952: x3b8 x3b9 x3ba x3bb:                     Radio-active tile animation
+956: x3bc x3bd x3be x3bf:                     Not used (blank tiles)
+
