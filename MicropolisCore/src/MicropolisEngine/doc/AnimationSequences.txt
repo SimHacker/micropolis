@@ -1,0 +1,194 @@
+# Tile animation sequences
+#
+# This file can be processed with genAnimationTable.py to generate the same
+# table as ../animate.cpp
+#
+# TODO: Remove water animation sequences as it animates the same tile (all
+#       those tiles are copies of each other)
+#
+#       x08f -> x07f -> x06f -> x05f -> x08f
+#       x0cf -> x0bf -> x0af -> x09f -> x0cf
+
+# Fire
+x038 -> x039 -> x03a -> x03b -> x03c -> x03d -> x03e -> x03f -> x038
+
+# Light traffic
+x080 -> x070 -> x060 -> x050 -> x080
+x081 -> x071 -> x061 -> x051 -> x081
+x082 -> x072 -> x062 -> x052 -> x082
+x083 -> x073 -> x063 -> x053 -> x083
+x084 -> x074 -> x064 -> x054 -> x084
+x085 -> x075 -> x065 -> x055 -> x085
+x086 -> x076 -> x066 -> x056 -> x086
+x087 -> x077 -> x067 -> x057 -> x087
+x088 -> x078 -> x068 -> x058 -> x088
+x089 -> x079 -> x069 -> x059 -> x089
+x08a -> x07a -> x06a -> x05a -> x08a
+x08b -> x07b -> x06b -> x05b -> x08b
+x08c -> x07c -> x06c -> x05c -> x08c
+x08d -> x07d -> x06d -> x05d -> x08d
+x08e -> x07e -> x06e -> x05e -> x08e
+x08f -> x07f -> x06f -> x05f -> x08f # Water, but all tiles are the same
+
+# Heavy traffic
+x0c0 -> x0b0 -> x0a0 -> x090 -> x0c0
+x0c1 -> x0b1 -> x0a1 -> x091 -> x0c1
+x0c2 -> x0b2 -> x0a2 -> x092 -> x0c2
+x0c3 -> x0b3 -> x0a3 -> x093 -> x0c3
+x0c4 -> x0b4 -> x0a4 -> x094 -> x0c4
+x0c5 -> x0b5 -> x0a5 -> x095 -> x0c5
+x0c6 -> x0b6 -> x0a6 -> x096 -> x0c6
+x0c7 -> x0b7 -> x0a7 -> x097 -> x0c7
+x0c8 -> x0b8 -> x0a8 -> x098 -> x0c8
+x0c9 -> x0b9 -> x0a9 -> x099 -> x0c9
+x0ca -> x0ba -> x0aa -> x09a -> x0ca
+x0cb -> x0bb -> x0ab -> x09b -> x0cb
+x0cc -> x0bc -> x0ac -> x09c -> x0cc
+x0cd -> x0bd -> x0ad -> x09d -> x0cd
+x0ce -> x0be -> x0ae -> x09e -> x0ce
+x0cf -> x0bf -> x0af -> x09f -> x0cf # Water, but all tiles are the same
+
+# Rotating radar at top of airport
+x2c7 -> x340
+x340 -> x341 -> x342 -> x343 -> x344 -> x345 -> x346 -> x347 -> x340
+
+# Fountain
+x348 -> x349 -> x34a -> x34b -> x348
+
+# Rotating radar (elsewhere)
+# TODO: Figure out whether we use this
+x34c -> x34d -> x34e -> x34f -> x350 -> x351 -> x352 -> x353 -> x34c
+
+# Smoking chimney
+x26c -> x354
+x354 -> x355 -> x356 -> x357 -> x358 -> x359 -> x35a -> x35b -> x354
+
+# Explosion
+x35c -> x35d -> x35e -> x35f -> x360 -> x361 -> x362 -> x363
+x363 -> x363
+
+# Chimney
+x281 -> x374
+x374 -> x375 -> x376 -> x377 -> x374
+
+# Chimney
+x284 -> x378
+x378 -> x379 -> x37a -> x37b -> x378
+
+# Chimney
+x289 -> x37c
+x37c -> x37d -> x37e -> x37f -> x37c
+
+# Chimney
+x28a -> x380
+x380 -> x381 -> x382 -> x383 -> x380
+
+# Chimney
+x2a4 -> x384
+x384 -> x385 -> x386 -> x387 -> x384
+
+# Chimney
+x2a5 -> x388
+x388 -> x389 -> x38a -> x38b -> x388
+
+# Chimney
+x2ae -> x38c
+x38c -> x38d -> x38e -> x38f -> x38c
+
+# Chimney
+x2b1 -> x390
+x390 -> x391 -> x392 -> x393 -> x390
+
+# Chimney
+x2eb -> x394
+x394 -> x395 -> x396 -> x397 -> x394
+
+# Chimney
+x2ec -> x398
+x398 -> x399 -> x39a -> x39b -> x398
+
+# Chimney
+x2ef -> x39c
+x39c -> x39d -> x39e -> x39f -> x39c
+
+# Chimney
+x2f0 -> x3a0
+x3a0 -> x3a1 -> x3a2 -> x3a3 -> x3a0
+
+# Stadium (top part, bottom part)
+x3a4 -> x3a5 -> x3a6 -> x3a7 -> x3a8 -> x3a9 -> x3aa -> x3ab -> x3a4
+x3ac -> x3ad -> x3ae -> x3af -> x3b0 -> x3b1 -> x3b2 -> x3b3 -> x3ac
+
+# Nuclear swirl (at nuclear power plant?)
+x334 -> x3b8
+x3b8 -> x3b9 -> x3ba -> x3bb -> x3b8
+
+# Non-used tiles
+956 -> 0
+957 -> 0
+958 -> 0
+959 -> 0
+960 -> 0
+961 -> 0
+962 -> 0
+963 -> 0
+964 -> 0
+965 -> 0
+966 -> 0
+967 -> 0
+968 -> 0
+969 -> 0
+970 -> 0
+971 -> 0
+972 -> 0
+973 -> 0
+974 -> 0
+975 -> 0
+976 -> 0
+977 -> 0
+978 -> 0
+979 -> 0
+980 -> 0
+981 -> 0
+982 -> 0
+983 -> 0
+984 -> 0
+985 -> 0
+986 -> 0
+987 -> 0
+988 -> 0
+989 -> 0
+990 -> 0
+991 -> 0
+992 -> 0
+993 -> 0
+994 -> 0
+995 -> 0
+996 -> 0
+997 -> 0
+998 -> 0
+999 -> 0
+1000 -> 0
+1001 -> 0
+1002 -> 0
+1003 -> 0
+1004 -> 0
+1005 -> 0
+1006 -> 0
+1007 -> 0
+1008 -> 0
+1009 -> 0
+1010 -> 0
+1011 -> 0
+1012 -> 0
+1013 -> 0
+1014 -> 0
+1015 -> 0
+1016 -> 0
+1017 -> 0
+1018 -> 0
+1019 -> 0
+1020 -> 0
+1021 -> 0
+1022 -> 0
+1023 -> 0
