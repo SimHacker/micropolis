@@ -149,7 +149,7 @@ scan.cpp: python/stdafx.h micropolis.h
 simulate.cpp: python/stdafx.h micropolis.h
 sprite.cpp: python/stdafx.h micropolis.h
 stubs.cpp: python/stdafx.h micropolis.h
-tool.cpp: python/stdafx.h micropolis.h
+tool.cpp: python/stdafx.h micropolis.h text.h
 traffic.cpp: python/stdafx.h micropolis.h
 update.cpp: python/stdafx.h micropolis.h
 utilities.cpp: python/stdafx.h micropolis.h
