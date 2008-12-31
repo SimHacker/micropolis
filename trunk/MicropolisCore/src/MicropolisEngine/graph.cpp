@@ -94,78 +94,78 @@
  */
 void Micropolis::drawMonth(short *hist, unsigned char *s, float scale)
 {
-  int val, x;
+    int val, x;
 
-  for (x = 0; x < 120; x++) {
-    val = (int)(hist[x] * scale);
-    s[119 - x] = (unsigned char)clamp(val, 0, 255);
-  }
+    for (x = 0; x < 120; x++) {
+        val = (int)(hist[x] * scale);
+        s[119 - x] = (unsigned char)clamp(val, 0, 255);
+    }
 }
 
 
 /** Re-compute all graphs. */
 void Micropolis::doAllGraphs()
 {
-  float scaleValue;
-  short AllMax = 0;
+    float scaleValue;
+    short AllMax = 0;
 
-  AllMax = max(AllMax, ResHisMax);
-  AllMax = max(AllMax, ComHisMax);
-  AllMax = max(AllMax, IndHisMax);
+    AllMax = max(AllMax, ResHisMax);
+    AllMax = max(AllMax, ComHisMax);
+    AllMax = max(AllMax, IndHisMax);
 
-  if (AllMax <= 128) {
+    if (AllMax <= 128) {
+        AllMax = 0;
+    }
+
+    if (AllMax) {
+        scaleValue = (float)128.0 / (float)AllMax;
+    } else {
+        scaleValue = 1.0;
+    }
+
+    // scaleValue = 0.5; // XXX
+
+    drawMonth(ResHis, History10[RES_HIST], scaleValue);
+    drawMonth(ComHis, History10[COM_HIST], scaleValue);
+    drawMonth(IndHis, History10[IND_HIST], scaleValue);
+    drawMonth(MoneyHis, History10[MONEY_HIST], 1.0);
+    drawMonth(CrimeHis, History10[CRIME_HIST], 1.0);
+    drawMonth(PollutionHis, History10[POLLUTION_HIST], 1.0);
+
     AllMax = 0;
-  }
 
-  if (AllMax) {
-    scaleValue = (float)128.0 / (float)AllMax;
-  } else {
-    scaleValue = 1.0;
-  }
+    AllMax = max(AllMax, Res2HisMax);
+    AllMax = max(AllMax, Com2HisMax);
+    AllMax = max(AllMax, Ind2HisMax);
 
-  // scaleValue = 0.5; // XXX
+    if (AllMax <= 128) {
+        AllMax = 0;
+    }
 
-  drawMonth(ResHis, History10[RES_HIST], scaleValue);
-  drawMonth(ComHis, History10[COM_HIST], scaleValue);
-  drawMonth(IndHis, History10[IND_HIST], scaleValue);
-  drawMonth(MoneyHis, History10[MONEY_HIST], 1.0);
-  drawMonth(CrimeHis, History10[CRIME_HIST], 1.0);
-  drawMonth(PollutionHis, History10[POLLUTION_HIST], 1.0);
+    if (AllMax) {
+        scaleValue =
+            (float)128.0 /
+            (float)AllMax;
+    } else {
+        scaleValue =
+            (float)1.0;
+    }
 
-  AllMax = 0;
+    // scaleValue = 0.5; // XXX
 
-  AllMax = max(AllMax, Res2HisMax);
-  AllMax = max(AllMax, Com2HisMax);
-  AllMax = max(AllMax, Ind2HisMax);
-
-  if (AllMax <= 128) {
-    AllMax = 0;
-  }
-
-  if (AllMax) {
-    scaleValue =
-      (float)128.0 /
-      (float)AllMax;
-  } else {
-    scaleValue =
-      (float)1.0;
-  }
-
-  // scaleValue = 0.5; // XXX
-
-  drawMonth(ResHis + 120, History120[RES_HIST], scaleValue);
-  drawMonth(ComHis + 120, History120[COM_HIST], scaleValue);
-  drawMonth(IndHis + 120, History120[IND_HIST], scaleValue);
-  drawMonth(MoneyHis + 120, History120[MONEY_HIST], 1.0);
-  drawMonth(CrimeHis + 120, History120[CRIME_HIST], 1.0);
-  drawMonth(PollutionHis + 120, History120[POLLUTION_HIST], 1.0);
+    drawMonth(ResHis + 120, History120[RES_HIST], scaleValue);
+    drawMonth(ComHis + 120, History120[COM_HIST], scaleValue);
+    drawMonth(IndHis + 120, History120[IND_HIST], scaleValue);
+    drawMonth(MoneyHis + 120, History120[MONEY_HIST], 1.0);
+    drawMonth(CrimeHis + 120, History120[CRIME_HIST], 1.0);
+    drawMonth(PollutionHis + 120, History120[POLLUTION_HIST], 1.0);
 }
 
 
 /** Set flag that graph data has been changed and graphs should be updated. */
 void Micropolis::ChangeCensus()
 {
-  censusChanged = true;
+    censusChanged = true;
 }
 
 
@@ -175,94 +175,94 @@ void Micropolis::ChangeCensus()
  */
 void Micropolis::graphDoer()
 {
-  if (censusChanged) {
-    doAllGraphs();
-    newGraph = true;
-    censusChanged = false;
-  }
+    if (censusChanged) {
+        doAllGraphs();
+        newGraph = true;
+        censusChanged = false;
+    }
 
-  if (newGraph) {
-    Callback("UIUpdate", "s", "graph");
-    newGraph = false;
-  }
+    if (newGraph) {
+        Callback("UIUpdate", "s", "graph");
+        newGraph = false;
+    }
 }
 
 
 /** Initialize graphs */
 void Micropolis::initGraphs()
 {
-  if (!HistoryInitialized) {
-    HistoryInitialized = 1;
-  }
+    if (!HistoryInitialized) {
+        HistoryInitialized = 1;
+    }
 }
 
 
 /** Compute various max ranges of graphs */
 void Micropolis::InitGraphMax()
 {
-  int x;
+    int x;
 
-  ResHisMax = 0;
-  ComHisMax = 0;
-  IndHisMax = 0;
+    ResHisMax = 0;
+    ComHisMax = 0;
+    IndHisMax = 0;
 
-  for (x = 118; x >= 0; x--) {
+    for (x = 118; x >= 0; x--) {
 
-    ResHisMax = max(ResHisMax, ResHis[x]);
-    ComHisMax = max(ComHisMax, ComHis[x]);
-    IndHisMax = max(IndHisMax, IndHis[x]);
+        ResHisMax = max(ResHisMax, ResHis[x]);
+        ComHisMax = max(ComHisMax, ComHis[x]);
+        IndHisMax = max(IndHisMax, IndHis[x]);
 
-    if (ResHis[x] < 0) {
-      ResHis[x] = 0;
+        if (ResHis[x] < 0) {
+            ResHis[x] = 0;
+        }
+
+        if (ComHis[x] < 0) {
+            ComHis[x] = 0;
+        }
+
+        if (IndHis[x] < 0) {
+            IndHis[x] = 0;
+        }
+
     }
 
-    if (ComHis[x] < 0) {
-      ComHis[x] = 0;
+    Graph10Max = ResHisMax;
+
+    if (ComHisMax > Graph10Max) {
+        Graph10Max = ComHisMax;
     }
 
-    if (IndHis[x] < 0) {
-      IndHis[x] = 0;
+    if (IndHisMax > Graph10Max) {
+        Graph10Max = IndHisMax;
     }
 
-  }
+    Res2HisMax = 0;
+    Com2HisMax = 0;
+    Ind2HisMax = 0;
 
-  Graph10Max = ResHisMax;
+    for (x = 238; x >= 120; x--) {
 
-  if (ComHisMax > Graph10Max) {
-    Graph10Max = ComHisMax;
-  }
+        Res2HisMax = max(Res2HisMax, ResHis[x]);
+        Com2HisMax = max(Com2HisMax, ComHis[x]);
+        Ind2HisMax = max(Ind2HisMax, IndHis[x]);
 
-  if (IndHisMax > Graph10Max) {
-    Graph10Max = IndHisMax;
-  }
+        if (ResHis[x] < 0) {
+            ResHis[x] = 0;
+        }
 
-  Res2HisMax = 0;
-  Com2HisMax = 0;
-  Ind2HisMax = 0;
+        if (ComHis[x] < 0) {
+            ComHis[x] = 0;
+        }
 
-  for (x = 238; x >= 120; x--) {
+        if (IndHis[x] < 0) {
+            IndHis[x] = 0;
+        }
 
-    Res2HisMax = max(Res2HisMax, ResHis[x]);
-    Com2HisMax = max(Com2HisMax, ComHis[x]);
-    Ind2HisMax = max(Ind2HisMax, IndHis[x]);
-
-    if (ResHis[x] < 0) {
-      ResHis[x] = 0;
     }
 
-    if (ComHis[x] < 0) {
-      ComHis[x] = 0;
-    }
-
-    if (IndHis[x] < 0) {
-      IndHis[x] = 0;
-    }
-
-  }
-
-  Graph120Max = Res2HisMax;
-  Graph120Max = max(Graph120Max, Com2HisMax);
-  Graph120Max = max(Graph120Max, Ind2HisMax);
+    Graph120Max = Res2HisMax;
+    Graph120Max = max(Graph120Max, Com2HisMax);
+    Graph120Max = max(Graph120Max, Ind2HisMax);
 }
 
 
