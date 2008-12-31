@@ -80,14 +80,20 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-SimSprite *Micropolis::NewSprite(
-  char *name,
-  int type,
-  int x,
-  int y)
+/**
+ * Create and initialize a sprite.
+ * @param name Name of the sprite (always \c "").
+ * @param type Type pf the sprite. @see SpriteType.
+ * @param x X coordinate of the sprite (in pixels).
+ * @param y Y coordinate of the sprite (in pixels).
+ * @return New sprite object.
+ */
+SimSprite *Micropolis::NewSprite(const char *name, int type, int x, int y)
 {
   SimSprite *sprite;
 
+  // If a sprite is available at the pool, use one.
+  // else, allocate a new one.
   if (FreeSprites) {
     sprite = FreeSprites;
     FreeSprites = sprite->next;
@@ -109,18 +115,28 @@ SimSprite *Micropolis::NewSprite(
 }
 
 
-void Micropolis::InitSprite(
-  SimSprite *sprite,
-  int x,
-  int y)
+/** Re-initialize an existing sprite.
+ * @param sprite Sprite to re-use.
+ * @param x      New x coordinate of the sprite (in pixels?).
+ * @param y      New y coordinate of the sprite (in pixels?).
+ * @todo Make derived classes for each type.
+ * @todo Move code to (derived) #SimSprite methods.
+ */
+void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
 {
-  sprite->x = x; sprite->y = y;
+  sprite->x = x;
+  sprite->y = y;
   sprite->frame = 0;
-  sprite->orig_x = sprite->orig_y = 0;
-  sprite->dest_x = sprite->dest_y = 0;
-  sprite->count = sprite->sound_count = 0;
-  sprite->dir = sprite->new_dir = 0;
-  sprite->step = sprite->flag = 0;
+  sprite->orig_x = 0;
+  sprite->orig_y = 0;
+  sprite->dest_x = 0;
+  sprite->dest_y = 0;
+  sprite->count = 0;
+  sprite->sound_count = 0;
+  sprite->dir = 0;
+  sprite->new_dir = 0;
+  sprite->step = 0;
+  sprite->flag = 0;
   sprite->control = -1;
   sprite->turn = 0;
   sprite->accel = 0;
@@ -133,17 +149,23 @@ void Micropolis::InitSprite(
   switch (sprite->type) {
 
   case TRA:
-    sprite->width = sprite->height = 32;
-    sprite->x_offset = 32; sprite->y_offset = -16;
-    sprite->x_hot = 40; sprite->y_hot = -8;
+    sprite->width = 32;
+    sprite->height = 32;
+    sprite->x_offset = 32;
+    sprite->y_offset = -16;
+    sprite->x_hot = 40;
+    sprite->y_hot = -8;
     sprite->frame = 1;
     sprite->dir = 4;
     break;
 
   case SHI:
-    sprite->width = sprite->height = 48;
-    sprite->x_offset = 32; sprite->y_offset = -16;
-    sprite->x_hot = 48; sprite->y_hot = 0;
+    sprite->width = 48;
+    sprite->height = 48;
+    sprite->x_offset = 32;
+    sprite->y_offset = -16;
+    sprite->x_hot = 48;
+    sprite->y_hot = 0;
 
     if (x < (4 <<4)) {
       sprite->frame = 3;
@@ -163,9 +185,12 @@ void Micropolis::InitSprite(
     break;
 
   case GOD:
-    sprite->width = sprite->height = 48;
-    sprite->x_offset = 24; sprite->y_offset = 0;
-    sprite->x_hot = 40; sprite->y_hot = 16;
+    sprite->width = 48;
+    sprite->height = 48;
+    sprite->x_offset = 24;
+    sprite->y_offset = 0;
+    sprite->x_hot = 40;
+    sprite->y_hot = 16;
 
     if (x > ((WORLD_X <<4) / 2)) {
       if (y > ((WORLD_Y <<4) / 2)) {
@@ -187,9 +212,12 @@ void Micropolis::InitSprite(
     break;
 
   case COP:
-    sprite->width = sprite->height = 32;
-    sprite->x_offset = 32; sprite->y_offset = -16;
-    sprite->x_hot = 40; sprite->y_hot = -8;
+    sprite->width = 32;
+    sprite->height = 32;
+    sprite->x_offset = 32;
+    sprite->y_offset = -16;
+    sprite->x_hot = 40;
+    sprite->y_hot = -8;
     sprite->frame = 5;
     sprite->count = 1500;
     sprite->dest_x = Rand((WORLD_X <<4) - 1);
@@ -199,9 +227,12 @@ void Micropolis::InitSprite(
     break;
 
   case AIR:
-    sprite->width = sprite->height = 48;
-    sprite->x_offset = 24; sprite->y_offset = 0;
-    sprite->x_hot = 48; sprite->y_hot = 16;
+    sprite->width = 48;
+    sprite->height = 48;
+    sprite->x_offset = 24;
+    sprite->y_offset = 0;
+    sprite->x_hot = 48;
+    sprite->y_hot = 16;
     if (x > ((WORLD_X - 20) <<4)) {
       sprite->x -= 100 + 48;
       sprite->dest_x = sprite->x - 200;
@@ -214,24 +245,33 @@ void Micropolis::InitSprite(
     break;
 
   case TOR:
-    sprite->width = sprite->height = 48;
-    sprite->x_offset = 24; sprite->y_offset = 0;
-    sprite->x_hot = 40; sprite->y_hot = 36;
+    sprite->width = 48;
+    sprite->height = 48;
+    sprite->x_offset = 24;
+    sprite->y_offset = 0;
+    sprite->x_hot = 40;
+    sprite->y_hot = 36;
     sprite->frame = 1;
     sprite->count = 200;
     break;
 
   case EXP:
-    sprite->width = sprite->height = 48;
-    sprite->x_offset = 24; sprite->y_offset = 0;
-    sprite->x_hot = 40; sprite->y_hot = 16;
+    sprite->width = 48;
+    sprite->height = 48;
+    sprite->x_offset = 24;
+    sprite->y_offset = 0;
+    sprite->x_hot = 40;
+    sprite->y_hot = 16;
     sprite->frame = 1;
     break;
 
   case BUS:
-    sprite->width = sprite->height = 32;
-    sprite->x_offset = 30; sprite->y_offset = -18;
-    sprite->x_hot = 40; sprite->y_hot = -8;
+    sprite->width = 32;
+    sprite->height = 32;
+    sprite->x_offset = 30;
+    sprite->y_offset = -18;
+    sprite->x_hot = 40;
+    sprite->y_hot = -8;
     sprite->frame = 1;
     sprite->dir = 1;
     break;
@@ -240,6 +280,10 @@ void Micropolis::InitSprite(
 }
 
 
+/**
+ * Destroy all sprites bt de-activating them all (setting their
+ * SimSprite::frame to 0).
+ */
 void Micropolis::DestroyAllSprites()
 {
   SimSprite *sprite;
@@ -250,13 +294,14 @@ void Micropolis::DestroyAllSprites()
 }
 
 
-void Micropolis::DestroySprite(
-  SimSprite *sprite)
+/**
+ * Destroy the sprite by taking it out of the active list.
+ * @param sprite Sprite to destroy.
+ * @todo Break the connection between any views that are following this sprite.
+ */
+void Micropolis::DestroySprite(SimSprite *sprite)
 {
   SimSprite **sp;
-
-  // TODO: Break the connection between any views
-  // that are following this sprite.
 
   if (GlobalSprites[sprite->type] == sprite) {
     GlobalSprites[sprite->type] = (SimSprite *)NULL;
@@ -279,13 +324,15 @@ void Micropolis::DestroySprite(
 }
 
 
-SimSprite *Micropolis::GetSprite(
-  int type)
+/**
+ * Return the sprite of the give type, if available.
+ * @param type Type of the sprite.
+ * @return Pointer to the active sprite if avaiable, else \c NULL.
+ */
+SimSprite *Micropolis::GetSprite(int type)
 {
-  SimSprite *sprite;
-
-  if (((sprite = GlobalSprites[type]) == NULL) ||
-      (sprite->frame == 0)) {
+  SimSprite *sprite = GlobalSprites[type];
+  if (sprite == NULL || sprite->frame == 0) {
     return (SimSprite *)NULL;
   } else {
     return sprite;
@@ -293,14 +340,18 @@ SimSprite *Micropolis::GetSprite(
 }
 
 
-SimSprite *Micropolis::MakeSprite(
-  int type,
-  int x,
-  int y)
+/**
+ * Make a sprite either by re-using the old one, or by making a new one.
+ * @param type Sprite type of the new sprite.
+ * @param x    X coordinate of the new sprite.
+ * @param y    Y coordinate of the new sprite.
+ */
+SimSprite *Micropolis::MakeSprite(int type, int x, int y)
 {
   SimSprite *sprite;
 
-  if ((sprite = GlobalSprites[type]) == NULL) {
+  sprite = GlobalSprites[type];
+  if (sprite == NULL) {
     sprite = NewSprite("", type, x, y);
   } else {
     InitSprite(sprite, x, y);
@@ -309,18 +360,7 @@ SimSprite *Micropolis::MakeSprite(
 }
 
 
-SimSprite *Micropolis::MakeNewSprite(
-  int type,
-  int x,
-  int y)
-{
-  SimSprite *sprite;
-
-  sprite = NewSprite("", type, x, y);
-  return sprite;
-}
-
-
+/** Draw all sprites */
 void Micropolis::DrawObjects()
 {
   SimSprite *sprite;
@@ -331,8 +371,12 @@ void Micropolis::DrawObjects()
 }
 
 
-void Micropolis::DrawSprite(
-  SimSprite *sprite)
+/**
+ * Draw sprite.
+ * @param sprite Sprite to draw.
+ * @bug Sprite is not actually drawn.
+ */
+void Micropolis::DrawSprite(SimSprite *sprite)
 {
   int x, y, i;
 
@@ -342,12 +386,8 @@ void Micropolis::DrawSprite(
 
   i = (sprite->frame - 1) * 2;
 
-  x =
-    sprite->x +
-    sprite->x_offset;
-  y =
-    sprite->y +
-    sprite->y_offset;
+  x = sprite->x + sprite->x_offset;
+  y = sprite->y + sprite->y_offset;
 
   // TODO: draw sprite
 
@@ -357,37 +397,46 @@ void Micropolis::DrawSprite(
 }
 
 
-short Micropolis::GetChar(
-  int x,
-  int y)
+/**
+ * Get character from the map.
+ * @param x X coordinate in pixels.
+ * @param y Y coordinate in pixels.
+ * @return Map character if on-map, or \c -1 if off-map.
+ */
+short Micropolis::GetChar(int x, int y)
 {
   x >>= 4;
   y >>= 4;
 
   if (!TestBounds(x, y)) {
-    return(-1);
+    return -1;
   } else {
-    return(Map[x][y] & LOMASK);
+    return Map[x][y] & LOMASK;
   }
 }
 
 
-short Micropolis::TurnTo(
-  int p,
-  int d)
+/**
+ * Turn.
+ * @param p Present direction (1..8).
+ * @param d Destination direction (1..8).
+ * @return New direction.
+ * @todo Remove local magic constants and document the code.
+ */
+short Micropolis::TurnTo(int p, int d)
 {
   if (p == d) {
-    return(p);
+    return p;
   }
 
   if (p < d) {
-    if ((d - p) < 4) {
+    if (d - p < 4) {
       p++;
     } else {
       p--;
     }
   } else {
-    if ((p - d) < 4) {
+    if (p - d < 4) {
       p--;
     } else {
       p++;
@@ -402,16 +451,15 @@ short Micropolis::TurnTo(
     p = 8;
   }
 
-  return (p);
+  return p;
 }
 
-
-short Micropolis::TryOther(
-  int Tpoo,
-  int Told,
-  int Tnew)
+/** ???
+ * @todo Remove local magic constants and document the code.
+ */
+bool Micropolis::TryOther(int Tpoo, int Told, int Tnew)
 {
-  register short z;
+  short z;
 
   z = Told + 4;
 
@@ -420,43 +468,44 @@ short Micropolis::TryOther(
   }
 
   if (Tnew != z) {
-    return(0);
+    return false;
   }
 
-  if ((Tpoo == POWERBASE) ||
-      (Tpoo == POWERBASE + 1) ||
-      (Tpoo == RAILBASE) ||
-      (Tpoo == RAILBASE + 1)) {
-    return(1);
+  if (Tpoo == POWERBASE || Tpoo == POWERBASE + 1
+        || Tpoo == RAILBASE || Tpoo == RAILBASE + 1) {
+    return true;
   }
 
-  return(0);
+  return false;
 }
 
 
-short Micropolis::SpriteNotInBounds(
-  SimSprite *sprite)
+/**
+ * Check whether a sprite is still entirely on-map.
+ * @param sprite Sprite to check.
+ * @return Sprite is at least partly off-map.
+ */
+bool Micropolis::SpriteNotInBounds(SimSprite *sprite)
 {
   int x = sprite->x + sprite->x_hot;
   int y = sprite->y + sprite->y_hot;
 
-  if ((x < 0) ||
-      (y < 0) ||
-      (x >= (WORLD_X <<4)) ||
-      (y >= (WORLD_Y <<4))) {
-    return (1);
-  }
-  return (0);
+  return x < 0 || y < 0 || x >= (WORLD_X <<4) || y >= (WORLD_Y <<4);
 }
 
-
-short Micropolis::GetDir(
-  int orgX,
-  int orgY,
-  int desX,
-  int desY)
+/**
+ * Get direction (0..8?) to get from starting point to destination point.
+ * @param orgX X coordinate starting point.
+ * @param orgY Y coordinate starting point.
+ * @param desX X coordinate destination point.
+ * @param desY Y coordinate destination point.
+ * @return Direction to go in.
+ * @todo Remove local magic constants and document the code.
+ * @bug Has a condition that never holds.
+ */
+short Micropolis::GetDir(int orgX, int orgY, int desX, int desY)
 {
-  static short Gdtab[13] = { 0, 3, 2, 1, 3, 4, 5, 7, 6, 5, 7, 8, 1 };
+  static const short Gdtab[13] = { 0, 3, 2, 1, 3, 4, 5, 7, 6, 5, 7, 8, 1 };
   int dispX, dispY, z;
 
   dispX = desX - orgX;
@@ -476,72 +525,59 @@ short Micropolis::GetDir(
     }
   }
 
-  if (dispX < 0) {
-    dispX = -dispX;
-  }
-
-  if (dispY < 0) {
-    dispY = -dispY;
-  }
-
+  dispX = absoluteValue(dispX);
+  dispY = absoluteValue(dispY);
   absDist = dispX + dispY;
 
-  if ((dispX <<1) < dispY) {
+  if (dispX * 2 < dispY) {
     z++;
-  } else if ((dispY <<1) < dispY) {
+  } else if (dispY * 2 < dispY) {  // XXX This never holds!!
     z--;
   }
 
-  if ((z < 0) ||
-      (z > 12)) {
+  if (z < 0 || z > 12) {
     z = 0;
   }
 
-  return (Gdtab[z]);
+  return Gdtab[z];
 }
 
 
-short Micropolis::GetDis(
-  int x1,
-  int y1,
-  int x2,
-  int y2)
+/**
+ * Compute Manhattan distance between two points.
+ * @param x1 X coordinate first point.
+ * @param y1 Y coordinate first point.
+ * @param x2 X coordinate second point.
+ * @param y2 Y coordinate second point.
+ * @return Manhattan distance between both points.
+ */
+int Micropolis::GetDistance(int x1, int y1, int x2, int y2)
 {
-  register short dispX, dispY;
-
-  if (x1 > x2) {
-    dispX = x1 - x2;
-  } else {
-    dispX = x2 - x1;
-  }
-
-  if (y1 > y2) {
-    dispY = y1 - y2;
-  } else {
-    dispY = y2 - y1;
-  }
-
-  return (dispX + dispY);
+  return absoluteValue(x1 - x2) + absoluteValue(y1 - y2);
 }
 
 
-int Micropolis::CheckSpriteCollision(
-  SimSprite *s1,
-  SimSprite *s2)
+/**
+ * Check whether two sprites collide with each other.
+ * @param s1 First sprite.
+ * @param s2 Second sprite.
+ * @return Sprites are colliding.
+ */
+bool Micropolis::CheckSpriteCollision(SimSprite *s1, SimSprite *s2)
 {
-  if ((s1->frame != 0) &&
-      (s2->frame != 0) &&
-      GetDis(s1->x + s1->x_hot,
-             s1->y + s1->y_hot,
-             s2->x + s2->x_hot,
-             s2->y + s2->y_hot) < 30) {
-    return(1);
-  }
-
-  return(0);
+  return s1->frame != 0 && s2->frame != 0 &&
+         GetDistance(s1->x + s1->x_hot, s1->y + s1->y_hot,
+                     s2->x + s2->x_hot, s2->y + s2->y_hot) < 30;
 }
 
 
+/**
+ * Move all sprites.
+ *
+ * Sprites with SimSprite::frame == 0 are removed.
+ * @todo It uses SimSprite::name[0] == '\0' as condition which seems stupid.
+ * @todo #DestroySprite modifies the #spriteList while we loop over it.
+ */
 void Micropolis::MoveObjects()
 {
   SimSprite *sprite;
@@ -553,7 +589,7 @@ void Micropolis::MoveObjects()
   Cycle++;
 
   for (sprite = spriteList; sprite != NULL;) {
-    if (sprite->frame) {
+    if (sprite->frame > 0) {
       switch (sprite->type) {
 
       case TRA:
@@ -607,30 +643,35 @@ void Micropolis::MoveObjects()
 }
 
 
-void Micropolis::DoTrainSprite(
-  SimSprite *sprite)
+/**
+ * Move train sprite.
+ * @param sprite Train sprite.
+ * @todo Remove local magic constants and document the code.
+ */
+void Micropolis::DoTrainSprite(SimSprite *sprite)
 {
-  static short Cx[4] = {   0,  16,   0, -16 };
-  static short Cy[4] = { -16,   0,  16,   0 };
-  static short Dx[5] = {   0,   4,   0,  -4,   0 };
-  static short Dy[5] = {  -4,   0,   4,   0,   0 };
-  static short TrainPic2[5] = { 1, 2, 1, 2, 5 };
-  register short z, dir, dir2;
+  /* Offset in pixels of sprite x and y to map tile */
+  static const short Cx[4] = {   0,  16,   0, -16 };
+  static const short Cy[4] = { -16,   0,  16,   0 };
+  /* X and Y movement of the sprite in pixels */
+  static const short Dx[5] = {   0,   4,   0,  -4,   0 };
+  static const short Dy[5] = {  -4,   0,   4,   0,   0 };
+
+  static const short TrainPic2[5] = { 1, 2, 1, 2, 5 };
+  short z, dir, dir2;
   short c;
 
-  if ((sprite->frame == 3) || (sprite->frame == 4)) {
+  if (sprite->frame == 3 || sprite->frame == 4) {
     sprite->frame = TrainPic2[sprite->dir];
   }
 
   sprite->x += Dx[sprite->dir];
   sprite->y += Dy[sprite->dir];
 
-  if (!(Cycle & 3)) {
+  if ((Cycle & 3) == 0) {
 
     dir = Rand16() & 3;
-
-    for (z = dir; z < (dir + 4); z++) {
-
+    for (z = dir; z < dir + 4; z++) {
       dir2 = z & 3;
 
       if (sprite->dir != 4) {
@@ -639,20 +680,14 @@ void Micropolis::DoTrainSprite(
         }
       }
 
-      c =
-        GetChar(
-          sprite->x + Cx[dir2] + 48,
-          sprite->y + Cy[dir2]);
+      c = GetChar(sprite->x + Cx[dir2] + 48, sprite->y + Cy[dir2]);
 
-      if (((c >= RAILBASE) &&
-           (c <= LASTRAIL)) || /* track? */
-          (c == RAILVPOWERH) ||
-          (c == RAILHPOWERV)) {
+      if ((c >= RAILBASE && c <= LASTRAIL) /* track? */
+                || c == RAILVPOWERH || c == RAILHPOWERV) {
 
-        if ((sprite->dir != dir2) &&
-            (sprite->dir != 4)) {
+        if (sprite->dir != dir2 && sprite->dir != 4) {
 
-          if ((sprite->dir + dir2) == 3) {
+          if (sprite->dir + dir2 == 3) {
             sprite->frame = 3;
           } else {
             sprite->frame = 4;
@@ -662,13 +697,11 @@ void Micropolis::DoTrainSprite(
           sprite->frame = TrainPic2[dir2];
         }
 
-        if ((c == HRAIL) ||
-            (c == VRAIL)) {
+        if (c == HRAIL || c == VRAIL) {
           sprite->frame = 5;
         }
 
         sprite->dir = dir2;
-
         return;
       }
     }
@@ -682,13 +715,17 @@ void Micropolis::DoTrainSprite(
   }
 }
 
-
+/**
+ * Move helicopter sprite.
+ * @param sprite Helicopter sprite.
+ * @todo Remove local magic constants and document the code.
+ */
 void Micropolis::DoCopterSprite(
   SimSprite *sprite)
 {
-  static short CDx[9] = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
-  static short CDy[9] = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
-  register short z, d, x, y;
+  static const short CDx[9] = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
+  static const short CDy[9] = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
+  short x, y;
 
   if (sprite->sound_count > 0) {
     sprite->sound_count--;
@@ -700,15 +737,17 @@ void Micropolis::DoCopterSprite(
       sprite->count--;
     }
 
-    if (!sprite->count) {
+    if (sprite->count == 0) {
 
-      /* Attract copter to monster and tornado so it blows up more often */
+      /* Attract copter to monster so it blows up more often */
       SimSprite *s = GetSprite(GOD);
 
       if (s != NULL) {
         sprite->dest_x = s->x;
         sprite->dest_y = s->y;
       } else {
+
+        /* Attract copter to tornado so it blows up more often */
         s = GetSprite(TOR);
 
         if (s != NULL) {
@@ -722,7 +761,7 @@ void Micropolis::DoCopterSprite(
       }
     }
 
-    if (!sprite->count) { /* land */
+    if (sprite->count == 0) { /* land */
       GetDir(sprite->x, sprite->y, sprite->orig_x, sprite->orig_y);
 
       if (absDist < 30) {
@@ -744,15 +783,12 @@ void Micropolis::DoCopterSprite(
 
   }
 
-  if (!sprite->sound_count) { /* send report  */
+  if (sprite->sound_count == 0) { /* send report  */
 
     x = (sprite->x + 48) >>5;
     y = sprite->y >>5;
 
-    if ((x >= 0) &&
-        (x < (WORLD_X >>1)) &&
-        (y >= 0) &&
-        (y < (WORLD_Y >>1))) {
+    if (x >= 0 && x < (WORLD_X >>1) && y >= 0 && y < (WORLD_Y >>1)) {
 
       /* Don changed from 160 to 170 to shut the #$%#$% thing up! */
 
@@ -766,10 +802,10 @@ void Micropolis::DoCopterSprite(
 
   }
 
-  z = sprite->frame;
+  short z = sprite->frame;
 
-  if (!(Cycle & 3)) {
-    d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+  if ((Cycle & 3) == 0) {
+    short d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
     z = TurnTo(z, d);
     sprite->frame = z;
   }
@@ -779,24 +815,29 @@ void Micropolis::DoCopterSprite(
 }
 
 
+/**
+ * Move airplane sprite.
+ * @param sprite Airplane sprite.
+ * @todo Remove local magic constants and document the code.
+ */
 void Micropolis::DoAirplaneSprite(
   SimSprite *sprite)
 {
-  static short CDx[12] = { 0,  0,  6,  8,  6,  0, -6, -8, -6,  8,  8,  8 };
-  static short CDy[12] = { 0, -8, -6,  0,  6,  8,  6,  0, -6,  0,  0,  0 };
+  static const short CDx[12] = {0,  0,  6, 8, 6, 0, -6, -8, -6, 8, 8, 8};
+  static const short CDy[12] = {0, -8, -6, 0, 6, 8,  6,  0, -6, 0, 0, 0};
 
-  register short z, d;
+  short z = sprite->frame;
 
-  z = sprite->frame;
-
-  if (!(Cycle % 5)) {
+  if ((Cycle % 5) == 0) {
 
     if (z > 8) { /* TakeOff  */
       z--;
-      if (z < 9) z = 3;
+      if (z < 9) {
+        z = 3;
+      }
       sprite->frame = z;
     } else { /* goto destination */
-      d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+      short d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
       z = TurnTo(z, d);
       sprite->frame = z;
     }
@@ -811,16 +852,19 @@ void Micropolis::DoAirplaneSprite(
   /* deh added test for !Disasters */
   if (!NoDisasters) {
     SimSprite *s;
-    int explode = 0;
+    bool explode = false;
 
+    /* Check whether another sprite is near enough to collide with */
     for (s = spriteList; s != NULL; s = s->next) {
-      if ((s->frame != 0) &&
-          ((s->type == COP) ||
-           ((sprite != s) &&
-            (s->type == AIR))) &&
-          CheckSpriteCollision(sprite, s)) {
+      if (s->frame == 0 || s == sprite) {
+        /* Non-active sprite, or self: skip */
+        continue;
+      }
+
+      if ((s->type == COP || s->type == AIR)
+                                    && CheckSpriteCollision(sprite, s)) {
         ExplodeSprite(s);
-        explode = 1;
+        explode = true;
       }
     }
 
@@ -838,16 +882,20 @@ void Micropolis::DoAirplaneSprite(
 }
 
 
-void Micropolis::DoShipSprite(
-  SimSprite *sprite)
+/**
+ * Move ship sprite.
+ * @param sprite Ship sprite.
+ * @todo Remove local magic constants and document the code.
+ */
+void Micropolis::DoShipSprite(SimSprite *sprite)
 {
-  static short BDx[9] = { 0,  0,  1,  1,  1,  0, -1, -1, -1 };
-  static short BDy[9] = { 0, -1, -1,  0,  1,  1,  1,  0, -1 };
-  static short BPx[9] = { 0,  0,  2,  2,  2,  0, -2, -2, -2 };
-  static short BPy[9] = { 0, -2, -2,  0,  2,  2,  2,  0, -2 };
-  static short BtClrTab[8] = { RIVER, CHANNEL, POWERBASE, POWERBASE + 1,
-                               RAILBASE, RAILBASE + 1, BRWH, BRWV };
-  register short x, y, z, t = RIVER;
+  static const short BDx[9] = { 0,  0,  1,  1,  1,  0, -1, -1, -1 };
+  static const short BDy[9] = { 0, -1, -1,  0,  1,  1,  1,  0, -1 };
+  static const short BPx[9] = { 0,  0,  2,  2,  2,  0, -2, -2, -2 };
+  static const short BPy[9] = { 0, -2, -2,  0,  2,  2,  2,  0, -2 };
+  static const short BtClrTab[8] = { RIVER, CHANNEL, POWERBASE, POWERBASE + 1,
+                                     RAILBASE, RAILBASE + 1, BRWH, BRWV };
+  short x, y, z, t = RIVER;
   short tem, pem;
 
   if (sprite->sound_count > 0) {
@@ -867,14 +915,13 @@ void Micropolis::DoShipSprite(
     }
 
     sprite->sound_count = 200;
-
   }
 
   if (sprite->count > 0) {
     sprite->count--;
   }
 
-  if (!sprite->count) {
+  if (sprite->count == 0) {
 
     sprite->count = 9;
 
@@ -900,10 +947,8 @@ void Micropolis::DoShipSprite(
 
         t = Map[x][y] & LOMASK;
 
-        if ((t == CHANNEL) ||
-            (t == BRWH) ||
-            (t == BRWV) ||
-            TryOther(t, sprite->dir, z)) {
+        if (t == CHANNEL || t == BRWH || t == BRWV
+                                            || TryOther(t, sprite->dir, z)) {
 
           sprite->new_dir = z;
           sprite->frame = TurnTo(sprite->frame, sprite->new_dir);
@@ -953,16 +998,20 @@ void Micropolis::DoShipSprite(
 }
 
 
-void Micropolis::DoMonsterSprite(
-  SimSprite *sprite)
+/**
+ * Move monster sprite.
+ * @param sprite Monster sprite.
+ * @todo Remove local magic constants and document the code.
+ */
+void Micropolis::DoMonsterSprite(SimSprite *sprite)
 {
-  static short Gx[5] = {  2,  2, -2, -2,  0 };
-  static short Gy[5] = { -2,  2,  2, -2,  0 };
-  static short ND1[4] = {  0,  1,  2,  3 };
-  static short ND2[4] = {  1,  2,  3,  0 };
-  static short nn1[4] = {  2,  5,  8, 11 };
-  static short nn2[4] = { 11,  2,  5,  8 };
-  register short d, z, c;
+  static const short Gx[5] = {  2,  2, -2, -2,  0 };
+  static const short Gy[5] = { -2,  2,  2, -2,  0 };
+  static const short ND1[4] = {  0,  1,  2,  3 };
+  static const short ND2[4] = {  1,  2,  3,  0 };
+  static const short nn1[4] = {  2,  5,  8, 11 };
+  static const short nn2[4] = { 11,  2,  5,  8 };
+  short d, z, c;
 
   if (sprite->sound_count > 0) {
     sprite->sound_count--;
@@ -1004,16 +1053,12 @@ void Micropolis::DoMonsterSprite(
 
         c = (c - 1) / 2;
 
-        if (((c != d) && (!Rand(5))) ||
-            (!Rand(20))) {
+        if ((c != d && Rand(5) == 0) || Rand(20) == 0) {
 
           int diff = (c - d) & 3;
 
-          if ((diff == 1) ||
-              (diff == 3)) {
-
+          if (diff == 1 || diff == 3) {
             d = c;
-
           } else {
 
             if (Rand16() & 1) {
@@ -1023,12 +1068,10 @@ void Micropolis::DoMonsterSprite(
             }
 
             d &= 3;
-
           }
-
         } else {
 
-          if (!Rand(20)) {
+          if (Rand(20) == 0) {
 
             if (Rand16() & 1) {
               d++;
@@ -1037,13 +1080,9 @@ void Micropolis::DoMonsterSprite(
             }
 
             d &= 3;
-
           }
-
         }
-
       }
-
     } else {
 
       d = (sprite->frame - 1) / 3;
@@ -1151,7 +1190,7 @@ void Micropolis::DoMonsterSprite(
 
   }
 
-  z = (((d * 3) + z) + 1);
+  z = d * 3 + z + 1;
 
   if (z > 16) {
     z = 16;
@@ -1168,21 +1207,17 @@ void Micropolis::DoMonsterSprite(
 
   c = GetChar(sprite->x + sprite->x_hot, sprite->y + sprite->y_hot);
 
-  if ((c == -1) ||
-      ((c == RIVER) &&
-       (sprite->count != 0) &&
-       (sprite->control == -1))) {
+  if (c == -1
+        || (c == RIVER && sprite->count != 0 && sprite->control == -1)) {
     sprite->frame = 0; /* kill zilla */
   }
 
   {
     SimSprite *s;
     for (s = spriteList; s != NULL; s = s->next) {
-      if ((s->frame != 0) &&
-          ((s->type == AIR) ||
-           (s->type == COP) ||
-           (s->type == SHI) ||
-           (s->type == TRA)) &&
+      if (s->frame != 0 &&
+          (s->type == AIR || s->type == COP ||
+           s->type == SHI || s->type == TRA) &&
         CheckSpriteCollision(sprite, s)) {
         ExplodeSprite(s);
       }
@@ -1192,12 +1227,15 @@ void Micropolis::DoMonsterSprite(
   Destroy(sprite->x + 48, sprite->y + 16);
 }
 
-
-void Micropolis::DoTornadoSprite(
-  SimSprite *sprite)
+/**
+ * Move tornado.
+ * @param sprite Tornado sprite to move.
+ * @todo Remove local magic constants and document the code.
+ */
+void Micropolis::DoTornadoSprite(SimSprite *sprite)
 {
-  static short CDx[9] = {  2,  3,  2,  0, -2, -3 };
-  static short CDy[9] = { -2,  0,  2,  3,  2,  0 };
+  static const short CDx[9] = {  2,  3,  2,  0, -2, -3 };
+  static const short CDy[9] = { -2,  0,  2,  3,  2,  0 };
   register short z;
 
   z = sprite->frame;
@@ -1260,12 +1298,15 @@ void Micropolis::DoTornadoSprite(
 }
 
 
-void Micropolis::DoExplosionSprite(
-  SimSprite *sprite)
+/**
+ * 'Move' fire sprite.
+ * @param sprite Fire sprite.
+ */
+void Micropolis::DoExplosionSprite(SimSprite *sprite)
 {
   short x, y;
 
-  if (!(Cycle & 1)) {
+  if ((Cycle & 1) == 0) {
 
     if (sprite->frame == 1) {
       MakeSound("city", "Explosion-High"); /* explosion */
@@ -1285,18 +1326,20 @@ void Micropolis::DoExplosionSprite(
     StartFire(sprite->x + 48 + 8, sprite->y);
     StartFire(sprite->x + 48 - 24, sprite->y + 32);
     StartFire(sprite->x + 48 + 8, sprite->y + 32);
-
-    return;
   }
 }
 
 
-void Micropolis::DoBusSprite(
-  SimSprite *sprite)
+/**
+ * Move bus sprite.
+ * @param sprite Bus sprite.
+ * @todo Remove local magic constants and document the code.
+ */
+void Micropolis::DoBusSprite(SimSprite *sprite)
 {
-  static short Dx[5] = {   0,   1,   0,  -1,   0 };
-  static short Dy[5] = {  -1,   0,   1,   0,   0 };
-  static short Dir2Frame[4] = { 1, 2, 1, 2 };
+  static const short Dx[5] = {   0,   1,   0,  -1,   0 };
+  static const short Dy[5] = {  -1,   0,   1,   0,   0 };
+  static const short Dir2Frame[4] = { 1, 2, 1, 2 };
   int dx, dy, tx, ty, otx, oty;
   int turned = 0;
   int speed = 0;
@@ -1355,10 +1398,7 @@ printf("Bus dir %d turn %d frame %d\n",
     tx = (sprite->x + sprite->x_hot) >>5;
     ty = (sprite->y + sprite->y_hot) >>5;
 
-    if ((tx >= 0) &&
-        (tx < (WORLD_X >>1)) &&
-        (ty >= 0) &&
-        (ty < (WORLD_Y >>1))) {
+    if (tx >= 0 && tx < (WORLD_X >>1) && ty >= 0 && ty < (WORLD_Y >>1)) {
 
       z = TrfDensity[tx][ty] >>6;
 
@@ -1451,7 +1491,7 @@ printf("moving right y %x z %d dy %d\n", sprite->y + sprite->y_hot, z, dy);
 
       case 2: /* down */
 
-        z = ((tx <<4)) - (sprite->x + sprite->x_hot);
+        z = (tx <<4) - (sprite->x + sprite->x_hot);
 
         if (z < 0) {
           dx = -1;
@@ -1467,7 +1507,7 @@ printf("moving down x %x z %d dx %d\n", sprite->x + sprite->x_hot, z, dx);
 
       case 3: /* left */
 
-        z = ((ty <<4)) - (sprite->y + sprite->y_hot);
+        z = (ty <<4) - (sprite->y + sprite->y_hot);
 
         if (z < 0) {
           dy = -1;
@@ -1493,34 +1533,16 @@ printf("speed dx %d dy %d\n", dx, dy);
   otx = (sprite->x + sprite->x_hot + (Dx[sprite->dir] * AHEAD)) >>4;
   oty = (sprite->y + sprite->y_hot + (Dy[sprite->dir] * AHEAD)) >>4;
 
-  if (otx < 0) {
-    otx = 0;
-  } else if (otx >= WORLD_X) {
-    otx = WORLD_X - 1;
-  }
-
-  if (oty < 0) {
-    oty = 0;
-  } else if (oty >= WORLD_Y) {
-    oty = WORLD_Y - 1;
-  }
+  otx = clamp(otx, 0, WORLD_X - 1);
+  oty = clamp(oty, 0, WORLD_Y - 1);
 
   tx = (sprite->x + sprite->x_hot + dx + (Dx[sprite->dir] * AHEAD)) >>4;
   ty = (sprite->y + sprite->y_hot + dy + (Dy[sprite->dir] * AHEAD)) >>4;
 
-  if (tx < 0) {
-    tx = 0;
-  } else if (tx >= WORLD_X) {
-    tx = WORLD_X - 1;
-  }
+  tx = clamp(tx, 0, WORLD_X - 1);
+  ty = clamp(ty, 0, WORLD_Y - 1);
 
-  if (ty < 0) {
-    ty = 0;
-  } else if (ty >= WORLD_Y) {
-    ty = WORLD_Y - 1;
-  }
-
-  if ((tx != otx) || (ty != oty)) {
+  if (tx != otx || ty != oty) {
 
 #ifdef DEBUGBUS
 printf("drive from tile %d %d to %d %d\n",
@@ -1592,10 +1614,13 @@ printf("drive from tile %d %d to %d %d\n",
   }
 }
 
-
-int Micropolis::CanDriveOn(
-  int x,
-  int y)
+/**
+ * Can one drive at the specified tile?
+ * @param x X coordinate at map.
+ * @param y Y coordinate at map.
+ * @return 0 if not, 1 if you can, -1 otherwise
+ */
+int Micropolis::CanDriveOn(int x, int y)
 {
   int tile;
 
@@ -1605,16 +1630,12 @@ int Micropolis::CanDriveOn(
 
   tile = Map[x][y] & LOMASK;
 
-  if (((tile >= ROADBASE) &&
-       (tile <= LASTROAD) &&
-       (tile != BRWH) &&
-       (tile != BRWV)) ||
-      (tile == HRAILROAD) ||
-      (tile == VRAILROAD)) {
+  if ((tile >= ROADBASE && tile <= LASTROAD && tile != BRWH && tile != BRWV)
+            || tile == HRAILROAD || tile == VRAILROAD) {
     return 1;
   }
 
-  if ((tile == DIRT) || tally(tile)) {
+  if (tile == DIRT || tally(tile)) {
     return -1;
   }
 
@@ -1622,8 +1643,11 @@ int Micropolis::CanDriveOn(
 }
 
 
-void Micropolis::ExplodeSprite(
-  SimSprite *sprite)
+/**
+ * Handle explosion of sprite (mostly due to collision?).
+ * @param sprite that should explode.
+ */
+void Micropolis::ExplodeSprite(SimSprite *sprite)
 {
   int x, y;
 
@@ -1671,30 +1695,27 @@ void Micropolis::ExplodeSprite(
   }
 
   MakeSound("city", "Explosion-High"); /* explosion */
-
   return;
 }
 
 
-int Micropolis::checkWet(
-  int x)
+bool Micropolis::checkWet(int x)
 {
-  if ((x == HPOWER) ||
-      (x == VPOWER) ||
-      (x == HRAIL) ||
-      (x == VRAIL) ||
-      (x == BRWH) ||
-      (x == BRWV)) {
-    return(1);
+  if (x == HPOWER || x == VPOWER || x == HRAIL || x == VRAIL
+            || x == BRWH || x == BRWV) {
+    return true;
   } else {
-    return(0);
+    return false;
   }
 }
 
 
-void Micropolis::Destroy(
-  int ox,
-  int oy)
+/**
+ * Destroy a map tile.
+ * @param ox X coordinate in pixels.
+ * @param oy Y coordinate in pixels.
+ */
+void Micropolis::Destroy(int ox, int oy)
 {
   short t, z, x, y;
 
@@ -1712,8 +1733,7 @@ void Micropolis::Destroy(
     /* TILE_IS_BRIDGE(t) */
     if (!(z & BURNBIT)) {
 
-      if ((t >= ROADBASE) &&
-          (t <= LASTROAD)) {
+      if (t >= ROADBASE && t <= LASTROAD) {
         Map[x][y] = RIVER;
       }
 
@@ -1731,28 +1751,24 @@ void Micropolis::Destroy(
     }
 
     if (checkWet(t)) {
-
       Map[x][y] = RIVER;
-
     } else {
-
-      Map[x][y] =
-        (DoAnimation
-           ? TINYEXP
-           : (LASTTINYEXP - 3)) |
-        BULLBIT | ANIMBIT;
-
+      Map[x][y] = (DoAnimation ? TINYEXP : (LASTTINYEXP - 3))
+                | BULLBIT | ANIMBIT;
     }
   }
 }
 
 
-void Micropolis::OFireZone(
-  int Xloc,
-  int Yloc,
-  int ch)
+/**
+ * Start a fire in a zone.
+ * @param Xloc X coordinate in map coordinate.
+ * @param Yloc Y coordinate in map coordinate.
+ * @param ch   Map character at (\a Xloc, \a Yloc).
+ */
+void Micropolis::OFireZone(int Xloc, int Yloc, int ch)
 {
-  register short Xtem, Ytem;
+  short Xtem, Ytem;
   short x, y, XYmax;
 
   RateOGMem[Xloc >>3][Yloc >>3] -= 20;
@@ -1775,8 +1791,7 @@ void Micropolis::OFireZone(
       Xtem = Xloc + x;
       Ytem = Yloc + y;
 
-      if (TestBounds(Xtem, Ytem) &&
-                  ((Map[Xtem][Ytem] & LOMASK) >= ROADBASE)) {
+      if (TestBounds(Xtem, Ytem) && (Map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
         Map[Xtem][Ytem] |= BULLBIT;
       }
 
@@ -1785,26 +1800,26 @@ void Micropolis::OFireZone(
 }
 
 
-void Micropolis::StartFire(
-  int x,
-  int y)
+/**
+ * Start a fire at a single tile.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::StartFire(int x, int y)
 {
-  register int t, z;
+  int t, z;
 
   x >>= 4;
   y >>= 4;
 
-  if ((x >= WORLD_X) ||
-      (y >= WORLD_Y) ||
-      (x < 0) ||
-      (y < 0)) {
+  if (!TestBounds(x, y)) {
     return;
   }
 
   z = Map[x][y];
   t = z & LOMASK;
 
-  if ((!(z & BURNBIT)) && (t != 0)) {
+  if (!(z & BURNBIT) && t != 0) {
     return;
   }
 
@@ -1816,36 +1831,36 @@ void Micropolis::StartFire(
 }
 
 
-void Micropolis::GenerateTrain(
-  int x,
-  int y)
+/**
+ * Try to start a new train sprite at the given map tile.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::GenerateTrain(int x, int y)
 {
-  if ((TotalPop > 20) &&
-      (GetSprite(TRA) == NULL) &&
-      (!Rand(25))) {
-
+  if (TotalPop > 20 && GetSprite(TRA) == NULL && Rand(25) == 0) {
     MakeSprite(TRA, (x <<4) + TRA_GROOVE_X, (y <<4) + TRA_GROOVE_Y);
-
   }
 }
 
 
-void Micropolis::GenerateBus(
-  int x,
-  int y)
+/**
+ * Try to start a new bus sprite at the given map tile.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::GenerateBus(int x, int y)
 {
-  if ((GetSprite(BUS) == NULL) &&
-      (!Rand(25))) {
-
+  if (GetSprite(BUS) == NULL && Rand(25) == 0) {
     MakeSprite(BUS, (x <<4) + BUS_GROOVE_X, (y <<4) + BUS_GROOVE_Y);
-
   }
 }
 
 
+/** Try to construct a new ship sprite */
 void Micropolis::GenerateShip()
 {
-  register short x, y;
+  short x, y;
 
   if (!(Rand16() & 3)) {
     for (x = 4; x < WORLD_X - 2; x++) {
@@ -1885,20 +1900,27 @@ void Micropolis::GenerateShip()
 }
 
 
-void Micropolis::MakeShipHere(
-  int x,
-  int y)
+/**
+ * Start a new ship sprite at the given map tile.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::MakeShipHere(int x, int y)
 {
   MakeSprite(SHI, (x <<4) - (48 - 1), (y <<4));
 }
 
 
+/* Start a new monster sprite.
+ * @bug The "!done == 0" looks wrong.
+ */
 void Micropolis::MakeMonster()
 {
-  register int x, y, z, done = 0;
+  int x, y, z, done = 0;
   SimSprite *sprite;
 
-  if ((sprite = GetSprite(GOD)) != NULL) {
+  sprite = GetSprite(GOD);
+  if (sprite != NULL) {
     sprite->sound_count = 1;
     sprite->count = 1000;
     sprite->dest_x = PolMaxX <<4;
@@ -1911,7 +1933,7 @@ void Micropolis::MakeMonster()
     x = Rand(WORLD_X - 20) + 10;
     y = Rand(WORLD_Y - 10) + 5;
 
-    if ((Map[x][y] == RIVER) || (Map[x][y] == RIVER + BULLBIT)) {
+    if (Map[x][y] == RIVER || Map[x][y] == RIVER + BULLBIT) {
       MonsterHere(x, y);
       done = 1;
       break;
@@ -1926,31 +1948,44 @@ void Micropolis::MakeMonster()
 }
 
 
-void Micropolis::MonsterHere(
-  int x,
-  int y)
+/**
+ * Start a new monster sprite at the given map tile.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::MonsterHere(int x, int y)
 {
-  MakeSprite(GOD, (x <<4) + 48, (y <<4));
+  MakeSprite(GOD, (x << 4) + 48, (y << 4));
   ClearMes();
   SendMesAt(-21, x + 5, y);
 }
 
 
-void Micropolis::GenerateCopter(
-  int x,
-  int y)
+/**
+ * Ensure a helicopter sprite exists.
+ *
+ * If it does not exist, create one at the given coordinates.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::GenerateCopter(int x, int y)
 {
   if (GetSprite(COP) != NULL) {
     return;
   }
 
-  MakeSprite(COP, (x <<4), (y <<4) + 30);
+  MakeSprite(COP, (x << 4), (y << 4) + 30);
 }
 
 
-void Micropolis::GeneratePlane(
-  int x,
-  int y)
+/**
+ * Ensure a airplane sprite exists.
+ *
+ * If it does not exist, create one at the given coordinates.
+ * @param x X coordinate in map coordinate.
+ * @param y Y coordinate in map coordinate.
+ */
+void Micropolis::GeneratePlane(int x, int y)
 {
   if (GetSprite(AIR) != NULL) {
     return;
@@ -1960,12 +1995,14 @@ void Micropolis::GeneratePlane(
 }
 
 
+/** Ensure a airplane sprite exists. */
 void Micropolis::MakeTornado()
 {
   short x, y;
   SimSprite *sprite;
 
-  if ((sprite = GetSprite(TOR)) != NULL) {
+  sprite = GetSprite(TOR);
+  if (sprite != NULL) {
     sprite->count = 200;
     return;
   }
@@ -1979,22 +2016,27 @@ void Micropolis::MakeTornado()
 }
 
 
-void Micropolis::MakeExplosion(
-  int x,
-  int y)
+/**
+ * Construct an explosion sprite.
+ * @param x X coordinate of the explosion (in map coordinates).
+ * @param y Y coordinate of the explosion (in map coordinates).
+ */
+void Micropolis::MakeExplosion(int x, int y)
 {
-  if ((x >= 0) && (x < WORLD_X) &&
-      (y >= 0) && (y < WORLD_Y)) {
+  if (TestBounds(x, y)) {
     MakeExplosionAt((x << 4) + 8, (y << 4) + 8);
   }
 }
 
 
-void Micropolis::MakeExplosionAt(
-  int x,
-  int y)
+/**
+ * Construct an explosion sprite.
+ * @param x X coordinate of the explosion (in pixels).
+ * @param y Y coordinate of the explosion (in pixels).
+ */
+void Micropolis::MakeExplosionAt( int x, int y)
 {
-  MakeNewSprite(EXP, x - 40, y - 16);
+  NewSprite("", EXP, x - 40, y - 16);
 }
 
 
