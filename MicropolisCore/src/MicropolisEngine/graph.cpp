@@ -85,53 +85,40 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-void Micropolis::drawMonth(
-  short *hist,
-  unsigned char *s,
-  float scale)
+/**
+ * Copy history data to new array, scaling as needed.
+ * @param hist  Source history data.
+ * @param s     Destination byte array.
+ * @param scale Scale factor.
+ * @todo Figure out why we copy data.
+ */
+void Micropolis::drawMonth(short *hist, unsigned char *s, float scale)
 {
-  register short val;
-  register short x;
+  int val, x;
 
   for (x = 0; x < 120; x++) {
-    val = (short)(hist[x] * scale);
-    if (val < 0) {
-      val = 0;
-    }
-    if (val > 255) {
-      val = 255;
-    }
-    s[119 - x] =
-      (unsigned char)val;
+    val = (int)(hist[x] * scale);
+    s[119 - x] = (unsigned char)clamp(val, 0, 255);
   }
 }
 
 
+/** Re-compute all graphs. */
 void Micropolis::doAllGraphs()
 {
   float scaleValue;
   short AllMax = 0;
 
-  if (ResHisMax > AllMax) {
-    AllMax = ResHisMax;
-  }
-
-  if (ComHisMax > AllMax) {
-    AllMax = ComHisMax;
-  }
-
-  if (IndHisMax > AllMax) {
-    AllMax = IndHisMax;
-  }
+  AllMax = max(AllMax, ResHisMax);
+  AllMax = max(AllMax, ComHisMax);
+  AllMax = max(AllMax, IndHisMax);
 
   if (AllMax <= 128) {
     AllMax = 0;
   }
 
   if (AllMax) {
-    scaleValue =
-      (float)128.0 /
-      (float)AllMax;
+    scaleValue = (float)128.0 / (float)AllMax;
   } else {
     scaleValue = 1.0;
   }
@@ -147,17 +134,9 @@ void Micropolis::doAllGraphs()
 
   AllMax = 0;
 
-  if (Res2HisMax > AllMax) {
-    AllMax = Res2HisMax;
-  }
-
-  if (Com2HisMax > AllMax) {
-    AllMax = Com2HisMax;
-  }
-
-  if (Ind2HisMax > AllMax) {
-    AllMax = Ind2HisMax;
-  }
+  AllMax = max(AllMax, Res2HisMax);
+  AllMax = max(AllMax, Com2HisMax);
+  AllMax = max(AllMax, Ind2HisMax);
 
   if (AllMax <= 128) {
     AllMax = 0;
@@ -183,12 +162,17 @@ void Micropolis::doAllGraphs()
 }
 
 
+/** Set flag that graph data has been changed and graphs should be updated. */
 void Micropolis::ChangeCensus()
 {
   CensusChanged = 1;
 }
 
 
+/**
+ * If graph data has been changed, update all graphs.
+ * If graphs have been changed, tell the user front-end about it.
+ */
 void Micropolis::graphDoer()
 {
   if (CensusChanged) {
@@ -198,15 +182,13 @@ void Micropolis::graphDoer()
   }
 
   if (NewGraph) {
-        Callback(
-          "UIUpdate",
-          "s",
-          "graph");
+    Callback("UIUpdate", "s", "graph");
     NewGraph = 0;
   }
 }
 
 
+/** Initialize graphs */
 void Micropolis::initGraphs()
 {
   if (!HistoryInitialized) {
@@ -215,10 +197,10 @@ void Micropolis::initGraphs()
 }
 
 
-/* comefrom: InitWillStuff */
+/** Compute various max ranges of graphs */
 void Micropolis::InitGraphMax()
 {
-  register int x;
+  int x;
 
   ResHisMax = 0;
   ComHisMax = 0;
@@ -226,17 +208,9 @@ void Micropolis::InitGraphMax()
 
   for (x = 118; x >= 0; x--) {
 
-    if (ResHis[x] > ResHisMax) {
-      ResHisMax = ResHis[x];
-    }
-
-    if (ComHis[x] > ComHisMax) {
-      ComHisMax = ComHis[x];
-    }
-
-    if (IndHis[x] > IndHisMax) {
-      IndHisMax = IndHis[x];
-    }
+    ResHisMax = max(ResHisMax, ResHis[x]);
+    ComHisMax = max(ComHisMax, ComHis[x]);
+    IndHisMax = max(IndHisMax, IndHis[x]);
 
     if (ResHis[x] < 0) {
       ResHis[x] = 0;
@@ -268,17 +242,9 @@ void Micropolis::InitGraphMax()
 
   for (x = 238; x >= 120; x--) {
 
-    if (ResHis[x] > Res2HisMax) {
-      Res2HisMax = ResHis[x];
-    }
-
-    if (ComHis[x] > Com2HisMax) {
-      Com2HisMax = ComHis[x];
-    }
-
-    if (IndHis[x] > Ind2HisMax) {
-      Ind2HisMax = IndHis[x];
-    }
+    Res2HisMax = max(Res2HisMax, ResHis[x]);
+    Com2HisMax = max(Com2HisMax, ComHis[x]);
+    Ind2HisMax = max(Ind2HisMax, IndHis[x]);
 
     if (ResHis[x] < 0) {
       ResHis[x] = 0;
@@ -295,15 +261,8 @@ void Micropolis::InitGraphMax()
   }
 
   Graph120Max = Res2HisMax;
-
-  if (Com2HisMax > Graph120Max) {
-    Graph120Max = Com2HisMax;
-  }
-
-  if (Ind2HisMax > Graph120Max) {
-    Graph120Max = Ind2HisMax;
-  }
-
+  Graph120Max = max(Graph120Max, Com2HisMax);
+  Graph120Max = max(Graph120Max, Ind2HisMax);
 }
 
 
