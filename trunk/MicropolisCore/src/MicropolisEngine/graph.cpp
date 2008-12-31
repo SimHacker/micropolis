@@ -165,7 +165,7 @@ void Micropolis::doAllGraphs()
 /** Set flag that graph data has been changed and graphs should be updated. */
 void Micropolis::ChangeCensus()
 {
-  CensusChanged = 1;
+  censusChanged = true;
 }
 
 
@@ -175,10 +175,10 @@ void Micropolis::ChangeCensus()
  */
 void Micropolis::graphDoer()
 {
-  if (CensusChanged) {
+  if (censusChanged) {
     doAllGraphs();
     NewGraph = 1;
-    CensusChanged = 0;
+    censusChanged = false;
   }
 
   if (NewGraph) {
