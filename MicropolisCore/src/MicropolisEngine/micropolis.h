@@ -2000,9 +2000,11 @@ public:
 public:
 
 
-  // Flag that tells if there is a new graph to draw.
-  // This should be replaced by a general purpose view updating system.
-  short NewGraph;
+  /**
+   * Flag that tells if there is a new graph to draw.
+   * @todo This should be replaced by a general purpose view updating system.
+   */
+  bool newGraph;
 
   // 10 year history graphs.
   unsigned char *History10[HISTORIES];

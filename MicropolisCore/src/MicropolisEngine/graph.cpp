@@ -177,13 +177,13 @@ void Micropolis::graphDoer()
 {
   if (censusChanged) {
     doAllGraphs();
-    NewGraph = 1;
+    newGraph = true;
     censusChanged = false;
   }
 
-  if (NewGraph) {
+  if (newGraph) {
     Callback("UIUpdate", "s", "graph");
-    NewGraph = 0;
+    newGraph = false;
   }
 }
 
