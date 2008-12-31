@@ -497,23 +497,16 @@ void Micropolis::init()
   // graph.cpp
 
 
-  // short NewGraph;
-  NewGraph = 0;
+  newGraph = false;
 
   for (int i = 0; i < HISTORIES; i++) {
 
-    History10[i] = 
-      (unsigned char *)NewPtr(120);
-
-    History120[i] = 
-      (unsigned char *)NewPtr(120);
+    History10[i] = (unsigned char *)NewPtr(120);
+    History120[i] = (unsigned char *)NewPtr(120);
 
   }
- 
-  // short Graph10Max;
-  Graph10Max = 0;
 
-  // short Graph120Max;
+  Graph10Max = 0;
   Graph120Max = 0;
 
   // int GraphUpdateTime;

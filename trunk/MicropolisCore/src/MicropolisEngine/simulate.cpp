@@ -266,7 +266,7 @@ void Micropolis::DoSimInit()
   FireAnalysis();
   NewMap = 1;
   doAllGraphs();
-  NewGraph = 1;
+  newGraph = true;
   TotalPop = 1;
   DoInitialEval = true;
 }
