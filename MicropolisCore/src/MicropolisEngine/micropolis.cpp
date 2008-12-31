@@ -784,14 +784,11 @@ void Micropolis::init()
   //SimSprite *spriteList;
   spriteList = NULL;
 
-  //int spriteCount;
-  spriteCount = 0;
-
   // SimSprite *FreeSprites;
   FreeSprites = NULL;
 
-  // SimSprite *GlobalSprites[OBJN];
-  memset(GlobalSprites, 0, sizeof(SimSprite *) * OBJN);
+  // SimSprite *GlobalSprites[SPRITE_COUNT];
+  memset(GlobalSprites, 0, sizeof(SimSprite *) * SPRITE_COUNT);
 
   // short CrashX;
   CrashX = 0;

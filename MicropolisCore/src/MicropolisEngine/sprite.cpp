@@ -107,7 +107,6 @@ SimSprite *Micropolis::NewSprite(const char *name, int type, int x, int y)
 
   InitSprite(sprite, x, y);
 
-  spriteCount++;
   sprite->next = spriteList;
   spriteList = sprite;
 

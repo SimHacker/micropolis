@@ -2543,8 +2543,6 @@ public:
 
   SimSprite *spriteList; ///< List of active sprites.
 
-  int spriteCount;
-
   SimSprite *FreeSprites; ///< Pool of free #SimSprite objects.
 
   SimSprite *GlobalSprites[SPRITE_COUNT];
