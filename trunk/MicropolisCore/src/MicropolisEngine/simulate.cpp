@@ -83,13 +83,11 @@ void Micropolis::SimFrame()
     Spdcycle = 0;
   }
 
-  if ((SimSpeed == 1) &&
-      (Spdcycle % 5)) {
+  if (SimSpeed == 1 && (Spdcycle % 5) != 0) {
     return;
   }
 
-  if ((SimSpeed == 2) &&
-      (Spdcycle % 3)) {
+  if (SimSpeed == 2 && (Spdcycle % 3) != 0) {
     return;
   }
 
@@ -108,14 +106,13 @@ void Micropolis::SimFrame()
 
 
 /* comefrom: SimFrame */
-void Micropolis::Simulate(
-  int mod16)
+void Micropolis::Simulate(int mod16)
 {
-  static short SpdPwr[4] = { 1,  2,  4,  5 };
-  static short SpdPtl[4] = { 1,  2,  7, 17 };
-  static short SpdCri[4] = { 1,  1,  8, 18 };
-  static short SpdPop[4] = { 1,  1,  9, 19 };
-  static short SpdFir[4] = { 1,  1, 10, 20 };
+  static const short SpdPwr[4] = { 1,  2,  4,  5 };
+  static const short SpdPtl[4] = { 1,  2,  7, 17 };
+  static const short SpdCri[4] = { 1,  1,  8, 18 };
+  static const short SpdPop[4] = { 1,  1,  9, 19 };
+  static const short SpdFir[4] = { 1,  1, 10, 20 };
   short x;
 
   x = SimSpeed;
@@ -174,14 +171,14 @@ void Micropolis::Simulate(
       break;
 
     case 9:
-      if (!(CityTime % CENSUSRATE)) {
+      if ((CityTime % CENSUSRATE) == 0) {
         TakeCensus();
       }
-      if (!(CityTime % (CENSUSRATE * 12))) {
+      if ((CityTime % (CENSUSRATE * 12)) == 0) {
         Take2Census();
       }
 
-      if (!(CityTime % TAXFREQ))  {
+      if ((CityTime % TAXFREQ) == 0)  {
         CollectTax();
         CityEvaluation();
       }
@@ -203,7 +200,7 @@ void Micropolis::Simulate(
       break;
 
     case 11:
-      if (!(Scycle % SpdPwr[x])) {
+      if ((Scycle % SpdPwr[x]) == 0) {
         DoPowerScan();
         NewMapFlags[PRMAP] = 1;
         NewPower = 1; /* post-release change */
@@ -211,25 +208,25 @@ void Micropolis::Simulate(
       break;
 
     case 12:
-      if (!(Scycle % SpdPtl[x])) {
+      if ((Scycle % SpdPtl[x]) == 0) {
         PTLScan();
       }
       break;
 
     case 13:
-      if (!(Scycle % SpdCri[x])) {
+      if ((Scycle % SpdCri[x]) == 0) {
         CrimeScan();
       }
       break;
 
     case 14:
-      if (!(Scycle % SpdPop[x])) {
+      if ((Scycle % SpdPop[x]) == 0) {
         PopDenScan();
       }
       break;
 
     case 15:
-      if (!(Scycle % SpdFir[x])) {
+      if ((Scycle % SpdFir[x]) == 0) {
         FireAnalysis();
       }
       DoDisasters();
@@ -294,36 +291,43 @@ void Micropolis::DoNilPower()
 }
 
 
-/* comefrom: Simulate */
+/** Decrease traffic memory */
 void Micropolis::DecTrafficMem()
 {
   /* tends to empty TrfDensity */
-  register short x, y, z;
+  short x, y, z;
 
   for (x = 0; x < HWLDX; x++) {
     for (y = 0; y < HWLDY; y++) {
-          z = TrfDensity[x][y];
-      if (z) {
-        if (z > 24) {
-          if (z > 200) {
-            TrfDensity[x][y] = z - 34;
-          } else {
-            TrfDensity[x][y] = z - 24;
-          }
-        } else {
-          TrfDensity[x][y] = 0;
-        }
+      z = TrfDensity[x][y];
+      if (z == 0) {
+        continue;
+      }
+
+      if (z <= 24) {
+        TrfDensity[x][y] = 0;
+        continue;
+      }
+
+      if (z > 200) {
+        TrfDensity[x][y] = z - 34;
+      } else {
+        TrfDensity[x][y] = z - 24;
       }
     }
   }
 }
 
 
-/* comefrom: Simulate */
+/**
+ * Decrease rate of grow.
+ * @todo Limiting rate should not be done here, but when we add a new value to
+ *       it.
+ */
 void Micropolis::DecROGMem()
 {
   /* tends to empty RateOGMem   */
-  register short x, y, z;
+  short x, y, z;
 
   for (x = 0; x < SmX; x++) {
     for (y = 0; y < SmY; y++) {
@@ -331,6 +335,7 @@ void Micropolis::DecROGMem()
       if (z == 0) {
         continue;
       }
+
       if (z > 0) {
         --RateOGMem[x][y];
         if (z > 200) {
@@ -338,6 +343,7 @@ void Micropolis::DecROGMem()
         }
         continue;
       }
+
       if (z < 0)  {
         ++RateOGMem[x][y];
         if (z < -200) {
@@ -595,9 +601,9 @@ void Micropolis::SetValves()
 
   /* global tax and game level effects */
   short z = min((short)(CityTax + gameLevel), MaxTax);
-  Rratio = ((Rratio - 1) * TaxTableScale) + TaxTable[z];
-  Cratio = ((Cratio - 1) * TaxTableScale) + TaxTable[z];
-  Iratio = ((Iratio - 1) * TaxTableScale) + TaxTable[z];
+  Rratio = (Rratio - 1) * TaxTableScale + TaxTable[z];
+  Cratio = (Cratio - 1) * TaxTableScale + TaxTable[z];
+  Iratio = (Iratio - 1) * TaxTableScale + TaxTable[z];
 
   /* ratios are velocity changes to valves  */
   if (Rratio > 0) {
@@ -691,7 +697,9 @@ void Micropolis::ClearCensus()
 }
 
 
-/* comefrom: Simulate */
+/**
+ * @todo A lot of this max stuff is also done in graph.cpp
+ */
 void Micropolis::TakeCensus()
 {
   // TODO: Make configurable parameters.
@@ -706,17 +714,9 @@ void Micropolis::TakeCensus()
 
   for (x = 118; x >= 0; x--)    {
 
-    if (ResHis[x] > ResHisMax) {
-      ResHisMax = ResHis[x];
-    }
-
-    if (ComHis[x] > ComHisMax) {
-      ComHisMax = ComHis[x];
-    }
-
-    if (IndHis[x] > IndHisMax) {
-      IndHisMax = IndHis[x];
-    }
+    ResHisMax = max(ResHisMax, ResHis[x]);
+    ComHisMax = max(ComHisMax, ComHis[x]);
+    IndHisMax = max(IndHisMax, IndHis[x]);
 
     ResHis[x + 1] = ResHis[x];
     ComHis[x + 1] = ComHis[x];
@@ -724,48 +724,25 @@ void Micropolis::TakeCensus()
     CrimeHis[x + 1] = CrimeHis[x];
     PollutionHis[x + 1] = PollutionHis[x];
     MoneyHis[x + 1] = MoneyHis[x];
-
   }
 
   Graph10Max = ResHisMax;
-
-  if (ComHisMax > Graph10Max) {
-    Graph10Max = ComHisMax;
-  }
-
-  if (IndHisMax > Graph10Max) {
-    Graph10Max = IndHisMax;
-  }
+  Graph10Max = max(Graph10Max, ComHisMax);
+  Graph10Max = max(Graph10Max, IndHisMax);
 
   ResHis[0] = ResPop / ResPopDenom;
   ComHis[0] = ComPop;
   IndHis[0] = IndPop;
 
   CrimeRamp += (CrimeAverage - CrimeRamp) / 4;
-  CrimeHis[0] = CrimeRamp;
+  CrimeHis[0] = min(CrimeRamp, (short)255);
 
   PolluteRamp += (PolluteAverage - PolluteRamp) / 4;
-  PollutionHis[0] = PolluteRamp;
+  PollutionHis[0] = min(PolluteRamp, (short)255);
 
   x = (CashFlow / 20) + 128;    /* scale to 0..255  */
+  MoneyHis[0] = clamp(x, (short)0, (short)255);
 
-  if (x < 0) {
-    x = 0;
-  }
-
-  if (x > 255) {
-    x = 255;
-  }
-
-  MoneyHis[0] = x;
-
-  if (CrimeHis[0] > 255) {
-    CrimeHis[0] = 255;
-  }
-
-  if (PollutionHis[0] > 255) {
-    PollutionHis[0] = 255;
-  }
 
   ChangeCensus();
 
@@ -782,6 +759,7 @@ void Micropolis::TakeCensus()
   if (HospPop == ResPopScaled) {
     NeedHosp = 0;
   }
+
 
   if (ChurchPop < ResPopScaled) {
     NeedChurch = 1;
@@ -812,17 +790,9 @@ void Micropolis::Take2Census()
 
   for (x = 238; x >= 120; x--)  {
 
-    if (ResHis[x] > Res2HisMax) {
-      Res2HisMax = ResHis[x];
-    }
-
-    if (ComHis[x] > Com2HisMax) {
-      Com2HisMax = ComHis[x];
-    }
-
-    if (IndHis[x] > Ind2HisMax) {
-      Ind2HisMax = IndHis[x];
-    }
+    Res2HisMax = max(Res2HisMax, ResHis[x]);
+    Com2HisMax = max(Com2HisMax, ComHis[x]);
+    Ind2HisMax = max(Ind2HisMax, IndHis[x]);
 
     ResHis[x + 1] = ResHis[x];
     ComHis[x + 1] = ComHis[x];
@@ -833,14 +803,8 @@ void Micropolis::Take2Census()
   }
 
   Graph120Max = Res2HisMax;
-
-  if (Com2HisMax > Graph120Max) {
-    Graph120Max = Com2HisMax;
-  }
-
-  if (Ind2HisMax > Graph120Max) {
-    Graph120Max = Ind2HisMax;
-  }
+  Graph120Max = max(Graph120Max, Com2HisMax);
+  Graph120Max = max(Graph120Max, Ind2HisMax);
 
   ResHis[120] = ResPop / ResPopDenom;
   ComHis[120] = ComPop;
@@ -911,8 +875,8 @@ void Micropolis::CollectTax()
  * Update effects of (possibly reduced) funding
  *
  * It updates effects with respect to roads, police, and fire.
- * @note This function should probably not be used when Micropolis::TotalPop is
- *       clear (ie with an empty) city. See also bugs of Micropolis::CollectTax()
+ * @note This function should probably not be used when #TotalPop is
+ *       clear (ie with an empty) city. See also bugs of #CollectTax()
  */
 void Micropolis::UpdateFundEffects()
 {
@@ -1012,7 +976,7 @@ void Micropolis::MapScan(
 }
 
 
-/* comefrom: MapScan */
+/** Handle rail tail */
 void Micropolis::DoRail()
 {
   RailTotal++;
@@ -1047,7 +1011,7 @@ void Micropolis::DoRadTile()
 }
 
 
-/* comefrom: MapScan */
+/** Handle road tile */
 void Micropolis::DoRoad()
 {
   register short Density, tden, z;
@@ -1109,7 +1073,7 @@ void Micropolis::DoRoad()
 }
 
 
-/* comefrom: MapScan */
+/** Handle bridge */
 bool Micropolis::DoBridge()
 {
   static short HDx[7] = { -2,  2, -2, -1,  0,  1,  2 };
@@ -1132,8 +1096,7 @@ bool Micropolis::DoBridge()
 
   if (CChr9 == BRWV) { /*  Vertical bridge close */
 
-    if ((!(Rand16() & 3)) &&
-        (GetBoatDis() > 340)) {
+    if ((!(Rand16() & 3)) && GetBoatDis() > 340) {
 
       for (z = 0; z < 7; z++) { /* Close */
 
@@ -1154,8 +1117,7 @@ bool Micropolis::DoBridge()
 
   if (CChr9 == BRWH) { /*  Horizontal bridge close  */
 
-    if ((!(Rand16() & 3)) &&
-        (GetBoatDis() > 340)) {
+    if ((!(Rand16() & 3)) && GetBoatDis() > 340) {
 
       for (z = 0; z < 7; z++) { /* Close */
 
@@ -1175,13 +1137,9 @@ bool Micropolis::DoBridge()
     return true;
   }
 
-  if ((GetBoatDis() < 300) ||
-      (!(Rand16() & 7))) {
-
+  if (GetBoatDis() < 300 || (!(Rand16() & 7))) {
     if (CChr9 & 1) {
-
-      if (SMapX < (WORLD_X - 1)) {
-
+      if (SMapX < WORLD_X - 1) {
         if (Map[SMapX + 1][SMapY] == CHANNEL) { /* Vertical open */
 
           for (z = 0; z < 7; z++) {
@@ -1192,17 +1150,12 @@ bool Micropolis::DoBridge()
             if (TestBounds(x, y)) {
 
               MPtem = Map[x][y];
-
-              if ((MPtem == CHANNEL) ||
-                  ((MPtem & 15) == (VBRTAB2[z] & 15))) {
-
+              if (MPtem == CHANNEL || ((MPtem & 15) == (VBRTAB2[z] & 15))) {
                 Map[x][y] = VBRTAB[z];
-
               }
             }
           }
           return true;
-
         }
       }
       return false;
@@ -1210,7 +1163,6 @@ bool Micropolis::DoBridge()
     } else {
 
       if (SMapY > 0) {
-
         if (Map[SMapX][SMapY - 1] == CHANNEL) {
 
           /* Horizontal open  */
@@ -1222,24 +1174,17 @@ bool Micropolis::DoBridge()
             if (TestBounds(x, y)) {
 
               MPtem = Map[x][y];
-
-              if (((MPtem & 15) == (HBRTAB2[z] & 15)) ||
-                  (MPtem == CHANNEL)) {
-
+              if (((MPtem & 15) == (HBRTAB2[z] & 15)) || MPtem == CHANNEL) {
                 Map[x][y] = HBRTAB[z];
-
               }
             }
           }
           return true;
-
         }
       }
-
       return false;
     }
   }
-
   return false;
 }
 
