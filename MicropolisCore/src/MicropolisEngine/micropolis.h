@@ -1202,10 +1202,9 @@ public:
   /**
    * Census changed flag.
    *
-   * Need to redraw census dependent stuff. Set by ChangeCensus,
-   * UpdateGraphs, TakeCensus, Take2Census, loadFile.
+   * Need to redraw census dependent stuff.
    */
-  short CensusChanged;
+  bool censusChanged;
 
   /**
    * Message number to display asynchronously.

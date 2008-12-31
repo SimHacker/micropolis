@@ -229,8 +229,7 @@ void Micropolis::init()
   // short Ind2HisMax;
   Ind2HisMax = 0;
 
-  // short CensusChanged;
-  CensusChanged = 0;
+  censusChanged = false;
 
   // short messagePort;
   messagePort = 0;
