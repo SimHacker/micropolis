@@ -662,7 +662,7 @@ short Micropolis::check6x6(
         mapV++;
     }
 
-    checkBorder(xMap, yMap);
+    checkBorder(xMap, yMap, 6);
 
     return 1;
 }
