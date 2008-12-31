@@ -202,18 +202,34 @@ static const int WORLD_Y =              100;
 
 /* Object & Sound Numbers */
 
-#define TRA                             1
-#define COP                             2
-#define AIR                             3
-#define SHI                             4
-#define GOD                             5
-#define TOR                             6
-#define EXP                             7
-#define BUS                             8
+enum SpriteType {
+    SPRITE_NOTUSED = 0,
 
-/* Max # of Objects */
+    /* Obsolete names */
+    TRA, ///< Train sprite
+    COP, ///< Helicopter sprite
+    AIR, ///< Airplane sprite
+    SHI, ///< Ship
+    GOD, ///< Godzilla monster
+    TOR, ///< Tornado sprite
+    EXP, ///< Explosion sprite
+    BUS, ///< Bus sprite
 
-#define OBJN                            9
+    OBJN, ///< Number of sprite objects
+
+
+    SPRITE_TRAIN = TRA, ///< Train sprite
+    SPRITE_HELICOPTER = COP, ///< Helicopter sprite
+    SPRITE_AIRPLANE = AIR, ///< Airplane sprite
+    SPRITE_SHIP = SHI, ///< Ship
+    SPRITE_GODZILLA = GOD, ///< Godzilla monster
+    SPRITE_TORNADO = TOR, ///< Tornado sprite
+    SPRITE_EXPLOSION = EXP, ///< Explosion sprite
+    SPRITE_BUS = BUS, ///< Bus sprite
+
+    SPRITE_COUNT = OBJN, ///< Number of sprite objects
+};
+
 
 /* Graph Histories */
 #define RES_HIST                        0
@@ -860,17 +876,20 @@ public:
 };
 
 
-/** Sprite in the simulator. */
+/** Sprite in the simulator.
+ * @todo #name is never set to anything else than \c "", and only used to
+ *       detect a non-removed non-active sprite (in a non-robust way).
+ */
 class SimSprite {
 
 public:
 
-  SimSprite *next;
-  char *name;
+  SimSprite *next; ///< Pointer to next #SimSprite object in the list.
+  char *name; ///< Name of the sprite.
   int type; ///< Type of the sprite (TRA -- BUS).
-  int frame; ///< ?? (non-zero normally on an active sprite)??
-  int x; ///< X coordinate of the sprite?
-  int y; ///< Y coordinate of the sprite?
+  int frame; ///< Frame (\c 0 means non-active sprite)
+  int x; ///< X coordinate of the sprite in pixels?
+  int y; ///< Y coordinate of the sprite in pixels?
   int width;
   int height;
   int x_offset;
@@ -2522,13 +2541,13 @@ private:
 public:
 
 
-  SimSprite *spriteList;
+  SimSprite *spriteList; ///< List of active sprites.
 
   int spriteCount;
 
-  SimSprite *FreeSprites;
+  SimSprite *FreeSprites; ///< Pool of free #SimSprite objects.
 
-  SimSprite *GlobalSprites[OBJN];
+  SimSprite *GlobalSprites[SPRITE_COUNT];
 
   short CrashX;
 
@@ -2539,158 +2558,88 @@ public:
   short Cycle;
 
 
-  SimSprite *NewSprite(
-    char *name,
-    int type,
-    int x,
-    int y);
+  SimSprite *NewSprite(const char *name, int type, int x, int y);
 
-  void InitSprite(
-    SimSprite *sprite,
-    int x,
-    int y);
+  void InitSprite(SimSprite *sprite, int x, int y);
 
   void DestroyAllSprites();
 
-  void DestroySprite(
-    SimSprite *sprite);
+  void DestroySprite(SimSprite *sprite);
 
-  SimSprite *GetSprite(
-    int type);
+  SimSprite *GetSprite(int type);
 
-  SimSprite *MakeSprite(
-    int type,
-    int x,
-    int y);
+  SimSprite *MakeSprite(int type, int x, int y);
 
-  SimSprite *MakeNewSprite(
-    int type,
-    int x,
-    int y);
 
   void DrawObjects();
 
-  void DrawSprite(
-    SimSprite *sprite);
+  void DrawSprite(SimSprite *sprite);
 
-  short GetChar(
-    int x,
-    int y);
+  short GetChar(int x, int y);
 
-  short TurnTo(
-    int p,
-    int d);
+  short TurnTo(int p, int d);
 
-  short TryOther(
-    int Tpoo,
-    int Told,
-    int Tnew);
+  bool TryOther(int Tpoo, int Told, int Tnew);
 
-  short SpriteNotInBounds(
-    SimSprite *sprite);
+  bool SpriteNotInBounds(SimSprite *sprite);
 
-  short GetDir(
-    int orgX,
-    int orgY,
-    int desX,
-    int desY);
+  short GetDir(int orgX, int orgY, int desX, int desY);
 
-  short GetDis(
-    int x1,
-    int y1,
-    int x2,
-    int y2);
+  int GetDistance(int x1, int y1, int x2, int y2);
 
-  int CheckSpriteCollision(
-    SimSprite *s1,
-    SimSprite *s2);
+  bool CheckSpriteCollision(SimSprite *s1, SimSprite *s2);
 
   void MoveObjects();
 
-  void DoTrainSprite(
-    SimSprite *sprite);
+  void DoTrainSprite(SimSprite *sprite);
 
-  void DoCopterSprite(
-    SimSprite *sprite);
+  void DoCopterSprite(SimSprite *sprite);
 
-  void DoAirplaneSprite(
-    SimSprite *sprite);
+  void DoAirplaneSprite(SimSprite *sprite);
 
-  void DoShipSprite(
-    SimSprite *sprite);
+  void DoShipSprite(SimSprite *sprite);
 
-  void DoMonsterSprite(
-    SimSprite *sprite);
+  void DoMonsterSprite(SimSprite *sprite);
 
-  void DoTornadoSprite(
-    SimSprite *sprite);
+  void DoTornadoSprite(SimSprite *sprite);
 
-  void DoExplosionSprite(
-    SimSprite *sprite);
+  void DoExplosionSprite(SimSprite *sprite);
 
-  void DoBusSprite(
-    SimSprite *sprite);
+  void DoBusSprite(SimSprite *sprite);
 
-  int CanDriveOn(
-    int x,
-    int y);
+  int CanDriveOn(int x, int y);
 
-  void ExplodeSprite(
-    SimSprite *sprite);
+  void ExplodeSprite(SimSprite *sprite);
 
-  int checkWet(
-    int x);
+  bool checkWet(int x);
 
-  void Destroy(
-    int ox,
-    int oy);
+  void Destroy(int ox, int oy);
 
-  void OFireZone(
-    int Xloc,
-    int Yloc,
-    int ch);
+  void OFireZone(int Xloc, int Yloc, int ch);
 
-  void StartFire(
-    int x,
-    int y);
+  void StartFire(int x, int y);
 
-  void GenerateTrain(
-    int x,
-    int y);
+  void GenerateTrain(int x, int y);
 
-  void GenerateBus(
-    int x,
-    int y);
+  void GenerateBus(int x, int y);
 
   void GenerateShip();
 
-  void MakeShipHere(
-    int x,
-    int y);
+  void MakeShipHere(int x, int y);
 
   void MakeMonster();
 
-  void MonsterHere(
-    int x,
-    int y);
+  void MonsterHere(int x, int y);
 
-  void GenerateCopter(
-    int x,
-    int y);
+  void GenerateCopter(int x, int y);
 
-  void GeneratePlane(
-    int x,
-    int y);
+  void GeneratePlane(int x, int y);
 
   void MakeTornado();
 
-  void MakeExplosion(
-    int x,
-    int y);
+  void MakeExplosion(int x, int y);
 
-  void MakeExplosionAt(
-    int x,
-    int y);
+  void MakeExplosionAt(int x, int y);
 
 
   ////////////////////////////////////////////////////////////////////////
