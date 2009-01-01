@@ -1605,8 +1605,7 @@ public:
 
   void DoBudgetFromMenu();
 
-  void DoBudgetNow(
-    int fromMenu);
+  void DoBudgetNow(bool fromMenu);
 
   void drawBudgetWindow();
 
