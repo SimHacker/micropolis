@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -148,7 +149,9 @@ void Micropolis::doTimeStuff()
 //  }
 }
 
-
+/**
+ * @bug Message is wrong.
+ */
 void Micropolis::updateDate()
 {
   int megalinium = 1000000;
@@ -161,7 +164,7 @@ void Micropolis::updateDate()
   if (CityYear >= megalinium) {
     SetYear(StartingYear);
     CityYear = StartingYear;
-    SendMes(-40);
+    SendMes(-STR301_NOT_ENOUGH_POWER);
   }
 
   doMessage();

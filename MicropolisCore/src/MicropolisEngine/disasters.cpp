@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -221,7 +222,7 @@ void Micropolis::FireBomb()
     CrashY = Rand(WORLD_Y - 1);
     MakeExplosion(CrashX, CrashY);
     ClearMes();
-    SendMesAt(-30, CrashX, CrashY);
+    SendMesAt(-STR301_FIREBOMBING, CrashX, CrashY);
 }
 
 
@@ -232,7 +233,7 @@ void Micropolis::MakeEarthquake()
 
     DoEarthquake();
 
-    SendMesAt(-23, CCx, CCy);
+    SendMesAt(-STR301_EARTHQUAKE, CCx, CCy);
     short time = Rand(700) + 300; // strength/duration of the earthquake
 
     for (z = 0; z < time; z++)  {
@@ -269,7 +270,7 @@ void Micropolis::SetFire()
             Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
             CrashX = x;
             CrashY = y;
-            SendMesAt(-20, x, y);
+            SendMesAt(-STR301_FIRE_REPORTED, x, y);
         }
     }
 }
@@ -290,7 +291,7 @@ void Micropolis::MakeFire()
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
                 Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
-                SendMesAt(20, x, y);
+                SendMesAt(STR301_FIRE_REPORTED, x, y);
                 return;
             }
         }
@@ -343,7 +344,7 @@ void Micropolis::MakeFlood()
                           || (c & (BULLBIT | BURNBIT)) == (BULLBIT | BURNBIT)) {
                         Map[xx][yy] = FLOOD;
                         FloodCnt = 30;
-                        SendMesAt(-42, xx, yy);
+                        SendMesAt(-STR301_FLOODING_REPORTED, xx, yy);
                         return;
                     }
                 }

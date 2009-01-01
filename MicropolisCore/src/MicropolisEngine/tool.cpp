@@ -1330,13 +1330,16 @@ int Micropolis::doTool(EditingTool tool, short x, short y, bool first)
 }
 
 
+/**
+ * @todo The last coordinates should be passed from the tool so the
+ *       simulator is stateless and can support multiple tools
+ *       drawing at once. Get rid of last_x and last_y.
+ * @todo Add enum for tool result values.
+ */
 void Micropolis::toolDown(EditingTool tool, short x, short y)
 {
     int result;
 
-    // @todo The last coordinates should be passed from the tool so the
-    //       simulator is stateless and can support multiple tools
-    //       drawing at once. Get rid of last_x and last_y.
     last_x = x;
     last_y = y;
 
@@ -1344,11 +1347,11 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
 
     if (result == -1) {
         ClearMes();
-        SendMes(34);
+        SendMes(STR301_BULLDOZE_AREA_FIRST);
         MakeSound("edit", "UhUh");
     } else if (result == -2) {
         ClearMes();
-        SendMes(33);
+        SendMes(STR301_NOT_ENOUGH_FUNDS);
         MakeSound("edit", "Sorry");
     }
 

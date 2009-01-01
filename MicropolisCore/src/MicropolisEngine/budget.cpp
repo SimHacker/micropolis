@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -306,7 +307,7 @@ noMoney:
       autoBudget = false; /* force autobudget */
       MustUpdateOptions = 1;
       ClearMes();
-      SendMes(29);
+      SendMes(STR301_NO_MONEY);
       goto noMoney;
 
     }

@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -792,7 +793,7 @@ void Micropolis::DoCopterSprite(
       /* Don changed from 160 to 170 to shut the #$%#$% thing up! */
 
       if ((TrfDensity[x][y] > 170) && ((Rand16() & 7) == 0)) {
-        SendMesAt(-41, (x <<1) + 1, (y <<1) + 1);
+        SendMesAt(-STR301_HEAVY_TRAFFIC, (x <<1) + 1, (y <<1) + 1);
         MakeSound("city", "HeavyTraffic"); /* chopper */
         sprite->sound_count = 200;
       }
@@ -1311,7 +1312,7 @@ void Micropolis::DoExplosionSprite(SimSprite *sprite)
       MakeSound("city", "Explosion-High"); /* explosion */
       x = (sprite->x >>4) + 3;
       y = (sprite->y >>4);
-      SendMesAt(32, x, y);
+      SendMesAt(STR301_EXPLOSION_REPORTED, x, y);
     }
 
     sprite->frame++;
@@ -1645,6 +1646,7 @@ int Micropolis::CanDriveOn(int x, int y)
 /**
  * Handle explosion of sprite (mostly due to collision?).
  * @param sprite that should explode.
+ * @todo Add a 'bus crashed' message to #Stri301.
  */
 void Micropolis::ExplodeSprite(SimSprite *sprite)
 {
@@ -1664,31 +1666,31 @@ void Micropolis::ExplodeSprite(SimSprite *sprite)
   case AIR:
     CrashX = x;
     CrashY = y;
-    SendMesAt(-24, x, y);
+    SendMesAt(-STR301_PLANE_CRASHED, x, y);
     break;
 
   case SHI:
     CrashX = x;
     CrashY = y;
-    SendMesAt(-25, x, y);
+    SendMesAt(-STR301_SHIP_CRASHED, x, y);
     break;
 
   case TRA:
     CrashX = x;
     CrashY = y;
-    SendMesAt(-26, x, y);
+    SendMesAt(-STR301_TRAIN_CRASHED, x, y);
     break;
 
   case COP:
     CrashX = x;
     CrashY = y;
-    SendMesAt(-27, x, y);
+    SendMesAt(-STR301_HELICOPTER_CRASHED, x, y);
     break;
 
   case BUS:
     CrashX = x;
     CrashY = y;
-    SendMesAt(-26, x, y); /* XXX for now */
+    SendMesAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
     break;
 
   }
@@ -1956,7 +1958,7 @@ void Micropolis::MonsterHere(int x, int y)
 {
   MakeSprite(GOD, (x << 4) + 48, (y << 4));
   ClearMes();
-  SendMesAt(-21, x + 5, y);
+  SendMesAt(-STR301_MONSTER_SIGHTED, x + 5, y);
 }
 
 
@@ -2011,7 +2013,7 @@ void Micropolis::MakeTornado()
 
   MakeSprite(TOR, x, y);
   ClearMes();
-  SendMesAt(-22, (x >>4) + 3, (y >>4) + 2);
+  SendMesAt(-STR301_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2);
 }
 
 
