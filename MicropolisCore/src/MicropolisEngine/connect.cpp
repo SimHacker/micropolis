@@ -97,11 +97,7 @@ static short WireTable[16] = {
 
 
 /* comefrom: check3Border check4Border check5Border processWand */
-int Micropolis::ConnecTile(
-  short x,
-  short y,
-  short *TileAdrPtr,
-  short Command)
+int Micropolis::ConnecTile(short x, short y, short *TileAdrPtr, short Command)
 {
   short Tile;
   int result = 1;
@@ -112,27 +108,22 @@ int Micropolis::ConnecTile(
   }
 
   /* AutoDoze */
-  if ((Command >= 2) &&
-      (Command <= 4)) {
+  if (Command >= 2 && Command <= 4) {
 
     if (autoBulldoze && TotalFunds > 0) {
 
-      Tile =
-        (*TileAdrPtr);
+      Tile = *TileAdrPtr;
 
       if (Tile & BULLBIT) {
         NeutralizeRoad(Tile);
 
         /* Maybe this should check BULLBIT instead of checking tile values? */
-        if (((Tile >= TINYEXP) &&
-             (Tile <= LASTTINYEXP)) ||
-            ((Tile < HBRIDGE) &&
-             (Tile != DIRT))) {
+        if ((Tile >= TINYEXP && Tile <= LASTTINYEXP) ||
+            (Tile < HBRIDGE && Tile != DIRT)) {
 
           Spend(1);
 
-          (*TileAdrPtr) =
-            DIRT;
+          *TileAdrPtr = DIRT;
 
         }
       }
@@ -146,26 +137,22 @@ int Micropolis::ConnecTile(
     break;
 
   case 1:       /* Doze zone */
-    result =
-      LayDoze(x, y, TileAdrPtr);
+    result = LayDoze(x, y, TileAdrPtr);
     FixZone(x, y, TileAdrPtr);
     break;
 
   case 2:       /* Lay Road */
-    result =
-      LayRoad(x, y, TileAdrPtr);
+    result = LayRoad(x, y, TileAdrPtr);
     FixZone(x, y, TileAdrPtr);
     break;
 
   case 3:       /* Lay Rail */
-    result =
-      LayRail(x, y, TileAdrPtr);
+    result = LayRail(x, y, TileAdrPtr);
     FixZone(x, y, TileAdrPtr);
     break;
 
   case 4:       /* Lay Wire */
-    result =
-      LayWire(x, y, TileAdrPtr);
+    result = LayWire(x, y, TileAdrPtr);
     FixZone(x, y, TileAdrPtr);
     break;
 
@@ -175,20 +162,21 @@ int Micropolis::ConnecTile(
 }
 
 
-/* comefrom: ConnecTile */
-int Micropolis::LayDoze(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Builldoze, and update connections (rail, road, and wire) around it.
+ * @param x          X map coordinate.
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+int Micropolis::LayDoze(int x, int y, short *TileAdrPtr)
 {
   short Tile;
 
-  if (!TotalFunds) {
+  if (TotalFunds == 0) {
     return -2;                  /* no mas dinero. */
   }
 
-  Tile =
-    (*TileAdrPtr);
+  Tile = *TileAdrPtr;
 
   if (!(Tile & BULLBIT)) {
     return 0;                   /* Check dozeable bit. */
@@ -213,13 +201,11 @@ int Micropolis::LayDoze(
   case VPOWER:
   case HRAIL:
   case VRAIL:           /* Dozing over water, replace with water. */
-    (*TileAdrPtr) =
-      RIVER;
+    *TileAdrPtr = RIVER;
     break;
 
   default:              /* Dozing on land, replace with land.  Simple, eh? */
-    (*TileAdrPtr) =
-      DIRT;
+    *TileAdrPtr = DIRT;
     break;
   }
 
@@ -229,11 +215,13 @@ int Micropolis::LayDoze(
 }
 
 
-/* comefrom: ConnecTile */
-int Micropolis::LayRoad(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Lay a road, and update connections (rail, road, and wire) around it.
+ * @param x          X map coordinate.
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+int Micropolis::LayRoad(int x, int y, short *TileAdrPtr)
 {
   int cost = 10;
 
@@ -241,37 +229,29 @@ int Micropolis::LayRoad(
     return -2;
   }
 
-  short Tile =
-    (*TileAdrPtr) & LOMASK;
+  short Tile = *TileAdrPtr & LOMASK;
 
   switch (Tile) {
 
   case DIRT:
-
-    (*TileAdrPtr) =
-      ROADS | BULLBIT | BURNBIT;
-
+    *TileAdrPtr = ROADS | BULLBIT | BURNBIT;
     break;
 
   case RIVER:                   /* Road on Water */
   case REDGE:
   case CHANNEL:                 /* Check how to build bridges, if possible. */
-
     cost = 50;
 
     if (TotalFunds < cost) {
       return -2;
     }
 
-    if (x < (WORLD_X - 1)) {
+    if (x < WORLD_X - 1) {
       Tile = TileAdrPtr[WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile == VRAILROAD) ||
-          (Tile == HBRIDGE) ||
-          ((Tile >= ROADS) &&
-           (Tile <= HROADPOWER))) {
-        (*TileAdrPtr) =
-          HBRIDGE | BULLBIT;
+      if (Tile == VRAILROAD || Tile == HBRIDGE
+                        || (Tile >= ROADS && Tile <= HROADPOWER)) {
+        *TileAdrPtr = HBRIDGE | BULLBIT;
         break;
       }
     }
@@ -279,25 +259,19 @@ int Micropolis::LayRoad(
     if (x > 0) {
       Tile = TileAdrPtr[-WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile == VRAILROAD) ||
-          (Tile == HBRIDGE) ||
-          ((Tile >= ROADS) &&
-           (Tile <= INTERSECTION))) {
-        (*TileAdrPtr) =
-          HBRIDGE | BULLBIT;
+      if (Tile == VRAILROAD || Tile == HBRIDGE
+                        || (Tile >= ROADS && Tile <= INTERSECTION)) {
+        *TileAdrPtr = HBRIDGE | BULLBIT;
         break;
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       NeutralizeRoad(Tile);
-      if ((Tile == HRAILROAD) ||
-          (Tile == VROADPOWER) ||
-          ((Tile >= VBRIDGE) &&
-           (Tile <= INTERSECTION))) {
-        (*TileAdrPtr) =
-          VBRIDGE | BULLBIT;
+      if (Tile == HRAILROAD || Tile == VROADPOWER
+                        || (Tile >= VBRIDGE && Tile <= INTERSECTION)) {
+        *TileAdrPtr = VBRIDGE | BULLBIT;
         break;
       }
     }
@@ -305,12 +279,9 @@ int Micropolis::LayRoad(
     if (y > 0) {
       Tile = TileAdrPtr[-1];
       NeutralizeRoad(Tile);
-      if ((Tile == HRAILROAD) ||
-          (Tile == VROADPOWER) ||
-          ((Tile >= VBRIDGE) &&
-           (Tile <= INTERSECTION))) {
-        (*TileAdrPtr) =
-          VBRIDGE | BULLBIT;
+      if (Tile == HRAILROAD || Tile == VROADPOWER
+                        || (Tile >= VBRIDGE && Tile <= INTERSECTION)) {
+        *TileAdrPtr = VBRIDGE | BULLBIT;
         break;
       }
     }
@@ -319,35 +290,22 @@ int Micropolis::LayRoad(
     return 0;
 
   case LHPOWER:         /* Road on power */
-
-    (*TileAdrPtr) =
-      VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case LVPOWER:         /* Road on power #2 */
-
-    (*TileAdrPtr) =
-      HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case LHRAIL:          /* Road on rail */
-
-    (*TileAdrPtr) =
-      HRAILROAD | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = HRAILROAD | BURNBIT | BULLBIT;
     break;
 
   case LVRAIL:          /* Road on rail #2 */
-
-    (*TileAdrPtr) =
-      VRAILROAD | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = VRAILROAD | BURNBIT | BULLBIT;
     break;
 
   default:              /* Can't do road */
-
     return 0;
 
   }
@@ -358,11 +316,13 @@ int Micropolis::LayRoad(
 }
 
 
-/* comefrom: ConnecTile */
-int Micropolis::LayRail(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Lay a rail, and update connections (rail, road, and wire) around it.
+ * @param x          X map coordinate.
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+int Micropolis::LayRail(int x, int y, short *TileAdrPtr)
 {
   int cost = 20;
 
@@ -370,22 +330,20 @@ int Micropolis::LayRail(
     return -2;
   }
 
-  short Tile =
-    (*TileAdrPtr) & LOMASK;
+  short Tile = *TileAdrPtr & LOMASK;
 
   NeutralizeRoad(Tile);
 
   switch (Tile) {
   case 0:                       /* Rail on Dirt */
 
-    (*TileAdrPtr) =
-      LHRAIL | BULLBIT | BURNBIT;
+    *TileAdrPtr = LHRAIL | BULLBIT | BURNBIT;
 
     break;
 
-  case 2:                       /* Rail on Water */
+  case 2:          /* Rail on Water */
   case 3:
-  case 4:                       /* Check how to build underwater tunnel, if possible. */
+  case 4:          /* Check how to build underwater tunnel, if possible. */
 
     cost = 100;
 
@@ -393,43 +351,32 @@ int Micropolis::LayRail(
       return -2;
     }
 
-    if (x < (WORLD_X - 1)) {
-      Tile =
-        TileAdrPtr[WORLD_Y];
+    if (x < WORLD_X - 1) {
+      Tile = TileAdrPtr[WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile == RAILHPOWERV) ||
-          (Tile == HRAIL) ||
-          ((Tile >= LHRAIL) &&
-           (Tile <= HRAILROAD))) {
-        (*TileAdrPtr) =
-          HRAIL | BULLBIT;
+      if (Tile == RAILHPOWERV || Tile == HRAIL
+                            || (Tile >= LHRAIL && Tile <= HRAILROAD)) {
+        *TileAdrPtr = HRAIL | BULLBIT;
         break;
       }
     }
 
     if (x > 0) {
-      Tile =
-        TileAdrPtr[-WORLD_Y];
+      Tile = TileAdrPtr[-WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile == RAILHPOWERV) ||
-          (Tile == HRAIL) ||
-          ((Tile > VRAIL) &&
-           (Tile < VRAILROAD))) {
-        (*TileAdrPtr) =
-          HRAIL | BULLBIT;
+      if (Tile == RAILHPOWERV || Tile == HRAIL
+                            || (Tile > VRAIL && Tile < VRAILROAD)) {
+        *TileAdrPtr = HRAIL | BULLBIT;
         break;
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       NeutralizeRoad(Tile);
-      if ((Tile == RAILVPOWERH) ||
-          (Tile == VRAILROAD) ||
-          ((Tile > HRAIL) &&
-           (Tile < HRAILROAD))) {
-        (*TileAdrPtr) =
-          VRAIL | BULLBIT;
+      if (Tile == RAILVPOWERH || Tile == VRAILROAD
+                            || (Tile > HRAIL && Tile < HRAILROAD)) {
+        *TileAdrPtr = VRAIL | BULLBIT;
         break;
       }
     }
@@ -437,12 +384,9 @@ int Micropolis::LayRail(
     if (y > 0) {
       Tile = TileAdrPtr[-1];
       NeutralizeRoad(Tile);
-      if ((Tile == RAILVPOWERH) ||
-          (Tile == VRAILROAD) ||
-          ((Tile > HRAIL) &&
-           (Tile < HRAILROAD))) {
-        (*TileAdrPtr) =
-          VRAIL | BULLBIT;
+      if (Tile == RAILVPOWERH || Tile == VRAILROAD
+                            || (Tile > HRAIL && Tile < HRAILROAD)) {
+        *TileAdrPtr = VRAIL | BULLBIT;
         break;
       }
     }
@@ -451,50 +395,37 @@ int Micropolis::LayRail(
     return 0;
 
   case LHPOWER:             /* Rail on power */
-
-    (*TileAdrPtr) =
-      RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case LVPOWER:             /* Rail on power #2 */
-
-    (*TileAdrPtr) =
-      RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case ROADS:              /* Rail on road */
-
-    (*TileAdrPtr) =
-      VRAILROAD | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = VRAILROAD | BURNBIT | BULLBIT;
     break;
 
   case ROADS2:              /* Rail on road #2 */
-
-    (*TileAdrPtr) =
-      HRAILROAD | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = HRAILROAD | BURNBIT | BULLBIT;
     break;
 
   default:              /* Can't do rail */
-
     return 0;
-
   }
 
   Spend(cost);
-
   return 1;
 }
 
 
-/* comefrom: ConnecTile */
-int Micropolis::LayWire(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Lay a wire, and update connections (rail, road, and wire) around it.
+ * @param x          X map coordinate.
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+int Micropolis::LayWire(int x, int y, short *TileAdrPtr)
 {
   int cost = 5;
 
@@ -502,8 +433,7 @@ int Micropolis::LayWire(
     return -2;
   }
 
-  short Tile =
-    (*TileAdrPtr) & LOMASK;
+  short Tile = *TileAdrPtr & LOMASK;
 
   NeutralizeRoad(Tile);
 
@@ -511,14 +441,13 @@ int Micropolis::LayWire(
 
   case 0:                       /* Wire on Dirt */
 
-    (*TileAdrPtr) =
-      LHPOWER | CONDBIT | BURNBIT | BULLBIT;
+    *TileAdrPtr = LHPOWER | CONDBIT | BURNBIT | BULLBIT;
 
     break;
 
-  case 2:                       /* Wire on Water */
+  case 2:               /* Wire on Water */
   case 3:
-  case 4:                       /* Check how to lay underwater wire, if possible. */
+  case 4:               /* Check how to lay underwater wire, if possible. */
 
     cost = 25;
 
@@ -526,15 +455,12 @@ int Micropolis::LayWire(
       return -2;
     }
 
-    if (x < (WORLD_X - 1)) {
+    if (x < WORLD_X - 1) {
       Tile = TileAdrPtr[WORLD_Y];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != HROADPOWER) &&
-            (Tile != RAILHPOWERV) &&
-            (Tile != HPOWER)) {
-          (*TileAdrPtr) =
-            VPOWER | CONDBIT | BULLBIT;
+        if (Tile != HROADPOWER && Tile != RAILHPOWERV && Tile != HPOWER) {
+          *TileAdrPtr = VPOWER | CONDBIT | BULLBIT;
           break;
         }
       }
@@ -544,25 +470,19 @@ int Micropolis::LayWire(
       Tile = TileAdrPtr[-WORLD_Y];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != HROADPOWER) &&
-            (Tile != RAILHPOWERV) &&
-            (Tile != HPOWER)) {
-          (*TileAdrPtr) =
-            VPOWER | CONDBIT | BULLBIT;
+        if (Tile != HROADPOWER && Tile != RAILHPOWERV && Tile != HPOWER) {
+          *TileAdrPtr = VPOWER | CONDBIT | BULLBIT;
           break;
         }
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != VROADPOWER) &&
-            (Tile != RAILVPOWERH) &&
-            (Tile != VPOWER)) {
-          (*TileAdrPtr) =
-            HPOWER | CONDBIT | BULLBIT;
+        if (Tile != VROADPOWER && Tile != RAILVPOWERH && Tile != VPOWER) {
+          *TileAdrPtr = HPOWER | CONDBIT | BULLBIT;
           break;
         }
       }
@@ -572,11 +492,8 @@ int Micropolis::LayWire(
       Tile = TileAdrPtr[-1];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != VROADPOWER) &&
-            (Tile != RAILVPOWERH) &&
-            (Tile != VPOWER)) {
-          (*TileAdrPtr) =
-            HPOWER | CONDBIT | BULLBIT;
+        if (Tile != VROADPOWER && Tile != RAILVPOWERH && Tile != VPOWER) {
+          *TileAdrPtr = HPOWER | CONDBIT | BULLBIT;
           break;
         }
       }
@@ -586,50 +503,38 @@ int Micropolis::LayWire(
     return 0;
 
   case ROADS:              /* Wire on Road */
-
-    (*TileAdrPtr) =
-      HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case ROADS2:              /* Wire on Road #2 */
-
-    (*TileAdrPtr) =
-      VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case LHRAIL:             /* Wire on rail */
-
-    (*TileAdrPtr) =
-      RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   case LVRAIL:             /* Wire on rail #2 */
-
-    (*TileAdrPtr) =
-      RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
-
+    *TileAdrPtr = RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
     break;
 
   default:              /* Can't do wire */
-
     return 0;
 
   }
 
   Spend(cost);
-
   return 1;
 }
 
 
-/* comefrom: ConnecTile */
-void Micropolis::FixZone(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Fix a zone, and update connections (rails, and wire connections) around it.
+ * @param x          X map coordinate
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+void Micropolis::FixZone(int x, int y, short *TileAdrPtr)
 {
   FixSingle(x, y, &TileAdrPtr[0]);
 
@@ -637,11 +542,11 @@ void Micropolis::FixZone(
     FixSingle(x, y - 1, &TileAdrPtr[-1]);
   }
 
-  if (x < (WORLD_X - 1)) {
+  if (x < WORLD_X - 1) {
     FixSingle(x + 1, y, &TileAdrPtr[WORLD_Y]);
   }
 
-  if (y < (WORLD_Y - 1)) {
+  if (y < WORLD_Y - 1) {
     FixSingle(x, y + 1, &TileAdrPtr[1]);
   }
 
@@ -652,57 +557,45 @@ void Micropolis::FixZone(
 }
 
 
-/* comefrom: FixZone */
-void Micropolis::FixSingle(
-  int x,
-  int y,
-  short *TileAdrPtr)
+/**
+ * Modify road, rails, and wire connections at a given tile.
+ * @param x          X map coordinate
+ * @param y          Y map coordinate.
+ * @param TileAdrPtr Pointer to tile (\a x, \a y).
+ */
+void Micropolis::FixSingle(int x, int y, short *TileAdrPtr)
 {
   short adjTile = 0;
 
-  short Tile =
-    (*TileAdrPtr) & LOMASK;
+  short Tile = *TileAdrPtr & LOMASK;
 
   NeutralizeRoad(Tile);
 
-  if ((Tile >= ROADS) &&
-      (Tile <= INTERSECTION)) {           /* Cleanup Road */
+  if (Tile >= ROADS && Tile <= INTERSECTION) {           /* Cleanup Road */
 
     if (y > 0) {
       Tile = TileAdrPtr[-1];
       NeutralizeRoad(Tile);
-      if (((Tile == HRAILROAD) ||
-           ((Tile >= ROADBASE) &&
-            (Tile <= VROADPOWER))) &&
-          (Tile != HROADPOWER) &&
-          (Tile != VRAILROAD) &&
-          (Tile != ROADBASE)) {
+      if ((Tile == HRAILROAD || (Tile >= ROADBASE && Tile <= VROADPOWER))
+                && Tile != HROADPOWER && Tile != VRAILROAD && Tile != ROADBASE) {
         adjTile |= 0x0001;
       }
     }
 
-    if (x < (WORLD_X - 1)) {
+    if (x < WORLD_X - 1) {
       Tile = TileAdrPtr[WORLD_Y];
       NeutralizeRoad(Tile);
-      if (((Tile == VRAILROAD) ||
-           ((Tile >= ROADBASE) &&
-            (Tile <= VROADPOWER))) &&
-          (Tile != VROADPOWER) &&
-          (Tile != HRAILROAD) &&
-          (Tile != VBRIDGE)) {
+      if ((Tile == VRAILROAD || (Tile >= ROADBASE && Tile <= VROADPOWER))
+                && Tile != VROADPOWER && Tile != HRAILROAD && Tile != VBRIDGE) {
         adjTile |= 0x0002;
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       NeutralizeRoad(Tile);
-      if (((Tile == HRAILROAD) ||
-           ((Tile >= ROADBASE) &&
-            (Tile <= VROADPOWER))) &&
-          (Tile != HROADPOWER) &&
-          (Tile != VRAILROAD) &&
-          (Tile != ROADBASE)) {
+      if ((Tile == HRAILROAD || (Tile >= ROADBASE && Tile <= VROADPOWER))
+                && Tile != HROADPOWER && Tile != VRAILROAD && Tile != ROADBASE) {
         adjTile |= 0x0004;
       }
     }
@@ -710,56 +603,41 @@ void Micropolis::FixSingle(
     if (x > 0) {
       Tile = TileAdrPtr[-WORLD_Y];
       NeutralizeRoad(Tile);
-      if (((Tile == VRAILROAD) ||
-           ((Tile >= ROADBASE) &&
-            (Tile <= VROADPOWER))) &&
-          (Tile != VROADPOWER) &&
-          (Tile != HRAILROAD) &&
-          (Tile != VBRIDGE)) {
+      if ((Tile == VRAILROAD || (Tile >= ROADBASE && Tile <= VROADPOWER))
+                && Tile != VROADPOWER && Tile != HRAILROAD && Tile != VBRIDGE) {
         adjTile |= 0x0008;
       }
     }
 
-    (*TileAdrPtr) =
-      RoadTable[adjTile] | BULLBIT | BURNBIT;
+    *TileAdrPtr = RoadTable[adjTile] | BULLBIT | BURNBIT;
     return;
   }
 
-  if ((Tile >= LHRAIL) &&
-      (Tile <= LVRAIL10)) {         /* Cleanup Rail */
+  if (Tile >= LHRAIL && Tile <= LVRAIL10) {         /* Cleanup Rail */
 
     if (y > 0) {
       Tile = TileAdrPtr[-1];
       NeutralizeRoad(Tile);
-      if ((Tile >= RAILHPOWERV) &&
-          (Tile <= VRAILROAD) &&
-          (Tile != RAILHPOWERV) &&
-          (Tile != HRAILROAD) &&
-          (Tile != HRAIL)) {
+      if (Tile >= RAILHPOWERV && Tile <= VRAILROAD
+                && Tile != RAILHPOWERV && Tile != HRAILROAD && Tile != HRAIL) {
         adjTile |= 0x0001;
       }
     }
 
-    if (x < (WORLD_X - 1)) {
+    if (x < WORLD_X - 1) {
       Tile = TileAdrPtr[WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile >= RAILHPOWERV) &&
-          (Tile <= VRAILROAD) &&
-          (Tile != RAILVPOWERH) &&
-          (Tile != VRAILROAD) &&
-          (Tile != VRAIL)) {
+      if (Tile >= RAILHPOWERV && Tile <= VRAILROAD
+                && Tile != RAILVPOWERH && Tile != VRAILROAD && Tile != VRAIL) {
         adjTile |= 0x0002;
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       NeutralizeRoad(Tile);
-      if ((Tile >= RAILHPOWERV) &&
-          (Tile <= VRAILROAD) &&
-          (Tile != RAILHPOWERV) &&
-          (Tile != HRAILROAD) &&
-          (Tile != HRAIL)) {
+      if (Tile >= RAILHPOWERV && Tile <= VRAILROAD
+                && Tile != RAILHPOWERV && Tile != HRAILROAD && Tile != HRAIL) {
         adjTile |= 0x0004;
       }
     }
@@ -767,54 +645,43 @@ void Micropolis::FixSingle(
     if (x > 0) {
       Tile = TileAdrPtr[-WORLD_Y];
       NeutralizeRoad(Tile);
-      if ((Tile >= RAILHPOWERV) &&
-          (Tile <= VRAILROAD) &&
-          (Tile != RAILVPOWERH) &&
-          (Tile != VRAILROAD) &&
-          (Tile != VRAIL)) {
+      if (Tile >= RAILHPOWERV && Tile <= VRAILROAD
+                && Tile != RAILVPOWERH && Tile != VRAILROAD && Tile != VRAIL) {
         adjTile |= 0x0008;
       }
     }
 
-    (*TileAdrPtr) =
-      RailTable[adjTile] | BULLBIT | BURNBIT;
+    *TileAdrPtr = RailTable[adjTile] | BULLBIT | BURNBIT;
     return;
   }
 
-  if ((Tile >= LHPOWER) &&
-      (Tile <= LVPOWER10)) {         /* Cleanup Wire */
+  if (Tile >= LHPOWER && Tile <= LVPOWER10) {         /* Cleanup Wire */
 
     if (y > 0) {
       Tile = TileAdrPtr[-1];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != VPOWER) &&
-            (Tile != VROADPOWER) &&
-            (Tile != RAILVPOWERH)) {
+        if (Tile != VPOWER && Tile != VROADPOWER && Tile != RAILVPOWERH) {
           adjTile |= 0x0001;
         }
       }
     }
 
-    if (x < (WORLD_X - 1)) {
+    if (x < WORLD_X - 1) {
       Tile = TileAdrPtr[WORLD_Y];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != HPOWER) &&
-            (Tile != HROADPOWER) &&
-            (Tile != RAILHPOWERV)) {
+        if (Tile != HPOWER && Tile != HROADPOWER && Tile != RAILHPOWERV) {
           adjTile |= 0x0002;
         }
       }
     }
 
-    if (y < (WORLD_Y - 1)) {
+    if (y < WORLD_Y - 1) {
       Tile = TileAdrPtr[1];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != VPOWER) &&
-            (Tile != VROADPOWER) &&
-            (Tile != RAILVPOWERH)) {
+        if (Tile != VPOWER && Tile != VROADPOWER && Tile != RAILVPOWERH) {
           adjTile |= 0x0004;
         }
       }
@@ -824,20 +691,15 @@ void Micropolis::FixSingle(
       Tile = TileAdrPtr[-WORLD_Y];
       if (Tile & CONDBIT) {
         NeutralizeRoad(Tile);
-        if ((Tile != HPOWER) &&
-            (Tile != HROADPOWER) &&
-            (Tile != RAILHPOWERV)) {
+        if (Tile != HPOWER && Tile != HROADPOWER && Tile != RAILHPOWERV) {
           adjTile |= 0x0008;
         }
       }
     }
 
-    (*TileAdrPtr) =
-      WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT;
-
+    *TileAdrPtr = WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT;
     return;
   }
-
 }
 
 
