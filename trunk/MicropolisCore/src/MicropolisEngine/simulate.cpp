@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -1624,7 +1625,7 @@ void Micropolis::DoMeltdown(int SX, int SY)
 
   // Report disaster to the user
   ClearMes();
-  SendMesAt(-43, SX, SY);
+  SendMesAt(-STR301_NUCLEAR_MELTDOWN, SX, SY);
 }
 
 

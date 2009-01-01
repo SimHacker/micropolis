@@ -129,9 +129,9 @@ install: all
 
 allocate.cpp: python/stdafx.h micropolis.h
 animate.cpp: python/stdafx.h micropolis.h
-budget.cpp: python/stdafx.h micropolis.h
+budget.cpp: python/stdafx.h micropolis.h text.h
 connect.cpp: python/stdafx.h micropolis.h
-disasters.cpp: python/stdafx.h micropolis.h
+disasters.cpp: python/stdafx.h micropolis.h text.h
 evaluate.cpp: python/stdafx.h micropolis.h
 evaluation.cpp: python/stdafx.h micropolis.h
 fileio.cpp: python/stdafx.h micropolis.h
@@ -140,18 +140,18 @@ graph.cpp: python/stdafx.h micropolis.h
 initialize.cpp: python/stdafx.h micropolis.h
 main.cpp: python/stdafx.h micropolis.h
 map.cpp: python/stdafx.h micropolis.h
-message.cpp: python/stdafx.h micropolis.h
+message.cpp: python/stdafx.h micropolis.h text.h
 micropolis.cpp: python/stdafx.h micropolis.h
-power.cpp: python/stdafx.h micropolis.h
+power.cpp: python/stdafx.h micropolis.h text.h
 random.cpp: python/stdafx.h micropolis.h
 resource.cpp: python/stdafx.h micropolis.h
 scan.cpp: python/stdafx.h micropolis.h
-simulate.cpp: python/stdafx.h micropolis.h
-sprite.cpp: python/stdafx.h micropolis.h
+simulate.cpp: python/stdafx.h micropolis.h text.h
+sprite.cpp: python/stdafx.h micropolis.h text.h
 stubs.cpp: python/stdafx.h micropolis.h
-tool.cpp: python/stdafx.h micropolis.h text.h
+tool.cpp: python/stdafx.h micropolis.h text.h text.h
 traffic.cpp: python/stdafx.h micropolis.h
-update.cpp: python/stdafx.h micropolis.h
+update.cpp: python/stdafx.h micropolis.h text.h
 utilities.cpp: python/stdafx.h micropolis.h
 zone.cpp: python/stdafx.h micropolis.h
 

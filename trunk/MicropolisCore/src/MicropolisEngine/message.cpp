@@ -66,6 +66,7 @@
 
 
 #include "stdafx.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -94,43 +95,43 @@ void Micropolis::SendMessages()
 
     case 1:
         if (TotalZPop / 4 >= ResZPop) {
-            SendMes(1); /* need Res */
+            SendMes(STR301_NEED_MORE_RESIDENTIAL);
         }
         break;
 
     case 5:
         if (TotalZPop / 8 >= ComZPop) {
-            SendMes(2); /* need Com */
+            SendMes(STR301_NEED_MORE_COMMERCIAL);
         }
         break;
 
     case 10:
         if (TotalZPop / 8 >= IndZPop) {
-            SendMes(3); /* need Ind */
+            SendMes(STR301_NEED_MORE_INDUSTRIAL);
         }
         break;
 
     case 14:
         if (TotalZPop > 10 && TotalZPop * 2 > RoadTotal) {
-            SendMes(4);
+            SendMes(STR301_NEED_MORE_ROADS);
         }
         break;
 
     case 18:
         if (TotalZPop > 50 && TotalZPop > RailTotal) {
-            SendMes(5);
+            SendMes(STR301_NEED_MORE_RAILS);
         }
         break;
 
     case 22:
         if (TotalZPop > 10 && PowerPop == 0) {
-            SendMes(6); /* need Power */
+            SendMes(STR301_NEED_ELECTRICITY);
         }
         break;
 
     case 26:
         if (ResPop > 500 && StadiumPop == 0) {
-            SendMes(7); /* need Stad */
+            SendMes(STR301_NEED_STADIUM);
             ResCap = 1;
         } else {
             ResCap = 0;
@@ -139,7 +140,7 @@ void Micropolis::SendMessages()
 
     case 28:
         if (IndPop > 70 && PortPop == 0) {
-            SendMes(8);
+            SendMes(STR301_NEED_SEAPORT);
             IndCap = 1;
         } else {
             IndCap = 0;
@@ -148,7 +149,7 @@ void Micropolis::SendMessages()
 
     case 30:
         if (ComPop > 100 && APortPop == 0) {
-            SendMes(9);
+            SendMes(STR301_NEED_AIRPORT);
             ComCap = 1;
         } else {
             ComCap = 0;
@@ -159,52 +160,52 @@ void Micropolis::SendMessages()
         TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
         if (TM > 0) {
             if (PwrdZCnt / TM < 0.7) {
-                SendMes(15);
+                SendMes(STR301_BLACKOUTS_REPORTED);
             }
         }
         break;
 
     case 35:
         if (PolluteAverage > /* 80 */ 60) {
-            SendMes(-10);
+            SendMes(-STR301_HIGH_POLLUTION);
         }
         break;
 
     case 42:
         if (CrimeAverage > 100) {
-            SendMes(-11);
+            SendMes(-STR301_HIGH_CRIME);
         }
         break;
 
     case 45:
         if (TotalPop > 60 && FireStPop == 0) {
-            SendMes(13);
+            SendMes(STR301_NEED_FIRE_STATION);
         }
         break;
 
     case 48:
         if (TotalPop > 60 && PolicePop == 0) {
-            SendMes(14);
+            SendMes(STR301_NEED_POLICE_STATION);
         }
         break;
 
     case 51:
         if (CityTax > 12) {
-            SendMes(16);
+            SendMes(STR301_TAX_TOO_HIGH);
         }
         break;
 
     case 54:
         // If RoadEffect < 5/8 of max effect
         if (RoadEffect < (5 * MAX_ROAD_EFFECT / 8) && RoadTotal > 30) {
-            SendMes(17);
+            SendMes(STR301_ROAD_NEEDS_FUNDING);
         }
         break;
 
     case 57:
         // If FireEffect < 0.7 of max effect
         if (FireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && TotalPop > 20) {
-            SendMes(18);
+            SendMes(STR301_FIRE_STATION_NEEDS_FUNDING);
         }
         break;
 
@@ -212,13 +213,13 @@ void Micropolis::SendMessages()
         // If PoliceEffect < 0.7 of max effect
         if (PoliceEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
                                                         && TotalPop > 20) {
-            SendMes(19);
+            SendMes(STR301_POLICE_NEEDS_FUNDING);
         }
         break;
 
     case 63:
         if (trafficAverage > 60) {
-            SendMes(-12);
+            SendMes(-STR301_TRAFFIC_JAMS);
         }
         break;
     }
@@ -244,23 +245,23 @@ void Micropolis::CheckGrowth()
         if (lastCityPop > 0) {
 
             if (lastCityPop < 2000 && thisCityPop >= 2000) {
-                z = 35;
+                z = STR301_REACHED_TOWN;
             }
 
             if (lastCityPop < 10000 && thisCityPop >= 10000) {
-                z = 36;
+                z = STR301_REACHED_CITY;
             }
 
             if (lastCityPop < 50000L && thisCityPop >= 50000L) {
-                z = 37;
+                z = STR301_REACHED_CAPITAL;
             }
 
             if (lastCityPop < 100000L && thisCityPop >= 100000L) {
-                z = 38;
+                z = STR301_REACHED_METROPOLIS;
             }
 
             if (lastCityPop < 500000L && thisCityPop >= 500000L) {
-                z = 39;
+                z = STR301_REACHED_MEGAPOLIS;
             }
 
         }
@@ -279,58 +280,60 @@ void Micropolis::CheckGrowth()
  * Compute score for each scenario
  * @param type Scenario used
  * @note Parameter \a type may not be \c SC_NONE
+ * @bug Messages #STR301_SCENARIO_LOST and #STR301_SCENARIO_WON are handled
+ *      special (they are larger than #STR301_LAST). Fix this.
  */
 void Micropolis::DoScenarioScore(Scenario type)
 {
-    short z = -200;     /* you lose */
+    short z = -STR301_SCENARIO_LOST;     /* you lose */
 
     switch(type) {
 
     case SC_DULLSVILLE:
         if (cityClass >= CC_METROPOLIS) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_SAN_FRANCISCO:
         if (cityClass >= CC_METROPOLIS) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_HAMBURG:
         if (cityClass >= CC_METROPOLIS) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_BERN:
         if (trafficAverage < 80) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_TOKYO:
         if (cityScore > 500) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_DETROIT:
         if (CrimeAverage < 60) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_BOSTON:
         if (cityScore > 500) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
     case SC_RIO:
         if (cityScore > 500) {
-            z = -100;
+            z = -STR301_SCENARIO_WON;
         }
         break;
 
@@ -343,7 +346,7 @@ void Micropolis::DoScenarioScore(Scenario type)
     ClearMes();
     SendMes(z);
 
-    if (z == -200) {
+    if (z == -STR301_SCENARIO_LOST) {
         DoLoseGame();
     }
 }
@@ -410,6 +413,8 @@ void Micropolis::SendMesAt(short mesgNum, short x, short y)
  * @todo A picture (that is, a negative value in Micropolis::messagePort)
  *       causes 2 messages to be send. A picture, immediately followed by a
  *       text message. Why not do this in one step?
+ * @bug Last valid message is #STR301_LOADED_SAVED_CITY, which is much less
+ *      than #STR301_LAST. Close this gap.
  */
 void Micropolis::doMessage()
 {
@@ -442,7 +447,7 @@ void Micropolis::doMessage()
             return;
         }
 
-        if (MesNum > 60) {
+        if (MesNum > STR301_LAST) {
             MesNum = 0;
             return;
         }
@@ -489,7 +494,7 @@ void Micropolis::doMakeSound(int mesgNum)
     assert(mesgNum >= 0);
 
     switch (mesgNum) {
-        case 12:
+        case STR301_TRAFFIC_JAMS:
             if (Rand(5) == 1) {
                 MakeSound("city", "HonkHonk-Med");
             } else if (Rand(5) == 1) {
@@ -499,33 +504,33 @@ void Micropolis::doMakeSound(int mesgNum)
             }
             break;
 
-        case 11:
-        case 20:
-        case 22:
-        case 23:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
+        case STR301_HIGH_CRIME:
+        case STR301_FIRE_REPORTED:
+        case STR301_TORNADO_SIGHTED:
+        case STR301_EARTHQUAKE:
+        case STR301_PLANE_CRASHED:
+        case STR301_SHIP_CRASHED:
+        case STR301_TRAIN_CRASHED:
+        case STR301_HELICOPTER_CRASHED:
             MakeSound("city", "Siren");
             break;
 
-        case  21:
+        case  STR301_MONSTER_SIGHTED:
             MakeSound("city", "Monster -speed [MonsterSpeed]");
             break;
 
-        case 30:
+        case STR301_FIREBOMBING:
             MakeSound("city", "Explosion-Low");
             MakeSound("city", "Siren");
             break;
 
-        case  43:
+        case STR301_NUCLEAR_MELTDOWN:
             MakeSound("city", "Explosion-High");
             MakeSound("city", "Explosion-Low");
             MakeSound("city", "Siren");
             break;
 
-        case  44:
+        case STR301_RIOTS_REPORTED:
             MakeSound("city", "Siren");
             break;
     }

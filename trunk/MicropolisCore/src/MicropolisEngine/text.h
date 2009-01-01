@@ -63,6 +63,8 @@
 /** @file text.h Identification numbers for texts. */
 
 ////////////////////////////////////////////////////////////////////////
+
+/** String numbers of score card. */
 enum Stri202 {
     STR202_POPULATIONDENSITY_LOW = 0, ///< Low
     STR202_POPULATIONDENSITY_MEDIUM = 1, ///< Medium
@@ -90,3 +92,60 @@ enum Stri202 {
     STR202_GROWRATE_FASTGROWTH = 19, ///< Fast Growth
 };
 
+/** String numbers of messages. */
+enum Stri301 {
+    STR301_NEED_MORE_RESIDENTIAL = 1, ///< More residential zones needed.
+    STR301_NEED_MORE_COMMERCIAL, ///< More commercial zones needed.
+    STR301_NEED_MORE_INDUSTRIAL, ///< More industrial zones needed.
+    STR301_NEED_MORE_ROADS, ///< More roads required.
+    STR301_NEED_MORE_RAILS, ///< 5: Inadequate rail system.
+    STR301_NEED_ELECTRICITY, ///< Build a Power Plant.
+    STR301_NEED_STADIUM, ///< Residents demand a Stadium.
+    STR301_NEED_SEAPORT, ///< Industry requires a Sea Port.
+    STR301_NEED_AIRPORT, ///< Commerce requires an Airport.
+    STR301_HIGH_POLLUTION, ///< 10: Pollution very high.
+    STR301_HIGH_CRIME, ///< Crime very high.
+    STR301_TRAFFIC_JAMS, ///< Frequent traffic jams reported.
+    STR301_NEED_FIRE_STATION, ///< Citizens demand a Fire Department.
+    STR301_NEED_POLICE_STATION, ///< Citizens demand a Police Department.
+    STR301_BLACKOUTS_REPORTED, ///< 15: Blackouts reported. Check power map.
+    STR301_TAX_TOO_HIGH, ///< Citizens upset. The tax rate is too high.
+    STR301_ROAD_NEEDS_FUNDING, ///< Roads deteriorating, due to lack of funds.
+    STR301_FIRE_STATION_NEEDS_FUNDING, ///< Fire departments need funding.
+    STR301_POLICE_NEEDS_FUNDING, ///< Police departments need funding.
+    STR301_FIRE_REPORTED, ///< 20: Fire reported !
+    STR301_MONSTER_SIGHTED, ///< A Monster has been sighted !!
+    STR301_TORNADO_SIGHTED, ///< Tornado reported !!
+    STR301_EARTHQUAKE, ///< Major earthquake reported !!!
+    STR301_PLANE_CRASHED, ///< A plane has crashed !
+    STR301_SHIP_CRASHED, ///< 25: Shipwreck reported !
+    STR301_TRAIN_CRASHED, ///< A train crashed !
+    STR301_HELICOPTER_CRASHED, ///< A helicopter crashed !
+    STR301_HIGH_UNEMPLOYMENT, ///< Unemployment rate is high.
+    STR301_NO_MONEY, ///< YOUR CITY HAS GONE BROKE!
+    STR301_FIREBOMBING, ///< 30: Firebombing reported !
+    STR301_NEED_MORE_PARKS, ///< Need more parks.
+    STR301_EXPLOSION_REPORTED, ///< Explosion detected !
+    STR301_NOT_ENOUGH_FUNDS, ///< Insufficient funds to build that.
+    STR301_BULLDOZE_AREA_FIRST, ///< Area must be bulldozed first.
+    STR301_REACHED_TOWN, ///< 35: Population has reached 2,000.
+    STR301_REACHED_CITY, ///< Population has reached 10,000.
+    STR301_REACHED_CAPITAL, ///< Population has reached 50,000.
+    STR301_REACHED_METROPOLIS, ///< Population has reached 100,000.
+    STR301_REACHED_MEGAPOLIS, ///< Population has reached 500,000.
+    STR301_NOT_ENOUGH_POWER, ///< 40: Brownouts, build another Power Plant.
+    STR301_HEAVY_TRAFFIC, ///< Heavy Traffic reported.
+    STR301_FLOODING_REPORTED, ///< Flooding reported !!
+    STR301_NUCLEAR_MELTDOWN, ///< A Nuclear Meltdown has occurred !!!
+    STR301_RIOTS_REPORTED, ///< They're rioting in the streets !!
+    STR301_END_OF_DEMO, ///< 45: End of Demo !!
+    STR301_NO_SOUND_SERVER, ///< No Sound Server!
+    STR301_NO_MULTIPLAYER_LICENSE, ///< No Multi Player License !!
+    STR301_STARTED_NEW_CITY, ///< Started a New City.
+    STR301_LOADED_SAVED_CITY, ///< 49: Restored a Saved City.
+
+    STR301_LAST = 60, ///< Last valid message
+
+    STR301_SCENARIO_WON = 100,  ///< You won the scenario
+    STR301_SCENARIO_LOST = 200, ///< Toy lose the scenario
+};

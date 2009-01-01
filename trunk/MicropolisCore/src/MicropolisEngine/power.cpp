@@ -66,7 +66,7 @@
 
 
 #include "stdafx.h"
-
+#include "text.h"
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -182,7 +182,7 @@ void Micropolis::DoPowerScan()
         ADir = 4;
         do {
             if (++NumPower > MaxPower) {
-                SendMes(40);
+                SendMes(STR301_NOT_ENOUGH_POWER);
                 return;
             }
             if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
