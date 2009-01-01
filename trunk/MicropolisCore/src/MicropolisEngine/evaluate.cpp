@@ -92,18 +92,22 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/** Evaluate city */
+/**
+ * Evaluate city
+ * @todo Handle lack of voting explicitly
+ */
 void Micropolis::CityEvaluation()
 {
-    if (TotalPop) {
+    if (TotalPop > 0) {
         getAssValue();
         DoPopNum();
         DoProblems();
         GetScore();
-        DoVotes();
+        DoVotes();  // How well is the mayor doing?
         ChangeEval();
     } else {
         EvalInit();
+        cityYes = 50; // No population => no voting. Let's say 50/50.
         ChangeEval();
     }
 }
