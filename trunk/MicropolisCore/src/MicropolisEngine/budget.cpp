@@ -84,21 +84,26 @@ void Micropolis::InitFundingLevel()
   drawCurrPercents();
 }
 
-
+/** Game decided to show the budget window */
 void Micropolis::DoBudget()
 {
-  DoBudgetNow(0);
+  DoBudgetNow(false);
 }
 
 
+/** User queried the budget window */
 void Micropolis::DoBudgetFromMenu()
 {
-  DoBudgetNow(1);
+  DoBudgetNow(true);
 }
 
-
-void Micropolis::DoBudgetNow(
-  int fromMenu)
+/**
+ * Handle budget window.
+ * @param fromMenu User requested the budget window.
+ * @todo Simplify this code. Instead of this nested mess, make a sequence of
+ *       assigning funds to road, fire, and police.
+ */
+void Micropolis::DoBudgetNow(bool fromMenu)
 {
   Quad fireInt   = (int)(FireFund   * firePercent);
   Quad policeInt = (int)(PoliceFund * policePercent);
@@ -123,7 +128,7 @@ void Micropolis::DoBudgetNow(
 
         assert(yumDuckets <= total);
 
-        // Not enough yumDuckets to fund everything. 
+        // Not enough yumDuckets to fund everything.
         // First spend on roads, then on fire, then on police.
 
     if (yumDuckets > roadInt) {
@@ -135,17 +140,17 @@ void Micropolis::DoBudgetNow(
 
       if (yumDuckets > fireInt) {
 
-                // Enough yumDuckets to fully fund fire. 
+                // Enough yumDuckets to fully fund fire.
 
         fireValue = fireInt;
         yumDuckets -= fireInt;
 
         if (yumDuckets > policeInt) {
 
-                  // Enough yumDuckets to fully fund police. 
-                  // Hey what are we doing here? Should never get here. 
+                  // Enough yumDuckets to fully fund police.
+                  // Hey what are we doing here? Should never get here.
                   // We tested for yumDuckets > total above
-                  // (where total = fireInt + policeInt + roadInt), 
+                  // (where total = fireInt + policeInt + roadInt),
                   // so this should never happen.
 
           policeValue = policeInt;
@@ -153,8 +158,8 @@ void Micropolis::DoBudgetNow(
 
         } else {
 
-                  // Fuly funded roads and fire. 
-                  // Partially fund police. 
+                  // Fuly funded roads and fire.
+                  // Partially fund police.
 
           policeValue = yumDuckets;
 
@@ -162,8 +167,7 @@ void Micropolis::DoBudgetNow(
 
                         // Scale back police percentage to available cash.
 
-            policePercent =
-              ((float)yumDuckets) / ((float)PoliceFund);
+            policePercent = ((float)yumDuckets) / ((float)PoliceFund);
 
           } else {
 
@@ -218,8 +222,7 @@ void Micropolis::DoBudgetNow(
 
                 // Scale back road percentage to available cash.
 
-        roadPercent =
-          ((float)yumDuckets) / ((float)RoadFund);
+        roadPercent = ((float)yumDuckets) / ((float)RoadFund);
 
       } else {
 
@@ -268,11 +271,9 @@ noMoney:
       PoliceSpend = (short)policeValue;
       RoadSpend = (short)roadValue;
 
-      total =
-        FireSpend + PoliceSpend + RoadSpend;
+      total = FireSpend + PoliceSpend + RoadSpend;
 
-      Quad moreDough =
-        (Quad)(TaxFund - total);
+      Quad moreDough = (Quad)(TaxFund - total);
       Spend(-moreDough);
 
     }
@@ -290,8 +291,7 @@ noMoney:
 
     if (yumDuckets > total) {
 
-      Quad moreDough =
-        (Quad)(TaxFund - total);
+      Quad moreDough = (Quad)(TaxFund - total);
       Spend(-moreDough);
 
       FireSpend = FireFund;
@@ -316,7 +316,7 @@ noMoney:
 
 }
 
-
+/** Request to the front-end to draw the budget window. */
 void Micropolis::drawBudgetWindow()
 {
   MustDrawBudgetWindow = 1;
