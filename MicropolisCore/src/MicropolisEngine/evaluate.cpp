@@ -85,7 +85,8 @@
 // "Easy", "Medium", "Hard"
 
 // City Problems:
-//  "CRIME", "POLLUTION", "HOUSING COSTS", "TAXES", "TRAFFIC", "UNEMPLOYMENT", "FIRES"
+//  "CRIME", "POLLUTION", "HOUSING COSTS", "TAXES",
+//  "TRAFFIC", "UNEMPLOYMENT", "FIRES"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -94,17 +95,17 @@
 /** Evaluate city */
 void Micropolis::CityEvaluation()
 {
-  if (TotalPop) {
-    getAssValue();
-    DoPopNum();
-    DoProblems();
-    GetScore();
-    DoVotes();
-    ChangeEval();
-  } else {
-    EvalInit();
-    ChangeEval();
-  }
+    if (TotalPop) {
+        getAssValue();
+        DoPopNum();
+        DoProblems();
+        GetScore();
+        DoVotes();
+        ChangeEval();
+    } else {
+        EvalInit();
+        ChangeEval();
+    }
 }
 
 
@@ -113,19 +114,19 @@ void Micropolis::CityEvaluation()
  */
 void Micropolis::EvalInit()
 {
-  cityYes = 0;
-  cityPop = 0;
-  deltaCityPop = 0;
-  cityAssValue = 0;
-  cityClass = CC_VILLAGE;
-  cityScore = 500;
-  deltaCityScore = 0;
-  for (int i = 0; i < PROBNUM; i++) {
-    problemVotes[i] = 0;
-  }
-  for (int i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
-    problemOrder[i] = CVP_NUMPROBLEMS;
-  }
+    cityYes = 0;
+    cityPop = 0;
+    deltaCityPop = 0;
+    cityAssValue = 0;
+    cityClass = CC_VILLAGE;
+    cityScore = 500;
+    deltaCityScore = 0;
+    for (int i = 0; i < PROBNUM; i++) {
+        problemVotes[i] = 0;
+    }
+    for (int i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
+        problemOrder[i] = CVP_NUMPROBLEMS;
+    }
 }
 
 
@@ -135,55 +136,57 @@ void Micropolis::EvalInit()
  */
 void Micropolis::getAssValue()
 {
-  Quad z;
+    Quad z;
 
-  z = RoadTotal * 5;
-  z += RailTotal * 10;
-  z += PolicePop * 1000;
-  z += FireStPop * 1000;
-  z += HospPop * 400;
-  z += StadiumPop * 3000;
-  z += PortPop * 5000;
-  z += APortPop * 10000;
-  z += CoalPop * 3000;
-  z += NuclearPop * 6000;
-  cityAssValue = z * 1000;
+    z = RoadTotal * 5;
+    z += RailTotal * 10;
+    z += PolicePop * 1000;
+    z += FireStPop * 1000;
+    z += HospPop * 400;
+    z += StadiumPop * 3000;
+    z += PortPop * 5000;
+    z += APortPop * 10000;
+    z += CoalPop * 3000;
+    z += NuclearPop * 6000;
+
+    cityAssValue = z * 1000;
 }
 
 
 /**
- * Compute city population and city classification
- * @see cityPop cityClass
+ * Compute city population and city classification.
+ * @see cityPop cityClass.
+ * @todo Put people counts into a table.
  */
 void Micropolis::DoPopNum()
 {
-  Quad oldCityPop = cityPop;
+    Quad oldCityPop = cityPop;
 
-  cityPop = (ResPop + (ComPop + IndPop) * 8L) * 20L;
+    cityPop = (ResPop + (ComPop + IndPop) * 8L) * 20L;
 
-  if (oldCityPop == -1) {
-    oldCityPop = cityPop;
-  }
+    if (oldCityPop == -1) {
+        oldCityPop = cityPop;
+    }
 
-  deltaCityPop = cityPop - oldCityPop;
+    deltaCityPop = cityPop - oldCityPop;
 
-  // Compute cityClass
-  cityClass = CC_VILLAGE;
-  if (cityPop > 2000) {
-    cityClass = CC_TOWN;
-  }
-  if (cityPop > 10000) {
-    cityClass = CC_CITY;
-  }
-  if (cityPop > 50000) {
-    cityClass = CC_CAPITAL;
-  }
-  if (cityPop > 100000) {
-    cityClass = CC_METROPOLIS;
-  }
-  if (cityPop > 500000) {
-    cityClass = CC_MEGALOPOLIS;
-  }
+    // Compute cityClass
+    cityClass = CC_VILLAGE;
+    if (cityPop > 2000) {
+        cityClass = CC_TOWN;
+    }
+    if (cityPop > 10000) {
+        cityClass = CC_CITY;
+    }
+    if (cityPop > 50000) {
+        cityClass = CC_CAPITAL;
+    }
+    if (cityPop > 100000) {
+        cityClass = CC_METROPOLIS;
+    }
+    if (cityPop > 500000) {
+        cityClass = CC_MEGALOPOLIS;
+    }
 }
 
 
@@ -196,42 +199,42 @@ void Micropolis::DoPopNum()
  */
 void Micropolis::DoProblems()
 {
-  bool problemTaken[PROBNUM]; // Which problems are taken?
+    bool problemTaken[PROBNUM]; // Which problems are taken?
 
-  for (int z = 0; z < PROBNUM; z++) {
-    problemTaken[z] = false;
-    problemTable[z] = 0;
-  }
-
-  problemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
-  problemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
-  problemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
-  problemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
-  problemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
-  problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
-  problemTable[CVP_FIRE]         = GetFire();             /* Fire */
-  voteProblems();
-
-  for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
-    // Find biggest problem not taken yet
-    int maxVotes = 0;
-    int bestProblem = CVP_NUMPROBLEMS;
-    for (int i = 0; i < CVP_NUMPROBLEMS; i++) {
-      if ((problemVotes[i] > maxVotes) && (!problemTaken[i])) {
-        bestProblem = i;
-        maxVotes = problemVotes[i];
-      }
+    for (int z = 0; z < PROBNUM; z++) {
+        problemTaken[z] = false;
+        problemTable[z] = 0;
     }
 
-    // bestProblem == CVP_NUMPROBLEMS means no problem found
-    problemOrder[z] = bestProblem;
-    if (bestProblem < CVP_NUMPROBLEMS) {
-      problemTaken[bestProblem] = true;
+    problemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
+    problemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
+    problemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
+    problemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
+    problemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
+    problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
+    problemTable[CVP_FIRE]         = GetFire();             /* Fire */
+    voteProblems();
+
+    for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
+        // Find biggest problem not taken yet
+        int maxVotes = 0;
+        int bestProblem = CVP_NUMPROBLEMS;
+        for (int i = 0; i < CVP_NUMPROBLEMS; i++) {
+            if ((problemVotes[i] > maxVotes) && (!problemTaken[i])) {
+                bestProblem = i;
+                maxVotes = problemVotes[i];
+            }
+        }
+
+        // bestProblem == CVP_NUMPROBLEMS means no problem found
+        problemOrder[z] = bestProblem;
+        if (bestProblem < CVP_NUMPROBLEMS) {
+            problemTaken[bestProblem] = true;
+        }
+        // else: No problem found.
+        //       Repeating the procedure will give the same result.
+        //       Optimize by filling all remaining entries, and breaking out
     }
-    // else: No problem found.
-    //       Repeating the procedure will give the same result.
-    //       Optimize by filling all remaining entries, and breaking out
-  }
 }
 
 
@@ -242,24 +245,24 @@ void Micropolis::DoProblems()
  */
 void Micropolis::voteProblems()
 {
-  for (int z = 0; z < PROBNUM; z++) {
-    problemVotes[z] = 0;
-  }
+    for (int z = 0; z < PROBNUM; z++) {
+        problemVotes[z] = 0;
+    }
 
-  int problem = 0; // Problem to vote for
-  int voteCount = 0; // Number of votes
-  int loopCount = 0; // Number of attempts
-  while (voteCount < 100 && loopCount < 600) {
-    if (Rand(300) < problemTable[problem]) {
-      problemVotes[problem]++;
-      voteCount++;
+    int problem = 0; // Problem to vote for
+    int voteCount = 0; // Number of votes
+    int loopCount = 0; // Number of attempts
+    while (voteCount < 100 && loopCount < 600) {
+        if (Rand(300) < problemTable[problem]) {
+            problemVotes[problem]++;
+            voteCount++;
+        }
+        problem++;
+        if (problem > PROBNUM) {
+            problem = 0;
+        }
+        loopCount++;
     }
-    problem++;
-    if (problem > PROBNUM) {
-      problem = 0;
-    }
-    loopCount++;
-  }
 }
 
 
@@ -269,23 +272,23 @@ void Micropolis::voteProblems()
  */
 short Micropolis::AverageTrf()
 {
-  Quad TrfTotal;
-  register short x, y, count;
+    Quad TrfTotal;
+    short x, y, count;
 
-  TrfTotal = 0;
-  count = 1;
-  for (x=0; x < HWLDX; x++) {
-    for (y=0; y < HWLDY; y++) {
-      if (LandValueMem[x][y]) {
-        TrfTotal += TrfDensity[x][y];
-        count++;
-      }
+    TrfTotal = 0;
+    count = 1;
+    for (x=0; x < HWLDX; x++) {
+        for (y=0; y < HWLDY; y++) {
+            if (LandValueMem[x][y]) {
+                TrfTotal += TrfDensity[x][y];
+                count++;
+            }
+        }
     }
-  }
 
-  trafficAverage = (short)((TrfTotal / count) * 2.4);
+    trafficAverage = (short)((TrfTotal / count) * 2.4);
 
-  return trafficAverage;
+    return trafficAverage;
 }
 
 
@@ -295,17 +298,17 @@ short Micropolis::AverageTrf()
  */
 short Micropolis::GetUnemployment()
 {
-  short b = (ComPop + IndPop) * 8;
+    short b = (ComPop + IndPop) * 8;
 
-  if (b == 0) {
-    return 0;
-  }
+    if (b == 0) {
+        return 0;
+    }
 
-  // Ratio total people / working. At least 1.
-  float r = ((float)ResPop) / b;
+    // Ratio total people / working. At least 1.
+    float r = ((float)ResPop) / b;
 
-  b = (short)((r - 1) * 255); // (r - 1) is the fraction unemployed people
-  return min(b, (short)255);
+    b = (short)((r - 1) * 255); // (r - 1) is the fraction unemployed people
+    return min(b, (short)255);
 }
 
 
@@ -315,7 +318,7 @@ short Micropolis::GetUnemployment()
  */
 short Micropolis::GetFire()
 {
-  return min(FirePop * 5, 255);
+    return min(FirePop * 5, 255);
 }
 
 
@@ -324,90 +327,90 @@ short Micropolis::GetFire()
  */
 void Micropolis::GetScore()
 {
-  int x, z;
-  short oldCityScore;
+    int x, z;
+    short oldCityScore;
 
-  oldCityScore = cityScore;
-  x = 0;
+    oldCityScore = cityScore;
+    x = 0;
 
-  for (z = 0; z < CVP_NUMPROBLEMS; z++) {
-    x += problemTable[z];       /* add 7 probs */
-  }
+    for (z = 0; z < CVP_NUMPROBLEMS; z++) {
+        x += problemTable[z];       /* add 7 probs */
+    }
 
-  /*
-   * @todo Should this expression depend on CVP_NUMPROBLEMS?
-   */
-  x = x / 3;                    /* 7 + 2 average */
-  x = min(x, 256);
+    /*
+     * @todo Should this expression depend on CVP_NUMPROBLEMS?
+     */
+    x = x / 3;                    /* 7 + 2 average */
+    x = min(x, 256);
 
-  z = clamp((256 - x) * 4, 0, 1000);
+    z = clamp((256 - x) * 4, 0, 1000);
 
-  if (ResCap) {
-    z = (int)(z * .85);
-  }
+    if (ResCap) {
+        z = (int)(z * .85);
+    }
 
-  if (ComCap) {
-    z = (int)(z * .85);
-  }
+    if (ComCap) {
+        z = (int)(z * .85);
+    }
 
-  if (IndCap) {
-    z = (int)(z * .85);
-  }
+    if (IndCap) {
+        z = (int)(z * .85);
+    }
 
-  if (RoadEffect < MAX_ROAD_EFFECT)  {
-    z -= MAX_ROAD_EFFECT - RoadEffect;
-  }
+    if (RoadEffect < MAX_ROAD_EFFECT)  {
+        z -= MAX_ROAD_EFFECT - RoadEffect;
+    }
 
-  if (PoliceEffect < MAX_POLICESTATION_EFFECT) {
-    // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-    z = (int)(z * (0.9 + (PoliceEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
-  }
+    if (PoliceEffect < MAX_POLICESTATION_EFFECT) {
+        // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
+        z = (int)(z * (0.9 + (PoliceEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
+    }
 
-  if (FireEffect < MAX_FIRESTATION_EFFECT) {
-    // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-    z = (int)(z * (0.9 + (FireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
-  }
+    if (FireEffect < MAX_FIRESTATION_EFFECT) {
+        // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
+        z = (int)(z * (0.9 + (FireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
+    }
 
-  if (RValve < -1000) {
-    z = (int)(z * .85);
-  }
+    if (RValve < -1000) {
+        z = (int)(z * .85);
+    }
 
-  if (CValve < -1000) {
-    z = (int)(z * .85);
-  }
+    if (CValve < -1000) {
+        z = (int)(z * .85);
+    }
 
-  if (IValve < -1000) {
-    z = (int)(z * .85);
-  }
+    if (IValve < -1000) {
+        z = (int)(z * .85);
+    }
 
-  float SM = 1.0;
-  if (cityPop == 0 || deltaCityPop == 0) {
-    SM = 1.0; // there is nobody or no migration happened
+    float SM = 1.0;
+    if (cityPop == 0 || deltaCityPop == 0) {
+        SM = 1.0; // there is nobody or no migration happened
 
-  } else if (deltaCityPop == cityPop) {
-    SM = 1.0; // city sprang into existence or doubled in size
+    } else if (deltaCityPop == cityPop) {
+        SM = 1.0; // city sprang into existence or doubled in size
 
-  } else if (deltaCityPop > 0) {
-    SM = ((float)deltaCityPop / cityPop) + 1.0f;
+    } else if (deltaCityPop > 0) {
+        SM = ((float)deltaCityPop / cityPop) + 1.0f;
 
-  } else if (deltaCityPop < 0) {
-    SM = 0.95f + ((float)deltaCityPop / (cityPop - deltaCityPop));
-  }
+    } else if (deltaCityPop < 0) {
+        SM = 0.95f + ((float)deltaCityPop / (cityPop - deltaCityPop));
+    }
 
-  z = (int)(z * SM);
-  z = z - GetFire() - CityTax; // dec score for fires and taxes
+    z = (int)(z * SM);
+    z = z - GetFire() - CityTax; // dec score for fires and taxes
 
-  float TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
-  if (TM > 0.0) {
-    z = (int)(z * (float)(PwrdZCnt / TM));
-  } else {
-  }
+    float TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
+    if (TM > 0.0) {
+        z = (int)(z * (float)(PwrdZCnt / TM));
+    } else {
+    }
 
-  z = clamp(z, 0, 1000);
+    z = clamp(z, 0, 1000);
 
-  cityScore = (cityScore + z) / 2;
+    cityScore = (cityScore + z) / 2;
 
-  deltaCityScore = cityScore - oldCityScore;
+    deltaCityScore = cityScore - oldCityScore;
 }
 
 
@@ -417,98 +420,108 @@ void Micropolis::GetScore()
  */
 void Micropolis::DoVotes()
 {
-  register int z;
+    int z;
 
-  cityYes = 0;
+    cityYes = 0;
 
-  for (z = 0; z < 100; z++) {
-    if (Rand(1000) < cityScore) {
-      cityYes++;
+    for (z = 0; z < 100; z++) {
+        if (Rand(1000) < cityScore) {
+            cityYes++;
+        }
     }
-  }
 }
 
 
 /** Push new score to the user */
 void Micropolis::doScoreCard()
 {
-  Callback(
-        "UIUpdate",
-        "s",
-        "evaluation");
+    Callback("UIUpdate", "s", "evaluation");
 
-  // The user interface should pull these raw values out and format
-  // them. The simulator core used to format them and push them out,
-  // but the user interface should pull them out and format them
-  // itself.
+    // The user interface should pull these raw values out and format
+    // them. The simulator core used to format them and push them out,
+    // but the user interface should pull them out and format them
+    // itself.
 
-  // City Evaluation ${FormatYear(CurrentYear())}
-  // Public Opinion
-  //   Is the mayor doing a good job?
-  //     Yes: ${FormatPercent(cityYes)}
-  //     No: ${FormatPercent(100 - cityYes)}
-  //   What are the worst problems?
-  //     for i in range(0, CVP_PROBLEM_COMPLAINTS), while problemOrder[i] < CVP_NUMPROBLEMS:
-  //     ${probStr[problemOrder[i]]}: ${FormatPercent(problemVotes[problemOrder[i]])}
-  // Statistics
-  //   Population: ${FormatNumber(cityPop)}
-  //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
-  //   Assessed Value: ${FormatMoney(cityAssValue))
-  //   Category: ${cityClassStr[cityClass]}
-  //   Game Level: ${cityLevelStr[gameLevel]}
+    // City Evaluation ${FormatYear(CurrentYear())}
+    // Public Opinion
+    //   Is the mayor doing a good job?
+    //     Yes: ${FormatPercent(cityYes)}
+    //     No: ${FormatPercent(100 - cityYes)}
+    //   What are the worst problems?
+    //     for i in range(0, CVP_PROBLEM_COMPLAINTS),
+    //                 while problemOrder[i] < CVP_NUMPROBLEMS:
+    //     ${probStr[problemOrder[i]]}:
+    //                  ${FormatPercent(problemVotes[problemOrder[i]])}
+    // Statistics
+    //   Population: ${FormatNumber(cityPop)}
+    //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
+    //   Assessed Value: ${FormatMoney(cityAssValue))
+    //   Category: ${cityClassStr[cityClass]}
+    //   Game Level: ${cityLevelStr[gameLevel]}
 }
 
-/** Request that new score is displayed to the user */
+/** Request that new score is displayed to the user. */
 void Micropolis::ChangeEval()
 {
-  evalChanged = true;
+    evalChanged = true;
 }
 
 
+/** Update the score after being requested. */
 void Micropolis::scoreDoer()
 {
-  if (evalChanged) {
-    doScoreCard();
-    evalChanged = false;
-  }
+    if (evalChanged) {
+        doScoreCard();
+        evalChanged = false;
+    }
 }
 
-
+/**
+ * Return number of problem in the city.
+ * @return Number of problems.
+ */
 int Micropolis::countProblems()
 {
-  int i;
-  for (i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
-    if (problemOrder[i] == CVP_NUMPROBLEMS) {
-      break;
+    int i;
+    for (i = 0; i < CVP_PROBLEM_COMPLAINTS; i++) {
+        if (problemOrder[i] == CVP_NUMPROBLEMS) {
+            break;
+        }
     }
-  }
-  return i;
+    return i;
+}
+
+/**
+ * Return the index of the \a i-th worst problem.
+ * @param i Number of the problem.
+ * @return Index into the #problemOrder table of the \a i-th problem.
+ *         Returns \c -1 if such a problem does not exist.
+ */
+int Micropolis::getProblemNumber(int i)
+{
+    if (i < 0 || i >= CVP_PROBLEM_COMPLAINTS
+                        || problemOrder[i] == CVP_NUMPROBLEMS) {
+        return -1;
+    } else {
+        return problemOrder[i];
+    }
 }
 
 
-int Micropolis::getProblemNumber(
-  int i)
+/**
+ * Return number of votes to solve the \a i-th worst problem.
+ * @param i Number of the problem.
+ * @return Number of votes to solve the \a i-th worst problem.
+ *         Returns \c -1 if such a problem does not exist.
+ */
+int Micropolis::getProblemVotes(int i)
 {
-  if ((i < 0) ||
-      (i >= CVP_PROBLEM_COMPLAINTS) ||
-      (problemOrder[i] == CVP_NUMPROBLEMS)) {
-    return -1;
-  } else {
-    return problemOrder[i];
-  }
-}
-
-
-int Micropolis::getProblemVotes(
-  int i)
-{
-  if ((i < 0) ||
-      (i >= CVP_PROBLEM_COMPLAINTS) ||
-      (problemOrder[i] == CVP_NUMPROBLEMS)) {
-    return -1;
-  } else {
-    return problemVotes[problemOrder[i]];
-  }
+    if (i < 0 || i >= CVP_PROBLEM_COMPLAINTS
+                        || problemOrder[i] == CVP_NUMPROBLEMS) {
+        return -1;
+    } else {
+        return problemVotes[problemOrder[i]];
+    }
 }
 
 
