@@ -1,0 +1,78 @@
+Simulate
+  Switches through 16 phases (0 to 15).
+
+  Phase 0:
+    Increment Scycle and wrap mod 1024.
+    If DoInitialEval:
+      Clear DoInitialEval.
+      Call CityEvaluation.
+    Increment CityTime.
+    Increase AvCityTax by CityTax.
+    If Scycle is even:
+      Call SetValves.
+    Call ClearCensus.
+
+  Phase 1:
+    Call MapScan on 1st 8th of map.
+
+  Phase 2:
+    Call MapScan on 2nd 8th of map.
+
+  Phase 3:
+    Call MapScan on 3rd 8th of map.
+
+  Phase 4:
+    Call MapScan on 4th 8th of map.
+
+  Phase 5:
+    Call MapScan on 5th 8th of map.
+
+  Phase 6:
+    Call MapScan on 6st 8th of map.
+
+  Phase 7:
+    Call MapScan on 7st 8th of map.
+
+  Phase 8:
+    Call MapScan on 8st 8th of map.
+
+  Phase 9:
+    If CityTime mod CENSUSRATE is 0:
+      Call TakeCensus.
+    If CityTime mod (CENSUSRATE * 12) is 0:
+      Call Cake2Census.
+    If CityTime mod TAXFREQ is 0:
+      Call CollectTax.
+      Call CityEvaluation.
+
+  Phase 10:
+    If Scycle mod 5 is 0:
+      Call DecROGMem.
+    Call DecTrafficMem.
+    Set NewMapFlags for TDMAP, RDMAP, ALMAP, REMA, COMAP, INMAP, DYMAP.
+    Call SendMessages.
+
+  Phase 11:
+    If Scycle mod SpdPwr[SimSpeed] is 0:
+      Call DoPowerScan.
+      Set NewMapFlags for PRMAP.
+      Set NewPower.
+
+  Phase 12:
+    If Scycle mod SpdPtl[SimSpeed] is 0:
+      Call PTLScan. (Pollution, Terrain, Land Value.)
+
+  Phase 13:
+    If Scycle mod SpdCri[SimSpeed] is 0:
+      Call CrimeScan.
+
+  Phase 14:
+    If Scycle mod SpdPop[SimSpeed] is 0:
+      Call PopDenScan.
+
+  Phase 15:
+    If Scycle mod SpdFir[SimSpeed] is 0:
+      Call FireAnalysis.
+    Call DoDisasters.
+
+
