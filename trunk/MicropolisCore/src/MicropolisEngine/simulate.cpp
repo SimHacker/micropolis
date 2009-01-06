@@ -96,6 +96,7 @@ void Micropolis::SimFrame()
     Fcycle = 0;
   }
 
+  // Why is this disabled? Look useful for initializing after loading.
 /*
   if (InitSimLoad) {
     Fcycle = 0;
@@ -285,6 +286,10 @@ void Micropolis::DoNilPower()
         SMapX = x;
         SMapY = y;
         CChr = z;
+	// @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
+	//       SetZPower to distinguish nuclear and coal power plants. 
+	//       Better yet, pass all parameters into SetZPower and rewrite
+	//       it not to use globals. 
         SetZPower();
       }
     }
@@ -475,9 +480,9 @@ void Micropolis::SimLoadInit()
     ScoreType = SC_NONE;
   }
 
-  RoadEffect   = MAX_ROAD_EFFECT;
+  RoadEffect = MAX_ROAD_EFFECT;
   PoliceEffect = MAX_POLICESTATION_EFFECT;
-  FireEffect   = MAX_FIRESTATION_EFFECT;
+  FireEffect = MAX_FIRESTATION_EFFECT;
   InitSimLoad = 0;
 }
 
@@ -486,9 +491,9 @@ void Micropolis::SimLoadInit()
 void Micropolis::SetCommonInits()
 {
   EvalInit();
-  RoadEffect   = MAX_ROAD_EFFECT;
+  RoadEffect = MAX_ROAD_EFFECT;
   PoliceEffect = MAX_POLICESTATION_EFFECT;
-  FireEffect   = MAX_FIRESTATION_EFFECT;
+  FireEffect = MAX_FIRESTATION_EFFECT;
   TaxFlag = 0;
   TaxFund = 0;
 }
@@ -497,17 +502,17 @@ void Micropolis::SetCommonInits()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::SetValves()
 {
-  // FIXME: Break the tax table out into configurable parameters.
+  // @todo Break the tax table out into configurable parameters.
   static const short TaxTable[21] = {
     200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
     -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
   };
-  static const float extMarkerParamTable[3] = {
+  static const float extMarketParamTable[3] = {
     1.2f, 1.1f, 0.98f
   };
-  assert(LEVEL_COUNT == LENGTH_OF(extMarkerParamTable));
+  assert(LEVEL_COUNT == LENGTH_OF(extMarketParamTable));
 
-  // TODO: Make configurable parameters.
+  // @todo Make configurable parameters.
   short ResPopDenom = 8;
   float BirthRate = 0.02;
   float MaxLaborBase = 1.3;
@@ -526,8 +531,8 @@ void Micropolis::SetValves()
   short MaxIValve = 1500;
   short MinIValve = -1500;
 
-  // FIXME: Break the interesting values out into public member
-  // variables so the user interface can display them.
+  // @todo Break the interesting values out into public member
+  //       variables so the user interface can display them.
   float Employment, Migration, Births, LaborBase, IntMarket;
   float Rratio, Cratio, Iratio;
   float NormResPop, PjResPop, PjComPop, PjIndPop;
@@ -560,7 +565,7 @@ void Micropolis::SetValves()
 
   Migration = NormResPop * (Employment - 1);
   Births = NormResPop * BirthRate;
-  PjResPop = NormResPop + Migration + Births;   /* Projected Res.Pop  */
+  PjResPop = NormResPop + Migration + Births;   // Projected res pop.
 
   // Compute LaborBase
   float temp = ComHis[1] + IndHis[1];
@@ -576,11 +581,11 @@ void Micropolis::SetValves()
   PjComPop = IntMarket * LaborBase;
 
   assert(gameLevel >= LEVEL_FIRST && gameLevel <= LEVEL_LAST);
-  PjIndPop = IndPop * LaborBase * extMarkerParamTable[gameLevel];
+  PjIndPop = IndPop * LaborBase * extMarketParamTable[gameLevel];
   PjIndPop = max(PjIndPop, MinPjIndPop);
 
   if (NormResPop > 0) {
-    Rratio = (float)PjResPop / (float)NormResPop; /* projected -vs- actual */
+    Rratio = (float)PjResPop / (float)NormResPop; // Projected -vs- actual.
   } else {
     Rratio = DefaultRratio;
   }
@@ -590,6 +595,7 @@ void Micropolis::SetValves()
   } else {
     Cratio = (float)PjComPop;
   }
+
   if (IndPop > 0) {
     Iratio = (float)PjIndPop / (float)IndPop;
   } else {
@@ -600,13 +606,13 @@ void Micropolis::SetValves()
   Cratio = min(Cratio, MaxCratio);
   Rratio = min(Iratio, MaxIratio);
 
-  /* global tax and game level effects */
+  // Global tax and game level effects.
   short z = min((short)(CityTax + gameLevel), MaxTax);
   Rratio = (Rratio - 1) * TaxTableScale + TaxTable[z];
   Cratio = (Cratio - 1) * TaxTableScale + TaxTable[z];
   Iratio = (Iratio - 1) * TaxTableScale + TaxTable[z];
 
-  /* ratios are velocity changes to valves  */
+  // Ratios are velocity changes to valves.
   if (Rratio > 0) {
     if (RValve < MaxRValve) {
       RValve += (short)Rratio;
@@ -647,16 +653,16 @@ void Micropolis::SetValves()
   CValve = clamp(CValve, MinCValve, MaxCValve);
   IValve = clamp(IValve, MinIValve, MaxIValve);
 
-  if ((ResCap) && (RValve > 0)) {
-    RValve = 0; /* Stad, Prt, Airprt  */
+  if (ResCap && (RValve > 0)) {
+    RValve = 0; // Need a stadium, so cap RValve.
   }
 
-  if ((ComCap) && (CValve > 0)) {
-    CValve = 0;
+  if (ComCap && (CValve > 0)) {
+    CValve = 0; // Need a airport, so cap CValve.
   }
 
-  if ((IndCap) && (IValve > 0)) {
-    IValve = 0;
+  if (IndCap && (IValve > 0)) {
+    IValve = 0; // Need an seaport, so cap IValve.
   }
 
   ValveFlag = 1;
@@ -848,7 +854,7 @@ void Micropolis::CollectTax()
 
   if (!TaxFlag) { // If the Tax Port is clear
 
-    // XXX: do something with z
+    // @todo Do something with z? Check old Mac code to see if it's used.
     z = AvCityTax / 48;  // post release
 
     AvCityTax = 0;
@@ -1063,10 +1069,10 @@ void Micropolis::DoRoad()
 
   if (tden != Density) { /* tden 0..2   */
     z = ((CChr9 - ROADBASE) & 15) + DenTab[Density];
-    z += CChr & (ALLBITS - ANIMBIT);
+    z |= CChr & (ALLBITS - ANIMBIT);
 
     if (Density > 0) {
-      z += ANIMBIT;
+      z |= ANIMBIT;
     }
 
     Map[SMapX][SMapY] = z;

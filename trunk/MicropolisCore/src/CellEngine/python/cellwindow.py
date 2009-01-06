@@ -152,10 +152,11 @@ class CellWindow(gtk.Window):
         engine.InitScreen(w, h)
         engine.SetRect(0, 0, w, h)
         engine.wrap = 3
-        engine.steps = 1
-        engine.frob = -4
-        #engine.neighborhood = 46
-        engine.neighborhood = 37
+        engine.steps = 7
+        engine.frob = 1
+        engine.neighborhood = 33
+        #engine.neighborhood = 37
+        #engine.LoadRule('WORMS')
         engine.Garble()
 
 

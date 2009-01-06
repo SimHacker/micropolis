@@ -116,7 +116,7 @@ void Micropolis::DoHospChur()
     HospPop++;
 
     if (!(CityTime & 15)) {
-      RepairZone (HOSPITAL, 3); /*post*/
+      RepairZone(HOSPITAL, 3); /*post*/
     }
 
     if (NeedHosp == -1) {
@@ -132,7 +132,7 @@ void Micropolis::DoHospChur()
     ChurchPop++;
 
     if (!(CityTime & 15)) {
-      RepairZone (CHURCH, 3); /*post*/
+      RepairZone(CHURCH, 3); /*post*/
     }
 
     if (NeedChurch == -1) {
@@ -768,6 +768,10 @@ bool Micropolis::ZonePlop(int base)
   }
 
   CChr = Map[SMapX][SMapY];
+  // @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
+  //       SetZPower to distinguish nuclear and coal power plants. 
+  //       Better yet, pass all parameters into SetZPower and rewrite
+  //       it not to use globals. 
   SetZPower();
   Map[SMapX][SMapY] |= ZONEBIT + BULLBIT;
 

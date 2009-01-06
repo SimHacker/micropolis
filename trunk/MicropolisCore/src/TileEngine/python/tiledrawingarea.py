@@ -1014,6 +1014,9 @@ class TileDrawingArea(gtk.DrawingArea):
                 #print "Activated panTool", panTool
                 return
 
+        if self.handleKey(key):
+            return
+
         tool = self.getActiveTool()
         if tool:
             if tool.handleKeyDown(self, event):
@@ -1031,6 +1034,13 @@ class TileDrawingArea(gtk.DrawingArea):
                 self.changeScale(self.scale * 0.5)
             elif key == ord('r'):
                 self.changeScale(1.0)
+
+
+    def handleKey(
+        self,
+        key):
+
+        pass
 
 
     def handleKeyRelease(

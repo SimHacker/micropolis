@@ -456,4 +456,23 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
             view.changeScale(view.scale / view.scrollWheelZoomScale)
 
 
+    def handleKey(
+        self,
+        key):
+        
+        print "*" * 72
+        print "HANDLEKEY", key
+
+        if key == 'm':
+            self.engine.heat_steps = 1
+            self.engine.heat_rule = 0
+            return True
+        elif key == 'n':
+            self.engine.heat_steps = 1
+            self.engine.heat_rule = 1
+            return True
+
+        return False
+
+
 ########################################################################
