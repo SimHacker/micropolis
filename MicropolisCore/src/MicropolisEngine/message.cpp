@@ -409,7 +409,7 @@ void Micropolis::SendMesAt(short mesgNum, short x, short y)
  * Forward the message from Micropolis::messagePort to the front-end.
  *
  * Convert the message number to text and display it. Also add a sound if
- * appropiate.
+ * appropriate.
  * @todo A picture (that is, a negative value in Micropolis::messagePort)
  *       causes 2 messages to be send. A picture, immediately followed by a
  *       text message. Why not do this in one step?

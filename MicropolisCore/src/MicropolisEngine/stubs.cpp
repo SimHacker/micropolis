@@ -108,7 +108,7 @@ Quad Micropolis::TickCount()
 #else
     struct timeval time;
     gettimeofday(&time, 0);
-    return (Quad)((time.tv_sec / 60) + (time.tv_usec * 1000000 / 60));
+    return (Quad)((time.tv_sec * 60) + (time.tv_usec * 60) / 1000000);
 #endif
 }
 
