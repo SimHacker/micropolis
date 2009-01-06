@@ -147,5 +147,5 @@ enum Stri301 {
     STR301_LAST = 60, ///< Last valid message
 
     STR301_SCENARIO_WON = 100,  ///< You won the scenario
-    STR301_SCENARIO_LOST = 200, ///< Toy lose the scenario
+    STR301_SCENARIO_LOST = 200, ///< You lose the scenario
 };

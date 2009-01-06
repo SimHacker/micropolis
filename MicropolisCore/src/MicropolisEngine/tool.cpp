@@ -910,18 +910,18 @@ int Micropolis::bulldozerTool(short x, short y)
             switch (checkSize(temp)) {
 
             case 3:
-                MakeSound("city", "Explosion-High");
+                MakeSound("city", "Explosion-High", x, y);
                 putRubble(x - 1, y - 1, 3);
                 break;
 
             case 4:
-                MakeSound("city", "Explosion-Low");
+                MakeSound("city", "Explosion-Low", x, y);
                 putRubble(x - 1, y - 1, 4);
                 break;
 
             case 6:
-                MakeSound("city", "Explosion-High");
-                MakeSound("city", "Explosion-Low");
+                MakeSound("city", "Explosion-High", x, y);
+                MakeSound("city", "Explosion-Low", x, y);
                 putRubble(x - 1, y - 1, 6);
                 break;
 
@@ -941,17 +941,17 @@ int Micropolis::bulldozerTool(short x, short y)
             switch (zoneSize) {
 
             case 3:
-                MakeSound("city", "Explosion-High");
+                MakeSound("city", "Explosion-High", x, y);
                 break;
 
             case 4:
-                MakeSound("city", "Explosion-Low");
+                MakeSound("city", "Explosion-Low", x, y);
                 putRubble(x + deltaH - 1, y + deltaV - 1, 4);
                 break;
 
             case 6:
-                MakeSound("city", "Explosion-High");
-                MakeSound("city", "Explosion-Low");
+                MakeSound("city", "Explosion-High", x, y);
+                MakeSound("city", "Explosion-Low", x, y);
                 putRubble(x + deltaH - 1, y + deltaV - 1, 6);
                 break;
 
@@ -1348,11 +1348,13 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
     if (result == -1) {
         ClearMes();
         SendMes(STR301_BULLDOZE_AREA_FIRST);
-        MakeSound("edit", "UhUh");
+	// @todo: Multi player: This sound should only be heard by the user who called this function. 
+        MakeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
         ClearMes();
         SendMes(STR301_NOT_ENOUGH_FUNDS);
-        MakeSound("edit", "Sorry");
+	// @todo: Multi player: This sound should only be heard by the user who called this function. 
+        MakeSound("interface", "Sorry", x <<4, y <<4);
     }
 
     sim_skip = 0;

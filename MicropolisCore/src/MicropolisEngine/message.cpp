@@ -371,8 +371,8 @@ bool Micropolis::SendMes(int mesgNum)
     if (mesgNum < 0) {
         if (mesgNum != LastPicNum) {
             messagePort = mesgNum;
-            mesX = 0;
-            mesY = 0;
+            mesX = -1;
+            mesY = -1;
             LastPicNum = mesgNum;
             return true;
         }
@@ -427,7 +427,7 @@ void Micropolis::doMessage()
         MesNum = messagePort;
         messagePort = 0;
         LastMesTime = TickCount();
-        doMakeSound((MesNum < 0) ? -MesNum : MesNum);
+        doMakeSound((MesNum < 0) ? -MesNum : MesNum, mesX, mesY);
     } else {
         if (MesNum == 0) {
             return;
@@ -454,10 +454,10 @@ void Micropolis::doMessage()
 
         GetIndString(messageStr, 301, MesNum);
 
-        if (autoGo && (mesX != 0 || mesY != 0)) {
+        if (autoGo && mesX != -1 && mesY != -1) {
             DoAutoGoto(mesX, mesY, messageStr);
-            mesX = 0;
-            mesY = 0;
+            mesX = -1;
+            mesY = -1;
         } else {
             SetMessageField(messageStr);
         }
@@ -476,7 +476,7 @@ void Micropolis::doMessage()
 
         messagePort = pictId; /* resend text message */
 
-        if (autoGo && (mesX != 0 || mesY != 0)) {
+        if (autoGo && mesX != -1 && mesY != -1) {
 
             DoAutoGoto(mesX, mesY, messageStr);
             mesX = 0;
@@ -486,21 +486,21 @@ void Micropolis::doMessage()
 }
 
 /**
- * Make a sound for message \a mesNum if appropiate.
+ * Make a sound for message \a mesgNum if appropriate.
  * @param mesgNum Message number displayed
  */
-void Micropolis::doMakeSound(int mesgNum)
+void Micropolis::doMakeSound(int mesgNum, int x, int y)
 {
     assert(mesgNum >= 0);
 
     switch (mesgNum) {
         case STR301_TRAFFIC_JAMS:
             if (Rand(5) == 1) {
-                MakeSound("city", "HonkHonk-Med");
+	        MakeSound("city", "HonkHonk-Med", x, y);
             } else if (Rand(5) == 1) {
-                MakeSound("city", "HonkHonk-Low");
+                MakeSound("city", "HonkHonk-Low", x, y);
             } else if (Rand(5) == 1) {
-                MakeSound("city", "HonkHonk-High");
+                MakeSound("city", "HonkHonk-High", x, y);
             }
             break;
 
@@ -512,26 +512,26 @@ void Micropolis::doMakeSound(int mesgNum)
         case STR301_SHIP_CRASHED:
         case STR301_TRAIN_CRASHED:
         case STR301_HELICOPTER_CRASHED:
-            MakeSound("city", "Siren");
+	    MakeSound("city", "Siren", x, y);
             break;
 
         case  STR301_MONSTER_SIGHTED:
-            MakeSound("city", "Monster -speed [MonsterSpeed]");
+            MakeSound("city", "Monster", x, y);
             break;
 
         case STR301_FIREBOMBING:
-            MakeSound("city", "Explosion-Low");
-            MakeSound("city", "Siren");
+            MakeSound("city", "Explosion-Low", x, y);
+            MakeSound("city", "Siren", x, y);
             break;
 
         case STR301_NUCLEAR_MELTDOWN:
-            MakeSound("city", "Explosion-High");
-            MakeSound("city", "Explosion-Low");
-            MakeSound("city", "Siren");
+            MakeSound("city", "Explosion-High", x, y);
+            MakeSound("city", "Explosion-Low", x, y);
+            MakeSound("city", "Siren", x, y);
             break;
 
         case STR301_RIOTS_REPORTED:
-            MakeSound("city", "Siren");
+            MakeSound("city", "Siren", x, y);
             break;
     }
 }
