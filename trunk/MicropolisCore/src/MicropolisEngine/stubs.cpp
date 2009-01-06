@@ -228,12 +228,12 @@ void Micropolis::Callback(const char *name, const char *params, ...)
 
 
 /**
- * Tell the front-end to show an earth quake to the user (shaking the map for
+ * Tell the front-end to show an earthquake to the user (shaking the map for
  * some time).
  */
 void Micropolis::DoEarthquake()
 {
-    MakeSound("city", "Explosion-Low");
+    MakeSound("city", "Explosion-Low"); // Make the sound all over.
 
     int magnitude = Rand(10) + 3;
     Callback("UIStartEarthquake", "d", magnitude);
@@ -264,14 +264,21 @@ void Micropolis::InitializeSound()
 
 /**
  * Instruct the front-end to make a sound.
- * @param channel Name of the channel.
+ * @param channel Name of the sound channel, which can effect the 
+ *                sound (location, volume, spatialization, etc).
+ *                Use "city" for city sounds effects, and "interface" 
+ *                for user interface sounds.
  * @param sound   Name of the sound.
- * @todo Figure out what 'name of the channel' actually is and whether we need
- *       it.
+ * @param x       Tile X position of sound, or -1 for everywhere.
+ * @param y       Tile Y position of sound, or -1 for everywhere.
  */
-void Micropolis::MakeSound(const char *channel, const char *sound)
+void Micropolis::MakeSound(
+    const char *channel, 
+    const char *sound,
+    int x,
+    int y)
 {
-    Callback( "UIMakeSound", "ss", channel, sound);
+    Callback( "UIMakeSound", "ssdd", channel, sound, x, y);
 }
 
 
@@ -295,10 +302,11 @@ int Micropolis::getTile(int x, int y)
 
 /**
  * Get the address of the internal buffer containing the map.
+ *
+ * This is used to enable the tile engine to access the
+ * tiles directly.
+ *
  * @return Pointer to the start of the world map buffer.
- * @todo Why does this function exist? Internal function can access it
- *       directly, external functions should not need it.
- * @todo Find out where this function is used.
  */
 void *Micropolis::getMapBuffer()
 {

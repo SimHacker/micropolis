@@ -2254,7 +2254,8 @@ public:
   void SendMesAt(short Mnum, short x, short y);
 
   void doMessage();
-  void doMakeSound(int mesgNum);
+
+  void doMakeSound(int mesgNum, int x, int y);
 
   void DoAutoGoto(short x, short y, char *msg);
 
@@ -2449,7 +2450,7 @@ public:
   short DisasterWait; ///< Count-down timer for the disaster
 
   Scenario ScoreType; ///< The type of score table to use
-  short ScoreWait; ///< Time to wait before computing the scoew
+  short ScoreWait; ///< Time to wait before computing the score
 
   short PwrdZCnt; ///< Number of powered tiles in all zone
   short unPwrdZCnt; ///< Number of unpowered tiles in all zones
@@ -2746,7 +2747,9 @@ public:
 
   void MakeSound(
     const char *channel,
-    const char *sound);
+    const char *sound,
+    int x=-1,
+    int y=-1);
 
   int getTile(
         int x,

@@ -22,7 +22,7 @@ Callback("UIDoPendTool", "ddd", tool, x, y);
 Callback("UIDropFireBombs", "");
 Callback("UIInitializeSound", "");
 Callback("UILoseGame", "");
-Callback("UIMakeSound", "ss", channel, sound);
+Callback("UIMakeSound", "ssdd", channel, sound, x, y);
 Callback("UINewGame", "");
 Callback("UIPlayNewCity", "");
 Callback("UIReallyStartGame", "");

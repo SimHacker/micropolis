@@ -405,6 +405,7 @@ void Micropolis::DrawSprite(SimSprite *sprite)
  */
 short Micropolis::GetChar(int x, int y)
 {
+  // Convert sprite coordinates to tile coordinates.
   x >>= 4;
   y >>= 4;
 
@@ -785,6 +786,7 @@ void Micropolis::DoCopterSprite(
 
   if (sprite->sound_count == 0) { /* send report  */
 
+    // Convert sprite coordinates to traffic density map coordinates.
     x = (sprite->x + 48) >>5;
     y = sprite->y >>5;
 
@@ -792,9 +794,11 @@ void Micropolis::DoCopterSprite(
 
       /* Don changed from 160 to 170 to shut the #$%#$% thing up! */
 
+      int chopperX = (x <<1) + 1;
+      int chopperY = (y <<1) + 1;
       if ((TrfDensity[x][y] > 170) && ((Rand16() & 7) == 0)) {
-        SendMesAt(-STR301_HEAVY_TRAFFIC, (x <<1) + 1, (y <<1) + 1);
-        MakeSound("city", "HeavyTraffic"); /* chopper */
+        SendMesAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
+        MakeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
         sprite->sound_count = 200;
       }
 
@@ -906,10 +910,14 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
     if ((Rand16() & 3) == 1) {
 
+      // Convert sprite coordinates to tile coordinates.
+      int shipX = sprite->x >>4;
+      int shipY = sprite->y >>4;
+
       if (ScenarioID == SC_SAN_FRANCISCO && Rand(10) < 5) {
-        MakeSound("city", "HonkHonk-Low -speed 80");
+        MakeSound("city", "FogHorn-Low", shipX, shipY);
       } else {
-        MakeSound("city", "HonkHonk-Low");
+        MakeSound("city", "HonkHonk-Low", shipX, shipY);
       }
 
     }
@@ -1138,7 +1146,10 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
           d = 4;
 
           if (!sprite->sound_count) {
-            MakeSound("city", "Monster -speed [MonsterSpeed]"); /* monster */
+	    // Convert sprite coordinates to tile coordinates.
+	    int monsterX = sprite->x >>4;
+	    int monsterY = sprite->y >>4;
+            MakeSound("city", "Monster", monsterX, monsterY); /* monster */
             sprite->sound_count = 50 + Rand(100);
           }
 
@@ -1309,7 +1320,10 @@ void Micropolis::DoExplosionSprite(SimSprite *sprite)
   if ((Cycle & 1) == 0) {
 
     if (sprite->frame == 1) {
-      MakeSound("city", "Explosion-High"); /* explosion */
+      // Convert sprite coordinates to tile coordinates.
+      int explosionX = sprite->x >>4;
+      int explosionY = sprite->y >>4;
+      MakeSound("city", "Explosion-High", explosionX, explosionY); /* explosion */
       x = (sprite->x >>4) + 3;
       y = (sprite->y >>4);
       SendMesAt(STR301_EXPLOSION_REPORTED, x, y);
@@ -1695,7 +1709,9 @@ void Micropolis::ExplodeSprite(SimSprite *sprite)
 
   }
 
-  MakeSound("city", "Explosion-High"); /* explosion */
+  // Convert sprite coordinates to tile coordinates.
+  MakeSound("city", "Explosion-High", x, y); /* explosion */
+
   return;
 }
 
