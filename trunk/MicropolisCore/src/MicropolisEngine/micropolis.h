@@ -2342,7 +2342,7 @@ public:
 
   char *HomeDir;
 
-  /** Name of the sub-directory where the resources are loacted. */
+  /** Name of the sub-directory where the resources are located. */
   char *ResourceDir;
 
   char *KeyDir;

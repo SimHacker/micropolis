@@ -210,7 +210,7 @@ void Micropolis::GetIndString(char *str, int id, short num)
             }
         }
 
-        // XXX What about termnination of last line?
+        // XXX What about termination of last line?
 
         st->lines = lines;
         st->strings = (char **)NewPtr(size * sizeof(char *));
