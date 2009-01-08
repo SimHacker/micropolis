@@ -73,9 +73,7 @@
 
 /* comefrom: drawTaxesCollected incBoxValue decBoxValue drawCurrentFunds
              drawActualBox UpdateFunds updateCurrentCost */
-void Micropolis::makeDollarDecimalStr(
-  char *numStr,
-  char *dollarStr)
+void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
 {
   register short leftMostSet;
   short numOfDigits;
@@ -160,8 +158,7 @@ void Micropolis::Resume()
 }
 
 
-void Micropolis::setSpeed(
-  short speed)
+void Micropolis::setSpeed(short speed)
 {
   if (speed < 0) {
     speed = 0;
@@ -186,8 +183,7 @@ void Micropolis::setSpeed(
 }
 
 
-void Micropolis::setSkips(
-  int skips)
+void Micropolis::setSkips(int skips)
 {
   sim_skips = skips;
   sim_skip = 0;
@@ -248,11 +244,11 @@ void Micropolis::setCityName(const std::string &name)
     int i;
     int n = name.length();
     for (i = 0; i < n; i++) {
-	char ch = name[i];
-	if (!isalnum(ch)) {
-	    ch = '_';
-	}
-	cleanName.push_back(ch);
+        char ch = name[i];
+        if (!isalnum(ch)) {
+            ch = '_';
+        }
+        cleanName.push_back(ch);
     }
 
     setCleanCityName(cleanName);
@@ -270,12 +266,11 @@ void Micropolis::setCleanCityName(const std::string &name)
 }
 
 
-void Micropolis::SetYear(
-  int year)
+void Micropolis::SetYear(int year)
 {
     // Must prevent year from going negative, since it screws up the non-floored modulo arithmetic.
     if (year < StartingYear) {
-	year = StartingYear;
+        year = StartingYear;
     }
 
     year = (year - StartingYear) - (CityTime / 48);
@@ -293,17 +288,6 @@ int Micropolis::CurrentYear()
 void Micropolis::DoNewGame()
 {
     Callback("UINewGame", "");
-}
-
-
-void Micropolis::DoGeneratedCityImage(
-    char *name,
-    int time,
-    int pop,
-    char *cityClassName,
-    int score)
-{
-    /* @todo Print city. */
 }
 
 

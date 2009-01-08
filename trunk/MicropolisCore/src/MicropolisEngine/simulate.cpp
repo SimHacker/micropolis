@@ -913,9 +913,7 @@ void Micropolis::UpdateFundEffects()
 
 
 /* comefrom: Simulate DoSimInit */
-void Micropolis::MapScan(
-  int x1,
-  int x2)
+void Micropolis::MapScan(int x1, int x2)
 {
   register short x, y;
 

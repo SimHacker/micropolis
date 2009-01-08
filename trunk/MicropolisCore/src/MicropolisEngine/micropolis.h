@@ -769,45 +769,45 @@ static inline int absoluteValue(int val)
 
 
 #define ABS(x) \
-        (((x) < 0) ? (-(x)) : (x))
+    (((x) < 0) ? (-(x)) : (x))
 
 #define TILE_IS_NUCLEAR(tile) \
-        ((tile & LOMASK) == NUCLEAR)
+    ((tile & LOMASK) == NUCLEAR)
 
 #define TILE_IS_VULNERABLE(tile) \
-        (!(tile & ZONEBIT) && \
-         ((tile & LOMASK) >= RBRDR) && \
-         ((tile & LOMASK) <= LASTZONE))
+    (!(tile & ZONEBIT) && \
+     ((tile & LOMASK) >= RBRDR) && \
+     ((tile & LOMASK) <= LASTZONE))
 
 #define TILE_IS_ARSONABLE(tile) \
-        (!(tile & ZONEBIT) && \
-         ((tile & LOMASK) >= RBRDR) && \
-         ((tile & LOMASK) <= LASTZONE))
+    (!(tile & ZONEBIT) && \
+     ((tile & LOMASK) >= RBRDR) && \
+     ((tile & LOMASK) <= LASTZONE))
 
 #define TILE_IS_RIVER_EDGE(tile) \
-        (((tile & LOMASK) >= FIRSTRIVEDGE) && \
-         ((tile & LOMASK) <= LASTRIVEDGE))
+    (((tile & LOMASK) >= FIRSTRIVEDGE) && \
+     ((tile & LOMASK) <= LASTRIVEDGE))
 
 #define TILE_IS_FLOODABLE(tile) \
-        ((tile == DIRT) || \
-         ((tile & BULLBIT) && \
-          (tile & BURNBIT)))
+    ((tile == DIRT) || \
+     ((tile & BULLBIT) && \
+      (tile & BURNBIT)))
 
 #define TILE_IS_RUBBLE(tile) \
-         (((tile & LOMASK) >= RUBBLE) && \
-          ((tile & LOMASK) <= LASTRUBBLE)))
+     (((tile & LOMASK) >= RUBBLE) && \
+      ((tile & LOMASK) <= LASTRUBBLE)))
 
 #define TILE_IS_FLOODABLE2(tile) \
-        ((tile == 0) || \
-         (tile & BURNBIT) || \
-         TILE_IS_RUBBLE(tile))
+    ((tile == 0) || \
+     (tile & BURNBIT) || \
+     TILE_IS_RUBBLE(tile))
 
 #define NeutralizeRoad(tile) \
-                tile &= LOMASK; \
-        if ((tile >= 64) && \
-            (tile <= 207)) { \
-          tile = (tile & 0x000F) + 64; \
-        }
+    tile &= LOMASK; \
+    if ((tile >= 64) && \
+	(tile <= 207)) { \
+        tile = (tile & 0x000F) + 64; \
+    }
 
 /**
  * Compute length of array
@@ -846,11 +846,11 @@ typedef unsigned long UQuad;
 // This is the signature of the scripting language independent
 // callback function.
 typedef void (*CallbackFunction)(
-  Micropolis *micropolis,
-  void *data,
-  const char *name,
-  const char *params,
-  va_list arglist);
+    Micropolis *micropolis,
+    void *data,
+    const char *name,
+    const char *params,
+    va_list arglist);
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -861,11 +861,11 @@ class Resource {
 
 public:
 
-  char *buf; ///< Pointer to loaded file data.
-  Quad size; ///< Size of the loaded file data.
-  char name[4]; ///< Name of the resource (not zero-terminated).
-  Quad id; ///< Identification of the resource.
-  Resource *next; ///< Pointer to next #Resource.
+    char *buf; ///< Pointer to loaded file data.
+    Quad size; ///< Size of the loaded file data.
+    char name[4]; ///< Name of the resource (not zero-terminated).
+    Quad id; ///< Identification of the resource.
+    Resource *next; ///< Pointer to next #Resource.
 };
 
 /** Table of strings. */
@@ -873,10 +873,10 @@ class StringTable {
 
 public:
 
-  Quad id; ///< Identification of the string table.
-  int lines; ///< Number of lines in the table.
-  char **strings; ///< Array of pointers to start of each line.
-  StringTable *next; ///< Pointer to next #StringTable.
+    Quad id; ///< Identification of the string table.
+    int lines; ///< Number of lines in the table.
+    char **strings; ///< Array of pointers to start of each line.
+    StringTable *next; ///< Pointer to next #StringTable.
 };
 
 
@@ -888,32 +888,32 @@ class SimSprite {
 
 public:
 
-  SimSprite *next; ///< Pointer to next #SimSprite object in the list.
-  char *name; ///< Name of the sprite.
-  int type; ///< Type of the sprite (TRA -- BUS).
-  int frame; ///< Frame (\c 0 means non-active sprite)
-  int x; ///< X coordinate of the sprite in pixels?
-  int y; ///< Y coordinate of the sprite in pixels?
-  int width;
-  int height;
-  int x_offset;
-  int y_offset;
-  int x_hot; ///< Offset of the hot-spot of the sprite relative to #x?
-  int y_hot; ///< Offset of the hot-spot of the sprite relative to #y?
-  int orig_x;
-  int orig_y;
-  int dest_x; ///< Destination X coordinate of the sprite.
-  int dest_y; ///< Destination Y coordinate of the sprite.
-  int count;
-  int sound_count;
-  int dir;
-  int new_dir;
-  int step;
-  int flag;
-  int control;
-  int turn;
-  int accel;
-  int speed;
+    SimSprite *next; ///< Pointer to next #SimSprite object in the list.
+    char *name; ///< Name of the sprite.
+    int type; ///< Type of the sprite (TRA -- BUS).
+    int frame; ///< Frame (\c 0 means non-active sprite)
+    int x; ///< X coordinate of the sprite in pixels?
+    int y; ///< Y coordinate of the sprite in pixels?
+    int width;
+    int height;
+    int x_offset;
+    int y_offset;
+    int x_hot; ///< Offset of the hot-spot of the sprite relative to #x?
+    int y_hot; ///< Offset of the hot-spot of the sprite relative to #y?
+    int orig_x;
+    int orig_y;
+    int dest_x; ///< Destination X coordinate of the sprite.
+    int dest_y; ///< Destination Y coordinate of the sprite.
+    int count;
+    int sound_count;
+    int dir;
+    int new_dir;
+    int step;
+    int flag;
+    int control;
+    int turn;
+    int accel;
+    int speed;
 };
 
 /**
@@ -929,589 +929,589 @@ class Micropolis {
 public:
 
 
-  ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
 
 
-  Micropolis();
+    Micropolis();
 
-  ~Micropolis();
+    ~Micropolis();
 
-  void init();
+    void init();
 
-  void destroy();
+    void destroy();
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // allocate.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // allocate.cpp
 
 public:
 
 
-  /**
-   * Communication variable with map scan x position.
-   *
-   * Used all over.
-   */
-  short SMapX;
-
-
-  /**
-   * Communication variable with map scan y position.
-   *
-   * Used all over.
-   */
-  short SMapY;
-
-  /**
-   * Tile at SMapX, SMapY, raw.
-   *
-   * Used all over.
-   */
-  short CChr;
-
-  /**
-   * Tile at SMapX, SMapY, masked with TILEMASK.
-   *
-   * Used all over.
-   */
-  short CChr9;
-
-  /**
-   * Number of road tiles in the game.
-   *
-   * Bridges count as 4 tiles, and high density traffic counts as
-   * 2 tiles.
-   */
-  short RoadTotal;
-
-  /**
-   * Total number of rails.
-   *
-   * No penalty for bridges or high traffic density.
-   */
-  short RailTotal;
-
-  /**
-   * Number of fires.
-   */
-  short FirePop;
-
-  /**
-   * Residential zone population.
-   *
-   * Depends on level of zone development.
-   */
-  short ResPop;
-
-  /**
-   * Commercial zone population.
-   *
-   * Depends on level of zone development.
-   */
-  short ComPop;
-
-  /**
-   * Industrial zone population.
-   *
-   * Depends on level of zone development.
-   */
-  short IndPop;
-
-  /**
-   * Total population.
-   *
-   * Includes residential pop / 8 plus industrial pop plus commercial
-   * pop.
-   */
-  short TotalPop;
-
-  /**
-   * Last total population.
-   *
-   * Not used?
-   */
-  short LastTotalPop;
-
-  /**
-   * Residential zone population.
-   */
-  short ResZPop;
-
-  /**
-   * Commercial zone population.
-   */
-  short ComZPop;
-
-  /**
-   * Industrial zone population.
-   */
-  short IndZPop;
-
-  /**
-   * Total zone population.
-   */
-  short TotalZPop;
-
-  /**
-   * Hospital population.
-   */
-  short HospPop;
-
-  /**
-   * Church population.
-   */
-  short ChurchPop;
-
-  /**
-   * Stadium population.
-   */
-  short StadiumPop;
-
-  /**
-   * Police station population.
-   */
-  short PolicePop;
-
-  /**
-   * Fire station population.
-   */
-  short FireStPop;
-
-  /**
-   * Coal power plant population.
-   */
-  short CoalPop;
-
-  /**
-   * Nuclear power plant population.
-   */
-  short NuclearPop;
-
-  /**
-   * Seaport population.
-   */
-  short PortPop;
-
-  /**
-   * Airport population.
-   */
-  short APortPop;
-
-  /**
-   * Need hospital?
-   *
-   * 0 if no, 1 if yes, -1 if too many.
-   */
-  short NeedHosp;
-
-  /**
-   * Need church?
-   *
-   * 0 if no, 1 if yes, -1 if too many.
-   */
-  short NeedChurch;
-
-  /**
-   * Average crime.
-   *
-   * Affected by land value, population density, police station
-   * distance.
-   */
-  short CrimeAverage;
-
-  /**
-   * Average pollution.
-   *
-   * Affected by PollutionMem, which is effected by traffic, fire,
-   * radioactivity, industrial zones, seaports, airports, power
-   * plants.
-   */
-  short PolluteAverage;
-
-  /**
-   * Land value average.
-   *
-   * Affected by distance from city center, development density
-   * (terrainMem), pollution, and crime.
-   */
-  short LVAverage;
-
-  /** @name Dates */
-  //@{
-
-  /**
-
-   * City time tick counter. 48 ticks per year.
-   *
-   * Four ticks per 12 months, so one tick is about a week (7.6 days).
-   */
-  Quad CityTime;
-
-  /**
-   * City month, 4 ticks per month.
-   */
-  Quad CityMonth;
-
-  /**
-   * City year, (Micropolis::CityTime / 48) + Micropolis::StartingYear.
-   */
-  Quad CityYear;
-
-  /**
-   * City starting year.
-   */
-  short StartingYear;
-
-  //@}
-
-  /* Maps */
-
-  /**
-   * Two-dimensional array of map tiles.
-   *
-   * Map[0 <= x < 120][0 <= y < 100]
-   */
-  short *Map[WORLD_X];
-
-  /**
-   * 10 year residential history maximum value.
-   */
-  short ResHisMax;
-
-  /**
-   * 120 year residential history maximum value.
-   */
-  short Res2HisMax;
-
-  /**
-   * 10 year commercial history maximum value.
-   */
-  short ComHisMax;
-
-  /**
-   * 120 year commercial history maximum value.
-   */
-  short Com2HisMax;
-
-  /**
-   * 10 year industrial history maximum value.
-   */
-  short IndHisMax;
-
-  /**
-   * 120 year industrial history maximum value.
-   */
-  short Ind2HisMax;
-
-  /**
-   * Census changed flag.
-   *
-   * Need to redraw census dependent stuff.
-   */
-  bool censusChanged;
-
-  /**
-   * Message number to display asynchronously.
-   *
-   * Clean this up to use a simpler interface, and a queue.
-   * Might need to collapse some messages.
-   */
-  short messagePort;
-
-  /**
-   * Message X location.
-   */
-  short mesX;
-
-  /**
-   * Message Y location.
-   */
-  short mesY;
-
-  /** @name Budget */
-  //@{
-
-  /**
-   * Spending on roads.
-   */
-  Quad RoadSpend;
-
-  /**
-   * Spending on police stations.
-   */
-  short PoliceSpend;
-
-  /**
-   * Spending on fire stations.
-   */
-  short FireSpend;
-
-  /**
-   * Requested funds for roads.
-   *
-   * Depends on number of roads, rails, and game level.
-   */
-  Quad RoadFund;
-
-  /**
-   * Requested funds for police stations.
-   *
-   * Depends on police station population.
-   */
-  short PoliceFund;
-
-  /**
-   * Requested funds for fire stations.
-   *
-   * Depends on fire station population.
-   */
-  short FireFund;
-
-  /**
-   * Radio of road spending over road funding, times 32.
-   */
-  short RoadEffect;
-
-  /**
-   * Radio of police spending over road funding, times 32.
-   */
-  short PoliceEffect;
-
-  /**
-   * Radio of fire spending over road funding, times 32.
-   */
-  short FireEffect;
-
-  /**
-   * Funds from taxes.
-   *
-   * Depends on total population, average land value, city tax, and
-   * game level.
-   */
-  Quad TaxFund;
-
-  /**
-   * City tax rate.
-   */
-  short CityTax;
-
-  /**
-   * Tax port flag.
-   *
-   * Apparently never used. CollectTax checks it.
-   *
-   * @todo Apparently TaxFlag is never set to true in MicropolisEngine
-   *       or the TCL code.
-   * @todo Don should check old Mac code to see if it's ever set.
-   * @todo Variable is always \c 0. Decide whether to keep it, and if yes,
-   *       create means to modify its value
-   * @todo It looks like a boolean. If we keep it, modify accordingly
-   */
-  short TaxFlag;
-
-  //@}
-
-  /**
-   * Population density map.
-   */
-  Byte *PopDensity[HWLDX];
-
-  /**
-   * Traffic map.
-   */
-  Byte *TrfDensity[HWLDX];
-
-  /**
-   * Pollution map.
-   */
-  Byte *PollutionMem[HWLDX];
-
-  /**
-   * Land value mep.
-   */
-  Byte *LandValueMem[HWLDX];
-
-  /**
-   * Crime map.
-   */
-  Byte *CrimeMem[HWLDX];
-
-  /**
-   * Temporary map.
-   *
-   * Used to smooth population density, pollution.
-   */
-  Byte *tem[HWLDX];
-
-  /**
-   * Temporary map 2.
-   *
-   * Used to smooth population density, pollution.
-   */
-  Byte *tem2[HWLDX];
-
-  /**
-   * Terrain development  density map.
-   *
-   * Used to calculate land value.
-   */
-  Byte *TerrainMem[QWX];
-
-  /**
-   * Temporary map Q.
-   *
-   * Used to smooth development density, for TerrainMem.
-   */
-  Byte *Qtem[QWX];
-
-  /**
-   * Rate of growth map.
-   *
-   * Affected by DecROGMem, incROG called by zones. Decreased by fire
-   * explosions from sprites, fire spreading. Doesn't seem to
-   * actually feed back into the simulation. Output only.
-   */
-  short RateOGMem[SmX][SmY];
-
-  /**
-   * Fire station map.
-   *
-   * Effectivity of fire control in this area.
-   *
-   * Affected by fire stations, powered, fire funding ratio, road
-   * access. Affects how long fires burn.
-   * @see #FireEffect
-   */
-  short FireStMap[SmX][SmY];
-
-  /**
-   * Police station map.
-   *
-   * Effectivity of police in fighting crime.
-   *
-   * Affected by police stations, powered, police funding ratio, road
-   * access. Affects crime rate.
-   * @see #PoliceEffect
-   */
-  short PoliceMap[SmX][SmY];
-
-  /**
-   * Copy of police station map to display.
-   */
-  short PoliceMapEffect[SmX][SmY];
-
-  /**
-   * Copy of fire station map to display.
-   */
-  short FireRate[SmX][SmY];
-
-  /**
-   * Commercial rate map.
-   *
-   * Depends on distance to city center. Affects commercial zone
-   * evaluation.
-   */
-  short ComRate[SmX][SmY];
-
-  /**
-   * Temporary array for smoothing fire and police station maps.
-   */
-  short STem[SmX][SmY];
-
-  /**
-   * Memory for TerrainMem array.
-   */
-  Ptr terrainBase;
-
-  /**
-   * Memory for Qtem array.
-   */
-  Ptr qTemBase;
-
-  /**
-   * Memory for tem array.
-   */
-  Ptr tem1Base;
-
-  /**
-   * Memory for tem2 array.
-   */
-  Ptr tem2Base;
-
-  /**
-   * Memory for PopDensity array.
-   */
-  Ptr popPtr;
-
-  /**
-   * Memory for TrfDensity array.
-   */
-  Ptr trfPtr;
-
-  /**
-   * Memory for PollutionMem array.
-   */
-  Ptr polPtr;
-
-  /**
-   * Memory for LandValueMem array.
-   */
-  Ptr landPtr;
-
-  /**
-   * Memory for CrimeMem array.
-   */
-  Ptr crimePtr;
-
-  /**
-   * Memory for Map array.
-   */
-  unsigned short *mapPtr;
-
-  /**
-   * Residential population history.
-   */
-  short *ResHis;
-
-  /**
-   * Commercial population history.
-   */
-  short *ComHis;
-
-  /**
-   * Industrial population history.
-   */
-  short *IndHis;
-
-  /**
-   * Money history.
-   */
-  short *MoneyHis;
-
-  /**
-   * Pollution history.
-   */
-  short *PollutionHis;
-
-  /**
-   * Crime history.
-   */
-  short *CrimeHis;
-
-  /**
-   * Memory used to save miscelaneous game values in save file.
-   */
-  short *MiscHis;
-
-  /**
-   * Power distribution bitmap.
-   */
-  short *PowerMap;
-
-
-  void initMapArrays();
-
-  void destroyMapArrays();
+    /**
+     * Communication variable with map scan x position.
+     *
+     * Used all over.
+     */
+    short SMapX;
+
+
+    /**
+     * Communication variable with map scan y position.
+     *
+     * Used all over.
+     */
+    short SMapY;
+
+    /**
+     * Tile at SMapX, SMapY, raw.
+     *
+     * Used all over.
+     */
+    short CChr;
+
+    /**
+     * Tile at SMapX, SMapY, masked with TILEMASK.
+     *
+     * Used all over.
+     */
+    short CChr9;
+
+    /**
+     * Number of road tiles in the game.
+     *
+     * Bridges count as 4 tiles, and high density traffic counts as
+     * 2 tiles.
+     */
+    short RoadTotal;
+
+    /**
+     * Total number of rails.
+     *
+     * No penalty for bridges or high traffic density.
+     */
+    short RailTotal;
+
+    /**
+     * Number of fires.
+     */
+    short FirePop;
+
+    /**
+     * Residential zone population.
+     *
+     * Depends on level of zone development.
+     */
+    short ResPop;
+
+    /**
+     * Commercial zone population.
+     *
+     * Depends on level of zone development.
+     */
+    short ComPop;
+
+    /**
+     * Industrial zone population.
+     *
+     * Depends on level of zone development.
+     */
+    short IndPop;
+
+    /**
+     * Total population.
+     *
+     * Includes residential pop / 8 plus industrial pop plus commercial
+     * pop.
+     */
+    short TotalPop;
+
+    /**
+     * Last total population.
+     *
+     * Not used?
+     */
+    short LastTotalPop;
+
+    /**
+     * Residential zone population.
+     */
+    short ResZPop;
+
+    /**
+     * Commercial zone population.
+     */
+    short ComZPop;
+
+    /**
+     * Industrial zone population.
+     */
+    short IndZPop;
+
+    /**
+     * Total zone population.
+     */
+    short TotalZPop;
+
+    /**
+     * Hospital population.
+     */
+    short HospPop;
+
+    /**
+     * Church population.
+     */
+    short ChurchPop;
+
+    /**
+     * Stadium population.
+     */
+    short StadiumPop;
+
+    /**
+     * Police station population.
+     */
+    short PolicePop;
+
+    /**
+     * Fire station population.
+     */
+    short FireStPop;
+
+    /**
+     * Coal power plant population.
+     */
+    short CoalPop;
+
+    /**
+     * Nuclear power plant population.
+     */
+    short NuclearPop;
+
+    /**
+     * Seaport population.
+     */
+    short PortPop;
+
+    /**
+     * Airport population.
+     */
+    short APortPop;
+
+    /**
+     * Need hospital?
+     *
+     * 0 if no, 1 if yes, -1 if too many.
+     */
+    short NeedHosp;
+
+    /**
+     * Need church?
+     *
+     * 0 if no, 1 if yes, -1 if too many.
+     */
+    short NeedChurch;
+
+    /**
+     * Average crime.
+     *
+     * Affected by land value, population density, police station
+     * distance.
+     */
+    short CrimeAverage;
+
+    /**
+     * Average pollution.
+     *
+     * Affected by PollutionMem, which is effected by traffic, fire,
+     * radioactivity, industrial zones, seaports, airports, power
+     * plants.
+     */
+    short PolluteAverage;
+
+    /**
+     * Land value average.
+     *
+     * Affected by distance from city center, development density
+     * (terrainMem), pollution, and crime.
+     */
+    short LVAverage;
+
+    /** @name Dates */
+    //@{
+
+    /**
+
+     * City time tick counter. 48 ticks per year.
+     *
+     * Four ticks per 12 months, so one tick is about a week (7.6 days).
+     */
+    Quad CityTime;
+
+    /**
+     * City month, 4 ticks per month.
+     */
+    Quad CityMonth;
+
+    /**
+     * City year, (Micropolis::CityTime / 48) + Micropolis::StartingYear.
+     */
+    Quad CityYear;
+
+    /**
+     * City starting year.
+     */
+    short StartingYear;
+
+    //@}
+
+    /* Maps */
+
+    /**
+     * Two-dimensional array of map tiles.
+     *
+     * Map[0 <= x < 120][0 <= y < 100]
+     */
+    short *Map[WORLD_X];
+
+    /**
+     * 10 year residential history maximum value.
+     */
+    short ResHisMax;
+
+    /**
+     * 120 year residential history maximum value.
+     */
+    short Res2HisMax;
+
+    /**
+     * 10 year commercial history maximum value.
+     */
+    short ComHisMax;
+
+    /**
+     * 120 year commercial history maximum value.
+     */
+    short Com2HisMax;
+
+    /**
+     * 10 year industrial history maximum value.
+     */
+    short IndHisMax;
+
+    /**
+     * 120 year industrial history maximum value.
+     */
+    short Ind2HisMax;
+
+    /**
+     * Census changed flag.
+     *
+     * Need to redraw census dependent stuff.
+     */
+    bool censusChanged;
+
+    /**
+     * Message number to display asynchronously.
+     *
+     * Clean this up to use a simpler interface, and a queue.
+     * Might need to collapse some messages.
+     */
+    short messagePort;
+
+    /**
+     * Message X location.
+     */
+    short mesX;
+
+    /**
+     * Message Y location.
+     */
+    short mesY;
+
+    /** @name Budget */
+    //@{
+
+    /**
+     * Spending on roads.
+     */
+    Quad RoadSpend;
+
+    /**
+     * Spending on police stations.
+     */
+    short PoliceSpend;
+
+    /**
+     * Spending on fire stations.
+     */
+    short FireSpend;
+
+    /**
+     * Requested funds for roads.
+     *
+     * Depends on number of roads, rails, and game level.
+     */
+    Quad RoadFund;
+
+    /**
+     * Requested funds for police stations.
+     *
+     * Depends on police station population.
+     */
+    short PoliceFund;
+
+    /**
+     * Requested funds for fire stations.
+     *
+     * Depends on fire station population.
+     */
+    short FireFund;
+
+    /**
+     * Radio of road spending over road funding, times 32.
+     */
+    short RoadEffect;
+
+    /**
+     * Radio of police spending over road funding, times 32.
+     */
+    short PoliceEffect;
+
+    /**
+     * Radio of fire spending over road funding, times 32.
+     */
+    short FireEffect;
+
+    /**
+     * Funds from taxes.
+     *
+     * Depends on total population, average land value, city tax, and
+     * game level.
+     */
+    Quad TaxFund;
+
+    /**
+     * City tax rate.
+     */
+    short CityTax;
+
+    /**
+     * Tax port flag.
+     *
+     * Apparently never used. CollectTax checks it.
+     *
+     * @todo Apparently TaxFlag is never set to true in MicropolisEngine
+     *       or the TCL code.
+     * @todo Don should check old Mac code to see if it's ever set.
+     * @todo Variable is always \c 0. Decide whether to keep it, and if yes,
+     *       create means to modify its value
+     * @todo It looks like a boolean. If we keep it, modify accordingly
+     */
+    short TaxFlag;
+
+    //@}
+
+    /**
+     * Population density map.
+     */
+    Byte *PopDensity[HWLDX];
+
+    /**
+     * Traffic map.
+     */
+    Byte *TrfDensity[HWLDX];
+
+    /**
+     * Pollution map.
+     */
+    Byte *PollutionMem[HWLDX];
+
+    /**
+     * Land value mep.
+     */
+    Byte *LandValueMem[HWLDX];
+
+    /**
+     * Crime map.
+     */
+    Byte *CrimeMem[HWLDX];
+
+    /**
+     * Temporary map.
+     *
+     * Used to smooth population density, pollution.
+     */
+    Byte *tem[HWLDX];
+
+    /**
+     * Temporary map 2.
+     *
+     * Used to smooth population density, pollution.
+     */
+    Byte *tem2[HWLDX];
+
+    /**
+     * Terrain development  density map.
+     *
+     * Used to calculate land value.
+     */
+    Byte *TerrainMem[QWX];
+
+    /**
+     * Temporary map Q.
+     *
+     * Used to smooth development density, for TerrainMem.
+     */
+    Byte *Qtem[QWX];
+
+    /**
+     * Rate of growth map.
+     *
+     * Affected by DecROGMem, incROG called by zones. Decreased by fire
+     * explosions from sprites, fire spreading. Doesn't seem to
+     * actually feed back into the simulation. Output only.
+     */
+    short RateOGMem[SmX][SmY];
+
+    /**
+     * Fire station map.
+     *
+     * Effectivity of fire control in this area.
+     *
+     * Affected by fire stations, powered, fire funding ratio, road
+     * access. Affects how long fires burn.
+     * @see #FireEffect
+     */
+    short FireStMap[SmX][SmY];
+
+    /**
+     * Police station map.
+     *
+     * Effectivity of police in fighting crime.
+     *
+     * Affected by police stations, powered, police funding ratio, road
+     * access. Affects crime rate.
+     * @see #PoliceEffect
+     */
+    short PoliceMap[SmX][SmY];
+
+    /**
+     * Copy of police station map to display.
+     */
+    short PoliceMapEffect[SmX][SmY];
+
+    /**
+     * Copy of fire station map to display.
+     */
+    short FireRate[SmX][SmY];
+
+    /**
+     * Commercial rate map.
+     *
+     * Depends on distance to city center. Affects commercial zone
+     * evaluation.
+     */
+    short ComRate[SmX][SmY];
+
+    /**
+     * Temporary array for smoothing fire and police station maps.
+     */
+    short STem[SmX][SmY];
+
+    /**
+     * Memory for TerrainMem array.
+     */
+    Ptr terrainBase;
+
+    /**
+     * Memory for Qtem array.
+     */
+    Ptr qTemBase;
+
+    /**
+     * Memory for tem array.
+     */
+    Ptr tem1Base;
+
+    /**
+     * Memory for tem2 array.
+     */
+    Ptr tem2Base;
+
+    /**
+     * Memory for PopDensity array.
+     */
+    Ptr popPtr;
+
+    /**
+     * Memory for TrfDensity array.
+     */
+    Ptr trfPtr;
+
+    /**
+     * Memory for PollutionMem array.
+     */
+    Ptr polPtr;
+
+    /**
+     * Memory for LandValueMem array.
+     */
+    Ptr landPtr;
+
+    /**
+     * Memory for CrimeMem array.
+     */
+    Ptr crimePtr;
+
+    /**
+     * Memory for Map array.
+     */
+    unsigned short *mapPtr;
+
+    /**
+     * Residential population history.
+     */
+    short *ResHis;
+
+    /**
+     * Commercial population history.
+     */
+    short *ComHis;
+
+    /**
+     * Industrial population history.
+     */
+    short *IndHis;
+
+    /**
+     * Money history.
+     */
+    short *MoneyHis;
+
+    /**
+     * Pollution history.
+     */
+    short *PollutionHis;
+
+    /**
+     * Crime history.
+     */
+    short *CrimeHis;
+
+    /**
+     * Memory used to save miscelaneous game values in save file.
+     */
+    short *MiscHis;
+
+    /**
+     * Power distribution bitmap.
+     */
+    short *PowerMap;
+
+
+    void initMapArrays();
+
+    void destroyMapArrays();
 
 #ifdef SWIG
 // This tells SWIG that minValResult, maxValResult are output parameters,
@@ -1520,1579 +1520,1478 @@ public:
 %apply short *OUTPUT { short *maxValResult };
 #endif
 
-  void GetHistoryRange(
-        int historyType,
-        int historyScale,
-        short *minValResult,
-        short *maxValResult);
+    void GetHistoryRange(
+	int historyType,
+	int historyScale,
+	short *minValResult,
+	short *maxValResult);
 
-  short GetHistory(
-        int historyType,
-        int historyScale,
-        int historyIndex);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // animate.cpp
-
-public:
+    short GetHistory(
+	int historyType,
+	int historyScale,
+	int historyIndex);
 
 
-  void animateTiles();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // budget.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // animate.cpp
 
 public:
 
 
-  /**
-   * Percentage of requested road and rail costs to funding level.
-   *
-   * Value between \c 0 and #MAX_ROAD_EFFECT.
-   * Affected by road funds slider and budgetary constraints.
-   */
-  float roadPercent;
-
-  /**
-   * Percentage of requested police station costs to funding level.
-   *
-   * Value between \c 0 and #MAX_POLICESTATION_EFFECT.
-   * Affected by road funds slider and budgetary constraints.
-   */
-  float policePercent;
-
-  /**
-   * Percentage of requested fire station costs to funding level.
-   *
-   * Value between \c 0 and #MAX_FIRESTATION_EFFECT.
-   * Affected by road funds slider and budgetary constraints.
-   */
-  float firePercent;
-
-  /**
-   * Amount of road funding granted.
-   */
-  Quad roadValue;
-
-  /**
-   * Amount of police funding granted.
-   */
-  Quad policeValue;
-
-  /**
-   * Amount of fire station funding granted.
-   */
-  Quad fireValue;
-
-  /**
-   * Flag set when drawCurrPercents called.
-   *
-   * Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
-   * @todo Clean this up.
-   */
-  int MustDrawCurrPercents;
-
-  /**
-   * Flag set when drawBudgetWindow called.
-   *
-   * Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
-   * @todo Clean this up.
-   */
-  int MustDrawBudgetWindow;
+    void animateTiles();
 
 
-  void InitFundingLevel();
-
-  void DoBudget();
-
-  void DoBudgetFromMenu();
-
-  void DoBudgetNow(bool fromMenu);
-
-  void drawBudgetWindow();
-
-  void ReallyDrawBudgetWindow();
-
-  void drawCurrPercents();
-
-  void ReallyDrawCurrPercents();
-
-  void UpdateBudgetWindow();
-
-  void UpdateBudget();
-
-  void ShowBudgetWindowAndStartWaiting();
-
-  void SetBudget(
-    char *flowStr,
-    char *previousStr,
-    char *currentStr,
-    char *collectedStr,
-    short tax);
-
-  void SetBudgetValues(
-    char *roadGot,
-    char *roadWant,
-    char *policeGot,
-    char *policeWant,
-    char *fireGot,
-    char *fireWant);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // connect.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // budget.cpp
 
 public:
 
 
-  int ConnecTile(
-    short x,
-    short y,
-    short *TileAdrPtr,
-    short Command);
+    /**
+     * Percentage of requested road and rail costs to funding level.
+     *
+     * Value between \c 0 and #MAX_ROAD_EFFECT.
+     * Affected by road funds slider and budgetary constraints.
+     */
+    float roadPercent;
 
-  int LayDoze(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Percentage of requested police station costs to funding level.
+     *
+     * Value between \c 0 and #MAX_POLICESTATION_EFFECT.
+     * Affected by road funds slider and budgetary constraints.
+     */
+    float policePercent;
 
-  int LayRoad(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Percentage of requested fire station costs to funding level.
+     *
+     * Value between \c 0 and #MAX_FIRESTATION_EFFECT.
+     * Affected by road funds slider and budgetary constraints.
+     */
+    float firePercent;
 
-  int LayRail(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Amount of road funding granted.
+     */
+    Quad roadValue;
 
-  int LayWire(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Amount of police funding granted.
+     */
+    Quad policeValue;
 
-  void FixZone(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Amount of fire station funding granted.
+     */
+    Quad fireValue;
 
-  void FixSingle(
-    int x,
-    int y,
-    short *TileAdrPtr);
+    /**
+     * Flag set when drawCurrPercents called.
+     *
+     * Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
+     * @todo Clean this up.
+     */
+    int MustDrawCurrPercents;
+
+    /**
+     * Flag set when drawBudgetWindow called.
+     *
+     * Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
+     * @todo Clean this up.
+     */
+    int MustDrawBudgetWindow;
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // disasters.cpp
+    void InitFundingLevel();
+
+    void DoBudget();
+
+    void DoBudgetFromMenu();
+
+    void DoBudgetNow(bool fromMenu);
+
+    void drawBudgetWindow();
+
+    void ReallyDrawBudgetWindow();
+
+    void drawCurrPercents();
+
+    void ReallyDrawCurrPercents();
+
+    void UpdateBudgetWindow();
+
+    void UpdateBudget();
+
+    void ShowBudgetWindowAndStartWaiting();
+
+    void SetBudget(
+	char *flowStr,
+	char *previousStr,
+	char *currentStr,
+	char *collectedStr,
+	short tax);
+
+    void SetBudgetValues(
+	char *roadGot,
+	char *roadWant,
+	char *policeGot,
+	char *policeWant,
+	char *fireGot,
+	char *fireWant);
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // connect.cpp
 
 public:
 
 
-  /**
-   * Size of flooding disaster.
-   */
-  short FloodCnt;
+    int ConnecTile(
+	short x,
+	short y,
+	short *TileAdrPtr,
+	short Command);
+
+    int LayDoze(
+	int x,
+	int y,
+	short *TileAdrPtr);
+
+    int LayRoad(
+	int x,
+	int y,
+	short *TileAdrPtr);
+
+    int LayRail(
+	int x,
+	int y,
+	short *TileAdrPtr);
+
+    int LayWire(
+	  int x,
+	  int y,
+	  short *TileAdrPtr);
+
+    void FixZone(
+	int x,
+	int y,
+	short *TileAdrPtr);
+
+    void FixSingle(
+	int x,
+	int y,
+	short *TileAdrPtr);
 
 
-  void MakeMeltdown();
+    ////////////////////////////////////////////////////////////////////////
+    // disasters.cpp
 
-  void FireBomb();
+public:
 
-  void MakeEarthquake();
 
-  void MakeFire();
+    /**
+     * Size of flooding disaster.
+     */
+    short FloodCnt;
 
-  void MakeFlood();
+
+    void MakeMeltdown();
+
+    void FireBomb();
+
+    void MakeEarthquake();
+
+    void MakeFire();
+
+    void MakeFlood();
+
+  private:
+
+    void DoDisasters();
+
+    void ScenarioDisaster();
+
+    void SetFire();
+
+    bool Vulnerable(int tem);
+
+    void DoFlood();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // evaluate.cpp
+
+public:
+
+
+    /**
+     * Yes votes.
+     *
+     * Percentage of people who think the mayor is doing a good job.
+     */
+    short cityYes;
+
+    /**
+     * Problem table.
+     *
+     * Score for each problem, higher the more severe the problem is.
+     */
+    short problemTable[PROBNUM];
+
+    /**
+     * Problem votes.
+     *
+     * The number of votes for each problem.
+     */
+    short problemVotes[PROBNUM];
+
+    /**
+     * Order of taken problems.
+     *
+     * Contains index of ProblemTable of taken problems, in decreasing order.
+     * @note Value CVP_NUMPROBLEMS means that the entry is not used
+     */
+    short problemOrder[CVP_PROBLEM_COMPLAINTS];
+
+    /**
+     * City population.
+     *
+     * Depends of ResPop, ComPop and IndPop.
+     */
+    Quad cityPop;
+
+    /**
+     * Change in the city population.
+     *
+     * Depends on last cityPop.
+     */
+    Quad deltaCityPop;
+
+    /**
+     * City assessed value.
+     *
+     * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop,
+     * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
+     * their respective values.
+     */
+    Quad cityAssValue;
+
+    /**
+     * City class.
+     *
+     * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
+     * Affected by city population.
+     */
+    short cityClass;
+
+    /**
+     * City score.
+     *
+     * Affected by average of problems, residential cap, commercial cap,
+     * industrial cap, road effect, police effect, fire effect,
+     * residential valve, commercial valve, industrial valve, city
+     * population, delta city population, fires, tax rate, and unpowered
+     * zones.
+     */
+    short cityScore;
+
+    /**
+     * Change in the city score.
+     *
+     * Depends on city score.
+     */
+    short deltaCityScore;
+
+    /**
+     * Average traffic.
+     *
+     * Depends on average traffic density of tiles with non-zero land value.
+     */
+    short trafficAverage;
+
+
+    void CityEvaluation();
+
+    void EvalInit();
+
+    void DoPopNum();
+
+    void DoProblems();
+
+    void getAssValue();
+
+    void voteProblems();
+
+    short AverageTrf();
+
+    short GetUnemployment();
+
+    short GetFire();
+
+    void GetScore();
+
+    void DoVotes();
+
+    void doScoreCard();
+
+    void ChangeEval();
+
+    void scoreDoer();
+
+    int countProblems();
+
+    int getProblemNumber(int i);
+
+    int getProblemVotes(int i);
+
+    ////////////////////////////////////////////////////////////////////////
+    // fileio.cpp
+
+public:
+
+
+    bool load_file(const char *filename, const char *dir);
+
+    bool loadFile(const char *filename);
+
+    bool saveFile(const char *filename);
+
+    void LoadScenario(Scenario s);
+
+    void DidLoadScenario();
+
+    bool LoadCity(const char *filename);
+
+    void DidLoadCity();
+
+    void DidntLoadCity(const char *msg);
+
+    void SaveCity();
+
+    void DoSaveCityAs();
+
+    void DidSaveCity();
+
+    void DidntSaveCity(const char *msg);
+
+    void SaveCityAs(const char *filename);
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // generate.cpp
+
+public:
+
+
+    // It would be nice to open up the terrain generator, and make its
+    // features available incrementally as city building tools.
+    //
+    // The user should be able to place water and trees, and it should
+    // dynamically smooth the edges.
+    //
+    // The user interface could restrict the user to only drawing
+    // terrain before any zones were built, but it would be best if
+    // the terrain editing tools worked properly when there were zones
+    // built (by automatically bulldozing zones whose underlying
+    // terrain it's modifying).
+
+    // Starting X location of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short XStart;
+
+    // Starting Y location of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short YStart;
+
+    // Current X location of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short MapX;
+
+    // Current Y location of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short MapY;
+
+    // Current direction of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short Dir;
+
+    // Last direction of the terrain generator.
+    // Only used internally by the terrain generator. Should be private.
+    short LastDir;
+
+    // Controls the level of tree creation.
+    // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
+    int TreeLevel;
+
+    // Controls the level of lake creation.
+    // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
+    int LakeLevel;
+
+    // Controls the level of river curviness.
+    // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
+    int CurveLevel;
+
+    // Controls how often to create an island.
+    // -1 => 10% chance of island, 0 => never create island, 1 => always create island
+    int CreateIsland;
+
+    // Controls the radius of islands.
+    int IslandRadius;
+
+
+    void GenerateNewCity() ;
+
+    void GenerateSomeCity(int r);
+
+    void GenerateMap(int r);
+
+    void ClearMap();
+
+    void ClearUnnatural();
+
+    void MakeNakedIsland();
+
+    void MakeIsland();
+
+    void MakeLakes();
+
+    void GetRandStart();
+
+    void MoveMap(short dir);
+
+    void TreeSplash(short xloc, short yloc);
+
+    void DoTrees();
+
+    void SmoothRiver();
+
+    bool IsTree(int cell);
+
+    void SmoothTrees();
+
+    void DoRivers();
+
+    void DoBRiv();
+
+    void DoSRiv();
+
+    void PutOnMap(short Mchar, short Xoff, short Yoff);
+
+    void BRivPlop();
+
+    void SRivPlop();
+
+    void SmoothWater();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // graph.cpp
+
+public:
+
+
+    /**
+     * Flag that tells if there is a new graph to draw.
+     * @todo This should be replaced by a general purpose view updating system.
+     */
+    bool newGraph;
+
+    // 10 year history graphs.
+    unsigned char *History10[HISTORIES];
+
+    // 120 year history graphs.
+    unsigned char *History120[HISTORIES];
+
+    //
+    int HistoryInitialized;
+
+    short Graph10Max;
+
+    short Graph120Max;
+
+    int GraphUpdateTime;
+
+
+    void drawMonth(short *hist, unsigned char *s, float scale);
+
+    void doAllGraphs();
+
+    void ChangeCensus();
+
+    void graphDoer();
+
+    void initGraphs();
+
+    void InitGraphMax();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // initialize.cpp
+
+public:
+
+
+    void InitWillStuff();
+
+    void ResetMapState();
+
+    void ResetEditorState();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // main.cpp
+
+public:
+
+
+    int sim_loops;
+
+    int sim_delay;
+
+    int sim_skips;
+
+    int sim_skip;
+
+    /**
+     * Simulation is paused
+     * @todo Variable has reversed logic, maybe use sim_running instead?
+     */
+    bool sim_paused;
+
+    int sim_paused_speed;
+
+    int heat_steps;
+
+    int heat_flow;
+
+    int heat_rule;
+
+    int heat_wrap;
+
+    std::string CityFileName;
+
+    int MultiPlayerMode;
+
+    int TilesAnimated;
+
+    int DoAnimation;
+
+    int DoMessages;
+
+    int DoNotices;
+
 
 private:
 
-  void DoDisasters();
+    short *CellSrc;
 
-  void ScenarioDisaster();
-
-  void SetFire();
-
-  bool Vulnerable(int tem);
-
-  void DoFlood();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // evaluate.cpp
-
-public:
-
-
-  /**
-   * Yes votes.
-   *
-   * Percentage of people who think the mayor is doing a good job.
-   */
-  short cityYes;
-
-  /**
-   * Problem table.
-   *
-   * Score for each problem, higher the more severe the problem is.
-   */
-  short problemTable[PROBNUM];
-
-  /**
-   * Problem votes.
-   *
-   * The number of votes for each problem.
-   */
-  short problemVotes[PROBNUM];
-
-  /**
-   * Order of taken problems.
-   *
-   * Contains index of ProblemTable of taken problems, in decreasing order.
-   * @note Value CVP_NUMPROBLEMS means that the entry is not used
-   */
-  short problemOrder[CVP_PROBLEM_COMPLAINTS];
-
-  /**
-   * City population.
-   *
-   * Depends of ResPop, ComPop and IndPop.
-   */
-  Quad cityPop;
-
-  /**
-   * Change in the city population.
-   *
-   * Depends on last cityPop.
-   */
-  Quad deltaCityPop;
-
-  /**
-   * City assessed value.
-   *
-   * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop,
-   * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
-   * their respective values.
-   */
-  Quad cityAssValue;
-
-  /**
-   * City class.
-   *
-   * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
-   * Affected by city population.
-   */
-  short cityClass;
-
-  /**
-   * City score.
-   *
-   * Affected by average of problems, residential cap, commercial cap,
-   * industrial cap, road effect, police effect, fire effect,
-   * residential valve, commercial valve, industrial valve, city
-   * population, delta city population, fires, tax rate, and unpowered
-   * zones.
-   */
-  short cityScore;
-
-  /**
-   * Change in the city score.
-   *
-   * Depends on city score.
-   */
-  short deltaCityScore;
-
-  /**
-   * Average traffic.
-   *
-   * Depends on average traffic density of tiles with non-zero land value.
-   */
-  short trafficAverage;
-
-
-  void CityEvaluation();
-
-  void EvalInit();
-
-  void DoPopNum();
-
-  void DoProblems();
-
-  void getAssValue();
-
-  void voteProblems();
-
-  short AverageTrf();
-
-  short GetUnemployment();
-
-  short GetFire();
-
-  void GetScore();
-
-  void DoVotes();
-
-  void doScoreCard();
-
-  void ChangeEval();
-
-  void scoreDoer();
-
-  int countProblems();
-
-  int getProblemNumber(
-    int i);
-
-  int getProblemVotes(
-    int i);
-
-  ////////////////////////////////////////////////////////////////////////
-  // fileio.cpp
-
-public:
-
-
-  bool load_file(const char *filename, const char *dir);
-
-  bool loadFile(const char *filename);
-
-  bool saveFile(const char *filename);
-
-  void LoadScenario(Scenario s);
-
-  void DidLoadScenario();
-
-  bool LoadCity(const char *filename);
-
-  void DidLoadCity();
-
-  void DidntLoadCity(const char *msg);
-
-  void SaveCity();
-
-  void DoSaveCityAs();
-
-  void DidSaveCity();
-
-  void DidntSaveCity(const char *msg);
-
-  void SaveCityAs(const char *filename);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // generate.cpp
-
-public:
-
-
-  // It would be nice to open up the terrain generator, and make its features available incrementally as city building tools.
-  // The user should be able to place water and trees, and it should dynamically smooth the edges.
-  // The user interface could restrict the user to only drawing terrain before any zones were built,
-  // but it would be best if the terrain editing tools worked properly when there were zones built
-  // (by automatically bulldozing zones whose underlying terrain it's modifying).
-
-  // Starting X location of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short XStart;
-
-  // Starting Y location of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short YStart;
-
-  // Current X location of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short MapX;
-
-  // Current Y location of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short MapY;
-
-  // Current direction of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short Dir;
-
-  // Last direction of the terrain generator.
-  // Only used internally by the terrain generator. Should be private.
-  short LastDir;
-
-  // Controls the level of tree creation.
-  // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
-  int TreeLevel;
-
-  // Controls the level of lake creation.
-  // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
-  int LakeLevel;
-
-  // Controls the level of river curviness.
-  // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
-  int CurveLevel;
-
-  // Controls how often to create an island.
-  // -1 => 10% chance of island, 0 => never create island, 1 => always create island
-  int CreateIsland;
-
-  // Controls the radius of islands.
-  int IslandRadius;
-
-
-  void GenerateNewCity() ;
-
-  void GenerateSomeCity(
-    int r);
-
-  void GenerateMap(
-    int r);
-
-  void ClearMap();
-
-  void ClearUnnatural();
-
-  void MakeNakedIsland();
-
-  void MakeIsland();
-
-  void MakeLakes();
-
-  void GetRandStart();
-
-  void MoveMap(
-    short dir);
-
-  void TreeSplash(
-    short xloc,
-    short yloc);
-
-  void DoTrees();
-
-  void SmoothRiver();
-
-  bool IsTree(int cell);
-
-  void SmoothTrees();
-
-  void DoRivers();
-
-  void DoBRiv();
-
-  void DoSRiv();
-
-  void PutOnMap(
-    short Mchar,
-    short Xoff,
-    short Yoff);
-
-  void BRivPlop();
-
-  void SRivPlop();
-
-  void SmoothWater();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // graph.cpp
-
-public:
-
-
-  /**
-   * Flag that tells if there is a new graph to draw.
-   * @todo This should be replaced by a general purpose view updating system.
-   */
-  bool newGraph;
-
-  // 10 year history graphs.
-  unsigned char *History10[HISTORIES];
-
-  // 120 year history graphs.
-  unsigned char *History120[HISTORIES];
-
-  //
-  int HistoryInitialized;
-
-  short Graph10Max;
-
-  short Graph120Max;
-
-  int GraphUpdateTime;
-
-
-  void drawMonth(
-    short *hist,
-    unsigned char *s,
-    float scale);
-
-  void doAllGraphs();
-
-  void ChangeCensus();
-
-  void graphDoer();
-
-  void initGraphs();
-
-  void InitGraphMax();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // initialize.cpp
-
-public:
-
-
-  void InitWillStuff();
-
-  void ResetMapState();
-
-  void ResetEditorState();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // main.cpp
-
-public:
-
-
-  int sim_loops;
-
-  int sim_delay;
-
-  int sim_skips;
-
-  int sim_skip;
-
-  /**
-   * Simulation is paused
-   * @todo Variable has reversed logic, maybe use sim_running instead?
-   */
-  bool sim_paused;
-
-  int sim_paused_speed;
-
-  int heat_steps;
-
-  int heat_flow;
-
-  int heat_rule;
-
-  int heat_wrap;
-
-  std::string CityFileName;
-
-  int MultiPlayerMode;
-
-  int TilesAnimated;
-
-  int DoAnimation;
-
-  int DoMessages;
-
-  int DoNotices;
-
-
- private:
-
-  short *CellSrc;
-
-  short *CellDst;
+    short *CellDst;
 
 
 public:
 
-  const char *getMicropolisVersion();
+    const char *getMicropolisVersion();
 
-  void env_init();
+    void env_init();
 
-  void sim_init();
+    void sim_init();
 
-  void sim_update();
+    void sim_update();
 
-  void sim_heat();
+    void sim_heat();
 
-  void sim_loop(
-    int doSim);
+    void sim_loop(int doSim);
 
-  void sim_tick();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // map.cpp
-
-public:
+    void sim_tick();
 
 
 #if 0
-  ////////////////////////////////////////////////////////////////////////
-  // Disabled this small map drawing, filtering and overlaying code.
-  // Going to re-implement it in the tile engine and Python.
+
+    ////////////////////////////////////////////////////////////////////////
+    // map.cpp
+    //
+    // Disabled this small map drawing, filtering and overlaying code.
+    // Going to re-implement it in the tile engine and Python.
+
+public:
 
 
-  int DynamicData[32];
+    int DynamicData[32];
 
 
-  void drawAll(
-    SimView *view);
+    void drawAll();
 
-  void drawRes(
-    SimView *view);
+    void drawRes();
 
-  void drawCom(
-    SimView *view);
+    void drawCom();
 
-  void drawInd(
-    SimView *view);
+    void drawInd();
 
-  void drawLilTransMap(
-    SimView *view);
+    void drawLilTransMap();
 
-  void drawPower(
-    SimView *view);
+    void drawPower();
 
-  int dynamicFilter(
-    int col,
-    int row);
+    int dynamicFilter(int col, int row);
 
-  void drawDynamic(
-    SimView *view);
+    void drawDynamic();
 
-  short GetCI(
-    short x);
+    short GetCI(short x);
 
-  void drawPopDensity(
-   SimView *view);
+    void drawPopDensity();
 
-  void drawRateOfGrowth(
-    SimView *view);
+    void drawRateOfGrowth();
 
-  void drawTrafMap(
-    SimView *view);
+    void drawTrafMap();
 
-  void drawPolMap(
-    SimView *view);
+    void drawPolMap();
 
-  void drawCrimeMap(
-    SimView *view);
+    void drawCrimeMap();
 
-  void drawLandMap(
-    SimView *view);
+    void drawLandMap();
 
-  void drawFireRadius(
-    SimView *view);
+    void drawFireRadius();
 
-  void drawPoliceRadius(
-    SimView *view);
+    void drawPoliceRadius();
 
-  void MemDrawMap(
-    SimView *view);
+    void MemDrawMap();
 
-  void ditherMap(
-    SimView *view);
+    void ditherMap();
 
-  void maybeDrawRect(
-    SimView *view,
-    int val,
-    int x,
-    int y,
-    int w,
-    int h);
+    void maybeDrawRect(
+	int val,
+	int x,
+	int y,
+	int w,
+	int h);
 
-  void drawRect(
-    SimView *view,
-    int pixel,
-    int solid,
-    int x,
-    int y,
-    int w,
-    int h);
-
+    void drawRect(
+	int pixel,
+	int solid,
+	int x,
+	int y,
+	int w,
+	int h);
 
 #endif
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // message.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // message.cpp
 
 public:
 
 
-  Quad lastCityPop;   ///< Population of last city class check. @see CheckGrowth
-  short LastCategory; ///< City class of last city class check. @see CheckGrowth
+    Quad lastCityPop;   ///< Population of last city class check. @see CheckGrowth
+    short LastCategory; ///< City class of last city class check. @see CheckGrowth
 
-  short LastPicNum; ///< Last picture displayed to the user
+    short LastPicNum; ///< Last picture displayed to the user
 
-  /**
-   * Enable auto goto
-   *
-   * When enabled and an important event happens, the map display will jump to
-   * the location of the event
-   */
-  bool autoGo;
+    /**
+     * Enable auto goto
+     *
+     * When enabled and an important event happens, the map display will jump to
+     * the location of the event
+     */
+    bool autoGo;
 
-  /**
-   * Do we have a valid message in LastMessage?
-   * @todo Remove the variable by using LastMessage instead (for example the
-   *       empty string)
-   */
-  bool HaveLastMessage;
+    /**
+     * Do we have a valid message in LastMessage?
+     * @todo Remove the variable by using LastMessage instead (for example the
+     *       empty string)
+     */
+    bool HaveLastMessage;
 
-  char LastMessage[256]; ///< Last message displayed to the user
-
-
-  void SendMessages();
-
-  void CheckGrowth();
-
-  void DoScenarioScore(Scenario type);
-
-  void ClearMes();
-
-  bool SendMes(int Mnum);
-
-  void SendMesAt(short Mnum, short x, short y);
-
-  void doMessage();
-
-  void doMakeSound(int mesgNum, int x, int y);
-
-  void DoAutoGoto(short x, short y, char *msg);
-
-  void SetMessageField(char *str);
-
-  void DoShowPicture(short id);
-
-  void DoLoseGame();
-  void DoWinGame();
+    char LastMessage[256]; ///< Last message displayed to the user
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // power.cpp
+    void SendMessages();
 
-public:
+    void CheckGrowth();
 
-  /** @name Power stack
-   * Stack used to find powered tiles by tracking conductive tiles.
-   */
-  //@{
+    void DoScenarioScore(Scenario type);
 
-  int powerStackNum; ///< Stack counter, points to top-most item.
+    void ClearMes();
 
-  short powerStackX[PWRSTKSIZE]; ///< X coordinates at the power stack.
-  short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
+    bool SendMes(int Mnum);
 
+    void SendMesAt(short Mnum, short x, short y);
 
-  void DoPowerScan();
+    void doMessage();
 
-  bool TestForCond(Direction TFDir);
+    void doMakeSound(int mesgNum, int x, int y);
 
-  void PushPowerStack();
+    void DoAutoGoto(short x, short y, char *msg);
 
-  void PullPowerStack();
+    void SetMessageField(char *str);
 
-  //@}
+    void DoShowPicture(short id);
 
-  /**
-   * Maximal power that the combined coal and nuclear power plants can deliver.
-   * @see NumPower CoalPop NuclearPop
-   */
-  Quad MaxPower;
-  Quad NumPower; ///< Amount of power used.
+    void DoLoseGame();
+    void DoWinGame();
 
 
-  bool MoveMapSim(Direction mDir);
-
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // random.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // power.cpp
 
 public:
 
+    /** @name Power stack
+     * Stack used to find powered tiles by tracking conductive tiles.
+     */
+    //@{
 
-  UQuad nextRandom;
+    int powerStackNum; ///< Stack counter, points to top-most item.
 
-
-  int sim_rand();
-
-  void sim_srand(
-    UQuad seed);
-
-  short Rand(
-    short range);
-
-  int Rand16();
-
-  int Rand16Signed();
-
-  short ERand(
-    short limit);
-
-  void RandomlySeedRand();
-
-  void SeedRand(
-    int seed);
+    short powerStackX[PWRSTKSIZE]; ///< X coordinates at the power stack.
+    short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // resource.cpp
+    void DoPowerScan();
+
+    bool TestForCond(Direction TFDir);
+
+    void PushPowerStack();
+
+    void PullPowerStack();
+
+    //@}
+
+    /**
+     * Maximal power that the combined coal and nuclear power plants can deliver.
+     * @see NumPower CoalPop NuclearPop
+     */
+    Quad MaxPower;
+    Quad NumPower; ///< Amount of power used.
+
+
+    bool MoveMapSim(Direction mDir);
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // random.cpp
 
 public:
 
 
-  char *HomeDir;
-
-  /** Name of the sub-directory where the resources are located. */
-  char *ResourceDir;
-
-  char *KeyDir;
-
-  char *HostName;
-
-  Resource *Resources; ///< Linked list of loaded resources
-  StringTable *StringTables; ///< Linked list of loaded string tables
+    UQuad nextRandom;
 
 
-  Resource *GetResource(const char *name, Quad id);
+    int sim_rand();
 
-  void GetIndString(char *str, int id, short num);
+    void sim_srand(
+      UQuad seed);
 
+    short Rand(short range);
 
+    int Rand16();
 
-  ////////////////////////////////////////////////////////////////////////
-  // scan.cpp
+    int Rand16Signed();
 
-public:
+    short ERand(short limit);
 
+    void RandomlySeedRand();
 
-  short NewMap;
-
-  short NewMapFlags[NMAPS];
-
-  short CCx; ///< X coordinate of city center
-  short CCy; ///< Y coordinate of city center
-
-  short CCx2; ///< X coordinate of city center divided by 2
-  short CCy2; ///< Y coordinate of city center divided by 2
-
-  short PolMaxX; ///< X coordinate of most polluted area
-  short PolMaxY; ///< Y coordinate of most polluted area
-
-  short CrimeMaxX; ///< X coordinate of most criminal area
-  short CrimeMaxY; ///< Y coordinate of most criminal area
-
-  Quad DonDither;
+    void SeedRand(int seed);
 
 
-  void FireAnalysis();
-
-  void PopDenScan();
-
-  int GetPDen(
-    int Ch9);
-
-  void PTLScan();
-
-  int GetPValue(
-    int loc);
-
-  int GetDisCC(
-    int x,
-    int y);
-
-  void CrimeScan();
-
-  void SmoothTerrain();
-
-  void DoSmooth();
-
-  void DoSmooth2();
-
-  void ClrTemArray();
-
-  void SmoothFSMap();
-
-  void SmoothPSMap();
-
-  void DistIntMarket();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // simulate.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // resource.cpp
 
 public:
 
 
-  short ValveFlag;
+    char *HomeDir;
 
-  short CrimeRamp;
+    /** Name of the sub-directory where the resources are located. */
+    char *ResourceDir;
 
-  short PolluteRamp;
+    char *KeyDir;
 
-  short RValve;
+    char *HostName;
 
-  short CValve;
-
-  short IValve;
-
-  short ResCap;
-
-  short ComCap;
-
-  short IndCap;
-
-  short CashFlow;
-
-  float EMarket;
-
-  Scenario DisasterEvent; ///< The disaster for which a count-down is running
-  short DisasterWait; ///< Count-down timer for the disaster
-
-  Scenario ScoreType; ///< The type of score table to use
-  short ScoreWait; ///< Time to wait before computing the score
-
-  short PwrdZCnt; ///< Number of powered tiles in all zone
-  short unPwrdZCnt; ///< Number of unpowered tiles in all zones
-
-  short NewPower; /* post */
-
-  short AvCityTax;
-
-  short Scycle;
-
-  short Fcycle;
-
-  short Spdcycle;
-
-  bool DoInitialEval; ///< Need to perform initial city evaluation.
+    Resource *Resources; ///< Linked list of loaded resources
+    StringTable *StringTables; ///< Linked list of loaded string tables
 
 
-  void SimFrame();
+    Resource *GetResource(const char *name, Quad id);
 
-  void Simulate(
-    int mod16);
+    void GetIndString(char *str, int id, short num);
 
-  void DoSimInit();
 
-  void DoNilPower();
+    ////////////////////////////////////////////////////////////////////////
+    // scan.cpp
 
-  void DecTrafficMem();
+public:
 
-  void DecROGMem();
 
-  void InitSimMemory();
+    short NewMap;
 
-  void SimLoadInit();
+    short NewMapFlags[NMAPS];
 
-  void SetCommonInits();
+    short CCx; ///< X coordinate of city center
+    short CCy; ///< Y coordinate of city center
 
-  void SetValves();
+    short CCx2; ///< X coordinate of city center divided by 2
+    short CCy2; ///< Y coordinate of city center divided by 2
 
-  void ClearCensus();
+    short PolMaxX; ///< X coordinate of most polluted area
+    short PolMaxY; ///< Y coordinate of most polluted area
 
-  void TakeCensus();
+    short CrimeMaxX; ///< X coordinate of most criminal area
+    short CrimeMaxY; ///< Y coordinate of most criminal area
 
-  void Take2Census();
+    Quad DonDither;
 
-  void CollectTax();
 
-  void UpdateFundEffects();
+    void FireAnalysis();
 
-  void MapScan(
-    int x1,
-    int x2);
+    void PopDenScan();
 
-  void DoRail();
+    int GetPDen(int Ch9);
 
-  void DoRadTile();
+    void PTLScan();
 
-  void DoRoad();
+    int GetPValue(int loc);
 
-  bool DoBridge();
+    int GetDisCC(int x, int y);
 
-  int GetBoatDis();
+    void CrimeScan();
 
-  void DoFire();
+    void SmoothTerrain();
 
-  void FireZone(
-    int Xloc,
-    int Yloc,
-    int ch);
+    void DoSmooth();
+
+    void DoSmooth2();
+
+    void ClrTemArray();
+
+    void SmoothFSMap();
+
+    void SmoothPSMap();
+
+    void DistIntMarket();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // simulate.cpp
+
+public:
+
+
+    short ValveFlag;
+
+    short CrimeRamp;
+
+    short PolluteRamp;
+
+    short RValve;
+
+    short CValve;
+
+    short IValve;
+
+    short ResCap;
+
+    short ComCap;
+
+    short IndCap;
+
+    short CashFlow;
+
+    float EMarket;
+
+    Scenario DisasterEvent; ///< The disaster for which a count-down is running
+    short DisasterWait; ///< Count-down timer for the disaster
+
+    Scenario ScoreType; ///< The type of score table to use
+    short ScoreWait; ///< Time to wait before computing the score
+
+    short PwrdZCnt; ///< Number of powered tiles in all zone
+    short unPwrdZCnt; ///< Number of unpowered tiles in all zones
+
+    short NewPower; /* post */
+
+    short AvCityTax;
+
+    short Scycle;
+
+    short Fcycle;
+
+    short Spdcycle;
+
+    bool DoInitialEval; ///< Need to perform initial city evaluation.
+
+
+    void SimFrame();
+
+    void Simulate(
+      int mod16);
+
+    void DoSimInit();
+
+    void DoNilPower();
+
+    void DecTrafficMem();
+
+    void DecROGMem();
+
+    void InitSimMemory();
+
+    void SimLoadInit();
+
+    void SetCommonInits();
+
+    void SetValves();
+
+    void ClearCensus();
+
+    void TakeCensus();
+
+    void Take2Census();
+
+    void CollectTax();
+
+    void UpdateFundEffects();
+
+    void MapScan(int x1, int x2);
+
+    void DoRail();
+
+    void DoRadTile();
+
+    void DoRoad();
+
+    bool DoBridge();
+
+    int GetBoatDis();
+
+    void DoFire();
+
+    void FireZone(int Xloc, int Yloc, int ch);
 
 
 private:
 
-  void RepairZone(short ZCent, short zsize);
+    void RepairZone(short ZCent, short zsize);
 
-  void DoSPZone(bool PwrOn);
+    void DoSPZone(bool PwrOn);
 
-  void DrawStadium(int z);
+    void DrawStadium(int z);
 
-  void DoAirport();
+    void DoAirport();
 
-  void CoalSmoke(int mx, int my);
+    void CoalSmoke(int mx, int my);
 
-  void DoMeltdown(int SX, int SY);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // sprite.cpp
-
-public:
+    void DoMeltdown(int SX, int SY);
 
 
-  SimSprite *spriteList; ///< List of active sprites.
-
-  SimSprite *FreeSprites; ///< Pool of free #SimSprite objects.
-
-  SimSprite *GlobalSprites[SPRITE_COUNT];
-
-  short CrashX;
-
-  short CrashY;
-
-  int absDist;
-
-  short Cycle;
-
-
-  SimSprite *NewSprite(const char *name, int type, int x, int y);
-
-  void InitSprite(SimSprite *sprite, int x, int y);
-
-  void DestroyAllSprites();
-
-  void DestroySprite(SimSprite *sprite);
-
-  SimSprite *GetSprite(int type);
-
-  SimSprite *MakeSprite(int type, int x, int y);
-
-
-  void DrawObjects();
-
-  void DrawSprite(SimSprite *sprite);
-
-  short GetChar(int x, int y);
-
-  short TurnTo(int p, int d);
-
-  bool TryOther(int Tpoo, int Told, int Tnew);
-
-  bool SpriteNotInBounds(SimSprite *sprite);
-
-  short GetDir(int orgX, int orgY, int desX, int desY);
-
-  int GetDistance(int x1, int y1, int x2, int y2);
-
-  bool CheckSpriteCollision(SimSprite *s1, SimSprite *s2);
-
-  void MoveObjects();
-
-  void DoTrainSprite(SimSprite *sprite);
-
-  void DoCopterSprite(SimSprite *sprite);
-
-  void DoAirplaneSprite(SimSprite *sprite);
-
-  void DoShipSprite(SimSprite *sprite);
-
-  void DoMonsterSprite(SimSprite *sprite);
-
-  void DoTornadoSprite(SimSprite *sprite);
-
-  void DoExplosionSprite(SimSprite *sprite);
-
-  void DoBusSprite(SimSprite *sprite);
-
-  int CanDriveOn(int x, int y);
-
-  void ExplodeSprite(SimSprite *sprite);
-
-  bool checkWet(int x);
-
-  void Destroy(int ox, int oy);
-
-  void OFireZone(int Xloc, int Yloc, int ch);
-
-  void StartFire(int x, int y);
-
-  void GenerateTrain(int x, int y);
-
-  void GenerateBus(int x, int y);
-
-  void GenerateShip();
-
-  void MakeShipHere(int x, int y);
-
-  void MakeMonster();
-
-  void MonsterHere(int x, int y);
-
-  void GenerateCopter(int x, int y);
-
-  void GeneratePlane(int x, int y);
-
-  void MakeTornado();
-
-  void MakeExplosion(int x, int y);
-
-  void MakeExplosionAt(int x, int y);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // stubs.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // sprite.cpp
 
 public:
 
 
-  Quad TotalFunds; ///< Funds of the player
+    SimSprite *spriteList; ///< List of active sprites.
 
-  /**
-   * Enable auto-bulldoze
-   *
-   * When enabled, the game will silently clear tiles when the user
-   * builds something on non-clear and bulldozable tiles
-   */
-  bool autoBulldoze;
+    SimSprite *FreeSprites; ///< Pool of free #SimSprite objects.
 
-  /**
-   * Enable auto budget
-   *
-   * When enabled, the program will perform budgetting of the city
-   */
-  bool autoBudget;
+    SimSprite *GlobalSprites[SPRITE_COUNT];
 
-  Quad LastMesTime;
+    short CrashX;
 
-  GameLevel gameLevel; ///< Difficulty level of the game (0..2)
+    short CrashY;
 
-  short InitSimLoad;
+    int absDist;
 
-  Scenario ScenarioID; ///< Scenario being played
-
-  short SimSpeed;
-
-  short SimMetaSpeed;
-
-  bool UserSoundOn; ///< Enable sound
-
-  std::string CityName;
-
-  /**
-   * Disable disasters
-   * @todo Variable has reverse logic,
-   *       we should use AllowDisasters or EnableDisasters instead
-   */
-  bool NoDisasters;
-
-  short MesNum;
-
-  bool evalChanged; ///< The evaluation window should be shown to the user
-
-  short flagBlink;
-
-  // Hook into scripting language to send callbacks.
-  // (i.e. a function that calls back into the Python interpreter.)
-  CallbackFunction callbackHook;
-
-  // Hook for scripting language to store scripted callback function.
-  // (i.e. a callable Python object.)
-  void *callbackData;
-
-  // Hook for scripting language to store context (i.e. peer object).
-  // (i.e. Python SWIG wrapper of this Micropolis object.)
-  void *userData;
-
-  void Spend(
-    int dollars);
-
-  void SetFunds(
-    int dollars);
-
-  Quad TickCount();
-
-  Ptr NewPtr(
-    int size);
-
-  void FreePtr(
-    void *data);
-
-  void DoPlayNewCity();
-
-  void DoReallyStartGame();
-
-  void DoStartLoad();
-
-  void DoStartScenario(
-    int scenario);
-
-  void DropFireBombs();
-
-  void InitGame();
-
-  void Callback(
-        const char *name,
-        const char *params,
-        ...);
-
-  void DoEarthquake(int strength);
-
-  void InvalidateEditors();
-
-  void InvalidateMaps();
-
-  void InitializeSound();
-
-  void MakeSound(
-    const char *channel,
-    const char *sound,
-    int x=-1,
-    int y=-1);
-
-  int getTile(
-        int x,
-        int y);
-
-  void *getMapBuffer();
+    short Cycle;
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // tool.cpp
+    SimSprite *NewSprite(const char *name, int type, int x, int y);
+
+    void InitSprite(SimSprite *sprite, int x, int y);
+
+    void DestroyAllSprites();
+
+    void DestroySprite(SimSprite *sprite);
+
+    SimSprite *GetSprite(int type);
+
+    SimSprite *MakeSprite(int type, int x, int y);
+
+    void DrawObjects();
+
+    void DrawSprite(SimSprite *sprite);
+
+    short GetChar(int x, int y);
+
+    short TurnTo(int p, int d);
+
+    bool TryOther(int Tpoo, int Told, int Tnew);
+
+    bool SpriteNotInBounds(SimSprite *sprite);
+
+    short GetDir(int orgX, int orgY, int desX, int desY);
+
+    int GetDistance(int x1, int y1, int x2, int y2);
+
+    bool CheckSpriteCollision(SimSprite *s1, SimSprite *s2);
+
+    void MoveObjects();
+
+    void DoTrainSprite(SimSprite *sprite);
+
+    void DoCopterSprite(SimSprite *sprite);
+
+    void DoAirplaneSprite(SimSprite *sprite);
+
+    void DoShipSprite(SimSprite *sprite);
+
+    void DoMonsterSprite(SimSprite *sprite);
+
+    void DoTornadoSprite(SimSprite *sprite);
+
+    void DoExplosionSprite(SimSprite *sprite);
+
+    void DoBusSprite(SimSprite *sprite);
+
+    int CanDriveOn(int x, int y);
+
+    void ExplodeSprite(SimSprite *sprite);
+
+    bool checkWet(int x);
+
+    void Destroy(int ox, int oy);
+
+    void OFireZone(int Xloc, int Yloc, int ch);
+
+    void StartFire(int x, int y);
+
+    void GenerateTrain(int x, int y);
+
+    void GenerateBus(int x, int y);
+
+    void GenerateShip();
+
+    void MakeShipHere(int x, int y);
+
+    void MakeMonster();
+
+    void MonsterHere(int x, int y);
+
+    void GenerateCopter(int x, int y);
+
+    void GeneratePlane(int x, int y);
+
+    void MakeTornado();
+
+    void MakeExplosion(int x, int y);
+
+    void MakeExplosionAt(int x, int y);
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // stubs.cpp
 
 public:
 
 
-  int last_x; ///< Get rid of this.
+    Quad TotalFunds; ///< Funds of the player
 
-  int last_y; ///< Get rid of this.
+    /**
+     * Enable auto-bulldoze
+     *
+     * When enabled, the game will silently clear tiles when the user
+     * builds something on non-clear and bulldozable tiles
+     */
+    bool autoBulldoze;
 
-  int tool_x; ///< Get rid of this.
+    /**
+     * Enable auto budget
+     *
+     * When enabled, the program will perform budgetting of the city
+     */
+    bool autoBudget;
 
-  int tool_y; ///< Get rid of this.
+    Quad LastMesTime;
+
+    GameLevel gameLevel; ///< Difficulty level of the game (0..2)
+
+    short InitSimLoad;
+
+    Scenario ScenarioID; ///< Scenario being played
+
+    short SimSpeed;
+
+    short SimMetaSpeed;
+
+    bool UserSoundOn; ///< Enable sound
+
+    std::string CityName;
+
+    /**
+     * Disable disasters
+     * @todo Variable has reverse logic,
+     *       we should use AllowDisasters or EnableDisasters instead
+     */
+    bool NoDisasters;
+
+    short MesNum;
+
+    bool evalChanged; ///< The evaluation window should be shown to the user
+
+    short flagBlink;
+
+    // Hook into scripting language to send callbacks.
+    // (i.e. a function that calls back into the Python interpreter.)
+    CallbackFunction callbackHook;
+
+    // Hook for scripting language to store scripted callback function.
+    // (i.e. a callable Python object.)
+    void *callbackData;
+
+    // Hook for scripting language to store context (i.e. peer object).
+    // (i.e. Python SWIG wrapper of this Micropolis object.)
+    void *userData;
+
+    void Spend(int dollars);
+
+    void SetFunds(int dollars);
+
+    Quad TickCount();
+
+    Ptr NewPtr(int size);
+
+    void FreePtr(void *data);
+
+    void DoPlayNewCity();
+
+    void DoReallyStartGame();
+
+    void DoStartLoad();
+
+    void DoStartScenario(
+      int scenario);
+
+    void DropFireBombs();
+
+    void InitGame();
+
+    void Callback(const char *name, const char *params, ...);
+
+    void DoEarthquake(int strength);
+
+    void InvalidateEditors();
+
+    void InvalidateMaps();
+
+    void InitializeSound();
+
+    void MakeSound(
+      const char *channel,
+      const char *sound,
+      int x=-1,
+      int y=-1);
+
+    int getTile(int x, int y);
+
+    void *getMapBuffer();
 
 
-  int putDownPark(short mapH, short mapV);
+    ////////////////////////////////////////////////////////////////////////
+    // tool.cpp
 
-  int putDownNetwork(short mapH, short mapV);
+public:
 
-  short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
-  int check3x3(short mapH, short mapV, short base, short tool);
+    int last_x; ///< Get rid of this.
 
-  short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
+    int last_y; ///< Get rid of this.
 
-  short check6x6(short mapH, short mapV, short base, short tool);
+    int tool_x; ///< Get rid of this.
 
-  int getDensityStr(short catNo, short mapH, short mapV);
+    int tool_y; ///< Get rid of this.
 
-  void doZoneStatus(short mapH, short mapV);
 
-  void doShowZoneStatus(char *str, char *s0, char *s1, char *s2,
-                        char *s3, char *s4, int x, int y);
+    int putDownPark(short mapH, short mapV);
 
-  void didTool(const char *name, short x, short y);
+    int putDownNetwork(short mapH, short mapV);
 
-  int queryTool(short x, short y);
+    short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
-  int bulldozerTool(short x, short y);
+    int check3x3(short mapH, short mapV, short base, short tool);
 
-  int roadTool(short x, short y);
+    short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
 
-  int railroadTool(short x, short y);
+    short check6x6(short mapH, short mapV, short base, short tool);
 
-  int wireTool(short x, short y);
+    int getDensityStr(short catNo, short mapH, short mapV);
 
-  int parkTool(short x, short y);
+    void doZoneStatus(short mapH, short mapV);
 
-  int residentialTool(short x, short y);
+    void doShowZoneStatus(
+        char *str, 
+	char *s0, char *s1, char *s2, char *s3, char *s4, 
+	int x, int y);
 
-  int commercialTool(short x, short y);
+    void didTool(const char *name, short x, short y);
 
-  int industrialTool(short x, short y);
+    int queryTool(short x, short y);
 
-  int policeStationTool(short x, short y);
+    int bulldozerTool(short x, short y);
 
-  int fireStationTool(short x, short y);
+    int roadTool(short x, short y);
 
-  int stadiumTool(short x, short y);
+    int railroadTool(short x, short y);
 
-  int coalPowerTool(short x, short y);
+    int wireTool(short x, short y);
 
-  int nuclearPowerTool(short x, short y);
+    int parkTool(short x, short y);
 
-  int seaportTool(short x, short y);
+    int residentialTool(short x, short y);
 
-  int airportTool(short x, short y);
+    int commercialTool(short x, short y);
 
-  int networkTool(short x, short y);
+    int industrialTool(short x, short y);
 
-  int doTool(EditingTool tool, short x, short y, bool first);
+    int policeStationTool(short x, short y);
 
-  void toolDown(EditingTool tool, short x, short y);
+    int fireStationTool(short x, short y);
 
-  void toolUp(EditingTool tool, short x, short y);
+    int stadiumTool(short x, short y);
 
-  void toolDrag(EditingTool tool, short px, short py);
+    int coalPowerTool(short x, short y);
+
+    int nuclearPowerTool(short x, short y);
+
+    int seaportTool(short x, short y);
+
+    int airportTool(short x, short y);
+
+    int networkTool(short x, short y);
+
+    int doTool(EditingTool tool, short x, short y, bool first);
+
+    void toolDown(EditingTool tool, short x, short y);
+
+    void toolUp(EditingTool tool, short x, short y);
+
+    void toolDrag(EditingTool tool, short px, short py);
 
 private:
 
-  bool tally(short tileValue);
+    bool tally(short tileValue);
 
-  short checkSize(short tileValue);
+    short checkSize(short tileValue);
 
-  void checkBorder(short xMap, short yMap, int size);
+    void checkBorder(short xMap, short yMap, int size);
+
+    void putRubble(int x, int y, int size);
 
 
-  void putRubble(int x, int y, int size);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // traffic.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // traffic.cpp
 
 public:
 
-  /* Position stack */
-  short PosStackN; ///< Position stack top pointer, points to top position
-  short SMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
-  short SMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
+    /* Position stack */
+    short PosStackN; ///< Position stack top pointer, points to top position
+    short SMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
+    short SMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
 
-  Direction LDir; ///< Last moved direction
+    Direction LDir; ///< Last moved direction
 
-  short TrafMaxX;
+    short TrafMaxX;
 
-  short TrafMaxY;
+    short TrafMaxY;
 
 
-  short MakeTraf(ZoneType dest);
+    short MakeTraf(ZoneType dest);
 
-  void SetTrafMem();
+    void SetTrafMem();
 
-  void PushPos();
+    void PushPos();
 
-  void PullPos();
+    void PullPos();
 
-  bool FindPRoad();
+    bool FindPRoad();
 
-  bool FindPTele();
+    bool FindPTele();
 
-  bool TryDrive();
+    bool TryDrive();
 
-  bool TryGo(int dist);
+    bool TryGo(int dist);
 
-  short GetFromMap(Direction d);
+    short GetFromMap(Direction d);
+
 
 private:
 
-  ZoneType Zsource; ///< Destination of traffic
+    ZoneType Zsource; ///< Destination of traffic
 
 
-  bool DriveDone();
+    bool DriveDone();
 
-  bool RoadTest(int tile);
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // update.cpp
-
-public:
+    bool RoadTest(int tile);
 
 
-  short MustUpdateFunds;
-
-  short MustUpdateOptions;
-
-  Quad LastCityTime;
-
-  Quad LastCityYear;
-
-  Quad LastCityMonth;
-
-  Quad LastFunds;
-
-  Quad LastR;
-
-  Quad LastC;
-
-  Quad LastI;
-
-
-  void DoUpdateHeads();
-
-  void UpdateEditors();
-
-  void UpdateMaps();
-
-  void UpdateGraphs();
-
-  void UpdateEvaluation();
-
-  void UpdateHeads();
-
-  void UpdateFunds();
-
-  void ReallyUpdateFunds();
-
-  void doTimeStuff();
-
-  void updateDate();
-
-  void showValves();
-
-  void drawValve();
-
-  void SetDemand(
-    double r,
-    double c,
-    double i);
-
-  void updateOptions();
-
-  void UpdateOptionsMenu(
-    int options);
-
-  void UpdateUserInterface();
-
-
-  ////////////////////////////////////////////////////////////////////////
-  // utilities.cpp
+    ////////////////////////////////////////////////////////////////////////
+    // update.cpp
 
 public:
 
 
-  void makeDollarDecimalStr(
-    char *numStr,
-    char *dollarStr);
+    short MustUpdateFunds;
 
-  void Pause();
+    short MustUpdateOptions;
 
-  void Resume();
+    Quad LastCityTime;
 
-  void setSpeed(
-    short speed);
+    Quad LastCityYear;
 
-  void setSkips(
-    int skips);
+    Quad LastCityMonth;
 
-  void SetGameLevel(GameLevel level);
-  void SetGameLevelFunds(GameLevel level);
+    Quad LastFunds;
 
-  void UpdateGameLevel();
+    Quad LastR;
 
-  void setCityName(const std::string &name);
+    Quad LastC;
 
-  void setCleanCityName(const std::string &name);
-
-  void SetYear(
-    int year);
-
-  int CurrentYear();
-
-  void DoNewGame();
-
-  void DoGeneratedCityImage(
-    char *name,
-    int time,
-    int pop,
-    char *cityClassName,
-    int score);
+    Quad LastI;
 
 
-  ////////////////////////////////////////////////////////////////////////
-  // zone.cpp
+    void DoUpdateHeads();
+
+    void UpdateEditors();
+
+    void UpdateMaps();
+
+    void UpdateGraphs();
+
+    void UpdateEvaluation();
+
+    void UpdateHeads();
+
+    void UpdateFunds();
+
+    void ReallyUpdateFunds();
+
+    void doTimeStuff();
+
+    void updateDate();
+
+    void showValves();
+
+    void drawValve();
+
+    void SetDemand(float r, float c, float i);
+
+    void updateOptions();
+
+    void UpdateOptionsMenu(int options);
+
+    void UpdateUserInterface();
+
+
+    ////////////////////////////////////////////////////////////////////////
+    // utilities.cpp
 
 public:
 
 
-  void DoZone();
+    void makeDollarDecimalStr(char *numStr, char *dollarStr);
 
-  void DoHospChur();
+    void Pause();
 
-  void SetSmoke(
-    int ZonePower);
+    void Resume();
 
-  void DoIndustrial(
-    int ZonePwrFlg);
+    void setSpeed(short speed);
 
-  void DoCommercial(
-    int ZonePwrFlg);
+    void setSkips(int skips);
 
-  void DoResidential(
-    int ZonePwrFlg);
+    void SetGameLevelFunds(GameLevel level);
 
-  void MakeHosp();
+    void SetGameLevel(GameLevel level);
 
-  short GetCRVal();
+    void UpdateGameLevel();
 
-  void DoResIn(
-    int pop,
-    int value);
+    void setCityName(const std::string &name);
 
-  void DoComIn(
-    int pop,
-    int value);
+    void setCleanCityName(const std::string &name);
 
-  void DoIndIn(
-    int pop,
-    int value);
+    void SetYear(int year);
 
-  void IncROG(
-    int amount);
+    int CurrentYear();
 
-  void DoResOut(
-    int pop,
-    int value);
-
-  void DoComOut(
-    int pop,
-    int value);
-
-  void DoIndOut(
-    int pop,
-    int value);
-
-  short RZPop(
-    int Ch9);
-
-  short CZPop(
-    int Ch9);
-
-  short IZPop(
-    int Ch9);
-
-  void BuildHouse(
-    int value);
-
-  void ResPlop(
-    int Den,
-    int Value);
-
-  void ComPlop(
-    int Den,
-    int Value);
-
-  void IndPlop(
-    int Den,
-    int Value);
-
-  short EvalLot(
-    int x,
-    int y);
-
-  bool ZonePlop(int base);
-
-  short EvalRes(
-    int traf);
-
-  short EvalCom(
-    int traf);
-
-  short EvalInd(
-    int traf);
-
-  short DoFreePop();
-
-  bool SetZPower();
+    void DoNewGame();
 
 
-  ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    // zone.cpp
+
+public:
+
+
+    void DoZone();
+
+    void DoHospChur();
+
+    void SetSmoke(int ZonePower);
+
+    void DoIndustrial(int ZonePwrFlg);
+
+    void DoCommercial(int ZonePwrFlg);
+
+    void DoResidential(int ZonePwrFlg);
+
+    void MakeHosp();
+
+    short GetCRVal();
+
+    void DoResIn(int pop, int value);
+
+    void DoComIn(int pop, int value);
+
+    void DoIndIn(int pop, int value);
+
+    void IncROG(int amount);
+
+    void DoResOut(int pop, int value);
+
+    void DoComOut(int pop, int value);
+
+    void DoIndOut(int pop, int value);
+
+    short RZPop(int Ch9);
+
+    short CZPop(int Ch9);
+
+    short IZPop(int Ch9);
+
+    void BuildHouse(int value);
+
+    void ResPlop(int Den, int Value);
+
+    void ComPlop(int Den, int Value);
+
+    void IndPlop(int Den, int Value);
+
+    short EvalLot(int x, int y);
+
+    bool ZonePlop(int base);
+
+    short EvalRes(int traf);
+
+    short EvalCom(int traf);
+
+    short EvalInd(int traf);
+
+    short DoFreePop();
+
+    bool SetZPower();
+
+
+    ////////////////////////////////////////////////////////////////////////
 
 
 };

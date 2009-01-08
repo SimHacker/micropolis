@@ -52,15 +52,13 @@ int Micropolis::sim_rand()
 }
 
 
-void Micropolis::sim_srand(
-  UQuad seed)
+void Micropolis::sim_srand(UQuad seed)
 {
   nextRandom = seed;
 }
 
 
-short Micropolis::Rand(
-  short range)
+short Micropolis::Rand(short range)
 {
   int maxMultiple, rnum;
 
@@ -93,8 +91,7 @@ int Micropolis::Rand16Signed()
 }
 
 
-short Micropolis::ERand(
-  short limit)
+short Micropolis::ERand(short limit)
 {
   short x, z;
 
@@ -119,8 +116,7 @@ void Micropolis::RandomlySeedRand()
 }
 
 
-void Micropolis::SeedRand(
-  int seed)
+void Micropolis::SeedRand(int seed)
 {
   sim_srand(seed);
 }

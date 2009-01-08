@@ -27124,16 +27124,16 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_SetDemand(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  double arg2 ;
-  double arg3 ;
-  double arg4 ;
+  float arg2 ;
+  float arg3 ;
+  float arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  double val2 ;
+  float val2 ;
   int ecode2 = 0 ;
-  double val3 ;
+  float val3 ;
   int ecode3 = 0 ;
-  double val4 ;
+  float val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -27146,21 +27146,21 @@ SWIGINTERN PyObject *_wrap_Micropolis_SetDemand(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SetDemand" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  ecode2 = SWIG_AsVal_float(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SetDemand" "', argument " "2"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SetDemand" "', argument " "2"" of type '" "float""'");
   } 
-  arg2 = static_cast< double >(val2);
-  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  arg2 = static_cast< float >(val2);
+  ecode3 = SWIG_AsVal_float(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_SetDemand" "', argument " "3"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_SetDemand" "', argument " "3"" of type '" "float""'");
   } 
-  arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  arg3 = static_cast< float >(val3);
+  ecode4 = SWIG_AsVal_float(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_SetDemand" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_SetDemand" "', argument " "4"" of type '" "float""'");
   } 
-  arg4 = static_cast< double >(val4);
+  arg4 = static_cast< float >(val4);
   (arg1)->SetDemand(arg2,arg3,arg4);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -27388,36 +27388,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_SetGameLevel(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  GameLevel arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_SetGameLevel",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SetGameLevel" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SetGameLevel" "', argument " "2"" of type '" "GameLevel""'");
-  } 
-  arg2 = static_cast< GameLevel >(val2);
-  (arg1)->SetGameLevel(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_SetGameLevelFunds(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -27441,6 +27411,36 @@ SWIGINTERN PyObject *_wrap_Micropolis_SetGameLevelFunds(PyObject *SWIGUNUSEDPARM
   } 
   arg2 = static_cast< GameLevel >(val2);
   (arg1)->SetGameLevelFunds(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_SetGameLevel(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  GameLevel arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_SetGameLevel",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_SetGameLevel" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_SetGameLevel" "', argument " "2"" of type '" "GameLevel""'");
+  } 
+  arg2 = static_cast< GameLevel >(val2);
+  (arg1)->SetGameLevel(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -27612,78 +27612,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_DoNewGame(PyObject *SWIGUNUSEDPARM(self), 
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_DoGeneratedCityImage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
-  int arg3 ;
-  int arg4 ;
-  char *arg5 = (char *) 0 ;
-  int arg6 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  int val3 ;
-  int ecode3 = 0 ;
-  int val4 ;
-  int ecode4 = 0 ;
-  int res5 ;
-  char *buf5 = 0 ;
-  int alloc5 = 0 ;
-  int val6 ;
-  int ecode6 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
-  PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Micropolis_DoGeneratedCityImage",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "2"" of type '" "char *""'");
-  }
-  arg2 = reinterpret_cast< char * >(buf2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "3"" of type '" "int""'");
-  } 
-  arg3 = static_cast< int >(val3);
-  ecode4 = SWIG_AsVal_int(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "4"" of type '" "int""'");
-  } 
-  arg4 = static_cast< int >(val4);
-  res5 = SWIG_AsCharPtrAndSize(obj4, &buf5, NULL, &alloc5);
-  if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "5"" of type '" "char *""'");
-  }
-  arg5 = reinterpret_cast< char * >(buf5);
-  ecode6 = SWIG_AsVal_int(obj5, &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Micropolis_DoGeneratedCityImage" "', argument " "6"" of type '" "int""'");
-  } 
-  arg6 = static_cast< int >(val6);
-  (arg1)->DoGeneratedCityImage(arg2,arg3,arg4,arg5,arg6);
-  resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
-  return resultobj;
-fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
   return NULL;
 }
 
@@ -29468,15 +29396,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_Resume", _wrap_Micropolis_Resume, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setSpeed", _wrap_Micropolis_setSpeed, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setSkips", _wrap_Micropolis_setSkips, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_SetGameLevel", _wrap_Micropolis_SetGameLevel, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetGameLevelFunds", _wrap_Micropolis_SetGameLevelFunds, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_SetGameLevel", _wrap_Micropolis_SetGameLevel, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_UpdateGameLevel", _wrap_Micropolis_UpdateGameLevel, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setCityName", _wrap_Micropolis_setCityName, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setCleanCityName", _wrap_Micropolis_setCleanCityName, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetYear", _wrap_Micropolis_SetYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CurrentYear", _wrap_Micropolis_CurrentYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoNewGame", _wrap_Micropolis_DoNewGame, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_DoGeneratedCityImage", _wrap_Micropolis_DoGeneratedCityImage, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoZone", _wrap_Micropolis_DoZone, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoHospChur", _wrap_Micropolis_DoHospChur, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetSmoke", _wrap_Micropolis_SetSmoke, METH_VARARGS, NULL},

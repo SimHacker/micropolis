@@ -451,17 +451,17 @@ bool Micropolis::LoadCity(const char *filename)
 
         CityFileName = filename;
 
-	unsigned int lastDot = CityFileName.find_last_of('.');
-	unsigned int lastSlash = CityFileName.find_last_of('/');
+        unsigned int lastDot = CityFileName.find_last_of('.');
+        unsigned int lastSlash = CityFileName.find_last_of('/');
 
-	unsigned int pos =
-	    (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
-	unsigned int last =
-	    (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
-	unsigned int len = 
-	    last - pos;
-	std::string newCityName =
-	    CityFileName.substr(pos, len);
+        unsigned int pos =
+            (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
+        unsigned int last =
+            (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+        unsigned int len = 
+            last - pos;
+        std::string newCityName =
+            CityFileName.substr(pos, len);
 
         setCityName(newCityName);
 
@@ -541,17 +541,17 @@ void Micropolis::SaveCityAs(const char *filename)
 
     if (saveFile(CityFileName.c_str())) {
 
-	unsigned int lastDot = CityFileName.find_last_of('.');
-	unsigned int lastSlash = CityFileName.find_last_of('/');
+        unsigned int lastDot = CityFileName.find_last_of('.');
+        unsigned int lastSlash = CityFileName.find_last_of('/');
 
-	unsigned int pos =
-	    (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
-	unsigned int last =
-	    (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
-	unsigned int len = 
-	    last - pos;
-	std::string newCityName =
-	    CityFileName.substr(pos, len);
+        unsigned int pos =
+            (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
+        unsigned int last =
+            (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+        unsigned int len = 
+            last - pos;
+        std::string newCityName =
+            CityFileName.substr(pos, len);
 
         setCityName(newCityName);
 

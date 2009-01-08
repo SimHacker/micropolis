@@ -194,7 +194,7 @@ void Micropolis::showValves()
 
 void Micropolis::drawValve()
 {
-  double r, c, i;
+  float r, c, i;
 
   r = RValve;
 
@@ -239,10 +239,7 @@ void Micropolis::drawValve()
 }
 
 
-void Micropolis::SetDemand(
-  double r,
-  double c,
-  double i)
+void Micropolis::SetDemand(float r, float c, float i)
 {
   Callback(
     "UISetDemand",
@@ -299,12 +296,11 @@ void Micropolis::updateOptions()
 }
 
 
-void Micropolis::UpdateOptionsMenu(
-  int options)
+void Micropolis::UpdateOptionsMenu(int options)
 {
-  // FIXME: just notify the scripting language that the options changed,
-  // and let it pull the values out of our members, instead of encoding
-  // and passing the options.
+  // @todo Just notify the scripting language that the options 
+  //       changed, and let it pull the values out of our members, 
+  //       instead of encoding and passing the options.
   Callback(
     "UISetOptions",
     "dddddddd",
@@ -321,7 +317,7 @@ void Micropolis::UpdateOptionsMenu(
 
 void Micropolis::UpdateUserInterface()
 {
-  // TODO: Send all pending update messages to the user interface.
+  // @todo Send all pending update messages to the user interface.
 
   // city: after load file, load scenario, or generate city
   // map: when small overall map changes
