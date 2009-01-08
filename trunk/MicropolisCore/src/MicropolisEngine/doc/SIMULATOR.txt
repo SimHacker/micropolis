@@ -1,5 +1,23 @@
+Micropolis City Simulation Algorithm Description.
+
+SimFrame
+
+  If SimSpeed is 0, then return.
+
+  Increment Spdcycle mod 1024.
+  
+  If SimSpeed is 1, then return every 4 out of 5 frames.
+
+  If SimSpeed is 2, then return every 2 out of 3 frames.
+
+  Increment Fcycle mod 1024.
+
+  Call Simulate, passing the phase parameter of (Fcycle mod 16).
+
+
 Simulate
-  Switches through 16 phases (0 to 15).
+
+  Passed the phase parameter, which switches through 16 phases (0 to 15).
 
   Phase 0:
     Increment Scycle and wrap mod 1024.

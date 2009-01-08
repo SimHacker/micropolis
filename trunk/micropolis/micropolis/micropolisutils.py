@@ -497,12 +497,14 @@ class WebMicropolis(micropolisengine.Micropolis):
         })
 
     
-    def handle_UIMakeSound(self, channel, sound):
-        print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound)
+    def handle_UIMakeSound(self, channel, sound, x, y):
+        print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound, x, y)
         self.sendSessions({
             'message': "UIMakeSound",
             'channel': channel,
             'sound': sound,
+            'x': x,
+            'y': y,
         })
 
     

@@ -303,9 +303,9 @@ class MicropolisModel(micropolisengine.Micropolis):
         print "handle_UILoseGame(self)", (self,)
 
     
-    def handle_UIMakeSound(self, channel, sound):
-        #print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound)
-        pass # print "SOUND", channel, sound
+    def handle_UIMakeSound(self, channel, sound, x, y):
+        #print "handle_UIMakeSound(self, channel, sound, x, y)", (self, channel, sound, x, y)
+        pass # print "SOUND", channel, sound, x, y
 
     
     def handle_UINewGame(self):
