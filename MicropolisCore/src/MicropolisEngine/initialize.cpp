@@ -138,13 +138,6 @@ void Micropolis::InitWillStuff()
  */
 void Micropolis::ResetMapState()
 {
-/*
-    SimView *view;
-
-    for (view = sim->map; view != NULL; view = view->next) {
-        view->map_state = ALMAP;
-    }
-*/
 }
 
 
@@ -155,14 +148,6 @@ void Micropolis::ResetMapState()
  */
 void Micropolis::ResetEditorState()
 {
-/*
-    SimView *view;
-
-    for (view = sim->editor; view != NULL; view = view->next) {
-        view->tool_state = dozeState;
-        view->tool_state_save = -1;
-    }
-*/
 }
 
 

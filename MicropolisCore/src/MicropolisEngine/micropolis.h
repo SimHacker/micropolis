@@ -805,7 +805,7 @@ static inline int absoluteValue(int val)
 #define NeutralizeRoad(tile) \
     tile &= LOMASK; \
     if ((tile >= 64) && \
-	(tile <= 207)) { \
+        (tile <= 207)) { \
         tile = (tile & 0x000F) + 64; \
     }
 
@@ -1521,15 +1521,15 @@ public:
 #endif
 
     void GetHistoryRange(
-	int historyType,
-	int historyScale,
-	short *minValResult,
-	short *maxValResult);
+        int historyType,
+        int historyScale,
+        short *minValResult,
+        short *maxValResult);
 
     short GetHistory(
-	int historyType,
-	int historyScale,
-	int historyIndex);
+        int historyType,
+        int historyScale,
+        int historyIndex);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1626,19 +1626,19 @@ public:
     void ShowBudgetWindowAndStartWaiting();
 
     void SetBudget(
-	char *flowStr,
-	char *previousStr,
-	char *currentStr,
-	char *collectedStr,
-	short tax);
+        char *flowStr,
+        char *previousStr,
+        char *currentStr,
+        char *collectedStr,
+        short tax);
 
     void SetBudgetValues(
-	char *roadGot,
-	char *roadWant,
-	char *policeGot,
-	char *policeWant,
-	char *fireGot,
-	char *fireWant);
+        char *roadGot,
+        char *roadWant,
+        char *policeGot,
+        char *policeWant,
+        char *fireGot,
+        char *fireWant);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1648,40 +1648,40 @@ public:
 
 
     int ConnecTile(
-	short x,
-	short y,
-	short *TileAdrPtr,
-	short Command);
+        short x,
+        short y,
+        short *TileAdrPtr,
+        short Command);
 
     int LayDoze(
-	int x,
-	int y,
-	short *TileAdrPtr);
+        int x,
+        int y,
+        short *TileAdrPtr);
 
     int LayRoad(
-	int x,
-	int y,
-	short *TileAdrPtr);
+        int x,
+        int y,
+        short *TileAdrPtr);
 
     int LayRail(
-	int x,
-	int y,
-	short *TileAdrPtr);
+        int x,
+        int y,
+        short *TileAdrPtr);
 
     int LayWire(
-	  int x,
-	  int y,
-	  short *TileAdrPtr);
+          int x,
+          int y,
+          short *TileAdrPtr);
 
     void FixZone(
-	int x,
-	int y,
-	short *TileAdrPtr);
+        int x,
+        int y,
+        short *TileAdrPtr);
 
     void FixSingle(
-	int x,
-	int y,
-	short *TileAdrPtr);
+        int x,
+        int y,
+        short *TileAdrPtr);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2159,19 +2159,19 @@ public:
     void ditherMap();
 
     void maybeDrawRect(
-	int val,
-	int x,
-	int y,
-	int w,
-	int h);
+        int val,
+        int x,
+        int y,
+        int w,
+        int h);
 
     void drawRect(
-	int pixel,
-	int solid,
-	int x,
-	int y,
-	int w,
-	int h);
+        int pixel,
+        int solid,
+        int x,
+        int y,
+        int w,
+        int h);
 
 #endif
 
@@ -2731,8 +2731,8 @@ public:
 
     void doShowZoneStatus(
         char *str, 
-	char *s0, char *s1, char *s2, char *s3, char *s4, 
-	int x, int y);
+        char *s0, char *s1, char *s2, char *s3, char *s4, 
+        int x, int y);
 
     void didTool(const char *name, short x, short y);
 
