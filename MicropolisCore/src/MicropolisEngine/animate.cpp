@@ -191,26 +191,24 @@ static short aniTile[1024] = {
 /* comefrom: moveWorld doEditWindow scoreDoer doMapInFront graphDoer */
 void Micropolis::animateTiles()
 {
-  unsigned short tilevalue, tileflags;
-  unsigned short *tMapPtr;
-  int i;
+    unsigned short tilevalue, tileflags;
+    unsigned short *tMapPtr;
+    int i;
 
-  /* Animate whole world */
-  tMapPtr = (unsigned short *)&(Map[0][0]);
+    /* Animate whole world */
+    tMapPtr = (unsigned short *)&(Map[0][0]);
 
-  for (i = WORLD_X * WORLD_Y; i > 0; i--) {
-    tilevalue = (*tMapPtr);
-    if (tilevalue & ANIMBIT) {
-      tileflags = tilevalue & ALLBITS;
-      tilevalue &= LOMASK;
-      tilevalue = aniTile[tilevalue];
-
-      tilevalue |= tileflags;
-      (*tMapPtr) = tilevalue;
+    for (i = WORLD_X * WORLD_Y; i > 0; i--) {
+	tilevalue = (*tMapPtr);
+	if (tilevalue & ANIMBIT) {
+	    tileflags = tilevalue & ALLBITS;
+	    tilevalue &= LOMASK;
+	    tilevalue = aniTile[tilevalue];
+	    tilevalue |= tileflags;
+	    (*tMapPtr) = tilevalue;
+	}
+	tMapPtr++;
     }
-    tMapPtr++;
-  }
-
 }
 
 
