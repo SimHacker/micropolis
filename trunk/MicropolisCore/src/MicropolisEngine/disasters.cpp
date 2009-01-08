@@ -133,7 +133,7 @@ void Micropolis::DoDisasters()
 
             case 7:
             case 8:
-                // 2/9 chance godzilla arrives in a dirty town
+                // 2/9 chance a scary monster arrives in a dirty town
                 if (PolluteAverage > /* 80 */ 60) {
                     MakeMonster();
                 }
