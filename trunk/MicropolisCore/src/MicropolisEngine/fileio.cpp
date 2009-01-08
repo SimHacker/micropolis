@@ -79,33 +79,33 @@
 
 
 static void swap_shorts(
-  short *buf,
-  int len)
+    short *buf,
+    int len)
 {
-  int i;
+    int i;
 
-  /* Flip bytes in each short! */
-  for (i = 0; i < len; i++) {
-    *buf = ((*buf & 0xFF) <<8) | ((*buf &0xFF00) >>8);
-    buf++;
-  }
+    /* Flip bytes in each short! */
+    for (i = 0; i < len; i++) {
+        *buf = ((*buf & 0xFF) <<8) | ((*buf &0xFF00) >>8);
+        buf++;
+    }
 }
 
 
 static void half_swap_longs(
-  long *buf,
-  int len)
+    long *buf,
+    int len)
 {
-  int i;
+    int i;
 
-  /* Flip bytes in each long! */
-  for (i = 0; i < len; i++) {
-    long l = *buf;
-    *buf =
-      ((l & 0x0000ffff) << 16) |
-      ((l & 0xffff0000) >> 16);
-    buf++;
-  }
+    /* Flip bytes in each long! */
+    for (i = 0; i < len; i++) {
+        long l = *buf;
+        *buf =
+            ((l & 0x0000ffff) << 16) |
+            ((l & 0xffff0000) >> 16);
+        buf++;
+    }
 }
 
 
@@ -119,260 +119,225 @@ static void half_swap_longs(
 #endif
 
 
-static int load_short(
-  short *buf,
-  int len,
-  FILE *f)
+static bool load_short(
+    short *buf,
+    int len,
+    FILE *f)
 {
-  size_t result =
-    fread(buf, sizeof(short), len, f);
-  if ((int)result != len) {
-     return 0;
-  }
+    size_t result =
+        fread(buf, sizeof(short), len, f);
+    if ((int)result != len) {
+         return false;
+    }
 
-  SWAP_SHORTS(buf, len);        /* to intel */
+    SWAP_SHORTS(buf, len);        /* to intel */
 
-  return 1;
+    return true;
 }
 
 
-static int save_short(
-  short *buf,
-  int len,
-  FILE *f)
+static bool save_short(
+    short *buf,
+    int len,
+    FILE *f)
 {
+    SWAP_SHORTS(buf, len);        /* to MAC */
 
-  SWAP_SHORTS(buf, len);        /* to MAC */
+    if ((int)fwrite(buf, sizeof(short), len, f) != len) {
+        return false;
+    }
 
-  if ((int)fwrite(buf, sizeof(short), len, f) != len) {
-     return 0;
-  }
+    SWAP_SHORTS(buf, len);        /* back to intel */
 
-  SWAP_SHORTS(buf, len);        /* back to intel */
-
-  return 1;
+    return true;
 }
 
 
-int Micropolis::load_file(
-  char *filename,
-  char *dir)
+bool Micropolis::load_file(const char *filename, const char *dir)
 {
-  FILE *f;
-  char path[512];
-  Quad size;
+    bool result = false;
+    char *path = NULL;
+    FILE *f;
+    Quad size;
 
-  if (dir != NULL) {
-    sprintf(path, "%s/%s", dir, filename);
-    filename = path;
-  }
+    if (dir != NULL) {
+        path = (char *)malloc(strlen(dir) + 1 + strlen(filename) + 1);
+        sprintf(path, "%s/%s", dir, filename);
+        filename = path;
+    }
 
-  if ((f = fopen(filename, "rb")) == NULL) {
-    return (0);
-  }
+    if ((f = fopen(filename, "rb")) == NULL) {
+        goto done;
+    }
 
-  fseek(f, 0L, SEEK_END);
-  size = ftell(f);
-  fseek(f, 0L, SEEK_SET);
+    fseek(f, 0L, SEEK_END);
+    size = ftell(f);
+    fseek(f, 0L, SEEK_SET);
 
-  switch (size) {
+    result =
+      (size == 27120) &&
+      load_short(ResHis, HISTLEN / sizeof(short), f) &&
+      load_short(ComHis, HISTLEN / sizeof(short), f) &&
+      load_short(IndHis, HISTLEN / sizeof(short), f) &&
+      load_short(CrimeHis, HISTLEN / sizeof(short), f) &&
+      load_short(PollutionHis, HISTLEN / sizeof(short), f) &&
+      load_short(MoneyHis, HISTLEN / sizeof(short), f) &&
+      load_short(MiscHis, MISCHISTLEN / sizeof(short), f) &&
+      load_short((&Map[0][0]), WORLD_X * WORLD_Y, f);
 
-  case 27120: /* Normal city */
-    break;
-
-  case 99120: /* 2x2 city */
-    break;
-
-  case 219120: /* 3x3 city */
-    break;
-
-  default:
-    return (0);
-
-  }
-
-  if ((load_short(ResHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(ComHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(IndHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(CrimeHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(PollutionHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(MoneyHis, HISTLEN / sizeof(short), f) == 0) ||
-      (load_short(MiscHis, MISCHISTLEN / sizeof(short), f) == 0) ||
-      (load_short((&Map[0][0]), WORLD_X * WORLD_Y, f) < 0)) {
-
-    /* TODO:  report error */
     fclose(f);
-    return (0);
 
-  }
+ done:
+    if (path != NULL) {
+        free(path);
+    }
 
-  fclose(f);
-  return (1);
+    return result;
 }
 
 
-int Micropolis::loadFile(
-  char *filename)
+bool Micropolis::loadFile(const char *filename)
 {
-  long n;
+    long n;
 
-  if (load_file(filename, NULL) == 0) {
-    return(0);
-  }
+    if (!load_file(filename, NULL)) {
+        return false;
+    }
 
-  /* total funds is a long.....    MiscHis is array of shorts */
-  /* total funds is being put in the 50th & 51th word of MiscHis */
-  /* find the address, cast the ptr to a lontPtr, take contents */
+    /* total funds is a long.....    MiscHis is array of shorts */
+    /* total funds is being put in the 50th & 51th word of MiscHis */
+    /* find the address, cast the ptr to a longPtr, take contents */
 
-  n =
-    *(Quad *)(MiscHis + 50);
-  HALF_SWAP_LONGS(&n, 1);
-  SetFunds(n);
+    n = *(Quad *)(MiscHis + 50);
+    HALF_SWAP_LONGS(&n, 1);
+    SetFunds(n);
 
-  n =
-    *(Quad *)(MiscHis + 8);
-  HALF_SWAP_LONGS(&n, 1);
-  CityTime = n;
+    n = *(Quad *)(MiscHis + 8);
+    HALF_SWAP_LONGS(&n, 1);
+    CityTime = n;
 
-  autoBulldoze = (MiscHis[52] != 0);   // flag for autoBulldoze
-  autoBudget   = (MiscHis[53] != 0);   // flag for autoBudget
-  autoGo       = (MiscHis[54] != 0);   // flag for auto-goto
-  UserSoundOn  = (MiscHis[55] != 0);   // flag for the sound on/off
-  CityTax = MiscHis[56];
-  SimSpeed = MiscHis[57];
-  ChangeCensus();
-  MustUpdateOptions = 1;
+    autoBulldoze = (MiscHis[52] != 0);   // flag for autoBulldoze
+    autoBudget   = (MiscHis[53] != 0);   // flag for autoBudget
+    autoGo       = (MiscHis[54] != 0);   // flag for auto-goto
+    UserSoundOn  = (MiscHis[55] != 0);   // flag for the sound on/off
+    CityTax = MiscHis[56];
+    SimSpeed = MiscHis[57];
+    ChangeCensus();
+    MustUpdateOptions = 1;
 
-  /* yayaya */
+    /* yayaya */
 
-  n =
-    *(Quad *)(MiscHis + 58);
-  HALF_SWAP_LONGS(&n, 1);
-  policePercent =
-    ((float)n) / ((float)65536);
+    n = *(Quad *)(MiscHis + 58);
+    HALF_SWAP_LONGS(&n, 1);
+    policePercent = ((float)n) / ((float)65536);
 
-  n =
-    *(Quad *)(MiscHis + 60);
-  HALF_SWAP_LONGS(&n, 1);
-  firePercent =
-    (float)n / (float)65536.0;
+    n = *(Quad *)(MiscHis + 60);
+    HALF_SWAP_LONGS(&n, 1);
+    firePercent = (float)n / (float)65536.0;
 
-  n =
-    *(Quad *)(MiscHis + 62);
-  HALF_SWAP_LONGS(&n, 1);
-  roadPercent = (float)n / (float)65536.0;
+    n = *(Quad *)(MiscHis + 62);
+    HALF_SWAP_LONGS(&n, 1);
+    roadPercent = (float)n / (float)65536.0;
 
-  policePercent =
-    (float)(*(Quad*)(MiscHis + 58)) /
-    (float)65536.0;   /* and 59 */
-  firePercent =
-    (float)(*(Quad*)(MiscHis + 60)) /
-    (float)65536.0;   /* and 61 */
-  roadPercent =
-    (float)(*(Quad*)(MiscHis + 62)) /
-    (float)65536.0;   /* and 63 */
+    policePercent =
+        (float)(*(Quad*)(MiscHis + 58)) /
+        (float)65536.0;   /* and 59 */
+    firePercent =
+        (float)(*(Quad*)(MiscHis + 60)) /
+        (float)65536.0;   /* and 61 */
+    roadPercent =
+        (float)(*(Quad*)(MiscHis + 62)) /
+        (float)65536.0;   /* and 63 */
 
-  if (CityTime < 0) {
-    CityTime = 0;
-  }
+    CityTime = max((Quad)0, CityTime);
 
-  if ((CityTax > 20) ||
-      (CityTax < 0)) {
-    CityTax = 7;
-  }
+    // If the tax is nonsensical, set it to a reasonable value.
+    if ((CityTax > 20) ||
+        (CityTax < 0)) {
+        CityTax = 7;
+    }
 
-  if ((SimSpeed < 0) ||
-      (SimSpeed > 3)) {
-    SimSpeed = 3;
-  }
+    // If the speed is nonsensical, set it to a reasonable value.
+    if ((SimSpeed < 0) ||
+        (SimSpeed > 3)) {
+        SimSpeed = 3;
+    }
 
-  setSpeed(SimSpeed);
-  setSkips(0);
-  InitFundingLevel();
+    setSpeed(SimSpeed);
+    setSkips(0);
+    InitFundingLevel();
 
-  /* set the scenario id to 0 */
-  InitWillStuff();
-  ScenarioID = SC_NONE;
-  InitSimLoad = 1;
-  DoInitialEval = false;
-  DoSimInit();
-  InvalidateEditors();
-  InvalidateMaps();
+    // Set the scenario id to 0.
+    InitWillStuff();
+    ScenarioID = SC_NONE;
+    InitSimLoad = 1;
+    DoInitialEval = false;
+    DoSimInit();
+    InvalidateEditors();
+    InvalidateMaps();
 
-  return (1);
+    return true;
 }
 
 
-int Micropolis::saveFile(
-  char *filename)
+bool Micropolis::saveFile(const char *filename)
 {
-  long n;
-  FILE *f;
+    long n;
+    FILE *f;
 
-  if ((f = fopen(filename, "wb")) == NULL) {
-    /* TODO: report error */
-    return(0);
-  }
+    if ((f = fopen(filename, "wb")) == NULL) {
+        // @todo Report error saving file.
+        return false;
+    }
 
-  /* total funds is a long.....    MiscHis is array of ints */
-  /* total funds is bien put in the 50th & 51th word of MiscHis */
-  /* find the address, cast the ptr to a lontPtr, take contents */
+    /* total funds is a long.....    MiscHis is array of ints */
+    /* total funds is bien put in the 50th & 51th word of MiscHis */
+    /* find the address, cast the ptr to a longPtr, take contents */
 
-  n = TotalFunds;
-  HALF_SWAP_LONGS(&n, 1);
-  (*(Quad *)(MiscHis + 50)) =
-    n;
+    n = TotalFunds;
+    HALF_SWAP_LONGS(&n, 1);
+    (*(Quad *)(MiscHis + 50)) = n;
 
-  n = CityTime;
-  HALF_SWAP_LONGS(&n, 1);
-  (*(Quad *)(MiscHis + 8)) =
-    n;
+    n = CityTime;
+    HALF_SWAP_LONGS(&n, 1);
+    (*(Quad *)(MiscHis + 8)) = n;
 
-  MiscHis[52] = autoBulldoze;   // flag for autoBulldoze
-  MiscHis[53] = autoBudget;     // flag for autoBudget
-  MiscHis[54] = autoGo;         // flag for auto-goto
-  MiscHis[55] = UserSoundOn;    // flag for the sound on/off
-  MiscHis[57] = SimSpeed;
-  MiscHis[56] = CityTax;        /* post release */
+    MiscHis[52] = autoBulldoze;   // flag for autoBulldoze
+    MiscHis[53] = autoBudget;     // flag for autoBudget
+    MiscHis[54] = autoGo;         // flag for auto-goto
+    MiscHis[55] = UserSoundOn;    // flag for the sound on/off
+    MiscHis[57] = SimSpeed;
+    MiscHis[56] = CityTax;        /* post release */
 
-  /* yayaya */
+    /* yayaya */
 
-  n =
-    (int)(policePercent * 65536);
-  HALF_SWAP_LONGS(&n, 1);
-  (*(Quad *)(MiscHis + 58)) =
-    n;
+    n = (int)(policePercent * 65536);
+    HALF_SWAP_LONGS(&n, 1);
+    (*(Quad *)(MiscHis + 58)) = n;
 
-  n =
-    (int)(firePercent * 65536);
-  HALF_SWAP_LONGS(&n, 1);
-  (*(Quad *)(MiscHis + 60)) =
-    n;
+    n = (int)(firePercent * 65536);
+    HALF_SWAP_LONGS(&n, 1);
+    (*(Quad *)(MiscHis + 60)) = n;
 
-  n =
-    (int)(roadPercent * 65536);
-  HALF_SWAP_LONGS(&n, 1);
-  (*(Quad *)(MiscHis + 62)) =
-    n;
+    n = (int)(roadPercent * 65536);
+    HALF_SWAP_LONGS(&n, 1);
+    (*(Quad *)(MiscHis + 62)) = n;
 
-  if ((save_short(ResHis, HISTLEN / 2, f) == 0) ||
-      (save_short(ComHis, HISTLEN / 2, f) == 0) ||
-      (save_short(IndHis, HISTLEN / 2, f) == 0) ||
-      (save_short(CrimeHis, HISTLEN / 2, f) == 0) ||
-      (save_short(PollutionHis, HISTLEN / 2, f) == 0) ||
-      (save_short(MoneyHis, HISTLEN / 2, f) == 0) ||
-      (save_short(MiscHis, MISCHISTLEN / 2, f) == 0) ||
-      (save_short((&Map[0][0]), WORLD_X * WORLD_Y, f) < 0)) {
+    bool result = 
+        save_short(ResHis, HISTLEN / 2, f) &&
+        save_short(ComHis, HISTLEN / 2, f) &&
+        save_short(IndHis, HISTLEN / 2, f) &&
+        save_short(CrimeHis, HISTLEN / 2, f) &&
+        save_short(PollutionHis, HISTLEN / 2, f) &&
+        save_short(MoneyHis, HISTLEN / 2, f) &&
+        save_short(MiscHis, MISCHISTLEN / 2, f) &&
+        save_short((&Map[0][0]), WORLD_X * WORLD_Y, f);
 
-    /* TODO:  report error */
     fclose(f);
-    return(0);
 
-  }
-
-  fclose(f);
-  return(1);
+    return result;
 }
+
 
 /**
  * Load a scenario
@@ -381,181 +346,148 @@ int Micropolis::saveFile(
  */
 void Micropolis::LoadScenario(Scenario s)
 {
-  char *name = NULL;
-  char *fname = NULL;
+    const char *name = NULL;
+    const char *fname = NULL;
 
-  if (CityFileName != NULL) {
-    FreePtr(CityFileName);
-    CityFileName = NULL;
-  }
+    CityFileName = "";
 
-  SetGameLevel(LEVEL_EASY);
+    SetGameLevel(LEVEL_EASY);
 
-  if (s < SC_DULLSVILLE || s > SC_RIO) {
-    s = SC_DULLSVILLE;
-  }
+    if (s < SC_DULLSVILLE || s > SC_RIO) {
+        s = SC_DULLSVILLE;
+    }
 
-  switch (s) {
-  case SC_DULLSVILLE:
-    name = "Dullsville";
-    fname = "snro.111";
-    ScenarioID = SC_DULLSVILLE;
-    CityTime =
-      ((1900 - 1900) * 48) + 2;
-    SetFunds(5000);
-    break;
-  case SC_SAN_FRANCISCO:
-    name = "San Francisco";
-    fname = "snro.222";
-    ScenarioID = SC_SAN_FRANCISCO;
-    CityTime =
-      ((1906 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_HAMBURG:
-    name = "Hamburg";
-    fname = "snro.333";
-    ScenarioID = SC_HAMBURG;
-    CityTime =
-      ((1944 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_BERN:
-    name = "Bern";
-    fname = "snro.444";
-    ScenarioID = SC_BERN;
-    CityTime =
-      ((1965 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_TOKYO:
-    name = "Tokyo";
-    fname = "snro.555";
-    ScenarioID = SC_TOKYO;
-    CityTime =
-      ((1957 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_DETROIT:
-    name = "Detroit";
-    fname = "snro.666";
-    ScenarioID = SC_DETROIT;
-    CityTime =
-      ((1972 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_BOSTON:
-    name = "Boston";
-    fname = "snro.777";
-    ScenarioID = SC_BOSTON;
-    CityTime =
-      ((2010 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  case SC_RIO:
-    name = "Rio de Janeiro";
-    fname = "snro.888";
-    ScenarioID = SC_RIO;
-    CityTime =
-      ((2047 - 1900) * 48) + 2;
-    SetFunds(20000);
-    break;
-  default:
-    NOT_REACHED();
-    break;
-  }
+    switch (s) {
+        case SC_DULLSVILLE:
+            name = "Dullsville";
+            fname = "snro.111";
+            ScenarioID = SC_DULLSVILLE;
+            CityTime = ((1900 - 1900) * 48) + 2;
+            SetFunds(5000);
+            break;
+        case SC_SAN_FRANCISCO:
+            name = "San Francisco";
+            fname = "snro.222";
+            ScenarioID = SC_SAN_FRANCISCO;
+            CityTime = ((1906 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_HAMBURG:
+            name = "Hamburg";
+            fname = "snro.333";
+            ScenarioID = SC_HAMBURG;
+            CityTime = ((1944 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_BERN:
+            name = "Bern";
+            fname = "snro.444";
+            ScenarioID = SC_BERN;
+            CityTime = ((1965 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_TOKYO:
+            name = "Tokyo";
+            fname = "snro.555";
+            ScenarioID = SC_TOKYO;
+            CityTime = ((1957 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_DETROIT:
+            name = "Detroit";
+            fname = "snro.666";
+            ScenarioID = SC_DETROIT;
+            CityTime = ((1972 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_BOSTON:
+            name = "Boston";
+            fname = "snro.777";
+            ScenarioID = SC_BOSTON;
+            CityTime = ((2010 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        case SC_RIO:
+            name = "Rio de Janeiro";
+            fname = "snro.888";
+            ScenarioID = SC_RIO;
+            CityTime = ((2047 - 1900) * 48) + 2;
+            SetFunds(20000);
+            break;
+        default:
+            NOT_REACHED();
+            break;
+    }
 
-  setAnyCityName(name);
-  setSpeed(3);
-  CityTax = 7;
+    setCleanCityName(name);
+    setSpeed(3);
+    CityTax = 7;
 
-  load_file(
-    fname,
-    ResourceDir);
+    load_file(
+        fname,
+        ResourceDir);
 
-  InitWillStuff();
-  InitFundingLevel();
-  UpdateFunds();
-  InvalidateEditors();
-  InvalidateMaps();
-  InitSimLoad = 1;
-  DoInitialEval = false;
-  DoSimInit();
-  DidLoadScenario();
+    InitWillStuff();
+    InitFundingLevel();
+    UpdateFunds();
+    InvalidateEditors();
+    InvalidateMaps();
+    InitSimLoad = 1;
+    DoInitialEval = false;
+    DoSimInit();
+    DidLoadScenario();
 }
 
 
 void Micropolis::DidLoadScenario()
 {
-  Callback("UIDidLoadScenario", "");
+    Callback("UIDidLoadScenario", "");
 }
 
 
-int Micropolis::LoadCity(
-  char *filename)
+bool Micropolis::LoadCity(const char *filename)
 {
-  char *cp;
-  char msg[256];
+    if (loadFile(filename)) {
 
-  if (loadFile(filename)) {
-    if (CityFileName != NULL) {
-      FreePtr(CityFileName);
-    }
+        CityFileName = filename;
 
-    CityFileName =
-      (char *)NewPtr((int)strlen(filename) + 1);
+	unsigned int lastDot = CityFileName.find_last_of('.');
+	unsigned int lastSlash = CityFileName.find_last_of('/');
 
-    strcpy(CityFileName, filename);
+	unsigned int pos =
+	    (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
+	unsigned int last =
+	    (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+	unsigned int len = 
+	    last - pos;
+	std::string newCityName =
+	    CityFileName.substr(pos, len);
 
-    cp = (char *)strrchr(filename, '.');
-    if (cp != NULL) {
-      *cp = 0;
-    }
+        setCityName(newCityName);
 
-    cp = (char *)strrchr(filename, '/');
-    if (cp != NULL) {
-      cp++;
+        DidLoadCity();
+
+        return true;
+
     } else {
-      cp = filename;
+
+        DidntLoadCity(filename ? filename : "(null)");
+
+        return false;
+
     }
-
-    filename =
-      (char *)NewPtr((int)strlen(cp) + 1);
-
-    strcpy(filename, cp);
-
-    setCityName(filename);
-
-    DidLoadCity();
-
-    return (1);
-
-  } else {
-
-    sprintf(
-      msg,
-      "Unable to load a city from the file named \"%s\". %s",
-      filename ? filename : "(null)",
-      errno ? strerror(errno) : "");
-
-    DidntLoadCity(msg);
-
-    return (0);
-
-  }
 }
 
 
 void Micropolis::DidLoadCity()
 {
-  Callback("UIDidLoadCity", "");
+    Callback("UIDidLoadCity", "");
 }
 
 
-void Micropolis::DidntLoadCity(
-  char *msg)
+void Micropolis::DidntLoadCity(const char *msg)
 {
-  Callback(
+    Callback(
         "UIDidntLoadCity",
         "s",
         msg);
@@ -564,102 +496,72 @@ void Micropolis::DidntLoadCity(
 
 void Micropolis::SaveCity()
 {
-  char msg[256];
+    if (CityFileName.length() > 0) {
 
-  if (CityFileName == NULL) {
-
-    DoSaveCityAs();
-
-  } else {
-    if (saveFile(CityFileName)) {
-
-      DidSaveCity();
+        DoSaveCityAs();
 
     } else {
+        if (saveFile(CityFileName.c_str())) {
 
-      sprintf(
-        msg,
-        "Unable to save the city to the file named \"%s\". %s",
-        CityFileName ? CityFileName : "(null)",
-        errno ? strerror(errno) : "");
+            DidSaveCity();
 
-      DidntSaveCity(msg);
+        } else {
 
+            DidntSaveCity(CityFileName.c_str());
+
+        }
     }
-  }
 }
 
 
 void Micropolis::DoSaveCityAs()
 {
-  Callback("UISaveCityAs", "");
+    Callback("UISaveCityAs", "");
 }
 
 
 void Micropolis::DidSaveCity()
 {
-  Callback("UIDidSaveCity", "");
+    Callback("UIDidSaveCity", "");
 }
 
 
-void Micropolis::DidntSaveCity(
-  char *msg)
+void Micropolis::DidntSaveCity(const char *msg)
 {
-  Callback(
+    Callback(
         "UIDidntSaveCity",
         "s",
         msg);
 }
 
 
-void Micropolis::SaveCityAs(
-  char *filename)
+void Micropolis::SaveCityAs(const char *filename)
 {
-  char *cp;
+    CityFileName = filename;
 
-  if (CityFileName != NULL) {
-    FreePtr(CityFileName);
-  }
-  CityFileName =
-    (char *)NewPtr((int)strlen(filename) + 1);
-  strcpy(CityFileName, filename);
+    if (saveFile(CityFileName.c_str())) {
 
-  if (saveFile(CityFileName)) {
+	unsigned int lastDot = CityFileName.find_last_of('.');
+	unsigned int lastSlash = CityFileName.find_last_of('/');
 
-    cp = (char *)strrchr(filename, '.');
-    if (cp != NULL) {
-      *cp = 0;
-    }
+	unsigned int pos =
+	    (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
+	unsigned int last =
+	    (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+	unsigned int len = 
+	    last - pos;
+	std::string newCityName =
+	    CityFileName.substr(pos, len);
 
-    cp = (char *)strrchr(filename, '/');
-    if (cp != NULL) {
-      cp++;
+        setCityName(newCityName);
+
+        DidSaveCity();
+
     } else {
-      cp = filename;
+
+        DidntSaveCity(CityFileName.c_str());
+
     }
-
-    filename =
-      (char *)NewPtr((int)strlen(cp) + 1);
-
-    strcpy(filename, cp);
-
-    setCityName(cp);
-
-    DidSaveCity();
-
-  } else {
-
-    char msg[2048];
-
-    sprintf(
-      msg,
-      "Unable to save the city to the file named \"%1024s\". %512s",
-      CityFileName ? CityFileName : "(null)",
-      errno ? strerror(errno) : "");
-
-    DidntSaveCity(msg);
-
-  }
 }
 
 

@@ -1853,27 +1853,21 @@ public:
 public:
 
 
-  int load_file(
-    char *filename,
-    char *dir);
+  bool load_file(const char *filename, const char *dir);
 
-  int loadFile(
-    char *filename);
+  bool loadFile(const char *filename);
 
-  int saveFile(
-    char *filename);
+  bool saveFile(const char *filename);
 
   void LoadScenario(Scenario s);
 
   void DidLoadScenario();
 
-  int LoadCity(
-    char *filename);
+  bool LoadCity(const char *filename);
 
   void DidLoadCity();
 
-  void DidntLoadCity(
-    char *msg);
+  void DidntLoadCity(const char *msg);
 
   void SaveCity();
 
@@ -1881,11 +1875,9 @@ public:
 
   void DidSaveCity();
 
-  void DidntSaveCity(
-    char *msg);
+  void DidntSaveCity(const char *msg);
 
-  void SaveCityAs(
-    char *filename);
+  void SaveCityAs(const char *filename);
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -2084,7 +2076,7 @@ public:
 
   int heat_wrap;
 
-  char *CityFileName;
+  std::string CityFileName;
 
   int MultiPlayerMode;
 
@@ -2682,7 +2674,7 @@ public:
 
   bool UserSoundOn; ///< Enable sound
 
-  char *CityName;
+  std::string CityName;
 
   /**
    * Disable disasters
@@ -2984,11 +2976,9 @@ public:
 
   void UpdateGameLevel();
 
-  void setCityName(
-    char *name);
+  void setCityName(const std::string &name);
 
-  void setAnyCityName(
-    char *name);
+  void setCleanCityName(const std::string &name);
 
   void SetYear(
     int year);

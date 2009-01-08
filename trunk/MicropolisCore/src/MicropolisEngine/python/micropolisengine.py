@@ -1549,7 +1549,7 @@ class Micropolis(_object):
     def SetGameLevelFunds(*args): return _micropolisengine.Micropolis_SetGameLevelFunds(*args)
     def UpdateGameLevel(*args): return _micropolisengine.Micropolis_UpdateGameLevel(*args)
     def setCityName(*args): return _micropolisengine.Micropolis_setCityName(*args)
-    def setAnyCityName(*args): return _micropolisengine.Micropolis_setAnyCityName(*args)
+    def setCleanCityName(*args): return _micropolisengine.Micropolis_setCleanCityName(*args)
     def SetYear(*args): return _micropolisengine.Micropolis_SetYear(*args)
     def CurrentYear(*args): return _micropolisengine.Micropolis_CurrentYear(*args)
     def DoNewGame(*args): return _micropolisengine.Micropolis_DoNewGame(*args)
