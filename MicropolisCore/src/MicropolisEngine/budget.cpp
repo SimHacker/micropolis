@@ -74,28 +74,29 @@
 
 void Micropolis::InitFundingLevel()
 {
-  firePercent = 1.0;            /* 1.0 */
-  fireValue = 0;
-  policePercent = 1.0;          /* 1.0 */
-  policeValue = 0;
-  roadPercent = 1.0;            /* 1.0 */
-  roadValue = 0;
-  drawBudgetWindow();
-  drawCurrPercents();
+    firePercent = 1.0;
+    fireValue = 0;
+    policePercent = 1.0;
+    policeValue = 0;
+    roadPercent = 1.0;
+    roadValue = 0;
+    drawBudgetWindow();
+    drawCurrPercents();
 }
 
 /** Game decided to show the budget window */
 void Micropolis::DoBudget()
 {
-  DoBudgetNow(false);
+    DoBudgetNow(false);
 }
 
 
 /** User queried the budget window */
 void Micropolis::DoBudgetFromMenu()
 {
-  DoBudgetNow(true);
+    DoBudgetNow(true);
 }
+
 
 /**
  * Handle budget window.
@@ -105,385 +106,392 @@ void Micropolis::DoBudgetFromMenu()
  */
 void Micropolis::DoBudgetNow(bool fromMenu)
 {
-  Quad fireInt   = (int)(FireFund   * firePercent);
-  Quad policeInt = (int)(PoliceFund * policePercent);
-  Quad roadInt   = (int)(RoadFund   * roadPercent);
+    Quad fireInt   = (int)(FireFund   * firePercent);
+    Quad policeInt = (int)(PoliceFund * policePercent);
+    Quad roadInt   = (int)(RoadFund   * roadPercent);
 
-  Quad total = fireInt + policeInt + roadInt;
+    Quad total = fireInt + policeInt + roadInt;
 
-  Quad yumDuckets = TaxFund + TotalFunds;
+    Quad yumDuckets = TaxFund + TotalFunds;
 
-  if (yumDuckets > total) {
+    if (yumDuckets > total) {
 
         // Enough yumDuckets to fully fund fire, police and road.
 
-    fireValue = fireInt;
-    policeValue = policeInt;
-    roadValue = roadInt;
+        fireValue = fireInt;
+        policeValue = policeInt;
+        roadValue = roadInt;
 
-        // FIXME: Why are we not subtracting from yumDuckets what we
+        // @todo Why are we not subtracting from yumDuckets what we
         // spend, like the code below is doing?
 
-  } else if (total > 0) {
+    } else if (total > 0) {
 
         assert(yumDuckets <= total);
 
         // Not enough yumDuckets to fund everything.
         // First spend on roads, then on fire, then on police.
 
-    if (yumDuckets > roadInt) {
+        if (yumDuckets > roadInt) {
 
-          // Enough yumDuckets to fully fund roads.
+            // Enough yumDuckets to fully fund roads.
 
-      roadValue = roadInt;
-      yumDuckets -= roadInt;
+            roadValue = roadInt;
+            yumDuckets -= roadInt;
 
-      if (yumDuckets > fireInt) {
+            if (yumDuckets > fireInt) {
 
                 // Enough yumDuckets to fully fund fire.
 
-        fireValue = fireInt;
-        yumDuckets -= fireInt;
+                fireValue = fireInt;
+                yumDuckets -= fireInt;
 
-        if (yumDuckets > policeInt) {
+                if (yumDuckets > policeInt) {
 
-                  // Enough yumDuckets to fully fund police.
-                  // Hey what are we doing here? Should never get here.
-                  // We tested for yumDuckets > total above
-                  // (where total = fireInt + policeInt + roadInt),
-                  // so this should never happen.
+                    // Enough yumDuckets to fully fund police.
+                    // Hey what are we doing here? Should never get here.
+                    // We tested for yumDuckets > total above
+                    // (where total = fireInt + policeInt + roadInt),
+                    // so this should never happen.
 
-          policeValue = policeInt;
-          yumDuckets -= policeInt;
+                    policeValue = policeInt;
+                    yumDuckets -= policeInt;
 
-        } else {
+                } else {
 
-                  // Fuly funded roads and fire.
-                  // Partially fund police.
+                    // Fuly funded roads and fire.
+                    // Partially fund police.
 
-          policeValue = yumDuckets;
+                    policeValue = yumDuckets;
 
-          if (yumDuckets > 0) {
+                    if (yumDuckets > 0) {
 
                         // Scale back police percentage to available cash.
 
-            policePercent = ((float)yumDuckets) / ((float)PoliceFund);
+                        policePercent = ((float)yumDuckets) / ((float)PoliceFund);
 
-          } else {
+                    } else {
 
                         // Exactly nothing left, so scale back police percentage to zero.
 
-            policePercent = 0.0;
+                        policePercent = 0.0;
 
-          }
-        }
-      } else {
+                    }
 
-                // Not enough yumDuckets to fully fund fire. 
+                }
 
-        fireValue = yumDuckets;
+            } else {
+
+                // Not enough yumDuckets to fully fund fire.
+
+                fireValue = yumDuckets;
 
                 // No police after funding roads and fire.
 
-        policeValue = 0;
-        policePercent = 0.0;
+                policeValue = 0;
+                policePercent = 0.0;
 
-        if (yumDuckets > 0) {
+                if (yumDuckets > 0) {
 
-                  // Scale back fire percentage to available cash.
+                    // Scale back fire percentage to available cash.
 
-          firePercent =
-            ((float)yumDuckets) / ((float)FireFund);
+                    firePercent =
+                        ((float)yumDuckets) / ((float)FireFund);
 
-        } else {
+                } else {
 
                   // Exactly nothing left, so scale back fire percentage to zero.
 
-          firePercent = 0.0;
+                  firePercent = 0.0;
 
-        }
+                }
 
-      }
+            }
 
-    } else {
+        } else {
 
-          // Not enough yumDuckets to fully fund roads.
+            // Not enough yumDuckets to fully fund roads.
 
-      roadValue = yumDuckets;
+            roadValue = yumDuckets;
 
-          // No fire or police after funding roads.
+            // No fire or police after funding roads.
 
-      fireValue = 0;
-      policeValue = 0;
-      firePercent = 0.0;
-      policePercent = 0.0;
+            fireValue = 0;
+            policeValue = 0;
+            firePercent = 0.0;
+            policePercent = 0.0;
 
-      if (yumDuckets > 0) {
+            if (yumDuckets > 0) {
 
                 // Scale back road percentage to available cash.
 
-        roadPercent = ((float)yumDuckets) / ((float)RoadFund);
+                roadPercent = ((float)yumDuckets) / ((float)RoadFund);
 
-      } else {
+            } else {
 
                 // Exactly nothing left, so scale back road percentage to zero.
 
-        roadPercent = 0.0;
+                roadPercent = 0.0;
 
-      }
+            }
 
-    }
+        }
 
-  } else {
+    } else {
 
         assert(yumDuckets == total);
         assert(total == 0);
 
         // Zero funding, so no values but full percentages.
 
-    fireValue = 0;
-    policeValue = 0;
-    roadValue = 0;
-    firePercent = 1.0;
-    policePercent = 1.0;
-    roadPercent = 1.0;
-
-  }
-
-  drawCurrPercents();
-
-noMoney:
-
-  if (!autoBudget || fromMenu) {
-
-    // FIXME: This might have blocked on the Mac, but now it's asynchronous.
-        // Make sure the stuff we do just afterwards is intended to be done immediately
-        // and is not supposed to wait until after the budget dialog is dismissed.
-    // Otherwise don't do it after this and arrange for it to happen when the
-    // modal budget dialog is dismissed.
-    ShowBudgetWindowAndStartWaiting();
-
-        // FIXME: Only do this AFTER the budget window is accepted.
-
-    if (!fromMenu) {
-
-      FireSpend = (short)fireValue;
-      PoliceSpend = (short)policeValue;
-      RoadSpend = (short)roadValue;
-
-      total = FireSpend + PoliceSpend + RoadSpend;
-
-      Quad moreDough = (Quad)(TaxFund - total);
-      Spend(-moreDough);
+        fireValue = 0;
+        policeValue = 0;
+        roadValue = 0;
+        firePercent = 1.0;
+        policePercent = 1.0;
+        roadPercent = 1.0;
 
     }
 
-    drawBudgetWindow();
     drawCurrPercents();
-    DoUpdateHeads();
 
-  } else { /* autoBudget & !fromMenu */
+noMoney:
+
+    if (!autoBudget || fromMenu) {
+
+        // FIXME: This might have blocked on the Mac, but now it's asynchronous.
+        // Make sure the stuff we do just afterwards is intended to be done immediately
+        // and is not supposed to wait until after the budget dialog is dismissed.
+        // Otherwise don't do it after this and arrange for it to happen when the
+        // modal budget dialog is dismissed.
+        ShowBudgetWindowAndStartWaiting();
+
+        // FIXME: Only do this AFTER the budget window is accepted.
+
+        if (!fromMenu) {
+
+            FireSpend = (short)fireValue;
+            PoliceSpend = (short)policeValue;
+            RoadSpend = (short)roadValue;
+
+            total = FireSpend + PoliceSpend + RoadSpend;
+
+            Quad moreDough = (Quad)(TaxFund - total);
+            Spend(-moreDough);
+
+        }
+
+        drawBudgetWindow();
+        drawCurrPercents();
+        DoUpdateHeads();
+
+    } else { /* autoBudget & !fromMenu */
 
         // FIXME: Not sure yumDuckets is the right value here. It gets the
         // amount spent subtracted from it above in some cases, but not if
         // we are fully funded. I think we want to use the original value
         // of yumDuckets, which is TaxFund + TotalFunds.
 
-    if (yumDuckets > total) {
+        if (yumDuckets > total) {
 
-      Quad moreDough = (Quad)(TaxFund - total);
-      Spend(-moreDough);
+            Quad moreDough = (Quad)(TaxFund - total);
+            Spend(-moreDough);
 
-      FireSpend = FireFund;
-      PoliceSpend = PoliceFund;
-      RoadSpend = RoadFund;
+            FireSpend = FireFund;
+            PoliceSpend = PoliceFund;
+            RoadSpend = RoadFund;
 
-      drawBudgetWindow();
-      drawCurrPercents();
-      DoUpdateHeads();
+            drawBudgetWindow();
+            drawCurrPercents();
+            DoUpdateHeads();
 
-    } else {
+        } else {
 
-      autoBudget = false; /* force autobudget */
-      MustUpdateOptions = 1;
-      ClearMes();
-      SendMes(STR301_NO_MONEY);
-      goto noMoney;
+            autoBudget = false; /* force autobudget */
+            MustUpdateOptions = 1;
+            ClearMes();
+            SendMes(STR301_NO_MONEY);
+            goto noMoney;
+
+        }
 
     }
 
-  }
-
 }
+
 
 /** Request to the front-end to draw the budget window. */
 void Micropolis::drawBudgetWindow()
 {
-  MustDrawBudgetWindow = 1;
+    MustDrawBudgetWindow = 1;
 }
 
 
-// TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out.
 void Micropolis::ReallyDrawBudgetWindow()
 {
-  short cashFlow, cashFlow2;
-  char numStr[256], dollarStr[256], collectedStr[256],
-       flowStr[256], previousStr[256], currentStr[256];
+    // @todo The scripting language should pull these raw values out
+    //       and format them, instead of the simulator core formatting
+    //       them and pushing them out.
 
-  cashFlow =
-    (short)(TaxFund - fireValue - policeValue - roadValue);
+    short cashFlow, cashFlow2;
+    char numStr[256], dollarStr[256], collectedStr[256],
+         flowStr[256], previousStr[256], currentStr[256];
 
-  cashFlow2 = cashFlow;
+    cashFlow =
+        (short)(TaxFund - fireValue - policeValue - roadValue);
 
-  if (cashFlow < 0)   {
+    cashFlow2 = cashFlow;
 
-    cashFlow = -cashFlow;
-    sprintf(numStr, "%d", cashFlow);
-    makeDollarDecimalStr(numStr, dollarStr);
-    sprintf(flowStr, "-%s", dollarStr);
+    if (cashFlow < 0)   {
 
-  } else {
+        cashFlow = -cashFlow;
+        sprintf(numStr, "%d", cashFlow);
+        makeDollarDecimalStr(numStr, dollarStr);
+        sprintf(flowStr, "-%s", dollarStr);
 
-    sprintf(numStr, "%d", cashFlow);
-    makeDollarDecimalStr(numStr, dollarStr);
-    sprintf(flowStr, "+%s", dollarStr);
+    } else {
 
-  }
+        sprintf(numStr, "%d", cashFlow);
+        makeDollarDecimalStr(numStr, dollarStr);
+        sprintf(flowStr, "+%s", dollarStr);
 
-  sprintf(numStr, "%d", (int)TotalFunds);
-  makeDollarDecimalStr(numStr, previousStr);
+    }
 
-  sprintf(numStr, "%d", (int)(cashFlow2 + TotalFunds));
-  makeDollarDecimalStr(numStr, currentStr);
+    sprintf(numStr, "%d", (int)TotalFunds);
+    makeDollarDecimalStr(numStr, previousStr);
 
-  sprintf(numStr, "%d", (int)TaxFund);
-  makeDollarDecimalStr(numStr, collectedStr);
+    sprintf(numStr, "%d", (int)(cashFlow2 + TotalFunds));
+    makeDollarDecimalStr(numStr, currentStr);
 
-  SetBudget(
-    flowStr,
-    previousStr,
-    currentStr,
-    collectedStr,
-    CityTax);
+    sprintf(numStr, "%d", (int)TaxFund);
+    makeDollarDecimalStr(numStr, collectedStr);
 
+    SetBudget(
+        flowStr,
+        previousStr,
+        currentStr,
+        collectedStr,
+        CityTax);
 }
 
 
 void Micropolis::drawCurrPercents()
 {
-  MustDrawCurrPercents = 1;
+    MustDrawCurrPercents = 1;
 }
 
 
-// TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out.
 void Micropolis::ReallyDrawCurrPercents()
 {
-  char num[256];
-  char fireWant[256], policeWant[256], roadWant[256];
-  char fireGot[256], policeGot[256], roadGot[256];
+    // @todo The scripting language should pull these raw values out
+    //       and format them, instead of the simulator core formatting
+    //       them and pushing them out.
 
-  sprintf(num, "%d", (int)FireFund);
-  makeDollarDecimalStr(num, fireWant);
+    char num[256];
+    char fireWant[256], policeWant[256], roadWant[256];
+    char fireGot[256], policeGot[256], roadGot[256];
 
-  sprintf(num, "%d", (int)PoliceFund);
-  makeDollarDecimalStr(num, policeWant);
+    sprintf(num, "%d", (int)FireFund);
+    makeDollarDecimalStr(num, fireWant);
 
-  sprintf(num, "%d", (int)RoadFund);
-  makeDollarDecimalStr(num, roadWant);
+    sprintf(num, "%d", (int)PoliceFund);
+    makeDollarDecimalStr(num, policeWant);
 
-  sprintf(num, "%d", (int)(FireFund * firePercent));
-  makeDollarDecimalStr(num, fireGot);
+    sprintf(num, "%d", (int)RoadFund);
+    makeDollarDecimalStr(num, roadWant);
 
-  sprintf(num, "%d", (int)(PoliceFund * policePercent));
-  makeDollarDecimalStr(num, policeGot);
+    sprintf(num, "%d", (int)(FireFund * firePercent));
+    makeDollarDecimalStr(num, fireGot);
 
-  sprintf(num, "%d", (int)(RoadFund * roadPercent));
-  makeDollarDecimalStr(num, roadGot);
+    sprintf(num, "%d", (int)(PoliceFund * policePercent));
+    makeDollarDecimalStr(num, policeGot);
 
-  SetBudgetValues(
-    roadGot,
-    roadWant,
-    policeGot,
-    policeWant,
-    fireGot,
-    fireWant);
+    sprintf(num, "%d", (int)(RoadFund * roadPercent));
+    makeDollarDecimalStr(num, roadGot);
 
+    SetBudgetValues(
+        roadGot,
+        roadWant,
+        policeGot,
+        policeWant,
+        fireGot,
+        fireWant);
 }
 
 
-// TODO: The scripting language should pull these raw values out and format them,
-// instead of the simulator core formatting them and pushing them out.
 void Micropolis::UpdateBudgetWindow()
 {
-  if (MustDrawCurrPercents) {
-    ReallyDrawCurrPercents();
-    MustDrawCurrPercents = 0;
-  }
+    // @todo The scripting language should pull these raw values out
+    //       and format them, instead of the simulator core formatting
+    //       them and pushing them out.
 
-  if (MustDrawBudgetWindow) {
-    ReallyDrawBudgetWindow();
-    MustDrawBudgetWindow = 0;
-  }
+    if (MustDrawCurrPercents) {
+        ReallyDrawCurrPercents();
+        MustDrawCurrPercents = 0;
+    }
+
+    if (MustDrawBudgetWindow) {
+        ReallyDrawBudgetWindow();
+        MustDrawBudgetWindow = 0;
+    }
 }
 
 
 void Micropolis::UpdateBudget()
 {
-  drawCurrPercents();
-  drawBudgetWindow();
+    drawCurrPercents();
+    drawBudgetWindow();
 
-  Callback("UIUpdateBudget", "");
+    Callback("UIUpdateBudget", "");
 }
 
 
 void Micropolis::ShowBudgetWindowAndStartWaiting()
 {
-  Callback("UIShowBudgetAndWait", "");
+    Callback("UIShowBudgetAndWait", "");
 
-  Pause();
+    Pause();
 }
 
 
 void Micropolis::SetBudget(
-  char *flowStr,
-  char *previousStr,
-  char *currentStr,
-  char *collectedStr,
-  short tax)
+    char *flowStr,
+    char *previousStr,
+    char *currentStr,
+    char *collectedStr,
+    short tax)
 {
-  Callback(
-    "UISetBudget",
+    Callback(
+        "UISetBudget",
         "ssssd",
-    flowStr,
-    previousStr,
-    currentStr,
-    collectedStr,
-    (int)tax);
+        flowStr,
+        previousStr,
+        currentStr,
+        collectedStr,
+        (int)tax);
 }
 
 
 void Micropolis::SetBudgetValues(
-  char *roadGot,
-  char *roadWant,
-  char *policeGot,
-  char *policeWant,
-  char *fireGot,
-  char *fireWant)
+    char *roadGot,
+    char *roadWant,
+    char *policeGot,
+    char *policeWant,
+    char *fireGot,
+    char *fireWant)
 {
-  Callback(
-    "UISetBudgetValues",
-    "ssdssdssd",
-    roadGot,
-    roadWant,
-    (int)(roadPercent * 100),
-    policeGot,
-    policeWant,
-    (int)(policePercent * 100),
-    fireGot,
-    fireWant,
-    (int)(firePercent * 100));
+    Callback(
+        "UISetBudgetValues",
+        "ssdssdssd",
+        roadGot,
+        roadWant,
+        (int)(roadPercent * 100),
+        policeGot,
+        policeWant,
+        (int)(policePercent * 100),
+        fireGot,
+        fireWant,
+        (int)(firePercent * 100));
 }
 
 

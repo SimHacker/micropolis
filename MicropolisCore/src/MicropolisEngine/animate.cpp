@@ -199,15 +199,15 @@ void Micropolis::animateTiles()
     tMapPtr = (unsigned short *)&(Map[0][0]);
 
     for (i = WORLD_X * WORLD_Y; i > 0; i--) {
-	tilevalue = (*tMapPtr);
-	if (tilevalue & ANIMBIT) {
-	    tileflags = tilevalue & ALLBITS;
-	    tilevalue &= LOMASK;
-	    tilevalue = aniTile[tilevalue];
-	    tilevalue |= tileflags;
-	    (*tMapPtr) = tilevalue;
-	}
-	tMapPtr++;
+        tilevalue = (*tMapPtr);
+        if (tilevalue & ANIMBIT) {
+            tileflags = tilevalue & ALLBITS;
+            tilevalue &= LOMASK;
+            tilevalue = aniTile[tilevalue];
+            tilevalue |= tileflags;
+            (*tMapPtr) = tilevalue;
+        }
+        tMapPtr++;
     }
 }
 
