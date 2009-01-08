@@ -73,305 +73,308 @@
 
 void Micropolis::initMapArrays()
 {
-  short i;
+    short i;
 
-  if (!mapPtr) {
-    mapPtr = (unsigned short *)NewPtr(
-      sizeof(unsigned short) *
-      WORLD_X * WORLD_Y);
-  }
+    if (!mapPtr) {
+	mapPtr = (unsigned short *)NewPtr(
+	    sizeof(unsigned short) *
+	    WORLD_X * WORLD_Y);
+    }
 
-  for (i = 0; i < WORLD_X; i++) {
-    Map[i] = (short *)(mapPtr + (i * WORLD_Y));
-  }
+    for (i = 0; i < WORLD_X; i++) {
+	Map[i] = (short *)(mapPtr + (i * WORLD_Y));
+    }
 
-  popPtr = NewPtr(HWLDX * HWLDY);
-  trfPtr = NewPtr(HWLDX * HWLDY);
-  polPtr = NewPtr(HWLDX * HWLDY);
-  landPtr = NewPtr(HWLDX * HWLDY);
-  crimePtr = NewPtr(HWLDX * HWLDY);
+    popPtr = NewPtr(HWLDX * HWLDY);
+    trfPtr = NewPtr(HWLDX * HWLDY);
+    polPtr = NewPtr(HWLDX * HWLDY);
+    landPtr = NewPtr(HWLDX * HWLDY);
+    crimePtr = NewPtr(HWLDX * HWLDY);
 
-  tem1Base = NewPtr(HWLDX * HWLDY);
-  tem2Base = NewPtr(HWLDX * HWLDY);
+    tem1Base = NewPtr(HWLDX * HWLDY);
+    tem2Base = NewPtr(HWLDX * HWLDY);
 
-  for (i = 0; i < HWLDX; i++) {
-    PopDensity[i] = (Byte *)popPtr + (i * HWLDY);
-    TrfDensity[i] = (Byte *)trfPtr + (i * HWLDY);
-    PollutionMem[i] = (Byte *)polPtr + (i * HWLDY);
-    LandValueMem[i] = (Byte *)landPtr + (i * HWLDY);
-    CrimeMem[i] = (Byte *)crimePtr + (i * HWLDY);
+    for (i = 0; i < HWLDX; i++) {
+	PopDensity[i] = (Byte *)popPtr + (i * HWLDY);
+	TrfDensity[i] = (Byte *)trfPtr + (i * HWLDY);
+	PollutionMem[i] = (Byte *)polPtr + (i * HWLDY);
+	LandValueMem[i] = (Byte *)landPtr + (i * HWLDY);
+	CrimeMem[i] = (Byte *)crimePtr + (i * HWLDY);
 
-    tem[i] = (Byte *)tem1Base + (i * HWLDY);
-    tem2[i] = (Byte *)tem2Base + (i * HWLDY);
-  }
+	tem[i] = (Byte *)tem1Base + (i * HWLDY);
+	tem2[i] = (Byte *)tem2Base + (i * HWLDY);
+    }
 
-  terrainBase = NewPtr(QWX * QWY);
-  qTemBase = NewPtr(QWX * QWY);
+    terrainBase = NewPtr(QWX * QWY);
+    qTemBase = NewPtr(QWX * QWY);
 
-  for (i = 0; i < QWX; i++) {
-    TerrainMem[i] = (Byte *)terrainBase + (i * QWY);
-    Qtem[i] = (Byte *)qTemBase + (i * QWY);
-  }
+    for (i = 0; i < QWX; i++) {
+	TerrainMem[i] = (Byte *)terrainBase + (i * QWY);
+	Qtem[i] = (Byte *)qTemBase + (i * QWY);
+    }
 
-  ResHis = (short *)NewPtr(HISTLEN);
-  ComHis = (short *)NewPtr(HISTLEN);
-  IndHis = (short *)NewPtr(HISTLEN);
-  MoneyHis = (short *)NewPtr(HISTLEN);
-  PollutionHis = (short *)NewPtr(HISTLEN);
-  CrimeHis = (short *)NewPtr(HISTLEN);
-  MiscHis = (short *)NewPtr(MISCHISTLEN);
-  PowerMap = (short *)NewPtr(POWERMAPLEN);              /* power alloc */
+    ResHis = (short *)NewPtr(HISTLEN);
+    ComHis = (short *)NewPtr(HISTLEN);
+    IndHis = (short *)NewPtr(HISTLEN);
+    MoneyHis = (short *)NewPtr(HISTLEN);
+    PollutionHis = (short *)NewPtr(HISTLEN);
+    CrimeHis = (short *)NewPtr(HISTLEN);
+    MiscHis = (short *)NewPtr(MISCHISTLEN);
+    PowerMap = (short *)NewPtr(POWERMAPLEN); // Power alloc.
 }
 
 
 void Micropolis::destroyMapArrays()
 {
 
-  if (mapPtr) {
-    FreePtr(mapPtr);
-    mapPtr = NULL;
-  }
+    if (mapPtr != NULL) {
+	FreePtr(mapPtr);
+	mapPtr = NULL;
+    }
 
-  memset(Map, 0, sizeof(short *) * WORLD_X);
+    memset(Map, 0, sizeof(short *) * WORLD_X);
 
-  if (popPtr) {
-    FreePtr(popPtr);
-    popPtr = NULL;
-  }
+    if (popPtr != NULL) {
+	FreePtr(popPtr);
+	popPtr = NULL;
+    }
 
-  if (trfPtr) {
-    FreePtr(trfPtr);
-    trfPtr = NULL;
-  }
+    if (trfPtr != NULL) {
+	FreePtr(trfPtr);
+	trfPtr = NULL;
+    }
 
-  if (polPtr) {
-    FreePtr(polPtr);
-    polPtr = NULL;
-  }
+    if (polPtr != NULL) {
+	FreePtr(polPtr);
+	polPtr = NULL;
+    }
 
-  if (landPtr) {
-    FreePtr(landPtr);
-    landPtr = NULL;
-  }
+    if (landPtr != NULL) {
+	FreePtr(landPtr);
+	landPtr = NULL;
+    }
 
-  if (crimePtr) {
-    FreePtr(crimePtr);
-    crimePtr = NULL;
-  }
+    if (crimePtr != NULL) {
+	FreePtr(crimePtr);
+	crimePtr = NULL;
+    }
 
-  if (tem1Base) {
-    FreePtr(tem1Base);
-    tem1Base = NULL;
-  }
+    if (tem1Base != NULL) {
+	FreePtr(tem1Base);
+	tem1Base = NULL;
+    }
 
-  if (tem2Base) {
-    FreePtr(tem2Base);
-    tem2Base = NULL;
-  }
+    if (tem2Base != NULL) {
+	FreePtr(tem2Base);
+	tem2Base = NULL;
+    }
 
-  memset(PopDensity, 0, sizeof(Byte *) * HWLDX);
-  memset(TrfDensity, 0, sizeof(Byte *) * HWLDX);
-  memset(PollutionMem, 0, sizeof(Byte *) * HWLDX);
-  memset(LandValueMem, 0, sizeof(Byte *) * HWLDX);
-  memset(CrimeMem, 0, sizeof(Byte *) * HWLDX);
-  memset(tem, 0, sizeof(Byte *) * HWLDX);
-  memset(tem2, 0, sizeof(Byte *) * HWLDX);
-  memset(tem2, 0, sizeof(Byte *) * HWLDX);
+    memset(PopDensity, 0, sizeof(Byte *) * HWLDX);
+    memset(TrfDensity, 0, sizeof(Byte *) * HWLDX);
+    memset(PollutionMem, 0, sizeof(Byte *) * HWLDX);
+    memset(LandValueMem, 0, sizeof(Byte *) * HWLDX);
+    memset(CrimeMem, 0, sizeof(Byte *) * HWLDX);
+    memset(tem, 0, sizeof(Byte *) * HWLDX);
+    memset(tem2, 0, sizeof(Byte *) * HWLDX);
+    memset(tem2, 0, sizeof(Byte *) * HWLDX);
 
-  if (terrainBase) {
-    FreePtr(terrainBase);
-    terrainBase = NULL;
-  }
+    if (terrainBase != NULL) {
+	FreePtr(terrainBase);
+	terrainBase = NULL;
+    }
 
-  if (qTemBase) {
-    FreePtr(qTemBase);
-    qTemBase = NULL;
-  }
+    if (qTemBase != NULL) {
+	FreePtr(qTemBase);
+	qTemBase = NULL;
+    }
 
-  memset(TerrainMem, 0, sizeof(Byte *) * QWX);
-  memset(Qtem, 0, sizeof(Byte *) * QWX);
+    memset(TerrainMem, 0, sizeof(Byte *) * QWX);
+    memset(Qtem, 0, sizeof(Byte *) * QWX);
 
-  if (ResHis) {
-    FreePtr(ResHis);
-    ResHis = NULL;
-  }
+    if (ResHis != NULL) {
+	FreePtr(ResHis);
+	ResHis = NULL;
+    }
 
-  if (ComHis) {
-    FreePtr(ComHis);
-    ComHis = NULL;
-  }
+    if (ComHis != NULL) {
+	FreePtr(ComHis);
+	ComHis = NULL;
+    }
 
-  if (IndHis) {
-    FreePtr(IndHis);
-    IndHis = NULL;
-  }
+    if (IndHis != NULL) {
+	FreePtr(IndHis);
+	IndHis = NULL;
+    }
 
-  if (MoneyHis) {
-    FreePtr(MoneyHis);
-    MoneyHis = NULL;
-  }
+    if (MoneyHis != NULL) {
+	FreePtr(MoneyHis);
+	MoneyHis = NULL;
+    }
 
-  if (PollutionHis) {
-    FreePtr(PollutionHis);
-    PollutionHis = NULL;
-  }
+    if (PollutionHis != NULL) {
+	FreePtr(PollutionHis);
+	PollutionHis = NULL;
+    }
 
-  if (CrimeHis) {
-    FreePtr(CrimeHis);
-    CrimeHis = NULL;
-  }
+    if (CrimeHis != NULL) {
+	FreePtr(CrimeHis);
+	CrimeHis = NULL;
+    }
 
-  if (MiscHis) {
-    FreePtr(MiscHis);
-    MiscHis = NULL;
-  }
+    if (MiscHis != NULL) {
+	FreePtr(MiscHis);
+	MiscHis = NULL;
+    }
 
-  if (PowerMap) {
-    FreePtr(PowerMap);
-    PowerMap = NULL;
-  }
+    if (PowerMap != NULL) {
+	FreePtr(PowerMap);
+	PowerMap = NULL;
+    }
 
-  for (int i = 0; i < HISTORIES; i++) {
-    free(History10[i]);
-    free(History120[i]);
-  }
-
+    for (int i = 0; i < HISTORIES; i++) {
+	if (History10[i] != NULL) {
+	    free(History10[i]);
+	}
+	if (History120[i] != NULL) {
+	    free(History120[i]);
+	}
+    }
 }
 
 
 void Micropolis::GetHistoryRange(
-        int historyType,
-        int historyScale,
-        short *minValResult,
-        short *maxValResult)
+    int historyType,
+    int historyScale,
+    short *minValResult,
+    short *maxValResult)
 {
-        if ((historyType < 0) ||
-                (historyType >= HISTORY_TYPE_COUNT) ||
-                (historyScale < 0) ||
-                (historyScale >= HISTORY_SCALE_COUNT)) {
-                *minValResult = 0;
-                *maxValResult = 0;
-                return;
-        }
+    if ((historyType < 0) ||
+	(historyType >= HISTORY_TYPE_COUNT) ||
+	(historyScale < 0) ||
+	(historyScale >= HISTORY_SCALE_COUNT)) {
+	*minValResult = 0;
+	*maxValResult = 0;
+	return;
+    }
 
-        short *history =
-                NULL;
-        switch (historyType) {
-                case HISTORY_TYPE_RES:
-                        history = ResHis;
-                        break;
-                case HISTORY_TYPE_COM:
-                        history = ComHis;
-                        break;
-                case HISTORY_TYPE_IND:
-                        history = IndHis;
-                        break;
-                case HISTORY_TYPE_MONEY:
-                        history = MoneyHis;
-                        break;
-                case HISTORY_TYPE_CRIME:
-                        history = CrimeHis;
-                        break;
-                case HISTORY_TYPE_POLLUTION:
-                        history = PollutionHis;
-                        break;
-                default:
-                        NOT_REACHED();
-                        break;
-        }
+    short *history =
+	NULL;
+    switch (historyType) {
+	case HISTORY_TYPE_RES:
+	    history = ResHis;
+	    break;
+	case HISTORY_TYPE_COM:
+	    history = ComHis;
+	    break;
+	case HISTORY_TYPE_IND:
+	    history = IndHis;
+	    break;
+	case HISTORY_TYPE_MONEY:
+	    history = MoneyHis;
+	    break;
+	case HISTORY_TYPE_CRIME:
+	    history = CrimeHis;
+	    break;
+	case HISTORY_TYPE_POLLUTION:
+	    history = PollutionHis;
+	    break;
+	default:
+	    NOT_REACHED();
+	    break;
+    }
 
-        int offset =
-                0;
-        switch (historyScale) {
-                case HISTORY_SCALE_SHORT:
-                        offset = 0;
-                        break;
-                case HISTORY_SCALE_LONG:
-                        offset = 120;
-                        break;
-                default:
-                        NOT_REACHED();
-                        break;
-        }
+    int offset =
+	0;
+    switch (historyScale) {
+	case HISTORY_SCALE_SHORT:
+	    offset = 0;
+	    break;
+	case HISTORY_SCALE_LONG:
+	    offset = 120;
+	    break;
+	default:
+	    NOT_REACHED();
+	    break;
+    }
 
-        short minVal = 32000;
-        short maxVal = -32000;
+    short minVal = 32000;
+    short maxVal = -32000;
 
-        int i;
-        for (i = 0; i < HISTORY_COUNT; i++) {
-                short val =
-                        history[i + offset];
-                if (val < minVal) {
-                        minVal = val;
-                }
-                if (val > maxVal) {
-                        maxVal = val;
-                }
-        }
+    int i;
+    for (i = 0; i < HISTORY_COUNT; i++) {
+	short val =
+	    history[i + offset];
+	if (val < minVal) {
+	    minVal = val;
+	}
+	if (val > maxVal) {
+	    maxVal = val;
+	}
+    }
 
-        *minValResult = minVal;
-        *maxValResult = maxVal;
+    *minValResult = minVal;
+    *maxValResult = maxVal;
 }
 
 
 short Micropolis::GetHistory(
-        int historyType,
-        int historyScale,
-        int historyIndex)
+    int historyType,
+    int historyScale,
+    int historyIndex)
 {
-        if ((historyType < 0) ||
-                (historyType >= HISTORY_TYPE_COUNT) ||
-                (historyScale < 0) ||
-                (historyScale >= HISTORY_SCALE_COUNT) ||
-                (historyIndex < 0) ||
-                (historyIndex >= HISTORY_COUNT)) {
-                return 0;
-        }
+    if ((historyType < 0) ||
+	(historyType >= HISTORY_TYPE_COUNT) ||
+	(historyScale < 0) ||
+	(historyScale >= HISTORY_SCALE_COUNT) ||
+	(historyIndex < 0) ||
+	(historyIndex >= HISTORY_COUNT)) {
+	return 0;
+    }
 
-        short *history =
-                NULL;
-        switch (historyType) {
-                case HISTORY_TYPE_RES:
-                        history = ResHis;
-                        break;
-                case HISTORY_TYPE_COM:
-                        history = ComHis;
-                        break;
-                case HISTORY_TYPE_IND:
-                        history = IndHis;
-                        break;
-                case HISTORY_TYPE_MONEY:
-                        history = MoneyHis;
-                        break;
-                case HISTORY_TYPE_CRIME:
-                        history = CrimeHis;
-                        break;
-                case HISTORY_TYPE_POLLUTION:
-                        history = PollutionHis;
-                        break;
-                default:
-                        NOT_REACHED();
-                        break;
-        }
+    short *history =
+	NULL;
+    switch (historyType) {
+	case HISTORY_TYPE_RES:
+	    history = ResHis;
+	    break;
+	case HISTORY_TYPE_COM:
+	    history = ComHis;
+	    break;
+	case HISTORY_TYPE_IND:
+	    history = IndHis;
+	    break;
+	case HISTORY_TYPE_MONEY:
+	    history = MoneyHis;
+	    break;
+	case HISTORY_TYPE_CRIME:
+	    history = CrimeHis;
+	    break;
+	case HISTORY_TYPE_POLLUTION:
+	    history = PollutionHis;
+	    break;
+	default:
+	    NOT_REACHED();
+	    break;
+    }
 
-        int offset =
-                0;
-        switch (historyScale) {
-                case HISTORY_SCALE_SHORT:
-                        offset = 0;
-                        break;
-                case HISTORY_SCALE_LONG:
-                        offset = 120;
-                        break;
-                default:
-                        NOT_REACHED();
-                        break;
-        }
+    int offset =
+	0;
+    switch (historyScale) {
+	case HISTORY_SCALE_SHORT:
+	    offset = 0;
+	    break;
+	case HISTORY_SCALE_LONG:
+	    offset = 120;
+	    break;
+	default:
+	    NOT_REACHED();
+	    break;
+    }
 
-        short result =
-                history[historyIndex + offset];
+    short result =
+	history[historyIndex + offset];
 
-        return result;
+    return result;
 }
 
 
