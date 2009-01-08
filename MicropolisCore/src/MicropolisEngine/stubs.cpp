@@ -231,12 +231,11 @@ void Micropolis::Callback(const char *name, const char *params, ...)
  * Tell the front-end to show an earthquake to the user (shaking the map for
  * some time).
  */
-void Micropolis::DoEarthquake()
+void Micropolis::DoEarthquake(int strength)
 {
     MakeSound("city", "Explosion-Low"); // Make the sound all over.
 
-    int magnitude = Rand(10) + 3;
-    Callback("UIStartEarthquake", "d", magnitude);
+    Callback("UIStartEarthquake", "d", strength);
 }
 
 

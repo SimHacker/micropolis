@@ -534,6 +534,10 @@ enum MapTileCharacters {
 };
 
 
+#define RANDOM_FIRE ((FIRE + (Rand16() & 7)) | ANIMBIT)
+#define RANDOM_RUBBLE ((RUBBLE + (Rand16() & 3)) | BULLBIT)
+
+
 /*
  * These describe the wand values, the object dragged around on the screen.
  */
@@ -2737,7 +2741,7 @@ public:
         const char *params,
         ...);
 
-  void DoEarthquake();
+  void DoEarthquake(int strength);
 
   void InvalidateEditors();
 

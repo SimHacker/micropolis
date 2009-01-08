@@ -231,23 +231,23 @@ void Micropolis::MakeEarthquake()
 {
     short x, y, z;
 
-    DoEarthquake();
+    int strength = Rand(700) + 300; // strength/duration of the earthquake
+
+    DoEarthquake(strength);
 
     SendMesAt(-STR301_EARTHQUAKE, CCx, CCy);
-    short time = Rand(700) + 300; // strength/duration of the earthquake
 
-    for (z = 0; z < time; z++)  {
+    for (z = 0; z < strength; z++)  {
         x = Rand(WORLD_X - 1);
         y = Rand(WORLD_Y - 1);
-
 
         if (Vulnerable(Map[x][y])) {
 
             if ((z & 0x3) != 0) { // 3 of 4 times reduce to rubble
-                Map[x][y] = (RUBBLE + BULLBIT) + (Rand16() & 3);
+                Map[x][y] = RANDOM_RUBBLE;
             } else {
                 // 1 of 4 times start fire
-                Map[x][y] = (FIRE + ANIMBIT) + (Rand16() & 7);
+                Map[x][y] = RANDOM_FIRE;
             }
         }
     }
@@ -267,7 +267,7 @@ void Micropolis::SetFire()
     if ((z & ZONEBIT) == 0) {
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
-            Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
+            Map[x][y] = RANDOM_FIRE;
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_FIRE_REPORTED, x, y);
@@ -286,11 +286,10 @@ void Micropolis::MakeFire()
         y = Rand(WORLD_Y - 1);
         z = Map[x][y];
 
-        /* !(z & BURNBIT) && TILE_IS_ARSONABLE(z) */
         if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
-                Map[x][y] = FIRE + ANIMBIT + (Rand16() & 7);
+                Map[x][y] = RANDOM_FIRE;
                 SendMesAt(STR301_FIRE_REPORTED, x, y);
                 return;
             }
@@ -384,7 +383,7 @@ void Micropolis::DoFlood()
                     }
                 }
             }
-        }
+         }
     } else {
         if ((Rand16() & 15) == 0) { // 1/16 chance
             Map[SMapX][SMapY] = DIRT;
