@@ -151,8 +151,7 @@ void Micropolis::PopDenScan()
 
 
 /* comefrom: PopDenScan */
-int Micropolis::GetPDen(
-  int Ch9)
+int Micropolis::GetPDen(int Ch9)
 {
   register int pop;
 

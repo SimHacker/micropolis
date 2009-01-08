@@ -821,8 +821,10 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
  * @param x   X coordinate of the tile.
  * @param y   Y coordinate of the tile.
  */
-void Micropolis::doShowZoneStatus(char *str, char *s0, char *s1, char *s2, char *s3, char *s4,
-                                    int x, int y)
+void Micropolis::doShowZoneStatus(
+    char *str, 
+    char *s0, char *s1, char *s2, char *s3, char *s4,
+    int x, int y)
 {
     Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
 }

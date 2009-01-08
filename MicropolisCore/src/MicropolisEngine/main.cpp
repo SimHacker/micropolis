@@ -329,8 +329,7 @@ void Micropolis::sim_heat()
 }
 
 
-void Micropolis::sim_loop(
-  int doSim)
+void Micropolis::sim_loop(int doSim)
 {
   if (heat_steps) {
     int j;

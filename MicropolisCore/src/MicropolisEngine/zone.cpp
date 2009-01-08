@@ -151,8 +151,7 @@ void Micropolis::DoHospChur()
 #define ASCBIT (ANIMBIT | CONDBIT | BURNBIT)
 #define REGBIT (CONDBIT | BURNBIT)
 
-void Micropolis::SetSmoke(
-  int ZonePower)
+void Micropolis::SetSmoke(int ZonePower)
 {
   static short AniThis[8] = {    T,    F,    T,    T,    F,    F,    T,    T };
   static short DX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
@@ -205,8 +204,7 @@ void Micropolis::SetSmoke(
 }
 
 
-void Micropolis::DoIndustrial(
-  int ZonePwrFlg)
+void Micropolis::DoIndustrial(int ZonePwrFlg)
 {
   short tpop, zscore, TrfGood;
 
@@ -250,8 +248,7 @@ void Micropolis::DoIndustrial(
 }
 
 
-void Micropolis::DoCommercial(
-  int ZonePwrFlg)
+void Micropolis::DoCommercial(int ZonePwrFlg)
 {
   register short tpop, TrfGood;
   short zscore, locvalve,value;
@@ -301,8 +298,7 @@ void Micropolis::DoCommercial(
 }
 
 
-void Micropolis::DoResidential(
-  int ZonePwrFlg)
+void Micropolis::DoResidential(int ZonePwrFlg)
 {
   short tpop, zscore, locvalve, value, TrfGood;
 
@@ -402,9 +398,7 @@ short Micropolis::GetCRVal()
 }
 
 
-void Micropolis::DoResIn(
-  int pop,
-  int value)
+void Micropolis::DoResIn(int pop, int value)
 {
   short z;
 
@@ -439,9 +433,7 @@ void Micropolis::DoResIn(
 }
 
 
-void Micropolis::DoComIn(
-  int pop,
-  int value)
+void Micropolis::DoComIn(int pop, int value)
 {
   register short z;
 
@@ -459,9 +451,7 @@ void Micropolis::DoComIn(
 }
 
 
-void Micropolis::DoIndIn(
-  int pop,
-  int value)
+void Micropolis::DoIndIn(int pop, int value)
 {
   if (pop < 4) {
     IndPlop(pop, value);
@@ -470,16 +460,13 @@ void Micropolis::DoIndIn(
 }
 
 
-void Micropolis::IncROG(
-  int amount)
+void Micropolis::IncROG(int amount)
 {
   RateOGMem[SMapX>>3][SMapY>>3] += amount<<2;
 }
 
 
-void Micropolis::DoResOut(
-  int pop,
-  int value)
+void Micropolis::DoResOut(int pop, int value)
 {
   static short Brdr[9] = {0,3,6,1,4,7,2,5,8};
   register short x, y, loc, z;
@@ -547,9 +534,7 @@ void Micropolis::DoResOut(
 }
 
 
-void Micropolis::DoComOut(
-  int pop,
-  int value)
+void Micropolis::DoComOut(int pop, int value)
 {
   if (pop > 1) {
     ComPlop(pop - 2, value);
@@ -564,9 +549,7 @@ void Micropolis::DoComOut(
 }
 
 
-void Micropolis::DoIndOut(
-  int pop,
-  int value)
+void Micropolis::DoIndOut(int pop, int value)
 {
   if (pop > 1) {
     IndPlop(pop - 2, value);
@@ -581,8 +564,7 @@ void Micropolis::DoIndOut(
 }
 
 
-short Micropolis::RZPop(
-  int Ch9)
+short Micropolis::RZPop(int Ch9)
 {
   short CzDen;
 
@@ -592,8 +574,7 @@ short Micropolis::RZPop(
 }
 
 
-short Micropolis::CZPop(
-  int Ch9)
+short Micropolis::CZPop(int Ch9)
 {
   short CzDen;
 
@@ -607,8 +588,7 @@ short Micropolis::CZPop(
 }
 
 
-short Micropolis::IZPop(
-  int Ch9)
+short Micropolis::IZPop(int Ch9)
 {
   short CzDen;
 
@@ -622,8 +602,7 @@ short Micropolis::IZPop(
 }
 
 
-void Micropolis::BuildHouse(
-  int value)
+void Micropolis::BuildHouse(int value)
 {
   short z, score, hscore, BestLoc;
   static short ZeX[9] = { 0,-1, 0, 1,-1, 1,-1, 0, 1};
@@ -670,9 +649,7 @@ void Micropolis::BuildHouse(
 }
 
 
-void Micropolis::ResPlop(
-  int Den,
-  int Value)
+void Micropolis::ResPlop(int Den, int Value)
 {
   short base;
 
@@ -681,9 +658,7 @@ void Micropolis::ResPlop(
 }
 
 
-void Micropolis::ComPlop(
-  int Den,
-  int Value)
+void Micropolis::ComPlop(int Den, int Value)
 {
   short base;
 
@@ -692,9 +667,7 @@ void Micropolis::ComPlop(
 }
 
 
-void Micropolis::IndPlop(
-  int Den,
-  int Value)
+void Micropolis::IndPlop(int Den, int Value)
 {
   short base;
 
@@ -703,9 +676,7 @@ void Micropolis::IndPlop(
 }
 
 
-short Micropolis::EvalLot(
-  int x,
-  int y)
+short Micropolis::EvalLot(int x, int y)
 {
   short z, score;
   static short DX[4] = { 0, 1, 0,-1};
@@ -779,8 +750,7 @@ bool Micropolis::ZonePlop(int base)
 }
 
 
-short Micropolis::EvalRes(
-  int traf)
+short Micropolis::EvalRes(int traf)
 {
   register short Value;
 
@@ -807,8 +777,7 @@ short Micropolis::EvalRes(
 }
 
 
-short Micropolis::EvalCom(
-  int traf)
+short Micropolis::EvalCom(int traf)
 {
   short Value;
 
@@ -822,8 +791,7 @@ short Micropolis::EvalCom(
 }
 
 
-short Micropolis::EvalInd(
-  int traf)
+short Micropolis::EvalInd(int traf)
 {
   if (traf < 0) {
     return (-1000);
