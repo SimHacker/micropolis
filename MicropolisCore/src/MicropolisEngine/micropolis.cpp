@@ -549,8 +549,8 @@ void Micropolis::init()
   // int heat_wrap;
   heat_wrap = 3;
 
-  // char *CityFileName;
-  CityFileName = NULL;
+  // std::string CityFileName;
+  CityFileName = "";
 
   // int MultiPlayerMode;
   MultiPlayerMode = 0;
@@ -823,8 +823,8 @@ void Micropolis::init()
 
   UserSoundOn = false; // Disable sound
 
-  // char *CityName;
-  CityName = NULL;
+  // std::string CityName;
+  CityName = "";
 
   NoDisasters = false; // Enable disasters
 

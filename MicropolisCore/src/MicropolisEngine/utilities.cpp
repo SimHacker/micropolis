@@ -219,6 +219,7 @@ void Micropolis::SetGameLevelFunds(GameLevel level)
   }
 }
 
+
 /** Set/change the game level.
  * @param level New game level.
  */
@@ -228,6 +229,7 @@ void Micropolis::SetGameLevel(GameLevel level)
   gameLevel = level;
   UpdateGameLevel();
 }
+
 
 /** Report to the front-end that a new game level has been set. */
 void Micropolis::UpdateGameLevel()
@@ -239,72 +241,69 @@ void Micropolis::UpdateGameLevel()
 }
 
 
-void Micropolis::setCityName(
-  char *name)
+void Micropolis::setCityName(const std::string &name)
 {
-  char *cp = name;
-
-  // FIXME: This actually modifies the string passed in. Kinda gross.
-
-  while (*cp) {
-
-    if (!isalnum(*cp)) {
-      *cp = '_';
+    std::string cleanName;
+  
+    int i;
+    int n = name.length();
+    for (i = 0; i < n; i++) {
+	char ch = name[i];
+	if (!isalnum(ch)) {
+	    ch = '_';
+	}
+	cleanName.push_back(ch);
     }
 
-    cp++;
-  }
-
-  setAnyCityName(name);
+    setCleanCityName(cleanName);
 }
 
 
-void Micropolis::setAnyCityName(
-  char *name)
+void Micropolis::setCleanCityName(const std::string &name)
 {
   CityName = name;
 
   Callback(
     "UISetCityName",
     "s",
-    CityName);
+    CityName.c_str());
 }
 
 
 void Micropolis::SetYear(
   int year)
 {
-  // Must prevent year from going negative, since it screws up the non-floored modulo arithmetic.
-  if (year < StartingYear) {
-    year = StartingYear;
-  }
+    // Must prevent year from going negative, since it screws up the non-floored modulo arithmetic.
+    if (year < StartingYear) {
+	year = StartingYear;
+    }
 
-  year = (year - StartingYear) - (CityTime / 48);
-  CityTime += year * 48;
-  doTimeStuff();
+    year = (year - StartingYear) - (CityTime / 48);
+    CityTime += year * 48;
+    doTimeStuff();
 }
 
 
 int Micropolis::CurrentYear()
 {
-  return ((CityTime / 48) + StartingYear);
+    return ((CityTime / 48) + StartingYear);
 }
 
 
 void Micropolis::DoNewGame()
 {
-  Callback("UINewGame", "");
+    Callback("UINewGame", "");
 }
 
 
 void Micropolis::DoGeneratedCityImage(
-  char *name,
-  int time,
-  int pop,
-  char *cityClassName,
-  int score)
+    char *name,
+    int time,
+    int pop,
+    char *cityClassName,
+    int score)
 {
-  /* XXX: TODO: print city */
+    /* @todo Print city. */
 }
 
 

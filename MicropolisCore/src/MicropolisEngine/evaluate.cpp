@@ -404,7 +404,7 @@ void Micropolis::GetScore()
     z = (int)(z * SM);
     z = z - GetFire() - CityTax; // dec score for fires and taxes
 
-    float TM = unPwrdZCnt + PwrdZCnt;   /* dec score for unpowered zones */
+    float TM = unPwrdZCnt + PwrdZCnt;   // dec score for unpowered zones
     if (TM > 0.0) {
         z = (int)(z * (float)(PwrdZCnt / TM));
     } else {

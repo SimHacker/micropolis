@@ -3141,6 +3141,48 @@ SWIG_From_float  (float value)
 
 
 SWIGINTERN int
+SWIG_AsPtr_std_string (PyObject * obj, std::string **val) 
+{
+  char* buf = 0 ; size_t size = 0; int alloc = SWIG_OLDOBJ;
+  if (SWIG_IsOK((SWIG_AsCharPtrAndSize(obj, &buf, &size, &alloc)))) {
+    if (buf) {
+      if (val) *val = new std::string(buf, size - 1);
+      if (alloc == SWIG_NEWOBJ) delete[] buf;
+      return SWIG_NEWOBJ;
+    } else {
+      if (val) *val = 0;
+      return SWIG_OLDOBJ;
+    }
+  } else {
+    static int init = 0;
+    static swig_type_info* descriptor = 0;
+    if (!init) {
+      descriptor = SWIG_TypeQuery("std::string" " *");
+      init = 1;
+    }
+    if (descriptor) {
+      std::string *vptr;
+      int res = SWIG_ConvertPtr(obj, (void**)&vptr, descriptor, 0);
+      if (SWIG_IsOK(res) && val) *val = vptr;
+      return res;
+    }
+  }
+  return SWIG_ERROR;
+}
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_std_string  (const std::string& s)
+{
+  if (s.size()) {
+    return SWIG_FromCharPtrAndSize(s.data(), s.size());
+  } else {
+    return SWIG_FromCharPtrAndSize(s.c_str(), 0);
+  }
+}
+
+
+SWIGINTERN int
 SWIG_AsVal_unsigned_SS_long (PyObject *obj, unsigned long *val) 
 {
   if (PyInt_Check(obj)) {
@@ -12970,7 +13012,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_load_file(PyObject *SWIGUNUSEDPARM(self), 
   Micropolis *arg1 = (Micropolis *) 0 ;
   char *arg2 = (char *) 0 ;
   char *arg3 = (char *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 ;
@@ -12991,16 +13033,16 @@ SWIGINTERN PyObject *_wrap_Micropolis_load_file(PyObject *SWIGUNUSEDPARM(self), 
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_load_file" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_load_file" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
   res3 = SWIG_AsCharPtrAndSize(obj2, &buf3, NULL, &alloc3);
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Micropolis_load_file" "', argument " "3"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Micropolis_load_file" "', argument " "3"" of type '" "char const *""'");
   }
   arg3 = reinterpret_cast< char * >(buf3);
-  result = (int)(arg1)->load_file(arg2,arg3);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool)(arg1)->load_file((char const *)arg2,(char const *)arg3);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   if (alloc3 == SWIG_NEWOBJ) delete[] buf3;
   return resultobj;
@@ -13015,7 +13057,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_loadFile(PyObject *SWIGUNUSEDPARM(self), P
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   char *arg2 = (char *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 ;
@@ -13032,11 +13074,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_loadFile(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_loadFile" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_loadFile" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  result = (int)(arg1)->loadFile(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool)(arg1)->loadFile((char const *)arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
 fail:
@@ -13049,7 +13091,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_saveFile(PyObject *SWIGUNUSEDPARM(self), P
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   char *arg2 = (char *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 ;
@@ -13066,11 +13108,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_saveFile(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_saveFile" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_saveFile" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  result = (int)(arg1)->saveFile(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool)(arg1)->saveFile((char const *)arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
 fail:
@@ -13134,7 +13176,7 @@ SWIGINTERN PyObject *_wrap_Micropolis_LoadCity(PyObject *SWIGUNUSEDPARM(self), P
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   char *arg2 = (char *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int res2 ;
@@ -13151,11 +13193,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_LoadCity(PyObject *SWIGUNUSEDPARM(self), P
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_LoadCity" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_LoadCity" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  result = (int)(arg1)->LoadCity(arg2);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool)(arg1)->LoadCity((char const *)arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
 fail:
@@ -13205,10 +13247,10 @@ SWIGINTERN PyObject *_wrap_Micropolis_DidntLoadCity(PyObject *SWIGUNUSEDPARM(sel
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DidntLoadCity" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DidntLoadCity" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->DidntLoadCity(arg2);
+  (arg1)->DidntLoadCity((char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
@@ -13301,10 +13343,10 @@ SWIGINTERN PyObject *_wrap_Micropolis_DidntSaveCity(PyObject *SWIGUNUSEDPARM(sel
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DidntSaveCity" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_DidntSaveCity" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->DidntSaveCity(arg2);
+  (arg1)->DidntSaveCity((char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
@@ -13334,10 +13376,10 @@ SWIGINTERN PyObject *_wrap_Micropolis_SaveCityAs(PyObject *SWIGUNUSEDPARM(self),
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SaveCityAs" "', argument " "2"" of type '" "char *""'");
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_SaveCityAs" "', argument " "2"" of type '" "char const *""'");
   }
   arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->SaveCityAs(arg2);
+  (arg1)->SaveCityAs((char const *)arg2);
   resultobj = SWIG_Py_Void();
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
@@ -15606,12 +15648,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_CityFileName_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
+  std::string *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -15621,23 +15661,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_CityFileName_set(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityFileName_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_CityFileName_set" "', argument " "2"" of type '" "char *""'");
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_CityFileName_set" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Micropolis_CityFileName_set" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  arg2 = reinterpret_cast< char * >(buf2);
-  if (arg1->CityFileName) delete[] arg1->CityFileName;
-  if (arg2) {
-    size_t size = strlen(reinterpret_cast< const char * >(arg2)) + 1;
-    arg1->CityFileName = (char *)reinterpret_cast< char* >(memcpy((new char[size]), reinterpret_cast< const char * >(arg2), sizeof(char)*(size)));
-  } else {
-    arg1->CityFileName = 0;
-  }
+  if (arg1) (arg1)->CityFileName = *arg2;
+  
   resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -15645,7 +15686,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_CityFileName_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *result = 0 ;
+  std::string *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -15656,8 +15697,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_CityFileName_get(PyObject *SWIGUNUSEDPARM(
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityFileName_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (char *) ((arg1)->CityFileName);
-  resultobj = SWIG_FromCharPtr((const char *)result);
+  {
+    std::string const &_result_ref =  ((arg1)->CityFileName);
+    result = (std::string *) &_result_ref;
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
   return resultobj;
 fail:
   return NULL;
@@ -22975,12 +23019,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_CityName_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
+  std::string *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -22990,23 +23032,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_CityName_set(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityName_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_CityName_set" "', argument " "2"" of type '" "char *""'");
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_CityName_set" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Micropolis_CityName_set" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  arg2 = reinterpret_cast< char * >(buf2);
-  if (arg1->CityName) delete[] arg1->CityName;
-  if (arg2) {
-    size_t size = strlen(reinterpret_cast< const char * >(arg2)) + 1;
-    arg1->CityName = (char *)reinterpret_cast< char* >(memcpy((new char[size]), reinterpret_cast< const char * >(arg2), sizeof(char)*(size)));
-  } else {
-    arg1->CityName = 0;
-  }
+  if (arg1) (arg1)->CityName = *arg2;
+  
   resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -23014,7 +23057,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_CityName_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *result = 0 ;
+  std::string *result = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -23025,8 +23068,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_CityName_get(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_CityName_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (char *) ((arg1)->CityName);
-  resultobj = SWIG_FromCharPtr((const char *)result);
+  {
+    std::string const &_result_ref =  ((arg1)->CityName);
+    result = (std::string *) &_result_ref;
+  }
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
   return resultobj;
 fail:
   return NULL;
@@ -23738,17 +23784,26 @@ SWIGINTERN PyObject *_wrap_Micropolis_Callback(PyObject *self, PyObject *args) {
 SWIGINTERN PyObject *_wrap_Micropolis_DoEarthquake(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
+  int arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_DoEarthquake",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_DoEarthquake",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_DoEarthquake" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->DoEarthquake();
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_DoEarthquake" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  (arg1)->DoEarthquake(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -27417,12 +27472,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_setCityName(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
+  std::string *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
@@ -27432,50 +27485,60 @@ SWIGINTERN PyObject *_wrap_Micropolis_setCityName(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setCityName" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_setCityName" "', argument " "2"" of type '" "char *""'");
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_setCityName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Micropolis_setCityName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->setCityName(arg2);
+  (arg1)->setCityName((std::string const &)*arg2);
   resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_setAnyCityName(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_setCleanCityName(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
+  std::string *arg2 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setAnyCityName",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setCleanCityName",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setAnyCityName" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setCleanCityName" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_setAnyCityName" "', argument " "2"" of type '" "char *""'");
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_setCleanCityName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Micropolis_setCleanCityName" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
-  arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->setAnyCityName(arg2);
+  (arg1)->setCleanCityName((std::string const &)*arg2);
   resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -29409,7 +29472,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_SetGameLevelFunds", _wrap_Micropolis_SetGameLevelFunds, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_UpdateGameLevel", _wrap_Micropolis_UpdateGameLevel, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setCityName", _wrap_Micropolis_setCityName, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_setAnyCityName", _wrap_Micropolis_setAnyCityName, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setCleanCityName", _wrap_Micropolis_setCleanCityName, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_SetYear", _wrap_Micropolis_SetYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_CurrentYear", _wrap_Micropolis_CurrentYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_DoNewGame", _wrap_Micropolis_DoNewGame, METH_VARARGS, NULL},

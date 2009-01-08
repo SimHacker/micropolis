@@ -80,10 +80,7 @@ void Micropolis::GenerateNewCity()
 void Micropolis::GenerateSomeCity(
   int r)
 {
-  if (CityFileName != NULL) {
-    FreePtr(CityFileName);
-    CityFileName = NULL;
-  }
+  CityFileName = "";
 
   GenerateMap(r);
   ScenarioID = SC_NONE;
