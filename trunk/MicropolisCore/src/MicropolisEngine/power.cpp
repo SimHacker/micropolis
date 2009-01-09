@@ -101,6 +101,7 @@ bool Micropolis::MoveMapSim(Direction mDir)
                 SMapX = WORLD_X - 1;
             }
             return false;
+
         case DIR_SOUTH:
             if (SMapY < WORLD_Y - 1) {
                 SMapY++;
@@ -154,8 +155,10 @@ bool Micropolis::TestForCond(Direction tfDir)
             }
         }
     }
+
     SMapX = xsave;
     SMapY = ysave;
+
     return false;
 }
 
