@@ -93,6 +93,7 @@ static const short gToolSize[] = {
 ////////////////////////////////////////////////////////////////////////
 // Utilities
 
+
 /**
  * Put a park down at the give tile.
  * @param mapH X coordinate of the tile.
@@ -123,6 +124,7 @@ int Micropolis::putDownPark(short mapH, short mapV)
 
     return 1;
 }
+
 
 /**
  * Put down a communication network.
@@ -291,6 +293,7 @@ short Micropolis::checkBigZone(short id, short *deltaHPtr, short *deltaVPtr)
     }
 }
 
+
 /**
  * Can the tile be auto-bulldozed?.
  * @param tileValue Value of the tile.
@@ -302,6 +305,7 @@ bool Micropolis::tally(short tileValue)
            (tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
            (tileValue >= TINYEXP       && tileValue <= LASTTINYEXP + 2);
 }
+
 
 /**
  * Return the size of the zone that the tile belongs to.
@@ -324,6 +328,7 @@ short Micropolis::checkSize(short tileValue)
 
     return 0;
 }
+
 
 /**
  * Check and connect a new zone around the border.
@@ -373,8 +378,8 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
     }
 }
 
-/* 3x3 */
 
+/* 3x3 */
 
 int Micropolis::check3x3(
     short mapH, short mapV, 
@@ -469,7 +474,6 @@ int Micropolis::check3x3(
 
 
 /* 4x4 */
-
 
 short Micropolis::check4x4(
     short mapH, short mapV,
@@ -572,7 +576,6 @@ short Micropolis::check4x4(
 
 /* 6x6 */
 
-
 short Micropolis::check6x6(
   short mapH, short mapV,
   short base, short tool)
@@ -668,8 +671,7 @@ short Micropolis::check6x6(
 }
 
 
-/* QUERY */
-
+/* Query */
 
 /* search table for zone status string match */
 static short idArray[29] = {
@@ -760,6 +762,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
     }
 }
 
+
 /**
  * Report about the status of a tile.
  * @param mapH X coordinate of the tile.
@@ -810,6 +813,7 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
     doShowZoneStatus(localStr, statusStr[0], statusStr[1], statusStr[2],
                     statusStr[3], statusStr[4], mapH, mapV);
 }
+
 
 /** Tell front-end to report on status of a tile.
  * @param str Category of the tile.
