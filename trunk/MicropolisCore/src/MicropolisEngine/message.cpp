@@ -91,7 +91,7 @@ void Micropolis::SendMessages()
     TotalZPop = ResZPop + ComZPop + IndZPop;
     PowerPop = NuclearPop + CoalPop;
 
-    switch(CityTime & 63) {
+    switch (CityTime & 63) {
 
     case 1:
         if (TotalZPop / 4 >= ResZPop) {
@@ -222,6 +222,7 @@ void Micropolis::SendMessages()
             SendMes(-STR301_TRAFFIC_JAMS);
         }
         break;
+
     }
 }
 
@@ -261,14 +262,14 @@ void Micropolis::CheckGrowth()
             }
 
             if (lastCityPop < 500000L && thisCityPop >= 500000L) {
-                z = STR301_REACHED_MEGAPOLIS;
+                z = STR301_REACHED_MEGALOPOLIS;
             }
 
         }
 
         if (z > 0 && z != LastCategory) {
-                SendMes(-z);
-                LastCategory = z;
+	    SendMes(-z);
+	    LastCategory = z;
         }
 
         lastCityPop = thisCityPop;
@@ -287,7 +288,7 @@ void Micropolis::DoScenarioScore(Scenario type)
 {
     short z = -STR301_SCENARIO_LOST;     /* you lose */
 
-    switch(type) {
+    switch (type) {
 
     case SC_DULLSVILLE:
         if (cityClass >= CC_METROPOLIS) {
@@ -494,6 +495,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
     assert(mesgNum >= 0);
 
     switch (mesgNum) {
+
         case STR301_TRAFFIC_JAMS:
             if (Rand(5) == 1) {
 	        MakeSound("city", "HonkHonk-Med", x, y);
@@ -533,6 +535,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
         case STR301_RIOTS_REPORTED:
             MakeSound("city", "Siren", x, y);
             break;
+
     }
 }
 
