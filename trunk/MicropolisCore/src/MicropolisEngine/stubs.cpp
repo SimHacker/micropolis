@@ -123,6 +123,7 @@ Ptr Micropolis::NewPtr(int size)
     return (Ptr)malloc(size);
 }
 
+
 /**
  * Release claimed memory.
  * @param data Pointer to previously claimed memory.
@@ -188,6 +189,7 @@ void Micropolis::InitGame()
     setSpeed(0);
 }
 
+
 /**
  * Scripting language independent callback mechanism.
  *
@@ -252,6 +254,7 @@ void Micropolis::InvalidateMaps()
     Callback("UIInvalidateMaps", "");
 }
 
+
 /**
  * Tell the front-end to initialize its sound system.
  * @todo Should be handled by the front-end entirely?
@@ -260,6 +263,7 @@ void Micropolis::InitializeSound()
 {
     Callback("UIInitializeSound", "");
 }
+
 
 /**
  * Instruct the front-end to make a sound.
