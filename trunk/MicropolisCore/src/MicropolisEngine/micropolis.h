@@ -2132,7 +2132,7 @@ public:
 
     void drawPower();
 
-    int dynamicFilter(int col, int row);
+    bool dynamicFilter(int col, int row);
 
     void drawDynamic();
 
