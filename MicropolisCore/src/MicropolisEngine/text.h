@@ -132,7 +132,7 @@ enum Stri301 {
     STR301_REACHED_CITY, ///< Population has reached 10,000.
     STR301_REACHED_CAPITAL, ///< Population has reached 50,000.
     STR301_REACHED_METROPOLIS, ///< Population has reached 100,000.
-    STR301_REACHED_MEGAPOLIS, ///< Population has reached 500,000.
+    STR301_REACHED_MEGALOPOLIS, ///< Population has reached 500,000.
     STR301_NOT_ENOUGH_POWER, ///< 40: Brownouts, build another Power Plant.
     STR301_HEAVY_TRAFFIC, ///< Heavy Traffic reported.
     STR301_FLOODING_REPORTED, ///< Flooding reported !!
