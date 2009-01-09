@@ -74,264 +74,261 @@
 
 void Micropolis::DoUpdateHeads()
 {
-  showValves();
-  doTimeStuff();
-  ReallyUpdateFunds();
-  updateOptions();
+    showValves();
+    doTimeStuff();
+    ReallyUpdateFunds();
+    updateOptions();
 }
 
 
 void Micropolis::UpdateEditors()
 {
-  InvalidateEditors();
-  DoUpdateHeads();
+    InvalidateEditors();
+    DoUpdateHeads();
 }
 
 
 void Micropolis::UpdateMaps()
 {
-  InvalidateMaps();
+    InvalidateMaps();
 }
 
 
 void Micropolis::UpdateGraphs()
 {
-  ChangeCensus();
+    ChangeCensus();
 }
 
 
 void Micropolis::UpdateEvaluation()
 {
-  ChangeEval();
+    ChangeEval();
 }
 
 
 void Micropolis::UpdateHeads()
 {
-  MustUpdateFunds = ValveFlag = 1;
-  LastCityTime = LastCityYear = LastCityMonth = LastFunds = LastR = -999999;
-  DoUpdateHeads();
+    MustUpdateFunds = ValveFlag = 1;
+    LastCityTime = LastCityYear = LastCityMonth = LastFunds = LastR = -999999;
+    DoUpdateHeads();
 }
 
 
 void Micropolis::UpdateFunds()
 {
-  MustUpdateFunds = 1;
+    MustUpdateFunds = 1;
 }
 
 
 void Micropolis::ReallyUpdateFunds()
 {
-  if (!MustUpdateFunds) {
-    return;
-  }
+    if (!MustUpdateFunds) {
+	return;
+    }
 
-  MustUpdateFunds = 0;
+    MustUpdateFunds = 0;
 
-  if (TotalFunds != LastFunds) {
-    LastFunds = TotalFunds;
+    if (TotalFunds != LastFunds) {
+	LastFunds = TotalFunds;
 
-    Callback(
-      "UIUpdate",
-      "s",
-      "funds");
-  }
+	Callback(
+	    "UIUpdate",
+	    "s",
+	    "funds");
+    }
 
 }
 
 
 void Micropolis::doTimeStuff()
 {
-        // FIXME: Why is the condition commented out?
-        // Figure out what it's trying to do, and replace or delete.
-//  if ((CityTime >> 2) != LastCityTime) {
     updateDate();
-//  }
 }
+
 
 /**
  * @bug Message is wrong.
  */
 void Micropolis::updateDate()
 {
-  int megalinium = 1000000;
+    int megalinium = 1000000;
 
-  LastCityTime = CityTime >> 2;
+    LastCityTime = CityTime >> 2;
 
-  CityYear = ((int)CityTime / 48) + (int)StartingYear;
-  CityMonth = ((int)CityTime % 48) >> 2;
+    CityYear = ((int)CityTime / 48) + (int)StartingYear;
+    CityMonth = ((int)CityTime % 48) >> 2;
 
-  if (CityYear >= megalinium) {
-    SetYear(StartingYear);
-    CityYear = StartingYear;
-    SendMes(-STR301_NOT_ENOUGH_POWER);
-  }
+    if (CityYear >= megalinium) {
+	SetYear(StartingYear);
+	CityYear = StartingYear;
+	SendMes(-STR301_NOT_ENOUGH_POWER);
+    }
 
-  doMessage();
+    doMessage();
 
-  if ((LastCityYear != CityYear) ||
-      (LastCityMonth != CityMonth)) {
+    if ((LastCityYear != CityYear) ||
+	(LastCityMonth != CityMonth)) {
 
-    LastCityYear = CityYear;
-    LastCityMonth = CityMonth;
+	LastCityYear = CityYear;
+	LastCityMonth = CityMonth;
 
-    Callback(
-      "UIUpdate",
-      "s",
-      "date");
-  }
+	Callback(
+	    "UIUpdate",
+	    "s",
+	    "date");
+    }
 }
 
 
 void Micropolis::showValves()
 {
-  if (ValveFlag) {
-    drawValve();
-    ValveFlag = 0;
-  }
+    if (ValveFlag) {
+	drawValve();
+	ValveFlag = 0;
+    }
 }
 
 
 void Micropolis::drawValve()
 {
-  float r, c, i;
+    float r, c, i;
 
-  r = RValve;
+    r = RValve;
 
-  if (r < -1500) {
-    r = -1500;
-  }
+    if (r < -1500) {
+	r = -1500;
+    }
 
-  if (r > 1500) {
-    r = 1500;
-  }
+    if (r > 1500) {
+	r = 1500;
+    }
 
-  c = CValve;
+    c = CValve;
 
-  if (c < -1500) {
-    c = -1500;
-  }
+    if (c < -1500) {
+	c = -1500;
+    }
 
-  if (c > 1500) {
-    c = 1500;
-  }
+    if (c > 1500) {
+	c = 1500;
+    }
 
-  i = IValve;
+    i = IValve;
 
-  if (i < -1500) {
-    i = -1500;
-  }
+    if (i < -1500) {
+	i = -1500;
+    }
 
-  if (i > 1500) {
-    i = 1500;
-  }
+    if (i > 1500) {
+	i = 1500;
+    }
 
-  if ((r != LastR) ||
-      (c != LastC) ||
-      (i != LastI)) {
+    if ((r != LastR) ||
+	(c != LastC) ||
+	(i != LastI)) {
 
-    LastR = (int)r;
-    LastC = (int)c;
-    LastI = (int)i;
+	LastR = (int)r;
+	LastC = (int)c;
+	LastI = (int)i;
 
-    SetDemand(r, c, i);
-  }
+	SetDemand(r, c, i);
+    }
 }
 
 
 void Micropolis::SetDemand(float r, float c, float i)
 {
-  Callback(
-    "UISetDemand",
-    "ddd",
-    (int)(r / 100),
-    (int)(c / 100),
-    (int)(i / 100));
+    Callback(
+	"UISetDemand",
+	"ddd",
+	(int)(r / 100),
+	(int)(c / 100),
+	(int)(i / 100));
 }
 
 
 void Micropolis::updateOptions()
 {
-  int options;
+    int options;
 
-  if (MustUpdateOptions) {
+    if (MustUpdateOptions) {
 
-    options = 0;
+	options = 0;
 
-    if (autoBudget) {
-      options |= 1;
+	if (autoBudget) {
+	    options |= 1;
+	}
+
+	if (autoGo) {
+	    options |= 2;
+	}
+
+	if (autoBulldoze) {
+	    options |= 4;
+	}
+
+	if (!NoDisasters) {
+	    options |= 8;
+	}
+
+	if (UserSoundOn) {
+	    options |= 16;
+	}
+
+	if (DoAnimation) {
+	    options |= 32;
+	}
+
+	if (DoMessages) {
+	    options |= 64;
+	}
+
+	if (DoNotices) {
+	    options |= 128;
+	}
+
+	MustUpdateOptions = 0;
+	UpdateOptionsMenu(options);
     }
-
-    if (autoGo) {
-      options |= 2;
-    }
-
-    if (autoBulldoze) {
-      options |= 4;
-    }
-
-    if (!NoDisasters) {
-      options |= 8;
-    }
-
-    if (UserSoundOn) {
-      options |= 16;
-    }
-
-    if (DoAnimation) {
-      options |= 32;
-    }
-
-    if (DoMessages) {
-      options |= 64;
-    }
-
-    if (DoNotices) {
-      options |= 128;
-    }
-
-    MustUpdateOptions = 0;
-    UpdateOptionsMenu(options);
-  }
 }
 
 
 void Micropolis::UpdateOptionsMenu(int options)
 {
-  // @todo Just notify the scripting language that the options 
-  //       changed, and let it pull the values out of our members, 
-  //       instead of encoding and passing the options.
-  Callback(
-    "UISetOptions",
-    "dddddddd",
-    (options & 1) ? 1 : 0,
-    (options & 2) ? 1 : 0,
-    (options & 4) ? 1 : 0,
-    (options & 8) ? 1 : 0,
-    (options & 16) ? 1 : 0,
-    (options & 32) ? 1 : 0,
-    (options & 64) ? 1 : 0,
-    (options & 128) ? 1 : 0);
+    // @todo Just notify the scripting language that the options 
+    //       changed, and let it pull the values out of our members, 
+    //       instead of encoding and passing the options.
+    Callback(
+	"UISetOptions",
+	"dddddddd",
+	(options & 1) ? 1 : 0,
+	(options & 2) ? 1 : 0,
+	(options & 4) ? 1 : 0,
+	(options & 8) ? 1 : 0,
+	(options & 16) ? 1 : 0,
+	(options & 32) ? 1 : 0,
+	(options & 64) ? 1 : 0,
+	(options & 128) ? 1 : 0);
 }
 
 
 void Micropolis::UpdateUserInterface()
 {
-  // @todo Send all pending update messages to the user interface.
+    // @todo Send all pending update messages to the user interface.
 
-  // city: after load file, load scenario, or generate city
-  // map: when small overall map changes
-  // editor: when large close-up map changes
-  // graph: when graph changes
-  // evaluation: when evaluation changes
-  // budget: when budget changes
-  // date: when date changes
-  // funds: when funds change
-  // demand: when demand changes
-  // level: when level changes
-  // speed: when speed changes
-  // delay: when delay changes
-  // option: when options change
+    // city: after load file, load scenario, or generate city
+    // map: when small overall map changes
+    // editor: when large close-up map changes
+    // graph: when graph changes
+    // evaluation: when evaluation changes
+    // budget: when budget changes
+    // date: when date changes
+    // funds: when funds change
+    // demand: when demand changes
+    // level: when level changes
+    // speed: when speed changes
+    // delay: when delay changes
+    // option: when options change
 }
 
 
