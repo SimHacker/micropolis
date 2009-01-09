@@ -74,74 +74,74 @@
 
 void Micropolis::DoZone()
 {
-  bool ZonePwrFlg = SetZPower(); // Set Power Bit in Map from PowerMap
+    bool ZonePwrFlg = SetZPower(); // Set Power Bit in Map from PowerMap
 
-  if (ZonePwrFlg) {
-    PwrdZCnt++;
-  } else {
-    unPwrdZCnt++;
-  }
+    if (ZonePwrFlg) {
+	PwrdZCnt++;
+    } else {
+	unPwrdZCnt++;
+    }
 
-  if (CChr9 > PORTBASE) {       /* do Special Zones  */
-    DoSPZone(ZonePwrFlg);
+    if (CChr9 > PORTBASE) {       /* do Special Zones  */
+	DoSPZone(ZonePwrFlg);
+	return;
+    }
+
+    if (CChr9 < HOSPITAL) {
+	DoResidential(ZonePwrFlg);
+	return;
+    }
+
+    if (CChr9 < COMBASE) {
+	DoHospChur();
+	return;
+    }
+
+    if (CChr9 < INDBASE)  {
+	DoCommercial(ZonePwrFlg);
+	return;
+    }
+
+    DoIndustrial(ZonePwrFlg);
+
     return;
-  }
-
-  if (CChr9 < HOSPITAL) {
-    DoResidential(ZonePwrFlg);
-    return;
-  }
-
-  if (CChr9 < COMBASE) {
-    DoHospChur();
-    return;
-  }
-
-  if (CChr9 < INDBASE)  {
-    DoCommercial(ZonePwrFlg);
-    return;
-  }
-
-  DoIndustrial(ZonePwrFlg);
-
-  return;
 }
 
 
 void Micropolis::DoHospChur()
 {
 
-  if (CChr9 == HOSPITAL) {
+    if (CChr9 == HOSPITAL) {
 
-    HospPop++;
+	HospPop++;
 
-    if (!(CityTime & 15)) {
-      RepairZone(HOSPITAL, 3); /*post*/
+	if (!(CityTime & 15)) {
+	    RepairZone(HOSPITAL, 3); /*post*/
+	}
+
+	if (NeedHosp == -1) {
+	    if (!Rand(20)) {
+		ZonePlop(RESBASE);
+	    }
+	}
+
     }
 
-    if (NeedHosp == -1) {
-      if (!Rand(20)) {
-        ZonePlop(RESBASE);
-      }
+    if (CChr9 == CHURCH) {
+
+	ChurchPop++;
+
+	if (!(CityTime & 15)) {
+	    RepairZone(CHURCH, 3); /*post*/
+	}
+
+	if (NeedChurch == -1) {
+	    if (!Rand(20)) {
+		ZonePlop(RESBASE);
+	    }
+	}
+
     }
-
-  }
-
-  if (CChr9 == CHURCH) {
-
-    ChurchPop++;
-
-    if (!(CityTime & 15)) {
-      RepairZone(CHURCH, 3); /*post*/
-    }
-
-    if (NeedChurch == -1) {
-      if (!Rand(20)) {
-        ZonePlop(RESBASE);
-      }
-    }
-
-  }
 
 }
 
@@ -153,680 +153,660 @@ void Micropolis::DoHospChur()
 
 void Micropolis::SetSmoke(int ZonePower)
 {
-  static short AniThis[8] = {    T,    F,    T,    T,    F,    F,    T,    T };
-  static short DX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
-  static short DY1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
-  //static short DX2[8]     = {   -1,    0,    1,    1,    0,    0,    1,    1 };
-  //static short DY2[8]     = {   -1,    0,    0,   -1,    0,    0,   -1,    0 };
-  static short AniTabA[8] = {    0,    0,   32,   40,    0,    0,   48,   56 };
-  static short AniTabB[8] = {    0,    0,   36,   44,    0,    0,   52,   60 };
-  static short AniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
-  static short AniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
-  register short z;
+    static short AniThis[8] = {    T,    F,    T,    T,    F,    F,    T,    T };
+    static short DX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
+    static short DY1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
+    //static short DX2[8]     = {   -1,    0,    1,    1,    0,    0,    1,    1 };
+    //static short DY2[8]     = {   -1,    0,    0,   -1,    0,    0,   -1,    0 };
+    static short AniTabA[8] = {    0,    0,   32,   40,    0,    0,   48,   56 };
+    static short AniTabB[8] = {    0,    0,   36,   44,    0,    0,   52,   60 };
+    static short AniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
+    static short AniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
+    register short z;
 
-  if (CChr9 < IZB) {
-    return;
-  }
-
-  z = (CChr9 - IZB) >>3;
-  z = z & 7;
-
-  if (AniThis[z]) {
-    int xx = SMapX + DX1[z];
-    int yy = SMapY + DY1[z];
-
-    if (TestBounds(xx, yy)) {
-
-      if (ZonePower) {
-
-        if ((Map[xx][yy] & LOMASK) == AniTabC[z]) {
-          Map[xx][yy] =
-            ASCBIT | (SMOKEBASE + AniTabA[z]);
-          Map[xx][yy] =
-            ASCBIT | (SMOKEBASE + AniTabB[z]);
-        }
-
-      } else {
-
-        if ((Map[xx][yy] & LOMASK) > AniTabC[z]) {
-          Map[xx][yy] =
-            REGBIT | AniTabC[z];
-          Map[xx][yy] =
-            REGBIT | AniTabD[z];
-        }
-
-      }
-
+    if (CChr9 < IZB) {
+	return;
     }
 
-  }
+    z = (CChr9 - IZB) >>3;
+    z = z & 7;
+
+    if (AniThis[z]) {
+	int xx = SMapX + DX1[z];
+	int yy = SMapY + DY1[z];
+
+	if (TestBounds(xx, yy)) {
+
+	    if (ZonePower) {
+
+		if ((Map[xx][yy] & LOMASK) == AniTabC[z]) {
+		    Map[xx][yy] =
+			ASCBIT | (SMOKEBASE + AniTabA[z]);
+		    Map[xx][yy] =
+			ASCBIT | (SMOKEBASE + AniTabB[z]);
+		}
+
+	    } else {
+
+		if ((Map[xx][yy] & LOMASK) > AniTabC[z]) {
+		  Map[xx][yy] =
+		      REGBIT | AniTabC[z];
+		  Map[xx][yy] =
+		      REGBIT | AniTabD[z];
+		}
+
+	    }
+
+	}
+
+    }
 
 }
 
 
 void Micropolis::DoIndustrial(int ZonePwrFlg)
 {
-  short tpop, zscore, TrfGood;
+    short tpop, zscore, TrfGood;
 
-  IndZPop++;
-  SetSmoke(ZonePwrFlg);
-  tpop = IZPop(CChr9);
-  IndPop += tpop;
+    IndZPop++;
+    SetSmoke(ZonePwrFlg);
+    tpop = IZPop(CChr9);
+    IndPop += tpop;
 
-  if (tpop > Rand(5)) {
-    /* Try driving from industrial to residential */
-    TrfGood = MakeTraf(ZT_RESIDENTIAL);
-  } else {
-    TrfGood = 1;
-  }
-
-  if (TrfGood == -1) {
-    DoIndOut(tpop, Rand16() & 1);
-    return;
-  }
-
-  if (!(Rand16() & 7)) {
-    zscore = IValve + EvalInd(TrfGood);
-
-    if (!ZonePwrFlg) {
-      zscore = -500;
+    if (tpop > Rand(5)) {
+	/* Try driving from industrial to residential */
+	TrfGood = MakeTraf(ZT_RESIDENTIAL);
+    } else {
+	TrfGood = 1;
     }
 
-    if ((zscore > -350) &&
-        (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
-      DoIndIn(tpop, Rand16() & 1);
-      return;
+    if (TrfGood == -1) {
+	DoIndOut(tpop, Rand16() & 1);
+	return;
     }
 
-    if ((zscore < 350) &&
-        (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
-      DoIndOut(tpop, Rand16() & 1);
-    }
+    if (!(Rand16() & 7)) {
+	zscore = IValve + EvalInd(TrfGood);
 
-  }
+	if (!ZonePwrFlg) {
+	    zscore = -500;
+	}
+
+	if ((zscore > -350) &&
+	    (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+	    DoIndIn(tpop, Rand16() & 1);
+	    return;
+	}
+
+	if ((zscore < 350) &&
+	    (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
+	    DoIndOut(tpop, Rand16() & 1);
+	}
+
+    }
 
 }
 
 
 void Micropolis::DoCommercial(int ZonePwrFlg)
 {
-  register short tpop, TrfGood;
-  short zscore, locvalve,value;
+    short tpop, TrfGood;
+    short zscore, locvalve,value;
 
-  ComZPop++;
-  tpop = CZPop(CChr9);
-  ComPop += tpop;
+    ComZPop++;
+    tpop = CZPop(CChr9);
+    ComPop += tpop;
 
-  if (tpop > Rand(5)) {
-    /* Try driving from commercial to industrial */
-    TrfGood = MakeTraf(ZT_INDUSTRIAL);
-  } else {
-    TrfGood = 1;
-  }
-
-  if (TrfGood == -1) {
-    value = GetCRVal();
-    DoComOut(tpop, value);
-    return;
-  }
-
-  if (!(Rand16() & 7)) {
-
-    locvalve = EvalCom(TrfGood);
-    zscore = CValve + locvalve;
-
-    if (!ZonePwrFlg) {
-      zscore = -500;
+    if (tpop > Rand(5)) {
+	/* Try driving from commercial to industrial */
+	TrfGood = MakeTraf(ZT_INDUSTRIAL);
+    } else {
+	TrfGood = 1;
     }
 
-    if (TrfGood &&
-        (zscore > -350) &&
-        (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
-      value = GetCRVal();
-      DoComIn(tpop, value);
-      return;
+    if (TrfGood == -1) {
+	value = GetCRVal();
+	DoComOut(tpop, value);
+	return;
     }
 
-    if ((zscore < 350) &&
-        (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
-      value = GetCRVal();
-      DoComOut(tpop, value);
-    }
+    if (!(Rand16() & 7)) {
 
-  }
+	locvalve = EvalCom(TrfGood);
+	zscore = CValve + locvalve;
+
+	if (!ZonePwrFlg) {
+	    zscore = -500;
+	}
+
+	if (TrfGood &&
+	    (zscore > -350) &&
+	    (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+	    value = GetCRVal();
+	    DoComIn(tpop, value);
+	    return;
+	}
+
+	if ((zscore < 350) &&
+	    (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
+	    value = GetCRVal();
+	    DoComOut(tpop, value);
+	}
+
+    }
 
 }
 
 
 void Micropolis::DoResidential(int ZonePwrFlg)
 {
-  short tpop, zscore, locvalve, value, TrfGood;
+    short tpop, zscore, locvalve, value, TrfGood;
 
-  ResZPop++;
+    ResZPop++;
 
-  if (CChr9 == FREEZ) {
-    tpop = DoFreePop();
-  } else {
-    tpop = RZPop(CChr9);
-  }
-
-  ResPop += tpop;
-
-  if (tpop > Rand(35)) {
-    /* Try driving from residential to commercial */
-    TrfGood = MakeTraf(ZT_COMMERCIAL);
-  } else {
-    TrfGood = 1;
-  }
-
-  if (TrfGood == -1) {
-    value = GetCRVal();
-    DoResOut(tpop, value);
-    return;
-  }
-
-  if ((CChr9 == FREEZ) || (!(Rand16() & 7))) {
-
-    locvalve = EvalRes(TrfGood);
-    zscore = RValve + locvalve;
-
-    if (!ZonePwrFlg) {
-      zscore = -500;
+    if (CChr9 == FREEZ) {
+	tpop = DoFreePop();
+    } else {
+	tpop = RZPop(CChr9);
     }
 
-    if ((zscore > -350) &&
-        (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+    ResPop += tpop;
 
-      if ((!tpop) && (!(Rand16() & 3))) {
-        MakeHosp();
-        return;
-      }
-
-      value = GetCRVal();
-      DoResIn(tpop, value);
-
-      return;
+    if (tpop > Rand(35)) {
+	/* Try driving from residential to commercial */
+	TrfGood = MakeTraf(ZT_COMMERCIAL);
+    } else {
+	TrfGood = 1;
     }
 
-    if ((zscore < 350) &&
-        (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
-      value = GetCRVal();
-      DoResOut(tpop, value);
+    if (TrfGood == -1) {
+	value = GetCRVal();
+	DoResOut(tpop, value);
+	return;
     }
 
-  }
+    if ((CChr9 == FREEZ) || (!(Rand16() & 7))) {
+
+	locvalve = EvalRes(TrfGood);
+	zscore = RValve + locvalve;
+
+	if (!ZonePwrFlg) {
+	    zscore = -500;
+	}
+
+	if ((zscore > -350) &&
+	    (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+
+	  if ((!tpop) && (!(Rand16() & 3))) {
+	      MakeHosp();
+	      return;
+	  }
+
+	  value = GetCRVal();
+	  DoResIn(tpop, value);
+
+	  return;
+        }
+
+	if ((zscore < 350) &&
+	    (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
+	    value = GetCRVal();
+	    DoResOut(tpop, value);
+	}
+
+    }
 
 }
 
 
 void Micropolis::MakeHosp()
 {
-  if (NeedHosp > 0) {
-    ZonePlop(HOSPITAL - 4);
-    NeedHosp = 0;
-    return;
-  }
+    if (NeedHosp > 0) {
+	ZonePlop(HOSPITAL - 4);
+	NeedHosp = 0;
+	return;
+    }
 
-  if (NeedChurch > 0) {
-    ZonePlop(CHURCH - 4);
-    NeedChurch = 0;
-    return;
-  }
+    if (NeedChurch > 0) {
+	ZonePlop(CHURCH - 4);
+	NeedChurch = 0;
+	return;
+    }
 }
 
 
 short Micropolis::GetCRVal()
 {
-  register short LVal;
+    register short LVal;
 
-  LVal = LandValueMem[SMapX >>1][SMapY >>1];
-  LVal -= PollutionMem[SMapX >>1][SMapY >>1];
+    LVal = LandValueMem[SMapX >>1][SMapY >>1];
+    LVal -= PollutionMem[SMapX >>1][SMapY >>1];
 
-  if (LVal < 30) {
-    return (0);
-  }
+    if (LVal < 30) {
+	return 0;
+    }
 
-  if (LVal < 80) {
-    return (1);
-  }
+    if (LVal < 80) {
+	return 1;
+    }
 
-  if (LVal < 150) {
-    return (2);
-  }
+    if (LVal < 150) {
+	return 2;
+    }
 
-  return (3);
+    return 3;
 }
 
 
 void Micropolis::DoResIn(int pop, int value)
 {
-  short z;
+    short z;
 
-  z = PollutionMem[SMapX >>1][SMapY >>1];
+    z = PollutionMem[SMapX >>1][SMapY >>1];
 
-  if (z > 128) {
-    return;
-  }
-
-  if (CChr9 == FREEZ) {
-
-    if (pop < 8) {
-      BuildHouse(value);
-      IncROG(1);
-      return;
+    if (z > 128) {
+	return;
     }
 
-    if (PopDensity[SMapX >>1][SMapY >>1] > 64) {
-      ResPlop(0, value);
-      IncROG(8);
-      return;
+    if (CChr9 == FREEZ) {
+
+	if (pop < 8) {
+	    BuildHouse(value);
+	    IncROG(1);
+	    return;
+	}
+
+	if (PopDensity[SMapX >>1][SMapY >>1] > 64) {
+	    ResPlop(0, value);
+	    IncROG(8);
+	    return;
+	}
+
+	return;
     }
 
-    return;
-  }
-
-  if (pop < 40) {
-    ResPlop((pop / 8) - 1, value);
-    IncROG(8);
-  }
+    if (pop < 40) {
+	ResPlop((pop / 8) - 1, value);
+	IncROG(8);
+    }
 
 }
 
 
 void Micropolis::DoComIn(int pop, int value)
 {
-  register short z;
+    register short z;
 
-  z = LandValueMem[SMapX >>1][SMapY >>1];
-  z = z >>5;
+    z = LandValueMem[SMapX >>1][SMapY >>1];
+    z = z >>5;
 
-  if (pop > z) {
-    return;
-  }
+    if (pop > z) {
+	return;
+    }
 
-  if (pop < 5) {
-    ComPlop(pop, value);
-    IncROG(8);
-  }
+    if (pop < 5) {
+	ComPlop(pop, value);
+	IncROG(8);
+    }
 }
 
 
 void Micropolis::DoIndIn(int pop, int value)
 {
-  if (pop < 4) {
-    IndPlop(pop, value);
-    IncROG(8);
-  }
+    if (pop < 4) {
+	IndPlop(pop, value);
+	IncROG(8);
+    }
 }
 
 
 void Micropolis::IncROG(int amount)
 {
-  RateOGMem[SMapX>>3][SMapY>>3] += amount<<2;
+    RateOGMem[SMapX>>3][SMapY>>3] += amount<<2;
 }
 
 
 void Micropolis::DoResOut(int pop, int value)
 {
-  static short Brdr[9] = {0,3,6,1,4,7,2,5,8};
-  register short x, y, loc, z;
+    static short Brdr[9] = {0,3,6,1,4,7,2,5,8};
+    register short x, y, loc, z;
 
-  if (!pop) {
-    return;
-  }
-
-  if (pop > 16) {
-    ResPlop(((pop - 24) / 8), value);
-    IncROG(-8);
-    return;
-  }
-
-  if (pop == 16) {
-    IncROG(-8);
-    Map[SMapX][SMapY] = (FREEZ | BLBNCNBIT | ZONEBIT);
-
-    for (x = SMapX - 1; x <= SMapX + 1; x++) {
-      for (y = SMapY - 1; y <= SMapY + 1; y++) {
-
-        if (x >= 0 && x < WORLD_X &&
-            y >= 0 && y < WORLD_Y) {
-
-          if ((Map[x][y] & LOMASK) != FREEZ) {
-            Map[x][y] =
-              LHTHR + value + Rand(2) + BLBNCNBIT;
-          }
-
-        }
-
-      }
+    if (!pop) {
+	return;
     }
 
-  }
-
-  if (pop < 16) {
-
-    IncROG(-1);
-    z = 0;
-
-    for (x = SMapX - 1; x <= SMapX + 1; x++) {
-      for (y = SMapY - 1; y <= SMapY + 1; y++) {
-
-        if (x >= 0 && x < WORLD_X &&
-            y >= 0 && y < WORLD_Y) {
-
-          loc = Map[x][y] & LOMASK;
-
-          if ((loc >= LHTHR) && (loc <= HHTHR)) {
-            Map[x][y] =
-              Brdr[z] + BLBNCNBIT + FREEZ - 4;
-            return;
-          }
-
-        }
-
-        z++;
-
-      }
+    if (pop > 16) {
+	ResPlop(((pop - 24) / 8), value);
+	IncROG(-8);
+	return;
     }
 
-  }
+    if (pop == 16) {
+	IncROG(-8);
+	Map[SMapX][SMapY] = (FREEZ | BLBNCNBIT | ZONEBIT);
+	for (x = SMapX - 1; x <= SMapX + 1; x++) {
+	    for (y = SMapY - 1; y <= SMapY + 1; y++) {
+		if (x >= 0 && x < WORLD_X &&
+		    y >= 0 && y < WORLD_Y) {
+		    if ((Map[x][y] & LOMASK) != FREEZ) {
+			Map[x][y] =
+			    LHTHR + value + Rand(2) + BLBNCNBIT;
+		    }
+		}
+	    }
+	}
+    }
+
+    if (pop < 16) {
+	IncROG(-1);
+	z = 0;
+	for (x = SMapX - 1; x <= SMapX + 1; x++) {
+	    for (y = SMapY - 1; y <= SMapY + 1; y++) {
+		if (x >= 0 && x < WORLD_X &&
+		    y >= 0 && y < WORLD_Y) {
+		    loc = Map[x][y] & LOMASK;
+		    if ((loc >= LHTHR) && (loc <= HHTHR)) {
+			Map[x][y] =
+			    Brdr[z] + BLBNCNBIT + FREEZ - 4;
+			return;
+		    }
+		}
+		z++;
+	    }
+	}
+    }
 
 }
 
 
 void Micropolis::DoComOut(int pop, int value)
 {
-  if (pop > 1) {
-    ComPlop(pop - 2, value);
-    IncROG(-8);
-    return;
-  }
+    if (pop > 1) {
+	ComPlop(pop - 2, value);
+	IncROG(-8);
+	return;
+    }
 
-  if (pop == 1) {
-    ZonePlop(COMBASE);
-    IncROG(-8);
-  }
+    if (pop == 1) {
+	ZonePlop(COMBASE);
+	IncROG(-8);
+    }
 }
 
 
 void Micropolis::DoIndOut(int pop, int value)
 {
-  if (pop > 1) {
-    IndPlop(pop - 2, value);
-    IncROG(-8);
-    return;
-  }
+    if (pop > 1) {
+	IndPlop(pop - 2, value);
+	IncROG(-8);
+	return;
+    }
 
-  if (pop == 1) {
-    ZonePlop(INDCLR - 4);
-    IncROG(-8);
-  }
+    if (pop == 1) {
+	ZonePlop(INDCLR - 4);
+	IncROG(-8);
+    }
 }
 
 
 short Micropolis::RZPop(int Ch9)
 {
-  short CzDen;
+    short CzDen;
 
-  CzDen = (((Ch9 - RZB) / 9) % 4);
+    CzDen = (((Ch9 - RZB) / 9) % 4);
 
-  return ((CzDen * 8) + 16);
+    return ((CzDen * 8) + 16);
 }
 
 
 short Micropolis::CZPop(int Ch9)
 {
-  short CzDen;
+    short CzDen;
 
-  if (Ch9 == COMCLR) {
-    return (0);
-  }
+    if (Ch9 == COMCLR) {
+	return (0);
+    }
 
-  CzDen = (((Ch9 - CZB) / 9) % 5) + 1;
+    CzDen = (((Ch9 - CZB) / 9) % 5) + 1;
 
-  return (CzDen);
+    return (CzDen);
 }
 
 
 short Micropolis::IZPop(int Ch9)
 {
-  short CzDen;
+    short CzDen;
 
-  if (Ch9 == INDCLR) {
-    return (0);
-  }
+    if (Ch9 == INDCLR) {
+	return (0);
+    }
 
-  CzDen = (((Ch9 - IZB) / 9) % 4) + 1;
+    CzDen = (((Ch9 - IZB) / 9) % 4) + 1;
 
-  return (CzDen);
+    return (CzDen);
 }
 
 
 void Micropolis::BuildHouse(int value)
 {
-  short z, score, hscore, BestLoc;
-  static short ZeX[9] = { 0,-1, 0, 1,-1, 1,-1, 0, 1};
-  static short ZeY[9] = { 0,-1,-1,-1, 0, 0, 1, 1, 1};
+    short z, score, hscore, BestLoc;
+    static short ZeX[9] = { 0,-1, 0, 1,-1, 1,-1, 0, 1};
+    static short ZeY[9] = { 0,-1,-1,-1, 0, 0, 1, 1, 1};
 
-  BestLoc = 0;
-  hscore = 0;
+    BestLoc = 0;
+    hscore = 0;
 
-  for (z = 1; z < 9; z++) {
-    int xx = SMapX + ZeX[z];
-    int yy = SMapY + ZeY[z];
+    for (z = 1; z < 9; z++) {
+	int xx = SMapX + ZeX[z];
+	int yy = SMapY + ZeY[z];
 
-    if (TestBounds(xx, yy)) {
+	if (TestBounds(xx, yy)) {
 
-      score = EvalLot(xx, yy);
+	    score = EvalLot(xx, yy);
 
-      if (score != 0) {
+	    if (score != 0) {
 
-        if (score > hscore) {
-          hscore = score;
-          BestLoc = z;
-        }
+		if (score > hscore) {
+		    hscore = score;
+		    BestLoc = z;
+		}
 
-        if ((score == hscore) && !(Rand16() & 7)) {
-          BestLoc = z;
-        }
+		if ((score == hscore) && !(Rand16() & 7)) {
+		    BestLoc = z;
+		}
 
-      }
+	    }
+
+	}
 
     }
 
-  }
+    if (BestLoc) {
+	int xx = SMapX + ZeX[BestLoc];
+	int yy = SMapY + ZeY[BestLoc];
 
-  if (BestLoc) {
-    int xx = SMapX + ZeX[BestLoc];
-    int yy = SMapY + ZeY[BestLoc];
+	if (TestBounds(xx, yy)) {
+	    Map[xx][yy] =
+		HOUSE + BLBNCNBIT + Rand(2) + (value * 3);
+	}
 
-    if (TestBounds(xx, yy)) {
-      Map[xx][yy] =
-        HOUSE + BLBNCNBIT + Rand(2) + (value * 3);
     }
-
-  }
 }
 
 
 void Micropolis::ResPlop(int Den, int Value)
 {
-  short base;
+    short base;
 
-  base = (((Value * 4) + Den) * 9) + RZB - 4;
-  ZonePlop(base);
+    base = (((Value * 4) + Den) * 9) + RZB - 4;
+    ZonePlop(base);
 }
 
 
 void Micropolis::ComPlop(int Den, int Value)
 {
-  short base;
+    short base;
 
-  base = (((Value * 5) + Den) * 9) + CZB - 4;
-  ZonePlop(base);
+    base = (((Value * 5) + Den) * 9) + CZB - 4;
+    ZonePlop(base);
 }
 
 
 void Micropolis::IndPlop(int Den, int Value)
 {
-  short base;
+    short base;
 
-  base = (((Value * 4) + Den) * 9) + (IZB - 4);
-  ZonePlop(base);
+    base = (((Value * 4) + Den) * 9) + (IZB - 4);
+    ZonePlop(base);
 }
 
 
 short Micropolis::EvalLot(int x, int y)
 {
-  short z, score;
-  static short DX[4] = { 0, 1, 0,-1};
-  static short DY[4] = {-1, 0, 1, 0};
+    short z, score;
+    static short DX[4] = { 0, 1, 0,-1};
+    static short DY[4] = {-1, 0, 1, 0};
 
-  /* test for clear lot */
-  z = Map[x][y] & LOMASK;
+    /* test for clear lot */
+    z = Map[x][y] & LOMASK;
 
-  if (z && ((z < RESBASE) || (z > RESBASE + 8))) {
-    return (-1);
-  }
-
-  score = 1;
-
-  for (z = 0; z < 4; z++) {
-    int xx = x + DX[z];
-    int yy = y + DY[z];
-
-    if (TestBounds(xx, yy) &&
-        (Map[xx][yy] != DIRT) &&
-        ((Map[xx][yy] & LOMASK) <= LASTROAD)) {
-      score++;          /* look for road */
+    if (z && ((z < RESBASE) || (z > RESBASE + 8))) {
+	return -1;
     }
 
-  }
+    score = 1;
 
-  return (score);
+    for (z = 0; z < 4; z++) {
+	int xx = x + DX[z];
+	int yy = y + DY[z];
+
+	if (TestBounds(xx, yy) &&
+	    (Map[xx][yy] != DIRT) &&
+	    ((Map[xx][yy] & LOMASK) <= LASTROAD)) {
+	    score++;          /* look for road */
+	}
+
+    }
+
+    return score;
 }
 
 bool Micropolis::ZonePlop(int base)
 {
-  short z, x;
-  static const short Zx[9] = {-1, 0, 1,-1, 0, 1,-1, 0, 1};
-  static const short Zy[9] = {-1,-1,-1, 0, 0, 0, 1, 1, 1};
+    short z, x;
+    static const short Zx[9] = {-1, 0, 1,-1, 0, 1,-1, 0, 1};
+    static const short Zy[9] = {-1,-1,-1, 0, 0, 0, 1, 1, 1};
 
-  for (z = 0; z < 9; z++) {             /* check for fire  */
-    int xx = SMapX + Zx[z];
-    int yy = SMapY + Zy[z];
+    for (z = 0; z < 9; z++) {             /* check for fire  */
+	int xx = SMapX + Zx[z];
+	int yy = SMapY + Zy[z];
 
-    if (TestBounds(xx, yy)) {
-      x = Map[xx][yy] & LOMASK;
+	if (TestBounds(xx, yy)) {
+	    x = Map[xx][yy] & LOMASK;
 
-      if ((x >= FLOOD) && (x < ROADBASE)) {
-        return false;
-      }
+	    if ((x >= FLOOD) && (x < ROADBASE)) {
+		return false;
+	    }
+
+	}
 
     }
 
-  }
+    for (z = 0; z < 9; z++) {
+	int xx = SMapX + Zx[z];
+	int yy = SMapY + Zy[z];
 
-  for (z = 0; z < 9; z++) {
-    int xx = SMapX + Zx[z];
-    int yy = SMapY + Zy[z];
+	if (TestBounds(xx, yy)) {
+	    Map[xx][yy] = base + BNCNBIT;
+	}
 
-    if (TestBounds(xx, yy)) {
-      Map[xx][yy] = base + BNCNBIT;
+	base++;
     }
 
-    base++;
-  }
+    CChr = Map[SMapX][SMapY];
+    // @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
+    //       SetZPower to distinguish nuclear and coal power plants. 
+    //       Better yet, pass all parameters into SetZPower and rewrite
+    //       it not to use globals. 
+    SetZPower();
+    Map[SMapX][SMapY] |= ZONEBIT + BULLBIT;
 
-  CChr = Map[SMapX][SMapY];
-  // @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
-  //       SetZPower to distinguish nuclear and coal power plants. 
-  //       Better yet, pass all parameters into SetZPower and rewrite
-  //       it not to use globals. 
-  SetZPower();
-  Map[SMapX][SMapY] |= ZONEBIT + BULLBIT;
-
-  return true;
+    return true;
 }
 
 
 short Micropolis::EvalRes(int traf)
 {
-  register short Value;
+    register short Value;
 
-  if (traf < 0) {
-    return (-3000);
-  }
+    if (traf < 0) {
+	return -3000;
+    }
 
-  Value = LandValueMem[SMapX >>1][SMapY >>1];
-  Value -= PollutionMem[SMapX >>1][SMapY >>1];
+    Value = LandValueMem[SMapX >>1][SMapY >>1];
+    Value -= PollutionMem[SMapX >>1][SMapY >>1];
 
-  if (Value < 0) {
-    Value = 0;          /* Cap at 0 */
-  } else {
-    Value = Value <<5;
-  }
+    if (Value < 0) {
+	Value = 0;          /* Cap at 0 */
+    } else {
+	Value = Value <<5;
+    }
 
-  if (Value > 6000) {
-    Value = 6000;       /* Cap at 6000 */
-  }
+    if (Value > 6000) {
+	Value = 6000;       /* Cap at 6000 */
+    }
 
-  Value = Value - 3000;
+    Value = Value - 3000;
 
-  return (Value);
+    return Value;
 }
 
 
 short Micropolis::EvalCom(int traf)
 {
-  short Value;
+    short Value;
 
-  if (traf < 0) {
-    return (-3000);
-  }
+    if (traf < 0) {
+	return -3000;
+    }
 
-  Value = ComRate[SMapX >>3][SMapY >>3];
+    Value = ComRate[SMapX >>3][SMapY >>3];
 
-  return (Value);
+    return Value;
 }
 
 
 short Micropolis::EvalInd(int traf)
 {
-  if (traf < 0) {
-    return (-1000);
-  }
+    if (traf < 0) {
+	return -1000;
+    }
 
-  return (0);
+    return 0;
 }
 
 
 short Micropolis::DoFreePop()
 {
-  short count;
-  register short loc, x, y;
+    short count;
+    register short loc, x, y;
 
-  count = 0;
+    count = 0;
 
-  for (x = SMapX - 1; x <= SMapX + 1; x++) {
-    for (y = SMapY - 1; y <= SMapY + 1; y++) {
-
-      if (x >= 0 && x < WORLD_X &&
-          y >= 0 && y < WORLD_Y) {
-
-        loc = Map[x][y] & LOMASK;
-
-        if ((loc >= LHTHR) &&
-            (loc <= HHTHR)) {
-          count++;
-        }
-
-      }
-
+    for (x = SMapX - 1; x <= SMapX + 1; x++) {
+	for (y = SMapY - 1; y <= SMapY + 1; y++) {
+	    if (x >= 0 && x < WORLD_X &&
+		y >= 0 && y < WORLD_Y) {
+		loc = Map[x][y] & LOMASK;
+		if ((loc >= LHTHR) &&
+		    (loc <= HHTHR)) {
+		    count++;
+		}
+	    }
+	}
     }
-  }
 
-  return (count);
+    return count;
 }
 
 
@@ -837,19 +817,19 @@ short Micropolis::DoFreePop()
  */
 bool Micropolis::SetZPower()
 {
-  if (CChr9 == NUCLEAR || CChr9 == POWERPLANT) {
-    Map[SMapX][SMapY] = CChr | PWRBIT;
-    return true;
-  }
+    if (CChr9 == NUCLEAR || CChr9 == POWERPLANT) {
+	Map[SMapX][SMapY] = CChr | PWRBIT;
+	return true;
+    }
 
-  Quad PowerWrd = POWERWORD(SMapX, SMapY);
-  if (PowerWrd < PWRMAPSIZE && (PowerMap[PowerWrd] & (1 << (SMapX & 15)))) {
-    Map[SMapX][SMapY] = CChr | PWRBIT;
-    return true;
-  } else {
-    Map[SMapX][SMapY] = CChr & (~PWRBIT);
-    return false;
-  }
+    Quad PowerWrd = POWERWORD(SMapX, SMapY);
+    if (PowerWrd < PWRMAPSIZE && (PowerMap[PowerWrd] & (1 << (SMapX & 15)))) {
+	Map[SMapX][SMapY] = CChr | PWRBIT;
+	return true;
+    } else {
+	Map[SMapX][SMapY] = CChr & (~PWRBIT);
+	return false;
+    }
 }
 
 
