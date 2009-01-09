@@ -74,7 +74,7 @@ all:
 	cd MicropolisEngine ; make
 
 clean:
-	rm -rf *~ *.suo *.ncb build
+	rm -rf *~ *.suo *.ncb build html
 	cd TileEngine ; make clean
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean
