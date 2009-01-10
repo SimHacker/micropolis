@@ -972,7 +972,7 @@ void Micropolis::MapScan(int x1, int x2)
 		    if ((CChr9 >= SOMETINYEXP) &&
 			(CChr9 <= LASTTINYEXP)) {
 			/* clear AniRubble */
-			Map[x][y] = RUBBLE + (Rand16() & 3) + BULLBIT;
+			Map[x][y] = RandomRubble();
 		    }
 		}
 	    }
@@ -997,7 +997,7 @@ void Micropolis::DoRail()
 		    if (CChr9 < (RAILBASE + 2)) {
 			Map[SMapX][SMapY] = RIVER;
 		    } else {
-			Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
+			Map[SMapX][SMapY] = RandomRubble();
 		    }
 		    return;
 		}
@@ -1035,7 +1035,7 @@ void Micropolis::DoRoad()
 		    if ((CChr9 & 15) < 2 || (CChr9 & 15) == 15) {
 			Map[SMapX][SMapY] = RIVER;
 		    } else {
-			Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
+			Map[SMapX][SMapY] = RandomRubble();
 		    }
 		    return;
 		}
@@ -1254,7 +1254,7 @@ void Micropolis::DoFire()
 		    }
 		}
 
-		Map[Xtem][Ytem] = FIRE + (Rand16() & 3) + ANIMBIT;
+		Map[Xtem][Ytem] = RandomFire();
 	    }
 	}
     }
@@ -1275,7 +1275,7 @@ void Micropolis::DoFire()
 
     // Decide whether to put out the fire.
     if (Rand(Rate) == 0) {
-        Map[SMapX][SMapY] = RUBBLE + (Rand16() & 3) + BULLBIT;
+        Map[SMapX][SMapY] = RandomRubble();
     }
 }
 
@@ -1608,7 +1608,7 @@ void Micropolis::DoMeltdown(int SX, int SY)
     // Whole power plant is at fire
     for (int x = SX - 1; x < SX + 3; x++) {
 	for (int y = SY - 1; y < SY + 3; y++) {
-	    Map[x][y] = FIRE + (Rand16() & 3) + ANIMBIT;
+	    Map[x][y] = RandomFire();
 	}
     }
 

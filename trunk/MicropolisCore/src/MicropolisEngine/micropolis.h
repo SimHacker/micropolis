@@ -302,9 +302,11 @@ enum MapTileCharacters {
     WOODS3         = 41,
     WOODS4         = 42,
     WOODS5         = 43,
+
+    /* Rubble (4 sprites) */
     RUBBLE         = 44,
-    // sprite 45, 46 ?
     LASTRUBBLE     = 47,
+
     FLOOD          = 48,
     // sprite 49, 50 ?
     LASTFLOOD      = 51,
@@ -315,10 +317,9 @@ enum MapTileCharacters {
     UNUSED_TRASH4  = 54,
     UNUSED_TRASH5  = 55,
 
-    /* Fire */
+    /* Fire animation (8 sprites) */
     FIRE           = 56,
     FIREBASE       = FIRE,
-    // sprite 57 -- 62 ?
     LASTFIRE       = 63,
 
     HBRIDGE        = 64, ///< Horizontal bridge
@@ -533,10 +534,17 @@ enum MapTileCharacters {
     TILE_COUNT     = 960,
 };
 
+/** Generate a random animated #FIRE tile */
+static inline short RandomFire()
+{
+    return (FIRE + (Rand16() & 7)) | ANIMBIT;
+}
 
-#define RANDOM_FIRE ((FIRE + (Rand16() & 7)) | ANIMBIT)
-#define RANDOM_RUBBLE ((RUBBLE + (Rand16() & 3)) | BULLBIT)
-
+/** Generate a random #RUBBLE tile */
+static inline short RandomRubble()
+{
+    return (RUBBLE + (Rand16() & 3)) | BULLBIT;
+}
 
 /*
  * These describe the wand values, the object dragged around on the screen.
