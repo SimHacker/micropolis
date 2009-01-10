@@ -1837,7 +1837,7 @@ void Micropolis::StartFire(int x, int y)
     z = Map[x][y];
     t = z & LOMASK;
 
-    if (!(z & BURNBIT) && t != 0) {
+    if (!(z & BURNBIT) && t != DIRT) {
 	return;
     }
 
@@ -1845,7 +1845,7 @@ void Micropolis::StartFire(int x, int y)
 	return;
     }
 
-    Map[x][y] = FIRE + (Rand16() & 3) + ANIMBIT;
+    Map[x][y] = RandomFire();
 }
 
 

@@ -244,10 +244,10 @@ void Micropolis::MakeEarthquake()
         if (Vulnerable(Map[x][y])) {
 
             if ((z & 0x3) != 0) { // 3 of 4 times reduce to rubble
-                Map[x][y] = RANDOM_RUBBLE;
+                Map[x][y] = RandomRubble();
             } else {
                 // 1 of 4 times start fire
-                Map[x][y] = RANDOM_FIRE;
+                Map[x][y] = RandomFire();
             }
         }
     }
@@ -267,7 +267,7 @@ void Micropolis::SetFire()
     if ((z & ZONEBIT) == 0) {
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
-            Map[x][y] = RANDOM_FIRE;
+            Map[x][y] = RandomFire();
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_FIRE_REPORTED, x, y);
@@ -289,7 +289,7 @@ void Micropolis::MakeFire()
         if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
-                Map[x][y] = RANDOM_FIRE;
+                Map[x][y] = RandomFire();
                 SendMesAt(STR301_FIRE_REPORTED, x, y);
                 return;
             }
