@@ -210,7 +210,7 @@ enum SpriteType {
     COP, ///< Helicopter sprite
     AIR, ///< Airplane sprite
     SHI, ///< Ship
-    GOD, ///< Godzilla monster
+    MON, ///< Scary monster
     TOR, ///< Tornado sprite
     EXP, ///< Explosion sprite
     BUS, ///< Bus sprite
@@ -222,7 +222,7 @@ enum SpriteType {
     SPRITE_HELICOPTER = COP, ///< Helicopter sprite
     SPRITE_AIRPLANE = AIR, ///< Airplane sprite
     SPRITE_SHIP = SHI, ///< Ship
-    SPRITE_GODZILLA = GOD, ///< Godzilla monster
+    SPRITE_MONSTER = MON, ///< Scary monster
     SPRITE_TORNADO = TOR, ///< Tornado sprite
     SPRITE_EXPLOSION = EXP, ///< Explosion sprite
     SPRITE_BUS = BUS, ///< Bus sprite
@@ -586,7 +586,7 @@ enum Scenario {
     SC_SAN_FRANCISCO,  ///< San francisco (earth quake)
     SC_HAMBURG,        ///< Hamburg (fire bombs)
     SC_BERN,           ///< Bern (traffic)
-    SC_TOKYO,          ///< Tokyo (godzilla)
+    SC_TOKYO,          ///< Tokyo (scary monster)
     SC_DETROIT,        ///< Detroit (crime)
     SC_BOSTON,         ///< Boston (nuclear meltdown)
     SC_RIO,            ///< Rio (flooding)
