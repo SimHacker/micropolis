@@ -184,7 +184,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
 	    sprite->count = 1;
 	    break;
 
-	case GOD:
+	case MON:
 	    sprite->width = 48;
 	    sprite->height = 48;
 	    sprite->x_offset = 24;
@@ -609,7 +609,7 @@ void Micropolis::MoveObjects()
 		    DoShipSprite(sprite);
 		    break;
 
-		case GOD:
+		case MON:
 		    DoMonsterSprite(sprite);
 		    break;
 
@@ -741,7 +741,7 @@ void Micropolis::DoCopterSprite(
 	if (sprite->count == 0) {
 
 	    /* Attract copter to monster so it blows up more often */
-	    SimSprite *s = GetSprite(GOD);
+	    SimSprite *s = GetSprite(MON);
 
 	    if (s != NULL) {
 		sprite->dest_x = s->x;
@@ -1220,7 +1220,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
 
     if (c == -1
 	  || (c == RIVER && sprite->count != 0 && sprite->control == -1)) {
-	sprite->frame = 0; /* kill zilla */
+	sprite->frame = 0; /* kill scary monster */
     }
 
     {
@@ -1937,7 +1937,7 @@ void Micropolis::MakeMonster()
     int x, y, z, done = 0;
     SimSprite *sprite;
 
-    sprite = GetSprite(GOD);
+    sprite = GetSprite(MON);
     if (sprite != NULL) {
 	sprite->sound_count = 1;
 	sprite->count = 1000;
@@ -1973,7 +1973,7 @@ void Micropolis::MakeMonster()
  */
 void Micropolis::MonsterHere(int x, int y)
 {
-    MakeSprite(GOD, (x << 4) + 48, (y << 4));
+    MakeSprite(MON, (x << 4) + 48, (y << 4));
     ClearMes();
     SendMesAt(-STR301_MONSTER_SIGHTED, x + 5, y);
 }
