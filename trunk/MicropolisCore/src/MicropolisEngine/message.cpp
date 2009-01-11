@@ -488,7 +488,9 @@ void Micropolis::doMessage()
 
 /**
  * Make a sound for message \a mesgNum if appropriate.
- * @param mesgNum Message number displayed
+ * @param mesgNum Message number displayed.
+ * @param x       Horizontal coordinate in the city of the sound.
+ * @param y       Vertical coordinate in the city of the sound.
  */
 void Micropolis::doMakeSound(int mesgNum, int x, int y)
 {
