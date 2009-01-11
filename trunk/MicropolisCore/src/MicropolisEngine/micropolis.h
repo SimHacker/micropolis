@@ -1148,8 +1148,7 @@ public:
     //@{
 
     /**
-
-     * City time tick counter. 48 ticks per year.
+     * City time tick counter. 48 ticks per year, relative to #StartingYear.
      *
      * Four ticks per 12 months, so one tick is about a week (7.6 days).
      */
@@ -1157,11 +1156,13 @@ public:
 
     /**
      * City month, 4 ticks per month.
+     * @todo Remove, can be computed from #CityTime.
      */
     Quad CityMonth;
 
     /**
      * City year, (Micropolis::CityTime / 48) + Micropolis::StartingYear.
+     * @todo Remove, can be computed from #CityTime.
      */
     Quad CityYear;
 
@@ -2078,7 +2079,8 @@ public:
 
     int heat_wrap;
 
-    std::string CityFileName;
+    std::string CityFileName; ///< Filename of the last loaded city
+    std::string CityName;     ///< Name of the city
 
     int MultiPlayerMode;
 
@@ -2635,8 +2637,6 @@ public:
     short SimMetaSpeed;
 
     bool UserSoundOn; ///< Enable sound
-
-    std::string CityName;
 
     /**
      * Disable disasters

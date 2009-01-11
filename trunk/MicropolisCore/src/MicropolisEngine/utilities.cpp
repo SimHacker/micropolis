@@ -256,6 +256,10 @@ void Micropolis::setCityName(const std::string &name)
 }
 
 
+/**
+ * Set the name of the city.
+ * @param name New name of the city.
+ */
 void Micropolis::setCleanCityName(const std::string &name)
 {
     CityName = name;
@@ -280,9 +284,13 @@ void Micropolis::SetYear(int year)
 }
 
 
+/**
+ * Get the current year.
+ * @return The current game year.
+ */
 int Micropolis::CurrentYear()
 {
-    return ((CityTime / 48) + StartingYear);
+    return (CityTime / 48) + StartingYear;
 }
 
 
