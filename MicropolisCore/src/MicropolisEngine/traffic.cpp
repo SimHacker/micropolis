@@ -89,26 +89,26 @@ short Micropolis::MakeTraf(ZoneType dest)
 
 #if 0
       if ((!Rand(2)) && FindPTele()) {
-	/* printf("Telecommute!\n"); */
-	return 1;
+        /* printf("Telecommute!\n"); */
+        return 1;
       }
 #endif
 
     if (FindPRoad()) {            /* look for road on zone perimeter */
 
-	if (TryDrive()) {           /* attempt to drive somewhere */
-	    SetTrafMem();             /* if sucessful, inc trafdensity */
-	    SMapX = xtem;
-	    SMapY = ytem;
-	    return 1;            /* traffic passed */
-	}
+        if (TryDrive()) {           /* attempt to drive somewhere */
+            SetTrafMem();             /* if sucessful, inc trafdensity */
+            SMapX = xtem;
+            SMapY = ytem;
+            return 1;            /* traffic passed */
+        }
 
-	SMapX = xtem;
-	SMapY = ytem;
+        SMapX = xtem;
+        SMapY = ytem;
 
-	return 0;             /* traffic failed */
+        return 0;             /* traffic failed */
     } else {
-	return -1;             /* no road found */
+        return -1;             /* no road found */
     }
 }
 
@@ -121,40 +121,40 @@ void Micropolis::SetTrafMem()
     /* For each saved position of the drive */
     for (x = PosStackN; x > 0; x--) {
 
-	PullPos();
+        PullPos();
 
-	if (TestBounds(SMapX, SMapY)) {
+        if (TestBounds(SMapX, SMapY)) {
 
-	    z = Map[SMapX][SMapY] & LOMASK;
+            z = Map[SMapX][SMapY] & LOMASK;
 
-	    if ((z >= ROADBASE) &&
-		(z < POWERBASE)) {
-		SimSprite *sprite;
+            if ((z >= ROADBASE) &&
+                (z < POWERBASE)) {
+                SimSprite *sprite;
 
-		/* check for rail */
-		z = TrfDensity[SMapX >>1][SMapY >>1];
-		z += 50;
+                /* check for rail */
+                z = TrfDensity[SMapX >>1][SMapY >>1];
+                z += 50;
 
-		if ((z > 240) &&
-		    (!Rand(5))) {
+                if ((z > 240) &&
+                    (!Rand(5))) {
 
-		    z = 240;
-		    TrafMaxX = SMapX <<4;
-		    TrafMaxY = SMapY <<4;
+                    z = 240;
+                    TrafMaxX = SMapX <<4;
+                    TrafMaxY = SMapY <<4;
 
-		    if (((sprite = GetSprite(COP)) != NULL) &&
-			(sprite->control == -1)) {
+                    if (((sprite = GetSprite(COP)) != NULL) &&
+                        (sprite->control == -1)) {
 
-			sprite->dest_x = TrafMaxX;
-			sprite->dest_y = TrafMaxY;
+                        sprite->dest_x = TrafMaxX;
+                        sprite->dest_y = TrafMaxY;
 
-		    }
+                    }
 
-		}
+                }
 
-		TrfDensity[SMapX >>1][SMapY >>1] = (Byte)z;
-	    }
-	}
+                TrfDensity[SMapX >>1][SMapY >>1] = (Byte)z;
+            }
+        }
     }
 }
 
@@ -192,19 +192,19 @@ bool Micropolis::FindPRoad()
 
     for (short z = 0; z < 12; z++) {
 
-	tx = SMapX + PerimX[z];
-	ty = SMapY + PerimY[z];
+        tx = SMapX + PerimX[z];
+        ty = SMapY + PerimY[z];
 
-	if (TestBounds(tx, ty)) {
+        if (TestBounds(tx, ty)) {
 
-	    if (RoadTest(Map[tx][ty])) {
+            if (RoadTest(Map[tx][ty])) {
 
-		SMapX = tx;
-		SMapY = ty;
+                SMapX = tx;
+                SMapY = ty;
 
-		return true;
-	    }
-	}
+                return true;
+            }
+        }
     }
 
     return false;
@@ -225,16 +225,16 @@ bool Micropolis::FindPTele()
 
     for (short z = 0; z < 12; z++) {
 
-	tx = SMapX + PerimX[z];
-	ty = SMapY + PerimY[z];
+        tx = SMapX + PerimX[z];
+        ty = SMapY + PerimY[z];
 
-	if (TestBounds(tx, ty)) {
+        if (TestBounds(tx, ty)) {
 
-	    tile = Map[tx][ty] & LOMASK;
-	    if (tile >= TELEBASE && tile <= TELELAST) {
-		return true;
-	    }
-	}
+            tile = Map[tx][ty] & LOMASK;
+            if (tile >= TELEBASE && tile <= TELELAST) {
+                return true;
+            }
+        }
     }
 
     return false;
@@ -255,22 +255,22 @@ bool Micropolis::TryDrive()
     LDir = DIR_INVALID;
     for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
-	if (TryGo(dist)) {                /* if it got a road */
+        if (TryGo(dist)) {                /* if it got a road */
 
-	    if (DriveDone()) {              /* if destination is reached */
-		return true;                  /* pass */
-	    }
+            if (DriveDone()) {              /* if destination is reached */
+                return true;                  /* pass */
+            }
 
-	} else {
+        } else {
 
-	    if (PosStackN > 0) {            /* deadend , backup */
-		PosStackN--;
-		dist += 3;
-	    } else {
-		return false;                 /* give up at start  */
-	    }
+            if (PosStackN > 0) {            /* deadend , backup */
+                PosStackN--;
+                dist += 3;
+            } else {
+                return false;                 /* give up at start  */
+            }
 
-	}
+        }
     }
 
     return false;                       /* gone maxdis */
@@ -291,23 +291,23 @@ bool Micropolis::TryGo(int dist)
 
     for (x = rdir; x < (rdir + 4); x++) { /* for the 4 directions */
 
-	realdir = (Direction)(x & 3);
+        realdir = (Direction)(x & 3);
 
-	if (realdir == LDir) {
-	    continue; /* skip last direction */
-	}
+        if (realdir == LDir) {
+            continue; /* skip last direction */
+        }
 
-	if (RoadTest(GetFromMap(realdir))) {
-	    MoveMapSim(realdir);
-	    LDir = ReverseDirection(realdir);
+        if (RoadTest(GetFromMap(realdir))) {
+            MoveMapSim(realdir);
+            LDir = ReverseDirection(realdir);
 
-	    if (dist & 1) {
-		/* save pos every other move */
-		PushPos();
-	    }
+            if (dist & 1) {
+                /* save pos every other move */
+                PushPos();
+            }
 
-	    return true;
-	}
+            return true;
+        }
     }
 
     return false;
@@ -324,36 +324,36 @@ short Micropolis::GetFromMap(Direction d)
 {
     switch (d) {
 
-	case DIR_NORTH:
-	    if (SMapY > 0) {
-	      return Map[SMapX][SMapY - 1] & LOMASK;
-	    }
+        case DIR_NORTH:
+            if (SMapY > 0) {
+              return Map[SMapX][SMapY - 1] & LOMASK;
+            }
 
-	    return DIRT;
+            return DIRT;
 
-	case DIR_WEST:
-	    if (SMapX < (WORLD_X - 1)) {
-	      return Map[SMapX + 1][SMapY] & LOMASK;
-	    }
+        case DIR_WEST:
+            if (SMapX < (WORLD_X - 1)) {
+              return Map[SMapX + 1][SMapY] & LOMASK;
+            }
 
-	    return DIRT;
+            return DIRT;
 
-	case DIR_SOUTH:
-	    if (SMapY < (WORLD_Y - 1)) {
-	      return Map[SMapX][SMapY + 1] & LOMASK;
-	    }
+        case DIR_SOUTH:
+            if (SMapY < (WORLD_Y - 1)) {
+              return Map[SMapX][SMapY + 1] & LOMASK;
+            }
 
-	    return DIRT;
+            return DIRT;
 
-	case DIR_EAST:
-	    if (SMapX > 0) {
-	      return Map[SMapX - 1][SMapY] & LOMASK;
-	    }
+        case DIR_EAST:
+            if (SMapX > 0) {
+              return Map[SMapX - 1][SMapY] & LOMASK;
+            }
 
-	    return DIRT;
+            return DIRT;
 
-	default:
-	    return DIRT;
+        default:
+            return DIRT;
 
     }
 }
@@ -377,31 +377,31 @@ bool Micropolis::DriveDone()
     short h = TARGH[Zsource]; // Highest acceptable tile value
 
     if (SMapY > 0) {
-	short z = Map[SMapX][SMapY - 1] & LOMASK;
-	if ((z >= l) && (z <= h)) {
-	    return true;
-	}
+        short z = Map[SMapX][SMapY - 1] & LOMASK;
+        if ((z >= l) && (z <= h)) {
+            return true;
+        }
     }
 
     if (SMapX < (WORLD_X - 1)) {
-	short z = Map[SMapX + 1][SMapY] & LOMASK;
-	if ((z >= l) && (z <= h)) {
-	    return true;
-	}
+        short z = Map[SMapX + 1][SMapY] & LOMASK;
+        if ((z >= l) && (z <= h)) {
+            return true;
+        }
     }
 
     if (SMapY < (WORLD_Y - 1)) {
-	short z = Map[SMapX][SMapY + 1] & LOMASK;
-	if ((z >= l) && (z <= h)) {
-	    return true;
-	}
+        short z = Map[SMapX][SMapY + 1] & LOMASK;
+        if ((z >= l) && (z <= h)) {
+            return true;
+        }
     }
 
     if (SMapX > 0) {
-	short z = Map[SMapX - 1][SMapY] & LOMASK;
-	if ((z >= l) && (z <= h)) {
-	    return true;
-	}
+        short z = Map[SMapX - 1][SMapY] & LOMASK;
+        if ((z >= l) && (z <= h)) {
+            return true;
+        }
     }
 
     return false;
@@ -418,11 +418,11 @@ bool Micropolis::RoadTest(int t)
     t = t & LOMASK;
 
     if (t < ROADBASE || t > LASTRAIL) {
-	return false;
+        return false;
     }
 
     if (t >= POWERBASE && t < LASTPOWER) {
-	return false;
+        return false;
     }
 
     return true;

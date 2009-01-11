@@ -382,7 +382,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 /* 3x3 */
 
 int Micropolis::check3x3(
-    short mapH, short mapV, 
+    short mapH, short mapV,
     short base, short tool)
 {
     short rowNum, columnNum;
@@ -826,7 +826,7 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
  * @param y   Y coordinate of the tile.
  */
 void Micropolis::doShowZoneStatus(
-    char *str, 
+    char *str,
     char *s0, char *s1, char *s2, char *s3, char *s4,
     int x, int y)
 {
@@ -1354,12 +1354,12 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
     if (result == -1) {
         ClearMes();
         SendMes(STR301_BULLDOZE_AREA_FIRST);
-	/// @todo: Multi player: This sound should only be heard by the user who called this function.
+        /// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
         ClearMes();
         SendMes(STR301_NOT_ENOUGH_FUNDS);
-	/// @todo: Multi player: This sound should only be heard by the user who called this function.
+        /// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "Sorry", x <<4, y <<4);
     }
 

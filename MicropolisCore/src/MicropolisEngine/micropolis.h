@@ -2739,8 +2739,8 @@ public:
     void doZoneStatus(short mapH, short mapV);
 
     void doShowZoneStatus(
-        char *str, 
-        char *s0, char *s1, char *s2, char *s3, char *s4, 
+        char *str,
+        char *s0, char *s1, char *s2, char *s3, char *s4,
         int x, int y);
 
     void didTool(const char *name, short x, short y);

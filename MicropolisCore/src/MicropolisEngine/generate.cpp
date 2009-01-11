@@ -377,7 +377,7 @@ void Micropolis::SmoothTrees()
 {
     static short DX[4] = { -1,  0,  1,  0 };
     static short DY[4] = {  0,  1,  0, -1 };
-    static short TEdTab[16] = { 
+    static short TEdTab[16] = {
         0,  0,  0,  34,
         0,  0,  36, 35,
         0,  32, 0,  33,

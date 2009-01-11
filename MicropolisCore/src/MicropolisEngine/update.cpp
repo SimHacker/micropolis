@@ -123,18 +123,18 @@ void Micropolis::UpdateFunds()
 void Micropolis::ReallyUpdateFunds()
 {
     if (!MustUpdateFunds) {
-	return;
+        return;
     }
 
     MustUpdateFunds = 0;
 
     if (TotalFunds != LastFunds) {
-	LastFunds = TotalFunds;
+        LastFunds = TotalFunds;
 
-	Callback(
-	    "UIUpdate",
-	    "s",
-	    "funds");
+        Callback(
+            "UIUpdate",
+            "s",
+            "funds");
     }
 
 }
@@ -159,23 +159,23 @@ void Micropolis::updateDate()
     CityMonth = ((int)CityTime % 48) >> 2;
 
     if (CityYear >= megalinium) {
-	SetYear(StartingYear);
-	CityYear = StartingYear;
-	SendMes(-STR301_NOT_ENOUGH_POWER);
+        SetYear(StartingYear);
+        CityYear = StartingYear;
+        SendMes(-STR301_NOT_ENOUGH_POWER);
     }
 
     doMessage();
 
     if ((LastCityYear != CityYear) ||
-	(LastCityMonth != CityMonth)) {
+        (LastCityMonth != CityMonth)) {
 
-	LastCityYear = CityYear;
-	LastCityMonth = CityMonth;
+        LastCityYear = CityYear;
+        LastCityMonth = CityMonth;
 
-	Callback(
-	    "UIUpdate",
-	    "s",
-	    "date");
+        Callback(
+            "UIUpdate",
+            "s",
+            "date");
     }
 }
 
@@ -183,8 +183,8 @@ void Micropolis::updateDate()
 void Micropolis::showValves()
 {
     if (ValveFlag) {
-	drawValve();
-	ValveFlag = 0;
+        drawValve();
+        ValveFlag = 0;
     }
 }
 
@@ -196,42 +196,42 @@ void Micropolis::drawValve()
     r = RValve;
 
     if (r < -1500) {
-	r = -1500;
+        r = -1500;
     }
 
     if (r > 1500) {
-	r = 1500;
+        r = 1500;
     }
 
     c = CValve;
 
     if (c < -1500) {
-	c = -1500;
+        c = -1500;
     }
 
     if (c > 1500) {
-	c = 1500;
+        c = 1500;
     }
 
     i = IValve;
 
     if (i < -1500) {
-	i = -1500;
+        i = -1500;
     }
 
     if (i > 1500) {
-	i = 1500;
+        i = 1500;
     }
 
     if ((r != LastR) ||
-	(c != LastC) ||
-	(i != LastI)) {
+        (c != LastC) ||
+        (i != LastI)) {
 
-	LastR = (int)r;
-	LastC = (int)c;
-	LastI = (int)i;
+        LastR = (int)r;
+        LastC = (int)c;
+        LastI = (int)i;
 
-	SetDemand(r, c, i);
+        SetDemand(r, c, i);
     }
 }
 
@@ -239,11 +239,11 @@ void Micropolis::drawValve()
 void Micropolis::SetDemand(float r, float c, float i)
 {
     Callback(
-	"UISetDemand",
-	"ddd",
-	(int)(r / 100),
-	(int)(c / 100),
-	(int)(i / 100));
+        "UISetDemand",
+        "ddd",
+        (int)(r / 100),
+        (int)(c / 100),
+        (int)(i / 100));
 }
 
 
@@ -253,42 +253,42 @@ void Micropolis::updateOptions()
 
     if (MustUpdateOptions) {
 
-	options = 0;
+        options = 0;
 
-	if (autoBudget) {
-	    options |= 1;
-	}
+        if (autoBudget) {
+            options |= 1;
+        }
 
-	if (autoGo) {
-	    options |= 2;
-	}
+        if (autoGo) {
+            options |= 2;
+        }
 
-	if (autoBulldoze) {
-	    options |= 4;
-	}
+        if (autoBulldoze) {
+            options |= 4;
+        }
 
-	if (!NoDisasters) {
-	    options |= 8;
-	}
+        if (!NoDisasters) {
+            options |= 8;
+        }
 
-	if (UserSoundOn) {
-	    options |= 16;
-	}
+        if (UserSoundOn) {
+            options |= 16;
+        }
 
-	if (DoAnimation) {
-	    options |= 32;
-	}
+        if (DoAnimation) {
+            options |= 32;
+        }
 
-	if (DoMessages) {
-	    options |= 64;
-	}
+        if (DoMessages) {
+            options |= 64;
+        }
 
-	if (DoNotices) {
-	    options |= 128;
-	}
+        if (DoNotices) {
+            options |= 128;
+        }
 
-	MustUpdateOptions = 0;
-	UpdateOptionsMenu(options);
+        MustUpdateOptions = 0;
+        UpdateOptionsMenu(options);
     }
 }
 
@@ -299,16 +299,16 @@ void Micropolis::UpdateOptionsMenu(int options)
     ///       changed, and let it pull the values out of our members,
     ///       instead of encoding and passing the options.
     Callback(
-	"UISetOptions",
-	"dddddddd",
-	(options & 1) ? 1 : 0,
-	(options & 2) ? 1 : 0,
-	(options & 4) ? 1 : 0,
-	(options & 8) ? 1 : 0,
-	(options & 16) ? 1 : 0,
-	(options & 32) ? 1 : 0,
-	(options & 64) ? 1 : 0,
-	(options & 128) ? 1 : 0);
+        "UISetOptions",
+        "dddddddd",
+        (options & 1) ? 1 : 0,
+        (options & 2) ? 1 : 0,
+        (options & 4) ? 1 : 0,
+        (options & 8) ? 1 : 0,
+        (options & 16) ? 1 : 0,
+        (options & 32) ? 1 : 0,
+        (options & 64) ? 1 : 0,
+        (options & 128) ? 1 : 0);
 }
 
 /** @todo Keeping track of pending updates should be moved to the interface

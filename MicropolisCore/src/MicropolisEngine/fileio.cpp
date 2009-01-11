@@ -328,7 +328,7 @@ bool Micropolis::saveFile(const char *filename)
     HALF_SWAP_LONGS(&n, 1);
     (*(Quad *)(MiscHis + 62)) = n;
 
-    bool result = 
+    bool result =
         save_short(ResHis, HISTLEN / 2, f) &&
         save_short(ComHis, HISTLEN / 2, f) &&
         save_short(IndHis, HISTLEN / 2, f) &&
@@ -463,7 +463,7 @@ bool Micropolis::LoadCity(const char *filename)
             (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
         unsigned int last =
             (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
-        unsigned int len = 
+        unsigned int len =
             last - pos;
         std::string newCityName =
             CityFileName.substr(pos, len);
@@ -553,7 +553,7 @@ void Micropolis::SaveCityAs(const char *filename)
             (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
         unsigned int last =
             (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
-        unsigned int len = 
+        unsigned int len =
             last - pos;
         std::string newCityName =
             CityFileName.substr(pos, len);

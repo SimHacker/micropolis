@@ -86,48 +86,48 @@ void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
     numOfDigits = (short)strlen(numStr);
 
     if (numOfDigits == 1) {
-	dollarStr[0] = '$';
-	dollarStr[1] = numStr[ 0 ];
-	dollarStr[2] = 0;
-	return;
+        dollarStr[0] = '$';
+        dollarStr[1] = numStr[ 0 ];
+        dollarStr[2] = 0;
+        return;
     } else if (numOfDigits == 2) {
-	dollarStr[0] = '$';
-	dollarStr[1] = numStr[0];
-	dollarStr[2] = numStr[1];
-	dollarStr[3] = 0;
-	return;
+        dollarStr[0] = '$';
+        dollarStr[1] = numStr[0];
+        dollarStr[2] = numStr[1];
+        dollarStr[3] = 0;
+        return;
     } else if (numOfDigits == 3) {
-	dollarStr[0] = '$';
-	dollarStr[1] = numStr[0];
-	dollarStr[2] = numStr[1];
-	dollarStr[3] = numStr[2];
-	dollarStr[4] = 0;
+        dollarStr[0] = '$';
+        dollarStr[1] = numStr[0];
+        dollarStr[2] = numStr[1];
+        dollarStr[3] = numStr[2];
+        dollarStr[4] = 0;
     } else {
-	leftMostSet = numOfDigits % 3;
+        leftMostSet = numOfDigits % 3;
 
-	if (leftMostSet == 0) {
-	    leftMostSet = 3;
-	}
+        if (leftMostSet == 0) {
+            leftMostSet = 3;
+        }
 
-	numOfCommas = (numOfDigits - 1) / 3;
+        numOfCommas = (numOfDigits - 1) / 3;
 
-	/* add 1 for the dollar sign */
-	numOfChars = numOfDigits + numOfCommas + 1;
+        /* add 1 for the dollar sign */
+        numOfChars = numOfDigits + numOfCommas + 1;
 
-	dollarStr[numOfChars] = 0;
+        dollarStr[numOfChars] = 0;
 
-	dollarStr[dollarIndex++] = '$';
+        dollarStr[dollarIndex++] = '$';
 
-	for (x = 1; x <= leftMostSet; x++) {
-	    dollarStr[dollarIndex++] = numStr[numIndex++];
-	}
+        for (x = 1; x <= leftMostSet; x++) {
+            dollarStr[dollarIndex++] = numStr[numIndex++];
+        }
 
-	for (x = 1; x <= numOfCommas; x++) {
-	    dollarStr[dollarIndex++] = ',';
-	    dollarStr[dollarIndex++] = numStr[numIndex++];
-	    dollarStr[dollarIndex++] = numStr[numIndex++];
-	    dollarStr[dollarIndex++] = numStr[numIndex++];
-	}
+        for (x = 1; x <= numOfCommas; x++) {
+            dollarStr[dollarIndex++] = ',';
+            dollarStr[dollarIndex++] = numStr[numIndex++];
+            dollarStr[dollarIndex++] = numStr[numIndex++];
+            dollarStr[dollarIndex++] = numStr[numIndex++];
+        }
 
     }
 }
@@ -139,9 +139,9 @@ void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
 void Micropolis::Pause()
 {
     if (!sim_paused) {
-	sim_paused_speed = SimMetaSpeed;
-	setSpeed(0);
-	sim_paused = true;
+        sim_paused_speed = SimMetaSpeed;
+        setSpeed(0);
+        sim_paused = true;
     }
 }
 
@@ -152,8 +152,8 @@ void Micropolis::Pause()
 void Micropolis::Resume()
 {
     if (sim_paused) {
-	sim_paused = false;
-	setSpeed(sim_paused_speed);
+        sim_paused = false;
+        setSpeed(sim_paused_speed);
     }
 }
 
@@ -161,24 +161,24 @@ void Micropolis::Resume()
 void Micropolis::setSpeed(short speed)
 {
     if (speed < 0) {
-	speed = 0;
+        speed = 0;
     } else if (speed > 3) {
-	speed = 3;
+        speed = 3;
     }
 
     SimMetaSpeed = speed;
 
     if (sim_paused) {
-	sim_paused_speed = SimMetaSpeed;
-	speed = 0;
+        sim_paused_speed = SimMetaSpeed;
+        speed = 0;
     }
 
     SimSpeed = speed;
 
     Callback(
-	"UISetSpeed",
-	"d",
-	(int)(sim_paused ? 0 : SimMetaSpeed));
+        "UISetSpeed",
+        "d",
+        (int)(sim_paused ? 0 : SimMetaSpeed));
 
 }
 
@@ -197,21 +197,21 @@ void Micropolis::SetGameLevelFunds(GameLevel level)
 {
     switch (level) {
 
-	default:
-	case LEVEL_EASY:
-	    SetFunds(20000);
-	    SetGameLevel(LEVEL_EASY);
-	    break;
+        default:
+        case LEVEL_EASY:
+            SetFunds(20000);
+            SetGameLevel(LEVEL_EASY);
+            break;
 
-	case LEVEL_MEDIUM:
-	    SetFunds(10000);
-	    SetGameLevel(LEVEL_MEDIUM);
-	    break;
+        case LEVEL_MEDIUM:
+            SetFunds(10000);
+            SetGameLevel(LEVEL_MEDIUM);
+            break;
 
-	case LEVEL_HARD:
-	    SetFunds(5000);
-	    SetGameLevel(LEVEL_HARD);
-	    break;
+        case LEVEL_HARD:
+            SetFunds(5000);
+            SetGameLevel(LEVEL_HARD);
+            break;
 
     }
 }
@@ -232,16 +232,16 @@ void Micropolis::SetGameLevel(GameLevel level)
 void Micropolis::UpdateGameLevel()
 {
     Callback(
-	"UISetGameLevel",
-	"d",
-	(int)gameLevel);
+        "UISetGameLevel",
+        "d",
+        (int)gameLevel);
 }
 
 
 void Micropolis::setCityName(const std::string &name)
 {
     std::string cleanName;
-  
+
     int i;
     int n = name.length();
     for (i = 0; i < n; i++) {
@@ -261,9 +261,9 @@ void Micropolis::setCleanCityName(const std::string &name)
     CityName = name;
 
     Callback(
-	"UISetCityName",
-	"s",
-	CityName.c_str());
+        "UISetCityName",
+        "s",
+        CityName.c_str());
 }
 
 

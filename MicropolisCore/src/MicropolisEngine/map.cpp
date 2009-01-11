@@ -141,64 +141,64 @@ static short valGrayMap[] = {
     mp = &Map[0][0]; \
     imageBase = view->x->color ? view->data : view->data8; \
     for (col = 0; col < WORLD_X; col++) { \
-	image = imageBase + (3 * pixelBytes * col); \
-	for (row = 0; row < WORLD_Y; row++) { \
-	    tile = *(mp++) & LOMASK; \
-	    if (tile >= TILE_COUNT) { \
-		tile -= TILE_COUNT; \
-	    }
+        image = imageBase + (3 * pixelBytes * col); \
+        for (row = 0; row < WORLD_Y; row++) { \
+            tile = *(mp++) & LOMASK; \
+            if (tile >= TILE_COUNT) { \
+                tile -= TILE_COUNT; \
+            }
 
 
 #ifdef IS_INTEL
 
 #define ROW1_8(n) \
-	    m = mem[n]; \
-	    image[0] = (unsigned char)(m); \
-	    image[1] = (unsigned char)(m >>8); \
-	    image[2] = (unsigned char)(m >>16); \
-	    image += lineBytes;
+            m = mem[n]; \
+            image[0] = (unsigned char)(m); \
+            image[1] = (unsigned char)(m >>8); \
+            image[2] = (unsigned char)(m >>16); \
+            image += lineBytes;
 
 #define ROW1_16(n) \
-	    memcpy((char *)image, ((char *)mem) + (n * 4 * 2), (3 * 2)); \
-	    image += lineBytes;
+            memcpy((char *)image, ((char *)mem) + (n * 4 * 2), (3 * 2)); \
+            image += lineBytes;
 
 #define ROW1_24(n) \
-	    memcpy((char *)image, ((char *)mem) + (n * 4 * 3), (3 * 3)); \
-	    image += lineBytes;
+            memcpy((char *)image, ((char *)mem) + (n * 4 * 3), (3 * 3)); \
+            image += lineBytes;
 
 #define ROW1_32(n) \
-	    memcpy((char *)image, ((char *)mem) + (n * 4 * 4), (3 * 4)); \
-	    image += lineBytes;
+            memcpy((char *)image, ((char *)mem) + (n * 4 * 4), (3 * 4)); \
+            image += lineBytes;
 
 #else
 
 #define ROW1_8(n) \
-	    m = (UQuad)(mem[n]); \
-	    image[0] = (unsigned char)(m >>24); \
-	    image[1] = (unsigned char)(m >>16); \
-	    image[2] = (unsigned char)(m >>8); \
-	    image += lineBytes;
+            m = (UQuad)(mem[n]); \
+            image[0] = (unsigned char)(m >>24); \
+            image[1] = (unsigned char)(m >>16); \
+            image[2] = (unsigned char)(m >>8); \
+            image += lineBytes;
 
 #define ROW1_16(n) \
-	    m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
-	    image[0] = (unsigned char)(m >>24); \
-	    image[1] = (unsigned char)(m >>16); \
-	    image[2] = (unsigned char)(m >>8); \
-	    image += lineBytes;
+            m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
+            image[0] = (unsigned char)(m >>24); \
+            image[1] = (unsigned char)(m >>16); \
+            image[2] = (unsigned char)(m >>8); \
+            image += lineBytes;
 
 #define ROW1_24(n) \
-	    m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
-	    image[0] = (unsigned char)(m >>24); \
-	    image[1] = (unsigned char)(m >>16); \
-	    image[2] = (unsigned char)(m >>8); \
-	    image += lineBytes;
+            m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
+            image[0] = (unsigned char)(m >>24); \
+            image[1] = (unsigned char)(m >>16); \
+            image[2] = (unsigned char)(m >>8); \
+            image += lineBytes;
 
 #define ROW1_32(n) \
-	    m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
-	    image[0] = (unsigned char)(m >>24); \
-	    image[1] = (unsigned char)(m >>16); \
-	    image[2] = (unsigned char)(m >>8); \
-	    image += lineBytes;
+            m = (UQuad)mem[n]; /* XXX: WRONG. handle depth */ \
+            image[0] = (unsigned char)(m >>24); \
+            image[1] = (unsigned char)(m >>16); \
+            image[2] = (unsigned char)(m >>8); \
+            image += lineBytes;
 
 #endif
 
@@ -208,30 +208,30 @@ static short valGrayMap[] = {
 #define ROW3_32 ROW1_32(0) ROW1_32(1) ROW1_32(2)
 
 #define ROW3 \
-	    switch (view->x->depth) { \
-		case 1: \
-		case 8: \
-		    ROW3_8 \
-		    break; \
-		case 15: \
-		case 16: \
-		    ROW3_16 \
-		    break; \
-		case 24: \
-		    ROW3_24 \
-		    break; \
-		case 32: \
-		    ROW3_32 \
-		    break; \
-		default: \
-		    assert(0); /* Undefined depth */ \
-		    break; \
-	    }
+            switch (view->x->depth) { \
+                case 1: \
+                case 8: \
+                    ROW3_8 \
+                    break; \
+                case 15: \
+                case 16: \
+                    ROW3_16 \
+                    break; \
+                case 24: \
+                    ROW3_24 \
+                    break; \
+                case 32: \
+                    ROW3_32 \
+                    break; \
+                default: \
+                    assert(0); /* Undefined depth */ \
+                    break; \
+            }
 
 #define DRAW_END \
-	    mem = (UQuad *)&view->smalltiles[tile * 4 * 4 * pixelBytes]; \
-	    ROW3 \
-	} \
+            mem = (UQuad *)&view->smalltiles[tile * 4 * 4 * pixelBytes]; \
+            ROW3 \
+        } \
     }
 
 
@@ -245,9 +245,9 @@ void Micropolis::drawAll()
 void Micropolis::drawRes()
 {
     DRAW_BEGIN
-	if (tile >= COMBASE) {
-	    tile = DIRT;
-	}
+        if (tile >= COMBASE) {
+            tile = DIRT;
+        }
     DRAW_END
 }
 
@@ -255,11 +255,11 @@ void Micropolis::drawRes()
 void Micropolis::drawCom()
 {
     DRAW_BEGIN
-	if ((tile > COMLAST) ||
-	    ((tile >= LVRAIL6) &&
-	     (tile < COMBASE))) {
-	    tile = DIRT;
-	}
+        if ((tile > COMLAST) ||
+            ((tile >= LVRAIL6) &&
+             (tile < COMBASE))) {
+            tile = DIRT;
+        }
     DRAW_END
 }
 
@@ -268,12 +268,12 @@ void Micropolis::drawInd()
 
 {
     DRAW_BEGIN
-	if (((tile >= RESBASE) && (tile < INDBASE)) ||
-	    ((tile >= PORTBASE) && (tile < SMOKEBASE)) ||
-	    ((tile >= TINYEXP) && (tile <= TINYEXPLAST)) ||
-	    (tile >= FOOTBALLGAME1)) {
-	    tile = DIRT;
-	}
+        if (((tile >= RESBASE) && (tile < INDBASE)) ||
+            ((tile >= PORTBASE) && (tile < SMOKEBASE)) ||
+            ((tile >= TINYEXP) && (tile <= TINYEXPLAST)) ||
+            (tile >= FOOTBALLGAME1)) {
+            tile = DIRT;
+        }
     DRAW_END
 }
 
@@ -281,11 +281,11 @@ void Micropolis::drawInd()
 void Micropolis::drawLilTransMap()
 {
     DRAW_BEGIN
-	if ((tile >= RESBASE) ||
-	    ((tile >= BRWXXX7) && tile <= LVPOWER10) ||
-	    (tile == UNUSED_TRASH6)) {
-	    tile = DIRT;
-	}
+        if ((tile >= RESBASE) ||
+            ((tile >= BRWXXX7) && tile <= LVPOWER10) ||
+            (tile == UNUSED_TRASH6)) {
+            tile = DIRT;
+        }
     DRAW_END
 }
 
@@ -305,102 +305,102 @@ void Micropolis::drawPower()
     int powered, unpowered, conductive;
 
     if (view->x->color) {
-	powered = view->pixels[POWERED];
-	unpowered = view->pixels[UNPOWERED];
-	conductive = view->pixels[CONDUCTIVE];
+        powered = view->pixels[POWERED];
+        unpowered = view->pixels[UNPOWERED];
+        conductive = view->pixels[CONDUCTIVE];
     } else {
-	powered = 255;
-	unpowered = 0;
-	conductive = 127;
+        powered = 255;
+        unpowered = 0;
+        conductive = 127;
     }
 
     mp =
-	&Map[0][0];
+        &Map[0][0];
     imageBase =
-	view->x->color ? view->data : view->data8;
+        view->x->color ? view->data : view->data8;
 
     for (col = 0; col < WORLD_X; col++) {
 
-	image =
-	    imageBase + (3 * pixelBytes * col);
+        image =
+            imageBase + (3 * pixelBytes * col);
 
-	for (row = 0; row < WORLD_Y; row++) {
-	    tile = *(mp++);
+        for (row = 0; row < WORLD_Y; row++) {
+            tile = *(mp++);
 
-	    if ((tile & LOMASK) >= TILE_COUNT) {
-		tile -= TILE_COUNT;
-	    }
+            if ((tile & LOMASK) >= TILE_COUNT) {
+                tile -= TILE_COUNT;
+            }
 
-	    if ((tile & LOMASK) <= LASTFIRE) {
-		tile &= LOMASK;
-		pix = -1;
-	    } else if (tile & ZONEBIT) {
-		pix = (tile & PWRBIT) ? powered : unpowered;
-	    } else {
-		if (tile & CONDBIT) {
-		    pix = conductive;
-		} else {
-		    tile = DIRT;
-		    pix = -1;
-		}
-	    }
+            if ((tile & LOMASK) <= LASTFIRE) {
+                tile &= LOMASK;
+                pix = -1;
+            } else if (tile & ZONEBIT) {
+                pix = (tile & PWRBIT) ? powered : unpowered;
+            } else {
+                if (tile & CONDBIT) {
+                    pix = conductive;
+                } else {
+                    tile = DIRT;
+                    pix = -1;
+                }
+            }
 
-	    if (pix < 0) {
-		mem = (UQuad *)&view->smalltiles[tile * 4 * 4 * pixelBytes];
-		ROW3
-	    } else {
-		switch (view->x->depth) {
+            if (pix < 0) {
+                mem = (UQuad *)&view->smalltiles[tile * 4 * 4 * pixelBytes];
+                ROW3
+            } else {
+                switch (view->x->depth) {
 
-		    case 1:
-		    case 8:
-			image[0] = image[1] = image[2] = pix;
-			image += lineBytes;
-			image[0] = image[1] = image[2] = pix;
-			image += lineBytes;
-			image[0] = image[1] = image[2] = pix;
-			image += lineBytes;
-			break;
+                    case 1:
+                    case 8:
+                        image[0] = image[1] = image[2] = pix;
+                        image += lineBytes;
+                        image[0] = image[1] = image[2] = pix;
+                        image += lineBytes;
+                        image[0] = image[1] = image[2] = pix;
+                        image += lineBytes;
+                        break;
 
-		    case 15:
-		    case 16: {
-			unsigned short *p;
-			p = (unsigned short *)image;
-			p[0] = p[1] = p[2] = pix;
-			image += lineBytes;
-			p = (unsigned short *)image;
-			p[0] = p[1] = p[2] = pix;
-			image += lineBytes;
-			p = (unsigned short *)image;
-			p[0] = p[1] = p[2] = pix;
-			image += lineBytes;
-			break;
-		    }
+                    case 15:
+                    case 16: {
+                        unsigned short *p;
+                        p = (unsigned short *)image;
+                        p[0] = p[1] = p[2] = pix;
+                        image += lineBytes;
+                        p = (unsigned short *)image;
+                        p[0] = p[1] = p[2] = pix;
+                        image += lineBytes;
+                        p = (unsigned short *)image;
+                        p[0] = p[1] = p[2] = pix;
+                        image += lineBytes;
+                        break;
+                    }
 
-		    case 24:
-		    case 32: {
-			int x, y;
-			for (y = 0; y < 3; y++) {
-			    unsigned char *img = image;
-			    for (x = 0; x < 4; x++) {
-				*(img++) = (pix >> 0) & 0xff;
-				*(img++) = (pix >> 8) & 0xff;
-				*(img++) = (pix >> 16) & 0xff;
-				if (pixelBytes == 4) {
-				    img++;
-				} // if
-			    } // for x
-			    image += lineBytes;
-			  } // for y
-			  break;
-		      }
+                    case 24:
+                    case 32: {
+                        int x, y;
+                        for (y = 0; y < 3; y++) {
+                            unsigned char *img = image;
+                            for (x = 0; x < 4; x++) {
+                                *(img++) = (pix >> 0) & 0xff;
+                                *(img++) = (pix >> 8) & 0xff;
+                                *(img++) = (pix >> 16) & 0xff;
+                                if (pixelBytes == 4) {
+                                    img++;
+                                } // if
+                            } // for x
+                            image += lineBytes;
+                          } // for y
+                          break;
+                      }
 
-		    default:
-			assert(0); /* Undefined depth */
-			break;
+                    default:
+                        assert(0); /* Undefined depth */
+                        break;
 
-		}
-	    }
-	}
+                }
+            }
+        }
     }
 }
 
@@ -423,40 +423,40 @@ bool Micropolis::dynamicFilter(
 
     return (
         ((DynamicData[0] > DynamicData[1]) ||
-	 (populationDensity >= DynamicData[0]) &&
-	 (populationDensity <= DynamicData[1])) &&
-	((DynamicData[2] > DynamicData[3]) ||
-	 (rateOfGrowth >= ((2 * DynamicData[2]) - 256)) &&
-	 (rateOfGrowth <= ((2 * DynamicData[3]) - 256))) &&
-	((DynamicData[4] > DynamicData[5]) ||
-	 (traffic >= DynamicData[4]) &&
-	 (traffic <= DynamicData[5])) &&
-	((DynamicData[6] > DynamicData[7]) ||
-	 (pollution >= DynamicData[6]) &&
-	 (pollution <= DynamicData[7])) &&
-	((DynamicData[8] > DynamicData[9]) ||
-	 (crime >= DynamicData[8]) &&
-	 (crime <= DynamicData[9])) &&
-	((DynamicData[10] > DynamicData[11]) ||
-	 (landValue >= DynamicData[10]) &&
-	 (landValue <= DynamicData[11])) &&
-	((DynamicData[12] > DynamicData[13]) ||
-	 (police >= DynamicData[12]) &&
-	 (police <= DynamicData[13])) &&
-	((DynamicData[14] > DynamicData[15]) ||
-	 (fire >= DynamicData[14]) &&
-	 (fire <= DynamicData[15])));
+         (populationDensity >= DynamicData[0]) &&
+         (populationDensity <= DynamicData[1])) &&
+        ((DynamicData[2] > DynamicData[3]) ||
+         (rateOfGrowth >= ((2 * DynamicData[2]) - 256)) &&
+         (rateOfGrowth <= ((2 * DynamicData[3]) - 256))) &&
+        ((DynamicData[4] > DynamicData[5]) ||
+         (traffic >= DynamicData[4]) &&
+         (traffic <= DynamicData[5])) &&
+        ((DynamicData[6] > DynamicData[7]) ||
+         (pollution >= DynamicData[6]) &&
+         (pollution <= DynamicData[7])) &&
+        ((DynamicData[8] > DynamicData[9]) ||
+         (crime >= DynamicData[8]) &&
+         (crime <= DynamicData[9])) &&
+        ((DynamicData[10] > DynamicData[11]) ||
+         (landValue >= DynamicData[10]) &&
+         (landValue <= DynamicData[11])) &&
+        ((DynamicData[12] > DynamicData[13]) ||
+         (police >= DynamicData[12]) &&
+         (police <= DynamicData[13])) &&
+        ((DynamicData[14] > DynamicData[15]) ||
+         (fire >= DynamicData[14]) &&
+         (fire <= DynamicData[15])));
 }
 
 
 void Micropolis::drawDynamic()
 {
     DRAW_BEGIN
-	if (tile > LASTFIRE) {
-	    if (!dynamicFilter(col, row)) {
-		tile = DIRT;
-	    } // if
-	} // if
+        if (tile > LASTFIRE) {
+            if (!dynamicFilter(col, row)) {
+                tile = DIRT;
+            } // if
+        } // if
     DRAW_END
 }
 
@@ -464,16 +464,16 @@ void Micropolis::drawDynamic()
 short Micropolis::GetCI(short x)
 {
     if (x < 50) {
-	return VAL_NONE;
+        return VAL_NONE;
     }
     if (x < 100) {
-	return VAL_LOW;
+        return VAL_LOW;
     }
     if (x < 150) {
-	return VAL_MEDIUM;
+        return VAL_MEDIUM;
     }
     if (x < 200) {
-	return VAL_HIGH;
+        return VAL_HIGH;
     }
     return VAL_VERYHIGH;
 }
@@ -485,14 +485,14 @@ void Micropolis::drawPopDensity()
 
     drawAll();
     for (x = 0; x < HWLDX; x++) {
-	for (y = 0; y < HWLDY; y++) {
-	    maybeDrawRect(
-		GetCI(PopDensity[x][y]),
-		x * 6,
-		y * 6,
-		6,
-		6);
-	}
+        for (y = 0; y < HWLDY; y++) {
+            maybeDrawRect(
+                GetCI(PopDensity[x][y]),
+                x * 6,
+                y * 6,
+                6,
+                6);
+        }
     }
 }
 
@@ -504,34 +504,34 @@ void Micropolis::drawRateOfGrowth()
     drawAll();
 
     for (x = 0; x < SmX; x++) {
-	for (y = 0; y < SmY; y++) {
-	    short val;
-	    short z = RateOGMem[x][y];
+        for (y = 0; y < SmY; y++) {
+            short val;
+            short z = RateOGMem[x][y];
 
-	    if (z > 100) {
-		val = VAL_VERYPLUS;
-	    } else {
-		if (z > 20) {
-		    val = VAL_PLUS;
-		} else {
-		    if (z < -100) {
-			val = VAL_VERYMINUS;
-		    } else {
-			if (z < -20) {
-			    val = VAL_MINUS;
-			} else {
-			    val = VAL_NONE;
-			}
-		    }
-		}
-	    }
-	    maybeDrawRect(
-		val,
-		x * 24,
-		y * 24,
-		24,
-		24);
-	}
+            if (z > 100) {
+                val = VAL_VERYPLUS;
+            } else {
+                if (z > 20) {
+                    val = VAL_PLUS;
+                } else {
+                    if (z < -100) {
+                        val = VAL_VERYMINUS;
+                    } else {
+                        if (z < -20) {
+                            val = VAL_MINUS;
+                        } else {
+                            val = VAL_NONE;
+                        }
+                    }
+                }
+            }
+            maybeDrawRect(
+                val,
+                x * 24,
+                y * 24,
+                24,
+                24);
+        }
     }
 }
 
@@ -544,14 +544,14 @@ void Micropolis::drawTrafMap()
     drawLilTransMap();
 
     for (x = 0; x < HWLDX; x++) {
-	for (y = 0; y < HWLDY; y++) {
-	    maybeDrawRect(
-		GetCI(TrfDensity[x][y]),
-		x * 6,
-		y * 6,
-		6,
-		6);
-	}
+        for (y = 0; y < HWLDY; y++) {
+            maybeDrawRect(
+                GetCI(TrfDensity[x][y]),
+                x * 6,
+                y * 6,
+                6,
+                6);
+        }
     }
 }
 
@@ -563,14 +563,14 @@ void Micropolis::drawPolMap()
     drawAll(view);
 
     for (x = 0; x < HWLDX; x++) {
-	for (y = 0; y < HWLDY; y++) {
-	    maybeDrawRect(
-		GetCI(10 + PollutionMem[x][y]),
-		x * 6,
-		y * 6,
-		6,
-		6);
-	}
+        for (y = 0; y < HWLDY; y++) {
+            maybeDrawRect(
+                GetCI(10 + PollutionMem[x][y]),
+                x * 6,
+                y * 6,
+                6,
+                6);
+        }
     }
 }
 
@@ -582,14 +582,14 @@ void Micropolis::drawCrimeMap()
     drawAll();
 
     for (x = 0; x < HWLDX; x++) {
-	for (y = 0; y < HWLDY; y++) {
-	    maybeDrawRect(
-		GetCI(CrimeMem[x][y]),
-		x * 6,
-		y * 6,
-		6,
-		6);
-	}
+        for (y = 0; y < HWLDY; y++) {
+            maybeDrawRect(
+                GetCI(CrimeMem[x][y]),
+                x * 6,
+                y * 6,
+                6,
+                6);
+        }
     }
 }
 
@@ -601,15 +601,15 @@ void Micropolis::drawLandMap()
     drawAll();
 
     for (x = 0; x < HWLDX; x++) {
-	for (y = 0; y < HWLDY; y++) {
-	    maybeDrawRect(
-		view,
-		GetCI(LandValueMem[x][y]),
-		x * 6,
-		y * 6,
-		6,
-		6);
-	}
+        for (y = 0; y < HWLDY; y++) {
+            maybeDrawRect(
+                view,
+                GetCI(LandValueMem[x][y]),
+                x * 6,
+                y * 6,
+                6,
+                6);
+        }
     }
 }
 
@@ -620,14 +620,14 @@ void Micropolis::drawFireRadius()
 
     drawAll();
     for (x = 0; x < SmY; x++) {
-	for (y = 0; y < SmY; y++) {
-	    maybeDrawRect(
-		GetCI(FireRate[x][y]),
-		x * 24,
-		y * 24,
-		24,
-		24);
-	}
+        for (y = 0; y < SmY; y++) {
+            maybeDrawRect(
+                GetCI(FireRate[x][y]),
+                x * 24,
+                y * 24,
+                24,
+                24);
+        }
     }
 }
 
@@ -638,14 +638,14 @@ void Micropolis::drawPoliceRadius()
 
     drawAll();
     for (x = 0; x < SmX; x++) {
-	for (y = 0; y < SmY; y++) {
-	    maybeDrawRect(
-		GetCI(PoliceMapEffect[x][y]),
-		x * 24,
-		y * 24,
-		24,
-		24);
-	}
+        for (y = 0; y < SmY; y++) {
+            maybeDrawRect(
+                GetCI(PoliceMapEffect[x][y]),
+                x * 24,
+                y * 24,
+                24,
+                24);
+        }
     }
 }
 
@@ -656,78 +656,78 @@ void Micropolis::MemDrawMap()
     switch (view->map_state) {
 
       case ALMAP:
-	  drawAll(view);
-	  break;
+          drawAll(view);
+          break;
 
       case REMAP:
-	  drawRes(view);
-	  break;
+          drawRes(view);
+          break;
 
       case COMAP:
-	  drawCom(view);
-	  break;
+          drawCom(view);
+          break;
 
       case INMAP:
-	  drawInd(view);
-	  break;
+          drawInd(view);
+          break;
 
       case PRMAP:
-	  drawPower(view);
-	  break;
+          drawPower(view);
+          break;
 
       case RDMAP:
-	  drawLilTransMap(view);
-	  break;
+          drawLilTransMap(view);
+          break;
 
       case PDMAP:
-	  drawPopDensity(view);
-	  break;
+          drawPopDensity(view);
+          break;
 
       case RGMAP:
-	  drawRateOfGrowth(view);
-	  break;
+          drawRateOfGrowth(view);
+          break;
 
       case TDMAP:
-	  drawTrafMap(view);
-	  break;
+          drawTrafMap(view);
+          break;
 
       case PLMAP:
-	  drawPolMap(view);
-	  break;
+          drawPolMap(view);
+          break;
 
       case CRMAP:
-	  drawCrimeMap(view);
-	  break;
+          drawCrimeMap(view);
+          break;
 
       case LVMAP:
-	  drawLandMap(view);
-	  break;
+          drawLandMap(view);
+          break;
 
       case FIMAP:
-	  drawFireRadius(view);
-	  break;
+          drawFireRadius(view);
+          break;
 
       case POMAP:
-	  drawPoliceRadius(view);
-	  break;
+          drawPoliceRadius(view);
+          break;
 
       case DYMAP:
-	  drawDynamic(view);
-	  break;
+          drawDynamic(view);
+          break;
 
       default:
-	  assert(0); /* Undefined map */
-	  break;
+          assert(0); /* Undefined map */
+          break;
 
     }
 
   /*
     if (!view->x->color) {
-	ditherMap(view);
-	XSetForeground(view->x->dpy, view->x->gc, view->pixels[COLOR_BLACK]);
-	XSetBackground(view->x->dpy, view->x->gc, view->pixels[COLOR_WHITE]);
-	XPutImage(view->x->dpy, view->pixmap, view->x->gc, view->image,
-		  0, 0, 0, 0, view->m_width, view->m_height);
+        ditherMap(view);
+        XSetForeground(view->x->dpy, view->x->gc, view->pixels[COLOR_BLACK]);
+        XSetBackground(view->x->dpy, view->x->gc, view->pixels[COLOR_WHITE]);
+        XPutImage(view->x->dpy, view->pixmap, view->x->gc, view->image,
+                  0, 0, 0, 0, view->m_width, view->m_height);
     }
   */
 
@@ -751,57 +751,57 @@ void Micropolis::ditherMap()
     errors = (int *)NewPtr(sizeof(int) * width);
 
     for (i = 0; i < width; i++) {
-	errors[i] = (Rand16() & 15) - 7;
+        errors[i] = (Rand16() & 15) - 7;
     }
 
     err = (Rand16() & 15) - 7;
 
     for (y = 0; y < height; y += 2) {
-	unsigned char *i1 = image1;
-	unsigned char *i8 = image8;
+        unsigned char *i1 = image1;
+        unsigned char *i8 = image8;
 
-	image1 += line_bytes1;
-	image8 += line_bytes8;
+        image1 += line_bytes1;
+        image8 += line_bytes8;
 
-	for (x = 0; x < width; x += 8) {
-	    pixel1 = 0;
-	    for (i = 0; i < 8; i++) {
-		pixel1 <<= 1;
-		pixel8 = *(i8++) + err + errors[x + i];
-		if (pixel8 > 127) {
-		    err = pixel8 - 255;
-		} else {
-		    pixel1 |= 1;
-		    err = pixel8;
-		}
-		errors[x + i] = err/2;
-		err = err/2;
-	    }
-	    *(i1++) = pixel1;
-	}
+        for (x = 0; x < width; x += 8) {
+            pixel1 = 0;
+            for (i = 0; i < 8; i++) {
+                pixel1 <<= 1;
+                pixel8 = *(i8++) + err + errors[x + i];
+                if (pixel8 > 127) {
+                    err = pixel8 - 255;
+                } else {
+                    pixel1 |= 1;
+                    err = pixel8;
+                }
+                errors[x + i] = err/2;
+                err = err/2;
+            }
+            *(i1++) = pixel1;
+        }
 
-	i1 = image1 + (width / 8) - 1;
-	i8 = image8 + width - 1;
+        i1 = image1 + (width / 8) - 1;
+        i8 = image8 + width - 1;
 
-	image1 += line_bytes1;
-	image8 += line_bytes8;
+        image1 += line_bytes1;
+        image8 += line_bytes8;
 
-	for (x = width - 8; x >= 0; x -= 8) {
-	    pixel1 = 0;
-	    for (i = 7; i >= 0; i--) {
-		pixel1 >>= 1;
-		pixel8 = *(i8--) + err + errors[x + i];
-		if (pixel8 > 127) {
-		    err = pixel8 - 255;
-		} else {
-		    pixel1 |= 128;
-		    err = pixel8;
-		}
-		errors[x + i] = err/2;
-		err = err/2;
-	    }
-	    *(i1--) = pixel1;
-	}
+        for (x = width - 8; x >= 0; x -= 8) {
+            pixel1 = 0;
+            for (i = 7; i >= 0; i--) {
+                pixel1 >>= 1;
+                pixel8 = *(i8--) + err + errors[x + i];
+                if (pixel8 > 127) {
+                    err = pixel8 - 255;
+                } else {
+                    pixel1 |= 128;
+                    err = pixel8;
+                }
+                errors[x + i] = err/2;
+                err = err/2;
+            }
+            *(i1--) = pixel1;
+        }
     }
 
     FreePtr(errors);
@@ -842,157 +842,157 @@ void Micropolis::drawRect(
     int W = view->m_width, H = view->m_height;
 
     if (x < 0) {
-	if ((w += x) < 0) {
-	    w = 0;
-	}
-	x = 0;
+        if ((w += x) < 0) {
+            w = 0;
+        }
+        x = 0;
     } else if (x > W) {
-	x = 0;
-	w = 0;
+        x = 0;
+        w = 0;
     }
     if (x + w > W) {
-	w = W - x;
+        w = W - x;
     }
     if (y < 0) {
-	if ((h += y) < 0) {
-	    h = 0;
-	}
+        if ((h += y) < 0) {
+            h = 0;
+        }
         y = 0;
     } else if (y > H) {
-	y = 0;
-	h = 0;
+        y = 0;
+        h = 0;
     }
     if (y + h > H) {
-	h = H - y;
+        h = H - y;
     }
 
     if (w && h) {
-	int i, j, stipple = (x ^ y) & 1;
-	unsigned char *data =
-	    view->x->color ? view->data : view->data8;
+        int i, j, stipple = (x ^ y) & 1;
+        unsigned char *data =
+            view->x->color ? view->data : view->data8;
 
-	// In the case of black and white, we use an 8 bit buffer and dither it.
-	int pixelBytes =
-	    view->x->color ? view->pixel_bytes : 1;
-	Quad line =
-	    view->x->color ? view->line_bytes : view->line_bytes8;
+        // In the case of black and white, we use an 8 bit buffer and dither it.
+        int pixelBytes =
+            view->x->color ? view->pixel_bytes : 1;
+        Quad line =
+            view->x->color ? view->line_bytes : view->line_bytes8;
 
-	unsigned char *image =
-	    &(data[(line * y) + (x * pixelBytes)]);
+        unsigned char *image =
+            &(data[(line * y) + (x * pixelBytes)]);
 
-	switch (pixelBytes) {
+        switch (pixelBytes) {
 
-	    case 1: {
-		unsigned char *data =
-		    view->data8;
-		unsigned char *image =
-		    &data[(line * y) + (x * pixelBytes)];
+            case 1: {
+                unsigned char *data =
+                    view->data8;
+                unsigned char *image =
+                    &data[(line * y) + (x * pixelBytes)];
 
-		if (solid) {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    *image = pixel;
-			    image++;
-			}
-			image += line - w;
-		    }
-		} else {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    if (stipple++ & 1) {
-				*image = pixel;
-			    }
-			    image++;
-			}
-			if (!(w & 1))
-			    stipple++;
-			image += line - w;
-		    }
-		}
-		break;
-	    }
+                if (solid) {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            *image = pixel;
+                            image++;
+                        }
+                        image += line - w;
+                    }
+                } else {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            if (stipple++ & 1) {
+                                *image = pixel;
+                            }
+                            image++;
+                        }
+                        if (!(w & 1))
+                            stipple++;
+                        image += line - w;
+                    }
+                }
+                break;
+            }
 
-	    case 2: {
-		unsigned short *data =
-		    (unsigned short *)view->data;
-		unsigned short *image;
-		line >>= 1; // Convert from byte offset to short offset
-		image =
-		    &data[(line * y) + x];
+            case 2: {
+                unsigned short *data =
+                    (unsigned short *)view->data;
+                unsigned short *image;
+                line >>= 1; // Convert from byte offset to short offset
+                image =
+                    &data[(line * y) + x];
 
-		if (solid) {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    *image = pixel;
-			    image++;
-			}
-			image += line - w;
-		    }
-		} else {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    if (stipple++ & 1) {
-			        *image = pixel;
-			    }
-			    image++;
-			}
-			if (!(w & 1)) {
-			    stipple++;
-			}
-			image += line - w;
-		    }
-		}
-		break;
-	    }
+                if (solid) {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            *image = pixel;
+                            image++;
+                        }
+                        image += line - w;
+                    }
+                } else {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            if (stipple++ & 1) {
+                                *image = pixel;
+                            }
+                            image++;
+                        }
+                        if (!(w & 1)) {
+                            stipple++;
+                        }
+                        image += line - w;
+                    }
+                }
+                break;
+            }
 
-	    case 3:
-	    case 4: {
-		unsigned char *data =
-		    (unsigned char *)view->data;
-		unsigned char *image;
-		int bitmapPad = view->x->small_tile_image->bitmap_pad;
-		int rowBytes = view->x->small_tile_image->bytes_per_line;
-		line = rowBytes >> 1; // Convert from byte offset to short offset
-		image = &data[(line * y) + x];
+            case 3:
+            case 4: {
+                unsigned char *data =
+                    (unsigned char *)view->data;
+                unsigned char *image;
+                int bitmapPad = view->x->small_tile_image->bitmap_pad;
+                int rowBytes = view->x->small_tile_image->bytes_per_line;
+                line = rowBytes >> 1; // Convert from byte offset to short offset
+                image = &data[(line * y) + x];
 
-		if (solid) {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    *(image++) = (pixel >> 0) & 0xff;
-			    *(image++) = (pixel >> 8) & 0xff;
-			    *(image++) = (pixel >> 16) & 0xff;
-			    if (bitmapPad == 32) {
-				image++;
-			    }
-			}
-			image += line - w;
-		    }
-		} else {
-		    for (i = h; i > 0; i--) {
-			for (j = w; j > 0; j--) {
-			    if (stipple++ & 1) {
-			      *(image++) = (pixel >> 0) & 0xff;
-			      *(image++) = (pixel >> 8) & 0xff;
-			      *(image++) = (pixel >> 16) & 0xff;
-			      if (bitmapPad == 32) {
-				  image++;
-			      }
-			  }
-			}
-			if (!(w & 1)) {
-			    stipple++;
-			}
-			image += line - w;
-		    }
-		}
-		break;
-	    }
+                if (solid) {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            *(image++) = (pixel >> 0) & 0xff;
+                            *(image++) = (pixel >> 8) & 0xff;
+                            *(image++) = (pixel >> 16) & 0xff;
+                            if (bitmapPad == 32) {
+                                image++;
+                            }
+                        }
+                        image += line - w;
+                    }
+                } else {
+                    for (i = h; i > 0; i--) {
+                        for (j = w; j > 0; j--) {
+                            if (stipple++ & 1) {
+                              *(image++) = (pixel >> 0) & 0xff;
+                              *(image++) = (pixel >> 8) & 0xff;
+                              *(image++) = (pixel >> 16) & 0xff;
+                              if (bitmapPad == 32) {
+                                  image++;
+                              }
+                          }
+                        }
+                        if (!(w & 1)) {
+                            stipple++;
+                        }
+                        image += line - w;
+                    }
+                }
+                break;
+            }
 
-	    default:
-		assert(0); // Undefined depth
-		break;
+            default:
+                assert(0); // Undefined depth
+                break;
 
-	}
+        }
 
     }
 */

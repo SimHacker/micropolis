@@ -240,10 +240,10 @@ void Micropolis::sim_heat()
             }
             memcpy(
                 CellSrc,
-                CellSrc + (SRCCOL * WORLD_X), 
+                CellSrc + (SRCCOL * WORLD_X),
                 SRCCOL * sizeof (short));
             memcpy(
-                CellSrc + SRCCOL * (WORLD_X + 1), 
+                CellSrc + SRCCOL * (WORLD_X + 1),
                 CellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
@@ -256,22 +256,22 @@ void Micropolis::sim_heat()
                 dst += DSTCOL;
             }
             memcpy(
-                CellSrc, 
+                CellSrc,
                 CellSrc + (SRCCOL * WORLD_X),
                 SRCCOL * sizeof (short));
             memcpy(
-                CellSrc + SRCCOL * (WORLD_X + 1), 
+                CellSrc + SRCCOL * (WORLD_X + 1),
                 CellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         case 4:
-            src[0] = 
+            src[0] =
                 dst[0];
-            src[1 + WORLD_Y] = 
+            src[1 + WORLD_Y] =
                 dst[WORLD_Y - 1];
-            src[(1 + WORLD_X) * SRCCOL] = 
+            src[(1 + WORLD_X) * SRCCOL] =
                 dst[(WORLD_X - 1) * DSTCOL];
-            src[((2 + WORLD_X) * SRCCOL) - 1] = 
+            src[((2 + WORLD_X) * SRCCOL) - 1] =
                 dst[(WORLD_X * WORLD_Y) - 1];
             for (x = 0; x < WORLD_X; x++) {
                 memcpy(src, dst, WORLD_Y * sizeof (short));
