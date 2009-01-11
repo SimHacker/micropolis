@@ -117,23 +117,58 @@
 #define RANDOM_RANGE                    0xffff
 
 /**
- * Size of the world in horizontal direction
+ * Size of the world in horizontal direction.
  * @note Must be <= 128 due to PowerMap bitmap
- *       (where 1 row is assumed to be less or equal to 8 words)
+ *       (where 1 row is assumed to be less or equal to 8 words).
  */
-static const int WORLD_X =              120;
+static const int WORLD_X = 120;
 
 /**
- * Size of the world in vertical direction
+ * Size of the world in vertical direction.
  */
-static const int WORLD_Y =              100;
+static const int WORLD_Y = 100;
 
-#define HWLDX                           (WORLD_X >>1)
-#define HWLDY                           (WORLD_Y >>1)
-#define QWX                             (WORLD_X >>2)
-#define QWY                             (WORLD_Y >>2)
-#define SmX                             (WORLD_X >>3)
-#define SmY                             ((WORLD_Y + 7) >>3)
+/**
+ * Horizontal size of the world for a map that stores a value for every 2x2
+ * square.
+ * @todo Make a Map class that keeps its 2x2 square storage details internally,
+ *       so the code doesn't need to bother with it.
+ */
+static const int HWLDX = WORLD_X >>1;
+
+/**
+ * Vertical size of the world for a map that stores a value for every 2x2
+ * square.
+ */
+static const int HWLDY = WORLD_Y >>1;
+
+/**
+ * Horizontal size of the world for a map that stores a value for every 4x4
+ * square.
+ * @todo Make a Map class that keeps its 4x4 square storage details internally,
+ *       so the code doesn't need to bother with it.
+ */
+static const int QWX = WORLD_X >>2;
+
+/**
+ * Vertical size of the world for a map that stores a value for every 4x4
+ * square.
+ */
+static const int QWY = WORLD_Y >>2;
+
+/**
+ * Horizontal size of the world for a map that stores a value for every 8x8
+ * square.
+ * @todo Make a Map class that keeps its 8x8 square storage details internally,
+ *       so the code doesn't need to bother with it.
+ */
+static const int SmX = WORLD_X >>3;
+
+/**
+ * Vertical size of the world for a map that stores a value for every 8x8
+ * square.
+ */
+static const int SmY = (WORLD_Y + 7) >>3;
 
 #define EDITOR_W                        (WORLD_X * 16)
 #define EDITOR_H                        (WORLD_Y * 16)
@@ -149,19 +184,48 @@ static const int WORLD_Y =              100;
 
 #define ISLAND_RADIUS                   18
 
-#define HISTORY_COUNT                   120
+/**
+ * Length of the history tables.
+ * @todo It is not really a count of histories, rename to HISTORY_LENGTH?
+ */
+static const int HISTORY_COUNT = 120;
 
-#define HISTORY_TYPE_RES                0
-#define HISTORY_TYPE_COM                1
-#define HISTORY_TYPE_IND                2
-#define HISTORY_TYPE_MONEY              3
-#define HISTORY_TYPE_CRIME              4
-#define HISTORY_TYPE_POLLUTION          5
-#define HISTORY_TYPE_COUNT              6
 
-#define HISTORY_SCALE_SHORT             0
-#define HISTORY_SCALE_LONG              1
-#define HISTORY_SCALE_COUNT             2
+/**
+ * Available types of historic data
+ * @todo These enum values seem equal to the *_HIST constants below.
+ *       Either eliminate one of the sets, or document how they differ.
+ * @note ALL_HISTORIES does not seem to be used.
+ */
+enum HistoryType {
+    HISTORY_TYPE_RES,   ///< Residiential history type
+    HISTORY_TYPE_COM,   ///< Commercial history type
+    HISTORY_TYPE_IND,   ///< Industry history type
+    HISTORY_TYPE_MONEY, ///< Money history type
+    HISTORY_TYPE_CRIME, ///< Crime history type
+    HISTORY_TYPE_POLLUTION, ///< Pollution history type
+
+    HISTORY_TYPE_COUNT,  ///< Number of history types
+};
+
+/* Graph Histories */
+#define RES_HIST                        0
+#define COM_HIST                        1
+#define IND_HIST                        2
+#define MONEY_HIST                      3
+#define CRIME_HIST                      4
+#define POLLUTION_HIST                  5
+
+#define HISTORIES                       6
+#define ALL_HISTORIES                   ((1 <<HISTORIES) - 1)
+
+/** Available historic scales */
+enum HistoryScale {
+    HISTORY_SCALE_SHORT, ///< Short scale data (10 years)
+    HISTORY_SCALE_LONG,  ///< Long scale data (120 years)
+
+    HISTORY_SCALE_COUNT, ///< Number of history scales available
+};
 
 #define POWERMAPROW                     ((WORLD_X + 15) / 16)
 
@@ -217,16 +281,6 @@ enum SpriteType {
     SPRITE_COUNT, ///< Number of sprite objects
 };
 
-
-/* Graph Histories */
-#define RES_HIST                        0
-#define COM_HIST                        1
-#define IND_HIST                        2
-#define MONEY_HIST                      3
-#define CRIME_HIST                      4
-#define POLLUTION_HIST                  5
-#define HISTORIES                       6
-#define ALL_HISTORIES                   ((1 <<HISTORIES) - 1)
 
 ///////////////////////////////////////////////////
 // Tiles
@@ -1982,10 +2036,10 @@ public:
      */
     bool newGraph;
 
-    // 10 year history graphs.
+    ///< 10 year history graphs.
     unsigned char *History10[HISTORIES];
 
-    // 120 year history graphs.
+    ///< 120 year history graphs.
     unsigned char *History120[HISTORIES];
 
     //
