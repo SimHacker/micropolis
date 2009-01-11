@@ -268,8 +268,8 @@ void Micropolis::CheckGrowth()
         }
 
         if (z > 0 && z != LastCategory) {
-	    SendMes(-z);
-	    LastCategory = z;
+            SendMes(-z);
+            LastCategory = z;
         }
 
         lastCityPop = thisCityPop;
@@ -501,7 +501,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
 
         case STR301_TRAFFIC_JAMS:
             if (Rand(5) == 1) {
-	        MakeSound("city", "HonkHonk-Med", x, y);
+                MakeSound("city", "HonkHonk-Med", x, y);
             } else if (Rand(5) == 1) {
                 MakeSound("city", "HonkHonk-Low", x, y);
             } else if (Rand(5) == 1) {
@@ -517,7 +517,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
         case STR301_SHIP_CRASHED:
         case STR301_TRAIN_CRASHED:
         case STR301_HELICOPTER_CRASHED:
-	    MakeSound("city", "Siren", x, y);
+            MakeSound("city", "Siren", x, y);
             break;
 
         case  STR301_MONSTER_SIGHTED:
