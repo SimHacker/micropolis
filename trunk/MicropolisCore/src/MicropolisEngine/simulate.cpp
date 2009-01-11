@@ -1213,7 +1213,7 @@ int Micropolis::GetBoatDis()
     my = (SMapY <<4) + 8;
 
     for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
-        if (sprite->type == SHI && sprite->frame != 0) {
+        if (sprite->type == SPRITE_SHIP && sprite->frame != 0) {
 
             sprDist = absoluteValue(sprite->x + sprite->x_hot - mx)
                     + absoluteValue(sprite->y + sprite->y_hot - my);
@@ -1529,7 +1529,7 @@ void Micropolis::DoSPZone(bool pwrOn)
             }
 
             // If port has power and there is no ship, generate one
-            if (pwrOn && GetSprite(SHI) == NULL) {
+            if (pwrOn && GetSprite(SPRITE_SHIP) == NULL) {
                 GenerateShip();
             }
 
