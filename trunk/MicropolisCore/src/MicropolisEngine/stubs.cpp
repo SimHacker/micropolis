@@ -267,19 +267,16 @@ void Micropolis::InitializeSound()
 
 /**
  * Instruct the front-end to make a sound.
- * @param channel Name of the sound channel, which can effect the 
+ * @param channel Name of the sound channel, which can effect the
  *                sound (location, volume, spatialization, etc).
- *                Use "city" for city sounds effects, and "interface" 
+ *                Use "city" for city sounds effects, and "interface"
  *                for user interface sounds.
  * @param sound   Name of the sound.
  * @param x       Tile X position of sound, or -1 for everywhere.
  * @param y       Tile Y position of sound, or -1 for everywhere.
  */
-void Micropolis::MakeSound(
-    const char *channel, 
-    const char *sound,
-    int x,
-    int y)
+void Micropolis::MakeSound(const char *channel, const char *sound,
+                            int x, int y)
 {
     Callback( "UIMakeSound", "ssdd", channel, sound, x, y);
 }

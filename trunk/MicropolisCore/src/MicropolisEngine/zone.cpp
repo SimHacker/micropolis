@@ -724,10 +724,10 @@ bool Micropolis::ZonePlop(int base)
     }
 
     CChr = Map[SMapX][SMapY];
-    // @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
-    //       SetZPower to distinguish nuclear and coal power plants. 
-    //       Better yet, pass all parameters into SetZPower and rewrite
-    //       it not to use globals. 
+    /// @bug: Should set #CChr9 to (#CChr & #LOMASK), since it is used by
+    ///       #SetZPower to distinguish nuclear and coal power plants.
+    ///       Better yet, pass all parameters into #SetZPower and rewrite
+    ///       it not to use globals.
     SetZPower();
     Map[SMapX][SMapY] |= ZONEBIT + BULLBIT;
 
