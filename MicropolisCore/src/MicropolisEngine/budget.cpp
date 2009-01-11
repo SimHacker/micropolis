@@ -122,8 +122,8 @@ void Micropolis::DoBudgetNow(bool fromMenu)
         policeValue = policeInt;
         roadValue = roadInt;
 
-        // @todo Why are we not subtracting from yumDuckets what we
-        // spend, like the code below is doing?
+        /// @todo Why are we not subtracting from yumDuckets what we
+        /// spend, like the code below is doing?
 
     } else if (total > 0) {
 
@@ -329,9 +329,9 @@ void Micropolis::drawBudgetWindow()
 
 void Micropolis::ReallyDrawBudgetWindow()
 {
-    // @todo The scripting language should pull these raw values out
-    //       and format them, instead of the simulator core formatting
-    //       them and pushing them out.
+    /// @todo The scripting language should pull these raw values out
+    ///       and format them, instead of the simulator core formatting
+    ///       them and pushing them out.
 
     short cashFlow, cashFlow2;
     char numStr[256], dollarStr[256], collectedStr[256],
@@ -383,9 +383,9 @@ void Micropolis::drawCurrPercents()
 
 void Micropolis::ReallyDrawCurrPercents()
 {
-    // @todo The scripting language should pull these raw values out
-    //       and format them, instead of the simulator core formatting
-    //       them and pushing them out.
+    /// @todo The scripting language should pull these raw values out
+    ///       and format them, instead of the simulator core formatting
+    ///       them and pushing them out.
 
     char num[256];
     char fireWant[256], policeWant[256], roadWant[256];
@@ -421,9 +421,9 @@ void Micropolis::ReallyDrawCurrPercents()
 
 void Micropolis::UpdateBudgetWindow()
 {
-    // @todo The scripting language should pull these raw values out
-    //       and format them, instead of the simulator core formatting
-    //       them and pushing them out.
+    /// @todo The scripting language should pull these raw values out
+    ///       and format them, instead of the simulator core formatting
+    ///       them and pushing them out.
 
     if (MustDrawCurrPercents) {
         ReallyDrawCurrPercents();

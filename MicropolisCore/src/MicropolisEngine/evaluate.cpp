@@ -341,7 +341,7 @@ void Micropolis::GetScore()
         x += problemTable[z];       /* add 7 probs */
     }
 
-    /*
+    /**
      * @todo Should this expression depend on CVP_NUMPROBLEMS?
      */
     x = x / 3;                    /* 7 + 2 average */

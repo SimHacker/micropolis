@@ -456,6 +456,7 @@ short Micropolis::TurnTo(int p, int d)
 }
 
 /** ???
+ * @todo Figure out what this function is doing.
  * @todo Remove local magic constants and document the code.
  */
 bool Micropolis::TryOther(int Tpoo, int Told, int Tnew)
@@ -1929,7 +1930,8 @@ void Micropolis::MakeShipHere(int x, int y)
 }
 
 
-/* Start a new monster sprite.
+/**
+ * Start a new monster sprite.
  * @bug The "!done == 0" looks wrong.
  */
 void Micropolis::MakeMonster()

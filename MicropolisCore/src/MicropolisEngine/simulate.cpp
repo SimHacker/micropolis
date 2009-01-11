@@ -282,10 +282,10 @@ void Micropolis::DoNilPower()
 		SMapX = x;
 		SMapY = y;
 		CChr = z;
-		// @bug: Should set CChr9 to (CChr & LOMASK), since it is used by 
-		//       SetZPower to distinguish nuclear and coal power plants. 
-		//       Better yet, pass all parameters into SetZPower and rewrite
-		//       it not to use globals. 
+                /// @bug: Should set #CChr9 to (#CChr & #LOMASK), since it is
+                ///       used by #SetZPower to distinguish nuclear and coal
+                ///       power plants. Better yet, pass all parameters into
+                ///       #SetZPower and rewrite it not to use globals.
 		SetZPower();
 	    }
 	}
@@ -500,7 +500,7 @@ void Micropolis::SetCommonInits()
 /* comefrom: Simulate DoSimInit */
 void Micropolis::SetValves()
 {
-    // @todo Break the tax table out into configurable parameters.
+    /// @todo Break the tax table out into configurable parameters.
     static const short TaxTable[21] = {
 	200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
 	-150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
@@ -510,7 +510,7 @@ void Micropolis::SetValves()
     };
     assert(LEVEL_COUNT == LENGTH_OF(extMarketParamTable));
 
-    // @todo Make configurable parameters.
+    /// @todo Make configurable parameters.
     short ResPopDenom = 8;
     float BirthRate = 0.02;
     float MaxLaborBase = 1.3;
@@ -529,8 +529,8 @@ void Micropolis::SetValves()
     short MaxIValve = 1500;
     short MinIValve = -1500;
 
-    // @todo Break the interesting values out into public member
-    //       variables so the user interface can display them.
+    /// @todo Break the interesting values out into public member
+    ///       variables so the user interface can display them.
     float Employment, Migration, Births, LaborBase, IntMarket;
     float Rratio, Cratio, Iratio;
     float NormResPop, PjResPop, PjComPop, PjIndPop;
@@ -835,7 +835,7 @@ void Micropolis::CollectTax()
 {
     short z;
 
-    /*
+    /**
      * @todo Break out so the user interface can configure this.
      */
     static const float RLevels[3] = { 0.7, 0.9, 1.2 };
@@ -846,7 +846,7 @@ void Micropolis::CollectTax()
 
     CashFlow = 0;
 
-    /*
+    /**
      * @todo Apparently TaxFlag is never set to true in MicropolisEngine
      *       or the TCL code, so this always runs.
      * @todo Check old Mac code to see if it's ever set, and why.
@@ -854,7 +854,7 @@ void Micropolis::CollectTax()
 
     if (!TaxFlag) { // If the Tax Port is clear
 
-	// @todo Do something with z? Check old Mac code to see if it's used.
+	/// @todo Do something with z? Check old Mac code to see if it's used.
 	z = AvCityTax / 48;  // post release
 
 	AvCityTax = 0;

@@ -295,9 +295,9 @@ void Micropolis::updateOptions()
 
 void Micropolis::UpdateOptionsMenu(int options)
 {
-    // @todo Just notify the scripting language that the options 
-    //       changed, and let it pull the values out of our members, 
-    //       instead of encoding and passing the options.
+    /// @todo Just notify the scripting language that the options
+    ///       changed, and let it pull the values out of our members,
+    ///       instead of encoding and passing the options.
     Callback(
 	"UISetOptions",
 	"dddddddd",
@@ -311,10 +311,13 @@ void Micropolis::UpdateOptionsMenu(int options)
 	(options & 128) ? 1 : 0);
 }
 
-
+/** @todo Keeping track of pending updates should be moved to the interface
+ *        (the simulator generates events, the interface forwards them to
+ *        the GUI when possible/allowed.
+ */
 void Micropolis::UpdateUserInterface()
 {
-    // @todo Send all pending update messages to the user interface.
+    /// @todo Send all pending update messages to the user interface.
 
     // city: after load file, load scenario, or generate city
     // map: when small overall map changes

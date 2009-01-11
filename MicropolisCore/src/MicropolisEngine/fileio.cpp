@@ -280,13 +280,18 @@ bool Micropolis::loadFile(const char *filename)
 }
 
 
+/**
+ * Save a game to disk.
+ * @param filename Name of the file to use for storing the game.
+ * @return The game was saved successfully.
+ */
 bool Micropolis::saveFile(const char *filename)
 {
     long n;
     FILE *f;
 
     if ((f = fopen(filename, "wb")) == NULL) {
-        // @todo Report error saving file.
+        /// @todo Report error saving file.
         return false;
     }
 

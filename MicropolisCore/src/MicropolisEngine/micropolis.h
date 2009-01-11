@@ -1220,6 +1220,7 @@ public:
 
     /**
      * Message number to display asynchronously.
+     * Value \c 0 means 'no message to display'.
      *
      * Clean this up to use a simpler interface, and a queue.
      * Might need to collapse some messages.

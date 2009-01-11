@@ -996,7 +996,7 @@ int Micropolis::bulldozerTool(short x, short y)
 }
 
 
-/** @todo Generalize TestBounds for different upper bounds */
+/** @todo Generalize #TestBounds for different upper bounds */
 int Micropolis::roadTool(short x, short y)
 {
     int result;
@@ -1354,12 +1354,12 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
     if (result == -1) {
         ClearMes();
         SendMes(STR301_BULLDOZE_AREA_FIRST);
-	// @todo: Multi player: This sound should only be heard by the user who called this function. 
+	/// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
         ClearMes();
         SendMes(STR301_NOT_ENOUGH_FUNDS);
-	// @todo: Multi player: This sound should only be heard by the user who called this function. 
+	/// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "Sorry", x <<4, y <<4);
     }
 

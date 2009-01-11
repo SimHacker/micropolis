@@ -416,6 +416,7 @@ void Micropolis::SendMesAt(short mesgNum, short x, short y)
  *       text message. Why not do this in one step?
  * @bug Last valid message is #STR301_LOADED_SAVED_CITY, which is much less
  *      than #STR301_LAST. Close this gap.
+ * @todo Document meaning of \c -1 and \c 0 values of #mesX and #mesY.
  */
 void Micropolis::doMessage()
 {
@@ -465,7 +466,7 @@ void Micropolis::doMessage()
 
     } else { /* picture message */
 
-        pictId = -(MesNum);
+        pictId = -MesNum;
 
         if (pictId < 43) {
             GetIndString(messageStr, 301, pictId);
