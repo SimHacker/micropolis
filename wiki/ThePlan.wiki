@@ -112,7 +112,7 @@ Long term plan for MicropolisCore:
     * Also support small children using Micropolis like a drawing tool or etch-a-sketch, simply doodling with the editing tools for the visceral pleasure of it, and setting fires and other disasters to watch it burn and mutate.
     * Logo Turtles (as a generalization of the monster, tornado, helicopter, etc)
       * Implement programmable logo turtles as agents that can move around on the map, sense it, and edit it.
-      * Like Robot Odyssey agents, so you can go "inside" an agent, and travel around with it, operate its controls, read its sensors, and automate its behvior by wiring up visual programs with logic and math and nested "ic chip" components.
+      * Like Robot Odyssey agents, so you can go "inside" an agent, and travel around with it, operate its controls, read its sensors, and automate its behavior by wiring up visual programs with logic and math and nested "ic chip" components.
       * Plug in graphics to represent the agent: use classic logo turtle and Micropolis sprites, but also allow kids to plug in their own.  
       * Micropolis sprites have 8 rotations.  
       * SVG or Cairo drawings can be rotated continuously.
