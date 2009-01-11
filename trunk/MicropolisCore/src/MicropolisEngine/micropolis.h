@@ -2409,13 +2409,13 @@ public:
     bool DoInitialEval; ///< Need to perform initial city evaluation.
 
 
-    /** Generate a random animated #FIRE tile */
+    /** Generate a random animated MapTileCharacters::FIRE tile */
     inline short RandomFire()
     {
         return (FIRE + (Rand16() & 7)) | ANIMBIT;
     };
 
-    /** Generate a random #RUBBLE tile */
+    /** Generate a random MapTileCharacters::RUBBLE tile */
     inline short RandomRubble()
     {
         return (RUBBLE + (Rand16() & 3)) | BULLBIT;
