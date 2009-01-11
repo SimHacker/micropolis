@@ -205,29 +205,16 @@ static const int WORLD_Y =              100;
 enum SpriteType {
     SPRITE_NOTUSED = 0,
 
-    /* Obsolete names */
-    TRA, ///< Train sprite
-    COP, ///< Helicopter sprite
-    AIR, ///< Airplane sprite
-    SHI, ///< Ship
-    MON, ///< Scary monster
-    TOR, ///< Tornado sprite
-    EXP, ///< Explosion sprite
-    BUS, ///< Bus sprite
+    SPRITE_TRAIN, ///< Train sprite
+    SPRITE_HELICOPTER, ///< Helicopter sprite
+    SPRITE_AIRPLANE, ///< Airplane sprite
+    SPRITE_SHIP, ///< Ship
+    SPRITE_MONSTER, ///< Scary monster
+    SPRITE_TORNADO, ///< Tornado sprite
+    SPRITE_EXPLOSION, ///< Explosion sprite
+    SPRITE_BUS, ///< Bus sprite
 
-    OBJN, ///< Number of sprite objects
-
-
-    SPRITE_TRAIN = TRA, ///< Train sprite
-    SPRITE_HELICOPTER = COP, ///< Helicopter sprite
-    SPRITE_AIRPLANE = AIR, ///< Airplane sprite
-    SPRITE_SHIP = SHI, ///< Ship
-    SPRITE_MONSTER = MON, ///< Scary monster
-    SPRITE_TORNADO = TOR, ///< Tornado sprite
-    SPRITE_EXPLOSION = EXP, ///< Explosion sprite
-    SPRITE_BUS = BUS, ///< Bus sprite
-
-    SPRITE_COUNT = OBJN, ///< Number of sprite objects
+    SPRITE_COUNT, ///< Number of sprite objects
 };
 
 
@@ -2810,9 +2797,8 @@ public:
 
     Direction LDir; ///< Last moved direction
 
-    short TrafMaxX;
-
-    short TrafMaxY;
+    short TrafMaxX; ///< X coordinate of a position with heavy traffic
+    short TrafMaxY; ///< Y coordinate of a position with heavy traffic
 
 
     short MakeTraf(ZoneType dest);

@@ -148,7 +148,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
 
     switch (sprite->type) {
 
-        case TRA:
+        case SPRITE_TRAIN:
             sprite->width = 32;
             sprite->height = 32;
             sprite->x_offset = 32;
@@ -159,7 +159,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->dir = 4;
             break;
 
-        case SHI:
+        case SPRITE_SHIP:
             sprite->width = 48;
             sprite->height = 48;
             sprite->x_offset = 32;
@@ -184,7 +184,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->count = 1;
             break;
 
-        case MON:
+        case SPRITE_MONSTER:
             sprite->width = 48;
             sprite->height = 48;
             sprite->x_offset = 24;
@@ -211,7 +211,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->orig_y = sprite->y;
             break;
 
-        case COP:
+        case SPRITE_HELICOPTER:
             sprite->width = 32;
             sprite->height = 32;
             sprite->x_offset = 32;
@@ -226,7 +226,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->orig_y = y;
             break;
 
-        case AIR:
+        case SPRITE_AIRPLANE:
             sprite->width = 48;
             sprite->height = 48;
             sprite->x_offset = 24;
@@ -244,7 +244,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->dest_y = sprite->y;
             break;
 
-        case TOR:
+        case SPRITE_TORNADO:
             sprite->width = 48;
             sprite->height = 48;
             sprite->x_offset = 24;
@@ -255,7 +255,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->count = 200;
             break;
 
-        case EXP:
+        case SPRITE_EXPLOSION:
             sprite->width = 48;
             sprite->height = 48;
             sprite->x_offset = 24;
@@ -265,7 +265,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->frame = 1;
             break;
 
-        case BUS:
+        case SPRITE_BUS:
             sprite->width = 32;
             sprite->height = 32;
             sprite->x_offset = 30;
@@ -594,35 +594,35 @@ void Micropolis::MoveObjects()
         if (sprite->frame > 0) {
             switch (sprite->type) {
 
-                case TRA:
+                case SPRITE_TRAIN:
                     DoTrainSprite(sprite);
                     break;
 
-                case COP:
+                case SPRITE_HELICOPTER:
                     DoCopterSprite(sprite);
                     break;
 
-                case AIR:
+                case SPRITE_AIRPLANE:
                     DoAirplaneSprite(sprite);
                     break;
 
-                case SHI:
+                case SPRITE_SHIP:
                     DoShipSprite(sprite);
                     break;
 
-                case MON:
+                case SPRITE_MONSTER:
                     DoMonsterSprite(sprite);
                     break;
 
-                case TOR:
+                case SPRITE_TORNADO:
                     DoTornadoSprite(sprite);
                     break;
 
-                case EXP:
+                case SPRITE_EXPLOSION:
                     DoExplosionSprite(sprite);
                     break;
 
-                case BUS:
+                case SPRITE_BUS:
                     DoBusSprite(sprite);
                     break;
 
@@ -742,7 +742,7 @@ void Micropolis::DoCopterSprite(
         if (sprite->count == 0) {
 
             /* Attract copter to monster so it blows up more often */
-            SimSprite *s = GetSprite(MON);
+            SimSprite *s = GetSprite(SPRITE_MONSTER);
 
             if (s != NULL) {
                 sprite->dest_x = s->x;
@@ -750,7 +750,7 @@ void Micropolis::DoCopterSprite(
             } else {
 
                 /* Attract copter to tornado so it blows up more often */
-                s = GetSprite(TOR);
+                s = GetSprite(SPRITE_TORNADO);
 
                 if (s != NULL) {
                     sprite->dest_x = s->x;
@@ -866,7 +866,7 @@ void Micropolis::DoAirplaneSprite(
                 continue;
             }
 
-            if ((s->type == COP || s->type == AIR)
+            if ((s->type == SPRITE_HELICOPTER || s->type == SPRITE_AIRPLANE)
                                           && CheckSpriteCollision(sprite, s)) {
                 ExplodeSprite(s);
                 explode = true;
@@ -1228,8 +1228,8 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
         SimSprite *s;
         for (s = spriteList; s != NULL; s = s->next) {
             if (s->frame != 0 &&
-                (s->type == AIR || s->type == COP ||
-                 s->type == SHI || s->type == TRA) &&
+                (s->type == SPRITE_AIRPLANE || s->type == SPRITE_HELICOPTER
+                 || s->type == SPRITE_SHIP || s->type == SPRITE_TRAIN) &&
                 CheckSpriteCollision(sprite, s)) {
                 ExplodeSprite(s);
             }
@@ -1282,11 +1282,9 @@ void Micropolis::DoTornadoSprite(SimSprite *sprite)
     {
         SimSprite *s;
         for (s = spriteList; s != NULL; s = s->next) {
-            if ((s->frame != 0) &&
-                ((s->type == AIR) ||
-                 (s->type == COP) ||
-                 (s->type == SHI) ||
-                 (s->type == TRA)) &&
+            if (s->frame != 0 &&
+                (s->type == SPRITE_AIRPLANE || s->type == SPRITE_HELICOPTER
+                 || s->type == SPRITE_SHIP || s->type == SPRITE_TRAIN) &&
                 CheckSpriteCollision(sprite, s)) {
                 ExplodeSprite(s);
             }
@@ -1301,8 +1299,7 @@ void Micropolis::DoTornadoSprite(SimSprite *sprite)
         sprite->frame = 0;
     }
 
-    if ((sprite->count != 0) &&
-        (!Rand(500))) {
+    if (sprite->count != 0 && Rand(500) == 0) {
         sprite->frame = 0;
     }
 
@@ -1611,12 +1608,10 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
         int explode = 0;
 
         for (s = spriteList; s != NULL; s = s->next) {
-            if ((sprite != s) &&
-                (s->frame != 0) &&
-                ((s->type == BUS) ||
-                 ((s->type == TRA) &&
-                  (s->frame != 5))) &&
-                CheckSpriteCollision(sprite, s)) {
+            if (sprite != s && s->frame != 0
+                    && (s->type == SPRITE_BUS
+                        || (s->type == SPRITE_TRAIN && s->frame != 5))
+                    && CheckSpriteCollision(sprite, s)) {
                 ExplodeSprite(s);
                 explode = 1;
             }
@@ -1679,31 +1674,31 @@ void Micropolis::ExplodeSprite(SimSprite *sprite)
 
     switch (sprite->type) {
 
-        case AIR:
+        case SPRITE_AIRPLANE:
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_PLANE_CRASHED, x, y);
             break;
 
-        case SHI:
+        case SPRITE_SHIP:
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_SHIP_CRASHED, x, y);
             break;
 
-        case TRA:
+        case SPRITE_TRAIN:
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_TRAIN_CRASHED, x, y);
             break;
 
-        case COP:
+        case SPRITE_HELICOPTER:
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_HELICOPTER_CRASHED, x, y);
             break;
 
-        case BUS:
+        case SPRITE_BUS:
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
@@ -1857,8 +1852,8 @@ void Micropolis::StartFire(int x, int y)
  */
 void Micropolis::GenerateTrain(int x, int y)
 {
-    if (TotalPop > 20 && GetSprite(TRA) == NULL && Rand(25) == 0) {
-        MakeSprite(TRA, (x <<4) + TRA_GROOVE_X, (y <<4) + TRA_GROOVE_Y);
+    if (TotalPop > 20 && GetSprite(SPRITE_TRAIN) == NULL && Rand(25) == 0) {
+        MakeSprite(SPRITE_TRAIN, (x <<4) + TRA_GROOVE_X, (y <<4) + TRA_GROOVE_Y);
     }
 }
 
@@ -1870,8 +1865,8 @@ void Micropolis::GenerateTrain(int x, int y)
  */
 void Micropolis::GenerateBus(int x, int y)
 {
-    if (GetSprite(BUS) == NULL && Rand(25) == 0) {
-        MakeSprite(BUS, (x <<4) + BUS_GROOVE_X, (y <<4) + BUS_GROOVE_Y);
+    if (GetSprite(SPRITE_BUS) == NULL && Rand(25) == 0) {
+        MakeSprite(SPRITE_BUS, (x <<4) + BUS_GROOVE_X, (y <<4) + BUS_GROOVE_Y);
     }
 }
 
@@ -1926,7 +1921,7 @@ void Micropolis::GenerateShip()
  */
 void Micropolis::MakeShipHere(int x, int y)
 {
-    MakeSprite(SHI, (x <<4) - (48 - 1), (y <<4));
+    MakeSprite(SPRITE_SHIP, (x <<4) - (48 - 1), (y <<4));
 }
 
 
@@ -1939,7 +1934,7 @@ void Micropolis::MakeMonster()
     int x, y, z, done = 0;
     SimSprite *sprite;
 
-    sprite = GetSprite(MON);
+    sprite = GetSprite(SPRITE_MONSTER);
     if (sprite != NULL) {
         sprite->sound_count = 1;
         sprite->count = 1000;
@@ -1975,7 +1970,7 @@ void Micropolis::MakeMonster()
  */
 void Micropolis::MonsterHere(int x, int y)
 {
-    MakeSprite(MON, (x << 4) + 48, (y << 4));
+    MakeSprite(SPRITE_MONSTER, (x << 4) + 48, (y << 4));
     ClearMes();
     SendMesAt(-STR301_MONSTER_SIGHTED, x + 5, y);
 }
@@ -1990,11 +1985,11 @@ void Micropolis::MonsterHere(int x, int y)
  */
 void Micropolis::GenerateCopter(int x, int y)
 {
-    if (GetSprite(COP) != NULL) {
+    if (GetSprite(SPRITE_HELICOPTER) != NULL) {
         return;
     }
 
-    MakeSprite(COP, (x << 4), (y << 4) + 30);
+    MakeSprite(SPRITE_HELICOPTER, (x << 4), (y << 4) + 30);
 }
 
 
@@ -2007,11 +2002,11 @@ void Micropolis::GenerateCopter(int x, int y)
  */
 void Micropolis::GeneratePlane(int x, int y)
 {
-    if (GetSprite(AIR) != NULL) {
+    if (GetSprite(SPRITE_AIRPLANE) != NULL) {
         return;
     }
 
-    MakeSprite(AIR, (x <<4) + 48, (y <<4) + 12);
+    MakeSprite(SPRITE_AIRPLANE, (x <<4) + 48, (y <<4) + 12);
 }
 
 
@@ -2021,7 +2016,7 @@ void Micropolis::MakeTornado()
     short x, y;
     SimSprite *sprite;
 
-    sprite = GetSprite(TOR);
+    sprite = GetSprite(SPRITE_TORNADO);
     if (sprite != NULL) {
         sprite->count = 200;
         return;
@@ -2030,7 +2025,7 @@ void Micropolis::MakeTornado()
     x = Rand((WORLD_X <<4) - 800) + 400;
     y = Rand((WORLD_Y <<4) - 200) + 100;
 
-    MakeSprite(TOR, x, y);
+    MakeSprite(SPRITE_TORNADO, x, y);
     ClearMes();
     SendMesAt(-STR301_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2);
 }
@@ -2056,7 +2051,7 @@ void Micropolis::MakeExplosion(int x, int y)
  */
 void Micropolis::MakeExplosionAt( int x, int y)
 {
-    NewSprite("", EXP, x - 40, y - 16);
+    NewSprite("", SPRITE_EXPLOSION, x - 40, y - 16);
 }
 
 

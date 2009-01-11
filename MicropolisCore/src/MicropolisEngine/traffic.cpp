@@ -127,29 +127,27 @@ void Micropolis::SetTrafMem()
 
             z = Map[SMapX][SMapY] & LOMASK;
 
-            if ((z >= ROADBASE) &&
-                (z < POWERBASE)) {
+            if (z >= ROADBASE && z < POWERBASE) {
                 SimSprite *sprite;
 
                 /* check for rail */
                 z = TrfDensity[SMapX >>1][SMapY >>1];
                 z += 50;
 
-                if ((z > 240) &&
-                    (!Rand(5))) {
+                if (z > 240 && Rand(5) == 0) {
 
                     z = 240;
                     TrafMaxX = SMapX <<4;
                     TrafMaxY = SMapY <<4;
 
-                    if (((sprite = GetSprite(COP)) != NULL) &&
-                        (sprite->control == -1)) {
+                    /* Direct helicopter towards heavy traffic */
+                    sprite = GetSprite(SPRITE_HELICOPTER);
+                    if (sprite != NULL && sprite->control == -1) {
 
                         sprite->dest_x = TrafMaxX;
                         sprite->dest_y = TrafMaxY;
 
                     }
-
                 }
 
                 TrfDensity[SMapX >>1][SMapY >>1] = (Byte)z;
