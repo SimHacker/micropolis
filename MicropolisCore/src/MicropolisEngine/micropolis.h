@@ -534,18 +534,6 @@ enum MapTileCharacters {
     TILE_COUNT     = 960,
 };
 
-/** Generate a random animated #FIRE tile */
-static inline short RandomFire()
-{
-    return (FIRE + (Rand16() & 7)) | ANIMBIT;
-}
-
-/** Generate a random #RUBBLE tile */
-static inline short RandomRubble()
-{
-    return (RUBBLE + (Rand16() & 3)) | BULLBIT;
-}
-
 /*
  * These describe the wand values, the object dragged around on the screen.
  */
@@ -2433,6 +2421,18 @@ public:
 
     bool DoInitialEval; ///< Need to perform initial city evaluation.
 
+
+    /** Generate a random animated #FIRE tile */
+    inline short RandomFire()
+    {
+        return (FIRE + (Rand16() & 7)) | ANIMBIT;
+    };
+
+    /** Generate a random #RUBBLE tile */
+    inline short RandomRubble()
+    {
+        return (RUBBLE + (Rand16() & 3)) | BULLBIT;
+    };
 
     void SimFrame();
 
