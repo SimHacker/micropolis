@@ -242,23 +242,24 @@ void Micropolis::destroyMapArrays()
 }
 
 
-void Micropolis::GetHistoryRange(
-    int historyType,
-    int historyScale,
-    short *minValResult,
-    short *maxValResult)
+/**
+ * Get the minimal and maximal values of a historic graph.
+ * @param historyType  Type of history information. @see HistoryType
+ * @param historyScale Scale of history data. @see HistoryScale
+ * @param minValResult Pointer to variable to write minimal value to.
+ * @param maxValResult Pointer to variable to write maximal value to.
+ */
+void Micropolis::GetHistoryRange(int historyType, int historyScale,
+                                 short *minValResult, short *maxValResult)
 {
-    if ((historyType < 0) ||
-        (historyType >= HISTORY_TYPE_COUNT) ||
-        (historyScale < 0) ||
-        (historyScale >= HISTORY_SCALE_COUNT)) {
+    if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
+            || historyScale < 0 || historyScale >= HISTORY_SCALE_COUNT) {
         *minValResult = 0;
         *maxValResult = 0;
         return;
     }
 
-    short *history =
-        NULL;
+    short *history = NULL;
     switch (historyType) {
         case HISTORY_TYPE_RES:
             history = ResHis;
@@ -283,8 +284,7 @@ void Micropolis::GetHistoryRange(
             break;
     }
 
-    int offset =
-        0;
+    int offset = 0;
     switch (historyScale) {
         case HISTORY_SCALE_SHORT:
             offset = 0;
@@ -300,16 +300,11 @@ void Micropolis::GetHistoryRange(
     short minVal = 32000;
     short maxVal = -32000;
 
-    int i;
-    for (i = 0; i < HISTORY_COUNT; i++) {
-        short val =
-            history[i + offset];
-        if (val < minVal) {
-            minVal = val;
-        }
-        if (val > maxVal) {
-            maxVal = val;
-        }
+    for (int i = 0; i < HISTORY_COUNT; i++) {
+        short val = history[i + offset];
+
+        minVal = min(val, minVal);
+        maxVal = max(val, maxVal);
     }
 
     *minValResult = minVal;
@@ -317,22 +312,23 @@ void Micropolis::GetHistoryRange(
 }
 
 
-short Micropolis::GetHistory(
-    int historyType,
-    int historyScale,
-    int historyIndex)
+/**
+ * Get a value from the history tables.
+ * @param historyType  Type of history information. @see HistoryType
+ * @param historyScale Scale of history data. @see HistoryScale
+ * @param historyIndex Index in the data to obtain
+ * @return Historic data value of the requested graph
+ */
+short Micropolis::GetHistory(int historyType, int historyScale,
+                             int historyIndex)
 {
-    if ((historyType < 0) ||
-        (historyType >= HISTORY_TYPE_COUNT) ||
-        (historyScale < 0) ||
-        (historyScale >= HISTORY_SCALE_COUNT) ||
-        (historyIndex < 0) ||
-        (historyIndex >= HISTORY_COUNT)) {
+    if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
+            || historyScale < 0 || historyScale >= HISTORY_SCALE_COUNT
+            || historyIndex < 0 || historyIndex >= HISTORY_COUNT) {
         return 0;
     }
 
-    short *history =
-        NULL;
+    short *history = NULL;
     switch (historyType) {
         case HISTORY_TYPE_RES:
             history = ResHis;
@@ -357,8 +353,7 @@ short Micropolis::GetHistory(
             break;
     }
 
-    int offset =
-        0;
+    int offset = 0;
     switch (historyScale) {
         case HISTORY_SCALE_SHORT:
             offset = 0;
@@ -371,8 +366,7 @@ short Micropolis::GetHistory(
             break;
     }
 
-    short result =
-        history[historyIndex + offset];
+    short result = history[historyIndex + offset];
 
     return result;
 }
