@@ -497,7 +497,7 @@ void Micropolis::DidLoadCity()
 
 /**
  * Report to the frontend that the game failed to load.
- * @msg File that attempted to load
+ * @param msg File that attempted to load
  */
 void Micropolis::DidntLoadCity(const char *msg)
 {
