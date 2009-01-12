@@ -97,7 +97,7 @@ static const short WireTable[16] = {
 
 
 /* comefrom: check3Border check4Border check5Border processWand */
-int Micropolis::ConnecTile(short x, short y, short *TileAdrPtr, short Command)
+int Micropolis::connectTile(short x, short y, short *TileAdrPtr, short Command)
 {
     short Tile;
     int result = 1;
@@ -133,27 +133,27 @@ int Micropolis::ConnecTile(short x, short y, short *TileAdrPtr, short Command)
     switch (Command) {
 
     case 0:       /* Fix zone */
-        FixZone(x, y, TileAdrPtr);
+        fixZone(x, y, TileAdrPtr);
         break;
 
     case 1:       /* Doze zone */
-        result = LayDoze(x, y, TileAdrPtr);
-        FixZone(x, y, TileAdrPtr);
+        result = layDoze(x, y, TileAdrPtr);
+        fixZone(x, y, TileAdrPtr);
         break;
 
     case 2:       /* Lay Road */
-        result = LayRoad(x, y, TileAdrPtr);
-        FixZone(x, y, TileAdrPtr);
+        result = layRoad(x, y, TileAdrPtr);
+        fixZone(x, y, TileAdrPtr);
         break;
 
     case 3:       /* Lay Rail */
-        result = LayRail(x, y, TileAdrPtr);
-        FixZone(x, y, TileAdrPtr);
+        result = layRail(x, y, TileAdrPtr);
+        fixZone(x, y, TileAdrPtr);
         break;
 
     case 4:       /* Lay Wire */
-        result = LayWire(x, y, TileAdrPtr);
-        FixZone(x, y, TileAdrPtr);
+        result = layWire(x, y, TileAdrPtr);
+        fixZone(x, y, TileAdrPtr);
         break;
 
     }
@@ -168,7 +168,7 @@ int Micropolis::ConnecTile(short x, short y, short *TileAdrPtr, short Command)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::LayDoze(int x, int y, short *TileAdrPtr)
+int Micropolis::layDoze(int x, int y, short *TileAdrPtr)
 {
     short Tile;
 
@@ -221,7 +221,7 @@ int Micropolis::LayDoze(int x, int y, short *TileAdrPtr)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::LayRoad(int x, int y, short *TileAdrPtr)
+int Micropolis::layRoad(int x, int y, short *TileAdrPtr)
 {
     int cost = 10;
 
@@ -321,7 +321,7 @@ int Micropolis::LayRoad(int x, int y, short *TileAdrPtr)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::LayRail(int x, int y, short *TileAdrPtr)
+int Micropolis::layRail(int x, int y, short *TileAdrPtr)
 {
     int cost = 20;
 
@@ -424,7 +424,7 @@ int Micropolis::LayRail(int x, int y, short *TileAdrPtr)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::LayWire(int x, int y, short *TileAdrPtr)
+int Micropolis::layWire(int x, int y, short *TileAdrPtr)
 {
     int cost = 5;
 
@@ -533,24 +533,24 @@ int Micropolis::LayWire(int x, int y, short *TileAdrPtr)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-void Micropolis::FixZone(int x, int y, short *TileAdrPtr)
+void Micropolis::fixZone(int x, int y, short *TileAdrPtr)
 {
-    FixSingle(x, y, &TileAdrPtr[0]);
+    fixSingle(x, y, &TileAdrPtr[0]);
 
     if (y > 0) {
-        FixSingle(x, y - 1, &TileAdrPtr[-1]);
+        fixSingle(x, y - 1, &TileAdrPtr[-1]);
     }
 
     if (x < WORLD_X - 1) {
-        FixSingle(x + 1, y, &TileAdrPtr[WORLD_Y]);
+        fixSingle(x + 1, y, &TileAdrPtr[WORLD_Y]);
     }
 
     if (y < WORLD_Y - 1) {
-        FixSingle(x, y + 1, &TileAdrPtr[1]);
+        fixSingle(x, y + 1, &TileAdrPtr[1]);
     }
 
     if (x > 0) {
-        FixSingle(x - 1, y, &TileAdrPtr[-WORLD_Y]);
+        fixSingle(x - 1, y, &TileAdrPtr[-WORLD_Y]);
     }
 }
 
@@ -561,7 +561,7 @@ void Micropolis::FixZone(int x, int y, short *TileAdrPtr)
  * @param y          Y map coordinate.
  * @param TileAdrPtr Pointer to tile (\a x, \a y).
  */
-void Micropolis::FixSingle(int x, int y, short *TileAdrPtr)
+void Micropolis::fixSingle(int x, int y, short *TileAdrPtr)
 {
     short adjTile = 0;
 

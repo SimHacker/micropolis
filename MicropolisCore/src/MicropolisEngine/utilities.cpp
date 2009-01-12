@@ -138,10 +138,10 @@ void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
  */
 void Micropolis::Pause()
 {
-    if (!sim_paused) {
-        sim_paused_speed = SimMetaSpeed;
+    if (!simPaused) {
+        simPausedSpeed = SimMetaSpeed;
         setSpeed(0);
-        sim_paused = true;
+        simPaused = true;
     }
 }
 
@@ -151,9 +151,9 @@ void Micropolis::Pause()
  */
 void Micropolis::Resume()
 {
-    if (sim_paused) {
-        sim_paused = false;
-        setSpeed(sim_paused_speed);
+    if (simPaused) {
+        simPaused = false;
+        setSpeed(simPausedSpeed);
     }
 }
 
@@ -168,8 +168,8 @@ void Micropolis::setSpeed(short speed)
 
     SimMetaSpeed = speed;
 
-    if (sim_paused) {
-        sim_paused_speed = SimMetaSpeed;
+    if (simPaused) {
+        simPausedSpeed = SimMetaSpeed;
         speed = 0;
     }
 
@@ -178,15 +178,15 @@ void Micropolis::setSpeed(short speed)
     Callback(
         "UISetSpeed",
         "d",
-        (int)(sim_paused ? 0 : SimMetaSpeed));
+        (int)(simPaused ? 0 : SimMetaSpeed));
 
 }
 
 
 void Micropolis::setSkips(int skips)
 {
-    sim_skips = skips;
-    sim_skip = 0;
+    simSkips = skips;
+    simSkip = 0;
 }
 
 /**
@@ -262,12 +262,12 @@ void Micropolis::setCityName(const std::string &name)
  */
 void Micropolis::setCleanCityName(const std::string &name)
 {
-    CityName = name;
+    cityName = name;
 
     Callback(
         "UISetCityName",
         "s",
-        CityName.c_str());
+        cityName.c_str());
 }
 
 

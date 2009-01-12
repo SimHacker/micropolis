@@ -610,9 +610,9 @@ class Micropolis(_object):
     __swig_setmethods__["airportPop"] = _micropolisengine.Micropolis_airportPop_set
     __swig_getmethods__["airportPop"] = _micropolisengine.Micropolis_airportPop_get
     if _newclass:airportPop = _swig_property(_micropolisengine.Micropolis_airportPop_get, _micropolisengine.Micropolis_airportPop_set)
-    __swig_setmethods__["needHosp"] = _micropolisengine.Micropolis_needHosp_set
-    __swig_getmethods__["needHosp"] = _micropolisengine.Micropolis_needHosp_get
-    if _newclass:needHosp = _swig_property(_micropolisengine.Micropolis_needHosp_get, _micropolisengine.Micropolis_needHosp_set)
+    __swig_setmethods__["needHospital"] = _micropolisengine.Micropolis_needHospital_set
+    __swig_getmethods__["needHospital"] = _micropolisengine.Micropolis_needHospital_get
+    if _newclass:needHospital = _swig_property(_micropolisengine.Micropolis_needHospital_get, _micropolisengine.Micropolis_needHospital_set)
     __swig_setmethods__["needChurch"] = _micropolisengine.Micropolis_needChurch_set
     __swig_getmethods__["needChurch"] = _micropolisengine.Micropolis_needChurch_get
     if _newclass:needChurch = _swig_property(_micropolisengine.Micropolis_needChurch_get, _micropolisengine.Micropolis_needChurch_set)
@@ -831,40 +831,40 @@ class Micropolis(_object):
     __swig_setmethods__["fireValue"] = _micropolisengine.Micropolis_fireValue_set
     __swig_getmethods__["fireValue"] = _micropolisengine.Micropolis_fireValue_get
     if _newclass:fireValue = _swig_property(_micropolisengine.Micropolis_fireValue_get, _micropolisengine.Micropolis_fireValue_set)
-    __swig_setmethods__["MustDrawCurrPercents"] = _micropolisengine.Micropolis_MustDrawCurrPercents_set
-    __swig_getmethods__["MustDrawCurrPercents"] = _micropolisengine.Micropolis_MustDrawCurrPercents_get
-    if _newclass:MustDrawCurrPercents = _swig_property(_micropolisengine.Micropolis_MustDrawCurrPercents_get, _micropolisengine.Micropolis_MustDrawCurrPercents_set)
-    __swig_setmethods__["MustDrawBudgetWindow"] = _micropolisengine.Micropolis_MustDrawBudgetWindow_set
-    __swig_getmethods__["MustDrawBudgetWindow"] = _micropolisengine.Micropolis_MustDrawBudgetWindow_get
-    if _newclass:MustDrawBudgetWindow = _swig_property(_micropolisengine.Micropolis_MustDrawBudgetWindow_get, _micropolisengine.Micropolis_MustDrawBudgetWindow_set)
-    def InitFundingLevel(*args): return _micropolisengine.Micropolis_InitFundingLevel(*args)
-    def DoBudget(*args): return _micropolisengine.Micropolis_DoBudget(*args)
-    def DoBudgetFromMenu(*args): return _micropolisengine.Micropolis_DoBudgetFromMenu(*args)
-    def DoBudgetNow(*args): return _micropolisengine.Micropolis_DoBudgetNow(*args)
+    __swig_setmethods__["mustDrawCurrPercents"] = _micropolisengine.Micropolis_mustDrawCurrPercents_set
+    __swig_getmethods__["mustDrawCurrPercents"] = _micropolisengine.Micropolis_mustDrawCurrPercents_get
+    if _newclass:mustDrawCurrPercents = _swig_property(_micropolisengine.Micropolis_mustDrawCurrPercents_get, _micropolisengine.Micropolis_mustDrawCurrPercents_set)
+    __swig_setmethods__["mustDrawBudgetWindow"] = _micropolisengine.Micropolis_mustDrawBudgetWindow_set
+    __swig_getmethods__["mustDrawBudgetWindow"] = _micropolisengine.Micropolis_mustDrawBudgetWindow_get
+    if _newclass:mustDrawBudgetWindow = _swig_property(_micropolisengine.Micropolis_mustDrawBudgetWindow_get, _micropolisengine.Micropolis_mustDrawBudgetWindow_set)
+    def initFundingLevel(*args): return _micropolisengine.Micropolis_initFundingLevel(*args)
+    def doBudget(*args): return _micropolisengine.Micropolis_doBudget(*args)
+    def doBudgetFromMenu(*args): return _micropolisengine.Micropolis_doBudgetFromMenu(*args)
+    def doBudgetNow(*args): return _micropolisengine.Micropolis_doBudgetNow(*args)
     def drawBudgetWindow(*args): return _micropolisengine.Micropolis_drawBudgetWindow(*args)
-    def ReallyDrawBudgetWindow(*args): return _micropolisengine.Micropolis_ReallyDrawBudgetWindow(*args)
+    def reallyDrawBudgetWindow(*args): return _micropolisengine.Micropolis_reallyDrawBudgetWindow(*args)
     def drawCurrPercents(*args): return _micropolisengine.Micropolis_drawCurrPercents(*args)
-    def ReallyDrawCurrPercents(*args): return _micropolisengine.Micropolis_ReallyDrawCurrPercents(*args)
-    def UpdateBudgetWindow(*args): return _micropolisengine.Micropolis_UpdateBudgetWindow(*args)
-    def UpdateBudget(*args): return _micropolisengine.Micropolis_UpdateBudget(*args)
-    def ShowBudgetWindowAndStartWaiting(*args): return _micropolisengine.Micropolis_ShowBudgetWindowAndStartWaiting(*args)
-    def SetBudget(*args): return _micropolisengine.Micropolis_SetBudget(*args)
-    def SetBudgetValues(*args): return _micropolisengine.Micropolis_SetBudgetValues(*args)
-    def ConnecTile(*args): return _micropolisengine.Micropolis_ConnecTile(*args)
-    def LayDoze(*args): return _micropolisengine.Micropolis_LayDoze(*args)
-    def LayRoad(*args): return _micropolisengine.Micropolis_LayRoad(*args)
-    def LayRail(*args): return _micropolisengine.Micropolis_LayRail(*args)
-    def LayWire(*args): return _micropolisengine.Micropolis_LayWire(*args)
-    def FixZone(*args): return _micropolisengine.Micropolis_FixZone(*args)
-    def FixSingle(*args): return _micropolisengine.Micropolis_FixSingle(*args)
-    __swig_setmethods__["FloodCnt"] = _micropolisengine.Micropolis_FloodCnt_set
-    __swig_getmethods__["FloodCnt"] = _micropolisengine.Micropolis_FloodCnt_get
-    if _newclass:FloodCnt = _swig_property(_micropolisengine.Micropolis_FloodCnt_get, _micropolisengine.Micropolis_FloodCnt_set)
-    def MakeMeltdown(*args): return _micropolisengine.Micropolis_MakeMeltdown(*args)
-    def FireBomb(*args): return _micropolisengine.Micropolis_FireBomb(*args)
-    def MakeEarthquake(*args): return _micropolisengine.Micropolis_MakeEarthquake(*args)
-    def MakeFire(*args): return _micropolisengine.Micropolis_MakeFire(*args)
-    def MakeFlood(*args): return _micropolisengine.Micropolis_MakeFlood(*args)
+    def reallyDrawCurrPercents(*args): return _micropolisengine.Micropolis_reallyDrawCurrPercents(*args)
+    def updateBudgetWindow(*args): return _micropolisengine.Micropolis_updateBudgetWindow(*args)
+    def updateBudget(*args): return _micropolisengine.Micropolis_updateBudget(*args)
+    def showBudgetWindowAndStartWaiting(*args): return _micropolisengine.Micropolis_showBudgetWindowAndStartWaiting(*args)
+    def setBudget(*args): return _micropolisengine.Micropolis_setBudget(*args)
+    def setBudgetValues(*args): return _micropolisengine.Micropolis_setBudgetValues(*args)
+    def connectTile(*args): return _micropolisengine.Micropolis_connectTile(*args)
+    def layDoze(*args): return _micropolisengine.Micropolis_layDoze(*args)
+    def layRoad(*args): return _micropolisengine.Micropolis_layRoad(*args)
+    def layRail(*args): return _micropolisengine.Micropolis_layRail(*args)
+    def layWire(*args): return _micropolisengine.Micropolis_layWire(*args)
+    def fixZone(*args): return _micropolisengine.Micropolis_fixZone(*args)
+    def fixSingle(*args): return _micropolisengine.Micropolis_fixSingle(*args)
+    __swig_setmethods__["floodCount"] = _micropolisengine.Micropolis_floodCount_set
+    __swig_getmethods__["floodCount"] = _micropolisengine.Micropolis_floodCount_get
+    if _newclass:floodCount = _swig_property(_micropolisengine.Micropolis_floodCount_get, _micropolisengine.Micropolis_floodCount_set)
+    def makeMeltdown(*args): return _micropolisengine.Micropolis_makeMeltdown(*args)
+    def fireBomb(*args): return _micropolisengine.Micropolis_fireBomb(*args)
+    def makeEarthquake(*args): return _micropolisengine.Micropolis_makeEarthquake(*args)
+    def makeFire(*args): return _micropolisengine.Micropolis_makeFire(*args)
+    def makeFlood(*args): return _micropolisengine.Micropolis_makeFlood(*args)
     __swig_setmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_set
     __swig_getmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_get
     if _newclass:cityYes = _swig_property(_micropolisengine.Micropolis_cityYes_get, _micropolisengine.Micropolis_cityYes_set)
@@ -883,225 +883,219 @@ class Micropolis(_object):
     __swig_setmethods__["deltaCityPop"] = _micropolisengine.Micropolis_deltaCityPop_set
     __swig_getmethods__["deltaCityPop"] = _micropolisengine.Micropolis_deltaCityPop_get
     if _newclass:deltaCityPop = _swig_property(_micropolisengine.Micropolis_deltaCityPop_get, _micropolisengine.Micropolis_deltaCityPop_set)
-    __swig_setmethods__["cityAssValue"] = _micropolisengine.Micropolis_cityAssValue_set
-    __swig_getmethods__["cityAssValue"] = _micropolisengine.Micropolis_cityAssValue_get
-    if _newclass:cityAssValue = _swig_property(_micropolisengine.Micropolis_cityAssValue_get, _micropolisengine.Micropolis_cityAssValue_set)
+    __swig_setmethods__["cityAssessedValue"] = _micropolisengine.Micropolis_cityAssessedValue_set
+    __swig_getmethods__["cityAssessedValue"] = _micropolisengine.Micropolis_cityAssessedValue_get
+    if _newclass:cityAssessedValue = _swig_property(_micropolisengine.Micropolis_cityAssessedValue_get, _micropolisengine.Micropolis_cityAssessedValue_set)
     __swig_setmethods__["cityClass"] = _micropolisengine.Micropolis_cityClass_set
     __swig_getmethods__["cityClass"] = _micropolisengine.Micropolis_cityClass_get
     if _newclass:cityClass = _swig_property(_micropolisengine.Micropolis_cityClass_get, _micropolisengine.Micropolis_cityClass_set)
     __swig_setmethods__["cityScore"] = _micropolisengine.Micropolis_cityScore_set
     __swig_getmethods__["cityScore"] = _micropolisengine.Micropolis_cityScore_get
     if _newclass:cityScore = _swig_property(_micropolisengine.Micropolis_cityScore_get, _micropolisengine.Micropolis_cityScore_set)
-    __swig_setmethods__["deltaCityScore"] = _micropolisengine.Micropolis_deltaCityScore_set
-    __swig_getmethods__["deltaCityScore"] = _micropolisengine.Micropolis_deltaCityScore_get
-    if _newclass:deltaCityScore = _swig_property(_micropolisengine.Micropolis_deltaCityScore_get, _micropolisengine.Micropolis_deltaCityScore_set)
+    __swig_setmethods__["cityScoreDelta"] = _micropolisengine.Micropolis_cityScoreDelta_set
+    __swig_getmethods__["cityScoreDelta"] = _micropolisengine.Micropolis_cityScoreDelta_get
+    if _newclass:cityScoreDelta = _swig_property(_micropolisengine.Micropolis_cityScoreDelta_get, _micropolisengine.Micropolis_cityScoreDelta_set)
     __swig_setmethods__["trafficAverage"] = _micropolisengine.Micropolis_trafficAverage_set
     __swig_getmethods__["trafficAverage"] = _micropolisengine.Micropolis_trafficAverage_get
     if _newclass:trafficAverage = _swig_property(_micropolisengine.Micropolis_trafficAverage_get, _micropolisengine.Micropolis_trafficAverage_set)
-    def CityEvaluation(*args): return _micropolisengine.Micropolis_CityEvaluation(*args)
-    def EvalInit(*args): return _micropolisengine.Micropolis_EvalInit(*args)
-    def DoPopNum(*args): return _micropolisengine.Micropolis_DoPopNum(*args)
-    def DoProblems(*args): return _micropolisengine.Micropolis_DoProblems(*args)
-    def getAssValue(*args): return _micropolisengine.Micropolis_getAssValue(*args)
+    def cityEvaluation(*args): return _micropolisengine.Micropolis_cityEvaluation(*args)
+    def evalInit(*args): return _micropolisengine.Micropolis_evalInit(*args)
+    def doPopNum(*args): return _micropolisengine.Micropolis_doPopNum(*args)
+    def doProblems(*args): return _micropolisengine.Micropolis_doProblems(*args)
+    def getAssessedValue(*args): return _micropolisengine.Micropolis_getAssessedValue(*args)
     def voteProblems(*args): return _micropolisengine.Micropolis_voteProblems(*args)
-    def AverageTrf(*args): return _micropolisengine.Micropolis_AverageTrf(*args)
-    def GetUnemployment(*args): return _micropolisengine.Micropolis_GetUnemployment(*args)
-    def GetFire(*args): return _micropolisengine.Micropolis_GetFire(*args)
-    def GetScore(*args): return _micropolisengine.Micropolis_GetScore(*args)
-    def DoVotes(*args): return _micropolisengine.Micropolis_DoVotes(*args)
+    def getTrafficAverage(*args): return _micropolisengine.Micropolis_getTrafficAverage(*args)
+    def getUnemployment(*args): return _micropolisengine.Micropolis_getUnemployment(*args)
+    def getFireSeverity(*args): return _micropolisengine.Micropolis_getFireSeverity(*args)
+    def getScore(*args): return _micropolisengine.Micropolis_getScore(*args)
+    def doVotes(*args): return _micropolisengine.Micropolis_doVotes(*args)
     def doScoreCard(*args): return _micropolisengine.Micropolis_doScoreCard(*args)
-    def ChangeEval(*args): return _micropolisengine.Micropolis_ChangeEval(*args)
+    def changeEval(*args): return _micropolisengine.Micropolis_changeEval(*args)
     def scoreDoer(*args): return _micropolisengine.Micropolis_scoreDoer(*args)
     def countProblems(*args): return _micropolisengine.Micropolis_countProblems(*args)
     def getProblemNumber(*args): return _micropolisengine.Micropolis_getProblemNumber(*args)
     def getProblemVotes(*args): return _micropolisengine.Micropolis_getProblemVotes(*args)
-    def load_file(*args): return _micropolisengine.Micropolis_load_file(*args)
+    def loadFileDir(*args): return _micropolisengine.Micropolis_loadFileDir(*args)
     def loadFile(*args): return _micropolisengine.Micropolis_loadFile(*args)
     def saveFile(*args): return _micropolisengine.Micropolis_saveFile(*args)
-    def LoadScenario(*args): return _micropolisengine.Micropolis_LoadScenario(*args)
-    def DidLoadScenario(*args): return _micropolisengine.Micropolis_DidLoadScenario(*args)
-    def LoadCity(*args): return _micropolisengine.Micropolis_LoadCity(*args)
-    def DidLoadCity(*args): return _micropolisengine.Micropolis_DidLoadCity(*args)
-    def DidntLoadCity(*args): return _micropolisengine.Micropolis_DidntLoadCity(*args)
-    def SaveCity(*args): return _micropolisengine.Micropolis_SaveCity(*args)
-    def DoSaveCityAs(*args): return _micropolisengine.Micropolis_DoSaveCityAs(*args)
-    def DidSaveCity(*args): return _micropolisengine.Micropolis_DidSaveCity(*args)
-    def DidntSaveCity(*args): return _micropolisengine.Micropolis_DidntSaveCity(*args)
-    def SaveCityAs(*args): return _micropolisengine.Micropolis_SaveCityAs(*args)
-    __swig_setmethods__["XStart"] = _micropolisengine.Micropolis_XStart_set
-    __swig_getmethods__["XStart"] = _micropolisengine.Micropolis_XStart_get
-    if _newclass:XStart = _swig_property(_micropolisengine.Micropolis_XStart_get, _micropolisengine.Micropolis_XStart_set)
-    __swig_setmethods__["YStart"] = _micropolisengine.Micropolis_YStart_set
-    __swig_getmethods__["YStart"] = _micropolisengine.Micropolis_YStart_get
-    if _newclass:YStart = _swig_property(_micropolisengine.Micropolis_YStart_get, _micropolisengine.Micropolis_YStart_set)
-    __swig_setmethods__["MapX"] = _micropolisengine.Micropolis_MapX_set
-    __swig_getmethods__["MapX"] = _micropolisengine.Micropolis_MapX_get
-    if _newclass:MapX = _swig_property(_micropolisengine.Micropolis_MapX_get, _micropolisengine.Micropolis_MapX_set)
-    __swig_setmethods__["MapY"] = _micropolisengine.Micropolis_MapY_set
-    __swig_getmethods__["MapY"] = _micropolisengine.Micropolis_MapY_get
-    if _newclass:MapY = _swig_property(_micropolisengine.Micropolis_MapY_get, _micropolisengine.Micropolis_MapY_set)
-    __swig_setmethods__["Dir"] = _micropolisengine.Micropolis_Dir_set
-    __swig_getmethods__["Dir"] = _micropolisengine.Micropolis_Dir_get
-    if _newclass:Dir = _swig_property(_micropolisengine.Micropolis_Dir_get, _micropolisengine.Micropolis_Dir_set)
-    __swig_setmethods__["LastDir"] = _micropolisengine.Micropolis_LastDir_set
-    __swig_getmethods__["LastDir"] = _micropolisengine.Micropolis_LastDir_get
-    if _newclass:LastDir = _swig_property(_micropolisengine.Micropolis_LastDir_get, _micropolisengine.Micropolis_LastDir_set)
-    __swig_setmethods__["TreeLevel"] = _micropolisengine.Micropolis_TreeLevel_set
-    __swig_getmethods__["TreeLevel"] = _micropolisengine.Micropolis_TreeLevel_get
-    if _newclass:TreeLevel = _swig_property(_micropolisengine.Micropolis_TreeLevel_get, _micropolisengine.Micropolis_TreeLevel_set)
-    __swig_setmethods__["LakeLevel"] = _micropolisengine.Micropolis_LakeLevel_set
-    __swig_getmethods__["LakeLevel"] = _micropolisengine.Micropolis_LakeLevel_get
-    if _newclass:LakeLevel = _swig_property(_micropolisengine.Micropolis_LakeLevel_get, _micropolisengine.Micropolis_LakeLevel_set)
-    __swig_setmethods__["CurveLevel"] = _micropolisengine.Micropolis_CurveLevel_set
-    __swig_getmethods__["CurveLevel"] = _micropolisengine.Micropolis_CurveLevel_get
-    if _newclass:CurveLevel = _swig_property(_micropolisengine.Micropolis_CurveLevel_get, _micropolisengine.Micropolis_CurveLevel_set)
-    __swig_setmethods__["CreateIsland"] = _micropolisengine.Micropolis_CreateIsland_set
-    __swig_getmethods__["CreateIsland"] = _micropolisengine.Micropolis_CreateIsland_get
-    if _newclass:CreateIsland = _swig_property(_micropolisengine.Micropolis_CreateIsland_get, _micropolisengine.Micropolis_CreateIsland_set)
-    __swig_setmethods__["IslandRadius"] = _micropolisengine.Micropolis_IslandRadius_set
-    __swig_getmethods__["IslandRadius"] = _micropolisengine.Micropolis_IslandRadius_get
-    if _newclass:IslandRadius = _swig_property(_micropolisengine.Micropolis_IslandRadius_get, _micropolisengine.Micropolis_IslandRadius_set)
-    def GenerateNewCity(*args): return _micropolisengine.Micropolis_GenerateNewCity(*args)
-    def GenerateSomeCity(*args): return _micropolisengine.Micropolis_GenerateSomeCity(*args)
-    def GenerateMap(*args): return _micropolisengine.Micropolis_GenerateMap(*args)
-    def ClearMap(*args): return _micropolisengine.Micropolis_ClearMap(*args)
-    def ClearUnnatural(*args): return _micropolisengine.Micropolis_ClearUnnatural(*args)
-    def MakeNakedIsland(*args): return _micropolisengine.Micropolis_MakeNakedIsland(*args)
-    def MakeIsland(*args): return _micropolisengine.Micropolis_MakeIsland(*args)
-    def MakeLakes(*args): return _micropolisengine.Micropolis_MakeLakes(*args)
-    def GetRandStart(*args): return _micropolisengine.Micropolis_GetRandStart(*args)
-    def MoveMap(*args): return _micropolisengine.Micropolis_MoveMap(*args)
-    def TreeSplash(*args): return _micropolisengine.Micropolis_TreeSplash(*args)
-    def DoTrees(*args): return _micropolisengine.Micropolis_DoTrees(*args)
-    def SmoothRiver(*args): return _micropolisengine.Micropolis_SmoothRiver(*args)
-    def IsTree(*args): return _micropolisengine.Micropolis_IsTree(*args)
-    def SmoothTrees(*args): return _micropolisengine.Micropolis_SmoothTrees(*args)
-    def DoRivers(*args): return _micropolisengine.Micropolis_DoRivers(*args)
-    def DoBRiv(*args): return _micropolisengine.Micropolis_DoBRiv(*args)
-    def DoSRiv(*args): return _micropolisengine.Micropolis_DoSRiv(*args)
-    def PutOnMap(*args): return _micropolisengine.Micropolis_PutOnMap(*args)
-    def BRivPlop(*args): return _micropolisengine.Micropolis_BRivPlop(*args)
-    def SRivPlop(*args): return _micropolisengine.Micropolis_SRivPlop(*args)
-    def SmoothWater(*args): return _micropolisengine.Micropolis_SmoothWater(*args)
+    def loadScenario(*args): return _micropolisengine.Micropolis_loadScenario(*args)
+    def didLoadScenario(*args): return _micropolisengine.Micropolis_didLoadScenario(*args)
+    def loadCity(*args): return _micropolisengine.Micropolis_loadCity(*args)
+    def didLoadCity(*args): return _micropolisengine.Micropolis_didLoadCity(*args)
+    def didntLoadCity(*args): return _micropolisengine.Micropolis_didntLoadCity(*args)
+    def saveCity(*args): return _micropolisengine.Micropolis_saveCity(*args)
+    def doSaveCityAs(*args): return _micropolisengine.Micropolis_doSaveCityAs(*args)
+    def didSaveCity(*args): return _micropolisengine.Micropolis_didSaveCity(*args)
+    def didntSaveCity(*args): return _micropolisengine.Micropolis_didntSaveCity(*args)
+    def saveCityAs(*args): return _micropolisengine.Micropolis_saveCityAs(*args)
+    __swig_setmethods__["terrainXStart"] = _micropolisengine.Micropolis_terrainXStart_set
+    __swig_getmethods__["terrainXStart"] = _micropolisengine.Micropolis_terrainXStart_get
+    if _newclass:terrainXStart = _swig_property(_micropolisengine.Micropolis_terrainXStart_get, _micropolisengine.Micropolis_terrainXStart_set)
+    __swig_setmethods__["terrainYStart"] = _micropolisengine.Micropolis_terrainYStart_set
+    __swig_getmethods__["terrainYStart"] = _micropolisengine.Micropolis_terrainYStart_get
+    if _newclass:terrainYStart = _swig_property(_micropolisengine.Micropolis_terrainYStart_get, _micropolisengine.Micropolis_terrainYStart_set)
+    __swig_setmethods__["terrainMapX"] = _micropolisengine.Micropolis_terrainMapX_set
+    __swig_getmethods__["terrainMapX"] = _micropolisengine.Micropolis_terrainMapX_get
+    if _newclass:terrainMapX = _swig_property(_micropolisengine.Micropolis_terrainMapX_get, _micropolisengine.Micropolis_terrainMapX_set)
+    __swig_setmethods__["terrainMapY"] = _micropolisengine.Micropolis_terrainMapY_set
+    __swig_getmethods__["terrainMapY"] = _micropolisengine.Micropolis_terrainMapY_get
+    if _newclass:terrainMapY = _swig_property(_micropolisengine.Micropolis_terrainMapY_get, _micropolisengine.Micropolis_terrainMapY_set)
+    __swig_setmethods__["terrainDir"] = _micropolisengine.Micropolis_terrainDir_set
+    __swig_getmethods__["terrainDir"] = _micropolisengine.Micropolis_terrainDir_get
+    if _newclass:terrainDir = _swig_property(_micropolisengine.Micropolis_terrainDir_get, _micropolisengine.Micropolis_terrainDir_set)
+    __swig_setmethods__["terrainDirLast"] = _micropolisengine.Micropolis_terrainDirLast_set
+    __swig_getmethods__["terrainDirLast"] = _micropolisengine.Micropolis_terrainDirLast_get
+    if _newclass:terrainDirLast = _swig_property(_micropolisengine.Micropolis_terrainDirLast_get, _micropolisengine.Micropolis_terrainDirLast_set)
+    __swig_setmethods__["terrainTreeLevel"] = _micropolisengine.Micropolis_terrainTreeLevel_set
+    __swig_getmethods__["terrainTreeLevel"] = _micropolisengine.Micropolis_terrainTreeLevel_get
+    if _newclass:terrainTreeLevel = _swig_property(_micropolisengine.Micropolis_terrainTreeLevel_get, _micropolisengine.Micropolis_terrainTreeLevel_set)
+    __swig_setmethods__["terrainLakeLevel"] = _micropolisengine.Micropolis_terrainLakeLevel_set
+    __swig_getmethods__["terrainLakeLevel"] = _micropolisengine.Micropolis_terrainLakeLevel_get
+    if _newclass:terrainLakeLevel = _swig_property(_micropolisengine.Micropolis_terrainLakeLevel_get, _micropolisengine.Micropolis_terrainLakeLevel_set)
+    __swig_setmethods__["terrainCurveLevel"] = _micropolisengine.Micropolis_terrainCurveLevel_set
+    __swig_getmethods__["terrainCurveLevel"] = _micropolisengine.Micropolis_terrainCurveLevel_get
+    if _newclass:terrainCurveLevel = _swig_property(_micropolisengine.Micropolis_terrainCurveLevel_get, _micropolisengine.Micropolis_terrainCurveLevel_set)
+    __swig_setmethods__["terrainCreateIsland"] = _micropolisengine.Micropolis_terrainCreateIsland_set
+    __swig_getmethods__["terrainCreateIsland"] = _micropolisengine.Micropolis_terrainCreateIsland_get
+    if _newclass:terrainCreateIsland = _swig_property(_micropolisengine.Micropolis_terrainCreateIsland_get, _micropolisengine.Micropolis_terrainCreateIsland_set)
+    __swig_setmethods__["terrainIslandRadius"] = _micropolisengine.Micropolis_terrainIslandRadius_set
+    __swig_getmethods__["terrainIslandRadius"] = _micropolisengine.Micropolis_terrainIslandRadius_get
+    if _newclass:terrainIslandRadius = _swig_property(_micropolisengine.Micropolis_terrainIslandRadius_get, _micropolisengine.Micropolis_terrainIslandRadius_set)
+    def generateNewCity(*args): return _micropolisengine.Micropolis_generateNewCity(*args)
+    def generateSomeCity(*args): return _micropolisengine.Micropolis_generateSomeCity(*args)
+    def generateMap(*args): return _micropolisengine.Micropolis_generateMap(*args)
+    def clearMap(*args): return _micropolisengine.Micropolis_clearMap(*args)
+    def clearUnnatural(*args): return _micropolisengine.Micropolis_clearUnnatural(*args)
+    def makeNakedIsland(*args): return _micropolisengine.Micropolis_makeNakedIsland(*args)
+    def makeIsland(*args): return _micropolisengine.Micropolis_makeIsland(*args)
+    def makeLakes(*args): return _micropolisengine.Micropolis_makeLakes(*args)
+    def getRandStart(*args): return _micropolisengine.Micropolis_getRandStart(*args)
+    def moveMap(*args): return _micropolisengine.Micropolis_moveMap(*args)
+    def treeSplash(*args): return _micropolisengine.Micropolis_treeSplash(*args)
+    def doTrees(*args): return _micropolisengine.Micropolis_doTrees(*args)
+    def smoothRiver(*args): return _micropolisengine.Micropolis_smoothRiver(*args)
+    def isTree(*args): return _micropolisengine.Micropolis_isTree(*args)
+    def smoothTrees(*args): return _micropolisengine.Micropolis_smoothTrees(*args)
+    def doRivers(*args): return _micropolisengine.Micropolis_doRivers(*args)
+    def doBRiver(*args): return _micropolisengine.Micropolis_doBRiver(*args)
+    def doSRiver(*args): return _micropolisengine.Micropolis_doSRiver(*args)
+    def putOnMap(*args): return _micropolisengine.Micropolis_putOnMap(*args)
+    def plopBRiver(*args): return _micropolisengine.Micropolis_plopBRiver(*args)
+    def plopSRiver(*args): return _micropolisengine.Micropolis_plopSRiver(*args)
+    def smoothWater(*args): return _micropolisengine.Micropolis_smoothWater(*args)
     __swig_setmethods__["newGraph"] = _micropolisengine.Micropolis_newGraph_set
     __swig_getmethods__["newGraph"] = _micropolisengine.Micropolis_newGraph_get
     if _newclass:newGraph = _swig_property(_micropolisengine.Micropolis_newGraph_get, _micropolisengine.Micropolis_newGraph_set)
-    __swig_setmethods__["History10"] = _micropolisengine.Micropolis_History10_set
-    __swig_getmethods__["History10"] = _micropolisengine.Micropolis_History10_get
-    if _newclass:History10 = _swig_property(_micropolisengine.Micropolis_History10_get, _micropolisengine.Micropolis_History10_set)
-    __swig_setmethods__["History120"] = _micropolisengine.Micropolis_History120_set
-    __swig_getmethods__["History120"] = _micropolisengine.Micropolis_History120_get
-    if _newclass:History120 = _swig_property(_micropolisengine.Micropolis_History120_get, _micropolisengine.Micropolis_History120_set)
-    __swig_setmethods__["HistoryInitialized"] = _micropolisengine.Micropolis_HistoryInitialized_set
-    __swig_getmethods__["HistoryInitialized"] = _micropolisengine.Micropolis_HistoryInitialized_get
-    if _newclass:HistoryInitialized = _swig_property(_micropolisengine.Micropolis_HistoryInitialized_get, _micropolisengine.Micropolis_HistoryInitialized_set)
-    __swig_setmethods__["Graph10Max"] = _micropolisengine.Micropolis_Graph10Max_set
-    __swig_getmethods__["Graph10Max"] = _micropolisengine.Micropolis_Graph10Max_get
-    if _newclass:Graph10Max = _swig_property(_micropolisengine.Micropolis_Graph10Max_get, _micropolisengine.Micropolis_Graph10Max_set)
-    __swig_setmethods__["Graph120Max"] = _micropolisengine.Micropolis_Graph120Max_set
-    __swig_getmethods__["Graph120Max"] = _micropolisengine.Micropolis_Graph120Max_get
-    if _newclass:Graph120Max = _swig_property(_micropolisengine.Micropolis_Graph120Max_get, _micropolisengine.Micropolis_Graph120Max_set)
-    __swig_setmethods__["GraphUpdateTime"] = _micropolisengine.Micropolis_GraphUpdateTime_set
-    __swig_getmethods__["GraphUpdateTime"] = _micropolisengine.Micropolis_GraphUpdateTime_get
-    if _newclass:GraphUpdateTime = _swig_property(_micropolisengine.Micropolis_GraphUpdateTime_get, _micropolisengine.Micropolis_GraphUpdateTime_set)
+    __swig_setmethods__["history10"] = _micropolisengine.Micropolis_history10_set
+    __swig_getmethods__["history10"] = _micropolisengine.Micropolis_history10_get
+    if _newclass:history10 = _swig_property(_micropolisengine.Micropolis_history10_get, _micropolisengine.Micropolis_history10_set)
+    __swig_setmethods__["history120"] = _micropolisengine.Micropolis_history120_set
+    __swig_getmethods__["history120"] = _micropolisengine.Micropolis_history120_get
+    if _newclass:history120 = _swig_property(_micropolisengine.Micropolis_history120_get, _micropolisengine.Micropolis_history120_set)
+    __swig_setmethods__["historyInitialized"] = _micropolisengine.Micropolis_historyInitialized_set
+    __swig_getmethods__["historyInitialized"] = _micropolisengine.Micropolis_historyInitialized_get
+    if _newclass:historyInitialized = _swig_property(_micropolisengine.Micropolis_historyInitialized_get, _micropolisengine.Micropolis_historyInitialized_set)
+    __swig_setmethods__["graph10Max"] = _micropolisengine.Micropolis_graph10Max_set
+    __swig_getmethods__["graph10Max"] = _micropolisengine.Micropolis_graph10Max_get
+    if _newclass:graph10Max = _swig_property(_micropolisengine.Micropolis_graph10Max_get, _micropolisengine.Micropolis_graph10Max_set)
+    __swig_setmethods__["graph120Max"] = _micropolisengine.Micropolis_graph120Max_set
+    __swig_getmethods__["graph120Max"] = _micropolisengine.Micropolis_graph120Max_get
+    if _newclass:graph120Max = _swig_property(_micropolisengine.Micropolis_graph120Max_get, _micropolisengine.Micropolis_graph120Max_set)
+    __swig_setmethods__["graphUpdateTime"] = _micropolisengine.Micropolis_graphUpdateTime_set
+    __swig_getmethods__["graphUpdateTime"] = _micropolisengine.Micropolis_graphUpdateTime_get
+    if _newclass:graphUpdateTime = _swig_property(_micropolisengine.Micropolis_graphUpdateTime_get, _micropolisengine.Micropolis_graphUpdateTime_set)
     def drawMonth(*args): return _micropolisengine.Micropolis_drawMonth(*args)
     def doAllGraphs(*args): return _micropolisengine.Micropolis_doAllGraphs(*args)
-    def ChangeCensus(*args): return _micropolisengine.Micropolis_ChangeCensus(*args)
+    def changeCensus(*args): return _micropolisengine.Micropolis_changeCensus(*args)
     def graphDoer(*args): return _micropolisengine.Micropolis_graphDoer(*args)
     def initGraphs(*args): return _micropolisengine.Micropolis_initGraphs(*args)
-    def InitGraphMax(*args): return _micropolisengine.Micropolis_InitGraphMax(*args)
-    def InitWillStuff(*args): return _micropolisengine.Micropolis_InitWillStuff(*args)
-    def ResetMapState(*args): return _micropolisengine.Micropolis_ResetMapState(*args)
-    def ResetEditorState(*args): return _micropolisengine.Micropolis_ResetEditorState(*args)
-    __swig_setmethods__["sim_loops"] = _micropolisengine.Micropolis_sim_loops_set
-    __swig_getmethods__["sim_loops"] = _micropolisengine.Micropolis_sim_loops_get
-    if _newclass:sim_loops = _swig_property(_micropolisengine.Micropolis_sim_loops_get, _micropolisengine.Micropolis_sim_loops_set)
-    __swig_setmethods__["sim_delay"] = _micropolisengine.Micropolis_sim_delay_set
-    __swig_getmethods__["sim_delay"] = _micropolisengine.Micropolis_sim_delay_get
-    if _newclass:sim_delay = _swig_property(_micropolisengine.Micropolis_sim_delay_get, _micropolisengine.Micropolis_sim_delay_set)
-    __swig_setmethods__["sim_skips"] = _micropolisengine.Micropolis_sim_skips_set
-    __swig_getmethods__["sim_skips"] = _micropolisengine.Micropolis_sim_skips_get
-    if _newclass:sim_skips = _swig_property(_micropolisengine.Micropolis_sim_skips_get, _micropolisengine.Micropolis_sim_skips_set)
-    __swig_setmethods__["sim_skip"] = _micropolisengine.Micropolis_sim_skip_set
-    __swig_getmethods__["sim_skip"] = _micropolisengine.Micropolis_sim_skip_get
-    if _newclass:sim_skip = _swig_property(_micropolisengine.Micropolis_sim_skip_get, _micropolisengine.Micropolis_sim_skip_set)
-    __swig_setmethods__["sim_paused"] = _micropolisengine.Micropolis_sim_paused_set
-    __swig_getmethods__["sim_paused"] = _micropolisengine.Micropolis_sim_paused_get
-    if _newclass:sim_paused = _swig_property(_micropolisengine.Micropolis_sim_paused_get, _micropolisengine.Micropolis_sim_paused_set)
-    __swig_setmethods__["sim_paused_speed"] = _micropolisengine.Micropolis_sim_paused_speed_set
-    __swig_getmethods__["sim_paused_speed"] = _micropolisengine.Micropolis_sim_paused_speed_get
-    if _newclass:sim_paused_speed = _swig_property(_micropolisengine.Micropolis_sim_paused_speed_get, _micropolisengine.Micropolis_sim_paused_speed_set)
-    __swig_setmethods__["heat_steps"] = _micropolisengine.Micropolis_heat_steps_set
-    __swig_getmethods__["heat_steps"] = _micropolisengine.Micropolis_heat_steps_get
-    if _newclass:heat_steps = _swig_property(_micropolisengine.Micropolis_heat_steps_get, _micropolisengine.Micropolis_heat_steps_set)
-    __swig_setmethods__["heat_flow"] = _micropolisengine.Micropolis_heat_flow_set
-    __swig_getmethods__["heat_flow"] = _micropolisengine.Micropolis_heat_flow_get
-    if _newclass:heat_flow = _swig_property(_micropolisengine.Micropolis_heat_flow_get, _micropolisengine.Micropolis_heat_flow_set)
-    __swig_setmethods__["heat_rule"] = _micropolisengine.Micropolis_heat_rule_set
-    __swig_getmethods__["heat_rule"] = _micropolisengine.Micropolis_heat_rule_get
-    if _newclass:heat_rule = _swig_property(_micropolisengine.Micropolis_heat_rule_get, _micropolisengine.Micropolis_heat_rule_set)
-    __swig_setmethods__["heat_wrap"] = _micropolisengine.Micropolis_heat_wrap_set
-    __swig_getmethods__["heat_wrap"] = _micropolisengine.Micropolis_heat_wrap_get
-    if _newclass:heat_wrap = _swig_property(_micropolisengine.Micropolis_heat_wrap_get, _micropolisengine.Micropolis_heat_wrap_set)
-    __swig_setmethods__["CityFileName"] = _micropolisengine.Micropolis_CityFileName_set
-    __swig_getmethods__["CityFileName"] = _micropolisengine.Micropolis_CityFileName_get
-    if _newclass:CityFileName = _swig_property(_micropolisengine.Micropolis_CityFileName_get, _micropolisengine.Micropolis_CityFileName_set)
-    __swig_setmethods__["CityName"] = _micropolisengine.Micropolis_CityName_set
-    __swig_getmethods__["CityName"] = _micropolisengine.Micropolis_CityName_get
-    if _newclass:CityName = _swig_property(_micropolisengine.Micropolis_CityName_get, _micropolisengine.Micropolis_CityName_set)
-    __swig_setmethods__["MultiPlayerMode"] = _micropolisengine.Micropolis_MultiPlayerMode_set
-    __swig_getmethods__["MultiPlayerMode"] = _micropolisengine.Micropolis_MultiPlayerMode_get
-    if _newclass:MultiPlayerMode = _swig_property(_micropolisengine.Micropolis_MultiPlayerMode_get, _micropolisengine.Micropolis_MultiPlayerMode_set)
-    __swig_setmethods__["TilesAnimated"] = _micropolisengine.Micropolis_TilesAnimated_set
-    __swig_getmethods__["TilesAnimated"] = _micropolisengine.Micropolis_TilesAnimated_get
-    if _newclass:TilesAnimated = _swig_property(_micropolisengine.Micropolis_TilesAnimated_get, _micropolisengine.Micropolis_TilesAnimated_set)
-    __swig_setmethods__["DoAnimation"] = _micropolisengine.Micropolis_DoAnimation_set
-    __swig_getmethods__["DoAnimation"] = _micropolisengine.Micropolis_DoAnimation_get
-    if _newclass:DoAnimation = _swig_property(_micropolisengine.Micropolis_DoAnimation_get, _micropolisengine.Micropolis_DoAnimation_set)
-    __swig_setmethods__["DoMessages"] = _micropolisengine.Micropolis_DoMessages_set
-    __swig_getmethods__["DoMessages"] = _micropolisengine.Micropolis_DoMessages_get
-    if _newclass:DoMessages = _swig_property(_micropolisengine.Micropolis_DoMessages_get, _micropolisengine.Micropolis_DoMessages_set)
-    __swig_setmethods__["DoNotices"] = _micropolisengine.Micropolis_DoNotices_set
-    __swig_getmethods__["DoNotices"] = _micropolisengine.Micropolis_DoNotices_get
-    if _newclass:DoNotices = _swig_property(_micropolisengine.Micropolis_DoNotices_get, _micropolisengine.Micropolis_DoNotices_set)
+    def initGraphMax(*args): return _micropolisengine.Micropolis_initGraphMax(*args)
+    def initWillStuff(*args): return _micropolisengine.Micropolis_initWillStuff(*args)
+    def resetMapState(*args): return _micropolisengine.Micropolis_resetMapState(*args)
+    def resetEditorState(*args): return _micropolisengine.Micropolis_resetEditorState(*args)
+    __swig_setmethods__["simLoops"] = _micropolisengine.Micropolis_simLoops_set
+    __swig_getmethods__["simLoops"] = _micropolisengine.Micropolis_simLoops_get
+    if _newclass:simLoops = _swig_property(_micropolisengine.Micropolis_simLoops_get, _micropolisengine.Micropolis_simLoops_set)
+    __swig_setmethods__["simSkips"] = _micropolisengine.Micropolis_simSkips_set
+    __swig_getmethods__["simSkips"] = _micropolisengine.Micropolis_simSkips_get
+    if _newclass:simSkips = _swig_property(_micropolisengine.Micropolis_simSkips_get, _micropolisengine.Micropolis_simSkips_set)
+    __swig_setmethods__["simSkip"] = _micropolisengine.Micropolis_simSkip_set
+    __swig_getmethods__["simSkip"] = _micropolisengine.Micropolis_simSkip_get
+    if _newclass:simSkip = _swig_property(_micropolisengine.Micropolis_simSkip_get, _micropolisengine.Micropolis_simSkip_set)
+    __swig_setmethods__["simPaused"] = _micropolisengine.Micropolis_simPaused_set
+    __swig_getmethods__["simPaused"] = _micropolisengine.Micropolis_simPaused_get
+    if _newclass:simPaused = _swig_property(_micropolisengine.Micropolis_simPaused_get, _micropolisengine.Micropolis_simPaused_set)
+    __swig_setmethods__["simPausedSpeed"] = _micropolisengine.Micropolis_simPausedSpeed_set
+    __swig_getmethods__["simPausedSpeed"] = _micropolisengine.Micropolis_simPausedSpeed_get
+    if _newclass:simPausedSpeed = _swig_property(_micropolisengine.Micropolis_simPausedSpeed_get, _micropolisengine.Micropolis_simPausedSpeed_set)
+    __swig_setmethods__["heatSteps"] = _micropolisengine.Micropolis_heatSteps_set
+    __swig_getmethods__["heatSteps"] = _micropolisengine.Micropolis_heatSteps_get
+    if _newclass:heatSteps = _swig_property(_micropolisengine.Micropolis_heatSteps_get, _micropolisengine.Micropolis_heatSteps_set)
+    __swig_setmethods__["heatFlow"] = _micropolisengine.Micropolis_heatFlow_set
+    __swig_getmethods__["heatFlow"] = _micropolisengine.Micropolis_heatFlow_get
+    if _newclass:heatFlow = _swig_property(_micropolisengine.Micropolis_heatFlow_get, _micropolisengine.Micropolis_heatFlow_set)
+    __swig_setmethods__["heatRule"] = _micropolisengine.Micropolis_heatRule_set
+    __swig_getmethods__["heatRule"] = _micropolisengine.Micropolis_heatRule_get
+    if _newclass:heatRule = _swig_property(_micropolisengine.Micropolis_heatRule_get, _micropolisengine.Micropolis_heatRule_set)
+    __swig_setmethods__["heatWrap"] = _micropolisengine.Micropolis_heatWrap_set
+    __swig_getmethods__["heatWrap"] = _micropolisengine.Micropolis_heatWrap_get
+    if _newclass:heatWrap = _swig_property(_micropolisengine.Micropolis_heatWrap_get, _micropolisengine.Micropolis_heatWrap_set)
+    __swig_setmethods__["cityFileName"] = _micropolisengine.Micropolis_cityFileName_set
+    __swig_getmethods__["cityFileName"] = _micropolisengine.Micropolis_cityFileName_get
+    if _newclass:cityFileName = _swig_property(_micropolisengine.Micropolis_cityFileName_get, _micropolisengine.Micropolis_cityFileName_set)
+    __swig_setmethods__["cityName"] = _micropolisengine.Micropolis_cityName_set
+    __swig_getmethods__["cityName"] = _micropolisengine.Micropolis_cityName_get
+    if _newclass:cityName = _swig_property(_micropolisengine.Micropolis_cityName_get, _micropolisengine.Micropolis_cityName_set)
+    __swig_setmethods__["tilesAnimated"] = _micropolisengine.Micropolis_tilesAnimated_set
+    __swig_getmethods__["tilesAnimated"] = _micropolisengine.Micropolis_tilesAnimated_get
+    if _newclass:tilesAnimated = _swig_property(_micropolisengine.Micropolis_tilesAnimated_get, _micropolisengine.Micropolis_tilesAnimated_set)
+    __swig_setmethods__["doAnimation"] = _micropolisengine.Micropolis_doAnimation_set
+    __swig_getmethods__["doAnimation"] = _micropolisengine.Micropolis_doAnimation_get
+    if _newclass:doAnimation = _swig_property(_micropolisengine.Micropolis_doAnimation_get, _micropolisengine.Micropolis_doAnimation_set)
+    __swig_setmethods__["doMessages"] = _micropolisengine.Micropolis_doMessages_set
+    __swig_getmethods__["doMessages"] = _micropolisengine.Micropolis_doMessages_get
+    if _newclass:doMessages = _swig_property(_micropolisengine.Micropolis_doMessages_get, _micropolisengine.Micropolis_doMessages_set)
+    __swig_setmethods__["doNotices"] = _micropolisengine.Micropolis_doNotices_set
+    __swig_getmethods__["doNotices"] = _micropolisengine.Micropolis_doNotices_get
+    if _newclass:doNotices = _swig_property(_micropolisengine.Micropolis_doNotices_get, _micropolisengine.Micropolis_doNotices_set)
     def getMicropolisVersion(*args): return _micropolisengine.Micropolis_getMicropolisVersion(*args)
-    def env_init(*args): return _micropolisengine.Micropolis_env_init(*args)
-    def sim_init(*args): return _micropolisengine.Micropolis_sim_init(*args)
-    def sim_update(*args): return _micropolisengine.Micropolis_sim_update(*args)
-    def sim_heat(*args): return _micropolisengine.Micropolis_sim_heat(*args)
-    def sim_loop(*args): return _micropolisengine.Micropolis_sim_loop(*args)
-    def sim_tick(*args): return _micropolisengine.Micropolis_sim_tick(*args)
+    def environmentInit(*args): return _micropolisengine.Micropolis_environmentInit(*args)
+    def simInit(*args): return _micropolisengine.Micropolis_simInit(*args)
+    def simUpdate(*args): return _micropolisengine.Micropolis_simUpdate(*args)
+    def simHeat(*args): return _micropolisengine.Micropolis_simHeat(*args)
+    def simLoop(*args): return _micropolisengine.Micropolis_simLoop(*args)
+    def simTick(*args): return _micropolisengine.Micropolis_simTick(*args)
     __swig_setmethods__["lastCityPop"] = _micropolisengine.Micropolis_lastCityPop_set
     __swig_getmethods__["lastCityPop"] = _micropolisengine.Micropolis_lastCityPop_get
     if _newclass:lastCityPop = _swig_property(_micropolisengine.Micropolis_lastCityPop_get, _micropolisengine.Micropolis_lastCityPop_set)
-    __swig_setmethods__["LastCategory"] = _micropolisengine.Micropolis_LastCategory_set
-    __swig_getmethods__["LastCategory"] = _micropolisengine.Micropolis_LastCategory_get
-    if _newclass:LastCategory = _swig_property(_micropolisengine.Micropolis_LastCategory_get, _micropolisengine.Micropolis_LastCategory_set)
-    __swig_setmethods__["LastPicNum"] = _micropolisengine.Micropolis_LastPicNum_set
-    __swig_getmethods__["LastPicNum"] = _micropolisengine.Micropolis_LastPicNum_get
-    if _newclass:LastPicNum = _swig_property(_micropolisengine.Micropolis_LastPicNum_get, _micropolisengine.Micropolis_LastPicNum_set)
-    __swig_setmethods__["autoGo"] = _micropolisengine.Micropolis_autoGo_set
-    __swig_getmethods__["autoGo"] = _micropolisengine.Micropolis_autoGo_get
-    if _newclass:autoGo = _swig_property(_micropolisengine.Micropolis_autoGo_get, _micropolisengine.Micropolis_autoGo_set)
-    __swig_setmethods__["HaveLastMessage"] = _micropolisengine.Micropolis_HaveLastMessage_set
-    __swig_getmethods__["HaveLastMessage"] = _micropolisengine.Micropolis_HaveLastMessage_get
-    if _newclass:HaveLastMessage = _swig_property(_micropolisengine.Micropolis_HaveLastMessage_get, _micropolisengine.Micropolis_HaveLastMessage_set)
-    __swig_setmethods__["LastMessage"] = _micropolisengine.Micropolis_LastMessage_set
-    __swig_getmethods__["LastMessage"] = _micropolisengine.Micropolis_LastMessage_get
-    if _newclass:LastMessage = _swig_property(_micropolisengine.Micropolis_LastMessage_get, _micropolisengine.Micropolis_LastMessage_set)
-    def SendMessages(*args): return _micropolisengine.Micropolis_SendMessages(*args)
-    def CheckGrowth(*args): return _micropolisengine.Micropolis_CheckGrowth(*args)
-    def DoScenarioScore(*args): return _micropolisengine.Micropolis_DoScenarioScore(*args)
-    def ClearMes(*args): return _micropolisengine.Micropolis_ClearMes(*args)
-    def SendMes(*args): return _micropolisengine.Micropolis_SendMes(*args)
-    def SendMesAt(*args): return _micropolisengine.Micropolis_SendMesAt(*args)
+    __swig_setmethods__["lastCategory"] = _micropolisengine.Micropolis_lastCategory_set
+    __swig_getmethods__["lastCategory"] = _micropolisengine.Micropolis_lastCategory_get
+    if _newclass:lastCategory = _swig_property(_micropolisengine.Micropolis_lastCategory_get, _micropolisengine.Micropolis_lastCategory_set)
+    __swig_setmethods__["messagePictureLast"] = _micropolisengine.Micropolis_messagePictureLast_set
+    __swig_getmethods__["messagePictureLast"] = _micropolisengine.Micropolis_messagePictureLast_get
+    if _newclass:messagePictureLast = _swig_property(_micropolisengine.Micropolis_messagePictureLast_get, _micropolisengine.Micropolis_messagePictureLast_set)
+    __swig_setmethods__["autoGoto"] = _micropolisengine.Micropolis_autoGoto_set
+    __swig_getmethods__["autoGoto"] = _micropolisengine.Micropolis_autoGoto_get
+    if _newclass:autoGoto = _swig_property(_micropolisengine.Micropolis_autoGoto_get, _micropolisengine.Micropolis_autoGoto_set)
+    __swig_setmethods__["messageLastValid"] = _micropolisengine.Micropolis_messageLastValid_set
+    __swig_getmethods__["messageLastValid"] = _micropolisengine.Micropolis_messageLastValid_get
+    if _newclass:messageLastValid = _swig_property(_micropolisengine.Micropolis_messageLastValid_get, _micropolisengine.Micropolis_messageLastValid_set)
+    __swig_setmethods__["messageLast"] = _micropolisengine.Micropolis_messageLast_set
+    __swig_getmethods__["messageLast"] = _micropolisengine.Micropolis_messageLast_get
+    if _newclass:messageLast = _swig_property(_micropolisengine.Micropolis_messageLast_get, _micropolisengine.Micropolis_messageLast_set)
+    def sendMessages(*args): return _micropolisengine.Micropolis_sendMessages(*args)
+    def checkGrowth(*args): return _micropolisengine.Micropolis_checkGrowth(*args)
+    def doScenarioScore(*args): return _micropolisengine.Micropolis_doScenarioScore(*args)
+    def clearMessage(*args): return _micropolisengine.Micropolis_clearMessage(*args)
+    def sendMessage(*args): return _micropolisengine.Micropolis_sendMessage(*args)
+    def sendMessageAt(*args): return _micropolisengine.Micropolis_sendMessageAt(*args)
     def doMessage(*args): return _micropolisengine.Micropolis_doMessage(*args)
     def doMakeSound(*args): return _micropolisengine.Micropolis_doMakeSound(*args)
-    def DoAutoGoto(*args): return _micropolisengine.Micropolis_DoAutoGoto(*args)
-    def SetMessageField(*args): return _micropolisengine.Micropolis_SetMessageField(*args)
-    def DoShowPicture(*args): return _micropolisengine.Micropolis_DoShowPicture(*args)
-    def DoLoseGame(*args): return _micropolisengine.Micropolis_DoLoseGame(*args)
-    def DoWinGame(*args): return _micropolisengine.Micropolis_DoWinGame(*args)
+    def doAutoGoto(*args): return _micropolisengine.Micropolis_doAutoGoto(*args)
+    def setMessageField(*args): return _micropolisengine.Micropolis_setMessageField(*args)
+    def doShowPicture(*args): return _micropolisengine.Micropolis_doShowPicture(*args)
+    def doLoseGame(*args): return _micropolisengine.Micropolis_doLoseGame(*args)
+    def doWinGame(*args): return _micropolisengine.Micropolis_doWinGame(*args)
     __swig_setmethods__["powerStackNum"] = _micropolisengine.Micropolis_powerStackNum_set
     __swig_getmethods__["powerStackNum"] = _micropolisengine.Micropolis_powerStackNum_get
     if _newclass:powerStackNum = _swig_property(_micropolisengine.Micropolis_powerStackNum_get, _micropolisengine.Micropolis_powerStackNum_set)
@@ -1111,48 +1105,41 @@ class Micropolis(_object):
     __swig_setmethods__["powerStackY"] = _micropolisengine.Micropolis_powerStackY_set
     __swig_getmethods__["powerStackY"] = _micropolisengine.Micropolis_powerStackY_get
     if _newclass:powerStackY = _swig_property(_micropolisengine.Micropolis_powerStackY_get, _micropolisengine.Micropolis_powerStackY_set)
-    def DoPowerScan(*args): return _micropolisengine.Micropolis_DoPowerScan(*args)
-    def TestForCond(*args): return _micropolisengine.Micropolis_TestForCond(*args)
-    def PushPowerStack(*args): return _micropolisengine.Micropolis_PushPowerStack(*args)
-    def PullPowerStack(*args): return _micropolisengine.Micropolis_PullPowerStack(*args)
-    __swig_setmethods__["MaxPower"] = _micropolisengine.Micropolis_MaxPower_set
-    __swig_getmethods__["MaxPower"] = _micropolisengine.Micropolis_MaxPower_get
-    if _newclass:MaxPower = _swig_property(_micropolisengine.Micropolis_MaxPower_get, _micropolisengine.Micropolis_MaxPower_set)
-    __swig_setmethods__["NumPower"] = _micropolisengine.Micropolis_NumPower_set
-    __swig_getmethods__["NumPower"] = _micropolisengine.Micropolis_NumPower_get
-    if _newclass:NumPower = _swig_property(_micropolisengine.Micropolis_NumPower_get, _micropolisengine.Micropolis_NumPower_set)
-    def MoveMapSim(*args): return _micropolisengine.Micropolis_MoveMapSim(*args)
+    def doPowerScan(*args): return _micropolisengine.Micropolis_doPowerScan(*args)
+    def testForConductive(*args): return _micropolisengine.Micropolis_testForConductive(*args)
+    def pushPowerStack(*args): return _micropolisengine.Micropolis_pushPowerStack(*args)
+    def pullPowerStack(*args): return _micropolisengine.Micropolis_pullPowerStack(*args)
+    __swig_setmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_set
+    __swig_getmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_get
+    if _newclass:maxPower = _swig_property(_micropolisengine.Micropolis_maxPower_get, _micropolisengine.Micropolis_maxPower_set)
+    __swig_setmethods__["numPower"] = _micropolisengine.Micropolis_numPower_set
+    __swig_getmethods__["numPower"] = _micropolisengine.Micropolis_numPower_get
+    if _newclass:numPower = _swig_property(_micropolisengine.Micropolis_numPower_get, _micropolisengine.Micropolis_numPower_set)
+    def moveMapSim(*args): return _micropolisengine.Micropolis_moveMapSim(*args)
     __swig_setmethods__["nextRandom"] = _micropolisengine.Micropolis_nextRandom_set
     __swig_getmethods__["nextRandom"] = _micropolisengine.Micropolis_nextRandom_get
     if _newclass:nextRandom = _swig_property(_micropolisengine.Micropolis_nextRandom_get, _micropolisengine.Micropolis_nextRandom_set)
-    def sim_rand(*args): return _micropolisengine.Micropolis_sim_rand(*args)
-    def sim_srand(*args): return _micropolisengine.Micropolis_sim_srand(*args)
-    def Rand(*args): return _micropolisengine.Micropolis_Rand(*args)
-    def Rand16(*args): return _micropolisengine.Micropolis_Rand16(*args)
-    def Rand16Signed(*args): return _micropolisengine.Micropolis_Rand16Signed(*args)
-    def ERand(*args): return _micropolisengine.Micropolis_ERand(*args)
-    def RandomlySeedRand(*args): return _micropolisengine.Micropolis_RandomlySeedRand(*args)
-    def SeedRand(*args): return _micropolisengine.Micropolis_SeedRand(*args)
-    __swig_setmethods__["HomeDir"] = _micropolisengine.Micropolis_HomeDir_set
-    __swig_getmethods__["HomeDir"] = _micropolisengine.Micropolis_HomeDir_get
-    if _newclass:HomeDir = _swig_property(_micropolisengine.Micropolis_HomeDir_get, _micropolisengine.Micropolis_HomeDir_set)
-    __swig_setmethods__["ResourceDir"] = _micropolisengine.Micropolis_ResourceDir_set
-    __swig_getmethods__["ResourceDir"] = _micropolisengine.Micropolis_ResourceDir_get
-    if _newclass:ResourceDir = _swig_property(_micropolisengine.Micropolis_ResourceDir_get, _micropolisengine.Micropolis_ResourceDir_set)
-    __swig_setmethods__["KeyDir"] = _micropolisengine.Micropolis_KeyDir_set
-    __swig_getmethods__["KeyDir"] = _micropolisengine.Micropolis_KeyDir_get
-    if _newclass:KeyDir = _swig_property(_micropolisengine.Micropolis_KeyDir_get, _micropolisengine.Micropolis_KeyDir_set)
-    __swig_setmethods__["HostName"] = _micropolisengine.Micropolis_HostName_set
-    __swig_getmethods__["HostName"] = _micropolisengine.Micropolis_HostName_get
-    if _newclass:HostName = _swig_property(_micropolisengine.Micropolis_HostName_get, _micropolisengine.Micropolis_HostName_set)
-    __swig_setmethods__["Resources"] = _micropolisengine.Micropolis_Resources_set
-    __swig_getmethods__["Resources"] = _micropolisengine.Micropolis_Resources_get
-    if _newclass:Resources = _swig_property(_micropolisengine.Micropolis_Resources_get, _micropolisengine.Micropolis_Resources_set)
-    __swig_setmethods__["StringTables"] = _micropolisengine.Micropolis_StringTables_set
-    __swig_getmethods__["StringTables"] = _micropolisengine.Micropolis_StringTables_get
-    if _newclass:StringTables = _swig_property(_micropolisengine.Micropolis_StringTables_get, _micropolisengine.Micropolis_StringTables_set)
-    def GetResource(*args): return _micropolisengine.Micropolis_GetResource(*args)
-    def GetIndString(*args): return _micropolisengine.Micropolis_GetIndString(*args)
+    def simRandom(*args): return _micropolisengine.Micropolis_simRandom(*args)
+    def getRandom(*args): return _micropolisengine.Micropolis_getRandom(*args)
+    def getRandom16(*args): return _micropolisengine.Micropolis_getRandom16(*args)
+    def getRandom16Signed(*args): return _micropolisengine.Micropolis_getRandom16Signed(*args)
+    def getERandom(*args): return _micropolisengine.Micropolis_getERandom(*args)
+    def randomlySeedRandom(*args): return _micropolisengine.Micropolis_randomlySeedRandom(*args)
+    def seedRandom(*args): return _micropolisengine.Micropolis_seedRandom(*args)
+    __swig_setmethods__["homeDir"] = _micropolisengine.Micropolis_homeDir_set
+    __swig_getmethods__["homeDir"] = _micropolisengine.Micropolis_homeDir_get
+    if _newclass:homeDir = _swig_property(_micropolisengine.Micropolis_homeDir_get, _micropolisengine.Micropolis_homeDir_set)
+    __swig_setmethods__["resourceDir"] = _micropolisengine.Micropolis_resourceDir_set
+    __swig_getmethods__["resourceDir"] = _micropolisengine.Micropolis_resourceDir_get
+    if _newclass:resourceDir = _swig_property(_micropolisengine.Micropolis_resourceDir_get, _micropolisengine.Micropolis_resourceDir_set)
+    __swig_setmethods__["resources"] = _micropolisengine.Micropolis_resources_set
+    __swig_getmethods__["resources"] = _micropolisengine.Micropolis_resources_get
+    if _newclass:resources = _swig_property(_micropolisengine.Micropolis_resources_get, _micropolisengine.Micropolis_resources_set)
+    __swig_setmethods__["stringTables"] = _micropolisengine.Micropolis_stringTables_set
+    __swig_getmethods__["stringTables"] = _micropolisengine.Micropolis_stringTables_get
+    if _newclass:stringTables = _swig_property(_micropolisengine.Micropolis_stringTables_get, _micropolisengine.Micropolis_stringTables_set)
+    def getResource(*args): return _micropolisengine.Micropolis_getResource(*args)
+    def getIndString(*args): return _micropolisengine.Micropolis_getIndString(*args)
     __swig_setmethods__["NewMap"] = _micropolisengine.Micropolis_NewMap_set
     __swig_getmethods__["NewMap"] = _micropolisengine.Micropolis_NewMap_get
     if _newclass:NewMap = _swig_property(_micropolisengine.Micropolis_NewMap_get, _micropolisengine.Micropolis_NewMap_set)
@@ -1349,11 +1336,11 @@ class Micropolis(_object):
     def GenerateBus(*args): return _micropolisengine.Micropolis_GenerateBus(*args)
     def GenerateShip(*args): return _micropolisengine.Micropolis_GenerateShip(*args)
     def MakeShipHere(*args): return _micropolisengine.Micropolis_MakeShipHere(*args)
-    def MakeMonster(*args): return _micropolisengine.Micropolis_MakeMonster(*args)
+    def makeMonster(*args): return _micropolisengine.Micropolis_makeMonster(*args)
     def MonsterHere(*args): return _micropolisengine.Micropolis_MonsterHere(*args)
     def GenerateCopter(*args): return _micropolisengine.Micropolis_GenerateCopter(*args)
     def GeneratePlane(*args): return _micropolisengine.Micropolis_GeneratePlane(*args)
-    def MakeTornado(*args): return _micropolisengine.Micropolis_MakeTornado(*args)
+    def makeTornado(*args): return _micropolisengine.Micropolis_makeTornado(*args)
     def MakeExplosion(*args): return _micropolisengine.Micropolis_MakeExplosion(*args)
     def MakeExplosionAt(*args): return _micropolisengine.Micropolis_MakeExplosionAt(*args)
     __swig_setmethods__["TotalFunds"] = _micropolisengine.Micropolis_TotalFunds_set
@@ -1416,7 +1403,7 @@ class Micropolis(_object):
     def DoReallyStartGame(*args): return _micropolisengine.Micropolis_DoReallyStartGame(*args)
     def DoStartLoad(*args): return _micropolisengine.Micropolis_DoStartLoad(*args)
     def DoStartScenario(*args): return _micropolisengine.Micropolis_DoStartScenario(*args)
-    def DropFireBombs(*args): return _micropolisengine.Micropolis_DropFireBombs(*args)
+    def dropFireBombs(*args): return _micropolisengine.Micropolis_dropFireBombs(*args)
     def InitGame(*args): return _micropolisengine.Micropolis_InitGame(*args)
     def Callback(*args): return _micropolisengine.Micropolis_Callback(*args)
     def DoEarthquake(*args): return _micropolisengine.Micropolis_DoEarthquake(*args)
@@ -1494,7 +1481,7 @@ class Micropolis(_object):
     def FindPRoad(*args): return _micropolisengine.Micropolis_FindPRoad(*args)
     def FindPTele(*args): return _micropolisengine.Micropolis_FindPTele(*args)
     def TryDrive(*args): return _micropolisengine.Micropolis_TryDrive(*args)
-    def TryGo(*args): return _micropolisengine.Micropolis_TryGo(*args)
+    def tryGo(*args): return _micropolisengine.Micropolis_tryGo(*args)
     def GetFromMap(*args): return _micropolisengine.Micropolis_GetFromMap(*args)
     __swig_setmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_set
     __swig_getmethods__["MustUpdateFunds"] = _micropolisengine.Micropolis_MustUpdateFunds_get

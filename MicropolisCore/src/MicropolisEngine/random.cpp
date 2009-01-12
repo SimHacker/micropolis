@@ -43,7 +43,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-int Micropolis::sim_rand()
+int Micropolis::simRandom()
 {
     // TODO: Use Wolfram's fast cellular automata pseudo random number generator.
 
@@ -52,13 +52,7 @@ int Micropolis::sim_rand()
 }
 
 
-void Micropolis::sim_srand(UQuad seed)
-{
-    nextRandom = seed;
-}
-
-
-short Micropolis::Rand(short range)
+short Micropolis::getRandom(short range)
 {
     int maxMultiple, rnum;
 
@@ -66,21 +60,21 @@ short Micropolis::Rand(short range)
     maxMultiple = RANDOM_RANGE / range;
     maxMultiple *= range;
 
-    while ((rnum = Rand16()) >= maxMultiple) ;
+    while ((rnum = getRandom16()) >= maxMultiple) ;
 
     return (rnum % range);
 }
 
 
-int Micropolis::Rand16()
+int Micropolis::getRandom16()
 {
-    return sim_rand() & 0x0000ffff;
+    return simRandom() & 0x0000ffff;
 }
 
 
-int Micropolis::Rand16Signed()
+int Micropolis::getRandom16Signed()
 {
-    int i = Rand16();
+    int i = getRandom16();
 
     if (i > 0x7fff) {
       i = 0x7fff - i;
@@ -90,12 +84,12 @@ int Micropolis::Rand16Signed()
 }
 
 
-short Micropolis::ERand(short limit)
+short Micropolis::getERandom(short limit)
 {
     short x, z;
 
-    z = Rand(limit);
-    x = Rand(limit);
+    z = getRandom(limit);
+    x = getRandom(limit);
     if (z < x) {
         return z;
     }
@@ -103,21 +97,21 @@ short Micropolis::ERand(short limit)
 }
 
 
-void Micropolis::RandomlySeedRand()
+void Micropolis::randomlySeedRandom()
 {
 #ifdef _WIN32
-    SeedRand(::GetTickCount());
+    seedRandom(::GetTickCount());
 #else
     struct timeval time;
     gettimeofday(&time, NULL);
-    SeedRand(time.tv_usec ^ time.tv_sec);
+    seedRandom(time.tv_usec ^ time.tv_sec);
 #endif
 }
 
 
-void Micropolis::SeedRand(int seed)
+void Micropolis::seedRandom(int seed)
 {
-    sim_srand(seed);
+    nextRandom = seed;
 }
 
 

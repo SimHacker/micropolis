@@ -72,7 +72,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-void Micropolis::InitFundingLevel()
+void Micropolis::initFundingLevel()
 {
     firePercent = 1.0;
     fireValue = 0;
@@ -85,16 +85,16 @@ void Micropolis::InitFundingLevel()
 }
 
 /** Game decided to show the budget window */
-void Micropolis::DoBudget()
+void Micropolis::doBudget()
 {
-    DoBudgetNow(false);
+    doBudgetNow(false);
 }
 
 
 /** User queried the budget window */
-void Micropolis::DoBudgetFromMenu()
+void Micropolis::doBudgetFromMenu()
 {
-    DoBudgetNow(true);
+    doBudgetNow(true);
 }
 
 
@@ -104,7 +104,7 @@ void Micropolis::DoBudgetFromMenu()
  * @todo Simplify this code. Instead of this nested mess, make a sequence of
  *       assigning funds to road, fire, and police.
  */
-void Micropolis::DoBudgetNow(bool fromMenu)
+void Micropolis::doBudgetNow(bool fromMenu)
 {
     Quad fireInt   = (int)(fireFund   * firePercent);
     Quad policeInt = (int)(policeFund * policePercent);
@@ -264,7 +264,7 @@ noMoney:
         // and is not supposed to wait until after the budget dialog is dismissed.
         // Otherwise don't do it after this and arrange for it to happen when the
         // modal budget dialog is dismissed.
-        ShowBudgetWindowAndStartWaiting();
+        showBudgetWindowAndStartWaiting();
 
         // FIXME: Only do this AFTER the budget window is accepted.
 
@@ -309,8 +309,8 @@ noMoney:
 
             autoBudget = false; /* force autobudget */
             MustUpdateOptions = 1;
-            ClearMes();
-            SendMes(STR301_NO_MONEY);
+            clearMessage();
+            sendMessage(STR301_NO_MONEY);
             goto noMoney;
 
         }
@@ -323,11 +323,11 @@ noMoney:
 /** Request to the front-end to draw the budget window. */
 void Micropolis::drawBudgetWindow()
 {
-    MustDrawBudgetWindow = 1;
+    mustDrawBudgetWindow = 1;
 }
 
 
-void Micropolis::ReallyDrawBudgetWindow()
+void Micropolis::reallyDrawBudgetWindow()
 {
     /// @todo The scripting language should pull these raw values out
     ///       and format them, instead of the simulator core formatting
@@ -366,7 +366,7 @@ void Micropolis::ReallyDrawBudgetWindow()
     sprintf(numStr, "%d", (int)taxFund);
     makeDollarDecimalStr(numStr, collectedStr);
 
-    SetBudget(
+    setBudget(
         flowStr,
         previousStr,
         currentStr,
@@ -377,11 +377,11 @@ void Micropolis::ReallyDrawBudgetWindow()
 
 void Micropolis::drawCurrPercents()
 {
-    MustDrawCurrPercents = 1;
+    mustDrawCurrPercents = 1;
 }
 
 
-void Micropolis::ReallyDrawCurrPercents()
+void Micropolis::reallyDrawCurrPercents()
 {
     /// @todo The scripting language should pull these raw values out
     ///       and format them, instead of the simulator core formatting
@@ -409,7 +409,7 @@ void Micropolis::ReallyDrawCurrPercents()
     sprintf(num, "%d", (int)(roadFund * roadPercent));
     makeDollarDecimalStr(num, roadGot);
 
-    SetBudgetValues(
+    setBudgetValues(
         roadGot,
         roadWant,
         policeGot,
@@ -419,25 +419,25 @@ void Micropolis::ReallyDrawCurrPercents()
 }
 
 
-void Micropolis::UpdateBudgetWindow()
+void Micropolis::updateBudgetWindow()
 {
     /// @todo The scripting language should pull these raw values out
     ///       and format them, instead of the simulator core formatting
     ///       them and pushing them out.
 
-    if (MustDrawCurrPercents) {
-        ReallyDrawCurrPercents();
-        MustDrawCurrPercents = 0;
+    if (mustDrawCurrPercents) {
+        reallyDrawCurrPercents();
+        mustDrawCurrPercents = 0;
     }
 
-    if (MustDrawBudgetWindow) {
-        ReallyDrawBudgetWindow();
-        MustDrawBudgetWindow = 0;
+    if (mustDrawBudgetWindow) {
+        reallyDrawBudgetWindow();
+        mustDrawBudgetWindow = 0;
     }
 }
 
 
-void Micropolis::UpdateBudget()
+void Micropolis::updateBudget()
 {
     drawCurrPercents();
     drawBudgetWindow();
@@ -446,7 +446,7 @@ void Micropolis::UpdateBudget()
 }
 
 
-void Micropolis::ShowBudgetWindowAndStartWaiting()
+void Micropolis::showBudgetWindowAndStartWaiting()
 {
     Callback("UIShowBudgetAndWait", "");
 
@@ -454,7 +454,7 @@ void Micropolis::ShowBudgetWindowAndStartWaiting()
 }
 
 
-void Micropolis::SetBudget(
+void Micropolis::setBudget(
     char *flowStr,
     char *previousStr,
     char *currentStr,
@@ -472,7 +472,7 @@ void Micropolis::SetBudget(
 }
 
 
-void Micropolis::SetBudgetValues(
+void Micropolis::setBudgetValues(
     char *roadGot,
     char *roadWant,
     char *policeGot,

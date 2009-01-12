@@ -71,12 +71,12 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-//char *Micropolis::HistName[] = {
+//char *Micropolis::histName[] = {
 //  "Residential", "Commercial", "Industrial",
 //  "Cash Flow", "Crime", "Pollution"
 //};
 
-//unsigned char Micropolis::HistColor[] = {
+//unsigned char Micropolis::histColor[] = {
 //  COLOR_LIGHTGREEN, COLOR_DARKBLUE, COLOR_YELLOW,
 //  COLOR_DARKGREEN, COLOR_RED, COLOR_OLIVE
 //};
@@ -125,12 +125,12 @@ void Micropolis::doAllGraphs()
 
     // scaleValue = 0.5; // XXX
 
-    drawMonth(resHist, History10[RES_HIST], scaleValue);
-    drawMonth(comHist, History10[COM_HIST], scaleValue);
-    drawMonth(indHist, History10[IND_HIST], scaleValue);
-    drawMonth(moneyHist, History10[MONEY_HIST], 1.0);
-    drawMonth(crimeHist, History10[CRIME_HIST], 1.0);
-    drawMonth(pollutionHist, History10[POLLUTION_HIST], 1.0);
+    drawMonth(resHist, history10[RES_HIST], scaleValue);
+    drawMonth(comHist, history10[COM_HIST], scaleValue);
+    drawMonth(indHist, history10[IND_HIST], scaleValue);
+    drawMonth(moneyHist, history10[MONEY_HIST], 1.0);
+    drawMonth(crimeHist, history10[CRIME_HIST], 1.0);
+    drawMonth(pollutionHist, history10[POLLUTION_HIST], 1.0);
 
     AllMax = 0;
 
@@ -153,17 +153,17 @@ void Micropolis::doAllGraphs()
 
     // scaleValue = 0.5; // XXX
 
-    drawMonth(resHist + 120, History120[RES_HIST], scaleValue);
-    drawMonth(comHist + 120, History120[COM_HIST], scaleValue);
-    drawMonth(indHist + 120, History120[IND_HIST], scaleValue);
-    drawMonth(moneyHist + 120, History120[MONEY_HIST], 1.0);
-    drawMonth(crimeHist + 120, History120[CRIME_HIST], 1.0);
-    drawMonth(pollutionHist + 120, History120[POLLUTION_HIST], 1.0);
+    drawMonth(resHist + 120, history120[RES_HIST], scaleValue);
+    drawMonth(comHist + 120, history120[COM_HIST], scaleValue);
+    drawMonth(indHist + 120, history120[IND_HIST], scaleValue);
+    drawMonth(moneyHist + 120, history120[MONEY_HIST], 1.0);
+    drawMonth(crimeHist + 120, history120[CRIME_HIST], 1.0);
+    drawMonth(pollutionHist + 120, history120[POLLUTION_HIST], 1.0);
 }
 
 
 /** Set flag that graph data has been changed and graphs should be updated. */
-void Micropolis::ChangeCensus()
+void Micropolis::changeCensus()
 {
     censusChanged = true;
 }
@@ -191,14 +191,14 @@ void Micropolis::graphDoer()
 /** Initialize graphs */
 void Micropolis::initGraphs()
 {
-    if (!HistoryInitialized) {
-        HistoryInitialized = 1;
+    if (!historyInitialized) {
+        historyInitialized = 1;
     }
 }
 
 
 /** Compute various max ranges of graphs */
-void Micropolis::InitGraphMax()
+void Micropolis::initGraphMax()
 {
     int x;
 
@@ -226,14 +226,14 @@ void Micropolis::InitGraphMax()
 
     }
 
-    Graph10Max = resHist10Max;
+    graph10Max = resHist10Max;
 
-    if (comHist10Max > Graph10Max) {
-        Graph10Max = comHist10Max;
+    if (comHist10Max > graph10Max) {
+        graph10Max = comHist10Max;
     }
 
-    if (indHist10Max > Graph10Max) {
-        Graph10Max = indHist10Max;
+    if (indHist10Max > graph10Max) {
+        graph10Max = indHist10Max;
     }
 
     resHist120Max = 0;
@@ -260,9 +260,9 @@ void Micropolis::InitGraphMax()
 
     }
 
-    Graph120Max = resHist120Max;
-    Graph120Max = max(Graph120Max, comHist120Max);
-    Graph120Max = max(Graph120Max, indHist120Max);
+    graph120Max = resHist120Max;
+    graph120Max = max(graph120Max, comHist120Max);
+    graph120Max = max(graph120Max, indHist120Max);
 }
 
 

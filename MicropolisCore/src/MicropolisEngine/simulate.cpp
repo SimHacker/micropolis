@@ -126,7 +126,7 @@ void Micropolis::Simulate(int mod16)
             }
             if (doInitialEval) {
                 doInitialEval = false;
-                CityEvaluation();
+                cityEvaluation();
             }
             cityTime++;
             cityTaxAverage += cityTax;             /* post */
@@ -178,7 +178,7 @@ void Micropolis::Simulate(int mod16)
 
             if ((cityTime % TAXFREQ) == 0)  {
                 CollectTax();
-                CityEvaluation();
+                cityEvaluation();
             }
             break;
 
@@ -194,12 +194,12 @@ void Micropolis::Simulate(int mod16)
             NewMapFlags[COMAP] = 1;
             NewMapFlags[INMAP] = 1;
             NewMapFlags[DYMAP] = 1;
-            SendMessages();
+            sendMessages();
             break;
 
         case 11:
             if ((simCycle % SpdPwr[x]) == 0) {
-                DoPowerScan();
+                doPowerScan();
                 NewMapFlags[PRMAP] = 1;
                 NewPower = 1; /* post-release change */
             }
@@ -227,7 +227,7 @@ void Micropolis::Simulate(int mod16)
             if ((simCycle % SpdFir[x]) == 0) {
                 FireAnalysis();
             }
-            DoDisasters();
+            doDisasters();
             break;
 
     }
@@ -253,7 +253,7 @@ void Micropolis::DoSimInit()
     SetValves();
     ClearCensus();
     MapScan(0, WORLD_X);
-    DoPowerScan();
+    doPowerScan();
     NewPower = 1;         /* post rel */
     PTLScan();
     CrimeScan();
@@ -387,7 +387,7 @@ void Micropolis::InitSimMemory()
 
     /* This clears powermem */
     powerStackNum = 0;
-    DoPowerScan();
+    doPowerScan();
     NewPower = 1; /* post rel */
 
     InitSimLoad = 0;
@@ -488,7 +488,7 @@ void Micropolis::SimLoadInit()
 /* comefrom: InitSimMemory SimLoadInit */
 void Micropolis::SetCommonInits()
 {
-    EvalInit();
+    evalInit();
     roadEffect = MAX_ROAD_EFFECT;
     policeEffect = MAX_POLICESTATION_EFFECT;
     fireEffect = MAX_FIRESTATION_EFFECT;
@@ -732,9 +732,9 @@ void Micropolis::TakeCensus()
 
     }
 
-    Graph10Max = resHist10Max;
-    Graph10Max = max(Graph10Max, comHist10Max);
-    Graph10Max = max(Graph10Max, indHist10Max);
+    graph10Max = resHist10Max;
+    graph10Max = max(graph10Max, comHist10Max);
+    graph10Max = max(graph10Max, indHist10Max);
 
     resHist[0] = resPop / resPopDenom;
     comHist[0] = comPop;
@@ -750,20 +750,20 @@ void Micropolis::TakeCensus()
     moneyHist[0] = clamp(x, (short)0, (short)255);
 
 
-    ChangeCensus();
+    changeCensus();
 
     short resPopScaled = resPop >> 8;
 
     if (hospitalPop < resPopScaled) {
-        needHosp = 1;
+        needHospital = 1;
     }
 
     if (hospitalPop > resPopScaled) {
-        needHosp = -1;
+        needHospital = -1;
     }
 
     if (hospitalPop == resPopScaled) {
-        needHosp = 0;
+        needHospital = 0;
     }
 
 
@@ -809,9 +809,9 @@ void Micropolis::Take2Census()
 
     }
 
-    Graph120Max = resHist120Max;
-    Graph120Max = max(Graph120Max, comHist120Max);
-    Graph120Max = max(Graph120Max, indHist120Max);
+    graph120Max = resHist120Max;
+    graph120Max = max(graph120Max, comHist120Max);
+    graph120Max = max(graph120Max, indHist120Max);
 
     resHist[120] = resPop / resPopDenom;
     comHist[120] = comPop;
@@ -819,7 +819,7 @@ void Micropolis::Take2Census()
     crimeHist[120] = crimeHist[0] ;
     pollutionHist[120] = pollutionHist[0];
     moneyHist[120] = moneyHist[0];
-    ChangeCensus();
+    changeCensus();
 }
 
 
@@ -867,7 +867,7 @@ void Micropolis::CollectTax()
         if (totalPop > 0) {
             /* There are people to tax. */
             CashFlow = (short)(taxFund - (policeFund + fireFund + roadFund));
-            DoBudget();
+            doBudget();
         } else {
             /* Nobody lives here. */
             roadEffect   = MAX_ROAD_EFFECT;
@@ -933,14 +933,14 @@ void Micropolis::MapScan(int x1, int x2)
 
                         if (curTile >= FIREBASE) {
                             firePop++;
-                            if (!(Rand16() & 3)) {
+                            if (!(getRandom16() & 3)) {
                                 DoFire();    /* 1 in 4 times */
                             }
                             continue;
                         }
 
                         if (curTile < RADTILE) {
-                            DoFlood();
+                            doFlood();
                         } else {
                             DoRadTile();
                         }
@@ -990,10 +990,10 @@ void Micropolis::DoRail()
 
     if (roadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
         // roadEffect < 15/16 of max road, enable deteriorating rail
-        if (!(Rand16() & 511)) {
+        if (!(getRandom16() & 511)) {
             if (!(curNum & CONDBIT)) {
-                assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(Rand16() & 31)' makes no sense
-                if (roadEffect < (Rand16() & 31)) {
+                assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(getRandom16() & 31)' makes no sense
+                if (roadEffect < (getRandom16() & 31)) {
                     if (curTile < (RAILBASE + 2)) {
                         map[curMapX][curMapY] = RIVER;
                     } else {
@@ -1010,7 +1010,7 @@ void Micropolis::DoRail()
 /** Handle decay of radio-active tile */
 void Micropolis::DoRadTile()
 {
-    if ((Rand16() & 4095) == 0) {
+    if ((getRandom16() & 4095) == 0) {
         map[curMapX][curMapY] = DIRT; /* Radioactive decay */
     }
 }
@@ -1028,10 +1028,10 @@ void Micropolis::DoRoad()
 
     if (roadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
         // roadEffect < 15/16 of max road, enable deteriorating road
-        if ((Rand16() & 511) == 0) {
+        if ((getRandom16() & 511) == 0) {
             if (!(curNum & CONDBIT)) {
-                assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(Rand16() & 31)' makes no sense
-                if (roadEffect < (Rand16() & 31)) {
+                assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(getRandom16() & 31)' makes no sense
+                if (roadEffect < (getRandom16() & 31)) {
                     if ((curTile & 15) < 2 || (curTile & 15) == 15) {
                         map[curMapX][curMapY] = RIVER;
                     } else {
@@ -1105,7 +1105,7 @@ bool Micropolis::DoBridge()
 
     if (curTile == BRWV) { /*  Vertical bridge close */
 
-        if ((!(Rand16() & 3)) && GetBoatDis() > 340) {
+        if ((!(getRandom16() & 3)) && GetBoatDis() > 340) {
 
             for (z = 0; z < 7; z++) { /* Close */
 
@@ -1126,7 +1126,7 @@ bool Micropolis::DoBridge()
 
     if (curTile == BRWH) { /*  Horizontal bridge close  */
 
-        if ((!(Rand16() & 3)) && GetBoatDis() > 340) {
+        if ((!(getRandom16() & 3)) && GetBoatDis() > 340) {
 
             for (z = 0; z < 7; z++) { /* Close */
 
@@ -1146,7 +1146,7 @@ bool Micropolis::DoBridge()
         return true;
     }
 
-    if (GetBoatDis() < 300 || (!(Rand16() & 7))) {
+    if (GetBoatDis() < 300 || (!(getRandom16() & 7))) {
         if (curTile & 1) {
             if (curMapX < WORLD_X - 1) {
                 if (map[curMapX + 1][curMapY] == CHANNEL) { /* Vertical open */
@@ -1237,7 +1237,7 @@ void Micropolis::DoFire()
     // Try to set neighbouring tiles on fire as well
     for (short z = 0; z < 4; z++) {
 
-        if ((Rand16() & 7) == 0) {
+        if ((getRandom16() & 7) == 0) {
 
             short Xtem = curMapX + DX[z];
             short Ytem = curMapY + DY[z];
@@ -1274,7 +1274,7 @@ void Micropolis::DoFire()
     }
 
     // Decide whether to put out the fire.
-    if (Rand(Rate) == 0) {
+    if (getRandom(Rate) == 0) {
         map[curMapX][curMapY] = RandomRubble();
     }
 }
@@ -1393,7 +1393,7 @@ void Micropolis::DoSPZone(bool pwrOn)
                 RepairZone(POWERPLANT, 4); /* post */
             }
 
-            PushPowerStack();
+            pushPowerStack();
             CoalSmoke(curMapX, curMapY);
 
             return;
@@ -1402,7 +1402,7 @@ void Micropolis::DoSPZone(bool pwrOn)
 
             assert(LEVEL_COUNT == LENGTH_OF(MeltdownTable));
 
-            if (!NoDisasters && !Rand(MeltdownTable[gameLevel])) {
+            if (!NoDisasters && !getRandom(MeltdownTable[gameLevel])) {
                 DoMeltdown(curMapX, curMapY);
                 return;
             }
@@ -1413,7 +1413,7 @@ void Micropolis::DoSPZone(bool pwrOn)
                 RepairZone(NUCLEAR, 4); /* post */
             }
 
-            PushPowerStack();
+            pushPowerStack();
 
             return;
 
@@ -1561,12 +1561,12 @@ void Micropolis::DrawStadium(int z)
 /** Generate a airplane or helicopter every now and then. */
 void Micropolis::DoAirport()
 {
-    if (Rand(5) == 0) {
+    if (getRandom(5) == 0) {
         GeneratePlane(curMapX, curMapY);
         return;
     }
 
-    if (Rand(12) == 0) {
+    if (getRandom(12) == 0) {
         GenerateCopter(curMapX, curMapY);
     }
 }
@@ -1615,8 +1615,8 @@ void Micropolis::DoMeltdown(int SX, int SY)
     // and lots of radiation tiles around the plant
     for (int z = 0; z < 200; z++)  {
 
-        int x = SX - 20 + Rand(40);
-        int y = SY - 15 + Rand(30);
+        int x = SX - 20 + getRandom(40);
+        int y = SY - 15 + getRandom(30);
 
         if (!TestBounds(x, y)) { // Ignore off-map positions
             continue;
@@ -1635,8 +1635,8 @@ void Micropolis::DoMeltdown(int SX, int SY)
     }
 
     // Report disaster to the user
-    ClearMes();
-    SendMesAt(-STR301_NUCLEAR_MELTDOWN, SX, SY);
+    clearMessage();
+    sendMessageAt(-STR301_NUCLEAR_MELTDOWN, SX, SY);
 }
 
 

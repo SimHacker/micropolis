@@ -78,7 +78,7 @@
  * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
  *       back onto the map in the reverse direction if off-map.
  */
-bool Micropolis::MoveMapSim(Direction mDir)
+bool Micropolis::moveMapSim(Direction mDir)
 {
     switch (mDir) {
 
@@ -136,14 +136,14 @@ bool Micropolis::MoveMapSim(Direction mDir)
  * @return Unpowered tile has been found in the indicated direction.
  * @bug Returning \c true for \c powerWord>PWRMAPSIZE looks wrong.
  */
-bool Micropolis::TestForCond(Direction tfDir)
+bool Micropolis::testForConductive(Direction tfDir)
 {
     int xsave, ysave;
 
     xsave = curMapX;
     ysave = curMapY;
 
-    if (MoveMapSim(tfDir)) {
+    if (moveMapSim(tfDir)) {
         if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
                             && curTile != NUCLEAR && curTile != POWERPLANT) {
             int powerWord = POWERWORD(curMapX, curMapY);
@@ -168,7 +168,7 @@ bool Micropolis::TestForCond(Direction tfDir)
  * array.
  * Also warn the user about using too much power ('buy another power plant').
  */
-void Micropolis::DoPowerScan()
+void Micropolis::doPowerScan()
 {
     short ADir;
     int ConNum, Dir;
@@ -177,32 +177,32 @@ void Micropolis::DoPowerScan()
         powerMap[x] = 0;    /* ClearPowerMem */
     }
 
-    MaxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
-    NumPower = 0;
+    maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
+    numPower = 0;
 
     while (powerStackNum > 0) {
-        PullPowerStack();
+        pullPowerStack();
         ADir = 4;
         do {
-            if (++NumPower > MaxPower) {
-                SendMes(STR301_NOT_ENOUGH_POWER);
+            if (++numPower > maxPower) {
+                sendMessage(STR301_NOT_ENOUGH_POWER);
                 return;
             }
-            if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
-                MoveMapSim((Direction)ADir);
+            if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
+                moveMapSim((Direction)ADir);
             }
             SETPOWERBIT(curMapX, curMapY);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
-                if (TestForCond((Direction)Dir)) {
+                if (testForConductive((Direction)Dir)) {
                     ConNum++;
                     ADir = Dir;
                 }
                 Dir++;
             }
             if (ConNum > 1) {
-                PushPowerStack();
+                pushPowerStack();
             }
         } while (ConNum);
     }
@@ -211,9 +211,9 @@ void Micropolis::DoPowerScan()
 
 /**
  * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
- * @see powerStackNum, PushPowerStackX, PushPowerStackY
+ * @see powerStackNum, powerStackX, powerStackY
  */
-void Micropolis::PushPowerStack()
+void Micropolis::pushPowerStack()
 {
     if (powerStackNum < (PWRSTKSIZE - 2)) {
         powerStackNum++;
@@ -226,9 +226,9 @@ void Micropolis::PushPowerStack()
 /**
  * Pull a position from the power stack and store it in Micropolis::curMapX and
  * Micropolis::curMapY.
- * @see powerStackNum, PushPowerStackX, PushPowerStackY
+ * @see powerStackNum, powerStackX, powerStackY
  */
-void Micropolis::PullPowerStack()
+void Micropolis::pullPowerStack()
 {
     if (powerStackNum > 0)  {
         curMapX = powerStackX[powerStackNum];

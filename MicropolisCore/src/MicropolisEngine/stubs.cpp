@@ -168,7 +168,7 @@ void Micropolis::DoStartScenario(int scenario)
 
 
 /** Tell the front-end that fire bombs are being dropped. */
-void Micropolis::DropFireBombs()
+void Micropolis::dropFireBombs()
 {
     Callback("UIDropFireBombs", "");
 }
@@ -181,11 +181,11 @@ void Micropolis::DropFireBombs()
  */
 void Micropolis::InitGame()
 {
-    sim_paused = false; // Simulation is running.
-    sim_paused_speed = 0;
-    sim_skip = 0;
-    sim_skips = 0;
-    heat_steps = 0; // Disable cellular automata machine.
+    simPaused = false; // Simulation is running.
+    simPausedSpeed = 0;
+    simSkip = 0;
+    simSkips = 0;
+    heatSteps = 0; // Disable cellular automata machine.
     setSpeed(0);
 }
 

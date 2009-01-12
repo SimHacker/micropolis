@@ -153,7 +153,7 @@ static bool save_short(
 }
 
 
-bool Micropolis::load_file(const char *filename, const char *dir)
+bool Micropolis::loadFileDir(const char *filename, const char *dir)
 {
     bool result = false;
     char *path = NULL;
@@ -200,7 +200,7 @@ bool Micropolis::loadFile(const char *filename)
 {
     long n;
 
-    if (!load_file(filename, NULL)) {
+    if (!loadFileDir(filename, NULL)) {
         return false;
     }
 
@@ -218,11 +218,11 @@ bool Micropolis::loadFile(const char *filename)
 
     autoBulldoze = (miscHist[52] != 0);   // flag for autoBulldoze
     autoBudget   = (miscHist[53] != 0);   // flag for autoBudget
-    autoGo       = (miscHist[54] != 0);   // flag for auto-goto
+    autoGoto     = (miscHist[54] != 0);   // flag for auto-goto
     UserSoundOn  = (miscHist[55] != 0);   // flag for the sound on/off
     cityTax = miscHist[56];
     SimSpeed = miscHist[57];
-    ChangeCensus();
+    changeCensus();
     MustUpdateOptions = 1;
 
     /* yayaya */
@@ -265,10 +265,10 @@ bool Micropolis::loadFile(const char *filename)
 
     setSpeed(SimSpeed);
     setSkips(0);
-    InitFundingLevel();
+    initFundingLevel();
 
     // Set the scenario id to 0.
-    InitWillStuff();
+    initWillStuff();
     ScenarioID = SC_NONE;
     InitSimLoad = 1;
     doInitialEval = false;
@@ -309,7 +309,7 @@ bool Micropolis::saveFile(const char *filename)
 
     miscHist[52] = autoBulldoze;   // flag for autoBulldoze
     miscHist[53] = autoBudget;     // flag for autoBudget
-    miscHist[54] = autoGo;         // flag for auto-goto
+    miscHist[54] = autoGoto;       // flag for auto-goto
     miscHist[55] = UserSoundOn;    // flag for the sound on/off
     miscHist[57] = SimSpeed;
     miscHist[56] = cityTax;        /* post release */
@@ -349,12 +349,12 @@ bool Micropolis::saveFile(const char *filename)
  * @param s Scenario to load.
  * @note \a s cannot be \c SC_NONE.
  */
-void Micropolis::LoadScenario(Scenario s)
+void Micropolis::loadScenario(Scenario s)
 {
     const char *name = NULL;
     const char *fname = NULL;
 
-    CityFileName = "";
+    cityFileName = "";
 
     SetGameLevel(LEVEL_EASY);
 
@@ -428,24 +428,24 @@ void Micropolis::LoadScenario(Scenario s)
     setSpeed(3);
     cityTax = 7;
 
-    load_file(
+    loadFileDir(
         fname,
-        ResourceDir);
+        resourceDir.c_str());
 
-    InitWillStuff();
-    InitFundingLevel();
+    initWillStuff();
+    initFundingLevel();
     UpdateFunds();
     InvalidateEditors();
     InvalidateMaps();
     InitSimLoad = 1;
     doInitialEval = false;
     DoSimInit();
-    DidLoadScenario();
+    didLoadScenario();
 }
 
 
 /** Report to the front-end that the scenario was loaded. */
-void Micropolis::DidLoadScenario()
+void Micropolis::didLoadScenario()
 {
     Callback("UIDidLoadScenario", "");
 }
@@ -455,33 +455,33 @@ void Micropolis::DidLoadScenario()
  * @param filename Name of the file to load.
  * @return Game was loaded successfully.
  * @todo In what state is the game left when loading fails?
- * @todo String normalization code is duplicated in #SaveCityAs(). Extract to
+ * @todo String normalization code is duplicated in #saveCityAs(). Extract to
  *       a sub-function.
  * @bug Function fails if \c lastDot<lastSlash (ie with \c "x.y/bla" )
  */
-bool Micropolis::LoadCity(const char *filename)
+bool Micropolis::loadCity(const char *filename)
 {
     if (loadFile(filename)) {
 
-        CityFileName = filename;
+        cityFileName = filename;
 
-        unsigned int lastSlash = CityFileName.find_last_of('/');
+        unsigned int lastSlash = cityFileName.find_last_of('/');
         unsigned int pos = (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
 
-        unsigned int lastDot = CityFileName.find_last_of('.');
+        unsigned int lastDot = cityFileName.find_last_of('.');
         unsigned int last =
-            (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+            (lastDot == std::string::npos) ? cityFileName.length() : lastDot;
 
-        std::string newCityName = CityFileName.substr(pos, last - pos);
+        std::string newCityName = cityFileName.substr(pos, last - pos);
         setCityName(newCityName);
 
-        DidLoadCity();
+        didLoadCity();
 
         return true;
 
     } else {
 
-        DidntLoadCity((filename && *filename) ? filename : "(null)");
+        didntLoadCity((filename && *filename) ? filename : "(null)");
 
         return false;
 
@@ -489,7 +489,7 @@ bool Micropolis::LoadCity(const char *filename)
 }
 
 /** Report to the frontend that the game was successfully loaded. */
-void Micropolis::DidLoadCity()
+void Micropolis::didLoadCity()
 {
     Callback("UIDidLoadCity", "");
 }
@@ -499,7 +499,7 @@ void Micropolis::DidLoadCity()
  * Report to the frontend that the game failed to load.
  * @param msg File that attempted to load
  */
-void Micropolis::DidntLoadCity(const char *msg)
+void Micropolis::didntLoadCity(const char *msg)
 {
     Callback(
         "UIDidntLoadCity",
@@ -510,23 +510,23 @@ void Micropolis::DidntLoadCity(const char *msg)
 
 /**
  * Try to save the game.
- * @todo This is a no-op if the #CityFileName is empty.
+ * @todo This is a no-op if the #cityFileName is empty.
  *       In that case, we should probably warn the user about the failure.
  */
-void Micropolis::SaveCity()
+void Micropolis::saveCity()
 {
-    if (CityFileName.length() > 0) {
+    if (cityFileName.length() > 0) {
 
-        DoSaveCityAs();
+        doSaveCityAs();
 
     } else {
-        if (saveFile(CityFileName.c_str())) {
+        if (saveFile(cityFileName.c_str())) {
 
-            DidSaveCity();
+            didSaveCity();
 
         } else {
 
-            DidntSaveCity(CityFileName.c_str());
+            didntSaveCity(cityFileName.c_str());
 
         }
     }
@@ -534,14 +534,14 @@ void Micropolis::SaveCity()
 
 
 /** Report to the frontend that the city is being saved. */
-void Micropolis::DoSaveCityAs()
+void Micropolis::doSaveCityAs()
 {
     Callback("UISaveCityAs", "");
 }
 
 
 /** Report to the frontend that the city was saved successfully. */
-void Micropolis::DidSaveCity()
+void Micropolis::didSaveCity()
 {
     Callback("UIDidSaveCity", "");
 }
@@ -551,7 +551,7 @@ void Micropolis::DidSaveCity()
  * Report to the frontend that the city could not be saved.
  * @param msg Name of the file used
  */
-void Micropolis::DidntSaveCity(const char *msg)
+void Micropolis::didntSaveCity(const char *msg)
 {
     Callback(
         "UIDidntSaveCity",
@@ -563,35 +563,35 @@ void Micropolis::DidntSaveCity(const char *msg)
 /**
  * Save the city under a new name (?)
  * @param filename Name of the file to use for storing the game.
- * @todo String normalization code is duplicated in #LoadCity(). Extract to
+ * @todo String normalization code is duplicated in #loadCity(). Extract to
  *       a sub-function.
  * @bug Function fails if \c lastDot<lastSlash (ie with \c "x.y/bla" )
  */
-void Micropolis::SaveCityAs(const char *filename)
+void Micropolis::saveCityAs(const char *filename)
 {
-    CityFileName = filename;
+    cityFileName = filename;
 
-    if (saveFile(CityFileName.c_str())) {
+    if (saveFile(cityFileName.c_str())) {
 
-        unsigned int lastDot = CityFileName.find_last_of('.');
-        unsigned int lastSlash = CityFileName.find_last_of('/');
+        unsigned int lastDot = cityFileName.find_last_of('.');
+        unsigned int lastSlash = cityFileName.find_last_of('/');
 
         unsigned int pos =
             (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
         unsigned int last =
-            (lastDot == std::string::npos) ? CityFileName.length() : lastDot;
+            (lastDot == std::string::npos) ? cityFileName.length() : lastDot;
         unsigned int len =
             last - pos;
         std::string newCityName =
-            CityFileName.substr(pos, len);
+            cityFileName.substr(pos, len);
 
         setCityName(newCityName);
 
-        DidSaveCity();
+        didSaveCity();
 
     } else {
 
-        DidntSaveCity(CityFileName.c_str());
+        didntSaveCity(cityFileName.c_str());
 
     }
 }

@@ -82,10 +82,10 @@
  * @bug File handling is not safe across platforms (text-mode may modify data).
  * @todo What is the point of a \c Quad \a id when we cast it to an \c int ?
  */
-Resource *Micropolis::GetResource(const char *name, Quad id)
+Resource *Micropolis::getResource(const char *name, Quad id)
 {
-    Resource *r = Resources;
-    char fname[256];
+    Resource *r = resources;
+    char fname[4096];
 
     while (r != NULL) {
         if (r->id == id && strncmp(r->name, name, 4) == 0) {
@@ -100,7 +100,7 @@ Resource *Micropolis::GetResource(const char *name, Quad id)
     r = (Resource *)NewPtr(sizeof(Resource));
     assert(r != NULL);
 
-    // XXX Not safe
+    /// @bug Not safe!
     r->name[0] = name[0];
     r->name[1] = name[1];
     r->name[2] = name[2];
@@ -109,8 +109,8 @@ Resource *Micropolis::GetResource(const char *name, Quad id)
 
     // Load the file into memory
 
-    // XXX Not safe (overflow, non-printable chars)
-    sprintf(fname, "%s/%c%c%c%c.%d", ResourceDir,
+    /// @bug Not safe (overflow, non-printable chars)
+    sprintf(fname, "%s/%c%c%c%c.%d", resourceDir.c_str(),
                         r->name[0], r->name[1], r->name[2], r->name[3],
                         (int)r->id);
 
@@ -147,8 +147,8 @@ Resource *Micropolis::GetResource(const char *name, Quad id)
     // File-load ok !!
     fclose(fp);
 
-    r->next = Resources;
-    Resources = r;
+    r->next = resources;
+    resources = r;
 
     return r;
 
@@ -159,7 +159,7 @@ loadFailed:
     r->buf = NULL;
     r->size = 0;
     fprintf(stderr, "Can't find resource file \"%s\"!\n", fname);
-    perror("GetResource");
+    perror("getResource");
     return NULL;
 }
 
@@ -174,12 +174,12 @@ loadFailed:
  *      is overwritten at least. Maybe use an \c assert() instead?).
  * @todo Why do we copy the text? Can we not return its address instead?
  */
-void Micropolis::GetIndString(char *str, int id, short num)
+void Micropolis::getIndString(char *str, int id, short num)
 {
     StringTable *tp, *st;
 
     // Try to find requested string table in already loaded files.
-    tp = StringTables;
+    tp = stringTables;
     st = NULL;
     while (tp != NULL) {
         if (tp->id == id) {
@@ -197,7 +197,7 @@ void Micropolis::GetIndString(char *str, int id, short num)
         assert(st != NULL);
 
         st->id = id;
-        Resource *r = GetResource("stri", id);
+        Resource *r = getResource("stri", id);
         Quad size = r->size;
         char *buf = r->buf;
 
@@ -222,8 +222,8 @@ void Micropolis::GetIndString(char *str, int id, short num)
             buf += strlen(buf) + 1;
         }
 
-        st->next = StringTables;
-        StringTables = st;
+        st->next = stringTables;
+        stringTables = st;
     }
 
     // st points to the (possibly just loaded) string table

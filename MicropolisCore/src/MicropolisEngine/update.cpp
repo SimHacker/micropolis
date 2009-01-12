@@ -96,13 +96,13 @@ void Micropolis::UpdateMaps()
 
 void Micropolis::UpdateGraphs()
 {
-    ChangeCensus();
+    changeCensus();
 }
 
 
 void Micropolis::UpdateEvaluation()
 {
-    ChangeEval();
+    changeEval();
 }
 
 
@@ -161,7 +161,7 @@ void Micropolis::updateDate()
     if (cityYear >= megalinium) {
         SetYear(startingYear);
         cityYear = startingYear;
-        SendMes(-STR301_NOT_ENOUGH_POWER);
+        sendMessage(-STR301_NOT_ENOUGH_POWER);
     }
 
     doMessage();
@@ -259,7 +259,7 @@ void Micropolis::updateOptions()
             options |= 1;
         }
 
-        if (autoGo) {
+        if (autoGoto) {
             options |= 2;
         }
 
@@ -275,15 +275,15 @@ void Micropolis::updateOptions()
             options |= 16;
         }
 
-        if (DoAnimation) {
+        if (doAnimation) {
             options |= 32;
         }
 
-        if (DoMessages) {
+        if (doMessages) {
             options |= 64;
         }
 
-        if (DoNotices) {
+        if (doNotices) {
             options |= 128;
         }
 

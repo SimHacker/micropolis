@@ -88,7 +88,7 @@ short Micropolis::MakeTraf(ZoneType dest)
     PosStackN = 0; // Clear position stack
 
 #if 0
-      if ((!Rand(2)) && FindPTele()) {
+      if ((!getRandom(2)) && FindPTele()) {
         /* printf("Telecommute!\n"); */
         return 1;
       }
@@ -134,7 +134,7 @@ void Micropolis::SetTrafMem()
                 z = trafficDensityMap[curMapX >>1][curMapY >>1];
                 z += 50;
 
-                if (z > 240 && Rand(5) == 0) {
+                if (z > 240 && getRandom(5) == 0) {
 
                     z = 240;
                     TrafMaxX = curMapX <<4;
@@ -253,7 +253,7 @@ bool Micropolis::TryDrive()
     LDir = DIR_INVALID;
     for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
-        if (TryGo(dist)) {                /* if it got a road */
+        if (tryGo(dist)) {                /* if it got a road */
 
             if (DriveDone()) {              /* if destination is reached */
                 return true;                  /* pass */
@@ -276,15 +276,15 @@ bool Micropolis::TryDrive()
 
 
 /* comefrom: TryDrive */
-bool Micropolis::TryGo(int dist)
+bool Micropolis::tryGo(int dist)
 {
     short x, rdir;
     Direction realdir;
 
 #if 0
-    rdir = Rand(3); /* XXX: Heaviest user of Rand */
+    rdir = getRandom(3); /* XXX: Heaviest user of Rand */
 #else
-    rdir = Rand16() & 3;
+    rdir = getRandom16() & 3;
 #endif
 
     for (x = rdir; x < (rdir + 4); x++) { /* for the 4 directions */
@@ -296,7 +296,7 @@ bool Micropolis::TryGo(int dist)
         }
 
         if (RoadTest(GetFromMap(realdir))) {
-            MoveMapSim(realdir);
+            moveMapSim(realdir);
             LDir = ReverseDirection(realdir);
 
             if (dist & 1) {

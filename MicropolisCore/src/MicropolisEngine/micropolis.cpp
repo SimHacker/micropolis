@@ -181,8 +181,8 @@ void Micropolis::init()
     // short airportPop;
     airportPop = 0;
 
-    // short needHosp;
-    needHosp = 0;
+    // short needHospital;
+    needHospital = 0;
 
     // short needChurch;
     needChurch = 0;
@@ -397,11 +397,11 @@ void Micropolis::init()
     // Quad fireValue;
     fireValue = 0;
 
-    // int MustDrawCurrPercents;
-    MustDrawCurrPercents = 0;
+    // int mustDrawCurrPercents;
+    mustDrawCurrPercents = 0;
 
-    // int MustDrawBudgetWindow;
-    MustDrawBudgetWindow = 0;
+    // int mustDrawBudgetWindow;
+    mustDrawBudgetWindow = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -412,8 +412,8 @@ void Micropolis::init()
     // disasters.cpp
 
 
-    // short FloodCnt;
-    FloodCnt = 0;
+    // short floodCount;
+    floodCount = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -435,8 +435,8 @@ void Micropolis::init()
     // Quad deltaCityPop;
     deltaCityPop = 0;
 
-    // Quad cityAssValue;
-    cityAssValue = 0;
+    // Quad cityAssessedValue;
+    cityAssessedValue = 0;
 
     // CityClass cityClass;
     cityClass = CC_VILLAGE;
@@ -444,8 +444,8 @@ void Micropolis::init()
     // short cityScore;
     cityScore = 0;
 
-    // short deltaCityScore;
-    deltaCityScore = 0;
+    // short cityScoreDelta;
+    cityScoreDelta = 0;
 
     // short trafficAverage;
     trafficAverage = 0;
@@ -459,38 +459,38 @@ void Micropolis::init()
     // generate.cpp
 
 
-    // short XStart;
-    XStart = 0;
+    // short terrainXStart;
+    terrainXStart = 0;
 
-    // short YStart;
-    YStart = 0;
+    // short terrainYStart;
+    terrainYStart = 0;
 
-    // short MapX;
-    MapX = 0;
+    // short terrainMapX;
+    terrainMapX = 0;
 
-    // short MapY;
-    MapY = 0;
+    // short terrainMapY;
+    terrainMapY = 0;
 
     // short Dir;
-    Dir = 0;
+    terrainDir = 0;
 
     // short LastDir;
-    LastDir = 0;
+    terrainDirLast = 0;
 
     // int TreeLevel; /* level for tree creation */
-    TreeLevel = -1;
+    terrainTreeLevel = -1;
 
     // int LakeLevel; /* level for lake creation */
-    LakeLevel = -1;
+    terrainLakeLevel = -1;
 
     // int CurveLevel; /* level for river curviness */
-    CurveLevel = -1;
+    terrainCurveLevel = -1;
 
     // int CreateIsland; /* -1 => 10%, 0 => never, 1 => always */
-    CreateIsland = -1;
+    terrainCreateIsland = -1;
 
     // int IslandRadius;
-    CreateIsland = ISLAND_RADIUS;
+    terrainIslandRadius = ISLAND_RADIUS;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -501,16 +501,16 @@ void Micropolis::init()
 
     for (int i = 0; i < HISTORIES; i++) {
 
-      History10[i] = (unsigned char *)NewPtr(120);
-      History120[i] = (unsigned char *)NewPtr(120);
+      history10[i] = (unsigned char *)NewPtr(120);
+      history120[i] = (unsigned char *)NewPtr(120);
 
     }
 
-    Graph10Max = 0;
-    Graph120Max = 0;
+    graph10Max = 0;
+    graph120Max = 0;
 
     // int GraphUpdateTime;
-    GraphUpdateTime = 100;
+    graphUpdateTime = 100;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -520,75 +520,72 @@ void Micropolis::init()
     ////////////////////////////////////////////////////////////////////////
     // main.cpp
 
-    // int sim_loops;
-    sim_loops = 0;
+    // int simLoops;
+    simLoops = 0;
 
-    // int sim_delay;
-    sim_delay = 50;
+    // int simSkips;
+    simSkips = 0;
 
-    // int sim_skips;
-    sim_skips = 0;
+    // int simSkip;
+    simSkip = 0;
 
-    // int sim_skip;
-    sim_skip = 0;
+    simPaused = false; // Simulation is running
 
-    sim_paused = false; // Simulation is running
+    // int simPausedSpeed;
+    simPausedSpeed = 3;
 
-    // int sim_paused_speed;
-    sim_paused_speed = 3;
+    // int heatSteps;
+    heatSteps = 0;
 
-    // int heat_steps;
-    heat_steps = 0;
+    // int heatFlow;
+    heatFlow = -7;
 
-    // int heat_flow;
-    heat_flow = -7;
+    // int heatRule;
+    heatRule = 0;
 
-    // int heat_rule;
-    heat_rule = 0;
+    // int heatWrap;
+    heatWrap = 3;
 
-    // int heat_wrap;
-    heat_wrap = 3;
+    // std::string cityFileName;
+    cityFileName = "";
 
-    // std::string CityFileName;
-    CityFileName = "";
+    // std::string cityName;
+    cityName = "";
 
-    // int MultiPlayerMode;
-    MultiPlayerMode = 0;
+    // int tilesAnimated;
+    tilesAnimated = 0;
 
-    // int TilesAnimated;
-    TilesAnimated = 0;
+    // int doAnimation;
+    doAnimation = 1;
 
-    // int DoAnimation;
-    DoAnimation = 1;
+    // int doMessages;
+    doMessages = 1;
 
-    // int DoMessages;
-    DoMessages = 1;
+    // int doNotices;
+    doNotices = 1;
 
-    // int DoNotices;
-    DoNotices = 1;
+    // short *cellSrc;
+    cellSrc = NULL;
 
-    // short *CellSrc;
-    CellSrc = NULL;
-
-    // short *CellDst;
-    CellDst = NULL;
+    // short *cellDst;
+    cellDst = NULL;
 
 
     ////////////////////////////////////////////////////////////////////////
     // map.cpp
 
 
-  #if 0
+#if 0
 
     ////////////////////////////////////////////////////////////////////////
     // Disabled this small map drawing, filtering and overlaying code.
     // Going to re-implement it in the tile engine and Python.
 
 
-    // int DynamicData[32];
-    memset(DynamicData, 0, sizeof(int) * 32);
+    // int dynamicData[32];
+    memset(dynamicData, 0, sizeof(int) * 32);
 
-  #endif
+#endif
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -598,18 +595,18 @@ void Micropolis::init()
     // Quad lastCityPop;
     lastCityPop = 0;
 
-    // short LastCategory;
-    LastCategory = 0;
+    // short lastCategory;
+    lastCategory = 0;
 
-    // short LastPicNum;
-    LastPicNum = 0;
+    // short messagePictureLast;
+    messagePictureLast = 0;
 
-    autoGo = false;
+    autoGoto = false;
 
-    HaveLastMessage = false;
+    messageLastValid = false;
 
-    // char LastMessage[256];
-    memset(LastMessage, 0, sizeof(char) * 256);
+    // char messageLast[256];
+    memset(messageLast, 0, sizeof(char) * 256);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -623,11 +620,11 @@ void Micropolis::init()
     memset(powerStackX, 0, sizeof(short) * PWRSTKSIZE);
     memset(powerStackY, 0, sizeof(short) * PWRSTKSIZE);
 
-    // Quad MaxPower;
-    MaxPower = 0;
+    // Quad maxPower;
+    maxPower = 0;
 
-    // Quad NumPower;
-    NumPower = 0;
+    // Quad numPower;
+    numPower = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -643,22 +640,16 @@ void Micropolis::init()
 
 
     // char *HomeDir;
-    HomeDir = NULL;
+    homeDir = "";
 
     // char *ResourceDir;
-    ResourceDir = NULL;
+    resourceDir = "";
 
-    // char *KeyDir;
-    KeyDir = NULL;
+    // Resource *resources;
+    resources = NULL;
 
-    // char *HostName;
-    HostName = NULL;
-
-    // Resource *Resources;
-    Resources = NULL;
-
-    // StringTable *StringTables;
-    StringTables = NULL;
+    // StringTable *stringTables;
+    stringTables = NULL;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -823,9 +814,6 @@ void Micropolis::init()
 
     UserSoundOn = false; // Disable sound
 
-    // std::string CityName;
-    CityName = "";
-
     NoDisasters = false; // Enable disasters
 
     // short MesNum;
@@ -929,7 +917,7 @@ void Micropolis::init()
 
     ////////////////////////////////////////////////////////////////////////
 
-    sim_init();
+    simInit();
 
 }
 
