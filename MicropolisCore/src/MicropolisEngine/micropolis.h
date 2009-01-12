@@ -2356,52 +2356,52 @@ public:
 public:
 
 
-    short NewMap;
+    short newMap;
 
-    short NewMapFlags[NMAPS];
+    short newMapFlags[NMAPS];
 
-    short CCx; ///< X coordinate of city center
-    short CCy; ///< Y coordinate of city center
+    short cityCenterX; ///< X coordinate of city center
+    short cityCenterY; ///< Y coordinate of city center
 
-    short CCx2; ///< X coordinate of city center divided by 2
-    short CCy2; ///< Y coordinate of city center divided by 2
+    short cityCenterX2; ///< X coordinate of city center divided by 2
+    short cityCenterY2; ///< Y coordinate of city center divided by 2
 
-    short PolMaxX; ///< X coordinate of most polluted area
-    short PolMaxY; ///< Y coordinate of most polluted area
+    short pollutionMaxX; ///< X coordinate of most polluted area
+    short pollutionMaxY; ///< Y coordinate of most polluted area
 
-    short CrimeMaxX; ///< X coordinate of most criminal area
-    short CrimeMaxY; ///< Y coordinate of most criminal area
+    short crimeMaxX; ///< X coordinate of most criminal area
+    short crimeMaxY; ///< Y coordinate of most criminal area
 
-    Quad DonDither;
+    Quad donDither;
 
 
-    void FireAnalysis();
+    void fireAnalysis();
 
-    void PopDenScan();
+    void populationDensityScan();
 
-    int GetPDen(int Ch9);
+    int getPopulationDensity(int Ch9);
 
-    void PTLScan();
+    void pollutionTerrainLandValueScan();
 
-    int GetPValue(int loc);
+    int getPollutionValue(int loc);
 
-    int GetDisCC(int x, int y);
+    int getCityCenterDistance(int x, int y);
 
-    void CrimeScan();
+    void crimeScan();
 
-    void SmoothTerrain();
+    void smoothTerrain();
 
-    void DoSmooth();
+    void doSmooth1();
 
-    void DoSmooth2();
+    void doSmooth2();
 
-    void ClrTemArray();
+    void clearTempMap1();
 
-    void SmoothFSMap();
+    void smoothFireStationMap();
 
-    void SmoothPSMap();
+    void smoothPoliceStationMap();
 
-    void DistIntMarket();
+    void computeComRateMap();
 
 
     ////////////////////////////////////////////////////////////////////////

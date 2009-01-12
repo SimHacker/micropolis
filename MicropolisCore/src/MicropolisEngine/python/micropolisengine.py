@@ -1140,53 +1140,53 @@ class Micropolis(_object):
     if _newclass:stringTables = _swig_property(_micropolisengine.Micropolis_stringTables_get, _micropolisengine.Micropolis_stringTables_set)
     def getResource(*args): return _micropolisengine.Micropolis_getResource(*args)
     def getIndString(*args): return _micropolisengine.Micropolis_getIndString(*args)
-    __swig_setmethods__["NewMap"] = _micropolisengine.Micropolis_NewMap_set
-    __swig_getmethods__["NewMap"] = _micropolisengine.Micropolis_NewMap_get
-    if _newclass:NewMap = _swig_property(_micropolisengine.Micropolis_NewMap_get, _micropolisengine.Micropolis_NewMap_set)
-    __swig_setmethods__["NewMapFlags"] = _micropolisengine.Micropolis_NewMapFlags_set
-    __swig_getmethods__["NewMapFlags"] = _micropolisengine.Micropolis_NewMapFlags_get
-    if _newclass:NewMapFlags = _swig_property(_micropolisengine.Micropolis_NewMapFlags_get, _micropolisengine.Micropolis_NewMapFlags_set)
-    __swig_setmethods__["CCx"] = _micropolisengine.Micropolis_CCx_set
-    __swig_getmethods__["CCx"] = _micropolisengine.Micropolis_CCx_get
-    if _newclass:CCx = _swig_property(_micropolisengine.Micropolis_CCx_get, _micropolisengine.Micropolis_CCx_set)
-    __swig_setmethods__["CCy"] = _micropolisengine.Micropolis_CCy_set
-    __swig_getmethods__["CCy"] = _micropolisengine.Micropolis_CCy_get
-    if _newclass:CCy = _swig_property(_micropolisengine.Micropolis_CCy_get, _micropolisengine.Micropolis_CCy_set)
-    __swig_setmethods__["CCx2"] = _micropolisengine.Micropolis_CCx2_set
-    __swig_getmethods__["CCx2"] = _micropolisengine.Micropolis_CCx2_get
-    if _newclass:CCx2 = _swig_property(_micropolisengine.Micropolis_CCx2_get, _micropolisengine.Micropolis_CCx2_set)
-    __swig_setmethods__["CCy2"] = _micropolisengine.Micropolis_CCy2_set
-    __swig_getmethods__["CCy2"] = _micropolisengine.Micropolis_CCy2_get
-    if _newclass:CCy2 = _swig_property(_micropolisengine.Micropolis_CCy2_get, _micropolisengine.Micropolis_CCy2_set)
-    __swig_setmethods__["PolMaxX"] = _micropolisengine.Micropolis_PolMaxX_set
-    __swig_getmethods__["PolMaxX"] = _micropolisengine.Micropolis_PolMaxX_get
-    if _newclass:PolMaxX = _swig_property(_micropolisengine.Micropolis_PolMaxX_get, _micropolisengine.Micropolis_PolMaxX_set)
-    __swig_setmethods__["PolMaxY"] = _micropolisengine.Micropolis_PolMaxY_set
-    __swig_getmethods__["PolMaxY"] = _micropolisengine.Micropolis_PolMaxY_get
-    if _newclass:PolMaxY = _swig_property(_micropolisengine.Micropolis_PolMaxY_get, _micropolisengine.Micropolis_PolMaxY_set)
-    __swig_setmethods__["CrimeMaxX"] = _micropolisengine.Micropolis_CrimeMaxX_set
-    __swig_getmethods__["CrimeMaxX"] = _micropolisengine.Micropolis_CrimeMaxX_get
-    if _newclass:CrimeMaxX = _swig_property(_micropolisengine.Micropolis_CrimeMaxX_get, _micropolisengine.Micropolis_CrimeMaxX_set)
-    __swig_setmethods__["CrimeMaxY"] = _micropolisengine.Micropolis_CrimeMaxY_set
-    __swig_getmethods__["CrimeMaxY"] = _micropolisengine.Micropolis_CrimeMaxY_get
-    if _newclass:CrimeMaxY = _swig_property(_micropolisengine.Micropolis_CrimeMaxY_get, _micropolisengine.Micropolis_CrimeMaxY_set)
-    __swig_setmethods__["DonDither"] = _micropolisengine.Micropolis_DonDither_set
-    __swig_getmethods__["DonDither"] = _micropolisengine.Micropolis_DonDither_get
-    if _newclass:DonDither = _swig_property(_micropolisengine.Micropolis_DonDither_get, _micropolisengine.Micropolis_DonDither_set)
-    def FireAnalysis(*args): return _micropolisengine.Micropolis_FireAnalysis(*args)
-    def PopDenScan(*args): return _micropolisengine.Micropolis_PopDenScan(*args)
-    def GetPDen(*args): return _micropolisengine.Micropolis_GetPDen(*args)
-    def PTLScan(*args): return _micropolisengine.Micropolis_PTLScan(*args)
-    def GetPValue(*args): return _micropolisengine.Micropolis_GetPValue(*args)
-    def GetDisCC(*args): return _micropolisengine.Micropolis_GetDisCC(*args)
-    def CrimeScan(*args): return _micropolisengine.Micropolis_CrimeScan(*args)
-    def SmoothTerrain(*args): return _micropolisengine.Micropolis_SmoothTerrain(*args)
-    def DoSmooth(*args): return _micropolisengine.Micropolis_DoSmooth(*args)
-    def DoSmooth2(*args): return _micropolisengine.Micropolis_DoSmooth2(*args)
-    def ClrTemArray(*args): return _micropolisengine.Micropolis_ClrTemArray(*args)
-    def SmoothFSMap(*args): return _micropolisengine.Micropolis_SmoothFSMap(*args)
-    def SmoothPSMap(*args): return _micropolisengine.Micropolis_SmoothPSMap(*args)
-    def DistIntMarket(*args): return _micropolisengine.Micropolis_DistIntMarket(*args)
+    __swig_setmethods__["newMap"] = _micropolisengine.Micropolis_newMap_set
+    __swig_getmethods__["newMap"] = _micropolisengine.Micropolis_newMap_get
+    if _newclass:newMap = _swig_property(_micropolisengine.Micropolis_newMap_get, _micropolisengine.Micropolis_newMap_set)
+    __swig_setmethods__["newMapFlags"] = _micropolisengine.Micropolis_newMapFlags_set
+    __swig_getmethods__["newMapFlags"] = _micropolisengine.Micropolis_newMapFlags_get
+    if _newclass:newMapFlags = _swig_property(_micropolisengine.Micropolis_newMapFlags_get, _micropolisengine.Micropolis_newMapFlags_set)
+    __swig_setmethods__["cityCenterX"] = _micropolisengine.Micropolis_cityCenterX_set
+    __swig_getmethods__["cityCenterX"] = _micropolisengine.Micropolis_cityCenterX_get
+    if _newclass:cityCenterX = _swig_property(_micropolisengine.Micropolis_cityCenterX_get, _micropolisengine.Micropolis_cityCenterX_set)
+    __swig_setmethods__["cityCenterY"] = _micropolisengine.Micropolis_cityCenterY_set
+    __swig_getmethods__["cityCenterY"] = _micropolisengine.Micropolis_cityCenterY_get
+    if _newclass:cityCenterY = _swig_property(_micropolisengine.Micropolis_cityCenterY_get, _micropolisengine.Micropolis_cityCenterY_set)
+    __swig_setmethods__["cityCenterX2"] = _micropolisengine.Micropolis_cityCenterX2_set
+    __swig_getmethods__["cityCenterX2"] = _micropolisengine.Micropolis_cityCenterX2_get
+    if _newclass:cityCenterX2 = _swig_property(_micropolisengine.Micropolis_cityCenterX2_get, _micropolisengine.Micropolis_cityCenterX2_set)
+    __swig_setmethods__["cityCenterY2"] = _micropolisengine.Micropolis_cityCenterY2_set
+    __swig_getmethods__["cityCenterY2"] = _micropolisengine.Micropolis_cityCenterY2_get
+    if _newclass:cityCenterY2 = _swig_property(_micropolisengine.Micropolis_cityCenterY2_get, _micropolisengine.Micropolis_cityCenterY2_set)
+    __swig_setmethods__["pollutionMaxX"] = _micropolisengine.Micropolis_pollutionMaxX_set
+    __swig_getmethods__["pollutionMaxX"] = _micropolisengine.Micropolis_pollutionMaxX_get
+    if _newclass:pollutionMaxX = _swig_property(_micropolisengine.Micropolis_pollutionMaxX_get, _micropolisengine.Micropolis_pollutionMaxX_set)
+    __swig_setmethods__["pollutionMaxY"] = _micropolisengine.Micropolis_pollutionMaxY_set
+    __swig_getmethods__["pollutionMaxY"] = _micropolisengine.Micropolis_pollutionMaxY_get
+    if _newclass:pollutionMaxY = _swig_property(_micropolisengine.Micropolis_pollutionMaxY_get, _micropolisengine.Micropolis_pollutionMaxY_set)
+    __swig_setmethods__["crimeMaxX"] = _micropolisengine.Micropolis_crimeMaxX_set
+    __swig_getmethods__["crimeMaxX"] = _micropolisengine.Micropolis_crimeMaxX_get
+    if _newclass:crimeMaxX = _swig_property(_micropolisengine.Micropolis_crimeMaxX_get, _micropolisengine.Micropolis_crimeMaxX_set)
+    __swig_setmethods__["crimeMaxY"] = _micropolisengine.Micropolis_crimeMaxY_set
+    __swig_getmethods__["crimeMaxY"] = _micropolisengine.Micropolis_crimeMaxY_get
+    if _newclass:crimeMaxY = _swig_property(_micropolisengine.Micropolis_crimeMaxY_get, _micropolisengine.Micropolis_crimeMaxY_set)
+    __swig_setmethods__["donDither"] = _micropolisengine.Micropolis_donDither_set
+    __swig_getmethods__["donDither"] = _micropolisengine.Micropolis_donDither_get
+    if _newclass:donDither = _swig_property(_micropolisengine.Micropolis_donDither_get, _micropolisengine.Micropolis_donDither_set)
+    def fireAnalysis(*args): return _micropolisengine.Micropolis_fireAnalysis(*args)
+    def populationDensityScan(*args): return _micropolisengine.Micropolis_populationDensityScan(*args)
+    def getPopulationDensity(*args): return _micropolisengine.Micropolis_getPopulationDensity(*args)
+    def pollutionTerrainLandValueScan(*args): return _micropolisengine.Micropolis_pollutionTerrainLandValueScan(*args)
+    def getPollutionValue(*args): return _micropolisengine.Micropolis_getPollutionValue(*args)
+    def getCityCenterDistance(*args): return _micropolisengine.Micropolis_getCityCenterDistance(*args)
+    def crimeScan(*args): return _micropolisengine.Micropolis_crimeScan(*args)
+    def smoothTerrain(*args): return _micropolisengine.Micropolis_smoothTerrain(*args)
+    def doSmooth1(*args): return _micropolisengine.Micropolis_doSmooth1(*args)
+    def doSmooth2(*args): return _micropolisengine.Micropolis_doSmooth2(*args)
+    def clearTempMap1(*args): return _micropolisengine.Micropolis_clearTempMap1(*args)
+    def smoothFireStationMap(*args): return _micropolisengine.Micropolis_smoothFireStationMap(*args)
+    def smoothPoliceStationMap(*args): return _micropolisengine.Micropolis_smoothPoliceStationMap(*args)
+    def computeComRateMap(*args): return _micropolisengine.Micropolis_computeComRateMap(*args)
     __swig_setmethods__["ValveFlag"] = _micropolisengine.Micropolis_ValveFlag_set
     __swig_getmethods__["ValveFlag"] = _micropolisengine.Micropolis_ValveFlag_get
     if _newclass:ValveFlag = _swig_property(_micropolisengine.Micropolis_ValveFlag_get, _micropolisengine.Micropolis_ValveFlag_set)

@@ -187,45 +187,45 @@ void Micropolis::Simulate(int mod16)
                 DecROGMem();
             }
             DecTrafficMem();
-            NewMapFlags[TDMAP] = 1;
-            NewMapFlags[RDMAP] = 1;
-            NewMapFlags[ALMAP] = 1;
-            NewMapFlags[REMAP] = 1;
-            NewMapFlags[COMAP] = 1;
-            NewMapFlags[INMAP] = 1;
-            NewMapFlags[DYMAP] = 1;
+            newMapFlags[TDMAP] = 1;
+            newMapFlags[RDMAP] = 1;
+            newMapFlags[ALMAP] = 1;
+            newMapFlags[REMAP] = 1;
+            newMapFlags[COMAP] = 1;
+            newMapFlags[INMAP] = 1;
+            newMapFlags[DYMAP] = 1;
             sendMessages();
             break;
 
         case 11:
             if ((simCycle % SpdPwr[x]) == 0) {
                 doPowerScan();
-                NewMapFlags[PRMAP] = 1;
+                newMapFlags[PRMAP] = 1;
                 NewPower = 1; /* post-release change */
             }
             break;
 
         case 12:
             if ((simCycle % SpdPtl[x]) == 0) {
-                PTLScan();
+                pollutionTerrainLandValueScan();
             }
             break;
 
         case 13:
             if ((simCycle % SpdCri[x]) == 0) {
-                CrimeScan();
+                crimeScan();
             }
             break;
 
         case 14:
             if ((simCycle % SpdPop[x]) == 0) {
-                PopDenScan();
+                populationDensityScan();
             }
             break;
 
         case 15:
             if ((simCycle % SpdFir[x]) == 0) {
-                FireAnalysis();
+                fireAnalysis();
             }
             doDisasters();
             break;
@@ -255,11 +255,11 @@ void Micropolis::DoSimInit()
     MapScan(0, WORLD_X);
     doPowerScan();
     NewPower = 1;         /* post rel */
-    PTLScan();
-    CrimeScan();
-    PopDenScan();
-    FireAnalysis();
-    NewMap = 1;
+    pollutionTerrainLandValueScan();
+    crimeScan();
+    populationDensityScan();
+    fireAnalysis();
+    newMap = 1;
     doAllGraphs();
     newGraph = true;
     totalPop = 1;

@@ -655,38 +655,38 @@ void Micropolis::init()
     ////////////////////////////////////////////////////////////////////////
     // scan.cpp
 
-    // short NewMap;
-    NewMap = 0;
+    // short newMap;
+    newMap = 0;
 
-    // short NewMapFlags[NMAPS];
-    memset(NewMapFlags, 0, sizeof(short) * NMAPS);
+    // short newMapFlags[NMAPS];
+    memset(newMapFlags, 0, sizeof(short) * NMAPS);
 
-    // short CCx;
-    CCx = 0;
+    // short cityCenterX;
+    cityCenterX = 0;
 
-    // short CCy;
-    CCy = 0;
+    // short cityCenterY;
+    cityCenterY = 0;
 
-    // short CCx2;
-    CCx2 = 0;
+    // short cityCenterX2;
+    cityCenterX2 = 0;
 
-    // short CCy2;
-    CCy2 = 0;
+    // short cityCenterY2;
+    cityCenterY2 = 0;
 
-    // short PolMaxX;
-    PolMaxX = 0;
+    // short pollutionMaxX;
+    pollutionMaxX = 0;
 
-    // short PolMaxY;
-    PolMaxY = 0;
+    // short pollutionMaxY;
+    pollutionMaxY = 0;
 
-    // short CrimeMaxX;
-    CrimeMaxX = 0;
+    // short crimeMaxX;
+    crimeMaxX = 0;
 
-    // short CrimeMaxY;
-    CrimeMaxY = 0;
+    // short crimeMaxY;
+    crimeMaxY = 0;
 
-    // Quad DonDither;
-    DonDither = 0;
+    // Quad donDither;
+    donDither = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
