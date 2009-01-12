@@ -349,15 +349,15 @@ void Micropolis::getScore()
 
     z = clamp((256 - x) * 4, 0, 1000);
 
-    if (ResCap) {
+    if (resCap) {
         z = (int)(z * .85);
     }
 
-    if (ComCap) {
+    if (comCap) {
         z = (int)(z * .85);
     }
 
-    if (IndCap) {
+    if (indCap) {
         z = (int)(z * .85);
     }
 
@@ -375,15 +375,15 @@ void Micropolis::getScore()
         z = (int)(z * (0.9 + (fireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
     }
 
-    if (RValve < -1000) {
+    if (resValve < -1000) {
         z = (int)(z * .85);
     }
 
-    if (CValve < -1000) {
+    if (comValve < -1000) {
         z = (int)(z * .85);
     }
 
-    if (IValve < -1000) {
+    if (indValve < -1000) {
         z = (int)(z * .85);
     }
 

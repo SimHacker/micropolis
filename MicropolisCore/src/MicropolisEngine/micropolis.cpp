@@ -693,32 +693,32 @@ void Micropolis::init()
     // simulate.cpp
 
 
-    // short ValveFlag;
-    ValveFlag = 0;
+    // short valveFlag;
+    valveFlag = 0;
 
-    // short CrimeRamp;
-    CrimeRamp = 0;
+    // short crimeRamp;
+    crimeRamp = 0;
 
-    // short PolluteRamp;
-    PolluteRamp = 0;
+    // short pollutionRamp;
+    pollutionRamp = 0;
 
-    // short RValve;
-    RValve = 0;
+    // short resValve;
+    resValve = 0;
 
-    // short CValve;
-    CValve = 0;
+    // short comValve;
+    comValve = 0;
 
-    // short IValve;
-    IValve = 0;
+    // short indValve;
+    indValve = 0;
 
-    // short ResCap;
-    ResCap = 0;
+    // short resCap;
+    resCap = 0;
 
-    // short ComCap;
-    ComCap = 0;
+    // short comCap;
+    comCap = 0;
 
-    // short IndCap;
-    IndCap = 0;
+    // short indCap;
+    indCap = 0;
 
     // short CashFlow;
     CashFlow = 0;

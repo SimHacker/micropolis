@@ -132,27 +132,27 @@ void Micropolis::sendMessages()
     case 26:
         if (resPop > 500 && stadiumPop == 0) {
             sendMessage(STR301_NEED_STADIUM);
-            ResCap = 1;
+            resCap = 1;
         } else {
-            ResCap = 0;
+            resCap = 0;
         }
         break;
 
     case 28:
         if (indPop > 70 && seaportPop == 0) {
             sendMessage(STR301_NEED_SEAPORT);
-            IndCap = 1;
+            indCap = 1;
         } else {
-            IndCap = 0;
+            indCap = 0;
         }
         break;
 
     case 30:
         if (comPop > 100 && airportPop == 0) {
             sendMessage(STR301_NEED_AIRPORT);
-            ComCap = 1;
+            comCap = 1;
         } else {
-            ComCap = 0;
+            comCap = 0;
         }
         break;
 

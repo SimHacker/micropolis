@@ -2410,23 +2410,23 @@ public:
 public:
 
 
-    short ValveFlag;
+    short valveFlag;
 
-    short CrimeRamp;
+    short crimeRamp;
 
-    short PolluteRamp;
+    short pollutionRamp;
 
-    short RValve;
+    short resValve;
 
-    short CValve;
+    short comValve;
 
-    short IValve;
+    short indValve;
 
-    short ResCap;
+    short resCap;
 
-    short ComCap;
+    short comCap;
 
-    short IndCap;
+    short indCap;
 
     short CashFlow;
 
