@@ -144,8 +144,8 @@ void Micropolis::SetTrafMem()
                     sprite = GetSprite(SPRITE_HELICOPTER);
                     if (sprite != NULL && sprite->control == -1) {
 
-                        sprite->dest_x = TrafMaxX;
-                        sprite->dest_y = TrafMaxY;
+                        sprite->destX = TrafMaxX;
+                        sprite->destY = TrafMaxY;
 
                     }
                 }

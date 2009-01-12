@@ -1215,8 +1215,8 @@ int Micropolis::GetBoatDis()
     for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
         if (sprite->type == SPRITE_SHIP && sprite->frame != 0) {
 
-            sprDist = absoluteValue(sprite->x + sprite->x_hot - mx)
-                    + absoluteValue(sprite->y + sprite->y_hot - my);
+            sprDist = absoluteValue(sprite->x + sprite->xHot - mx)
+                    + absoluteValue(sprite->y + sprite->yHot - my);
 
             dist = min(dist, sprDist);
         }
