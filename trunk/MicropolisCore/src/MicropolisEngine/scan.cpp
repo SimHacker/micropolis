@@ -277,7 +277,7 @@ void Micropolis::PTLScan()
                 pnum++;
                 ptot += z;
                 /* find max pol for monster  */
-                if (z > pmax || (z == pmax && (Rand16() & 3) == 0)) {
+                if (z > pmax || (z == pmax && (getRandom16() & 3) == 0)) {
                     pmax = z;
                     PolMaxX = x <<1;
                     PolMaxY = y <<1;
@@ -406,7 +406,7 @@ void Micropolis::CrimeScan()
                 totz += z;
 
                 // Update new crime hot-spot
-                if (z > cmax || (z == cmax && (Rand16() & 3) == 0)) {
+                if (z > cmax || (z == cmax && (getRandom16() & 3) == 0)) {
                     cmax = z;
                     CrimeMaxX = x <<1;
                     CrimeMaxY = y <<1;

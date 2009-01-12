@@ -231,11 +231,11 @@ void Micropolis::destroyMapArrays()
     }
 
     for (int i = 0; i < HISTORIES; i++) {
-        if (History10[i] != NULL) {
-            free(History10[i]);
+        if (history10[i] != NULL) {
+            free(history10[i]);
         }
-        if (History120[i] != NULL) {
-            free(History120[i]);
+        if (history120[i] != NULL) {
+            free(history120[i]);
         }
     }
 }

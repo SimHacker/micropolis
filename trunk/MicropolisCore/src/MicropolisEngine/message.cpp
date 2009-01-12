@@ -73,7 +73,7 @@
 
 
 /** Check progress of the user, and send him messages about it. */
-void Micropolis::SendMessages()
+void Micropolis::sendMessages()
 {
     short PowerPop;
     float TM;
@@ -82,11 +82,11 @@ void Micropolis::SendMessages()
     if (ScenarioID > SC_NONE && ScoreType > SC_NONE && ScoreWait > 0) {
         ScoreWait--;
         if (ScoreWait == 0) {
-            DoScenarioScore(ScoreType);
+            doScenarioScore(ScoreType);
         }
     }
 
-    CheckGrowth();
+    checkGrowth();
 
     totalZonePop = resZonePop + comZonePop + indZonePop;
     PowerPop = nuclearPowerPop + coalPowerPop;
@@ -95,43 +95,43 @@ void Micropolis::SendMessages()
 
     case 1:
         if (totalZonePop / 4 >= resZonePop) {
-            SendMes(STR301_NEED_MORE_RESIDENTIAL);
+            sendMessage(STR301_NEED_MORE_RESIDENTIAL);
         }
         break;
 
     case 5:
         if (totalZonePop / 8 >= comZonePop) {
-            SendMes(STR301_NEED_MORE_COMMERCIAL);
+            sendMessage(STR301_NEED_MORE_COMMERCIAL);
         }
         break;
 
     case 10:
         if (totalZonePop / 8 >= indZonePop) {
-            SendMes(STR301_NEED_MORE_INDUSTRIAL);
+            sendMessage(STR301_NEED_MORE_INDUSTRIAL);
         }
         break;
 
     case 14:
         if (totalZonePop > 10 && totalZonePop * 2 > roadTotal) {
-            SendMes(STR301_NEED_MORE_ROADS);
+            sendMessage(STR301_NEED_MORE_ROADS);
         }
         break;
 
     case 18:
         if (totalZonePop > 50 && totalZonePop > railTotal) {
-            SendMes(STR301_NEED_MORE_RAILS);
+            sendMessage(STR301_NEED_MORE_RAILS);
         }
         break;
 
     case 22:
         if (totalZonePop > 10 && PowerPop == 0) {
-            SendMes(STR301_NEED_ELECTRICITY);
+            sendMessage(STR301_NEED_ELECTRICITY);
         }
         break;
 
     case 26:
         if (resPop > 500 && stadiumPop == 0) {
-            SendMes(STR301_NEED_STADIUM);
+            sendMessage(STR301_NEED_STADIUM);
             ResCap = 1;
         } else {
             ResCap = 0;
@@ -140,7 +140,7 @@ void Micropolis::SendMessages()
 
     case 28:
         if (indPop > 70 && seaportPop == 0) {
-            SendMes(STR301_NEED_SEAPORT);
+            sendMessage(STR301_NEED_SEAPORT);
             IndCap = 1;
         } else {
             IndCap = 0;
@@ -149,7 +149,7 @@ void Micropolis::SendMessages()
 
     case 30:
         if (comPop > 100 && airportPop == 0) {
-            SendMes(STR301_NEED_AIRPORT);
+            sendMessage(STR301_NEED_AIRPORT);
             ComCap = 1;
         } else {
             ComCap = 0;
@@ -160,52 +160,52 @@ void Micropolis::SendMessages()
         TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
         if (TM > 0) {
             if (PwrdZCnt / TM < 0.7) {
-                SendMes(STR301_BLACKOUTS_REPORTED);
+                sendMessage(STR301_BLACKOUTS_REPORTED);
             }
         }
         break;
 
     case 35:
         if (pollutionAverage > /* 80 */ 60) {
-            SendMes(-STR301_HIGH_POLLUTION);
+            sendMessage(-STR301_HIGH_POLLUTION);
         }
         break;
 
     case 42:
         if (crimeAverage > 100) {
-            SendMes(-STR301_HIGH_CRIME);
+            sendMessage(-STR301_HIGH_CRIME);
         }
         break;
 
     case 45:
         if (totalPop > 60 && fireStationPop == 0) {
-            SendMes(STR301_NEED_FIRE_STATION);
+            sendMessage(STR301_NEED_FIRE_STATION);
         }
         break;
 
     case 48:
         if (totalPop > 60 && policeStationPop == 0) {
-            SendMes(STR301_NEED_POLICE_STATION);
+            sendMessage(STR301_NEED_POLICE_STATION);
         }
         break;
 
     case 51:
         if (cityTax > 12) {
-            SendMes(STR301_TAX_TOO_HIGH);
+            sendMessage(STR301_TAX_TOO_HIGH);
         }
         break;
 
     case 54:
         // If roadEffect < 5/8 of max effect
         if (roadEffect < (5 * MAX_ROAD_EFFECT / 8) && roadTotal > 30) {
-            SendMes(STR301_ROAD_NEEDS_FUNDING);
+            sendMessage(STR301_ROAD_NEEDS_FUNDING);
         }
         break;
 
     case 57:
         // If fireEffect < 0.7 of max effect
         if (fireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && totalPop > 20) {
-            SendMes(STR301_FIRE_STATION_NEEDS_FUNDING);
+            sendMessage(STR301_FIRE_STATION_NEEDS_FUNDING);
         }
         break;
 
@@ -213,13 +213,13 @@ void Micropolis::SendMessages()
         // If policeEffect < 0.7 of max effect
         if (policeEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
                                                         && totalPop > 20) {
-            SendMes(STR301_POLICE_NEEDS_FUNDING);
+            sendMessage(STR301_POLICE_NEEDS_FUNDING);
         }
         break;
 
     case 63:
         if (trafficAverage > 60) {
-            SendMes(-STR301_TRAFFIC_JAMS);
+            sendMessage(-STR301_TRAFFIC_JAMS);
         }
         break;
 
@@ -234,7 +234,7 @@ void Micropolis::SendMessages()
  * @todo City class detection seems duplicated. Find other instances, and merge
  *       them to a single function.
  */
-void Micropolis::CheckGrowth()
+void Micropolis::checkGrowth()
 {
     Quad thisCityPop;
     short z;
@@ -267,9 +267,9 @@ void Micropolis::CheckGrowth()
 
         }
 
-        if (z > 0 && z != LastCategory) {
-            SendMes(-z);
-            LastCategory = z;
+        if (z > 0 && z != lastCategory) {
+            sendMessage(-z);
+            lastCategory = z;
         }
 
         lastCityPop = thisCityPop;
@@ -284,7 +284,7 @@ void Micropolis::CheckGrowth()
  * @bug Messages #STR301_SCENARIO_LOST and #STR301_SCENARIO_WON are handled
  *      special (they are larger than #STR301_LAST). Fix this.
  */
-void Micropolis::DoScenarioScore(Scenario type)
+void Micropolis::doScenarioScore(Scenario type)
 {
     short z = -STR301_SCENARIO_LOST;     /* you lose */
 
@@ -344,21 +344,21 @@ void Micropolis::DoScenarioScore(Scenario type)
 
     }
 
-    ClearMes();
-    SendMes(z);
+    clearMessage();
+    sendMessage(z);
 
     if (z == -STR301_SCENARIO_LOST) {
-        DoLoseGame();
+        doLoseGame();
     }
 }
 
 /** Remove any pending message and picture */
-void Micropolis::ClearMes()
+void Micropolis::clearMessage()
 {
     messagePort = 0;
     messageX = 0;
     messageY = 0;
-    LastPicNum = 0;
+    messagePictureLast = 0;
 }
 
 
@@ -367,14 +367,14 @@ void Micropolis::ClearMes()
  * @param mesgNum Message number of the message to display
  * @return Setup succeeded (there was no other message/picture displayed)
  */
-bool Micropolis::SendMes(int mesgNum)
+bool Micropolis::sendMessage(int mesgNum)
 {
     if (mesgNum < 0) {
-        if (mesgNum != LastPicNum) {
+        if (mesgNum != messagePictureLast) {
             messagePort = mesgNum;
             messageX = -1;
             messageY = -1;
-            LastPicNum = mesgNum;
+            messagePictureLast = mesgNum;
             return true;
         }
     } else {
@@ -396,11 +396,11 @@ bool Micropolis::SendMes(int mesgNum)
  * @param mesgNum Message number of the message to display.
  * @param x       X coordinate of the position of the event.
  * @param y       Y coordinate of the position of the event.
- * @todo Merge Micropolis::SendMes() and Micropolis::SendMesAt().
+ * @todo Merge Micropolis::sendMessage() and Micropolis::sendMessageAt().
  */
-void Micropolis::SendMesAt(short mesgNum, short x, short y)
+void Micropolis::sendMessageAt(short mesgNum, short x, short y)
 {
-    if (SendMes(mesgNum)) {
+    if (sendMessage(mesgNum)) {
         messageX = x;
         messageY = y;
     }
@@ -454,14 +454,14 @@ void Micropolis::doMessage()
             return;
         }
 
-        GetIndString(messageStr, 301, MesNum);
+        getIndString(messageStr, 301, MesNum);
 
-        if (autoGo && messageX != -1 && messageY != -1) {
-            DoAutoGoto(messageX, messageY, messageStr);
+        if (autoGoto && messageX != -1 && messageY != -1) {
+            doAutoGoto(messageX, messageY, messageStr);
             messageX = -1;
             messageY = -1;
         } else {
-            SetMessageField(messageStr);
+            setMessageField(messageStr);
         }
 
     } else { /* picture message */
@@ -469,18 +469,18 @@ void Micropolis::doMessage()
         pictId = -MesNum;
 
         if (pictId < 43) {
-            GetIndString(messageStr, 301, pictId);
+            getIndString(messageStr, 301, pictId);
         } else {
             messageStr[0] = '\0';
         }
 
-        DoShowPicture(pictId);
+        doShowPicture(pictId);
 
         messagePort = pictId; /* resend text message */
 
-        if (autoGo && messageX != -1 && messageY != -1) {
+        if (autoGoto && messageX != -1 && messageY != -1) {
 
-            DoAutoGoto(messageX, messageY, messageStr);
+            doAutoGoto(messageX, messageY, messageStr);
             messageX = 0;
             messageY = 0;
         }
@@ -500,11 +500,11 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
     switch (mesgNum) {
 
         case STR301_TRAFFIC_JAMS:
-            if (Rand(5) == 1) {
+            if (getRandom(5) == 1) {
                 MakeSound("city", "HonkHonk-Med", x, y);
-            } else if (Rand(5) == 1) {
+            } else if (getRandom(5) == 1) {
                 MakeSound("city", "HonkHonk-Low", x, y);
-            } else if (Rand(5) == 1) {
+            } else if (getRandom(5) == 1) {
                 MakeSound("city", "HonkHonk-High", x, y);
             }
             break;
@@ -549,7 +549,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
  * @param msg Message
  * @todo \a msg parameter is not used!
  */
-void Micropolis::DoAutoGoto(short x, short y, char *msg)
+void Micropolis::doAutoGoto(short x, short y, char *msg)
 {
     Callback("UIAutoGoto", "dd", (int)x, (int)y);
 }
@@ -559,11 +559,11 @@ void Micropolis::DoAutoGoto(short x, short y, char *msg)
  * Display message to the user
  * @param str Text message
  */
-void Micropolis::SetMessageField(char *str)
+void Micropolis::setMessageField(char *str)
 {
-    if (!HaveLastMessage || strcmp(LastMessage, str) != 0) {
-        strcpy(LastMessage, str);
-        HaveLastMessage = true;
+    if (!messageLastValid || strcmp(messageLast, str) != 0) {
+        strcpy(messageLast, str);
+        messageLastValid = true;
 
         Callback("UISetMessage", "s", str);
     }
@@ -574,21 +574,21 @@ void Micropolis::SetMessageField(char *str)
  * Tell the front-end to display a picture
  * @param id Identification of the picture to show
  */
-void Micropolis::DoShowPicture(short id)
+void Micropolis::doShowPicture(short id)
 {
     Callback("UIShowPicture", "d", (int)id);
 }
 
 
 /** Tell the front-end that the player has lost the game */
-void Micropolis::DoLoseGame()
+void Micropolis::doLoseGame()
 {
     Callback("UILoseGame", "");
 }
 
 
 /** Tell the front-end that the player has won the game */
-void Micropolis::DoWinGame()
+void Micropolis::doWinGame()
 {
     Callback("UIWinGame", "");
 }

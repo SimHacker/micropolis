@@ -1139,7 +1139,7 @@ public:
      *
      * 0 if no, 1 if yes, -1 if too many.
      */
-    short needHosp;
+    short needHospital;
 
     /**
      * Need church?
@@ -1627,50 +1627,50 @@ public:
     /**
      * Flag set when drawCurrPercents called.
      *
-     * Causes ReallyDrawCurrPercents to be called when UpdateBudgetWindow called.
+     * Causes reallyDrawCurrPercents to be called when updateBudgetWindow called.
      * @todo Clean this up.
      */
-    int MustDrawCurrPercents;
+    int mustDrawCurrPercents;
 
     /**
      * Flag set when drawBudgetWindow called.
      *
-     * Causes ReallyDrawBudgetWindow to be called when UpdateBudgetWindow called.
+     * Causes reallyDrawBudgetWindow to be called when updateBudgetWindow called.
      * @todo Clean this up.
      */
-    int MustDrawBudgetWindow;
+    int mustDrawBudgetWindow;
 
 
-    void InitFundingLevel();
+    void initFundingLevel();
 
-    void DoBudget();
+    void doBudget();
 
-    void DoBudgetFromMenu();
+    void doBudgetFromMenu();
 
-    void DoBudgetNow(bool fromMenu);
+    void doBudgetNow(bool fromMenu);
 
     void drawBudgetWindow();
 
-    void ReallyDrawBudgetWindow();
+    void reallyDrawBudgetWindow();
 
     void drawCurrPercents();
 
-    void ReallyDrawCurrPercents();
+    void reallyDrawCurrPercents();
 
-    void UpdateBudgetWindow();
+    void updateBudgetWindow();
 
-    void UpdateBudget();
+    void updateBudget();
 
-    void ShowBudgetWindowAndStartWaiting();
+    void showBudgetWindowAndStartWaiting();
 
-    void SetBudget(
+    void setBudget(
         char *flowStr,
         char *previousStr,
         char *currentStr,
         char *collectedStr,
         short tax);
 
-    void SetBudgetValues(
+    void setBudgetValues(
         char *roadGot,
         char *roadWant,
         char *policeGot,
@@ -1685,38 +1685,38 @@ public:
 public:
 
 
-    int ConnecTile(
+    int connectTile(
         short x,
         short y,
         short *TileAdrPtr,
         short Command);
 
-    int LayDoze(
+    int layDoze(
         int x,
         int y,
         short *TileAdrPtr);
 
-    int LayRoad(
+    int layRoad(
         int x,
         int y,
         short *TileAdrPtr);
 
-    int LayRail(
+    int layRail(
         int x,
         int y,
         short *TileAdrPtr);
 
-    int LayWire(
+    int layWire(
           int x,
           int y,
           short *TileAdrPtr);
 
-    void FixZone(
+    void fixZone(
         int x,
         int y,
         short *TileAdrPtr);
 
-    void FixSingle(
+    void fixSingle(
         int x,
         int y,
         short *TileAdrPtr);
@@ -1731,30 +1731,30 @@ public:
     /**
      * Size of flooding disaster.
      */
-    short FloodCnt;
+    short floodCount;
 
 
-    void MakeMeltdown();
+    void makeMeltdown();
 
-    void FireBomb();
+    void fireBomb();
 
-    void MakeEarthquake();
+    void makeEarthquake();
 
-    void MakeFire();
+    void makeFire();
 
-    void MakeFlood();
+    void makeFlood();
 
   private:
 
-    void DoDisasters();
+    void doDisasters();
 
-    void ScenarioDisaster();
+    void scenarioDisaster();
 
-    void SetFire();
+    void setFire();
 
-    bool Vulnerable(int tem);
+    bool vulnerable(int tem);
 
-    void DoFlood();
+    void doFlood();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1809,16 +1809,18 @@ public:
     /**
      * City assessed value.
      *
-     * Depends on RoadTotal, RailTotal, PolicePop, FireStPop, HospPop,
-     * StadiumPop, PortPop, APortPop, coalPop, and NuclearPop, and
-     * their respective values.
+     * Depends on roadTotal, railTotal, policeStationPop,
+     * fireStationPop, hospitalPop, stadiumPop, seaportPop,
+     * airportPop, coalPowerPop, and nuclearPowerPop, and their
+     * respective values.
      */
-    Quad cityAssValue;
+    Quad cityAssessedValue;
 
     /**
      * City class.
      *
-     * 0: village, 1: town, 2: city, 3: capital, 4: metropolis, 5: megalopolis.
+     * 0: village, 1: town, 2: city, 3: capital, 
+     * 4: metropolis, 5: megalopolis.
      * Affected by city population.
      */
     short cityClass;
@@ -1839,7 +1841,7 @@ public:
      *
      * Depends on city score.
      */
-    short deltaCityScore;
+    short cityScoreDelta;
 
     /**
      * Average traffic.
@@ -1849,31 +1851,31 @@ public:
     short trafficAverage;
 
 
-    void CityEvaluation();
+    void cityEvaluation();
 
-    void EvalInit();
+    void evalInit();
 
-    void DoPopNum();
+    void doPopNum();
 
-    void DoProblems();
+    void doProblems();
 
-    void getAssValue();
+    void getAssessedValue();
 
     void voteProblems();
 
-    short AverageTrf();
+    short getTrafficAverage();
 
-    short GetUnemployment();
+    short getUnemployment();
 
-    short GetFire();
+    short getFireSeverity();
 
-    void GetScore();
+    void getScore();
 
-    void DoVotes();
+    void doVotes();
 
     void doScoreCard();
 
-    void ChangeEval();
+    void changeEval();
 
     void scoreDoer();
 
@@ -1889,31 +1891,31 @@ public:
 public:
 
 
-    bool load_file(const char *filename, const char *dir);
+    bool loadFileDir(const char *filename, const char *dir);
 
     bool loadFile(const char *filename);
 
     bool saveFile(const char *filename);
 
-    void LoadScenario(Scenario s);
+    void loadScenario(Scenario s);
 
-    void DidLoadScenario();
+    void didLoadScenario();
 
-    bool LoadCity(const char *filename);
+    bool loadCity(const char *filename);
 
-    void DidLoadCity();
+    void didLoadCity();
 
-    void DidntLoadCity(const char *msg);
+    void didntLoadCity(const char *msg);
 
-    void SaveCity();
+    void saveCity();
 
-    void DoSaveCityAs();
+    void doSaveCityAs();
 
-    void DidSaveCity();
+    void didSaveCity();
 
-    void DidntSaveCity(const char *msg);
+    void didntSaveCity(const char *msg);
 
-    void SaveCityAs(const char *filename);
+    void saveCityAs(const char *filename);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1936,91 +1938,91 @@ public:
 
     // Starting X location of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short XStart;
+    short terrainXStart;
 
     // Starting Y location of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short YStart;
+    short terrainYStart;
 
     // Current X location of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short MapX;
+    short terrainMapX;
 
     // Current Y location of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short MapY;
+    short terrainMapY;
 
     // Current direction of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short Dir;
+    short terrainDir;
 
     // Last direction of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
-    short LastDir;
+    short terrainDirLast;
 
     // Controls the level of tree creation.
     // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
-    int TreeLevel;
+    int terrainTreeLevel;
 
     // Controls the level of lake creation.
     // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
-    int LakeLevel;
+    int terrainLakeLevel;
 
     // Controls the level of river curviness.
     // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
-    int CurveLevel;
+    int terrainCurveLevel;
 
     // Controls how often to create an island.
     // -1 => 10% chance of island, 0 => never create island, 1 => always create island
-    int CreateIsland;
+    int terrainCreateIsland;
 
     // Controls the radius of islands.
-    int IslandRadius;
+    int terrainIslandRadius;
 
 
-    void GenerateNewCity() ;
+    void generateNewCity() ;
 
-    void GenerateSomeCity(int r);
+    void generateSomeCity(int r);
 
-    void GenerateMap(int r);
+    void generateMap(int r);
 
-    void ClearMap();
+    void clearMap();
 
-    void ClearUnnatural();
+    void clearUnnatural();
 
-    void MakeNakedIsland();
+    void makeNakedIsland();
 
-    void MakeIsland();
+    void makeIsland();
 
-    void MakeLakes();
+    void makeLakes();
 
-    void GetRandStart();
+    void getRandStart();
 
-    void MoveMap(short dir);
+    void moveMap(short dir);
 
-    void TreeSplash(short xloc, short yloc);
+    void treeSplash(short xloc, short yloc);
 
-    void DoTrees();
+    void doTrees();
 
-    void SmoothRiver();
+    void smoothRiver();
 
-    bool IsTree(int cell);
+    bool isTree(int cell);
 
-    void SmoothTrees();
+    void smoothTrees();
 
-    void DoRivers();
+    void doRivers();
 
-    void DoBRiv();
+    void doBRiver();
 
-    void DoSRiv();
+    void doSRiver();
 
-    void PutOnMap(short Mchar, short Xoff, short Yoff);
+    void putOnMap(short Mchar, short Xoff, short Yoff);
 
-    void BRivPlop();
+    void plopBRiver();
 
-    void SRivPlop();
+    void plopSRiver();
 
-    void SmoothWater();
+    void smoothWater();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2036,32 +2038,32 @@ public:
     bool newGraph;
 
     ///< 10 year history graphs.
-    unsigned char *History10[HISTORIES];
+    unsigned char *history10[HISTORIES];
 
     ///< 120 year history graphs.
-    unsigned char *History120[HISTORIES];
+    unsigned char *history120[HISTORIES];
 
     //
-    int HistoryInitialized;
+    int historyInitialized;
 
-    short Graph10Max;
+    short graph10Max;
 
-    short Graph120Max;
+    short graph120Max;
 
-    int GraphUpdateTime;
+    int graphUpdateTime;
 
 
     void drawMonth(short *hist, unsigned char *s, float scale);
 
     void doAllGraphs();
 
-    void ChangeCensus();
+    void changeCensus();
 
     void graphDoer();
 
     void initGraphs();
 
-    void InitGraphMax();
+    void initGraphMax();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2070,11 +2072,11 @@ public:
 public:
 
 
-    void InitWillStuff();
+    void initWillStuff();
 
-    void ResetMapState();
+    void resetMapState();
 
-    void ResetEditorState();
+    void resetEditorState();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2083,66 +2085,62 @@ public:
 public:
 
 
-    int sim_loops;
+    int simLoops;
 
-    int sim_delay;
+    int simSkips;
 
-    int sim_skips;
-
-    int sim_skip;
+    int simSkip;
 
     /**
      * Simulation is paused
      * @todo Variable has reversed logic, maybe use sim_running instead?
      */
-    bool sim_paused;
+    bool simPaused;
 
-    int sim_paused_speed;
+    int simPausedSpeed;
 
-    int heat_steps;
+    int heatSteps;
 
-    int heat_flow;
+    int heatFlow;
 
-    int heat_rule;
+    int heatRule;
 
-    int heat_wrap;
+    int heatWrap;
 
-    std::string CityFileName; ///< Filename of the last loaded city
-    std::string CityName;     ///< Name of the city
+    std::string cityFileName; ///< Filename of the last loaded city
+    std::string cityName;     ///< Name of the city
 
-    int MultiPlayerMode;
+    int tilesAnimated; ///< @todo Not currently used, should hook it up.
 
-    int TilesAnimated;
+    int doAnimation;
 
-    int DoAnimation;
+    int doMessages; ///< @todo Not currently used, should hook it up.
 
-    int DoMessages;
-
-    int DoNotices;
+    int doNotices; ///< @todo Not currently used, should hook it up.
 
 
 private:
 
-    short *CellSrc;
+    short *cellSrc;
 
-    short *CellDst;
+    short *cellDst;
 
 
 public:
 
     const char *getMicropolisVersion();
 
-    void env_init();
+    void environmentInit();
 
-    void sim_init();
+    void simInit();
 
-    void sim_update();
+    void simUpdate();
 
-    void sim_heat();
+    void simHeat();
 
-    void sim_loop(int doSim);
+    void simLoop(int doSim);
 
-    void sim_tick();
+    void simTick();
 
 
 #if 0
@@ -2156,7 +2154,7 @@ public:
 public:
 
 
-    int DynamicData[32];
+    int dynamicData[32];
 
 
     void drawAll();
@@ -2175,7 +2173,7 @@ public:
 
     void drawDynamic();
 
-    short GetCI(short x);
+    short getCI(short x);
 
     void drawPopulationDensity();
 
@@ -2193,7 +2191,7 @@ public:
 
     void drawPoliceRadius();
 
-    void MemDrawMap();
+    void memDrawMap();
 
     void ditherMap();
 
@@ -2222,9 +2220,9 @@ public:
 
 
     Quad lastCityPop;   ///< Population of last city class check. @see CheckGrowth
-    short LastCategory; ///< City class of last city class check. @see CheckGrowth
+    short lastCategory; ///< City class of last city class check. @see CheckGrowth
 
-    short LastPicNum; ///< Last picture displayed to the user
+    short messagePictureLast; ///< Last picture displayed to the user
 
     /**
      * Enable auto goto
@@ -2232,42 +2230,42 @@ public:
      * When enabled and an important event happens, the map display will jump to
      * the location of the event
      */
-    bool autoGo;
+    bool autoGoto;
 
     /**
      * Do we have a valid message in LastMessage?
      * @todo Remove the variable by using LastMessage instead (for example the
      *       empty string)
      */
-    bool HaveLastMessage;
+    bool messageLastValid;
 
-    char LastMessage[256]; ///< Last message displayed to the user
+    char messageLast[256]; ///< Last message displayed to the user
 
 
-    void SendMessages();
+    void sendMessages();
 
-    void CheckGrowth();
+    void checkGrowth();
 
-    void DoScenarioScore(Scenario type);
+    void doScenarioScore(Scenario type);
 
-    void ClearMes();
+    void clearMessage();
 
-    bool SendMes(int Mnum);
+    bool sendMessage(int Mnum);
 
-    void SendMesAt(short Mnum, short x, short y);
+    void sendMessageAt(short Mnum, short x, short y);
 
     void doMessage();
 
     void doMakeSound(int mesgNum, int x, int y);
 
-    void DoAutoGoto(short x, short y, char *msg);
+    void doAutoGoto(short x, short y, char *msg);
 
-    void SetMessageField(char *str);
+    void setMessageField(char *str);
 
-    void DoShowPicture(short id);
+    void doShowPicture(short id);
 
-    void DoLoseGame();
-    void DoWinGame();
+    void doLoseGame();
+    void doWinGame(); ///< @todo This may not be called. Call it when appropriate.
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2286,13 +2284,13 @@ public:
     short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
 
 
-    void DoPowerScan();
+    void doPowerScan();
 
-    bool TestForCond(Direction TFDir);
+    bool testForConductive(Direction TFDir);
 
-    void PushPowerStack();
+    void pushPowerStack();
 
-    void PullPowerStack();
+    void pullPowerStack();
 
     //@}
 
@@ -2300,11 +2298,11 @@ public:
      * Maximal power that the combined coal and nuclear power plants can deliver.
      * @see NumPower CoalPop NuclearPop
      */
-    Quad MaxPower;
-    Quad NumPower; ///< Amount of power used.
+    Quad maxPower;
+    Quad numPower; ///< Amount of power used.
 
 
-    bool MoveMapSim(Direction mDir);
+    bool moveMapSim(Direction mDir);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2316,22 +2314,19 @@ public:
     UQuad nextRandom;
 
 
-    int sim_rand();
+    int simRandom();
 
-    void sim_srand(
-      UQuad seed);
+    short getRandom(short range);
 
-    short Rand(short range);
+    int getRandom16();
 
-    int Rand16();
+    int getRandom16Signed();
 
-    int Rand16Signed();
+    short getERandom(short limit);
 
-    short ERand(short limit);
+    void randomlySeedRandom();
 
-    void RandomlySeedRand();
-
-    void SeedRand(int seed);
+    void seedRandom(int seed);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2340,22 +2335,19 @@ public:
 public:
 
 
-    char *HomeDir;
+    /** Name of the Micrpolis top level home directory. */
+    std::string homeDir;
 
     /** Name of the sub-directory where the resources are located. */
-    char *ResourceDir;
+    std::string resourceDir;
 
-    char *KeyDir;
-
-    char *HostName;
-
-    Resource *Resources; ///< Linked list of loaded resources
-    StringTable *StringTables; ///< Linked list of loaded string tables
+    Resource *resources; ///< Linked list of loaded resources
+    StringTable *stringTables; ///< Linked list of loaded string tables
 
 
-    Resource *GetResource(const char *name, Quad id);
+    Resource *getResource(const char *name, Quad id);
 
-    void GetIndString(char *str, int id, short num);
+    void getIndString(char *str, int id, short num);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2465,13 +2457,13 @@ public:
     /** Generate a random animated MapTileCharacters::FIRE tile */
     inline short RandomFire()
     {
-        return (FIRE + (Rand16() & 7)) | ANIMBIT;
+        return (FIRE + (getRandom16() & 7)) | ANIMBIT;
     };
 
     /** Generate a random MapTileCharacters::RUBBLE tile */
     inline short RandomRubble()
     {
-        return (RUBBLE + (Rand16() & 3)) | BULLBIT;
+        return (RUBBLE + (getRandom16() & 3)) | BULLBIT;
     };
 
     void SimFrame();
@@ -2626,7 +2618,7 @@ public:
 
     void MakeShipHere(int x, int y);
 
-    void MakeMonster();
+    void makeMonster();
 
     void MonsterHere(int x, int y);
 
@@ -2634,7 +2626,7 @@ public:
 
     void GeneratePlane(int x, int y);
 
-    void MakeTornado();
+    void makeTornado();
 
     void MakeExplosion(int x, int y);
 
@@ -2722,7 +2714,7 @@ public:
     void DoStartScenario(
       int scenario);
 
-    void DropFireBombs();
+    void dropFireBombs();
 
     void InitGame();
 
@@ -2868,7 +2860,7 @@ public:
 
     bool TryDrive();
 
-    bool TryGo(int dist);
+    bool tryGo(int dist);
 
     short GetFromMap(Direction d);
 

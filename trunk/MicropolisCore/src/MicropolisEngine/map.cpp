@@ -422,30 +422,30 @@ bool Micropolis::dynamicFilter(
 
 
     return (
-        ((DynamicData[0] > DynamicData[1]) ||
-         (populationDensity >= DynamicData[0]) &&
-         (populationDensity <= DynamicData[1])) &&
-        ((DynamicData[2] > DynamicData[3]) ||
-         (rateOfGrowth >= ((2 * DynamicData[2]) - 256)) &&
-         (rateOfGrowth <= ((2 * DynamicData[3]) - 256))) &&
-        ((DynamicData[4] > DynamicData[5]) ||
-         (traffic >= DynamicData[4]) &&
-         (traffic <= DynamicData[5])) &&
-        ((DynamicData[6] > DynamicData[7]) ||
-         (pollution >= DynamicData[6]) &&
-         (pollution <= DynamicData[7])) &&
-        ((DynamicData[8] > DynamicData[9]) ||
-         (crime >= DynamicData[8]) &&
-         (crime <= DynamicData[9])) &&
-        ((DynamicData[10] > DynamicData[11]) ||
-         (landValue >= DynamicData[10]) &&
-         (landValue <= DynamicData[11])) &&
-        ((DynamicData[12] > DynamicData[13]) ||
-         (police >= DynamicData[12]) &&
-         (police <= DynamicData[13])) &&
-        ((DynamicData[14] > DynamicData[15]) ||
-         (fire >= DynamicData[14]) &&
-         (fire <= DynamicData[15])));
+        ((dynamicData[0] > dynamicData[1]) ||
+         (populationDensity >= dynamicData[0]) &&
+         (populationDensity <= dynamicData[1])) &&
+        ((dynamicData[2] > dynamicData[3]) ||
+         (rateOfGrowth >= ((2 * dynamicData[2]) - 256)) &&
+         (rateOfGrowth <= ((2 * dynamicData[3]) - 256))) &&
+        ((dynamicData[4] > dynamicData[5]) ||
+         (traffic >= dynamicData[4]) &&
+         (traffic <= dynamicData[5])) &&
+        ((dynamicData[6] > dynamicData[7]) ||
+         (pollution >= dynamicData[6]) &&
+         (pollution <= dynamicData[7])) &&
+        ((dynamicData[8] > dynamicData[9]) ||
+         (crime >= dynamicData[8]) &&
+         (crime <= dynamicData[9])) &&
+        ((dynamicData[10] > dynamicData[11]) ||
+         (landValue >= dynamicData[10]) &&
+         (landValue <= dynamicData[11])) &&
+        ((dynamicData[12] > dynamicData[13]) ||
+         (police >= dynamicData[12]) &&
+         (police <= dynamicData[13])) &&
+        ((dynamicData[14] > dynamicData[15]) ||
+         (fire >= dynamicData[14]) &&
+         (fire <= dynamicData[15])));
 }
 
 
@@ -461,7 +461,7 @@ void Micropolis::drawDynamic()
 }
 
 
-short Micropolis::GetCI(short x)
+short Micropolis::getCI(short x)
 {
     if (x < 50) {
         return VAL_NONE;
@@ -487,7 +487,7 @@ void Micropolis::drawPopulationDensity()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(populationDensityMap[x][y]),
+                getCI(populationDensityMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -546,7 +546,7 @@ void Micropolis::drawTrafMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(trafficDensityMap[x][y]),
+                getCI(trafficDensityMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -565,7 +565,7 @@ void Micropolis::drawPolMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(10 + pollutionMap[x][y]),
+                getCI(10 + pollutionMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -584,7 +584,7 @@ void Micropolis::drawCrimeMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(crimeMap[x][y]),
+                getCI(crimeMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -604,7 +604,7 @@ void Micropolis::drawLandMap()
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
                 view,
-                GetCI(landValueMap[x][y]),
+                getCI(landValueMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -622,7 +622,7 @@ void Micropolis::drawFireRadius()
     for (x = 0; x < SmY; x++) {
         for (y = 0; y < SmY; y++) {
             maybeDrawRect(
-                GetCI(fireStationMapEffect[x][y]),
+                getCI(fireStationMapEffect[x][y]),
                 x * 24,
                 y * 24,
                 24,
@@ -640,7 +640,7 @@ void Micropolis::drawPoliceRadius()
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
             maybeDrawRect(
-                GetCI(policeStationMapEffect[x][y]),
+                getCI(policeStationMapEffect[x][y]),
                 x * 24,
                 y * 24,
                 24,
@@ -650,7 +650,7 @@ void Micropolis::drawPoliceRadius()
 }
 
 
-void Micropolis::MemDrawMap()
+void Micropolis::memDrawMap()
 {
 
     switch (view->map_state) {
@@ -751,10 +751,10 @@ void Micropolis::ditherMap()
     errors = (int *)NewPtr(sizeof(int) * width);
 
     for (i = 0; i < width; i++) {
-        errors[i] = (Rand16() & 15) - 7;
+        errors[i] = (getRandom16() & 15) - 7;
     }
 
-    err = (Rand16() & 15) - 7;
+    err = (getRandom16() & 15) - 7;
 
     for (y = 0; y < height; y += 2) {
         unsigned char *i1 = image1;

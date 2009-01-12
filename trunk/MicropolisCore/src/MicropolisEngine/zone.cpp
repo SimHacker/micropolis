@@ -119,8 +119,8 @@ void Micropolis::DoHospChur()
             RepairZone(HOSPITAL, 3); /*post*/
         }
 
-        if (needHosp == -1) {
-            if (!Rand(20)) {
+        if (needHospital == -1) {
+            if (!getRandom(20)) {
                 ZonePlop(RESBASE);
             }
         }
@@ -136,7 +136,7 @@ void Micropolis::DoHospChur()
         }
 
         if (needChurch == -1) {
-            if (!Rand(20)) {
+            if (!getRandom(20)) {
                 ZonePlop(RESBASE);
             }
         }
@@ -213,7 +213,7 @@ void Micropolis::DoIndustrial(int ZonePwrFlg)
     tpop = getIndZonePop(curTile);
     indPop += tpop;
 
-    if (tpop > Rand(5)) {
+    if (tpop > getRandom(5)) {
         /* Try driving from industrial to residential */
         TrfGood = MakeTraf(ZT_RESIDENTIAL);
     } else {
@@ -221,11 +221,11 @@ void Micropolis::DoIndustrial(int ZonePwrFlg)
     }
 
     if (TrfGood == -1) {
-        DoIndOut(tpop, Rand16() & 1);
+        DoIndOut(tpop, getRandom16() & 1);
         return;
     }
 
-    if (!(Rand16() & 7)) {
+    if (!(getRandom16() & 7)) {
         zscore = IValve + EvalInd(TrfGood);
 
         if (!ZonePwrFlg) {
@@ -233,14 +233,14 @@ void Micropolis::DoIndustrial(int ZonePwrFlg)
         }
 
         if ((zscore > -350) &&
-            (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
-            DoIndIn(tpop, Rand16() & 1);
+            (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
+            DoIndIn(tpop, getRandom16() & 1);
             return;
         }
 
         if ((zscore < 350) &&
-            (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
-            DoIndOut(tpop, Rand16() & 1);
+            (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
+            DoIndOut(tpop, getRandom16() & 1);
         }
 
     }
@@ -257,7 +257,7 @@ void Micropolis::DoCommercial(int ZonePwrFlg)
     tpop = getComZonePop(curTile);
     comPop += tpop;
 
-    if (tpop > Rand(5)) {
+    if (tpop > getRandom(5)) {
         /* Try driving from commercial to industrial */
         TrfGood = MakeTraf(ZT_INDUSTRIAL);
     } else {
@@ -270,7 +270,7 @@ void Micropolis::DoCommercial(int ZonePwrFlg)
         return;
     }
 
-    if (!(Rand16() & 7)) {
+    if (!(getRandom16() & 7)) {
 
         locvalve = EvalCom(TrfGood);
         zscore = CValve + locvalve;
@@ -281,14 +281,14 @@ void Micropolis::DoCommercial(int ZonePwrFlg)
 
         if (TrfGood &&
             (zscore > -350) &&
-            (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+            (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
             value = GetCRVal();
             DoComIn(tpop, value);
             return;
         }
 
         if ((zscore < 350) &&
-            (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
+            (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
             value = GetCRVal();
             DoComOut(tpop, value);
         }
@@ -312,7 +312,7 @@ void Micropolis::DoResidential(int ZonePwrFlg)
 
     resPop += tpop;
 
-    if (tpop > Rand(35)) {
+    if (tpop > getRandom(35)) {
         /* Try driving from residential to commercial */
         TrfGood = MakeTraf(ZT_COMMERCIAL);
     } else {
@@ -325,7 +325,7 @@ void Micropolis::DoResidential(int ZonePwrFlg)
         return;
     }
 
-    if ((curTile == FREEZ) || (!(Rand16() & 7))) {
+    if ((curTile == FREEZ) || (!(getRandom16() & 7))) {
 
         locvalve = EvalRes(TrfGood);
         zscore = RValve + locvalve;
@@ -335,9 +335,9 @@ void Micropolis::DoResidential(int ZonePwrFlg)
         }
 
         if ((zscore > -350) &&
-            (((short)(zscore - 26380)) > ((short)Rand16Signed()))) {
+            (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
 
-          if ((!tpop) && (!(Rand16() & 3))) {
+          if ((!tpop) && (!(getRandom16() & 3))) {
               MakeHosp();
               return;
           }
@@ -349,7 +349,7 @@ void Micropolis::DoResidential(int ZonePwrFlg)
         }
 
         if ((zscore < 350) &&
-            (((short)(zscore + 26380)) < ((short)Rand16Signed()))) {
+            (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
             value = GetCRVal();
             DoResOut(tpop, value);
         }
@@ -361,9 +361,9 @@ void Micropolis::DoResidential(int ZonePwrFlg)
 
 void Micropolis::MakeHosp()
 {
-    if (needHosp > 0) {
+    if (needHospital > 0) {
         ZonePlop(HOSPITAL - 4);
-        needHosp = 0;
+        needHospital = 0;
         return;
     }
 
@@ -490,7 +490,7 @@ void Micropolis::DoResOut(int pop, int value)
                     y >= 0 && y < WORLD_Y) {
                     if ((map[x][y] & LOMASK) != FREEZ) {
                         map[x][y] =
-                            LHTHR + value + Rand(2) + BLBNCNBIT;
+                            LHTHR + value + getRandom(2) + BLBNCNBIT;
                     }
                 }
             }
@@ -611,7 +611,7 @@ void Micropolis::BuildHouse(int value)
                     BestLoc = z;
                 }
 
-                if ((score == hscore) && !(Rand16() & 7)) {
+                if ((score == hscore) && !(getRandom16() & 7)) {
                     BestLoc = z;
                 }
 
@@ -627,7 +627,7 @@ void Micropolis::BuildHouse(int value)
 
         if (TestBounds(xx, yy)) {
             map[xx][yy] =
-                HOUSE + BLBNCNBIT + Rand(2) + (value * 3);
+                HOUSE + BLBNCNBIT + getRandom(2) + (value * 3);
         }
 
     }

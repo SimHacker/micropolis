@@ -43,11 +43,6 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-#define COPY(FROM, TO) \
-    TO = (char *)NewPtr((int)strlen(FROM) + 1); \
-    strcpy(TO, FROM);
-
-
 #define TESTDIR(DIR, NAME) \
     if ((stat(DIR, &statbuf) == -1) || \
         !(S_ISDIR(statbuf.st_mode))) { \
@@ -64,11 +59,11 @@
 #define DSTCOL WORLD_Y
 
 #define CLIPPER_LOOP_BODY(CODE) \
-    src = CellSrc; dst = CellDst; \
+    src = cellSrc; dst = cellDst; \
     for (x = 0; x < WORLD_X;) { \
         short nw, n, ne, w, c, e, sw, s, se; \
-        src = CellSrc + (x * SRCCOL); \
-        dst = CellDst + (x * DSTCOL); \
+        src = cellSrc + (x * SRCCOL); \
+        dst = cellDst + (x * DSTCOL); \
         w = src[0]; c = src[SRCCOL]; e = src[2 * SRCCOL]; \
         sw = src[1]; s = src[SRCCOL + 1]; se = src[(2 * SRCCOL) + 1]; \
         for (y = 0; y < WORLD_Y; y++) { \
@@ -79,8 +74,8 @@
             src++; dst++; \
         } \
         x++; \
-        src = CellSrc + ((x + 1) * SRCCOL) - 3; \
-        dst = CellDst + ((x + 1) * DSTCOL) - 1; \
+        src = cellSrc + ((x + 1) * SRCCOL) - 3; \
+        dst = cellDst + ((x + 1) * DSTCOL) - 1; \
         nw = src[1]; n = src[SRCCOL + 1]; ne = src[(2 * SRCCOL) + 1]; \
         w = src[2]; c = src[SRCCOL + 2]; e = src[(2 * SRCCOL) + 2]; \
         for (y = WORLD_Y - 1; y >= 0; y--) { \
@@ -103,9 +98,8 @@ const char *Micropolis::getMicropolisVersion()
 }
 
 
-void Micropolis::env_init()
+void Micropolis::environmentInit()
 {
-    char dir[4096];
     char *s;
     struct stat statbuf;
     int lost = 0;
@@ -113,12 +107,12 @@ void Micropolis::env_init()
     if ((s = getenv("SIMHOME")) == NULL) {
         s = ".";
     }
-    COPY(s, HomeDir);
-    TESTDIR(HomeDir, "$SIMHOME");
+    homeDir = s;
+    TESTDIR(homeDir.c_str(), "$SIMHOME");
 
-    sprintf(dir, "%s/res/", HomeDir);
-    COPY(dir, ResourceDir);
-    TESTDIR(ResourceDir, "$SIMHOME/res");
+    resourceDir = homeDir;
+    resourceDir += "/res/";
+    TESTDIR(resourceDir.c_str(), "$SIMHOME/res");
 
     if (lost) {
         fprintf(stderr,
@@ -129,15 +123,15 @@ void Micropolis::env_init()
 }
 
 
-void Micropolis::sim_init()
+void Micropolis::simInit()
 {
     UserSoundOn = true; // Enable sound
     MustUpdateOptions = 1;
-    HaveLastMessage = false; // No message seen yet
+    messageLastValid = false; // No message seen yet
     ScenarioID = SC_NONE;
     startingYear = 1900;
-    sim_skips = sim_skip = 0;
-    autoGo = true;  // Enable auto-goto
+    simSkips = simSkip = 0;
+    autoGoto = true;  // Enable auto-goto
     cityTax = 7;
     cityTime = 50;
     NoDisasters = false; // Enable disasters
@@ -147,22 +141,22 @@ void Micropolis::sim_init()
     LastMesTime = 0;
     flagBlink = 1;
     SimSpeed = 3;
-    ChangeEval();
+    changeEval();
     messagePort = 0;
     messageX = -1;
     messageY = -1;
-    sim_paused = false; // Simumaltion is running
-    sim_loops = 0;
+    simPaused = false; // Simumaltion is running
+    simLoops = 0;
     InitSimLoad = 2;
 
     InitializeSound();
     initMapArrays();
     initGraphs();
-    InitFundingLevel();
-    ResetMapState();
-    ResetEditorState();
-    ClearMap();
-    InitWillStuff();
+    initFundingLevel();
+    resetMapState();
+    resetEditorState();
+    clearMap();
+    initWillStuff();
     SetFunds(5000);
     SetGameLevelFunds(LEVEL_EASY);
     setSpeed(0);
@@ -170,35 +164,35 @@ void Micropolis::sim_init()
 }
 
 
-void Micropolis::sim_update()
+void Micropolis::simUpdate()
 {
     flagBlink = ((TickCount() % 60) < 30) ? 1 : -1;
 
-    if (SimSpeed && !heat_steps) {
-      TilesAnimated = 0;
+    if (SimSpeed && !heatSteps) {
+      tilesAnimated = 0;
     }
 
     DoUpdateHeads();
     graphDoer();
-    UpdateBudgetWindow();
+    updateBudgetWindow();
     scoreDoer();
 }
 
 
-void Micropolis::sim_heat()
+void Micropolis::simHeat()
 {
     int x, y;
     static int a = 0;
     short *src, *dst;
-    register int fl = heat_flow;
+    register int fl = heatFlow;
 
-    if (CellSrc == NULL) {
-        CellSrc = (short *)NewPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
-        CellDst = &map[0][0];
+    if (cellSrc == NULL) {
+        cellSrc = (short *)NewPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
+        cellDst = &map[0][0];
     }
 
-    src = CellSrc + SRCCOL + 1;
-    dst = CellDst;
+    src = cellSrc + SRCCOL + 1;
+    dst = cellDst;
 
     /*
      * Copy wrapping edges:
@@ -221,7 +215,7 @@ void Micropolis::sim_heat()
      *  4   copy future=>past, same edges
      */
 
-    switch (heat_wrap) {
+    switch (heatWrap) {
         case 0:
             break;
         case 1:
@@ -239,12 +233,12 @@ void Micropolis::sim_heat()
                 dst += DSTCOL;
             }
             memcpy(
-                CellSrc,
-                CellSrc + (SRCCOL * WORLD_X),
+                cellSrc,
+                cellSrc + (SRCCOL * WORLD_X),
                 SRCCOL * sizeof (short));
             memcpy(
-                CellSrc + SRCCOL * (WORLD_X + 1),
-                CellSrc + SRCCOL,
+                cellSrc + SRCCOL * (WORLD_X + 1),
+                cellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         case 3:
@@ -256,12 +250,12 @@ void Micropolis::sim_heat()
                 dst += DSTCOL;
             }
             memcpy(
-                CellSrc,
-                CellSrc + (SRCCOL * WORLD_X),
+                cellSrc,
+                cellSrc + (SRCCOL * WORLD_X),
                 SRCCOL * sizeof (short));
             memcpy(
-                CellSrc + SRCCOL * (WORLD_X + 1),
-                CellSrc + SRCCOL,
+                cellSrc + SRCCOL * (WORLD_X + 1),
+                cellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         case 4:
@@ -281,12 +275,12 @@ void Micropolis::sim_heat()
                 dst += DSTCOL;
             }
             memcpy(
-                CellSrc + (SRCCOL * (WORLD_X + 1)),
-                CellSrc + (SRCCOL * WORLD_X),
+                cellSrc + (SRCCOL * (WORLD_X + 1)),
+                cellSrc + (SRCCOL * WORLD_X),
                 SRCCOL * sizeof (short));
             memcpy(
-                CellSrc,
-                CellSrc + SRCCOL,
+                cellSrc,
+                cellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         default:
@@ -294,7 +288,7 @@ void Micropolis::sim_heat()
             break;
     }
 
-    switch (heat_rule) {
+    switch (heatRule) {
 
       case 0:
 
@@ -354,13 +348,13 @@ void Micropolis::sim_heat()
 }
 
 
-void Micropolis::sim_loop(int doSim)
+void Micropolis::simLoop(int doSim)
 {
-   if (heat_steps) {
+   if (heatSteps) {
        int j;
 
-       for (j = 0; j < heat_steps; j++) {
-           sim_heat();
+       for (j = 0; j < heatSteps; j++) {
+           simHeat();
        }
 
        MoveObjects();
@@ -375,17 +369,17 @@ void Micropolis::sim_loop(int doSim)
      MoveObjects();
    }
 
-   sim_loops++;
-   sim_update();
+   simLoops++;
+   simUpdate();
 }
 
 
-void Micropolis::sim_tick()
+void Micropolis::simTick()
 {
     if (SimSpeed) {
         int i;
-        for (i = 0; i < sim_skips; i++) {
-            sim_loop(1);
+        for (i = 0; i < simSkips; i++) {
+            simLoop(1);
         }
     }
 }

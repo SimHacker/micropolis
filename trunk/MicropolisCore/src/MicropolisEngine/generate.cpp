@@ -71,73 +71,73 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-void Micropolis::GenerateNewCity()
+void Micropolis::generateNewCity()
 {
-    GenerateSomeCity(Rand16());
+    generateSomeCity(getRandom16());
 }
 
 
-void Micropolis::GenerateSomeCity(int r)
+void Micropolis::generateSomeCity(int r)
 {
-    CityFileName = "";
+    cityFileName = "";
 
-    GenerateMap(r);
+    generateMap(r);
     ScenarioID = SC_NONE;
     cityTime = 0;
     InitSimLoad = 2;
     doInitialEval = false;
 
-    InitWillStuff();
-    ResetMapState();
-    ResetEditorState();
+    initWillStuff();
+    resetMapState();
+    resetEditorState();
     InvalidateEditors();
     InvalidateMaps();
     UpdateFunds();
     DoSimInit();
 
-    sim_update();
+    simUpdate();
 
     Callback("UIDidGenerateNewCity", "");
 }
 
 
-void Micropolis::GenerateMap(int r)
+void Micropolis::generateMap(int r)
 {
-    SeedRand(r);
+    seedRandom(r);
 
-    if (CreateIsland < 0) {
-        if (Rand(100) < 10) { /* chance that island is generated */
-            MakeIsland();
+    if (terrainCreateIsland < 0) {
+        if (getRandom(100) < 10) { /* chance that island is generated */
+            makeIsland();
             return;
         }
     }
 
-    if (CreateIsland == 1) {
-        MakeNakedIsland();
+    if (terrainCreateIsland == 1) {
+        makeNakedIsland();
     } else {
-        ClearMap();
+        clearMap();
     }
 
-    GetRandStart();
+    getRandStart();
 
-    if (CurveLevel != 0) {
-        DoRivers();
+    if (terrainCurveLevel != 0) {
+        doRivers();
     }
 
-    if (LakeLevel != 0) {
-        MakeLakes();
+    if (terrainLakeLevel != 0) {
+        makeLakes();
     }
 
-    SmoothRiver();
+    smoothRiver();
 
-    if (TreeLevel != 0) {
-        DoTrees();
+    if (terrainTreeLevel != 0) {
+        doTrees();
     }
 
 }
 
 
-void Micropolis::ClearMap()
+void Micropolis::clearMap()
 {
     short x, y;
 
@@ -149,7 +149,7 @@ void Micropolis::ClearMap()
 }
 
 
-void Micropolis::ClearUnnatural()
+void Micropolis::clearUnnatural()
 {
     short x, y;
 
@@ -163,7 +163,7 @@ void Micropolis::ClearUnnatural()
 }
 
 
-void Micropolis::MakeNakedIsland()
+void Micropolis::makeNakedIsland()
 {
     int x, y;
 
@@ -180,145 +180,145 @@ void Micropolis::MakeNakedIsland()
     }
 
     for (x = 0; x < WORLD_X - 5; x += 2) {
-        MapX = x ;
-        MapY = ERand(ISLAND_RADIUS);
-        BRivPlop();
-        MapY = (WORLD_Y - 10) - ERand(ISLAND_RADIUS);
-        BRivPlop();
-        MapY = 0;
-        SRivPlop();
-        MapY = (WORLD_Y - 6);
-        SRivPlop();
+        terrainMapX = x ;
+        terrainMapY = getERandom(terrainIslandRadius);
+        plopBRiver();
+        terrainMapY = (WORLD_Y - 10) - getERandom(terrainIslandRadius);
+        plopBRiver();
+        terrainMapY = 0;
+        plopSRiver();
+        terrainMapY = (WORLD_Y - 6);
+        plopSRiver();
     }
 
     for (y = 0; y < WORLD_Y - 5; y += 2) {
-        MapY = y ;
-        MapX = ERand(ISLAND_RADIUS);
-        BRivPlop();
-        MapX = (WORLD_X - 10) - ERand(ISLAND_RADIUS);
-        BRivPlop();
-        MapX = 0;
-        SRivPlop();
-        MapX = (WORLD_X - 6);
-        SRivPlop();
+        terrainMapY = y ;
+        terrainMapX = getERandom(terrainIslandRadius);
+        plopBRiver();
+        terrainMapX = (WORLD_X - 10) - getERandom(terrainIslandRadius);
+        plopBRiver();
+        terrainMapX = 0;
+        plopSRiver();
+        terrainMapX = (WORLD_X - 6);
+        plopSRiver();
     }
 
 }
 
 
-void Micropolis::MakeIsland()
+void Micropolis::makeIsland()
 {
-    MakeNakedIsland();
-    SmoothRiver();
-    DoTrees();
+    makeNakedIsland();
+    smoothRiver();
+    doTrees();
 }
 
 
-void Micropolis::MakeLakes()
+void Micropolis::makeLakes()
 {
     short Lim1, Lim2, t, z;
     short x, y;
 
-    if (LakeLevel < 0) {
-        Lim1 = Rand(10);
+    if (terrainLakeLevel < 0) {
+        Lim1 = getRandom(10);
     } else {
-        Lim1 = LakeLevel / 2;
+        Lim1 = terrainLakeLevel / 2;
     }
 
     for (t = 0; t < Lim1; t++) {
-        x = Rand(WORLD_X - 21) + 10;
-        y = Rand(WORLD_Y - 20) + 10;
-        Lim2 = Rand(12) + 2;
+        x = getRandom(WORLD_X - 21) + 10;
+        y = getRandom(WORLD_Y - 20) + 10;
+        Lim2 = getRandom(12) + 2;
 
         for (z = 0; z < Lim2; z++) {
-            MapX = x - 6 + Rand(12);
-            MapY = y - 6 + Rand(12);
+            terrainMapX = x - 6 + getRandom(12);
+            terrainMapY = y - 6 + getRandom(12);
 
-            if (Rand(4)) {
-                SRivPlop();
+            if (getRandom(4)) {
+                plopSRiver();
             } else {
-                BRivPlop();
+                plopBRiver();
             }
         }
     }
 }
 
 
-void Micropolis::GetRandStart()
+void Micropolis::getRandStart()
 {
-    XStart = 40 + Rand(WORLD_X - 80);
-    YStart = 33 + Rand(WORLD_Y - 67);
+    terrainXStart = 40 + getRandom(WORLD_X - 80);
+    terrainYStart = 33 + getRandom(WORLD_Y - 67);
 
-    MapX = XStart;
-    MapY = YStart;
+    terrainMapX = terrainXStart;
+    terrainMapY = terrainYStart;
 }
 
 
-void Micropolis::MoveMap(short dir)
+void Micropolis::moveMap(short dir)
 {
-    static short DirTab[2][8] = {
+    static short dirTab[2][8] = {
         {  0,  1,  1,  1,  0, -1, -1, -1 },
         { -1, -1,  0,  1,  1,  1,  0, -1 },
     };
 
     dir = dir & 7;
-    MapX += DirTab[0][dir];
-    MapY += DirTab[1][dir];
+    terrainMapX += dirTab[0][dir];
+    terrainMapY += dirTab[1][dir];
 }
 
 
-void Micropolis::TreeSplash(short xloc, short yloc)
+void Micropolis::treeSplash(short xloc, short yloc)
 {
     short dis, dir;
     short z;
 
-    if (TreeLevel < 0) {
-        dis = Rand(150) + 50;
+    if (terrainTreeLevel < 0) {
+        dis = getRandom(150) + 50;
     } else {
-        dis = Rand(100 + (TreeLevel * 2)) + 50;
+        dis = getRandom(100 + (terrainTreeLevel * 2)) + 50;
     }
 
-    MapX = xloc;
-    MapY = yloc;
+    terrainMapX = xloc;
+    terrainMapY = yloc;
 
     for (z = 0; z < dis; z++) {
-        dir = Rand(7);
-        MoveMap(dir);
+        dir = getRandom(7);
+        moveMap(dir);
 
-        if (!(TestBounds(MapX, MapY))) {
+        if (!(TestBounds(terrainMapX, terrainMapY))) {
             return;
         }
 
-        if ((map[MapX][MapY] & LOMASK) == DIRT) {
-            map[MapX][MapY] = WOODS | BLBNBIT;
+        if ((map[terrainMapX][terrainMapY] & LOMASK) == DIRT) {
+            map[terrainMapX][terrainMapY] = WOODS | BLBNBIT;
         }
 
     }
 }
 
 
-void Micropolis::DoTrees()
+void Micropolis::doTrees()
 {
     short Amount, x, xloc, yloc;
 
-    if (TreeLevel < 0) {
-        Amount = Rand(100) + 50;
+    if (terrainTreeLevel < 0) {
+        Amount = getRandom(100) + 50;
     } else {
-        Amount = TreeLevel + 3;
+        Amount = terrainTreeLevel + 3;
     }
 
     for (x = 0; x < Amount; x++) {
-        xloc = Rand(WORLD_X - 1);
-        yloc = Rand(WORLD_Y - 1);
-        TreeSplash(xloc, yloc);
+        xloc = getRandom(WORLD_X - 1);
+        yloc = getRandom(WORLD_Y - 1);
+        treeSplash(xloc, yloc);
     }
 
-    SmoothTrees();
-    SmoothTrees();
+    smoothTrees();
+    smoothTrees();
 }
 
 
-void Micropolis::SmoothRiver()
+void Micropolis::smoothRiver()
 {
     static short DX[4] = { -1,  0,  1,  0 };
     static short DY[4] = {  0,  1,  0, -1 };
@@ -352,7 +352,7 @@ void Micropolis::SmoothRiver()
                 temp = REdTab[bitindex & 15];
 
                 if ((temp != RIVER) &&
-                    Rand(1)) {
+                    getRandom(1)) {
                     temp++;
                 }
 
@@ -363,7 +363,7 @@ void Micropolis::SmoothRiver()
 }
 
 
-bool Micropolis::IsTree(int cell)
+bool Micropolis::isTree(int cell)
 {
     if ((cell & LOMASK) >= WOODS_LOW && (cell & LOMASK) <= WOODS_HIGH) {
         return true;
@@ -373,7 +373,7 @@ bool Micropolis::IsTree(int cell)
 }
 
 
-void Micropolis::SmoothTrees()
+void Micropolis::smoothTrees()
 {
     static short DX[4] = { -1,  0,  1,  0 };
     static short DY[4] = {  0,  1,  0, -1 };
@@ -389,14 +389,14 @@ void Micropolis::SmoothTrees()
 
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            if (IsTree(map[x][y])) {
+            if (isTree(map[x][y])) {
                 bitindex = 0;
                 for (z = 0; z < 4; z++) {
                     bitindex = bitindex << 1;
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
                     if (TestBounds(Xtem, Ytem) &&
-                        IsTree(map[Xtem][Ytem])) {
+                        isTree(map[Xtem][Ytem])) {
                         bitindex++;
                     }
                 }
@@ -417,82 +417,82 @@ void Micropolis::SmoothTrees()
 }
 
 
-void Micropolis::DoRivers()
+void Micropolis::doRivers()
 {
-    LastDir = Rand(3);
-    Dir = LastDir;
-    DoBRiv();
-    MapX = XStart;
-    MapY = YStart;
-    LastDir = LastDir ^ 4;
-    Dir = LastDir;
-    DoBRiv();
-    MapX = XStart;
-    MapY = YStart;
-    LastDir = Rand(3);
-    DoSRiv();
+    terrainDirLast = getRandom(3);
+    terrainDir = terrainDirLast;
+    doBRiver();
+    terrainMapX = terrainXStart;
+    terrainMapY = terrainYStart;
+    terrainDirLast = terrainDirLast ^ 4;
+    terrainDir = terrainDirLast;
+    doBRiver();
+    terrainMapX = terrainXStart;
+    terrainMapY = terrainYStart;
+    terrainDirLast = getRandom(3);
+    doSRiver();
 }
 
 
-void Micropolis::DoBRiv()
-{
-    int r1, r2;
-
-    if (CurveLevel < 0) {
-        r1 = 100;
-        r2 = 200;
-    } else {
-        r1 = CurveLevel + 10;
-        r2 = CurveLevel + 100;
-    }
-
-    while (TestBounds (MapX + 4, MapY + 4)) {
-        BRivPlop();
-        if (Rand(r1) < 10) {
-            Dir = LastDir;
-        } else {
-            if (Rand(r2) > 90) {
-                Dir++;
-            }
-            if (Rand(r2) > 90) {
-                Dir--;
-            }
-        }
-        MoveMap(Dir);
-    }
-}
-
-
-void Micropolis::DoSRiv()
+void Micropolis::doBRiver()
 {
     int r1, r2;
 
-    if (CurveLevel < 0) {
+    if (terrainCurveLevel < 0) {
         r1 = 100;
         r2 = 200;
     } else {
-        r1 = CurveLevel + 10;
-        r2 = CurveLevel + 100;
+        r1 = terrainCurveLevel + 10;
+        r2 = terrainCurveLevel + 100;
     }
 
-    while (TestBounds (MapX + 3, MapY + 3)) {
-        SRivPlop();
-        if (Rand(r1) < 10) {
-            Dir = LastDir;
+    while (TestBounds (terrainMapX + 4, terrainMapY + 4)) {
+        plopBRiver();
+        if (getRandom(r1) < 10) {
+            terrainDir = terrainDirLast;
         } else {
-            if (Rand(r2) > 90) {
-                Dir++;
+            if (getRandom(r2) > 90) {
+                terrainDir++;
             }
-            if (Rand(r2) > 90) {
-                Dir--;
+            if (getRandom(r2) > 90) {
+                terrainDir--;
             }
         }
-        MoveMap(Dir);
+        moveMap(terrainDir);
     }
 }
 
 
-void Micropolis::PutOnMap(short Mchar, short Xoff, short Yoff)
+void Micropolis::doSRiver()
+{
+    int r1, r2;
+
+    if (terrainCurveLevel < 0) {
+        r1 = 100;
+        r2 = 200;
+    } else {
+        r1 = terrainCurveLevel + 10;
+        r2 = terrainCurveLevel + 100;
+    }
+
+    while (TestBounds (terrainMapX + 3, terrainMapY + 3)) {
+        plopSRiver();
+        if (getRandom(r1) < 10) {
+            terrainDir = terrainDirLast;
+        } else {
+            if (getRandom(r2) > 90) {
+                terrainDir++;
+            }
+            if (getRandom(r2) > 90) {
+                terrainDir--;
+            }
+        }
+        moveMap(terrainDir);
+    }
+}
+
+
+void Micropolis::putOnMap(short Mchar, short Xoff, short Yoff)
 {
     short Xloc, Yloc, temp;
 
@@ -500,8 +500,8 @@ void Micropolis::PutOnMap(short Mchar, short Xoff, short Yoff)
         return;
     }
 
-    Xloc = MapX + Xoff;
-    Yloc = MapY + Yoff;
+    Xloc = terrainMapX + Xoff;
+    Yloc = terrainMapY + Yoff;
 
     if (!TestBounds(Xloc, Yloc)) {
         return;
@@ -524,7 +524,7 @@ void Micropolis::PutOnMap(short Mchar, short Xoff, short Yoff)
 }
 
 
-void Micropolis::BRivPlop()
+void Micropolis::plopBRiver()
 {
     short x, y;
     static short BRMatrix[9][9] = {
@@ -541,13 +541,13 @@ void Micropolis::BRivPlop()
 
     for (x = 0; x < 9; x++) {
         for (y = 0; y < 9; y++) {
-            PutOnMap(BRMatrix[y][x], x, y);
+            putOnMap(BRMatrix[y][x], x, y);
         }
     }
 }
 
 
-void Micropolis::SRivPlop()
+void Micropolis::plopSRiver()
 {
     short x, y;
     static short SRMatrix[6][6] = {
@@ -561,13 +561,13 @@ void Micropolis::SRivPlop()
 
     for (x = 0; x < 6; x++) {
         for (y = 0; y < 6; y++) {
-          PutOnMap(SRMatrix[y][x], x, y);
+          putOnMap(SRMatrix[y][x], x, y);
         }
     }
 }
 
 
-void Micropolis::SmoothWater()
+void Micropolis::smoothWater()
 {
     int x, y;
 

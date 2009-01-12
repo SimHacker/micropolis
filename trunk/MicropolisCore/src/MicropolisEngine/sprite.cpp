@@ -220,8 +220,8 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             sprite->yHot = -8;
             sprite->frame = 5;
             sprite->count = 1500;
-            sprite->destX = Rand((WORLD_X <<4) - 1);
-            sprite->destY = Rand((WORLD_Y <<4) - 1);
+            sprite->destX = getRandom((WORLD_X <<4) - 1);
+            sprite->destY = getRandom((WORLD_Y <<4) - 1);
             sprite->origX = x - 30;
             sprite->origY = y;
             break;
@@ -672,7 +672,7 @@ void Micropolis::DoTrainSprite(SimSprite *sprite)
 
     if ((Cycle & 3) == 0) {
 
-        dir = Rand16() & 3;
+        dir = getRandom16() & 3;
         for (z = dir; z < dir + 4; z++) {
             dir2 = z & 3;
 
@@ -797,8 +797,8 @@ void Micropolis::DoCopterSprite(
 
             int chopperX = (x <<1) + 1;
             int chopperY = (y <<1) + 1;
-            if ((trafficDensityMap[x][y] > 170) && ((Rand16() & 7) == 0)) {
-                SendMesAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
+            if ((trafficDensityMap[x][y] > 170) && ((getRandom16() & 7) == 0)) {
+                sendMessageAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
                 MakeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
                 sprite->soundCount = 200;
             }
@@ -850,8 +850,8 @@ void Micropolis::DoAirplaneSprite(
     }
 
     if (absDist < 50) { /* at destination  */
-        sprite->destX = Rand((WORLD_X * 16) + 100) - 50;
-        sprite->destY = Rand((WORLD_Y * 16) + 100) - 50;
+        sprite->destX = getRandom((WORLD_X * 16) + 100) - 50;
+        sprite->destY = getRandom((WORLD_Y * 16) + 100) - 50;
     }
 
     /* deh added test for !Disasters */
@@ -909,13 +909,13 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
     if (!sprite->soundCount) {
 
-        if ((Rand16() & 3) == 1) {
+        if ((getRandom16() & 3) == 1) {
 
             // Convert sprite coordinates to tile coordinates.
             int shipX = sprite->x >>4;
             int shipY = sprite->y >>4;
 
-            if (ScenarioID == SC_SAN_FRANCISCO && Rand(10) < 5) {
+            if (ScenarioID == SC_SAN_FRANCISCO && getRandom(10) < 5) {
                 MakeSound("city", "FogHorn-Low", shipX, shipY);
             } else {
                 MakeSound("city", "HonkHonk-Low", shipX, shipY);
@@ -939,7 +939,7 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
             return;
         }
 
-        tem = Rand16() & 7;
+        tem = getRandom16() & 7;
 
         for (pem = tem; pem < (tem + 8); pem++) {
 
@@ -974,7 +974,7 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
         if (pem == (tem + 8)) {
             sprite->dir = 10;
-            sprite->newDir = (Rand16() & 7) + 1;
+            sprite->newDir = (getRandom16() & 7) + 1;
         }
 
     } else {
@@ -1062,7 +1062,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
 
                 c = (c - 1) / 2;
 
-                if ((c != d && Rand(5) == 0) || Rand(20) == 0) {
+                if ((c != d && getRandom(5) == 0) || getRandom(20) == 0) {
 
                     int diff = (c - d) & 3;
 
@@ -1070,7 +1070,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                         d = c;
                     } else {
 
-                        if (Rand16() & 1) {
+                        if (getRandom16() & 1) {
                             d++;
                         } else {
                             d--;
@@ -1080,9 +1080,9 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                     }
                 } else {
 
-                    if (Rand(20) == 0) {
+                    if (getRandom(20) == 0) {
 
-                        if (Rand16() & 1) {
+                        if (getRandom16() & 1) {
                             d++;
                         } else {
                             d--;
@@ -1136,9 +1136,9 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                 c = GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
                 c = (c - 1) / 2;
 
-                if ((c != d) && (!Rand(10))) {
+                if ((c != d) && (!getRandom(10))) {
 
-                    if (Rand16() & 1) {
+                    if (getRandom16() & 1) {
                         z = ND1[d];
                     } else {
                         z = ND2[d];
@@ -1151,7 +1151,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                         int monsterX = sprite->x >>4;
                         int monsterY = sprite->y >>4;
                         MakeSound("city", "Monster", monsterX, monsterY); /* monster */
-                        sprite->soundCount = 50 + Rand(100);
+                        sprite->soundCount = 50 + getRandom(100);
                     }
 
                 }
@@ -1162,9 +1162,9 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                 c = sprite->frame;
                 z = (c - 13) & 3;
 
-                if (!(Rand16() & 3)) {
+                if (!(getRandom16() & 3)) {
 
-                    if (Rand16() & 1) {
+                    if (getRandom16() & 1) {
                         z = nn1[z];
                     } else {
                         z = nn2[z];
@@ -1291,7 +1291,7 @@ void Micropolis::DoTornadoSprite(SimSprite *sprite)
         }
     }
 
-    z = Rand(5);
+    z = getRandom(5);
     sprite->x += CDx[z];
     sprite->y += CDy[z];
 
@@ -1299,7 +1299,7 @@ void Micropolis::DoTornadoSprite(SimSprite *sprite)
         sprite->frame = 0;
     }
 
-    if (sprite->count != 0 && Rand(500) == 0) {
+    if (sprite->count != 0 && getRandom(500) == 0) {
         sprite->frame = 0;
     }
 
@@ -1324,7 +1324,7 @@ void Micropolis::DoExplosionSprite(SimSprite *sprite)
             MakeSound("city", "Explosion-High", explosionX, explosionY); /* explosion */
             x = (sprite->x >>4) + 3;
             y = (sprite->y >>4);
-            SendMesAt(STR301_EXPLOSION_REPORTED, x, y);
+            sendMessageAt(STR301_EXPLOSION_REPORTED, x, y);
         }
 
         sprite->frame++;
@@ -1677,31 +1677,31 @@ void Micropolis::ExplodeSprite(SimSprite *sprite)
         case SPRITE_AIRPLANE:
             CrashX = x;
             CrashY = y;
-            SendMesAt(-STR301_PLANE_CRASHED, x, y);
+            sendMessageAt(-STR301_PLANE_CRASHED, x, y);
             break;
 
         case SPRITE_SHIP:
             CrashX = x;
             CrashY = y;
-            SendMesAt(-STR301_SHIP_CRASHED, x, y);
+            sendMessageAt(-STR301_SHIP_CRASHED, x, y);
             break;
 
         case SPRITE_TRAIN:
             CrashX = x;
             CrashY = y;
-            SendMesAt(-STR301_TRAIN_CRASHED, x, y);
+            sendMessageAt(-STR301_TRAIN_CRASHED, x, y);
             break;
 
         case SPRITE_HELICOPTER:
             CrashX = x;
             CrashY = y;
-            SendMesAt(-STR301_HELICOPTER_CRASHED, x, y);
+            sendMessageAt(-STR301_HELICOPTER_CRASHED, x, y);
             break;
 
         case SPRITE_BUS:
             CrashX = x;
             CrashY = y;
-            SendMesAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
+            sendMessageAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
             break;
 
     }
@@ -1767,7 +1767,7 @@ void Micropolis::Destroy(int ox, int oy)
         if (checkWet(t)) {
             map[x][y] = RIVER;
         } else {
-            map[x][y] = (DoAnimation ? TINYEXP : (LASTTINYEXP - 3))
+            map[x][y] = (doAnimation ? TINYEXP : (LASTTINYEXP - 3))
                       | BULLBIT | ANIMBIT;
         }
     }
@@ -1852,7 +1852,7 @@ void Micropolis::StartFire(int x, int y)
  */
 void Micropolis::GenerateTrain(int x, int y)
 {
-    if (totalPop > 20 && GetSprite(SPRITE_TRAIN) == NULL && Rand(25) == 0) {
+    if (totalPop > 20 && GetSprite(SPRITE_TRAIN) == NULL && getRandom(25) == 0) {
         MakeSprite(SPRITE_TRAIN, (x <<4) + TRA_GROOVE_X, (y <<4) + TRA_GROOVE_Y);
     }
 }
@@ -1865,7 +1865,7 @@ void Micropolis::GenerateTrain(int x, int y)
  */
 void Micropolis::GenerateBus(int x, int y)
 {
-    if (GetSprite(SPRITE_BUS) == NULL && Rand(25) == 0) {
+    if (GetSprite(SPRITE_BUS) == NULL && getRandom(25) == 0) {
         MakeSprite(SPRITE_BUS, (x <<4) + BUS_GROOVE_X, (y <<4) + BUS_GROOVE_Y);
     }
 }
@@ -1876,7 +1876,7 @@ void Micropolis::GenerateShip()
 {
     short x, y;
 
-    if (!(Rand16() & 3)) {
+    if (!(getRandom16() & 3)) {
         for (x = 4; x < WORLD_X - 2; x++) {
             if (map[x][0] == CHANNEL)  {
                 MakeShipHere(x, 0);
@@ -1885,7 +1885,7 @@ void Micropolis::GenerateShip()
         }
     }
 
-    if (!(Rand16() & 3)) {
+    if (!(getRandom16() & 3)) {
         for (y = 1; y < WORLD_Y - 2; y++) {
             if (map[0][y] == CHANNEL)  {
                 MakeShipHere(0, y);
@@ -1894,7 +1894,7 @@ void Micropolis::GenerateShip()
         }
     }
 
-    if (!(Rand16() & 3)) {
+    if (!(getRandom16() & 3)) {
         for (x = 4; x < WORLD_X - 2; x++) {
             if (map[x][WORLD_Y - 1] == CHANNEL)  {
                 MakeShipHere(x, WORLD_Y - 1);
@@ -1903,7 +1903,7 @@ void Micropolis::GenerateShip()
         }
     }
 
-    if (!(Rand16() & 3)) {
+    if (!(getRandom16() & 3)) {
         for (y = 1; y < WORLD_Y - 2; y++) {
             if (map[WORLD_X - 1][y] == CHANNEL)  {
                 MakeShipHere(WORLD_X - 1, y);
@@ -1929,7 +1929,7 @@ void Micropolis::MakeShipHere(int x, int y)
  * Start a new monster sprite.
  * @bug The "!done == 0" looks wrong.
  */
-void Micropolis::MakeMonster()
+void Micropolis::makeMonster()
 {
     int x, y, z, done = 0;
     SimSprite *sprite;
@@ -1945,8 +1945,8 @@ void Micropolis::MakeMonster()
 
     for (z = 0; z < 300; z++)  {
 
-        x = Rand(WORLD_X - 20) + 10;
-        y = Rand(WORLD_Y - 10) + 5;
+        x = getRandom(WORLD_X - 20) + 10;
+        y = getRandom(WORLD_Y - 10) + 5;
 
         if (map[x][y] == RIVER || map[x][y] == RIVER + BULLBIT) {
             MonsterHere(x, y);
@@ -1971,8 +1971,8 @@ void Micropolis::MakeMonster()
 void Micropolis::MonsterHere(int x, int y)
 {
     MakeSprite(SPRITE_MONSTER, (x << 4) + 48, (y << 4));
-    ClearMes();
-    SendMesAt(-STR301_MONSTER_SIGHTED, x + 5, y);
+    clearMessage();
+    sendMessageAt(-STR301_MONSTER_SIGHTED, x + 5, y);
 }
 
 
@@ -2011,7 +2011,7 @@ void Micropolis::GeneratePlane(int x, int y)
 
 
 /** Ensure a airplane sprite exists. */
-void Micropolis::MakeTornado()
+void Micropolis::makeTornado()
 {
     short x, y;
     SimSprite *sprite;
@@ -2022,12 +2022,12 @@ void Micropolis::MakeTornado()
         return;
     }
 
-    x = Rand((WORLD_X <<4) - 800) + 400;
-    y = Rand((WORLD_Y <<4) - 200) + 100;
+    x = getRandom((WORLD_X <<4) - 800) + 400;
+    y = getRandom((WORLD_Y <<4) - 200) + 100;
 
     MakeSprite(SPRITE_TORNADO, x, y);
-    ClearMes();
-    SendMesAt(-STR301_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2);
+    clearMessage();
+    sendMessageAt(-STR301_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2);
 }
 
 

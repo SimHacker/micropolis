@@ -96,19 +96,19 @@
  * Evaluate city
  * @todo Handle lack of voting explicitly
  */
-void Micropolis::CityEvaluation()
+void Micropolis::cityEvaluation()
 {
     if (totalPop > 0) {
-        getAssValue();
-        DoPopNum();
-        DoProblems();
-        GetScore();
-        DoVotes();  // How well is the mayor doing?
-        ChangeEval();
+        getAssessedValue();
+        doPopNum();
+        doProblems();
+        getScore();
+        doVotes();  // How well is the mayor doing?
+        changeEval();
     } else {
-        EvalInit();
+        evalInit();
         cityYes = 50; // No population => no voting. Let's say 50/50.
-        ChangeEval();
+        changeEval();
     }
 }
 
@@ -116,15 +116,15 @@ void Micropolis::CityEvaluation()
 /**
  * Initialize evaluation variables
  */
-void Micropolis::EvalInit()
+void Micropolis::evalInit()
 {
     cityYes = 0;
     cityPop = 0;
     deltaCityPop = 0;
-    cityAssValue = 0;
+    cityAssessedValue = 0;
     cityClass = CC_VILLAGE;
     cityScore = 500;
-    deltaCityScore = 0;
+    cityScoreDelta = 0;
     for (int i = 0; i < PROBNUM; i++) {
         problemVotes[i] = 0;
     }
@@ -136,9 +136,9 @@ void Micropolis::EvalInit()
 
 /**
  * Assess value of the city
- * @post #cityAssValue contains the total city value
+ * @post #cityAssessedValue contains the total city value
  */
-void Micropolis::getAssValue()
+void Micropolis::getAssessedValue()
 {
     Quad z;
 
@@ -153,7 +153,7 @@ void Micropolis::getAssValue()
     z += coalPowerPop * 3000;
     z += nuclearPowerPop * 6000;
 
-    cityAssValue = z * 1000;
+    cityAssessedValue = z * 1000;
 }
 
 
@@ -162,7 +162,7 @@ void Micropolis::getAssValue()
  * @see cityPop cityClass.
  * @todo Put people counts into a table.
  */
-void Micropolis::DoPopNum()
+void Micropolis::doPopNum()
 {
     Quad oldCityPop = cityPop;
 
@@ -201,7 +201,7 @@ void Micropolis::DoPopNum()
  *       #problemVotes contains votes of each problem,
  *       #problemOrder contains (in decreasing order) the worst problems.
  */
-void Micropolis::DoProblems()
+void Micropolis::doProblems()
 {
     bool problemTaken[PROBNUM]; // Which problems are taken?
 
@@ -214,9 +214,9 @@ void Micropolis::DoProblems()
     problemTable[CVP_POLLUTION]    = pollutionAverage;            /* Pollution */
     problemTable[CVP_HOUSING]      = landValueAverage * 7 / 10;   /* Housing */
     problemTable[CVP_TAXES]        = cityTax * 10;                /* Taxes */
-    problemTable[CVP_TRAFFIC]      = AverageTrf();                /* Traffic */
-    problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();           /* Unemployment */
-    problemTable[CVP_FIRE]         = GetFire();                   /* Fire */
+    problemTable[CVP_TRAFFIC]      = getTrafficAverage();         /* Traffic */
+    problemTable[CVP_UNEMPLOYMENT] = getUnemployment();           /* Unemployment */
+    problemTable[CVP_FIRE]         = getFireSeverity();           /* Fire */
     voteProblems();
 
     for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
@@ -257,7 +257,7 @@ void Micropolis::voteProblems()
     int voteCount = 0; // Number of votes
     int loopCount = 0; // Number of attempts
     while (voteCount < 100 && loopCount < 600) {
-        if (Rand(300) < problemTable[problem]) {
+        if (getRandom(300) < problemTable[problem]) {
             problemVotes[problem]++;
             voteCount++;
         }
@@ -274,7 +274,7 @@ void Micropolis::voteProblems()
  * Compute average traffic in the city.
  * @return Value representing how large the traffic problem is.
  */
-short Micropolis::AverageTrf()
+short Micropolis::getTrafficAverage()
 {
     Quad trafficTotal;
     short x, y, count;
@@ -300,7 +300,7 @@ short Micropolis::AverageTrf()
  * Compute severity of unemployment
  * @return Value representing the severity of unemployment problems
  */
-short Micropolis::GetUnemployment()
+short Micropolis::getUnemployment()
 {
     short b = (comPop + indPop) * 8;
 
@@ -320,7 +320,7 @@ short Micropolis::GetUnemployment()
  * Compute severity of fire
  * @return Value representing the severity of fire problems
  */
-short Micropolis::GetFire()
+short Micropolis::getFireSeverity()
 {
     return min(firePop * 5, 255);
 }
@@ -329,12 +329,12 @@ short Micropolis::GetFire()
 /**
  * Compute total score
  */
-void Micropolis::GetScore()
+void Micropolis::getScore()
 {
     int x, z;
-    short oldCityScore;
+    short cityScoreLast;
 
-    oldCityScore = cityScore;
+    cityScoreLast = cityScore;
     x = 0;
 
     for (z = 0; z < CVP_NUMPROBLEMS; z++) {
@@ -402,7 +402,7 @@ void Micropolis::GetScore()
     }
 
     z = (int)(z * SM);
-    z = z - GetFire() - cityTax; // dec score for fires and taxes
+    z = z - getFireSeverity() - cityTax; // dec score for fires and taxes
 
     float TM = unPwrdZCnt + PwrdZCnt;   // dec score for unpowered zones
     if (TM > 0.0) {
@@ -414,7 +414,7 @@ void Micropolis::GetScore()
 
     cityScore = (cityScore + z) / 2;
 
-    deltaCityScore = cityScore - oldCityScore;
+    cityScoreDelta = cityScore - cityScoreLast;
 }
 
 
@@ -422,14 +422,14 @@ void Micropolis::GetScore()
  * Vote whether the mayor is doing a good job
  * @post #cityYes contains the number of 'yes' votes
  */
-void Micropolis::DoVotes()
+void Micropolis::doVotes()
 {
     int z;
 
     cityYes = 0;
 
     for (z = 0; z < 100; z++) {
-        if (Rand(1000) < cityScore) {
+        if (getRandom(1000) < cityScore) {
             cityYes++;
         }
     }
@@ -459,13 +459,13 @@ void Micropolis::doScoreCard()
     // Statistics
     //   Population: ${FormatNumber(cityPop)}
     //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
-    //   Assessed Value: ${FormatMoney(cityAssValue))
+    //   Assessed Value: ${FormatMoney(cityAssessedValue))
     //   Category: ${cityClassStr[cityClass]}
     //   Game Level: ${cityLevelStr[gameLevel]}
 }
 
 /** Request that new score is displayed to the user. */
-void Micropolis::ChangeEval()
+void Micropolis::changeEval()
 {
     evalChanged = true;
 }

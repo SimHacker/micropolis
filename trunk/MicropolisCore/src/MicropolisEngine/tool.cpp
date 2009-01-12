@@ -107,7 +107,7 @@ int Micropolis::putDownPark(short mapH, short mapV)
 
     if (TotalFunds - gCostOf[TOOL_PARK] < 0) return -2;
 
-    value = Rand(4);
+    value = getRandom(4);
 
     if (value == 4) {
         tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
@@ -346,7 +346,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the upper bordering row */
-        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, &map[xPos][yPos], 0);
         xPos++;
     }
 
@@ -355,7 +355,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the left bordering row */
-        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, &map[xPos][yPos], 0);
         yPos++;
     }
 
@@ -364,7 +364,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the bottom bordering row */
-        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, &map[xPos][yPos], 0);
         xPos++;
     }
 
@@ -373,7 +373,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the right bordering row */
-        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, &map[xPos][yPos], 0);
         yPos++;
     }
 }
@@ -803,11 +803,11 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
 
     // Obtain the string of the tile category.
     // 'stri.219' has only 27 lines, so 0 <= i <= 26 is acceptable.
-    GetIndString(localStr, 219, i + 1);
+    getIndString(localStr, 219, i + 1);
 
     for (i = 0; i < 5; i++) {
         short id = clamp(getDensityStr(i, mapH, mapV) + 1, 1, 20);
-        GetIndString(statusStr[i], 202, id);
+        getIndString(statusStr[i], 202, id);
     }
 
     doShowZoneStatus(localStr, statusStr[0], statusStr[1], statusStr[2],
@@ -849,7 +849,7 @@ void Micropolis::putRubble(int x, int y, int size)
                 int tile = map[xx][yy] & LOMASK;
 
                 if (tile != RADTILE && tile != DIRT) {
-                    tile = (DoAnimation ? (TINYEXP + Rand(2)) : SOMETINYEXP);
+                    tile = (doAnimation ? (TINYEXP + getRandom(2)) : SOMETINYEXP);
                     map[xx][yy] = tile | ANIMBIT | BULLBIT;
                 }
             }
@@ -971,7 +971,7 @@ int Micropolis::bulldozerTool(short x, short y)
 
             if (TotalFunds >= 6) {
 
-                result = ConnecTile(x, y, &map[x][y], 1);
+                result = connectTile(x, y, &map[x][y], 1);
 
                 if (temp != (map[x][y] & LOMASK)) {
                   Spend(5);
@@ -981,7 +981,7 @@ int Micropolis::bulldozerTool(short x, short y)
                 result = 0;
             }
         } else {
-            result = ConnecTile(x, y, &map[x][y], 1);
+            result = connectTile(x, y, &map[x][y], 1);
         }
 
     }
@@ -1005,7 +1005,7 @@ int Micropolis::roadTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &map[x][y], 2);
+    result = connectTile(x, y, &map[x][y], 2);
     UpdateFunds();
 
     if (result == 1) {
@@ -1024,7 +1024,7 @@ int Micropolis::railroadTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &map[x][y], 3);
+    result = connectTile(x, y, &map[x][y], 3);
     UpdateFunds();
 
     if (result == 1) {
@@ -1043,7 +1043,7 @@ int Micropolis::wireTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &map[x][y], 4);
+    result = connectTile(x, y, &map[x][y], 4);
     UpdateFunds();
 
     if (result == 1) {
@@ -1352,18 +1352,18 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
     result = doTool(tool, x <<4, y <<4, true);
 
     if (result == -1) {
-        ClearMes();
-        SendMes(STR301_BULLDOZE_AREA_FIRST);
+        clearMessage();
+        sendMessage(STR301_BULLDOZE_AREA_FIRST);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
-        ClearMes();
-        SendMes(STR301_NOT_ENOUGH_FUNDS);
+        clearMessage();
+        sendMessage(STR301_NOT_ENOUGH_FUNDS);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
         MakeSound("interface", "Sorry", x <<4, y <<4);
     }
 
-    sim_skip = 0;
+    simSkip = 0;
     InvalidateEditors();
 }
 
@@ -1444,7 +1444,7 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
     last_x = (lx <<4) + 8;
     last_y = (ly <<4) + 8;
 
-    sim_skip = 0; // update editors overlapping this one
+    simSkip = 0; // update editors overlapping this one
 
     InvalidateEditors();
 }

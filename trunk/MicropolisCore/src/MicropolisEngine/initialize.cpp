@@ -72,12 +72,12 @@
 
 
 /** Reset many game state variables */
-void Micropolis::InitWillStuff()
+void Micropolis::initWillStuff()
 {
     short x, y;
 
-    RandomlySeedRand();
-    InitGraphMax();
+    randomlySeedRandom();
+    initGraphMax();
     DestroyAllSprites();
 
     roadEffect = MAX_ROAD_EFFECT;
@@ -136,7 +136,7 @@ void Micropolis::InitWillStuff()
  * @note Function is empty
  * @todo What should be done with this empty function?
  */
-void Micropolis::ResetMapState()
+void Micropolis::resetMapState()
 {
 }
 
@@ -146,7 +146,7 @@ void Micropolis::ResetMapState()
  * @note Function is empty
  * @todo What should be done with this empty function?
  */
-void Micropolis::ResetEditorState()
+void Micropolis::resetEditorState()
 {
 }
 
