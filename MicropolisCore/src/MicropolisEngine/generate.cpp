@@ -83,9 +83,9 @@ void Micropolis::GenerateSomeCity(int r)
 
     GenerateMap(r);
     ScenarioID = SC_NONE;
-    CityTime = 0;
+    cityTime = 0;
     InitSimLoad = 2;
-    DoInitialEval = false;
+    doInitialEval = false;
 
     InitWillStuff();
     ResetMapState();
@@ -143,7 +143,7 @@ void Micropolis::ClearMap()
 
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            Map[x][y] = DIRT;
+            map[x][y] = DIRT;
         }
     }
 }
@@ -155,8 +155,8 @@ void Micropolis::ClearUnnatural()
 
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            if (Map[x][y] > WOODS) {
-                Map[x][y] = DIRT;
+            if (map[x][y] > WOODS) {
+                map[x][y] = DIRT;
             }
         }
     }
@@ -169,13 +169,13 @@ void Micropolis::MakeNakedIsland()
 
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            Map[x][y] = RIVER;
+            map[x][y] = RIVER;
         }
     }
 
     for (x = 5; x < WORLD_X - 5; x++) {
         for (y = 5; y < WORLD_Y - 5; y++) {
-            Map[x][y] = DIRT;
+            map[x][y] = DIRT;
         }
     }
 
@@ -289,8 +289,8 @@ void Micropolis::TreeSplash(short xloc, short yloc)
             return;
         }
 
-        if ((Map[MapX][MapY] & LOMASK) == DIRT) {
-            Map[MapX][MapY] = WOODS | BLBNBIT;
+        if ((map[MapX][MapY] & LOMASK) == DIRT) {
+            map[MapX][MapY] = WOODS | BLBNBIT;
         }
 
     }
@@ -334,7 +334,7 @@ void Micropolis::SmoothRiver()
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
 
-            if (Map[x][y] == REDGE) {
+            if (map[x][y] == REDGE) {
                 bitindex = 0;
 
                 for (z = 0; z < 4; z++) {
@@ -342,9 +342,9 @@ void Micropolis::SmoothRiver()
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
                     if (TestBounds(Xtem, Ytem) &&
-                        ((Map[Xtem][Ytem] & LOMASK) != DIRT) &&
-                        (((Map[Xtem][Ytem]&LOMASK) < WOODS_LOW) ||
-                         ((Map[Xtem][Ytem]&LOMASK) > WOODS_HIGH))) {
+                        ((map[Xtem][Ytem] & LOMASK) != DIRT) &&
+                        (((map[Xtem][Ytem]&LOMASK) < WOODS_LOW) ||
+                         ((map[Xtem][Ytem]&LOMASK) > WOODS_HIGH))) {
                         bitindex++;
                     }
                 }
@@ -356,7 +356,7 @@ void Micropolis::SmoothRiver()
                     temp++;
                 }
 
-                Map[x][y] = temp;
+                map[x][y] = temp;
             }
         }
     }
@@ -389,14 +389,14 @@ void Micropolis::SmoothTrees()
 
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            if (IsTree(Map[x][y])) {
+            if (IsTree(map[x][y])) {
                 bitindex = 0;
                 for (z = 0; z < 4; z++) {
                     bitindex = bitindex << 1;
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
                     if (TestBounds(Xtem, Ytem) &&
-                        IsTree(Map[Xtem][Ytem])) {
+                        IsTree(map[Xtem][Ytem])) {
                         bitindex++;
                     }
                 }
@@ -407,9 +407,9 @@ void Micropolis::SmoothTrees()
                             temp = temp - 8;
                         }
                     }
-                    Map[x][y] = temp | BLBNBIT;
+                    map[x][y] = temp | BLBNBIT;
                 } else {
-                    Map[x][y] = temp;
+                    map[x][y] = temp;
                 }
             }
         }
@@ -507,7 +507,7 @@ void Micropolis::PutOnMap(short Mchar, short Xoff, short Yoff)
         return;
     }
 
-    temp = Map[Xloc][Yloc];
+    temp = map[Xloc][Yloc];
 
     if (temp != DIRT) {
         temp = temp & LOMASK;
@@ -520,7 +520,7 @@ void Micropolis::PutOnMap(short Mchar, short Xoff, short Yoff)
             return;
         }
     }
-    Map[Xloc][Yloc] = Mchar;
+    map[Xloc][Yloc] = Mchar;
 }
 
 
@@ -575,39 +575,39 @@ void Micropolis::SmoothWater()
         for (y = 0; y < WORLD_Y; y++) {
 
             /* If water: */
-            if (((Map[x][y] & LOMASK) >= WATER_LOW) &&
-                ((Map[x][y] & LOMASK) <= WATER_HIGH)) {
+            if (((map[x][y] & LOMASK) >= WATER_LOW) &&
+                ((map[x][y] & LOMASK) <= WATER_HIGH)) {
 
                 if (x > 0) {
                     /* If nearest object is not water: */
-                    if (((Map[x - 1][y] & LOMASK) < WATER_LOW) ||
-                        ((Map[x - 1][y] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x - 1][y] & LOMASK) < WATER_LOW) ||
+                        ((map[x - 1][y] & LOMASK) > WATER_HIGH)) {
                         goto edge;
                     }
                 }
 
                 if (x < (WORLD_X - 1)) {
                     /* If nearest object is not water: */
-                    if (((Map[x + 1][y] & LOMASK) < WATER_LOW) ||
-                        ((Map[x + 1][y] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x + 1][y] & LOMASK) < WATER_LOW) ||
+                        ((map[x + 1][y] & LOMASK) > WATER_HIGH)) {
                         goto edge;
                     }
                 }
 
                 if (y > 0) {
                     /* If nearest object is not water: */
-                    if (((Map[x][y - 1] & LOMASK) < WATER_LOW) ||
-                        ((Map[x][y - 1] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x][y - 1] & LOMASK) < WATER_LOW) ||
+                        ((map[x][y - 1] & LOMASK) > WATER_HIGH)) {
                         goto edge;
                     }
                 }
 
                 if (y < (WORLD_Y - 1)) {
                     /* If nearest object is not water: */
-                    if (((Map[x][y + 1] & LOMASK) < WATER_LOW) ||
-                        ((Map[x][y + 1] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x][y + 1] & LOMASK) < WATER_LOW) ||
+                        ((map[x][y + 1] & LOMASK) > WATER_HIGH)) {
                     edge:
-                        Map[x][y]=REDGE; /* set river edge */
+                        map[x][y]=REDGE; /* set river edge */
                         continue;
                     }
                 }
@@ -619,43 +619,43 @@ void Micropolis::SmoothWater()
         for (y = 0; y < WORLD_Y; y++) {
 
             /* If water which is not a channel: */
-            if (((Map[x][y] & LOMASK) != CHANNEL) &&
-                ((Map[x][y] & LOMASK) >= WATER_LOW) &&
-                ((Map[x][y] & LOMASK) <= WATER_HIGH)) {
+            if (((map[x][y] & LOMASK) != CHANNEL) &&
+                ((map[x][y] & LOMASK) >= WATER_LOW) &&
+                ((map[x][y] & LOMASK) <= WATER_HIGH)) {
 
                 if (x > 0) {
                     /* If nearest object is not water; */
-                    if (((Map[x - 1][y] & LOMASK) < WATER_LOW) ||
-                        ((Map[x - 1][y] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x - 1][y] & LOMASK) < WATER_LOW) ||
+                        ((map[x - 1][y] & LOMASK) > WATER_HIGH)) {
                         continue;
                     }
                 }
 
                 if (x < (WORLD_X - 1)) {
                     /* If nearest object is not water: */
-                    if (((Map[x + 1][y] & LOMASK) < WATER_LOW) ||
-                        ((Map[x + 1][y] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x + 1][y] & LOMASK) < WATER_LOW) ||
+                        ((map[x + 1][y] & LOMASK) > WATER_HIGH)) {
                         continue;
                     }
                 }
 
                 if (y > 0) {
                     /* If nearest object is not water: */
-                    if (((Map[x][y - 1] & LOMASK) < WATER_LOW) ||
-                        ((Map[x][y - 1] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x][y - 1] & LOMASK) < WATER_LOW) ||
+                        ((map[x][y - 1] & LOMASK) > WATER_HIGH)) {
                         continue;
                     }
                 }
 
                 if (y < (WORLD_Y - 1)) {
                     /* If nearest object is not water: */
-                    if (((Map[x][y + 1] & LOMASK) < WATER_LOW) ||
-                        ((Map[x][y + 1] & LOMASK) > WATER_HIGH)) {
+                    if (((map[x][y + 1] & LOMASK) < WATER_LOW) ||
+                        ((map[x][y + 1] & LOMASK) > WATER_HIGH)) {
                         continue;
                     }
                 }
 
-                Map[x][y] = RIVER; /* make it a river */
+                map[x][y] = RIVER; /* make it a river */
             }
         }
     }
@@ -664,41 +664,41 @@ void Micropolis::SmoothWater()
         for (y = 0; y < WORLD_Y; y++) {
 
             /* If woods: */
-            if (((Map[x][y] & LOMASK) >= WOODS_LOW) &&
-                ((Map[x][y] & LOMASK) <= WOODS_HIGH)) {
+            if (((map[x][y] & LOMASK) >= WOODS_LOW) &&
+                ((map[x][y] & LOMASK) <= WOODS_HIGH)) {
 
                 if (x > 0) {
                     /* If nearest object is water: */
-                    if ((Map[x - 1][y] == RIVER) ||
-                        (Map[x - 1][y] == CHANNEL)) {
-                        Map[x][y] = REDGE; /* make it water's edge */
+                    if ((map[x - 1][y] == RIVER) ||
+                        (map[x - 1][y] == CHANNEL)) {
+                        map[x][y] = REDGE; /* make it water's edge */
                         continue;
                     }
                 }
 
                 if (x < (WORLD_X - 1)) {
                     /* If nearest object is water: */
-                    if ((Map[x + 1][y] == RIVER) ||
-                        (Map[x + 1][y] == CHANNEL)) {
-                        Map[x][y] = REDGE; /* make it water's edge */
+                    if ((map[x + 1][y] == RIVER) ||
+                        (map[x + 1][y] == CHANNEL)) {
+                        map[x][y] = REDGE; /* make it water's edge */
                         continue;
                     }
                 }
 
                 if (y > 0) {
                     /* If nearest object is water: */
-                    if ((Map[x][y - 1] == RIVER) ||
-                        (Map[x][y - 1] == CHANNEL)) {
-                        Map[x][y] = REDGE; /* make it water's edge */
+                    if ((map[x][y - 1] == RIVER) ||
+                        (map[x][y - 1] == CHANNEL)) {
+                        map[x][y] = REDGE; /* make it water's edge */
                         continue;
                     }
                 }
 
                 if (y < (WORLD_Y - 1)) {
                     /* If nearest object is water; */
-                    if ((Map[x][y + 1] == RIVER) ||
-                        (Map[x][y + 1] == CHANNEL)) {
-                        Map[x][y] = REDGE; /* make it water's edge */
+                    if ((map[x][y + 1] == RIVER) ||
+                        (map[x][y + 1] == CHANNEL)) {
+                        map[x][y] = REDGE; /* make it water's edge */
                         continue;
                     }
                 }

@@ -106,13 +106,13 @@ void Micropolis::DoBudgetFromMenu()
  */
 void Micropolis::DoBudgetNow(bool fromMenu)
 {
-    Quad fireInt   = (int)(FireFund   * firePercent);
-    Quad policeInt = (int)(PoliceFund * policePercent);
-    Quad roadInt   = (int)(RoadFund   * roadPercent);
+    Quad fireInt   = (int)(fireFund   * firePercent);
+    Quad policeInt = (int)(policeFund * policePercent);
+    Quad roadInt   = (int)(roadFund   * roadPercent);
 
     Quad total = fireInt + policeInt + roadInt;
 
-    Quad yumDuckets = TaxFund + TotalFunds;
+    Quad yumDuckets = taxFund + TotalFunds;
 
     if (yumDuckets > total) {
 
@@ -168,7 +168,7 @@ void Micropolis::DoBudgetNow(bool fromMenu)
 
                         // Scale back police percentage to available cash.
 
-                        policePercent = ((float)yumDuckets) / ((float)PoliceFund);
+                        policePercent = ((float)yumDuckets) / ((float)policeFund);
 
                     } else {
 
@@ -196,7 +196,7 @@ void Micropolis::DoBudgetNow(bool fromMenu)
                     // Scale back fire percentage to available cash.
 
                     firePercent =
-                        ((float)yumDuckets) / ((float)FireFund);
+                        ((float)yumDuckets) / ((float)fireFund);
 
                 } else {
 
@@ -225,7 +225,7 @@ void Micropolis::DoBudgetNow(bool fromMenu)
 
                 // Scale back road percentage to available cash.
 
-                roadPercent = ((float)yumDuckets) / ((float)RoadFund);
+                roadPercent = ((float)yumDuckets) / ((float)roadFund);
 
             } else {
 
@@ -270,13 +270,13 @@ noMoney:
 
         if (!fromMenu) {
 
-            FireSpend = (short)fireValue;
-            PoliceSpend = (short)policeValue;
-            RoadSpend = (short)roadValue;
+            fireSpend = fireValue;
+            policeSpend = policeValue;
+            roadSpend = roadValue;
 
-            total = FireSpend + PoliceSpend + RoadSpend;
+            total = fireSpend + policeSpend + roadSpend;
 
-            Quad moreDough = (Quad)(TaxFund - total);
+            Quad moreDough = (Quad)(taxFund - total);
             Spend(-moreDough);
 
         }
@@ -290,16 +290,16 @@ noMoney:
         // FIXME: Not sure yumDuckets is the right value here. It gets the
         // amount spent subtracted from it above in some cases, but not if
         // we are fully funded. I think we want to use the original value
-        // of yumDuckets, which is TaxFund + TotalFunds.
+        // of yumDuckets, which is taxFund + TotalFunds.
 
         if (yumDuckets > total) {
 
-            Quad moreDough = (Quad)(TaxFund - total);
+            Quad moreDough = (Quad)(taxFund - total);
             Spend(-moreDough);
 
-            FireSpend = FireFund;
-            PoliceSpend = PoliceFund;
-            RoadSpend = RoadFund;
+            fireSpend = fireFund;
+            policeSpend = policeFund;
+            roadSpend = roadFund;
 
             drawBudgetWindow();
             drawCurrPercents();
@@ -338,7 +338,7 @@ void Micropolis::ReallyDrawBudgetWindow()
          flowStr[256], previousStr[256], currentStr[256];
 
     cashFlow =
-        (short)(TaxFund - fireValue - policeValue - roadValue);
+        (short)(taxFund - fireValue - policeValue - roadValue);
 
     cashFlow2 = cashFlow;
 
@@ -363,7 +363,7 @@ void Micropolis::ReallyDrawBudgetWindow()
     sprintf(numStr, "%d", (int)(cashFlow2 + TotalFunds));
     makeDollarDecimalStr(numStr, currentStr);
 
-    sprintf(numStr, "%d", (int)TaxFund);
+    sprintf(numStr, "%d", (int)taxFund);
     makeDollarDecimalStr(numStr, collectedStr);
 
     SetBudget(
@@ -371,7 +371,7 @@ void Micropolis::ReallyDrawBudgetWindow()
         previousStr,
         currentStr,
         collectedStr,
-        CityTax);
+        cityTax);
 }
 
 
@@ -391,22 +391,22 @@ void Micropolis::ReallyDrawCurrPercents()
     char fireWant[256], policeWant[256], roadWant[256];
     char fireGot[256], policeGot[256], roadGot[256];
 
-    sprintf(num, "%d", (int)FireFund);
+    sprintf(num, "%d", (int)fireFund);
     makeDollarDecimalStr(num, fireWant);
 
-    sprintf(num, "%d", (int)PoliceFund);
+    sprintf(num, "%d", (int)policeFund);
     makeDollarDecimalStr(num, policeWant);
 
-    sprintf(num, "%d", (int)RoadFund);
+    sprintf(num, "%d", (int)roadFund);
     makeDollarDecimalStr(num, roadWant);
 
-    sprintf(num, "%d", (int)(FireFund * firePercent));
+    sprintf(num, "%d", (int)(fireFund * firePercent));
     makeDollarDecimalStr(num, fireGot);
 
-    sprintf(num, "%d", (int)(PoliceFund * policePercent));
+    sprintf(num, "%d", (int)(policeFund * policePercent));
     makeDollarDecimalStr(num, policeGot);
 
-    sprintf(num, "%d", (int)(RoadFund * roadPercent));
+    sprintf(num, "%d", (int)(roadFund * roadPercent));
     makeDollarDecimalStr(num, roadGot);
 
     SetBudgetValues(

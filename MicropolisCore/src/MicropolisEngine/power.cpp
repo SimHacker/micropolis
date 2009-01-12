@@ -72,10 +72,10 @@
 
 
 /**
- * Move (Micropolis::SMapX, Micropolis::SMapY) in direction \a mDir.
+ * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
  * @param mDir Direction to move in.
  * @return Movement was succesfull.
- * @note Also silently moves (Micropolis::SMapX, Micropolis::SMapY)
+ * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
  *       back onto the map in the reverse direction if off-map.
  */
 bool Micropolis::MoveMapSim(Direction mDir)
@@ -83,42 +83,42 @@ bool Micropolis::MoveMapSim(Direction mDir)
     switch (mDir) {
 
         case DIR_NORTH:
-            if (SMapY > 0) {
-                SMapY--;
+            if (curMapY > 0) {
+                curMapY--;
                 return true;
             }
-            if (SMapY < 0) {
-                SMapY = 0;
+            if (curMapY < 0) {
+                curMapY = 0;
             }
             return false;
 
         case DIR_WEST:
-            if (SMapX < WORLD_X - 1) {
-                SMapX++;
+            if (curMapX < WORLD_X - 1) {
+                curMapX++;
                 return true;
             }
-            if (SMapX > WORLD_X - 1) {
-                SMapX = WORLD_X - 1;
+            if (curMapX > WORLD_X - 1) {
+                curMapX = WORLD_X - 1;
             }
             return false;
 
         case DIR_SOUTH:
-            if (SMapY < WORLD_Y - 1) {
-                SMapY++;
+            if (curMapY < WORLD_Y - 1) {
+                curMapY++;
                 return true;
             }
-            if (SMapY > WORLD_Y - 1) {
-                SMapY = WORLD_Y - 1;
+            if (curMapY > WORLD_Y - 1) {
+                curMapY = WORLD_Y - 1;
             }
             return false;
 
         case DIR_EAST:
-            if (SMapX > 0) {
-                SMapX--;
+            if (curMapX > 0) {
+                curMapX--;
                 return true;
             }
-            if (SMapX < 0) {
-                SMapX = 0;
+            if (curMapX < 0) {
+                curMapX = 0;
             }
             return false;
 
@@ -130,7 +130,7 @@ bool Micropolis::MoveMapSim(Direction mDir)
 
 
 /**
- * Check whether from position (Micropolis::SMapX, Micropolis::SMapY) in the
+ * Check whether from position (Micropolis::curMapX, Micropolis::curMapY) in the
  * direction \a tfDir for a conducting tile that has no power.
  * @param tfDir Direction to investigate.
  * @return Unpowered tile has been found in the indicated direction.
@@ -140,31 +140,31 @@ bool Micropolis::TestForCond(Direction tfDir)
 {
     int xsave, ysave;
 
-    xsave = SMapX;
-    ysave = SMapY;
+    xsave = curMapX;
+    ysave = curMapY;
 
     if (MoveMapSim(tfDir)) {
-        if ((Map[SMapX][SMapY] & CONDBIT) == CONDBIT
-                            && CChr9 != NUCLEAR && CChr9 != POWERPLANT) {
-            int powerWord = POWERWORD(SMapX, SMapY);
+        if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
+                            && curTile != NUCLEAR && curTile != POWERPLANT) {
+            int powerWord = POWERWORD(curMapX, curMapY);
             if (powerWord > PWRMAPSIZE
-                    || (PowerMap[powerWord] & (1 << (SMapX & 15))) == 0) {
-                SMapX = xsave;
-                SMapY = ysave;
+                    || (powerMap[powerWord] & (1 << (curMapX & 15))) == 0) {
+                curMapX = xsave;
+                curMapY = ysave;
                 return true;
             }
         }
     }
 
-    SMapX = xsave;
-    SMapY = ysave;
+    curMapX = xsave;
+    curMapY = ysave;
 
     return false;
 }
 
 
 /**
- * Scan the map for powered tiles, and copy them to the Micropolis::PowerMap
+ * Scan the map for powered tiles, and copy them to the Micropolis::powerMap
  * array.
  * Also warn the user about using too much power ('buy another power plant').
  */
@@ -174,10 +174,10 @@ void Micropolis::DoPowerScan()
     int ConNum, Dir;
 
     for (int x = 0; x < PWRMAPSIZE; x++) {
-        PowerMap[x] = 0;    /* ClearPowerMem */
+        powerMap[x] = 0;    /* ClearPowerMem */
     }
 
-    MaxPower = CoalPop * 700L + NuclearPop * 2000L; /* post release */
+    MaxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
     NumPower = 0;
 
     while (powerStackNum > 0) {
@@ -191,7 +191,7 @@ void Micropolis::DoPowerScan()
             if (ADir < 4) {  // ADir == 4 does nothing in MoveMapSim()
                 MoveMapSim((Direction)ADir);
             }
-            SETPOWERBIT(SMapX, SMapY);
+            SETPOWERBIT(curMapX, curMapY);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
@@ -210,29 +210,29 @@ void Micropolis::DoPowerScan()
 
 
 /**
- * Push the (Micropolis::SMapX, Micropolis::SMapY) pair onto the power stack.
+ * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
  * @see powerStackNum, PushPowerStackX, PushPowerStackY
  */
 void Micropolis::PushPowerStack()
 {
     if (powerStackNum < (PWRSTKSIZE - 2)) {
         powerStackNum++;
-        powerStackX[powerStackNum] = SMapX;
-        powerStackY[powerStackNum] = SMapY;
+        powerStackX[powerStackNum] = curMapX;
+        powerStackY[powerStackNum] = curMapY;
     }
 }
 
 
 /**
- * Pull a position from the power stack and store it in Micropolis::SMapX and
- * Micropolis::SMapY.
+ * Pull a position from the power stack and store it in Micropolis::curMapX and
+ * Micropolis::curMapY.
  * @see powerStackNum, PushPowerStackX, PushPowerStackY
  */
 void Micropolis::PullPowerStack()
 {
     if (powerStackNum > 0)  {
-        SMapX = powerStackX[powerStackNum];
-        SMapY = powerStackY[powerStackNum];
+        curMapX = powerStackX[powerStackNum];
+        curMapY = powerStackY[powerStackNum];
         powerStackNum--;
     }
 }

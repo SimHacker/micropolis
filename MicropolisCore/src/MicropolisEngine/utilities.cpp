@@ -274,12 +274,12 @@ void Micropolis::setCleanCityName(const std::string &name)
 void Micropolis::SetYear(int year)
 {
     // Must prevent year from going negative, since it screws up the non-floored modulo arithmetic.
-    if (year < StartingYear) {
-        year = StartingYear;
+    if (year < startingYear) {
+        year = startingYear;
     }
 
-    year = (year - StartingYear) - (CityTime / 48);
-    CityTime += year * 48;
+    year = (year - startingYear) - (cityTime / 48);
+    cityTime += year * 48;
     doTimeStuff();
 }
 
@@ -290,7 +290,7 @@ void Micropolis::SetYear(int year)
  */
 int Micropolis::CurrentYear()
 {
-    return (CityTime / 48) + StartingYear;
+    return (cityTime / 48) + startingYear;
 }
 
 

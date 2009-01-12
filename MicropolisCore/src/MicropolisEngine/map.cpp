@@ -138,7 +138,7 @@ static short valGrayMap[] = {
     UQuad m; \
     int lineBytes = view->line_bytes8; \
     int pixelBytes = view->pixel_bytes; \
-    mp = &Map[0][0]; \
+    mp = &map[0][0]; \
     imageBase = view->x->color ? view->data : view->data8; \
     for (col = 0; col < WORLD_X; col++) { \
         image = imageBase + (3 * pixelBytes * col); \
@@ -315,7 +315,7 @@ void Micropolis::drawPower()
     }
 
     mp =
-        &Map[0][0];
+        &map[0][0];
     imageBase =
         view->x->color ? view->data : view->data8;
 
@@ -411,14 +411,14 @@ bool Micropolis::dynamicFilter(
 {
     int r = row >>1;
     int c = col >>1;
-    int populationDensity = PopDensity[c][r];
-    int rateOfGrowth = RateOGMem[c>>2][r>>2];
-    int traffic = TrfDensity[c][r];
-    int pollution = PollutionMem[c][r];
-    int crime = CrimeMem[c][r];
-    int landValue = LandValueMem[c][r];
-    int police = PoliceMapEffect[c>>2][r>>2];
-    int fire = FireRate[c>>2][r>>2];
+    int populationDensity = populationDensityMap[c][r];
+    int rateOfGrowth = rateOfGrowthMap[c>>2][r>>2];
+    int traffic = trafficDensityMap[c][r];
+    int pollution = pollutionMap[c][r];
+    int crime = crimeMap[c][r];
+    int landValue = landValueMap[c][r];
+    int police = policeStationMapEffect[c>>2][r>>2];
+    int fire = fireStationMapEffect[c>>2][r>>2];
 
 
     return (
@@ -479,7 +479,7 @@ short Micropolis::GetCI(short x)
 }
 
 
-void Micropolis::drawPopDensity()
+void Micropolis::drawPopulationDensity()
 {
     short x, y;
 
@@ -487,7 +487,7 @@ void Micropolis::drawPopDensity()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(PopDensity[x][y]),
+                GetCI(populationDensityMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -506,7 +506,7 @@ void Micropolis::drawRateOfGrowth()
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
             short val;
-            short z = RateOGMem[x][y];
+            short z = rateOfGrowthMap[x][y];
 
             if (z > 100) {
                 val = VAL_VERYPLUS;
@@ -546,7 +546,7 @@ void Micropolis::drawTrafMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(TrfDensity[x][y]),
+                GetCI(trafficDensityMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -565,7 +565,7 @@ void Micropolis::drawPolMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(10 + PollutionMem[x][y]),
+                GetCI(10 + pollutionMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -584,7 +584,7 @@ void Micropolis::drawCrimeMap()
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
-                GetCI(CrimeMem[x][y]),
+                GetCI(crimeMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -604,7 +604,7 @@ void Micropolis::drawLandMap()
         for (y = 0; y < HWLDY; y++) {
             maybeDrawRect(
                 view,
-                GetCI(LandValueMem[x][y]),
+                GetCI(landValueMap[x][y]),
                 x * 6,
                 y * 6,
                 6,
@@ -622,7 +622,7 @@ void Micropolis::drawFireRadius()
     for (x = 0; x < SmY; x++) {
         for (y = 0; y < SmY; y++) {
             maybeDrawRect(
-                GetCI(FireRate[x][y]),
+                GetCI(fireStationMapEffect[x][y]),
                 x * 24,
                 y * 24,
                 24,
@@ -640,7 +640,7 @@ void Micropolis::drawPoliceRadius()
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
             maybeDrawRect(
-                GetCI(PoliceMapEffect[x][y]),
+                GetCI(policeStationMapEffect[x][y]),
                 x * 24,
                 y * 24,
                 24,
@@ -680,7 +680,7 @@ void Micropolis::MemDrawMap()
           break;
 
       case PDMAP:
-          drawPopDensity(view);
+          drawPopulationDensity(view);
           break;
 
       case RGMAP:
@@ -688,7 +688,7 @@ void Micropolis::MemDrawMap()
           break;
 
       case TDMAP:
-          drawTrafMap(view);
+          drawTrafficMap(view);
           break;
 
       case PLMAP:

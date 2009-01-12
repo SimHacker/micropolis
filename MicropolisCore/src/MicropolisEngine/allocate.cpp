@@ -75,160 +75,159 @@ void Micropolis::initMapArrays()
 {
     short i;
 
-    if (!mapPtr) {
-        mapPtr = (unsigned short *)NewPtr(
+    if (!mapBase) {
+        mapBase = (unsigned short *)NewPtr(
             sizeof(unsigned short) *
             WORLD_X * WORLD_Y);
     }
 
     for (i = 0; i < WORLD_X; i++) {
-        Map[i] = (short *)(mapPtr + (i * WORLD_Y));
+        map[i] = (short *)(mapBase + (i * WORLD_Y));
     }
 
-    popPtr = NewPtr(HWLDX * HWLDY);
-    trfPtr = NewPtr(HWLDX * HWLDY);
-    polPtr = NewPtr(HWLDX * HWLDY);
-    landPtr = NewPtr(HWLDX * HWLDY);
-    crimePtr = NewPtr(HWLDX * HWLDY);
+    populationDensityMapBase = NewPtr(HWLDX * HWLDY);
+    trafficDensityMapBase = NewPtr(HWLDX * HWLDY);
+    pollutionMapBase = NewPtr(HWLDX * HWLDY);
+    landValueMapBase = NewPtr(HWLDX * HWLDY);
+    crimeMapBase = NewPtr(HWLDX * HWLDY);
 
-    tem1Base = NewPtr(HWLDX * HWLDY);
-    tem2Base = NewPtr(HWLDX * HWLDY);
+    tempMap1Base = NewPtr(HWLDX * HWLDY);
+    tempMap2Base = NewPtr(HWLDX * HWLDY);
+    tempMap3Base = NewPtr(QWX * QWY);
 
     for (i = 0; i < HWLDX; i++) {
-        PopDensity[i] = (Byte *)popPtr + (i * HWLDY);
-        TrfDensity[i] = (Byte *)trfPtr + (i * HWLDY);
-        PollutionMem[i] = (Byte *)polPtr + (i * HWLDY);
-        LandValueMem[i] = (Byte *)landPtr + (i * HWLDY);
-        CrimeMem[i] = (Byte *)crimePtr + (i * HWLDY);
+        populationDensityMap[i] = (Byte *)populationDensityMapBase + (i * HWLDY);
+        trafficDensityMap[i] = (Byte *)trafficDensityMapBase + (i * HWLDY);
+        pollutionMap[i] = (Byte *)pollutionMapBase + (i * HWLDY);
+        landValueMap[i] = (Byte *)landValueMapBase + (i * HWLDY);
+        crimeMap[i] = (Byte *)crimeMapBase + (i * HWLDY);
 
-        tem[i] = (Byte *)tem1Base + (i * HWLDY);
-        tem2[i] = (Byte *)tem2Base + (i * HWLDY);
+        tempMap1[i] = (Byte *)tempMap1Base + (i * HWLDY);
+        tempMap2[i] = (Byte *)tempMap2Base + (i * HWLDY);
     }
 
-    terrainBase = NewPtr(QWX * QWY);
-    qTemBase = NewPtr(QWX * QWY);
+    terrainDensityMapBase = NewPtr(QWX * QWY);
 
     for (i = 0; i < QWX; i++) {
-        TerrainMem[i] = (Byte *)terrainBase + (i * QWY);
-        Qtem[i] = (Byte *)qTemBase + (i * QWY);
+        terrainDensityMap[i] = (Byte *)terrainDensityMapBase + (i * QWY);
+        tempMap3[i] = (Byte *)tempMap3Base + (i * QWY);
     }
 
-    ResHis = (short *)NewPtr(HISTLEN);
-    ComHis = (short *)NewPtr(HISTLEN);
-    IndHis = (short *)NewPtr(HISTLEN);
-    MoneyHis = (short *)NewPtr(HISTLEN);
-    PollutionHis = (short *)NewPtr(HISTLEN);
-    CrimeHis = (short *)NewPtr(HISTLEN);
-    MiscHis = (short *)NewPtr(MISCHISTLEN);
-    PowerMap = (short *)NewPtr(POWERMAPLEN); // Power alloc.
+    resHist = (short *)NewPtr(HISTLEN);
+    comHist = (short *)NewPtr(HISTLEN);
+    indHist = (short *)NewPtr(HISTLEN);
+    moneyHist = (short *)NewPtr(HISTLEN);
+    pollutionHist = (short *)NewPtr(HISTLEN);
+    crimeHist = (short *)NewPtr(HISTLEN);
+    miscHist = (short *)NewPtr(MISCHISTLEN);
+    powerMap = (short *)NewPtr(POWERMAPLEN); // Power alloc.
 }
 
 
 void Micropolis::destroyMapArrays()
 {
 
-    if (mapPtr != NULL) {
-        FreePtr(mapPtr);
-        mapPtr = NULL;
+    if (mapBase != NULL) {
+        FreePtr(mapBase);
+        mapBase = NULL;
     }
 
-    memset(Map, 0, sizeof(short *) * WORLD_X);
+    memset(map, 0, sizeof(short *) * WORLD_X);
 
-    if (popPtr != NULL) {
-        FreePtr(popPtr);
-        popPtr = NULL;
+    if (populationDensityMapBase != NULL) {
+        FreePtr(populationDensityMapBase);
+        populationDensityMapBase = NULL;
     }
 
-    if (trfPtr != NULL) {
-        FreePtr(trfPtr);
-        trfPtr = NULL;
+    if (trafficDensityMapBase != NULL) {
+        FreePtr(trafficDensityMapBase);
+        trafficDensityMapBase = NULL;
     }
 
-    if (polPtr != NULL) {
-        FreePtr(polPtr);
-        polPtr = NULL;
+    if (pollutionMapBase != NULL) {
+        FreePtr(pollutionMapBase);
+        pollutionMapBase = NULL;
     }
 
-    if (landPtr != NULL) {
-        FreePtr(landPtr);
-        landPtr = NULL;
+    if (landValueMapBase != NULL) {
+        FreePtr(landValueMapBase);
+        landValueMapBase = NULL;
     }
 
-    if (crimePtr != NULL) {
-        FreePtr(crimePtr);
-        crimePtr = NULL;
+    if (crimeMapBase != NULL) {
+        FreePtr(crimeMapBase);
+        crimeMapBase = NULL;
     }
 
-    if (tem1Base != NULL) {
-        FreePtr(tem1Base);
-        tem1Base = NULL;
+    if (tempMap1Base != NULL) {
+        FreePtr(tempMap1Base);
+        tempMap1Base = NULL;
     }
 
-    if (tem2Base != NULL) {
-        FreePtr(tem2Base);
-        tem2Base = NULL;
+    if (tempMap2Base != NULL) {
+        FreePtr(tempMap2Base);
+        tempMap2Base = NULL;
     }
 
-    memset(PopDensity, 0, sizeof(Byte *) * HWLDX);
-    memset(TrfDensity, 0, sizeof(Byte *) * HWLDX);
-    memset(PollutionMem, 0, sizeof(Byte *) * HWLDX);
-    memset(LandValueMem, 0, sizeof(Byte *) * HWLDX);
-    memset(CrimeMem, 0, sizeof(Byte *) * HWLDX);
-    memset(tem, 0, sizeof(Byte *) * HWLDX);
-    memset(tem2, 0, sizeof(Byte *) * HWLDX);
-    memset(tem2, 0, sizeof(Byte *) * HWLDX);
-
-    if (terrainBase != NULL) {
-        FreePtr(terrainBase);
-        terrainBase = NULL;
+    if (tempMap3Base != NULL) {
+        FreePtr(tempMap3Base);
+        tempMap3Base = NULL;
     }
 
-    if (qTemBase != NULL) {
-        FreePtr(qTemBase);
-        qTemBase = NULL;
+    memset(populationDensityMap, 0, sizeof(Byte *) * HWLDX);
+    memset(trafficDensityMap, 0, sizeof(Byte *) * HWLDX);
+    memset(pollutionMap, 0, sizeof(Byte *) * HWLDX);
+    memset(landValueMap, 0, sizeof(Byte *) * HWLDX);
+    memset(crimeMap, 0, sizeof(Byte *) * HWLDX);
+    memset(tempMap1, 0, sizeof(Byte *) * HWLDX);
+    memset(tempMap2, 0, sizeof(Byte *) * HWLDX);
+    memset(tempMap3, 0, sizeof(Byte *) * QWX);
+
+    if (terrainDensityMapBase != NULL) {
+        FreePtr(terrainDensityMapBase);
+        terrainDensityMapBase = NULL;
     }
 
-    memset(TerrainMem, 0, sizeof(Byte *) * QWX);
-    memset(Qtem, 0, sizeof(Byte *) * QWX);
+    memset(terrainDensityMap, 0, sizeof(Byte *) * QWX);
 
-    if (ResHis != NULL) {
-        FreePtr(ResHis);
-        ResHis = NULL;
+    if (resHist != NULL) {
+        FreePtr(resHist);
+        resHist = NULL;
     }
 
-    if (ComHis != NULL) {
-        FreePtr(ComHis);
-        ComHis = NULL;
+    if (comHist != NULL) {
+        FreePtr(comHist);
+        comHist = NULL;
     }
 
-    if (IndHis != NULL) {
-        FreePtr(IndHis);
-        IndHis = NULL;
+    if (indHist != NULL) {
+        FreePtr(indHist);
+        indHist = NULL;
     }
 
-    if (MoneyHis != NULL) {
-        FreePtr(MoneyHis);
-        MoneyHis = NULL;
+    if (moneyHist != NULL) {
+        FreePtr(moneyHist);
+        moneyHist = NULL;
     }
 
-    if (PollutionHis != NULL) {
-        FreePtr(PollutionHis);
-        PollutionHis = NULL;
+    if (pollutionHist != NULL) {
+        FreePtr(pollutionHist);
+        pollutionHist = NULL;
     }
 
-    if (CrimeHis != NULL) {
-        FreePtr(CrimeHis);
-        CrimeHis = NULL;
+    if (crimeHist != NULL) {
+        FreePtr(crimeHist);
+        crimeHist = NULL;
     }
 
-    if (MiscHis != NULL) {
-        FreePtr(MiscHis);
-        MiscHis = NULL;
+    if (miscHist != NULL) {
+        FreePtr(miscHist);
+        miscHist = NULL;
     }
 
-    if (PowerMap != NULL) {
-        FreePtr(PowerMap);
-        PowerMap = NULL;
+    if (powerMap != NULL) {
+        FreePtr(powerMap);
+        powerMap = NULL;
     }
 
     for (int i = 0; i < HISTORIES; i++) {
@@ -249,7 +248,7 @@ void Micropolis::destroyMapArrays()
  * @param minValResult Pointer to variable to write minimal value to.
  * @param maxValResult Pointer to variable to write maximal value to.
  */
-void Micropolis::GetHistoryRange(int historyType, int historyScale,
+void Micropolis::getHistoryRange(int historyType, int historyScale,
                                  short *minValResult, short *maxValResult)
 {
     if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
@@ -262,22 +261,22 @@ void Micropolis::GetHistoryRange(int historyType, int historyScale,
     short *history = NULL;
     switch (historyType) {
         case HISTORY_TYPE_RES:
-            history = ResHis;
+            history = resHist;
             break;
         case HISTORY_TYPE_COM:
-            history = ComHis;
+            history = comHist;
             break;
         case HISTORY_TYPE_IND:
-            history = IndHis;
+            history = indHist;
             break;
         case HISTORY_TYPE_MONEY:
-            history = MoneyHis;
+            history = moneyHist;
             break;
         case HISTORY_TYPE_CRIME:
-            history = CrimeHis;
+            history = crimeHist;
             break;
         case HISTORY_TYPE_POLLUTION:
-            history = PollutionHis;
+            history = pollutionHist;
             break;
         default:
             NOT_REACHED();
@@ -319,7 +318,7 @@ void Micropolis::GetHistoryRange(int historyType, int historyScale,
  * @param historyIndex Index in the data to obtain
  * @return Historic data value of the requested graph
  */
-short Micropolis::GetHistory(int historyType, int historyScale,
+short Micropolis::getHistory(int historyType, int historyScale,
                              int historyIndex)
 {
     if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
@@ -331,22 +330,22 @@ short Micropolis::GetHistory(int historyType, int historyScale,
     short *history = NULL;
     switch (historyType) {
         case HISTORY_TYPE_RES:
-            history = ResHis;
+            history = resHist;
             break;
         case HISTORY_TYPE_COM:
-            history = ComHis;
+            history = comHist;
             break;
         case HISTORY_TYPE_IND:
-            history = IndHis;
+            history = indHist;
             break;
         case HISTORY_TYPE_MONEY:
-            history = MoneyHis;
+            history = moneyHist;
             break;
         case HISTORY_TYPE_CRIME:
-            history = CrimeHis;
+            history = crimeHist;
             break;
         case HISTORY_TYPE_POLLUTION:
-            history = PollutionHis;
+            history = pollutionHist;
             break;
         default:
             NOT_REACHED();

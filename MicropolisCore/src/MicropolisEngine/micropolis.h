@@ -118,7 +118,7 @@
 
 /**
  * Size of the world in horizontal direction.
- * @note Must be <= 128 due to PowerMap bitmap
+ * @note Must be <= 128 due to powerMap bitmap
  *       (where 1 row is assumed to be less or equal to 8 words).
  */
 static const int WORLD_X = 120;
@@ -232,7 +232,7 @@ enum HistoryScale {
 #define POWERMAPLEN                     1700 /* ??? PWRMAPSIZE */
 #define POWERWORD(x, y)                 (((x) >>4) + ((y) <<3))
 
-#define SETPOWERBIT(x, y)               PowerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
+#define SETPOWERBIT(x, y)               powerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
 #define PWRMAPSIZE                      (POWERMAPROW * WORLD_Y)
 #define PWRSTKSIZE                      ((WORLD_X * WORLD_Y) / 4)
 
@@ -989,7 +989,7 @@ public:
      *
      * Used all over.
      */
-    short SMapX;
+    short curMapX;
 
 
     /**
@@ -997,21 +997,21 @@ public:
      *
      * Used all over.
      */
-    short SMapY;
+    short curMapY;
 
     /**
-     * Tile at SMapX, SMapY, raw.
+     * Current number at curMapX, curMapY, raw.
      *
      * Used all over.
      */
-    short CChr;
+    short curNum;
 
     /**
-     * Tile at SMapX, SMapY, masked with TILEMASK.
+     * Current tile at curMapX, curMapY, the number masked with TILEMASK.
      *
      * Used all over.
      */
-    short CChr9;
+    short curTile;
 
     /**
      * Number of road tiles in the game.
@@ -1019,40 +1019,40 @@ public:
      * Bridges count as 4 tiles, and high density traffic counts as
      * 2 tiles.
      */
-    short RoadTotal;
+    short roadTotal;
 
     /**
      * Total number of rails.
      *
      * No penalty for bridges or high traffic density.
      */
-    short RailTotal;
+    short railTotal;
 
     /**
      * Number of fires.
      */
-    short FirePop;
+    short firePop;
 
     /**
      * Residential zone population.
      *
      * Depends on level of zone development.
      */
-    short ResPop;
+    short resPop;
 
     /**
      * Commercial zone population.
      *
      * Depends on level of zone development.
      */
-    short ComPop;
+    short comPop;
 
     /**
      * Industrial zone population.
      *
      * Depends on level of zone development.
      */
-    short IndPop;
+    short indPop;
 
     /**
      * Total population.
@@ -1060,93 +1060,93 @@ public:
      * Includes residential pop / 8 plus industrial pop plus commercial
      * pop.
      */
-    short TotalPop;
+    short totalPop;
 
     /**
      * Last total population.
      *
      * Not used?
      */
-    short LastTotalPop;
+    short totalPopLast;
 
     /**
      * Residential zone population.
      */
-    short ResZPop;
+    short resZonePop;
 
     /**
      * Commercial zone population.
      */
-    short ComZPop;
+    short comZonePop;
 
     /**
      * Industrial zone population.
      */
-    short IndZPop;
+    short indZonePop;
 
     /**
      * Total zone population.
      */
-    short TotalZPop;
+    short totalZonePop;
 
     /**
      * Hospital population.
      */
-    short HospPop;
+    short hospitalPop;
 
     /**
      * Church population.
      */
-    short ChurchPop;
+    short churchPop;
 
     /**
      * Stadium population.
      */
-    short StadiumPop;
+    short stadiumPop;
 
     /**
      * Police station population.
      */
-    short PolicePop;
+    short policeStationPop;
 
     /**
      * Fire station population.
      */
-    short FireStPop;
+    short fireStationPop;
 
     /**
      * Coal power plant population.
      */
-    short CoalPop;
+    short coalPowerPop;
 
     /**
      * Nuclear power plant population.
      */
-    short NuclearPop;
+    short nuclearPowerPop;
 
     /**
      * Seaport population.
      */
-    short PortPop;
+    short seaportPop;
 
     /**
      * Airport population.
      */
-    short APortPop;
+    short airportPop;
 
     /**
      * Need hospital?
      *
      * 0 if no, 1 if yes, -1 if too many.
      */
-    short NeedHosp;
+    short needHosp;
 
     /**
      * Need church?
      *
      * 0 if no, 1 if yes, -1 if too many.
      */
-    short NeedChurch;
+    short needChurch;
 
     /**
      * Average crime.
@@ -1154,7 +1154,7 @@ public:
      * Affected by land value, population density, police station
      * distance.
      */
-    short CrimeAverage;
+    short crimeAverage;
 
     /**
      * Average pollution.
@@ -1163,7 +1163,7 @@ public:
      * radioactivity, industrial zones, seaports, airports, power
      * plants.
      */
-    short PolluteAverage;
+    short pollutionAverage;
 
     /**
      * Land value average.
@@ -1171,34 +1171,34 @@ public:
      * Affected by distance from city center, development density
      * (terrainMem), pollution, and crime.
      */
-    short LVAverage;
+    short landValueAverage;
 
     /** @name Dates */
     //@{
 
     /**
-     * City time tick counter. 48 ticks per year, relative to #StartingYear.
+     * City time tick counter. 48 ticks per year, relative to #startingYear.
      *
      * Four ticks per 12 months, so one tick is about a week (7.6 days).
      */
-    Quad CityTime;
+    Quad cityTime;
 
     /**
      * City month, 4 ticks per month.
-     * @todo Remove, can be computed from #CityTime.
+     * @todo Remove, can be computed from #cityTime.
      */
-    Quad CityMonth;
+    Quad cityMonth;
 
     /**
-     * City year, (Micropolis::CityTime / 48) + Micropolis::StartingYear.
-     * @todo Remove, can be computed from #CityTime.
+     * City year, (Micropolis::cityTime / 48) + Micropolis::startingYear.
+     * @todo Remove, can be computed from #cityTime.
      */
-    Quad CityYear;
+    Quad cityYear;
 
     /**
      * City starting year.
      */
-    short StartingYear;
+    short startingYear;
 
     //@}
 
@@ -1209,37 +1209,37 @@ public:
      *
      * Map[0 <= x < 120][0 <= y < 100]
      */
-    short *Map[WORLD_X];
+    short *map[WORLD_X];
 
     /**
      * 10 year residential history maximum value.
      */
-    short ResHisMax;
+    short resHist10Max;
 
     /**
      * 120 year residential history maximum value.
      */
-    short Res2HisMax;
+    short resHist120Max;
 
     /**
      * 10 year commercial history maximum value.
      */
-    short ComHisMax;
+    short comHist10Max;
 
     /**
      * 120 year commercial history maximum value.
      */
-    short Com2HisMax;
+    short comHist120Max;
 
     /**
      * 10 year industrial history maximum value.
      */
-    short IndHisMax;
+    short indHist10Max;
 
     /**
      * 120 year industrial history maximum value.
      */
-    short Ind2HisMax;
+    short indHist120Max;
 
     /**
      * Census changed flag.
@@ -1260,12 +1260,12 @@ public:
     /**
      * Message X location.
      */
-    short mesX;
+    short messageX;
 
     /**
      * Message Y location.
      */
-    short mesY;
+    short messageY;
 
     /** @name Budget */
     //@{
@@ -1273,53 +1273,53 @@ public:
     /**
      * Spending on roads.
      */
-    Quad RoadSpend;
+    Quad roadSpend;
 
     /**
      * Spending on police stations.
      */
-    short PoliceSpend;
+    Quad policeSpend;
 
     /**
      * Spending on fire stations.
      */
-    short FireSpend;
+    Quad fireSpend;
 
     /**
      * Requested funds for roads.
      *
      * Depends on number of roads, rails, and game level.
      */
-    Quad RoadFund;
+    Quad roadFund;
 
     /**
      * Requested funds for police stations.
      *
      * Depends on police station population.
      */
-    short PoliceFund;
+    Quad policeFund;
 
     /**
      * Requested funds for fire stations.
      *
      * Depends on fire station population.
      */
-    short FireFund;
+    Quad fireFund;
 
     /**
      * Radio of road spending over road funding, times 32.
      */
-    short RoadEffect;
+    Quad roadEffect;
 
     /**
      * Radio of police spending over road funding, times 32.
      */
-    short PoliceEffect;
+    Quad policeEffect;
 
     /**
      * Radio of fire spending over road funding, times 32.
      */
-    short FireEffect;
+    Quad fireEffect;
 
     /**
      * Funds from taxes.
@@ -1327,81 +1327,85 @@ public:
      * Depends on total population, average land value, city tax, and
      * game level.
      */
-    Quad TaxFund;
+    Quad taxFund;
 
     /**
      * City tax rate.
      */
-    short CityTax;
+    short cityTax;
 
     /**
      * Tax port flag.
      *
      * Apparently never used. CollectTax checks it.
      *
-     * @todo Apparently TaxFlag is never set to true in MicropolisEngine
+     * @todo Apparently taxFlag is never set to true in MicropolisEngine
      *       or the TCL code.
      * @todo Don should check old Mac code to see if it's ever set.
      * @todo Variable is always \c 0. Decide whether to keep it, and if yes,
      *       create means to modify its value
-     * @todo It looks like a boolean. If we keep it, modify accordingly
      */
-    short TaxFlag;
+    bool taxFlag;
 
     //@}
 
     /**
      * Population density map.
      */
-    Byte *PopDensity[HWLDX];
+    Byte *populationDensityMap[HWLDX];
 
     /**
      * Traffic map.
      */
-    Byte *TrfDensity[HWLDX];
+    Byte *trafficDensityMap[HWLDX];
 
     /**
      * Pollution map.
      */
-    Byte *PollutionMem[HWLDX];
+    Byte *pollutionMap[HWLDX];
 
     /**
      * Land value mep.
      */
-    Byte *LandValueMem[HWLDX];
+    Byte *landValueMap[HWLDX];
 
     /**
      * Crime map.
      */
-    Byte *CrimeMem[HWLDX];
+    Byte *crimeMap[HWLDX];
 
     /**
-     * Temporary map.
+     * Temporary map 1.
      *
      * Used to smooth population density, pollution.
      */
-    Byte *tem[HWLDX];
+    Byte *tempMap1[HWLDX];
 
     /**
      * Temporary map 2.
      *
      * Used to smooth population density, pollution.
      */
-    Byte *tem2[HWLDX];
+    Byte *tempMap2[HWLDX];
 
     /**
-     * Terrain development  density map.
+     * Temporary map 3.
+     *
+     * Used to smooth development density, for terrainDensityMap.
+     */
+    Byte *tempMap3[QWX];
+
+    /**
+     * Temporary array for smoothing fire and police station maps.
+     */
+    short tempMap4[SmX][SmY];
+
+    /**
+     * Terrain development density map.
      *
      * Used to calculate land value.
      */
-    Byte *TerrainMem[QWX];
-
-    /**
-     * Temporary map Q.
-     *
-     * Used to smooth development density, for TerrainMem.
-     */
-    Byte *Qtem[QWX];
+    Byte *terrainDensityMap[QWX];
 
     /**
      * Rate of growth map.
@@ -1410,7 +1414,7 @@ public:
      * explosions from sprites, fire spreading. Doesn't seem to
      * actually feed back into the simulation. Output only.
      */
-    short RateOGMem[SmX][SmY];
+    short rateOfGrowthMap[SmX][SmY];
 
     /**
      * Fire station map.
@@ -1421,7 +1425,7 @@ public:
      * access. Affects how long fires burn.
      * @see #FireEffect
      */
-    short FireStMap[SmX][SmY];
+    short fireStationMap[SmX][SmY];
 
     /**
      * Police station map.
@@ -1432,17 +1436,17 @@ public:
      * access. Affects crime rate.
      * @see #PoliceEffect
      */
-    short PoliceMap[SmX][SmY];
+    short policeStationMap[SmX][SmY];
 
     /**
      * Copy of police station map to display.
      */
-    short PoliceMapEffect[SmX][SmY];
+    short policeStationMapEffect[SmX][SmY];
 
     /**
      * Copy of fire station map to display.
      */
-    short FireRate[SmX][SmY];
+    short fireStationMapEffect[SmX][SmY];
 
     /**
      * Commercial rate map.
@@ -1450,102 +1454,97 @@ public:
      * Depends on distance to city center. Affects commercial zone
      * evaluation.
      */
-    short ComRate[SmX][SmY];
+    short comRateMap[SmX][SmY];
 
     /**
-     * Temporary array for smoothing fire and police station maps.
+     * Memory for terrainDensityMap array.
      */
-    short STem[SmX][SmY];
+    Ptr terrainDensityMapBase;
 
     /**
-     * Memory for TerrainMem array.
+     * Memory for tempMap1 array.
      */
-    Ptr terrainBase;
+    Ptr tempMap1Base;
 
     /**
-     * Memory for Qtem array.
+     * Memory for tempMap2 array.
      */
-    Ptr qTemBase;
+    Ptr tempMap2Base;
 
     /**
-     * Memory for tem array.
+     * Memory for tempMap3 array.
      */
-    Ptr tem1Base;
+    Ptr tempMap3Base;
 
     /**
-     * Memory for tem2 array.
+     * Memory for populationDensityMap array.
      */
-    Ptr tem2Base;
+    Ptr populationDensityMapBase;
 
     /**
-     * Memory for PopDensity array.
+     * Memory for trafficDensityMap array.
      */
-    Ptr popPtr;
+    Ptr trafficDensityMapBase;
 
     /**
-     * Memory for TrfDensity array.
+     * Memory for pollutionMap array.
      */
-    Ptr trfPtr;
+    Ptr pollutionMapBase;
 
     /**
-     * Memory for PollutionMem array.
+     * Memory for landValueMap array.
      */
-    Ptr polPtr;
+    Ptr landValueMapBase;
 
     /**
-     * Memory for LandValueMem array.
+     * Memory for crimeMap array.
      */
-    Ptr landPtr;
+    Ptr crimeMapBase;
 
     /**
-     * Memory for CrimeMem array.
+     * Memory for map array.
      */
-    Ptr crimePtr;
-
-    /**
-     * Memory for Map array.
-     */
-    unsigned short *mapPtr;
+    unsigned short *mapBase;
 
     /**
      * Residential population history.
      */
-    short *ResHis;
+    short *resHist;
 
     /**
      * Commercial population history.
      */
-    short *ComHis;
+    short *comHist;
 
     /**
      * Industrial population history.
      */
-    short *IndHis;
+    short *indHist;
 
     /**
      * Money history.
      */
-    short *MoneyHis;
+    short *moneyHist;
 
     /**
      * Pollution history.
      */
-    short *PollutionHis;
+    short *pollutionHist;
 
     /**
      * Crime history.
      */
-    short *CrimeHis;
+    short *crimeHist;
 
     /**
      * Memory used to save miscelaneous game values in save file.
      */
-    short *MiscHis;
+    short *miscHist;
 
     /**
      * Power distribution bitmap.
      */
-    short *PowerMap;
+    short *powerMap;
 
 
     void initMapArrays();
@@ -1559,13 +1558,13 @@ public:
 %apply short *OUTPUT { short *maxValResult };
 #endif
 
-    void GetHistoryRange(
+    void getHistoryRange(
         int historyType,
         int historyScale,
         short *minValResult,
         short *maxValResult);
 
-    short GetHistory(
+    short getHistory(
         int historyType,
         int historyScale,
         int historyIndex);
@@ -2178,11 +2177,11 @@ public:
 
     short GetCI(short x);
 
-    void drawPopDensity();
+    void drawPopulationDensity();
 
     void drawRateOfGrowth();
 
-    void drawTrafMap();
+    void drawTrafficMap();
 
     void drawPolMap();
 
@@ -2452,15 +2451,15 @@ public:
 
     short NewPower; /* post */
 
-    short AvCityTax;
+    short cityTaxAverage;
 
-    short Scycle;
+    short simCycle;
 
-    short Fcycle;
+    short phaseCycle;
 
-    short Spdcycle;
+    short speedCycle;
 
-    bool DoInitialEval; ///< Need to perform initial city evaluation.
+    bool doInitialEval; ///< Need to perform initial city evaluation.
 
 
     /** Generate a random animated MapTileCharacters::FIRE tile */
@@ -2846,8 +2845,8 @@ public:
 
     /* Position stack */
     short PosStackN; ///< Position stack top pointer, points to top position
-    short SMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
-    short SMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
+    short curMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
+    short curMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
 
     Direction LDir; ///< Last moved direction
 
@@ -2894,11 +2893,11 @@ public:
 
     short MustUpdateOptions;
 
-    Quad LastCityTime;
+    Quad cityTimeLast;
 
-    Quad LastCityYear;
+    Quad cityYearLast;
 
-    Quad LastCityMonth;
+    Quad cityMonthLast;
 
     Quad LastFunds;
 
@@ -3011,11 +3010,11 @@ public:
 
     void DoIndOut(int pop, int value);
 
-    short RZPop(int Ch9);
+    short getResZonePop(int Ch9);
 
-    short CZPop(int Ch9);
+    short getComZonePop(int Ch9);
 
-    short IZPop(int Ch9);
+    short getIndZonePop(int Ch9);
 
     void BuildHouse(int value);
 

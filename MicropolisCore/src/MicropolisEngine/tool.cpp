@@ -115,9 +115,9 @@ int Micropolis::putDownPark(short mapH, short mapV)
         tile = (value + WOODS2) | BURNBIT | BULLBIT;
     }
 
-    if (Map[mapH][mapV] != DIRT) return -1;
+    if (map[mapH][mapV] != DIRT) return -1;
 
-    Map[mapH][mapV] = tile;
+    map[mapH][mapV] = tile;
 
     Spend(gCostOf[TOOL_PARK]);
     UpdateFunds();
@@ -136,10 +136,10 @@ int Micropolis::putDownPark(short mapH, short mapV)
  */
 int Micropolis::putDownNetwork(short mapH, short mapV)
 {
-    int tile = Map[mapH][mapV] & LOMASK;
+    int tile = map[mapH][mapV] & LOMASK;
 
     if (TotalFunds > 0 && tally(tile)) {
-        Map[mapH][mapV] = DIRT;
+        map[mapH][mapV] = DIRT;
         tile = DIRT;
         Spend(1);
     }
@@ -148,7 +148,7 @@ int Micropolis::putDownNetwork(short mapH, short mapV)
 
     if (TotalFunds - gCostOf[TOOL_NETWORK] < 0) return -2;
 
-    Map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
+    map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
     Spend(gCostOf[TOOL_NETWORK]);
     UpdateFunds();
@@ -346,7 +346,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the upper bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
         xPos++;
     }
 
@@ -355,7 +355,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the left bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
         yPos++;
     }
 
@@ -364,7 +364,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the bottom bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
         xPos++;
     }
 
@@ -373,7 +373,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the right bordering row */
-        ConnecTile(xPos, yPos, &Map[xPos][yPos], 0);
+        ConnecTile(xPos, yPos, &map[xPos][yPos], 0);
         yPos++;
     }
 }
@@ -410,7 +410,7 @@ int Micropolis::check3x3(
 
         for (columnNum = 0; columnNum <= 2; columnNum++) {
 
-            tileValue = Map[mapH++][mapV] & LOMASK;
+            tileValue = map[mapH++][mapV] & LOMASK;
 
             if (autoBulldoze) {
 
@@ -456,9 +456,9 @@ int Micropolis::check3x3(
 
         if ((columnNum == 1) &&
             (rowNum == 1)) {
-          Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+          map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
         } else {
-          Map[mapH++][mapV] = base + BNCNBIT;
+          map[mapH++][mapV] = base + BNCNBIT;
         }
 
         base++;
@@ -508,7 +508,7 @@ short Micropolis::check4x4(
 
         for (columnNum = 0; columnNum <= 3; columnNum++) {
 
-            tileValue = Map[mapH++][mapV] & LOMASK;
+            tileValue = map[mapH++][mapV] & LOMASK;
 
             if (autoBulldoze) {
 
@@ -555,11 +555,11 @@ short Micropolis::check4x4(
         for (columnNum = 0; columnNum <= 3; columnNum++) {
 
             if ((columnNum == 1) && (rowNum == 1)) {
-                Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+                map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
             } else if ((columnNum == 1) && (rowNum == 2) && aniFlag) {
-                Map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
+                map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
             } else {
-                Map[mapH++][mapV] = base + BNCNBIT;
+                map[mapH++][mapV] = base + BNCNBIT;
             }
 
             base++;
@@ -607,7 +607,7 @@ short Micropolis::check6x6(
 
         for (columnNum = 0; columnNum <= 5; columnNum++) {
 
-            tileValue = Map[mapH++][mapV] & LOMASK;
+            tileValue = map[mapH++][mapV] & LOMASK;
 
             if (autoBulldoze) {
 
@@ -654,9 +654,9 @@ short Micropolis::check6x6(
         for (columnNum = 0; columnNum <= 5; columnNum++) {
 
             if ((columnNum == 1) && (rowNum == 1)) {
-                Map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
+                map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
             } else {
-                Map[mapH++][mapV] = base + BNCNBIT;
+                map[mapH++][mapV] = base + BNCNBIT;
             }
 
             base++;
@@ -727,33 +727,33 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
 
     case 0:
     default:
-        z = PopDensity[mapH >>1][mapV >>1];
+        z = populationDensityMap[mapH >>1][mapV >>1];
         z = z >> 6;
         z = z & 3;
         return z + STR202_POPULATIONDENSITY_LOW;
 
     case 1:
-        z = LandValueMem[mapH >>1][mapV >>1];
+        z = landValueMap[mapH >>1][mapV >>1];
         if (z < 30) return STR202_LANDVALUE_SLUM;
         if (z < 80) return STR202_LANDVALUE_LOWER_CLASS;
         if (z < 150) return STR202_LANDVALUE_MIDDLE_CLASS;
         return STR202_LANDVALUE_HIGH_CLASS;
 
     case 2:
-        z = CrimeMem[mapH >>1][mapV >>1];
+        z = crimeMap[mapH >>1][mapV >>1];
         z = z >> 6;
         z = z & 3;
         return z + STR202_CRIME_NONE;
 
     case 3:
-        z = PollutionMem[mapH >>1][mapV >>1];
+        z = pollutionMap[mapH >>1][mapV >>1];
         if ((z < 64) && (z > 0)) return 13;
         z = z >> 6;
         z = z & 3;
         return z + STR202_POLLUTION_NONE;
 
     case 4:
-        z = RateOGMem[mapH >>3][mapV >>3];
+        z = rateOfGrowthMap[mapH >>3][mapV >>3];
         if (z < 0) return STR202_GROWRATE_DECLINING;
         if (z == 0) return STR202_GROWRATE_STABLE;
         if (z > 100) return STR202_GROWRATE_FASTGROWTH;
@@ -774,7 +774,7 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
     char localStr[256]; // Textual version of the category the tile belongs to
     char statusStr[5][256];
 
-    short tileNum = Map[mapH][mapV] & LOMASK;
+    short tileNum = map[mapH][mapV] & LOMASK;
 
     if (tileNum >= COALSMOKE1 && tileNum < FOOTBALLGAME1) {
       tileNum = COALBASE;
@@ -846,11 +846,11 @@ void Micropolis::putRubble(int x, int y, int size)
         for (int yy = y; yy < y + size; yy++)  {
 
             if (TestBounds(xx, yy)) {
-                int tile = Map[xx][yy] & LOMASK;
+                int tile = map[xx][yy] & LOMASK;
 
                 if (tile != RADTILE && tile != DIRT) {
                     tile = (DoAnimation ? (TINYEXP + Rand(2)) : SOMETINYEXP);
-                    Map[xx][yy] = tile | ANIMBIT | BULLBIT;
+                    map[xx][yy] = tile | ANIMBIT | BULLBIT;
                 }
             }
         }
@@ -904,7 +904,7 @@ int Micropolis::bulldozerTool(short x, short y)
         return -1;
     }
 
-    currTile = Map[x][y];
+    currTile = map[x][y];
     temp = currTile & LOMASK;
 
     if (currTile & ZONEBIT) { /* zone center bit is set */
@@ -971,9 +971,9 @@ int Micropolis::bulldozerTool(short x, short y)
 
             if (TotalFunds >= 6) {
 
-                result = ConnecTile(x, y, &Map[x][y], 1);
+                result = ConnecTile(x, y, &map[x][y], 1);
 
-                if (temp != (Map[x][y] & LOMASK)) {
+                if (temp != (map[x][y] & LOMASK)) {
                   Spend(5);
                 }
 
@@ -981,7 +981,7 @@ int Micropolis::bulldozerTool(short x, short y)
                 result = 0;
             }
         } else {
-            result = ConnecTile(x, y, &Map[x][y], 1);
+            result = ConnecTile(x, y, &map[x][y], 1);
         }
 
     }
@@ -1005,7 +1005,7 @@ int Micropolis::roadTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &Map[x][y], 2);
+    result = ConnecTile(x, y, &map[x][y], 2);
     UpdateFunds();
 
     if (result == 1) {
@@ -1024,7 +1024,7 @@ int Micropolis::railroadTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &Map[x][y], 3);
+    result = ConnecTile(x, y, &map[x][y], 3);
     UpdateFunds();
 
     if (result == 1) {
@@ -1043,7 +1043,7 @@ int Micropolis::wireTool(short x, short y)
         return -1;
     }
 
-    result = ConnecTile(x, y, &Map[x][y], 4);
+    result = ConnecTile(x, y, &map[x][y], 4);
     UpdateFunds();
 
     if (result == 1) {

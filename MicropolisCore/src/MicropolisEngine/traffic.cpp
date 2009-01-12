@@ -82,8 +82,8 @@ short Micropolis::MakeTraf(ZoneType dest)
 {
     short xtem, ytem;
 
-    xtem = SMapX; // Temporarily save SMapX
-    ytem = SMapY; // Temporarily save SMapY
+    xtem = curMapX; // Temporarily save curMapX
+    ytem = curMapY; // Temporarily save curMapY
     Zsource = dest;
     PosStackN = 0; // Clear position stack
 
@@ -98,13 +98,13 @@ short Micropolis::MakeTraf(ZoneType dest)
 
         if (TryDrive()) {           /* attempt to drive somewhere */
             SetTrafMem();             /* if sucessful, inc trafdensity */
-            SMapX = xtem;
-            SMapY = ytem;
+            curMapX = xtem;
+            curMapY = ytem;
             return 1;            /* traffic passed */
         }
 
-        SMapX = xtem;
-        SMapY = ytem;
+        curMapX = xtem;
+        curMapY = ytem;
 
         return 0;             /* traffic failed */
     } else {
@@ -123,22 +123,22 @@ void Micropolis::SetTrafMem()
 
         PullPos();
 
-        if (TestBounds(SMapX, SMapY)) {
+        if (TestBounds(curMapX, curMapY)) {
 
-            z = Map[SMapX][SMapY] & LOMASK;
+            z = map[curMapX][curMapY] & LOMASK;
 
             if (z >= ROADBASE && z < POWERBASE) {
                 SimSprite *sprite;
 
                 /* check for rail */
-                z = TrfDensity[SMapX >>1][SMapY >>1];
+                z = trafficDensityMap[curMapX >>1][curMapY >>1];
                 z += 50;
 
                 if (z > 240 && Rand(5) == 0) {
 
                     z = 240;
-                    TrafMaxX = SMapX <<4;
-                    TrafMaxY = SMapY <<4;
+                    TrafMaxX = curMapX <<4;
+                    TrafMaxY = curMapY <<4;
 
                     /* Direct helicopter towards heavy traffic */
                     sprite = GetSprite(SPRITE_HELICOPTER);
@@ -150,27 +150,27 @@ void Micropolis::SetTrafMem()
                     }
                 }
 
-                TrfDensity[SMapX >>1][SMapY >>1] = (Byte)z;
+                trafficDensityMap[curMapX >>1][curMapY >>1] = (Byte)z;
             }
         }
     }
 }
 
 
-/** Push current position (SMapX, SMapY) onto position stack */
+/** Push current position (curMapX, curMapY) onto position stack */
 void Micropolis::PushPos()
 {
     PosStackN++;
-    SMapXStack[PosStackN] = SMapX;
-    SMapYStack[PosStackN] = SMapY;
+    curMapXStack[PosStackN] = curMapX;
+    curMapYStack[PosStackN] = curMapY;
 }
 
 
-/** Pull top-most position from stack and store in SMapX and SMapY */
+/** Pull top-most position from stack and store in curMapX and curMapY */
 void Micropolis::PullPos()
 {
-    SMapX = SMapXStack[PosStackN];
-    SMapY = SMapYStack[PosStackN];
+    curMapX = curMapXStack[PosStackN];
+    curMapY = curMapYStack[PosStackN];
     PosStackN--;
 }
 
@@ -178,8 +178,8 @@ void Micropolis::PullPos()
 /**
  * Find a connection to a road at the perimeter
  * @return Indication that a connection has been found
- * @pre  SMapX and SMapY contain the starting coordinates
- * @post If a connection is found, it is stored in SMapX and SMapY
+ * @pre  curMapX and curMapY contain the starting coordinates
+ * @post If a connection is found, it is stored in curMapX and curMapY
  */
 bool Micropolis::FindPRoad()
 {
@@ -190,15 +190,15 @@ bool Micropolis::FindPRoad()
 
     for (short z = 0; z < 12; z++) {
 
-        tx = SMapX + PerimX[z];
-        ty = SMapY + PerimY[z];
+        tx = curMapX + PerimX[z];
+        ty = curMapY + PerimY[z];
 
         if (TestBounds(tx, ty)) {
 
-            if (RoadTest(Map[tx][ty])) {
+            if (RoadTest(map[tx][ty])) {
 
-                SMapX = tx;
-                SMapY = ty;
+                curMapX = tx;
+                curMapY = ty;
 
                 return true;
             }
@@ -212,7 +212,7 @@ bool Micropolis::FindPRoad()
 /**
  * Find a telecomm connection at the perimeter
  * @return Indication that a telecomm connection has been found
- * @pre  SMapX and SMapY contain the starting coordinates
+ * @pre  curMapX and curMapY contain the starting coordinates
  */
 bool Micropolis::FindPTele()
 {
@@ -223,12 +223,12 @@ bool Micropolis::FindPTele()
 
     for (short z = 0; z < 12; z++) {
 
-        tx = SMapX + PerimX[z];
-        ty = SMapY + PerimY[z];
+        tx = curMapX + PerimX[z];
+        ty = curMapY + PerimY[z];
 
         if (TestBounds(tx, ty)) {
 
-            tile = Map[tx][ty] & LOMASK;
+            tile = map[tx][ty] & LOMASK;
             if (tile >= TELEBASE && tile <= TELELAST) {
                 return true;
             }
@@ -242,9 +242,9 @@ bool Micropolis::FindPTele()
 /**
  * Try to drive to a destination.
  * @return Was drive succesful?
- * @post Position stack (SMapXStack, SMapYStack, PosStackN)
+ * @post Position stack (curMapXStack, curMapYStack, PosStackN)
  *       is filled with some intermediate positions of the drive
- * @todo Find out why the stack is popped, but SMapX and sMapY are not updated
+ * @todo Find out why the stack is popped, but curMapX and sMapY are not updated
  */
 bool Micropolis::TryDrive()
 {
@@ -323,29 +323,29 @@ short Micropolis::GetFromMap(Direction d)
     switch (d) {
 
         case DIR_NORTH:
-            if (SMapY > 0) {
-              return Map[SMapX][SMapY - 1] & LOMASK;
+            if (curMapY > 0) {
+              return map[curMapX][curMapY - 1] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_WEST:
-            if (SMapX < (WORLD_X - 1)) {
-              return Map[SMapX + 1][SMapY] & LOMASK;
+            if (curMapX < (WORLD_X - 1)) {
+              return map[curMapX + 1][curMapY] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_SOUTH:
-            if (SMapY < (WORLD_Y - 1)) {
-              return Map[SMapX][SMapY + 1] & LOMASK;
+            if (curMapY < (WORLD_Y - 1)) {
+              return map[curMapX][curMapY + 1] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_EAST:
-            if (SMapX > 0) {
-              return Map[SMapX - 1][SMapY] & LOMASK;
+            if (curMapX > 0) {
+              return map[curMapX - 1][curMapY] & LOMASK;
             }
 
             return DIRT;
@@ -374,29 +374,29 @@ bool Micropolis::DriveDone()
     short l = TARGL[Zsource]; // Lowest acceptable tile value
     short h = TARGH[Zsource]; // Highest acceptable tile value
 
-    if (SMapY > 0) {
-        short z = Map[SMapX][SMapY - 1] & LOMASK;
+    if (curMapY > 0) {
+        short z = map[curMapX][curMapY - 1] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;
         }
     }
 
-    if (SMapX < (WORLD_X - 1)) {
-        short z = Map[SMapX + 1][SMapY] & LOMASK;
+    if (curMapX < (WORLD_X - 1)) {
+        short z = map[curMapX + 1][curMapY] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;
         }
     }
 
-    if (SMapY < (WORLD_Y - 1)) {
-        short z = Map[SMapX][SMapY + 1] & LOMASK;
+    if (curMapY < (WORLD_Y - 1)) {
+        short z = map[curMapX][curMapY + 1] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;
         }
     }
 
-    if (SMapX > 0) {
-        short z = Map[SMapX - 1][SMapY] & LOMASK;
+    if (curMapX > 0) {
+        short z = map[curMapX - 1][curMapY] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;
         }

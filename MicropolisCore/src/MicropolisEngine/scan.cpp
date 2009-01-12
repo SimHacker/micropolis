@@ -84,7 +84,7 @@ void Micropolis::FireAnalysis()
 
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
-            FireRate[x][y] = FireStMap[x][y];
+            fireStationMapEffect[x][y] = fireStationMap[x][y];
         }
     }
 
@@ -95,7 +95,7 @@ void Micropolis::FireAnalysis()
 /* comefrom: Simulate SpecialInit */
 void Micropolis::PopDenScan()
 {
-    /*  sets: PopDensity, , , ComRate  */
+    /*  sets: populationDensityMap, , , comRateMap  */
     Quad Xtot, Ytot, Ztot;
     register short x, y, z;
 
@@ -105,16 +105,16 @@ void Micropolis::PopDenScan()
     Ztot = 0;
     for (x = 0; x < WORLD_X; x++) {
         for (y = 0; y < WORLD_Y; y++) {
-            z = Map[x][y];
+            z = map[x][y];
             if (z & ZONEBIT) {
                 z = z & LOMASK;
-                SMapX = x;
-                SMapY = y;
+                curMapX = x;
+                curMapY = y;
                 z = GetPDen(z) <<3;
                 if (z > 254) {
                     z = 254;
                 }
-                tem[x >>1][y >>1] = (Byte)z;
+                tempMap1[x >>1][y >>1] = (Byte)z;
                 Xtot += x;
                 Ytot += y;
                 Ztot++;
@@ -122,17 +122,17 @@ void Micropolis::PopDenScan()
         }
     }
 
-    DoSmooth(); // tem -> tem2
-    DoSmooth2(); // tem2 -> tem
-    DoSmooth(); // tem -> tem2
+    DoSmooth(); // tempMap1 -> tempMap2
+    DoSmooth2(); // tempMap2 -> tempMap1
+    DoSmooth(); // tempMap1 -> tempMap2
 
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
-            PopDensity[x][y] = tem2[x][y] <<1;
+            populationDensityMap[x][y] = tempMap2[x][y] <<1;
         }
     }
 
-    DistIntMarket();              /* set ComRate w/ (/ComMap) */
+    DistIntMarket();              /* set comRateMap w/ (/comMap) */
 
     if (Ztot > 0) {               /* Find Center of Mass for City */
         CCx = (short)(Xtot / Ztot);
@@ -161,17 +161,17 @@ int Micropolis::GetPDen(int Ch9)
     }
 
     if (Ch9 < COMBASE) {
-        pop = RZPop(Ch9);
+        pop = getResZonePop(Ch9);
         return pop;
     }
 
     if (Ch9 < INDBASE) {
-        pop = (CZPop(Ch9) <<3);
+        pop = (getComZonePop(Ch9) <<3);
         return pop;
     }
 
     if (Ch9 < PORTBASE) {
-        pop = (IZPop(Ch9) <<3);
+        pop = (getIndZonePop(Ch9) <<3);
         return pop;
     }
 
@@ -187,10 +187,10 @@ void Micropolis::PTLScan()
     register int x, y, z, dis;
     int Plevel, LVflag, loc, zx, zy, Mx, My, pnum, LVnum, pmax;
 
-    // Qtem is a map of development density, smoothed into terrainMap.
+    // tempMap3 is a map of development density, smoothed into terrainMap.
     for (x = 0; x < QWX; x++) {
         for (y = 0; y < QWY; y++) {
-            Qtem[x][y] = 0;
+            tempMap3[x][y] = 0;
         }
     }
 
@@ -206,10 +206,10 @@ void Micropolis::PTLScan()
 
             for (Mx = zx; Mx <= zx + 1; Mx++) {
                 for (My = zy; My <= zy + 1; My++) {
-                    loc = (Map[Mx][My] & LOMASK);
+                    loc = (map[Mx][My] & LOMASK);
                     if (loc) {
                         if (loc < RUBBLE) {
-                            Qtem[x >>1][y >>1] += 15; /* inc terrainMem */
+                            tempMap3[x >>1][y >>1] += 15; /* inc terrainMem */
                             continue;
                         }
                         Plevel += GetPValue(loc);
@@ -230,14 +230,14 @@ void Micropolis::PTLScan()
                 Plevel = 255;
             }
 
-            tem[x][y] = Plevel;
+            tempMap1[x][y] = Plevel;
 
             if (LVflag) {                     /* LandValue Equation */
                 dis = 34 - GetDisCC(x, y);
                 dis = dis <<2;
-                dis += (TerrainMem[x >>1][y >>1] );
-                dis -= (PollutionMem[x][y]);
-                if (CrimeMem[x][y] > 190) {
+                dis += (terrainDensityMap[x >>1][y >>1] );
+                dis -= (pollutionMap[x][y]);
+                if (crimeMap[x][y] > 190) {
                     dis -= 20;
                 }
                 if (dis > 250) {
@@ -246,23 +246,23 @@ void Micropolis::PTLScan()
                 if (dis < 1) {
                     dis = 1;
                 }
-                LandValueMem[x][y] = dis;
+                landValueMap[x][y] = dis;
                 LVtot += dis;
                 LVnum++;
             } else {
-                LandValueMem[x][y] = 0;
+                landValueMap[x][y] = 0;
             }
         }
     }
 
     if (LVnum) {
-        LVAverage = (short)(LVtot / LVnum);
+        landValueAverage = (short)(LVtot / LVnum);
     } else {
-        LVAverage = 0;
+        landValueAverage = 0;
     }
 
-    DoSmooth(); // tem -> temp2
-    DoSmooth2(); // tem2 -> tem
+    DoSmooth(); // tempMap1 -> tempMap2
+    DoSmooth2(); // tempMap2 -> tempMap1
 
     pmax = 0;
     pnum = 0;
@@ -270,8 +270,8 @@ void Micropolis::PTLScan()
 
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++)  {
-            z = tem[x][y];
-            PollutionMem[x][y] = z;
+            z = tempMap1[x][y];
+            pollutionMap[x][y] = z;
 
             if (z) { /*  get pollute average  */
                 pnum++;
@@ -286,9 +286,9 @@ void Micropolis::PTLScan()
         }
     }
     if (pnum) {
-        PolluteAverage = (short)(ptot / pnum);
+        pollutionAverage = (short)(ptot / pnum);
     } else {
-        PolluteAverage = 0;
+        pollutionAverage = 0;
     }
 
     SmoothTerrain();
@@ -392,17 +392,17 @@ void Micropolis::CrimeScan()
 
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
-            z = LandValueMem[x][y];
+            z = landValueMap[x][y];
             if (z) {
                 ++numz;
                 z = 128 - z;
-                z += PopDensity[x][y];
+                z += populationDensityMap[x][y];
                 if (z > 300) {
                     z = 300;
                 }
-                z -= PoliceMap[x >>2][y >>2];
+                z -= policeStationMap[x >>2][y >>2];
                 z = clamp(z, (short)0, (short)250);
-                CrimeMem[x][y] = (Byte)z;
+                crimeMap[x][y] = (Byte)z;
                 totz += z;
 
                 // Update new crime hot-spot
@@ -413,20 +413,20 @@ void Micropolis::CrimeScan()
                 }
 
             } else {
-                CrimeMem[x][y] = 0;
+                crimeMap[x][y] = 0;
             }
         }
     }
 
     if (numz > 0) {
-        CrimeAverage = (short)(totz / numz);
+        crimeAverage = (short)(totz / numz);
     } else {
-        CrimeAverage = 0;
+        crimeAverage = 0;
     }
 
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
-            PoliceMapEffect[x][y] = PoliceMap[x][y];
+            policeStationMapEffect[x][y] = policeStationMap[x][y];
         }
     }
 
@@ -445,12 +445,12 @@ void Micropolis::SmoothTerrain()
         for (x = 0; x < QWX; x++) {
             for (; y != QWY && y != -1; y += dir) {
                 z +=
-                    Qtem[(x == 0) ? x : (x - 1)][y] +
-                    Qtem[(x == (QWX - 1)) ? x : (x + 1)][y] +
-                    Qtem[x][(y == 0) ? (0) : (y - 1)] +
-                    Qtem[x][(y == (QWY - 1)) ? y : (y + 1)] +
-                    (Qtem[x][y] <<2);
-                TerrainMem[x][y] = (unsigned char)(((unsigned)z) >>3);
+                    tempMap3[(x == 0) ? x : (x - 1)][y] +
+                    tempMap3[(x == (QWX - 1)) ? x : (x + 1)][y] +
+                    tempMap3[x][(y == 0) ? (0) : (y - 1)] +
+                    tempMap3[x][(y == (QWY - 1)) ? y : (y + 1)] +
+                    (tempMap3[x][y] <<2);
+                terrainDensityMap[x][y] = (unsigned char)(((unsigned)z) >>3);
                 z &= 0x7;
             }
             dir = -dir;
@@ -463,18 +463,18 @@ void Micropolis::SmoothTerrain()
             for (y = 0; y < QWY; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += Qtem[x - 1][y];
+                    z += tempMap3[x - 1][y];
                 }
                 if (x < (QWX - 1)) {
-                    z += Qtem[x + 1][y];
+                    z += tempMap3[x + 1][y];
                 }
                 if (y > 0) {
-                    z += Qtem[x][y - 1];
+                    z += tempMap3[x][y - 1];
                 }
                 if (y < (QWY - 1)) {
-                    z += Qtem[x][y + 1];
+                    z += tempMap3[x][y + 1];
                 }
-                TerrainMem[x][y] = (unsigned char)((z >>2) + Qtem[x][y]) >>1;
+                terrainDensityMap[x][y] = (unsigned char)((z >>2) + tempMap3[x][y]) >>1;
             }
         }
     }
@@ -484,19 +484,19 @@ void Micropolis::SmoothTerrain()
 /* comefrom: PopDenScan */
 void Micropolis::DoSmooth()
 {
-    /* smooths data in tem[x][y] into tem2[x][y]  */
+    /* smooths data in tempMap1[x][y] into tempMap2[x][y]  */
     if (DonDither & 2) {
         register int x, y = 0, z = 0, dir = 1;
 
         for (x = 0; x < HWLDX; x++) {
             for (; y != HWLDY && y != -1; y += dir) {
                 z +=
-                    tem[(x == 0) ? x : (x - 1)][y] +
-                    tem[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
-                    tem[x][(y == 0) ? (0) : (y - 1)] +
-                    tem[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
-                    tem[x][y];
-                tem2[x][y] = (unsigned char)(((unsigned int)z) >>2);
+                    tempMap1[(x == 0) ? x : (x - 1)][y] +
+                    tempMap1[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
+                    tempMap1[x][(y == 0) ? (0) : (y - 1)] +
+                    tempMap1[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
+                    tempMap1[x][y];
+                tempMap2[x][y] = (unsigned char)(((unsigned int)z) >>2);
                 z &= 3;
             }
             dir = -dir;
@@ -509,22 +509,22 @@ void Micropolis::DoSmooth()
             for (y = 0; y < HWLDY; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += tem[x - 1][y];
+                    z += tempMap1[x - 1][y];
                 }
                 if (x < (HWLDX - 1)) {
-                    z += tem[x + 1][y];
+                    z += tempMap1[x + 1][y];
                 }
                 if (y > 0) {
-                    z += tem[x][y - 1];
+                    z += tempMap1[x][y - 1];
                 }
                 if (y < (HWLDY - 1)) {
-                    z += tem[x][y + 1];
+                    z += tempMap1[x][y + 1];
                 }
-                z = (z + tem[x][y]) >>2;
+                z = (z + tempMap1[x][y]) >>2;
                 if (z > 255) {
                     z = 255;
                 }
-                tem2[x][y] = (unsigned char)z;
+                tempMap2[x][y] = (unsigned char)z;
             }
         }
     }
@@ -534,19 +534,19 @@ void Micropolis::DoSmooth()
 /* comefrom: PopDenScan */
 void Micropolis::DoSmooth2()
 {
-    /* smooths data in tem2[x][y] into tem[x][y]  */
+    /* smooths data in tempMap2[x][y] into tempMap1[x][y]  */
     if (DonDither & 4) {
         int x, y = 0, z = 0, dir = 1;
 
         for (x = 0; x < HWLDX; x++) {
             for (; y != HWLDY && y != -1; y += dir) {
                 z +=
-                    tem2[(x == 0) ? x : (x - 1)][y] +
-                    tem2[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
-                    tem2[x][(y == 0) ? (0) : (y - 1)] +
-                    tem2[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
-                    tem2[x][y];
-                tem[x][y] = (unsigned char)(((unsigned char)z) >>2);
+                    tempMap2[(x == 0) ? x : (x - 1)][y] +
+                    tempMap2[(x == (HWLDX - 1)) ? x : (x + 1)][y] +
+                    tempMap2[x][(y == 0) ? (0) : (y - 1)] +
+                    tempMap2[x][(y == (HWLDY - 1)) ? y : (y + 1)] +
+                    tempMap2[x][y];
+                tempMap1[x][y] = (unsigned char)(((unsigned char)z) >>2);
                 z &= 3;
             }
             dir = -dir;
@@ -559,22 +559,22 @@ void Micropolis::DoSmooth2()
             for (y = 0; y < HWLDY; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += tem2[x - 1][y];
+                    z += tempMap2[x - 1][y];
                 }
                 if (x < (HWLDX - 1)) {
-                    z += tem2[x + 1][y];
+                    z += tempMap2[x + 1][y];
                 }
                 if (y > 0) {
-                    z += tem2[x][y - 1];
+                    z += tempMap2[x][y - 1];
                 }
                 if (y < (HWLDY - 1)) {
-                    z += tem2[x][y + 1];
+                    z += tempMap2[x][y + 1];
                 }
-                z = (z + tem2[x][y]) >>2;
+                z = (z + tempMap2[x][y]) >>2;
                 if (z > 255) {
                     z = 255;
                 }
-                tem[x][y] = (unsigned char)z;
+                tempMap1[x][y] = (unsigned char)z;
             }
         }
     }
@@ -588,7 +588,7 @@ void Micropolis::ClrTemArray()
 
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
-            tem[x][y] = (Byte)0;
+            tempMap1[x][y] = (Byte)0;
         }
     }
 }
@@ -603,25 +603,25 @@ void Micropolis::SmoothFSMap()
         for (y = 0; y < SmY; y++) {
             edge = 0;
             if (x > 0) {
-                edge += FireStMap[x - 1][y];
+                edge += fireStationMap[x - 1][y];
             }
             if (x < (SmX - 1)) {
-                edge += FireStMap[x + 1][y];
+                edge += fireStationMap[x + 1][y];
             }
             if (y > 0) {
-                edge += FireStMap[x][y - 1];
+                edge += fireStationMap[x][y - 1];
             }
             if (y < (SmY - 1)) {
-                edge += FireStMap[x][y + 1];
+                edge += fireStationMap[x][y + 1];
             }
-            edge = (edge >>2) + FireStMap[x][y];
-            STem[x][y] = edge >>1;
+            edge = (edge >>2) + fireStationMap[x][y];
+            tempMap4[x][y] = edge >>1;
         }
     }
 
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
-            FireStMap[x][y] = STem[x][y];
+            fireStationMap[x][y] = tempMap4[x][y];
         }
     }
 }
@@ -636,25 +636,25 @@ void Micropolis::SmoothPSMap()
         for (y = 0; y < SmY; y++) {
             edge = 0;
             if (x > 0) {
-                edge += PoliceMap[x - 1][y];
+                edge += policeStationMap[x - 1][y];
             }
             if (x < (SmX - 1)) {
-                edge += PoliceMap[x + 1][y];
+                edge += policeStationMap[x + 1][y];
             }
             if (y> 0) {
-                edge += PoliceMap[x][y - 1];
+                edge += policeStationMap[x][y - 1];
             }
             if (y < (SmY - 1)) {
-                edge += PoliceMap[x][y + 1];
+                edge += policeStationMap[x][y + 1];
             }
-            edge = (edge >>2) + PoliceMap[x][y];
-            STem[x][y] = edge >>1;
+            edge = (edge >>2) + policeStationMap[x][y];
+            tempMap4[x][y] = edge >>1;
         }
     }
 
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
-            PoliceMap[x][y] = STem[x][y];
+            policeStationMap[x][y] = tempMap4[x][y];
         }
     }
 }
@@ -662,7 +662,7 @@ void Micropolis::SmoothPSMap()
 
 /**
  * Compute distance to city center for the entire map.
- * @see ComRate
+ * @see comRateMap
  */
 void Micropolis::DistIntMarket()
 {
@@ -673,7 +673,7 @@ void Micropolis::DistIntMarket()
             z = GetDisCC(x * 4,y * 4); // 0..32
             z = z * 4;  // 0..128
             z = 64 - z; // 64..-64
-            ComRate[x][y] = z;
+            comRateMap[x][y] = z;
         }
     }
 }
