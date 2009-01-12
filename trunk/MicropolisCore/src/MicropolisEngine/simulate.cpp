@@ -371,15 +371,15 @@ void Micropolis::InitSimMemory()
         pollutionHist[x] = 0;
     }
 
-    CrimeRamp = 0;
-    PolluteRamp = 0;
+    crimeRamp = 0;
+    pollutionRamp = 0;
     totalPop = 0;
-    RValve = 0;
-    CValve = 0;
-    IValve = 0;
-    ResCap = 0;
-    ComCap = 0;
-    IndCap = 0;
+    resValve = 0;
+    comValve = 0;
+    indValve = 0;
+    resCap = 0;
+    comCap = 0;
+    indCap = 0;
 
     EMarket = 6.0;
     DisasterEvent = SC_NONE;
@@ -412,11 +412,11 @@ void Micropolis::SimLoadInit()
     resPop = miscHist[2];
     comPop = miscHist[3];
     indPop = miscHist[4];
-    RValve = miscHist[5];
-    CValve = miscHist[6];
-    IValve = miscHist[7];
-    CrimeRamp = miscHist[10];
-    PolluteRamp = miscHist[11];
+    resValve = miscHist[5];
+    comValve = miscHist[6];
+    indValve = miscHist[7];
+    crimeRamp = miscHist[10];
+    pollutionRamp = miscHist[11];
     landValueAverage = miscHist[12];
     crimeAverage = miscHist[13];
     pollutionAverage = miscHist[14];
@@ -449,9 +449,9 @@ void Micropolis::SimLoadInit()
         cityScore = 500;
     }
 
-    ResCap = 0;
-    ComCap = 0;
-    IndCap = 0;
+    resCap = 0;
+    comCap = 0;
+    indCap = 0;
 
     cityTaxAverage = (cityTime % 48) * 7;  /* post */
 
@@ -501,7 +501,7 @@ void Micropolis::SetCommonInits()
 void Micropolis::SetValves()
 {
     /// @todo Break the tax table out into configurable parameters.
-    static const short TaxTable[21] = {
+    static const short taxTable[21] = {
         200, 150, 120, 100, 80, 50, 30, 0, -10, -40, -100,
         -150, -200, -250, -300, -350, -400, -450, -500, -550, -600,
     };
@@ -512,38 +512,38 @@ void Micropolis::SetValves()
 
     /// @todo Make configurable parameters.
     short resPopDenom = 8;
-    float BirthRate = 0.02;
-    float MaxLaborBase = 1.3;
-    float IntMarketDenom = 3.7;
-    float MinPjindPop = 5.0;
-    float DefaultRratio = 1.3;
-    float MaxRratio = 2;
-    float MaxCratio = 2;
-    float MaxIratio = 2;
-    short MaxTax = 20;
-    float TaxTableScale = 600;
-    short MaxRValve = 2000;
-    short MinRValve = -2000;
-    short MaxCValve = 1500;
-    short MinCValve = -1500;
-    short MaxIValve = 1500;
-    short MinIValve = -1500;
+    float birthRate = 0.02;
+    float maxLaborBase = 1.3;
+    float intMarketDenom = 3.7;
+    float projectedIndPopMin = 5.0;
+    float defaultResRatio = 1.3;
+    float resRatioMax = 2;
+    float comRatioMax = 2;
+    float indRatioMax = 2;
+    short taxMax = 20;
+    float taxTableScale = 600;
+    short resValveMax = 2000;
+    short resValveMin = -2000;
+    short comValveMax = 1500;
+    short comValveMin = -1500;
+    short indValveMax = 1500;
+    short indValveMin = -1500;
 
     /// @todo Break the interesting values out into public member
     ///       variables so the user interface can display them.
     float Employment, Migration, Births, LaborBase, IntMarket;
-    float Rratio, Cratio, Iratio;
-    float NormresPop, PjresPop, PjcomPop, PjindPop;
+    float resRatio, comRatio, indRatio;
+    float normResPop, projectedResPop, projectedComPop, projectedIndPop;
 
     miscHist[1] = (short)EMarket;
     miscHist[2] = resPop;
     miscHist[3] = comPop;
     miscHist[4] = indPop;
-    miscHist[5] = RValve;
-    miscHist[6] = CValve;
-    miscHist[7] = IValve;
-    miscHist[10] = CrimeRamp;
-    miscHist[11] = PolluteRamp;
+    miscHist[5] = resValve;
+    miscHist[6] = comValve;
+    miscHist[7] = indValve;
+    miscHist[10] = crimeRamp;
+    miscHist[11] = pollutionRamp;
     miscHist[12] = landValueAverage;
     miscHist[13] = crimeAverage;
     miscHist[14] = pollutionAverage;
@@ -551,19 +551,19 @@ void Micropolis::SetValves()
     miscHist[16] = (short)cityClass;
     miscHist[17] = cityScore;
 
-    NormresPop = (float)resPop / (float)resPopDenom;
+    normResPop = (float)resPop / (float)resPopDenom;
     totalPopLast = totalPop;
-    totalPop = (short)(NormresPop + comPop + indPop);
+    totalPop = (short)(normResPop + comPop + indPop);
 
     if (resPop > 0) {
-        Employment = (comHist[1] + indHist[1]) / NormresPop;
+        Employment = (comHist[1] + indHist[1]) / normResPop;
     } else {
         Employment = 1;
     }
 
-    Migration = NormresPop * (Employment - 1);
-    Births = NormresPop * BirthRate;
-    PjresPop = NormresPop + Migration + Births;   // Projected res pop.
+    Migration = normResPop * (Employment - 1);
+    Births = normResPop * birthRate;
+    projectedResPop = normResPop + Migration + Births;   // Projected res pop.
 
     // Compute LaborBase
     float temp = comHist[1] + indHist[1];
@@ -572,98 +572,98 @@ void Micropolis::SetValves()
     } else {
         LaborBase = 1;
     }
-    LaborBase = clamp(LaborBase, 0.0f, MaxLaborBase);
+    LaborBase = clamp(LaborBase, 0.0f, maxLaborBase);
 
-    IntMarket = (float)(NormresPop + comPop + indPop) / IntMarketDenom;
+    IntMarket = (float)(normResPop + comPop + indPop) / intMarketDenom;
 
-    PjcomPop = IntMarket * LaborBase;
+    projectedComPop = IntMarket * LaborBase;
 
     assert(gameLevel >= LEVEL_FIRST && gameLevel <= LEVEL_LAST);
-    PjindPop = indPop * LaborBase * extMarketParamTable[gameLevel];
-    PjindPop = max(PjindPop, MinPjindPop);
+    projectedIndPop = indPop * LaborBase * extMarketParamTable[gameLevel];
+    projectedIndPop = max(projectedIndPop, projectedIndPopMin);
 
-    if (NormresPop > 0) {
-        Rratio = (float)PjresPop / (float)NormresPop; // Projected -vs- actual.
+    if (normResPop > 0) {
+        resRatio = (float)projectedResPop / (float)normResPop; // projected -vs- actual.
     } else {
-        Rratio = DefaultRratio;
+        resRatio = defaultResRatio;
     }
 
     if (comPop > 0) {
-        Cratio = (float)PjcomPop / (float)comPop;
+        comRatio = (float)projectedComPop / (float)comPop;
     } else {
-        Cratio = (float)PjcomPop;
+        comRatio = (float)projectedComPop;
     }
 
     if (indPop > 0) {
-        Iratio = (float)PjindPop / (float)indPop;
+        indRatio = (float)projectedIndPop / (float)indPop;
     } else {
-        Iratio = (float)PjindPop;
+        indRatio = (float)projectedIndPop;
     }
 
-    Rratio = min(Rratio, MaxRratio);
-    Cratio = min(Cratio, MaxCratio);
-    Rratio = min(Iratio, MaxIratio);
+    resRatio = min(resRatio, resRatioMax);
+    comRatio = min(comRatio, comRatioMax);
+    resRatio = min(indRatio, indRatioMax);
 
     // Global tax and game level effects.
-    short z = min((short)(cityTax + gameLevel), MaxTax);
-    Rratio = (Rratio - 1) * TaxTableScale + TaxTable[z];
-    Cratio = (Cratio - 1) * TaxTableScale + TaxTable[z];
-    Iratio = (Iratio - 1) * TaxTableScale + TaxTable[z];
+    short z = min((short)(cityTax + gameLevel), taxMax);
+    resRatio = (resRatio - 1) * taxTableScale + taxTable[z];
+    comRatio = (comRatio - 1) * taxTableScale + taxTable[z];
+    indRatio = (indRatio - 1) * taxTableScale + taxTable[z];
 
     // Ratios are velocity changes to valves.
-    if (Rratio > 0) {
-        if (RValve < MaxRValve) {
-            RValve += (short)Rratio;
+    if (resRatio > 0) {
+        if (resValve < resValveMax) {
+            resValve += (short)resRatio;
         }
     }
 
-    if (Rratio < 0) {
-        if (RValve > MinRValve) {
-            RValve += (short)Rratio; // Adding a negative number
+    if (resRatio < 0) {
+        if (resValve > resValveMin) {
+            resValve += (short)resRatio; // Adding a negative number
         }
     }
 
-    if (Cratio > 0) {
-        if (CValve <  MaxCValve) {
-            CValve += (short)Cratio;
+    if (comRatio > 0) {
+        if (comValve <  comValveMax) {
+            comValve += (short)comRatio;
         }
     }
 
-    if (Cratio < 0) {
-        if (CValve > MinCValve) {
-            CValve += (short)Cratio; // Adding a negative number
+    if (comRatio < 0) {
+        if (comValve > comValveMin) {
+            comValve += (short)comRatio; // Adding a negative number
         }
     }
 
-    if (Iratio > 0) {
-        if (IValve <  MaxIValve) {
-            IValve += (short)Iratio;
+    if (indRatio > 0) {
+        if (indValve <  indValveMax) {
+            indValve += (short)indRatio;
         }
     }
 
-    if (Iratio < 0) {
-        if (IValve > MinIValve) {
-            IValve += (short)Iratio; // Adding a negative number
+    if (indRatio < 0) {
+        if (indValve > indValveMin) {
+            indValve += (short)indRatio; // Adding a negative number
         }
     }
 
-    RValve = clamp(RValve, MinRValve, MaxRValve);
-    CValve = clamp(CValve, MinCValve, MaxCValve);
-    IValve = clamp(IValve, MinIValve, MaxIValve);
+    resValve = clamp(resValve, resValveMin, resValveMax);
+    comValve = clamp(comValve, comValveMin, comValveMax);
+    indValve = clamp(indValve, indValveMin, indValveMax);
 
-    if (ResCap && (RValve > 0)) {
-        RValve = 0; // Need a stadium, so cap RValve.
+    if (resCap && (resValve > 0)) {
+        resValve = 0; // Need a stadium, so cap resValve.
     }
 
-    if (ComCap && (CValve > 0)) {
-        CValve = 0; // Need a airport, so cap CValve.
+    if (comCap && (comValve > 0)) {
+        comValve = 0; // Need a airport, so cap comValve.
     }
 
-    if (IndCap && (IValve > 0)) {
-        IValve = 0; // Need an seaport, so cap IValve.
+    if (indCap && (indValve > 0)) {
+        indValve = 0; // Need an seaport, so cap indValve.
     }
 
-    ValveFlag = 1;
+    valveFlag = 1;
 }
 
 
@@ -740,11 +740,11 @@ void Micropolis::TakeCensus()
     comHist[0] = comPop;
     indHist[0] = indPop;
 
-    CrimeRamp += (crimeAverage - CrimeRamp) / 4;
-    crimeHist[0] = min(CrimeRamp, (short)255);
+    crimeRamp += (crimeAverage - crimeRamp) / 4;
+    crimeHist[0] = min(crimeRamp, (short)255);
 
-    PolluteRamp += (pollutionAverage - PolluteRamp) / 4;
-    pollutionHist[0] = min(PolluteRamp, (short)255);
+    pollutionRamp += (pollutionAverage - pollutionRamp) / 4;
+    pollutionHist[0] = min(pollutionRamp, (short)255);
 
     x = (CashFlow / 20) + 128;    /* scale to 0..255  */
     moneyHist[0] = clamp(x, (short)0, (short)255);

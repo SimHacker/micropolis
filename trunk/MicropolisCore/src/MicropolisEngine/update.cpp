@@ -108,7 +108,7 @@ void Micropolis::UpdateEvaluation()
 
 void Micropolis::UpdateHeads()
 {
-    MustUpdateFunds = ValveFlag = 1;
+    MustUpdateFunds = valveFlag = 1;
     cityTimeLast = cityYearLast = cityMonthLast = LastFunds = LastR = -999999;
     DoUpdateHeads();
 }
@@ -182,9 +182,9 @@ void Micropolis::updateDate()
 
 void Micropolis::showValves()
 {
-    if (ValveFlag) {
+    if (valveFlag) {
         drawValve();
-        ValveFlag = 0;
+        valveFlag = 0;
     }
 }
 
@@ -193,7 +193,7 @@ void Micropolis::drawValve()
 {
     float r, c, i;
 
-    r = RValve;
+    r = resValve;
 
     if (r < -1500) {
         r = -1500;
@@ -203,7 +203,7 @@ void Micropolis::drawValve()
         r = 1500;
     }
 
-    c = CValve;
+    c = comValve;
 
     if (c < -1500) {
         c = -1500;
@@ -213,7 +213,7 @@ void Micropolis::drawValve()
         c = 1500;
     }
 
-    i = IValve;
+    i = indValve;
 
     if (i < -1500) {
         i = -1500;

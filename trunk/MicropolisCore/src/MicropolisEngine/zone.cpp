@@ -226,7 +226,7 @@ void Micropolis::DoIndustrial(int ZonePwrFlg)
     }
 
     if (!(getRandom16() & 7)) {
-        zscore = IValve + EvalInd(TrfGood);
+        zscore = indValve + EvalInd(TrfGood);
 
         if (!ZonePwrFlg) {
             zscore = -500;
@@ -251,7 +251,7 @@ void Micropolis::DoIndustrial(int ZonePwrFlg)
 void Micropolis::DoCommercial(int ZonePwrFlg)
 {
     short tpop, TrfGood;
-    short zscore, locvalve,value;
+    short zscore, locvalve, value;
 
     comZonePop++;
     tpop = getComZonePop(curTile);
@@ -273,7 +273,7 @@ void Micropolis::DoCommercial(int ZonePwrFlg)
     if (!(getRandom16() & 7)) {
 
         locvalve = EvalCom(TrfGood);
-        zscore = CValve + locvalve;
+        zscore = comValve + locvalve;
 
         if (!ZonePwrFlg) {
             zscore = -500;
@@ -328,7 +328,7 @@ void Micropolis::DoResidential(int ZonePwrFlg)
     if ((curTile == FREEZ) || (!(getRandom16() & 7))) {
 
         locvalve = EvalRes(TrfGood);
-        zscore = RValve + locvalve;
+        zscore = resValve + locvalve;
 
         if (!ZonePwrFlg) {
             zscore = -500;
