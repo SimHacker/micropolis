@@ -134,7 +134,7 @@ void Micropolis::DoDisasters()
             case 7:
             case 8:
                 // 2/9 chance a scary monster arrives in a dirty town
-                if (PolluteAverage > /* 80 */ 60) {
+                if (pollutionAverage > /* 80 */ 60) {
                     MakeMonster();
                 }
                 break;
@@ -207,7 +207,7 @@ void Micropolis::MakeMeltdown()
 
     for (x = 0; x < (WORLD_X - 1); x++) {
         for (y = 0; y < (WORLD_Y - 1); y++) {
-            if ((Map[x][y] & LOMASK) == NUCLEAR) {
+            if ((map[x][y] & LOMASK) == NUCLEAR) {
                 DoMeltdown(x, y);
                 return;
             }
@@ -241,13 +241,13 @@ void Micropolis::MakeEarthquake()
         x = Rand(WORLD_X - 1);
         y = Rand(WORLD_Y - 1);
 
-        if (Vulnerable(Map[x][y])) {
+        if (Vulnerable(map[x][y])) {
 
             if ((z & 0x3) != 0) { // 3 of 4 times reduce to rubble
-                Map[x][y] = RandomRubble();
+                map[x][y] = RandomRubble();
             } else {
                 // 1 of 4 times start fire
-                Map[x][y] = RandomFire();
+                map[x][y] = RandomFire();
             }
         }
     }
@@ -261,13 +261,13 @@ void Micropolis::SetFire()
 
     x = Rand(WORLD_X - 1);
     y = Rand(WORLD_Y - 1);
-    z = Map[x][y];
+    z = map[x][y];
 
     /* TILE_IS_ARSONABLE(z) */
     if ((z & ZONEBIT) == 0) {
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
-            Map[x][y] = RandomFire();
+            map[x][y] = RandomFire();
             CrashX = x;
             CrashY = y;
             SendMesAt(-STR301_FIRE_REPORTED, x, y);
@@ -284,12 +284,12 @@ void Micropolis::MakeFire()
     for (t = 0; t < 40; t++)  {
         x = Rand(WORLD_X - 1);
         y = Rand(WORLD_Y - 1);
-        z = Map[x][y];
+        z = map[x][y];
 
         if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
-                Map[x][y] = RandomFire();
+                map[x][y] = RandomFire();
                 SendMesAt(STR301_FIRE_REPORTED, x, y);
                 return;
             }
@@ -329,19 +329,19 @@ void Micropolis::MakeFlood()
     for (z = 0; z < 300; z++) {
         x = Rand(WORLD_X - 1);
         y = Rand(WORLD_Y - 1);
-        c = Map[x][y] & LOMASK;
+        c = map[x][y] & LOMASK;
 
         if (c > CHANNEL && c <= WATER_HIGH) { /* if riveredge  */
             for (t = 0; t < 4; t++) {
                 xx = x + Dx[t];
                 yy = y + Dy[t];
                 if (TestBounds(xx, yy)) {
-                    c = Map[xx][yy];
+                    c = map[xx][yy];
 
                     /* tile is floodable */
                     if (c == DIRT
                           || (c & (BULLBIT | BURNBIT)) == (BULLBIT | BURNBIT)) {
-                        Map[xx][yy] = FLOOD;
+                        map[xx][yy] = FLOOD;
                         FloodCnt = 30;
                         SendMesAt(-STR301_FLOODING_REPORTED, xx, yy);
                         return;
@@ -354,7 +354,7 @@ void Micropolis::MakeFlood()
 
 
 /**
- * Flood around the (SMapX, SMapY) tile
+ * Flood around the (curMapX, curMapY) tile
  * @todo Use Direction and some form of XYPosition class here
  */
 void Micropolis::DoFlood()
@@ -367,10 +367,10 @@ void Micropolis::DoFlood()
         // Flood is not over yet
         for (z = 0; z < 4; z++) {
             if ((Rand16() & 7) == 0) { // 12.5% chance
-                xx = SMapX + Dx[z];
-                yy = SMapY + Dy[z];
+                xx = curMapX + Dx[z];
+                yy = curMapY + Dy[z];
                 if (TestBounds(xx, yy)) {
-                    c = Map[xx][yy];
+                    c = map[xx][yy];
                     t = c & LOMASK;
 
                     /* TILE_IS_FLOODABLE2(c) */
@@ -379,14 +379,14 @@ void Micropolis::DoFlood()
                         if ((c & ZONEBIT) == ZONEBIT) {
                             FireZone(xx, yy, c);
                         }
-                        Map[xx][yy] = FLOOD + Rand(2);
+                        map[xx][yy] = FLOOD + Rand(2);
                     }
                 }
             }
          }
     } else {
         if ((Rand16() & 15) == 0) { // 1/16 chance
-            Map[SMapX][SMapY] = DIRT;
+            map[curMapX][curMapY] = DIRT;
         }
     }
 }

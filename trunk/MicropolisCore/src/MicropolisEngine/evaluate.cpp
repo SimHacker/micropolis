@@ -98,7 +98,7 @@
  */
 void Micropolis::CityEvaluation()
 {
-    if (TotalPop > 0) {
+    if (totalPop > 0) {
         getAssValue();
         DoPopNum();
         DoProblems();
@@ -142,16 +142,16 @@ void Micropolis::getAssValue()
 {
     Quad z;
 
-    z = RoadTotal * 5;
-    z += RailTotal * 10;
-    z += PolicePop * 1000;
-    z += FireStPop * 1000;
-    z += HospPop * 400;
-    z += StadiumPop * 3000;
-    z += PortPop * 5000;
-    z += APortPop * 10000;
-    z += CoalPop * 3000;
-    z += NuclearPop * 6000;
+    z = roadTotal * 5;
+    z += railTotal * 10;
+    z += policeStationPop * 1000;
+    z += fireStationPop * 1000;
+    z += hospitalPop * 400;
+    z += stadiumPop * 3000;
+    z += seaportPop * 5000;
+    z += airportPop * 10000;
+    z += coalPowerPop * 3000;
+    z += nuclearPowerPop * 6000;
 
     cityAssValue = z * 1000;
 }
@@ -166,7 +166,7 @@ void Micropolis::DoPopNum()
 {
     Quad oldCityPop = cityPop;
 
-    cityPop = (ResPop + (ComPop + IndPop) * 8L) * 20L;
+    cityPop = (resPop + (comPop + indPop) * 8L) * 20L;
 
     if (oldCityPop == -1) {
         oldCityPop = cityPop;
@@ -210,13 +210,13 @@ void Micropolis::DoProblems()
         problemTable[z] = 0;
     }
 
-    problemTable[CVP_CRIME]        = CrimeAverage;          /* Crime */
-    problemTable[CVP_POLLUTION]    = PolluteAverage;        /* Pollution */
-    problemTable[CVP_HOUSING]      = LVAverage * 7 / 10;    /* Housing */
-    problemTable[CVP_TAXES]        = CityTax * 10;          /* Taxes */
-    problemTable[CVP_TRAFFIC]      = AverageTrf();          /* Traffic */
-    problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();     /* Unemployment */
-    problemTable[CVP_FIRE]         = GetFire();             /* Fire */
+    problemTable[CVP_CRIME]        = crimeAverage;                /* Crime */
+    problemTable[CVP_POLLUTION]    = pollutionAverage;            /* Pollution */
+    problemTable[CVP_HOUSING]      = landValueAverage * 7 / 10;   /* Housing */
+    problemTable[CVP_TAXES]        = cityTax * 10;                /* Taxes */
+    problemTable[CVP_TRAFFIC]      = AverageTrf();                /* Traffic */
+    problemTable[CVP_UNEMPLOYMENT] = GetUnemployment();           /* Unemployment */
+    problemTable[CVP_FIRE]         = GetFire();                   /* Fire */
     voteProblems();
 
     for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
@@ -276,21 +276,21 @@ void Micropolis::voteProblems()
  */
 short Micropolis::AverageTrf()
 {
-    Quad TrfTotal;
+    Quad trafficTotal;
     short x, y, count;
 
-    TrfTotal = 0;
+    trafficTotal = 0;
     count = 1;
     for (x=0; x < HWLDX; x++) {
         for (y=0; y < HWLDY; y++) {
-            if (LandValueMem[x][y]) {
-                TrfTotal += TrfDensity[x][y];
+            if (landValueMap[x][y]) {
+                trafficTotal += trafficDensityMap[x][y];
                 count++;
             }
         }
     }
 
-    trafficAverage = (short)((TrfTotal / count) * 2.4);
+    trafficAverage = (short)((trafficTotal / count) * 2.4);
 
     return trafficAverage;
 }
@@ -302,14 +302,14 @@ short Micropolis::AverageTrf()
  */
 short Micropolis::GetUnemployment()
 {
-    short b = (ComPop + IndPop) * 8;
+    short b = (comPop + indPop) * 8;
 
     if (b == 0) {
         return 0;
     }
 
     // Ratio total people / working. At least 1.
-    float r = ((float)ResPop) / b;
+    float r = ((float)resPop) / b;
 
     b = (short)((r - 1) * 255); // (r - 1) is the fraction unemployed people
     return min(b, (short)255);
@@ -322,7 +322,7 @@ short Micropolis::GetUnemployment()
  */
 short Micropolis::GetFire()
 {
-    return min(FirePop * 5, 255);
+    return min(firePop * 5, 255);
 }
 
 
@@ -361,18 +361,18 @@ void Micropolis::GetScore()
         z = (int)(z * .85);
     }
 
-    if (RoadEffect < MAX_ROAD_EFFECT)  {
-        z -= MAX_ROAD_EFFECT - RoadEffect;
+    if (roadEffect < MAX_ROAD_EFFECT)  {
+        z -= MAX_ROAD_EFFECT - roadEffect;
     }
 
-    if (PoliceEffect < MAX_POLICESTATION_EFFECT) {
+    if (policeEffect < MAX_POLICESTATION_EFFECT) {
         // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-        z = (int)(z * (0.9 + (PoliceEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
+        z = (int)(z * (0.9 + (policeEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
     }
 
-    if (FireEffect < MAX_FIRESTATION_EFFECT) {
+    if (fireEffect < MAX_FIRESTATION_EFFECT) {
         // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-        z = (int)(z * (0.9 + (FireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
+        z = (int)(z * (0.9 + (fireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
     }
 
     if (RValve < -1000) {
@@ -402,7 +402,7 @@ void Micropolis::GetScore()
     }
 
     z = (int)(z * SM);
-    z = z - GetFire() - CityTax; // dec score for fires and taxes
+    z = z - GetFire() - cityTax; // dec score for fires and taxes
 
     float TM = unPwrdZCnt + PwrdZCnt;   // dec score for unpowered zones
     if (TM > 0.0) {

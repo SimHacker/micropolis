@@ -80,49 +80,49 @@ void Micropolis::InitWillStuff()
     InitGraphMax();
     DestroyAllSprites();
 
-    RoadEffect = MAX_ROAD_EFFECT;
-    PoliceEffect = MAX_POLICESTATION_EFFECT;
-    FireEffect = MAX_FIRESTATION_EFFECT;
+    roadEffect = MAX_ROAD_EFFECT;
+    policeEffect = MAX_POLICESTATION_EFFECT;
+    fireEffect = MAX_FIRESTATION_EFFECT;
     cityScore = 500;
     cityPop = -1;
-    LastCityTime = -1;
-    LastCityYear = -1;
-    LastCityMonth = -1;
+    cityTimeLast = -1;
+    cityYearLast = -1;
+    cityMonthLast = -1;
     LastFunds = -1;
     LastR = LastC = LastI = -999999;
     MesNum = 0;
     messagePort = 0;
-    RoadFund = 0;
-    PoliceFund = 0;
-    FireFund = 0;
+    roadFund = 0;
+    policeFund = 0;
+    fireFund = 0;
     ValveFlag = 1;
     DisasterEvent = SC_NONE;
-    TaxFlag = 0;
+    taxFlag = false;
 
     for (x = 0; x < HWLDX; x++) {
         for (y = 0; y < HWLDY; y++) {
-            PopDensity[x][y] = 0;
-            TrfDensity[x][y] = 0;
-            PollutionMem[x][y] = 0;
-            LandValueMem[x][y] = 0;
-            CrimeMem[x][y] = 0;
+            populationDensityMap[x][y] = 0;
+            trafficDensityMap[x][y] = 0;
+            pollutionMap[x][y] = 0;
+            landValueMap[x][y] = 0;
+            crimeMap[x][y] = 0;
         }
     }
 
     for (x = 0; x < QWX; x++) {
         for (y = 0; y < QWY; y++) {
-            TerrainMem[x][y] = 0;
+            terrainDensityMap[x][y] = 0;
         }
     }
 
     for (x = 0; x < SmX; x++) {
         for (y = 0; y < SmY; y++) {
-            RateOGMem[x][y] = 0;
-            FireRate[x][y] = 0;
-            ComRate[x][y] = 0;
-            PoliceMap[x][y] = 0;
-            PoliceMapEffect[x][y] = 0;
-            FireRate[x][y] = 0;
+            rateOfGrowthMap[x][y] = 0;
+            comRateMap[x][y] = 0;
+            policeStationMap[x][y] = 0;
+            policeStationMapEffect[x][y] = 0;
+            fireStationMap[x][y] = 0;
+            fireStationMapEffect[x][y] = 0;
         }
     }
 

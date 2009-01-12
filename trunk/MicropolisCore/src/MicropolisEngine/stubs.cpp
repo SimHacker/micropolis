@@ -296,7 +296,7 @@ int Micropolis::getTile(int x, int y)
         return DIRT;
     }
 
-    return Map[x][y];
+    return map[x][y];
 }
 
 
@@ -310,7 +310,7 @@ int Micropolis::getTile(int x, int y)
  */
 void *Micropolis::getMapBuffer()
 {
-    return (void *)mapPtr;
+    return (void *)mapBase;
 }
 
 

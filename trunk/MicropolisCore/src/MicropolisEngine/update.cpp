@@ -109,7 +109,7 @@ void Micropolis::UpdateEvaluation()
 void Micropolis::UpdateHeads()
 {
     MustUpdateFunds = ValveFlag = 1;
-    LastCityTime = LastCityYear = LastCityMonth = LastFunds = LastR = -999999;
+    cityTimeLast = cityYearLast = cityMonthLast = LastFunds = LastR = -999999;
     DoUpdateHeads();
 }
 
@@ -153,24 +153,24 @@ void Micropolis::updateDate()
 {
     int megalinium = 1000000;
 
-    LastCityTime = CityTime >> 2;
+    cityTimeLast = cityTime >> 2;
 
-    CityYear = ((int)CityTime / 48) + (int)StartingYear;
-    CityMonth = ((int)CityTime % 48) >> 2;
+    cityYear = ((int)cityTime / 48) + (int)startingYear;
+    cityMonth = ((int)cityTime % 48) >> 2;
 
-    if (CityYear >= megalinium) {
-        SetYear(StartingYear);
-        CityYear = StartingYear;
+    if (cityYear >= megalinium) {
+        SetYear(startingYear);
+        cityYear = startingYear;
         SendMes(-STR301_NOT_ENOUGH_POWER);
     }
 
     doMessage();
 
-    if ((LastCityYear != CityYear) ||
-        (LastCityMonth != CityMonth)) {
+    if ((cityYearLast != cityYear) ||
+        (cityMonthLast != cityMonth)) {
 
-        LastCityYear = CityYear;
-        LastCityMonth = CityMonth;
+        cityYearLast = cityYear;
+        cityMonthLast = cityMonth;
 
         Callback(
             "UIUpdate",

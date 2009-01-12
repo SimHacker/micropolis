@@ -412,7 +412,7 @@ short Micropolis::GetChar(int x, int y)
     if (!TestBounds(x, y)) {
         return -1;
     } else {
-        return Map[x][y] & LOMASK;
+        return map[x][y] & LOMASK;
     }
 }
 
@@ -797,7 +797,7 @@ void Micropolis::DoCopterSprite(
 
             int chopperX = (x <<1) + 1;
             int chopperY = (y <<1) + 1;
-            if ((TrfDensity[x][y] > 170) && ((Rand16() & 7) == 0)) {
+            if ((trafficDensityMap[x][y] > 170) && ((Rand16() & 7) == 0)) {
                 SendMesAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
                 MakeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
                 sprite->soundCount = 200;
@@ -954,7 +954,7 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
             if (TestBounds(x, y)) {
 
-                t = Map[x][y] & LOMASK;
+                t = map[x][y] & LOMASK;
 
                 if (t == CHANNEL || t == BRWH || t == BRWV
                                                     || TryOther(t, sprite->dir, z)) {
@@ -1412,7 +1412,7 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
 
         if (tx >= 0 && tx < (WORLD_X >>1) && ty >= 0 && ty < (WORLD_Y >>1)) {
 
-            z = TrfDensity[tx][ty] >>6;
+            z = trafficDensityMap[tx][ty] >>6;
 
             if (z > 1) {
               z--;
@@ -1639,7 +1639,7 @@ int Micropolis::CanDriveOn(int x, int y)
         return 0;
     }
 
-    tile = Map[x][y] & LOMASK;
+    tile = map[x][y] & LOMASK;
 
     if ((tile >= ROADBASE && tile <= LASTROAD && tile != BRWH && tile != BRWV)
               || tile == HRAILROAD || tile == VRAILROAD) {
@@ -1740,7 +1740,7 @@ void Micropolis::Destroy(int ox, int oy)
         return;
     }
 
-    z = Map[x][y];
+    z = map[x][y];
     t = z & LOMASK;
 
     if (t >= TREEBASE) {
@@ -1748,7 +1748,7 @@ void Micropolis::Destroy(int ox, int oy)
         if (!(z & BURNBIT)) {
 
           if (t >= ROADBASE && t <= LASTROAD) {
-              Map[x][y] = RIVER;
+              map[x][y] = RIVER;
           }
 
           return;
@@ -1765,9 +1765,9 @@ void Micropolis::Destroy(int ox, int oy)
         }
 
         if (checkWet(t)) {
-            Map[x][y] = RIVER;
+            map[x][y] = RIVER;
         } else {
-            Map[x][y] = (DoAnimation ? TINYEXP : (LASTTINYEXP - 3))
+            map[x][y] = (DoAnimation ? TINYEXP : (LASTTINYEXP - 3))
                       | BULLBIT | ANIMBIT;
         }
     }
@@ -1785,7 +1785,7 @@ void Micropolis::OFireZone(int Xloc, int Yloc, int ch)
     short Xtem, Ytem;
     short x, y, XYmax;
 
-    RateOGMem[Xloc >>3][Yloc >>3] -= 20;
+    rateOfGrowthMap[Xloc >>3][Yloc >>3] -= 20;
 
     ch &= LOMASK;
 
@@ -1805,8 +1805,8 @@ void Micropolis::OFireZone(int Xloc, int Yloc, int ch)
             Xtem = Xloc + x;
             Ytem = Yloc + y;
 
-            if (TestBounds(Xtem, Ytem) && (Map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
-                Map[Xtem][Ytem] |= BULLBIT;
+            if (TestBounds(Xtem, Ytem) && (map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
+                map[Xtem][Ytem] |= BULLBIT;
             }
 
         }
@@ -1830,7 +1830,7 @@ void Micropolis::StartFire(int x, int y)
         return;
     }
 
-    z = Map[x][y];
+    z = map[x][y];
     t = z & LOMASK;
 
     if (!(z & BURNBIT) && t != DIRT) {
@@ -1841,7 +1841,7 @@ void Micropolis::StartFire(int x, int y)
         return;
     }
 
-    Map[x][y] = RandomFire();
+    map[x][y] = RandomFire();
 }
 
 
@@ -1852,7 +1852,7 @@ void Micropolis::StartFire(int x, int y)
  */
 void Micropolis::GenerateTrain(int x, int y)
 {
-    if (TotalPop > 20 && GetSprite(SPRITE_TRAIN) == NULL && Rand(25) == 0) {
+    if (totalPop > 20 && GetSprite(SPRITE_TRAIN) == NULL && Rand(25) == 0) {
         MakeSprite(SPRITE_TRAIN, (x <<4) + TRA_GROOVE_X, (y <<4) + TRA_GROOVE_Y);
     }
 }
@@ -1878,7 +1878,7 @@ void Micropolis::GenerateShip()
 
     if (!(Rand16() & 3)) {
         for (x = 4; x < WORLD_X - 2; x++) {
-            if (Map[x][0] == CHANNEL)  {
+            if (map[x][0] == CHANNEL)  {
                 MakeShipHere(x, 0);
                 return;
             }
@@ -1887,7 +1887,7 @@ void Micropolis::GenerateShip()
 
     if (!(Rand16() & 3)) {
         for (y = 1; y < WORLD_Y - 2; y++) {
-            if (Map[0][y] == CHANNEL)  {
+            if (map[0][y] == CHANNEL)  {
                 MakeShipHere(0, y);
                 return;
             }
@@ -1896,7 +1896,7 @@ void Micropolis::GenerateShip()
 
     if (!(Rand16() & 3)) {
         for (x = 4; x < WORLD_X - 2; x++) {
-            if (Map[x][WORLD_Y - 1] == CHANNEL)  {
+            if (map[x][WORLD_Y - 1] == CHANNEL)  {
                 MakeShipHere(x, WORLD_Y - 1);
                 return;
             }
@@ -1905,7 +1905,7 @@ void Micropolis::GenerateShip()
 
     if (!(Rand16() & 3)) {
         for (y = 1; y < WORLD_Y - 2; y++) {
-            if (Map[WORLD_X - 1][y] == CHANNEL)  {
+            if (map[WORLD_X - 1][y] == CHANNEL)  {
                 MakeShipHere(WORLD_X - 1, y);
                 return;
             }
@@ -1948,7 +1948,7 @@ void Micropolis::MakeMonster()
         x = Rand(WORLD_X - 20) + 10;
         y = Rand(WORLD_Y - 10) + 5;
 
-        if (Map[x][y] == RIVER || Map[x][y] == RIVER + BULLBIT) {
+        if (map[x][y] == RIVER || map[x][y] == RIVER + BULLBIT) {
             MonsterHere(x, y);
             done = 1;
             break;

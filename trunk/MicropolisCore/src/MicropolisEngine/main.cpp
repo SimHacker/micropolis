@@ -135,11 +135,11 @@ void Micropolis::sim_init()
     MustUpdateOptions = 1;
     HaveLastMessage = false; // No message seen yet
     ScenarioID = SC_NONE;
-    StartingYear = 1900;
+    startingYear = 1900;
     sim_skips = sim_skip = 0;
     autoGo = true;  // Enable auto-goto
-    CityTax = 7;
-    CityTime = 50;
+    cityTax = 7;
+    cityTime = 50;
     NoDisasters = false; // Enable disasters
     autoBulldoze = true; // Enable auto bulldoze
     autoBudget   = true; // Enable auto-budget
@@ -149,8 +149,8 @@ void Micropolis::sim_init()
     SimSpeed = 3;
     ChangeEval();
     messagePort = 0;
-    mesX = -1;
-    mesY = -1;
+    messageX = -1;
+    messageY = -1;
     sim_paused = false; // Simumaltion is running
     sim_loops = 0;
     InitSimLoad = 2;
@@ -194,7 +194,7 @@ void Micropolis::sim_heat()
 
     if (CellSrc == NULL) {
         CellSrc = (short *)NewPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
-        CellDst = &Map[0][0];
+        CellDst = &map[0][0];
     }
 
     src = CellSrc + SRCCOL + 1;

@@ -176,14 +176,14 @@ bool Micropolis::load_file(const char *filename, const char *dir)
 
     result =
       (size == 27120) &&
-      load_short(ResHis, HISTLEN / sizeof(short), f) &&
-      load_short(ComHis, HISTLEN / sizeof(short), f) &&
-      load_short(IndHis, HISTLEN / sizeof(short), f) &&
-      load_short(CrimeHis, HISTLEN / sizeof(short), f) &&
-      load_short(PollutionHis, HISTLEN / sizeof(short), f) &&
-      load_short(MoneyHis, HISTLEN / sizeof(short), f) &&
-      load_short(MiscHis, MISCHISTLEN / sizeof(short), f) &&
-      load_short((&Map[0][0]), WORLD_X * WORLD_Y, f);
+      load_short(resHist, HISTLEN / sizeof(short), f) &&
+      load_short(comHist, HISTLEN / sizeof(short), f) &&
+      load_short(indHist, HISTLEN / sizeof(short), f) &&
+      load_short(crimeHist, HISTLEN / sizeof(short), f) &&
+      load_short(pollutionHist, HISTLEN / sizeof(short), f) &&
+      load_short(moneyHist, HISTLEN / sizeof(short), f) &&
+      load_short(miscHist, MISCHISTLEN / sizeof(short), f) &&
+      load_short((&map[0][0]), WORLD_X * WORLD_Y, f);
 
     fclose(f);
 
@@ -204,57 +204,57 @@ bool Micropolis::loadFile(const char *filename)
         return false;
     }
 
-    /* total funds is a long.....    MiscHis is array of shorts */
-    /* total funds is being put in the 50th & 51th word of MiscHis */
+    /* total funds is a long.....    miscHist is array of shorts */
+    /* total funds is being put in the 50th & 51th word of miscHist */
     /* find the address, cast the ptr to a longPtr, take contents */
 
-    n = *(Quad *)(MiscHis + 50);
+    n = *(Quad *)(miscHist + 50);
     HALF_SWAP_LONGS(&n, 1);
     SetFunds(n);
 
-    n = *(Quad *)(MiscHis + 8);
+    n = *(Quad *)(miscHist + 8);
     HALF_SWAP_LONGS(&n, 1);
-    CityTime = n;
+    cityTime = n;
 
-    autoBulldoze = (MiscHis[52] != 0);   // flag for autoBulldoze
-    autoBudget   = (MiscHis[53] != 0);   // flag for autoBudget
-    autoGo       = (MiscHis[54] != 0);   // flag for auto-goto
-    UserSoundOn  = (MiscHis[55] != 0);   // flag for the sound on/off
-    CityTax = MiscHis[56];
-    SimSpeed = MiscHis[57];
+    autoBulldoze = (miscHist[52] != 0);   // flag for autoBulldoze
+    autoBudget   = (miscHist[53] != 0);   // flag for autoBudget
+    autoGo       = (miscHist[54] != 0);   // flag for auto-goto
+    UserSoundOn  = (miscHist[55] != 0);   // flag for the sound on/off
+    cityTax = miscHist[56];
+    SimSpeed = miscHist[57];
     ChangeCensus();
     MustUpdateOptions = 1;
 
     /* yayaya */
 
-    n = *(Quad *)(MiscHis + 58);
+    n = *(Quad *)(miscHist + 58);
     HALF_SWAP_LONGS(&n, 1);
     policePercent = ((float)n) / ((float)65536);
 
-    n = *(Quad *)(MiscHis + 60);
+    n = *(Quad *)(miscHist + 60);
     HALF_SWAP_LONGS(&n, 1);
     firePercent = (float)n / (float)65536.0;
 
-    n = *(Quad *)(MiscHis + 62);
+    n = *(Quad *)(miscHist + 62);
     HALF_SWAP_LONGS(&n, 1);
     roadPercent = (float)n / (float)65536.0;
 
     policePercent =
-        (float)(*(Quad*)(MiscHis + 58)) /
+        (float)(*(Quad*)(miscHist + 58)) /
         (float)65536.0;   /* and 59 */
     firePercent =
-        (float)(*(Quad*)(MiscHis + 60)) /
+        (float)(*(Quad*)(miscHist + 60)) /
         (float)65536.0;   /* and 61 */
     roadPercent =
-        (float)(*(Quad*)(MiscHis + 62)) /
+        (float)(*(Quad*)(miscHist + 62)) /
         (float)65536.0;   /* and 63 */
 
-    CityTime = max((Quad)0, CityTime);
+    cityTime = max((Quad)0, cityTime);
 
     // If the tax is nonsensical, set it to a reasonable value.
-    if ((CityTax > 20) ||
-        (CityTax < 0)) {
-        CityTax = 7;
+    if ((cityTax > 20) ||
+        (cityTax < 0)) {
+        cityTax = 7;
     }
 
     // If the speed is nonsensical, set it to a reasonable value.
@@ -271,7 +271,7 @@ bool Micropolis::loadFile(const char *filename)
     InitWillStuff();
     ScenarioID = SC_NONE;
     InitSimLoad = 1;
-    DoInitialEval = false;
+    doInitialEval = false;
     DoSimInit();
     InvalidateEditors();
     InvalidateMaps();
@@ -295,48 +295,48 @@ bool Micropolis::saveFile(const char *filename)
         return false;
     }
 
-    /* total funds is a long.....    MiscHis is array of ints */
-    /* total funds is bien put in the 50th & 51th word of MiscHis */
+    /* total funds is a long.....    miscHist is array of ints */
+    /* total funds is bien put in the 50th & 51th word of miscHist */
     /* find the address, cast the ptr to a longPtr, take contents */
 
     n = TotalFunds;
     HALF_SWAP_LONGS(&n, 1);
-    (*(Quad *)(MiscHis + 50)) = n;
+    (*(Quad *)(miscHist + 50)) = n;
 
-    n = CityTime;
+    n = cityTime;
     HALF_SWAP_LONGS(&n, 1);
-    (*(Quad *)(MiscHis + 8)) = n;
+    (*(Quad *)(miscHist + 8)) = n;
 
-    MiscHis[52] = autoBulldoze;   // flag for autoBulldoze
-    MiscHis[53] = autoBudget;     // flag for autoBudget
-    MiscHis[54] = autoGo;         // flag for auto-goto
-    MiscHis[55] = UserSoundOn;    // flag for the sound on/off
-    MiscHis[57] = SimSpeed;
-    MiscHis[56] = CityTax;        /* post release */
+    miscHist[52] = autoBulldoze;   // flag for autoBulldoze
+    miscHist[53] = autoBudget;     // flag for autoBudget
+    miscHist[54] = autoGo;         // flag for auto-goto
+    miscHist[55] = UserSoundOn;    // flag for the sound on/off
+    miscHist[57] = SimSpeed;
+    miscHist[56] = cityTax;        /* post release */
 
     /* yayaya */
 
     n = (int)(policePercent * 65536);
     HALF_SWAP_LONGS(&n, 1);
-    (*(Quad *)(MiscHis + 58)) = n;
+    (*(Quad *)(miscHist + 58)) = n;
 
     n = (int)(firePercent * 65536);
     HALF_SWAP_LONGS(&n, 1);
-    (*(Quad *)(MiscHis + 60)) = n;
+    (*(Quad *)(miscHist + 60)) = n;
 
     n = (int)(roadPercent * 65536);
     HALF_SWAP_LONGS(&n, 1);
-    (*(Quad *)(MiscHis + 62)) = n;
+    (*(Quad *)(miscHist + 62)) = n;
 
     bool result =
-        save_short(ResHis, HISTLEN / 2, f) &&
-        save_short(ComHis, HISTLEN / 2, f) &&
-        save_short(IndHis, HISTLEN / 2, f) &&
-        save_short(CrimeHis, HISTLEN / 2, f) &&
-        save_short(PollutionHis, HISTLEN / 2, f) &&
-        save_short(MoneyHis, HISTLEN / 2, f) &&
-        save_short(MiscHis, MISCHISTLEN / 2, f) &&
-        save_short((&Map[0][0]), WORLD_X * WORLD_Y, f);
+        save_short(resHist, HISTLEN / 2, f) &&
+        save_short(comHist, HISTLEN / 2, f) &&
+        save_short(indHist, HISTLEN / 2, f) &&
+        save_short(crimeHist, HISTLEN / 2, f) &&
+        save_short(pollutionHist, HISTLEN / 2, f) &&
+        save_short(moneyHist, HISTLEN / 2, f) &&
+        save_short(miscHist, MISCHISTLEN / 2, f) &&
+        save_short((&map[0][0]), WORLD_X * WORLD_Y, f);
 
     fclose(f);
 
@@ -367,56 +367,56 @@ void Micropolis::LoadScenario(Scenario s)
             name = "Dullsville";
             fname = "snro.111";
             ScenarioID = SC_DULLSVILLE;
-            CityTime = ((1900 - 1900) * 48) + 2;
+            cityTime = ((1900 - 1900) * 48) + 2;
             SetFunds(5000);
             break;
         case SC_SAN_FRANCISCO:
             name = "San Francisco";
             fname = "snro.222";
             ScenarioID = SC_SAN_FRANCISCO;
-            CityTime = ((1906 - 1900) * 48) + 2;
+            cityTime = ((1906 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_HAMBURG:
             name = "Hamburg";
             fname = "snro.333";
             ScenarioID = SC_HAMBURG;
-            CityTime = ((1944 - 1900) * 48) + 2;
+            cityTime = ((1944 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_BERN:
             name = "Bern";
             fname = "snro.444";
             ScenarioID = SC_BERN;
-            CityTime = ((1965 - 1900) * 48) + 2;
+            cityTime = ((1965 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_TOKYO:
             name = "Tokyo";
             fname = "snro.555";
             ScenarioID = SC_TOKYO;
-            CityTime = ((1957 - 1900) * 48) + 2;
+            cityTime = ((1957 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_DETROIT:
             name = "Detroit";
             fname = "snro.666";
             ScenarioID = SC_DETROIT;
-            CityTime = ((1972 - 1900) * 48) + 2;
+            cityTime = ((1972 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_BOSTON:
             name = "Boston";
             fname = "snro.777";
             ScenarioID = SC_BOSTON;
-            CityTime = ((2010 - 1900) * 48) + 2;
+            cityTime = ((2010 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         case SC_RIO:
             name = "Rio de Janeiro";
             fname = "snro.888";
             ScenarioID = SC_RIO;
-            CityTime = ((2047 - 1900) * 48) + 2;
+            cityTime = ((2047 - 1900) * 48) + 2;
             SetFunds(20000);
             break;
         default:
@@ -426,7 +426,7 @@ void Micropolis::LoadScenario(Scenario s)
 
     setCleanCityName(name);
     setSpeed(3);
-    CityTax = 7;
+    cityTax = 7;
 
     load_file(
         fname,
@@ -438,7 +438,7 @@ void Micropolis::LoadScenario(Scenario s)
     InvalidateEditors();
     InvalidateMaps();
     InitSimLoad = 1;
-    DoInitialEval = false;
+    doInitialEval = false;
     DoSimInit();
     DidLoadScenario();
 }

@@ -196,7 +196,7 @@ void Micropolis::animateTiles()
     int i;
 
     /* Animate whole world */
-    tMapPtr = (unsigned short *)&(Map[0][0]);
+    tMapPtr = (unsigned short *)&(map[0][0]);
 
     for (i = WORLD_X * WORLD_Y; i > 0; i--) {
         tilevalue = (*tMapPtr);

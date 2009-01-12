@@ -106,269 +106,269 @@ void Micropolis::init()
     // allocate.cpp
 
 
-    // short SMapX;
-    SMapX = 0;
+    // short curMapX;
+    curMapX = 0;
 
-    // short SMapY;
-    SMapY = 0;
+    // short curMapY;
+    curMapY = 0;
 
-    // short CChr;
-    CChr = 0;
+    // short curNum;
+    curNum = 0;
 
-    // short CChr9;
-    CChr9 = 0;
+    // short curTile;
+    curTile = 0;
 
-    // short RoadTotal;
-    RoadTotal = 0;
+    // short roadTotal;
+    roadTotal = 0;
 
-    // short RailTotal;
-    RailTotal = 0;
+    // short railTotal;
+    railTotal = 0;
 
-    // short FirePop;
-    FirePop = 0;
+    // short firePop;
+    firePop = 0;
 
-    // short ResPop;
-    ResPop = 0;
+    // short resPop;
+    resPop = 0;
 
-    // short ComPop;
-    ComPop = 0;
+    // short comPop;
+    comPop = 0;
 
-    // short IndPop;
-    IndPop = 0;
+    // short indPop;
+    indPop = 0;
 
-    // short TotalPop;
-    TotalPop = 0;
+    // short totalPop;
+    totalPop = 0;
 
-    // short LastTotalPop;
-    LastTotalPop = 0;
+    // short totalPopLast;
+    totalPopLast = 0;
 
-    // short ResZPop;
-    ResZPop = 0;
+    // short resZonePop;
+    resZonePop = 0;
 
-    // short ComZPop;
-    ComZPop = 0;
+    // short comZonePop;
+    comZonePop = 0;
 
-    // short IndZPop;
-    IndZPop = 0;
+    // short indZonePop;
+    indZonePop = 0;
 
-    // short TotalZPop;
-    TotalZPop = 0;
+    // short totalZonePop;
+    totalZonePop = 0;
 
-    // short HospPop;
-    HospPop = 0;
+    // short hospitalPop;
+    hospitalPop = 0;
 
-    // short ChurchPop;
-    ChurchPop = 0;
+    // short churchPop;
+    churchPop = 0;
 
-    // short StadiumPop;
-    StadiumPop = 0;
+    // short stadiumPop;
+    stadiumPop = 0;
 
-    // short PolicePop;
-    PolicePop = 0;
+    // short policeStationPop;
+    policeStationPop = 0;
 
-    // short FireStPop;
-    FireStPop = 0;
+    // short fireStationPop;
+    fireStationPop = 0;
 
-    // short CoalPop;
-    CoalPop = 0;
+    // short coalPowerPop;
+    coalPowerPop = 0;
 
-    // short NuclearPop;
-    NuclearPop = 0;
+    // short nuclearPowerPop;
+    nuclearPowerPop = 0;
 
-    // short PortPop;
-    PortPop = 0;
+    // short seaportPop;
+    seaportPop = 0;
 
-    // short APortPop;
-    APortPop = 0;
+    // short airportPop;
+    airportPop = 0;
 
-    // short NeedHosp;
-    NeedHosp = 0;
+    // short needHosp;
+    needHosp = 0;
 
-    // short NeedChurch;
-    NeedChurch = 0;
+    // short needChurch;
+    needChurch = 0;
 
-    // short CrimeAverage;
-    CrimeAverage = 0;
+    // short crimeAverage;
+    crimeAverage = 0;
 
-    // short PolluteAverage;
-    PolluteAverage = 0;
+    // short pollutionAverage;
+    pollutionAverage = 0;
 
-    // short LVAverage;
-    LVAverage = 0;
+    // short landValueAverage;
+    landValueAverage = 0;
 
-    // Quad CityTime;
-    CityTime = 0;
+    // Quad cityTime;
+    cityTime = 0;
 
-    // Quad CityMonth;
-    CityMonth = 0;
+    // Quad cityMonth;
+    cityMonth = 0;
 
-    // Quad CityYear;
-    CityYear = 0;
+    // Quad cityYear;
+    cityYear = 0;
 
-    // short StartingYear;
-    StartingYear = 0;
+    // short startingYear;
+    startingYear = 0;
 
-    // short *Map[WORLD_X];
-    memset(Map, 0, sizeof(short *) * WORLD_X);
+    // short *map[WORLD_X];
+    memset(map, 0, sizeof(short *) * WORLD_X);
 
-    // short ResHisMax;
-    ResHisMax = 0;
+    // short resHist10Max;
+    resHist10Max = 0;
 
-    // short Res2HisMax;
-    Res2HisMax = 0;
+    // short resHist120Max;
+    resHist120Max = 0;
 
-    // short ComHisMax;
-    ComHisMax = 0;
+    // short comHist10Max;
+    comHist10Max = 0;
 
-    // short Com2HisMax;
-    Com2HisMax = 0;
+    // short comHist120Max;
+    comHist120Max = 0;
 
-    // short IndHisMax;
-    IndHisMax = 0;
+    // short indHist10Max;
+    indHist10Max = 0;
 
-    // short Ind2HisMax;
-    Ind2HisMax = 0;
+    // short indHist120Max;
+    indHist120Max = 0;
 
     censusChanged = false;
 
     // short messagePort;
     messagePort = 0;
 
-    mesX = 0;
-    mesY = 0;
+    messageX = 0;
+    messageY = 0;
 
-    // Quad RoadSpend;
-    RoadSpend = 0;
+    // Quad roadSpend;
+    roadSpend = 0;
 
-    // short PoliceSpend;
-    PoliceSpend = 0;
+    // Quad policeSpend;
+    policeSpend = 0;
 
-    // short FireSpend;
-    FireSpend = 0;
+    // Quad fireSpend;
+    fireSpend = 0;
 
-    // Quad RoadFund;
-    RoadFund = 0;
+    // Quad roadFund;
+    roadFund = 0;
 
-    // short PoliceFund;
-    PoliceFund = 0;
+    // Quad policeFund;
+    policeFund = 0;
 
-    // short FireFund;
-    FireFund = 0;
+    // Quad fireFund;
+    fireFund = 0;
 
-    RoadEffect   = 0;
-    PoliceEffect = 0;
-    FireEffect   = 0;
+    roadEffect   = 0;
+    policeEffect = 0;
+    fireEffect   = 0;
 
-    // Quad TaxFund;
-    TaxFund = 0;
+    // Quad taxFund;
+    taxFund = 0;
 
-    // short CityTax;
-    CityTax = 0;
+    // short cityTax;
+    cityTax = 0;
 
-    // short TaxFlag;
-    TaxFlag = 0;
+    // bool taxFlag;
+    taxFlag = false;
 
-    // Byte *PopDensity[HWLDX];
-    memset(PopDensity, 0, sizeof(Byte *) * HWLDX);
+    // Byte *populationDensityMap[HWLDX];
+    memset(populationDensityMap, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *TrfDensity[HWLDX];
-    memset(TrfDensity, 0, sizeof(Byte *) * HWLDX);
+    // Byte *trafficDensityMap[HWLDX];
+    memset(trafficDensityMap, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *PollutionMem[HWLDX];
-    memset(PollutionMem, 0, sizeof(Byte *) * HWLDX);
+    // Byte *pollutionMap[HWLDX];
+    memset(pollutionMap, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *LandValueMem[HWLDX];
-    memset(LandValueMem, 0, sizeof(Byte *) * HWLDX);
+    // Byte *landValueMap[HWLDX];
+    memset(landValueMap, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *CrimeMem[HWLDX];
-    memset(CrimeMem, 0, sizeof(Byte *) * HWLDX);
+    // Byte *crimeMap[HWLDX];
+    memset(crimeMap, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *tem[HWLDX];
-    memset(tem, 0, sizeof(Byte *) * HWLDX);
+    // Byte *tempMap1[HWLDX];
+    memset(tempMap1, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *tem2[HWLDX];
-    memset(tem2, 0, sizeof(Byte *) * HWLDX);
+    // Byte *tempMap2[HWLDX];
+    memset(tempMap2, 0, sizeof(Byte *) * HWLDX);
 
-    // Byte *TerrainMem[QWX];
-    memset(TerrainMem, 0, sizeof(Byte *) * QWX);
+    // Byte *tempMap3[QWX];
+    memset(tempMap3, 0, sizeof(Byte *) * QWX);
 
-    // Byte *Qtem[QWX];
-    memset(Qtem, 0, sizeof(Byte *) * QWX);
+    // short tempMap4[SmX][SmY];
+    memset(tempMap4, 0, sizeof(short) * SmX * SmY);
 
-    // short RateOGMem[SmX][SmY];
-    memset(RateOGMem, 0, sizeof(short) * SmX * SmY);
+    // Byte *terrainDensityMap[QWX];
+    memset(terrainDensityMap, 0, sizeof(Byte *) * QWX);
 
-    // short FireStMap[SmX][SmY];
-    memset(FireStMap, 0, sizeof(short) * SmX * SmY);
+    // short rateOfGrowthMap[SmX][SmY];
+    memset(rateOfGrowthMap, 0, sizeof(short) * SmX * SmY);
 
-    // short PoliceMap[SmX][SmY];
-    memset(PoliceMap, 0, sizeof(short) * SmX * SmY);
+    // short fireStationMap[SmX][SmY];
+    memset(fireStationMap, 0, sizeof(short) * SmX * SmY);
 
-    // short PoliceMapEffect[SmX][SmY];
-    memset(PoliceMapEffect, 0, sizeof(short) * SmX * SmY);
+    // short policeStationMap[SmX][SmY];
+    memset(policeStationMap, 0, sizeof(short) * SmX * SmY);
 
-    // short FireRate[SmX][SmY];
-    memset(FireRate, 0, sizeof(short) * SmX * SmY);
+    // short policeStationMapEffect[SmX][SmY];
+    memset(policeStationMapEffect, 0, sizeof(short) * SmX * SmY);
 
-    // short ComRate[SmX][SmY];
-    memset(ComRate, 0, sizeof(short) * SmX * SmY);
+    // short fireStationMapEffect[SmX][SmY];
+    memset(fireStationMapEffect, 0, sizeof(short) * SmX * SmY);
 
-    // short STem[SmX][SmY];
-    memset(STem, 0, sizeof(short) * SmX * SmY);
+    // short comRateMap[SmX][SmY];
+    memset(comRateMap, 0, sizeof(short) * SmX * SmY);
 
-    // Ptr terrainBase;
-    terrainBase = NULL;
+    // Ptr terrainDensityMapBase;
+    terrainDensityMapBase = NULL;
 
-    // Ptr qTemBase;
-    qTemBase = NULL;
+    // Ptr tempMap1Base;
+    tempMap1Base = NULL;
 
-    // Ptr tem1Base;
-    tem1Base = NULL;
+    // Ptr tempMap2Base;
+    tempMap2Base = NULL;
 
-    // Ptr tem2Base;
-    tem2Base = NULL;
+    // Ptr tempMap3Base;
+    tempMap3Base = NULL;
 
-    // Ptr popPtr;
-    popPtr = NULL;
+    // Ptr populationDensityMapBase;
+    populationDensityMapBase = NULL;
 
-    // Ptr trfPtr;
-    trfPtr = NULL;
+    // Ptr trafficDensityMapBase;
+    trafficDensityMapBase = NULL;
 
-    // Ptr polPtr;
-    polPtr = NULL;
+    // Ptr pollitionMapBase;
+    pollutionMapBase = NULL;
 
-    // Ptr landPtr;
-    landPtr = NULL;
+    // Ptr landValueMapBase;
+    landValueMapBase = NULL;
 
-    // Ptr crimePtr;
-    crimePtr = NULL;
+    // Ptr crimeMapBase;
+    crimeMapBase = NULL;
 
-    // unsigned short *mapPtr;
-    mapPtr = NULL;
+    // unsigned short *mapBase;
+    mapBase = NULL;
 
-    // short *ResHis;
-    ResHis = NULL;
+    // short *resHist;
+    resHist = NULL;
 
-    // short *ComHis;
-    ComHis = NULL;
+    // short *comHist;
+    comHist = NULL;
 
-    // short *IndHis;
-    IndHis = NULL;
+    // short *indHist;
+    indHist = NULL;
 
-    // short *MoneyHis;
-    MoneyHis = NULL;
+    // short *moneyHist;
+    moneyHist = NULL;
 
-    // short *PollutionHis;
-    PollutionHis = NULL;
+    // short *pollutionHist;
+    pollutionHist = NULL;
 
-    // short *CrimeHis;
-    CrimeHis = NULL;
+    // short *crimeHist;
+    crimeHist = NULL;
 
-    // short *MiscHis;
-    MiscHis = NULL;
+    // short *miscHist;
+    miscHist = NULL;
 
-    // short *PowerMap;
-    PowerMap = NULL;
+    // short *powerMap;
+    powerMap = NULL;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -754,19 +754,19 @@ void Micropolis::init()
     // short NewPower; /* post */
     NewPower = 0;
 
-    // short AvCityTax;
-    AvCityTax = 0;
+    // short cityTaxAverage;
+    cityTaxAverage = 0;
 
-    // short Scycle;
-    Scycle = 0;
+    // short simCycle;
+    simCycle = 0;
 
-    // short Fcycle;
-    Fcycle = 0;
+    // short phaseCycle;
+    phaseCycle = 0;
 
-    // short Spdcycle;
-    Spdcycle = 0;
+    // short speedCycle;
+    speedCycle = 0;
 
-    DoInitialEval = false;
+    doInitialEval = false;
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -870,11 +870,11 @@ void Micropolis::init()
     // short PosStackN;
     PosStackN = 0;
 
-    // short SMapXStack[MAX_TRAFFIC_DISTANCE+1];
-    memset(SMapXStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
+    // short curMapXStack[MAX_TRAFFIC_DISTANCE+1];
+    memset(curMapXStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
-    // short SMapYStack[MAX_TRAFFIC_DISTANCE+1];
-    memset(SMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
+    // short curMapYStack[MAX_TRAFFIC_DISTANCE+1];
+    memset(curMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
     LDir = DIR_INVALID;
 
@@ -897,14 +897,14 @@ void Micropolis::init()
     // short MustUpdateOptions;
     MustUpdateOptions = 0;
 
-    // Quad LastCityTime;
-    LastCityTime = 0;
+    // Quad cityTimeLast;
+    cityTimeLast = 0;
 
-    // Quad LastCityYear;
-    LastCityYear = 0;
+    // Quad cityYearLast;
+    cityYearLast = 0;
 
-    // Quad LastCityMonth;
-    LastCityMonth = 0;
+    // Quad cityMonthLast;
+    cityMonthLast = 0;
 
     // Quad LastFunds;
     LastFunds = 0;

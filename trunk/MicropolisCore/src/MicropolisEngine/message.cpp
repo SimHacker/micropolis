@@ -88,49 +88,49 @@ void Micropolis::SendMessages()
 
     CheckGrowth();
 
-    TotalZPop = ResZPop + ComZPop + IndZPop;
-    PowerPop = NuclearPop + CoalPop;
+    totalZonePop = resZonePop + comZonePop + indZonePop;
+    PowerPop = nuclearPowerPop + coalPowerPop;
 
-    switch (CityTime & 63) {
+    switch (cityTime & 63) {
 
     case 1:
-        if (TotalZPop / 4 >= ResZPop) {
+        if (totalZonePop / 4 >= resZonePop) {
             SendMes(STR301_NEED_MORE_RESIDENTIAL);
         }
         break;
 
     case 5:
-        if (TotalZPop / 8 >= ComZPop) {
+        if (totalZonePop / 8 >= comZonePop) {
             SendMes(STR301_NEED_MORE_COMMERCIAL);
         }
         break;
 
     case 10:
-        if (TotalZPop / 8 >= IndZPop) {
+        if (totalZonePop / 8 >= indZonePop) {
             SendMes(STR301_NEED_MORE_INDUSTRIAL);
         }
         break;
 
     case 14:
-        if (TotalZPop > 10 && TotalZPop * 2 > RoadTotal) {
+        if (totalZonePop > 10 && totalZonePop * 2 > roadTotal) {
             SendMes(STR301_NEED_MORE_ROADS);
         }
         break;
 
     case 18:
-        if (TotalZPop > 50 && TotalZPop > RailTotal) {
+        if (totalZonePop > 50 && totalZonePop > railTotal) {
             SendMes(STR301_NEED_MORE_RAILS);
         }
         break;
 
     case 22:
-        if (TotalZPop > 10 && PowerPop == 0) {
+        if (totalZonePop > 10 && PowerPop == 0) {
             SendMes(STR301_NEED_ELECTRICITY);
         }
         break;
 
     case 26:
-        if (ResPop > 500 && StadiumPop == 0) {
+        if (resPop > 500 && stadiumPop == 0) {
             SendMes(STR301_NEED_STADIUM);
             ResCap = 1;
         } else {
@@ -139,7 +139,7 @@ void Micropolis::SendMessages()
         break;
 
     case 28:
-        if (IndPop > 70 && PortPop == 0) {
+        if (indPop > 70 && seaportPop == 0) {
             SendMes(STR301_NEED_SEAPORT);
             IndCap = 1;
         } else {
@@ -148,7 +148,7 @@ void Micropolis::SendMessages()
         break;
 
     case 30:
-        if (ComPop > 100 && APortPop == 0) {
+        if (comPop > 100 && airportPop == 0) {
             SendMes(STR301_NEED_AIRPORT);
             ComCap = 1;
         } else {
@@ -166,53 +166,53 @@ void Micropolis::SendMessages()
         break;
 
     case 35:
-        if (PolluteAverage > /* 80 */ 60) {
+        if (pollutionAverage > /* 80 */ 60) {
             SendMes(-STR301_HIGH_POLLUTION);
         }
         break;
 
     case 42:
-        if (CrimeAverage > 100) {
+        if (crimeAverage > 100) {
             SendMes(-STR301_HIGH_CRIME);
         }
         break;
 
     case 45:
-        if (TotalPop > 60 && FireStPop == 0) {
+        if (totalPop > 60 && fireStationPop == 0) {
             SendMes(STR301_NEED_FIRE_STATION);
         }
         break;
 
     case 48:
-        if (TotalPop > 60 && PolicePop == 0) {
+        if (totalPop > 60 && policeStationPop == 0) {
             SendMes(STR301_NEED_POLICE_STATION);
         }
         break;
 
     case 51:
-        if (CityTax > 12) {
+        if (cityTax > 12) {
             SendMes(STR301_TAX_TOO_HIGH);
         }
         break;
 
     case 54:
-        // If RoadEffect < 5/8 of max effect
-        if (RoadEffect < (5 * MAX_ROAD_EFFECT / 8) && RoadTotal > 30) {
+        // If roadEffect < 5/8 of max effect
+        if (roadEffect < (5 * MAX_ROAD_EFFECT / 8) && roadTotal > 30) {
             SendMes(STR301_ROAD_NEEDS_FUNDING);
         }
         break;
 
     case 57:
-        // If FireEffect < 0.7 of max effect
-        if (FireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && TotalPop > 20) {
+        // If fireEffect < 0.7 of max effect
+        if (fireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && totalPop > 20) {
             SendMes(STR301_FIRE_STATION_NEEDS_FUNDING);
         }
         break;
 
     case 60:
-        // If PoliceEffect < 0.7 of max effect
-        if (PoliceEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
-                                                        && TotalPop > 20) {
+        // If policeEffect < 0.7 of max effect
+        if (policeEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
+                                                        && totalPop > 20) {
             SendMes(STR301_POLICE_NEEDS_FUNDING);
         }
         break;
@@ -239,9 +239,9 @@ void Micropolis::CheckGrowth()
     Quad thisCityPop;
     short z;
 
-    if ((CityTime & 3) == 0) {
+    if ((cityTime & 3) == 0) {
         z = 0;
-        thisCityPop = (ResPop + (ComPop + IndPop) * 8) * 20;
+        thisCityPop = (resPop + (comPop + indPop) * 8) * 20;
 
         if (lastCityPop > 0) {
 
@@ -321,7 +321,7 @@ void Micropolis::DoScenarioScore(Scenario type)
         break;
 
     case SC_DETROIT:
-        if (CrimeAverage < 60) {
+        if (crimeAverage < 60) {
             z = -STR301_SCENARIO_WON;
         }
         break;
@@ -356,8 +356,8 @@ void Micropolis::DoScenarioScore(Scenario type)
 void Micropolis::ClearMes()
 {
     messagePort = 0;
-    mesX = 0;
-    mesY = 0;
+    messageX = 0;
+    messageY = 0;
     LastPicNum = 0;
 }
 
@@ -372,16 +372,16 @@ bool Micropolis::SendMes(int mesgNum)
     if (mesgNum < 0) {
         if (mesgNum != LastPicNum) {
             messagePort = mesgNum;
-            mesX = -1;
-            mesY = -1;
+            messageX = -1;
+            messageY = -1;
             LastPicNum = mesgNum;
             return true;
         }
     } else {
         if (messagePort == 0) {
             messagePort = mesgNum;
-            mesX = 0;
-            mesY = 0;
+            messageX = 0;
+            messageY = 0;
             return true;
         }
     }
@@ -401,8 +401,8 @@ bool Micropolis::SendMes(int mesgNum)
 void Micropolis::SendMesAt(short mesgNum, short x, short y)
 {
     if (SendMes(mesgNum)) {
-        mesX = x;
-        mesY = y;
+        messageX = x;
+        messageY = y;
     }
 }
 
@@ -416,7 +416,7 @@ void Micropolis::SendMesAt(short mesgNum, short x, short y)
  *       text message. Why not do this in one step?
  * @bug Last valid message is #STR301_LOADED_SAVED_CITY, which is much less
  *      than #STR301_LAST. Close this gap.
- * @todo Document meaning of \c -1 and \c 0 values of #mesX and #mesY.
+ * @todo Document meaning of \c -1 and \c 0 values of #messageX and #messageY.
  */
 void Micropolis::doMessage()
 {
@@ -429,7 +429,7 @@ void Micropolis::doMessage()
         MesNum = messagePort;
         messagePort = 0;
         LastMesTime = TickCount();
-        doMakeSound((MesNum < 0) ? -MesNum : MesNum, mesX, mesY);
+        doMakeSound((MesNum < 0) ? -MesNum : MesNum, messageX, messageY);
     } else {
         if (MesNum == 0) {
             return;
@@ -456,10 +456,10 @@ void Micropolis::doMessage()
 
         GetIndString(messageStr, 301, MesNum);
 
-        if (autoGo && mesX != -1 && mesY != -1) {
-            DoAutoGoto(mesX, mesY, messageStr);
-            mesX = -1;
-            mesY = -1;
+        if (autoGo && messageX != -1 && messageY != -1) {
+            DoAutoGoto(messageX, messageY, messageStr);
+            messageX = -1;
+            messageY = -1;
         } else {
             SetMessageField(messageStr);
         }
@@ -478,11 +478,11 @@ void Micropolis::doMessage()
 
         messagePort = pictId; /* resend text message */
 
-        if (autoGo && mesX != -1 && mesY != -1) {
+        if (autoGo && messageX != -1 && messageY != -1) {
 
-            DoAutoGoto(mesX, mesY, messageStr);
-            mesX = 0;
-            mesY = 0;
+            DoAutoGoto(messageX, messageY, messageStr);
+            messageX = 0;
+            messageY = 0;
         }
     }
 }
