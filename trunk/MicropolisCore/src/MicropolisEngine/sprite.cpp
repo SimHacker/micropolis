@@ -205,8 +205,8 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             }
 
             sprite->count = 1000;
-            sprite->destX = PolMaxX <<4;
-            sprite->destY = PolMaxY <<4;
+            sprite->destX = pollutionMaxX <<4;
+            sprite->destY = pollutionMaxY <<4;
             sprite->origX = sprite->x;
             sprite->origY = sprite->y;
             break;
@@ -1938,8 +1938,8 @@ void Micropolis::makeMonster()
     if (sprite != NULL) {
         sprite->soundCount = 1;
         sprite->count = 1000;
-        sprite->destX = PolMaxX <<4;
-        sprite->destY = PolMaxY <<4;
+        sprite->destX = pollutionMaxX <<4;
+        sprite->destY = pollutionMaxY <<4;
         return;
     }
 

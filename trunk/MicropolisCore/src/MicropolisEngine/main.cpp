@@ -359,7 +359,7 @@ void Micropolis::simLoop(int doSim)
 
        MoveObjects();
 
-       NewMap = 1;
+       newMap = 1;
 
    } else {
      if (doSim) {

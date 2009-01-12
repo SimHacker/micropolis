@@ -235,7 +235,7 @@ void Micropolis::makeEarthquake()
 
     DoEarthquake(strength);
 
-    sendMessageAt(-STR301_EARTHQUAKE, CCx, CCy);
+    sendMessageAt(-STR301_EARTHQUAKE, cityCenterX, cityCenterY);
 
     for (z = 0; z < strength; z++)  {
         x = getRandom(WORLD_X - 1);
