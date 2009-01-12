@@ -127,14 +127,14 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
     sprite->x = x;
     sprite->y = y;
     sprite->frame = 0;
-    sprite->orig_x = 0;
-    sprite->orig_y = 0;
-    sprite->dest_x = 0;
-    sprite->dest_y = 0;
+    sprite->origX = 0;
+    sprite->origY = 0;
+    sprite->destX = 0;
+    sprite->destY = 0;
     sprite->count = 0;
-    sprite->sound_count = 0;
+    sprite->soundCount = 0;
     sprite->dir = 0;
-    sprite->new_dir = 0;
+    sprite->newDir = 0;
     sprite->step = 0;
     sprite->flag = 0;
     sprite->control = -1;
@@ -151,10 +151,10 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
         case SPRITE_TRAIN:
             sprite->width = 32;
             sprite->height = 32;
-            sprite->x_offset = 32;
-            sprite->y_offset = -16;
-            sprite->x_hot = 40;
-            sprite->y_hot = -8;
+            sprite->xOffset = 32;
+            sprite->yOffset = -16;
+            sprite->xHot = 40;
+            sprite->yHot = -8;
             sprite->frame = 1;
             sprite->dir = 4;
             break;
@@ -162,10 +162,10 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
         case SPRITE_SHIP:
             sprite->width = 48;
             sprite->height = 48;
-            sprite->x_offset = 32;
-            sprite->y_offset = -16;
-            sprite->x_hot = 48;
-            sprite->y_hot = 0;
+            sprite->xOffset = 32;
+            sprite->yOffset = -16;
+            sprite->xHot = 48;
+            sprite->yHot = 0;
 
             if (x < (4 <<4)) {
                 sprite->frame = 3;
@@ -179,7 +179,7 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
                 sprite->frame = 3;
             }
 
-            sprite->new_dir = sprite->frame;
+            sprite->newDir = sprite->frame;
             sprite->dir = 10;
             sprite->count = 1;
             break;
@@ -187,10 +187,10 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
         case SPRITE_MONSTER:
             sprite->width = 48;
             sprite->height = 48;
-            sprite->x_offset = 24;
-            sprite->y_offset = 0;
-            sprite->x_hot = 40;
-            sprite->y_hot = 16;
+            sprite->xOffset = 24;
+            sprite->yOffset = 0;
+            sprite->xHot = 40;
+            sprite->yHot = 16;
 
             if (x > ((WORLD_X <<4) / 2)) {
                 if (y > ((WORLD_Y <<4) / 2)) {
@@ -205,52 +205,52 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
             }
 
             sprite->count = 1000;
-            sprite->dest_x = PolMaxX <<4;
-            sprite->dest_y = PolMaxY <<4;
-            sprite->orig_x = sprite->x;
-            sprite->orig_y = sprite->y;
+            sprite->destX = PolMaxX <<4;
+            sprite->destY = PolMaxY <<4;
+            sprite->origX = sprite->x;
+            sprite->origY = sprite->y;
             break;
 
         case SPRITE_HELICOPTER:
             sprite->width = 32;
             sprite->height = 32;
-            sprite->x_offset = 32;
-            sprite->y_offset = -16;
-            sprite->x_hot = 40;
-            sprite->y_hot = -8;
+            sprite->xOffset = 32;
+            sprite->yOffset = -16;
+            sprite->xHot = 40;
+            sprite->yHot = -8;
             sprite->frame = 5;
             sprite->count = 1500;
-            sprite->dest_x = Rand((WORLD_X <<4) - 1);
-            sprite->dest_y = Rand((WORLD_Y <<4) - 1);
-            sprite->orig_x = x - 30;
-            sprite->orig_y = y;
+            sprite->destX = Rand((WORLD_X <<4) - 1);
+            sprite->destY = Rand((WORLD_Y <<4) - 1);
+            sprite->origX = x - 30;
+            sprite->origY = y;
             break;
 
         case SPRITE_AIRPLANE:
             sprite->width = 48;
             sprite->height = 48;
-            sprite->x_offset = 24;
-            sprite->y_offset = 0;
-            sprite->x_hot = 48;
-            sprite->y_hot = 16;
+            sprite->xOffset = 24;
+            sprite->yOffset = 0;
+            sprite->xHot = 48;
+            sprite->yHot = 16;
             if (x > ((WORLD_X - 20) <<4)) {
                 sprite->x -= 100 + 48;
-                sprite->dest_x = sprite->x - 200;
+                sprite->destX = sprite->x - 200;
                 sprite->frame = 7;
             } else {
-                sprite->dest_x = sprite->x + 200;
+                sprite->destX = sprite->x + 200;
                 sprite->frame = 11;
             }
-            sprite->dest_y = sprite->y;
+            sprite->destY = sprite->y;
             break;
 
         case SPRITE_TORNADO:
             sprite->width = 48;
             sprite->height = 48;
-            sprite->x_offset = 24;
-            sprite->y_offset = 0;
-            sprite->x_hot = 40;
-            sprite->y_hot = 36;
+            sprite->xOffset = 24;
+            sprite->yOffset = 0;
+            sprite->xHot = 40;
+            sprite->yHot = 36;
             sprite->frame = 1;
             sprite->count = 200;
             break;
@@ -258,20 +258,20 @@ void Micropolis::InitSprite(SimSprite *sprite, int x, int y)
         case SPRITE_EXPLOSION:
             sprite->width = 48;
             sprite->height = 48;
-            sprite->x_offset = 24;
-            sprite->y_offset = 0;
-            sprite->x_hot = 40;
-            sprite->y_hot = 16;
+            sprite->xOffset = 24;
+            sprite->yOffset = 0;
+            sprite->xHot = 40;
+            sprite->yHot = 16;
             sprite->frame = 1;
             break;
 
         case SPRITE_BUS:
             sprite->width = 32;
             sprite->height = 32;
-            sprite->x_offset = 30;
-            sprite->y_offset = -18;
-            sprite->x_hot = 40;
-            sprite->y_hot = -8;
+            sprite->xOffset = 30;
+            sprite->yOffset = -18;
+            sprite->xHot = 40;
+            sprite->yHot = -8;
             sprite->frame = 1;
             sprite->dir = 1;
             break;
@@ -386,8 +386,8 @@ void Micropolis::DrawSprite(SimSprite *sprite)
 
     i = (sprite->frame - 1) * 2;
 
-    x = sprite->x + sprite->x_offset;
-    y = sprite->y + sprite->y_offset;
+    x = sprite->x + sprite->xOffset;
+    y = sprite->y + sprite->yOffset;
 
     // TODO: draw sprite
 
@@ -489,8 +489,8 @@ bool Micropolis::TryOther(int Tpoo, int Told, int Tnew)
  */
 bool Micropolis::SpriteNotInBounds(SimSprite *sprite)
 {
-    int x = sprite->x + sprite->x_hot;
-    int y = sprite->y + sprite->y_hot;
+    int x = sprite->x + sprite->xHot;
+    int y = sprite->y + sprite->yHot;
 
     return x < 0 || y < 0 || x >= (WORLD_X <<4) || y >= (WORLD_Y <<4);
 }
@@ -568,8 +568,8 @@ int Micropolis::GetDistance(int x1, int y1, int x2, int y2)
 bool Micropolis::CheckSpriteCollision(SimSprite *s1, SimSprite *s2)
 {
     return s1->frame != 0 && s2->frame != 0 &&
-           GetDistance(s1->x + s1->x_hot, s1->y + s1->y_hot,
-                       s2->x + s2->x_hot, s2->y + s2->y_hot) < 30;
+           GetDistance(s1->x + s1->xHot, s1->y + s1->yHot,
+                       s2->x + s2->xHot, s2->y + s2->yHot) < 30;
 }
 
 
@@ -729,8 +729,8 @@ void Micropolis::DoCopterSprite(
     static const short CDy[9] = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
     short x, y;
 
-    if (sprite->sound_count > 0) {
-        sprite->sound_count--;
+    if (sprite->soundCount > 0) {
+        sprite->soundCount--;
     }
 
     if (sprite->control < 0) {
@@ -745,26 +745,26 @@ void Micropolis::DoCopterSprite(
             SimSprite *s = GetSprite(SPRITE_MONSTER);
 
             if (s != NULL) {
-                sprite->dest_x = s->x;
-                sprite->dest_y = s->y;
+                sprite->destX = s->x;
+                sprite->destY = s->y;
             } else {
 
                 /* Attract copter to tornado so it blows up more often */
                 s = GetSprite(SPRITE_TORNADO);
 
                 if (s != NULL) {
-                    sprite->dest_x = s->x;
-                    sprite->dest_y = s->y;
+                    sprite->destX = s->x;
+                    sprite->destY = s->y;
                 } else {
-                    sprite->dest_x = sprite->orig_x;
-                    sprite->dest_y = sprite->orig_y;
+                    sprite->destX = sprite->origX;
+                    sprite->destY = sprite->origY;
                 }
 
             }
         }
 
         if (sprite->count == 0) { /* land */
-            GetDir(sprite->x, sprite->y, sprite->orig_x, sprite->orig_y);
+            GetDir(sprite->x, sprite->y, sprite->origX, sprite->origY);
 
             if (absDist < 30) {
                 sprite->frame = 0;
@@ -775,17 +775,17 @@ void Micropolis::DoCopterSprite(
 
     } else {
 
-        GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+        GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
 
         if (absDist < 16) {
-            sprite->dest_x = sprite->orig_x;
-            sprite->dest_y = sprite->orig_y;
+            sprite->destX = sprite->origX;
+            sprite->destY = sprite->origY;
             sprite->control = -1;
         }
 
     }
 
-    if (sprite->sound_count == 0) { /* send report  */
+    if (sprite->soundCount == 0) { /* send report  */
 
         // Convert sprite coordinates to traffic density map coordinates.
         x = (sprite->x + 48) >>5;
@@ -800,7 +800,7 @@ void Micropolis::DoCopterSprite(
             if ((TrfDensity[x][y] > 170) && ((Rand16() & 7) == 0)) {
                 SendMesAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
                 MakeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
-                sprite->sound_count = 200;
+                sprite->soundCount = 200;
             }
 
         }
@@ -810,7 +810,7 @@ void Micropolis::DoCopterSprite(
     short z = sprite->frame;
 
     if ((Cycle & 3) == 0) {
-        short d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+        short d = GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
         z = TurnTo(z, d);
         sprite->frame = z;
     }
@@ -842,7 +842,7 @@ void Micropolis::DoAirplaneSprite(
             }
             sprite->frame = z;
         } else { /* goto destination */
-            short d = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+            short d = GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
             z = TurnTo(z, d);
             sprite->frame = z;
         }
@@ -850,8 +850,8 @@ void Micropolis::DoAirplaneSprite(
     }
 
     if (absDist < 50) { /* at destination  */
-        sprite->dest_x = Rand((WORLD_X * 16) + 100) - 50;
-        sprite->dest_y = Rand((WORLD_Y * 16) + 100) - 50;
+        sprite->destX = Rand((WORLD_X * 16) + 100) - 50;
+        sprite->destY = Rand((WORLD_Y * 16) + 100) - 50;
     }
 
     /* deh added test for !Disasters */
@@ -903,11 +903,11 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
     short x, y, z, t = RIVER;
     short tem, pem;
 
-    if (sprite->sound_count > 0) {
-        sprite->sound_count--;
+    if (sprite->soundCount > 0) {
+        sprite->soundCount--;
     }
 
-    if (!sprite->sound_count) {
+    if (!sprite->soundCount) {
 
         if ((Rand16() & 3) == 1) {
 
@@ -923,7 +923,7 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
         }
 
-        sprite->sound_count = 200;
+        sprite->soundCount = 200;
     }
 
     if (sprite->count > 0) {
@@ -934,8 +934,8 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
         sprite->count = 9;
 
-        if (sprite->frame != sprite->new_dir) {
-            sprite->frame = TurnTo(sprite->frame, sprite->new_dir);
+        if (sprite->frame != sprite->newDir) {
+            sprite->frame = TurnTo(sprite->frame, sprite->newDir);
             return;
         }
 
@@ -959,8 +959,8 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
                 if (t == CHANNEL || t == BRWH || t == BRWV
                                                     || TryOther(t, sprite->dir, z)) {
 
-                    sprite->new_dir = z;
-                    sprite->frame = TurnTo(sprite->frame, sprite->new_dir);
+                    sprite->newDir = z;
+                    sprite->frame = TurnTo(sprite->frame, sprite->newDir);
                     sprite->dir = z + 4;
 
                     if (sprite->dir > 8) {
@@ -974,14 +974,14 @@ void Micropolis::DoShipSprite(SimSprite *sprite)
 
         if (pem == (tem + 8)) {
             sprite->dir = 10;
-            sprite->new_dir = (Rand16() & 7) + 1;
+            sprite->newDir = (Rand16() & 7) + 1;
         }
 
     } else {
 
         z = sprite->frame;
 
-        if (z == sprite->new_dir)  {
+        if (z == sprite->newDir)  {
             sprite->x += BPx[z];
             sprite->y += BPy[z];
         }
@@ -1022,8 +1022,8 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
     static const short nn2[4] = { 11,  2,  5,  8 };
     short d, z, c;
 
-    if (sprite->sound_count > 0) {
-        sprite->sound_count--;
+    if (sprite->soundCount > 0) {
+        sprite->soundCount--;
     }
 
     if (sprite->control < 0) {
@@ -1048,15 +1048,15 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                 z--;
             }
 
-            c = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+            c = GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
 
             if (absDist < 18) {
 
                 sprite->control = -1;
                 sprite->count = 1000;
                 sprite->flag = 1;
-                sprite->dest_x = sprite->orig_x;
-                sprite->dest_y = sprite->orig_y;
+                sprite->destX = sprite->origX;
+                sprite->destY = sprite->origY;
 
             } else {
 
@@ -1114,15 +1114,15 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
                     z--;
                 }
 
-                GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+                GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
 
                 if (absDist < 60) {
 
                     if (sprite->flag == 0) {
 
                         sprite->flag = 1;
-                        sprite->dest_x = sprite->orig_x;
-                        sprite->dest_y = sprite->orig_y;
+                        sprite->destX = sprite->origX;
+                        sprite->destY = sprite->origY;
 
                     } else {
 
@@ -1133,7 +1133,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
 
                 }
 
-                c = GetDir(sprite->x, sprite->y, sprite->dest_x, sprite->dest_y);
+                c = GetDir(sprite->x, sprite->y, sprite->destX, sprite->destY);
                 c = (c - 1) / 2;
 
                 if ((c != d) && (!Rand(10))) {
@@ -1146,12 +1146,12 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
 
                     d = 4;
 
-                    if (!sprite->sound_count) {
+                    if (!sprite->soundCount) {
                         // Convert sprite coordinates to tile coordinates.
                         int monsterX = sprite->x >>4;
                         int monsterY = sprite->y >>4;
                         MakeSound("city", "Monster", monsterX, monsterY); /* monster */
-                        sprite->sound_count = 50 + Rand(100);
+                        sprite->soundCount = 50 + Rand(100);
                     }
 
                 }
@@ -1217,7 +1217,7 @@ void Micropolis::DoMonsterSprite(SimSprite *sprite)
         sprite->count--;
     }
 
-    c = GetChar(sprite->x + sprite->x_hot, sprite->y + sprite->y_hot);
+    c = GetChar(sprite->x + sprite->xHot, sprite->y + sprite->yHot);
 
     if (c == -1
           || (c == RIVER && sprite->count != 0 && sprite->control == -1)) {
@@ -1407,8 +1407,8 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
 
     } else { /* cruise at traffic speed */
 
-        tx = (sprite->x + sprite->x_hot) >>5;
-        ty = (sprite->y + sprite->y_hot) >>5;
+        tx = (sprite->x + sprite->xHot) >>5;
+        ty = (sprite->y + sprite->yHot) >>5;
 
         if (tx >= 0 && tx < (WORLD_X >>1) && ty >= 0 && ty < (WORLD_Y >>1)) {
 
@@ -1463,15 +1463,15 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
             dx = Dx[sprite->dir] * speed;
             dy = Dy[sprite->dir] * speed;
 
-            tx = (sprite->x + sprite->x_hot) >>4;
-            ty = (sprite->y + sprite->y_hot) >>4;
+            tx = (sprite->x + sprite->xHot) >>4;
+            ty = (sprite->y + sprite->yHot) >>4;
 
             /* drift into the right lane */
             switch (sprite->dir) {
 
                   case 0: /* up */
 
-                    z = ((tx <<4) + 4) - (sprite->x + sprite->x_hot);
+                    z = ((tx <<4) + 4) - (sprite->x + sprite->xHot);
 
                     if (z < 0) {
                         dx = -1;
@@ -1480,14 +1480,14 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
                     }
 
 #ifdef DEBUGBUS
-                    printf("moving up x %x z %d dx %d\n", sprite->x + sprite->x_hot, z, dx);
+                    printf("moving up x %x z %d dx %d\n", sprite->x + sprite->xHot, z, dx);
 #endif
 
                     break;
 
                 case 1: /* right */
 
-                    z = ((ty <<4) + 4) - (sprite->y + sprite->y_hot);
+                    z = ((ty <<4) + 4) - (sprite->y + sprite->yHot);
 
                     if (z < 0) {
                         dy = -1;
@@ -1496,14 +1496,14 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
                     }
 
 #ifdef DEBUGBUS
-                    printf("moving right y %x z %d dy %d\n", sprite->y + sprite->y_hot, z, dy);
+                    printf("moving right y %x z %d dy %d\n", sprite->y + sprite->yHot, z, dy);
 #endif
 
                     break;
 
                 case 2: /* down */
 
-                    z = (tx <<4) - (sprite->x + sprite->x_hot);
+                    z = (tx <<4) - (sprite->x + sprite->xHot);
 
                     if (z < 0) {
                         dx = -1;
@@ -1512,14 +1512,14 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
                     }
 
 #ifdef DEBUGBUS
-                    printf("moving down x %x z %d dx %d\n", sprite->x + sprite->x_hot, z, dx);
+                    printf("moving down x %x z %d dx %d\n", sprite->x + sprite->xHot, z, dx);
 #endif
 
                     break;
 
                 case 3: /* left */
 
-                    z = (ty <<4) - (sprite->y + sprite->y_hot);
+                    z = (ty <<4) - (sprite->y + sprite->yHot);
 
                     if (z < 0) {
                         dy = -1;
@@ -1528,7 +1528,7 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
                     }
 
 #ifdef DEBUGBUS
-                    printf("moving left y %x z %d dy %d\n", sprite->y + sprite->y_hot, z, dy);
+                    printf("moving left y %x z %d dy %d\n", sprite->y + sprite->yHot, z, dy);
 #endif
 
                     break;
@@ -1542,14 +1542,14 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
 
 #define AHEAD 8
 
-    otx = (sprite->x + sprite->x_hot + (Dx[sprite->dir] * AHEAD)) >>4;
-    oty = (sprite->y + sprite->y_hot + (Dy[sprite->dir] * AHEAD)) >>4;
+    otx = (sprite->x + sprite->xHot + (Dx[sprite->dir] * AHEAD)) >>4;
+    oty = (sprite->y + sprite->yHot + (Dy[sprite->dir] * AHEAD)) >>4;
 
     otx = clamp(otx, 0, WORLD_X - 1);
     oty = clamp(oty, 0, WORLD_Y - 1);
 
-    tx = (sprite->x + sprite->x_hot + dx + (Dx[sprite->dir] * AHEAD)) >>4;
-    ty = (sprite->y + sprite->y_hot + dy + (Dy[sprite->dir] * AHEAD)) >>4;
+    tx = (sprite->x + sprite->xHot + dx + (Dx[sprite->dir] * AHEAD)) >>4;
+    ty = (sprite->y + sprite->yHot + dy + (Dy[sprite->dir] * AHEAD)) >>4;
 
     tx = clamp(tx, 0, WORLD_X - 1);
     ty = clamp(ty, 0, WORLD_Y - 1);
@@ -1585,8 +1585,8 @@ void Micropolis::DoBusSprite(SimSprite *sprite)
         }
     }
 
-    tx = (sprite->x + sprite->x_hot + dx) >>4;
-    ty = (sprite->y + sprite->y_hot + dy) >>4;
+    tx = (sprite->x + sprite->xHot + dx) >>4;
+    ty = (sprite->y + sprite->yHot + dy) >>4;
 
     z = CanDriveOn(tx, ty);
 
@@ -1665,8 +1665,8 @@ void Micropolis::ExplodeSprite(SimSprite *sprite)
 
     sprite->frame = 0;
 
-    x = sprite->x + sprite->x_hot;
-    y = sprite->y + sprite->y_hot;
+    x = sprite->x + sprite->xHot;
+    y = sprite->y + sprite->yHot;
     MakeExplosionAt(x, y);
 
     x = (x >>4);
@@ -1936,10 +1936,10 @@ void Micropolis::MakeMonster()
 
     sprite = GetSprite(SPRITE_MONSTER);
     if (sprite != NULL) {
-        sprite->sound_count = 1;
+        sprite->soundCount = 1;
         sprite->count = 1000;
-        sprite->dest_x = PolMaxX <<4;
-        sprite->dest_y = PolMaxY <<4;
+        sprite->destX = PolMaxX <<4;
+        sprite->destY = PolMaxY <<4;
         return;
     }
 

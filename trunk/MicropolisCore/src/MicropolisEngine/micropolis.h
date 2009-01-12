@@ -933,18 +933,18 @@ public:
     int y; ///< Y coordinate of the sprite in pixels?
     int width;
     int height;
-    int x_offset;
-    int y_offset;
-    int x_hot; ///< Offset of the hot-spot of the sprite relative to #x?
-    int y_hot; ///< Offset of the hot-spot of the sprite relative to #y?
-    int orig_x;
-    int orig_y;
-    int dest_x; ///< Destination X coordinate of the sprite.
-    int dest_y; ///< Destination Y coordinate of the sprite.
+    int xOffset;
+    int yOffset;
+    int xHot; ///< Offset of the hot-spot of the sprite relative to #x?
+    int yHot; ///< Offset of the hot-spot of the sprite relative to #y?
+    int origX;
+    int origY;
+    int destX; ///< Destination X coordinate of the sprite.
+    int destY; ///< Destination Y coordinate of the sprite.
     int count;
-    int sound_count;
+    int soundCount;
     int dir;
-    int new_dir;
+    int newDir;
     int step;
     int flag;
     int control;
