@@ -905,6 +905,12 @@ class Game(object):
                 m.MakeTornado()
             elif disaster == 'earthquake':
                 m.MakeEarthquake()
+            elif disaster == 'eco':
+                m.heat_steps = 1
+                m.heat_rule = 1
+            elif disaster == 'melt':
+                m.heat_steps = 1
+                m.heat_rule = 0
 
         elif command == 'setTaxRate':
 
@@ -954,6 +960,7 @@ class Game(object):
         #print "TICK", ticks
         #print "CityTime", m.CityTime, "CityMonth", m.CityMonth, "CityYear", m.CityYear
         #print "sim_paused", m.sim_paused, "sim_skips", m.sim_skips, "sim_skip", m.sim_skip
+        print "HEAT_STEPS", m.heat_steps
         m.sim_tick()
         m.setSkips(lastSkips)
         m.animateTiles()
