@@ -97,7 +97,7 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     // Resource not found, load it from disk
 
     // Allocate memory for the resource administration itself
-    r = (Resource *)NewPtr(sizeof(Resource));
+    r = (Resource *)newPtr(sizeof(Resource));
     assert(r != NULL);
 
     /// @bug Not safe!
@@ -125,7 +125,7 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     }
 
     r->size = st.st_size;
-    r->buf = (char *)NewPtr(r->size);
+    r->buf = (char *)newPtr(r->size);
     if (r->buf == NULL) { // No memory allocated
         goto loadFailed;
     }
@@ -193,7 +193,7 @@ void Micropolis::getIndString(char *str, int id, short num)
         // String table is not loaded yet -> get it
 
         // Create new string table
-        st = (StringTable *)NewPtr(sizeof(StringTable));
+        st = (StringTable *)newPtr(sizeof(StringTable));
         assert(st != NULL);
 
         st->id = id;
@@ -213,7 +213,7 @@ void Micropolis::getIndString(char *str, int id, short num)
         // XXX What about termination of last line?
 
         st->lines = lines;
-        st->strings = (char **)NewPtr(size * sizeof(char *));
+        st->strings = (char **)newPtr(size * sizeof(char *));
         assert(st->strings != NULL);
 
         // Store starting points of texts in st->strings array

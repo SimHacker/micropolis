@@ -75,9 +75,9 @@
  * Deduct \a dollars from the player funds.
  * @param dollars Amount of money spent.
  */
-void Micropolis::Spend(int dollars)
+void Micropolis::spend(int dollars)
 {
-    SetFunds(TotalFunds - dollars);
+    setFunds(totalFunds - dollars);
 }
 
 
@@ -88,10 +88,10 @@ void Micropolis::Spend(int dollars)
  * money.
  * @param dollars New value for the player funds.
  */
-void Micropolis::SetFunds(int dollars)
+void Micropolis::setFunds(int dollars)
 {
-    TotalFunds = dollars;
-    UpdateFunds();
+    totalFunds = dollars;
+    updateFunds();
 }
 
 
@@ -101,7 +101,7 @@ void Micropolis::SetFunds(int dollars)
  * @bug Unix version looks wrong, \c time.tv_usec should be divided to get
  *      seconds or \c time.tc_sec should be multiplied.
  */
-Quad Micropolis::TickCount()
+Quad Micropolis::tickCount()
 {
 #ifdef _WIN32
     return (::GetTickCount() * 60) / 1000;
@@ -118,7 +118,7 @@ Quad Micropolis::TickCount()
  * @param size Number of bytes to claim.
  * @return Pointer to the claimed memory.
  */
-Ptr Micropolis::NewPtr(int size)
+Ptr Micropolis::newPtr(int size)
 {
     return (Ptr)malloc(size);
 }
@@ -128,30 +128,30 @@ Ptr Micropolis::NewPtr(int size)
  * Release claimed memory.
  * @param data Pointer to previously claimed memory.
  */
-void Micropolis::FreePtr(void *data)
+void Micropolis::freePtr(void *data)
 {
     free(data);
 }
 
 
 /** @bug Function is never called. */
-void Micropolis::DoPlayNewCity()
+void Micropolis::doPlayNewCity()
 {
-    Callback("UIPlayNewCity", "");
+    callback("UIPlayNewCity", "");
 }
 
 
 /** @bug Function is never called. */
-void Micropolis::DoReallyStartGame()
+void Micropolis::doReallyStartGame()
 {
-    Callback("UIReallyStartGame", "");
+    callback("UIReallyStartGame", "");
 }
 
 
 /** @bug Function is never called. */
-void Micropolis::DoStartLoad()
+void Micropolis::doStartLoad()
 {
-    Callback("UIStartLoad", "");
+    callback("UIStartLoad", "");
 }
 
 
@@ -161,16 +161,16 @@ void Micropolis::DoStartLoad()
  * @see Scenario.
  * @bug Function is never called.
  */
-void Micropolis::DoStartScenario(int scenario)
+void Micropolis::doStartScenario(int scenario)
 {
-    Callback( "UIStartScenario", "d", (int)scenario);
+    callback( "UIStartScenario", "d", (int)scenario);
 }
 
 
 /** Tell the front-end that fire bombs are being dropped. */
 void Micropolis::dropFireBombs()
 {
-    Callback("UIDropFireBombs", "");
+    callback("UIDropFireBombs", "");
 }
 
 
@@ -179,7 +179,7 @@ void Micropolis::dropFireBombs()
  * @todo we seem to have several of these functions.
  * @bug Function is never called.
  */
-void Micropolis::InitGame()
+void Micropolis::initGame()
 {
     simPaused = false; // Simulation is running.
     simPausedSpeed = 0;
@@ -214,7 +214,7 @@ void Micropolis::InitGame()
  * @param name   Name of the callback.
  * @param params Parameters of the callback.
  */
-void Micropolis::Callback(const char *name, const char *params, ...)
+void Micropolis::callback(const char *name, const char *params, ...)
 {
     if (callbackHook == NULL) {
         return;
@@ -233,25 +233,25 @@ void Micropolis::Callback(const char *name, const char *params, ...)
  * Tell the front-end to show an earthquake to the user (shaking the map for
  * some time).
  */
-void Micropolis::DoEarthquake(int strength)
+void Micropolis::doEarthquake(int strength)
 {
-    MakeSound("city", "Explosion-Low"); // Make the sound all over.
+    makeSound("city", "Explosion-Low"); // Make the sound all over.
 
-    Callback("UIStartEarthquake", "d", strength);
+    callback("UIStartEarthquake", "d", strength);
 }
 
 
 /** Tell the front-end that the editors are not valid any more */
-void Micropolis::InvalidateEditors()
+void Micropolis::invalidateEditors()
 {
-    Callback("UIInvalidateEditors", "");
+    callback("UIInvalidateEditors", "");
 }
 
 
 /** Tell the front-end that the maps are not valid any more */
-void Micropolis::InvalidateMaps()
+void Micropolis::invalidateMaps()
 {
-    Callback("UIInvalidateMaps", "");
+    callback("UIInvalidateMaps", "");
 }
 
 
@@ -259,9 +259,9 @@ void Micropolis::InvalidateMaps()
  * Tell the front-end to initialize its sound system.
  * @todo Should be handled by the front-end entirely?
  */
-void Micropolis::InitializeSound()
+void Micropolis::initializeSound()
 {
-    Callback("UIInitializeSound", "");
+    callback("UIInitializeSound", "");
 }
 
 
@@ -275,10 +275,10 @@ void Micropolis::InitializeSound()
  * @param x       Tile X position of sound, or -1 for everywhere.
  * @param y       Tile Y position of sound, or -1 for everywhere.
  */
-void Micropolis::MakeSound(const char *channel, const char *sound,
-                            int x, int y)
+void Micropolis::makeSound(const char *channel, const char *sound,
+                           int x, int y)
 {
-    Callback( "UIMakeSound", "ssdd", channel, sound, x, y);
+    callback("UIMakeSound", "ssdd", channel, sound, x, y);
 }
 
 

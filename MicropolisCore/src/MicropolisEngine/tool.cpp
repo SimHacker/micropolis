@@ -105,7 +105,7 @@ int Micropolis::putDownPark(short mapH, short mapV)
 {
     short value, tile;
 
-    if (TotalFunds - gCostOf[TOOL_PARK] < 0) return -2;
+    if (totalFunds - gCostOf[TOOL_PARK] < 0) return -2;
 
     value = getRandom(4);
 
@@ -119,8 +119,8 @@ int Micropolis::putDownPark(short mapH, short mapV)
 
     map[mapH][mapV] = tile;
 
-    Spend(gCostOf[TOOL_PARK]);
-    UpdateFunds();
+    spend(gCostOf[TOOL_PARK]);
+    updateFunds();
 
     return 1;
 }
@@ -138,20 +138,20 @@ int Micropolis::putDownNetwork(short mapH, short mapV)
 {
     int tile = map[mapH][mapV] & LOMASK;
 
-    if (TotalFunds > 0 && tally(tile)) {
+    if (totalFunds > 0 && tally(tile)) {
         map[mapH][mapV] = DIRT;
         tile = DIRT;
-        Spend(1);
+        spend(1);
     }
 
     if (tile != DIRT) return -1;
 
-    if (TotalFunds - gCostOf[TOOL_NETWORK] < 0) return -2;
+    if (totalFunds - gCostOf[TOOL_NETWORK] < 0) return -2;
 
     map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
-    Spend(gCostOf[TOOL_NETWORK]);
-    UpdateFunds();
+    spend(gCostOf[TOOL_NETWORK]);
+    updateFunds();
 
     return 1;
 }
@@ -440,11 +440,11 @@ int Micropolis::check3x3(
 
     cost += (short)gCostOf[tool];
 
-    if ((TotalFunds - cost) < 0) return -2;
+    if ((totalFunds - cost) < 0) return -2;
 
     /* take care of the money situtation here */
-    Spend(cost);
-    UpdateFunds();
+    spend(cost);
+    updateFunds();
 
     mapV = holdMapV;
 
@@ -539,11 +539,11 @@ short Micropolis::check4x4(
 
     cost += (short)gCostOf[tool];
 
-    if ((TotalFunds - cost) < 0) return -2;
+    if ((totalFunds - cost) < 0) return -2;
 
     /* take care of the money situtation here */
-    Spend(cost);
-    UpdateFunds();
+    spend(cost);
+    updateFunds();
 
     mapV = v;
     holdMapH = h;
@@ -638,11 +638,11 @@ short Micropolis::check6x6(
 
     cost += (short)gCostOf[tool];
 
-    if ((TotalFunds - cost) < 0) return -2;
+    if ((totalFunds - cost) < 0) return -2;
 
     /* take care of the money situtation here */
-    Spend(cost);
-    UpdateFunds();
+    spend(cost);
+    updateFunds();
 
     mapV = v;
     holdMapH = h;
@@ -830,7 +830,7 @@ void Micropolis::doShowZoneStatus(
     char *s0, char *s1, char *s2, char *s3, char *s4,
     int x, int y)
 {
-    Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
+    callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
 }
 
 
@@ -866,7 +866,7 @@ void Micropolis::putRubble(int x, int y, int size)
  */
 void Micropolis::didTool(const char *name, short x, short y)
 {
-    Callback("UIDidTool", "sdd", name, (int)x, (int)y);
+    callback("UIDidTool", "sdd", name, (int)x, (int)y);
 }
 
 
@@ -909,25 +909,25 @@ int Micropolis::bulldozerTool(short x, short y)
 
     if (currTile & ZONEBIT) { /* zone center bit is set */
 
-        if (TotalFunds > 0) {
+        if (totalFunds > 0) {
 
-            Spend(1);
+            spend(1);
 
             switch (checkSize(temp)) {
 
             case 3:
-                MakeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-High", x, y);
                 putRubble(x - 1, y - 1, 3);
                 break;
 
             case 4:
-                MakeSound("city", "Explosion-Low", x, y);
+                makeSound("city", "Explosion-Low", x, y);
                 putRubble(x - 1, y - 1, 4);
                 break;
 
             case 6:
-                MakeSound("city", "Explosion-High", x, y);
-                MakeSound("city", "Explosion-Low", x, y);
+                makeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-Low", x, y);
                 putRubble(x - 1, y - 1, 6);
                 break;
 
@@ -940,24 +940,24 @@ int Micropolis::bulldozerTool(short x, short y)
 
     } else if ((zoneSize = checkBigZone(temp, &deltaH, &deltaV))) {
 
-        if (TotalFunds > 0) {
+        if (totalFunds > 0) {
 
-            Spend(1);
+            spend(1);
 
             switch (zoneSize) {
 
             case 3:
-                MakeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-High", x, y);
                 break;
 
             case 4:
-                MakeSound("city", "Explosion-Low", x, y);
+                makeSound("city", "Explosion-Low", x, y);
                 putRubble(x + deltaH - 1, y + deltaV - 1, 4);
                 break;
 
             case 6:
-                MakeSound("city", "Explosion-High", x, y);
-                MakeSound("city", "Explosion-Low", x, y);
+                makeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-Low", x, y);
                 putRubble(x + deltaH - 1, y + deltaV - 1, 6);
                 break;
 
@@ -969,12 +969,12 @@ int Micropolis::bulldozerTool(short x, short y)
 
         if (temp == RIVER || temp == REDGE || temp == CHANNEL) {
 
-            if (TotalFunds >= 6) {
+            if (totalFunds >= 6) {
 
                 result = connectTile(x, y, &map[x][y], 1);
 
                 if (temp != (map[x][y] & LOMASK)) {
-                  Spend(5);
+                  spend(5);
                 }
 
             } else {
@@ -986,7 +986,7 @@ int Micropolis::bulldozerTool(short x, short y)
 
     }
 
-    UpdateFunds();
+    updateFunds();
 
     if (result == 1) {
         didTool("Dozr", x, y);
@@ -1006,7 +1006,7 @@ int Micropolis::roadTool(short x, short y)
     }
 
     result = connectTile(x, y, &map[x][y], 2);
-    UpdateFunds();
+    updateFunds();
 
     if (result == 1) {
         didTool("Road", x, y);
@@ -1025,7 +1025,7 @@ int Micropolis::railroadTool(short x, short y)
     }
 
     result = connectTile(x, y, &map[x][y], 3);
-    UpdateFunds();
+    updateFunds();
 
     if (result == 1) {
         didTool("Rail", x, y);
@@ -1044,7 +1044,7 @@ int Micropolis::wireTool(short x, short y)
     }
 
     result = connectTile(x, y, &map[x][y], 4);
-    UpdateFunds();
+    updateFunds();
 
     if (result == 1) {
         didTool("Wire", x, y);
@@ -1339,15 +1339,15 @@ int Micropolis::doTool(EditingTool tool, short x, short y, bool first)
 /**
  * @todo The last coordinates should be passed from the tool so the
  *       simulator is stateless and can support multiple tools
- *       drawing at once. Get rid of last_x and last_y.
+ *       drawing at once. Get rid of toolXLast and toolYLast.
  * @todo Add enum for tool result values.
  */
 void Micropolis::toolDown(EditingTool tool, short x, short y)
 {
     int result;
 
-    last_x = x;
-    last_y = y;
+    toolXLast = x;
+    toolYLast = y;
 
     result = doTool(tool, x <<4, y <<4, true);
 
@@ -1355,16 +1355,16 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
         clearMessage();
         sendMessage(STR301_BULLDOZE_AREA_FIRST);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
-        MakeSound("interface", "UhUh", x <<4, y <<4);
+        makeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
         clearMessage();
         sendMessage(STR301_NOT_ENOUGH_FUNDS);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
-        MakeSound("interface", "Sorry", x <<4, y <<4);
+        makeSound("interface", "Sorry", x <<4, y <<4);
     }
 
     simSkip = 0;
-    InvalidateEditors();
+    invalidateEditors();
 }
 
 
@@ -1382,15 +1382,15 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
     x = px;
     y = py;
 
-    tool_x = x;
-    tool_y = y;
+    toolX = x;
+    toolY = y;
 
     dist = gToolSize[tool];
 
     x >>= 4;
     y >>= 4;
-    lx = last_x >> 4;
-    ly = last_y >> 4;
+    lx = toolXLast >> 4;
+    ly = toolYLast >> 4;
 
     dx = x - lx;
     dy = y - ly;
@@ -1411,8 +1411,8 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
 
     if (dist == 1) {
         for (i = 0.0; i <= 1 + step; i += step) {
-            tx = (last_x >>4) + i * dx;
-            ty = (last_y >>4) + i * dy;
+            tx = (toolXLast >>4) + i * dx;
+            ty = (toolYLast >>4) + i * dy;
             dtx = ABS(tx - lx);
             dty = ABS(ty - ly);
             if ((dtx >= 1) || (dty >= 1)) {
@@ -1431,8 +1431,8 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
         }
     } else {
         for (i = 0.0; i <= 1 + step; i += step) {
-            tx = (last_x >>4) + i * dx;
-            ty = (last_y >>4) + i * dy;
+            tx = (toolXLast >>4) + i * dx;
+            ty = (toolYLast >>4) + i * dy;
             dtx = ABS(tx - lx);
             dty = ABS(ty - ly);
             lx = (int)(tx + rx);
@@ -1441,12 +1441,12 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
         }
     }
 
-    last_x = (lx <<4) + 8;
-    last_y = (ly <<4) + 8;
+    toolXLast = (lx <<4) + 8;
+    toolYLast = (ly <<4) + 8;
 
     simSkip = 0; // update editors overlapping this one
 
-    InvalidateEditors();
+    invalidateEditors();
 }
 
 

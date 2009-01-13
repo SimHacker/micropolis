@@ -112,7 +112,7 @@ void Micropolis::doBudgetNow(bool fromMenu)
 
     Quad total = fireInt + policeInt + roadInt;
 
-    Quad yumDuckets = taxFund + TotalFunds;
+    Quad yumDuckets = taxFund + totalFunds;
 
     if (yumDuckets > total) {
 
@@ -277,25 +277,25 @@ noMoney:
             total = fireSpend + policeSpend + roadSpend;
 
             Quad moreDough = (Quad)(taxFund - total);
-            Spend(-moreDough);
+            spend(-moreDough);
 
         }
 
         drawBudgetWindow();
         drawCurrPercents();
-        DoUpdateHeads();
+        doUpdateHeads();
 
     } else { /* autoBudget & !fromMenu */
 
         // FIXME: Not sure yumDuckets is the right value here. It gets the
         // amount spent subtracted from it above in some cases, but not if
         // we are fully funded. I think we want to use the original value
-        // of yumDuckets, which is taxFund + TotalFunds.
+        // of yumDuckets, which is taxFund + totalFunds.
 
         if (yumDuckets > total) {
 
             Quad moreDough = (Quad)(taxFund - total);
-            Spend(-moreDough);
+            spend(-moreDough);
 
             fireSpend = fireFund;
             policeSpend = policeFund;
@@ -303,12 +303,12 @@ noMoney:
 
             drawBudgetWindow();
             drawCurrPercents();
-            DoUpdateHeads();
+            doUpdateHeads();
 
         } else {
 
             autoBudget = false; /* force autobudget */
-            MustUpdateOptions = 1;
+            mustUpdateOptions = 1;
             clearMessage();
             sendMessage(STR301_NO_MONEY);
             goto noMoney;
@@ -357,10 +357,10 @@ void Micropolis::reallyDrawBudgetWindow()
 
     }
 
-    sprintf(numStr, "%d", (int)TotalFunds);
+    sprintf(numStr, "%d", (int)totalFunds);
     makeDollarDecimalStr(numStr, previousStr);
 
-    sprintf(numStr, "%d", (int)(cashFlow2 + TotalFunds));
+    sprintf(numStr, "%d", (int)(cashFlow2 + totalFunds));
     makeDollarDecimalStr(numStr, currentStr);
 
     sprintf(numStr, "%d", (int)taxFund);
@@ -442,15 +442,15 @@ void Micropolis::updateBudget()
     drawCurrPercents();
     drawBudgetWindow();
 
-    Callback("UIUpdateBudget", "");
+    callback("UIUpdateBudget", "");
 }
 
 
 void Micropolis::showBudgetWindowAndStartWaiting()
 {
-    Callback("UIShowBudgetAndWait", "");
+    callback("UIShowBudgetAndWait", "");
 
-    Pause();
+    pause();
 }
 
 
@@ -461,7 +461,7 @@ void Micropolis::setBudget(
     char *collectedStr,
     short tax)
 {
-    Callback(
+    callback(
         "UISetBudget",
         "ssssd",
         flowStr,
@@ -480,7 +480,7 @@ void Micropolis::setBudgetValues(
     char *fireGot,
     char *fireWant)
 {
-    Callback(
+    callback(
         "UISetBudgetValues",
         "ssdssdssd",
         roadGot,

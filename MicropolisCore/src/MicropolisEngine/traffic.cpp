@@ -78,50 +78,50 @@
  * @return \c 1 if connection found, \c 0 if not found,
  *         \c -1 if no connection to road found
  */
-short Micropolis::MakeTraf(ZoneType dest)
+short Micropolis::makeTraffic(ZoneType dest)
 {
     short xtem, ytem;
 
     xtem = curMapX; // Temporarily save curMapX
     ytem = curMapY; // Temporarily save curMapY
-    Zsource = dest;
-    PosStackN = 0; // Clear position stack
+    zoneSource = dest;
+    curMapStackPointer = 0; // Clear position stack
 
 #if 0
-      if ((!getRandom(2)) && FindPTele()) {
-        /* printf("Telecommute!\n"); */
+      if ((!getRandom(2)) && findPermeterTelecom()) {
+        /* printf("Telecom!\n"); */
         return 1;
       }
 #endif
 
-    if (FindPRoad()) {            /* look for road on zone perimeter */
+    if (findPerimeterRoad()) {            /* look for road on zone perimeter */
 
-        if (TryDrive()) {           /* attempt to drive somewhere */
-            SetTrafMem();             /* if sucessful, inc trafdensity */
+        if (tryDrive()) {         /* attempt to drive somewhere */
+            setTrafficMap();      /* if sucessful, inc trafdensity */
             curMapX = xtem;
             curMapY = ytem;
-            return 1;            /* traffic passed */
+            return 1;             /* traffic passed */
         }
 
         curMapX = xtem;
         curMapY = ytem;
 
-        return 0;             /* traffic failed */
+        return 0;                 /* traffic failed */
     } else {
-        return -1;             /* no road found */
+        return -1;                /* no road found */
     }
 }
 
 
-/* comefrom: MakeTraf */
-void Micropolis::SetTrafMem()
+/* comefrom: makeTraffic */
+void Micropolis::setTrafficMap()
 {
     register short x, z;
 
     /* For each saved position of the drive */
-    for (x = PosStackN; x > 0; x--) {
+    for (x = curMapStackPointer; x > 0; x--) {
 
-        PullPos();
+        pullPos();
 
         if (TestBounds(curMapX, curMapY)) {
 
@@ -137,15 +137,15 @@ void Micropolis::SetTrafMem()
                 if (z > 240 && getRandom(5) == 0) {
 
                     z = 240;
-                    TrafMaxX = curMapX <<4;
-                    TrafMaxY = curMapY <<4;
+                    trafMaxX = curMapX;
+                    trafMaxY = curMapY;
 
                     /* Direct helicopter towards heavy traffic */
-                    sprite = GetSprite(SPRITE_HELICOPTER);
+                    sprite = getSprite(SPRITE_HELICOPTER);
                     if (sprite != NULL && sprite->control == -1) {
 
-                        sprite->destX = TrafMaxX;
-                        sprite->destY = TrafMaxY;
+		        sprite->destX = trafMaxX <<4;
+                        sprite->destY = trafMaxY <<4;
 
                     }
                 }
@@ -158,20 +158,20 @@ void Micropolis::SetTrafMem()
 
 
 /** Push current position (curMapX, curMapY) onto position stack */
-void Micropolis::PushPos()
+void Micropolis::pushPos()
 {
-    PosStackN++;
-    curMapXStack[PosStackN] = curMapX;
-    curMapYStack[PosStackN] = curMapY;
+    curMapStackPointer++;
+    curMapStackX[curMapStackPointer] = curMapX;
+    curMapStackY[curMapStackPointer] = curMapY;
 }
 
 
 /** Pull top-most position from stack and store in curMapX and curMapY */
-void Micropolis::PullPos()
+void Micropolis::pullPos()
 {
-    curMapX = curMapXStack[PosStackN];
-    curMapY = curMapYStack[PosStackN];
-    PosStackN--;
+    curMapX = curMapStackX[curMapStackPointer];
+    curMapY = curMapStackY[curMapStackPointer];
+    curMapStackPointer--;
 }
 
 
@@ -181,7 +181,7 @@ void Micropolis::PullPos()
  * @pre  curMapX and curMapY contain the starting coordinates
  * @post If a connection is found, it is stored in curMapX and curMapY
  */
-bool Micropolis::FindPRoad()
+bool Micropolis::findPerimeterRoad()
 {
     /* look for road on edges of zone */
     static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
@@ -195,7 +195,7 @@ bool Micropolis::FindPRoad()
 
         if (TestBounds(tx, ty)) {
 
-            if (RoadTest(map[tx][ty])) {
+            if (roadTest(map[tx][ty])) {
 
                 curMapX = tx;
                 curMapY = ty;
@@ -210,13 +210,13 @@ bool Micropolis::FindPRoad()
 
 
 /**
- * Find a telecomm connection at the perimeter
- * @return Indication that a telecomm connection has been found
+ * Find a telecom connection at the perimeter
+ * @return Indication that a telecom connection has been found
  * @pre  curMapX and curMapY contain the starting coordinates
  */
-bool Micropolis::FindPTele()
+bool Micropolis::findPerimeterTelecom()
 {
-    /* look for telecommunication on edges of zone */
+    /* look for telecom on edges of zone */
     static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
     static const short PerimY[12] = {-2,-2,-2,-1, 0, 1, 2, 2, 2, 1, 0,-1};
     short tx, ty, tile;
@@ -242,66 +242,66 @@ bool Micropolis::FindPTele()
 /**
  * Try to drive to a destination.
  * @return Was drive succesful?
- * @post Position stack (curMapXStack, curMapYStack, PosStackN)
+ * @post Position stack (curMapStackX, curMapStackY, curMapStackPointer)
  *       is filled with some intermediate positions of the drive
- * @todo Find out why the stack is popped, but curMapX and sMapY are not updated
+ * @todo Find out why the stack is popped, but curMapX and curMapY are not updated
  */
-bool Micropolis::TryDrive()
+bool Micropolis::tryDrive()
 {
     short dist;
 
-    LDir = DIR_INVALID;
+    dirLast = DIR_INVALID;
     for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
-        if (tryGo(dist)) {                /* if it got a road */
+        if (tryGo(dist)) { /* if it got a road */
 
-            if (DriveDone()) {              /* if destination is reached */
-                return true;                  /* pass */
+            if (driveDone()) { /* if destination is reached */
+                return true; /* pass */
             }
 
         } else {
 
-            if (PosStackN > 0) {            /* deadend , backup */
-                PosStackN--;
+            if (curMapStackPointer > 0) { /* dead end, backup */
+                curMapStackPointer--;
                 dist += 3;
             } else {
-                return false;                 /* give up at start  */
+                return false; /* give up at start  */
             }
 
         }
     }
 
-    return false;                       /* gone maxdis */
+    return false; /* gone MAX_TRAFFIC_DISTANCE */
 }
 
 
-/* comefrom: TryDrive */
+/* comefrom: tryDrive */
 bool Micropolis::tryGo(int dist)
 {
-    short x, rdir;
-    Direction realdir;
+    short x, dirRandom;
+    Direction dirReal;
 
 #if 0
-    rdir = getRandom(3); /* XXX: Heaviest user of Rand */
+    dirRandom = getRandom(3); /* XXX: Heaviest user of Rand */
 #else
-    rdir = getRandom16() & 3;
+    dirRandom = getRandom16() & 3;
 #endif
 
-    for (x = rdir; x < (rdir + 4); x++) { /* for the 4 directions */
+    for (x = dirRandom; x < (dirRandom + 4); x++) { /* for the 4 directions */
 
-        realdir = (Direction)(x & 3);
+        dirReal = (Direction)(x & 3);
 
-        if (realdir == LDir) {
+        if (dirReal == dirLast) {
             continue; /* skip last direction */
         }
 
-        if (RoadTest(GetFromMap(realdir))) {
-            moveMapSim(realdir);
-            LDir = ReverseDirection(realdir);
+        if (roadTest(getFromMap(dirReal))) {
+            moveMapSim(dirReal);
+            dirLast = ReverseDirection(dirReal);
 
             if (dist & 1) {
                 /* save pos every other move */
-                PushPos();
+                pushPos();
             }
 
             return true;
@@ -318,7 +318,7 @@ bool Micropolis::tryGo(int dist)
  * @return The tile in the indicated direction. If tile is off-world or an
  *         incorrect direction is given, \c DIRT is returned.
  */
-short Micropolis::GetFromMap(Direction d)
+short Micropolis::getFromMap(Direction d)
 {
     switch (d) {
 
@@ -360,9 +360,9 @@ short Micropolis::GetFromMap(Direction d)
 /**
  * Has the journey arrived at its destination?
  * @return Indication that destination has been reached
- * @pre Zsource contains the zone type to drive to
+ * @pre zoneSource contains the zone type to drive to
  */
-bool Micropolis::DriveDone()
+bool Micropolis::driveDone()
 {
     /* commercial, industrial, residential destinations */
     static const short TARGL[3] = {COMBASE, LHTHR, LHTHR};
@@ -371,8 +371,8 @@ bool Micropolis::DriveDone()
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGL));
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGH));
 
-    short l = TARGL[Zsource]; // Lowest acceptable tile value
-    short h = TARGH[Zsource]; // Highest acceptable tile value
+    short l = TARGL[zoneSource]; // Lowest acceptable tile value
+    short h = TARGH[zoneSource]; // Highest acceptable tile value
 
     if (curMapY > 0) {
         short z = map[curMapX][curMapY - 1] & LOMASK;
@@ -411,7 +411,7 @@ bool Micropolis::DriveDone()
  * @param t Tile
  * @return Indication that you can drive on the given tile
  */
-bool Micropolis::RoadTest(int t)
+bool Micropolis::roadTest(int t)
 {
     t = t & LOMASK;
 

@@ -404,9 +404,9 @@ void Micropolis::getScore()
     z = (int)(z * SM);
     z = z - getFireSeverity() - cityTax; // dec score for fires and taxes
 
-    float TM = unPwrdZCnt + PwrdZCnt;   // dec score for unpowered zones
+    float TM = unpoweredZoneCount + poweredZoneCount;   // dec score for unpowered zones
     if (TM > 0.0) {
-        z = (int)(z * (float)(PwrdZCnt / TM));
+        z = (int)(z * (float)(poweredZoneCount / TM));
     } else {
     }
 
@@ -439,14 +439,14 @@ void Micropolis::doVotes()
 /** Push new score to the user */
 void Micropolis::doScoreCard()
 {
-    Callback("UIUpdate", "s", "evaluation");
+    callback("UIUpdate", "s", "evaluation");
 
     // The user interface should pull these raw values out and format
     // them. The simulator core used to format them and push them out,
     // but the user interface should pull them out and format them
     // itself.
 
-    // City Evaluation ${FormatYear(CurrentYear())}
+    // City Evaluation ${FormatYear(currentYear())}
     // Public Opinion
     //   Is the mayor doing a good job?
     //     Yes: ${FormatPercent(cityYes)}

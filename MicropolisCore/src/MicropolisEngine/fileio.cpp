@@ -210,7 +210,7 @@ bool Micropolis::loadFile(const char *filename)
 
     n = *(Quad *)(miscHist + 50);
     HALF_SWAP_LONGS(&n, 1);
-    SetFunds(n);
+    setFunds(n);
 
     n = *(Quad *)(miscHist + 8);
     HALF_SWAP_LONGS(&n, 1);
@@ -219,11 +219,11 @@ bool Micropolis::loadFile(const char *filename)
     autoBulldoze = (miscHist[52] != 0);   // flag for autoBulldoze
     autoBudget   = (miscHist[53] != 0);   // flag for autoBudget
     autoGoto     = (miscHist[54] != 0);   // flag for auto-goto
-    UserSoundOn  = (miscHist[55] != 0);   // flag for the sound on/off
+    enableSound  = (miscHist[55] != 0);   // flag for the sound on/off
     cityTax = miscHist[56];
-    SimSpeed = miscHist[57];
+    simSpeed = miscHist[57];
     changeCensus();
-    MustUpdateOptions = 1;
+    mustUpdateOptions = 1;
 
     /* yayaya */
 
@@ -258,23 +258,23 @@ bool Micropolis::loadFile(const char *filename)
     }
 
     // If the speed is nonsensical, set it to a reasonable value.
-    if ((SimSpeed < 0) ||
-        (SimSpeed > 3)) {
-        SimSpeed = 3;
+    if ((simSpeed < 0) ||
+        (simSpeed > 3)) {
+        simSpeed = 3;
     }
 
-    setSpeed(SimSpeed);
+    setSpeed(simSpeed);
     setSkips(0);
     initFundingLevel();
 
     // Set the scenario id to 0.
     initWillStuff();
-    ScenarioID = SC_NONE;
-    InitSimLoad = 1;
+    scenario = SC_NONE;
+    initSimLoad = 1;
     doInitialEval = false;
-    DoSimInit();
-    InvalidateEditors();
-    InvalidateMaps();
+    doSimInit();
+    invalidateEditors();
+    invalidateMaps();
 
     return true;
 }
@@ -299,7 +299,7 @@ bool Micropolis::saveFile(const char *filename)
     /* total funds is bien put in the 50th & 51th word of miscHist */
     /* find the address, cast the ptr to a longPtr, take contents */
 
-    n = TotalFunds;
+    n = totalFunds;
     HALF_SWAP_LONGS(&n, 1);
     (*(Quad *)(miscHist + 50)) = n;
 
@@ -310,8 +310,8 @@ bool Micropolis::saveFile(const char *filename)
     miscHist[52] = autoBulldoze;   // flag for autoBulldoze
     miscHist[53] = autoBudget;     // flag for autoBudget
     miscHist[54] = autoGoto;       // flag for auto-goto
-    miscHist[55] = UserSoundOn;    // flag for the sound on/off
-    miscHist[57] = SimSpeed;
+    miscHist[55] = enableSound;    // flag for the sound on/off
+    miscHist[57] = simSpeed;
     miscHist[56] = cityTax;        /* post release */
 
     /* yayaya */
@@ -356,7 +356,7 @@ void Micropolis::loadScenario(Scenario s)
 
     cityFileName = "";
 
-    SetGameLevel(LEVEL_EASY);
+    setGameLevel(LEVEL_EASY);
 
     if (s < SC_DULLSVILLE || s > SC_RIO) {
         s = SC_DULLSVILLE;
@@ -366,58 +366,58 @@ void Micropolis::loadScenario(Scenario s)
         case SC_DULLSVILLE:
             name = "Dullsville";
             fname = "snro.111";
-            ScenarioID = SC_DULLSVILLE;
+            scenario = SC_DULLSVILLE;
             cityTime = ((1900 - 1900) * 48) + 2;
-            SetFunds(5000);
+            setFunds(5000);
             break;
         case SC_SAN_FRANCISCO:
             name = "San Francisco";
             fname = "snro.222";
-            ScenarioID = SC_SAN_FRANCISCO;
+            scenario = SC_SAN_FRANCISCO;
             cityTime = ((1906 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_HAMBURG:
             name = "Hamburg";
             fname = "snro.333";
-            ScenarioID = SC_HAMBURG;
+            scenario = SC_HAMBURG;
             cityTime = ((1944 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_BERN:
             name = "Bern";
             fname = "snro.444";
-            ScenarioID = SC_BERN;
+            scenario = SC_BERN;
             cityTime = ((1965 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_TOKYO:
             name = "Tokyo";
             fname = "snro.555";
-            ScenarioID = SC_TOKYO;
+            scenario = SC_TOKYO;
             cityTime = ((1957 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_DETROIT:
             name = "Detroit";
             fname = "snro.666";
-            ScenarioID = SC_DETROIT;
+            scenario = SC_DETROIT;
             cityTime = ((1972 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_BOSTON:
             name = "Boston";
             fname = "snro.777";
-            ScenarioID = SC_BOSTON;
+            scenario = SC_BOSTON;
             cityTime = ((2010 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         case SC_RIO:
             name = "Rio de Janeiro";
             fname = "snro.888";
-            ScenarioID = SC_RIO;
+            scenario = SC_RIO;
             cityTime = ((2047 - 1900) * 48) + 2;
-            SetFunds(20000);
+            setFunds(20000);
             break;
         default:
             NOT_REACHED();
@@ -434,12 +434,12 @@ void Micropolis::loadScenario(Scenario s)
 
     initWillStuff();
     initFundingLevel();
-    UpdateFunds();
-    InvalidateEditors();
-    InvalidateMaps();
-    InitSimLoad = 1;
+    updateFunds();
+    invalidateEditors();
+    invalidateMaps();
+    initSimLoad = 1;
     doInitialEval = false;
-    DoSimInit();
+    doSimInit();
     didLoadScenario();
 }
 
@@ -447,7 +447,7 @@ void Micropolis::loadScenario(Scenario s)
 /** Report to the front-end that the scenario was loaded. */
 void Micropolis::didLoadScenario()
 {
-    Callback("UIDidLoadScenario", "");
+    callback("UIDidLoadScenario", "");
 }
 
 /**
@@ -491,7 +491,7 @@ bool Micropolis::loadCity(const char *filename)
 /** Report to the frontend that the game was successfully loaded. */
 void Micropolis::didLoadCity()
 {
-    Callback("UIDidLoadCity", "");
+    callback("UIDidLoadCity", "");
 }
 
 
@@ -501,7 +501,7 @@ void Micropolis::didLoadCity()
  */
 void Micropolis::didntLoadCity(const char *msg)
 {
-    Callback(
+    callback(
         "UIDidntLoadCity",
         "s",
         msg);
@@ -536,14 +536,14 @@ void Micropolis::saveCity()
 /** Report to the frontend that the city is being saved. */
 void Micropolis::doSaveCityAs()
 {
-    Callback("UISaveCityAs", "");
+    callback("UISaveCityAs", "");
 }
 
 
 /** Report to the frontend that the city was saved successfully. */
 void Micropolis::didSaveCity()
 {
-    Callback("UIDidSaveCity", "");
+    callback("UIDidSaveCity", "");
 }
 
 
@@ -553,7 +553,7 @@ void Micropolis::didSaveCity()
  */
 void Micropolis::didntSaveCity(const char *msg)
 {
-    Callback(
+    callback(
         "UIDidntSaveCity",
         "s",
         msg);

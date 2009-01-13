@@ -72,66 +72,67 @@
 /////////////////////////////////////////////////////////////////////////
 
 
-void Micropolis::DoUpdateHeads()
+void Micropolis::doUpdateHeads()
 {
     showValves();
     doTimeStuff();
-    ReallyUpdateFunds();
+    reallyUpdateFunds();
     updateOptions();
 }
 
 
-void Micropolis::UpdateEditors()
+void Micropolis::updateEditors()
 {
-    InvalidateEditors();
-    DoUpdateHeads();
+    invalidateEditors();
+    doUpdateHeads();
 }
 
 
-void Micropolis::UpdateMaps()
+void Micropolis::updateMaps()
 {
-    InvalidateMaps();
+    invalidateMaps();
 }
 
 
-void Micropolis::UpdateGraphs()
+void Micropolis::updateGraphs()
 {
     changeCensus();
 }
 
 
-void Micropolis::UpdateEvaluation()
+void Micropolis::updateEvaluation()
 {
     changeEval();
 }
 
 
-void Micropolis::UpdateHeads()
+void Micropolis::updateHeads()
 {
-    MustUpdateFunds = valveFlag = 1;
-    cityTimeLast = cityYearLast = cityMonthLast = LastFunds = LastR = -999999;
-    DoUpdateHeads();
+    mustUpdateFunds = valveFlag = 1;
+    cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast = 
+      resLast = comLast = indLast = -999999;
+    doUpdateHeads();
 }
 
 
-void Micropolis::UpdateFunds()
+void Micropolis::updateFunds()
 {
-    MustUpdateFunds = 1;
+    mustUpdateFunds = 1;
 }
 
 
-void Micropolis::ReallyUpdateFunds()
+void Micropolis::reallyUpdateFunds()
 {
-    if (!MustUpdateFunds) {
+    if (!mustUpdateFunds) {
         return;
     }
 
-    MustUpdateFunds = 0;
+    mustUpdateFunds = 0;
 
-    if (TotalFunds != LastFunds) {
-        LastFunds = TotalFunds;
+    if (totalFunds != totalFundsLast) {
+        totalFundsLast = totalFunds;
 
-        Callback(
+        callback(
             "UIUpdate",
             "s",
             "funds");
@@ -159,7 +160,7 @@ void Micropolis::updateDate()
     cityMonth = ((int)cityTime % 48) >> 2;
 
     if (cityYear >= megalinium) {
-        SetYear(startingYear);
+        setYear(startingYear);
         cityYear = startingYear;
         sendMessage(-STR301_NOT_ENOUGH_POWER);
     }
@@ -172,7 +173,7 @@ void Micropolis::updateDate()
         cityYearLast = cityYear;
         cityMonthLast = cityMonth;
 
-        Callback(
+        callback(
             "UIUpdate",
             "s",
             "date");
@@ -223,22 +224,22 @@ void Micropolis::drawValve()
         i = 1500;
     }
 
-    if ((r != LastR) ||
-        (c != LastC) ||
-        (i != LastI)) {
+    if ((r != resLast) ||
+        (c != comLast) ||
+        (i != indLast)) {
 
-        LastR = (int)r;
-        LastC = (int)c;
-        LastI = (int)i;
+        resLast = (int)r;
+        comLast = (int)c;
+        indLast = (int)i;
 
-        SetDemand(r, c, i);
+        setDemand(r, c, i);
     }
 }
 
 
-void Micropolis::SetDemand(float r, float c, float i)
+void Micropolis::setDemand(float r, float c, float i)
 {
-    Callback(
+    callback(
         "UISetDemand",
         "ddd",
         (int)(r / 100),
@@ -251,7 +252,7 @@ void Micropolis::updateOptions()
 {
     int options;
 
-    if (MustUpdateOptions) {
+    if (mustUpdateOptions) {
 
         options = 0;
 
@@ -267,11 +268,11 @@ void Micropolis::updateOptions()
             options |= 4;
         }
 
-        if (!NoDisasters) {
+        if (enableDisasters) {
             options |= 8;
         }
 
-        if (UserSoundOn) {
+        if (enableSound) {
             options |= 16;
         }
 
@@ -287,18 +288,18 @@ void Micropolis::updateOptions()
             options |= 128;
         }
 
-        MustUpdateOptions = 0;
-        UpdateOptionsMenu(options);
+        mustUpdateOptions = 0;
+        updateOptionsMenu(options);
     }
 }
 
 
-void Micropolis::UpdateOptionsMenu(int options)
+void Micropolis::updateOptionsMenu(int options)
 {
     /// @todo Just notify the scripting language that the options
     ///       changed, and let it pull the values out of our members,
     ///       instead of encoding and passing the options.
-    Callback(
+    callback(
         "UISetOptions",
         "dddddddd",
         (options & 1) ? 1 : 0,
@@ -315,7 +316,7 @@ void Micropolis::UpdateOptionsMenu(int options)
  *        (the simulator generates events, the interface forwards them to
  *        the GUI when possible/allowed.
  */
-void Micropolis::UpdateUserInterface()
+void Micropolis::updateUserInterface()
 {
     /// @todo Send all pending update messages to the user interface.
 

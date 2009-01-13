@@ -110,7 +110,7 @@ int Micropolis::connectTile(short x, short y, short *TileAdrPtr, short Command)
     /* AutoDoze */
     if (Command >= 2 && Command <= 4) {
 
-        if (autoBulldoze && TotalFunds > 0) {
+        if (autoBulldoze && totalFunds > 0) {
 
             Tile = *TileAdrPtr;
 
@@ -121,7 +121,7 @@ int Micropolis::connectTile(short x, short y, short *TileAdrPtr, short Command)
                 if ((Tile >= TINYEXP && Tile <= LASTTINYEXP) ||
                         (Tile < HBRIDGE && Tile != DIRT)) {
 
-                    Spend(1);
+                    spend(1);
 
                     *TileAdrPtr = DIRT;
 
@@ -172,7 +172,7 @@ int Micropolis::layDoze(int x, int y, short *TileAdrPtr)
 {
     short Tile;
 
-    if (TotalFunds == 0) {
+    if (totalFunds == 0) {
         return -2;                  /* no mas dinero. */
     }
 
@@ -209,7 +209,7 @@ int Micropolis::layDoze(int x, int y, short *TileAdrPtr)
         break;
     }
 
-    Spend(1);                     /* Costs $1.00.... */
+    spend(1);                     /* Costs $1.00.... */
 
     return 1;
 }
@@ -225,7 +225,7 @@ int Micropolis::layRoad(int x, int y, short *TileAdrPtr)
 {
     int cost = 10;
 
-    if (TotalFunds < cost) {
+    if (totalFunds < cost) {
         return -2;
     }
 
@@ -242,7 +242,7 @@ int Micropolis::layRoad(int x, int y, short *TileAdrPtr)
     case CHANNEL:                 /* Check how to build bridges, if possible. */
         cost = 50;
 
-        if (TotalFunds < cost) {
+        if (totalFunds < cost) {
             return -2;
         }
 
@@ -310,7 +310,7 @@ int Micropolis::layRoad(int x, int y, short *TileAdrPtr)
 
     }
 
-    Spend(cost);
+    spend(cost);
     return 1;
 }
 
@@ -325,7 +325,7 @@ int Micropolis::layRail(int x, int y, short *TileAdrPtr)
 {
     int cost = 20;
 
-    if (TotalFunds < cost) {
+    if (totalFunds < cost) {
         return -2;
     }
 
@@ -346,7 +346,7 @@ int Micropolis::layRail(int x, int y, short *TileAdrPtr)
 
         cost = 100;
 
-        if (TotalFunds < cost) {
+        if (totalFunds < cost) {
             return -2;
         }
 
@@ -413,7 +413,7 @@ int Micropolis::layRail(int x, int y, short *TileAdrPtr)
         return 0;
     }
 
-    Spend(cost);
+    spend(cost);
     return 1;
 }
 
@@ -428,7 +428,7 @@ int Micropolis::layWire(int x, int y, short *TileAdrPtr)
 {
     int cost = 5;
 
-    if (TotalFunds < cost) {
+    if (totalFunds < cost) {
         return -2;
     }
 
@@ -450,7 +450,7 @@ int Micropolis::layWire(int x, int y, short *TileAdrPtr)
 
         cost = 25;
 
-        if (TotalFunds < cost) {
+        if (totalFunds < cost) {
             return -2;
         }
 
@@ -522,7 +522,7 @@ int Micropolis::layWire(int x, int y, short *TileAdrPtr)
 
     }
 
-    Spend(cost);
+    spend(cost);
     return 1;
 }
 

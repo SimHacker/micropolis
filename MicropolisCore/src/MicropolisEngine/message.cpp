@@ -79,10 +79,10 @@ void Micropolis::sendMessages()
     float TM;
 
     // Running a scenario, and waiting it to 'end' so we can give a score
-    if (ScenarioID > SC_NONE && ScoreType > SC_NONE && ScoreWait > 0) {
-        ScoreWait--;
-        if (ScoreWait == 0) {
-            doScenarioScore(ScoreType);
+    if (scenario > SC_NONE && scoreType > SC_NONE && scoreWait > 0) {
+        scoreWait--;
+        if (scoreWait == 0) {
+            doScenarioScore(scoreType);
         }
     }
 
@@ -157,9 +157,9 @@ void Micropolis::sendMessages()
         break;
 
     case 32:
-        TM = (float)(unPwrdZCnt + PwrdZCnt); /* dec score for unpowered zones */
+        TM = (float)(unpoweredZoneCount + poweredZoneCount); /* dec score for unpowered zones */
         if (TM > 0) {
-            if (PwrdZCnt / TM < 0.7) {
+            if (poweredZoneCount / TM < 0.7) {
                 sendMessage(STR301_BLACKOUTS_REPORTED);
             }
         }
@@ -421,40 +421,40 @@ void Micropolis::sendMessageAt(short mesgNum, short x, short y)
 void Micropolis::doMessage()
 {
     char messageStr[256];
-    short pictId;
+    short pictureNumber;
 
     messageStr[0] = 0;
 
     if (messagePort != 0) {
-        MesNum = messagePort;
+        messageNumber = messagePort;
         messagePort = 0;
-        LastMesTime = TickCount();
-        doMakeSound((MesNum < 0) ? -MesNum : MesNum, messageX, messageY);
+        messageTimeLast = tickCount();
+        doMakeSound((messageNumber < 0) ? -messageNumber : messageNumber, messageX, messageY);
     } else {
-        if (MesNum == 0) {
+        if (messageNumber == 0) {
             return;
         }
-        if (MesNum < 0) {
-            MesNum = -MesNum;
-            LastMesTime = TickCount();
-        } else if (TickCount() - LastMesTime > 60 * 30) {
-            MesNum = 0;
+        if (messageNumber < 0) {
+            messageNumber = -messageNumber;
+            messageTimeLast = tickCount();
+        } else if (tickCount() - messageTimeLast > 60 * 30) {
+            messageNumber = 0;
             return;
         }
     }
 
 
-    if (MesNum >= 0) {
-        if (MesNum == 0) {
+    if (messageNumber >= 0) {
+        if (messageNumber == 0) {
             return;
         }
 
-        if (MesNum > STR301_LAST) {
-            MesNum = 0;
+        if (messageNumber > STR301_LAST) {
+            messageNumber = 0;
             return;
         }
 
-        getIndString(messageStr, 301, MesNum);
+        getIndString(messageStr, 301, messageNumber);
 
         if (autoGoto && messageX != -1 && messageY != -1) {
             doAutoGoto(messageX, messageY, messageStr);
@@ -466,17 +466,17 @@ void Micropolis::doMessage()
 
     } else { /* picture message */
 
-        pictId = -MesNum;
+        pictureNumber = -messageNumber;
 
-        if (pictId < 43) {
-            getIndString(messageStr, 301, pictId);
+        if (pictureNumber < 43) {
+            getIndString(messageStr, 301, pictureNumber);
         } else {
             messageStr[0] = '\0';
         }
 
-        doShowPicture(pictId);
+        doShowPicture(pictureNumber);
 
-        messagePort = pictId; /* resend text message */
+        messagePort = pictureNumber; /* resend text message */
 
         if (autoGoto && messageX != -1 && messageY != -1) {
 
@@ -501,11 +501,11 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
 
         case STR301_TRAFFIC_JAMS:
             if (getRandom(5) == 1) {
-                MakeSound("city", "HonkHonk-Med", x, y);
+                makeSound("city", "HonkHonk-Med", x, y);
             } else if (getRandom(5) == 1) {
-                MakeSound("city", "HonkHonk-Low", x, y);
+                makeSound("city", "HonkHonk-Low", x, y);
             } else if (getRandom(5) == 1) {
-                MakeSound("city", "HonkHonk-High", x, y);
+                makeSound("city", "HonkHonk-High", x, y);
             }
             break;
 
@@ -517,26 +517,26 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
         case STR301_SHIP_CRASHED:
         case STR301_TRAIN_CRASHED:
         case STR301_HELICOPTER_CRASHED:
-            MakeSound("city", "Siren", x, y);
+            makeSound("city", "Siren", x, y);
             break;
 
         case  STR301_MONSTER_SIGHTED:
-            MakeSound("city", "Monster", x, y);
+            makeSound("city", "Monster", x, y);
             break;
 
         case STR301_FIREBOMBING:
-            MakeSound("city", "Explosion-Low", x, y);
-            MakeSound("city", "Siren", x, y);
+            makeSound("city", "Explosion-Low", x, y);
+            makeSound("city", "Siren", x, y);
             break;
 
         case STR301_NUCLEAR_MELTDOWN:
-            MakeSound("city", "Explosion-High", x, y);
-            MakeSound("city", "Explosion-Low", x, y);
-            MakeSound("city", "Siren", x, y);
+            makeSound("city", "Explosion-High", x, y);
+            makeSound("city", "Explosion-Low", x, y);
+            makeSound("city", "Siren", x, y);
             break;
 
         case STR301_RIOTS_REPORTED:
-            MakeSound("city", "Siren", x, y);
+            makeSound("city", "Siren", x, y);
             break;
 
     }
@@ -551,7 +551,7 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
  */
 void Micropolis::doAutoGoto(short x, short y, char *msg)
 {
-    Callback("UIAutoGoto", "dd", (int)x, (int)y);
+    callback("UIAutoGoto", "dd", (int)x, (int)y);
 }
 
 
@@ -565,7 +565,7 @@ void Micropolis::setMessageField(char *str)
         strcpy(messageLast, str);
         messageLastValid = true;
 
-        Callback("UISetMessage", "s", str);
+        callback("UISetMessage", "s", str);
     }
 }
 
@@ -576,21 +576,21 @@ void Micropolis::setMessageField(char *str)
  */
 void Micropolis::doShowPicture(short id)
 {
-    Callback("UIShowPicture", "d", (int)id);
+    callback("UIShowPicture", "d", (int)id);
 }
 
 
 /** Tell the front-end that the player has lost the game */
 void Micropolis::doLoseGame()
 {
-    Callback("UILoseGame", "");
+    callback("UILoseGame", "");
 }
 
 
 /** Tell the front-end that the player has won the game */
 void Micropolis::doWinGame()
 {
-    Callback("UIWinGame", "");
+    callback("UIWinGame", "");
 }
 
 

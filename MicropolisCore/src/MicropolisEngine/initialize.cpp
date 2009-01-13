@@ -78,7 +78,7 @@ void Micropolis::initWillStuff()
 
     randomlySeedRandom();
     initGraphMax();
-    DestroyAllSprites();
+    destroyAllSprites();
 
     roadEffect = MAX_ROAD_EFFECT;
     policeEffect = MAX_POLICESTATION_EFFECT;
@@ -88,15 +88,15 @@ void Micropolis::initWillStuff()
     cityTimeLast = -1;
     cityYearLast = -1;
     cityMonthLast = -1;
-    LastFunds = -1;
-    LastR = LastC = LastI = -999999;
-    MesNum = 0;
+    totalFundsLast = -1;
+    resLast = comLast = indLast = -999999;
+    messageNumber = 0;
     messagePort = 0;
     roadFund = 0;
     policeFund = 0;
     fireFund = 0;
     valveFlag = 1;
-    DisasterEvent = SC_NONE;
+    disasterEvent = SC_NONE;
     taxFlag = false;
 
     for (x = 0; x < HWLDX; x++) {
@@ -126,8 +126,8 @@ void Micropolis::initWillStuff()
         }
     }
 
-    DoNewGame();
-    DoUpdateHeads();
+    doNewGame();
+    doUpdateHeads();
 }
 
 

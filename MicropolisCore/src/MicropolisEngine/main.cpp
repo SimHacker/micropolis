@@ -125,31 +125,31 @@ void Micropolis::environmentInit()
 
 void Micropolis::simInit()
 {
-    UserSoundOn = true; // Enable sound
-    MustUpdateOptions = 1;
+    enableSound = true; // Enable sound
+    mustUpdateOptions = 1;
     messageLastValid = false; // No message seen yet
-    ScenarioID = SC_NONE;
+    scenario = SC_NONE;
     startingYear = 1900;
     simSkips = simSkip = 0;
     autoGoto = true;  // Enable auto-goto
     cityTax = 7;
     cityTime = 50;
-    NoDisasters = false; // Enable disasters
+    enableDisasters = true; // Enable disasters
     autoBulldoze = true; // Enable auto bulldoze
     autoBudget   = true; // Enable auto-budget
-    MesNum = 0;
-    LastMesTime = 0;
-    flagBlink = 1;
-    SimSpeed = 3;
+    messageNumber = 0;
+    messageTimeLast = 0;
+    blinkFlag = 1;
+    simSpeed = 3;
     changeEval();
     messagePort = 0;
     messageX = -1;
     messageY = -1;
     simPaused = false; // Simumaltion is running
     simLoops = 0;
-    InitSimLoad = 2;
+    initSimLoad = 2;
 
-    InitializeSound();
+    initializeSound();
     initMapArrays();
     initGraphs();
     initFundingLevel();
@@ -157,8 +157,8 @@ void Micropolis::simInit()
     resetEditorState();
     clearMap();
     initWillStuff();
-    SetFunds(5000);
-    SetGameLevelFunds(LEVEL_EASY);
+    setFunds(5000);
+    setGameLevelFunds(LEVEL_EASY);
     setSpeed(0);
     setSkips(0);
 }
@@ -166,13 +166,13 @@ void Micropolis::simInit()
 
 void Micropolis::simUpdate()
 {
-    flagBlink = ((TickCount() % 60) < 30) ? 1 : -1;
+    blinkFlag = ((tickCount() % 60) < 30) ? 1 : -1;
 
-    if (SimSpeed && !heatSteps) {
+    if (simSpeed && !heatSteps) {
       tilesAnimated = 0;
     }
 
-    DoUpdateHeads();
+    doUpdateHeads();
     graphDoer();
     updateBudgetWindow();
     scoreDoer();
@@ -187,7 +187,7 @@ void Micropolis::simHeat()
     register int fl = heatFlow;
 
     if (cellSrc == NULL) {
-        cellSrc = (short *)NewPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
+        cellSrc = (short *)newPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
         cellDst = &map[0][0];
     }
 
@@ -357,16 +357,16 @@ void Micropolis::simLoop(int doSim)
            simHeat();
        }
 
-       MoveObjects();
+       moveObjects();
 
        newMap = 1;
 
    } else {
      if (doSim) {
-         SimFrame();
+         simFrame();
      }
 
-     MoveObjects();
+     moveObjects();
    }
 
    simLoops++;
@@ -376,7 +376,7 @@ void Micropolis::simLoop(int doSim)
 
 void Micropolis::simTick()
 {
-    if (SimSpeed) {
+    if (simSpeed) {
         int i;
         for (i = 0; i < simSkips; i++) {
             simLoop(1);
