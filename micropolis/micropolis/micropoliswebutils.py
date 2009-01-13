@@ -1,6 +1,6 @@
 ########################################################################
-# micropolisutils.py
-# Micropolis utilities for integrating with TurboGears.
+# micropoliswebutils.py
+# Micropolis web utilities for integrating with TurboGears.
 # Written for Micropolis by Don Hopkins.
 # Licensed under GPLv3.
 
@@ -23,7 +23,6 @@ from datetime import datetime
 
 MicropolisCorePath = 'micropolis/MicropolisCore'
 
-MicropolisTileCount = 960
 MicropolisTileSize = 16
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
@@ -272,8 +271,8 @@ class Session(object):
 
         tileViewCache = array.array('i')
         self.tileViewCache = tileViewCache
-        row = (-1,) * micropolisengine.WORLD_X
-        for i in range(0, micropolisengine.WORLD_Y):
+        row = (-1,) * micropolisengine.WORLD_W
+        for i in range(0, micropolisengine.WORLD_H):
             tileViewCache.extend(row)
 
 
@@ -328,17 +327,17 @@ class WebMicropolis(micropolisengine.Micropolis):
         # TODO: Report SWIG bug, if it's not already known or fixed. 
 
         # Hook the engine up so it has a handle on its Python object side. 
-        self.userData = micropolisengine.GetPythonCallbackData(self)
+        self.userData = micropolisengine.getPythonCallbackData(self)
         #print "USERDATA"#, self.userData
 
         # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
-        self.callbackHook = micropolisengine.GetPythonCallbackHook()
+        self.callbackHook = micropolisengine.getPythonCallbackHook()
         #print "CALLBACKHOOK" #, self.callbackHook # SWIG crashes when it prints this
 
         # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
         print "self._invokeCallback", self._invokeCallback
-        self.callbackData = micropolisengine.GetPythonCallbackData(self._invokeCallback)
+        self.callbackData = micropolisengine.getPythonCallbackData(self._invokeCallback)
         #print "CALLBACKDATA" #, self.callbackData # SWIG crashes when it prints this
 
 
@@ -735,14 +734,14 @@ class WebMicropolis(micropolisengine.Micropolis):
 
             self.sendSessions({
                 'message': "UIUpdateFunds",
-                'funds': self.TotalFunds,
+                'funds': self.totalFunds,
             })
 
         elif aspect == "date":
 
             self.sendSessions({
                 'message': "UIUpdateDate",
-                'cityTime': self.CityTime,
+                'cityTime': self.cityTime,
             })
 
         elif aspect == "graph":
@@ -762,15 +761,15 @@ class WebMicropolis(micropolisengine.Micropolis):
 
             self.sendSessions({
                 'message': "UIUpdateEvaluation",
-                'currentYear': self.CurrentYear(),
+                'currentYear': self.currentYear(),
                 'cityYes': self.cityYes,
                 'cityScore': self.cityScore,
-                'deltaCityScore': self.deltaCityScore,
+                'deltaCityScore': self.cityScoreDelta,
                 'cityPop': self.cityPop,
                 'deltaCityPop': self.deltaCityPop,
-                'cityAssValue': self.cityAssValue,
+                'cityAssValue': self.cityAssessedValue,
                 'cityClass': self.cityClass,
-                'gameLevel': self.GameLevel,
+                'gameLevel': self.gameLevel,
                 'problems': problems,
             })
 
@@ -787,8 +786,8 @@ class Game(object):
 
         m = WebMicropolis()
         self.m = m
-        m.ResourceDir = MicropolisCorePath + '/res'
-        m.InitGame()
+        m.resourceDir = MicropolisCorePath + '/res'
+        m.initGame()
 
         # Load a city file.
         cityFileName = MicropolisCorePath + '/cities/haight.cty'
@@ -797,28 +796,28 @@ class Game(object):
 
         # Initialize the simulator engine.
 
-        m.Resume()
+        m.resume()
         m.setSpeed(2)
         m.setSkips(500)
-        m.SetFunds(1000000000)
-        m.autoGo = 0
-        m.CityTax = 10
-        m.NoDisasters = 1
+        m.setFunds(1000000000)
+        m.autoGoto = 0
+        m.cityTax = 10
+        m.enableDisasters = False
 
         tengine = tileengine.TileEngine()
         self.tengine = tengine
 
         tengine.setBuffer(m.getMapBuffer())
-        tengine.width = micropolisengine.WORLD_X
-        tengine.height = micropolisengine.WORLD_Y
+        tengine.width = micropolisengine.WORLD_W
+        tengine.height = micropolisengine.WORLD_H
 
         # Unsigned short tile values, in column major order.
         tengine.typeCode = 'H'
-        tengine.colBytes = 2 * micropolisengine.WORLD_Y
-        tengine.rowBytes = 2
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
         tengine.tileMask = micropolisengine.LOMASK
 
-        self.tileCount = MicropolisTileCount
+        self.tileCount = micropolisengine.TILE_COUNT
         self.tileSize = MicropolisTileSize
 
         self.tilesSurface = cairo.ImageSurface.create_from_png(MicropolisTilesPath)
@@ -859,28 +858,28 @@ class Game(object):
             print "DISASTER", disaster
             if disaster == 'Earthquake':
                 print "EARTHQUAKE"
-                m.MakeEarthquake()
+                m.makeEarthquake()
             elif disaster == 'Flood':
                 print "FLOOD"
-                m.MakeFlood()
+                m.makeFlood()
             elif disaster == 'Meltdown':
                 print "MELTDOWN"
-                m.MakeMeltdown()
+                m.makeMeltdown()
             elif disaster == 'BailOut':
                 print "BailOut"
-                m.SetFunds(7000000)
+                m.setFunds(7000000)
             else:
                 return None
 
         elif command == 'SetTaxRate':
 
             rateStr = kw.get('rate', None)
-            rate = m.CityTax
+            rate = m.cityTax
             try:
                 rate = int(rateStr)
             except: pass
             rate = max(0, min(rate, 20))
-            m.CityTax = rate
+            m.cityTax = rate
 
 
     def doCommand(self, params):
@@ -894,34 +893,34 @@ class Game(object):
             print "disaster", disaster
 
             if disaster == 'monster':
-                m.MakeMonster()
+                m.makeMonster()
             elif disaster == 'fire':
-                m.SetFire()
+                m.setFire()
             elif disaster == 'flood':
-                m.MakeFlood()
+                m.makeFlood()
             elif disaster == 'meltdown':
-                m.MakeMeltdown()
+                m.makeMeltdown()
             elif disaster == 'tornado':
-                m.MakeTornado()
+                m.makeTornado()
             elif disaster == 'earthquake':
-                m.MakeEarthquake()
+                m.makeEarthquake()
             elif disaster == 'eco':
-                m.heat_steps = 1
-                m.heat_rule = 1
+                m.heatSteps = 1
+                m.heatRule = 1
             elif disaster == 'melt':
-                m.heat_steps = 1
-                m.heat_rule = 0
+                m.heatSteps = 1
+                m.heatRule = 0
 
         elif command == 'setTaxRate':
 
-            rateStr = params.get('rate', m.CityTax)
-            rate = m.CityTax
+            rateStr = params.get('rate', m.cityTax)
+            rate = m.cityTax
             print "setTaxRate", rate
             try:
                 rate = int(rateStr)
             except: pass
             if (rate >= 0) and (rate <= 20):
-                m.CityTax = rate
+                m.cityTax = rate
 
         elif command == 'loadCity':
 
@@ -941,7 +940,7 @@ class Game(object):
                 scenario = int(scenarioStr)
             except: pass
             if scenario:
-                m.LoadScenario(scenario)
+                m.loadScenario(scenario)
 
 
     def tickSim(self, ticks=1):
@@ -951,20 +950,19 @@ class Game(object):
         now = time.time()
         fracTime = now - math.floor(now)
 
-        m.flagBlink = fracTime < 0.5
+        m.blinkFlag = fracTime < 0.5
 
-        m.Resume()
+        m.resume()
         
-        lastSkips = m.sim_skips
+        lastSkips = m.simSkips
         m.setSkips(ticks - 1)
         #print "TICK", ticks
-        #print "CityTime", m.CityTime, "CityMonth", m.CityMonth, "CityYear", m.CityYear
-        #print "sim_paused", m.sim_paused, "sim_skips", m.sim_skips, "sim_skip", m.sim_skip
-        print "HEAT_STEPS", m.heat_steps
-        m.sim_tick()
+        #print "CityTime", m.cityTime, "CityMonth", m.cityMonth, "CityYear", m.cityYear
+        #print "simPaused", m.simPaused, "simSkips", m.simSkips, "simSkip", m.simSkip
+        m.simTick()
         m.setSkips(lastSkips)
         m.animateTiles()
-        m.sim_update()
+        m.simUpdate()
 
 
     def handleTick(self, tick, tileViewCache):
@@ -1002,8 +1000,8 @@ class Game(object):
                         (row < 0) or
                         (cols <= 0) or
                         (rows <= 0) or
-                        ((col + cols) > micropolisengine.WORLD_X) or
-                        ((row + rows) > micropolisengine.WORLD_Y)):
+                        ((col + cols) > micropolisengine.WORLD_W) or
+                        ((row + rows) > micropolisengine.WORLD_H)):
                         self.expectationFailed("Invalid parameters.");
 
                     code = 3

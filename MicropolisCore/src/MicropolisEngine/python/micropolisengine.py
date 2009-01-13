@@ -48,8 +48,8 @@ except AttributeError:
 del types
 
 
-GetPythonCallbackHook = _micropolisengine.GetPythonCallbackHook
-GetPythonCallbackData = _micropolisengine.GetPythonCallbackData
+getPythonCallbackHook = _micropolisengine.getPythonCallbackHook
+getPythonCallbackData = _micropolisengine.getPythonCallbackData
 MICROPOLIS_VERSION = _micropolisengine.MICROPOLIS_VERSION
 IS_INTEL = _micropolisengine.IS_INTEL
 RANDOM_RANGE = _micropolisengine.RANDOM_RANGE

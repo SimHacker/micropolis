@@ -195,8 +195,8 @@ class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
         self.m = m
         print "Created Micropolis simulator engine:", m
 
-        m.ResourceDir = 'res'
-        m.InitGame()
+        m.resourceDir = 'res'
+        m.initGame()
 
         # Load a city file.
         cityFileName = 'cities/haight.cty'

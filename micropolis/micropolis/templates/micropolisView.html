@@ -31,13 +31,13 @@
         <h1><a href="/index">Micropolis Eduverse</a></h1>
 
 	<?python
-	    from micropolisengine import WORLD_X, WORLD_Y
+	    from micropolisengine import WORLD_W, WORLD_H
 	    
 	    rowStep = max(1, int(rows / 2))
 	    colStep = max(1, int(cols / 2))
 
-	    right = WORLD_X - cols
-	    bottom = WORLD_Y - rows
+	    right = WORLD_W - cols
+	    bottom = WORLD_H - rows
 	    
 	    colLeft = max(0, min(col - colStep, right))
 	    colRight = max(0, min(col + colStep, right))

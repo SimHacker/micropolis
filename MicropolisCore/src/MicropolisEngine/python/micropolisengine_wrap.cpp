@@ -2612,7 +2612,7 @@ namespace swig {
 // f: float
 // s: string
 //
-void PythonCallbackHook(
+void pythonCallbackHook(
   Micropolis *micropolis,
   void *data,
   const char *name,
@@ -2771,9 +2771,9 @@ void PythonCallbackHook(
 // (which gets wrapped by SWIG), because just exposing 
 // the function itself makes a callable method, not a 
 // way to get a pointer to it. 
-CallbackFunction GetPythonCallbackHook()
+CallbackFunction getPythonCallbackHook()
 {
-  return PythonCallbackHook;
+  return pythonCallbackHook;
 }
 
 
@@ -2781,7 +2781,7 @@ CallbackFunction GetPythonCallbackHook()
 // into a (wrapped) void pointer that you can store in a member 
 // that takes such a type, like the userData or callbackData. 
 // Beware that this subverts the reference counting system. 
-void *GetPythonCallbackData(
+void *getPythonCallbackData(
   PyObject *data)
 {
   return (void *)data;
@@ -3236,12 +3236,12 @@ SWIG_From_unsigned_SS_long  (unsigned long value)
 #ifdef __cplusplus
 extern "C" {
 #endif
-SWIGINTERN PyObject *_wrap_GetPythonCallbackHook(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_getPythonCallbackHook(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   CallbackFunction result;
   
-  if (!PyArg_ParseTuple(args,(char *)":GetPythonCallbackHook")) SWIG_fail;
-  result = (CallbackFunction)GetPythonCallbackHook();
+  if (!PyArg_ParseTuple(args,(char *)":getPythonCallbackHook")) SWIG_fail;
+  result = (CallbackFunction)getPythonCallbackHook();
   resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void);
   return resultobj;
 fail:
@@ -3249,15 +3249,15 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_GetPythonCallbackData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_getPythonCallbackData(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   PyObject *arg1 = (PyObject *) 0 ;
   void *result = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:GetPythonCallbackData",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:getPythonCallbackData",&obj0)) SWIG_fail;
   arg1 = obj0;
-  result = (void *)GetPythonCallbackData(arg1);
+  result = (void *)getPythonCallbackData(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_void, 0 |  0 );
   return resultobj;
 fail:
@@ -28457,8 +28457,8 @@ SWIGINTERN PyObject *Micropolis_swigregister(PyObject *SWIGUNUSEDPARM(self), PyO
 }
 
 static PyMethodDef SwigMethods[] = {
-	 { (char *)"GetPythonCallbackHook", _wrap_GetPythonCallbackHook, METH_VARARGS, NULL},
-	 { (char *)"GetPythonCallbackData", _wrap_GetPythonCallbackData, METH_VARARGS, NULL},
+	 { (char *)"getPythonCallbackHook", _wrap_getPythonCallbackHook, METH_VARARGS, NULL},
+	 { (char *)"getPythonCallbackData", _wrap_getPythonCallbackData, METH_VARARGS, NULL},
 	 { (char *)"ReverseDirection", _wrap_ReverseDirection, METH_VARARGS, NULL},
 	 { (char *)"TestBounds", _wrap_TestBounds, METH_VARARGS, NULL},
 	 { (char *)"absoluteValue", _wrap_absoluteValue, METH_VARARGS, NULL},

@@ -71,8 +71,8 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-CallbackFunction GetPythonCallbackHook();
-void *GetPythonCallbackData(PyObject *data);
+CallbackFunction getPythonCallbackHook();
+void *getPythonCallbackData(PyObject *data);
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -115,7 +115,7 @@ void *GetPythonCallbackData(PyObject *data);
 // f: float
 // s: string
 //
-void PythonCallbackHook(
+void pythonCallbackHook(
   Micropolis *micropolis,
   void *data,
   const char *name,
@@ -274,9 +274,9 @@ void PythonCallbackHook(
 // (which gets wrapped by SWIG), because just exposing 
 // the function itself makes a callable method, not a 
 // way to get a pointer to it. 
-CallbackFunction GetPythonCallbackHook()
+CallbackFunction getPythonCallbackHook()
 {
-  return PythonCallbackHook;
+  return pythonCallbackHook;
 }
 
 
@@ -284,7 +284,7 @@ CallbackFunction GetPythonCallbackHook()
 // into a (wrapped) void pointer that you can store in a member 
 // that takes such a type, like the userData or callbackData. 
 // Beware that this subverts the reference counting system. 
-void *GetPythonCallbackData(
+void *getPythonCallbackData(
   PyObject *data)
 {
   return (void *)data;
@@ -303,7 +303,7 @@ void *GetPythonCallbackData(
 %extend Micropolis {
 
 
-    // None now, but here is where they go. 
+    // None now, but here is where the extension methods go. 
     // Write a regular function that takes no "self" parameter, 
     // but then use "self" to refer to the Micropolis object. 
 

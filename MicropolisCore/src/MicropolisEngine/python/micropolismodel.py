@@ -117,16 +117,16 @@ class MicropolisModel(micropolisengine.Micropolis):
         # TODO: Report SWIG bug, if it's not already known or fixed. 
 
         # Hook the engine up so it has a handle on its Python object side. 
-        self.userData = micropolisengine.GetPythonCallbackData(self)
+        self.userData = micropolisengine.getPythonCallbackData(self)
         #print "USERDATA"#, self.userData
 
         # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
-        self.callbackHook = micropolisengine.GetPythonCallbackHook()
+        self.callbackHook = micropolisengine.getPythonCallbackHook()
         #print "CALLBACKHOOK"#, self.callbackHook
 
         # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
-        self.callbackData = micropolisengine.GetPythonCallbackData(self._invokeCallback)
+        self.callbackData = micropolisengine.getPythonCallbackData(self._invokeCallback)
         #print "CALLBACKDATA"#, self.callbackData
 
         if self.running:
