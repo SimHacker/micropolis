@@ -150,8 +150,8 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         engine = self.engine
 
-        getHistory = engine.GetHistory
-        getHistoryRange = engine.GetHistoryRange
+        getHistory = engine.getHistory
+        getHistoryRange = engine.getHistoryRange
 
         historyCount = micropolisengine.HISTORY_COUNT
         historyTypeCount = micropolisengine.HISTORY_TYPE_COUNT
@@ -353,8 +353,8 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         # Draw years.
 
-        cityYear = engine.CityYear
-        cityMonth = engine.CityMonth
+        cityYear = engine.cityYear
+        cityMonth = engine.cityMonth
 
         ctx.save()
 

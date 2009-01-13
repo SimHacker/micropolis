@@ -115,10 +115,10 @@ class MicropolisDrawingArea(TileDrawingArea):
         interests=('city', 'editor'),
         **args):
 
-        args['tileCount'] = 960
-        args['sourceTileSize'] = 16
-        args['worldCols'] = micropolisengine.WORLD_X
-        args['worldRows'] = micropolisengine.WORLD_Y
+        args['tileCount'] = micropolisengine.TILE_COUNT
+        args['sourceTileSize'] = micropolisengine.BITS_PER_TILE
+        args['worldCols'] = micropolisengine.WORLD_W
+        args['worldRows'] = micropolisengine.WORLD_H
 
         self.engine = engine
 
@@ -141,13 +141,13 @@ class MicropolisDrawingArea(TileDrawingArea):
         buffer = engine.getMapBuffer()
         print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_X
-        tengine.height = micropolisengine.WORLD_Y
+        tengine.width = micropolisengine.WORLD_W
+        tengine.height = micropolisengine.WORLD_H
 
         # Unsigned short tile values, in column major order.
         tengine.typeCode = 'H'
-        tengine.colBytes = 2 * micropolisengine.WORLD_Y
-        tengine.rowBytes = 2
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
         tengine.tileMask = micropolisengine.LOMASK
 
 
@@ -181,7 +181,7 @@ class MicropolisDrawingArea(TileDrawingArea):
     def tickEngine(self):
 
         engine = self.engine
-        engine.sim_tick()
+        engine.simTick()
         engine.animateTiles()
 
 
@@ -464,12 +464,12 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         print "HANDLEKEY", key
 
         if key == 'm':
-            self.engine.heat_steps = 1
-            self.engine.heat_rule = 0
+            self.engine.heatSteps = 1
+            self.engine.heatRule = 0
             return True
         elif key == 'n':
-            self.engine.heat_steps = 1
-            self.engine.heat_rule = 1
+            self.engine.heatSteps = 1
+            self.engine.heatRule = 1
             return True
 
         return False

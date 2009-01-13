@@ -205,9 +205,9 @@ class MicropolisModel(micropolisengine.Micropolis):
 
     def tickEngine(self):
 
-        self.sim_tick()
+        self.simTick()
         #self.animateTiles()
-        self.sim_update()
+        self.simUpdate()
 
 
     def sendUpdate(self, name, *args):
@@ -441,8 +441,8 @@ def CreateTestEngine():
     # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
     engine = MicropolisModel()
 
-    engine.ResourceDir = 'res'
-    engine.InitGame()
+    engine.resourceDir = 'res'
+    engine.initGame()
 
     # Load a city file.
     cityFileName = 'cities/haight.cty'
@@ -451,18 +451,18 @@ def CreateTestEngine():
 
     # Initialize the simulator engine.
 
-    engine.Resume()
+    engine.resume()
     engine.setSpeed(2)
-    engine.CityTax = 8
-    engine.autoGo = 0
-    engine.CityTax = 8
+    engine.cityTax = 8
+    engine.autoGoto = False
+    engine.cityTax = 8
 
     # Testing...
 
     #engine.setSkips(1000)
     engine.setSkips(10)
     #engine.setSkips(0)
-    engine.SetFunds(1000000000)
+    engine.setFunds(1000000000)
 
     return engine
 

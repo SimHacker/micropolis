@@ -94,14 +94,14 @@ class MicropolisTool(tiletool.TileTool):
     def handleMouseDown(self, view, event):
 
         x, y = view.getEventXY(event)
-        #print "DOWN", x, y, "index", self.toolIndex, view.engine.ToolDown
+        #print "DOWN", x, y, "index", self.toolIndex, view.engine.toolDown
         view.engine.toolDown(self.toolIndex, int(x * 16), int(y * 16))
 
 
     def handleMouseDrag(self, view, event):
 
         x, y = view.getEventXY(event)
-        #print "DRAG", x, y, "index", self.toolIndex, view.engine.ToolDrag
+        #print "DRAG", x, y, "index", self.toolIndex, view.engine.toolDrag
         view.engine.toolDrag(self.toolIndex, int(x * 16), int(y * 16))
 
 

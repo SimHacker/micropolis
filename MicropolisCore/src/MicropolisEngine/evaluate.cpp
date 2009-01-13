@@ -281,8 +281,8 @@ short Micropolis::getTrafficAverage()
 
     trafficTotal = 0;
     count = 1;
-    for (x=0; x < HWLDX; x++) {
-        for (y=0; y < HWLDY; y++) {
+    for (x=0; x < WORLD_W_2; x++) {
+        for (y=0; y < WORLD_H_2; y++) {
             if (landValueMap[x][y]) {
                 trafficTotal += trafficDensityMap[x][y];
                 count++;

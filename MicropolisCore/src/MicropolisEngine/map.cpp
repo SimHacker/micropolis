@@ -140,9 +140,9 @@ static short valGrayMap[] = {
     int pixelBytes = view->pixel_bytes; \
     mp = &map[0][0]; \
     imageBase = view->x->color ? view->data : view->data8; \
-    for (col = 0; col < WORLD_X; col++) { \
+    for (col = 0; col < WORLD_W; col++) { \
         image = imageBase + (3 * pixelBytes * col); \
-        for (row = 0; row < WORLD_Y; row++) { \
+        for (row = 0; row < WORLD_H; row++) { \
             tile = *(mp++) & LOMASK; \
             if (tile >= TILE_COUNT) { \
                 tile -= TILE_COUNT; \
@@ -319,12 +319,12 @@ void Micropolis::drawPower()
     imageBase =
         view->x->color ? view->data : view->data8;
 
-    for (col = 0; col < WORLD_X; col++) {
+    for (col = 0; col < WORLD_W; col++) {
 
         image =
             imageBase + (3 * pixelBytes * col);
 
-        for (row = 0; row < WORLD_Y; row++) {
+        for (row = 0; row < WORLD_H; row++) {
             tile = *(mp++);
 
             if ((tile & LOMASK) >= TILE_COUNT) {
@@ -484,8 +484,8 @@ void Micropolis::drawPopulationDensity()
     short x, y;
 
     drawAll();
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 getCI(populationDensityMap[x][y]),
                 x * 6,
@@ -503,8 +503,8 @@ void Micropolis::drawRateOfGrowth()
 
     drawAll();
 
-    for (x = 0; x < SmX; x++) {
-        for (y = 0; y < SmY; y++) {
+    for (x = 0; x < WORLD_W_8; x++) {
+        for (y = 0; y < WORLD_H_8; y++) {
             short val;
             short z = rateOfGrowthMap[x][y];
 
@@ -543,8 +543,8 @@ void Micropolis::drawTrafMap()
 
     drawLilTransMap();
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 getCI(trafficDensityMap[x][y]),
                 x * 6,
@@ -562,8 +562,8 @@ void Micropolis::drawPolMap()
 
     drawAll(view);
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 getCI(10 + pollutionMap[x][y]),
                 x * 6,
@@ -581,8 +581,8 @@ void Micropolis::drawCrimeMap()
 
     drawAll();
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 getCI(crimeMap[x][y]),
                 x * 6,
@@ -600,8 +600,8 @@ void Micropolis::drawLandMap()
 
     drawAll();
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 view,
                 getCI(landValueMap[x][y]),
@@ -619,8 +619,8 @@ void Micropolis::drawFireRadius()
     short x, y;
 
     drawAll();
-    for (x = 0; x < SmY; x++) {
-        for (y = 0; y < SmY; y++) {
+    for (x = 0; x < WORLD_H_8; x++) {
+        for (y = 0; y < WORLD_H_8; y++) {
             maybeDrawRect(
                 getCI(fireStationMapEffect[x][y]),
                 x * 24,
@@ -637,8 +637,8 @@ void Micropolis::drawPoliceRadius()
     short x, y;
 
     drawAll();
-    for (x = 0; x < SmX; x++) {
-        for (y = 0; y < SmY; y++) {
+    for (x = 0; x < WORLD_W_8; x++) {
+        for (y = 0; y < WORLD_H_8; y++) {
             maybeDrawRect(
                 getCI(policeStationMapEffect[x][y]),
                 x * 24,

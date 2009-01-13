@@ -302,8 +302,8 @@ short Micropolis::doFreePop()
 
     for (x = curMapX - 1; x <= curMapX + 1; x++) {
         for (y = curMapY - 1; y <= curMapY + 1; y++) {
-            if (x >= 0 && x < WORLD_X &&
-                y >= 0 && y < WORLD_Y) {
+            if (x >= 0 && x < WORLD_W &&
+                y >= 0 && y < WORLD_H) {
                 loc = map[x][y] & LOMASK;
                 if ((loc >= LHTHR) &&
                     (loc <= HHTHR)) {
@@ -533,8 +533,8 @@ void Micropolis::doResOut(int pop, int value)
         map[curMapX][curMapY] = (FREEZ | BLBNCNBIT | ZONEBIT);
         for (x = curMapX - 1; x <= curMapX + 1; x++) {
             for (y = curMapY - 1; y <= curMapY + 1; y++) {
-                if (x >= 0 && x < WORLD_X &&
-                    y >= 0 && y < WORLD_Y) {
+                if (x >= 0 && x < WORLD_W &&
+                    y >= 0 && y < WORLD_H) {
                     if ((map[x][y] & LOMASK) != FREEZ) {
                         map[x][y] =
                             LHTHR + value + getRandom(2) + BLBNCNBIT;
@@ -549,8 +549,8 @@ void Micropolis::doResOut(int pop, int value)
         z = 0;
         for (x = curMapX - 1; x <= curMapX + 1; x++) {
             for (y = curMapY - 1; y <= curMapY + 1; y++) {
-                if (x >= 0 && x < WORLD_X &&
-                    y >= 0 && y < WORLD_Y) {
+                if (x >= 0 && x < WORLD_W &&
+                    y >= 0 && y < WORLD_H) {
                     loc = map[x][y] & LOMASK;
                     if ((loc >= LHTHR) && (loc <= HHTHR)) {
                         map[x][y] =

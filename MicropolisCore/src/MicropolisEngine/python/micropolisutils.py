@@ -127,8 +127,8 @@ class MicropolisView:
             m=None,
             x=0,
             y=0,
-            width=micropolisengine.WORLD_X,
-            height=micropolisengine.WORLD_Y,
+            width=micropolisengine.WORLD_W,
+            height=micropolisengine.WORLD_H,
             **args):
         self.m = m
         self.x = x
@@ -141,8 +141,8 @@ class MicropolisView:
 
         left = max(self.x, 0)
         top = max(self.y, 0)
-        right = min(self.x + self.width, micropolisengine.WORLD_X)
-        bottom = min(self.y + self.height, micropolisengine.WORLD_Y)
+        right = min(self.x + self.width, micropolisengine.WORLD_W)
+        bottom = min(self.y + self.height, micropolisengine.WORLD_H)
 
         w = right - left
         h = bottom - top
@@ -151,7 +151,7 @@ class MicropolisView:
 
         if (w != 0) and (h != 0):
 
-            getTile = self.m.GetTile
+            getTile = self.m.getTile
             lowMask = micropolisengine.LOMASK
             flagsMask = ~lowMask
 
@@ -172,22 +172,19 @@ class MicropolisView:
         out = [
             "<p>\n",
             """<b>Micropolis City Evaluation, %s</b><br/>\n""" % (
-                m.CityDate,
+                m.cityDate,
             ),
             "Score: %s, Changed: %s, Class: %s, Level: %s, Tax Rate: %s%%<br/>\n" % (
-                m.evalScore, m.evalChanged, m.evalCityClass, m.evalCityLevel, m.CityTax,
+                m.evalScore, m.evalChanged, m.evalCityClass, m.evalCityLevel, m.cityTax,
             ),
             "Demand: Residential: %s, Commercial: %s, Industrial: %s<br/>\n" % (
-              m.LastR, m.LastC, m.LastI,
+              m.resLast, m.comLast, m.indLast,
             ),
             "Funds: $%s, Assessed: %s, Population: %s, Delta: %s<br/>\n" % (
-              m.TotalFunds, m.evalAssessedDollars, m.evalPop, m.evalDelta,
+              m.totalFunds, m.evalAssessedDollars, m.evalPopulation, m.evalDelta,
             ),
             "Survey: Is the Mayor doing a good job? Yes: %s, No: %s<br/>" % (
-              m.evalGoodYes, m.evalGoodNo,
-            ),
-            """Problems: %s: %s; %s: %s; %s: %s; %s: %s<br/>\n""" % (
-                m.evalPs0, m.evalPv0, m.evalPs1, m.evalPv1, m.evalPs2, m.evalPv2, m.evalPs3, m.evalPv3, 
+              m.evalGoodYes, 100 - m.evalGoodYes,
             ),
             "</p>\n",
             "<hr/>\n",

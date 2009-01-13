@@ -78,39 +78,39 @@ void Micropolis::initMapArrays()
     if (!mapBase) {
         mapBase = (unsigned short *)newPtr(
             sizeof(unsigned short) *
-            WORLD_X * WORLD_Y);
+            WORLD_W * WORLD_H);
     }
 
-    for (i = 0; i < WORLD_X; i++) {
-        map[i] = (short *)(mapBase + (i * WORLD_Y));
+    for (i = 0; i < WORLD_W; i++) {
+        map[i] = (short *)(mapBase + (i * WORLD_H));
     }
 
-    populationDensityMapBase = newPtr(HWLDX * HWLDY);
-    trafficDensityMapBase = newPtr(HWLDX * HWLDY);
-    pollutionMapBase = newPtr(HWLDX * HWLDY);
-    landValueMapBase = newPtr(HWLDX * HWLDY);
-    crimeMapBase = newPtr(HWLDX * HWLDY);
+    populationDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
+    trafficDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
+    pollutionMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
+    landValueMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
+    crimeMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
 
-    tempMap1Base = newPtr(HWLDX * HWLDY);
-    tempMap2Base = newPtr(HWLDX * HWLDY);
-    tempMap3Base = newPtr(QWX * QWY);
+    tempMap1Base = newPtr(WORLD_W_2 * WORLD_H_2);
+    tempMap2Base = newPtr(WORLD_W_2 * WORLD_H_2);
+    tempMap3Base = newPtr(WORLD_W_4 * WORLD_H_4);
 
-    for (i = 0; i < HWLDX; i++) {
-        populationDensityMap[i] = (Byte *)populationDensityMapBase + (i * HWLDY);
-        trafficDensityMap[i] = (Byte *)trafficDensityMapBase + (i * HWLDY);
-        pollutionMap[i] = (Byte *)pollutionMapBase + (i * HWLDY);
-        landValueMap[i] = (Byte *)landValueMapBase + (i * HWLDY);
-        crimeMap[i] = (Byte *)crimeMapBase + (i * HWLDY);
+    for (i = 0; i < WORLD_W_2; i++) {
+        populationDensityMap[i] = (Byte *)populationDensityMapBase + (i * WORLD_H_2);
+        trafficDensityMap[i] = (Byte *)trafficDensityMapBase + (i * WORLD_H_2);
+        pollutionMap[i] = (Byte *)pollutionMapBase + (i * WORLD_H_2);
+        landValueMap[i] = (Byte *)landValueMapBase + (i * WORLD_H_2);
+        crimeMap[i] = (Byte *)crimeMapBase + (i * WORLD_H_2);
 
-        tempMap1[i] = (Byte *)tempMap1Base + (i * HWLDY);
-        tempMap2[i] = (Byte *)tempMap2Base + (i * HWLDY);
+        tempMap1[i] = (Byte *)tempMap1Base + (i * WORLD_H_2);
+        tempMap2[i] = (Byte *)tempMap2Base + (i * WORLD_H_2);
     }
 
-    terrainDensityMapBase = newPtr(QWX * QWY);
+    terrainDensityMapBase = newPtr(WORLD_W_4 * WORLD_H_4);
 
-    for (i = 0; i < QWX; i++) {
-        terrainDensityMap[i] = (Byte *)terrainDensityMapBase + (i * QWY);
-        tempMap3[i] = (Byte *)tempMap3Base + (i * QWY);
+    for (i = 0; i < WORLD_W_4; i++) {
+        terrainDensityMap[i] = (Byte *)terrainDensityMapBase + (i * WORLD_H_4);
+        tempMap3[i] = (Byte *)tempMap3Base + (i * WORLD_H_4);
     }
 
     resHist = (short *)newPtr(HISTLEN);
@@ -132,7 +132,7 @@ void Micropolis::destroyMapArrays()
         mapBase = NULL;
     }
 
-    memset(map, 0, sizeof(short *) * WORLD_X);
+    memset(map, 0, sizeof(short *) * WORLD_W);
 
     if (populationDensityMapBase != NULL) {
         freePtr(populationDensityMapBase);
@@ -174,21 +174,21 @@ void Micropolis::destroyMapArrays()
         tempMap3Base = NULL;
     }
 
-    memset(populationDensityMap, 0, sizeof(Byte *) * HWLDX);
-    memset(trafficDensityMap, 0, sizeof(Byte *) * HWLDX);
-    memset(pollutionMap, 0, sizeof(Byte *) * HWLDX);
-    memset(landValueMap, 0, sizeof(Byte *) * HWLDX);
-    memset(crimeMap, 0, sizeof(Byte *) * HWLDX);
-    memset(tempMap1, 0, sizeof(Byte *) * HWLDX);
-    memset(tempMap2, 0, sizeof(Byte *) * HWLDX);
-    memset(tempMap3, 0, sizeof(Byte *) * QWX);
+    memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(trafficDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(pollutionMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(landValueMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(crimeMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
 
     if (terrainDensityMapBase != NULL) {
         freePtr(terrainDensityMapBase);
         terrainDensityMapBase = NULL;
     }
 
-    memset(terrainDensityMap, 0, sizeof(Byte *) * QWX);
+    memset(terrainDensityMap, 0, sizeof(Byte *) * WORLD_W_4);
 
     if (resHist != NULL) {
         freePtr(resHist);

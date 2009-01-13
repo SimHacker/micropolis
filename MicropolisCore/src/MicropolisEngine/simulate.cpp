@@ -137,35 +137,35 @@ void Micropolis::simulate(int mod16)
             break;
 
         case 1:
-            mapScan(0 * WORLD_X / 8, 1 * WORLD_X / 8);
+            mapScan(0 * WORLD_W / 8, 1 * WORLD_W / 8);
             break;
 
         case 2:
-            mapScan(1 * WORLD_X / 8, 2 * WORLD_X / 8);
+            mapScan(1 * WORLD_W / 8, 2 * WORLD_W / 8);
             break;
 
         case 3:
-            mapScan(2 * WORLD_X / 8, 3 * WORLD_X / 8);
+            mapScan(2 * WORLD_W / 8, 3 * WORLD_W / 8);
             break;
 
         case 4:
-            mapScan(3 * WORLD_X / 8, 4 * WORLD_X / 8);
+            mapScan(3 * WORLD_W / 8, 4 * WORLD_W / 8);
             break;
 
         case 5:
-            mapScan(4 * WORLD_X / 8, 5 * WORLD_X / 8);
+            mapScan(4 * WORLD_W / 8, 5 * WORLD_W / 8);
             break;
 
         case 6:
-            mapScan(5 * WORLD_X / 8, 6 * WORLD_X / 8);
+            mapScan(5 * WORLD_W / 8, 6 * WORLD_W / 8);
             break;
 
         case 7:
-            mapScan(6 * WORLD_X / 8, 7 * WORLD_X / 8);
+            mapScan(6 * WORLD_W / 8, 7 * WORLD_W / 8);
             break;
 
         case 8:
-            mapScan(7 * WORLD_X / 8, 8 * WORLD_X / 8);
+            mapScan(7 * WORLD_W / 8, 8 * WORLD_W / 8);
             break;
 
         case 9:
@@ -252,7 +252,7 @@ void Micropolis::doSimInit()
 
     setValves();
     clearCensus();
-    mapScan(0, WORLD_X);
+    mapScan(0, WORLD_W);
     doPowerScan();
     newPower = 1;         /* post rel */
     pollutionTerrainLandValueScan();
@@ -275,8 +275,8 @@ void Micropolis::doNilPower()
 {
     short x, y, z;
 
-    for (x = 0; x < WORLD_X; x++) {
-        for (y = 0; y < WORLD_Y; y++) {
+    for (x = 0; x < WORLD_W; x++) {
+        for (y = 0; y < WORLD_H; y++) {
             z = map[x][y];
             if (z & ZONEBIT) {
                 curMapX = x;
@@ -299,8 +299,8 @@ void Micropolis::decTrafficMap()
     /* tends to empty trafficDensityMap */
     short x, y, z;
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             z = trafficDensityMap[x][y];
             if (z == 0) {
                 continue;
@@ -331,8 +331,8 @@ void Micropolis::decRateOfGrowthMap()
     /* tends to empty rateOfGrowthMap */
     short x, y, z;
 
-    for (x = 0; x < SmX; x++) {
-        for (y = 0; y < SmY; y++) {
+    for (x = 0; x < WORLD_W_8; x++) {
+        for (y = 0; y < WORLD_H_8; y++) {
             z = rateOfGrowthMap[x][y];
             if (z == 0) {
                 continue;
@@ -692,8 +692,8 @@ void Micropolis::clearCensus()
     airportPop = 0;
     powerStackPointer = 0; /* Reset before Mapscan */
 
-    for (short x = 0; x < SmX; x++) {
-        for (short y = 0; y < SmY; y++) {
+    for (short x = 0; x < WORLD_W_8; x++) {
+        for (short y = 0; y < WORLD_H_8; y++) {
             fireStationMap[x][y] = 0;
             policeStationMap[x][y] = 0;
         }
@@ -918,7 +918,7 @@ void Micropolis::mapScan(int x1, int x2)
     short x, y;
 
     for (x = x1; x < x2; x++) {
-        for (y = 0; y < WORLD_Y; y++) {
+        for (y = 0; y < WORLD_H; y++) {
             curNum = map[x][y];
             if (curNum) {
 
@@ -1148,7 +1148,7 @@ bool Micropolis::doBridge()
 
     if (getBoatDistance() < 300 || (!(getRandom16() & 7))) {
         if (curTile & 1) {
-            if (curMapX < WORLD_X - 1) {
+            if (curMapX < WORLD_W - 1) {
                 if (map[curMapX + 1][curMapY] == CHANNEL) { /* Vertical open */
 
                     for (z = 0; z < 7; z++) {
@@ -1314,8 +1314,8 @@ void Micropolis::fireZone(int Xloc, int Yloc, int ch)
             short Xtem = Xloc + x;
             short Ytem = Yloc + y;
 
-            if (Xtem < 0 || Xtem > WORLD_X - 1 ||
-                Ytem < 0 || Ytem > WORLD_Y - 1) {
+            if (Xtem < 0 || Xtem > WORLD_W - 1 ||
+                Ytem < 0 || Ytem > WORLD_H - 1) {
                 continue;
             }
 

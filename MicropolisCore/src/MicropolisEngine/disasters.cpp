@@ -205,8 +205,8 @@ void Micropolis::makeMeltdown()
 {
     short x, y;
 
-    for (x = 0; x < (WORLD_X - 1); x++) {
-        for (y = 0; y < (WORLD_Y - 1); y++) {
+    for (x = 0; x < (WORLD_W - 1); x++) {
+        for (y = 0; y < (WORLD_H - 1); y++) {
             if ((map[x][y] & LOMASK) == NUCLEAR) {
                 doMeltdown(x, y);
                 return;
@@ -218,8 +218,8 @@ void Micropolis::makeMeltdown()
 /** Let a fire bomb explode at a random location */
 void Micropolis::fireBomb()
 {
-    crashX = getRandom(WORLD_X - 1);
-    crashY = getRandom(WORLD_Y - 1);
+    crashX = getRandom(WORLD_W - 1);
+    crashY = getRandom(WORLD_H - 1);
     makeExplosion(crashX, crashY);
     clearMessage();
     sendMessageAt(-STR301_FIREBOMBING, crashX, crashY);
@@ -238,8 +238,8 @@ void Micropolis::makeEarthquake()
     sendMessageAt(-STR301_EARTHQUAKE, cityCenterX, cityCenterY);
 
     for (z = 0; z < strength; z++)  {
-        x = getRandom(WORLD_X - 1);
-        y = getRandom(WORLD_Y - 1);
+        x = getRandom(WORLD_W - 1);
+        y = getRandom(WORLD_H - 1);
 
         if (vulnerable(map[x][y])) {
 
@@ -259,8 +259,8 @@ void Micropolis::setFire()
 {
     short x, y, z;
 
-    x = getRandom(WORLD_X - 1);
-    y = getRandom(WORLD_Y - 1);
+    x = getRandom(WORLD_W - 1);
+    y = getRandom(WORLD_H - 1);
     z = map[x][y];
 
     /* TILE_IS_ARSONABLE(z) */
@@ -282,8 +282,8 @@ void Micropolis::makeFire()
     short t, x, y, z;
 
     for (t = 0; t < 40; t++)  {
-        x = getRandom(WORLD_X - 1);
-        y = getRandom(WORLD_Y - 1);
+        x = getRandom(WORLD_W - 1);
+        y = getRandom(WORLD_H - 1);
         z = map[x][y];
 
         if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
@@ -327,8 +327,8 @@ void Micropolis::makeFlood()
     short z, t, x, y;
 
     for (z = 0; z < 300; z++) {
-        x = getRandom(WORLD_X - 1);
-        y = getRandom(WORLD_Y - 1);
+        x = getRandom(WORLD_W - 1);
+        y = getRandom(WORLD_H - 1);
         c = map[x][y] & LOMASK;
 
         if (c > CHANNEL && c <= WATER_HIGH) { /* if riveredge  */

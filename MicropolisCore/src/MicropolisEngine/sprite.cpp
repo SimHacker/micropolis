@@ -169,11 +169,11 @@ void Micropolis::initSprite(SimSprite *sprite, int x, int y)
 
             if (x < (4 <<4)) {
                 sprite->frame = 3;
-            } else if (x >= ((WORLD_X - 4) <<4)) {
+            } else if (x >= ((WORLD_W - 4) <<4)) {
                 sprite->frame = 7;
             } else if (y < (4 <<4)) {
                 sprite->frame = 5;
-            } else if (y >= ((WORLD_Y - 4) <<4)) {
+            } else if (y >= ((WORLD_H - 4) <<4)) {
                 sprite->frame = 1;
             } else {
                 sprite->frame = 3;
@@ -192,13 +192,13 @@ void Micropolis::initSprite(SimSprite *sprite, int x, int y)
             sprite->xHot = 40;
             sprite->yHot = 16;
 
-            if (x > ((WORLD_X <<4) / 2)) {
-                if (y > ((WORLD_Y <<4) / 2)) {
+            if (x > ((WORLD_W <<4) / 2)) {
+                if (y > ((WORLD_H <<4) / 2)) {
                     sprite->frame = 10;
                 } else {
                     sprite->frame = 7;
                 }
-            } else if (y > ((WORLD_Y <<4) / 2)) {
+            } else if (y > ((WORLD_H <<4) / 2)) {
                 sprite->frame = 1;
             } else {
                 sprite->frame = 4;
@@ -220,8 +220,8 @@ void Micropolis::initSprite(SimSprite *sprite, int x, int y)
             sprite->yHot = -8;
             sprite->frame = 5;
             sprite->count = 1500;
-            sprite->destX = getRandom((WORLD_X <<4) - 1);
-            sprite->destY = getRandom((WORLD_Y <<4) - 1);
+            sprite->destX = getRandom((WORLD_W <<4) - 1);
+            sprite->destY = getRandom((WORLD_H <<4) - 1);
             sprite->origX = x - 30;
             sprite->origY = y;
             break;
@@ -233,7 +233,7 @@ void Micropolis::initSprite(SimSprite *sprite, int x, int y)
             sprite->yOffset = 0;
             sprite->xHot = 48;
             sprite->yHot = 16;
-            if (x > ((WORLD_X - 20) <<4)) {
+            if (x > ((WORLD_W - 20) <<4)) {
                 sprite->x -= 100 + 48;
                 sprite->destX = sprite->x - 200;
                 sprite->frame = 7;
@@ -492,7 +492,7 @@ bool Micropolis::spriteNotInBounds(SimSprite *sprite)
     int x = sprite->x + sprite->xHot;
     int y = sprite->y + sprite->yHot;
 
-    return x < 0 || y < 0 || x >= (WORLD_X <<4) || y >= (WORLD_Y <<4);
+    return x < 0 || y < 0 || x >= (WORLD_W <<4) || y >= (WORLD_H <<4);
 }
 
 /**
@@ -791,7 +791,7 @@ void Micropolis::doCopterSprite(
         x = (sprite->x + 48) >>5;
         y = sprite->y >>5;
 
-        if (x >= 0 && x < (WORLD_X >>1) && y >= 0 && y < (WORLD_Y >>1)) {
+        if (x >= 0 && x < (WORLD_W >>1) && y >= 0 && y < (WORLD_H >>1)) {
 
             /* Don changed from 160 to 170 to shut the #$%#$% thing up! */
 
@@ -850,8 +850,8 @@ void Micropolis::doAirplaneSprite(
     }
 
     if (absDist < 50) { /* at destination  */
-        sprite->destX = getRandom((WORLD_X * 16) + 100) - 50;
-        sprite->destY = getRandom((WORLD_Y * 16) + 100) - 50;
+        sprite->destX = getRandom((WORLD_W * 16) + 100) - 50;
+        sprite->destY = getRandom((WORLD_H * 16) + 100) - 50;
     }
 
     /* deh added test for enableDisasters */
@@ -1410,7 +1410,7 @@ void Micropolis::doBusSprite(SimSprite *sprite)
         tx = (sprite->x + sprite->xHot) >>5;
         ty = (sprite->y + sprite->yHot) >>5;
 
-        if (tx >= 0 && tx < (WORLD_X >>1) && ty >= 0 && ty < (WORLD_Y >>1)) {
+        if (tx >= 0 && tx < (WORLD_W >>1) && ty >= 0 && ty < (WORLD_H >>1)) {
 
             z = trafficDensityMap[tx][ty] >>6;
 
@@ -1545,14 +1545,14 @@ void Micropolis::doBusSprite(SimSprite *sprite)
     otx = (sprite->x + sprite->xHot + (Dx[sprite->dir] * AHEAD)) >>4;
     oty = (sprite->y + sprite->yHot + (Dy[sprite->dir] * AHEAD)) >>4;
 
-    otx = clamp(otx, 0, WORLD_X - 1);
-    oty = clamp(oty, 0, WORLD_Y - 1);
+    otx = clamp(otx, 0, WORLD_W - 1);
+    oty = clamp(oty, 0, WORLD_H - 1);
 
     tx = (sprite->x + sprite->xHot + dx + (Dx[sprite->dir] * AHEAD)) >>4;
     ty = (sprite->y + sprite->yHot + dy + (Dy[sprite->dir] * AHEAD)) >>4;
 
-    tx = clamp(tx, 0, WORLD_X - 1);
-    ty = clamp(ty, 0, WORLD_Y - 1);
+    tx = clamp(tx, 0, WORLD_W - 1);
+    ty = clamp(ty, 0, WORLD_H - 1);
 
     if (tx != otx || ty != oty) {
 
@@ -1877,7 +1877,7 @@ void Micropolis::generateShip()
     short x, y;
 
     if (!(getRandom16() & 3)) {
-        for (x = 4; x < WORLD_X - 2; x++) {
+        for (x = 4; x < WORLD_W - 2; x++) {
             if (map[x][0] == CHANNEL)  {
                 makeShipHere(x, 0);
                 return;
@@ -1886,7 +1886,7 @@ void Micropolis::generateShip()
     }
 
     if (!(getRandom16() & 3)) {
-        for (y = 1; y < WORLD_Y - 2; y++) {
+        for (y = 1; y < WORLD_H - 2; y++) {
             if (map[0][y] == CHANNEL)  {
                 makeShipHere(0, y);
                 return;
@@ -1895,18 +1895,18 @@ void Micropolis::generateShip()
     }
 
     if (!(getRandom16() & 3)) {
-        for (x = 4; x < WORLD_X - 2; x++) {
-            if (map[x][WORLD_Y - 1] == CHANNEL)  {
-                makeShipHere(x, WORLD_Y - 1);
+        for (x = 4; x < WORLD_W - 2; x++) {
+            if (map[x][WORLD_H - 1] == CHANNEL)  {
+                makeShipHere(x, WORLD_H - 1);
                 return;
             }
         }
     }
 
     if (!(getRandom16() & 3)) {
-        for (y = 1; y < WORLD_Y - 2; y++) {
-            if (map[WORLD_X - 1][y] == CHANNEL)  {
-                makeShipHere(WORLD_X - 1, y);
+        for (y = 1; y < WORLD_H - 2; y++) {
+            if (map[WORLD_W - 1][y] == CHANNEL)  {
+                makeShipHere(WORLD_W - 1, y);
                 return;
             }
         }
@@ -1945,8 +1945,8 @@ void Micropolis::makeMonster()
 
     for (z = 0; z < 300; z++)  {
 
-        x = getRandom(WORLD_X - 20) + 10;
-        y = getRandom(WORLD_Y - 10) + 5;
+        x = getRandom(WORLD_W - 20) + 10;
+        y = getRandom(WORLD_H - 10) + 5;
 
         if (map[x][y] == RIVER || map[x][y] == RIVER + BULLBIT) {
             makeMonsterAt(x, y);
@@ -2022,8 +2022,8 @@ void Micropolis::makeTornado()
         return;
     }
 
-    x = getRandom((WORLD_X <<4) - 800) + 400;
-    y = getRandom((WORLD_Y <<4) - 200) + 100;
+    x = getRandom((WORLD_W <<4) - 800) + 400;
+    y = getRandom((WORLD_H <<4) - 200) + 100;
 
     makeSprite(SPRITE_TORNADO, x, y);
     clearMessage();

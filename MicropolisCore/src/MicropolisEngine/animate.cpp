@@ -198,7 +198,7 @@ void Micropolis::animateTiles()
     /* Animate whole world */
     tMapPtr = (unsigned short *)&(map[0][0]);
 
-    for (i = WORLD_X * WORLD_Y; i > 0; i--) {
+    for (i = WORLD_W * WORLD_H; i > 0; i--) {
         tilevalue = (*tMapPtr);
         if (tilevalue & ANIMBIT) {
             tileflags = tilevalue & ALLBITS;

@@ -387,14 +387,16 @@ class Resource(_object):
 Resource_swigregister = _micropolisengine.Resource_swigregister
 Resource_swigregister(Resource)
 cvar = _micropolisengine.cvar
-WORLD_X = cvar.WORLD_X
-WORLD_Y = cvar.WORLD_Y
-HWLDX = cvar.HWLDX
-HWLDY = cvar.HWLDY
-QWX = cvar.QWX
-QWY = cvar.QWY
-SmX = cvar.SmX
-SmY = cvar.SmY
+BITS_PER_TILE = cvar.BITS_PER_TILE
+BYTES_PER_TILE = cvar.BYTES_PER_TILE
+WORLD_W = cvar.WORLD_W
+WORLD_H = cvar.WORLD_H
+WORLD_W_2 = cvar.WORLD_W_2
+WORLD_H_2 = cvar.WORLD_H_2
+WORLD_W_4 = cvar.WORLD_W_4
+WORLD_H_4 = cvar.WORLD_H_4
+WORLD_W_8 = cvar.WORLD_W_8
+WORLD_H_8 = cvar.WORLD_H_8
 HISTORY_COUNT = cvar.HISTORY_COUNT
 MAX_TRAFFIC_DISTANCE = cvar.MAX_TRAFFIC_DISTANCE
 MAX_ROAD_EFFECT = cvar.MAX_ROAD_EFFECT

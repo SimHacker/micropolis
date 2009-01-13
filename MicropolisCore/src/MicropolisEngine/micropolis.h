@@ -117,16 +117,26 @@
 #define RANDOM_RANGE                    0xffff
 
 /**
+ * The number of bits per tile.
+ */
+static const int BITS_PER_TILE = 16;
+
+/**
+ * The number of bytes per tile.
+ */
+static const int BYTES_PER_TILE = 2;
+
+/**
  * Size of the world in horizontal direction.
  * @note Must be <= 128 due to powerMap bitmap
  *       (where 1 row is assumed to be less or equal to 8 words).
  */
-static const int WORLD_X = 120;
+static const int WORLD_W = 120;
 
 /**
  * Size of the world in vertical direction.
  */
-static const int WORLD_Y = 100;
+static const int WORLD_H = 100;
 
 /**
  * Horizontal size of the world for a map that stores a value for every 2x2
@@ -134,13 +144,13 @@ static const int WORLD_Y = 100;
  * @todo Make a Map class that keeps its 2x2 square storage details internally,
  *       so the code doesn't need to bother with it.
  */
-static const int HWLDX = WORLD_X >>1;
+static const int WORLD_W_2 = WORLD_W / 2;
 
 /**
  * Vertical size of the world for a map that stores a value for every 2x2
  * square.
  */
-static const int HWLDY = WORLD_Y >>1;
+static const int WORLD_H_2 = WORLD_H / 2;
 
 /**
  * Horizontal size of the world for a map that stores a value for every 4x4
@@ -148,13 +158,13 @@ static const int HWLDY = WORLD_Y >>1;
  * @todo Make a Map class that keeps its 4x4 square storage details internally,
  *       so the code doesn't need to bother with it.
  */
-static const int QWX = WORLD_X >>2;
+static const int WORLD_W_4 = WORLD_W / 4;
 
 /**
  * Vertical size of the world for a map that stores a value for every 4x4
  * square.
  */
-static const int QWY = WORLD_Y >>2;
+static const int WORLD_H_4 = WORLD_H / 4;
 
 /**
  * Horizontal size of the world for a map that stores a value for every 8x8
@@ -162,18 +172,18 @@ static const int QWY = WORLD_Y >>2;
  * @todo Make a Map class that keeps its 8x8 square storage details internally,
  *       so the code doesn't need to bother with it.
  */
-static const int SmX = WORLD_X >>3;
+static const int WORLD_W_8 = WORLD_W / 8;
 
 /**
  * Vertical size of the world for a map that stores a value for every 8x8
  * square.
  */
-static const int SmY = (WORLD_Y + 7) >>3;
+static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 
-#define EDITOR_W                        (WORLD_X * 16)
-#define EDITOR_H                        (WORLD_Y * 16)
-#define MAP_W                           (WORLD_X * 3)
-#define MAP_H                           (WORLD_Y * 3)
+#define EDITOR_W                        (WORLD_W * 16)
+#define EDITOR_H                        (WORLD_H * 16)
+#define MAP_W                           (WORLD_W * 3)
+#define MAP_H                           (WORLD_H * 3)
 
 #define NIL                             0
 #define HORIZ                           1
@@ -227,14 +237,14 @@ enum HistoryScale {
     HISTORY_SCALE_COUNT, ///< Number of history scales available
 };
 
-#define POWERMAPROW                     ((WORLD_X + 15) / 16)
+#define POWERMAPROW                     ((WORLD_W + 15) / 16)
 
 #define POWERMAPLEN                     1700 /* ??? PWRMAPSIZE */
 #define POWERWORD(x, y)                 (((x) >>4) + ((y) <<3))
 
 #define SETPOWERBIT(x, y)               powerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
-#define PWRMAPSIZE                      (POWERMAPROW * WORLD_Y)
-#define PWRSTKSIZE                      ((WORLD_X * WORLD_Y) / 4)
+#define PWRMAPSIZE                      (POWERMAPROW * WORLD_H)
+#define PWRSTKSIZE                      ((WORLD_W * WORLD_H) / 4)
 
 #define ALMAP                           0 /* all */
 #define REMAP                           1 /* residential */
@@ -742,7 +752,7 @@ enum GameLevel {
  */
 static inline bool TestBounds(int wx, int wy)
 {
-    return (wx >= 0 && wx < WORLD_X && wy >= 0 && wy < WORLD_Y);
+    return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
 }
 
 /**
@@ -1209,7 +1219,7 @@ public:
      *
      * Map[0 <= x < 120][0 <= y < 100]
      */
-    short *map[WORLD_X];
+    short *map[WORLD_W];
 
     /**
      * 10 year residential history maximum value.
@@ -1352,60 +1362,60 @@ public:
     /**
      * Population density map.
      */
-    Byte *populationDensityMap[HWLDX];
+    Byte *populationDensityMap[WORLD_W_2];
 
     /**
      * Traffic map.
      */
-    Byte *trafficDensityMap[HWLDX];
+    Byte *trafficDensityMap[WORLD_W_2];
 
     /**
      * Pollution map.
      */
-    Byte *pollutionMap[HWLDX];
+    Byte *pollutionMap[WORLD_W_2];
 
     /**
      * Land value mep.
      */
-    Byte *landValueMap[HWLDX];
+    Byte *landValueMap[WORLD_W_2];
 
     /**
      * Crime map.
      */
-    Byte *crimeMap[HWLDX];
+    Byte *crimeMap[WORLD_W_2];
 
     /**
      * Temporary map 1.
      *
      * Used to smooth population density, pollution.
      */
-    Byte *tempMap1[HWLDX];
+    Byte *tempMap1[WORLD_W_2];
 
     /**
      * Temporary map 2.
      *
      * Used to smooth population density, pollution.
      */
-    Byte *tempMap2[HWLDX];
+    Byte *tempMap2[WORLD_W_2];
 
     /**
      * Temporary map 3.
      *
      * Used to smooth development density, for terrainDensityMap.
      */
-    Byte *tempMap3[QWX];
+    Byte *tempMap3[WORLD_W_4];
 
     /**
      * Temporary array for smoothing fire and police station maps.
      */
-    short tempMap4[SmX][SmY];
+    short tempMap4[WORLD_W_8][WORLD_H_8];
 
     /**
      * Terrain development density map.
      *
      * Used to calculate land value.
      */
-    Byte *terrainDensityMap[QWX];
+    Byte *terrainDensityMap[WORLD_W_4];
 
     /**
      * Rate of growth map.
@@ -1414,7 +1424,7 @@ public:
      * explosions from sprites, fire spreading. Doesn't seem to
      * actually feed back into the simulation. Output only.
      */
-    short rateOfGrowthMap[SmX][SmY];
+    short rateOfGrowthMap[WORLD_W_8][WORLD_H_8];
 
     /**
      * Fire station map.
@@ -1425,7 +1435,7 @@ public:
      * access. Affects how long fires burn.
      * @see #FireEffect
      */
-    short fireStationMap[SmX][SmY];
+    short fireStationMap[WORLD_W_8][WORLD_H_8];
 
     /**
      * Police station map.
@@ -1436,17 +1446,17 @@ public:
      * access. Affects crime rate.
      * @see #PoliceEffect
      */
-    short policeStationMap[SmX][SmY];
+    short policeStationMap[WORLD_W_8][WORLD_H_8];
 
     /**
      * Copy of police station map to display.
      */
-    short policeStationMapEffect[SmX][SmY];
+    short policeStationMapEffect[WORLD_W_8][WORLD_H_8];
 
     /**
      * Copy of fire station map to display.
      */
-    short fireStationMapEffect[SmX][SmY];
+    short fireStationMapEffect[WORLD_W_8][WORLD_H_8];
 
     /**
      * Commercial rate map.
@@ -1454,7 +1464,7 @@ public:
      * Depends on distance to city center. Affects commercial zone
      * evaluation.
      */
-    short comRateMap[SmX][SmY];
+    short comRateMap[WORLD_W_8][WORLD_H_8];
 
     /**
      * Memory for terrainDensityMap array.

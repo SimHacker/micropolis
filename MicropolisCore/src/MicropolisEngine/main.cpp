@@ -55,18 +55,18 @@
     }
 
 
-#define SRCCOL (WORLD_Y + 2)
-#define DSTCOL WORLD_Y
+#define SRCCOL (WORLD_H + 2)
+#define DSTCOL WORLD_H
 
 #define CLIPPER_LOOP_BODY(CODE) \
     src = cellSrc; dst = cellDst; \
-    for (x = 0; x < WORLD_X;) { \
+    for (x = 0; x < WORLD_W;) { \
         short nw, n, ne, w, c, e, sw, s, se; \
         src = cellSrc + (x * SRCCOL); \
         dst = cellDst + (x * DSTCOL); \
         w = src[0]; c = src[SRCCOL]; e = src[2 * SRCCOL]; \
         sw = src[1]; s = src[SRCCOL + 1]; se = src[(2 * SRCCOL) + 1]; \
-        for (y = 0; y < WORLD_Y; y++) { \
+        for (y = 0; y < WORLD_H; y++) { \
             nw = w; w = sw; sw = src[2]; \
             n = c; c = s; s = src[SRCCOL + 2]; \
             ne = e; e = se; se = src[(2 * SRCCOL) + 2]; \
@@ -78,7 +78,7 @@
         dst = cellDst + ((x + 1) * DSTCOL) - 1; \
         nw = src[1]; n = src[SRCCOL + 1]; ne = src[(2 * SRCCOL) + 1]; \
         w = src[2]; c = src[SRCCOL + 2]; e = src[(2 * SRCCOL) + 2]; \
-        for (y = WORLD_Y - 1; y >= 0; y--) { \
+        for (y = WORLD_H - 1; y >= 0; y--) { \
             sw = w; w = nw; nw = src[0]; \
             s = c; c = n; n = src[SRCCOL]; \
             se = e; e = ne; ne = src[2 * SRCCOL]; \
@@ -187,7 +187,7 @@ void Micropolis::simHeat()
     register int fl = heatFlow;
 
     if (cellSrc == NULL) {
-        cellSrc = (short *)newPtr((WORLD_X + 2) * (WORLD_Y + 2) * sizeof (short));
+        cellSrc = (short *)newPtr((WORLD_W + 2) * (WORLD_H + 2) * sizeof (short));
         cellDst = &map[0][0];
     }
 
@@ -219,64 +219,64 @@ void Micropolis::simHeat()
         case 0:
             break;
         case 1:
-            for (x = 0; x < WORLD_X; x++) {
-                memcpy(src, dst, WORLD_Y * sizeof (short));
+            for (x = 0; x < WORLD_W; x++) {
+                memcpy(src, dst, WORLD_H * sizeof (short));
                 src += SRCCOL;
                 dst += DSTCOL;
             }
             break;
         case 2:
-            for (x = 0; x < WORLD_X; x++) {
-                src[-1] = src[WORLD_Y - 1];
-                src[WORLD_Y] = src[0];
+            for (x = 0; x < WORLD_W; x++) {
+                src[-1] = src[WORLD_H - 1];
+                src[WORLD_H] = src[0];
                 src += SRCCOL;
                 dst += DSTCOL;
             }
             memcpy(
                 cellSrc,
-                cellSrc + (SRCCOL * WORLD_X),
+                cellSrc + (SRCCOL * WORLD_W),
                 SRCCOL * sizeof (short));
             memcpy(
-                cellSrc + SRCCOL * (WORLD_X + 1),
+                cellSrc + SRCCOL * (WORLD_W + 1),
                 cellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         case 3:
-            for (x = 0; x < WORLD_X; x++) {
-                memcpy(src, dst, WORLD_Y * sizeof (short));
-                src[-1] = src[WORLD_Y - 1];
-                src[WORLD_Y] = src[0];
+            for (x = 0; x < WORLD_W; x++) {
+                memcpy(src, dst, WORLD_H * sizeof (short));
+                src[-1] = src[WORLD_H - 1];
+                src[WORLD_H] = src[0];
                 src += SRCCOL;
                 dst += DSTCOL;
             }
             memcpy(
                 cellSrc,
-                cellSrc + (SRCCOL * WORLD_X),
+                cellSrc + (SRCCOL * WORLD_W),
                 SRCCOL * sizeof (short));
             memcpy(
-                cellSrc + SRCCOL * (WORLD_X + 1),
+                cellSrc + SRCCOL * (WORLD_W + 1),
                 cellSrc + SRCCOL,
                 SRCCOL * sizeof (short));
             break;
         case 4:
             src[0] =
                 dst[0];
-            src[1 + WORLD_Y] =
-                dst[WORLD_Y - 1];
-            src[(1 + WORLD_X) * SRCCOL] =
-                dst[(WORLD_X - 1) * DSTCOL];
-            src[((2 + WORLD_X) * SRCCOL) - 1] =
-                dst[(WORLD_X * WORLD_Y) - 1];
-            for (x = 0; x < WORLD_X; x++) {
-                memcpy(src, dst, WORLD_Y * sizeof (short));
+            src[1 + WORLD_H] =
+                dst[WORLD_H - 1];
+            src[(1 + WORLD_W) * SRCCOL] =
+                dst[(WORLD_W - 1) * DSTCOL];
+            src[((2 + WORLD_W) * SRCCOL) - 1] =
+                dst[(WORLD_W * WORLD_H) - 1];
+            for (x = 0; x < WORLD_W; x++) {
+                memcpy(src, dst, WORLD_H * sizeof (short));
                 src[-1] = src[0];
-                src[WORLD_Y] =  src[WORLD_Y - 1];
+                src[WORLD_H] =  src[WORLD_H - 1];
                 src += SRCCOL;
                 dst += DSTCOL;
             }
             memcpy(
-                cellSrc + (SRCCOL * (WORLD_X + 1)),
-                cellSrc + (SRCCOL * WORLD_X),
+                cellSrc + (SRCCOL * (WORLD_W + 1)),
+                cellSrc + (SRCCOL * WORLD_W),
                 SRCCOL * sizeof (short));
             memcpy(
                 cellSrc,

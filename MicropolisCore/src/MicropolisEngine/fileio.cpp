@@ -183,7 +183,7 @@ bool Micropolis::loadFileDir(const char *filename, const char *dir)
       load_short(pollutionHist, HISTLEN / sizeof(short), f) &&
       load_short(moneyHist, HISTLEN / sizeof(short), f) &&
       load_short(miscHist, MISCHISTLEN / sizeof(short), f) &&
-      load_short((&map[0][0]), WORLD_X * WORLD_Y, f);
+      load_short((&map[0][0]), WORLD_W * WORLD_H, f);
 
     fclose(f);
 
@@ -336,7 +336,7 @@ bool Micropolis::saveFile(const char *filename)
         save_short(pollutionHist, HISTLEN / 2, f) &&
         save_short(moneyHist, HISTLEN / 2, f) &&
         save_short(miscHist, MISCHISTLEN / 2, f) &&
-        save_short((&map[0][0]), WORLD_X * WORLD_Y, f);
+        save_short((&map[0][0]), WORLD_W * WORLD_H, f);
 
     fclose(f);
 

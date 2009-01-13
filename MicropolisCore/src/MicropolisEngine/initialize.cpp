@@ -99,8 +99,8 @@ void Micropolis::initWillStuff()
     disasterEvent = SC_NONE;
     taxFlag = false;
 
-    for (x = 0; x < HWLDX; x++) {
-        for (y = 0; y < HWLDY; y++) {
+    for (x = 0; x < WORLD_W_2; x++) {
+        for (y = 0; y < WORLD_H_2; y++) {
             populationDensityMap[x][y] = 0;
             trafficDensityMap[x][y] = 0;
             pollutionMap[x][y] = 0;
@@ -109,14 +109,14 @@ void Micropolis::initWillStuff()
         }
     }
 
-    for (x = 0; x < QWX; x++) {
-        for (y = 0; y < QWY; y++) {
+    for (x = 0; x < WORLD_W_4; x++) {
+        for (y = 0; y < WORLD_H_4; y++) {
             terrainDensityMap[x][y] = 0;
         }
     }
 
-    for (x = 0; x < SmX; x++) {
-        for (y = 0; y < SmY; y++) {
+    for (x = 0; x < WORLD_W_8; x++) {
+        for (y = 0; y < WORLD_H_8; y++) {
             rateOfGrowthMap[x][y] = 0;
             comRateMap[x][y] = 0;
             policeStationMap[x][y] = 0;
