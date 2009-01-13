@@ -1,0 +1,49 @@
+<library>
+
+
+    <!-- Editor View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Editor
+  Editing Tool (cursor)
+  Scrolling
+  Zooming
+  Pie Menu (tool selection)
+  Palette (hide/show)
+    Residential
+    Commercial
+    Industrial
+    Query Zone
+    Fire Department
+    Police Department
+    Road
+    Railroad
+    Stadium
+    Seaport
+    Airport
+    Nuclear Power
+    Coal Power
+
+-->
+
+
+    <class name="editorview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<text
+	    resize="true"
+	>Editor View</text>
+
+
+    </class>
+
+
+</library>

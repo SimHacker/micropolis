@@ -1,0 +1,63 @@
+<library>
+
+
+    <!-- Map View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Map
+  Scroll Rectangle
+  Legend
+  Overlays
+    Zones
+      All
+      Residential
+      Commercial
+      Industrial
+      Transportation
+    Overlays
+      Population Density
+      Rate of Growth
+      Land Value
+      Crime Rate
+      Pollution Density
+      Traffic Density
+      Fire Coverage
+      Police Coverage
+
+-->
+
+
+    <class name="mapview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Map"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
+
+
+    </class>
+
+
+</library>

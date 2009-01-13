@@ -1,0 +1,87 @@
+<library>
+
+
+    <!-- Vertical Resize Bar -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="vresizebar"
+	x="$once{this.defaultx}"
+	y="$once{-this.overhang}"
+	width="5"
+	height="${parent.height + (2 * this.overhang)}"
+	pixellock="true"
+	bgcolor="${(this.dragging || this.pointing) ? this.hilitecolor : this.normalcolor}"
+	onmouseover="this.setAttribute('pointing', true)"
+	onmouseout="this.setAttribute('pointing', false)"
+	onmousedown="this.startdrag()"
+	onmouseup="this.stopdrag()"
+	onclick="this.togglepos()"
+    >
+
+
+	<attribute name="minx" value="0"/>
+	<attribute name="maxx" value="1000000"/>
+	<attribute name="defaultx" value="0"/>
+	<attribute name="startx" value="0"/>
+	<attribute name="overhang" value="0"/>
+	<attribute name="dragging" value="false"/>
+	<attribute name="pointing" value="false"/>
+	<attribute name="trackvar" type="string" value=""/>
+	<attribute name="normalcolor" value="0x006699"/>
+	<attribute name="hilitecolor" value="0x99ffff"/>
+
+
+	<method name="startdrag"><![CDATA[
+	    this.setAttribute("dragging", true);
+	    this.startx = this.x;
+	    this.dragger.apply();
+	  ]]>
+	</method>
+
+
+	<method name="stopdrag"><![CDATA[
+	    this.setAttribute("dragging", false);
+	    this.dragger.remove();
+	  ]]>
+	</method>
+
+
+	<method name="togglepos"><![CDATA[
+	    if (this.x == this.startx) {
+	      if (this.x == 0) {
+		this.animate("x", this.defaultx, 500);
+	      } else {
+		this.animate("x", 0, 500);
+	      } // if
+	    } // if
+	  ]]>
+	</method>
+
+
+	<handler name="onx"><![CDATA[
+	    var trackvar = this.trackvar;
+	    var val, newval;
+	    //Debug.write("vresizebar onx", this, "trackvar", trackvar, "y", this.x);
+	    if ((trackvar != "") &&
+		((val = gApp[trackvar]) != (newval = this.x))) {
+	      gApp.setAttribute(trackvar, newval);
+	    } // if
+	  ]]>
+	</handler>
+
+
+	<dragstate
+	  name="dragger" 
+	  drag_axis="x"
+	  drag_min_x="${this.minx}"
+	  drag_max_x="${this.maxx}"
+	/>
+
+
+    </class>
+
+
+</library>

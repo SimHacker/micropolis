@@ -1,0 +1,83 @@
+<library>
+
+
+    <!-- Control Panel -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Control Panel
+  SimCity
+    About
+    New City
+    Quit
+  Options
+    Disasters
+    Sound
+  Disasters
+    Monster
+    Fire
+    Flood
+    Meltdown
+    Tornado
+    Earthquake
+  Speed
+    Pause
+    Slow
+    Medium
+    Fast
+  Date
+  Funds
+  Tax Rate
+  Demand Gauge
+  History Graph
+  Message Log
+
+-->
+
+
+    <class name="controlpanel">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Micropolis Controls"
+	    value="true"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+	    >
+
+	    <simplelayout axis="y"/>
+
+	    <text
+		resize="true"
+	    >Disasters</text>
+
+	    <view
+		width="${parent.width}"
+	    >
+		<wrappinglayout/>
+
+		<button 
+		    datapath="ds_disasters:/disasters/disaster"
+		    text="$path{'@name'}"
+		    onclick="gApp.sendCommand(this.data.childNodes[0].serialize())"
+		/>
+
+	    </view>
+
+	</view>
+
+    </class>
+
+
+</library>
