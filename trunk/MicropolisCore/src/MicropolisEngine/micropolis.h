@@ -2278,7 +2278,7 @@ public:
      */
     //@{
 
-    int powerStackNum; ///< Stack counter, points to top-most item.
+    int powerStackPointer; ///< Stack counter, points to top-most item.
 
     short powerStackX[PWRSTKSIZE]; ///< X coordinates at the power stack.
     short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
@@ -2428,20 +2428,20 @@ public:
 
     short indCap;
 
-    short CashFlow;
+    short cashFlow;
 
-    float EMarket;
+    float externalMarket;
 
-    Scenario DisasterEvent; ///< The disaster for which a count-down is running
-    short DisasterWait; ///< Count-down timer for the disaster
+    Scenario disasterEvent; ///< The disaster for which a count-down is running
+    short disasterWait; ///< Count-down timer for the disaster
 
-    Scenario ScoreType; ///< The type of score table to use
-    short ScoreWait; ///< Time to wait before computing the score
+    Scenario scoreType; ///< The type of score table to use
+    short scoreWait; ///< Time to wait before computing the score
 
-    short PwrdZCnt; ///< Number of powered tiles in all zone
-    short unPwrdZCnt; ///< Number of unpowered tiles in all zones
+    short poweredZoneCount; ///< Number of powered tiles in all zone
+    short unpoweredZoneCount; ///< Number of unpowered tiles in all zones
 
-    short NewPower; /* post */
+    short newPower; /* post */
 
     short cityTaxAverage;
 
@@ -2455,78 +2455,77 @@ public:
 
 
     /** Generate a random animated MapTileCharacters::FIRE tile */
-    inline short RandomFire()
+    inline short randomFire()
     {
         return (FIRE + (getRandom16() & 7)) | ANIMBIT;
     };
 
     /** Generate a random MapTileCharacters::RUBBLE tile */
-    inline short RandomRubble()
+    inline short randomRubble()
     {
         return (RUBBLE + (getRandom16() & 3)) | BULLBIT;
     };
 
-    void SimFrame();
+    void simFrame();
 
-    void Simulate(
-      int mod16);
+    void simulate(int mod16);
 
-    void DoSimInit();
+    void doSimInit();
 
-    void DoNilPower();
+    void doNilPower();
 
-    void DecTrafficMem();
+    void decTrafficMap();
 
-    void DecROGMem();
+    void decRateOfGrowthMap();
 
-    void InitSimMemory();
+    void initSimMemory();
 
-    void SimLoadInit();
+    void simLoadInit();
 
-    void SetCommonInits();
+    void setCommonInits();
 
-    void SetValves();
+    void setValves();
 
-    void ClearCensus();
+    void clearCensus();
 
-    void TakeCensus();
+    void take10Census();
 
-    void Take2Census();
+    void take120Census();
 
-    void CollectTax();
+    void collectTax();
 
-    void UpdateFundEffects();
+    void updateFundEffects();
 
-    void MapScan(int x1, int x2);
+    void mapScan(int x1, int x2);
 
-    void DoRail();
+    void doRail();
 
-    void DoRadTile();
+    void doRadTile();
 
-    void DoRoad();
+    void doRoad();
 
-    bool DoBridge();
+    bool doBridge();
 
-    int GetBoatDis();
+    int getBoatDistance();
 
-    void DoFire();
+    void doFire();
 
-    void FireZone(int Xloc, int Yloc, int ch);
+    void fireZone(int Xloc, int Yloc, int ch);
 
 
 private:
 
-    void RepairZone(short ZCent, short zsize);
+    void repairZone(short ZCent, short zsize);
 
-    void DoSPZone(bool PwrOn);
+    void doSpecialZone(bool PwrOn);
 
-    void DrawStadium(int z);
+    void drawStadium(int z);
 
-    void DoAirport();
+    void doAirport();
 
-    void CoalSmoke(int mx, int my);
+    void coalSmoke(int mx, int my);
 
-    void DoMeltdown(int SX, int SY);
+    void doMeltdown(int SX, int SY);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2537,100 +2536,100 @@ public:
 
     SimSprite *spriteList; ///< List of active sprites.
 
-    SimSprite *FreeSprites; ///< Pool of free #SimSprite objects.
+    SimSprite *freeSprites; ///< Pool of free #SimSprite objects.
 
-    SimSprite *GlobalSprites[SPRITE_COUNT];
+    SimSprite *globalSprites[SPRITE_COUNT];
 
-    short CrashX;
+    short crashX;
 
-    short CrashY;
+    short crashY;
 
     int absDist;
 
-    short Cycle;
+    short spriteCycle;
 
 
-    SimSprite *NewSprite(const char *name, int type, int x, int y);
+    SimSprite *newSprite(const char *name, int type, int x, int y);
 
-    void InitSprite(SimSprite *sprite, int x, int y);
+    void initSprite(SimSprite *sprite, int x, int y);
 
-    void DestroyAllSprites();
+    void destroyAllSprites();
 
-    void DestroySprite(SimSprite *sprite);
+    void destroySprite(SimSprite *sprite);
 
-    SimSprite *GetSprite(int type);
+    SimSprite *getSprite(int type);
 
-    SimSprite *MakeSprite(int type, int x, int y);
+    SimSprite *makeSprite(int type, int x, int y);
 
-    void DrawObjects();
+    void drawObjects();
 
-    void DrawSprite(SimSprite *sprite);
+    void drawSprite(SimSprite *sprite);
 
-    short GetChar(int x, int y);
+    short getChar(int x, int y);
 
-    short TurnTo(int p, int d);
+    short turnTo(int p, int d);
 
-    bool TryOther(int Tpoo, int Told, int Tnew);
+    bool tryOther(int Tpoo, int Told, int Tnew);
 
-    bool SpriteNotInBounds(SimSprite *sprite);
+    bool spriteNotInBounds(SimSprite *sprite);
 
-    short GetDir(int orgX, int orgY, int desX, int desY);
+    short getDir(int orgX, int orgY, int desX, int desY);
 
-    int GetDistance(int x1, int y1, int x2, int y2);
+    int getDistance(int x1, int y1, int x2, int y2);
 
-    bool CheckSpriteCollision(SimSprite *s1, SimSprite *s2);
+    bool checkSpriteCollision(SimSprite *s1, SimSprite *s2);
 
-    void MoveObjects();
+    void moveObjects();
 
-    void DoTrainSprite(SimSprite *sprite);
+    void doTrainSprite(SimSprite *sprite);
 
-    void DoCopterSprite(SimSprite *sprite);
+    void doCopterSprite(SimSprite *sprite);
 
-    void DoAirplaneSprite(SimSprite *sprite);
+    void doAirplaneSprite(SimSprite *sprite);
 
-    void DoShipSprite(SimSprite *sprite);
+    void doShipSprite(SimSprite *sprite);
 
-    void DoMonsterSprite(SimSprite *sprite);
+    void doMonsterSprite(SimSprite *sprite);
 
-    void DoTornadoSprite(SimSprite *sprite);
+    void doTornadoSprite(SimSprite *sprite);
 
-    void DoExplosionSprite(SimSprite *sprite);
+    void doExplosionSprite(SimSprite *sprite);
 
-    void DoBusSprite(SimSprite *sprite);
+    void doBusSprite(SimSprite *sprite);
 
-    int CanDriveOn(int x, int y);
+    int canDriveOn(int x, int y);
 
-    void ExplodeSprite(SimSprite *sprite);
+    void explodeSprite(SimSprite *sprite);
 
     bool checkWet(int x);
 
-    void Destroy(int ox, int oy);
+    void destroyMapTile(int ox, int oy);
 
-    void OFireZone(int Xloc, int Yloc, int ch);
+    void startFireInZone(int Xloc, int Yloc, int ch);
 
-    void StartFire(int x, int y);
+    void startFire(int x, int y);
 
-    void GenerateTrain(int x, int y);
+    void generateTrain(int x, int y);
 
-    void GenerateBus(int x, int y);
+    void generateBus(int x, int y);
 
-    void GenerateShip();
+    void generateShip();
 
-    void MakeShipHere(int x, int y);
+    void makeShipHere(int x, int y);
 
     void makeMonster();
 
-    void MonsterHere(int x, int y);
+    void makeMonsterAt(int x, int y);
 
-    void GenerateCopter(int x, int y);
+    void generateCopter(int x, int y);
 
-    void GeneratePlane(int x, int y);
+    void generatePlane(int x, int y);
 
     void makeTornado();
 
-    void MakeExplosion(int x, int y);
+    void makeExplosion(int x, int y);
 
-    void MakeExplosionAt(int x, int y);
+    void makeExplosionAt(int x, int y);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2639,7 +2638,7 @@ public:
 public:
 
 
-    Quad TotalFunds; ///< Funds of the player
+    Quad totalFunds; ///< Funds of the player
 
     /**
      * Enable auto-bulldoze
@@ -2656,32 +2655,27 @@ public:
      */
     bool autoBudget;
 
-    Quad LastMesTime;
+    Quad messageTimeLast;
 
     GameLevel gameLevel; ///< Difficulty level of the game (0..2)
 
-    short InitSimLoad;
+    short initSimLoad;
 
-    Scenario ScenarioID; ///< Scenario being played
+    Scenario scenario; ///< Scenario being played
 
-    short SimSpeed;
+    short simSpeed;
 
-    short SimMetaSpeed;
+    short simSpeedMeta;
 
-    bool UserSoundOn; ///< Enable sound
+    bool enableSound; ///< Enable sound
 
-    /**
-     * Disable disasters
-     * @todo Variable has reverse logic,
-     *       we should use AllowDisasters or EnableDisasters instead
-     */
-    bool NoDisasters;
+    bool enableDisasters; ///< Enable disasters
 
-    short MesNum;
+    short messageNumber;
 
     bool evalChanged; ///< The evaluation window should be shown to the user
 
-    short flagBlink;
+    short blinkFlag;
 
     // Hook into scripting language to send callbacks.
     // (i.e. a function that calls back into the Python interpreter.)
@@ -2695,40 +2689,40 @@ public:
     // (i.e. Python SWIG wrapper of this Micropolis object.)
     void *userData;
 
-    void Spend(int dollars);
+    void spend(int dollars);
 
-    void SetFunds(int dollars);
+    void setFunds(int dollars);
 
-    Quad TickCount();
+    Quad tickCount();
 
-    Ptr NewPtr(int size);
+    Ptr newPtr(int size);
 
-    void FreePtr(void *data);
+    void freePtr(void *data);
 
-    void DoPlayNewCity();
+    void doPlayNewCity();
 
-    void DoReallyStartGame();
+    void doReallyStartGame();
 
-    void DoStartLoad();
+    void doStartLoad();
 
-    void DoStartScenario(
+    void doStartScenario(
       int scenario);
 
     void dropFireBombs();
 
-    void InitGame();
+    void initGame();
 
-    void Callback(const char *name, const char *params, ...);
+    void callback(const char *name, const char *params, ...);
 
-    void DoEarthquake(int strength);
+    void doEarthquake(int strength);
 
-    void InvalidateEditors();
+    void invalidateEditors();
 
-    void InvalidateMaps();
+    void invalidateMaps();
 
-    void InitializeSound();
+    void initializeSound();
 
-    void MakeSound(
+    void makeSound(
       const char *channel,
       const char *sound,
       int x=-1,
@@ -2745,13 +2739,13 @@ public:
 public:
 
 
-    int last_x; ///< Get rid of this.
+    int toolX; ///< Get rid of this.
 
-    int last_y; ///< Get rid of this.
+    int toolY; ///< Get rid of this.
 
-    int tool_x; ///< Get rid of this.
+    int toolXLast; ///< Get rid of this.
 
-    int tool_y; ///< Get rid of this.
+    int toolYLast; ///< Get rid of this.
 
 
     int putDownPark(short mapH, short mapV);
@@ -2836,43 +2830,43 @@ private:
 public:
 
     /* Position stack */
-    short PosStackN; ///< Position stack top pointer, points to top position
-    short curMapXStack[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
-    short curMapYStack[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
+    short curMapStackPointer; ///< Position stack top pointer, points to top position
+    short curMapStackX[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
+    short curMapStackY[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
 
-    Direction LDir; ///< Last moved direction
+    Direction dirLast; ///< Last moved direction
 
-    short TrafMaxX; ///< X coordinate of a position with heavy traffic
-    short TrafMaxY; ///< Y coordinate of a position with heavy traffic
+    short trafMaxX; ///< X coordinate of a position with heavy traffic
+    short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
 
-    short MakeTraf(ZoneType dest);
+    short makeTraffic(ZoneType dest);
 
-    void SetTrafMem();
+    void setTrafficMap();
 
-    void PushPos();
+    void pushPos();
 
-    void PullPos();
+    void pullPos();
 
-    bool FindPRoad();
+    bool findPerimeterRoad();
 
-    bool FindPTele();
+    bool findPerimeterTelecom();
 
-    bool TryDrive();
+    bool tryDrive();
 
     bool tryGo(int dist);
 
-    short GetFromMap(Direction d);
+    short getFromMap(Direction d);
 
 
 private:
 
-    ZoneType Zsource; ///< Destination of traffic
+    ZoneType zoneSource; ///< Destination of traffic
 
 
-    bool DriveDone();
+    bool driveDone();
 
-    bool RoadTest(int tile);
+    bool roadTest(int tile);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2881,9 +2875,9 @@ private:
 public:
 
 
-    short MustUpdateFunds;
+    short mustUpdateFunds;
 
-    short MustUpdateOptions;
+    short mustUpdateOptions;
 
     Quad cityTimeLast;
 
@@ -2891,30 +2885,30 @@ public:
 
     Quad cityMonthLast;
 
-    Quad LastFunds;
+    Quad totalFundsLast;
 
-    Quad LastR;
+    Quad resLast;
 
-    Quad LastC;
+    Quad comLast;
 
-    Quad LastI;
+    Quad indLast;
 
 
-    void DoUpdateHeads();
+    void doUpdateHeads();
 
-    void UpdateEditors();
+    void updateEditors();
 
-    void UpdateMaps();
+    void updateMaps();
 
-    void UpdateGraphs();
+    void updateGraphs();
 
-    void UpdateEvaluation();
+    void updateEvaluation();
 
-    void UpdateHeads();
+    void updateHeads();
 
-    void UpdateFunds();
+    void updateFunds();
 
-    void ReallyUpdateFunds();
+    void reallyUpdateFunds();
 
     void doTimeStuff();
 
@@ -2924,13 +2918,13 @@ public:
 
     void drawValve();
 
-    void SetDemand(float r, float c, float i);
+    void setDemand(float r, float c, float i);
 
     void updateOptions();
 
-    void UpdateOptionsMenu(int options);
+    void updateOptionsMenu(int options);
 
-    void UpdateUserInterface();
+    void updateUserInterface();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2941,29 +2935,29 @@ public:
 
     void makeDollarDecimalStr(char *numStr, char *dollarStr);
 
-    void Pause();
+    void pause();
 
-    void Resume();
+    void resume();
 
     void setSpeed(short speed);
 
     void setSkips(int skips);
 
-    void SetGameLevelFunds(GameLevel level);
+    void setGameLevelFunds(GameLevel level);
 
-    void SetGameLevel(GameLevel level);
+    void setGameLevel(GameLevel level);
 
-    void UpdateGameLevel();
+    void updateGameLevel();
 
     void setCityName(const std::string &name);
 
     void setCleanCityName(const std::string &name);
 
-    void SetYear(int year);
+    void setYear(int year);
 
-    int CurrentYear();
+    int currentYear();
 
-    void DoNewGame();
+    void doNewGame();
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2972,63 +2966,63 @@ public:
 public:
 
 
-    void DoZone();
+    void doZone();
 
-    void DoHospChur();
+    void doHospitalChurch();
 
-    void SetSmoke(int ZonePower);
+    void setSmoke(int ZonePower);
 
-    void DoIndustrial(int ZonePwrFlg);
+    void makeHospital();
 
-    void DoCommercial(int ZonePwrFlg);
+    short getLandPollutionValue();
 
-    void DoResidential(int ZonePwrFlg);
+    void incRateOfGrowth(int amount);
 
-    void MakeHosp();
+    bool zonePlop(int base);
 
-    short GetCRVal();
+    short doFreePop();
 
-    void DoResIn(int pop, int value);
+    bool setZonePower();
 
-    void DoComIn(int pop, int value);
+    void buildHouse(int value);
 
-    void DoIndIn(int pop, int value);
+    short evalLot(int x, int y);
 
-    void IncROG(int amount);
+    void doResidential(int ZonePwrFlg);
 
-    void DoResOut(int pop, int value);
+    void doResIn(int pop, int value);
 
-    void DoComOut(int pop, int value);
-
-    void DoIndOut(int pop, int value);
+    void doResOut(int pop, int value);
 
     short getResZonePop(int Ch9);
 
+    void resPlop(int Den, int Value);
+
+    short evalRes(int traf);
+
+    void doCommercial(int ZonePwrFlg);
+
+    void doComIn(int pop, int value);
+
+    void doComOut(int pop, int value);
+
     short getComZonePop(int Ch9);
+
+    void comPlop(int Den, int Value);
+
+    short evalCom(int traf);
+
+    void doIndustrial(int ZonePwrFlg);
+
+    void doIndIn(int pop, int value);
+
+    void doIndOut(int pop, int value);
 
     short getIndZonePop(int Ch9);
 
-    void BuildHouse(int value);
+    void indPlop(int Den, int Value);
 
-    void ResPlop(int Den, int Value);
-
-    void ComPlop(int Den, int Value);
-
-    void IndPlop(int Den, int Value);
-
-    short EvalLot(int x, int y);
-
-    bool ZonePlop(int base);
-
-    short EvalRes(int traf);
-
-    short EvalCom(int traf);
-
-    short EvalInd(int traf);
-
-    short DoFreePop();
-
-    bool SetZPower();
+    short evalInd(int traf);
 
 
     ////////////////////////////////////////////////////////////////////////

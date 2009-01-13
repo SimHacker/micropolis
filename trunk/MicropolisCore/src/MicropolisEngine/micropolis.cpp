@@ -501,8 +501,8 @@ void Micropolis::init()
 
     for (int i = 0; i < HISTORIES; i++) {
 
-      history10[i] = (unsigned char *)NewPtr(120);
-      history120[i] = (unsigned char *)NewPtr(120);
+      history10[i] = (unsigned char *)newPtr(120);
+      history120[i] = (unsigned char *)newPtr(120);
 
     }
 
@@ -613,7 +613,7 @@ void Micropolis::init()
     // power.cpp
 
 
-    powerStackNum = 0;
+    powerStackPointer = 0;
 
     // short powerStackX[PWRSTKSIZE];
     // short powerStackY[PWRSTKSIZE];
@@ -720,30 +720,30 @@ void Micropolis::init()
     // short indCap;
     indCap = 0;
 
-    // short CashFlow;
-    CashFlow = 0;
+    // short cashFlow;
+    cashFlow = 0;
 
-    // float EMarket;
-    EMarket = (float)4.0;
+    // float externalMarket;
+    externalMarket = (float)4.0;
 
-    DisasterEvent = SC_NONE;
+    disasterEvent = SC_NONE;
 
-    // short DisasterWait;
-    DisasterWait = 0;
+    // short disasterWait;
+    disasterWait = 0;
 
-    ScoreType = SC_NONE;
+    scoreType = SC_NONE;
 
-    // short ScoreWait;
-    ScoreWait = 0;
+    // short scoreWait;
+    scoreWait = 0;
 
-    // short PwrdZCnt;
-    PwrdZCnt = 0;
+    // short poweredZoneCount;
+    poweredZoneCount = 0;
 
-    // short unPwrdZCnt;
-    unPwrdZCnt = 0;
+    // short unpoweredZoneCount;
+    unpoweredZoneCount = 0;
 
-    // short NewPower; /* post */
-    NewPower = 0;
+    // short newPower; /* post */
+    newPower = 0;
 
     // short cityTaxAverage;
     cityTaxAverage = 0;
@@ -767,62 +767,62 @@ void Micropolis::init()
     //SimSprite *spriteList;
     spriteList = NULL;
 
-    // SimSprite *FreeSprites;
-    FreeSprites = NULL;
+    // SimSprite *freeSprites;
+    freeSprites = NULL;
 
-    // SimSprite *GlobalSprites[SPRITE_COUNT];
-    memset(GlobalSprites, 0, sizeof(SimSprite *) * SPRITE_COUNT);
+    // SimSprite *globalSprites[SPRITE_COUNT];
+    memset(globalSprites, 0, sizeof(SimSprite *) * SPRITE_COUNT);
 
-    // short CrashX;
-    CrashX = 0;
+    // short crashX;
+    crashX = 0;
 
-    // short CrashY;
-    CrashY = 0;
+    // short crashY;
+    crashY = 0;
 
     // int absDist;
     absDist = 0;
 
-    // short Cycle;
-    Cycle = 0;
+    // short spriteCycle;
+    spriteCycle = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
     // stubs.cpp
 
 
-    // Quad TotalFunds;
-    TotalFunds = 0;
+    // Quad totalFunds;
+    totalFunds = 0;
 
     autoBulldoze = false; // Disable auto-bulldoze
     autoBudget = false;   // Disable auto-budget
 
-    // Quad LastMesTime;
-    LastMesTime = 0;
+    // Quad messageTimeLast;
+    messageTimeLast = 0;
 
     gameLevel = LEVEL_EASY;
 
-    // short InitSimLoad;
-    InitSimLoad = 0;
+    // short initSimLoad;
+    initSimLoad = 0;
 
-    ScenarioID = SC_NONE;
+    scenario = SC_NONE;
 
-    // short SimSpeed;
-    SimSpeed = 0;
+    // short simSpeed;
+    simSpeed = 0;
 
-    // short SimMetaSpeed;
-    SimMetaSpeed = 0;
+    // short simSpeedMeta;
+    simSpeedMeta = 0;
 
-    UserSoundOn = false; // Disable sound
+    enableSound = false; // Disable sound
 
-    NoDisasters = false; // Enable disasters
+    enableDisasters = true; // Enable disasters
 
-    // short MesNum;
-    MesNum = 0;
+    // short messageNumber;
+    messageNumber = 0;
 
     evalChanged = false;
 
-    // short flagBlink;
-    flagBlink = 0;
+    // short blinkFlag;
+    blinkFlag = 0;
 
     // CallbackFunction callbackHook;
     callbackHook = NULL;
@@ -838,52 +838,52 @@ void Micropolis::init()
     //  tool.cpp
 
 
-    // int last_x;
-    last_x = 0;
+    // int toolX;
+    toolX = 0;
 
-    // int last_y;
-    last_y = 0;
+    // int toolY;
+    toolY = 0;
 
-    // int tool_x;
-    tool_x = 0;
+    // int toolXLast;
+    toolXLast = 0;
 
-    // int tool_y;
-    tool_y = 0;
+    // int toolYLast;
+    toolYLast = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
     // traffic.cpp
 
 
-    // short PosStackN;
-    PosStackN = 0;
+    // short curMapStackPointer;
+    curMapStackPointer = 0;
 
-    // short curMapXStack[MAX_TRAFFIC_DISTANCE+1];
-    memset(curMapXStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
+    // short curMapStackX[MAX_TRAFFIC_DISTANCE+1];
+    memset(curMapStackX, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
-    // short curMapYStack[MAX_TRAFFIC_DISTANCE+1];
-    memset(curMapYStack, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
+    // short curMapStackY[MAX_TRAFFIC_DISTANCE+1];
+    memset(curMapStackY, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
 
-    LDir = DIR_INVALID;
+    dirLast = DIR_INVALID;
 
-    Zsource = ZT_COMMERCIAL;
+    zoneSource = ZT_COMMERCIAL;
 
-    // short TrafMaxX;
-    TrafMaxX = 0;
+    // short trafMaxX;
+    trafMaxX = 0;
 
-    // short TrafMaxY;
-    TrafMaxY = 0;
+    // short trafMaxY;
+    trafMaxY = 0;
 
 
     ////////////////////////////////////////////////////////////////////////
     // update.cpp
 
 
-    // short MustUpdateFunds;
-    MustUpdateFunds = 0;
+    // short mustUpdateFunds;
+    mustUpdateFunds = 0;
 
-    // short MustUpdateOptions;
-    MustUpdateOptions = 0;
+    // short mustUpdateOptions;
+    mustUpdateOptions = 0;
 
     // Quad cityTimeLast;
     cityTimeLast = 0;
@@ -894,17 +894,17 @@ void Micropolis::init()
     // Quad cityMonthLast;
     cityMonthLast = 0;
 
-    // Quad LastFunds;
-    LastFunds = 0;
+    // Quad totalFundsLast;
+    totalFundsLast = 0;
 
-    // Quad LastR;
-    LastR = 0;
+    // Quad resLast;
+    resLast = 0;
 
-    // Quad LastC;
-    LastC = 0;
+    // Quad comLast;
+    comLast = 0;
 
-    // Quad LastI;
-    LastI = 0;
+    // Quad indLast;
+    indLast = 0;
 
 
     ////////////////////////////////////////////////////////////////////////

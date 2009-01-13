@@ -182,7 +182,7 @@ void Micropolis::graphDoer()
     }
 
     if (newGraph) {
-        Callback("UIUpdate", "s", "graph");
+        callback("UIUpdate", "s", "graph");
         newGraph = false;
     }
 }

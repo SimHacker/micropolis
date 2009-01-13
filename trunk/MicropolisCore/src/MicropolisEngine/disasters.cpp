@@ -92,11 +92,11 @@ void Micropolis::doDisasters()
         floodCount--;
     }
 
-    if (DisasterEvent != SC_NONE) {
+    if (disasterEvent != SC_NONE) {
         scenarioDisaster();
     }
 
-    if (NoDisasters) { // Disasters have been disabled
+    if (!enableDisasters) { // Disasters have been disabled
         return;
     }
 
@@ -146,12 +146,12 @@ void Micropolis::doDisasters()
 /** Let disasters of the scenario happen */
 void Micropolis::scenarioDisaster()
 {
-    switch (DisasterEvent) {
+    switch (disasterEvent) {
         case SC_DULLSVILLE:
             break;
 
         case SC_SAN_FRANCISCO:
-            if (DisasterWait == 1) {
+            if (disasterWait == 1) {
                 makeEarthquake();
             }
             break;
@@ -164,7 +164,7 @@ void Micropolis::scenarioDisaster()
             break;
 
         case SC_TOKYO:
-            if (DisasterWait == 1) {
+            if (disasterWait == 1) {
                 makeMonster();
             }
             break;
@@ -173,13 +173,13 @@ void Micropolis::scenarioDisaster()
             break;
 
         case SC_BOSTON:
-            if (DisasterWait == 1) {
+            if (disasterWait == 1) {
                 makeMeltdown();
             }
             break;
 
         case SC_RIO:
-            if ((DisasterWait % 24) == 0) {
+            if ((disasterWait % 24) == 0) {
                 makeFlood();
             }
             break;
@@ -189,10 +189,10 @@ void Micropolis::scenarioDisaster()
             break; // Never used
     }
 
-    if (DisasterWait > 0) {
-        DisasterWait--;
+    if (disasterWait > 0) {
+        disasterWait--;
     } else {
-        DisasterEvent = SC_NONE;
+        disasterEvent = SC_NONE;
     }
 }
 
@@ -208,7 +208,7 @@ void Micropolis::makeMeltdown()
     for (x = 0; x < (WORLD_X - 1); x++) {
         for (y = 0; y < (WORLD_Y - 1); y++) {
             if ((map[x][y] & LOMASK) == NUCLEAR) {
-                DoMeltdown(x, y);
+                doMeltdown(x, y);
                 return;
             }
         }
@@ -218,11 +218,11 @@ void Micropolis::makeMeltdown()
 /** Let a fire bomb explode at a random location */
 void Micropolis::fireBomb()
 {
-    CrashX = getRandom(WORLD_X - 1);
-    CrashY = getRandom(WORLD_Y - 1);
-    MakeExplosion(CrashX, CrashY);
+    crashX = getRandom(WORLD_X - 1);
+    crashY = getRandom(WORLD_Y - 1);
+    makeExplosion(crashX, crashY);
     clearMessage();
-    sendMessageAt(-STR301_FIREBOMBING, CrashX, CrashY);
+    sendMessageAt(-STR301_FIREBOMBING, crashX, crashY);
 }
 
 
@@ -233,7 +233,7 @@ void Micropolis::makeEarthquake()
 
     int strength = getRandom(700) + 300; // strength/duration of the earthquake
 
-    DoEarthquake(strength);
+    doEarthquake(strength);
 
     sendMessageAt(-STR301_EARTHQUAKE, cityCenterX, cityCenterY);
 
@@ -244,10 +244,10 @@ void Micropolis::makeEarthquake()
         if (vulnerable(map[x][y])) {
 
             if ((z & 0x3) != 0) { // 3 of 4 times reduce to rubble
-                map[x][y] = RandomRubble();
+                map[x][y] = randomRubble();
             } else {
                 // 1 of 4 times start fire
-                map[x][y] = RandomFire();
+                map[x][y] = randomFire();
             }
         }
     }
@@ -267,9 +267,9 @@ void Micropolis::setFire()
     if ((z & ZONEBIT) == 0) {
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
-            map[x][y] = RandomFire();
-            CrashX = x;
-            CrashY = y;
+            map[x][y] = randomFire();
+            crashX = x;
+            crashY = y;
             sendMessageAt(-STR301_FIRE_REPORTED, x, y);
         }
     }
@@ -289,7 +289,7 @@ void Micropolis::makeFire()
         if ((!(z & ZONEBIT)) && (z & BURNBIT)) {
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
-                map[x][y] = RandomFire();
+                map[x][y] = randomFire();
                 sendMessageAt(STR301_FIRE_REPORTED, x, y);
                 return;
             }
@@ -377,7 +377,7 @@ void Micropolis::doFlood()
                     if ((c & BURNBIT) == BURNBIT || c == DIRT
                                             || (t >= WOODS5 && t < FLOOD)) {
                         if ((c & ZONEBIT) == ZONEBIT) {
-                            FireZone(xx, yy, c);
+                            fireZone(xx, yy, c);
                         }
                         map[xx][yy] = FLOOD + getRandom(2);
                     }

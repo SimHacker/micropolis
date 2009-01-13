@@ -71,7 +71,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-/* comefrom: Simulate SpecialInit */
+/* comefrom: simulate SpecialInit */
 void Micropolis::fireAnalysis()
 {
     /* Make firerate map from firestation map */
@@ -92,7 +92,7 @@ void Micropolis::fireAnalysis()
 }
 
 
-/* comefrom: Simulate SpecialInit */
+/* comefrom: simulate SpecialInit */
 void Micropolis::populationDensityScan()
 {
     /*  sets: populationDensityMap, , , comRateMap  */
@@ -156,7 +156,7 @@ int Micropolis::getPopulationDensity(int Ch9)
     int pop;
 
     if (Ch9 == FREEZ) {
-        pop = DoFreePop();
+        pop = doFreePop();
         return pop;
     }
 
@@ -179,7 +179,7 @@ int Micropolis::getPopulationDensity(int Ch9)
 }
 
 
-/* comefrom: Simulate SpecialInit */
+/* comefrom: simulate SpecialInit */
 void Micropolis::pollutionTerrainLandValueScan()
 {
     /* Does pollution, terrain, land value */
@@ -374,7 +374,7 @@ int Micropolis::getCityCenterDistance(int x, int y)
 }
 
 
-/* comefrom: Simulate SpecialInit */
+/* comefrom: simulate SpecialInit */
 void Micropolis::crimeScan()
 {
     short numz;

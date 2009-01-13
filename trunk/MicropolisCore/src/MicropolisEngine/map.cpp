@@ -748,7 +748,7 @@ void Micropolis::ditherMap()
     width = view->m_width;
     height = view->m_height;
 
-    errors = (int *)NewPtr(sizeof(int) * width);
+    errors = (int *)newPtr(sizeof(int) * width);
 
     for (i = 0; i < width; i++) {
         errors[i] = (getRandom16() & 15) - 7;
@@ -804,7 +804,7 @@ void Micropolis::ditherMap()
         }
     }
 
-    FreePtr(errors);
+    freePtr(errors);
 */
 }
 

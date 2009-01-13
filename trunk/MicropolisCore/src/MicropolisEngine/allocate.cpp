@@ -76,7 +76,7 @@ void Micropolis::initMapArrays()
     short i;
 
     if (!mapBase) {
-        mapBase = (unsigned short *)NewPtr(
+        mapBase = (unsigned short *)newPtr(
             sizeof(unsigned short) *
             WORLD_X * WORLD_Y);
     }
@@ -85,15 +85,15 @@ void Micropolis::initMapArrays()
         map[i] = (short *)(mapBase + (i * WORLD_Y));
     }
 
-    populationDensityMapBase = NewPtr(HWLDX * HWLDY);
-    trafficDensityMapBase = NewPtr(HWLDX * HWLDY);
-    pollutionMapBase = NewPtr(HWLDX * HWLDY);
-    landValueMapBase = NewPtr(HWLDX * HWLDY);
-    crimeMapBase = NewPtr(HWLDX * HWLDY);
+    populationDensityMapBase = newPtr(HWLDX * HWLDY);
+    trafficDensityMapBase = newPtr(HWLDX * HWLDY);
+    pollutionMapBase = newPtr(HWLDX * HWLDY);
+    landValueMapBase = newPtr(HWLDX * HWLDY);
+    crimeMapBase = newPtr(HWLDX * HWLDY);
 
-    tempMap1Base = NewPtr(HWLDX * HWLDY);
-    tempMap2Base = NewPtr(HWLDX * HWLDY);
-    tempMap3Base = NewPtr(QWX * QWY);
+    tempMap1Base = newPtr(HWLDX * HWLDY);
+    tempMap2Base = newPtr(HWLDX * HWLDY);
+    tempMap3Base = newPtr(QWX * QWY);
 
     for (i = 0; i < HWLDX; i++) {
         populationDensityMap[i] = (Byte *)populationDensityMapBase + (i * HWLDY);
@@ -106,21 +106,21 @@ void Micropolis::initMapArrays()
         tempMap2[i] = (Byte *)tempMap2Base + (i * HWLDY);
     }
 
-    terrainDensityMapBase = NewPtr(QWX * QWY);
+    terrainDensityMapBase = newPtr(QWX * QWY);
 
     for (i = 0; i < QWX; i++) {
         terrainDensityMap[i] = (Byte *)terrainDensityMapBase + (i * QWY);
         tempMap3[i] = (Byte *)tempMap3Base + (i * QWY);
     }
 
-    resHist = (short *)NewPtr(HISTLEN);
-    comHist = (short *)NewPtr(HISTLEN);
-    indHist = (short *)NewPtr(HISTLEN);
-    moneyHist = (short *)NewPtr(HISTLEN);
-    pollutionHist = (short *)NewPtr(HISTLEN);
-    crimeHist = (short *)NewPtr(HISTLEN);
-    miscHist = (short *)NewPtr(MISCHISTLEN);
-    powerMap = (short *)NewPtr(POWERMAPLEN); // Power alloc.
+    resHist = (short *)newPtr(HISTLEN);
+    comHist = (short *)newPtr(HISTLEN);
+    indHist = (short *)newPtr(HISTLEN);
+    moneyHist = (short *)newPtr(HISTLEN);
+    pollutionHist = (short *)newPtr(HISTLEN);
+    crimeHist = (short *)newPtr(HISTLEN);
+    miscHist = (short *)newPtr(MISCHISTLEN);
+    powerMap = (short *)newPtr(POWERMAPLEN); // Power alloc.
 }
 
 
@@ -128,49 +128,49 @@ void Micropolis::destroyMapArrays()
 {
 
     if (mapBase != NULL) {
-        FreePtr(mapBase);
+        freePtr(mapBase);
         mapBase = NULL;
     }
 
     memset(map, 0, sizeof(short *) * WORLD_X);
 
     if (populationDensityMapBase != NULL) {
-        FreePtr(populationDensityMapBase);
+        freePtr(populationDensityMapBase);
         populationDensityMapBase = NULL;
     }
 
     if (trafficDensityMapBase != NULL) {
-        FreePtr(trafficDensityMapBase);
+        freePtr(trafficDensityMapBase);
         trafficDensityMapBase = NULL;
     }
 
     if (pollutionMapBase != NULL) {
-        FreePtr(pollutionMapBase);
+        freePtr(pollutionMapBase);
         pollutionMapBase = NULL;
     }
 
     if (landValueMapBase != NULL) {
-        FreePtr(landValueMapBase);
+        freePtr(landValueMapBase);
         landValueMapBase = NULL;
     }
 
     if (crimeMapBase != NULL) {
-        FreePtr(crimeMapBase);
+        freePtr(crimeMapBase);
         crimeMapBase = NULL;
     }
 
     if (tempMap1Base != NULL) {
-        FreePtr(tempMap1Base);
+        freePtr(tempMap1Base);
         tempMap1Base = NULL;
     }
 
     if (tempMap2Base != NULL) {
-        FreePtr(tempMap2Base);
+        freePtr(tempMap2Base);
         tempMap2Base = NULL;
     }
 
     if (tempMap3Base != NULL) {
-        FreePtr(tempMap3Base);
+        freePtr(tempMap3Base);
         tempMap3Base = NULL;
     }
 
@@ -184,49 +184,49 @@ void Micropolis::destroyMapArrays()
     memset(tempMap3, 0, sizeof(Byte *) * QWX);
 
     if (terrainDensityMapBase != NULL) {
-        FreePtr(terrainDensityMapBase);
+        freePtr(terrainDensityMapBase);
         terrainDensityMapBase = NULL;
     }
 
     memset(terrainDensityMap, 0, sizeof(Byte *) * QWX);
 
     if (resHist != NULL) {
-        FreePtr(resHist);
+        freePtr(resHist);
         resHist = NULL;
     }
 
     if (comHist != NULL) {
-        FreePtr(comHist);
+        freePtr(comHist);
         comHist = NULL;
     }
 
     if (indHist != NULL) {
-        FreePtr(indHist);
+        freePtr(indHist);
         indHist = NULL;
     }
 
     if (moneyHist != NULL) {
-        FreePtr(moneyHist);
+        freePtr(moneyHist);
         moneyHist = NULL;
     }
 
     if (pollutionHist != NULL) {
-        FreePtr(pollutionHist);
+        freePtr(pollutionHist);
         pollutionHist = NULL;
     }
 
     if (crimeHist != NULL) {
-        FreePtr(crimeHist);
+        freePtr(crimeHist);
         crimeHist = NULL;
     }
 
     if (miscHist != NULL) {
-        FreePtr(miscHist);
+        freePtr(miscHist);
         miscHist = NULL;
     }
 
     if (powerMap != NULL) {
-        FreePtr(powerMap);
+        freePtr(powerMap);
         powerMap = NULL;
     }
 

@@ -82,22 +82,22 @@ void Micropolis::generateSomeCity(int r)
     cityFileName = "";
 
     generateMap(r);
-    ScenarioID = SC_NONE;
+    scenario = SC_NONE;
     cityTime = 0;
-    InitSimLoad = 2;
+    initSimLoad = 2;
     doInitialEval = false;
 
     initWillStuff();
     resetMapState();
     resetEditorState();
-    InvalidateEditors();
-    InvalidateMaps();
-    UpdateFunds();
-    DoSimInit();
+    invalidateEditors();
+    invalidateMaps();
+    updateFunds();
+    doSimInit();
 
     simUpdate();
 
-    Callback("UIDidGenerateNewCity", "");
+    callback("UIDidGenerateNewCity", "");
 }
 
 

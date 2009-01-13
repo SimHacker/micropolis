@@ -180,7 +180,7 @@ void Micropolis::doPowerScan()
     maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
     numPower = 0;
 
-    while (powerStackNum > 0) {
+    while (powerStackPointer > 0) {
         pullPowerStack();
         ADir = 4;
         do {
@@ -211,14 +211,14 @@ void Micropolis::doPowerScan()
 
 /**
  * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
- * @see powerStackNum, powerStackX, powerStackY
+ * @see powerStackPointer, powerStackX, powerStackY
  */
 void Micropolis::pushPowerStack()
 {
-    if (powerStackNum < (PWRSTKSIZE - 2)) {
-        powerStackNum++;
-        powerStackX[powerStackNum] = curMapX;
-        powerStackY[powerStackNum] = curMapY;
+    if (powerStackPointer < (PWRSTKSIZE - 2)) {
+        powerStackPointer++;
+        powerStackX[powerStackPointer] = curMapX;
+        powerStackY[powerStackPointer] = curMapY;
     }
 }
 
@@ -226,14 +226,14 @@ void Micropolis::pushPowerStack()
 /**
  * Pull a position from the power stack and store it in Micropolis::curMapX and
  * Micropolis::curMapY.
- * @see powerStackNum, powerStackX, powerStackY
+ * @see powerStackPointer, powerStackX, powerStackY
  */
 void Micropolis::pullPowerStack()
 {
-    if (powerStackNum > 0)  {
-        curMapX = powerStackX[powerStackNum];
-        curMapY = powerStackY[powerStackNum];
-        powerStackNum--;
+    if (powerStackPointer > 0)  {
+        curMapX = powerStackX[powerStackPointer];
+        curMapY = powerStackY[powerStackPointer];
+        powerStackPointer--;
     }
 }
 

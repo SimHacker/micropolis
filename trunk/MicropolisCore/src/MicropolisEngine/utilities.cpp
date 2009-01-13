@@ -72,7 +72,7 @@
 
 
 /* comefrom: drawTaxesCollected incBoxValue decBoxValue drawCurrentFunds
-             drawActualBox UpdateFunds updateCurrentCost */
+             drawActualBox updateFunds updateCurrentCost */
 void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
 {
     register short leftMostSet;
@@ -134,12 +134,12 @@ void Micropolis::makeDollarDecimalStr(char *numStr, char *dollarStr)
 
 /**
  * Pause a simulation
- * @see Resume
+ * @see resume
  */
-void Micropolis::Pause()
+void Micropolis::pause()
 {
     if (!simPaused) {
-        simPausedSpeed = SimMetaSpeed;
+        simPausedSpeed = simSpeedMeta;
         setSpeed(0);
         simPaused = true;
     }
@@ -147,9 +147,9 @@ void Micropolis::Pause()
 
 /**
  * Resume simulation after pausing it
- * @see Pause
+ * @see pause
  */
-void Micropolis::Resume()
+void Micropolis::resume()
 {
     if (simPaused) {
         simPaused = false;
@@ -166,19 +166,19 @@ void Micropolis::setSpeed(short speed)
         speed = 3;
     }
 
-    SimMetaSpeed = speed;
+    simSpeedMeta = speed;
 
     if (simPaused) {
-        simPausedSpeed = SimMetaSpeed;
+        simPausedSpeed = simSpeedMeta;
         speed = 0;
     }
 
-    SimSpeed = speed;
+    simSpeed = speed;
 
-    Callback(
+    callback(
         "UISetSpeed",
         "d",
-        (int)(simPaused ? 0 : SimMetaSpeed));
+        (int)(simPaused ? 0 : simSpeedMeta));
 
 }
 
@@ -193,24 +193,24 @@ void Micropolis::setSkips(int skips)
  * Set the game level and initial funds.
  * @param level New game level.
  */
-void Micropolis::SetGameLevelFunds(GameLevel level)
+void Micropolis::setGameLevelFunds(GameLevel level)
 {
     switch (level) {
 
         default:
         case LEVEL_EASY:
-            SetFunds(20000);
-            SetGameLevel(LEVEL_EASY);
+            setFunds(20000);
+            setGameLevel(LEVEL_EASY);
             break;
 
         case LEVEL_MEDIUM:
-            SetFunds(10000);
-            SetGameLevel(LEVEL_MEDIUM);
+            setFunds(10000);
+            setGameLevel(LEVEL_MEDIUM);
             break;
 
         case LEVEL_HARD:
-            SetFunds(5000);
-            SetGameLevel(LEVEL_HARD);
+            setFunds(5000);
+            setGameLevel(LEVEL_HARD);
             break;
 
     }
@@ -220,18 +220,18 @@ void Micropolis::SetGameLevelFunds(GameLevel level)
 /** Set/change the game level.
  * @param level New game level.
  */
-void Micropolis::SetGameLevel(GameLevel level)
+void Micropolis::setGameLevel(GameLevel level)
 {
     assert(level >= LEVEL_FIRST && level <= LEVEL_LAST);
     gameLevel = level;
-    UpdateGameLevel();
+    updateGameLevel();
 }
 
 
 /** Report to the front-end that a new game level has been set. */
-void Micropolis::UpdateGameLevel()
+void Micropolis::updateGameLevel()
 {
-    Callback(
+    callback(
         "UISetGameLevel",
         "d",
         (int)gameLevel);
@@ -264,14 +264,14 @@ void Micropolis::setCleanCityName(const std::string &name)
 {
     cityName = name;
 
-    Callback(
+    callback(
         "UISetCityName",
         "s",
         cityName.c_str());
 }
 
 
-void Micropolis::SetYear(int year)
+void Micropolis::setYear(int year)
 {
     // Must prevent year from going negative, since it screws up the non-floored modulo arithmetic.
     if (year < startingYear) {
@@ -288,15 +288,15 @@ void Micropolis::SetYear(int year)
  * Get the current year.
  * @return The current game year.
  */
-int Micropolis::CurrentYear()
+int Micropolis::currentYear()
 {
     return (cityTime / 48) + startingYear;
 }
 
 
-void Micropolis::DoNewGame()
+void Micropolis::doNewGame()
 {
-    Callback("UINewGame", "");
+    callback("UINewGame", "");
 }
 
 
