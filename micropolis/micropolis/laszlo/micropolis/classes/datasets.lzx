@@ -21,6 +21,12 @@
     <dataset name="ds_disasters">
 	<disasters>
 	    <disaster
+		name="Eco"
+	    ><command name="disaster" disaster="eco"/></disaster>
+	    <disaster
+		name="Melt"
+	    ><command name="disaster" disaster="melt"/></disaster>
+	    <disaster
 		name="Monster"
 	    ><command name="disaster" disaster="monster"/></disaster>
 	    <disaster
