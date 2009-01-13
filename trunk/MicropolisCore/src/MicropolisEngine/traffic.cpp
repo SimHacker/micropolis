@@ -330,14 +330,14 @@ short Micropolis::getFromMap(Direction d)
             return DIRT;
 
         case DIR_WEST:
-            if (curMapX < (WORLD_X - 1)) {
+            if (curMapX < (WORLD_W - 1)) {
               return map[curMapX + 1][curMapY] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_SOUTH:
-            if (curMapY < (WORLD_Y - 1)) {
+            if (curMapY < (WORLD_H - 1)) {
               return map[curMapX][curMapY + 1] & LOMASK;
             }
 
@@ -381,14 +381,14 @@ bool Micropolis::driveDone()
         }
     }
 
-    if (curMapX < (WORLD_X - 1)) {
+    if (curMapX < (WORLD_W - 1)) {
         short z = map[curMapX + 1][curMapY] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;
         }
     }
 
-    if (curMapY < (WORLD_Y - 1)) {
+    if (curMapY < (WORLD_H - 1)) {
         short z = map[curMapX][curMapY + 1] & LOMASK;
         if ((z >= l) && (z <= h)) {
             return true;

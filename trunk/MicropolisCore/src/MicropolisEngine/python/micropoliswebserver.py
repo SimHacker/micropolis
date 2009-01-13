@@ -205,12 +205,12 @@ class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
 
         # Initialize the simulator engine.
 
-        m.Resume()
+        m.resume()
         m.setSpeed(2)
         m.setSkips(1000)
-        m.SetFunds(1000000000)
-        m.autoGo = 0
-        m.CityTax = 12
+        m.setFunds(1000000000)
+        m.autoGoto = 0
+        m.cityTax = 12
 
         view = micropolisutils.MicropolisView(m)
         self.view = view

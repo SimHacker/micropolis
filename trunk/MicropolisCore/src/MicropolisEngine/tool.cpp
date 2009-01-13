@@ -395,7 +395,7 @@ int Micropolis::check3x3(
     mapH--; mapV--;
 
     // Tool partly sticking outside world boundaries?
-    if (mapH < 0 || mapH > WORLD_X - 3 || mapV < 0 || mapV > WORLD_Y - 3) {
+    if (mapH < 0 || mapH > WORLD_W - 3 || mapV < 0 || mapV > WORLD_H - 3) {
         return -1;
     }
 
@@ -491,9 +491,9 @@ short Micropolis::check4x4(
     mapV--;
 
     if ((mapH < 0) ||
-        (mapH > (WORLD_X - 4)) ||
+        (mapH > (WORLD_W - 4)) ||
         (mapV < 0) ||
-        (mapV > (WORLD_Y - 4))) {
+        (mapV > (WORLD_H - 4))) {
         return -1;
     }
 
@@ -590,9 +590,9 @@ short Micropolis::check6x6(
 
     mapH--; mapV--;
     if ((mapH < 0) ||
-        (mapH > (WORLD_X - 6)) ||
+        (mapH > (WORLD_W - 6)) ||
         (mapV < 0) ||
-        (mapV > (WORLD_Y - 6))) {
+        (mapV > (WORLD_H - 6))) {
         return -1;
     }
 
@@ -882,7 +882,7 @@ void Micropolis::didTool(const char *name, short x, short y)
  */
 int Micropolis::queryTool(short x, short y)
 {
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -900,7 +900,7 @@ int Micropolis::bulldozerTool(short x, short y)
     short zoneSize, deltaH, deltaV;
     int result = 1;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1001,7 +1001,7 @@ int Micropolis::roadTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1020,7 +1020,7 @@ int Micropolis::railroadTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1039,7 +1039,7 @@ int Micropolis::wireTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1058,7 +1058,7 @@ int Micropolis::parkTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1076,7 +1076,7 @@ int Micropolis::residentialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1094,7 +1094,7 @@ int Micropolis::commercialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1112,7 +1112,7 @@ int Micropolis::industrialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1130,7 +1130,7 @@ int Micropolis::policeStationTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1148,7 +1148,7 @@ int Micropolis::fireStationTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1166,7 +1166,7 @@ int Micropolis::stadiumTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1184,7 +1184,7 @@ int Micropolis::coalPowerTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1202,7 +1202,7 @@ int Micropolis::nuclearPowerTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1220,7 +1220,7 @@ int Micropolis::seaportTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1238,7 +1238,7 @@ int Micropolis::airportTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 
@@ -1256,7 +1256,7 @@ int Micropolis::networkTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_X - 1 || y < 0 || y > WORLD_Y - 1) {
+    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
         return -1;
     }
 

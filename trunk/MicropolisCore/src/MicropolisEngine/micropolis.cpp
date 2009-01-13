@@ -208,8 +208,8 @@ void Micropolis::init()
     // short startingYear;
     startingYear = 0;
 
-    // short *map[WORLD_X];
-    memset(map, 0, sizeof(short *) * WORLD_X);
+    // short *map[WORLD_W];
+    memset(map, 0, sizeof(short *) * WORLD_W);
 
     // short resHist10Max;
     resHist10Max = 0;
@@ -268,53 +268,53 @@ void Micropolis::init()
     // bool taxFlag;
     taxFlag = false;
 
-    // Byte *populationDensityMap[HWLDX];
-    memset(populationDensityMap, 0, sizeof(Byte *) * HWLDX);
+    // Byte *populationDensityMap[WORLD_W_2];
+    memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *trafficDensityMap[HWLDX];
-    memset(trafficDensityMap, 0, sizeof(Byte *) * HWLDX);
+    // Byte *trafficDensityMap[WORLD_W_2];
+    memset(trafficDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *pollutionMap[HWLDX];
-    memset(pollutionMap, 0, sizeof(Byte *) * HWLDX);
+    // Byte *pollutionMap[WORLD_W_2];
+    memset(pollutionMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *landValueMap[HWLDX];
-    memset(landValueMap, 0, sizeof(Byte *) * HWLDX);
+    // Byte *landValueMap[WORLD_W_2];
+    memset(landValueMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *crimeMap[HWLDX];
-    memset(crimeMap, 0, sizeof(Byte *) * HWLDX);
+    // Byte *crimeMap[WORLD_W_2];
+    memset(crimeMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *tempMap1[HWLDX];
-    memset(tempMap1, 0, sizeof(Byte *) * HWLDX);
+    // Byte *tempMap1[WORLD_W_2];
+    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *tempMap2[HWLDX];
-    memset(tempMap2, 0, sizeof(Byte *) * HWLDX);
+    // Byte *tempMap2[WORLD_W_2];
+    memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *tempMap3[QWX];
-    memset(tempMap3, 0, sizeof(Byte *) * QWX);
+    // Byte *tempMap3[WORLD_W_4];
+    memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
 
-    // short tempMap4[SmX][SmY];
-    memset(tempMap4, 0, sizeof(short) * SmX * SmY);
+    // short tempMap4[WORLD_W_8][WORLD_H_8];
+    memset(tempMap4, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // Byte *terrainDensityMap[QWX];
-    memset(terrainDensityMap, 0, sizeof(Byte *) * QWX);
+    // Byte *terrainDensityMap[WORLD_W_4];
+    memset(terrainDensityMap, 0, sizeof(Byte *) * WORLD_W_4);
 
-    // short rateOfGrowthMap[SmX][SmY];
-    memset(rateOfGrowthMap, 0, sizeof(short) * SmX * SmY);
+    // short rateOfGrowthMap[WORLD_W_8][WORLD_H_8];
+    memset(rateOfGrowthMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // short fireStationMap[SmX][SmY];
-    memset(fireStationMap, 0, sizeof(short) * SmX * SmY);
+    // short fireStationMap[WORLD_W_8][WORLD_H_8];
+    memset(fireStationMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // short policeStationMap[SmX][SmY];
-    memset(policeStationMap, 0, sizeof(short) * SmX * SmY);
+    // short policeStationMap[WORLD_W_8][WORLD_H_8];
+    memset(policeStationMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // short policeStationMapEffect[SmX][SmY];
-    memset(policeStationMapEffect, 0, sizeof(short) * SmX * SmY);
+    // short policeStationMapEffect[WORLD_W_8][WORLD_H_8];
+    memset(policeStationMapEffect, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // short fireStationMapEffect[SmX][SmY];
-    memset(fireStationMapEffect, 0, sizeof(short) * SmX * SmY);
+    // short fireStationMapEffect[WORLD_W_8][WORLD_H_8];
+    memset(fireStationMapEffect, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
-    // short comRateMap[SmX][SmY];
-    memset(comRateMap, 0, sizeof(short) * SmX * SmY);
+    // short comRateMap[WORLD_W_8][WORLD_H_8];
+    memset(comRateMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
 
     // Ptr terrainDensityMapBase;
     terrainDensityMapBase = NULL;

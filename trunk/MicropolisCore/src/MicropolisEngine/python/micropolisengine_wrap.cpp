@@ -2469,7 +2469,7 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_Resource swig_types[1]
 #define SWIGTYPE_p_SimSprite swig_types[2]
 #define SWIGTYPE_p_StringTable swig_types[3]
-#define SWIGTYPE_p_a_SmY__short swig_types[4]
+#define SWIGTYPE_p_a_WORLD_H_8__short swig_types[4]
 #define SWIGTYPE_p_char swig_types[5]
 #define SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void swig_types[6]
 #define SWIGTYPE_p_long swig_types[7]
@@ -3265,114 +3265,142 @@ fail:
 }
 
 
-SWIGINTERN int WORLD_X_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable WORLD_X is read-only.");
+SWIGINTERN int BITS_PER_TILE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable BITS_PER_TILE is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *WORLD_X_get(void) {
+SWIGINTERN PyObject *BITS_PER_TILE_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(WORLD_X));
+  pyobj = SWIG_From_int(static_cast< int >(BITS_PER_TILE));
   return pyobj;
 }
 
 
-SWIGINTERN int WORLD_Y_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable WORLD_Y is read-only.");
+SWIGINTERN int BYTES_PER_TILE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable BYTES_PER_TILE is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *WORLD_Y_get(void) {
+SWIGINTERN PyObject *BYTES_PER_TILE_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(WORLD_Y));
+  pyobj = SWIG_From_int(static_cast< int >(BYTES_PER_TILE));
   return pyobj;
 }
 
 
-SWIGINTERN int HWLDX_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HWLDX is read-only.");
+SWIGINTERN int WORLD_W_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_W is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *HWLDX_get(void) {
+SWIGINTERN PyObject *WORLD_W_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(HWLDX));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_W));
   return pyobj;
 }
 
 
-SWIGINTERN int HWLDY_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable HWLDY is read-only.");
+SWIGINTERN int WORLD_H_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_H is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *HWLDY_get(void) {
+SWIGINTERN PyObject *WORLD_H_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(HWLDY));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_H));
   return pyobj;
 }
 
 
-SWIGINTERN int QWX_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable QWX is read-only.");
+SWIGINTERN int WORLD_W_2_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_W_2 is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *QWX_get(void) {
+SWIGINTERN PyObject *WORLD_W_2_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(QWX));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_W_2));
   return pyobj;
 }
 
 
-SWIGINTERN int QWY_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable QWY is read-only.");
+SWIGINTERN int WORLD_H_2_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_H_2 is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *QWY_get(void) {
+SWIGINTERN PyObject *WORLD_H_2_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(QWY));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_H_2));
   return pyobj;
 }
 
 
-SWIGINTERN int SmX_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SmX is read-only.");
+SWIGINTERN int WORLD_W_4_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_W_4 is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *SmX_get(void) {
+SWIGINTERN PyObject *WORLD_W_4_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(SmX));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_W_4));
   return pyobj;
 }
 
 
-SWIGINTERN int SmY_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable SmY is read-only.");
+SWIGINTERN int WORLD_H_4_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_H_4 is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *SmY_get(void) {
+SWIGINTERN PyObject *WORLD_H_4_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(SmY));
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_H_4));
+  return pyobj;
+}
+
+
+SWIGINTERN int WORLD_W_8_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_W_8 is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *WORLD_W_8_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_W_8));
+  return pyobj;
+}
+
+
+SWIGINTERN int WORLD_H_8_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable WORLD_H_8 is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *WORLD_H_8_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(WORLD_H_8));
   return pyobj;
 }
 
@@ -7456,15 +7484,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_map_set(PyObject *SWIGUNUSEDPARM(self), Py
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_map_set" "', argument " "2"" of type '" "short *[WORLD_X]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_map_set" "', argument " "2"" of type '" "short *[WORLD_W]""'"); 
   } 
   arg2 = reinterpret_cast< short ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)WORLD_X; ++ii) arg1->map[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W; ++ii) arg1->map[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""map""' of type '""short *[WORLD_X]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""map""' of type '""short *[WORLD_W]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8681,15 +8709,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_populationDensityMap_set(PyObject *SWIGUNU
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_populationDensityMap_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_populationDensityMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->populationDensityMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->populationDensityMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""populationDensityMap""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""populationDensityMap""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8740,15 +8768,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_trafficDensityMap_set(PyObject *SWIGUNUSED
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_trafficDensityMap_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_trafficDensityMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->trafficDensityMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->trafficDensityMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""trafficDensityMap""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""trafficDensityMap""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8799,15 +8827,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_pollutionMap_set(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_pollutionMap_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_pollutionMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->pollutionMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->pollutionMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""pollutionMap""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""pollutionMap""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8858,15 +8886,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_landValueMap_set(PyObject *SWIGUNUSEDPARM(
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_landValueMap_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_landValueMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->landValueMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->landValueMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""landValueMap""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""landValueMap""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8917,15 +8945,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_crimeMap_set(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_crimeMap_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_crimeMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->crimeMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->crimeMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""crimeMap""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""crimeMap""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -8976,15 +9004,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_tempMap1_set(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap1_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap1_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->tempMap1[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->tempMap1[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap1""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap1""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9035,15 +9063,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_tempMap2_set(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap2_set" "', argument " "2"" of type '" "Byte *[HWLDX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap2_set" "', argument " "2"" of type '" "Byte *[WORLD_W_2]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)HWLDX; ++ii) arg1->tempMap2[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_2; ++ii) arg1->tempMap2[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap2""' of type '""Byte *[HWLDX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap2""' of type '""Byte *[WORLD_W_2]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9094,15 +9122,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_tempMap3_set(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap3_set" "', argument " "2"" of type '" "Byte *[QWX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap3_set" "', argument " "2"" of type '" "Byte *[WORLD_W_4]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)QWX; ++ii) arg1->tempMap3[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_4; ++ii) arg1->tempMap3[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap3""' of type '""Byte *[QWX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap3""' of type '""Byte *[WORLD_W_4]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9137,7 +9165,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_tempMap4_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9151,24 +9179,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_tempMap4_set(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_tempMap4_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap4_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_tempMap4_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->tempMap4[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->tempMap4[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap4""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap4""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap4""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""tempMap4""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9181,7 +9209,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_tempMap4_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9192,8 +9220,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_tempMap4_get(PyObject *SWIGUNUSEDPARM(self
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_tempMap4_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->tempMap4);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->tempMap4);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9219,15 +9247,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_terrainDensityMap_set(PyObject *SWIGUNUSED
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_p_unsigned_char, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_terrainDensityMap_set" "', argument " "2"" of type '" "Byte *[QWX]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_terrainDensityMap_set" "', argument " "2"" of type '" "Byte *[WORLD_W_4]""'"); 
   } 
   arg2 = reinterpret_cast< Byte ** >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)QWX; ++ii) arg1->terrainDensityMap[ii] = arg2[ii];
+      for (; ii < (size_t)WORLD_W_4; ++ii) arg1->terrainDensityMap[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""terrainDensityMap""' of type '""Byte *[QWX]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""terrainDensityMap""' of type '""Byte *[WORLD_W_4]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9262,7 +9290,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_rateOfGrowthMap_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9276,24 +9304,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_rateOfGrowthMap_set(PyObject *SWIGUNUSEDPA
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_rateOfGrowthMap_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_rateOfGrowthMap_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_rateOfGrowthMap_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->rateOfGrowthMap[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->rateOfGrowthMap[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""rateOfGrowthMap""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""rateOfGrowthMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""rateOfGrowthMap""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""rateOfGrowthMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9306,7 +9334,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_rateOfGrowthMap_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9317,8 +9345,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_rateOfGrowthMap_get(PyObject *SWIGUNUSEDPA
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_rateOfGrowthMap_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->rateOfGrowthMap);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->rateOfGrowthMap);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9328,7 +9356,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_fireStationMap_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9342,24 +9370,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_fireStationMap_set(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_fireStationMap_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_fireStationMap_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_fireStationMap_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->fireStationMap[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->fireStationMap[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMap""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMap""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9372,7 +9400,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_fireStationMap_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9383,8 +9411,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_fireStationMap_get(PyObject *SWIGUNUSEDPAR
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_fireStationMap_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->fireStationMap);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->fireStationMap);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9394,7 +9422,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_policeStationMap_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9408,24 +9436,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_policeStationMap_set(PyObject *SWIGUNUSEDP
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_policeStationMap_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_policeStationMap_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_policeStationMap_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->policeStationMap[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->policeStationMap[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMap""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMap""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9438,7 +9466,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_policeStationMap_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9449,8 +9477,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_policeStationMap_get(PyObject *SWIGUNUSEDP
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_policeStationMap_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->policeStationMap);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->policeStationMap);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9460,7 +9488,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_policeStationMapEffect_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9474,24 +9502,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_policeStationMapEffect_set(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_policeStationMapEffect_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_policeStationMapEffect_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_policeStationMapEffect_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->policeStationMapEffect[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->policeStationMapEffect[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMapEffect""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMapEffect""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMapEffect""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""policeStationMapEffect""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9504,7 +9532,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_policeStationMapEffect_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9515,8 +9543,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_policeStationMapEffect_get(PyObject *SWIGU
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_policeStationMapEffect_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->policeStationMapEffect);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->policeStationMapEffect);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9526,7 +9554,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_fireStationMapEffect_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9540,24 +9568,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_fireStationMapEffect_set(PyObject *SWIGUNU
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_fireStationMapEffect_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_fireStationMapEffect_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_fireStationMapEffect_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->fireStationMapEffect[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->fireStationMapEffect[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMapEffect""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMapEffect""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMapEffect""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""fireStationMapEffect""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9570,7 +9598,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_fireStationMapEffect_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9581,8 +9609,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_fireStationMapEffect_get(PyObject *SWIGUNU
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_fireStationMapEffect_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->fireStationMapEffect);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->fireStationMapEffect);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -9592,7 +9620,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_comRateMap_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*arg2)[SmY] ;
+  short (*arg2)[WORLD_H_8] ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -9606,24 +9634,24 @@ SWIGINTERN PyObject *_wrap_Micropolis_comRateMap_set(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_comRateMap_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_comRateMap_set" "', argument " "2"" of type '" "short [SmX][SmY]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_comRateMap_set" "', argument " "2"" of type '" "short [WORLD_W_8][WORLD_H_8]""'"); 
   } 
-  arg2 = reinterpret_cast< short (*)[SmY] >(argp2);
+  arg2 = reinterpret_cast< short (*)[WORLD_H_8] >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)SmX; ++ii) {
+      for (; ii < (size_t)WORLD_W_8; ++ii) {
         if (arg2[ii]) {
           size_t jj = 0;
-          for (; jj < (size_t)SmY; ++jj) arg1->comRateMap[ii][jj] = arg2[ii][jj];
+          for (; jj < (size_t)WORLD_H_8; ++jj) arg1->comRateMap[ii][jj] = arg2[ii][jj];
         } else {
-          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""comRateMap""' of type '""short [SmX][SmY]""'");
+          SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""comRateMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
         }
       }
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""comRateMap""' of type '""short [SmX][SmY]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""comRateMap""' of type '""short [WORLD_W_8][WORLD_H_8]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -9636,7 +9664,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_comRateMap_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  short (*result)[SmY] = 0 ;
+  short (*result)[WORLD_H_8] = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -9647,8 +9675,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_comRateMap_get(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_comRateMap_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short (*)[SmY])(short (*)[SmY]) ((arg1)->comRateMap);
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_SmY__short, 0 |  0 );
+  result = (short (*)[WORLD_H_8])(short (*)[WORLD_H_8]) ((arg1)->comRateMap);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_a_WORLD_H_8__short, 0 |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -16978,15 +17006,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_powerStackX_set(PyObject *SWIGUNUSEDPARM(s
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_powerStackX_set" "', argument " "2"" of type '" "short [((WORLD_X*WORLD_Y)/4)]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_powerStackX_set" "', argument " "2"" of type '" "short [((WORLD_W*WORLD_H)/4)]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)((WORLD_X*WORLD_Y)/4); ++ii) arg1->powerStackX[ii] = arg2[ii];
+      for (; ii < (size_t)((WORLD_W*WORLD_H)/4); ++ii) arg1->powerStackX[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""powerStackX""' of type '""short [((WORLD_X*WORLD_Y)/4)]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""powerStackX""' of type '""short [((WORLD_W*WORLD_H)/4)]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -17037,15 +17065,15 @@ SWIGINTERN PyObject *_wrap_Micropolis_powerStackY_set(PyObject *SWIGUNUSEDPARM(s
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_short, 0 |  0 );
   if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_powerStackY_set" "', argument " "2"" of type '" "short [((WORLD_X*WORLD_Y)/4)]""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_powerStackY_set" "', argument " "2"" of type '" "short [((WORLD_W*WORLD_H)/4)]""'"); 
   } 
   arg2 = reinterpret_cast< short * >(argp2);
   {
     if (arg2) {
       size_t ii = 0;
-      for (; ii < (size_t)((WORLD_X*WORLD_Y)/4); ++ii) arg1->powerStackY[ii] = arg2[ii];
+      for (; ii < (size_t)((WORLD_W*WORLD_H)/4); ++ii) arg1->powerStackY[ii] = arg2[ii];
     } else {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""powerStackY""' of type '""short [((WORLD_X*WORLD_Y)/4)]""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""powerStackY""' of type '""short [((WORLD_W*WORLD_H)/4)]""'");
     }
   }
   resultobj = SWIG_Py_Void();
@@ -29325,7 +29353,7 @@ static swig_type_info _swigt__p_Micropolis = {"_p_Micropolis", "Micropolis *", 0
 static swig_type_info _swigt__p_Resource = {"_p_Resource", "Resource *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SimSprite = {"_p_SimSprite", "SimSprite *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_StringTable = {"_p_StringTable", "StringTable *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_a_SmY__short = {"_p_a_SmY__short", "short (*)[SmY]", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_a_WORLD_H_8__short = {"_p_a_WORLD_H_8__short", "short (*)[WORLD_H_8]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void = {"_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void", "void (*)(Micropolis *,void *,char const *,char const *,va_list)|CallbackFunction", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long = {"_p_long", "long *|Quad *", 0, 0, (void*)0, 0};
@@ -29344,7 +29372,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Resource,
   &_swigt__p_SimSprite,
   &_swigt__p_StringTable,
-  &_swigt__p_a_SmY__short,
+  &_swigt__p_a_WORLD_H_8__short,
   &_swigt__p_char,
   &_swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void,
   &_swigt__p_long,
@@ -29363,7 +29391,7 @@ static swig_cast_info _swigc__p_Micropolis[] = {  {&_swigt__p_Micropolis, 0, 0, 
 static swig_cast_info _swigc__p_Resource[] = {  {&_swigt__p_Resource, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SimSprite[] = {  {&_swigt__p_SimSprite, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_StringTable[] = {  {&_swigt__p_StringTable, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_a_SmY__short[] = {  {&_swigt__p_a_SmY__short, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_a_WORLD_H_8__short[] = {  {&_swigt__p_a_WORLD_H_8__short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void[] = {  {&_swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long[] = {  {&_swigt__p_long, 0, 0, 0},{0, 0, 0, 0}};
@@ -29382,7 +29410,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Resource,
   _swigc__p_SimSprite,
   _swigc__p_StringTable,
-  _swigc__p_a_SmY__short,
+  _swigc__p_a_WORLD_H_8__short,
   _swigc__p_char,
   _swigc__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void,
   _swigc__p_long,
@@ -29919,14 +29947,16 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "IS_INTEL",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "RANDOM_RANGE",SWIG_From_int(static_cast< int >(0xffff)));
   PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
-  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_X",WORLD_X_get, WORLD_X_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_Y",WORLD_Y_get, WORLD_Y_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HWLDX",HWLDX_get, HWLDX_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"HWLDY",HWLDY_get, HWLDY_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"QWX",QWX_get, QWX_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"QWY",QWY_get, QWY_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SmX",SmX_get, SmX_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"SmY",SmY_get, SmY_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"BITS_PER_TILE",BITS_PER_TILE_get, BITS_PER_TILE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"BYTES_PER_TILE",BYTES_PER_TILE_get, BYTES_PER_TILE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W",WORLD_W_get, WORLD_W_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H",WORLD_H_get, WORLD_H_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_2",WORLD_W_2_get, WORLD_W_2_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_2",WORLD_H_2_get, WORLD_H_2_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_4",WORLD_W_4_get, WORLD_W_4_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_4",WORLD_H_4_get, WORLD_H_4_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_8",WORLD_W_8_get, WORLD_W_8_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_8",WORLD_H_8_get, WORLD_H_8_set);
   SWIG_Python_SetConstant(d, "NIL",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "HORIZ",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "VERT",SWIG_From_int(static_cast< int >(0)));
