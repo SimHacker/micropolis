@@ -1,0 +1,28 @@
+<library>
+
+
+    <!-- Includes -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <include href="resources.lzx"/>
+    <include href="datasets.lzx"/>
+    <include href="global.lzx"/>
+    <include href="hresizebar.lzx"/>
+    <include href="vresizebar.lzx"/>
+    <include href="tile.lzx"/>
+    <include href="tileview.lzx"/>
+    <include href="budgetview.lzx"/>
+    <include href="controlpanel.lzx"/>
+    <include href="editorview.lzx"/>
+    <include href="evaluationview.lzx"/>
+    <include href="graphview.lzx"/>
+    <include href="mapview.lzx"/>
+    <include href="messageview.lzx"/>
+    <include href="newcityview.lzx"/>
+    <include href="appview.lzx"/>
+
+
+</library>

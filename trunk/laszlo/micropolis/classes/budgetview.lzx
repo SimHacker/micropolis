@@ -1,0 +1,162 @@
+<library>
+
+
+    <!-- Budget View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Budget
+  Tax Rate (slider, rate)
+  Fire Funds (funding, request, slider)
+  Police Funds (funding, request, slider)
+  Road Funds (funding, request, slider)
+  Taxes Collected
+  Cash Flow
+  Previous Funds
+  Current Funds
+
+-->
+
+
+    <class name="budgetview">
+
+
+	<attribute name="taxRate" value="7"/>
+	<attribute name="firePercent" value="${Math.floor(this.v.fireSlider.value + 0.5)}"/>
+	<attribute name="fireRequest" value="1000"/>
+	<attribute name="fireFunds" value="${Math.floor((this.firePercent / 100.0) * this.fireRequest)}"/>
+	<attribute name="policePercent" value="${Math.floor(this.v.policeSlider.value + 0.5)}"/>
+	<attribute name="policeRequest" value="1000"/>
+	<attribute name="policeFunds" value="${Math.floor((this.policePercent / 100.0) * this.policeRequest)}"/>
+	<attribute name="roadPercent" value="${Math.floor(this.v.roadSlider.value + 0.5)}"/>
+	<attribute name="roadRequest" value="1000"/>
+	<attribute name="roadFunds" value="${Math.floor((this.roadPercent / 100.0) * this.roadRequest)}"/>
+	
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Budget"
+	    value="false"
+	/>
+
+	<view name="v"
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+	>
+
+	    <simplelayout axis="y" spacing="5"/>
+
+	    <text name="taxLabel"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Tax rate: ' + Math.floor(parent.taxSlider.value + 0.5) + '%'}"
+	    />
+
+	    <slider name="taxSlider"
+		x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		minvalue="0"
+		maxvalue="20"
+		keystep="1"
+		showvalue="false"
+		thumbheight="20"
+		thumbwidth="20"
+		value="7"
+	    />
+
+	    <text name="fireLabel1"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Fire request: $' + classroot.fireRequest}"
+	    />
+
+	    <text name="fireLabel2"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Funds: ' + classroot.firePercent + '% = $' + classroot.fireFunds}"
+	    />
+
+	    <slider name="fireSlider"
+		x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		minvalue="0"
+		maxvalue="100"
+		keystep="10"
+		showvalue="false"
+		thumbheight="20"
+		thumbwidth="20"
+		value="100"
+	    />
+
+	    <text name="policeLabel1"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Police request: $' + classroot.policeRequest}"
+	    />
+
+	    <text name="policeLabel2"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Funds: ' + classroot.policePercent + '% = $' + classroot.policeFunds}"
+	    />
+
+	    <slider name="policeSlider"
+		x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		minvalue="0"
+		maxvalue="100"
+		keystep="10"
+		showvalue="false"
+		thumbheight="20"
+		thumbwidth="20"
+		value="100"
+	    />
+
+	    <text name="roadLabel1"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Road request: $' + classroot.roadRequest}"
+	    />
+
+	    <text name="roadLabel2"
+	        x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		text="${'Funds: ' + classroot.roadPercent + '% = $' + classroot.roadFunds}"
+	    />
+
+	    <slider name="roadSlider"
+		x="10"
+		y="0"
+		width="${parent.width - this.x}"
+		minvalue="0"
+		maxvalue="100"
+		keystep="10"
+		showvalue="false"
+		thumbheight="20"
+		thumbwidth="20"
+		value="100"
+	    />
+
+	</view>
+
+    </class>
+
+
+</library>

@@ -1,0 +1,52 @@
+<library>
+
+
+    <!-- Graph View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Graph
+  10/120 Years
+  Residential
+  Commercial
+  Industrial
+  Money
+  Crime
+  Pollution
+  
+-->
+
+
+    <class name="graphview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Graph"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
+
+
+    </class>
+
+
+</library>

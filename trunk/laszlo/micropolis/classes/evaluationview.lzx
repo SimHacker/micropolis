@@ -1,0 +1,56 @@
+<library>
+
+
+    <!-- Evaluation View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Evaluation
+  Public Opinion
+    Is the mayor doing a good job? (%yes, %no)
+    Worst Problems (top 4 problems and percentages)
+  Statistics
+    Net Migration
+    Assessed Value
+    Category
+    Game Level
+  Overall City Score
+    Current Score
+    Annual Change
+
+-->
+
+
+    <class name="evaluationview">
+
+
+	<simplelayout axis="y"/>
+
+
+	<checkbox name="visibleCheck"
+	    text="Evaluation"
+	    value="false"
+	/>
+
+	<view
+	    x="5"
+	    width="${parent.width - 5}"
+	    visible="${parent.visibleCheck.value}"
+        >
+
+	    <text
+		resize="true"
+		text="[TODO]"
+	    />
+
+	</view>
+
+
+    </class>
+
+
+</library>
