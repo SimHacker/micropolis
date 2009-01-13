@@ -29,7 +29,7 @@ log = logging.getLogger("micropolis.controllers")
 
 import cairo, pango
 import micropolisengine
-import micropolisutils
+import micropoliswebutils
 import tileengine
 
 
@@ -139,7 +139,7 @@ class Root(controllers.RootController):
 
         self.sessions = {}
 
-        self.game = micropolisutils.Game()
+        self.game = micropoliswebutils.Game()
 
 
     ####################################
@@ -153,7 +153,7 @@ class Root(controllers.RootController):
             session.touch()
             return session
 
-        session = micropolisutils.Session(sessionID)
+        session = micropoliswebutils.Session(sessionID)
         sessions[sessionID] = session
 
         session.setGame(self.game)
@@ -170,8 +170,8 @@ class Root(controllers.RootController):
             (row < 0) or
             (cols <= 0) or
             (rows <= 0) or
-            ((col + cols) > micropolisengine.WORLD_X) or
-            ((row + rows) > micropolisengine.WORLD_Y)):
+            ((col + cols) > micropolisengine.WORLD_W) or
+            ((row + rows) > micropolisengine.WORLD_H)):
             self.expectationFailed("Invalid tile coordinates.");
 
 
@@ -286,7 +286,7 @@ class Root(controllers.RootController):
         content_type="text/xml")
     def micropolisSessionStart(
         self):
-        session = self.getSession(micropolisutils.UniqueID('SESSION_'))
+        session = self.getSession(micropoliswebutils.UniqueID('SESSION_'))
         return {
             'session': session,
         }
@@ -308,8 +308,8 @@ class Root(controllers.RootController):
         self,
         col=0,
         row=0,
-        cols=micropolisengine.WORLD_X,
-        rows=micropolisengine.WORLD_Y,
+        cols=micropolisengine.WORLD_W,
+        rows=micropolisengine.WORLD_H,
         code=0,
         **kw):
 
@@ -387,8 +387,8 @@ class Root(controllers.RootController):
         self,
         col=0,
         row=0,
-        cols=micropolisengine.WORLD_X,
-        rows=micropolisengine.WORLD_Y,
+        cols=micropolisengine.WORLD_W,
+        rows=micropolisengine.WORLD_H,
         ticks=1,
         **kw):
 
@@ -396,8 +396,8 @@ class Root(controllers.RootController):
             (row < 0) or
             (cols <= 0) or
             (rows <= 0) or
-            ((col + cols) > micropolisengine.WORLD_X) or
-            ((row + rows) > micropolisengine.WORLD_Y)):
+            ((col + cols) > micropolisengine.WORLD_W) or
+            ((row + rows) > micropolisengine.WORLD_H)):
             self.expectationFailed("Invalid tile coordinates.");
 
         game = self.game
@@ -458,8 +458,8 @@ class Root(controllers.RootController):
         self,
         col=0,
         row=0,
-        cols=micropolisengine.WORLD_X / 4,
-        rows=micropolisengine.WORLD_Y / 4,
+        cols=micropolisengine.WORLD_W / 4,
+        rows=micropolisengine.WORLD_H / 4,
         ticks=1,
         **kw):
 
@@ -467,8 +467,8 @@ class Root(controllers.RootController):
             (row < 0) or
             (cols <= 0) or
             (rows <= 0) or
-            ((col + cols) > micropolisengine.WORLD_X) or
-            ((row + rows) > micropolisengine.WORLD_Y) or
+            ((col + cols) > micropolisengine.WORLD_W) or
+            ((row + rows) > micropolisengine.WORLD_H) or
             (ticks < 0) or
             (ticks > 1000000)):
             self.expectationFailed("Invalid parameter.");
@@ -487,7 +487,7 @@ class Root(controllers.RootController):
             'ticks': ticks,
             'game': game,
             'm': game.m,
-            'CityNames': micropolisutils.CityNames,
+            'CityNames': micropoliswebutils.CityNames,
         }
 
 

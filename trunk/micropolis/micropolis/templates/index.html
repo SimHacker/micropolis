@@ -34,13 +34,13 @@
 		</a>
 		<br/>
 		<?python
-		    from micropolisengine import WORLD_X, WORLD_Y
+		    from micropolisengine import WORLD_W, WORLD_H
 		    import random
 
 		    cols = 40
 		    rows = 15
-		    col = random.randint(0, WORLD_X - cols)
-		    row = random.randint(0, WORLD_Y - rows)
+		    col = random.randint(0, WORLD_W - cols)
+		    row = random.randint(0, WORLD_H - rows)
 		?>
 		<img
 		    src="/micropolisGetTilesImage?col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
