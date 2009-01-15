@@ -107,14 +107,25 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-// Constants
+// Definitions
 
 
-#define MICROPOLIS_VERSION              "5.0"
-
+/**
+ * Used to determine byte order. 
+ *
+ * @todo Determine byte order a better way.
+ */
 #define IS_INTEL                        1
 
-#define RANDOM_RANGE                    0xffff
+/**
+ * The version number of Micropolis.
+ */
+#define MICROPOLIS_VERSION		"5.0"
+
+
+////////////////////////////////////////////////////////////////////////
+// Constants
+
 
 /**
  * The number of bits per tile.
@@ -180,32 +191,127 @@ static const int WORLD_W_8 = WORLD_W / 8;
  */
 static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 
-#define EDITOR_W                        (WORLD_W * 16)
-#define EDITOR_H                        (WORLD_H * 16)
-#define MAP_W                           (WORLD_W * 3)
-#define MAP_H                           (WORLD_H * 3)
+/**
+ * The size of the editor view tiles, in pixels.
+ */
+static const int EDITOR_TILE_SIZE = 16;
 
-#define NIL                             0
-#define HORIZ                           1
-#define VERT                            0
+/**
+ * The width of the city editor view, in pixels. 
+ */
+static const int EDITOR_W = WORLD_W * EDITOR_TILE_SIZE;
 
-#define HISTLEN                         480
-#define MISCHISTLEN                     240
+/**
+ * The height of the city editor view, in pixels. 
+ */
+static const int EDITOR_H = WORLD_H * EDITOR_TILE_SIZE;
 
-#define ISLAND_RADIUS                   18
+/**
+ * The size of the map view tiles, in pixels.
+ */
+static const int MAP_TILE_SIZE = 3;
+
+/**
+ * The width of the city map view, in pixels.
+ */
+static const int MAP_W = WORLD_W * MAP_TILE_SIZE;
+
+/**
+ * The height of the city map view, in pixels.
+ */
+static const int MAP_H = WORLD_H * MAP_TILE_SIZE;
+
+/**
+ * The number of history entries.
+ */
+static const int HISTORY_LENGTH = 480;
+
+/**
+ * The number of miscellaneous history entries.
+ */
+static const int MISC_HISTORY_LENGTH = 240;
 
 /**
  * Length of the history tables.
- * @todo It is not really a count of histories, rename to HISTORY_LENGTH?
+ * @todo It is not really a count of histories, rename to something else?
  */
 static const int HISTORY_COUNT = 120;
 
+/**
+ * The default radius of an island, used by the terrain generator. 
+ */
+static const int ISLAND_RADIUS = 18;
 
 /**
- * Available types of historic data
- * @todo These enum values seem equal to the *_HIST constants below.
- *       Either eliminate one of the sets, or document how they differ.
- * @note ALL_HISTORIES does not seem to be used.
+ * The size in shorts of one row of the power map.
+ */
+static const int POWER_MAP_ROW = (WORLD_W + 15) / 16;
+
+/**
+ * The size in shorts of the power map.
+ */
+static const int POWER_MAP_SIZE = POWER_MAP_ROW * WORLD_H;
+
+/**
+ * The length in bytes of the power map memory.
+ *
+ * @todo: Why is it this size? 1600 + 100 slop?
+ */
+static const int POWER_MAP_LENGTH = 1700;
+
+/**
+ * The size in shorts of the power stack.
+ */
+static const int POWER_STACK_SIZE = (WORLD_W * WORLD_H) / 4;
+
+/* These adjust frequency in simulate() */
+
+/**
+ * How often to perform the short term census.
+ */
+static const int CENSUS_FREQUENCY_10 = 4;
+
+/**
+ * How often to perform the long term census.
+ */
+static const int CENSUS_FREQUENCY_120 = CENSUS_FREQUENCY_10 * 12;
+
+/**
+ * How often to collect taxes.
+ */
+static const int TAX_FREQUENCY = 48;
+
+
+///////////////////////////////////////////////////
+// Traffic
+
+/**
+ * Maximal number of map tiles to drive, looking for a destination
+ */
+static const int MAX_TRAFFIC_DISTANCE = 30;
+
+/**
+ * Maximal value of Micropolis::RoadEffect
+ */
+static const int MAX_ROAD_EFFECT = 32;
+
+/**
+ * Maximal value of Micropolis::PoliceEffect
+ */
+static const int MAX_POLICE_STATION_EFFECT = 1000;
+
+/**
+ * Maximal value of Micropolis::FireEffect
+ */
+static const int MAX_FIRE_STATION_EFFECT = 1000;
+
+
+////////////////////////////////////////////////////////////////////////
+// Enumerated types.
+
+
+/**
+ * Available types of historic data.
  */
 enum HistoryType {
     HISTORY_TYPE_RES,   ///< Residiential history type
@@ -218,18 +324,9 @@ enum HistoryType {
     HISTORY_TYPE_COUNT,  ///< Number of history types
 };
 
-/* Graph Histories */
-#define RES_HIST                        0
-#define COM_HIST                        1
-#define IND_HIST                        2
-#define MONEY_HIST                      3
-#define CRIME_HIST                      4
-#define POLLUTION_HIST                  5
-
-#define HISTORIES                       6
-#define ALL_HISTORIES                   ((1 <<HISTORIES) - 1)
-
-/** Available historic scales */
+/**
+ * Available historic scales.
+ */
 enum HistoryScale {
     HISTORY_SCALE_SHORT, ///< Short scale data (10 years)
     HISTORY_SCALE_LONG,  ///< Long scale data (120 years)
@@ -237,42 +334,28 @@ enum HistoryScale {
     HISTORY_SCALE_COUNT, ///< Number of history scales available
 };
 
-#define POWERMAPROW                     ((WORLD_W + 15) / 16)
+/**
+ * Available map types.
+ */
+enum MapType {
+    MAP_TYPE_ALL,                   ///< All zones
+    MAP_TYPE_RES,                   ///< Residential zones
+    MAP_TYPE_COM,                   ///< Commercial zones
+    MAP_TYPE_IND,                   ///< Industrial zones
+    MAP_TYPE_POWER,                 ///< Power connectivity
+    MAP_TYPE_ROAD,                  ///< Roads
+    MAP_TYPE_POPULATION_DENSITY,    ///< Population density
+    MAP_TYPE_RATE_OF_GROWTH,        ///< Rate of growth
+    MAP_TYPE_TRAFFIC_DENSITY,       ///< Traffic
+    MAP_TYPE_POLLUTION,             ///< Pollution
+    MAP_TYPE_CRIME,                 ///< Crime rate
+    MAP_TYPE_LAND_VALUE,            ///< Land value
+    MAP_TYPE_FIRE_RADIUS,           ///< Fire station coverage radius
+    MAP_TYPE_POLICE_RADIUS,         ///< Police station coverage radius
+    MAP_TYPE_DYNAMIC,               ///< Dynamic filter
 
-#define POWERMAPLEN                     1700 /* ??? PWRMAPSIZE */
-#define POWERWORD(x, y)                 (((x) >>4) + ((y) <<3))
-
-#define SETPOWERBIT(x, y)               powerMap[POWERWORD((x), (y))] |= 1 << ((x) & 15)
-#define PWRMAPSIZE                      (POWERMAPROW * WORLD_H)
-#define PWRSTKSIZE                      ((WORLD_W * WORLD_H) / 4)
-
-#define ALMAP                           0 /* all */
-#define REMAP                           1 /* residential */
-#define COMAP                           2 /* commercial */
-#define INMAP                           3 /* industrial */
-
-#define PRMAP                           4 /* power */
-#define RDMAP                           5 /* road */
-
-#define PDMAP                           6 /* population density */
-#define RGMAP                           7 /* rate of growth */
-
-#define TDMAP                           8 /* traffic density */
-#define PLMAP                           9 /* pollution */
-#define CRMAP                           10 /* crime */
-#define LVMAP                           11 /* land value */
-
-#define FIMAP                           12 /* fire radius */
-#define POMAP                           13 /* police radius */
-#define DYMAP                           14 /* dynamic */
-
-#define NMAPS                           15
-
-/* These adjust frequency in Simulate() */
-
-#define VALVERATE                       2
-#define CENSUSRATE                      4
-#define TAXFREQ                         48
+    MAP_TYPE_COUNT,                 ///< Number of map types
+};
 
 /* Object & Sound Numbers */
 
@@ -648,16 +731,6 @@ enum Direction {
     DIR_INVALID ///< Invalid direction (to 'nowhere')
 };
 
-/**
- * Return reverse direction
- * @param d Direction to reverse
- * @return Reversed direction
- */
-static inline Direction ReverseDirection(Direction d)
-{
-    return (Direction)((d + 2) & 0x3);
-}
-
 ///////////////////////////////////////////////////
 // Zones
 
@@ -669,28 +742,6 @@ enum ZoneType {
 
     ZT_NUM_DESTINATIONS, ///< Number of available zones
 };
-
-
-///////////////////////////////////////////////////
-// Traffic
-
-/** Maximal number of map tiles to drive, looking for a destination */
-static const int MAX_TRAFFIC_DISTANCE = 30;
-
-/**
- * Maximal value of Micropolis::RoadEffect
- */
-static const int MAX_ROAD_EFFECT = 32;
-
-/**
- * Maximal value of Micropolis::PoliceEffect
- */
-static const int MAX_POLICESTATION_EFFECT = 1000;
-
-/**
- * Maximal value of Micropolis::FireEffect
- */
-static const int MAX_FIRESTATION_EFFECT = 1000;
 
 
 ///////////////////////////////////////////////////
@@ -745,17 +796,6 @@ enum GameLevel {
 
 
 /**
- * Check that the given coordinate is within world bounds
- * @param wx World x coordinate
- * @param wy World y coordinate
- * @return Boolean indicating (wx, wy) is inside the world bounds
- */
-static inline bool TestBounds(int wx, int wy)
-{
-    return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
-}
-
-/**
  * Compute minimal value.
  * @param a First value.
  * @parem b Second value.
@@ -803,9 +843,10 @@ static inline T clamp(const T val, const T lower, const T upper)
  * @param val Input value.
  * @return Absolute value of \a val.
  */
-static inline int absoluteValue(int val)
+template <typename T>
+static inline T absoluteValue(const T val)
 {
-    if (val < 0) {
+  if (val < 0) {
         return -val;
     }
     return val;
@@ -814,47 +855,6 @@ static inline int absoluteValue(int val)
 ////////////////////////////////////////////////////////////////////////
 // Macros
 
-
-#define ABS(x) \
-    (((x) < 0) ? (-(x)) : (x))
-
-#define TILE_IS_NUCLEAR(tile) \
-    ((tile & LOMASK) == NUCLEAR)
-
-#define TILE_IS_VULNERABLE(tile) \
-    (!(tile & ZONEBIT) && \
-     ((tile & LOMASK) >= RBRDR) && \
-     ((tile & LOMASK) <= LASTZONE))
-
-#define TILE_IS_ARSONABLE(tile) \
-    (!(tile & ZONEBIT) && \
-     ((tile & LOMASK) >= RBRDR) && \
-     ((tile & LOMASK) <= LASTZONE))
-
-#define TILE_IS_RIVER_EDGE(tile) \
-    (((tile & LOMASK) >= FIRSTRIVEDGE) && \
-     ((tile & LOMASK) <= LASTRIVEDGE))
-
-#define TILE_IS_FLOODABLE(tile) \
-    ((tile == DIRT) || \
-     ((tile & BULLBIT) && \
-      (tile & BURNBIT)))
-
-#define TILE_IS_RUBBLE(tile) \
-     (((tile & LOMASK) >= RUBBLE) && \
-      ((tile & LOMASK) <= LASTRUBBLE)))
-
-#define TILE_IS_FLOODABLE2(tile) \
-    ((tile == 0) || \
-     (tile & BURNBIT) || \
-     TILE_IS_RUBBLE(tile))
-
-#define NeutralizeRoad(tile) \
-    tile &= LOMASK; \
-    if ((tile >= 64) && \
-        (tile <= 207)) { \
-        tile = (tile & 0x000F) + 64; \
-    }
 
 /**
  * Compute length of array
@@ -903,6 +903,7 @@ typedef void (*CallbackFunction)(
 ////////////////////////////////////////////////////////////////////////
 // Classes
 
+
 /** Resource of the game (a file with data loaded in memory). */
 class Resource {
 
@@ -914,6 +915,7 @@ public:
     Quad id; ///< Identification of the resource.
     Resource *next; ///< Pointer to next #Resource.
 };
+
 
 /** Table of strings. */
 class StringTable {
@@ -963,12 +965,13 @@ public:
     int speed;
 };
 
+
 /**
  * Main simulator class
  * @todo Modify Micropolis::roadPercent, Micropolis::policePercent, and
  *       Micropolis::firePercent to hold real percentage from \c 0 to \c 100
  *       instead of a floating point fraction
- * @todo Micropolis::CrimeMaxX and Micropolis::CrimeMaxY seem unused.
+ * @todo Micropolis::crimeMaxX and Micropolis::crimeMaxY seem unused.
  */
 class Micropolis {
 
@@ -1561,24 +1564,6 @@ public:
 
     void destroyMapArrays();
 
-#ifdef SWIG
-// This tells SWIG that minValResult, maxValResult are output parameters,
-// which will be returned in a tuple of length two.
-%apply short *OUTPUT { short *minValResult };
-%apply short *OUTPUT { short *maxValResult };
-#endif
-
-    void getHistoryRange(
-        int historyType,
-        int historyScale,
-        short *minValResult,
-        short *maxValResult);
-
-    short getHistory(
-        int historyType,
-        int historyScale,
-        int historyIndex);
-
 
     ////////////////////////////////////////////////////////////////////////
     // animate.cpp
@@ -2047,13 +2032,6 @@ public:
      */
     bool newGraph;
 
-    ///< 10 year history graphs.
-    unsigned char *history10[HISTORIES];
-
-    ///< 120 year history graphs.
-    unsigned char *history120[HISTORIES];
-
-    //
     int historyInitialized;
 
     short graph10Max;
@@ -2065,8 +2043,6 @@ public:
 
     void drawMonth(short *hist, unsigned char *s, float scale);
 
-    void doAllGraphs();
-
     void changeCensus();
 
     void graphDoer();
@@ -2074,6 +2050,22 @@ public:
     void initGraphs();
 
     void initGraphMax();
+
+#ifdef SWIG
+// This tells SWIG that minValResult, maxValResult are output parameters,
+// which will be returned in a tuple of length two.
+%apply short *OUTPUT { short *minValResult };
+%apply short *OUTPUT { short *maxValResult };
+#endif
+
+    void getHistoryRange(int historyType, int historyScale,
+			 short *minValResult, short *maxValResult);
+
+    short getHistory(int historyType, int historyScale,
+		     int historyIndex);
+
+    void setHistory(int historyType, int historyScale,
+		    int historyIndex, short historyValue);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2191,7 +2183,7 @@ public:
 
     void drawTrafficMap();
 
-    void drawPolMap();
+    void drawPollutionMap();
 
     void drawCrimeMap();
 
@@ -2283,6 +2275,14 @@ public:
 
 public:
 
+
+    /**
+     * Maximal power that the combined coal and nuclear power plants can deliver.
+     * @see NumPower CoalPop NuclearPop
+     */
+    Quad maxPower;
+    Quad numPower; ///< Amount of power used.
+
     /** @name Power stack
      * Stack used to find powered tiles by tracking conductive tiles.
      */
@@ -2290,8 +2290,8 @@ public:
 
     int powerStackPointer; ///< Stack counter, points to top-most item.
 
-    short powerStackX[PWRSTKSIZE]; ///< X coordinates at the power stack.
-    short powerStackY[PWRSTKSIZE]; ///< Y coordinates at the power stack.
+    short powerStackX[POWER_STACK_SIZE]; ///< X coordinates at the power stack.
+    short powerStackY[POWER_STACK_SIZE]; ///< Y coordinates at the power stack.
 
 
     void doPowerScan();
@@ -2304,15 +2304,36 @@ public:
 
     //@}
 
-    /**
-     * Maximal power that the combined coal and nuclear power plants can deliver.
-     * @see NumPower CoalPop NuclearPop
-     */
-    Quad maxPower;
-    Quad numPower; ///< Amount of power used.
-
-
     bool moveMapSim(Direction mDir);
+
+    /**
+     * Calculate the offset into the power map at x, y.
+     */
+    inline int powerMapOffset(int x, int y)
+    {
+        return (x >>4) + (y <<3);
+    };
+
+    /**
+     * Return the bit in the power map at x, y.
+     */
+    inline bool getPowerBit(int x, int y)
+    {
+	int offset = powerMapOffset(x, y);
+	return (offset >= 0 && offset < POWER_MAP_SIZE &&
+		!!(powerMap[offset] & (1 << (x & 0x0f))));
+    }
+
+    /**
+     * Set the bit in the power map at x, y.
+     */
+    inline void setPowerBit(int x, int y)
+    {
+	int offset = powerMapOffset(x, y);
+	if (offset >= 0 && offset < POWER_MAP_SIZE) {
+	    powerMap[powerMapOffset(x, y)] |= 1 << (x & 0x0f);
+	}
+    }
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2368,7 +2389,7 @@ public:
 
     short newMap;
 
-    short newMapFlags[NMAPS];
+    short newMapFlags[MAP_TYPE_COUNT];
 
     short cityCenterX; ///< X coordinate of city center
     short cityCenterY; ///< Y coordinate of city center
@@ -2478,7 +2499,7 @@ public:
 
     void simFrame();
 
-    void simulate(int mod16);
+    void simulate(int phase);
 
     void doSimInit();
 
@@ -2699,6 +2720,18 @@ public:
     // (i.e. Python SWIG wrapper of this Micropolis object.)
     void *userData;
 
+
+    /**
+     * Check that the given coordinate is within world bounds
+     * @param wx World x coordinate
+     * @param wy World y coordinate
+     * @return Boolean indicating (wx, wy) is inside the world bounds
+     */
+    static inline bool testBounds(int wx, int wy)
+    {
+	return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
+    };
+
     void spend(int dollars);
 
     void setFunds(int dollars);
@@ -2739,6 +2772,8 @@ public:
       int y=-1);
 
     int getTile(int x, int y);
+
+    void setTile(int x, int y, short tile);
 
     void *getMapBuffer();
 
@@ -2849,6 +2884,26 @@ public:
     short trafMaxX; ///< X coordinate of a position with heavy traffic
     short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
+
+    /**
+     * Return reverse direction
+     * @param d Direction to reverse
+     * @return Reversed direction
+     */
+    inline Direction reverseDirection(Direction d)
+    {
+	return (Direction)((d + 2) & 0x3);
+    };
+
+    inline short neutralizeRoad(short tile)
+    {
+	tile &= LOMASK;
+	if ((tile >= 64) &&
+	    (tile <= 207)) {
+	    tile = (tile & 0x000F) + 64;
+	}
+	return tile;
+    }
 
     short makeTraffic(ZoneType dest);
 

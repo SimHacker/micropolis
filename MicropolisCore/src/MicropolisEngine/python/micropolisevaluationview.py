@@ -65,6 +65,25 @@
 # Don Hopkins
 
 
+# Is The Mayor Doing a Good Job?
+#   Yes: XX%
+#   No: XX%
+# What are the Worst Problems?
+#   Problem 1: XXX%
+#   Problem 2: XXX%
+#   Problem 3: XXX%
+#   Problem 4: XXX%
+# Statistics
+#   Population: XXX
+#       Net Migration: XXX (last year)
+#       Assessed Value: XXX
+#       Category: XXX
+#       Game Level: XXX
+# Overall City Score (0 - 1000)
+#   Current Score: XXX
+#   Annual Change: XXX
+
+
 ########################################################################
 # Import stuff
 
@@ -99,7 +118,7 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         name,
         *args):
 
-        print "EVALUATION UPDATE", self, name, args
+        #print "EVALUATION UPDATE", self, name, args
 
         engine = self.engine
 
@@ -108,13 +127,78 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
 
     def drawContent(
         self,
-        ctx):
+        ctx,
+        playout):
 
-        #print "==== MicropolisEvaluationView DRAWCONTENT", self
+        print "==== MicropolisEvaluationView DRAWCONTENT", self
 
         winRect = self.get_allocation()
         winWidth = winRect.width
         winHeight = winRect.height
+
+        ctx.save()
+
+        ctx.set_source_rgb(1.0, 1.0, 1.0)
+        ctx.rectangle(0, 0, winWidth, winHeight)
+        ctx.fill()
+
+        yesPercent = 50
+        noPercent = 50
+        problem1 = "Problem 1: 20%"
+        problem2 = "Problem 2: 15%"
+        problem3 = "Problem 3: 10%"
+        problem4 = "Problem 4: 5%"
+        population = '10,000'
+        netMigration = '1,000'
+        assessedValue = '$100,000'
+        category = 'Town'
+        gameLevel = 'Medium'
+        currentScore = '800'
+        annualChange = '+30'
+
+        markup = """<span>
+  <b>Is The Mayor Doing a Good Job?</b><br/>
+    Yes: %s%%<br/>
+    No: %s%%<br/>
+  <b>What are the Worst Problems?</b><br/>
+    %s<br/>
+    %s<br/>
+    %s<br/>
+    %s<br/>
+  <b>Statistics</b><br/>
+    Population: %s<br/>
+        Net Migration: %s (last year)<br/>
+        Assessed Value: %s<br/>
+        Category: %s<br/>
+        Game Level: %s<br/>
+  <b>Overall City Score (0 - 1000)</b><br/>
+    Current Score: %s<br/>
+    Annual Change: %s<br/>
+</span>
+""" % (
+            yesPercent,
+            noPercent,
+            problem1,
+            problem2,
+            problem3,
+            problem4,
+            population,
+            netMigration,
+            assessedValue,
+            category,
+            gameLevel,
+            currentScore,
+            annualChange,
+        )
+
+        print markup
+
+        playout.set_font_description(self.labelFont)
+        playout.set_text(markup)
+        playout.set_markup(markup)
+        ctx.set_source_rgb(0.0, 0.0, 0.0)
+        ctx.move_to(10, 10)
+        ctx.show_layout(playout)
 
 
 ########################################################################

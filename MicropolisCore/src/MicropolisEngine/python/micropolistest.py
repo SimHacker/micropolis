@@ -69,7 +69,7 @@
 # Import standard Python modules.
 
 
-import sys, os
+import sys, os, random
 import gtk
 
 
@@ -98,6 +98,7 @@ for relPath in (
 # Import our modules
 
 
+import micropolisengine
 import micropolismodel
 import micropoliswindow
 import micropolisdrawingarea
@@ -109,6 +110,19 @@ import micropolisdrawingarea
 if __name__ == '__main__':
 
     engine = micropolismodel.CreateTestEngine()
+
+    engine.cityTax = 6
+    #engine.setSkips(500)
+    engine.setSkips(10)
+    setTile = engine.setTile
+
+    for y in range(0, micropolisengine.WORLD_H):
+        for x in range(0, micropolisengine.WORLD_W):
+            setTile(x, y, micropolisengine.RUBBLE | micropolisengine.BLBNBIT)
+
+    for y in range(10, 15):
+        for x in range(10, 15):
+            setTile(x, y, micropolisengine.FIRE | micropolisengine.ANIMBIT)
 
     fudge = 0
     width = int((120 * 4) + fudge)

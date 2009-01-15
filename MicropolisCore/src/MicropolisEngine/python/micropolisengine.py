@@ -50,15 +50,8 @@ del types
 
 getPythonCallbackHook = _micropolisengine.getPythonCallbackHook
 getPythonCallbackData = _micropolisengine.getPythonCallbackData
-MICROPOLIS_VERSION = _micropolisengine.MICROPOLIS_VERSION
 IS_INTEL = _micropolisengine.IS_INTEL
-RANDOM_RANGE = _micropolisengine.RANDOM_RANGE
-NIL = _micropolisengine.NIL
-HORIZ = _micropolisengine.HORIZ
-VERT = _micropolisengine.VERT
-HISTLEN = _micropolisengine.HISTLEN
-MISCHISTLEN = _micropolisengine.MISCHISTLEN
-ISLAND_RADIUS = _micropolisengine.ISLAND_RADIUS
+MICROPOLIS_VERSION = _micropolisengine.MICROPOLIS_VERSION
 HISTORY_TYPE_RES = _micropolisengine.HISTORY_TYPE_RES
 HISTORY_TYPE_COM = _micropolisengine.HISTORY_TYPE_COM
 HISTORY_TYPE_IND = _micropolisengine.HISTORY_TYPE_IND
@@ -66,37 +59,25 @@ HISTORY_TYPE_MONEY = _micropolisengine.HISTORY_TYPE_MONEY
 HISTORY_TYPE_CRIME = _micropolisengine.HISTORY_TYPE_CRIME
 HISTORY_TYPE_POLLUTION = _micropolisengine.HISTORY_TYPE_POLLUTION
 HISTORY_TYPE_COUNT = _micropolisengine.HISTORY_TYPE_COUNT
-RES_HIST = _micropolisengine.RES_HIST
-COM_HIST = _micropolisengine.COM_HIST
-IND_HIST = _micropolisengine.IND_HIST
-MONEY_HIST = _micropolisengine.MONEY_HIST
-CRIME_HIST = _micropolisengine.CRIME_HIST
-POLLUTION_HIST = _micropolisengine.POLLUTION_HIST
-HISTORIES = _micropolisengine.HISTORIES
-ALL_HISTORIES = _micropolisengine.ALL_HISTORIES
 HISTORY_SCALE_SHORT = _micropolisengine.HISTORY_SCALE_SHORT
 HISTORY_SCALE_LONG = _micropolisengine.HISTORY_SCALE_LONG
 HISTORY_SCALE_COUNT = _micropolisengine.HISTORY_SCALE_COUNT
-POWERMAPLEN = _micropolisengine.POWERMAPLEN
-ALMAP = _micropolisengine.ALMAP
-REMAP = _micropolisengine.REMAP
-COMAP = _micropolisengine.COMAP
-INMAP = _micropolisengine.INMAP
-PRMAP = _micropolisengine.PRMAP
-RDMAP = _micropolisengine.RDMAP
-PDMAP = _micropolisengine.PDMAP
-RGMAP = _micropolisengine.RGMAP
-TDMAP = _micropolisengine.TDMAP
-PLMAP = _micropolisengine.PLMAP
-CRMAP = _micropolisengine.CRMAP
-LVMAP = _micropolisengine.LVMAP
-FIMAP = _micropolisengine.FIMAP
-POMAP = _micropolisengine.POMAP
-DYMAP = _micropolisengine.DYMAP
-NMAPS = _micropolisengine.NMAPS
-VALVERATE = _micropolisengine.VALVERATE
-CENSUSRATE = _micropolisengine.CENSUSRATE
-TAXFREQ = _micropolisengine.TAXFREQ
+MAP_TYPE_ALL = _micropolisengine.MAP_TYPE_ALL
+MAP_TYPE_RES = _micropolisengine.MAP_TYPE_RES
+MAP_TYPE_COM = _micropolisengine.MAP_TYPE_COM
+MAP_TYPE_IND = _micropolisengine.MAP_TYPE_IND
+MAP_TYPE_POWER = _micropolisengine.MAP_TYPE_POWER
+MAP_TYPE_ROAD = _micropolisengine.MAP_TYPE_ROAD
+MAP_TYPE_POPULATION_DENSITY = _micropolisengine.MAP_TYPE_POPULATION_DENSITY
+MAP_TYPE_RATE_OF_GROWTH = _micropolisengine.MAP_TYPE_RATE_OF_GROWTH
+MAP_TYPE_TRAFFIC_DENSITY = _micropolisengine.MAP_TYPE_TRAFFIC_DENSITY
+MAP_TYPE_POLLUTION = _micropolisengine.MAP_TYPE_POLLUTION
+MAP_TYPE_CRIME = _micropolisengine.MAP_TYPE_CRIME
+MAP_TYPE_LAND_VALUE = _micropolisengine.MAP_TYPE_LAND_VALUE
+MAP_TYPE_FIRE_RADIUS = _micropolisengine.MAP_TYPE_FIRE_RADIUS
+MAP_TYPE_POLICE_RADIUS = _micropolisengine.MAP_TYPE_POLICE_RADIUS
+MAP_TYPE_DYNAMIC = _micropolisengine.MAP_TYPE_DYNAMIC
+MAP_TYPE_COUNT = _micropolisengine.MAP_TYPE_COUNT
 SPRITE_NOTUSED = _micropolisengine.SPRITE_NOTUSED
 SPRITE_TRAIN = _micropolisengine.SPRITE_TRAIN
 SPRITE_HELICOPTER = _micropolisengine.SPRITE_HELICOPTER
@@ -326,7 +307,6 @@ DIR_SOUTH = _micropolisengine.DIR_SOUTH
 DIR_EAST = _micropolisengine.DIR_EAST
 DIR_DIR4 = _micropolisengine.DIR_DIR4
 DIR_INVALID = _micropolisengine.DIR_INVALID
-ReverseDirection = _micropolisengine.ReverseDirection
 ZT_COMMERCIAL = _micropolisengine.ZT_COMMERCIAL
 ZT_INDUSTRIAL = _micropolisengine.ZT_INDUSTRIAL
 ZT_RESIDENTIAL = _micropolisengine.ZT_RESIDENTIAL
@@ -354,8 +334,6 @@ LEVEL_HARD = _micropolisengine.LEVEL_HARD
 LEVEL_COUNT = _micropolisengine.LEVEL_COUNT
 LEVEL_FIRST = _micropolisengine.LEVEL_FIRST
 LEVEL_LAST = _micropolisengine.LEVEL_LAST
-TestBounds = _micropolisengine.TestBounds
-absoluteValue = _micropolisengine.absoluteValue
 not_reached = _micropolisengine.not_reached
 class Resource(_object):
     __swig_setmethods__ = {}
@@ -397,11 +375,27 @@ WORLD_W_4 = cvar.WORLD_W_4
 WORLD_H_4 = cvar.WORLD_H_4
 WORLD_W_8 = cvar.WORLD_W_8
 WORLD_H_8 = cvar.WORLD_H_8
+EDITOR_TILE_SIZE = cvar.EDITOR_TILE_SIZE
+EDITOR_W = cvar.EDITOR_W
+EDITOR_H = cvar.EDITOR_H
+MAP_TILE_SIZE = cvar.MAP_TILE_SIZE
+MAP_W = cvar.MAP_W
+MAP_H = cvar.MAP_H
+HISTORY_LENGTH = cvar.HISTORY_LENGTH
+MISC_HISTORY_LENGTH = cvar.MISC_HISTORY_LENGTH
 HISTORY_COUNT = cvar.HISTORY_COUNT
+ISLAND_RADIUS = cvar.ISLAND_RADIUS
+POWER_MAP_ROW = cvar.POWER_MAP_ROW
+POWER_MAP_SIZE = cvar.POWER_MAP_SIZE
+POWER_MAP_LENGTH = cvar.POWER_MAP_LENGTH
+POWER_STACK_SIZE = cvar.POWER_STACK_SIZE
+CENSUS_FREQUENCY_10 = cvar.CENSUS_FREQUENCY_10
+CENSUS_FREQUENCY_120 = cvar.CENSUS_FREQUENCY_120
+TAX_FREQUENCY = cvar.TAX_FREQUENCY
 MAX_TRAFFIC_DISTANCE = cvar.MAX_TRAFFIC_DISTANCE
 MAX_ROAD_EFFECT = cvar.MAX_ROAD_EFFECT
-MAX_POLICESTATION_EFFECT = cvar.MAX_POLICESTATION_EFFECT
-MAX_FIRESTATION_EFFECT = cvar.MAX_FIRESTATION_EFFECT
+MAX_POLICE_STATION_EFFECT = cvar.MAX_POLICE_STATION_EFFECT
+MAX_FIRE_STATION_EFFECT = cvar.MAX_FIRE_STATION_EFFECT
 
 class StringTable(_object):
     __swig_setmethods__ = {}
@@ -812,8 +806,6 @@ class Micropolis(_object):
     if _newclass:powerMap = _swig_property(_micropolisengine.Micropolis_powerMap_get, _micropolisengine.Micropolis_powerMap_set)
     def initMapArrays(*args): return _micropolisengine.Micropolis_initMapArrays(*args)
     def destroyMapArrays(*args): return _micropolisengine.Micropolis_destroyMapArrays(*args)
-    def getHistoryRange(*args): return _micropolisengine.Micropolis_getHistoryRange(*args)
-    def getHistory(*args): return _micropolisengine.Micropolis_getHistory(*args)
     def animateTiles(*args): return _micropolisengine.Micropolis_animateTiles(*args)
     __swig_setmethods__["roadPercent"] = _micropolisengine.Micropolis_roadPercent_set
     __swig_getmethods__["roadPercent"] = _micropolisengine.Micropolis_roadPercent_get
@@ -988,12 +980,6 @@ class Micropolis(_object):
     __swig_setmethods__["newGraph"] = _micropolisengine.Micropolis_newGraph_set
     __swig_getmethods__["newGraph"] = _micropolisengine.Micropolis_newGraph_get
     if _newclass:newGraph = _swig_property(_micropolisengine.Micropolis_newGraph_get, _micropolisengine.Micropolis_newGraph_set)
-    __swig_setmethods__["history10"] = _micropolisengine.Micropolis_history10_set
-    __swig_getmethods__["history10"] = _micropolisengine.Micropolis_history10_get
-    if _newclass:history10 = _swig_property(_micropolisengine.Micropolis_history10_get, _micropolisengine.Micropolis_history10_set)
-    __swig_setmethods__["history120"] = _micropolisengine.Micropolis_history120_set
-    __swig_getmethods__["history120"] = _micropolisengine.Micropolis_history120_get
-    if _newclass:history120 = _swig_property(_micropolisengine.Micropolis_history120_get, _micropolisengine.Micropolis_history120_set)
     __swig_setmethods__["historyInitialized"] = _micropolisengine.Micropolis_historyInitialized_set
     __swig_getmethods__["historyInitialized"] = _micropolisengine.Micropolis_historyInitialized_get
     if _newclass:historyInitialized = _swig_property(_micropolisengine.Micropolis_historyInitialized_get, _micropolisengine.Micropolis_historyInitialized_set)
@@ -1007,11 +993,13 @@ class Micropolis(_object):
     __swig_getmethods__["graphUpdateTime"] = _micropolisengine.Micropolis_graphUpdateTime_get
     if _newclass:graphUpdateTime = _swig_property(_micropolisengine.Micropolis_graphUpdateTime_get, _micropolisengine.Micropolis_graphUpdateTime_set)
     def drawMonth(*args): return _micropolisengine.Micropolis_drawMonth(*args)
-    def doAllGraphs(*args): return _micropolisengine.Micropolis_doAllGraphs(*args)
     def changeCensus(*args): return _micropolisengine.Micropolis_changeCensus(*args)
     def graphDoer(*args): return _micropolisengine.Micropolis_graphDoer(*args)
     def initGraphs(*args): return _micropolisengine.Micropolis_initGraphs(*args)
     def initGraphMax(*args): return _micropolisengine.Micropolis_initGraphMax(*args)
+    def getHistoryRange(*args): return _micropolisengine.Micropolis_getHistoryRange(*args)
+    def getHistory(*args): return _micropolisengine.Micropolis_getHistory(*args)
+    def setHistory(*args): return _micropolisengine.Micropolis_setHistory(*args)
     def initWillStuff(*args): return _micropolisengine.Micropolis_initWillStuff(*args)
     def resetMapState(*args): return _micropolisengine.Micropolis_resetMapState(*args)
     def resetEditorState(*args): return _micropolisengine.Micropolis_resetEditorState(*args)
@@ -1098,6 +1086,12 @@ class Micropolis(_object):
     def doShowPicture(*args): return _micropolisengine.Micropolis_doShowPicture(*args)
     def doLoseGame(*args): return _micropolisengine.Micropolis_doLoseGame(*args)
     def doWinGame(*args): return _micropolisengine.Micropolis_doWinGame(*args)
+    __swig_setmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_set
+    __swig_getmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_get
+    if _newclass:maxPower = _swig_property(_micropolisengine.Micropolis_maxPower_get, _micropolisengine.Micropolis_maxPower_set)
+    __swig_setmethods__["numPower"] = _micropolisengine.Micropolis_numPower_set
+    __swig_getmethods__["numPower"] = _micropolisengine.Micropolis_numPower_get
+    if _newclass:numPower = _swig_property(_micropolisengine.Micropolis_numPower_get, _micropolisengine.Micropolis_numPower_set)
     __swig_setmethods__["powerStackPointer"] = _micropolisengine.Micropolis_powerStackPointer_set
     __swig_getmethods__["powerStackPointer"] = _micropolisengine.Micropolis_powerStackPointer_get
     if _newclass:powerStackPointer = _swig_property(_micropolisengine.Micropolis_powerStackPointer_get, _micropolisengine.Micropolis_powerStackPointer_set)
@@ -1111,13 +1105,10 @@ class Micropolis(_object):
     def testForConductive(*args): return _micropolisengine.Micropolis_testForConductive(*args)
     def pushPowerStack(*args): return _micropolisengine.Micropolis_pushPowerStack(*args)
     def pullPowerStack(*args): return _micropolisengine.Micropolis_pullPowerStack(*args)
-    __swig_setmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_set
-    __swig_getmethods__["maxPower"] = _micropolisengine.Micropolis_maxPower_get
-    if _newclass:maxPower = _swig_property(_micropolisengine.Micropolis_maxPower_get, _micropolisengine.Micropolis_maxPower_set)
-    __swig_setmethods__["numPower"] = _micropolisengine.Micropolis_numPower_set
-    __swig_getmethods__["numPower"] = _micropolisengine.Micropolis_numPower_get
-    if _newclass:numPower = _swig_property(_micropolisengine.Micropolis_numPower_get, _micropolisengine.Micropolis_numPower_set)
     def moveMapSim(*args): return _micropolisengine.Micropolis_moveMapSim(*args)
+    def powerMapOffset(*args): return _micropolisengine.Micropolis_powerMapOffset(*args)
+    def getPowerBit(*args): return _micropolisengine.Micropolis_getPowerBit(*args)
+    def setPowerBit(*args): return _micropolisengine.Micropolis_setPowerBit(*args)
     __swig_setmethods__["nextRandom"] = _micropolisengine.Micropolis_nextRandom_set
     __swig_getmethods__["nextRandom"] = _micropolisengine.Micropolis_nextRandom_get
     if _newclass:nextRandom = _swig_property(_micropolisengine.Micropolis_nextRandom_get, _micropolisengine.Micropolis_nextRandom_set)
@@ -1396,6 +1387,8 @@ class Micropolis(_object):
     __swig_setmethods__["userData"] = _micropolisengine.Micropolis_userData_set
     __swig_getmethods__["userData"] = _micropolisengine.Micropolis_userData_get
     if _newclass:userData = _swig_property(_micropolisengine.Micropolis_userData_get, _micropolisengine.Micropolis_userData_set)
+    __swig_getmethods__["testBounds"] = lambda x: _micropolisengine.Micropolis_testBounds
+    if _newclass:testBounds = staticmethod(_micropolisengine.Micropolis_testBounds)
     def spend(*args): return _micropolisengine.Micropolis_spend(*args)
     def setFunds(*args): return _micropolisengine.Micropolis_setFunds(*args)
     def tickCount(*args): return _micropolisengine.Micropolis_tickCount(*args)
@@ -1414,6 +1407,7 @@ class Micropolis(_object):
     def initializeSound(*args): return _micropolisengine.Micropolis_initializeSound(*args)
     def makeSound(*args): return _micropolisengine.Micropolis_makeSound(*args)
     def getTile(*args): return _micropolisengine.Micropolis_getTile(*args)
+    def setTile(*args): return _micropolisengine.Micropolis_setTile(*args)
     def getMapBuffer(*args): return _micropolisengine.Micropolis_getMapBuffer(*args)
     __swig_setmethods__["toolX"] = _micropolisengine.Micropolis_toolX_set
     __swig_getmethods__["toolX"] = _micropolisengine.Micropolis_toolX_get
@@ -1476,6 +1470,8 @@ class Micropolis(_object):
     __swig_setmethods__["trafMaxY"] = _micropolisengine.Micropolis_trafMaxY_set
     __swig_getmethods__["trafMaxY"] = _micropolisengine.Micropolis_trafMaxY_get
     if _newclass:trafMaxY = _swig_property(_micropolisengine.Micropolis_trafMaxY_get, _micropolisengine.Micropolis_trafMaxY_set)
+    def reverseDirection(*args): return _micropolisengine.Micropolis_reverseDirection(*args)
+    def neutralizeRoad(*args): return _micropolisengine.Micropolis_neutralizeRoad(*args)
     def makeTraffic(*args): return _micropolisengine.Micropolis_makeTraffic(*args)
     def setTrafficMap(*args): return _micropolisengine.Micropolis_setTrafficMap(*args)
     def pushPos(*args): return _micropolisengine.Micropolis_pushPos(*args)
@@ -1572,6 +1568,7 @@ class Micropolis(_object):
     def evalInd(*args): return _micropolisengine.Micropolis_evalInd(*args)
 Micropolis_swigregister = _micropolisengine.Micropolis_swigregister
 Micropolis_swigregister(Micropolis)
+Micropolis_testBounds = _micropolisengine.Micropolis_testBounds
 
 
 

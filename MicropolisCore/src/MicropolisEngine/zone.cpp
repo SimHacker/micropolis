@@ -175,7 +175,7 @@ void Micropolis::setSmoke(int ZonePower)
         int xx = curMapX + DX1[z];
         int yy = curMapY + DY1[z];
 
-        if (TestBounds(xx, yy)) {
+        if (testBounds(xx, yy)) {
 
             if (ZonePower) {
 
@@ -259,7 +259,7 @@ bool Micropolis::zonePlop(int base)
         int xx = curMapX + Zx[z];
         int yy = curMapY + Zy[z];
 
-        if (TestBounds(xx, yy)) {
+        if (testBounds(xx, yy)) {
             x = map[xx][yy] & LOMASK;
 
             if ((x >= FLOOD) && (x < ROADBASE)) {
@@ -274,7 +274,7 @@ bool Micropolis::zonePlop(int base)
         int xx = curMapX + Zx[z];
         int yy = curMapY + Zy[z];
 
-        if (TestBounds(xx, yy)) {
+        if (testBounds(xx, yy)) {
             map[xx][yy] = base + BNCNBIT;
         }
 
@@ -329,8 +329,7 @@ bool Micropolis::setZonePower()
         return true;
     }
 
-    Quad PowerWrd = POWERWORD(curMapX, curMapY);
-    if (PowerWrd < PWRMAPSIZE && (powerMap[PowerWrd] & (1 << (curMapX & 15)))) {
+    if (getPowerBit(curMapX, curMapY)) {
         map[curMapX][curMapY] = curNum | PWRBIT;
         return true;
     } else {
@@ -353,7 +352,7 @@ void Micropolis::buildHouse(int value)
         int xx = curMapX + ZeX[z];
         int yy = curMapY + ZeY[z];
 
-        if (TestBounds(xx, yy)) {
+        if (testBounds(xx, yy)) {
 
             score = evalLot(xx, yy);
 
@@ -378,7 +377,7 @@ void Micropolis::buildHouse(int value)
         int xx = curMapX + ZeX[BestLoc];
         int yy = curMapY + ZeY[BestLoc];
 
-        if (TestBounds(xx, yy)) {
+        if (testBounds(xx, yy)) {
             map[xx][yy] =
                 HOUSE + BLBNCNBIT + getRandom(2) + (value * 3);
         }
@@ -406,7 +405,7 @@ short Micropolis::evalLot(int x, int y)
         int xx = x + DX[z];
         int yy = y + DY[z];
 
-        if (TestBounds(xx, yy) &&
+        if (testBounds(xx, yy) &&
             (map[xx][yy] != DIRT) &&
             ((map[xx][yy] & LOMASK) <= LASTROAD)) {
             score++;          /* look for road */

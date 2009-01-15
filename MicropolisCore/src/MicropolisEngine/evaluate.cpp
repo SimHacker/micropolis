@@ -365,14 +365,14 @@ void Micropolis::getScore()
         z -= MAX_ROAD_EFFECT - roadEffect;
     }
 
-    if (policeEffect < MAX_POLICESTATION_EFFECT) {
+    if (policeEffect < MAX_POLICE_STATION_EFFECT) {
         // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-        z = (int)(z * (0.9 + (policeEffect / (10.0001 * MAX_POLICESTATION_EFFECT))));
+        z = (int)(z * (0.9 + (policeEffect / (10.0001 * MAX_POLICE_STATION_EFFECT))));
     }
 
-    if (fireEffect < MAX_FIRESTATION_EFFECT) {
+    if (fireEffect < MAX_FIRE_STATION_EFFECT) {
         // 10.0001 = 10000.1 / 1000, 1/10.0001 is about 0.1
-        z = (int)(z * (0.9 + (fireEffect / (10.0001 * MAX_FIRESTATION_EFFECT))));
+        z = (int)(z * (0.9 + (fireEffect / (10.0001 * MAX_FIRE_STATION_EFFECT))));
     }
 
     if (resValve < -1000) {

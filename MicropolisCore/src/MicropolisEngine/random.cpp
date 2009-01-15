@@ -57,7 +57,7 @@ short Micropolis::getRandom(short range)
     int maxMultiple, rnum;
 
     range++;
-    maxMultiple = RANDOM_RANGE / range;
+    maxMultiple = 0xffff / range;
     maxMultiple *= range;
 
     while ((rnum = getRandom16()) >= maxMultiple) ;

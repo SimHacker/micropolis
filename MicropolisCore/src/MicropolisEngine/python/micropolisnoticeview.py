@@ -96,7 +96,8 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
 
     def drawContent(
         self,
-        ctx):
+        ctx,
+        playout):
 
         #print "==== MicropolisNoticeView DRAWCONTENT", self
 

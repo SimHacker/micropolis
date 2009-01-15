@@ -72,6 +72,7 @@
 import sys
 import os
 import time
+import random
 import micropolisengine
 import gobject
 
@@ -141,6 +142,31 @@ class MicropolisModel(micropolisengine.Micropolis):
         self.stopTimer()
 
         micropolisengine.Micropolis.__del__(self)
+
+
+    # TODO: Internationalize
+    def getMonthName(self, monthIndex):
+        return [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ][monthIndex];
+
+
+    def getCityDate(self):
+        return (
+            self.getMonthName(self.cityMonth) +
+            ' ' +
+            str(self.cityYear))
 
 
     def addView(self, view):
@@ -244,7 +270,7 @@ class MicropolisModel(micropolisengine.Micropolis):
         # In this case, micropolis is the same is self, so ignore it. 
         handler = getattr(self, 'handle_' + name, None)
         if handler:
-            print "Calling handler", handler, args
+            #print "Calling handler", handler, args
             handler(*args)
             #print "Called handler."
         else:
@@ -428,7 +454,7 @@ class MicropolisModel(micropolisengine.Micropolis):
 
 
     def handle_UIUpdate(self, name, *args):
-        print "handle_UIUpdate(self, name, *args)", (self, name, args)
+        #print "handle_UIUpdate(self, name, *args)", (self, name, args)
 
         self.sendUpdate(name, *args)
 
@@ -453,8 +479,6 @@ def CreateTestEngine():
 
     engine.resume()
     engine.setSpeed(2)
-    engine.cityTax = 8
-    engine.autoGoto = False
     engine.cityTax = 8
 
     # Testing...

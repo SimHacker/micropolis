@@ -108,7 +108,7 @@ void Micropolis::simFrame()
 
 
 /* comefrom: simFrame */
-void Micropolis::simulate(int mod16)
+void Micropolis::simulate(int phase)
 {
     static const short SpdPwr[4] = { 1,  2,  4,  5 };
     static const short SpdPtl[4] = { 1,  2,  7, 17 };
@@ -118,116 +118,123 @@ void Micropolis::simulate(int mod16)
 
     short x = clamp(simSpeed, (short)1, (short)3);
 
-    switch (mod16)  {
+    switch (phase)  {
 
         case 0:
+
             if (++simCycle > 1023) {
-                simCycle = 0;     /* this is cosmic */
+                simCycle = 0; // This is cosmic!
             }
+
             if (doInitialEval) {
                 doInitialEval = false;
                 cityEvaluation();
             }
+
             cityTime++;
-            cityTaxAverage += cityTax;             /* post */
+            cityTaxAverage += cityTax;
+
             if (!(simCycle & 1)) {
                 setValves();
             }
+
             clearCensus();
+
             break;
 
         case 1:
-            mapScan(0 * WORLD_W / 8, 1 * WORLD_W / 8);
-            break;
-
         case 2:
-            mapScan(1 * WORLD_W / 8, 2 * WORLD_W / 8);
-            break;
-
         case 3:
-            mapScan(2 * WORLD_W / 8, 3 * WORLD_W / 8);
-            break;
-
         case 4:
-            mapScan(3 * WORLD_W / 8, 4 * WORLD_W / 8);
-            break;
-
         case 5:
-            mapScan(4 * WORLD_W / 8, 5 * WORLD_W / 8);
-            break;
-
         case 6:
-            mapScan(5 * WORLD_W / 8, 6 * WORLD_W / 8);
-            break;
-
         case 7:
-            mapScan(6 * WORLD_W / 8, 7 * WORLD_W / 8);
-            break;
-
         case 8:
-            mapScan(7 * WORLD_W / 8, 8 * WORLD_W / 8);
+
+	    // Scan 1/8 of the map for each of the 8 phases 1..8:
+            mapScan((phase - 1) * WORLD_W / 8, phase * WORLD_W / 8);
+
             break;
 
         case 9:
-            if ((cityTime % CENSUSRATE) == 0) {
+
+            if ((cityTime % CENSUS_FREQUENCY_10) == 0) {
                 take10Census();
             }
-            if ((cityTime % (CENSUSRATE * 12)) == 0) {
+
+            if ((cityTime % (CENSUS_FREQUENCY_120)) == 0) {
                 take120Census();
             }
 
-            if ((cityTime % TAXFREQ) == 0)  {
+            if ((cityTime % TAX_FREQUENCY) == 0)  {
                 collectTax();
                 cityEvaluation();
             }
+
             break;
 
         case 10:
+
             if (!(simCycle % 5)) {
                 decRateOfGrowthMap();
             }
+
             decTrafficMap();
-            newMapFlags[TDMAP] = 1;
-            newMapFlags[RDMAP] = 1;
-            newMapFlags[ALMAP] = 1;
-            newMapFlags[REMAP] = 1;
-            newMapFlags[COMAP] = 1;
-            newMapFlags[INMAP] = 1;
-            newMapFlags[DYMAP] = 1;
+
+            newMapFlags[MAP_TYPE_TRAFFIC_DENSITY] = 1;
+            newMapFlags[MAP_TYPE_ROAD] = 1;
+            newMapFlags[MAP_TYPE_ALL] = 1;
+            newMapFlags[MAP_TYPE_RES] = 1;
+            newMapFlags[MAP_TYPE_COM] = 1;
+            newMapFlags[MAP_TYPE_IND] = 1;
+            newMapFlags[MAP_TYPE_DYNAMIC] = 1;
+
             sendMessages();
+
             break;
 
         case 11:
+
             if ((simCycle % SpdPwr[x]) == 0) {
                 doPowerScan();
-                newMapFlags[PRMAP] = 1;
+                newMapFlags[MAP_TYPE_POWER] = 1;
                 newPower = 1; /* post-release change */
             }
+
             break;
 
         case 12:
+
             if ((simCycle % SpdPtl[x]) == 0) {
                 pollutionTerrainLandValueScan();
             }
+
             break;
 
         case 13:
+
             if ((simCycle % SpdCri[x]) == 0) {
                 crimeScan();
             }
+
             break;
 
         case 14:
+
             if ((simCycle % SpdPop[x]) == 0) {
                 populationDensityScan();
             }
+
             break;
 
         case 15:
+
             if ((simCycle % SpdFir[x]) == 0) {
                 fireAnalysis();
             }
+
             doDisasters();
+
             break;
 
     }
@@ -260,7 +267,6 @@ void Micropolis::doSimInit()
     populationDensityScan();
     fireAnalysis();
     newMap = 1;
-    doAllGraphs();
     newGraph = true;
     totalPop = 1;
     doInitialEval = true;
@@ -455,8 +461,9 @@ void Micropolis::simLoadInit()
 
     cityTaxAverage = (cityTime % 48) * 7;  /* post */
 
-    for (int z = 0; z < PWRMAPSIZE; z++) {
-        powerMap[z] = ~0; /* set power Map */
+    // Set power map.
+    for (int z = 0; z < POWER_MAP_SIZE; z++) {
+        powerMap[z] = ~0;
     }
 
     doNilPower();
@@ -479,8 +486,8 @@ void Micropolis::simLoadInit()
     }
 
     roadEffect = MAX_ROAD_EFFECT;
-    policeEffect = MAX_POLICESTATION_EFFECT;
-    fireEffect = MAX_FIRESTATION_EFFECT;
+    policeEffect = MAX_POLICE_STATION_EFFECT;
+    fireEffect = MAX_FIRE_STATION_EFFECT;
     initSimLoad = 0;
 }
 
@@ -490,8 +497,8 @@ void Micropolis::setCommonInits()
 {
     evalInit();
     roadEffect = MAX_ROAD_EFFECT;
-    policeEffect = MAX_POLICESTATION_EFFECT;
-    fireEffect = MAX_FIRESTATION_EFFECT;
+    policeEffect = MAX_POLICE_STATION_EFFECT;
+    fireEffect = MAX_FIRE_STATION_EFFECT;
     taxFlag = false;
     taxFund = 0;
 }
@@ -749,7 +756,6 @@ void Micropolis::take10Census()
     x = (cashFlow / 20) + 128;    /* scale to 0..255  */
     moneyHist[0] = clamp(x, (short)0, (short)255);
 
-
     changeCensus();
 
     short resPopScaled = resPop >> 8;
@@ -765,7 +771,6 @@ void Micropolis::take10Census()
     if (hospitalPop == resPopScaled) {
         needHospital = 0;
     }
-
 
     if (churchPop < resPopScaled) {
         needChurch = 1;
@@ -871,8 +876,8 @@ void Micropolis::collectTax()
         } else {
             /* Nobody lives here. */
             roadEffect   = MAX_ROAD_EFFECT;
-            policeEffect = MAX_POLICESTATION_EFFECT;
-            fireEffect   = MAX_FIRESTATION_EFFECT;
+            policeEffect = MAX_POLICE_STATION_EFFECT;
+            fireEffect   = MAX_FIRE_STATION_EFFECT;
         }
     }
 }
@@ -895,14 +900,14 @@ void Micropolis::updateFundEffects()
     }
 
     // Compute police station effects of funding
-    policeEffect = MAX_POLICESTATION_EFFECT;
+    policeEffect = MAX_POLICE_STATION_EFFECT;
     if (policeFund > 0) {
         // Multiply with funding fraction
         policeEffect = (short)((float)policeEffect * (float)policeSpend / (float)policeFund);
     }
 
     // Compute fire station effects of funding
-    fireEffect = MAX_FIRESTATION_EFFECT;
+    fireEffect = MAX_FIRE_STATION_EFFECT;
     if (fireFund > 0) {
         // Multiply with funding fraction
         fireEffect = (short)((float)fireEffect * (float)fireSpend / (float)fireFund);
@@ -1112,7 +1117,7 @@ bool Micropolis::doBridge()
                 x = curMapX + VDx[z];
                 y = curMapY + VDy[z];
 
-                if (TestBounds(x, y)) {
+                if (testBounds(x, y)) {
 
                     if ((map[x][y] & LOMASK) == (VBRTAB[z] & LOMASK)) {
                         map[x][y] = VBRTAB2[z];
@@ -1133,7 +1138,7 @@ bool Micropolis::doBridge()
                 x = curMapX + HDx[z];
                 y = curMapY + HDy[z];
 
-                if (TestBounds(x, y)) {
+                if (testBounds(x, y)) {
 
                     if ((map[x][y] & LOMASK) == (HBRTAB[z] & LOMASK)) {
 
@@ -1156,7 +1161,7 @@ bool Micropolis::doBridge()
                         x = curMapX + VDx[z];
                         y = curMapY + VDy[z];
 
-                        if (TestBounds(x, y)) {
+                        if (testBounds(x, y)) {
 
                             MPtem = map[x][y];
                             if (MPtem == CHANNEL || ((MPtem & 15) == (VBRTAB2[z] & 15))) {
@@ -1180,7 +1185,7 @@ bool Micropolis::doBridge()
                         x = curMapX + HDx[z];
                         y = curMapY + HDy[z];
 
-                        if (TestBounds(x, y)) {
+                        if (testBounds(x, y)) {
 
                             MPtem = map[x][y];
                             if (((MPtem & 15) == (HBRTAB2[z] & 15)) || MPtem == CHANNEL) {
@@ -1242,10 +1247,14 @@ void Micropolis::doFire()
             short Xtem = curMapX + DX[z];
             short Ytem = curMapY + DY[z];
 
-            if (TestBounds(Xtem, Ytem)) {
+            if (testBounds(Xtem, Ytem)) {
 
                 short c = map[Xtem][Ytem];
-                if ((c & (BURNBIT | ZONEBIT)) == (BURNBIT | ZONEBIT)) {
+		if (!(c & BURNBIT)) {
+		    continue;
+		}
+
+                if (c & ZONEBIT) {
                     // Neighbour is a zone and burnable
                     fireZone(Xtem, Ytem, c);
 
@@ -1260,21 +1269,21 @@ void Micropolis::doFire()
     }
 
     // Compute likelyhood of fire running out of fuel
-    short Rate = 10; // Likelyhood of extinguishing (bigger means less chance)
+    short rate = 10; // Likelyhood of extinguishing (bigger means less chance)
     short z = fireStationMapEffect[curMapX >>3][curMapY >>3];
 
     if (z > 0) {
-        Rate = 3;
+        rate = 3;
         if (z > 20) {
-            Rate = 2;
+            rate = 2;
         }
         if (z > 100) {
-            Rate = 1;
+            rate = 1;
         }
     }
 
     // Decide whether to put out the fire.
-    if (getRandom(Rate) == 0) {
+    if (getRandom(rate) == 0) {
         map[curMapX][curMapY] = randomRubble();
     }
 }
@@ -1351,7 +1360,7 @@ void Micropolis::repairZone(short ZCent, short zsize)
 
             cnt++;
 
-            if (TestBounds(xx, yy)) {
+            if (testBounds(xx, yy)) {
 
                 ThCh = map[xx][yy];
 
@@ -1618,7 +1627,7 @@ void Micropolis::doMeltdown(int SX, int SY)
         int x = SX - 20 + getRandom(40);
         int y = SY - 15 + getRandom(30);
 
-        if (!TestBounds(x, y)) { // Ignore off-map positions
+        if (!testBounds(x, y)) { // Ignore off-map positions
             continue;
         }
 
