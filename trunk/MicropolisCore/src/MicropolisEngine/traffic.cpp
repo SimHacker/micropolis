@@ -123,7 +123,7 @@ void Micropolis::setTrafficMap()
 
         pullPos();
 
-        if (TestBounds(curMapX, curMapY)) {
+        if (testBounds(curMapX, curMapY)) {
 
             z = map[curMapX][curMapY] & LOMASK;
 
@@ -193,7 +193,7 @@ bool Micropolis::findPerimeterRoad()
         tx = curMapX + PerimX[z];
         ty = curMapY + PerimY[z];
 
-        if (TestBounds(tx, ty)) {
+        if (testBounds(tx, ty)) {
 
             if (roadTest(map[tx][ty])) {
 
@@ -226,7 +226,7 @@ bool Micropolis::findPerimeterTelecom()
         tx = curMapX + PerimX[z];
         ty = curMapY + PerimY[z];
 
-        if (TestBounds(tx, ty)) {
+        if (testBounds(tx, ty)) {
 
             tile = map[tx][ty] & LOMASK;
             if (tile >= TELEBASE && tile <= TELELAST) {
@@ -297,7 +297,7 @@ bool Micropolis::tryGo(int dist)
 
         if (roadTest(getFromMap(dirReal))) {
             moveMapSim(dirReal);
-            dirLast = ReverseDirection(dirReal);
+            dirLast = reverseDirection(dirReal);
 
             if (dist & 1) {
                 /* save pos every other move */

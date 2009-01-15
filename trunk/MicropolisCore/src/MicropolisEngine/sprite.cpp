@@ -409,7 +409,7 @@ short Micropolis::getChar(int x, int y)
     x >>= 4;
     y >>= 4;
 
-    if (!TestBounds(x, y)) {
+    if (!testBounds(x, y)) {
         return -1;
     } else {
         return map[x][y] & LOMASK;
@@ -952,7 +952,7 @@ void Micropolis::doShipSprite(SimSprite *sprite)
             x = ((sprite->x + (48 - 1)) >>4) + BDx[z];
             y = (sprite->y >>4) + BDy[z];
 
-            if (TestBounds(x, y)) {
+            if (testBounds(x, y)) {
 
                 t = map[x][y] & LOMASK;
 
@@ -1635,7 +1635,7 @@ int Micropolis::canDriveOn(int x, int y)
 {
     int tile;
 
-    if (!TestBounds(x, y)) {
+    if (!testBounds(x, y)) {
         return 0;
     }
 
@@ -1736,7 +1736,7 @@ void Micropolis::destroyMapTile(int ox, int oy)
     x = ox >>4;
     y = oy >>4;
 
-    if (!TestBounds(x, y)) {
+    if (!testBounds(x, y)) {
         return;
     }
 
@@ -1744,7 +1744,6 @@ void Micropolis::destroyMapTile(int ox, int oy)
     t = z & LOMASK;
 
     if (t >= TREEBASE) {
-        /* TILE_IS_BRIDGE(t) */
         if (!(z & BURNBIT)) {
 
           if (t >= ROADBASE && t <= LASTROAD) {
@@ -1805,7 +1804,7 @@ void Micropolis::startFireInZone(int Xloc, int Yloc, int ch)
             Xtem = Xloc + x;
             Ytem = Yloc + y;
 
-            if (TestBounds(Xtem, Ytem) && (map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
+            if (testBounds(Xtem, Ytem) && (map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
                 map[Xtem][Ytem] |= BULLBIT;
             }
 
@@ -1826,7 +1825,7 @@ void Micropolis::startFire(int x, int y)
     x >>= 4;
     y >>= 4;
 
-    if (!TestBounds(x, y)) {
+    if (!testBounds(x, y)) {
         return;
     }
 
@@ -2038,7 +2037,7 @@ void Micropolis::makeTornado()
  */
 void Micropolis::makeExplosion(int x, int y)
 {
-    if (TestBounds(x, y)) {
+    if (testBounds(x, y)) {
         makeExplosionAt((x << 4) + 8, (y << 4) + 8);
     }
 }

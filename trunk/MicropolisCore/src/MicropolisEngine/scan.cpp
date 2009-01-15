@@ -88,7 +88,8 @@ void Micropolis::fireAnalysis()
         }
     }
 
-    newMapFlags[DYMAP] = newMapFlags[FIMAP] = 1;
+    newMapFlags[MAP_TYPE_FIRE_RADIUS] = 1;
+    newMapFlags[MAP_TYPE_DYNAMIC] = 1;
 }
 
 
@@ -144,9 +145,10 @@ void Micropolis::populationDensityScan()
 
     cityCenterX2 = cityCenterX >>1;
     cityCenterY2 = cityCenterY >>1;
-    newMapFlags[DYMAP] = 1;
-    newMapFlags[PDMAP] = 1;
-    newMapFlags[RGMAP] = 1;
+
+    newMapFlags[MAP_TYPE_POPULATION_DENSITY] = 1;
+    newMapFlags[MAP_TYPE_RATE_OF_GROWTH] = 1;
+    newMapFlags[MAP_TYPE_DYNAMIC] = 1;
 }
 
 
@@ -293,9 +295,9 @@ void Micropolis::pollutionTerrainLandValueScan()
 
     smoothTerrain();
 
-    newMapFlags[DYMAP] = 1;
-    newMapFlags[PLMAP] = 1;
-    newMapFlags[LVMAP] = 1;
+    newMapFlags[MAP_TYPE_POLLUTION] = 1;
+    newMapFlags[MAP_TYPE_LAND_VALUE] = 1;
+    newMapFlags[MAP_TYPE_DYNAMIC] = 1;
 }
 
 
@@ -430,9 +432,9 @@ void Micropolis::crimeScan()
         }
     }
 
-    newMapFlags[DYMAP] = 1;
-    newMapFlags[CRMAP] = 1;
-    newMapFlags[POMAP] = 1;
+    newMapFlags[MAP_TYPE_CRIME] = 1;
+    newMapFlags[MAP_TYPE_POLICE_RADIUS] = 1;
+    newMapFlags[MAP_TYPE_DYNAMIC] = 1;
 }
 
 

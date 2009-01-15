@@ -204,14 +204,14 @@ void Micropolis::sendMessages()
 
     case 57:
         // If fireEffect < 0.7 of max effect
-        if (fireEffect < (7 * MAX_FIRESTATION_EFFECT / 10) && totalPop > 20) {
+        if (fireEffect < (7 * MAX_FIRE_STATION_EFFECT / 10) && totalPop > 20) {
             sendMessage(STR301_FIRE_STATION_NEEDS_FUNDING);
         }
         break;
 
     case 60:
         // If policeEffect < 0.7 of max effect
-        if (policeEffect < (7 * MAX_POLICESTATION_EFFECT / 10)
+        if (policeEffect < (7 * MAX_POLICE_STATION_EFFECT / 10)
                                                         && totalPop > 20) {
             sendMessage(STR301_POLICE_NEEDS_FUNDING);
         }

@@ -845,7 +845,7 @@ void Micropolis::putRubble(int x, int y, int size)
     for (int xx = x; xx < x + size; xx++) {
         for (int yy = y; yy < y + size; yy++)  {
 
-            if (TestBounds(xx, yy)) {
+            if (testBounds(xx, yy)) {
                 int tile = map[xx][yy] & LOMASK;
 
                 if (tile != RADTILE && tile != DIRT) {
@@ -996,7 +996,7 @@ int Micropolis::bulldozerTool(short x, short y)
 }
 
 
-/** @todo Generalize #TestBounds for different upper bounds */
+/** @todo Generalize #testBounds for different upper bounds */
 int Micropolis::roadTool(short x, short y)
 {
     int result;
@@ -1397,8 +1397,8 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
 
     if ((dx == 0) && (dy == 0)) return;
 
-    adx = ABS(dx);
-    ady = ABS(dy);
+    adx = absoluteValue(dx);
+    ady = absoluteValue(dy);
 
     if (adx > ady) {
         step = (float)0.3 / adx;
@@ -1413,8 +1413,8 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
         for (i = 0.0; i <= 1 + step; i += step) {
             tx = (toolXLast >>4) + i * dx;
             ty = (toolYLast >>4) + i * dy;
-            dtx = ABS(tx - lx);
-            dty = ABS(ty - ly);
+            dtx = absoluteValue(tx - lx);
+            dty = absoluteValue(ty - ly);
             if ((dtx >= 1) || (dty >= 1)) {
                 // fill in corners
                 if ((dtx >= 1) && (dty >= 1)) {
@@ -1433,8 +1433,8 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
         for (i = 0.0; i <= 1 + step; i += step) {
             tx = (toolXLast >>4) + i * dx;
             ty = (toolYLast >>4) + i * dy;
-            dtx = ABS(tx - lx);
-            dty = ABS(ty - ly);
+            dtx = absoluteValue(tx - lx);
+            dty = absoluteValue(ty - ly);
             lx = (int)(tx + rx);
             ly = (int)(ty + ry);
             doTool(tool, lx <<4, ly <<4, false);

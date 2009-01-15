@@ -292,11 +292,28 @@ void Micropolis::makeSound(const char *channel, const char *sound,
  */
 int Micropolis::getTile(int x, int y)
 {
-    if (!TestBounds(x, y)) {
+    if (!testBounds(x, y)) {
         return DIRT;
     }
 
     return map[x][y];
+}
+
+
+/**
+ * Set a tile into the map.
+ * @param x X coordinate of the position to get.
+ * @param y Y coordinate of the position to get.
+ * @param tile the tile value to set.
+ * @note Off-map positions are ignored.
+ */
+void Micropolis::setTile(int x, int y, short tile)
+{
+    if (!testBounds(x, y)) {
+        return;
+    }
+
+    map[x][y] = tile;
 }
 
 

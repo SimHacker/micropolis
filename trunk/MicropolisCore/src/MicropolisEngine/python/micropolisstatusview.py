@@ -96,13 +96,21 @@ class MicropolisStatusView(micropolisview.MicropolisView):
 
     def drawContent(
         self,
-        ctx):
+        ctx,
+        playout):
 
         #print "==== MicropolisStatusView DRAWCONTENT", self
 
         winRect = self.get_allocation()
         winWidth = winRect.width
         winHeight = winRect.height
+
+        # RCI Demand Gauge (toggles graph)
+        # Date (speed control)
+        # Funds (opens budget window)
+        # Tax Rate (controls tax rate)
+        # Message Field
+        # Scrolling Message Journal
 
 
 ########################################################################

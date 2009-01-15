@@ -499,13 +499,6 @@ void Micropolis::init()
 
     newGraph = false;
 
-    for (int i = 0; i < HISTORIES; i++) {
-
-      history10[i] = (unsigned char *)newPtr(120);
-      history120[i] = (unsigned char *)newPtr(120);
-
-    }
-
     graph10Max = 0;
     graph120Max = 0;
 
@@ -615,10 +608,10 @@ void Micropolis::init()
 
     powerStackPointer = 0;
 
-    // short powerStackX[PWRSTKSIZE];
-    // short powerStackY[PWRSTKSIZE];
-    memset(powerStackX, 0, sizeof(short) * PWRSTKSIZE);
-    memset(powerStackY, 0, sizeof(short) * PWRSTKSIZE);
+    // short powerStackX[POWER_STACK_SIZE];
+    // short powerStackY[POWER_STACK_SIZE];
+    memset(powerStackX, 0, sizeof(short) * POWER_STACK_SIZE);
+    memset(powerStackY, 0, sizeof(short) * POWER_STACK_SIZE);
 
     // Quad maxPower;
     maxPower = 0;
@@ -658,8 +651,8 @@ void Micropolis::init()
     // short newMap;
     newMap = 0;
 
-    // short newMapFlags[NMAPS];
-    memset(newMapFlags, 0, sizeof(short) * NMAPS);
+    // short newMapFlags[MAP_TYPE_COUNT];
+    memset(newMapFlags, 0, sizeof(short) * MAP_TYPE_COUNT);
 
     // short cityCenterX;
     cityCenterX = 0;

@@ -263,7 +263,6 @@ void Micropolis::setFire()
     y = getRandom(WORLD_H - 1);
     z = map[x][y];
 
-    /* TILE_IS_ARSONABLE(z) */
     if ((z & ZONEBIT) == 0) {
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
@@ -335,7 +334,7 @@ void Micropolis::makeFlood()
             for (t = 0; t < 4; t++) {
                 xx = x + Dx[t];
                 yy = y + Dy[t];
-                if (TestBounds(xx, yy)) {
+                if (testBounds(xx, yy)) {
                     c = map[xx][yy];
 
                     /* tile is floodable */
@@ -369,11 +368,10 @@ void Micropolis::doFlood()
             if ((getRandom16() & 7) == 0) { // 12.5% chance
                 xx = curMapX + Dx[z];
                 yy = curMapY + Dy[z];
-                if (TestBounds(xx, yy)) {
+                if (testBounds(xx, yy)) {
                     c = map[xx][yy];
                     t = c & LOMASK;
 
-                    /* TILE_IS_FLOODABLE2(c) */
                     if ((c & BURNBIT) == BURNBIT || c == DIRT
                                             || (t >= WOODS5 && t < FLOOD)) {
                         if ((c & ZONEBIT) == ZONEBIT) {

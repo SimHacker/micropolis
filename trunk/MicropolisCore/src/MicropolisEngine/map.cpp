@@ -556,7 +556,7 @@ void Micropolis::drawTrafMap()
 }
 
 
-void Micropolis::drawPolMap()
+void Micropolis::drawPollutionMap()
 {
     short x, y;
 
@@ -655,63 +655,63 @@ void Micropolis::memDrawMap()
 
     switch (view->map_state) {
 
-      case ALMAP:
+      case MAP_TYPE_ALL:
           drawAll(view);
           break;
 
-      case REMAP:
+      case MAP_TYPE_RES:
           drawRes(view);
           break;
 
-      case COMAP:
+      case MAP_TYPE_COM:
           drawCom(view);
           break;
 
-      case INMAP:
+      case MAP_TYPE_IND:
           drawInd(view);
           break;
 
-      case PRMAP:
+      case MAP_TYPE_POWER:
           drawPower(view);
           break;
 
-      case RDMAP:
+      case MAP_TYPE_ROAD:
           drawLilTransMap(view);
           break;
 
-      case PDMAP:
+      case MAP_TYPE_POPULATION_DENSITY:
           drawPopulationDensity(view);
           break;
 
-      case RGMAP:
+      case MAP_TYPE_RATE_OF_GROWTH:
           drawRateOfGrowth(view);
           break;
 
-      case TDMAP:
+      case MAP_TYPE_TRAFFIC:
           drawTrafficMap(view);
           break;
 
-      case PLMAP:
-          drawPolMap(view);
+      case MAP_TYPE_POLLUTION:
+          drawPollutionMap(view);
           break;
 
-      case CRMAP:
+      case MAP_TYPE_CRIME:
           drawCrimeMap(view);
           break;
 
-      case LVMAP:
+      case MAP_TYPE_LAND_VALUE:
           drawLandMap(view);
           break;
 
-      case FIMAP:
+      case MAP_TYPE_FIRE_RADIUS:
           drawFireRadius(view);
           break;
 
-      case POMAP:
+      case MAP_TYPE_POLICE_RADIUS:
           drawPoliceRadius(view);
           break;
 
-      case DYMAP:
+      case MAP_TYPE_DYNAMIC:
           drawDynamic(view);
           break;
 

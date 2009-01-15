@@ -84,12 +84,21 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
 
     graphColors = (
-        (0.00, 1.00, 0.00), # LIGHTGREEN
-        (0.00, 0.00, 0.50), # DARKBLUE
-        (1.00, 1.00, 0.00), # YELLOW
-        (0.00, 0.60, 0.00), # DARKGREEN
-        (1.00, 0.00, 0.00), # RED
-        (0.33, 0.42, 0.18), # OLIVE
+        (0.00, 1.00, 0.00), # Res: LIGHTGREEN
+        (0.00, 0.00, 0.50), # Com: DARKBLUE
+        (1.00, 1.00, 0.00), # Ind: YELLOW
+        (0.00, 0.60, 0.00), # Money: DARKGREEN
+        (1.00, 0.00, 0.00), # Crime: RED
+        (0.33, 0.42, 0.18), # Pollution: OLIVE
+    )
+
+    graphRanges = (
+        (0, 768), # Res
+        (0, 768), # Com
+        (0, 768), # Ind
+        (0, 256), # Money
+        (0, 128), # Crime
+        (0, 128), # Pollution
     )
 
     graphLegends = (
@@ -101,25 +110,20 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         "Pollution",
     )
 
-    graphLegendWidth = 10
-    graphLegendHeight = 60
-
-    topEdgeHeight = 0
-    bottomEdgeHeight = 25
-    leftEdgeWidth = 50
-    rightEdgeWidth = 20
-    margin = 3
-    legendX = 5
-    legendY = 5
-    legendRightGap = 2
-    legendBottomGap = 5
-    scaleTopGap = 0
+    topEdgeHeight = 30
+    bottomEdgeHeight = 30
+    leftEdgeWidth = 100
+    rightEdgeWidth = 30
+    margin = 5
+    gap = 2
+    boxGap = 1
 
 
     def __init__(
         self,
         historyScale=micropolisengine.HISTORY_SCALE_LONG,
-        historyTypes=[0, 1, 2, 4, 5],
+        historyTypes=[0, 1, 2, 3, 4, 5],
+        title='Micropolis History Graph',
         **args):
 
         micropolisview.MicropolisView.__init__(
@@ -130,6 +134,8 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         self.historyScale = historyScale
         self.historyTypes = historyTypes
+        self.hiliteTarget = None
+        self.title = title
 
 
     def update(
@@ -137,14 +143,135 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         name,
         *args):
 
-        print "GRAPH UPDATE", self, name, args
+        #print "GRAPH UPDATE", self, name, args
 
         self.queue_draw()
 
 
+    def getScaleRect(self):
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        margin = self.margin
+        gap = self.gap
+
+        scaleX = margin
+        scaleY = winHeight - self.bottomEdgeHeight + gap
+        scaleWidth = self.leftEdgeWidth - (margin + gap)
+        scaleHeight = self.bottomEdgeHeight - (margin + gap)
+
+        return scaleX, scaleY, scaleWidth, scaleHeight
+
+
+    def getTitleRect(self):
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        margin = self.margin
+        gap = self.gap
+
+        titleX = margin
+        titleY = margin
+        titleWidth = winWidth - (margin + margin)
+        titleHeight = self.topEdgeHeight - (margin + gap)
+
+        return titleX, titleY, titleWidth, titleHeight
+
+
+    def getHistoryRect(self):
+
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        margin = self.margin
+        gap = self.gap
+
+        histX = self.leftEdgeWidth + gap
+        histY = self.topEdgeHeight + gap
+        histWidth = winWidth - (self.leftEdgeWidth + self.rightEdgeWidth + gap + gap)
+        histHeight = winHeight - (self.topEdgeHeight + self.bottomEdgeHeight + gap + gap)
+
+        histWidth = max(1, histWidth)
+        histHeight = max(1, histHeight)
+
+        return histX, histY, histWidth, histHeight
+
+
+    def getLegendRect(self):
+        
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        margin = self.margin
+        gap = self.gap
+
+        legendX = margin
+        legendY = self.topEdgeHeight + gap
+        legendWidth = self.leftEdgeWidth - (margin + gap)
+        legendHeight = winHeight - (self.topEdgeHeight + self.bottomEdgeHeight + gap + gap)
+        legendHeight = max(1, legendHeight)
+
+        return legendX, legendY, legendWidth, legendHeight
+
+
+    def getLegendBoxRect(self, i):
+        
+        winRect = self.get_allocation()
+        winWidth = winRect.width
+        winHeight = winRect.height
+
+        margin = self.margin
+        gap = self.gap
+
+        legendX = margin
+        legendY = self.topEdgeHeight + gap
+        legendWidth = self.leftEdgeWidth - (margin + gap)
+        legendHeight = winHeight - (self.topEdgeHeight + self.bottomEdgeHeight + gap + gap)
+        legendHeight = max(1, legendHeight)
+
+        h = float(legendHeight) / len(self.graphLegends)
+
+        boxGap = self.boxGap
+
+        boxX = legendX
+        boxY = legendY + (i * h)
+        boxWidth = legendWidth
+        boxHeight = h
+        return boxX, boxY, boxWidth, boxHeight
+
+
+    def findTarget(
+        self,
+        x,
+        y):
+
+        if self.pointInRect(x, y, self.getHistoryRect()):
+            return 'history', 0
+
+        if self.pointInRect(x, y, self.getTitleRect()):
+            return 'title', 0
+
+        if self.pointInRect(x, y, self.getScaleRect()):
+            return 'scale', 0
+
+        if self.pointInRect(x, y, self.getLegendRect()):
+            for i in range(0, len(self.graphLegends)):
+                if self.pointInRect(x, y, self.getLegendBoxRect(i)):
+                    return 'legend', i
+
+        return None, None
+
+
     def drawContent(
         self,
-        ctx):
+        ctx,
+        playout):
 
         #print "==== MicropolisGraphView DRAWCONTENT", self
 
@@ -157,30 +284,10 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         historyTypeCount = micropolisengine.HISTORY_TYPE_COUNT
         historyScaleCount = micropolisengine.HISTORY_SCALE_COUNT
 
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
         historyScale = self.historyScale
         historyTypes = self.historyTypes
 
-        histX = 0
-        histY = 0
-        histWidth = winWidth
-        histHeight = winHeight
-
-        histX += self.margin
-        histY += self.margin
-        histWidth -= 2 * self.margin
-        histHeight -= 2 * self.margin
-
-        histY += self.topEdgeHeight
-        histHeight -= self.topEdgeHeight + self.bottomEdgeHeight
-        histHeight = max(1, histHeight)
-
-        histX += self.leftEdgeWidth
-        histWidth -= self.leftEdgeWidth + self.rightEdgeWidth
-        histWidth = max(1, histWidth)
+        histX, histY, histWidth, histHeight = self.getHistoryRect()
 
         ctx.save()
 
@@ -190,61 +297,116 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             histWidth,
             histHeight)
 
-        ctx.set_source_rgb(
-            1.0, 1.0, 1.0)
+        histY += 2
+        histHeight -= 4
 
-        ctx.fill()
+        hiliteTarget = self.hiliteTarget
+
+        if hiliteTarget == ('history', 0):
+            ctx.set_source_rgb(
+                1.0, 1.0, 1.0)
+        else:
+            ctx.set_source_rgb(
+                0.75, 0.75, 0.75)
+
+        ctx.fill_preserve()
+
+        ctx.set_source_rgb(
+            *self.strokeColor)
+
+        ctx.set_line_width(2)
+
+        ctx.stroke()
 
         # Draw legend.
 
         ctx.save()
 
+        playout.set_font_description(self.labelFont)
+
         graphLegends = self.graphLegends
 
-        legendWidth = self.leftEdgeWidth - (self.legendX + self.legendRightGap)
-        legendHeight = winHeight - (self.legendY + self.bottomEdgeHeight + self.legendBottomGap)
-
-        ctx.translate(
-            self.legendX,
-            self.legendY)
-
-        h = float(legendHeight) / len(graphLegends)
-
         for i in range(0, len(graphLegends)):
+
+            boxX, boxY, boxWidth, boxHeight = self.getLegendBoxRect(i)
 
             ctx.save()
 
             rgb = self.graphColors[i]
 
             ctx.rectangle(
-                1,
-                (i * h) + 1,
-                legendWidth - 2,
-                h - 2)
+                boxX,
+                boxY,
+                boxWidth,
+                boxHeight)
 
             ctx.set_source_rgb(
                 *rgb)
 
+            ctx.clip_preserve()
             ctx.fill_preserve()
 
+            if hiliteTarget == ('legend', i):
+                rgb = (0.0, 0.0, 1.0)
+                lineWidth = 10
+                ctx.set_line_width(
+                    lineWidth)
+                ctx.set_source_rgb(
+                    *rgb)
+                ctx.stroke_preserve()
+
             if i in historyTypes:
-                rgb = (0, 0, 0)
-                lineWidth = 6
+                rgb = (1.0, 1.0, 1.0)
             else:
-                rgb = (0.5, 0.5, 0.5)
-                lineWidth = 6
-                
+                rgb = (0.0, 0.0, 0.0)
+
+            lineWidth = 4
             ctx.set_line_width(
                 lineWidth)
 
             ctx.set_source_rgb(
                 *rgb)
 
-            ctx.clip_preserve()
-
             ctx.stroke()
 
+            label = graphLegends[i]
+            playout.set_text(label)
+            labelWidth, labelHeight = playout.get_pixel_size()
+
+            xx = boxX + (boxWidth / 2) - (labelWidth / 2)
+            yy = boxY + (boxHeight / 2) - (labelHeight / 2)
+
+            yy += 1 # Fudge the position.
+
+            self.drawShadowText(label, xx, yy, ctx, playout)
+
             ctx.restore()
+
+        ctx.restore()
+
+        # Draw title.
+
+        ctx.save()
+
+        playout.set_font_description(self.titleFont)
+
+        titleX, titleY, titleWidth, titleHeight = self.getTitleRect()
+
+        ctx.set_source_rgb(
+            0.0, 0.0, 0.0)
+
+        title = self.title
+        title += ': ' + engine.getCityDate()
+
+        playout.set_text(title)
+        labelWidth, labelHeight = playout.get_pixel_size()
+
+        xx = titleX + (titleWidth / 2) - (labelWidth / 2)
+        yy = titleY + (titleHeight / 2) - (labelHeight / 2)
+
+        yy += 1 # Fudge the position.
+        
+        self.drawShadowText(title, xx, yy, ctx, playout)
 
         ctx.restore()
 
@@ -252,10 +414,9 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         ctx.save()
 
-        scaleX = self.legendX
-        scaleY = winHeight - self.bottomEdgeHeight
-        scaleWidth = legendWidth
-        scaleHeight = winHeight - (scaleY + self.legendBottomGap)
+        playout.set_font_description(self.labelFont)
+
+        scaleX, scaleY, scaleWidth, scaleHeight = self.getScaleRect()
 
         ctx.translate(
             scaleX,
@@ -269,23 +430,45 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         if historyScale == micropolisengine.HISTORY_SCALE_SHORT:
             rgb = (0.5, 1, 0.5)
+            label = '10 Years'
         elif historyScale == micropolisengine.HISTORY_SCALE_LONG:
             rgb = (0.5, 0.5, 1)
+            label = '120 Years'
         else:
             print "Invalid historyScale:", historyScale
             rgb = (1, 0, 0)
+            label = '???'
 
         ctx.set_source_rgb(
             *rgb)
 
+        ctx.clip_preserve()
         ctx.fill_preserve()
 
+        if hiliteTarget == ('scale', 0):
+            lineWidth = 10
+            ctx.set_line_width(lineWidth)
+            ctx.set_source_rgb(
+                0.0, 0.0, 1.0)
+
+            ctx.stroke_preserve()
+
+        lineWidth = 4
+        ctx.set_line_width(lineWidth)
         ctx.set_source_rgb(
             *self.strokeColor)
 
-        ctx.set_line_width(2)
-
         ctx.stroke()
+
+        playout.set_text(label)
+        labelWidth, labelHeight = playout.get_pixel_size()
+
+        xx = 0 + (scaleWidth / 2) - (labelWidth / 2)
+        yy = 0 + (scaleHeight / 2) - (labelHeight / 2)
+
+        yy += 1 # Fudge the position.
+        
+        self.drawShadowText(label, xx, yy, ctx, playout)
 
         ctx.restore()
 
@@ -297,24 +480,69 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             histX,
             histY)
 
+        # Scale the residential, commercial and industrial histories
+        # together relative to the max of all three.  Up to 128 they
+        # are not scaled. Starting at 128 they are scaled down so the
+        # maximum is always at the top of the graph.
+
+        def calcScale(maxVal):
+            if maxVal < 128:
+                maxVal = 0
+            if maxVal > 0:
+                return 128.0 / float(maxVal)
+            else:
+                return 1.0
+
+        resHistoryMin, resHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_RES,
+            historyScale)
+        comHistoryMin, comHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_COM,
+            historyScale)
+        indHistoryMin, indHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_IND,
+            historyScale)
+        allMax = max(resHistoryMax, 
+                     max(comHistoryMax,
+                         indHistoryMax))
+        rciScale = calcScale(allMax)
+
+        # Scale the money, crime and pollution histories 
+        # independently of each other.
+
+        moneyHistoryMin, moneyHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_MONEY,
+            historyScale)
+        crimeHistoryMin, crimeHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_CRIME,
+            historyScale)
+        pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
+            micropolisengine.HISTORY_TYPE_POLLUTION,
+            historyScale)
+
+        moneyScale = calcScale(moneyHistoryMax)
+        crimeScale = calcScale(crimeHistoryMax)
+        pollutionScale = calcScale(pollutionHistoryMax)
+
+        historyRange = 128.0
+        historyScales = (
+            rciScale, rciScale, rciScale, # res, com, ind
+            moneyScale, crimeScale, pollutionScale, # money, crime, pollution
+        )
+
         for historyType in historyTypes:
 
-            historyMin, historyMax = getHistoryRange(
-                historyType,
-                historyScale)
+            scaleValue = historyScales[historyType]
 
-            historyRange = historyMax - historyMin
-            if historyRange == 0:
-                historyRange = 1
-
+            first = True
             for historyIndex in range(historyCount - 1, -1, -1):
 
-                val = getHistory(
+                rawVal = getHistory(
                     historyType,
                     historyScale,
                     historyIndex)
 
-                val -= historyMin
+                val = rawVal * scaleValue
 
                 x = (
                     histWidth -
@@ -322,32 +550,31 @@ class MicropolisGraphView(micropolisview.MicropolisView):
                 #print historyIndex, x, histWidth
 
                 y = (
+                    histHeight -
                     (float(val) * (float(histHeight) / float(historyRange))))
 
-                if historyIndex == 0:
+                if first:
+                    #print "rawVal", rawVal, "scale", scale, "val", val, "y", y
                     ctx.move_to(x, y)
+                    first = False
                 else:
                     ctx.line_to(x, y)
 
             ctx.line_to(x + self.rightEdgeWidth, y)
 
+            if (hiliteTarget and
+                (hiliteTarget[0] == 'legend') and
+                (hiliteTarget[1] == historyType)):
+                lineWidth = 8
+            else:
+                lineWidth = 2
+
+            ctx.set_line_width(lineWidth)
+
             ctx.set_source_rgb(
                 *self.graphColors[historyType])
 
             ctx.stroke()
-
-        ctx.rectangle(
-            0,
-            0,
-            histWidth,
-            histHeight)
-
-        ctx.set_source_rgb(
-            *self.strokeColor)
-
-        ctx.set_line_width(2)
-
-        ctx.stroke()
 
         ctx.restore()
 
@@ -369,22 +596,32 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         sx = float(histWidth) / 120.0
 
+        cityTime = engine.cityTime
+        year = (cityTime / 48) + engine.startingYear
+        month = (cityTime / 4) % 12
+
         if historyScale == micropolisengine.HISTORY_SCALE_SHORT:
 
-            r = range(120 - cityMonth, -1, -12)
+            dur = 120
+            r = range(dur - cityMonth, -1, -dur / 10)
 
         elif historyScale == micropolisengine.HISTORY_SCALE_LONG:
 
             sx /= 10
-            past = 10 * (cityYear % 10)
-            year = int(cityYear / 10)
-
-            r = range(1200 - past, -1, -120)
+            past = 10 * (year % 10)
+            year = int(year / 10) * 10
+            dur = 1200
+            r = range(dur - past, -1, -dur / 10)
 
         else:
 
             print "Invalid historyScale:", historyScale
+            dur = 120
             r = ()
+
+        y = histHeight + self.bottomEdgeHeight
+
+        playout.set_font_description(self.labelFont)
 
         for i in r:
 
@@ -394,11 +631,87 @@ class MicropolisGraphView(micropolisview.MicropolisView):
                 x, 0)
 
             ctx.line_to(
-                x, histHeight + self.bottomEdgeHeight)
+                x, y)
 
             ctx.stroke()
 
+            if historyScale == micropolisengine.HISTORY_SCALE_SHORT:
+
+                label = str(year)
+                year -= 1
+
+            elif historyScale == micropolisengine.HISTORY_SCALE_LONG:
+
+                label = str(year)
+                year -= 10
+
+            playout.set_text(label)
+            labelWidth, labelHeight = playout.get_pixel_size()
+
+            xx = x + 4
+            yy = histHeight + (self.bottomEdgeHeight / 2) - (labelHeight / 2)
+
+            yy += 1 # Fudge the position.
+
+            self.drawShadowText(label, xx, yy, ctx, playout)
+
         ctx.restore()
     
+
+    def handleMouseDrag(
+        self,
+        event):
+        target = self.findTarget(event.x, event.y)
+        if target != self.hiliteTarget:
+            self.hiliteTarget = target
+            self.queue_draw()
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        target = self.findTarget(event.x, event.y)
+        if target != self.hiliteTarget:
+            self.hiliteTarget = target
+            self.queue_draw()
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        print "handleMouseRelease", self, event, event.x, event.y
+
+        if not self.clickable:
+            return
+
+        self.handleMouseDrag(event)
+
+        self.down = False
+
+        if self.hiliteTarget:
+            targetType, targetIndex = self.hiliteTarget
+            if  targetType == 'scale':
+
+                if self.historyScale == micropolisengine.HISTORY_SCALE_SHORT:
+                    self.historyScale = micropolisengine.HISTORY_SCALE_LONG
+                elif self.historyScale == micropolisengine.HISTORY_SCALE_LONG:
+                    self.historyScale = micropolisengine.HISTORY_SCALE_SHORT
+                else:
+                    print "Invalid history scale", self.historyScale
+
+            elif targetType == 'legend':
+
+                historyTypes = self.historyTypes
+                if targetIndex in historyTypes:
+                    historyTypes.remove(targetIndex)
+                else:
+                    historyTypes.append(targetIndex)
+
+            elif targetType == 'history':
+                pass
+
 
 ########################################################################

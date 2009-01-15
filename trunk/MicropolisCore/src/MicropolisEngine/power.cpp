@@ -134,7 +134,6 @@ bool Micropolis::moveMapSim(Direction mDir)
  * direction \a tfDir for a conducting tile that has no power.
  * @param tfDir Direction to investigate.
  * @return Unpowered tile has been found in the indicated direction.
- * @bug Returning \c true for \c powerWord>PWRMAPSIZE looks wrong.
  */
 bool Micropolis::testForConductive(Direction tfDir)
 {
@@ -146,9 +145,7 @@ bool Micropolis::testForConductive(Direction tfDir)
     if (moveMapSim(tfDir)) {
         if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
                             && curTile != NUCLEAR && curTile != POWERPLANT) {
-            int powerWord = POWERWORD(curMapX, curMapY);
-            if (powerWord > PWRMAPSIZE
-                    || (powerMap[powerWord] & (1 << (curMapX & 15))) == 0) {
+            if (!getPowerBit(curMapX, curMapY)) {
                 curMapX = xsave;
                 curMapY = ysave;
                 return true;
@@ -173,8 +170,9 @@ void Micropolis::doPowerScan()
     short ADir;
     int ConNum, Dir;
 
-    for (int x = 0; x < PWRMAPSIZE; x++) {
-        powerMap[x] = 0;    /* ClearPowerMem */
+    // Clear power map.
+    for (int x = 0; x < POWER_MAP_SIZE; x++) {
+        powerMap[x] = 0;
     }
 
     maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
@@ -191,7 +189,7 @@ void Micropolis::doPowerScan()
             if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
                 moveMapSim((Direction)ADir);
             }
-            SETPOWERBIT(curMapX, curMapY);
+            setPowerBit(curMapX, curMapY);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
@@ -215,7 +213,7 @@ void Micropolis::doPowerScan()
  */
 void Micropolis::pushPowerStack()
 {
-    if (powerStackPointer < (PWRSTKSIZE - 2)) {
+    if (powerStackPointer < (POWER_STACK_SIZE - 2)) {
         powerStackPointer++;
         powerStackX[powerStackPointer] = curMapX;
         powerStackY[powerStackPointer] = curMapY;

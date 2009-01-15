@@ -110,9 +110,12 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     // Load the file into memory
 
     /// @bug Not safe (overflow, non-printable chars)
-    sprintf(fname, "%s/%c%c%c%c.%d", resourceDir.c_str(),
-                        r->name[0], r->name[1], r->name[2], r->name[3],
-                        (int)r->id);
+    sprintf(
+        fname,
+	"%s/%c%c%c%c.%d",
+	resourceDir.c_str(),
+	r->name[0], r->name[1], r->name[2], r->name[3],
+	(int)r->id);
 
     struct stat st;
     FILE *fp = NULL;
@@ -120,6 +123,7 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     if (stat(fname, &st) < 0) {  // File cannot be found/loaded
         goto loadFailed;
     }
+
     if (st.st_size == 0) { // File is empty
         goto loadFailed;
     }
@@ -151,8 +155,6 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     resources = r;
 
     return r;
-
-
 
 loadFailed:
     // Load failed, print an error and quit

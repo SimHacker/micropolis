@@ -113,14 +113,14 @@ void Micropolis::initMapArrays()
         tempMap3[i] = (Byte *)tempMap3Base + (i * WORLD_H_4);
     }
 
-    resHist = (short *)newPtr(HISTLEN);
-    comHist = (short *)newPtr(HISTLEN);
-    indHist = (short *)newPtr(HISTLEN);
-    moneyHist = (short *)newPtr(HISTLEN);
-    pollutionHist = (short *)newPtr(HISTLEN);
-    crimeHist = (short *)newPtr(HISTLEN);
-    miscHist = (short *)newPtr(MISCHISTLEN);
-    powerMap = (short *)newPtr(POWERMAPLEN); // Power alloc.
+    resHist = (short *)newPtr(HISTORY_LENGTH);
+    comHist = (short *)newPtr(HISTORY_LENGTH);
+    indHist = (short *)newPtr(HISTORY_LENGTH);
+    moneyHist = (short *)newPtr(HISTORY_LENGTH);
+    pollutionHist = (short *)newPtr(HISTORY_LENGTH);
+    crimeHist = (short *)newPtr(HISTORY_LENGTH);
+    miscHist = (short *)newPtr(MISC_HISTORY_LENGTH);
+    powerMap = (short *)newPtr(POWER_MAP_LENGTH);
 }
 
 
@@ -230,144 +230,6 @@ void Micropolis::destroyMapArrays()
         powerMap = NULL;
     }
 
-    for (int i = 0; i < HISTORIES; i++) {
-        if (history10[i] != NULL) {
-            free(history10[i]);
-        }
-        if (history120[i] != NULL) {
-            free(history120[i]);
-        }
-    }
-}
-
-
-/**
- * Get the minimal and maximal values of a historic graph.
- * @param historyType  Type of history information. @see HistoryType
- * @param historyScale Scale of history data. @see HistoryScale
- * @param minValResult Pointer to variable to write minimal value to.
- * @param maxValResult Pointer to variable to write maximal value to.
- */
-void Micropolis::getHistoryRange(int historyType, int historyScale,
-                                 short *minValResult, short *maxValResult)
-{
-    if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
-            || historyScale < 0 || historyScale >= HISTORY_SCALE_COUNT) {
-        *minValResult = 0;
-        *maxValResult = 0;
-        return;
-    }
-
-    short *history = NULL;
-    switch (historyType) {
-        case HISTORY_TYPE_RES:
-            history = resHist;
-            break;
-        case HISTORY_TYPE_COM:
-            history = comHist;
-            break;
-        case HISTORY_TYPE_IND:
-            history = indHist;
-            break;
-        case HISTORY_TYPE_MONEY:
-            history = moneyHist;
-            break;
-        case HISTORY_TYPE_CRIME:
-            history = crimeHist;
-            break;
-        case HISTORY_TYPE_POLLUTION:
-            history = pollutionHist;
-            break;
-        default:
-            NOT_REACHED();
-            break;
-    }
-
-    int offset = 0;
-    switch (historyScale) {
-        case HISTORY_SCALE_SHORT:
-            offset = 0;
-            break;
-        case HISTORY_SCALE_LONG:
-            offset = 120;
-            break;
-        default:
-            NOT_REACHED();
-            break;
-    }
-
-    short minVal = 32000;
-    short maxVal = -32000;
-
-    for (int i = 0; i < HISTORY_COUNT; i++) {
-        short val = history[i + offset];
-
-        minVal = min(val, minVal);
-        maxVal = max(val, maxVal);
-    }
-
-    *minValResult = minVal;
-    *maxValResult = maxVal;
-}
-
-
-/**
- * Get a value from the history tables.
- * @param historyType  Type of history information. @see HistoryType
- * @param historyScale Scale of history data. @see HistoryScale
- * @param historyIndex Index in the data to obtain
- * @return Historic data value of the requested graph
- */
-short Micropolis::getHistory(int historyType, int historyScale,
-                             int historyIndex)
-{
-    if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
-            || historyScale < 0 || historyScale >= HISTORY_SCALE_COUNT
-            || historyIndex < 0 || historyIndex >= HISTORY_COUNT) {
-        return 0;
-    }
-
-    short *history = NULL;
-    switch (historyType) {
-        case HISTORY_TYPE_RES:
-            history = resHist;
-            break;
-        case HISTORY_TYPE_COM:
-            history = comHist;
-            break;
-        case HISTORY_TYPE_IND:
-            history = indHist;
-            break;
-        case HISTORY_TYPE_MONEY:
-            history = moneyHist;
-            break;
-        case HISTORY_TYPE_CRIME:
-            history = crimeHist;
-            break;
-        case HISTORY_TYPE_POLLUTION:
-            history = pollutionHist;
-            break;
-        default:
-            NOT_REACHED();
-            break;
-    }
-
-    int offset = 0;
-    switch (historyScale) {
-        case HISTORY_SCALE_SHORT:
-            offset = 0;
-            break;
-        case HISTORY_SCALE_LONG:
-            offset = 120;
-            break;
-        default:
-            NOT_REACHED();
-            break;
-    }
-
-    short result = history[historyIndex + offset];
-
-    return result;
 }
 
 

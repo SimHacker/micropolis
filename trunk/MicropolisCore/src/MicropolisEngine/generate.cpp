@@ -285,7 +285,7 @@ void Micropolis::treeSplash(short xloc, short yloc)
         dir = getRandom(7);
         moveMap(dir);
 
-        if (!(TestBounds(terrainMapX, terrainMapY))) {
+        if (!(testBounds(terrainMapX, terrainMapY))) {
             return;
         }
 
@@ -341,7 +341,7 @@ void Micropolis::smoothRiver()
                     bitindex = bitindex << 1;
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
-                    if (TestBounds(Xtem, Ytem) &&
+                    if (testBounds(Xtem, Ytem) &&
                         ((map[Xtem][Ytem] & LOMASK) != DIRT) &&
                         (((map[Xtem][Ytem]&LOMASK) < WOODS_LOW) ||
                          ((map[Xtem][Ytem]&LOMASK) > WOODS_HIGH))) {
@@ -395,7 +395,7 @@ void Micropolis::smoothTrees()
                     bitindex = bitindex << 1;
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
-                    if (TestBounds(Xtem, Ytem) &&
+                    if (testBounds(Xtem, Ytem) &&
                         isTree(map[Xtem][Ytem])) {
                         bitindex++;
                     }
@@ -446,7 +446,7 @@ void Micropolis::doBRiver()
         r2 = terrainCurveLevel + 100;
     }
 
-    while (TestBounds (terrainMapX + 4, terrainMapY + 4)) {
+    while (testBounds (terrainMapX + 4, terrainMapY + 4)) {
         plopBRiver();
         if (getRandom(r1) < 10) {
             terrainDir = terrainDirLast;
@@ -475,7 +475,7 @@ void Micropolis::doSRiver()
         r2 = terrainCurveLevel + 100;
     }
 
-    while (TestBounds (terrainMapX + 3, terrainMapY + 3)) {
+    while (testBounds (terrainMapX + 3, terrainMapY + 3)) {
         plopSRiver();
         if (getRandom(r1) < 10) {
             terrainDir = terrainDirLast;
@@ -503,7 +503,7 @@ void Micropolis::putOnMap(short Mchar, short Xoff, short Yoff)
     Xloc = terrainMapX + Xoff;
     Yloc = terrainMapY + Yoff;
 
-    if (!TestBounds(Xloc, Yloc)) {
+    if (!testBounds(Xloc, Yloc)) {
         return;
     }
 

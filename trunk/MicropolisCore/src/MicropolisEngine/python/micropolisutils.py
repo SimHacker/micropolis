@@ -113,7 +113,7 @@ class NiceMicropolis(micropolisengine.Micropolis):
         return (
             self.getMonthName(self.cityMonth) +
             ' ' +
-            str(self.CityYear))
+            str(self.cityYear))
 
 
 ########################################################################
