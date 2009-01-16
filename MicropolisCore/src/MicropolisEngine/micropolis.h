@@ -2895,15 +2895,7 @@ public:
 	return (Direction)((d + 2) & 0x3);
     };
 
-    inline short neutralizeRoad(short tile)
-    {
-	tile &= LOMASK;
-	if ((tile >= 64) &&
-	    (tile <= 207)) {
-	    tile = (tile & 0x000F) + 64;
-	}
-	return tile;
-    }
+    inline short neutralizeRoad(short tile);
 
     short makeTraffic(ZoneType dest);
 
