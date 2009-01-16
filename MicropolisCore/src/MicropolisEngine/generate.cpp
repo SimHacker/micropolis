@@ -60,12 +60,13 @@
  * NOT APPLY TO YOU.
  */
 
-/** @file generate.cpp */
+/** @file generate.cpp Terrain generator functions. */
 
 ////////////////////////////////////////////////////////////////////////
 
 
 #include "stdafx.h"
+#include "generate.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -149,6 +150,7 @@ void Micropolis::clearMap()
 }
 
 
+/** Clear everything from all land */
 void Micropolis::clearUnnatural()
 {
     short x, y;
@@ -162,9 +164,12 @@ void Micropolis::clearUnnatural()
     }
 }
 
-
+/**
+ * Construct a plain island as world, surrounded by 5 tiles of river.
+ */
 void Micropolis::makeNakedIsland()
 {
+    const int terrainIslandRadius = ISLAND_RADIUS;
     int x, y;
 
     for (x = 0; x < WORLD_W; x++) {

@@ -489,9 +489,6 @@ void Micropolis::init()
     // int CreateIsland; /* -1 => 10%, 0 => never, 1 => always */
     terrainCreateIsland = -1;
 
-    // int IslandRadius;
-    terrainIslandRadius = ISLAND_RADIUS;
-
 
     ////////////////////////////////////////////////////////////////////////
     // graph.cpp
