@@ -459,12 +459,6 @@ void Micropolis::init()
     // generate.cpp
 
 
-    // short terrainXStart;
-    terrainXStart = 0;
-
-    // short terrainYStart;
-    terrainYStart = 0;
-
     // short terrainMapX;
     terrainMapX = 0;
 

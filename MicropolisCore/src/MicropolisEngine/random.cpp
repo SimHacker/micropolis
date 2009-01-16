@@ -109,6 +109,10 @@ void Micropolis::randomlySeedRandom()
 }
 
 
+/**
+ * Set seed of the random number generator.
+ * @param seed New seed.
+ */
 void Micropolis::seedRandom(int seed)
 {
     nextRandom = seed;
