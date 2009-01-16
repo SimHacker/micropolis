@@ -99,10 +99,15 @@
 void Micropolis::cityEvaluation()
 {
     if (totalPop > 0) {
+        short problemTable[PROBNUM]; // Score for each problem, higher the more severe the problem is.
+        for (int z = 0; z < PROBNUM; z++) {
+            problemTable[z] = 0;
+        }
+
         getAssessedValue();
         doPopNum();
-        doProblems();
-        getScore();
+        doProblems(problemTable);
+        getScore(problemTable);
         doVotes();  // How well is the mayor doing?
         changeEval();
     } else {
@@ -197,11 +202,12 @@ void Micropolis::doPopNum()
 /**
  * Evaluate problems of the city, take votes, and decide which are the most
  * important ones.
+ * @param Storage of how bad each problem is.
  * @post #problemTable contains severity of each problem,
  *       #problemVotes contains votes of each problem,
  *       #problemOrder contains (in decreasing order) the worst problems.
  */
-void Micropolis::doProblems()
+void Micropolis::doProblems(short problemTable[PROBNUM])
 {
     bool problemTaken[PROBNUM]; // Which problems are taken?
 
@@ -217,7 +223,7 @@ void Micropolis::doProblems()
     problemTable[CVP_TRAFFIC]      = getTrafficAverage();         /* Traffic */
     problemTable[CVP_UNEMPLOYMENT] = getUnemployment();           /* Unemployment */
     problemTable[CVP_FIRE]         = getFireSeverity();           /* Fire */
-    voteProblems();
+    voteProblems(problemTable);
 
     for (int z = 0; z < CVP_PROBLEM_COMPLAINTS; z++) {
         // Find biggest problem not taken yet
@@ -247,7 +253,7 @@ void Micropolis::doProblems()
  *
  * @post problemVotes contains the vote counts
  */
-void Micropolis::voteProblems()
+void Micropolis::voteProblems(const short problemTable[PROBNUM])
 {
     for (int z = 0; z < PROBNUM; z++) {
         problemVotes[z] = 0;
@@ -329,7 +335,7 @@ short Micropolis::getFireSeverity()
 /**
  * Compute total score
  */
-void Micropolis::getScore()
+void Micropolis::getScore(const short problemTable[PROBNUM])
 {
     int x, z;
     short cityScoreLast;
