@@ -2273,8 +2273,6 @@ public:
 public:
 
 
-    Quad numPower; ///< Amount of power used.
-
     /** @name Power stack
      * Stack used to find powered tiles by tracking conductive tiles.
      */
