@@ -2007,7 +2007,10 @@ public:
      */
     bool newGraph;
 
-    int historyInitialized;
+    /**
+     * @todo Nobody uses this variable. Can it be removed?
+     */
+    bool historyInitialized;
 
     short graph10Max;
 

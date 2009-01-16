@@ -135,7 +135,7 @@ void Micropolis::graphDoer()
 void Micropolis::initGraphs()
 {
     if (!historyInitialized) {
-        historyInitialized = 1;
+        historyInitialized = true;
     }
 }
 
