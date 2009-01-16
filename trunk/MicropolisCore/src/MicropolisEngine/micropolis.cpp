@@ -684,14 +684,9 @@ void Micropolis::init()
     // short indValve;
     indValve = 0;
 
-    // short resCap;
-    resCap = 0;
-
-    // short comCap;
-    comCap = 0;
-
-    // short indCap;
-    indCap = 0;
+    resCap = false; // Do not block residential growth
+    comCap = false; // Do not block commercial growth
+    indCap = false; // Do not block industrial growth
 
     // short cashFlow;
     cashFlow = 0;
