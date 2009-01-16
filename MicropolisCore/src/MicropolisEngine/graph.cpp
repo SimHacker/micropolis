@@ -103,7 +103,10 @@ void Micropolis::drawMonth(short *hist, unsigned char *s, float scale)
 }
 
 
-/** Set flag that graph data has been changed and graphs should be updated. */
+/**
+ * Set flag that graph data has been changed and graphs should be updated.
+ * @todo Rename function.
+ */
 void Micropolis::changeCensus()
 {
     censusChanged = true;

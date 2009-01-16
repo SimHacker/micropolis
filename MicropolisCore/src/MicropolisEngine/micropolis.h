@@ -275,23 +275,6 @@ static const int POWER_MAP_LENGTH = 1700;
  */
 static const int POWER_STACK_SIZE = (WORLD_W * WORLD_H) / 4;
 
-/* These adjust frequency in simulate() */
-
-/**
- * How often to perform the short term census.
- */
-static const int CENSUS_FREQUENCY_10 = 4;
-
-/**
- * How often to perform the long term census.
- */
-static const int CENSUS_FREQUENCY_120 = CENSUS_FREQUENCY_10 * 12;
-
-/**
- * How often to collect taxes.
- */
-static const int TAX_FREQUENCY = 48;
-
 
 ///////////////////////////////////////////////////
 // Traffic
