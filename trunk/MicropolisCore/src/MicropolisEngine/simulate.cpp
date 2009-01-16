@@ -70,6 +70,27 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+// Constants
+
+/**
+ * How often to perform the short term census.
+ * @todo Rename to CENSUS_MONTHLY_FREQUENCY or so?
+ */
+static const int CENSUS_FREQUENCY_10 = 4;
+
+/**
+ * How often to perform the long term census.
+ * @todo Rename to CENSUS_YEARLY_FREQUENCY or so?
+ */
+static const int CENSUS_FREQUENCY_120 = CENSUS_FREQUENCY_10 * 12;
+
+/**
+ * How often to collect taxes.
+ */
+static const int TAX_FREQUENCY = 48;
+
+
+////////////////////////////////////////////////////////////////////////
 
 
 /* comefrom: doEditWindow scoreDoer doMapInFront graphDoer doNilEvent */
@@ -712,6 +733,9 @@ void Micropolis::clearCensus()
 
 
 /**
+ * Take monthly snaphsot of all relevant data for the historic graphs.
+ * Also update variables that control building new churches and hospitals.
+ * @todo Rename to takeMonthlyCensus (or takeMonthlySnaphshot?).
  * @todo A lot of this max stuff is also done in graph.cpp
  */
 void Micropolis::take10Census()
