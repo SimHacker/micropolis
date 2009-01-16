@@ -1760,23 +1760,17 @@ public:
     short cityYes;
 
     /**
-     * Problem table.
-     *
-     * Score for each problem, higher the more severe the problem is.
-     */
-    short problemTable[PROBNUM];
-
-    /**
      * Problem votes.
      *
      * The number of votes for each problem.
+     * @see CityVotingProblems
      */
     short problemVotes[PROBNUM];
 
     /**
      * Order of taken problems.
      *
-     * Contains index of ProblemTable of taken problems, in decreasing order.
+     * Contains index of MicropolisEngine::problemVotes of taken problems, in decreasing order.
      * @note Value CVP_NUMPROBLEMS means that the entry is not used
      */
     short problemOrder[CVP_PROBLEM_COMPLAINTS];
@@ -1846,11 +1840,11 @@ public:
 
     void doPopNum();
 
-    void doProblems();
+    void doProblems(short problemTable[PROBNUM]);
 
     void getAssessedValue();
 
-    void voteProblems();
+    void voteProblems(const short problemTable[PROBNUM]);
 
     short getTrafficAverage();
 
@@ -1858,7 +1852,7 @@ public:
 
     short getFireSeverity();
 
-    void getScore();
+    void getScore(const short problemTable[PROBNUM]);
 
     void doVotes();
 
