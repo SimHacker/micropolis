@@ -69,6 +69,16 @@
 #include "text.h"
 
 ////////////////////////////////////////////////////////////////////////
+// Constants
+
+/** Number of tiles that a coal power plant can supply power to. */
+static const Quad COAL_POWER_STRENGTH = 700L;
+
+/** Number of tiles that a nuclear power plant can supply power to. */
+static const Quad NUCLEAR_POWER_STRENGTH = 2000L;
+
+
+////////////////////////////////////////////////////////////////////////
 
 
 /**
@@ -164,7 +174,6 @@ bool Micropolis::testForConductive(Direction tfDir)
  * Scan the map for powered tiles, and copy them to the Micropolis::powerMap
  * array.
  * Also warns the user about using too much power ('buy another power plant').
- * @todo Make constants of the power of a coal (700) and nuclear (2000) plant.
  */
 void Micropolis::doPowerScan()
 {
@@ -177,7 +186,9 @@ void Micropolis::doPowerScan()
     }
 
     // Power that the combined coal and nuclear power plants can deliver.
-    Quad maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L;
+    Quad maxPower = coalPowerPop * COAL_POWER_STRENGTH
+                    + nuclearPowerPop * NUCLEAR_POWER_STRENGTH;
+
     Quad numPower = 0; // Amount of power used.
 
     while (powerStackPointer > 0) {
