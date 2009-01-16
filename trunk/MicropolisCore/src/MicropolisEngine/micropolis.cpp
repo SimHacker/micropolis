@@ -600,9 +600,6 @@ void Micropolis::init()
     memset(powerStackX, 0, sizeof(short) * POWER_STACK_SIZE);
     memset(powerStackY, 0, sizeof(short) * POWER_STACK_SIZE);
 
-    // Quad maxPower;
-    maxPower = 0;
-
     // Quad numPower;
     numPower = 0;
 
