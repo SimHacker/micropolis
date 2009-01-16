@@ -406,9 +406,9 @@ void Micropolis::initSimMemory()
     resValve = 0;
     comValve = 0;
     indValve = 0;
-    resCap = 0;
-    comCap = 0;
-    indCap = 0;
+    resCap = false; // Do not block residential growth
+    comCap = false; // Do not block commercial growth
+    indCap = false; // Do not block industrial growth
 
     externalMarket = 6.0;
     disasterEvent = SC_NONE;
@@ -478,9 +478,9 @@ void Micropolis::simLoadInit()
         cityScore = 500;
     }
 
-    resCap = 0;
-    comCap = 0;
-    indCap = 0;
+    resCap = false;
+    comCap = false;
+    indCap = false;
 
     cityTaxAverage = (cityTime % 48) * 7;  /* post */
 
@@ -681,15 +681,15 @@ void Micropolis::setValves()
     comValve = clamp(comValve, comValveMin, comValveMax);
     indValve = clamp(indValve, indValveMin, indValveMax);
 
-    if (resCap && (resValve > 0)) {
+    if (resCap && resValve > 0) {
         resValve = 0; // Need a stadium, so cap resValve.
     }
 
-    if (comCap && (comValve > 0)) {
+    if (comCap && comValve > 0) {
         comValve = 0; // Need a airport, so cap comValve.
     }
 
-    if (indCap && (indValve > 0)) {
+    if (indCap && indValve > 0) {
         indValve = 0; // Need an seaport, so cap indValve.
     }
 

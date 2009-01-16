@@ -2448,11 +2448,9 @@ public:
 
     short indValve;
 
-    short resCap;
-
-    short comCap;
-
-    short indCap;
+    bool resCap; ///< Block residential growth
+    bool comCap; ///< Block commercial growth
+    bool indCap; ///< Block industrial growth
 
     short cashFlow;
 
