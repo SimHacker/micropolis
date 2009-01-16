@@ -2390,9 +2390,14 @@ public:
     short pollutionMaxX; ///< X coordinate of most polluted area
     short pollutionMaxY; ///< Y coordinate of most polluted area
 
-    short crimeMaxX; ///< X coordinate of most criminal area
-    short crimeMaxY; ///< Y coordinate of most criminal area
+    short crimeMaxX; ///< X coordinate of most criminal area. Not used.
+    short crimeMaxY; ///< Y coordinate of most criminal area. Not used.
 
+    /**
+     * Integer with bits 0..2 that control smoothing.
+     * @todo Variable is always \c 0. Can we delete the variable?
+     * @todo Introduce constants for the bits and/or a bool array.
+     */
     Quad donDither;
 
 
