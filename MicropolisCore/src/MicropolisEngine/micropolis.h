@@ -2012,11 +2012,15 @@ public:
      */
     bool historyInitialized;
 
+    /**
+     * @todo Nobody reads this variable. Can it be removed?
+     */
     short graph10Max;
 
+    /**
+     * @todo Nobody reads this variable. Can it be removed?
+     */
     short graph120Max;
-
-    int graphUpdateTime;
 
 
     void drawMonth(short *hist, unsigned char *s, float scale);

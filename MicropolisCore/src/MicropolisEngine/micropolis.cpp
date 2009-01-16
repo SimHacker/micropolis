@@ -493,9 +493,6 @@ void Micropolis::init()
     graph10Max = 0;
     graph120Max = 0;
 
-    // int GraphUpdateTime;
-    graphUpdateTime = 100;
-
 
     ////////////////////////////////////////////////////////////////////////
     // initialize.cpp
