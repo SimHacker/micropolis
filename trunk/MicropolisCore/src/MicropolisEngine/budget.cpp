@@ -308,7 +308,7 @@ noMoney:
         } else {
 
             autoBudget = false; /* force autobudget */
-            mustUpdateOptions = 1;
+            mustUpdateOptions = true;
             clearMessage();
             sendMessage(STR301_NO_MONEY);
             goto noMoney;

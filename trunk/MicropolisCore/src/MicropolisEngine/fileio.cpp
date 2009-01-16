@@ -223,7 +223,7 @@ bool Micropolis::loadFile(const char *filename)
     cityTax = miscHist[56];
     simSpeed = miscHist[57];
     changeCensus();
-    mustUpdateOptions = 1;
+    mustUpdateOptions = true;
 
     /* yayaya */
 

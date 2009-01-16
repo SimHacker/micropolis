@@ -825,6 +825,9 @@ void Micropolis::doCopterSprite(
  * Move airplane sprite.
  * @param sprite Airplane sprite.
  * @todo Remove local magic constants and document the code.
+ * @todo absDist gets updated by Micropolis::getDir(), which is not always
+ *       called before reading it (or worse, we just turned towards the old
+ *       destination).
  */
 void Micropolis::doAirplaneSprite(
   SimSprite *sprite)
