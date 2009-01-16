@@ -129,11 +129,13 @@
 
 /**
  * The number of bits per tile.
+ * @todo Only used in python/micropolisdrawingarea.py
  */
 static const int BITS_PER_TILE = 16;
 
 /**
  * The number of bytes per tile.
+ * @todo Only used in python/micropolisdrawingarea.py
  */
 static const int BYTES_PER_TILE = 2;
 
@@ -193,31 +195,43 @@ static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 
 /**
  * The size of the editor view tiles, in pixels.
+ * @todo Not used at all (except in #EDITOR_W and #EDITOR_H below), it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int EDITOR_TILE_SIZE = 16;
 
 /**
- * The width of the city editor view, in pixels. 
+ * The width of the city editor view, in pixels.
+ * @todo Not used at all, it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int EDITOR_W = WORLD_W * EDITOR_TILE_SIZE;
 
 /**
  * The height of the city editor view, in pixels. 
+ * @todo Not used at all, it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int EDITOR_H = WORLD_H * EDITOR_TILE_SIZE;
 
 /**
  * The size of the map view tiles, in pixels.
+ * @todo Not used at all (except in #MAP_W and #MAP_H below), it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int MAP_TILE_SIZE = 3;
 
 /**
  * The width of the city map view, in pixels.
+ * @todo Not used at all, it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int MAP_W = WORLD_W * MAP_TILE_SIZE;
 
 /**
  * The height of the city map view, in pixels.
+ * @todo Not used at all, it seems.
+ *       Either remove this, or move it to the (generic) frontend.
  */
 static const int MAP_H = WORLD_H * MAP_TILE_SIZE;
 
@@ -255,7 +269,9 @@ static const int POWER_MAP_SIZE = POWER_MAP_ROW * WORLD_H;
 /**
  * The length in bytes of the power map memory.
  *
- * @todo: Why is it this size? 1600 + 100 slop?
+ * @todo Why is it this size? 1600 + 100 slop?
+ * @todo Compute its value from other constants
+ *       (probably  ::POWER_MAP_ROW * ::WORLD_H).
  */
 static const int POWER_MAP_LENGTH = 1700;
 
