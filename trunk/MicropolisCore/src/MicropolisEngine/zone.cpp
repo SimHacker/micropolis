@@ -282,10 +282,11 @@ bool Micropolis::zonePlop(int base)
     }
 
     curNum = map[curMapX][curMapY];
-    /// @bug: Should set #curTile to (#curNum & #LOMASK), since it is used by
-    ///       #setZonePower to distinguish nuclear and coal power plants.
-    ///       Better yet, pass all parameters into #setZonePower and rewrite
-    ///       it not to use globals.
+    /// @bug: Should set Micropolis::curTile to (Micropolis::curNum & ::LOMASK),
+    ///       since it is used by Micropolis::setZonePower to distinguish
+    ///       nuclear and coal power plants.
+    ///       Better yet, pass all parameters into Micropolis::setZonePower and
+    ///       rewrite it not to use globals.
     setZonePower();
     map[curMapX][curMapY] |= ZONEBIT + BULLBIT;
 
@@ -318,8 +319,8 @@ short Micropolis::doFreePop()
 
 
 /**
- * Set #PWRBIT in the #Map at #curMapX and #curMapY based on the corresponding bit
- * in the #powerMap.
+ * Set #PWRBIT in the map at #curMapX and #curMapY based on the corresponding
+ * bit in the #powerMap.
  * @return Does the tile have power?
  */
 bool Micropolis::setZonePower()
