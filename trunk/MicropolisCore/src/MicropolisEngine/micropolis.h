@@ -2013,12 +2013,12 @@ public:
     bool historyInitialized;
 
     /**
-     * @todo Nobody reads this variable. Can it be removed?
+     * @todo Write-only variable. Can it be removed?
      */
     short graph10Max;
 
     /**
-     * @todo Nobody reads this variable. Can it be removed?
+     * @todo Write-only variable. Can it be removed?
      */
     short graph120Max;
 
@@ -2085,18 +2085,33 @@ public:
 
     int heatSteps;
 
+    /**
+     * @todo Always -7, should this variable be moved or removed?
+     */
     int heatFlow;
 
     int heatRule;
 
+    /**
+     * @todo Always 3, should this variable be moved or removed?
+     */
     int heatWrap;
 
     std::string cityFileName; ///< Filename of the last loaded city
+
+    /**
+     * Name of the city.
+     * @todo Write-only variable, should it be removed?
+     */
     std::string cityName;     ///< Name of the city
 
     int tilesAnimated; ///< @todo Not currently used, should hook it up.
 
-    int doAnimation;
+    /**
+     * Enable animation.
+     * @todo Currently always \c true. Should connect it to a frontend option.
+     */
+    bool doAnimation;
 
     int doMessages; ///< @todo Not currently used, should hook it up.
 
