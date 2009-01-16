@@ -2436,7 +2436,7 @@ public:
 public:
 
 
-    short valveFlag;
+    bool valveFlag;
 
     short crimeRamp;
 

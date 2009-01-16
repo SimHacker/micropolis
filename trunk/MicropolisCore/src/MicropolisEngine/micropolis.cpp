@@ -667,8 +667,7 @@ void Micropolis::init()
     // simulate.cpp
 
 
-    // short valveFlag;
-    valveFlag = 0;
+    valveFlag = false;
 
     // short crimeRamp;
     crimeRamp = 0;

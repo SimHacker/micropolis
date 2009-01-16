@@ -693,7 +693,7 @@ void Micropolis::setValves()
         indValve = 0; // Need an seaport, so cap indValve.
     }
 
-    valveFlag = 1;
+    valveFlag = true;
 }
 
 

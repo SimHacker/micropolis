@@ -108,7 +108,8 @@ void Micropolis::updateEvaluation()
 
 void Micropolis::updateHeads()
 {
-    mustUpdateFunds = valveFlag = 1;
+    mustUpdateFunds = 1;
+    valveFlag = true;
     cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast = 
       resLast = comLast = indLast = -999999;
     doUpdateHeads();
@@ -185,7 +186,7 @@ void Micropolis::showValves()
 {
     if (valveFlag) {
         drawValve();
-        valveFlag = 0;
+        valveFlag = false;
     }
 }
 

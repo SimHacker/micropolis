@@ -95,7 +95,7 @@ void Micropolis::initWillStuff()
     roadFund = 0;
     policeFund = 0;
     fireFund = 0;
-    valveFlag = 1;
+    valveFlag = true;
     disasterEvent = SC_NONE;
     taxFlag = false;
 
