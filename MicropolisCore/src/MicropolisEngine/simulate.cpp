@@ -219,7 +219,7 @@ void Micropolis::simulate(int phase)
             if ((simCycle % SpdPwr[x]) == 0) {
                 doPowerScan();
                 newMapFlags[MAP_TYPE_POWER] = 1;
-                newPower = 1; /* post-release change */
+                newPower = true; /* post-release change */
             }
 
             break;
@@ -282,7 +282,7 @@ void Micropolis::doSimInit()
     clearCensus();
     mapScan(0, WORLD_W);
     doPowerScan();
-    newPower = 1;         /* post rel */
+    newPower = true;         /* post rel */
     pollutionTerrainLandValueScan();
     crimeScan();
     populationDensityScan();
@@ -417,7 +417,7 @@ void Micropolis::initSimMemory()
     /* This clears powermem */
     powerStackPointer = 0;
     doPowerScan();
-    newPower = 1; /* post rel */
+    newPower = true; /* post rel */
 
     initSimLoad = 0;
 }
