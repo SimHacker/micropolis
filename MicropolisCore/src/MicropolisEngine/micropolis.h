@@ -1976,8 +1976,6 @@ public:
 
     void makeLakes();
 
-    void getRandStart();
-
     void moveMap(short dir);
 
     void treeSplash(short xloc, short yloc);

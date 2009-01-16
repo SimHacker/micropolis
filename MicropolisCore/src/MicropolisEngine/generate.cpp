@@ -119,7 +119,12 @@ void Micropolis::generateMap(int r)
         clearMap();
     }
 
-    getRandStart();
+    terrainXStart = 40 + getRandom(WORLD_W - 80);
+    terrainYStart = 33 + getRandom(WORLD_H - 67);
+
+    terrainMapX = terrainXStart;
+    terrainMapY = terrainYStart;
+
 
     if (terrainCurveLevel != 0) {
         doRivers();
@@ -246,16 +251,6 @@ void Micropolis::makeLakes()
             }
         }
     }
-}
-
-
-void Micropolis::getRandStart()
-{
-    terrainXStart = 40 + getRandom(WORLD_W - 80);
-    terrainYStart = 33 + getRandom(WORLD_H - 67);
-
-    terrainMapX = terrainXStart;
-    terrainMapY = terrainYStart;
 }
 
 
