@@ -84,7 +84,6 @@ short Micropolis::makeTraffic(ZoneType dest)
 
     xtem = curMapX; // Temporarily save curMapX
     ytem = curMapY; // Temporarily save curMapY
-    zoneSource = dest;
     curMapStackPointer = 0; // Clear position stack
 
 #if 0
@@ -96,7 +95,7 @@ short Micropolis::makeTraffic(ZoneType dest)
 
     if (findPerimeterRoad()) {            /* look for road on zone perimeter */
 
-        if (tryDrive()) {         /* attempt to drive somewhere */
+        if (tryDrive(dest)) {     /* attempt to drive somewhere */
             setTrafficMap();      /* if sucessful, inc trafdensity */
             curMapX = xtem;
             curMapY = ytem;
@@ -241,12 +240,13 @@ bool Micropolis::findPerimeterTelecom()
 
 /**
  * Try to drive to a destination.
+ * @param destZone Zonetype to drive to.
  * @return Was drive succesful?
  * @post Position stack (curMapStackX, curMapStackY, curMapStackPointer)
  *       is filled with some intermediate positions of the drive
  * @todo Find out why the stack is popped, but curMapX and curMapY are not updated
  */
-bool Micropolis::tryDrive()
+bool Micropolis::tryDrive(ZoneType destZone)
 {
     short dist;
 
@@ -255,7 +255,7 @@ bool Micropolis::tryDrive()
 
         if (tryGo(dist)) { /* if it got a road */
 
-            if (driveDone()) { /* if destination is reached */
+            if (driveDone(destZone)) { /* if destination is reached */
                 return true; /* pass */
             }
 
@@ -359,10 +359,10 @@ short Micropolis::getFromMap(Direction d)
 
 /**
  * Has the journey arrived at its destination?
- * @return Indication that destination has been reached
- * @pre zoneSource contains the zone type to drive to
+ * @param destZone Zonetype to drive to.
+ * @return Indication that destination has been reached.
  */
-bool Micropolis::driveDone()
+bool Micropolis::driveDone(ZoneType destZone)
 {
     /* commercial, industrial, residential destinations */
     static const short TARGL[3] = {COMBASE, LHTHR, LHTHR};
@@ -371,8 +371,8 @@ bool Micropolis::driveDone()
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGL));
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGH));
 
-    short l = TARGL[zoneSource]; // Lowest acceptable tile value
-    short h = TARGH[zoneSource]; // Highest acceptable tile value
+    short l = TARGL[destZone]; // Lowest acceptable tile value
+    short h = TARGH[destZone]; // Highest acceptable tile value
 
     if (curMapY > 0) {
         short z = map[curMapX][curMapY - 1] & LOMASK;

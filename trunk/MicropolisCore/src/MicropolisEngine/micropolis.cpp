@@ -827,8 +827,6 @@ void Micropolis::init()
 
     dirLast = DIR_INVALID;
 
-    zoneSource = ZT_COMMERCIAL;
-
     // short trafMaxX;
     trafMaxX = 0;
 
