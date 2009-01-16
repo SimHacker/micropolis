@@ -218,8 +218,8 @@ void Micropolis::makeMeltdown()
 /** Let a fire bomb explode at a random location */
 void Micropolis::fireBomb()
 {
-    crashX = getRandom(WORLD_W - 1);
-    crashY = getRandom(WORLD_H - 1);
+    int crashX = getRandom(WORLD_W - 1);
+    int crashY = getRandom(WORLD_H - 1);
     makeExplosion(crashX, crashY);
     clearMessage();
     sendMessageAt(-STR301_FIREBOMBING, crashX, crashY);
@@ -267,8 +267,6 @@ void Micropolis::setFire()
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
             map[x][y] = randomFire();
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_FIRE_REPORTED, x, y);
         }
     }
