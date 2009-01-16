@@ -536,8 +536,7 @@ void Micropolis::init()
     // int tilesAnimated;
     tilesAnimated = 0;
 
-    // int doAnimation;
-    doAnimation = 1;
+    doAnimation = true; // Enable animation
 
     // int doMessages;
     doMessages = 1;

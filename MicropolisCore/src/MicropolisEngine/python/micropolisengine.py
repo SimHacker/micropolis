@@ -384,14 +384,10 @@ MAP_H = cvar.MAP_H
 HISTORY_LENGTH = cvar.HISTORY_LENGTH
 MISC_HISTORY_LENGTH = cvar.MISC_HISTORY_LENGTH
 HISTORY_COUNT = cvar.HISTORY_COUNT
-ISLAND_RADIUS = cvar.ISLAND_RADIUS
 POWER_MAP_ROW = cvar.POWER_MAP_ROW
 POWER_MAP_SIZE = cvar.POWER_MAP_SIZE
 POWER_MAP_LENGTH = cvar.POWER_MAP_LENGTH
 POWER_STACK_SIZE = cvar.POWER_STACK_SIZE
-CENSUS_FREQUENCY_10 = cvar.CENSUS_FREQUENCY_10
-CENSUS_FREQUENCY_120 = cvar.CENSUS_FREQUENCY_120
-TAX_FREQUENCY = cvar.TAX_FREQUENCY
 MAX_TRAFFIC_DISTANCE = cvar.MAX_TRAFFIC_DISTANCE
 MAX_ROAD_EFFECT = cvar.MAX_ROAD_EFFECT
 MAX_POLICE_STATION_EFFECT = cvar.MAX_POLICE_STATION_EFFECT
@@ -862,9 +858,6 @@ class Micropolis(_object):
     __swig_setmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_set
     __swig_getmethods__["cityYes"] = _micropolisengine.Micropolis_cityYes_get
     if _newclass:cityYes = _swig_property(_micropolisengine.Micropolis_cityYes_get, _micropolisengine.Micropolis_cityYes_set)
-    __swig_setmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_set
-    __swig_getmethods__["problemTable"] = _micropolisengine.Micropolis_problemTable_get
-    if _newclass:problemTable = _swig_property(_micropolisengine.Micropolis_problemTable_get, _micropolisengine.Micropolis_problemTable_set)
     __swig_setmethods__["problemVotes"] = _micropolisengine.Micropolis_problemVotes_set
     __swig_getmethods__["problemVotes"] = _micropolisengine.Micropolis_problemVotes_get
     if _newclass:problemVotes = _swig_property(_micropolisengine.Micropolis_problemVotes_get, _micropolisengine.Micropolis_problemVotes_set)
@@ -922,12 +915,6 @@ class Micropolis(_object):
     def didSaveCity(*args): return _micropolisengine.Micropolis_didSaveCity(*args)
     def didntSaveCity(*args): return _micropolisengine.Micropolis_didntSaveCity(*args)
     def saveCityAs(*args): return _micropolisengine.Micropolis_saveCityAs(*args)
-    __swig_setmethods__["terrainXStart"] = _micropolisengine.Micropolis_terrainXStart_set
-    __swig_getmethods__["terrainXStart"] = _micropolisengine.Micropolis_terrainXStart_get
-    if _newclass:terrainXStart = _swig_property(_micropolisengine.Micropolis_terrainXStart_get, _micropolisengine.Micropolis_terrainXStart_set)
-    __swig_setmethods__["terrainYStart"] = _micropolisengine.Micropolis_terrainYStart_set
-    __swig_getmethods__["terrainYStart"] = _micropolisengine.Micropolis_terrainYStart_get
-    if _newclass:terrainYStart = _swig_property(_micropolisengine.Micropolis_terrainYStart_get, _micropolisengine.Micropolis_terrainYStart_set)
     __swig_setmethods__["terrainMapX"] = _micropolisengine.Micropolis_terrainMapX_set
     __swig_getmethods__["terrainMapX"] = _micropolisengine.Micropolis_terrainMapX_get
     if _newclass:terrainMapX = _swig_property(_micropolisengine.Micropolis_terrainMapX_get, _micropolisengine.Micropolis_terrainMapX_set)
@@ -952,9 +939,6 @@ class Micropolis(_object):
     __swig_setmethods__["terrainCreateIsland"] = _micropolisengine.Micropolis_terrainCreateIsland_set
     __swig_getmethods__["terrainCreateIsland"] = _micropolisengine.Micropolis_terrainCreateIsland_get
     if _newclass:terrainCreateIsland = _swig_property(_micropolisengine.Micropolis_terrainCreateIsland_get, _micropolisengine.Micropolis_terrainCreateIsland_set)
-    __swig_setmethods__["terrainIslandRadius"] = _micropolisengine.Micropolis_terrainIslandRadius_set
-    __swig_getmethods__["terrainIslandRadius"] = _micropolisengine.Micropolis_terrainIslandRadius_get
-    if _newclass:terrainIslandRadius = _swig_property(_micropolisengine.Micropolis_terrainIslandRadius_get, _micropolisengine.Micropolis_terrainIslandRadius_set)
     def generateNewCity(*args): return _micropolisengine.Micropolis_generateNewCity(*args)
     def generateSomeCity(*args): return _micropolisengine.Micropolis_generateSomeCity(*args)
     def generateMap(*args): return _micropolisengine.Micropolis_generateMap(*args)
@@ -963,7 +947,6 @@ class Micropolis(_object):
     def makeNakedIsland(*args): return _micropolisengine.Micropolis_makeNakedIsland(*args)
     def makeIsland(*args): return _micropolisengine.Micropolis_makeIsland(*args)
     def makeLakes(*args): return _micropolisengine.Micropolis_makeLakes(*args)
-    def getRandStart(*args): return _micropolisengine.Micropolis_getRandStart(*args)
     def moveMap(*args): return _micropolisengine.Micropolis_moveMap(*args)
     def treeSplash(*args): return _micropolisengine.Micropolis_treeSplash(*args)
     def doTrees(*args): return _micropolisengine.Micropolis_doTrees(*args)
