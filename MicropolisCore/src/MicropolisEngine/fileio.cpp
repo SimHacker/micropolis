@@ -455,8 +455,8 @@ void Micropolis::didLoadScenario()
  * @param filename Name of the file to load.
  * @return Game was loaded successfully.
  * @todo In what state is the game left when loading fails?
- * @todo String normalization code is duplicated in #saveCityAs(). Extract to
- *       a sub-function.
+ * @todo String normalization code is duplicated in Micropolis::saveCityAs().
+ *       Extract to a sub-function.
  * @bug Function fails if \c lastDot<lastSlash (ie with \c "x.y/bla" )
  */
 bool Micropolis::loadCity(const char *filename)
@@ -510,7 +510,7 @@ void Micropolis::didntLoadCity(const char *msg)
 
 /**
  * Try to save the game.
- * @todo This is a no-op if the #cityFileName is empty.
+ * @todo This is a no-op if the Micropolis::cityFileName is empty.
  *       In that case, we should probably warn the user about the failure.
  */
 void Micropolis::saveCity()
@@ -563,8 +563,8 @@ void Micropolis::didntSaveCity(const char *msg)
 /**
  * Save the city under a new name (?)
  * @param filename Name of the file to use for storing the game.
- * @todo String normalization code is duplicated in #loadCity(). Extract to
- *       a sub-function.
+ * @todo String normalization code is duplicated in Micropolis::loadCity().
+ *       Extract to a sub-function.
  * @bug Function fails if \c lastDot<lastSlash (ie with \c "x.y/bla" )
  */
 void Micropolis::saveCityAs(const char *filename)

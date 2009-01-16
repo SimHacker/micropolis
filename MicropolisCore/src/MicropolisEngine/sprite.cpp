@@ -578,7 +578,8 @@ bool Micropolis::checkSpriteCollision(SimSprite *s1, SimSprite *s2)
  *
  * Sprites with SimSprite::frame == 0 are removed.
  * @todo It uses SimSprite::name[0] == '\0' as condition which seems stupid.
- * @todo #destroySprite modifies the #spriteList while we loop over it.
+ * @todo Micropolis::destroySprite modifies the Micropolis::spriteList
+ *       while we loop over it.
  */
 void Micropolis::moveObjects()
 {

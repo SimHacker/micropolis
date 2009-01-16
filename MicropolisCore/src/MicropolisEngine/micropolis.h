@@ -291,17 +291,17 @@ static const int TAX_FREQUENCY = 48;
 static const int MAX_TRAFFIC_DISTANCE = 30;
 
 /**
- * Maximal value of Micropolis::RoadEffect
+ * Maximal value of Micropolis::roadEffect
  */
 static const int MAX_ROAD_EFFECT = 32;
 
 /**
- * Maximal value of Micropolis::PoliceEffect
+ * Maximal value of Micropolis::policeEffect
  */
 static const int MAX_POLICE_STATION_EFFECT = 1000;
 
 /**
- * Maximal value of Micropolis::FireEffect
+ * Maximal value of Micropolis::fireEffect
  */
 static const int MAX_FIRE_STATION_EFFECT = 1000;
 
@@ -798,7 +798,7 @@ enum GameLevel {
 /**
  * Compute minimal value.
  * @param a First value.
- * @parem b Second value.
+ * @param b Second value.
  * @return Minimum of \a a and \a b.
  */
 template <typename T>
@@ -810,7 +810,7 @@ static inline T min(const T a, const T b)
 /**
  * Compute maximal value.
  * @param a First value.
- * @parem b Second value.
+ * @param b Second value.
  * @return Maximum of \a a and \a b.
  */
 template <typename T>
@@ -822,8 +822,8 @@ static inline T max(const T a, const T b)
 /**
  * Clamp value between lower and upper bound.
  * @param val   Value.
- * @parem lower Lower bound (inclusive).
- * @parem upper Upper bound (inclusive).
+ * @param lower Lower bound (inclusive).
+ * @param upper Upper bound (inclusive).
  * @return \a val, limited to the range given by the lower and upper bound.
  */
 template <typename T>
@@ -930,8 +930,8 @@ public:
 
 
 /** Sprite in the simulator.
- * @todo #name is never set to anything else than \c "", and only used to
- *       detect a non-removed non-active sprite (in a non-robust way).
+ * @todo SimSprite::name is never set to anything else than \c "", and only
+ *       used to detect a non-removed non-active sprite (in a non-robust way).
  */
 class SimSprite {
 
@@ -947,8 +947,8 @@ public:
     int height;
     int xOffset;
     int yOffset;
-    int xHot; ///< Offset of the hot-spot of the sprite relative to #x?
-    int yHot; ///< Offset of the hot-spot of the sprite relative to #y?
+    int xHot; ///< Offset of the hot-spot relative to SimSprite::x?
+    int yHot; ///< Offset of the hot-spot relative to SimSprite::y?
     int origX;
     int origY;
     int destX; ///< Destination X coordinate of the sprite.
@@ -1198,13 +1198,13 @@ public:
 
     /**
      * City month, 4 ticks per month.
-     * @todo Remove, can be computed from #cityTime.
+     * @todo Remove, can be computed from Micropolis::cityTime.
      */
     Quad cityMonth;
 
     /**
      * City year, (Micropolis::cityTime / 48) + Micropolis::startingYear.
-     * @todo Remove, can be computed from #cityTime.
+     * @todo Remove, can be computed from Micropolis::cityTime.
      */
     Quad cityYear;
 
@@ -1320,17 +1320,17 @@ public:
     Quad fireFund;
 
     /**
-     * Radio of road spending over road funding, times 32.
+     * Ratio of road spending over road funding, times 32.
      */
     Quad roadEffect;
 
     /**
-     * Radio of police spending over road funding, times 32.
+     * Ratio of police spending over road funding, times 32.
      */
     Quad policeEffect;
 
     /**
-     * Radio of fire spending over road funding, times 32.
+     * Ratio of fire spending over road funding, times 32.
      */
     Quad fireEffect;
 
@@ -1436,7 +1436,7 @@ public:
      *
      * Affected by fire stations, powered, fire funding ratio, road
      * access. Affects how long fires burn.
-     * @see #FireEffect
+     * @see #fireEffect
      */
     short fireStationMap[WORLD_W_8][WORLD_H_8];
 
@@ -1447,7 +1447,7 @@ public:
      *
      * Affected by police stations, powered, police funding ratio, road
      * access. Affects crime rate.
-     * @see #PoliceEffect
+     * @see #policeEffect
      */
     short policeStationMap[WORLD_W_8][WORLD_H_8];
 
@@ -1583,7 +1583,7 @@ public:
     /**
      * Percentage of requested road and rail costs to funding level.
      *
-     * Value between \c 0 and #MAX_ROAD_EFFECT.
+     * Value between \c 0 and ::MAX_ROAD_EFFECT.
      * Affected by road funds slider and budgetary constraints.
      */
     float roadPercent;
@@ -1591,7 +1591,7 @@ public:
     /**
      * Percentage of requested police station costs to funding level.
      *
-     * Value between \c 0 and #MAX_POLICESTATION_EFFECT.
+     * Value between \c 0 and ::MAX_POLICESTATION_EFFECT.
      * Affected by road funds slider and budgetary constraints.
      */
     float policePercent;
@@ -1599,7 +1599,7 @@ public:
     /**
      * Percentage of requested fire station costs to funding level.
      *
-     * Value between \c 0 and #MAX_FIRESTATION_EFFECT.
+     * Value between \c 0 and ::MAX_FIRESTATION_EFFECT.
      * Affected by road funds slider and budgetary constraints.
      */
     float firePercent;

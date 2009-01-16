@@ -996,7 +996,7 @@ int Micropolis::bulldozerTool(short x, short y)
 }
 
 
-/** @todo Generalize #testBounds for different upper bounds */
+/** @todo Generalize ::testBounds for different upper bounds */
 int Micropolis::roadTool(short x, short y)
 {
     int result;

@@ -288,10 +288,12 @@ void Micropolis::doNilPower()
                 curMapX = x;
                 curMapY = y;
                 curNum = z;
-                /// @bug: Should set #curTile to (#curNum & #LOMASK), since it is
-                ///       used by #setZonePower to distinguish nuclear and coal
-                ///       power plants. Better yet, pass all parameters into
-                ///       #setZonePower and rewrite it not to use globals.
+                /// @bug: Should set Micropolis::curTile to
+                ///       (Micropolis::curNum & #LOMASK), since it is used by
+                ///       Micropolis::setZonePower to distinguish nuclear and
+                ///       coal power plants. Better yet, pass all parameters
+                ///       into Micropolis::setZonePower and rewrite it not to
+                ///       use globals.
                 setZonePower();
             }
         }
