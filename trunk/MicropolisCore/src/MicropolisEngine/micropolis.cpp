@@ -740,12 +740,6 @@ void Micropolis::init()
     // SimSprite *globalSprites[SPRITE_COUNT];
     memset(globalSprites, 0, sizeof(SimSprite *) * SPRITE_COUNT);
 
-    // short crashX;
-    crashX = 0;
-
-    // short crashY;
-    crashY = 0;
-
     // int absDist;
     absDist = 0;
 

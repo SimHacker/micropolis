@@ -1676,32 +1676,22 @@ void Micropolis::explodeSprite(SimSprite *sprite)
     switch (sprite->type) {
 
         case SPRITE_AIRPLANE:
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_PLANE_CRASHED, x, y);
             break;
 
         case SPRITE_SHIP:
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_SHIP_CRASHED, x, y);
             break;
 
         case SPRITE_TRAIN:
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_TRAIN_CRASHED, x, y);
             break;
 
         case SPRITE_HELICOPTER:
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_HELICOPTER_CRASHED, x, y);
             break;
 
         case SPRITE_BUS:
-            crashX = x;
-            crashY = y;
             sendMessageAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
             break;
 

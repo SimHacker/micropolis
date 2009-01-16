@@ -2564,10 +2564,6 @@ public:
 
     SimSprite *globalSprites[SPRITE_COUNT];
 
-    short crashX;
-
-    short crashY;
-
     int absDist;
 
     short spriteCycle;
