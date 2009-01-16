@@ -78,11 +78,11 @@ void Micropolis::generateNewCity()
 }
 
 
-void Micropolis::generateSomeCity(int r)
+void Micropolis::generateSomeCity(int seed)
 {
     cityFileName = "";
 
-    generateMap(r);
+    generateMap(seed);
     scenario = SC_NONE;
     cityTime = 0;
     initSimLoad = 2;
@@ -102,9 +102,16 @@ void Micropolis::generateSomeCity(int r)
 }
 
 
-void Micropolis::generateMap(int r)
+/**
+ * Generate a map.
+ * @param seed Seed for random generator.
+ */
+void Micropolis::generateMap(int seed)
 {
-    seedRandom(r);
+    short terrainXStart; // Starting X location of the terrain generator.
+    short terrainYStart; // Starting Y location of the terrain generator.
+
+    seedRandom(seed);
 
     if (terrainCreateIsland < 0) {
         if (getRandom(100) < 10) { /* chance that island is generated */
@@ -127,7 +134,7 @@ void Micropolis::generateMap(int r)
 
 
     if (terrainCurveLevel != 0) {
-        doRivers();
+        doRivers(terrainXStart, terrainYStart);
     }
 
     if (terrainLakeLevel != 0) {
@@ -417,7 +424,12 @@ void Micropolis::smoothTrees()
 }
 
 
-void Micropolis::doRivers()
+/**
+ * Construct rivers.
+ * @param terrainXStart Horizontal coordinate of the start position.
+ * @param terrainYStart Vertical coordinate of the start position.
+ */
+void Micropolis::doRivers(short terrainXStart, short terrainYStart)
 {
     terrainDirLast = getRandom(3);
     terrainDir = terrainDirLast;

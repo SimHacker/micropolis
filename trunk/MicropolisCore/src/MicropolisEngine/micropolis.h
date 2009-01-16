@@ -1919,14 +1919,6 @@ public:
     // built (by automatically bulldozing zones whose underlying
     // terrain it's modifying).
 
-    // Starting X location of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainXStart;
-
-    // Starting Y location of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainYStart;
-
     // Current X location of the terrain generator.
     // Only used internally by the terrain generator. Should be private.
     short terrainMapX;
@@ -1988,7 +1980,7 @@ public:
 
     void smoothTrees();
 
-    void doRivers();
+    void doRivers(short terrainXStart, short terrainYStart);
 
     void doBRiver();
 
