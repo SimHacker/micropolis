@@ -178,13 +178,14 @@ void Micropolis::doPowerScan()
 
     // Power that the combined coal and nuclear power plants can deliver.
     Quad maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L;
-    numPower = 0;
+    Quad numPower = 0; // Amount of power used.
 
     while (powerStackPointer > 0) {
         pullPowerStack();
         ADir = 4;
         do {
-            if (++numPower > maxPower) {
+            numPower++;
+            if (numPower > maxPower) {
                 sendMessage(STR301_NOT_ENOUGH_POWER);
                 return;
             }
