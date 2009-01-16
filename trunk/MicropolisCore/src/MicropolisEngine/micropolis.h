@@ -252,11 +252,6 @@ static const int MISC_HISTORY_LENGTH = 240;
 static const int HISTORY_COUNT = 120;
 
 /**
- * The default radius of an island, used by the terrain generator. 
- */
-static const int ISLAND_RADIUS = 18;
-
-/**
  * The size in shorts of one row of the power map.
  */
 static const int POWER_MAP_ROW = (WORLD_W + 15) / 16;
@@ -1986,9 +1981,6 @@ public:
     // Controls how often to create an island.
     // -1 => 10% chance of island, 0 => never create island, 1 => always create island
     int terrainCreateIsland;
-
-    // Controls the radius of islands.
-    int terrainIslandRadius;
 
 
     void generateNewCity() ;
