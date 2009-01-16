@@ -2894,16 +2894,27 @@ public:
 
 
     /**
-     * Return reverse direction
-     * @param d Direction to reverse
-     * @return Reversed direction
+     * Return reverse direction.
+     * @param d Direction to reverse.
+     * @return Reversed direction.
      */
     inline Direction reverseDirection(Direction d)
     {
 	return (Direction)((d + 2) & 0x3);
     };
 
-    inline short neutralizeRoad(short tile);
+    /**
+     * Remove road from the tile.
+     * @param tile Current tile value.
+     * @return Equivalent tool without road.
+     */
+    inline short neutralizeRoad(short tile)
+    {
+        if (tile >= 64 && tile <= 207) {
+            tile = (tile & 0x000F) + 64;
+        }
+        return tile;
+    };
 
     short makeTraffic(ZoneType dest);
 

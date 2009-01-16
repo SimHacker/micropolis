@@ -95,22 +95,6 @@ static const short WireTable[16] = {
 
 ////////////////////////////////////////////////////////////////////////
 
-/**
- * Remove road from the tile.
- * @param tile Current tile value.
- * @return Equivalent tool without road.
- */
-inline short Micropolis::neutralizeRoad(short tile)
-{
-    if (tile >= 64 && tile <= 207) {
-        tile = (tile & 0x000F) + 64;
-    }
-    return tile;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-
 
 /* comefrom: check3Border check4Border check5Border processWand */
 int Micropolis::connectTile(short x, short y, short *tileAdrPtr, short Command)
