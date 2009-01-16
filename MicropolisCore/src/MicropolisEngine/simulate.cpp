@@ -262,7 +262,10 @@ void Micropolis::simulate(int phase)
 }
 
 
-/* comefrom: simulate */
+/**
+ * Initialize simulation.
+ * @todo Create constants for initSimLoad.
+ */
 void Micropolis::doSimInit()
 {
     phaseCycle = 0;

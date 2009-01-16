@@ -840,11 +840,9 @@ void Micropolis::init()
     // update.cpp
 
 
-    // short mustUpdateFunds;
-    mustUpdateFunds = 0;
+    mustUpdateFunds = false;
 
-    // short mustUpdateOptions;
-    mustUpdateOptions = 0;
+    mustUpdateOptions = false;
 
     // Quad cityTimeLast;
     cityTimeLast = 0;

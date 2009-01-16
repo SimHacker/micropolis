@@ -2695,18 +2695,27 @@ public:
 
     bool evalChanged; ///< The evaluation window should be shown to the user
 
+    /**
+     * @todo Variable is not used, can we remove it?
+     */
     short blinkFlag;
 
-    // Hook into scripting language to send callbacks.
-    // (i.e. a function that calls back into the Python interpreter.)
+    /**
+     * Hook into scripting language to send callbacks.
+     * (i.e. a function that calls back into the Python interpreter.)
+     */
     CallbackFunction callbackHook;
 
-    // Hook for scripting language to store scripted callback function.
-    // (i.e. a callable Python object.)
+    /**
+     * Hook for scripting language to store scripted callback function.
+     * (i.e. a callable Python object.)
+     */
     void *callbackData;
 
-    // Hook for scripting language to store context (i.e. peer object).
-    // (i.e. Python SWIG wrapper of this Micropolis object.)
+    /**
+     * Hook for scripting language to store context (i.e. peer object).
+     * (i.e. Python SWIG wrapper of this Micropolis object.)
+     */
     void *userData;
 
 
@@ -2932,9 +2941,9 @@ private:
 public:
 
 
-    short mustUpdateFunds;
+    bool mustUpdateFunds;
 
-    short mustUpdateOptions;
+    bool mustUpdateOptions; ///< Options displayed at user need updating.
 
     Quad cityTimeLast;
 

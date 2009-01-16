@@ -108,7 +108,7 @@ void Micropolis::updateEvaluation()
 
 void Micropolis::updateHeads()
 {
-    mustUpdateFunds = 1;
+    mustUpdateFunds = true;
     valveFlag = true;
     cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast = 
       resLast = comLast = indLast = -999999;
@@ -118,7 +118,7 @@ void Micropolis::updateHeads()
 
 void Micropolis::updateFunds()
 {
-    mustUpdateFunds = 1;
+    mustUpdateFunds = true;
 }
 
 
@@ -128,7 +128,7 @@ void Micropolis::reallyUpdateFunds()
         return;
     }
 
-    mustUpdateFunds = 0;
+    mustUpdateFunds = false;
 
     if (totalFunds != totalFundsLast) {
         totalFundsLast = totalFunds;
@@ -289,7 +289,7 @@ void Micropolis::updateOptions()
             options |= 128;
         }
 
-        mustUpdateOptions = 0;
+        mustUpdateOptions = false;
         updateOptionsMenu(options);
     }
 }

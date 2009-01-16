@@ -96,7 +96,7 @@ void Micropolis::environmentInit()
 void Micropolis::simInit()
 {
     enableSound = true; // Enable sound
-    mustUpdateOptions = 1;
+    mustUpdateOptions = true; // Update options displayed at user
     messageLastValid = false; // No message seen yet
     scenario = SC_NONE;
     startingYear = 1900;
