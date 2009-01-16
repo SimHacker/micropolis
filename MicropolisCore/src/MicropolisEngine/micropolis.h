@@ -2918,7 +2918,7 @@ public:
 
     bool findPerimeterTelecom();
 
-    bool tryDrive();
+    bool tryDrive(ZoneType destZone);
 
     bool tryGo(int dist);
 
@@ -2927,10 +2927,7 @@ public:
 
 private:
 
-    ZoneType zoneSource; ///< Destination of traffic
-
-
-    bool driveDone();
+    bool driveDone(ZoneType destZone);
 
     bool roadTest(int tile);
 
