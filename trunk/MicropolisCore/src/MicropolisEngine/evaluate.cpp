@@ -202,8 +202,8 @@ void Micropolis::doPopNum()
 /**
  * Evaluate problems of the city, take votes, and decide which are the most
  * important ones.
- * @param Storage of how bad each problem is.
- * @post #problemTable contains severity of each problem,
+ * @param problemTable Storage of how bad each problem is.
+ * @post \a problemTable contains severity of each problem,
  *       #problemVotes contains votes of each problem,
  *       #problemOrder contains (in decreasing order) the worst problems.
  */
@@ -249,7 +249,8 @@ void Micropolis::doProblems(short problemTable[PROBNUM])
 
 
 /**
- * Vote on the problems of the city
+ * Vote on the problems of the city.
+ * @param problemTable Storage of how bad each problem is.
  *
  * @post problemVotes contains the vote counts
  */
@@ -334,6 +335,7 @@ short Micropolis::getFireSeverity()
 
 /**
  * Compute total score
+ * @param problemTable Storage of how bad each problem is.
  */
 void Micropolis::getScore(const short problemTable[PROBNUM])
 {
