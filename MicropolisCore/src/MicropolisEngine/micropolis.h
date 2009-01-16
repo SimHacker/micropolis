@@ -2153,7 +2153,7 @@ public:
 public:
 
 
-    int dynamicData[32];
+    int dynamicData[32]; // Read-only, it seems
 
 
     void drawAll();
@@ -2273,11 +2273,6 @@ public:
 public:
 
 
-    /**
-     * Maximal power that the combined coal and nuclear power plants can deliver.
-     * @see NumPower CoalPop NuclearPop
-     */
-    Quad maxPower;
     Quad numPower; ///< Amount of power used.
 
     /** @name Power stack

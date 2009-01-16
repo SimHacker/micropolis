@@ -163,7 +163,8 @@ bool Micropolis::testForConductive(Direction tfDir)
 /**
  * Scan the map for powered tiles, and copy them to the Micropolis::powerMap
  * array.
- * Also warn the user about using too much power ('buy another power plant').
+ * Also warns the user about using too much power ('buy another power plant').
+ * @todo Make constants of the power of a coal (700) and nuclear (2000) plant.
  */
 void Micropolis::doPowerScan()
 {
@@ -175,7 +176,8 @@ void Micropolis::doPowerScan()
         powerMap[x] = 0;
     }
 
-    maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L; /* post release */
+    // Power that the combined coal and nuclear power plants can deliver.
+    Quad maxPower = coalPowerPop * 700L + nuclearPowerPop * 2000L;
     numPower = 0;
 
     while (powerStackPointer > 0) {
