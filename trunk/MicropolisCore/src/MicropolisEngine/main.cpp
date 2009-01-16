@@ -58,36 +58,6 @@
 #define SRCCOL (WORLD_H + 2)
 #define DSTCOL WORLD_H
 
-#define CLIPPER_LOOP_BODY(CODE) \
-    src = cellSrc; dst = cellDst; \
-    for (x = 0; x < WORLD_W;) { \
-        short nw, n, ne, w, c, e, sw, s, se; \
-        src = cellSrc + (x * SRCCOL); \
-        dst = cellDst + (x * DSTCOL); \
-        w = src[0]; c = src[SRCCOL]; e = src[2 * SRCCOL]; \
-        sw = src[1]; s = src[SRCCOL + 1]; se = src[(2 * SRCCOL) + 1]; \
-        for (y = 0; y < WORLD_H; y++) { \
-            nw = w; w = sw; sw = src[2]; \
-            n = c; c = s; s = src[SRCCOL + 2]; \
-            ne = e; e = se; se = src[(2 * SRCCOL) + 2]; \
-            { CODE } \
-            src++; dst++; \
-        } \
-        x++; \
-        src = cellSrc + ((x + 1) * SRCCOL) - 3; \
-        dst = cellDst + ((x + 1) * DSTCOL) - 1; \
-        nw = src[1]; n = src[SRCCOL + 1]; ne = src[(2 * SRCCOL) + 1]; \
-        w = src[2]; c = src[SRCCOL + 2]; e = src[(2 * SRCCOL) + 2]; \
-        for (y = WORLD_H - 1; y >= 0; y--) { \
-            sw = w; w = nw; nw = src[0]; \
-            s = c; c = n; n = src[SRCCOL]; \
-            se = e; e = ne; ne = src[2 * SRCCOL]; \
-            { CODE } \
-            src--; dst--; \
-        } \
-        x++; \
-    }
-
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -179,6 +149,9 @@ void Micropolis::simUpdate()
 }
 
 
+/** @todo Why is Micropolis::cellSrc not allocated together with all the other
+ *        variables?
+ */
 void Micropolis::simHeat()
 {
     int x, y;
@@ -287,6 +260,38 @@ void Micropolis::simHeat()
             NOT_REACHED();
             break;
     }
+
+
+#define CLIPPER_LOOP_BODY(CODE) \
+    src = cellSrc; dst = cellDst; \
+    for (x = 0; x < WORLD_W;) { \
+        short nw, n, ne, w, c, e, sw, s, se; \
+        src = cellSrc + (x * SRCCOL); \
+        dst = cellDst + (x * DSTCOL); \
+        w = src[0]; c = src[SRCCOL]; e = src[2 * SRCCOL]; \
+        sw = src[1]; s = src[SRCCOL + 1]; se = src[(2 * SRCCOL) + 1]; \
+        for (y = 0; y < WORLD_H; y++) { \
+            nw = w; w = sw; sw = src[2]; \
+            n = c; c = s; s = src[SRCCOL + 2]; \
+            ne = e; e = se; se = src[(2 * SRCCOL) + 2]; \
+            { CODE } \
+            src++; dst++; \
+        } \
+        x++; \
+        src = cellSrc + ((x + 1) * SRCCOL) - 3; \
+        dst = cellDst + ((x + 1) * DSTCOL) - 1; \
+        nw = src[1]; n = src[SRCCOL + 1]; ne = src[(2 * SRCCOL) + 1]; \
+        w = src[2]; c = src[SRCCOL + 2]; e = src[(2 * SRCCOL) + 2]; \
+        for (y = WORLD_H - 1; y >= 0; y--) { \
+            sw = w; w = nw; nw = src[0]; \
+            s = c; c = n; n = src[SRCCOL]; \
+            se = e; e = ne; ne = src[2 * SRCCOL]; \
+            { CODE } \
+            src--; dst--; \
+        } \
+        x++; \
+    }
+
 
     switch (heatRule) {
 
