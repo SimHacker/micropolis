@@ -145,7 +145,7 @@ void Micropolis::simInit()
     messagePort = 0;
     messageX = -1;
     messageY = -1;
-    simPaused = false; // Simumaltion is running
+    simPaused = false; // Simulation is running
     simLoops = 0;
     initSimLoad = 2;
 
