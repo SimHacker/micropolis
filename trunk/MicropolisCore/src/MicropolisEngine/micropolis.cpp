@@ -710,8 +710,7 @@ void Micropolis::init()
     // short unpoweredZoneCount;
     unpoweredZoneCount = 0;
 
-    // short newPower; /* post */
-    newPower = 0;
+    newPower = false;
 
     // short cityTaxAverage;
     cityTaxAverage = 0;

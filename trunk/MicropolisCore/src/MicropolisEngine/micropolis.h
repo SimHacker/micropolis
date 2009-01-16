@@ -2465,7 +2465,7 @@ public:
     short poweredZoneCount; ///< Number of powered tiles in all zone
     short unpoweredZoneCount; ///< Number of unpowered tiles in all zones
 
-    short newPower; /* post */
+    bool newPower; /* post */
 
     short cityTaxAverage;
 
