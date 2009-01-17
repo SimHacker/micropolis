@@ -111,18 +111,19 @@ if __name__ == '__main__':
 
     engine = micropolismodel.CreateTestEngine()
 
-    engine.cityTax = 6
-    #engine.setSkips(500)
-    engine.setSkips(10)
+    engine.cityTax = 10
+    #engine.setSkips(200)
+    engine.setSkips(200)
     setTile = engine.setTile
 
-    for y in range(0, micropolisengine.WORLD_H):
-        for x in range(0, micropolisengine.WORLD_W):
-            setTile(x, y, micropolisengine.RUBBLE | micropolisengine.BLBNBIT)
+    if False:
+        for y in range(0, micropolisengine.WORLD_H):
+            for x in range(0, micropolisengine.WORLD_W):
+                setTile(x, y, micropolisengine.RUBBLE | micropolisengine.BLBNBIT)
 
-    for y in range(10, 15):
-        for x in range(10, 15):
-            setTile(x, y, micropolisengine.FIRE | micropolisengine.ANIMBIT)
+        for y in range(10, 15):
+            for x in range(10, 15):
+                setTile(x, y, micropolisengine.FIRE | micropolisengine.ANIMBIT)
 
     fudge = 0
     width = int((120 * 4) + fudge)

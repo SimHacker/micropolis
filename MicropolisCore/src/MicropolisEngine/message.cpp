@@ -356,8 +356,8 @@ void Micropolis::doScenarioScore(Scenario type)
 void Micropolis::clearMessage()
 {
     messagePort = 0;
-    messageX = 0;
-    messageY = 0;
+    messageX = -1;
+    messageY = -1;
     messagePictureLast = 0;
 }
 
@@ -380,8 +380,8 @@ bool Micropolis::sendMessage(int mesgNum)
     } else {
         if (messagePort == 0) {
             messagePort = mesgNum;
-            messageX = 0;
-            messageY = 0;
+            messageX = -1;
+            messageY = -1;
             return true;
         }
     }
@@ -482,8 +482,8 @@ void Micropolis::doMessage()
         if (autoGoto && messageX != -1 && messageY != -1) {
 
             doAutoGoto(messageX, messageY, messageStr);
-            messageX = 0;
-            messageY = 0;
+            messageX = -1;
+            messageY = -1;
         }
     }
 }
