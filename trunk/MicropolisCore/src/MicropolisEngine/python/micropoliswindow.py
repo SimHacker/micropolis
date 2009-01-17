@@ -144,7 +144,6 @@ class MicropolisPanedWindow(gtk.Window):
         gtk.Window.__init__(self, **args)
 
         self.connect('destroy', gtk.main_quit)
-
         self.connect('realize', self.handleRealize)
         self.connect('size-allocate', self.handleResize)
 
@@ -154,43 +153,53 @@ class MicropolisPanedWindow(gtk.Window):
 
         self.engine = engine
 
+        # Views
+
         self.tileView = \
             tileViewClass(
                 engine=self.engine)
+
+        self.evaluationView = \
+            evaluationViewClass(
+                engine=engine)
+
+        self.graphView = \
+            graphViewClass(
+                engine=self.tileView.engine)
+
+        self.statusView = \
+            statusViewClass(
+                engine=engine)
+        self.noticeView = \
+            noticeViewClass(
+                engine=engine)
+
+        # Frames
+
         self.frameCenter = gtk.Frame()
         self.frameCenter.set_shadow_type(gtk.SHADOW_IN)
         self.frameCenter.add(self.tileView)
         engine.addView(self.tileView)
 
-        self.evaluationView = \
-            evaluationViewClass(
-                engine=engine)
         self.frameTop = gtk.Frame()
         self.frameTop.set_shadow_type(gtk.SHADOW_IN)
         self.frameTop.add(self.evaluationView)
         engine.addEvaluation(self.evaluationView)
 
-        self.graphView = \
-            graphViewClass(
-                engine=self.tileView.engine)
         self.frameBottom = gtk.Frame()
         self.frameBottom.set_shadow_type(gtk.SHADOW_IN)
         self.frameBottom.add(self.graphView)
         engine.addGraph(self.graphView)
 
-        self.statusView = \
-            statusViewClass(
-                engine=engine)
         self.frameLeft = gtk.Frame()
         self.frameLeft.set_shadow_type(gtk.SHADOW_IN)
         self.frameLeft.add(self.statusView)
 
-        self.noticeView = \
-            noticeViewClass(
-                engine=engine)
         self.frameRight = gtk.Frame()
         self.frameRight.set_shadow_type(gtk.SHADOW_IN)
         self.frameRight.add(self.noticeView)
+
+        # Panes
 
         self.vpaned1 = gtk.VPaned()
         self.vpaned2 = gtk.VPaned()
@@ -261,7 +270,7 @@ class MicropolisPanedWindow(gtk.Window):
 
         leftEdge = 16
         rightEdge = 16
-        topEdge = 16
+        topEdge = 150
         bottomEdge = 150
 
         self.hpaned1.set_position(leftEdge + extra)

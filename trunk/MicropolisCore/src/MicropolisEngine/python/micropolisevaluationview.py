@@ -102,6 +102,32 @@ import micropolisview
 class MicropolisEvaluationView(micropolisview.MicropolisView):
 
 
+    problemNames = (
+        'Crime',
+        'Pollution',
+        'Housing',
+        'Taxes',
+        'Traffic',
+        'Unemployment',
+        'Fire',
+    )
+
+    categoryNames = (
+        'Village',
+        'Town',
+        'City',
+        'Capital',
+        'Metropolis',
+        'Megalopolis',
+    )
+
+    levelNames = (
+        'Easy',
+        'Medium',
+        'Hard',
+    )
+
+
     def __init__(
         self,
         **args):
@@ -125,12 +151,44 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         self.queue_draw()
 
 
+    def formatMoney(
+        self, 
+        money):
+        return '$' + self.formatNumber(money)
+
+    def formatDelta(
+        self,
+        delta):
+        if delta < 0:
+            return self.formatNumber(delta)
+        else:
+            return '+' + self.formatNumber(delta)
+
+    def formatNumber(
+        self,
+        number):
+        negative = number < 0
+        if negative:
+            number = -number
+        s = str(number)
+        if len(s) > 9:
+            s = s[-12:-9] + ',' + s[-9:-6] + ',' + s[-6:-3] + ',' + s[-3:]
+        elif len(s) > 6:
+            s = s[:-6] + ',' + s[-6:-3] + ',' + s[-3:]
+        elif len(s) > 3:
+            s = s[:-3] + ',' + s[-3:]
+        if negative:
+            s = '-' + s
+        return s
+
     def drawContent(
         self,
         ctx,
         playout):
 
         print "==== MicropolisEvaluationView DRAWCONTENT", self
+
+        engine = self.engine
 
         winRect = self.get_allocation()
         winWidth = winRect.width
@@ -142,46 +200,58 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         ctx.rectangle(0, 0, winWidth, winHeight)
         ctx.fill()
 
-        yesPercent = 50
-        noPercent = 50
-        problem1 = "Problem 1: 20%"
-        problem2 = "Problem 2: 15%"
-        problem3 = "Problem 3: 10%"
-        problem4 = "Problem 4: 5%"
-        population = '10,000'
-        netMigration = '1,000'
-        assessedValue = '$100,000'
-        category = 'Town'
-        gameLevel = 'Medium'
-        currentScore = '800'
-        annualChange = '+30'
+        yesPercent = engine.cityYes
+        noPercent = 100 - yesPercent
+        problems = []
+        for problem in range(0, 4):
+            problemNumber = engine.getProblemNumber(problem)
+            if problemNumber == -1:
+                txt = ''
+            else:
+                txt = self.problemNames[problemNumber] + ': ' + str(engine.getProblemVotes(problem)) + '%'
+            problems.append(txt)
 
-        markup = """<span>
-  <b>Is The Mayor Doing a Good Job?</b><br/>
-    Yes: %s%%<br/>
-    No: %s%%<br/>
-  <b>What are the Worst Problems?</b><br/>
-    %s<br/>
-    %s<br/>
-    %s<br/>
-    %s<br/>
-  <b>Statistics</b><br/>
-    Population: %s<br/>
-        Net Migration: %s (last year)<br/>
-        Assessed Value: %s<br/>
-        Category: %s<br/>
-        Game Level: %s<br/>
-  <b>Overall City Score (0 - 1000)</b><br/>
-    Current Score: %s<br/>
-    Annual Change: %s<br/>
+        population = self.formatNumber(engine.cityPop)
+        netMigration = self.formatDelta(engine.deltaCityPop)
+        assessedValue = self.formatMoney(engine.cityAssessedValue)
+        category = self.categoryNames[engine.cityClass]
+        gameLevel = self.levelNames[engine.gameLevel]
+        currentScore = self.formatNumber(engine.cityScore)
+        annualChange = self.formatDelta(engine.cityScoreDelta)
+
+        markup1 = """<span>
+<b>Is The Mayor Doing a Good Job?</b>
+  Yes: %s%%
+  No: %s%%
+ 
+<b>What are the Worst Problems?</b>
+  %s
+  %s
+  %s
+  %s
 </span>
 """ % (
             yesPercent,
             noPercent,
-            problem1,
-            problem2,
-            problem3,
-            problem4,
+            problems[0],
+            problems[1],
+            problems[2],
+            problems[3],
+        )
+
+        markup2 = """<span>
+<b>Statistics</b>
+  Population: %s
+  Net Migration: %s (last year)
+  Assessed Value: %s
+  Category: %s
+  Game Level: %s
+ 
+<b>Overall City Score (0 - 1000)</b>
+  Current Score: %s
+  Annual Change: %s
+</span>
+""" % (
             population,
             netMigration,
             assessedValue,
@@ -191,13 +261,17 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
             annualChange,
         )
 
-        print markup
-
-        playout.set_font_description(self.labelFont)
-        playout.set_text(markup)
-        playout.set_markup(markup)
         ctx.set_source_rgb(0.0, 0.0, 0.0)
+        playout.set_font_description(self.labelFont)
+
+        #print markup1
+        playout.set_markup(markup1)
         ctx.move_to(10, 10)
+        ctx.show_layout(playout)
+
+        #print markup2
+        playout.set_markup(markup2)
+        ctx.move_to(250, 10)
         ctx.show_layout(playout)
 
 

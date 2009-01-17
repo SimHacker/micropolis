@@ -234,8 +234,8 @@ void Micropolis::init()
     // short messagePort;
     messagePort = 0;
 
-    messageX = 0;
-    messageY = 0;
+    messageX = -1;
+    messageY = -1;
 
     // Quad roadSpend;
     roadSpend = 0;
