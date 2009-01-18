@@ -98,7 +98,7 @@ void Micropolis::environmentInit()
     // Failed on $SIMHOME, ".", or the 'res' directory.
     fprintf(stderr,
             "Please check the environment or reinstall Micropolis and try again! Sorry!\n");
-        // TODO: Tell application to exit.
+    exit(1);
 }
 
 
