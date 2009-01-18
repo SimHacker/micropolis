@@ -2065,7 +2065,7 @@ public:
     ////////////////////////////////////////////////////////////////////////
     // initialize.cpp
 
-public:
+private:
 
 
     void initWillStuff();
@@ -2095,6 +2095,28 @@ public:
 
     int simPausedSpeed;
 
+    int tilesAnimated; ///< @todo Not currently used, should hook it up.
+
+    /**
+     * Enable animation.
+     * @todo Currently always \c true. Should connect it to a frontend option.
+     */
+    bool doAnimation;
+
+    int doMessages; ///< @todo Not currently used, should hook it up.
+
+    int doNotices; ///< @todo Not currently used, should hook it up.
+
+
+    const char *getMicropolisVersion();
+
+    void simUpdate();
+
+    void simTick();
+
+
+private:
+
     int heatSteps;
 
     /**
@@ -2117,41 +2139,18 @@ public:
      */
     std::string cityName;     ///< Name of the city
 
-    int tilesAnimated; ///< @todo Not currently used, should hook it up.
-
-    /**
-     * Enable animation.
-     * @todo Currently always \c true. Should connect it to a frontend option.
-     */
-    bool doAnimation;
-
-    int doMessages; ///< @todo Not currently used, should hook it up.
-
-    int doNotices; ///< @todo Not currently used, should hook it up.
-
-
-private:
-
     short *cellSrc;
 
     short *cellDst;
 
 
-public:
-
-    const char *getMicropolisVersion();
-
     void environmentInit();
 
     void simInit();
 
-    void simUpdate();
-
     void simHeat();
 
-    void simLoop(int doSim);
-
-    void simTick();
+    void simLoop(bool doSim);
 
 
 #if 0
