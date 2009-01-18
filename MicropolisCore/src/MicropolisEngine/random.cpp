@@ -32,7 +32,15 @@
  * SUCH DAMAGE.
  */
 
-/** @file random.cpp */
+/** @file random.cpp Random number generator functions. */
+
+/** @bug Code seems to assume that \c sizeof(short)==2 and \c sizeof(int)==4
+ *       However, this depends on the compiler. We should introduce typedefs
+ *       for them, and check correctness of our assumptions w.r.t. size of
+ *       them (eg in Micropolis::randomlySeedRandom() or in
+ *       Micropolis::Micropolis()).
+ * @bug Code stores unsigned 16 bit numbers in \c short which is a signed type.
+ */
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -43,35 +51,50 @@
 ////////////////////////////////////////////////////////////////////////
 
 
+/**
+ * Draw a random number (internal function).
+ * @todo Use Wolfram's fast cellular automata pseudo random number generator.
+ * @return Unsigned 16 bit random number.
+ */
 int Micropolis::simRandom()
 {
-    // TODO: Use Wolfram's fast cellular automata pseudo random number generator.
-
     nextRandom = nextRandom * 1103515245 + 12345;
-    return ((nextRandom % (0x10000 <<8)) >>8);
+    return (nextRandom & 0xffff00) >> 8;
 }
 
 
+/**
+ * Draw a random number in a given range.
+ * @param range Upper bound of the range (inclusive).
+ * @return Random number between \c 0 and \a range (inclusive).
+ */
 short Micropolis::getRandom(short range)
 {
     int maxMultiple, rnum;
 
-    range++;
+    range++; /// @bug Increment may cause range overflow.
     maxMultiple = 0xffff / range;
     maxMultiple *= range;
 
-    while ((rnum = getRandom16()) >= maxMultiple) ;
+    do {
+        rnum = getRandom16();
+    } while (rnum >= maxMultiple);
 
     return (rnum % range);
 }
 
 
+/**
+ * Get random 16 bit number.
+ * @return Unsigned 16 bit random number.
+ */
 int Micropolis::getRandom16()
 {
     return simRandom() & 0x0000ffff;
 }
 
 
+/** Get signed 16 bit random number. */
 int Micropolis::getRandom16Signed()
 {
     int i = getRandom16();
@@ -84,19 +107,22 @@ int Micropolis::getRandom16Signed()
 }
 
 
+/**
+ * Get a random number within a given range, with a preference to smaller
+ * values.
+ * @param limit Upper bound of the range (inclusive).
+ * @return Random number between \c 0 and \a limit (inclusive).
+ */
 short Micropolis::getERandom(short limit)
 {
-    short x, z;
+    short z = getRandom(limit);
+    short x = getRandom(limit);
 
-    z = getRandom(limit);
-    x = getRandom(limit);
-    if (z < x) {
-        return z;
-    }
-    return x;
+    return min(z, x);
 }
 
 
+/** Initialize the random number generator with a 'random' seed. */
 void Micropolis::randomlySeedRandom()
 {
 #ifdef _WIN32
