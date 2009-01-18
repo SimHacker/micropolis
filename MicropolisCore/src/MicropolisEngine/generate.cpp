@@ -72,12 +72,21 @@
 ////////////////////////////////////////////////////////////////////////
 
 
+/**
+ * Create a new map for a city.
+ * @bug We use a random number generator to draw a seed for initializing the
+ *      random number generator?
+ */
 void Micropolis::generateNewCity()
 {
     generateSomeCity(getRandom16());
 }
 
 
+/**
+ * Generate a map for a city.
+ * @param seed Random number generator initializing seed
+ */
 void Micropolis::generateSomeCity(int seed)
 {
     cityFileName = "";
@@ -104,7 +113,7 @@ void Micropolis::generateSomeCity(int seed)
 
 /**
  * Generate a map.
- * @param seed Seed for random generator.
+ * @param seed Initialization seed for the random generator.
  */
 void Micropolis::generateMap(int seed)
 {
@@ -150,6 +159,7 @@ void Micropolis::generateMap(int seed)
 }
 
 
+/** Clear the whole world to ::DIRT tiles */
 void Micropolis::clearMap()
 {
     short x, y;
@@ -223,6 +233,7 @@ void Micropolis::makeNakedIsland()
 }
 
 
+/** Construct a new world as an island */
 void Micropolis::makeIsland()
 {
     makeNakedIsland();
@@ -261,6 +272,12 @@ void Micropolis::makeLakes()
 }
 
 
+/**
+ * Move (Micropolis::terrainMapX, Micropolis::terrainMapY) a tile in the
+ * indicated direction.
+ * @param dir Direction to move in (0..7).
+ * @todo Merge with moveMapSim()
+ */
 void Micropolis::moveMap(short dir)
 {
     static short dirTab[2][8] = {
@@ -274,6 +291,15 @@ void Micropolis::moveMap(short dir)
 }
 
 
+/**
+ * Splash a bunch of trees down near (\a xloc, \a yloc).
+ *
+ * Amount of trees is controlled by Micropolis::terrainTreeLevel.
+ * @param xloc Horizontal position of starting point for splashing trees.
+ * @param yloc Vertical position of starting point for splashing trees.
+ * @note Trees are not smoothed.
+ * @bug Function generates trees even if Micropolis::terrainTreeLevel is 0.
+ */
 void Micropolis::treeSplash(short xloc, short yloc)
 {
     short dis, dir;
@@ -304,6 +330,7 @@ void Micropolis::treeSplash(short xloc, short yloc)
 }
 
 
+/** Splash trees around the world. */
 void Micropolis::doTrees()
 {
     short Amount, x, xloc, yloc;
@@ -431,14 +458,18 @@ void Micropolis::smoothTrees()
  */
 void Micropolis::doRivers(short terrainXStart, short terrainYStart)
 {
+    terrainMapX = terrainXStart;
+    terrainMapY = terrainYStart;
     terrainDirLast = getRandom(3);
     terrainDir = terrainDirLast;
     doBRiver();
+
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
     terrainDirLast = terrainDirLast ^ 4;
     terrainDir = terrainDirLast;
     doBRiver();
+
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
     terrainDirLast = getRandom(3);

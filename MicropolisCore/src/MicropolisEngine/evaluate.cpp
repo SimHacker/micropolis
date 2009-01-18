@@ -140,8 +140,9 @@ void Micropolis::evalInit()
 
 
 /**
- * Assess value of the city
- * @post #cityAssessedValue contains the total city value
+ * Assess value of the city.
+ * @post #cityAssessedValue contains the total city value.
+ * @todo Make function return the value, or change the name of the function.
  */
 void Micropolis::getAssessedValue()
 {

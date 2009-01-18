@@ -70,7 +70,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-
+/** Allocate and initialize arrays for the maps */
 void Micropolis::initMapArrays()
 {
     short i;
@@ -124,6 +124,7 @@ void Micropolis::initMapArrays()
 }
 
 
+/** Free all map arrays */
 void Micropolis::destroyMapArrays()
 {
 
