@@ -87,18 +87,23 @@ void not_reached(int line, const char *fname)
 ////////////////////////////////////////////////////////////////////////
 
 
+/**
+ * Simulator constructor.
+ */
 Micropolis::Micropolis()
 {
     init();
 }
 
 
+/** Simulator destructor. */
 Micropolis::~Micropolis()
 {
     destroy();
 }
 
 
+/** Initialize simulator variables to a sane default. */
 void Micropolis::init()
 {
 
