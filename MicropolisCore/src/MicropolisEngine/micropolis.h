@@ -980,6 +980,8 @@ public:
 
     ~Micropolis();
 
+private:
+
     void init();
 
     void destroy();
@@ -990,35 +992,6 @@ public:
 
 public:
 
-
-    /**
-     * Communication variable with map scan x position.
-     *
-     * Used all over.
-     */
-    short curMapX;
-
-
-    /**
-     * Communication variable with map scan y position.
-     *
-     * Used all over.
-     */
-    short curMapY;
-
-    /**
-     * Current number at curMapX, curMapY, raw.
-     *
-     * Used all over.
-     */
-    short curNum;
-
-    /**
-     * Current tile at curMapX, curMapY, the number masked with TILEMASK.
-     *
-     * Used all over.
-     */
-    short curTile;
 
     /**
      * Number of road tiles in the game.
@@ -1140,20 +1113,6 @@ public:
      * Airport population.
      */
     short airportPop;
-
-    /**
-     * Need hospital?
-     *
-     * 0 if no, 1 if yes, -1 if too many.
-     */
-    short needHospital;
-
-    /**
-     * Need church?
-     *
-     * 0 if no, 1 if yes, -1 if too many.
-     */
-    short needChurch;
 
     /**
      * Average crime.
@@ -1382,32 +1341,6 @@ public:
     Byte *crimeMap[WORLD_W_2];
 
     /**
-     * Temporary map 1.
-     *
-     * Used to smooth population density, pollution.
-     */
-    Byte *tempMap1[WORLD_W_2];
-
-    /**
-     * Temporary map 2.
-     *
-     * Used to smooth population density, pollution.
-     */
-    Byte *tempMap2[WORLD_W_2];
-
-    /**
-     * Temporary map 3.
-     *
-     * Used to smooth development density, for terrainDensityMap.
-     */
-    Byte *tempMap3[WORLD_W_4];
-
-    /**
-     * Temporary array for smoothing fire and police station maps.
-     */
-    short tempMap4[WORLD_W_8][WORLD_H_8];
-
-    /**
      * Terrain development density map.
      *
      * Used to calculate land value.
@@ -1464,56 +1397,6 @@ public:
     short comRateMap[WORLD_W_8][WORLD_H_8];
 
     /**
-     * Memory for terrainDensityMap array.
-     */
-    Ptr terrainDensityMapBase;
-
-    /**
-     * Memory for tempMap1 array.
-     */
-    Ptr tempMap1Base;
-
-    /**
-     * Memory for tempMap2 array.
-     */
-    Ptr tempMap2Base;
-
-    /**
-     * Memory for tempMap3 array.
-     */
-    Ptr tempMap3Base;
-
-    /**
-     * Memory for populationDensityMap array.
-     */
-    Ptr populationDensityMapBase;
-
-    /**
-     * Memory for trafficDensityMap array.
-     */
-    Ptr trafficDensityMapBase;
-
-    /**
-     * Memory for pollutionMap array.
-     */
-    Ptr pollutionMapBase;
-
-    /**
-     * Memory for landValueMap array.
-     */
-    Ptr landValueMapBase;
-
-    /**
-     * Memory for crimeMap array.
-     */
-    Ptr crimeMapBase;
-
-    /**
-     * Memory for map array.
-     */
-    unsigned short *mapBase;
-
-    /**
      * Residential population history.
      */
     short *resHist;
@@ -1552,6 +1435,129 @@ public:
      * Power distribution bitmap.
      */
     short *powerMap;
+
+private:
+
+
+    /**
+     * Communication variable with map scan x position.
+     *
+     * Used all over.
+     */
+    short curMapX;
+
+    /**
+     * Communication variable with map scan y position.
+     *
+     * Used all over.
+     */
+    short curMapY;
+
+    /**
+     * Current number at curMapX, curMapY, raw.
+     *
+     * Used all over.
+     */
+    short curNum;
+
+    /**
+     * Current tile at curMapX, curMapY, the number masked with TILEMASK.
+     *
+     * Used all over.
+     */
+    short curTile;
+
+    /**
+     * Need hospital?
+     *
+     * 0 if no, 1 if yes, -1 if too many.
+     */
+    short needHospital;
+
+    /**
+     * Need church?
+     *
+     * 0 if no, 1 if yes, -1 if too many.
+     */
+    short needChurch;
+
+
+    /**
+     * Memory for terrainDensityMap array.
+     */
+    Ptr terrainDensityMapBase;
+
+    /**
+     * Memory for populationDensityMap array.
+     */
+    Ptr populationDensityMapBase;
+
+    /**
+     * Memory for trafficDensityMap array.
+     */
+    Ptr trafficDensityMapBase;
+
+    /**
+     * Memory for pollutionMap array.
+     */
+    Ptr pollutionMapBase;
+
+    /**
+     * Memory for landValueMap array.
+     */
+    Ptr landValueMapBase;
+
+    /**
+     * Memory for crimeMap array.
+     */
+    Ptr crimeMapBase;
+
+    /**
+     * Memory for map array.
+     */
+    unsigned short *mapBase;
+
+    /**
+     * Memory for tempMap1 array.
+     */
+    Ptr tempMap1Base;
+
+    /**
+     * Memory for tempMap2 array.
+     */
+    Ptr tempMap2Base;
+
+    /**
+     * Memory for tempMap3 array.
+     */
+    Ptr tempMap3Base;
+
+    /**
+     * Temporary map 1.
+     *
+     * Used to smooth population density, pollution.
+     */
+    Byte *tempMap1[WORLD_W_2];
+
+    /**
+     * Temporary map 2.
+     *
+     * Used to smooth population density, pollution.
+     */
+    Byte *tempMap2[WORLD_W_2];
+
+    /**
+     * Temporary map 3.
+     *
+     * Used to smooth development density, for terrainDensityMap.
+     */
+    Byte *tempMap3[WORLD_W_4];
+
+    /**
+     * Temporary array for smoothing fire and police station maps.
+     */
+    short tempMap4[WORLD_W_8][WORLD_H_8];
+
 
 
     void initMapArrays();
@@ -1671,44 +1677,22 @@ public:
     ////////////////////////////////////////////////////////////////////////
     // connect.cpp
 
-public:
+private:
 
 
-    int connectTile(
-        short x,
-        short y,
-        short *TileAdrPtr,
-        short Command);
+    int connectTile(short x, short y, short *TileAdrPtr, short Command);
 
-    int layDoze(
-        int x,
-        int y,
-        short *TileAdrPtr);
+    int layDoze(int x, int y, short *TileAdrPtr);
 
-    int layRoad(
-        int x,
-        int y,
-        short *TileAdrPtr);
+    int layRoad(int x, int y, short *TileAdrPtr);
 
-    int layRail(
-        int x,
-        int y,
-        short *TileAdrPtr);
+    int layRail(int x, int y, short *TileAdrPtr);
 
-    int layWire(
-          int x,
-          int y,
-          short *TileAdrPtr);
+    int layWire(int x, int y, short *TileAdrPtr);
 
-    void fixZone(
-        int x,
-        int y,
-        short *TileAdrPtr);
+    void fixZone(int x, int y, short *TileAdrPtr);
 
-    void fixSingle(
-        int x,
-        int y,
-        short *TileAdrPtr);
+    void fixSingle(int x, int y, short *TileAdrPtr);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1838,11 +1822,26 @@ public:
 
     void evalInit();
 
+    void doScoreCard();
+
+    void changeEval();
+
+    void scoreDoer();
+
+    int countProblems();
+
+    int getProblemNumber(int i);
+
+    int getProblemVotes(int i);
+
+
+private:
+
+    void getAssessedValue();
+
     void doPopNum();
 
     void doProblems(short problemTable[PROBNUM]);
-
-    void getAssessedValue();
 
     void voteProblems(const short problemTable[PROBNUM]);
 
@@ -1855,18 +1854,6 @@ public:
     void getScore(const short problemTable[PROBNUM]);
 
     void doVotes();
-
-    void doScoreCard();
-
-    void changeEval();
-
-    void scoreDoer();
-
-    int countProblems();
-
-    int getProblemNumber(int i);
-
-    int getProblemVotes(int i);
 
     ////////////////////////////////////////////////////////////////////////
     // fileio.cpp
@@ -1906,79 +1893,98 @@ public:
 
 public:
 
+    /** @name Terrain generator.
+     * features available incrementally as city building tools.
+     *
+     * The user should be able to place water and trees, and it should
+     * dynamically smooth the edges.
+     *
+     * The user interface could restrict the user to only drawing
+     * terrain before any zones were built, but it would be best if
+     * the terrain editing tools worked properly when there were zones
+     * built (by automatically bulldozing zones whose underlying
+     * terrain it's modifying).
+     */
+    //@{
 
-    // It would be nice to open up the terrain generator, and make its
-    // features available incrementally as city building tools.
-    //
-    // The user should be able to place water and trees, and it should
-    // dynamically smooth the edges.
-    //
-    // The user interface could restrict the user to only drawing
-    // terrain before any zones were built, but it would be best if
-    // the terrain editing tools worked properly when there were zones
-    // built (by automatically bulldozing zones whose underlying
-    // terrain it's modifying).
-
-    // Current X location of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainMapX;
-
-    // Current Y location of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainMapY;
-
-    // Current direction of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainDir;
-
-    // Last direction of the terrain generator.
-    // Only used internally by the terrain generator. Should be private.
-    short terrainDirLast;
-
-    // Controls the level of tree creation.
-    // -1 => create default number of trees, 0 => never create trees, >0 => create more trees
+    /**
+     * Controls the level of tree creation.
+     * -1 => create default number of trees, 0 => never create trees, >0 => create more trees
+     */
     int terrainTreeLevel;
 
-    // Controls the level of lake creation.
-    // -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
+    /**
+     * Controls the level of lake creation.
+     * -1 => create default number of lakes, 0 => never create lakes, >0 => create more lakes
+     */
     int terrainLakeLevel;
 
-    // Controls the level of river curviness.
-    // -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
+    /**
+     * Controls the level of river curviness.
+     * -1 => default curve level, 0 => never create rivers, >0 => create curvier rivers
+     */
     int terrainCurveLevel;
 
-    // Controls how often to create an island.
-    // -1 => 10% chance of island, 0 => never create island, 1 => always create island
+    /**
+     * Controls how often to create an island.
+     * -1 => 10% chance of island, 0 => never create island, 1 => always create island
+     */
     int terrainCreateIsland;
 
 
     void generateNewCity() ;
 
-    void generateSomeCity(int r);
-
-    void generateMap(int r);
-
     void clearMap();
 
     void clearUnnatural();
 
-    void makeNakedIsland();
-
     void makeIsland();
 
-    void makeLakes();
+private:
 
-    void moveMap(short dir);
+    /**
+     * Current X location of the terrain generator.
+     * Only used internally by the terrain generator.
+     */
+    short terrainMapX;
 
-    void treeSplash(short xloc, short yloc);
+    /**
+     * Current Y location of the terrain generator.
+     * Only used internally by the terrain generator.
+     */
+    short terrainMapY;
+
+    /**
+     * Current direction of the terrain generator.
+     * Only used internally by the terrain generator.
+     */
+    short terrainDir;
+
+    /**
+     * Last direction of the terrain generator.
+     * Only used internally by the terrain generator.
+     */
+    short terrainDirLast;
+
+
+
+    void generateSomeCity(int seed);
+
+    void generateMap(int seed);
+
+    void makeNakedIsland();
+
 
     void doTrees();
 
-    void smoothRiver();
+    void treeSplash(short xloc, short yloc);
 
     bool isTree(int cell);
 
     void smoothTrees();
+
+
+    void makeLakes();
 
     void doRivers(short terrainXStart, short terrainYStart);
 
@@ -1986,7 +1992,7 @@ public:
 
     void doSRiver();
 
-    void putOnMap(short Mchar, short Xoff, short Yoff);
+    void smoothRiver();
 
     void plopBRiver();
 
@@ -1994,6 +2000,12 @@ public:
 
     void smoothWater();
 
+
+    void moveMap(short dir);
+
+    void putOnMap(short Mchar, short Xoff, short Yoff);
+
+    //@}
 
     ////////////////////////////////////////////////////////////////////////
     // graph.cpp
@@ -2329,7 +2341,7 @@ public:
     ////////////////////////////////////////////////////////////////////////
     // random.cpp
 
-public:
+private:
 
 
     UQuad nextRandom;
