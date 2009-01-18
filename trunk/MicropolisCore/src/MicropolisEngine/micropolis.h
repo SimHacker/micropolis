@@ -2281,7 +2281,7 @@ public:
     ////////////////////////////////////////////////////////////////////////
     // power.cpp
 
-public:
+pprivate:
 
 
     /** @name Power stack
@@ -2385,11 +2385,13 @@ public:
     ////////////////////////////////////////////////////////////////////////
     // scan.cpp
 
-public:
+private:
 
 
+    /** @todo Write-only variable, can be removed? */
     short newMap;
 
+    /** @todo Write-only variable, can be removed? */
     short newMapFlags[MAP_TYPE_COUNT];
 
     short cityCenterX; ///< X coordinate of city center
@@ -2440,7 +2442,6 @@ public:
 
     void computeComRateMap();
 
-
     ////////////////////////////////////////////////////////////////////////
     // simulate.cpp
 
@@ -2488,6 +2489,8 @@ public:
 
     bool doInitialEval; ///< Need to perform initial city evaluation.
 
+
+private:
 
     /** Generate a random animated MapTileCharacters::FIRE tile */
     inline short randomFire()
@@ -2547,9 +2550,6 @@ public:
 
     void fireZone(int Xloc, int Yloc, int ch);
 
-
-private:
-
     void repairZone(short ZCent, short zsize);
 
     void doSpecialZone(bool PwrOn);
@@ -2571,14 +2571,6 @@ public:
 
     SimSprite *spriteList; ///< List of active sprites.
 
-    SimSprite *freeSprites; ///< Pool of free #SimSprite objects.
-
-    SimSprite *globalSprites[SPRITE_COUNT];
-
-    int absDist;
-
-    short spriteCycle;
-
 
     SimSprite *newSprite(const char *name, int type, int x, int y);
 
@@ -2595,6 +2587,18 @@ public:
     void drawObjects();
 
     void drawSprite(SimSprite *sprite);
+
+
+private:
+
+    SimSprite *freeSprites; ///< Pool of free #SimSprite objects.
+
+    SimSprite *globalSprites[SPRITE_COUNT];
+
+    int absDist;
+
+    short spriteCycle;
+
 
     short getChar(int x, int y);
 
@@ -2661,7 +2665,6 @@ public:
     void makeExplosion(int x, int y);
 
     void makeExplosionAt(int x, int y);
-
 
     ////////////////////////////////////////////////////////////////////////
     // stubs.cpp
@@ -2757,8 +2760,7 @@ public:
 
     void doStartLoad();
 
-    void doStartScenario(
-      int scenario);
+    void doStartScenario(int scenario);
 
     void dropFireBombs();
 
@@ -2805,16 +2807,6 @@ public:
     int putDownPark(short mapH, short mapV);
 
     int putDownNetwork(short mapH, short mapV);
-
-    short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
-
-    int check3x3(short mapH, short mapV, short base, short tool);
-
-    short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
-
-    short check6x6(short mapH, short mapV, short base, short tool);
-
-    int getDensityStr(short catNo, short mapH, short mapV);
 
     void doZoneStatus(short mapH, short mapV);
 
@@ -2869,6 +2861,16 @@ public:
 
 private:
 
+    short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
+
+    int check3x3(short mapH, short mapV, short base, short tool);
+
+    short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
+
+    short check6x6(short mapH, short mapV, short base, short tool);
+
+    int getDensityStr(short catNo, short mapH, short mapV);
+
     bool tally(short tileValue);
 
     short checkSize(short tileValue);
@@ -2881,7 +2883,7 @@ private:
     ////////////////////////////////////////////////////////////////////////
     // traffic.cpp
 
-public:
+private:
 
     /* Position stack */
     short curMapStackPointer; ///< Position stack top pointer, points to top position
@@ -2934,9 +2936,6 @@ public:
     bool tryGo(int dist);
 
     short getFromMap(Direction d);
-
-
-private:
 
     bool driveDone(ZoneType destZone);
 
@@ -3006,9 +3005,6 @@ public:
 
 public:
 
-
-    void makeDollarDecimalStr(char *numStr, char *dollarStr);
-
     void pause();
 
     void resume();
@@ -3033,11 +3029,14 @@ public:
 
     void doNewGame();
 
+private:
+
+    void makeDollarDecimalStr(char *numStr, char *dollarStr);
 
     ////////////////////////////////////////////////////////////////////////
     // zone.cpp
 
-public:
+private:
 
 
     void doZone();
