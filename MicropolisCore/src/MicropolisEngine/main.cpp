@@ -43,56 +43,66 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-#define TESTDIR(DIR, NAME) \
-    if ((stat(DIR, &statbuf) == -1) || \
-        !(S_ISDIR(statbuf.st_mode))) { \
-        fprintf(stderr, \
-            "Can't find the directory \"%s\"!\n", DIR); \
-        fprintf(stderr, \
-            "The environment variable \"%s\" should name a directory.\n", \
-            NAME); \
-        lost = 1; \
-    }
-
-
-#define SRCCOL (WORLD_H + 2)
-#define DSTCOL WORLD_H
-
-
-////////////////////////////////////////////////////////////////////////
-
-
+/**
+ * Get version of Micropolis program.
+ * @todo Use this function or eliminate it.
+ * @return Textual version.
+ */
 const char *Micropolis::getMicropolisVersion()
 {
     return MICROPOLIS_VERSION;
 }
 
+/**
+ * Check whether \a dir points to a directory.
+ * If not, report an error.
+ * @param dir    Directory to search.
+ * @param envVar Environment variable controlling searchpath of the directory.
+ * @return Directory has been found.
+ */
+static bool testDirectory(const std::string& dir, const char *envVar)
+{
+    struct stat statbuf;
 
+    if (stat(dir.c_str(), &statbuf) == 0 && S_ISDIR(statbuf.st_mode)) {
+
+        return true;
+    }
+
+    fprintf(stderr, "Can't find the directory \"%s\"!\n", dir.c_str());
+    fprintf(stderr,
+            "The environment variable \"%s\" should name a directory.\n",
+            envVar);
+
+    return false;
+}
+
+/** Locate resource directory. */
 void Micropolis::environmentInit()
 {
-    char *s;
-    struct stat statbuf;
-    int lost = 0;
-
-    if ((s = getenv("SIMHOME")) == NULL) {
+    const char *s = getenv("SIMHOME");
+    if (s == NULL) {
         s = ".";
     }
     homeDir = s;
-    TESTDIR(homeDir.c_str(), "$SIMHOME");
 
-    resourceDir = homeDir;
-    resourceDir += "/res/";
-    TESTDIR(resourceDir.c_str(), "$SIMHOME/res");
+    if (testDirectory(homeDir, "$SIMHOME")) {
 
-    if (lost) {
-        fprintf(stderr,
-            "Please check the environment or reinstall Micropolis and try again! Sorry!\n");
-        // TODO: Tell application to exit.
+        resourceDir = homeDir + "/res/";
+        if (testDirectory(resourceDir, "$SIMHOME/res")) {
+
+            return; // All ok
+        }
     }
 
+    // Failed on $SIMHOME, ".", or the 'res' directory.
+    fprintf(stderr,
+            "Please check the environment or reinstall Micropolis and try again! Sorry!\n");
+        // TODO: Tell application to exit.
 }
 
 
+/** Initialize for a simulation */
 void Micropolis::simInit()
 {
     enableSound = true; // Enable sound
@@ -134,6 +144,11 @@ void Micropolis::simInit()
 }
 
 
+/**
+ * Update ????
+ * @todo What is the purpose of this function? (also in relation with
+ *       Micropolis::simTick()).
+ */
 void Micropolis::simUpdate()
 {
     blinkFlag = ((tickCount() % 60) < 30) ? 1 : -1;
@@ -149,15 +164,23 @@ void Micropolis::simUpdate()
 }
 
 
-/** @todo Why is Micropolis::cellSrc not allocated together with all the other
- *        variables?
+/**
+ * ????
+ * @todo Why is Micropolis::cellSrc not allocated together with all the other
+ *       variables?
+ * @todo What is the purpose of this function?
+ * @todo KILL the define.
  */
 void Micropolis::simHeat()
 {
     int x, y;
     static int a = 0;
     short *src, *dst;
-    register int fl = heatFlow;
+    int fl = heatFlow;
+
+    const int SRCCOL = WORLD_H + 2;
+    const int DSTCOL = WORLD_H;
+
 
     if (cellSrc == NULL) {
         cellSrc = (short *)newPtr((WORLD_W + 2) * (WORLD_H + 2) * sizeof (short));
@@ -353,7 +376,7 @@ void Micropolis::simHeat()
 }
 
 
-void Micropolis::simLoop(int doSim)
+void Micropolis::simLoop(bool doSim)
 {
    if (heatSteps) {
        int j;
@@ -379,12 +402,17 @@ void Micropolis::simLoop(int doSim)
 }
 
 
+/**
+ * Move simulaton forward.
+ * @todo What is the purpose of this function? (also in relation with
+ *       Micropolis::simUpdate()).
+ */
 void Micropolis::simTick()
 {
     if (simSpeed) {
         int i;
         for (i = 0; i < simSkips; i++) {
-            simLoop(1);
+            simLoop(true);
         }
     }
 }
