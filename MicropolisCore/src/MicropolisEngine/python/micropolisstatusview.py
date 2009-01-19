@@ -80,37 +80,46 @@ import micropolisview
 # MicropolisStatusView
 
 
-class MicropolisStatusView(micropolisview.MicropolisView):
+class MicropolisStatusView(gtk.VBox):
 
 
     def __init__(
         self,
+        engine=None,
         **args):
 
-        micropolisview.MicropolisView.__init__(
+        gtk.VBox.__init__(
             self,
-            aspect='status',
-            interests=('city', 'budget', 'date', 'funds', 'demand', 'level', 'speed', 'delay', 'option',),
+            False,
+            5,
             **args)
 
+        self.engine = engine
 
-    def drawContent(
-        self,
-        ctx,
-        playout):
+        # Views
 
-        #print "==== MicropolisStatusView DRAWCONTENT", self
+        self.hbox1 = gtk.HBox(False, 5)
+        self.pack_start(self.hbox1, False, False, 0)
 
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
+        self.buttonStart = gtk.Button("Start")
+        self.buttonStart.connect("clicked", self.buttonStartClicked, None)
+        self.hbox1.pack_start(self.buttonStart, False, False, 0)
+        self.buttonStart.show()
 
-        # RCI Demand Gauge (toggles graph)
-        # Date (speed control)
-        # Funds (opens budget window)
-        # Tax Rate (controls tax rate)
-        # Message Field
-        # Scrolling Message Journal
+        self.buttonStop = gtk.Button("Stop")
+        self.buttonStop.connect("clicked", self.buttonStopClicked, None)
+        self.hbox1.pack_start(self.buttonStop, False, False, 0)
+        self.buttonStop.show()
+
+
+    def buttonStartClicked(self, widget, data=None):
+        print "START"
+        self.engine.resume()
+
+
+    def buttonStopClicked(self, widget, data=None):
+        print "STOP"
+        self.engine.pause()
 
 
 ########################################################################

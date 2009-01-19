@@ -220,36 +220,37 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         annualChange = self.formatDelta(engine.cityScoreDelta)
 
         markup1 = """<span>
-<b>Is The Mayor Doing a Good Job?</b>
-  Yes: %s%%
-  No: %s%%
+<b>City Evaluation</b>
  
-<b>What are the Worst Problems?</b>
-  %s
-  %s
-  %s
-  %s
-</span>
-""" % (
-            yesPercent,
-            noPercent,
-            problems[0],
-            problems[1],
-            problems[2],
-            problems[3],
-        )
-
-        markup2 = """<span>
 <b>Statistics</b>
-  Population: %s
-  Net Migration: %s (last year)
-  Assessed Value: %s
-  Category: %s
-  Game Level: %s
+  Population:
+      %s
+  Net Migration:
+      %s
+  Assessed Value:
+      %s
+  Category:
+      %s
+  Game Level:
+      %s
  
-<b>Overall City Score (0 - 1000)</b>
-  Current Score: %s
-  Annual Change: %s
+<b>Overall City Score</b>
+  Current Score:
+      %s
+  Annual Change:
+      %s
+ 
+<b>Is The Mayor doing
+a Good Job?</b>
+    Yes: %s%%
+    No: %s%%
+ 
+<b>What are the 
+Worst Problems?</b>
+    %s
+    %s
+    %s
+    %s
 </span>
 """ % (
             population,
@@ -259,6 +260,12 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
             gameLevel,
             currentScore,
             annualChange,
+            yesPercent,
+            noPercent,
+            problems[0],
+            problems[1],
+            problems[2],
+            problems[3],
         )
 
         ctx.set_source_rgb(0.0, 0.0, 0.0)
@@ -267,11 +274,6 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         #print markup1
         playout.set_markup(markup1)
         ctx.move_to(10, 10)
-        ctx.show_layout(playout)
-
-        #print markup2
-        playout.set_markup(markup2)
-        ctx.move_to(250, 10)
         ctx.show_layout(playout)
 
 

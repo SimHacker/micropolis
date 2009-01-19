@@ -75,9 +75,9 @@ import time
 import thread
 import random
 import array
-import cam
-from cam import RenderCellTiles, RenderCellPixels
-from cam.utils import Engine
+import cellengine
+from cellengine import RenderCellTiles, RenderCellPixels
+from cellengine.utils import Engine
 from configurations import *
 
 

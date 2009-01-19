@@ -153,51 +153,22 @@ class MicropolisPanedWindow(gtk.Window):
 
         self.engine = engine
 
-        # Views
-
-        self.tileView = \
-            tileViewClass(
-                engine=self.engine)
-
-        self.evaluationView = \
-            evaluationViewClass(
-                engine=engine)
-
-        self.graphView = \
-            graphViewClass(
-                engine=self.tileView.engine)
-
-        self.statusView = \
-            statusViewClass(
-                engine=engine)
-        self.noticeView = \
-            noticeViewClass(
-                engine=engine)
-
         # Frames
 
         self.frameCenter = gtk.Frame()
         self.frameCenter.set_shadow_type(gtk.SHADOW_IN)
-        self.frameCenter.add(self.tileView)
-        engine.addView(self.tileView)
 
         self.frameTop = gtk.Frame()
         self.frameTop.set_shadow_type(gtk.SHADOW_IN)
-        self.frameTop.add(self.evaluationView)
-        engine.addEvaluation(self.evaluationView)
 
         self.frameBottom = gtk.Frame()
         self.frameBottom.set_shadow_type(gtk.SHADOW_IN)
-        self.frameBottom.add(self.graphView)
-        engine.addGraph(self.graphView)
 
         self.frameLeft = gtk.Frame()
         self.frameLeft.set_shadow_type(gtk.SHADOW_IN)
-        self.frameLeft.add(self.statusView)
 
         self.frameRight = gtk.Frame()
         self.frameRight.set_shadow_type(gtk.SHADOW_IN)
-        self.frameRight.add(self.noticeView)
 
         # Panes
 
@@ -255,6 +226,39 @@ class MicropolisPanedWindow(gtk.Window):
             resize=False,
             shrink=False)
 
+        # Views
+
+        self.tileView = \
+            tileViewClass(
+                engine=self.engine)
+        engine.addView(self.tileView)
+
+        self.evaluationView = \
+            evaluationViewClass(
+                engine=engine)
+        engine.addEvaluation(self.evaluationView)
+
+        self.graphView = \
+            graphViewClass(
+                engine=self.tileView.engine)
+        engine.addGraph(self.graphView)
+
+        self.statusView = \
+            statusViewClass(
+                engine=engine)
+
+        self.noticeView = \
+            noticeViewClass(
+                engine=engine)
+
+        # Add the views to the panes.
+
+        self.frameCenter.add(self.tileView)
+        self.frameTop.add(self.statusView)
+        self.frameBottom.add(self.graphView)
+        self.frameLeft.add(self.evaluationView)
+        self.frameRight.add(self.noticeView)
+
 
     def resizeEdges(
         self):
@@ -268,10 +272,10 @@ class MicropolisPanedWindow(gtk.Window):
         extra = 4
         padding = 14
 
-        leftEdge = 16
+        leftEdge = 150
         rightEdge = 16
-        topEdge = 150
-        bottomEdge = 150
+        topEdge = 100
+        bottomEdge = 200
 
         self.hpaned1.set_position(leftEdge + extra)
         self.hpaned2.set_position(winWidth - (extra + leftEdge + padding + rightEdge))

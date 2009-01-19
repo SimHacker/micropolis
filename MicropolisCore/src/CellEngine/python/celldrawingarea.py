@@ -71,6 +71,8 @@
 
 import sys
 import os
+import random
+import array
 
 
 ########################################################################
@@ -95,8 +97,9 @@ class CellDrawingArea(TileDrawingArea):
         **args):
 
         args['sourceTileSize'] = 16
-        args['worldRows'] = 256
-        args['worldCols'] = 256
+        args['worldRows'] = 100
+        args['worldCols'] = 100
+        args['tileCount'] = 960
 
         self.engine = engine
 
@@ -109,10 +112,19 @@ class CellDrawingArea(TileDrawingArea):
         tengine.setBuffer(engine.GetCellBuffer())
         tengine.width = engine.width
         tengine.height = engine.height
-        tengine.colBytes = engine.width
-        tengine.rowBytes = 1
+        tengine.colBytes = 1
+        tengine.rowBytes = engine.width
         tengine.typeCode = 'B'
         tengine.tileMask = 0xff
+
+
+    def makeTileMap(
+        self):
+
+        tileMap = array.array('i')
+        self.tileMap = tileMap
+        for i in range(0, self.tileCount):
+            tileMap.append(random.randint(0, 959))
 
 
     def destroyEngine(self):
