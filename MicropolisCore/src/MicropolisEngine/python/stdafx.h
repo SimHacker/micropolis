@@ -31,5 +31,3 @@
 
 #endif
 
-#include "micropolis.h"
-
