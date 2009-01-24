@@ -1,4 +1,4 @@
-# micropolisnoticeview.py
+# micropolisdemandgauge.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Notice View
+# Micropolis Graph View
 # Don Hopkins
 
 
@@ -77,30 +77,20 @@ import micropolisview
 
 
 ########################################################################
-# MicropolisNoticeView
+# MicropolisDemandGauge
 
 
-class MicropolisNoticeView(micropolisview.MicropolisView):
+class MicropolisDemandGauge(micropolisview.MicropolisView):
 
 
     def __init__(
         self,
-        statusview=None,
         **args):
 
         micropolisview.MicropolisView.__init__(
             self,
-            aspect='notice',
-            interests=('city', 'notice', 'message',),
+            interests=('demand',),
             **args)
-
-        self.statusview = statusview
-        self.messageNumber = 0
-        self.message = ''
-        self.messageX = -1
-        self.messageY = -1
-        self.showPicture = False
-        self.important = False
 
 
     def update(
@@ -108,48 +98,9 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
         name,
         *args):
 
-        if name == 'message':
-            self.updateMessage(*args)
-
-
-    def updateMessage(
-        self,
-        messageNumber,
-        messageX,
-        messageY,
-        showPicture,
-        important):
-
-        self.logMessage(messageNumber, messageX, messageY, showPicture, important)
-
-        if not showPicture:
-            return
-
-        #print "updateMessage", messageNumber, messageX, messageY, showPicture, important
-
-        engine = self.engine
-
-        self.messageNumber = messageNumber
-        self.message = engine.messages[messageNumber]
-        self.messageX = messageX
-        self.messageY = messageY
-        self.showPicture = showPicture
-        self.important = important
-
-        self.statusview.setCityViewVisible(showPicture, messageX, messageY)
+        #print "DEMAND GAUGE UPDATE", self, name, args
 
         self.queue_draw()
-
-
-    def logMessage(
-        self,
-        messageNumber,
-        messageX,
-        messageY,
-        showPicture,
-        important):
-        message = self.engine.messages[messageNumber]
-        print "MESSAGE", messageX, messageY, message
 
 
     def drawContent(
@@ -157,58 +108,179 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
         ctx,
         playout):
 
-        #print "==== MicropolisNoticeView DRAWCONTENT", self
+        #print "==== MicropolisDemandGauge DRAWCONTENT", self
 
         engine = self.engine
+
+        ctx.save()
+
+        # Measure window.
 
         winRect = self.get_allocation()
         winWidth = winRect.width
         winHeight = winRect.height
 
+        # Draw gauge.
+
+        ctx.rectangle(
+            0,
+            0,
+            winWidth,
+            winHeight)
+
+        ctx.set_source_rgb(
+            0.5, 0.5, 1.0)
+
+        ctx.fill_preserve()
+
+        ctx.set_source_rgb(
+            0.0, 0.0, 0.0)
+
+        ctx.set_line_width(
+            2)
+
+        ctx.stroke()
+
+        # Measure bar.
+
+        barGap = 5
+        barHeight = 10
+        barWidth = winWidth - (2 * barGap)
+        barX = barGap
+        barY = int((winHeight - barHeight) / 2)
+
+        # Measure columns.
+
+        colGap = 2
+        colWidth = int((barWidth - (colGap * 4)) / 3)
+        rColX = barX + colGap
+        cColX = rColX + colWidth + colGap
+        iColX = cColX + colWidth + colGap
+
+        colHeight = int((winHeight - barHeight - (2 * barGap)) / 2)
+        
+        resDemand, comDemand, indDemand = engine.getDemands()
+        print "RES", resDemand, "COM", comDemand, "IND", indDemand
+
+        res = -resDemand * colHeight
+        com = -comDemand * colHeight
+        ind = -indDemand * colHeight
+
+        # Draw columns.
+
+        if res != 0:
+            if res < 0:
+                y = barY + res
+                h = -res
+            else:
+                y = barY + barHeight
+                h = res
+            
+            ctx.rectangle(
+                rColX,
+                y,
+                colWidth,
+                h)
+
+            ctx.set_source_rgb(
+                0.0,
+                1.0,
+                0.0)
+
+            ctx.fill()
+
+        if com != 0:
+            if com < 0:
+                y = barY + com
+                h = -com
+            else:
+                y = barY + barHeight
+                h = com
+            
+            ctx.rectangle(
+                cColX,
+                y,
+                colWidth,
+                h)
+
+            ctx.set_source_rgb(
+                0.0,
+                0.0,
+                1.0)
+
+            ctx.fill()
+
+        if ind != 0:
+            if ind < 0:
+                y = barY + ind
+                h = -ind
+            else:
+                y = barY + barHeight
+                h = ind
+            
+            ctx.rectangle(
+                iColX,
+                y,
+                colWidth,
+                h)
+
+            ctx.set_source_rgb(
+                1.0,
+                1.0,
+                0.0)
+
+            ctx.fill()
+
+        # Draw bar.
+
         ctx.save()
 
-        ctx.set_source_rgb(1.0, 1.0, 1.0)
-        ctx.rectangle(0, 0, winWidth, winHeight)
-        ctx.fill()
+        ctx.rectangle(
+            barX,
+            barY,
+            barWidth,
+            barHeight)
 
-        gap = 10
-        textX = gap
-        textY = gap
-        textWidth = winWidth - (2 * gap)
-        textHeight = winHeight - (2 * gap)
+        ctx.set_source_rgb(
+            1.0, 1.0, 1.0)
 
-        if (textWidth > 0) and (textHeight > 0):
+        ctx.clip_preserve()
 
-            messageNumber = self.messageNumber
-            if messageNumber:
-                message = engine.messages[messageNumber]
-            else:
-                message = ""
+        ctx.fill_preserve()
 
-            text = "messageX: %d messageY: %d showPicture: %s important: %s" % (
-                self.messageX, self.messageY, self.showPicture, self.important,
-            )
+        ctx.set_source_rgb(
+            0.0, 0.0, 0.0)
 
-            markup1 = """<span>
-<b>%s</b>
- 
-%s
-</span>
-""" % (
-                message,
-                text,
-            )
+        ctx.set_line_width(
+            2)
 
-            ctx.set_source_rgb(0.0, 0.0, 0.0)
-            playout.set_font_description(self.labelFont)
-            playout.set_width(textWidth * 1024)
-            #playout.set_height(textHeight)
+        ctx.stroke()
 
-            #print markup1
-            playout.set_markup(markup1)
-            ctx.move_to(10, 10)
-            ctx.show_layout(playout)
+        ctx.restore()
 
+        ctx.restore()
+
+
+    def handleMouseDrag(
+        self,
+        event):
+
+        pass
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        pass
 
 
 ########################################################################

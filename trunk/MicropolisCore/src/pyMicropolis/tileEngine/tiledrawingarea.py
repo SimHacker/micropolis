@@ -203,6 +203,8 @@ class TileDrawingArea(gtk.DrawingArea):
 
         self.set_events(
             gtk.gdk.EXPOSURE_MASK |
+            gtk.gdk.ENTER_NOTIFY_MASK |
+            gtk.gdk.LEAVE_NOTIFY_MASK |
             gtk.gdk.POINTER_MOTION_MASK |
             gtk.gdk.POINTER_MOTION_HINT_MASK |
             gtk.gdk.BUTTON_MOTION_MASK |
@@ -215,6 +217,8 @@ class TileDrawingArea(gtk.DrawingArea):
             gtk.gdk.PROXIMITY_OUT_MASK)
 
         self.connect('expose_event', self.handleExpose)
+        self.connect('enter_notify_event', self.handleEnterNotify)
+        self.connect('enter_notify_event', self.handleLeaveNotify)
         self.connect('focus_in_event', self.handleFocusIn)
         self.connect('focus_out_event', self.handleFocusOut)
         self.connect('key_press_event', self.handleKeyPress)
@@ -320,6 +324,9 @@ class TileDrawingArea(gtk.DrawingArea):
         scale):
 
         if self.scale == scale:
+            return
+
+        if not self.window:
             return
 
         self.scale = scale
@@ -964,6 +971,22 @@ class TileDrawingArea(gtk.DrawingArea):
             self.panY + dy)
 
 
+    def centerOnTile(self, tileX, tileY):
+        px = -self.sourceTileSize * self.scale * tileX
+        py = -self.sourceTileSize * self.scale * tileY
+
+        rect = self.get_allocation()
+        winWidth = rect.width
+        winHeight = rect.height
+
+        px += int(winWidth / 2)
+        py += int(winHeight / 2)
+
+        #print "centerOnTile", "tile", tileX, tileY, "sourceTileSize", self.sourceTileSize, "scale", self.scale, "p", px, py
+        
+        self.panTo(px, py)
+
+
     def selectToolByName(self, toolName):
         print "selectToolByName", toolName
 
@@ -977,6 +1000,22 @@ class TileDrawingArea(gtk.DrawingArea):
             tool.select(self)
 
         self.selectedTool = tool
+
+
+    def handleEnterNotify(
+        self,
+        widget,
+        event):
+
+        self.grab_focus()
+
+
+    def handleLeaveNotify(
+        self,
+        widget,
+        event):
+
+        pass
 
 
     def handleFocusIn(

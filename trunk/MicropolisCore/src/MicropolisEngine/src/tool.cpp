@@ -1353,18 +1353,16 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
     result = doTool(tool, x <<4, y <<4, true);
 
     if (result == -1) {
-        clearMessage();
-        sendMessage(STR301_BULLDOZE_AREA_FIRST);
+        sendMessage(MESSAGE_BULLDOZE_AREA_FIRST, NOWHERE, NOWHERE, false, true);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
         makeSound("interface", "UhUh", x <<4, y <<4);
     } else if (result == -2) {
-        clearMessage();
-        sendMessage(STR301_NOT_ENOUGH_FUNDS);
+        sendMessage(MESSAGE_NOT_ENOUGH_FUNDS, NOWHERE, NOWHERE, false, true);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
         makeSound("interface", "Sorry", x <<4, y <<4);
     }
 
-    simSkip = 0;
+    simPass = 0;
     invalidateEditors();
 }
 
@@ -1445,7 +1443,7 @@ void Micropolis::toolDrag(EditingTool tool, short px, short py)
     toolXLast = (lx <<4) + 8;
     toolYLast = (ly <<4) + 8;
 
-    simSkip = 0; // update editors overlapping this one
+    simPass = 0; // update editors overlapping this one
 
     invalidateEditors();
 }

@@ -217,12 +217,12 @@ bool Micropolis::loadFile(const char *filename)
     HALF_SWAP_LONGS(&n, 1);
     cityTime = n;
 
-    autoBulldoze = (miscHist[52] != 0);   // flag for autoBulldoze
-    autoBudget   = (miscHist[53] != 0);   // flag for autoBudget
-    autoGoto     = (miscHist[54] != 0);   // flag for auto-goto
-    enableSound  = (miscHist[55] != 0);   // flag for the sound on/off
-    cityTax = miscHist[56];
-    simSpeed = miscHist[57];
+    setAutoBulldoze(miscHist[52] != 0);   // flag for autoBulldoze
+    setAutoBudget(miscHist[53] != 0);     // flag for autoBudget
+    setAutoGoto(miscHist[54] != 0);       // flag for auto-goto
+    setEnableSound(miscHist[55] != 0);    // flag for the sound on/off
+    setCityTax(miscHist[56]);
+    setSpeed(miscHist[57]);
     changeCensus();
     mustUpdateOptions = true;
 
@@ -255,17 +255,17 @@ bool Micropolis::loadFile(const char *filename)
     // If the tax is nonsensical, set it to a reasonable value.
     if ((cityTax > 20) ||
         (cityTax < 0)) {
-        cityTax = 7;
+        setCityTax(7);
     }
 
     // If the speed is nonsensical, set it to a reasonable value.
     if ((simSpeed < 0) ||
         (simSpeed > 3)) {
-        simSpeed = 3;
+        setSpeed(3);
     }
 
     setSpeed(simSpeed);
-    setSkips(0);
+    setPasses(1);
     initFundingLevel();
 
     // Set the scenario id to 0.
@@ -427,7 +427,7 @@ void Micropolis::loadScenario(Scenario s)
 
     setCleanCityName(name);
     setSpeed(3);
-    cityTax = 7;
+    setCityTax(7);
 
     loadFileDir(
         fname,

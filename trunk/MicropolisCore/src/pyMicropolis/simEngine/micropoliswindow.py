@@ -94,7 +94,6 @@ import micropolisdrawingarea
 import micropolisgraphview
 import micropolisevaluationview
 import micropolisstatusview
-import micropolisnoticeview
 
 
 ########################################################################
@@ -135,10 +134,10 @@ class MicropolisPanedWindow(gtk.Window):
         self,
         engine=None,
         tileViewClass=micropolisdrawingarea.EditableMicropolisDrawingArea,
+        miniTileViewClass=micropolisdrawingarea.MiniMicropolisDrawingArea,
         evaluationViewClass=micropolisevaluationview.MicropolisEvaluationView,
         graphViewClass=micropolisgraphview.MicropolisGraphView,
         statusViewClass=micropolisstatusview.MicropolisStatusView,
-        noticeViewClass=micropolisnoticeview.MicropolisNoticeView,
         **args):
         
         gtk.Window.__init__(self, **args)
@@ -228,10 +227,15 @@ class MicropolisPanedWindow(gtk.Window):
 
         # Views
 
-        self.tileView = \
+        self.tileView1 = \
             tileViewClass(
                 engine=self.engine)
-        engine.addView(self.tileView)
+        engine.addView(self.tileView1)
+
+        self.tileView2 = \
+            miniTileViewClass(
+                engine=self.engine)
+        engine.addView(self.tileView2)
 
         self.evaluationView = \
             evaluationViewClass(
@@ -240,24 +244,33 @@ class MicropolisPanedWindow(gtk.Window):
 
         self.graphView = \
             graphViewClass(
-                engine=self.tileView.engine)
+                engine=engine)
         engine.addGraph(self.graphView)
 
         self.statusView = \
             statusViewClass(
                 engine=engine)
 
-        self.noticeView = \
-            noticeViewClass(
-                engine=engine)
-
-        # Add the views to the panes.
-
-        self.frameCenter.add(self.tileView)
+        self.frameCenter.add(self.tileView1)
         self.frameTop.add(self.statusView)
         self.frameBottom.add(self.graphView)
         self.frameLeft.add(self.evaluationView)
-        self.frameRight.add(self.noticeView)
+        self.frameRight.add(self.tileView2)
+
+        # Load a city file.
+        cityFileName = 'cities/haight.cty'
+        print "Loading city file:", cityFileName
+        engine.loadFile(cityFileName)
+
+        # Initialize the simulator engine.
+
+        engine.resume()
+        engine.setSpeed(2)
+        engine.setCityTax(9)
+        engine.setEnableDisasters(False)
+        engine.setFunds(1000000000)
+
+        self.resize(800, 600)
 
 
     def resizeEdges(
@@ -273,9 +286,9 @@ class MicropolisPanedWindow(gtk.Window):
         padding = 14
 
         leftEdge = 150
-        rightEdge = 16
+        rightEdge = 120
         topEdge = 100
-        bottomEdge = 200
+        bottomEdge = 0
 
         self.hpaned1.set_position(leftEdge + extra)
         self.hpaned2.set_position(winWidth - (extra + leftEdge + padding + rightEdge))
@@ -283,8 +296,11 @@ class MicropolisPanedWindow(gtk.Window):
         self.vpaned1.set_position(topEdge + extra)
         self.vpaned2.set_position(winHeight - (extra + topEdge + padding + bottomEdge))
 
-        self.tileView.panTo(-100, -100)
+        self.tileView1.panTo(-200, -200)
+        self.tileView1.setScale(1.0)
 
+        self.tileView2.panTo(0, 0)
+        self.tileView2.setScale(0.0625)
 
     def handleRealize(
         self,

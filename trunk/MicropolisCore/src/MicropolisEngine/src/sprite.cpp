@@ -800,7 +800,7 @@ void Micropolis::doCopterSprite(
             int chopperX = (x <<1) + 1;
             int chopperY = (y <<1) + 1;
             if ((trafficDensityMap[x][y] > 170) && ((getRandom16() & 7) == 0)) {
-                sendMessageAt(-STR301_HEAVY_TRAFFIC, chopperX, chopperY);
+	        sendMessage(MESSAGE_HEAVY_TRAFFIC, chopperX, chopperY, true);
                 makeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
                 sprite->soundCount = 200;
             }
@@ -1329,7 +1329,7 @@ void Micropolis::doExplosionSprite(SimSprite *sprite)
             makeSound("city", "Explosion-High", explosionX, explosionY); /* explosion */
             x = (sprite->x >>4) + 3;
             y = (sprite->y >>4);
-            sendMessageAt(STR301_EXPLOSION_REPORTED, x, y);
+            sendMessage(MESSAGE_EXPLOSION_REPORTED, x, y);
         }
 
         sprite->frame++;
@@ -1662,7 +1662,7 @@ int Micropolis::canDriveOn(int x, int y)
 /**
  * Handle explosion of sprite (mostly due to collision?).
  * @param sprite that should explode.
- * @todo Add a 'bus crashed' message to #Stri301.
+ * @todo Add a 'bus crashed' message to #MessageNumber.
  */
 void Micropolis::explodeSprite(SimSprite *sprite)
 {
@@ -1680,23 +1680,23 @@ void Micropolis::explodeSprite(SimSprite *sprite)
     switch (sprite->type) {
 
         case SPRITE_AIRPLANE:
-            sendMessageAt(-STR301_PLANE_CRASHED, x, y);
+            sendMessage(MESSAGE_PLANE_CRASHED, x, y, true);
             break;
 
         case SPRITE_SHIP:
-            sendMessageAt(-STR301_SHIP_CRASHED, x, y);
+	    sendMessage(MESSAGE_SHIP_CRASHED, x, y, true);
             break;
 
         case SPRITE_TRAIN:
-            sendMessageAt(-STR301_TRAIN_CRASHED, x, y);
+	    sendMessage(MESSAGE_TRAIN_CRASHED, x, y, true);
             break;
 
         case SPRITE_HELICOPTER:
-            sendMessageAt(-STR301_HELICOPTER_CRASHED, x, y);
+            sendMessage(MESSAGE_HELICOPTER_CRASHED, x, y, true);
             break;
 
         case SPRITE_BUS:
-            sendMessageAt(-STR301_TRAIN_CRASHED, x, y); /* XXX for now */
+            sendMessage(MESSAGE_TRAIN_CRASHED, x, y, true); /* XXX for now */
             break;
 
     }
@@ -1965,8 +1965,7 @@ void Micropolis::makeMonster()
 void Micropolis::makeMonsterAt(int x, int y)
 {
     makeSprite(SPRITE_MONSTER, (x << 4) + 48, (y << 4));
-    clearMessage();
-    sendMessageAt(-STR301_MONSTER_SIGHTED, x + 5, y);
+    sendMessage(MESSAGE_MONSTER_SIGHTED, x + 5, y, true, true);
 }
 
 
@@ -2020,8 +2019,7 @@ void Micropolis::makeTornado()
     y = getRandom((WORLD_H <<4) - 200) + 100;
 
     makeSprite(SPRITE_TORNADO, x, y);
-    clearMessage();
-    sendMessageAt(-STR301_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2);
+    sendMessage(MESSAGE_TORNADO_SIGHTED, (x >>4) + 3, (y >>4) + 2, true, true);
 }
 
 

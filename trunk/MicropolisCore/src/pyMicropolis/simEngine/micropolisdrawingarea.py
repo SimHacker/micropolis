@@ -182,7 +182,8 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         engine = self.engine
         engine.simTick()
-        engine.animateTiles()
+        if engine.doAnimation and not engine.tilesAnimated:
+            engine.animateTiles()
 
 
     def makeToolPie(self):
@@ -201,6 +202,25 @@ class MicropolisDrawingArea(TileDrawingArea):
             event)
 
 
+    def handleKey(
+        self,
+        key):
+        
+        if key == 'm':
+            self.engine.heatSteps = 1
+            self.engine.heatRule = 0
+            return True
+        elif key == 'n':
+            self.engine.heatSteps = 1
+            self.engine.heatRule = 1
+            return True
+        elif key == 'o':
+            self.engine.heatSteps = 0
+            return True
+
+        return False
+
+
 ########################################################################
 
 
@@ -208,6 +228,69 @@ class EditableMicropolisDrawingArea(MicropolisDrawingArea):
 
 
     pass
+
+
+########################################################################
+
+
+class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
+
+
+    def __init__(
+        self,
+        follow=None,
+        **args):
+
+        args['keyable'] = False
+        args['clickable'] = False
+        args['zoomable'] = False
+        args['pannable'] = False
+        args['menuable'] = False
+        args['showCursor'] = False
+        args['scale'] = 2
+
+        MicropolisDrawingArea.__init__(self, **args)
+
+        self.follow = follow
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonPress(
+        self,
+        widget,
+        event):
+
+        # TODO: Pan main editor view to the center of this view.
+        pass
+
+
+    def handleMouseDrag(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        pass
+
+
+    def handleMouseScroll(
+        self,
+        widget,
+        event):
+
+        pass
 
 
 ########################################################################
@@ -454,25 +537,6 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
             view.changeScale(view.scale * view.scrollWheelZoomScale)
         elif direction == gtk.gdk.SCROLL_DOWN:
             view.changeScale(view.scale / view.scrollWheelZoomScale)
-
-
-    def handleKey(
-        self,
-        key):
-        
-        print "*" * 72
-        print "HANDLEKEY", key
-
-        if key == 'm':
-            self.engine.heatSteps = 1
-            self.engine.heatRule = 0
-            return True
-        elif key == 'n':
-            self.engine.heatSteps = 1
-            self.engine.heatRule = 1
-            return True
-
-        return False
 
 
 ########################################################################

@@ -2484,6 +2484,19 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_a_WORLD_H_8__short swig_types[4]
 #define SWIGTYPE_p_char swig_types[5]
 #define SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void swig_types[6]
+<<<<<<< .mine
+#define SWIGTYPE_p_float swig_types[7]
+#define SWIGTYPE_p_long swig_types[8]
+#define SWIGTYPE_p_p_char swig_types[9]
+#define SWIGTYPE_p_p_short swig_types[10]
+#define SWIGTYPE_p_p_unsigned_char swig_types[11]
+#define SWIGTYPE_p_short swig_types[12]
+#define SWIGTYPE_p_unsigned_char swig_types[13]
+#define SWIGTYPE_p_unsigned_long swig_types[14]
+#define SWIGTYPE_p_void swig_types[15]
+static swig_type_info *swig_types[17];
+static swig_module_info swig_module = {swig_types, 16, 0, 0, 0, 0};
+=======
 #define SWIGTYPE_p_long swig_types[7]
 #define SWIGTYPE_p_p_char swig_types[8]
 #define SWIGTYPE_p_p_short swig_types[9]
@@ -2494,6 +2507,7 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_void swig_types[14]
 static swig_type_info *swig_types[16];
 static swig_module_info swig_module = {swig_types, 15, 0, 0, 0, 0};
+>>>>>>> .r273
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2705,6 +2719,24 @@ void pythonCallbackHook(
             i,
             PyInt_FromLong(
               (long)d));
+          i++;
+          break;
+        }
+
+        case 'b': {
+          // Pass a boolean. 
+          bool b =
+            va_arg(arglist, int) ? true : false;
+#ifdef TRACE_CALLBACKS
+          printf(
+            "  bool: %s\n",
+            b ? "true" : "false");
+#endif
+          PyTuple_SetItem(
+            paramTuple,
+            i,
+            PyBool_FromLong(
+              b ? 1 : 0));
           i++;
           break;
         }
@@ -3536,7 +3568,25 @@ SWIGINTERN PyObject *Swig_var_POWER_STACK_SIZE_get(void) {
 }
 
 
+<<<<<<< .mine
+SWIGINTERN int NOWHERE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable NOWHERE is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *NOWHERE_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(NOWHERE));
+  return pyobj;
+}
+
+
+SWIGINTERN int MAX_TRAFFIC_DISTANCE_set(PyObject *) {
+=======
 SWIGINTERN int Swig_var_MAX_TRAFFIC_DISTANCE_set(PyObject *) {
+>>>>>>> .r273
   SWIG_Error(SWIG_AttributeError,"Variable MAX_TRAFFIC_DISTANCE is read-only.");
   return 1;
 }
@@ -3588,6 +3638,48 @@ SWIGINTERN PyObject *Swig_var_MAX_FIRE_STATION_EFFECT_get(void) {
   PyObject *pyobj = 0;
   
   pyobj = SWIG_From_int(static_cast< int >(MAX_FIRE_STATION_EFFECT));
+  return pyobj;
+}
+
+
+SWIGINTERN int RES_VALVE_RANGE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable RES_VALVE_RANGE is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *RES_VALVE_RANGE_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(RES_VALVE_RANGE));
+  return pyobj;
+}
+
+
+SWIGINTERN int COM_VALVE_RANGE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable COM_VALVE_RANGE is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *COM_VALVE_RANGE_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(COM_VALVE_RANGE));
+  return pyobj;
+}
+
+
+SWIGINTERN int IND_VALVE_RANGE_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable IND_VALVE_RANGE is read-only.");
+  return 1;
+}
+
+
+SWIGINTERN PyObject *IND_VALVE_RANGE_get(void) {
+  PyObject *pyobj = 0;
+  
+  pyobj = SWIG_From_int(static_cast< int >(IND_VALVE_RANGE));
   return pyobj;
 }
 
@@ -7577,165 +7669,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_messagePort_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messagePort_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messagePort_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_messagePort_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->messagePort = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messagePort_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messagePort_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messagePort_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->messagePort);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageX_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messageX_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageX_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_messageX_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->messageX = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageX_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messageX_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageX_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->messageX);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageY_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messageY_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageY_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_messageY_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->messageY = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageY_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messageY_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageY_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->messageY);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_roadSpend_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -10231,6 +10164,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Micropolis_setCityTax(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setCityTax",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setCityTax" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setCityTax" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  (arg1)->setCityTax(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Micropolis_setBudget(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -10784,7 +10747,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_deltaCityPop_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_cityPopDelta_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   Quad arg2 ;
@@ -10795,18 +10758,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_deltaCityPop_set(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_deltaCityPop_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_cityPopDelta_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_deltaCityPop_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_cityPopDelta_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_deltaCityPop_set" "', argument " "2"" of type '" "Quad""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_cityPopDelta_set" "', argument " "2"" of type '" "Quad""'");
   } 
   arg2 = static_cast< Quad >(val2);
-  if (arg1) (arg1)->deltaCityPop = arg2;
+  if (arg1) (arg1)->cityPopDelta = arg2;
   
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -10815,7 +10778,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_deltaCityPop_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_cityPopDelta_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   Quad result;
@@ -10823,13 +10786,13 @@ SWIGINTERN PyObject *_wrap_Micropolis_deltaCityPop_get(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_deltaCityPop_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_cityPopDelta_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_deltaCityPop_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_cityPopDelta_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Quad) ((arg1)->deltaCityPop);
+  result = (Quad) ((arg1)->cityPopDelta);
   resultobj = SWIG_From_long(static_cast< long >(result));
   return resultobj;
 fail:
@@ -12531,7 +12494,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_simSkips_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_simPasses_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int arg2 ;
@@ -12542,18 +12505,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_simSkips_set(PyObject *SWIGUNUSEDPARM(self
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_simSkips_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_simPasses_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simSkips_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simPasses_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_simSkips_set" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_simPasses_set" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->simSkips = arg2;
+  if (arg1) (arg1)->simPasses = arg2;
   
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -12562,7 +12525,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_simSkips_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_simPasses_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int result;
@@ -12570,13 +12533,13 @@ SWIGINTERN PyObject *_wrap_Micropolis_simSkips_get(PyObject *SWIGUNUSEDPARM(self
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_simSkips_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_simPasses_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simSkips_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simPasses_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int) ((arg1)->simSkips);
+  result = (int) ((arg1)->simPasses);
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
@@ -12584,7 +12547,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_simSkip_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_simPass_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int arg2 ;
@@ -12595,18 +12558,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_simSkip_set(PyObject *SWIGUNUSEDPARM(self)
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_simSkip_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_simPass_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simSkip_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simPass_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_simSkip_set" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_simPass_set" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  if (arg1) (arg1)->simSkip = arg2;
+  if (arg1) (arg1)->simPass = arg2;
   
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -12615,7 +12578,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_simSkip_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_simPass_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int result;
@@ -12623,13 +12586,13 @@ SWIGINTERN PyObject *_wrap_Micropolis_simSkip_get(PyObject *SWIGUNUSEDPARM(self)
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_simSkip_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_simPass_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simSkip_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_simPass_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int) ((arg1)->simSkip);
+  result = (int) ((arg1)->simPass);
   resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
@@ -12746,10 +12709,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_tilesAnimated_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
+  bool arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  bool val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -12760,11 +12723,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_tilesAnimated_set(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_tilesAnimated_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_tilesAnimated_set" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_tilesAnimated_set" "', argument " "2"" of type '" "bool""'");
   } 
-  arg2 = static_cast< int >(val2);
+  arg2 = static_cast< bool >(val2);
   if (arg1) (arg1)->tilesAnimated = arg2;
   
   resultobj = SWIG_Py_Void();
@@ -12777,7 +12740,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_tilesAnimated_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -12788,8 +12751,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_tilesAnimated_get(PyObject *SWIGUNUSEDPARM
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_tilesAnimated_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int) ((arg1)->tilesAnimated);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool) ((arg1)->tilesAnimated);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -12852,10 +12815,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_doMessages_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
+  bool arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  bool val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -12866,11 +12829,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_doMessages_set(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doMessages_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_doMessages_set" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_doMessages_set" "', argument " "2"" of type '" "bool""'");
   } 
-  arg2 = static_cast< int >(val2);
+  arg2 = static_cast< bool >(val2);
   if (arg1) (arg1)->doMessages = arg2;
   
   resultobj = SWIG_Py_Void();
@@ -12883,7 +12846,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_doMessages_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -12894,8 +12857,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_doMessages_get(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doMessages_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int) ((arg1)->doMessages);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool) ((arg1)->doMessages);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -12905,10 +12868,10 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_doNotices_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
+  bool arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  bool val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -12919,11 +12882,11 @@ SWIGINTERN PyObject *_wrap_Micropolis_doNotices_set(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doNotices_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_doNotices_set" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_doNotices_set" "', argument " "2"" of type '" "bool""'");
   } 
-  arg2 = static_cast< int >(val2);
+  arg2 = static_cast< bool >(val2);
   if (arg1) (arg1)->doNotices = arg2;
   
   resultobj = SWIG_Py_Void();
@@ -12936,7 +12899,7 @@ fail:
 SWIGINTERN PyObject *_wrap_Micropolis_doNotices_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int result;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
@@ -12947,8 +12910,8 @@ SWIGINTERN PyObject *_wrap_Micropolis_doNotices_get(PyObject *SWIGUNUSEDPARM(sel
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doNotices_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (int) ((arg1)->doNotices);
-  resultobj = SWIG_From_int(static_cast< int >(result));
+  result = (bool) ((arg1)->doNotices);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -13019,7 +12982,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_lastCityPop_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_cityPopLast_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   Quad arg2 ;
@@ -13030,18 +12993,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_lastCityPop_set(PyObject *SWIGUNUSEDPARM(s
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_lastCityPop_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_cityPopLast_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_lastCityPop_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_cityPopLast_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_lastCityPop_set" "', argument " "2"" of type '" "Quad""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_cityPopLast_set" "', argument " "2"" of type '" "Quad""'");
   } 
   arg2 = static_cast< Quad >(val2);
-  if (arg1) (arg1)->lastCityPop = arg2;
+  if (arg1) (arg1)->cityPopLast = arg2;
   
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13050,7 +13013,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_lastCityPop_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_cityPopLast_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   Quad result;
@@ -13058,13 +13021,13 @@ SWIGINTERN PyObject *_wrap_Micropolis_lastCityPop_get(PyObject *SWIGUNUSEDPARM(s
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_lastCityPop_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_cityPopLast_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_lastCityPop_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_cityPopLast_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (Quad) ((arg1)->lastCityPop);
+  result = (Quad) ((arg1)->cityPopLast);
   resultobj = SWIG_From_long(static_cast< long >(result));
   return resultobj;
 fail:
@@ -13072,7 +13035,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_lastCategory_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_categoryLast_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   short arg2 ;
@@ -13083,18 +13046,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_lastCategory_set(PyObject *SWIGUNUSEDPARM(
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_lastCategory_set",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_categoryLast_set",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_lastCategory_set" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_categoryLast_set" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_short(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_lastCategory_set" "', argument " "2"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_categoryLast_set" "', argument " "2"" of type '" "short""'");
   } 
   arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->lastCategory = arg2;
+  if (arg1) (arg1)->categoryLast = arg2;
   
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -13103,7 +13066,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_lastCategory_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_categoryLast_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   short result;
@@ -13111,66 +13074,13 @@ SWIGINTERN PyObject *_wrap_Micropolis_lastCategory_get(PyObject *SWIGUNUSEDPARM(
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_lastCategory_get",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_categoryLast_get",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_lastCategory_get" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_categoryLast_get" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->lastCategory);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messagePictureLast_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messagePictureLast_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messagePictureLast_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_messagePictureLast_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->messagePictureLast = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messagePictureLast_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messagePictureLast_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messagePictureLast_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->messagePictureLast);
+  result = (short) ((arg1)->categoryLast);
   resultobj = SWIG_From_short(static_cast< short >(result));
   return resultobj;
 fail:
@@ -13225,118 +13135,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_autoGoto_get(PyObject *SWIGUNUSEDPARM(self
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (bool) ((arg1)->autoGoto);
   resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageLastValid_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  bool arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messageLastValid_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageLastValid_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_bool(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_messageLastValid_set" "', argument " "2"" of type '" "bool""'");
-  } 
-  arg2 = static_cast< bool >(val2);
-  if (arg1) (arg1)->messageLastValid = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageLastValid_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messageLastValid_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageLastValid_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (bool) ((arg1)->messageLastValid);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageLast_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  char temp2[256] ;
-  int res2 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_messageLast_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageLast_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharArray(obj1, temp2, 256);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_messageLast_set" "', argument " "2"" of type '" "char [256]""'");
-  }
-  arg2 = reinterpret_cast< char * >(temp2);
-  if (arg2) memcpy(arg1->messageLast,arg2,256*sizeof(char));
-  else memset(arg1->messageLast,0,256*sizeof(char));
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_messageLast_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  char *result = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_messageLast_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_messageLast_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (char *)(char *) ((arg1)->messageLast);
-  {
-    size_t size = 256;
-    
-    while (size && (result[size - 1] == '\0')) --size;
-    
-    resultobj = SWIG_FromCharPtrAndSize(result, size);
-  }
   return resultobj;
 fail:
   return NULL;
@@ -13415,20 +13213,65 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_clearMessage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage__SWIG_0(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  short arg3 ;
+  short arg4 ;
+  bool arg5 ;
+  bool arg6 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  short val3 ;
+  int ecode3 = 0 ;
+  short val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
+  bool val6 ;
+  int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_clearMessage",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Micropolis_sendMessage",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_clearMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->clearMessage();
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  ecode3 = SWIG_AsVal_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_sendMessage" "', argument " "3"" of type '" "short""'");
+  } 
+  arg3 = static_cast< short >(val3);
+  ecode4 = SWIG_AsVal_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_sendMessage" "', argument " "4"" of type '" "short""'");
+  } 
+  arg4 = static_cast< short >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Micropolis_sendMessage" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  ecode6 = SWIG_AsVal_bool(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Micropolis_sendMessage" "', argument " "6"" of type '" "bool""'");
+  } 
+  arg6 = static_cast< bool >(val6);
+  (arg1)->sendMessage(arg2,arg3,arg4,arg5,arg6);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -13436,38 +13279,64 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_sendMessage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  bool result;
+  short arg2 ;
+  short arg3 ;
+  short arg4 ;
+  bool arg5 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  short val2 ;
   int ecode2 = 0 ;
+  short val3 ;
+  int ecode3 = 0 ;
+  short val4 ;
+  int ecode4 = 0 ;
+  bool val5 ;
+  int ecode5 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_sendMessage",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:Micropolis_sendMessage",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "short""'");
   } 
-  arg2 = static_cast< int >(val2);
-  result = (bool)(arg1)->sendMessage(arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  arg2 = static_cast< short >(val2);
+  ecode3 = SWIG_AsVal_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_sendMessage" "', argument " "3"" of type '" "short""'");
+  } 
+  arg3 = static_cast< short >(val3);
+  ecode4 = SWIG_AsVal_short(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_sendMessage" "', argument " "4"" of type '" "short""'");
+  } 
+  arg4 = static_cast< short >(val4);
+  ecode5 = SWIG_AsVal_bool(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Micropolis_sendMessage" "', argument " "5"" of type '" "bool""'");
+  } 
+  arg5 = static_cast< bool >(val5);
+  (arg1)->sendMessage(arg2,arg3,arg4,arg5);
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_sendMessageAt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   short arg2 ;
@@ -13486,28 +13355,28 @@ SWIGINTERN PyObject *_wrap_Micropolis_sendMessageAt(PyObject *SWIGUNUSEDPARM(sel
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_sendMessageAt",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:Micropolis_sendMessage",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessageAt" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_short(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessageAt" "', argument " "2"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "short""'");
   } 
   arg2 = static_cast< short >(val2);
   ecode3 = SWIG_AsVal_short(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_sendMessageAt" "', argument " "3"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_sendMessage" "', argument " "3"" of type '" "short""'");
   } 
   arg3 = static_cast< short >(val3);
   ecode4 = SWIG_AsVal_short(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_sendMessageAt" "', argument " "4"" of type '" "short""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Micropolis_sendMessage" "', argument " "4"" of type '" "short""'");
   } 
   arg4 = static_cast< short >(val4);
-  (arg1)->sendMessageAt(arg2,arg3,arg4);
+  (arg1)->sendMessage(arg2,arg3,arg4);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -13515,23 +13384,224 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_doMessage(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  short arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
+  short val2 ;
+  int ecode2 = 0 ;
+  short val3 ;
+  int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_doMessage",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Micropolis_sendMessage",&obj0,&obj1,&obj2)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
-  (arg1)->doMessage();
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  ecode3 = SWIG_AsVal_short(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Micropolis_sendMessage" "', argument " "3"" of type '" "short""'");
+  } 
+  arg3 = static_cast< short >(val3);
+  (arg1)->sendMessage(arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage__SWIG_4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  short arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+<<<<<<< .mine
+  short val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_sendMessage",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_sendMessage" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_short(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_sendMessage" "', argument " "2"" of type '" "short""'");
+  } 
+  arg2 = static_cast< short >(val2);
+  (arg1)->sendMessage(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_sendMessage(PyObject *self, PyObject *args) {
+  int argc;
+  PyObject *argv[7];
+  int ii;
+  
+  if (!PyTuple_Check(args)) SWIG_fail;
+  argc = PyObject_Length(args);
+  for (ii = 0; (ii < argc) && (ii < 6); ii++) {
+    argv[ii] = PyTuple_GET_ITEM(args,ii);
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Micropolis, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        return _wrap_Micropolis_sendMessage__SWIG_4(self, args);
+      }
+    }
+  }
+  if (argc == 3) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Micropolis, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          return _wrap_Micropolis_sendMessage__SWIG_3(self, args);
+        }
+      }
+    }
+  }
+  if (argc == 4) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Micropolis, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            return _wrap_Micropolis_sendMessage__SWIG_2(self, args);
+          }
+        }
+      }
+    }
+  }
+  if (argc == 5) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Micropolis, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              return _wrap_Micropolis_sendMessage__SWIG_1(self, args);
+            }
+          }
+        }
+      }
+    }
+  }
+  if (argc == 6) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_Micropolis, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
+      {
+        int res = SWIG_AsVal_short(argv[1], NULL);
+        _v = SWIG_CheckState(res);
+      }
+      if (_v) {
+        {
+          int res = SWIG_AsVal_short(argv[2], NULL);
+          _v = SWIG_CheckState(res);
+        }
+        if (_v) {
+          {
+            int res = SWIG_AsVal_short(argv[3], NULL);
+            _v = SWIG_CheckState(res);
+          }
+          if (_v) {
+            {
+              int res = SWIG_AsVal_bool(argv[4], NULL);
+              _v = SWIG_CheckState(res);
+            }
+            if (_v) {
+              {
+                int res = SWIG_AsVal_bool(argv[5], NULL);
+                _v = SWIG_CheckState(res);
+              }
+              if (_v) {
+                return _wrap_Micropolis_sendMessage__SWIG_0(self, args);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+fail:
+  SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number of arguments for overloaded function 'Micropolis_sendMessage'.\n  Possible C/C++ prototypes are:\n    sendMessage(short,short,short,bool,bool)\n    sendMessage(short,short,short,bool)\n    sendMessage(short,short,short)\n    sendMessage(short,short)\n    sendMessage(short)\n");
   return NULL;
 }
 
@@ -13635,69 +13705,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_setMessageField(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  char *arg2 = (char *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 ;
-  char *buf2 = 0 ;
-  int alloc2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setMessageField",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setMessageField" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  res2 = SWIG_AsCharPtrAndSize(obj1, &buf2, NULL, &alloc2);
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Micropolis_setMessageField" "', argument " "2"" of type '" "char *""'");
-  }
-  arg2 = reinterpret_cast< char * >(buf2);
-  (arg1)->setMessageField(arg2);
-  resultobj = SWIG_Py_Void();
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return resultobj;
-fail:
-  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_doShowPicture(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_doShowPicture",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doShowPicture" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_doShowPicture" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  (arg1)->doShowPicture(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_doLoseGame(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -13740,6 +13747,45 @@ fail:
 }
 
 
+=======
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_doLoseGame",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doLoseGame" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->doLoseGame();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_doWinGame(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_doWinGame",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_doWinGame" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->doWinGame();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+>>>>>>> .r273
 SWIGINTERN PyObject *_wrap_Micropolis_homeDir_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -14218,165 +14264,6 @@ SWIGINTERN PyObject *_wrap_Micropolis_pollutionRamp_get(PyObject *SWIGUNUSEDPARM
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   result = (short) ((arg1)->pollutionRamp);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_resValve_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_resValve_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_resValve_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_resValve_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->resValve = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_resValve_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_resValve_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_resValve_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->resValve);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_comValve_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_comValve_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_comValve_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_comValve_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->comValve = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_comValve_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_comValve_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_comValve_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->comValve);
-  resultobj = SWIG_From_short(static_cast< short >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_indValve_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  short val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_indValve_set",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_indValve_set" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_short(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_indValve_set" "', argument " "2"" of type '" "short""'");
-  } 
-  arg2 = static_cast< short >(val2);
-  if (arg1) (arg1)->indValve = arg2;
-  
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_Micropolis_indValve_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  short result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_indValve_get",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_indValve_get" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  result = (short) ((arg1)->indValve);
   resultobj = SWIG_From_short(static_cast< short >(result));
   return resultobj;
 fail:
@@ -19516,36 +19403,6 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_updateOptionsMenu(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  Micropolis *arg1 = (Micropolis *) 0 ;
-  int arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_updateOptionsMenu",&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_updateOptionsMenu" "', argument " "1"" of type '" "Micropolis *""'"); 
-  }
-  arg1 = reinterpret_cast< Micropolis * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_updateOptionsMenu" "', argument " "2"" of type '" "int""'");
-  } 
-  arg2 = static_cast< int >(val2);
-  (arg1)->updateOptionsMenu(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
 SWIGINTERN PyObject *_wrap_Micropolis_updateUserInterface(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
@@ -19639,7 +19496,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_Micropolis_setSkips(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_Micropolis_setPasses(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Micropolis *arg1 = (Micropolis *) 0 ;
   int arg2 ;
@@ -19650,18 +19507,18 @@ SWIGINTERN PyObject *_wrap_Micropolis_setSkips(PyObject *SWIGUNUSEDPARM(self), P
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setSkips",&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setPasses",&obj0,&obj1)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setSkips" "', argument " "1"" of type '" "Micropolis *""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setPasses" "', argument " "1"" of type '" "Micropolis *""'"); 
   }
   arg1 = reinterpret_cast< Micropolis * >(argp1);
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setSkips" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setPasses" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  (arg1)->setSkips(arg2);
+  (arg1)->setPasses(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -19897,6 +19754,300 @@ fail:
 }
 
 
+<<<<<<< .mine
+SWIGINTERN PyObject *_wrap_Micropolis_setEnableDisasters(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setEnableDisasters",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setEnableDisasters" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setEnableDisasters" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setEnableDisasters(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setAutoBudget(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setAutoBudget",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setAutoBudget" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setAutoBudget" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setAutoBudget(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setAutoBulldoze(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setAutoBulldoze",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setAutoBulldoze" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setAutoBulldoze" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setAutoBulldoze(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setAutoGoto(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setAutoGoto",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setAutoGoto" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setAutoGoto" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setAutoGoto(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setEnableSound(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setEnableSound",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setEnableSound" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setEnableSound" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setEnableSound(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setDoAnimation(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setDoAnimation",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setDoAnimation" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setDoAnimation" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setDoAnimation(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setDoMessages(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setDoMessages",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setDoMessages" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setDoMessages" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setDoMessages(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_setDoNotices(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  bool arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:Micropolis_setDoNotices",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_setDoNotices" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Micropolis_setDoNotices" "', argument " "2"" of type '" "bool""'");
+  } 
+  arg2 = static_cast< bool >(val2);
+  (arg1)->setDoNotices(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Micropolis_getDemands(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Micropolis *arg1 = (Micropolis *) 0 ;
+  float *arg2 = (float *) 0 ;
+  float *arg3 = (float *) 0 ;
+  float *arg4 = (float *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  float temp2 ;
+  int res2 = SWIG_TMPOBJ ;
+  float temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  float temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  
+  arg2 = &temp2;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"O:Micropolis_getDemands",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Micropolis, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Micropolis_getDemands" "', argument " "1"" of type '" "Micropolis *""'"); 
+  }
+  arg1 = reinterpret_cast< Micropolis * >(argp1);
+  (arg1)->getDemands(arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_float((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_float, new_flags));
+  }
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_float((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_float, new_flags));
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_float((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_float, new_flags));
+  }
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+=======
+>>>>>>> .r273
 SWIGINTERN PyObject *Micropolis_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O|swigregister", &obj)) return NULL;
@@ -20061,12 +20212,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_indHist120Max_get", _wrap_Micropolis_indHist120Max_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_censusChanged_set", _wrap_Micropolis_censusChanged_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_censusChanged_get", _wrap_Micropolis_censusChanged_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messagePort_set", _wrap_Micropolis_messagePort_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messagePort_get", _wrap_Micropolis_messagePort_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageX_set", _wrap_Micropolis_messageX_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageX_get", _wrap_Micropolis_messageX_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageY_set", _wrap_Micropolis_messageY_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageY_get", _wrap_Micropolis_messageY_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_roadSpend_set", _wrap_Micropolis_roadSpend_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_roadSpend_get", _wrap_Micropolis_roadSpend_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_policeSpend_set", _wrap_Micropolis_policeSpend_set, METH_VARARGS, NULL},
@@ -20159,6 +20304,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_updateBudgetWindow", _wrap_Micropolis_updateBudgetWindow, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_updateBudget", _wrap_Micropolis_updateBudget, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_showBudgetWindowAndStartWaiting", _wrap_Micropolis_showBudgetWindowAndStartWaiting, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setCityTax", _wrap_Micropolis_setCityTax, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setBudget", _wrap_Micropolis_setBudget, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setBudgetValues", _wrap_Micropolis_setBudgetValues, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_floodCount_set", _wrap_Micropolis_floodCount_set, METH_VARARGS, NULL},
@@ -20176,8 +20322,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_problemOrder_get", _wrap_Micropolis_problemOrder_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityPop_set", _wrap_Micropolis_cityPop_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityPop_get", _wrap_Micropolis_cityPop_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_deltaCityPop_set", _wrap_Micropolis_deltaCityPop_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_deltaCityPop_get", _wrap_Micropolis_deltaCityPop_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityPopDelta_set", _wrap_Micropolis_cityPopDelta_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityPopDelta_get", _wrap_Micropolis_cityPopDelta_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityAssessedValue_set", _wrap_Micropolis_cityAssessedValue_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityAssessedValue_get", _wrap_Micropolis_cityAssessedValue_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_cityClass_set", _wrap_Micropolis_cityClass_set, METH_VARARGS, NULL},
@@ -20239,10 +20385,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_setHistory", _wrap_Micropolis_setHistory, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simLoops_set", _wrap_Micropolis_simLoops_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simLoops_get", _wrap_Micropolis_simLoops_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_simSkips_set", _wrap_Micropolis_simSkips_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_simSkips_get", _wrap_Micropolis_simSkips_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_simSkip_set", _wrap_Micropolis_simSkip_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_simSkip_get", _wrap_Micropolis_simSkip_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_simPasses_set", _wrap_Micropolis_simPasses_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_simPasses_get", _wrap_Micropolis_simPasses_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_simPass_set", _wrap_Micropolis_simPass_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_simPass_get", _wrap_Micropolis_simPass_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simPaused_set", _wrap_Micropolis_simPaused_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simPaused_get", _wrap_Micropolis_simPaused_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simPausedSpeed_set", _wrap_Micropolis_simPausedSpeed_set, METH_VARARGS, NULL},
@@ -20258,29 +20404,18 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_getMicropolisVersion", _wrap_Micropolis_getMicropolisVersion, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simUpdate", _wrap_Micropolis_simUpdate, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_simTick", _wrap_Micropolis_simTick, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_lastCityPop_set", _wrap_Micropolis_lastCityPop_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_lastCityPop_get", _wrap_Micropolis_lastCityPop_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_lastCategory_set", _wrap_Micropolis_lastCategory_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_lastCategory_get", _wrap_Micropolis_lastCategory_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messagePictureLast_set", _wrap_Micropolis_messagePictureLast_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messagePictureLast_get", _wrap_Micropolis_messagePictureLast_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityPopLast_set", _wrap_Micropolis_cityPopLast_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_cityPopLast_get", _wrap_Micropolis_cityPopLast_get, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_categoryLast_set", _wrap_Micropolis_categoryLast_set, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_categoryLast_get", _wrap_Micropolis_categoryLast_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_autoGoto_set", _wrap_Micropolis_autoGoto_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_autoGoto_get", _wrap_Micropolis_autoGoto_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageLastValid_set", _wrap_Micropolis_messageLastValid_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageLastValid_get", _wrap_Micropolis_messageLastValid_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageLast_set", _wrap_Micropolis_messageLast_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_messageLast_get", _wrap_Micropolis_messageLast_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_sendMessages", _wrap_Micropolis_sendMessages, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_checkGrowth", _wrap_Micropolis_checkGrowth, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doScenarioScore", _wrap_Micropolis_doScenarioScore, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_clearMessage", _wrap_Micropolis_clearMessage, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_sendMessage", _wrap_Micropolis_sendMessage, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_sendMessageAt", _wrap_Micropolis_sendMessageAt, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_doMessage", _wrap_Micropolis_doMessage, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doMakeSound", _wrap_Micropolis_doMakeSound, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doAutoGoto", _wrap_Micropolis_doAutoGoto, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_setMessageField", _wrap_Micropolis_setMessageField, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_doShowPicture", _wrap_Micropolis_doShowPicture, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doLoseGame", _wrap_Micropolis_doLoseGame, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doWinGame", _wrap_Micropolis_doWinGame, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_homeDir_set", _wrap_Micropolis_homeDir_set, METH_VARARGS, NULL},
@@ -20299,12 +20434,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_crimeRamp_get", _wrap_Micropolis_crimeRamp_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_pollutionRamp_set", _wrap_Micropolis_pollutionRamp_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_pollutionRamp_get", _wrap_Micropolis_pollutionRamp_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_resValve_set", _wrap_Micropolis_resValve_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_resValve_get", _wrap_Micropolis_resValve_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_comValve_set", _wrap_Micropolis_comValve_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_comValve_get", _wrap_Micropolis_comValve_get, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_indValve_set", _wrap_Micropolis_indValve_set, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_indValve_get", _wrap_Micropolis_indValve_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_resCap_set", _wrap_Micropolis_resCap_set, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_resCap_get", _wrap_Micropolis_resCap_get, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_comCap_set", _wrap_Micropolis_comCap_set, METH_VARARGS, NULL},
@@ -20470,12 +20599,11 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_drawValve", _wrap_Micropolis_drawValve, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setDemand", _wrap_Micropolis_setDemand, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_updateOptions", _wrap_Micropolis_updateOptions, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_updateOptionsMenu", _wrap_Micropolis_updateOptionsMenu, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_updateUserInterface", _wrap_Micropolis_updateUserInterface, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_pause", _wrap_Micropolis_pause, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_resume", _wrap_Micropolis_resume, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setSpeed", _wrap_Micropolis_setSpeed, METH_VARARGS, NULL},
-	 { (char *)"Micropolis_setSkips", _wrap_Micropolis_setSkips, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setPasses", _wrap_Micropolis_setPasses, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setGameLevelFunds", _wrap_Micropolis_setGameLevelFunds, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_setGameLevel", _wrap_Micropolis_setGameLevel, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_updateGameLevel", _wrap_Micropolis_updateGameLevel, METH_VARARGS, NULL},
@@ -20484,6 +20612,18 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Micropolis_setYear", _wrap_Micropolis_setYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_currentYear", _wrap_Micropolis_currentYear, METH_VARARGS, NULL},
 	 { (char *)"Micropolis_doNewGame", _wrap_Micropolis_doNewGame, METH_VARARGS, NULL},
+<<<<<<< .mine
+	 { (char *)"Micropolis_setEnableDisasters", _wrap_Micropolis_setEnableDisasters, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setAutoBudget", _wrap_Micropolis_setAutoBudget, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setAutoBulldoze", _wrap_Micropolis_setAutoBulldoze, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setAutoGoto", _wrap_Micropolis_setAutoGoto, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setEnableSound", _wrap_Micropolis_setEnableSound, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setDoAnimation", _wrap_Micropolis_setDoAnimation, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setDoMessages", _wrap_Micropolis_setDoMessages, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_setDoNotices", _wrap_Micropolis_setDoNotices, METH_VARARGS, NULL},
+	 { (char *)"Micropolis_getDemands", _wrap_Micropolis_getDemands, METH_VARARGS, NULL},
+=======
+>>>>>>> .r273
 	 { (char *)"Micropolis_swigregister", Micropolis_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
@@ -20498,6 +20638,7 @@ static swig_type_info _swigt__p_StringTable = {"_p_StringTable", "StringTable *"
 static swig_type_info _swigt__p_a_WORLD_H_8__short = {"_p_a_WORLD_H_8__short", "short (*)[WORLD_H_8]", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void = {"_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void", "CallbackFunction|void (*)(Micropolis *,void *,char const *,char const *,va_list)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_float = {"_p_float", "float *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long = {"_p_long", "long *|Quad *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_short = {"_p_p_short", "short **", 0, 0, (void*)0, 0};
@@ -20515,6 +20656,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_a_WORLD_H_8__short,
   &_swigt__p_char,
   &_swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void,
+  &_swigt__p_float,
   &_swigt__p_long,
   &_swigt__p_p_char,
   &_swigt__p_p_short,
@@ -20532,6 +20674,7 @@ static swig_cast_info _swigc__p_StringTable[] = {  {&_swigt__p_StringTable, 0, 0
 static swig_cast_info _swigc__p_a_WORLD_H_8__short[] = {  {&_swigt__p_a_WORLD_H_8__short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void[] = {  {&_swigt__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_float[] = {  {&_swigt__p_float, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_long[] = {  {&_swigt__p_long, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_char[] = {  {&_swigt__p_p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_short[] = {  {&_swigt__p_p_short, 0, 0, 0},{0, 0, 0, 0}};
@@ -20549,6 +20692,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_a_WORLD_H_8__short,
   _swigc__p_char,
   _swigc__p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void,
+  _swigc__p_float,
   _swigc__p_long,
   _swigc__p_p_char,
   _swigc__p_p_short,
@@ -21080,6 +21224,36 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "IS_INTEL",SWIG_From_int(static_cast< int >(1)));
   SWIG_Python_SetConstant(d, "MICROPOLIS_VERSION",SWIG_FromCharPtr("5.0"));
   PyDict_SetItemString(d,(char*)"cvar", SWIG_globals());
+<<<<<<< .mine
+  SWIG_addvarlink(SWIG_globals(),(char*)"BITS_PER_TILE",BITS_PER_TILE_get, BITS_PER_TILE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"BYTES_PER_TILE",BYTES_PER_TILE_get, BYTES_PER_TILE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W",WORLD_W_get, WORLD_W_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H",WORLD_H_get, WORLD_H_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_2",WORLD_W_2_get, WORLD_W_2_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_2",WORLD_H_2_get, WORLD_H_2_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_4",WORLD_W_4_get, WORLD_W_4_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_4",WORLD_H_4_get, WORLD_H_4_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W_8",WORLD_W_8_get, WORLD_W_8_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_H_8",WORLD_H_8_get, WORLD_H_8_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"EDITOR_TILE_SIZE",EDITOR_TILE_SIZE_get, EDITOR_TILE_SIZE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"EDITOR_W",EDITOR_W_get, EDITOR_W_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"EDITOR_H",EDITOR_H_get, EDITOR_H_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAP_TILE_SIZE",MAP_TILE_SIZE_get, MAP_TILE_SIZE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAP_W",MAP_W_get, MAP_W_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAP_H",MAP_H_get, MAP_H_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"HISTORY_LENGTH",HISTORY_LENGTH_get, HISTORY_LENGTH_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MISC_HISTORY_LENGTH",MISC_HISTORY_LENGTH_get, MISC_HISTORY_LENGTH_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"HISTORY_COUNT",HISTORY_COUNT_get, HISTORY_COUNT_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"POWER_MAP_ROW",POWER_MAP_ROW_get, POWER_MAP_ROW_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"POWER_MAP_SIZE",POWER_MAP_SIZE_get, POWER_MAP_SIZE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"POWER_MAP_LENGTH",POWER_MAP_LENGTH_get, POWER_MAP_LENGTH_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"POWER_STACK_SIZE",POWER_STACK_SIZE_get, POWER_STACK_SIZE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"NOWHERE",NOWHERE_get, NOWHERE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_TRAFFIC_DISTANCE",MAX_TRAFFIC_DISTANCE_get, MAX_TRAFFIC_DISTANCE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_ROAD_EFFECT",MAX_ROAD_EFFECT_get, MAX_ROAD_EFFECT_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_POLICE_STATION_EFFECT",MAX_POLICE_STATION_EFFECT_get, MAX_POLICE_STATION_EFFECT_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"MAX_FIRE_STATION_EFFECT",MAX_FIRE_STATION_EFFECT_get, MAX_FIRE_STATION_EFFECT_set);
+=======
   SWIG_addvarlink(SWIG_globals(),(char*)"BITS_PER_TILE",Swig_var_BITS_PER_TILE_get, Swig_var_BITS_PER_TILE_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"BYTES_PER_TILE",Swig_var_BYTES_PER_TILE_get, Swig_var_BYTES_PER_TILE_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"WORLD_W",Swig_var_WORLD_W_get, Swig_var_WORLD_W_set);
@@ -21107,6 +21281,10 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"MAX_ROAD_EFFECT",Swig_var_MAX_ROAD_EFFECT_get, Swig_var_MAX_ROAD_EFFECT_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MAX_POLICE_STATION_EFFECT",Swig_var_MAX_POLICE_STATION_EFFECT_get, Swig_var_MAX_POLICE_STATION_EFFECT_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"MAX_FIRE_STATION_EFFECT",Swig_var_MAX_FIRE_STATION_EFFECT_get, Swig_var_MAX_FIRE_STATION_EFFECT_set);
+>>>>>>> .r273
+  SWIG_addvarlink(SWIG_globals(),(char*)"RES_VALVE_RANGE",RES_VALVE_RANGE_get, RES_VALVE_RANGE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"COM_VALVE_RANGE",COM_VALVE_RANGE_get, COM_VALVE_RANGE_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"IND_VALVE_RANGE",IND_VALVE_RANGE_get, IND_VALVE_RANGE_set);
   SWIG_Python_SetConstant(d, "HISTORY_TYPE_RES",SWIG_From_int(static_cast< int >(HISTORY_TYPE_RES)));
   SWIG_Python_SetConstant(d, "HISTORY_TYPE_COM",SWIG_From_int(static_cast< int >(HISTORY_TYPE_COM)));
   SWIG_Python_SetConstant(d, "HISTORY_TYPE_IND",SWIG_From_int(static_cast< int >(HISTORY_TYPE_IND)));

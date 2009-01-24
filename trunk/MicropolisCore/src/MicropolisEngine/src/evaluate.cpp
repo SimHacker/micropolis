@@ -126,7 +126,7 @@ void Micropolis::evalInit()
 {
     cityYes = 0;
     cityPop = 0;
-    deltaCityPop = 0;
+    cityPopDelta = 0;
     cityAssessedValue = 0;
     cityClass = CC_VILLAGE;
     cityScore = 500;
@@ -179,7 +179,7 @@ void Micropolis::doPopNum()
         oldCityPop = cityPop;
     }
 
-    deltaCityPop = cityPop - oldCityPop;
+    cityPopDelta = cityPop - oldCityPop;
 
     // Compute cityClass
     cityClass = CC_VILLAGE;
@@ -398,17 +398,17 @@ void Micropolis::getScore(const short problemTable[PROBNUM])
     }
 
     float SM = 1.0;
-    if (cityPop == 0 || deltaCityPop == 0) {
+    if (cityPop == 0 || cityPopDelta == 0) {
         SM = 1.0; // there is nobody or no migration happened
 
-    } else if (deltaCityPop == cityPop) {
+    } else if (cityPopDelta == cityPop) {
         SM = 1.0; // city sprang into existence or doubled in size
 
-    } else if (deltaCityPop > 0) {
-        SM = ((float)deltaCityPop / cityPop) + 1.0f;
+    } else if (cityPopDelta > 0) {
+        SM = ((float)cityPopDelta / cityPop) + 1.0f;
 
-    } else if (deltaCityPop < 0) {
-        SM = 0.95f + ((float)deltaCityPop / (cityPop - deltaCityPop));
+    } else if (cityPopDelta < 0) {
+        SM = 0.95f + ((float)cityPopDelta / (cityPop - cityPopDelta));
     }
 
     z = (int)(z * SM);
@@ -468,7 +468,7 @@ void Micropolis::doScoreCard()
     //                  ${FormatPercent(problemVotes[problemOrder[i]])}
     // Statistics
     //   Population: ${FormatNumber(cityPop)}
-    //   Net Migration: ${FormatNumber(deltaCityPop)} (last year)
+    //   Net Migration: ${FormatNumber(cityPopDelta)} (last year)
     //   Assessed Value: ${FormatMoney(cityAssessedValue))
     //   Category: ${cityClassStr[cityClass]}
     //   Game Level: ${cityLevelStr[gameLevel]}

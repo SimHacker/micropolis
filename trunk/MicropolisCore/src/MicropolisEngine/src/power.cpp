@@ -198,7 +198,7 @@ void Micropolis::doPowerScan()
         do {
             numPower++;
             if (numPower > maxPower) {
-                sendMessage(STR301_NOT_ENOUGH_POWER);
+                sendMessage(MESSAGE_NOT_ENOUGH_POWER);
                 return;
             }
             if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()

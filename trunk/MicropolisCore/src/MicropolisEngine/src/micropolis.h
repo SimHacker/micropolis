@@ -276,6 +276,13 @@ static const int POWER_MAP_LENGTH = 1700;
 static const int POWER_STACK_SIZE = (WORLD_W * WORLD_H) / 4;
 
 
+/**
+ * A constant used in place of an x or y position to indicate
+ * "nowhere".
+ */
+static const int NOWHERE = -1;
+
+
 ///////////////////////////////////////////////////
 // Traffic
 
@@ -298,6 +305,15 @@ static const int MAX_POLICE_STATION_EFFECT = 1000;
  * Maximal value of Micropolis::fireEffect
  */
 static const int MAX_FIRE_STATION_EFFECT = 1000;
+
+
+////////////////////////////////////////////////////////////////////////
+// Valves
+
+
+static const int RES_VALVE_RANGE = 2000;
+static const int COM_VALVE_RANGE = 1500;
+static const int IND_VALVE_RANGE = 1500;
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -1214,25 +1230,6 @@ public:
      */
     bool censusChanged;
 
-    /**
-     * Message number to display asynchronously.
-     * Value \c 0 means 'no message to display'.
-     *
-     * Clean this up to use a simpler interface, and a queue.
-     * Might need to collapse some messages.
-     */
-    short messagePort;
-
-    /**
-     * Message X location.
-     */
-    short messageX;
-
-    /**
-     * Message Y location.
-     */
-    short messageY;
-
     /** @name Budget */
     //@{
 
@@ -1658,6 +1655,8 @@ public:
 
     void showBudgetWindowAndStartWaiting();
 
+    void setCityTax(short tax);
+
     void setBudget(
         char *flowStr,
         char *previousStr,
@@ -1771,7 +1770,7 @@ public:
      *
      * Depends on last cityPop.
      */
-    Quad deltaCityPop;
+    Quad cityPopDelta;
 
     /**
      * City assessed value.
@@ -2083,9 +2082,15 @@ public:
 
     int simLoops;
 
-    int simSkips;
+    /**
+     * The number of passes through the simulator loop to take each tick.
+     */
+    int simPasses;
 
-    int simSkip;
+    /**
+     * The count of the current pass through the simulator loop.
+     */
+    int simPass;
 
     /**
      * Simulation is paused
@@ -2095,7 +2100,7 @@ public:
 
     int simPausedSpeed;
 
-    int tilesAnimated; ///< @todo Not currently used, should hook it up.
+    bool tilesAnimated; ///< @todo Not currently used, should hook it up.
 
     /**
      * Enable animation.
@@ -2103,9 +2108,9 @@ public:
      */
     bool doAnimation;
 
-    int doMessages; ///< @todo Not currently used, should hook it up.
+    bool doMessages; ///< @todo Not currently used, should hook it up.
 
-    int doNotices; ///< @todo Not currently used, should hook it up.
+    bool doNotices; ///< @todo Not currently used, should hook it up.
 
 
     const char *getMicropolisVersion();
@@ -2229,10 +2234,8 @@ public:
 public:
 
 
-    Quad lastCityPop;   ///< Population of last city class check. @see CheckGrowth
-    short lastCategory; ///< City class of last city class check. @see CheckGrowth
-
-    short messagePictureLast; ///< Last picture displayed to the user
+    Quad cityPopLast;   ///< Population of last city class check. @see CheckGrowth
+    short categoryLast; ///< City class of last city class check. @see CheckGrowth
 
     /**
      * Enable auto goto
@@ -2242,15 +2245,6 @@ public:
      */
     bool autoGoto;
 
-    /**
-     * Do we have a valid message in LastMessage?
-     * @todo Remove the variable by using LastMessage instead (for example the
-     *       empty string)
-     */
-    bool messageLastValid;
-
-    char messageLast[256]; ///< Last message displayed to the user
-
 
     void sendMessages();
 
@@ -2258,19 +2252,14 @@ public:
 
     void doScenarioScore(Scenario type);
 
-    void clearMessage();
-
-    bool sendMessage(int Mnum);
-
-    void sendMessageAt(short Mnum, short x, short y);
-
-    void doMessage();
+    void sendMessage(
+	short Mnum,
+	short x=NOWHERE, short y=NOWHERE,
+	bool picture=false, bool important=false);
 
     void doMakeSound(int mesgNum, int x, int y);
 
     void doAutoGoto(short x, short y, char *msg);
-
-    void setMessageField(char *str);
 
     void doShowPicture(short id);
 
@@ -2454,12 +2443,6 @@ public:
 
     short pollutionRamp;
 
-    short resValve;
-
-    short comValve;
-
-    short indValve;
-
     bool resCap; ///< Block residential growth
     bool comCap; ///< Block commercial growth
     bool indCap; ///< Block industrial growth
@@ -2488,6 +2471,10 @@ public:
     short speedCycle;
 
     bool doInitialEval; ///< Need to perform initial city evaluation.
+
+    short resValve;
+    short comValve;
+    short indValve;
 
 
 private:
@@ -2600,6 +2587,8 @@ private:
     short spriteCycle;
 
 
+public:
+
     short getChar(int x, int y);
 
     short turnTo(int p, int d);
@@ -2665,6 +2654,7 @@ private:
     void makeExplosion(int x, int y);
 
     void makeExplosionAt(int x, int y);
+
 
     ////////////////////////////////////////////////////////////////////////
     // stubs.cpp
@@ -2995,8 +2985,6 @@ public:
 
     void updateOptions();
 
-    void updateOptionsMenu(int options);
-
     void updateUserInterface();
 
 
@@ -3011,7 +2999,7 @@ public:
 
     void setSpeed(short speed);
 
-    void setSkips(int skips);
+    void setPasses(int passes);
 
     void setGameLevelFunds(GameLevel level);
 
@@ -3029,9 +3017,40 @@ public:
 
     void doNewGame();
 
+    void setEnableDisasters(bool value);
+
+    void setAutoBudget(bool value);
+
+    void setAutoBulldoze(bool value);
+
+    void setAutoGoto(bool value);
+
+    void setEnableSound(bool value);
+
+    void setDoAnimation(bool value);
+
+    void setDoMessages(bool value);
+
+    void setDoNotices(bool value);
+
+#ifdef SWIG
+// This tells SWIG that resDemandResult, comDemandResult and indDemandResult
+// are output parameters, which will be returned in a tuple of length three.
+%apply float *OUTPUT { float *resDemandResult };
+%apply float *OUTPUT { float *comDemandResult };
+%apply float *OUTPUT { float *indDemandResult };
+#endif
+
+    void getDemands(
+        float *resDemandResult,
+	float *comDemandResult,
+	float *indDemandResult);
+
+
 private:
 
     void makeDollarDecimalStr(char *numStr, char *dollarStr);
+
 
     ////////////////////////////////////////////////////////////////////////
     // zone.cpp
