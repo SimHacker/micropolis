@@ -74,14 +74,15 @@ import gobject
 import cairo
 import math
 import array
+import os
 
 
 ########################################################################
 # Import our modules
 
 
-import tileengine
-import tiletool
+from pyMicropolis.tileEngine import tileengine
+from pyMicropolis.tileEngine import tiletool
 
 
 ########################################################################
@@ -93,7 +94,7 @@ class TileDrawingArea(gtk.DrawingArea):
     def __init__(
         self,
         tengine=None,
-        tilesFileName='images/tiles.png',
+        tilesFileName=None,
         sourceTileSize=32,
         tileCount=256,
         maxSurfaceSize=512,
@@ -124,6 +125,12 @@ class TileDrawingArea(gtk.DrawingArea):
         **args):
 
         gtk.DrawingArea.__init__(self, **args)
+
+        # Compute path to tiles.png file relative to this module
+        if tilesFileName is None:
+            path = os.path.join(os.path.basename(__file__),
+                                '../images/tileEngine/tiles.png')
+            tilesFileName = os.path.abspath(path)
 
         self.tengine = tengine
         self.tilesFileName = tilesFileName
@@ -190,7 +197,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.tilesLoaded = False
 
         self.createEngine()
-        
+
         self.set_flags(
             gtk.CAN_FOCUS)
 
@@ -228,7 +235,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
     def tickTimer(
         self):
-        
+
         self.tickEngine()
         self.queue_draw()
 
@@ -295,15 +302,15 @@ class TileDrawingArea(gtk.DrawingArea):
 
         tileSize = self.tileSize
         #print "TILESIZE", tileSize
-        
+
         cursorScreenX = cursorCenterScreenX - (0.5 * cursorCols * tileSize)
         cursorScreenY = cursorCenterScreenY - (0.5 * cursorRows * tileSize)
         #print "CURSORSCREEN", cursorScreenX, cursorScreenY
-        
+
         panX = cursorScreenX - (cursorCol * tileSize)
         panY = cursorScreenY - (cursorRow * tileSize)
         #print "PAN", panX, panY
-        
+
         self.panX = panX
         self.panY = panY
 
@@ -327,7 +334,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self,
         ctx,
         force=False):
-        
+
         if force or (not self.tilesLoaded):
             self.loadTiles(ctx)
             self.tilesLoaded = True
@@ -415,7 +422,7 @@ class TileDrawingArea(gtk.DrawingArea):
             tileCtx = cairo.Context(tileSurface)
 
             tileCtx.set_antialias(cairo.ANTIALIAS_NONE)
-        
+
             self.tileCacheSurfaces = []
             self.tileCacheCount = 0
 
@@ -439,7 +446,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
     def makeTileMap(
         self):
-        
+
         tileMap = array.array('i')
         self.tileMap = tileMap
         for i in range(0, self.tileCount):
@@ -530,7 +537,7 @@ class TileDrawingArea(gtk.DrawingArea):
         windowBuffer = self.windowBuffer
         windowBufferWidth = self.windowBufferWidth
         windowBufferHeight = self.windowBufferHeight
-        
+
         slop = 4
 
         if ((not windowBuffer) or
@@ -673,7 +680,7 @@ class TileDrawingArea(gtk.DrawingArea):
         ctxWindowBuffer.restore()
 
         # Draw the background outside of the tile world.
-        
+
         backgroundVisible = False
 
         # Left Background
@@ -727,9 +734,9 @@ class TileDrawingArea(gtk.DrawingArea):
 
 
     # This function is called from the C++ code in self.tengine.renderTilesLazy.
-    # It renders a tile, and returns a tuple with a surface index, tile x and tile y position. 
-    # This function is totally in charge of the scaled tile cache, and can implement a variety 
-    # of different policies. 
+    # It renders a tile, and returns a tuple with a surface index, tile x and tile y position.
+    # This function is totally in charge of the scaled tile cache, and can implement a variety
+    # of different policies.
     def generateTile(
         self,
         tile):
@@ -747,11 +754,11 @@ class TileDrawingArea(gtk.DrawingArea):
         scale = self.scale
         maxSurfaceSize = self.maxSurfaceSize
 
-        # Calculate the measurements per surface, each of which contains one or more tiles, 
+        # Calculate the measurements per surface, each of which contains one or more tiles,
         # depending on the tile size.
         # If the tiles are small, we will put a lot of them per surface, but as they get
-        # bigger, we limit the size of the surface by reducing the number of tiles, so the 
-        # surfaces to not get too big. 
+        # bigger, we limit the size of the surface by reducing the number of tiles, so the
+        # surfaces to not get too big.
 
         tileColsPerSurface = max(1, int(math.floor(maxSurfaceSize / tileSize)))
         #print "tileColsPerSurface", tileColsPerSurface
@@ -906,7 +913,7 @@ class TileDrawingArea(gtk.DrawingArea):
         if tool:
             tool.setCursorPos(
                 self,
-                x - self.panX, 
+                x - self.panX,
                 y - self.panY)
 
 
@@ -1022,7 +1029,7 @@ class TileDrawingArea(gtk.DrawingArea):
             if tool.handleKeyDown(self, event):
                 return
 
-        # TODO: This might be handled by the pan tool. 
+        # TODO: This might be handled by the pan tool.
         if self.zoomable:
             if key == ord('i'):
                 self.changeScale(self.scale * 1.1)
