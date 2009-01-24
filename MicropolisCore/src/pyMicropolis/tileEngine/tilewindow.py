@@ -78,19 +78,21 @@ import gtk
 # Import our modules
 
 
-#print "CWD", os.getcwd()
+##print "CWD", os.getcwd()
+#
+#cwd = os.getcwd()
+#
+#for relPath in (
+#  'ReleaseSymbols',
+#  'build/lib.macosx-10.3-i386-2.5',
+#  '.',
+#):
+#    sys.path.insert(0, os.path.join(cwd, relPath))
+#
+# XXX Above should not be needed any more
 
-cwd = os.getcwd()
 
-for relPath in (
-  'ReleaseSymbols',
-  'build/lib.macosx-10.3-i386-2.5',
-  '.',
-):
-    sys.path.insert(0, os.path.join(cwd, relPath))
-
-
-from tiledrawingarea import TileDrawingArea
+from pyMicropolis.tileEngine.tiledrawingarea import TileDrawingArea
 
 
 ########################################################################
