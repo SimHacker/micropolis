@@ -5,39 +5,39 @@
 # Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
 # you need assistance with this program, you may contact:
 #   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.  You should have received a
 # copy of the GNU General Public License along with this program.  If
 # not, see <http://www.gnu.org/licenses/>.
-# 
+#
 #             ADDITIONAL TERMS per GNU GPL Section 7
-# 
+#
 # No trademark or publicity rights are granted.  This license does NOT
 # give you any right, title or interest in the trademark SimCity or any
 # other Electronic Arts trademark.  You may not distribute any
 # modification of this program using the trademark SimCity or claim any
 # affliation or association with Electronic Arts Inc. or its employees.
-# 
+#
 # Any propagation or conveyance of this program must include this
 # copyright notice and these terms.
-# 
+#
 # If you convey this program (or any modifications of it) and assume
 # contractual liability for the program to recipients of it, you agree
 # to indemnify Electronic Arts for any liability that those contractual
 # assumptions impose on Electronic Arts.
-# 
+#
 # You may not misrepresent the origins of this program; modified
 # versions of the program must be marked as such and not identified as
 # the original program.
-# 
+#
 # This disclaimer supplements the one included in the General Public
 # License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
 # PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -68,54 +68,47 @@
 from distutils.core import *
 
 setup(
-  name='MicropolisEngine',
-  version='1.0',
-  description='Micropolis City Simulator Engine',
-  author='Will Wright, Don Hopkins',
-  author_email='dhopkins@DonHopkins.com',
-  url='http://www.DonHopkins.com',
-  py_modules=[
-    'micropolisengine',
-    'micropolisdrawingarea',
-    'micropoliswindow',
-    'micropoliswebserver',
-  ],
-  ext_modules=[
-    Extension('_micropolisengine', [
-      'micropolisengine_wrap.cpp',
-      '../allocate.cpp',
-      '../animate.cpp',
-      '../budget.cpp',
-      '../connect.cpp',
-      '../disasters.cpp',
-      '../evaluate.cpp',
-      '../fileio.cpp',
-      '../generate.cpp',
-      '../graph.cpp',
-      '../initialize.cpp',
-      '../main.cpp',
-      '../map.cpp',
-      '../message.cpp',
-      '../micropolis.cpp',
-      '../power.cpp',
-      '../random.cpp',
-      '../resource.cpp',
-      '../scan.cpp',
-      '../simulate.cpp',
-      '../sprite.cpp',
-      '../stubs.cpp',
-      '../tool.cpp',
-      '../traffic.cpp',
-      '../update.cpp',
-      '../utilities.cpp',
-      '../zone.cpp',
-    ],
-    include_dirs=[
-      '.',
-      '..',
-      '/usr/local/include',
-    ]),
-  ]
+    name='MicropolisEngineInterface',
+    version='1.0',
+    description='Micropolis City Simulator Engine Interface',
+    author='Will Wright, Don Hopkins',
+    author_email='dhopkins@DonHopkins.com',
+    url='http://www.DonHopkins.com',
+    ext_modules=[
+        Extension('_micropolisengine', [
+            'objs/micropolisengine_wrap.cpp',
+            'src/allocate.cpp',
+            'src/animate.cpp',
+            'src/budget.cpp',
+            'src/connect.cpp',
+            'src/disasters.cpp',
+            'src/evaluate.cpp',
+            'src/fileio.cpp',
+            'src/generate.cpp',
+            'src/graph.cpp',
+            'src/initialize.cpp',
+            'src/main.cpp',
+            'src/map.cpp',
+            'src/message.cpp',
+            'src/micropolis.cpp',
+            'src/power.cpp',
+            'src/random.cpp',
+            'src/resource.cpp',
+            'src/scan.cpp',
+            'src/simulate.cpp',
+            'src/sprite.cpp',
+            'src/stubs.cpp',
+            'src/tool.cpp',
+            'src/traffic.cpp',
+            'src/update.cpp',
+            'src/utilities.cpp',
+            'src/zone.cpp',
+        ],
+        include_dirs=[
+            'src',
+            '/usr/local/include',
+        ]),
+    ]
 )
 
 

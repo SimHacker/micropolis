@@ -69,8 +69,7 @@ PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
 
 # ----------------------------------------------------------------------
 
-all: build_tileEngine build_cellEngine
-	cd MicropolisEngine ; make
+all: build_tileEngine build_cellEngine build_micropolisEngine
 
 clean:
 	rm -rf *~ *.suo *.ncb build html
@@ -78,12 +77,14 @@ clean:
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean
 
-# XXX Should not be needed
 cleanswig:
-	rm -rf *~ *.suo *.ncb build
-	cd TileEngine ; make cleanswig
-	cd CellEngine ; make cleanswig
-	cd MicropolisEngine ; make cleanswig
+	rm -f $(TILEENGINEDEST)/tileengine.py
+	rm -f $(TILEENGINEDEST)/_tileengine.so
+	rm -f $(CELLENGINEDEST)/cellengine.py
+	rm -f $(CELLENGINEDEST)/_cellengine.so
+	rm -f $(MICROPOLISENGINEDEST)/micropolisengine.py
+	rm -f $(MICROPOLISENGINEDEST)/_micropolisengine.so
+	rm -rf *~ *.suo *.ncb
 
 install: all
 	rm -rf build
@@ -94,6 +95,9 @@ install: all
 
 tar: all
 	tar cfz Micropolis-build.tgz build
+
+# ----------------------------------------------------------------------
+# Build documentation
 
 doxygen:
 	doxygen Doxyfile
@@ -117,5 +121,15 @@ build_cellEngine:
 	$(MAKE) -C CellEngine build_python
 	cp CellEngine/objs/cellengine.py $(CELLENGINEDEST)
 	cp CellEngine/objs/$(PYTHONBUILDDIR)/_cellengine.so $(CELLENGINEDEST)
+
+# ----------------------------------------------------------------------
+# build/install micropolisEngine
+
+MICROPOLISENGINEDEST = pyMicropolis/simEngine
+
+build_micropolisEngine:
+	$(MAKE) -C MicropolisEngine build_python
+	cp MicropolisEngine/objs/micropolisengine.py $(MICROPOLISENGINEDEST)
+	cp MicropolisEngine/objs/$(PYTHONBUILDDIR)/_micropolisengine.so $(MICROPOLISENGINEDEST)
 
 ########################################################################
