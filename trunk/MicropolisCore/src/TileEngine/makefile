@@ -63,12 +63,18 @@
 ########################################################################
 
 
-PYTHON=python
-SWIG=swig
+PYTHON = python
+SWIG = swig
 
-PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
+PYTHONBUILDDIR = $(shell python -c 'from distutils import sysconfig, util ; \
 	print "lib.%s-%s" \
 		% (util.get_platform(), sysconfig.get_config_var("VERSION"))')
+
+SOURCES = src/tileengine.cpp
+
+HEADERS = \
+	src/stdafx.h \
+	src/tileengine.h
 
 .PHONY: build_python build_swig clean
 
@@ -76,23 +82,14 @@ PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
 
 all: TILEENGINE
 
-TILEENGINE: tileengine.cpp build_swig
-	cd python ; $(PYTHON) setup.py build
-
-python/stdafx.h: tileengine.h
-
-tileengine.h:
-
-tileengine.cpp: python/stdafx.h tileengine.h
-
-python/tilewindow.py:
+TILEENGINE: build_python
 
 # ----------------------------------------------------------------------
 # Python extension module build
 
 build_python: objs/$(PYTHONBUILDDIR)/_tileengine.so
 
-objs/$(PYTHONBUILDDIR)/_tileengine.so: build_swig src/tileengine.cpp setup.py
+objs/$(PYTHONBUILDDIR)/_tileengine.so: build_swig setup.py $(SOURCES) $(HEADERS)
 	$(PYTHON) setup.py build --build-base=objs
 
 # ----------------------------------------------------------------------
@@ -106,7 +103,7 @@ objs/$(PYTHONBUILDDIR)/_tileengine.so: build_swig src/tileengine.cpp setup.py
 build_swig: objs/tileengine_wrap.cpp
 
 
-objs/tileengine_wrap.cpp: swig/tileengine.i swig/tileengine-swig-python.i swig/pycairo.i src/tileengine.h
+objs/tileengine_wrap.cpp: swig/tileengine.i swig/tileengine-swig-python.i swig/pycairo.i $(HEADERS)
 	$(SWIG) -python -c++ -Isrc -Wall \
 	     -outdir objs \
 	     -o objs/tileengine_wrap.cpp \
@@ -119,11 +116,9 @@ clean:
 	rm -rf swig/*~ objs/*
 	rm -rf python/*~ python/*.pyc python/*.pyd
 
+# XXX This is not needed
 cleanswig: clean
 	rm -rf python/tileengine.py python/tileengine_wrap.cpp
-
-install: all
-	(cd python ; $(PYTHON) setup.py install)
 
 
 ########################################################################
