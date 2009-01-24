@@ -65,12 +65,11 @@ PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
 	print "lib.%s-%s" \
 		% (util.get_platform(), sysconfig.get_config_var("VERSION"))')
 
-.PHONY: all build_tileEngine doxygen
+.PHONY: all build_tileEngine build_cellEngine doxygen
 
 # ----------------------------------------------------------------------
 
-all: build_tileEngine
-	cd CellEngine ; make
+all: build_tileEngine build_cellEngine
 	cd MicropolisEngine ; make
 
 clean:
@@ -79,6 +78,7 @@ clean:
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean
 
+# XXX Should not be needed
 cleanswig:
 	rm -rf *~ *.suo *.ncb build
 	cd TileEngine ; make cleanswig
@@ -107,5 +107,15 @@ build_tileEngine:
 	$(MAKE) -C TileEngine build_python
 	cp TileEngine/objs/tileengine.py $(TILEENGINEDEST)
 	cp TileEngine/objs/$(PYTHONBUILDDIR)/_tileengine.so $(TILEENGINEDEST)
+
+# ----------------------------------------------------------------------
+# build/install cellEngine
+
+CELLENGINEDEST = pyMicropolis/cellEngine
+
+build_cellEngine:
+	$(MAKE) -C CellEngine build_python
+	cp CellEngine/objs/cellengine.py $(CELLENGINEDEST)
+	cp CellEngine/objs/$(PYTHONBUILDDIR)/_cellengine.so $(CELLENGINEDEST)
 
 ########################################################################
