@@ -164,10 +164,9 @@ void Micropolis::updateDate()
     if (cityYear >= megalinium) {
         setYear(startingYear);
         cityYear = startingYear;
-        sendMessage(-STR301_NOT_ENOUGH_POWER);
-    }
+        sendMessage(MESSAGE_NOT_ENOUGH_POWER, NOWHERE, NOWHERE, true);
 
-    doMessage();
+    }
 
     if ((cityYearLast != cityYear) ||
         (cityMonthLast != cityMonth)) {
@@ -242,77 +241,23 @@ void Micropolis::drawValve()
 void Micropolis::setDemand(float r, float c, float i)
 {
     callback(
-        "UISetDemand",
-        "ddd",
-        (int)(r / 100),
-        (int)(c / 100),
-        (int)(i / 100));
+        "UIUpdate",
+        "s",
+        "demand");
 }
 
 
 void Micropolis::updateOptions()
 {
-    int options;
-
     if (mustUpdateOptions) {
-
-        options = 0;
-
-        if (autoBudget) {
-            options |= 1;
-        }
-
-        if (autoGoto) {
-            options |= 2;
-        }
-
-        if (autoBulldoze) {
-            options |= 4;
-        }
-
-        if (enableDisasters) {
-            options |= 8;
-        }
-
-        if (enableSound) {
-            options |= 16;
-        }
-
-        if (doAnimation) {
-            options |= 32;
-        }
-
-        if (doMessages) {
-            options |= 64;
-        }
-
-        if (doNotices) {
-            options |= 128;
-        }
-
         mustUpdateOptions = false;
-        updateOptionsMenu(options);
+	callback(
+	    "UIUpdate",
+	    "s",
+	    "options");
     }
 }
 
-
-void Micropolis::updateOptionsMenu(int options)
-{
-    /// @todo Just notify the scripting language that the options
-    ///       changed, and let it pull the values out of our members,
-    ///       instead of encoding and passing the options.
-    callback(
-        "UISetOptions",
-        "dddddddd",
-        (options & 1) ? 1 : 0,
-        (options & 2) ? 1 : 0,
-        (options & 4) ? 1 : 0,
-        (options & 8) ? 1 : 0,
-        (options & 16) ? 1 : 0,
-        (options & 32) ? 1 : 0,
-        (options & 64) ? 1 : 0,
-        (options & 128) ? 1 : 0);
-}
 
 /** @todo Keeping track of pending updates should be moved to the interface
  *        (the simulator generates events, the interface forwards them to

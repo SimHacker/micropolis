@@ -76,6 +76,7 @@ clean:
 	cd TileEngine ; make clean
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean
+	cd pyMicropolis ; make clean
 
 cleanswig:
 	rm -f $(TILEENGINEDEST)/tileengine.py

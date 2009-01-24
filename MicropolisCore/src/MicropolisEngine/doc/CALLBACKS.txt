@@ -31,7 +31,6 @@ Callback("UISetBudget", "ssssd", flowStr, previousStr, currentStr, collectedStr,
 Callback("UISetBudgetValues", "ssdssdssd", roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent);
 Callback("UISetCityName", "s", CityName);
 Callback("UISetDate", "sdd", str, m, y);
-Callback("UISetDemand", "ddd", r, c, i);
 Callback("UISetGameLevel", "d", GameLevel);
 Callback("UISetMessage", "s", str);
 Callback("UISetOptions", "dddddddd", autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
@@ -64,3 +63,4 @@ Callback("UIUpdate", "s", name);
     speed: when speed changes
     delay: when delay changes
     option: when options change
+    taxrate: tax rate [TODO]

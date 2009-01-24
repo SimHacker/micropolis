@@ -177,17 +177,20 @@ void Micropolis::setSpeed(short speed)
     simSpeed = speed;
 
     callback(
-        "UISetSpeed",
-        "d",
-        (int)(simPaused ? 0 : simSpeedMeta));
-
+        "UIUpdate",
+        "s",
+        "speed");
 }
 
 
-void Micropolis::setSkips(int skips)
+void Micropolis::setPasses(int passes)
 {
-    simSkips = skips;
-    simSkip = 0;
+    simPasses = passes;
+    simPass = 0;
+    callback(
+	"UIUpdate",
+	"s",
+	"passes");
 }
 
 /**
@@ -295,9 +298,133 @@ int Micropolis::currentYear()
 }
 
 
+/**
+ * Notify the user interface to start a new game.
+ */
 void Micropolis::doNewGame()
 {
     callback("UINewGame", "");
+}
+
+
+/**
+ * set the enableDisasters flag, and set the flag to 
+ * update the user interface.
+ */
+void Micropolis::setEnableDisasters(bool value)
+{
+    enableDisasters = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Notify the user interface to start a new game.
+ */
+void Micropolis::setAutoBudget(bool value)
+{
+    autoBudget = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the autoBulldoze flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set autoBulldoze to.
+ */
+void Micropolis::setAutoBulldoze(bool value)
+{
+    autoBulldoze = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the autoGoto flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set autoGoto to.
+ */
+void Micropolis::setAutoGoto(bool value)
+{
+    autoGoto = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the enableSound flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set enableSound to.
+ */
+void Micropolis::setEnableSound(bool value)
+{
+    enableSound = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the doAnimation flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set doAnimation to.
+ */
+void Micropolis::setDoAnimation(bool value)
+{
+    doAnimation = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the doMessages flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set doMessages to.
+ */
+void Micropolis::setDoMessages(bool value)
+{
+    doMessages = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Set the doNotices flag to the given value,
+ * and set the mustUpdateOptions flag to update 
+ * the user interface.
+ *
+ * @params value bool  The value to set doNotices to.
+ */
+void Micropolis::setDoNotices(bool value)
+{
+    doNotices = value;
+    mustUpdateOptions = true;
+}
+
+
+/**
+ * Return the residential, commercial and industrial 
+ * development demands, as floating point numbers 
+ * from -1 (lowest demand) to 1 (highest demand).
+ */
+void Micropolis::getDemands(
+    float *resDemandResult,
+    float *comDemandResult,
+    float *indDemandResult)
+{
+    *resDemandResult = (float)resValve / (float)RES_VALVE_RANGE;
+    *comDemandResult = (float)comValve / (float)COM_VALVE_RANGE;
+    *indDemandResult = (float)indValve / (float)IND_VALVE_RANGE;
 }
 
 

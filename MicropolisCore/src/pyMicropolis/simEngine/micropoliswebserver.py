@@ -202,7 +202,7 @@ class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
 
         m.resume()
         m.setSpeed(2)
-        m.setSkips(1000)
+        m.setPasses(1000)
         m.setFunds(1000000000)
         m.autoGoto = 0
         m.cityTax = 12

@@ -106,26 +106,21 @@ void Micropolis::environmentInit()
 /** Initialize for a simulation */
 void Micropolis::simInit()
 {
-    enableSound = true; // Enable sound
+  setEnableSound(true); // Enable sound
     mustUpdateOptions = true; // Update options displayed at user
-    messageLastValid = false; // No message seen yet
     scenario = SC_NONE;
     startingYear = 1900;
-    simSkips = simSkip = 0;
-    autoGoto = true;  // Enable auto-goto
-    cityTax = 7;
+    simPasses = 1;
+    simPass = 0;
+    setAutoGoto(true); // Enable auto-goto
+    setCityTax(7);
     cityTime = 50;
-    enableDisasters = true; // Enable disasters
-    autoBulldoze = true; // Enable auto bulldoze
-    autoBudget   = true; // Enable auto-budget
-    messageNumber = 0;
-    messageTimeLast = 0;
+    setEnableDisasters(true); // Enable disasters
+    setAutoBulldoze(true); // Enable auto bulldoze
+    setAutoBudget(true); // Enable auto-budget
     blinkFlag = 1;
     simSpeed = 3;
     changeEval();
-    messagePort = 0;
-    messageX = -1;
-    messageY = -1;
     simPaused = false; // Simulation is running
     simLoops = 0;
     initSimLoad = 2;
@@ -141,7 +136,7 @@ void Micropolis::simInit()
     setFunds(5000);
     setGameLevelFunds(LEVEL_EASY);
     setSpeed(0);
-    setSkips(0);
+    setPasses(1);
 }
 
 
@@ -155,7 +150,7 @@ void Micropolis::simUpdate()
     blinkFlag = ((tickCount() % 60) < 30) ? 1 : -1;
 
     if (simSpeed && !heatSteps) {
-      tilesAnimated = 0;
+      tilesAnimated = false;
     }
 
     doUpdateHeads();
@@ -391,15 +386,14 @@ void Micropolis::simLoop(bool doSim)
        newMap = 1;
 
    } else {
-     if (doSim) {
-         simFrame();
-     }
+       if (doSim) {
+	   simFrame();
+       }
 
-     moveObjects();
+       moveObjects();
    }
 
    simLoops++;
-   simUpdate();
 }
 
 
@@ -411,11 +405,11 @@ void Micropolis::simLoop(bool doSim)
 void Micropolis::simTick()
 {
     if (simSpeed) {
-        int i;
-        for (i = 0; i < simSkips; i++) {
+        for (simPass = 0; simPass < simPasses; simPass++) {
             simLoop(true);
         }
     }
+    simUpdate();
 }
 
 

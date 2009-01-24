@@ -1,4 +1,4 @@
-# micropolisevaluationview.py
+# micropolisgaugeview.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,27 +61,8 @@
 
 
 ########################################################################
-# Micropolis Evaluation View
+# Micropolis Graph View
 # Don Hopkins
-
-
-# Is The Mayor Doing a Good Job?
-#   Yes: XX%
-#   No: XX%
-# What are the Worst Problems?
-#   Problem 1: XXX%
-#   Problem 2: XXX%
-#   Problem 3: XXX%
-#   Problem 4: XXX%
-# Statistics
-#   Population: XXX
-#       Net Migration: XXX (last year)
-#       Assessed Value: XXX
-#       Category: XXX
-#       Game Level: XXX
-# Overall City Score (0 - 1000)
-#   Current Score: XXX
-#   Annual Change: XXX
 
 
 ########################################################################
@@ -96,36 +77,26 @@ import micropolisview
 
 
 ########################################################################
-# MicropolisEvaluationView
+# MicropolisGaugeView
 
 
-class MicropolisEvaluationView(micropolisview.MicropolisView):
+class MicropolisGaugeView(micropolisview.MicropolisView):
 
 
-    problemNames = (
-        'Crime',
-        'Pollution',
-        'Housing',
-        'Taxes',
-        'Traffic',
-        'Unemployment',
-        'Fire',
-    )
+    gap = 5
 
-    categoryNames = (
-        'Village',
-        'Town',
-        'City',
-        'Capital',
-        'Metropolis',
-        'Megalopolis',
-    )
+    gaugeX = 0
+    gaugeY = 0
+    gaugeWidth = 42
+    gaugeHeight = 60
 
-    levelNames = (
-        'Easy',
-        'Medium',
-        'Hard',
-    )
+    textX = gaugeX + gaugeWidth + gap
+    textY = gap
+    textWidth = 20
+    textHeight = gaugeHeight - (2 * gap)
+
+    viewWidth = 150
+    viewHeight = 60
 
 
     def __init__(
@@ -134,9 +105,10 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
 
         micropolisview.MicropolisView.__init__(
             self,
-            aspect='evaluation',
-            interests=('city', 'evaluation',),
+            interests=('demand', 'date', 'funds',),
             **args)
+
+        self.set_size_request(self.viewWidth, self.viewHeight)
 
 
     def update(
@@ -144,7 +116,7 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         name,
         *args):
 
-        #print "EVALUATION UPDATE", self, name, args
+        #print "GAUGE VIEW UPDATE", self, name, args
 
         self.queue_draw()
 
@@ -154,81 +126,182 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         ctx,
         playout):
 
-        #print "==== MicropolisEvaluationView DRAWCONTENT", self
+        #print "==== MicropolisGaugeView DRAWCONTENT", self
 
         engine = self.engine
+
+        # Measure window.
 
         winRect = self.get_allocation()
         winWidth = winRect.width
         winHeight = winRect.height
 
+        # Draw window.
+
         ctx.save()
 
-        ctx.set_source_rgb(1.0, 1.0, 1.0)
-        ctx.rectangle(0, 0, winWidth, winHeight)
-        ctx.fill()
+        # Draw background.
 
-        yesPercent = engine.cityYes
-        noPercent = 100 - yesPercent
-        problems = []
-        for problem in range(0, 4):
-            problemNumber = engine.getProblemNumber(problem)
-            if problemNumber == -1:
-                txt = ''
+        ctx.translate(
+            self.gaugeX, 
+            self.gaugeY)
+
+        ctx.rectangle(
+            0,
+            0,
+            winWidth,
+            winHeight)
+
+        ctx.set_source_rgb(
+            0.9, 0.9, 1.0)
+
+        ctx.clip_preserve()
+
+        ctx.fill_preserve()
+
+        ctx.set_source_rgb(
+            0.0, 0.0, 0.0)
+
+        ctx.set_line_width(
+            2)
+
+        ctx.stroke()
+
+        # Measure bar.
+
+        barGap = 5
+        barHeight = 10
+        barWidth = self.gaugeWidth - (2 * barGap)
+        barX = barGap
+        barY = int((self.gaugeHeight - barHeight) / 2)
+
+        # Measure columns.
+
+        colGap = 2
+        colWidth = int((barWidth - (colGap * 4)) / 3)
+        rColX = barX + colGap
+        cColX = rColX + colWidth + colGap
+        iColX = cColX + colWidth + colGap
+
+        colHeight = int((winHeight - barHeight - (2 * barGap)) / 2)
+        
+        resDemand, comDemand, indDemand = engine.getDemands()
+        #print "RES", resDemand, "COM", comDemand, "IND", indDemand
+
+        res = -resDemand * colHeight
+        com = -comDemand * colHeight
+        ind = -indDemand * colHeight
+
+        # Draw columns.
+
+        if res != 0:
+            if res < 0:
+                y = barY + res
+                h = -res
             else:
-                txt = self.problemNames[problemNumber] + ': ' + str(engine.getProblemVotes(problem)) + '%'
-            problems.append(txt)
+                y = barY + barHeight
+                h = res
+            
+            ctx.rectangle(
+                rColX,
+                y,
+                colWidth,
+                h)
 
-        population = engine.formatNumber(engine.cityPop)
-        netMigration = engine.formatDelta(engine.cityPopDelta)
-        assessedValue = engine.formatMoney(engine.cityAssessedValue)
-        category = self.categoryNames[engine.cityClass]
-        gameLevel = self.levelNames[engine.gameLevel]
-        currentScore = engine.formatNumber(engine.cityScore)
-        annualChange = engine.formatDelta(engine.cityScoreDelta)
+            ctx.set_source_rgb(
+                0.0,
+                1.0,
+                0.0)
+
+            ctx.fill()
+
+        if com != 0:
+            if com < 0:
+                y = barY + com
+                h = -com
+            else:
+                y = barY + barHeight
+                h = com
+            
+            ctx.rectangle(
+                cColX,
+                y,
+                colWidth,
+                h)
+
+            ctx.set_source_rgb(
+                0.0,
+                0.0,
+                1.0)
+
+            ctx.fill()
+
+        if ind != 0:
+            if ind < 0:
+                y = barY + ind
+                h = -ind
+            else:
+                y = barY + barHeight
+                h = ind
+            
+            ctx.rectangle(
+                iColX,
+                y,
+                colWidth,
+                h)
+
+            ctx.set_source_rgb(
+                1.0,
+                1.0,
+                0.0)
+
+            ctx.fill()
+
+        # Draw bar.
+
+        ctx.save()
+
+        ctx.rectangle(
+            barX,
+            barY,
+            barWidth,
+            barHeight)
+
+        ctx.set_source_rgb(
+            1.0, 1.0, 1.0)
+
+        ctx.clip_preserve()
+
+        ctx.fill_preserve()
+
+        ctx.set_source_rgb(
+            0.0, 0.0, 0.0)
+
+        ctx.set_line_width(
+            2)
+
+        ctx.stroke()
+
+        ctx.restore()
+
+        # Finish drawing gauge.
+
+        ctx.restore()
+
+        # Draw text.
+        
+        ctx.save()
+
+        ctx.translate(self.textX, self.textY)
 
         markup1 = """<span>
-<b>Population:</b>
-    %s
-<b>Net Migration:</b>
-    %s
-<b>Assessed Value:</b>
-    %s
-<b>Category:</b>
-    %s
-<b>Game Level:</b>
-    %s
-<b>Current Score:</b>
-    %s
-<b>Annual Change:</b>
-    %s
- 
-<b>Is The Mayor doing
-a Good Job?</b>
-    Yes: %s%%
-    No: %s%%
- 
-<b>What are the 
-Worst Problems?</b>
-    %s
-    %s
-    %s
-    %s
-</span>
-""" % (
-            population,
-            netMigration,
-            assessedValue,
-            category,
-            gameLevel,
-            currentScore,
-            annualChange,
-            yesPercent,
-            noPercent,
-            problems[0],
-            problems[1],
-            problems[2],
-            problems[3],
+<b>Date:</b>
+  %s
+<b>Funds:</b>
+   %s
+</span>""" % (
+            engine.getCityDate(),
+            '$' + engine.formatNumber(engine.totalFunds),
         )
 
         ctx.set_source_rgb(0.0, 0.0, 0.0)
@@ -236,8 +309,34 @@ Worst Problems?</b>
 
         #print markup1
         playout.set_markup(markup1)
-        ctx.move_to(10, 10)
+        ctx.move_to(0, 0)
         ctx.show_layout(playout)
+
+        # Finish drawing window.
+
+        ctx.restore()
+
+
+    def handleMouseDrag(
+        self,
+        event):
+
+        pass
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        pass
 
 
 ########################################################################

@@ -184,8 +184,8 @@ void Micropolis::initGame()
 {
     simPaused = false; // Simulation is running.
     simPausedSpeed = 0;
-    simSkip = 0;
-    simSkips = 0;
+    simPass = 0;
+    simPasses = 1;
     heatSteps = 0; // Disable cellular automata machine.
     setSpeed(0);
 }

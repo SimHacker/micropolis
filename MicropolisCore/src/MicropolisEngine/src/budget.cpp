@@ -308,10 +308,9 @@ noMoney:
 
         } else {
 
-            autoBudget = false; /* force autobudget */
+	    setAutoBudget(false); /* force autobudget */
             mustUpdateOptions = true;
-            clearMessage();
-            sendMessage(STR301_NO_MONEY);
+            sendMessage(MESSAGE_NO_MONEY, NOWHERE, NOWHERE, false, true);
             goto noMoney;
 
         }
@@ -452,6 +451,16 @@ void Micropolis::showBudgetWindowAndStartWaiting()
     callback("UIShowBudgetAndWait", "");
 
     pause();
+}
+
+
+void Micropolis::setCityTax(short tax)
+{
+    cityTax = tax;
+    callback(
+	"UIUpdate",
+	"s",
+	"taxrate");
 }
 
 

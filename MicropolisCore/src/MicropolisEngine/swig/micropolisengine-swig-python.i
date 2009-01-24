@@ -202,6 +202,24 @@ void pythonCallbackHook(
           break;
         }
 
+        case 'b': {
+          // Pass a boolean. 
+          bool b =
+            va_arg(arglist, int) ? true : false;
+#ifdef TRACE_CALLBACKS
+          printf(
+            "  bool: %s\n",
+            b ? "true" : "false");
+#endif
+          PyTuple_SetItem(
+            paramTuple,
+            i,
+            PyBool_FromLong(
+              b ? 1 : 0));
+          i++;
+          break;
+        }
+
         case 'F': {
           // Pass a double. 
           double d =

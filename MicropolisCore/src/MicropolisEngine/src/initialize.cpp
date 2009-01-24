@@ -91,8 +91,6 @@ void Micropolis::initWillStuff()
     cityMonthLast = -1;
     totalFundsLast = -1;
     resLast = comLast = indLast = -999999;
-    messageNumber = 0;
-    messagePort = 0;
     roadFund = 0;
     policeFund = 0;
     fireFund = 0;

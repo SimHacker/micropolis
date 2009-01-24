@@ -431,14 +431,29 @@ void Micropolis::initSimMemory()
 void Micropolis::simLoadInit()
 {
     // Disaster delay table for each scenario
-    static const short disasterTable[9] = {
-        0, 2, 10, 5, 20, 3, 5, 5, 2 * 48,
+    static const short disasterWaitTable[SC_COUNT] = {
+        0,          // No scenario (free playing)
+	2,          // Dullsville (boredom)
+	10,         // San francisco (earth quake)
+	4 * 10,     // Hamburg (fire bombs)
+	20,         // Bern (traffic)
+	3,          // Tokyo (scary monster)
+	5,          // Detroit (crime)
+	5,          // Boston (nuclear meltdown)
+	2 * 48,     // Rio (flooding)
     };
 
     // Time to wait before score calculation for each scenario
-    static const short scoreWaitTable[9] = {
-        0, 30 * 48, 5 * 48, 5 * 48, 10 * 48,
-        5 * 48, 10 * 48, 5 * 48, 10 * 48
+    static const short scoreWaitTable[SC_COUNT] = {
+        0,          // No scenario (free playing)
+	30 * 48,    // Dullsville (boredom)
+	5 * 48,     // San francisco (earth quake)
+	5 * 48,     // Hamburg (fire bombs)
+	10 * 48,    // Bern (traffic)
+        5 * 48,     // Tokyo (scary monster)
+	10 * 48,    // Detroit (crime)
+	5 * 48,     // Boston (nuclear meltdown)
+	10 * 48,    // Rio (flooding)
     };
 
     externalMarket = (float)miscHist[1];
@@ -500,16 +515,18 @@ void Micropolis::simLoadInit()
     }
 
     if (scenario != SC_NONE) {
-        assert(LENGTH_OF(disasterTable) == SC_COUNT);
+        assert(LENGTH_OF(disasterWaitTable) == SC_COUNT);
         assert(LENGTH_OF(scoreWaitTable) == SC_COUNT);
 
         disasterEvent = scenario;
-        disasterWait = disasterTable[disasterEvent];
+        disasterWait = disasterWaitTable[disasterEvent];
         scoreType = disasterEvent;
         scoreWait = scoreWaitTable[disasterEvent];
     } else {
         disasterEvent = SC_NONE;
+	disasterWait = 0;
         scoreType = SC_NONE;
+	scoreWait = 0;
     }
 
     roadEffect = MAX_ROAD_EFFECT;
@@ -556,12 +573,6 @@ void Micropolis::setValves()
     float indRatioMax = 2;
     short taxMax = 20;
     float taxTableScale = 600;
-    short resValveMax = 2000;
-    short resValveMin = -2000;
-    short comValveMax = 1500;
-    short comValveMin = -1500;
-    short indValveMax = 1500;
-    short indValveMin = -1500;
 
     /// @todo Break the interesting values out into public member
     ///       variables so the user interface can display them.
@@ -645,45 +656,9 @@ void Micropolis::setValves()
     indRatio = (indRatio - 1) * taxTableScale + taxTable[z];
 
     // Ratios are velocity changes to valves.
-    if (resRatio > 0) {
-        if (resValve < resValveMax) {
-            resValve += (short)resRatio;
-        }
-    }
-
-    if (resRatio < 0) {
-        if (resValve > resValveMin) {
-            resValve += (short)resRatio; // Adding a negative number
-        }
-    }
-
-    if (comRatio > 0) {
-        if (comValve <  comValveMax) {
-            comValve += (short)comRatio;
-        }
-    }
-
-    if (comRatio < 0) {
-        if (comValve > comValveMin) {
-            comValve += (short)comRatio; // Adding a negative number
-        }
-    }
-
-    if (indRatio > 0) {
-        if (indValve <  indValveMax) {
-            indValve += (short)indRatio;
-        }
-    }
-
-    if (indRatio < 0) {
-        if (indValve > indValveMin) {
-            indValve += (short)indRatio; // Adding a negative number
-        }
-    }
-
-    resValve = clamp(resValve, resValveMin, resValveMax);
-    comValve = clamp(comValve, comValveMin, comValveMax);
-    indValve = clamp(indValve, indValveMin, indValveMax);
+    resValve = clamp(resValve + (short)resRatio, -RES_VALVE_RANGE, RES_VALVE_RANGE);
+    comValve = clamp(comValve + (short)comRatio, -COM_VALVE_RANGE, COM_VALVE_RANGE);
+    indValve = clamp(indValve + (short)indRatio, -IND_VALVE_RANGE, IND_VALVE_RANGE);
 
     if (resCap && resValve > 0) {
         resValve = 0; // Need a stadium, so cap resValve.
@@ -1674,8 +1649,7 @@ void Micropolis::doMeltdown(int SX, int SY)
     }
 
     // Report disaster to the user
-    clearMessage();
-    sendMessageAt(-STR301_NUCLEAR_MELTDOWN, SX, SY);
+    sendMessage(MESSAGE_NUCLEAR_MELTDOWN, SX, SY, true, true);
 }
 
 

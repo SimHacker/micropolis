@@ -158,7 +158,9 @@ void Micropolis::scenarioDisaster()
             break;
 
         case SC_HAMBURG:
-            dropFireBombs();
+            if ((disasterWait % 10) == 0) {
+		dropFireBombs();
+            }
             break;
 
         case SC_BERN:
@@ -222,8 +224,7 @@ void Micropolis::fireBomb()
     int crashX = getRandom(WORLD_W - 1);
     int crashY = getRandom(WORLD_H - 1);
     makeExplosion(crashX, crashY);
-    clearMessage();
-    sendMessageAt(-STR301_FIREBOMBING, crashX, crashY);
+    sendMessage(MESSAGE_FIREBOMBING, crashX, crashY, true, true);
 }
 
 
@@ -236,7 +237,7 @@ void Micropolis::makeEarthquake()
 
     doEarthquake(strength);
 
-    sendMessageAt(-STR301_EARTHQUAKE, cityCenterX, cityCenterY);
+    sendMessage(MESSAGE_EARTHQUAKE, cityCenterX, cityCenterY, true);
 
     for (z = 0; z < strength; z++)  {
         x = getRandom(WORLD_W - 1);
@@ -268,7 +269,7 @@ void Micropolis::setFire()
         z = z & LOMASK;
         if (z > LHTHR && z < LASTZONE) {
             map[x][y] = randomFire();
-            sendMessageAt(-STR301_FIRE_REPORTED, x, y);
+            sendMessage(MESSAGE_FIRE_REPORTED, x, y, true);
         }
     }
 }
@@ -288,7 +289,7 @@ void Micropolis::makeFire()
             z = z & LOMASK;
             if ((z > 21) && (z < LASTZONE)) {
                 map[x][y] = randomFire();
-                sendMessageAt(STR301_FIRE_REPORTED, x, y);
+                sendMessage(MESSAGE_FIRE_REPORTED, x, y);
                 return;
             }
         }
@@ -341,7 +342,7 @@ void Micropolis::makeFlood()
                           || (c & (BULLBIT | BURNBIT)) == (BULLBIT | BURNBIT)) {
                         map[xx][yy] = FLOOD;
                         floodCount = 30;
-                        sendMessageAt(-STR301_FLOODING_REPORTED, xx, yy);
+                        sendMessage(MESSAGE_FLOODING_REPORTED, xx, yy, true);
                         return;
                     }
                 }

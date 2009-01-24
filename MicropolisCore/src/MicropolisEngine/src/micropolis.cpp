@@ -238,12 +238,6 @@ void Micropolis::init()
 
     censusChanged = false;
 
-    // short messagePort;
-    messagePort = 0;
-
-    messageX = -1;
-    messageY = -1;
-
     // Quad roadSpend;
     roadSpend = 0;
 
@@ -439,8 +433,8 @@ void Micropolis::init()
     // Quad cityPop;
     cityPop = 0;
 
-    // Quad deltaCityPop;
-    deltaCityPop = 0;
+    // Quad cityPopDelta;
+    cityPopDelta = 0;
 
     // Quad cityAssessedValue;
     cityAssessedValue = 0;
@@ -511,11 +505,11 @@ void Micropolis::init()
     // int simLoops;
     simLoops = 0;
 
-    // int simSkips;
-    simSkips = 0;
+    // int simPasses;
+    simPasses = 0;
 
-    // int simSkip;
-    simSkip = 0;
+    // int simPass;
+    simPass = 0;
 
     simPaused = false; // Simulation is running
 
@@ -540,16 +534,17 @@ void Micropolis::init()
     // std::string cityName;
     cityName = "";
 
-    // int tilesAnimated;
-    tilesAnimated = 0;
+    // bool tilesAnimated;
+    tilesAnimated = false;
 
-    doAnimation = true; // Enable animation
+    // bool doAnimaton;
+    doAnimation = true;
 
-    // int doMessages;
-    doMessages = 1;
+    // bool doMessages;
+    doMessages = true;
 
-    // int doNotices;
-    doNotices = 1;
+    // bool doNotices;
+    doNotices = true;
 
     // short *cellSrc;
     cellSrc = NULL;
@@ -579,21 +574,13 @@ void Micropolis::init()
     // message.cpp
 
 
-    // Quad lastCityPop;
-    lastCityPop = 0;
+    // Quad cityPopLast;
+    cityPopLast = 0;
 
-    // short lastCategory;
-    lastCategory = 0;
-
-    // short messagePictureLast;
-    messagePictureLast = 0;
+    // short categoryLast;
+    categoryLast = 0;
 
     autoGoto = false;
-
-    messageLastValid = false;
-
-    // char messageLast[256];
-    memset(messageLast, 0, sizeof(char) * 256);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -682,15 +669,6 @@ void Micropolis::init()
     // short pollutionRamp;
     pollutionRamp = 0;
 
-    // short resValve;
-    resValve = 0;
-
-    // short comValve;
-    comValve = 0;
-
-    // short indValve;
-    indValve = 0;
-
     resCap = false; // Do not block residential growth
     comCap = false; // Do not block commercial growth
     indCap = false; // Do not block industrial growth
@@ -733,6 +711,15 @@ void Micropolis::init()
 
     doInitialEval = false;
 
+    // short resValve;
+    resValve = 0;
+ 
+    // short comValve;
+    comValve = 0;
+
+    // short indValve;
+    indValve = 0;
+
 
     ////////////////////////////////////////////////////////////////////////
     // sprite.cpp
@@ -761,11 +748,9 @@ void Micropolis::init()
     // Quad totalFunds;
     totalFunds = 0;
 
-    autoBulldoze = false; // Disable auto-bulldoze
-    autoBudget = false;   // Disable auto-budget
+    autoBulldoze = true;
 
-    // Quad messageTimeLast;
-    messageTimeLast = 0;
+    autoBudget = true;
 
     gameLevel = LEVEL_EASY;
 
@@ -780,12 +765,9 @@ void Micropolis::init()
     // short simSpeedMeta;
     simSpeedMeta = 0;
 
-    enableSound = false; // Disable sound
+    enableSound = false;
 
-    enableDisasters = true; // Enable disasters
-
-    // short messageNumber;
-    messageNumber = 0;
+    enableDisasters = true;
 
     evalChanged = false;
 
