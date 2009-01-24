@@ -68,43 +68,35 @@
 from distutils.core import *
 
 setup(
-  name='TileEngine',
-  version='1.0',
-  description='Cairo Tile Engine',
-  author='Don Hopkins',
-  author_email='dhopkins@DonHopkins.com',
-  url='http://www.DonHopkins.com',
-  py_modules=[
-    'tileengine',
-    'tiletool',
-    'tiledrawingarea',
-    'tilewindow',
-    'piemenu',
-  ],
-  ext_modules=[
-    Extension('_tileengine', [
-      'tileengine_wrap.cpp',
-      '../tileengine.cpp'
-    ],
-    include_dirs=[
-      '.',
-      '..',
-      '/usr/local/include',
-      '/usr/local/include/cairo',
-      '/usr/local/include/pycairo',
-      '/usr/include/cairo',
-      '/usr/include/pycairo',
-      '/opt/local/include/cairo',
-      '/opt/local/include/pycairo',
-    ],
-    library_dirs=[
-      '/opt/gtk/lib',
-      '/opt/local/lib',
-    ],
-    libraries=[
-      'cairo',
-    ]),
-  ]
+    name='TileEngineInterface',
+    version='1.0',
+    description='Cairo Tile Engine Interface',
+    author='Don Hopkins',
+    author_email='dhopkins@DonHopkins.com',
+    url='http://www.DonHopkins.com',
+    ext_modules = [
+        Extension('_tileengine', [
+                'objs/tileengine_wrap.cpp',
+                'src/tileengine.cpp'
+            ],
+            include_dirs = [
+                'src',
+                '/usr/local/include',
+                '/usr/local/include/cairo',
+                '/usr/local/include/pycairo',
+                '/usr/include/cairo',
+                '/usr/include/pycairo',
+                '/opt/local/include/cairo',
+                '/opt/local/include/pycairo',
+            ],
+            library_dirs = [
+                '/opt/gtk/lib',
+                '/opt/local/lib',
+            ],
+            libraries = [
+                'cairo',
+            ]),
+    ]
 )
 
 
