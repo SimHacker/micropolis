@@ -61,15 +61,15 @@
 
 ########################################################################
 
-SUBDIRS = \
-	TileEngine \
-	CellEngine \
-	MicropolisEngine
+PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
+	print "lib.%s-%s" \
+		% (util.get_platform(), sysconfig.get_config_var("VERSION"))')
 
-########################################################################
+.PHONY: all build_tileEngine doxygen
 
-all:
-	cd TileEngine ; make
+# ----------------------------------------------------------------------
+
+all: build_tileEngine
 	cd CellEngine ; make
 	cd MicropolisEngine ; make
 
@@ -97,5 +97,15 @@ tar: all
 
 doxygen:
 	doxygen Doxyfile
+
+# ----------------------------------------------------------------------
+# build/install tileEngine
+
+TILEENGINEDEST = pyMicropolis/tileEngine
+
+build_tileEngine:
+	$(MAKE) -C TileEngine build_python
+	cp TileEngine/objs/tileengine.py $(TILEENGINEDEST)
+	cp TileEngine/objs/$(PYTHONBUILDDIR)/_tileengine.so $(TILEENGINEDEST)
 
 ########################################################################
