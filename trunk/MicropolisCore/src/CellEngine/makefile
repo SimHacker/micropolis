@@ -106,9 +106,9 @@ build_swig: objs/cellengine_wrap.cpp
 
 objs/cellengine_wrap.cpp: swig/cellengine.i swig/cellengine-swig-python.i $(HEADERS)
 	$(SWIG) -python -c++ -Isrc -Wall \
-	     -outdir objs \
-	     -o objs/cellengine_wrap.cpp \
-	     swig/cellengine.i
+	        -outdir objs \
+	        -o objs/cellengine_wrap.cpp \
+	        swig/cellengine.i
 
 # ----------------------------------------------------------------------
 

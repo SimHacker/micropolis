@@ -105,9 +105,9 @@ build_swig: objs/tileengine_wrap.cpp
 
 objs/tileengine_wrap.cpp: swig/tileengine.i swig/tileengine-swig-python.i swig/pycairo.i $(HEADERS)
 	$(SWIG) -python -c++ -Isrc -Wall \
-	     -outdir objs \
-	     -o objs/tileengine_wrap.cpp \
-	     swig/tileengine.i
+	        -outdir objs \
+	        -o objs/tileengine_wrap.cpp \
+	        swig/tileengine.i
 
 # ----------------------------------------------------------------------
 
