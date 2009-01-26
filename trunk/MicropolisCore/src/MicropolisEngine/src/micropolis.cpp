@@ -368,7 +368,7 @@ void Micropolis::init()
     // short *miscHist;
     miscHist = NULL;
 
-    // short *powerMap;
+    // char *powerMap;
     powerMap = NULL;
 
 
@@ -713,7 +713,7 @@ void Micropolis::init()
 
     // short resValve;
     resValve = 0;
- 
+
     // short comValve;
     comValve = 0;
 
@@ -786,19 +786,6 @@ void Micropolis::init()
 
     ////////////////////////////////////////////////////////////////////////
     //  tool.cpp
-
-
-    // int toolX;
-    toolX = 0;
-
-    // int toolY;
-    toolY = 0;
-
-    // int toolXLast;
-    toolXLast = 0;
-
-    // int toolYLast;
-    toolYLast = 0;
 
 
     ////////////////////////////////////////////////////////////////////////

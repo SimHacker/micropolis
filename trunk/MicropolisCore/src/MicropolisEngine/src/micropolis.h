@@ -111,7 +111,7 @@
 
 
 /**
- * Used to determine byte order. 
+ * Used to determine byte order.
  *
  * @todo Determine byte order a better way.
  */
@@ -120,7 +120,7 @@
 /**
  * The version number of Micropolis.
  */
-#define MICROPOLIS_VERSION		"5.0"
+#define MICROPOLIS_VERSION              "5.0"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -141,8 +141,6 @@ static const int BYTES_PER_TILE = 2;
 
 /**
  * Size of the world in horizontal direction.
- * @note Must be <= 128 due to powerMap bitmap
- *       (where 1 row is assumed to be less or equal to 8 words).
  */
 static const int WORLD_W = 120;
 
@@ -208,7 +206,7 @@ static const int EDITOR_TILE_SIZE = 16;
 static const int EDITOR_W = WORLD_W * EDITOR_TILE_SIZE;
 
 /**
- * The height of the city editor view, in pixels. 
+ * The height of the city editor view, in pixels.
  * @todo Not used at all, it seems.
  *       Either remove this, or move it to the (generic) frontend.
  */
@@ -252,23 +250,9 @@ static const int MISC_HISTORY_LENGTH = 240;
 static const int HISTORY_COUNT = 120;
 
 /**
- * The size in shorts of one row of the power map.
- */
-static const int POWER_MAP_ROW = (WORLD_W + 15) / 16;
-
-/**
- * The size in shorts of the power map.
- */
-static const int POWER_MAP_SIZE = POWER_MAP_ROW * WORLD_H;
-
-/**
  * The length in bytes of the power map memory.
- *
- * @todo Why is it this size? 1600 + 100 slop?
- * @todo Compute its value from other constants
- *       (probably  ::POWER_MAP_ROW * ::WORLD_H).
  */
-static const int POWER_MAP_LENGTH = 1700;
+static const int POWER_MAP_LENGTH = WORLD_W * WORLD_H;
 
 /**
  * The size in shorts of the power stack.
@@ -423,17 +407,17 @@ enum MapTileBits {
  */
 enum MapTileCharacters {
     DIRT           = 0, ///< Clear tile
-    // sprite 1 ?
+    // tile 1 ?
 
     /* Water */
     RIVER          = 2,
     REDGE          = 3,
     CHANNEL        = 4,
     FIRSTRIVEDGE   = 5,
-    // sprite 6 -- 19 ?
+    // tile 6 -- 19 ?
     LASTRIVEDGE    = 20,
-    WATER_LOW      = RIVER,       ///< First water sprite
-    WATER_HIGH     = LASTRIVEDGE, ///< Last water sprite (inclusive)
+    WATER_LOW      = RIVER,       ///< First water tile
+    WATER_HIGH     = LASTRIVEDGE, ///< Last water tile (inclusive)
 
     TREEBASE       = 21,
     WOODS_LOW      = TREEBASE,
@@ -441,18 +425,18 @@ enum MapTileCharacters {
     WOODS          = 37,
     UNUSED_TRASH1  = 38,
     UNUSED_TRASH2  = 39,
-    WOODS_HIGH     = UNUSED_TRASH2, // Why is an 'UNUSED' sprite used?
+    WOODS_HIGH     = UNUSED_TRASH2, // Why is an 'UNUSED' tile used?
     WOODS2         = 40,
     WOODS3         = 41,
     WOODS4         = 42,
     WOODS5         = 43,
 
-    /* Rubble (4 sprites) */
+    /* Rubble (4 tiles) */
     RUBBLE         = 44,
     LASTRUBBLE     = 47,
 
     FLOOD          = 48,
-    // sprite 49, 50 ?
+    // tile 49, 50 ?
     LASTFLOOD      = 51,
 
     RADTILE        = 52, ///< Radio-active contaminated tile
@@ -461,7 +445,7 @@ enum MapTileCharacters {
     UNUSED_TRASH4  = 54,
     UNUSED_TRASH5  = 55,
 
-    /* Fire animation (8 sprites) */
+    /* Fire animation (8 tiles) */
     FIRE           = 56,
     FIREBASE       = FIRE,
     LASTFIRE       = 63,
@@ -483,23 +467,23 @@ enum MapTileCharacters {
     HROADPOWER     = 77,
     VROADPOWER     = 78,
     BRWH           = 79,
-    LTRFBASE       = 80, ///< First sprite with low traffic
-    // sprite 81 -- 94 ?
+    LTRFBASE       = 80, ///< First tile with low traffic
+    // tile 81 -- 94 ?
     BRWV           = 95,
-    // sprite 96 -- 110 ?
+    // tile 96 -- 110 ?
     BRWXXX1        = 111,
-    // sprite 96 -- 110 ?
+    // tile 96 -- 110 ?
     BRWXXX2        = 127,
-    // sprite 96 -- 110 ?
+    // tile 96 -- 110 ?
     BRWXXX3        = 143,
-    HTRFBASE       = 144, ///< First sprite with high traffic
-    // sprite 145 -- 158 ?
+    HTRFBASE       = 144, ///< First tile with high traffic
+    // tile 145 -- 158 ?
     BRWXXX4        = 159,
-    // sprite 160 -- 174 ?
+    // tile 160 -- 174 ?
     BRWXXX5        = 175,
-    // sprite 176 -- 190 ?
+    // tile 176 -- 190 ?
     BRWXXX6        = 191,
-    // sprite 192 -- 205 ?
+    // tile 192 -- 205 ?
     LASTROAD       = 206,
     BRWXXX7        = 207,
 
@@ -546,86 +530,86 @@ enum MapTileCharacters {
     ROADVPOWERH    = 239, /* bogus? */
 
     RESBASE        = 240,
-    // sprite 241 -- 243 ?
+    // tile 241 -- 243 ?
     FREEZ          = 244,
-    // sprite 245 -- 248 ?
+    // tile 245 -- 248 ?
     HOUSE          = 249,
     LHTHR          = HOUSE,
-    // sprite 249 -- 259 ?
+    // tile 249 -- 259 ?
     HHTHR          = 260,
-    // sprite 261 -- 264 ?
+    // tile 261 -- 264 ?
     RZB            = 265,
-    // sprite 266 -- 408 ?
+    // tile 266 -- 408 ?
     HOSPITAL       = 409,
-    // sprite 410 -- 417 ?
+    // tile 410 -- 417 ?
     CHURCH         = 418,
-    // sprite 419 -- 422 ?
+    // tile 419 -- 422 ?
     COMBASE        = 423,
-    // sprite 424 -- 426 ?
+    // tile 424 -- 426 ?
     COMCLR         = 427,
-    // sprite 428 -- 435 ?
+    // tile 428 -- 435 ?
     CZB            = 436,
-    // sprite 437 -- 608 ?
+    // tile 437 -- 608 ?
     COMLAST        = 609,
-    // sprite 610, 611 ?
+    // tile 610, 611 ?
     INDBASE        = 612,
-    // sprite 613 -- 615 ?
+    // tile 613 -- 615 ?
     INDCLR         = 616,
-    // sprite 617 -- 619 ?
+    // tile 617 -- 619 ?
     LASTIND        = 620,
     IND1           = 621,
-    // sprite 622 -- 624 ?
+    // tile 622 -- 624 ?
     IZB            = 625,
-    // sprite 626 -- 640 ?
+    // tile 626 -- 640 ?
     IND2           = 641,
-    // sprite 642, 643 ?
+    // tile 642, 643 ?
     IND3           = 644,
-    // sprite 645 -- 648 ?
+    // tile 645 -- 648 ?
     IND4           = 649,
     IND5           = 650,
-    // sprite 651 -- 675 ?
+    // tile 651 -- 675 ?
     IND6           = 676,
     IND7           = 677,
-    // sprite 678 -- 685 ?
+    // tile 678 -- 685 ?
     IND8           = 686,
-    // sprite 687, 688 ?
+    // tile 687, 688 ?
     IND9           = 689,
-    // sprite 690 -- 692 ?
+    // tile 690 -- 692 ?
     PORTBASE       = 693,
-    // sprite 694 -- 697 ?
+    // tile 694 -- 697 ?
     PORT           = 698,
-    // sprite 699 -- 707 ?
+    // tile 699 -- 707 ?
     LASTPORT       = 708,
     AIRPORTBASE    = 709,
-    // sprite 710 ?
+    // tile 710 ?
     RADAR          = 711,
-    // sprite 712 -- 715 ?
+    // tile 712 -- 715 ?
     AIRPORT        = 716,
-    // sprite 717 -- 744 ?
+    // tile 717 -- 744 ?
     COALBASE       = 745,
-    // sprite 746 -- 749 ?
+    // tile 746 -- 749 ?
     POWERPLANT     = 750,
-    // sprite 751 -- 759 ?
+    // tile 751 -- 759 ?
     LASTPOWERPLANT = 760, // Why is NUCLEAR further down?
 
     FIRESTBASE     = 761,
-    // sprite 762 -- 764 ?
+    // tile 762 -- 764 ?
     FIRESTATION    = 765,
-    // sprite 766 -- 769 ?
+    // tile 766 -- 769 ?
     POLICESTBASE   = 770,
-    // sprite 771 -- 773 ?
+    // tile 771 -- 773 ?
     POLICESTATION  = 774,
-    // sprite 775 -- 778 ?
+    // tile 775 -- 778 ?
     STADIUMBASE    = 779,
-    // sprite 780 -- 783 ?
+    // tile 780 -- 783 ?
     STADIUM        = 784,
-    // sprite 785 -- 799 ?
+    // tile 785 -- 799 ?
     FULLSTADIUM    = 800,
-    // sprite 801 -- 810 ?
+    // tile 801 -- 810 ?
     NUCLEARBASE    = 811,
-    // sprite 812 -- 815 ?
+    // tile 812 -- 815 ?
     NUCLEAR        = 816, ///< Nuclear power plant
-    // sprite 817 -- 825 ?
+    // tile 817 -- 825 ?
     LASTZONE       = 826,
     LIGHTNINGBOLT  = 827,
     HBRDG0         = 828,
@@ -642,38 +626,38 @@ enum MapTileCharacters {
     RADAR6         = 838,
     RADAR7         = 839,
     FOUNTAIN       = 840,
-    // sprite 841 -- 843 ?
+    // tile 841 -- 843 ?
     INDBASE2       = 844,
     TELEBASE       = 844,
-    // sprite 845 -- 850 ?
+    // tile 845 -- 850 ?
     TELELAST       = 851,
     SMOKEBASE      = 852,
-    // sprite 853 -- 859 ?
+    // tile 853 -- 859 ?
     TINYEXP        = 860,
-    // sprite 861 -- 863 ?
+    // tile 861 -- 863 ?
     SOMETINYEXP    = 864,
-    // sprite 865 -- 866 ?
+    // tile 865 -- 866 ?
     LASTTINYEXP    = 867,
-    // sprite 868 -- 882 ?
+    // tile 868 -- 882 ?
     TINYEXPLAST    = 883,
-    // sprite 884 -- 915 ?
+    // tile 884 -- 915 ?
     COALSMOKE1     = 916,
-    // sprite 917 -- 919 ?
+    // tile 917 -- 919 ?
     COALSMOKE2     = 920,
-    // sprite 921 -- 923 ?
+    // tile 921 -- 923 ?
     COALSMOKE3     = 924,
-    // sprite 925 -- 927 ?
+    // tile 925 -- 927 ?
     COALSMOKE4     = 928,
-    // sprite 929 -- 931 ?
+    // tile 929 -- 931 ?
     FOOTBALLGAME1  = 932,
-    // sprite 933 -- 939 ?
+    // tile 933 -- 939 ?
     FOOTBALLGAME2  = 940,
-    // sprite 941 -- 947 ?
+    // tile 941 -- 947 ?
     VBRDG0         = 948,
     VBRDG1         = 949,
     VBRDG2         = 950,
     VBRDG3         = 951,
-    // sprite 952 -- 959 ?
+    // tile 952 -- 959 ?
 
     TILE_COUNT     = 960,
 };
@@ -1191,7 +1175,7 @@ public:
      *
      * Map[0 <= x < 120][0 <= y < 100]
      */
-    short *map[WORLD_W];
+    unsigned short *map[WORLD_W];
 
     /**
      * 10 year residential history maximum value.
@@ -1431,7 +1415,7 @@ public:
     /**
      * Power distribution bitmap.
      */
-    short *powerMap;
+    char *powerMap;
 
 private:
 
@@ -1679,19 +1663,19 @@ public:
 private:
 
 
-    int connectTile(short x, short y, short *TileAdrPtr, short Command);
+    int connectTile(short x, short y, unsigned short *TileAdrPtr, short Command);
 
-    int layDoze(int x, int y, short *TileAdrPtr);
+    int layDoze(int x, int y, unsigned short *TileAdrPtr);
 
-    int layRoad(int x, int y, short *TileAdrPtr);
+    int layRoad(int x, int y, unsigned short *TileAdrPtr);
 
-    int layRail(int x, int y, short *TileAdrPtr);
+    int layRail(int x, int y, unsigned short *TileAdrPtr);
 
-    int layWire(int x, int y, short *TileAdrPtr);
+    int layWire(int x, int y, unsigned short *TileAdrPtr);
 
-    void fixZone(int x, int y, short *TileAdrPtr);
+    void fixZone(int x, int y, unsigned short *TileAdrPtr);
 
-    void fixSingle(int x, int y, short *TileAdrPtr);
+    void fixSingle(int x, int y, unsigned short *TileAdrPtr);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1785,7 +1769,7 @@ public:
     /**
      * City class.
      *
-     * 0: village, 1: town, 2: city, 3: capital, 
+     * 0: village, 1: town, 2: city, 3: capital,
      * 4: metropolis, 5: megalopolis.
      * Affected by city population.
      */
@@ -2052,13 +2036,13 @@ public:
 #endif
 
     void getHistoryRange(int historyType, int historyScale,
-			 short *minValResult, short *maxValResult);
+                         short *minValResult, short *maxValResult);
 
     short getHistory(int historyType, int historyScale,
-		     int historyIndex);
+                     int historyIndex);
 
     void setHistory(int historyType, int historyScale,
-		    int historyIndex, short historyValue);
+                    int historyIndex, short historyValue);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2253,15 +2237,13 @@ public:
     void doScenarioScore(Scenario type);
 
     void sendMessage(
-	short Mnum,
-	short x=NOWHERE, short y=NOWHERE,
-	bool picture=false, bool important=false);
+        short Mnum,
+        short x=NOWHERE, short y=NOWHERE,
+        bool picture=false, bool important=false);
 
     void doMakeSound(int mesgNum, int x, int y);
 
     void doAutoGoto(short x, short y, char *msg);
-
-    void doShowPicture(short id);
 
     void doLoseGame();
     void doWinGame(); ///< @todo This may not be called. Call it when appropriate.
@@ -2301,7 +2283,7 @@ private:
      */
     inline int powerMapOffset(int x, int y)
     {
-        return (x >>4) + (y <<3);
+        return x * WORLD_H + y;
     };
 
     /**
@@ -2309,9 +2291,9 @@ private:
      */
     inline bool getPowerBit(int x, int y)
     {
-	int offset = powerMapOffset(x, y);
-	return (offset >= 0 && offset < POWER_MAP_SIZE &&
-		!!(powerMap[offset] & (1 << (x & 0x0f))));
+        int offset = powerMapOffset(x, y);
+        return (offset >= 0 && offset < POWER_MAP_LENGTH &&
+                !!powerMap[offset]);
     }
 
     /**
@@ -2319,10 +2301,10 @@ private:
      */
     inline void setPowerBit(int x, int y)
     {
-	int offset = powerMapOffset(x, y);
-	if (offset >= 0 && offset < POWER_MAP_SIZE) {
-	    powerMap[powerMapOffset(x, y)] |= 1 << (x & 0x0f);
-	}
+        int offset = powerMapOffset(x, y);
+        if (offset >= 0 && offset < POWER_MAP_LENGTH) {
+            powerMap[offset] = 1;
+        }
     }
 
 
@@ -2472,12 +2454,13 @@ public:
 
     bool doInitialEval; ///< Need to perform initial city evaluation.
 
+
+private:
+
     short resValve;
     short comValve;
     short indValve;
 
-
-private:
 
     /** Generate a random animated MapTileCharacters::FIRE tile */
     inline short randomFire()
@@ -2731,7 +2714,7 @@ public:
      */
     static inline bool testBounds(int wx, int wy)
     {
-	return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
+        return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
     };
 
     void spend(int dollars);
@@ -2778,20 +2761,27 @@ public:
 
     void *getMapBuffer();
 
+    void *getPowerMapBuffer();
+
+    // residential
+    // commercial
+    // industrial
+    // power
+    // roads
+    // population density
+    // rate of growth
+    void *getTrafficDensityMapBuffer();
+    // pollution
+    // crime
+    // land value
+    // fire radius
+    // police radius
+
 
     ////////////////////////////////////////////////////////////////////////
     // tool.cpp
 
 public:
-
-
-    int toolX; ///< Get rid of this.
-
-    int toolY; ///< Get rid of this.
-
-    int toolXLast; ///< Get rid of this.
-
-    int toolYLast; ///< Get rid of this.
 
 
     int putDownPark(short mapH, short mapV);
@@ -2841,13 +2831,11 @@ public:
 
     int networkTool(short x, short y);
 
-    int doTool(EditingTool tool, short x, short y, bool first);
+    int doTool(EditingTool tool, short tileX, short tileY);
 
-    void toolDown(EditingTool tool, short x, short y);
+    void toolDown(EditingTool tool, short tileX, short tileY);
 
-    void toolUp(EditingTool tool, short x, short y);
-
-    void toolDrag(EditingTool tool, short px, short py);
+    void toolDrag(EditingTool tool, short fromX, short fromY, short toX, short toY);
 
 private:
 
@@ -2893,7 +2881,7 @@ private:
      */
     inline Direction reverseDirection(Direction d)
     {
-	return (Direction)((d + 2) & 0x3);
+        return (Direction)((d + 2) & 0x3);
     };
 
     /**
@@ -3043,8 +3031,8 @@ public:
 
     void getDemands(
         float *resDemandResult,
-	float *comDemandResult,
-	float *indDemandResult);
+        float *comDemandResult,
+        float *indDemandResult);
 
 
 private:

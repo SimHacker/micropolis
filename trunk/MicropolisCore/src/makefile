@@ -86,6 +86,9 @@ cleanswig:
 	rm -f $(MICROPOLISENGINEDEST)/micropolisengine.py
 	rm -f $(MICROPOLISENGINEDEST)/_micropolisengine.so
 	rm -rf *~ *.suo *.ncb
+	(cd CellEngine ; make cleanswig)
+	(cd TileEngine ; make cleanswig)
+	(cd MicropolisEngine ; make cleanswig)
 
 install: all
 	rm -rf build

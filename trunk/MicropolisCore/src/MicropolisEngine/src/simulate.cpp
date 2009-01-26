@@ -173,7 +173,7 @@ void Micropolis::simulate(int phase)
         case 7:
         case 8:
 
-	    // Scan 1/8 of the map for each of the 8 phases 1..8:
+            // Scan 1/8 of the map for each of the 8 phases 1..8:
             mapScan((phase - 1) * WORLD_W / 8, phase * WORLD_W / 8);
 
             break;
@@ -433,27 +433,27 @@ void Micropolis::simLoadInit()
     // Disaster delay table for each scenario
     static const short disasterWaitTable[SC_COUNT] = {
         0,          // No scenario (free playing)
-	2,          // Dullsville (boredom)
-	10,         // San francisco (earth quake)
-	4 * 10,     // Hamburg (fire bombs)
-	20,         // Bern (traffic)
-	3,          // Tokyo (scary monster)
-	5,          // Detroit (crime)
-	5,          // Boston (nuclear meltdown)
-	2 * 48,     // Rio (flooding)
+        2,          // Dullsville (boredom)
+        10,         // San francisco (earth quake)
+        4 * 10,     // Hamburg (fire bombs)
+        20,         // Bern (traffic)
+        3,          // Tokyo (scary monster)
+        5,          // Detroit (crime)
+        5,          // Boston (nuclear meltdown)
+        2 * 48,     // Rio (flooding)
     };
 
     // Time to wait before score calculation for each scenario
     static const short scoreWaitTable[SC_COUNT] = {
         0,          // No scenario (free playing)
-	30 * 48,    // Dullsville (boredom)
-	5 * 48,     // San francisco (earth quake)
-	5 * 48,     // Hamburg (fire bombs)
-	10 * 48,    // Bern (traffic)
+        30 * 48,    // Dullsville (boredom)
+        5 * 48,     // San francisco (earth quake)
+        5 * 48,     // Hamburg (fire bombs)
+        10 * 48,    // Bern (traffic)
         5 * 48,     // Tokyo (scary monster)
-	10 * 48,    // Detroit (crime)
-	5 * 48,     // Boston (nuclear meltdown)
-	10 * 48,    // Rio (flooding)
+        10 * 48,    // Detroit (crime)
+        5 * 48,     // Boston (nuclear meltdown)
+        10 * 48,    // Rio (flooding)
     };
 
     externalMarket = (float)miscHist[1];
@@ -504,8 +504,9 @@ void Micropolis::simLoadInit()
     cityTaxAverage = (cityTime % 48) * 7;  /* post */
 
     // Set power map.
-    for (int z = 0; z < POWER_MAP_SIZE; z++) {
-        powerMap[z] = ~0;
+    /// @todo What purpose does this serve? Weird...
+    for (int z = 0; z < POWER_MAP_LENGTH; z++) {
+        powerMap[z] = 1;
     }
 
     doNilPower();
@@ -524,9 +525,9 @@ void Micropolis::simLoadInit()
         scoreWait = scoreWaitTable[disasterEvent];
     } else {
         disasterEvent = SC_NONE;
-	disasterWait = 0;
+        disasterWait = 0;
         scoreType = SC_NONE;
-	scoreWait = 0;
+        scoreWait = 0;
     }
 
     roadEffect = MAX_ROAD_EFFECT;
@@ -1255,9 +1256,9 @@ void Micropolis::doFire()
             if (testBounds(Xtem, Ytem)) {
 
                 short c = map[Xtem][Ytem];
-		if (!(c & BURNBIT)) {
-		    continue;
-		}
+                if (!(c & BURNBIT)) {
+                    continue;
+                }
 
                 if (c & ZONEBIT) {
                     // Neighbour is a zone and burnable

@@ -5,39 +5,39 @@
 # Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
 # you need assistance with this program, you may contact:
 #   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.  You should have received a
 # copy of the GNU General Public License along with this program.  If
 # not, see <http://www.gnu.org/licenses/>.
-# 
+#
 #             ADDITIONAL TERMS per GNU GPL Section 7
-# 
+#
 # No trademark or publicity rights are granted.  This license does NOT
 # give you any right, title or interest in the trademark SimCity or any
 # other Electronic Arts trademark.  You may not distribute any
 # modification of this program using the trademark SimCity or claim any
 # affliation or association with Electronic Arts Inc. or its employees.
-# 
+#
 # Any propagation or conveyance of this program must include this
 # copyright notice and these terms.
-# 
+#
 # If you convey this program (or any modifications of it) and assume
 # contractual liability for the program to recipients of it, you agree
 # to indemnify Electronic Arts for any liability that those contractual
 # assumptions impose on Electronic Arts.
-# 
+#
 # You may not misrepresent the origins of this program; modified
 # versions of the program must be marked as such and not identified as
 # the original program.
-# 
+#
 # This disclaimer supplements the one included in the General Public
 # License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
 # PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -90,9 +90,67 @@ import micropolisengine
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
-from tiledrawingarea import TileDrawingArea
+from pyMicropolis.tileEngine import tiledrawingarea
 import micropolistool
-from tiletool import TileTool
+
+
+########################################################################
+# Globals
+# @todo This should go through some kind of a resource manager.
+
+
+Sprites = [
+    {
+        'id': 1,
+        'name': 'train',
+        'frames': 5,
+    },
+    {
+        'id': 2,
+        'name': 'helicopter',
+        'frames': 8,
+    },
+    {
+        'id': 3,
+        'name': 'airplane',
+        'frames': 11,
+    },
+    {
+        'id': 4,
+        'name': 'boat',
+        'frames': 8,
+    },
+    {
+        'id': 5,
+        'name': 'monster',
+        'frames': 16,
+    },
+    {
+        'id': 6,
+        'name': 'tornado',
+        'frames': 3,
+    },
+    {
+        'id': 7,
+        'name': 'explosion',
+        'frames': 6,
+    },
+    {
+        'id': 8,
+        'name': 'bus',
+        'frames': 4,
+    },
+]
+for spriteData in Sprites:
+    images = []
+    spriteData['images'] = images
+    for i in range(0, spriteData['frames']):
+        fileName = 'images/simEngine/obj%d-%d.png' % (
+            spriteData['id'],
+            i,
+        )
+        image = cairo.ImageSurface.create_from_png(fileName)
+        images.append(image)
 
 
 ########################################################################
@@ -106,7 +164,7 @@ def PRINT(*args):
 ########################################################################
 
 
-class MicropolisDrawingArea(TileDrawingArea):
+class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
 
     def __init__(
@@ -122,11 +180,15 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         self.engine = engine
 
-        TileDrawingArea.__init__(self, **args)
+        tiledrawingarea.TileDrawingArea.__init__(self, **args)
 
         engine.expressInterest(
             self,
             interests)
+
+        self.flickerData = True
+        self.dataImages = []
+        self.blinkFlag = True
 
         self.reset()
 
@@ -139,10 +201,19 @@ class MicropolisDrawingArea(TileDrawingArea):
 
         engine = self.engine
         buffer = engine.getMapBuffer()
-        print "Map buffer", buffer
+        #print "Map buffer", buffer
         tengine.setBuffer(buffer)
         tengine.width = micropolisengine.WORLD_W
         tengine.height = micropolisengine.WORLD_H
+
+        from micropolisengine import ZONEBIT, PWRBIT, ALLBITS, LIGHTNINGBOLT
+
+        def tileFunction(row, col, tile):
+            if (tile & ZONEBIT) and not (tile & PWRBIT) and random.random() < 0.5:
+                tile = LIGHTNINGBOLT | (tile & ALLBITS)
+            return tile
+
+        self.tileFunction = tileFunction
 
         # Unsigned short tile values, in column major order.
         tengine.typeCode = 'H'
@@ -160,6 +231,8 @@ class MicropolisDrawingArea(TileDrawingArea):
         self,
         ctx):
 
+        self.drawData(ctx)
+
         self.drawSprites(ctx)
 
         self.drawChalk(ctx)
@@ -170,8 +243,92 @@ class MicropolisDrawingArea(TileDrawingArea):
                 tool.drawCursor(self, ctx)
 
 
+    def getDataImages(self):
+        #return self.dataImages
+        if self.flickerData:
+            trafficAlpha = random.random() * 0.2 + 0.5
+            powerAlpha = random.random() * 0.2 + 0.5
+        else:
+            trafficAlpha = 0.5
+            powerAlpha = 0.5
+        return [
+            [trafficAlpha, self.engine.getDataImage('traffic'),],
+            #[powerAlpha, self.engine.getDataImage('power'),],
+        ]
+
+
+    def drawData(self, ctx):
+
+        dataImages = self.getDataImages()
+        if not dataImages:
+            return
+
+        for opacity, dataImage in dataImages:
+
+            ctx.save()
+
+            tileSize = self.tileSize
+
+            ctx.translate(self.panX, self.panY)
+
+            imageWidth = dataImage.get_width()
+            imageHeight = dataImage.get_height()
+
+            ctx.scale(
+                (self.worldCols * tileSize) / imageWidth,
+                (self.worldRows * tileSize) / imageHeight)
+
+            ctx.set_source_surface(
+                dataImage,
+                0,
+                0)
+            ctx.paint_with_alpha(opacity)
+
+            ctx.restore()
+
+
     def drawSprites(self, ctx):
-        pass # TODO: drawSprites
+        engine = self.engine
+        sprite = engine.spriteList
+        while True:
+            if not sprite:
+                break
+            self.drawSprite(ctx, sprite)
+            sprite = sprite.next
+
+
+    def drawSprite(self, ctx, sprite):
+        spriteType = sprite.type
+        spriteFrame = sprite.frame
+
+        if (spriteFrame == 0 or
+            spriteType == micropolisengine.SPRITE_NOTUSED or
+            spriteType >= micropolisengine.SPRITE_COUNT):
+            return
+
+        ctx.save()
+
+        x = sprite.x
+        y = sprite.y
+        width = sprite.width
+        height = sprite.height
+        tileSize = self.tileSize
+
+        ctx.translate(self.panX, self.panY)
+        ctx.scale(tileSize / 16.0, tileSize / 16.0)
+
+        ctx.translate(x + sprite.xOffset, y + sprite.yOffset)
+
+        image = Sprites[spriteType - 1]['images'][spriteFrame - 1]
+
+        ctx.set_source_surface(
+            image,
+            0,
+            0)
+        #rectangle(0, 0, 1, 1)
+        ctx.paint()
+
+        ctx.restore()
 
 
     def drawChalk(self, ctx):
@@ -180,10 +337,8 @@ class MicropolisDrawingArea(TileDrawingArea):
 
     def tickEngine(self):
 
-        engine = self.engine
-        engine.simTick()
-        if engine.doAnimation and not engine.tilesAnimated:
-            engine.animateTiles()
+        # Don't do anything! The engine ticks itself.
+        return
 
 
     def makeToolPie(self):
@@ -205,7 +360,7 @@ class MicropolisDrawingArea(TileDrawingArea):
     def handleKey(
         self,
         key):
-        
+      
         if key == 'm':
             self.engine.heatSteps = 1
             self.engine.heatRule = 0
@@ -309,7 +464,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         args['pannable'] = False
         args['menuable'] = False
         args['showCursor'] = False
-        args['scale'] = 0.25
+        args['scale'] = 0.0625
 
         MicropolisDrawingArea.__init__(self, **args)
 
@@ -322,6 +477,13 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         self.panningStartPanY = 0
 
 
+    def prepareToRenderTiles(
+        self,
+        ctx):
+
+        self.blinkFlag = (self.engine.tickCount() % 60) < 30
+
+
     def drawOverlays(self, ctx):
 
         MicropolisDrawingArea.drawOverlays(self, ctx)
@@ -332,11 +494,14 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
     def getViewBox(self, view):
 
         viewRect = view.get_allocation()
+        viewWidth = viewRect.width
+        viewHeight = viewRect.height
 
-        x = self.panX + (((viewRect.x - view.panX) / view.tileSize) * self.tileSize)
-        y = self.panY + (((viewRect.y - view.panY) / view.tileSize) * self.tileSize)
-        width = (viewRect.width / view.tileSize) * self.tileSize
-        height = (viewRect.height / view.tileSize) * self.tileSize
+        x = self.panX - ((view.panX / view.tileSize) * self.tileSize)
+        y = self.panY - ((view.panY / view.tileSize) * self.tileSize)
+
+        width = (viewWidth / view.tileSize) * self.tileSize
+        height = (viewHeight / view.tileSize) * self.tileSize
 
         return x, y, width, height
 
@@ -356,7 +521,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
                 continue
 
             x, y, width, height = self.getViewBox(view)
-             
+           
             if view == currentView:
 
                 pad = 4

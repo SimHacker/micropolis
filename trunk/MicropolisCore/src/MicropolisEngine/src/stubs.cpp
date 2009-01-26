@@ -332,4 +332,35 @@ void *Micropolis::getMapBuffer()
 }
 
 
+/**
+ * Get the address of the internal buffer containing the
+ * power map.
+ *
+ * This is used to enable the tile engine to access the
+ * power map directly.
+ *
+ * @return Pointer to the start of the power map buffer.
+ */
+void *Micropolis::getPowerMapBuffer()
+{
+    return (void *)powerMap;
+}
+
+
+/**
+ * Get the address of the internal buffer containing the
+ * traffic density map.
+ *
+ * This is used to enable the tile engine to access the
+ * traffic density map directly.
+ *
+ * @return Pointer to the start of the traffic density
+ *         map buffer.
+ */
+void *Micropolis::getTrafficDensityMapBuffer()
+{
+    return (void *)trafficDensityMapBase;
+}
+
+
 ////////////////////////////////////////////////////////////////////////

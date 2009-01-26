@@ -800,7 +800,7 @@ void Micropolis::doCopterSprite(
             int chopperX = (x <<1) + 1;
             int chopperY = (y <<1) + 1;
             if ((trafficDensityMap[x][y] > 170) && ((getRandom16() & 7) == 0)) {
-	        sendMessage(MESSAGE_HEAVY_TRAFFIC, chopperX, chopperY, true);
+                sendMessage(MESSAGE_HEAVY_TRAFFIC, chopperX, chopperY, true);
                 makeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
                 sprite->soundCount = 200;
             }
@@ -1014,6 +1014,26 @@ void Micropolis::doShipSprite(SimSprite *sprite)
 
 /**
  * Move monster sprite.
+ *
+ * There are 16 monster sprite frames:
+ *
+ * Frame 0: NorthEast Left Foot
+ * Frame 1: NorthEast Both Feet
+ * Frame 2: NorthEast Right Foot
+ * Frame 3: SouthEast Right Foot
+ * Frame 4: SouthEast Both Feet
+ * Frame 5: SouthEast Left Foot
+ * Frame 6: SouthWest Right Foot
+ * Frame 7: SouthWest Both Feet
+ * Frame 8: SouthWest Left Foot
+ * Frame 9: NorthWest Left Foot
+ * Frame 10: NorthWest Both Feet
+ * Frame 11: NorthWest Right Foot
+ * Frame 12: North Left Foot
+ * Frame 13: East Left Foot
+ * Frame 14: South Right Foot
+ * Frame 15: West Right Foot
+ *
  * @param sprite Monster sprite.
  * @todo Remove local magic constants and document the code.
  */
@@ -1684,11 +1704,11 @@ void Micropolis::explodeSprite(SimSprite *sprite)
             break;
 
         case SPRITE_SHIP:
-	    sendMessage(MESSAGE_SHIP_CRASHED, x, y, true);
+            sendMessage(MESSAGE_SHIP_CRASHED, x, y, true);
             break;
 
         case SPRITE_TRAIN:
-	    sendMessage(MESSAGE_TRAIN_CRASHED, x, y, true);
+            sendMessage(MESSAGE_TRAIN_CRASHED, x, y, true);
             break;
 
         case SPRITE_HELICOPTER:
@@ -1921,7 +1941,6 @@ void Micropolis::makeShipHere(int x, int y)
 
 /**
  * Start a new monster sprite.
- * @bug The "!done == 0" looks wrong.
  */
 void Micropolis::makeMonster()
 {
@@ -1950,7 +1969,7 @@ void Micropolis::makeMonster()
 
     }
 
-    if (!done == 0) {
+    if (!done) {
         makeMonsterAt(60, 50);
     }
 

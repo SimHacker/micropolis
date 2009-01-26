@@ -114,8 +114,11 @@ objs/cellengine_wrap.cpp: swig/cellengine.i swig/cellengine-swig-python.i $(HEAD
 
 clean:
 	rm -rf *~ *.ncb
-	rm -rf swig/*~ objs/*
+	rm -rf swig/*~ objs/* build
 	rm -rf python/*~ python/*.pyc python/*.pyd
+
+install: all
+	($(PYTHON) setup.py install)
 
 # XXX This is not needed
 cleanswig: clean
