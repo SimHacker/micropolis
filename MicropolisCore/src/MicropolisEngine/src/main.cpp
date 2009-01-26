@@ -180,7 +180,7 @@ void Micropolis::simHeat()
 
     if (cellSrc == NULL) {
         cellSrc = (short *)newPtr((WORLD_W + 2) * (WORLD_H + 2) * sizeof (short));
-        cellDst = &map[0][0];
+        cellDst = (short *)&map[0][0];
     }
 
     src = cellSrc + SRCCOL + 1;
@@ -387,7 +387,7 @@ void Micropolis::simLoop(bool doSim)
 
    } else {
        if (doSim) {
-	   simFrame();
+           simFrame();
        }
 
        moveObjects();

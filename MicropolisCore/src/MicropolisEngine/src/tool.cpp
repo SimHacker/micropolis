@@ -1272,11 +1272,8 @@ int Micropolis::networkTool(short x, short y)
 }
 
 
-int Micropolis::doTool(EditingTool tool, short x, short y, bool first)
+int Micropolis::doTool(EditingTool tool, short tileX, short tileY)
 {
-    short tileX = x >>4;
-    short tileY = y >>4;
-
     switch (tool) {
 
     case TOOL_RESIDENTIAL:
@@ -1338,28 +1335,22 @@ int Micropolis::doTool(EditingTool tool, short x, short y, bool first)
 
 
 /**
- * @todo The last coordinates should be passed from the tool so the
- *       simulator is stateless and can support multiple tools
- *       drawing at once. Get rid of toolXLast and toolYLast.
  * @todo Add enum for tool result values.
  */
-void Micropolis::toolDown(EditingTool tool, short x, short y)
+void Micropolis::toolDown(EditingTool tool, short tileX, short tileY)
 {
     int result;
 
-    toolXLast = x;
-    toolYLast = y;
-
-    result = doTool(tool, x <<4, y <<4, true);
+    result = doTool(tool, tileX, tileY);
 
     if (result == -1) {
         sendMessage(MESSAGE_BULLDOZE_AREA_FIRST, NOWHERE, NOWHERE, false, true);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
-        makeSound("interface", "UhUh", x <<4, y <<4);
+        makeSound("interface", "UhUh", tileX <<4, tileY <<4);
     } else if (result == -2) {
         sendMessage(MESSAGE_NOT_ENOUGH_FUNDS, NOWHERE, NOWHERE, false, true);
         /// @todo: Multi player: This sound should only be heard by the user who called this function.
-        makeSound("interface", "Sorry", x <<4, y <<4);
+        makeSound("interface", "Sorry", tileX <<4, tileY <<4);
     }
 
     simPass = 0;
@@ -1367,81 +1358,52 @@ void Micropolis::toolDown(EditingTool tool, short x, short y)
 }
 
 
-void Micropolis::toolUp(EditingTool tool, short x, short y)
+void Micropolis::toolDrag(EditingTool tool, short fromX, short fromY, short toX, short toY)
 {
-    toolDrag(tool, x, y);
-}
-
-
-void Micropolis::toolDrag(EditingTool tool, short px, short py)
-{
-    short x, y, dx, dy, adx, ady, lx, ly, dist;
-    float i, step, tx, ty, dtx, dty, rx, ry;
-
-    x = px;
-    y = py;
-
-    toolX = x;
-    toolY = y;
-
-    dist = gToolSize[tool];
-
-    x >>= 4;
-    y >>= 4;
-    lx = toolXLast >> 4;
-    ly = toolYLast >> 4;
-
-    dx = x - lx;
-    dy = y - ly;
+    short x = toX;
+    short y = toY;
+    short lx = fromX;
+    short ly = fromY;
+    short dx = x - lx;
+    short dy = y - ly;
 
     if ((dx == 0) && (dy == 0)) return;
 
-    adx = absoluteValue(dx);
-    ady = absoluteValue(dy);
+    int toolSize = gToolSize[tool];
+    float rx = (float)(dx < 0 ? 1 : 0);
+    float ry = (float)(dy < 0 ? 1 : 0);
+    short adx = absoluteValue(dx);
+    short ady = absoluteValue(dy);
 
+    float step;
     if (adx > ady) {
         step = (float)0.3 / adx;
     } else {
         step = (float)0.3 / ady;
     }
 
-    rx = (float)(dx < 0 ? 1 : 0);
-    ry = (float)(dy < 0 ? 1 : 0);
-
-    if (dist == 1) {
-        for (i = 0.0; i <= 1 + step; i += step) {
-            tx = (toolXLast >>4) + i * dx;
-            ty = (toolYLast >>4) + i * dy;
-            dtx = absoluteValue(tx - lx);
-            dty = absoluteValue(ty - ly);
+    float i;
+    for (i = 0.0; i <= 1 + step; i += step) {
+        float tx = fromX + i * dx;
+        float ty = fromY + i * dy;
+        float dtx = absoluteValue(tx - lx);
+        float dty = absoluteValue(ty - ly);
+        if (toolSize == 1) {
             if ((dtx >= 1) || (dty >= 1)) {
                 // fill in corners
                 if ((dtx >= 1) && (dty >= 1)) {
                     if (dtx > dty) {
-                        doTool(tool, ((int)(tx + rx)) <<4, ly <<4, false);
+                        doTool(tool, ((int)(tx + rx)), ly);
                     } else {
-                        doTool(tool, lx <<4, ((int)(ty + ry)) <<4, false);
+                        doTool(tool, lx, (int)(ty + ry));
                     }
                 }
-                lx = (int)(tx + rx);
-                ly = (int)(ty + ry);
-                doTool(tool, lx <<4, ly <<4, false);
             }
         }
-    } else {
-        for (i = 0.0; i <= 1 + step; i += step) {
-            tx = (toolXLast >>4) + i * dx;
-            ty = (toolYLast >>4) + i * dy;
-            dtx = absoluteValue(tx - lx);
-            dty = absoluteValue(ty - ly);
-            lx = (int)(tx + rx);
-            ly = (int)(ty + ry);
-            doTool(tool, lx <<4, ly <<4, false);
-        }
+        lx = (int)(tx + rx);
+        ly = (int)(ty + ry);
+        doTool(tool, lx, ly);
     }
-
-    toolXLast = (lx <<4) + 8;
-    toolYLast = (ly <<4) + 8;
 
     simPass = 0; // update editors overlapping this one
 

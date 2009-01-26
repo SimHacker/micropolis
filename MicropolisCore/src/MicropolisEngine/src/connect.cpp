@@ -72,21 +72,21 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-static const short RoadTable[16] = {
+static const unsigned short RoadTable[16] = {
     ROADS, ROADS2, ROADS, ROADS3,
     ROADS2, ROADS2, ROADS4, ROADS8,
     ROADS, ROADS6, ROADS, ROADS7,
     ROADS5, ROADS10, ROADS9, INTERSECTION
 };
 
-static const short RailTable[16] = {
+static const unsigned short RailTable[16] = {
     LHRAIL, LVRAIL, LHRAIL, LVRAIL2,
     LVRAIL, LVRAIL, LVRAIL3, LVRAIL7,
     LHRAIL, LVRAIL5, LHRAIL, LVRAIL6,
     LVRAIL4, LVRAIL9, LVRAIL8, LVRAIL10
 };
 
-static const short WireTable[16] = {
+static const unsigned short WireTable[16] = {
     LHPOWER, LVPOWER, LHPOWER, LVPOWER2,
     LVPOWER, LVPOWER, LVPOWER3, LVPOWER7,
     LHPOWER, LVPOWER5, LHPOWER, LVPOWER6,
@@ -98,9 +98,9 @@ static const short WireTable[16] = {
 
 
 /* comefrom: check3Border check4Border check5Border processWand */
-int Micropolis::connectTile(short x, short y, short *tileAdrPtr, short Command)
+int Micropolis::connectTile(short x, short y, unsigned short *tileAdrPtr, short Command)
 {
-    short tile;
+    unsigned short tile;
     int result = 1;
 
     /* make sure the array subscripts are in bounds */
@@ -116,7 +116,7 @@ int Micropolis::connectTile(short x, short y, short *tileAdrPtr, short Command)
             tile = *tileAdrPtr;
 
             if (tile & BULLBIT) {
-	        tile &= LOMASK;
+                tile &= LOMASK;
                 tile = neutralizeRoad(tile);
 
                 /* Maybe this should check BULLBIT instead of checking tile values? */
@@ -170,9 +170,9 @@ int Micropolis::connectTile(short x, short y, short *tileAdrPtr, short Command)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::layDoze(int x, int y, short *tileAdrPtr)
+int Micropolis::layDoze(int x, int y, unsigned short *tileAdrPtr)
 {
-    short tile;
+    unsigned short tile;
 
     if (totalFunds == 0) {
         return -2;                  /* no mas dinero. */
@@ -224,7 +224,7 @@ int Micropolis::layDoze(int x, int y, short *tileAdrPtr)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::layRoad(int x, int y, short *tileAdrPtr)
+int Micropolis::layRoad(int x, int y, unsigned short *tileAdrPtr)
 {
     int cost = 10;
 
@@ -232,7 +232,7 @@ int Micropolis::layRoad(int x, int y, short *tileAdrPtr)
         return -2;
     }
 
-    short tile = *tileAdrPtr & LOMASK;
+    unsigned short tile = *tileAdrPtr & LOMASK;
 
     switch (tile) {
 
@@ -324,7 +324,7 @@ int Micropolis::layRoad(int x, int y, short *tileAdrPtr)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::layRail(int x, int y, short *tileAdrPtr)
+int Micropolis::layRail(int x, int y, unsigned short *tileAdrPtr)
 {
     int cost = 20;
 
@@ -332,7 +332,7 @@ int Micropolis::layRail(int x, int y, short *tileAdrPtr)
         return -2;
     }
 
-    short tile = *tileAdrPtr & LOMASK;
+    unsigned short tile = *tileAdrPtr & LOMASK;
 
     tile = neutralizeRoad(tile);
 
@@ -427,7 +427,7 @@ int Micropolis::layRail(int x, int y, short *tileAdrPtr)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-int Micropolis::layWire(int x, int y, short *tileAdrPtr)
+int Micropolis::layWire(int x, int y, unsigned short *tileAdrPtr)
 {
     int cost = 5;
 
@@ -435,7 +435,7 @@ int Micropolis::layWire(int x, int y, short *tileAdrPtr)
         return -2;
     }
 
-    short tile = *tileAdrPtr & LOMASK;
+    unsigned short tile = *tileAdrPtr & LOMASK;
 
     tile = neutralizeRoad(tile);
 
@@ -540,7 +540,7 @@ int Micropolis::layWire(int x, int y, short *tileAdrPtr)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-void Micropolis::fixZone(int x, int y, short *tileAdrPtr)
+void Micropolis::fixZone(int x, int y, unsigned short *tileAdrPtr)
 {
     fixSingle(x, y, &tileAdrPtr[0]);
 
@@ -568,11 +568,11 @@ void Micropolis::fixZone(int x, int y, short *tileAdrPtr)
  * @param y          Y map coordinate.
  * @param tileAdrPtr Pointer to tile (\a x, \a y).
  */
-void Micropolis::fixSingle(int x, int y, short *tileAdrPtr)
+void Micropolis::fixSingle(int x, int y, unsigned short *tileAdrPtr)
 {
-    short adjTile = 0;
+    unsigned short adjTile = 0;
 
-    short tile = *tileAdrPtr & LOMASK;
+    unsigned short tile = *tileAdrPtr & LOMASK;
 
     tile = neutralizeRoad(tile);
 

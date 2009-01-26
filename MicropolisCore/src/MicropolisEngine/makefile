@@ -139,7 +139,7 @@ objs/micropolisengine_wrap.cpp: swig/micropolisengine.i swig/micropolisengine-sw
 
 clean:
 	rm -rf *~ *.ncb
-	rm -rf swig/*~ objs/*
+	rm -rf swig/*~ objs/* build
 	rm -rf python/*~ python/*.pyc python/*.pyd
 
 # XXX This is not needed
@@ -147,7 +147,7 @@ cleanswig: clean
 	rm -rf python/micropolisengine.py python/micropolisengine_wrap.cpp
 
 install: all
-	(cd python ; $(PYTHON) setup.py install)
+	($(PYTHON) setup.py install)
 
 allocate.cpp:   python/stdafx.h micropolis.h
 animate.cpp:    python/stdafx.h micropolis.h

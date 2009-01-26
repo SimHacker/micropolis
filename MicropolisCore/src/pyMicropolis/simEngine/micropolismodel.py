@@ -5,39 +5,39 @@
 # Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
 # you need assistance with this program, you may contact:
 #   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.  You should have received a
 # copy of the GNU General Public License along with this program.  If
 # not, see <http://www.gnu.org/licenses/>.
-# 
+#
 #             ADDITIONAL TERMS per GNU GPL Section 7
-# 
+#
 # No trademark or publicity rights are granted.  This license does NOT
 # give you any right, title or interest in the trademark SimCity or any
 # other Electronic Arts trademark.  You may not distribute any
 # modification of this program using the trademark SimCity or claim any
 # affliation or association with Electronic Arts Inc. or its employees.
-# 
+#
 # Any propagation or conveyance of this program must include this
 # copyright notice and these terms.
-# 
+#
 # If you convey this program (or any modifications of it) and assume
 # contractual liability for the program to recipients of it, you agree
 # to indemnify Electronic Arts for any liability that those contractual
 # assumptions impose on Electronic Arts.
-# 
+#
 # You may not misrepresent the origins of this program; modified
 # versions of the program must be marked as such and not identified as
 # the original program.
-# 
+#
 # This disclaimer supplements the one included in the General Public
 # License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
 # PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -75,6 +75,8 @@ import time
 import random
 import micropolisengine
 import gobject
+import cairo
+from pyMicropolis.tileEngine import tileengine
 
 
 ########################################################################
@@ -171,7 +173,7 @@ Either clean up your act or open a gas mask concession at city hall.""",
             'description': """Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.
 
 Either build more roads and rails or get a bulletproof limo.""",
-	    'view': 'todo: pan view to frafficMaxX, traficMaxY',
+            'view': 'todo: pan view to frafficMaxX, traficMaxY',
         },
 
         20: {
@@ -179,7 +181,7 @@ Either build more roads and rails or get a bulletproof limo.""",
             'color': 0xff4f4f,
             'title': 'FIRE REPORTED!',
             'description': """A fire has been reported!""",
-	    'view': 'todo: pan view to crashX, crashY',
+            'view': 'todo: pan view to crashX, crashY',
         },
 
         21: {
@@ -189,7 +191,7 @@ Either build more roads and rails or get a bulletproof limo.""",
             'description': """A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.
 
 All you can do is wait till he leaves, then rebuild from the rubble.""",
-	    'view': 'todo: follow monster in view',
+            'view': 'todo: follow monster in view',
         },
 
         22: {
@@ -320,52 +322,52 @@ Many generations will confront this problem before it goes away, so don't hold y
 
 
         44: {
-	    'id': 44,
-	    'color': 0xff4f4f,
-	    'title': 'RIOTS!',
-	    'description': """The citizens are rioting in the streets, setting cars and houses on fire, and bombing government buildings and businesses!
+            'id': 44,
+            'color': 0xff4f4f,
+            'title': 'RIOTS!',
+            'description': """The citizens are rioting in the streets, setting cars and houses on fire, and bombing government buildings and businesses!
 
 All media coverage is blacked out, while the fascist pigs beat the poor citizens into submission.""",
             'view': 'todo: pan view to city center',
         },
 
-	45: {
-	    'id': 48,
-	    'color': 0x7f7fff,
-	    'title': 'Start a New City',
-	    'description': """Build your very own city from the ground up, starting with this map of uninhabited land.""",
-	},
+        45: {
+            'id': 48,
+            'color': 0x7f7fff,
+            'title': 'Start a New City',
+            'description': """Build your very own city from the ground up, starting with this map of uninhabited land.""",
+        },
 
-	46: {
-	    'id': 49,
-	    'color': 0x7f7fff,
-	    'title': 'Restore a Saved City',
-	    'description': """The city was saved.""",
-	},
+        46: {
+            'id': 49,
+            'color': 0x7f7fff,
+            'title': 'Restore a Saved City',
+            'description': """The city was saved.""",
+        },
 
-	47: {
-	    'id': 100,
-	    'color': 0x7fff7f,
-	    'title': 'YOU\'RE A WINNER!',
-	    'description': """Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?""",
+        47: {
+            'id': 100,
+            'color': 0x7fff7f,
+            'title': 'YOU\'RE A WINNER!',
+            'description': """Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?""",
             'view': 'todo: show key to the city image',
         },
 
         48: {
-	    'id': 200,
-	    'color': 0xff4f4f,
-	    'title': 'IMPEACHMENT NOTICE!',
-	    'description': """The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob -- led by your mother -- has been spotted in the vicinity of city hall.
+            'id': 200,
+            'color': 0xff4f4f,
+            'title': 'IMPEACHMENT NOTICE!',
+            'description': """The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob -- led by your mother -- has been spotted in the vicinity of city hall.
 
 You should seriously consider taking an extended vacation -- NOW. (Or read the manual and try again.)""",
             'view': 'todo: show impeachment image',
-	},
+        },
 
-	49: {
-	    'id': 300,
-	    'color': 0xffd700,
-	    'title': 'About Micropolis',
-	    'description': """Micropolis Copyright (C) 2007
+        49: {
+            'id': 300,
+            'color': 0xffd700,
+            'title': 'About Micropolis',
+            'description': """Micropolis Copyright (C) 2007
     by Electronic Arts.
 Based on the Original Micropolis Concept and Design
     by Will Wright.
@@ -373,82 +375,82 @@ User Interface Designed and Created
     by Don Hopkins, DUX Software.
 Ported to Linux, Optimized and Adapted for OLPC
     by Don Hopkins.
-Licensed under the GNU General Public License, 
+Licensed under the GNU General Public License,
     version 3, with additional conditions.""",
             'view': 'todo: show micropolis logo',
-	},
+        },
 
-	50: {
-	    'id': 1,
-	    'color': 0x7f7fff,
-	    'title': 'DULLSVILLE, USA  1900',
-	    'description': """Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader. 
+        50: {
+            'id': 1,
+            'color': 0x7f7fff,
+            'title': 'DULLSVILLE, USA  1900',
+            'description': """Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.
 
 It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.""",
-	},
+        },
 
-	51: {
-	    'id': 2,
-	    'color': 0x7f7fff,
-	    'title': 'SAN FRANCISCO, CA.  1906',
-	    'description': """Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.
+        51: {
+            'id': 2,
+            'color': 0x7f7fff,
+            'title': 'SAN FRANCISCO, CA.  1906',
+            'description': """Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.
 
 Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.""",
-	},
+        },
 
-	52: {
-	    'id': 3,
-	    'color': 0x7f7fff,
-	    'title': 'HAMBURG, GERMANY  1944',
-	    'description': """Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.
+        52: {
+            'id': 3,
+            'color': 0x7f7fff,
+            'title': 'HAMBURG, GERMANY  1944',
+            'description': """Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.
 
 You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.""",
-	},
+        },
 
-	53: {
-	    'id': 4,
-	    'color': 0x7f7fff,
-	    'title': 'BERN, SWITZERLAND  1965',
-	    'description': """The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.
+        53: {
+            'id': 4,
+            'color': 0x7f7fff,
+            'title': 'BERN, SWITZERLAND  1965',
+            'description': """The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.
 
 Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.""",
-	},
+        },
 
-	54: {
-	    'id': 5,
-	    'color': 0x7f7fff,
-	    'title': 'TOKYO, JAPAN  1957',
-	    'description': """A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.
+        54: {
+            'id': 5,
+            'color': 0x7f7fff,
+            'title': 'TOKYO, JAPAN  1957',
+            'description': """A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.
 
 Try to control the fires, then rebuild the industrial center. You have 5 years.""",
-	},
+        },
 
-	55: {
-	    'id': 6,
-	    'color': 0x7f7fff,
-	    'title': 'DETROIT, MI.  1972',
-	    'description': """By 1970, competition from overseas and other economic factors pushed the once "automobile capital of the world" into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.
+        55: {
+            'id': 6,
+            'color': 0x7f7fff,
+            'title': 'DETROIT, MI.  1972',
+            'description': """By 1970, competition from overseas and other economic factors pushed the once "automobile capital of the world" into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.
 
 You have 10 years to reduce crime and rebuild the industrial base of the city."""
         },
 
-	56: {
-	    'id': 7,
-	    'color': 0x7f7fff,
-	    'title': 'BOSTON, MA.  2010',
-	    'description': """A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.
+        56: {
+            'id': 7,
+            'color': 0x7f7fff,
+            'title': 'BOSTON, MA.  2010',
+            'description': """A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.
 
 You have 5 years to get the situation under control.""",
-	},
+        },
 
-	57: {
-	    'id': 8,
-	    'color': 0x7f7fff,
-	    'title': 'RIO DE JANEIRO, BRAZIL  2047',
-	    'description': """In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.
+        57: {
+            'id': 8,
+            'color': 0x7f7fff,
+            'title': 'RIO DE JANEIRO, BRAZIL  2047',
+            'description': """In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.
 
 You have 10 years to turn this swamp back into a city again.""",
-	},
+        },
 
     }
 
@@ -456,7 +458,7 @@ You have 10 years to turn this swamp back into a city again.""",
     def __init__(
             self,
             running=True,
-            timeDelay=50,
+            timeDelay=10,
             *args,
             **kwargs):
         print "MicropolisModel.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
@@ -474,23 +476,29 @@ You have 10 years to turn this swamp back into a city again.""",
         self.budgets = []
         self.evaluation = None
         self.interests = {}
+        self.powerDataImage = None
+        self.trafficDataImage = None
+        self.dataTileEngine = tileengine.TileEngine()
 
         # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
-        # So don't do that! I hope this bug in SWIG gets fixed. 
-        # TODO: Report SWIG bug, if it's not already known or fixed. 
+        # So don't do that! I hope this bug in SWIG gets fixed.
+        # TODO: Report SWIG bug, if it's not already known or fixed.
 
-        # Hook the engine up so it has a handle on its Python object side. 
+        # Hook the engine up so it has a handle on its Python object side.
         self.userData = micropolisengine.getPythonCallbackData(self)
         #print "USERDATA"#, self.userData
 
-        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler. 
+        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler.
         self.callbackHook = micropolisengine.getPythonCallbackHook()
         #print "CALLBACKHOOK"#, self.callbackHook
 
-        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper. 
+        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper.
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
         self.callbackData = micropolisengine.getPythonCallbackData(self._invokeCallback)
         #print "CALLBACKDATA"#, self.callbackData
+
+        self.dataImageColorMap = \
+            cairo.ImageSurface.create_from_png('images/simEngine/transparentYellowOrangeRed.png')
 
         if self.running:
             self.startTimer()
@@ -532,7 +540,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def formatMoney(
-        self, 
+        self,
         money):
         return '$' + self.formatNumber(money)
 
@@ -604,9 +612,94 @@ You have 10 years to turn this swamp back into a city again.""",
         self.budgets.remove(budget)
 
 
+    def getDataImage(self, name):
+        # @todo: cache images
+        if name == 'power':
+            return self.getPowerDataImage()
+        elif name == 'traffic':
+            return self.getTrafficDataImage()
+
+        return None
+
+
+    def getTrafficDataImage(self):
+        image = self.trafficDataImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            self.trafficDataImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getTrafficDensityMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_2
+        tengine.height = micropolisengine.WORLD_H_2
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.rowBytes = 1
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_2,
+            micropolisengine.WORLD_H_2)
+
+        return image
+
+
+    def getPowerDataImage(self):
+        image = self.powerDataImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W, micropolisengine.WORLD_H)
+            self.powerDataImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getPowerMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W
+        tengine.height = micropolisengine.WORLD_H
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H
+        tengine.rowBytes = 1
+        getTile = self.getTile
+
+        from micropolisengine import ZONEBIT, PWRBIT, ALLBITS
+
+        def tileFunction(row, col, tile):
+            if tile > 0:
+                tile = 255
+            return tile
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            tileFunction,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W,
+            micropolisengine.WORLD_H)
+
+        return image
+
+
+    def makeImage(self, width, height):
+        return self.dataImageColorMap.create_similar(
+            cairo.CONTENT_COLOR_ALPHA, width, height)
+
+
     def startTimer(
         self):
-        
+      
         if self.timerActive:
             return
 
@@ -617,7 +710,7 @@ You have 10 years to turn this swamp back into a city again.""",
     def stopTimer(
         self):
 
-        # FIXME: Is there some way to immediately cancel self.timerId? 
+        # FIXME: Is there some way to immediately cancel self.timerId?
 
         self.timerActive = False
 
@@ -647,8 +740,8 @@ You have 10 years to turn this swamp back into a city again.""",
     def tickEngine(self):
 
         self.simTick()
-        #self.animateTiles()
-        self.simUpdate()
+        if self.doAnimation and not self.tilesAnimated:
+            self.animateTiles()
 
 
     def sendUpdate(self, name, *args):
@@ -683,7 +776,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def invokeCallback(self, micropolis, name, *args):
         #print "==== MicropolisDrawingArea invokeCallback", "SELF", sys.getrefcount(self), self, "micropolis", sys.getrefcount(micropolis), micropolis, "name", name
-        # In this case, micropolis is the same is self, so ignore it. 
+        # In this case, micropolis is the same is self, so ignore it.
         handler = getattr(self, 'handle_' + name, None)
         if handler:
             #print "Calling handler", handler, args
@@ -691,7 +784,7 @@ You have 10 years to turn this swamp back into a city again.""",
             #print "Called handler."
         else:
             print "No handler for", name
-    
+  
 
     def __repr__(self):
         return "<MicropolisModel>"
@@ -699,94 +792,94 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def handle_UIAutoGoto(self, x, y):
         print "handle_UIAutoGoto(self, x, y)", (self, x, y)
-    
+  
 
     def handle_UIDidGenerateNewCity(self):
         print "handle_UIDidGenerateNewCity(self)", (self,)
 
-    
+  
     def handle_UIDidLoadCity(self):
         print "handle_UIDidLoadCity(self)", (self,)
 
-    
+  
     def handle_UIDidLoadScenario(self):
         print "handle_UIDidLoadScenario(self)", (self,)
 
-    
+  
     def handle_UIDidSaveCity(self):
         print "handle_UIDidSaveCity(self)", (self,)
 
-    
+  
     def handle_UIDidTool(self, name, x, y):
         print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
 
-    
+  
     def handle_UIDidntLoadCity(self, msg):
         print "handle_UIDidntLoadCity(self, msg)", (self, msg)
 
-    
+  
     def handle_UIDidntSaveCity(self, msg):
         print "handle_UIDidntSaveCity(self, msg)", (self, msg)
 
-    
+  
     def handle_UIDoPendTool(self, tool, x, y):
         print "handle_DoPendTool(self, tool, x, y)", (self, tool, x, y)
 
-    
+  
     def handle_UIDropFireBombs(self):
         print "handle_DropFireBombs(self)", (self,)
 
-    
+  
     def handle_UIInitializeSound(self):
         print "handle_UIInitializeSound(self)", (self,)
 
-    
+  
     def handle_UILoseGame(self):
         print "handle_UILoseGame(self)", (self,)
 
-    
+  
     def handle_UIMakeSound(self, channel, sound, x, y):
         #print "handle_UIMakeSound(self, channel, sound, x, y)", (self, channel, sound, x, y)
         pass # print "SOUND", channel, sound, x, y
 
-    
+  
     def handle_UINewGame(self):
         print "handle_UINewGame(self)", (self,)
 
-    
+  
     def handle_UIPlayNewCity(self):
         print "handle_UIPlayNewCity(self)", (self,)
 
-    
+  
     def handle_UIPopUpMessage(self, msg):
         print "handle_UIPopUpMessage(self, msg)", (self, msg)
 
-    
+  
     def handle_UIReallyStartGame(self):
         print "handle_UIReallyStartGame(self)", (self,)
 
-    
+  
     def handle_UISaveCityAs(self):
         print "handle_UISaveCityAs(self)", (self,)
 
-    
+  
     def handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax):
         pass # print "handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax)", (self, flowStr, previousStr, currentStr, collectedStr, tax)
 
-    
+  
     def handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
         pass # print "handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
 
-    
+  
     def handle_UISetCityName(self, CityName):
         print "handle_UISetCityName(self, CityName)", (self, CityName)
 
-    
+  
     def handle_UISetDate(self, str, m, y):
         #print "handle_UISetDate(self, str, m, d)", (self, str, m, y)
         pass#print "DATE", str, m, y
 
-    
+  
     def handle_UISetDemand(self, r, c, i):
         #print "handle_UISetDemand(self, r, c, i)", (self, r, c, i)
         self.r = r
@@ -795,14 +888,14 @@ You have 10 years to turn this swamp back into a city again.""",
         for demand in self.demands:
             demand.update()
 
-    
+  
     def handle_UISetEvaluation(self, *args):
         #print "handle_UISetEvaluation(self, args)
         self.evaluation = args
         for evaluation in self.evaluations:
             evaluation.update()
 
-    
+  
     def handle_UISetFunds(self, funds):
         #print "handle_UISetFunds(self, funds)", (self, funds)
         pass # print "FUNDS", funds
@@ -811,11 +904,11 @@ You have 10 years to turn this swamp back into a city again.""",
     def handle_UISetGameLevel(self, GameLevel):
         print "handle_UISetGameLevel(self, GameLevel)", (self, GameLevel)
 
-    
+  
     def handle_UISetMapState(self, state):
         print "handle_UISetMapState(self, state)", (self, state)
 
-    
+  
     def handle_UISetMessage(self, str):
         #print "handle_UISetMessage(self, str)", (self, str)
         print "MESSAGE", str
@@ -827,38 +920,38 @@ You have 10 years to turn this swamp back into a city again.""",
     def handle_UISetSpeed(self, speed):
         print "handle_UISetSpeed(self, speed)", (self, speed)
 
-    
+  
     def handle_UIShowBudgetAndWait(self):
         print "handle_UIShowBudgetAndWait(self)", (self,)
 
-    
+  
     def handle_UIShowPicture(self, id):
         #print "handle_UIShowPicture(self, id)", (self, id)
         print "SHOWPICTURE", id
 
-    
+  
     def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
         print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
 
-    
+  
     def handle_UIStartEarthquake(self, magnitude):
         print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
 
-    
+  
     def handle_UIStartLoad(self):
         print "handle_UIStartLoad(self)", (self,)
 
-    
+  
     def handle_UIStartScenario(self, scenario):
         print "handle_UIStartScenario(self, scenario)", (self, scenario)
 
-    
+  
     def handle_UIUpdateBudget(self):
         #print "handle_UIUpdateBudget(self)", (self,)
         for budget in self.budgets:
             budget.update()
 
-    
+  
     def handle_UIWinGame(self):
         print "handle_UIWinGame(self)", (self,)
 
@@ -880,7 +973,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 def CreateTestEngine():
 
-    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object. 
+    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object.
     engine = MicropolisModel()
 
     engine.resourceDir = 'res'

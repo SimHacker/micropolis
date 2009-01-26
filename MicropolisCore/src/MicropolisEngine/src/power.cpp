@@ -182,7 +182,7 @@ void Micropolis::doPowerScan()
     int ConNum, Dir;
 
     // Clear power map.
-    for (int x = 0; x < POWER_MAP_SIZE; x++) {
+    for (int x = 0; x < POWER_MAP_LENGTH; x++) {
         powerMap[x] = 0;
     }
 

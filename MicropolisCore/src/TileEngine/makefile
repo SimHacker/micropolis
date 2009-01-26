@@ -113,8 +113,11 @@ objs/tileengine_wrap.cpp: swig/tileengine.i swig/tileengine-swig-python.i swig/p
 
 clean:
 	rm -rf *~ *.ncb
-	rm -rf swig/*~ objs/*
+	rm -rf swig/*~ objs/* build
 	rm -rf python/*~ python/*.pyc python/*.pyd
+
+install: all
+	($(PYTHON) setup.py install)
 
 # XXX This is not needed
 cleanswig: clean

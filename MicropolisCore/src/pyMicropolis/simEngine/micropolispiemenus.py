@@ -5,39 +5,39 @@
 # Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
 # you need assistance with this program, you may contact:
 #   http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.  You should have received a
 # copy of the GNU General Public License along with this program.  If
 # not, see <http://www.gnu.org/licenses/>.
-# 
+#
 #             ADDITIONAL TERMS per GNU GPL Section 7
-# 
+#
 # No trademark or publicity rights are granted.  This license does NOT
 # give you any right, title or interest in the trademark SimCity or any
 # other Electronic Arts trademark.  You may not distribute any
 # modification of this program using the trademark SimCity or claim any
 # affliation or association with Electronic Arts Inc. or its employees.
-# 
+#
 # Any propagation or conveyance of this program must include this
 # copyright notice and these terms.
-# 
+#
 # If you convey this program (or any modifications of it) and assume
 # contractual liability for the program to recipients of it, you agree
 # to indemnify Electronic Arts for any liability that those contractual
 # assumptions impose on Electronic Arts.
-# 
+#
 # You may not misrepresent the origins of this program; modified
 # versions of the program must be marked as such and not identified as
 # the original program.
-# 
+#
 # This disclaimer supplements the one included in the General Public
 # License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
 # PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
@@ -68,7 +68,7 @@
 ########################################################################
 
 
-import piemenu
+from pyMicropolis.tileEngine import piemenu
 import gtk
 
 
@@ -81,20 +81,44 @@ def OldMakeToolPie(setToolAction):
     # Make pie menus.
 
 
+    # top
+    top_pie = piemenu.PieMenu(
+        header="Micropolis Menu",
+        fixed_radius=50,
+        neutral_description="Select an option.")
+
+    # top zone
     zone_pie = piemenu.PieMenu(
         header="Zone",
         fixed_radius=50,
         neutral_description="Select a zoning tool.")
 
+    # top zone build
     build_pie = piemenu.PieMenu(
         header="Build",
         fixed_radius=50,
         neutral_description="Select a building tool.")
 
+    # top zone tool
     tool_pie = piemenu.PieMenu(
         header="Micropolis Tools",
         fixed_radius=50,
         neutral_description="Select a Micropolis editing tool,\nor the zone or build submenu.")
+
+    view_pie = piemenu.PieMenu(
+        header="View",
+        fixed_radius=50,
+        neutral_description="Select a view option.")
+
+    control_pie = piemenu.PieMenu(
+        header="Control",
+        fixed_radius=50,
+        neutral_description="Select a control.")
+
+    foo_pie = piemenu.PieMenu(
+        header="Foo",
+        fixed_radius=50,
+        neutral_description="Select a foo.")
 
 
     ########################################################################
@@ -104,123 +128,12 @@ def OldMakeToolPie(setToolAction):
     for params in (
 
         {
-            'pie': zone_pie,
-            'description': 'Commercial\nzoning tool.',
+            'pie': top_pie,
+            'label': 'Zone...',
+            'description': 'Submenu of zoning options.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/iccom.png',
-            'icon_hilite': 'images/iccomhi.png',
-            'action': lambda item: setToolAction('Commercial'),
-        },
-
-        {
-            'pie': zone_pie,
-            'description': 'Industrial\nzoning tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icind.png',
-            'icon_hilite': 'images/icindhi.png',
-            'action': lambda item: setToolAction('Industrial'),
-        },
-
-        {
-            'pie': zone_pie,
-            'description': 'Police station\nzoning tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icpol.png',
-            'icon_hilite': 'images/icpolhi.png',
-            'action': lambda item: setToolAction('PoliceStation'),
-        },
-
-        {
-            'pie': zone_pie,
-            'description': 'Query zone\ntool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icqry.png',
-            'icon_hilite': 'images/icqryhi.png',
-            'action': lambda item: setToolAction('Query'),
-        },
-
-        {
-            'pie': zone_pie,
-            'description': 'Fire station\nzoning tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icfire.png',
-            'icon_hilite': 'images/icfirehi.png',
-            'action': lambda item: setToolAction('FireStation'),
-        },
-
-        {
-            'pie': zone_pie,
-            'description': 'Residential\nzoning tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icres.png',
-            'icon_hilite': 'images/icreshi.png',
-            'action': lambda item: setToolAction('Residential'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Park building tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icpark.png',
-            'icon_hilite': 'images/icparkhi.png',
-            'action': lambda item: setToolAction('Park'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Seaport building tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icseap.png',
-            'icon_hilite': 'images/icseaphi.png',
-            'action': lambda item: setToolAction('Seaport'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Nuclear power plant\nbuilding tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icnuc.png',
-            'icon_hilite': 'images/icnuchi.png',
-            'action': lambda item: setToolAction('NuclearPowerPlant'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Airport building tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icairp.png',
-            'icon_hilite': 'images/icairphi.png',
-            'action': lambda item: setToolAction('Airport'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Coal power plant\nbuilding tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/iccoal.png',
-            'icon_hilite': 'images/iccoalhi.png',
-            'action': lambda item: setToolAction('CoalPowerPlant'),
-        },
-
-        {
-            'pie': build_pie,
-            'description': 'Stadium building tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/icstad.png',
-            'icon_hilite': 'images/icstadhi.png',
-            'action': lambda item: setToolAction('Stadium'),
+            'sub_pie': zone_pie,
         },
 
         {
@@ -233,12 +146,132 @@ def OldMakeToolPie(setToolAction):
         },
 
         {
+            'pie': zone_pie,
+            'description': 'Commercial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/iccom.png',
+            'icon_hilite': 'images/simEngine/iccomhi.png',
+            'action': lambda item: setToolAction('Commercial'),
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Industrial\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icind.png',
+            'icon_hilite': 'images/simEngine/icindhi.png',
+            'action': lambda item: setToolAction('Industrial'),
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Police station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icpol.png',
+            'icon_hilite': 'images/simEngine/icpolhi.png',
+            'action': lambda item: setToolAction('PoliceStation'),
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Query zone\ntool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icqry.png',
+            'icon_hilite': 'images/simEngine/icqryhi.png',
+            'action': lambda item: setToolAction('Query'),
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Fire station\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icfire.png',
+            'icon_hilite': 'images/simEngine/icfirehi.png',
+            'action': lambda item: setToolAction('FireStation'),
+        },
+
+        {
+            'pie': zone_pie,
+            'description': 'Residential\nzoning tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icres.png',
+            'icon_hilite': 'images/simEngine/icreshi.png',
+            'action': lambda item: setToolAction('Residential'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Park building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icpark.png',
+            'icon_hilite': 'images/simEngine/icparkhi.png',
+            'action': lambda item: setToolAction('Park'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Seaport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icseap.png',
+            'icon_hilite': 'images/simEngine/icseaphi.png',
+            'action': lambda item: setToolAction('Seaport'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Nuclear power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icnuc.png',
+            'icon_hilite': 'images/simEngine/icnuchi.png',
+            'action': lambda item: setToolAction('NuclearPowerPlant'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Airport building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icairp.png',
+            'icon_hilite': 'images/simEngine/icairphi.png',
+            'action': lambda item: setToolAction('Airport'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Coal power plant\nbuilding tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/iccoal.png',
+            'icon_hilite': 'images/simEngine/iccoalhi.png',
+            'action': lambda item: setToolAction('CoalPowerPlant'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Stadium building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icstad.png',
+            'icon_hilite': 'images/simEngine/icstadhi.png',
+            'action': lambda item: setToolAction('Stadium'),
+        },
+
+        {
             'pie': tool_pie,
             'description': 'Bulldozer editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icdozr.png',
-            'icon_hilite': 'images/icdozrhi.png',
+            'icon': 'images/simEngine/icdozr.png',
+            'icon_hilite': 'images/simEngine/icdozrhi.png',
             'action': lambda item: setToolAction('Bulldozer'),
         },
 
@@ -247,8 +280,8 @@ def OldMakeToolPie(setToolAction):
             'description': 'Road editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icroad.png',
-            'icon_hilite': 'images/icroadhi.png',
+            'icon': 'images/simEngine/icroad.png',
+            'icon_hilite': 'images/simEngine/icroadhi.png',
             'action': lambda item: setToolAction('Road'),
         },
 
@@ -257,8 +290,8 @@ def OldMakeToolPie(setToolAction):
             'description': 'Eraser drawing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icersr.png',
-            'icon_hilite': 'images/icersrhi.png',
+            'icon': 'images/simEngine/icersr.png',
+            'icon_hilite': 'images/simEngine/icersrhi.png',
             'action': lambda item: setToolAction('Eraser'),
         },
 
@@ -276,8 +309,8 @@ def OldMakeToolPie(setToolAction):
             'description': 'Chalk drawing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icchlk.png',
-            'icon_hilite': 'images/icchlkhi.png',
+            'icon': 'images/simEngine/icchlk.png',
+            'icon_hilite': 'images/simEngine/icchlkhi.png',
             'action': lambda item: setToolAction('Chalk'),
         },
 
@@ -286,8 +319,8 @@ def OldMakeToolPie(setToolAction):
             'description': 'Rail editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icrail.png',
-            'icon_hilite': 'images/icrailhi.png',
+            'icon': 'images/simEngine/icrail.png',
+            'icon_hilite': 'images/simEngine/icrailhi.png',
             'action': lambda item: setToolAction('Rail'),
         },
 
@@ -296,9 +329,36 @@ def OldMakeToolPie(setToolAction):
             'description': 'Wire editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icwire.png',
-            'icon_hilite': 'images/icwirehi.png',
+            'icon': 'images/simEngine/icwire.png',
+            'icon_hilite': 'images/simEngine/icwirehi.png',
             'action': lambda item: setToolAction('Wire'),
+        },
+
+        {
+            'pie': top_pie,
+            'label': 'Control...',
+            'description': 'Submenu of controls.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': control_pie,
+        },
+
+        {
+            'pie': top_pie,
+            'label': 'Foo...',
+            'description': 'Submenu of foo options.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': foo_pie,
+        },
+
+        {
+            'pie': top_pie,
+            'label': 'View...',
+            'description': 'Submenu of view options.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': view_pie,
         },
 
     ):
@@ -342,8 +402,8 @@ def MakeToolPie(setToolAction):
             'description': 'Commercial\nzoning tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/iccom.png',
-            'icon_hilite': 'images/iccomhi.png',
+            'icon': 'images/simEngine/iccom.png',
+            'icon_hilite': 'images/simEngine/iccomhi.png',
             'action': lambda item: setToolAction('Commercial'),
         },
 
@@ -352,8 +412,8 @@ def MakeToolPie(setToolAction):
             'description': 'Industrial\nzoning tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icind.png',
-            'icon_hilite': 'images/icindhi.png',
+            'icon': 'images/simEngine/icind.png',
+            'icon_hilite': 'images/simEngine/icindhi.png',
             'action': lambda item: setToolAction('Industrial'),
         },
 
@@ -362,8 +422,8 @@ def MakeToolPie(setToolAction):
             'description': 'Road editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icroad.png',
-            'icon_hilite': 'images/icroadhi.png',
+            'icon': 'images/simEngine/icroad.png',
+            'icon_hilite': 'images/simEngine/icroadhi.png',
             'action': lambda item: setToolAction('Road'),
         },
 
@@ -372,8 +432,8 @@ def MakeToolPie(setToolAction):
             'description': 'Park building tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icpark.png',
-            'icon_hilite': 'images/icparkhi.png',
+            'icon': 'images/simEngine/icpark.png',
+            'icon_hilite': 'images/simEngine/icparkhi.png',
             'action': lambda item: setToolAction('Park'),
         },
 
@@ -382,8 +442,8 @@ def MakeToolPie(setToolAction):
             'description': 'Bulldozer editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icdozr.png',
-            'icon_hilite': 'images/icdozrhi.png',
+            'icon': 'images/simEngine/icdozr.png',
+            'icon_hilite': 'images/simEngine/icdozrhi.png',
             'action': lambda item: setToolAction('Bulldozer'),
         },
 
@@ -392,8 +452,8 @@ def MakeToolPie(setToolAction):
             'description': 'Wire editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icwire.png',
-            'icon_hilite': 'images/icwirehi.png',
+            'icon': 'images/simEngine/icwire.png',
+            'icon_hilite': 'images/simEngine/icwirehi.png',
             'action': lambda item: setToolAction('Wire'),
         },
 
@@ -402,8 +462,8 @@ def MakeToolPie(setToolAction):
             'description': 'Rail editing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icrail.png',
-            'icon_hilite': 'images/icrailhi.png',
+            'icon': 'images/simEngine/icrail.png',
+            'icon_hilite': 'images/simEngine/icrailhi.png',
             'action': lambda item: setToolAction('Rail'),
         },
 
@@ -412,8 +472,8 @@ def MakeToolPie(setToolAction):
             'description': 'Residential\nzoning tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icres.png',
-            'icon_hilite': 'images/icreshi.png',
+            'icon': 'images/simEngine/icres.png',
+            'icon_hilite': 'images/simEngine/icreshi.png',
             'action': lambda item: setToolAction('Residential'),
         },
 
@@ -424,8 +484,8 @@ def MakeToolPie(setToolAction):
             'description': 'Query zone\ntool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icqry.png',
-            'icon_hilite': 'images/icqryhi.png',
+            'icon': 'images/simEngine/icqry.png',
+            'icon_hilite': 'images/simEngine/icqryhi.png',
             'action': lambda item: setToolAction('Query'),
         },
 
@@ -434,8 +494,8 @@ def MakeToolPie(setToolAction):
             'description': 'Police station\nzoning tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icpol.png',
-            'icon_hilite': 'images/icpolhi.png',
+            'icon': 'images/simEngine/icpol.png',
+            'icon_hilite': 'images/simEngine/icpolhi.png',
             'action': lambda item: setToolAction('PoliceStation'),
         },
 
@@ -444,8 +504,8 @@ def MakeToolPie(setToolAction):
             'description': 'Seaport building tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icseap.png',
-            'icon_hilite': 'images/icseaphi.png',
+            'icon': 'images/simEngine/icseap.png',
+            'icon_hilite': 'images/simEngine/icseaphi.png',
             'action': lambda item: setToolAction('Seaport'),
         },
 
@@ -454,8 +514,8 @@ def MakeToolPie(setToolAction):
             'description': 'Nuclear power plant\nbuilding tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icnuc.png',
-            'icon_hilite': 'images/icnuchi.png',
+            'icon': 'images/simEngine/icnuc.png',
+            'icon_hilite': 'images/simEngine/icnuchi.png',
             'action': lambda item: setToolAction('NuclearPowerPlant'),
         },
 
@@ -464,8 +524,8 @@ def MakeToolPie(setToolAction):
             'description': 'Airport building tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icairp.png',
-            'icon_hilite': 'images/icairphi.png',
+            'icon': 'images/simEngine/icairp.png',
+            'icon_hilite': 'images/simEngine/icairphi.png',
             'action': lambda item: setToolAction('Airport'),
         },
 
@@ -474,8 +534,8 @@ def MakeToolPie(setToolAction):
             'description': 'Coal power plant\nbuilding tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/iccoal.png',
-            'icon_hilite': 'images/iccoalhi.png',
+            'icon': 'images/simEngine/iccoal.png',
+            'icon_hilite': 'images/simEngine/iccoalhi.png',
             'action': lambda item: setToolAction('CoalPowerPlant'),
         },
 
@@ -484,8 +544,8 @@ def MakeToolPie(setToolAction):
             'description': 'Stadium building tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icstad.png',
-            'icon_hilite': 'images/icstadhi.png',
+            'icon': 'images/simEngine/icstad.png',
+            'icon_hilite': 'images/simEngine/icstadhi.png',
             'action': lambda item: setToolAction('Stadium'),
         },
 
@@ -494,8 +554,8 @@ def MakeToolPie(setToolAction):
             'description': 'Fire station\nzoning tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'icon': 'images/icfire.png',
-            'icon_hilite': 'images/icfirehi.png',
+            'icon': 'images/simEngine/icfire.png',
+            'icon_hilite': 'images/simEngine/icfirehi.png',
             'action': lambda item: setToolAction('FireStation'),
         },
 

@@ -83,7 +83,7 @@ void Micropolis::initMapArrays()
     }
 
     for (i = 0; i < WORLD_W; i++) {
-        map[i] = (short *)(mapBase + (i * WORLD_H));
+        map[i] = (unsigned short *)(mapBase + (i * WORLD_H));
     }
 
     populationDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
@@ -121,7 +121,7 @@ void Micropolis::initMapArrays()
     pollutionHist = (short *)newPtr(HISTORY_LENGTH);
     crimeHist = (short *)newPtr(HISTORY_LENGTH);
     miscHist = (short *)newPtr(MISC_HISTORY_LENGTH);
-    powerMap = (short *)newPtr(POWER_MAP_LENGTH);
+    powerMap = (char *)newPtr(POWER_MAP_LENGTH);
 }
 
 
