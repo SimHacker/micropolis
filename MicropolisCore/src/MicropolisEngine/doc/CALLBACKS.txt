@@ -44,6 +44,7 @@ Callback("UIWinGame", "");
 Callback("UINewEvaluation", "");
 Callback("UIInvalidateEditors", "");
 Callback("UIInvalidateMaps", "");
+Callback("UISimRobots", "");
 Callback("UIUpdate", "s", name);
   Called when an aspect of the model has changed:
     city: after load file, load scenario, or generate city

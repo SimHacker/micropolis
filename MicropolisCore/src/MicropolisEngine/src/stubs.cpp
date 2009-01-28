@@ -273,8 +273,8 @@ void Micropolis::initializeSound()
  *                Use "city" for city sounds effects, and "interface"
  *                for user interface sounds.
  * @param sound   Name of the sound.
- * @param x       Tile X position of sound, or -1 for everywhere.
- * @param y       Tile Y position of sound, or -1 for everywhere.
+ * @param x       Tile X position of sound, 0 to WORLD_W, or -1 for everywhere.
+ * @param y       Tile Y position of sound, 0 to WORLD_H, or -1 for everywhere.
  */
 void Micropolis::makeSound(const char *channel, const char *sound,
                            int x, int y)
@@ -285,11 +285,10 @@ void Micropolis::makeSound(const char *channel, const char *sound,
 
 /**
  * Get a tile from the map.
- * @param x X coordinate of the position to get.
- * @param y Y coordinate of the position to get.
+ * @param x X coordinate of the position to get, 0 to WORLD_W.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H.
  * @return Value of the map at the given position.
  * @note Off-map positions are considered to contain #DIRT.
- * @todo Find out where this function is used (probably in he front-end).
  */
 int Micropolis::getTile(int x, int y)
 {
@@ -303,8 +302,8 @@ int Micropolis::getTile(int x, int y)
 
 /**
  * Set a tile into the map.
- * @param x X coordinate of the position to get.
- * @param y Y coordinate of the position to get.
+ * @param x X coordinate of the position to get, 0 to WORLD_W.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H.
  * @param tile the tile value to set.
  * @note Off-map positions are ignored.
  */
@@ -344,6 +343,40 @@ void *Micropolis::getMapBuffer()
 void *Micropolis::getPowerMapBuffer()
 {
     return (void *)powerMap;
+}
+
+
+/**
+ * Get a value from the traffic density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @return Value of the traffic density at the given position.
+ * @note Off-map positions are considered to contain 0.
+ */
+int Micropolis::getTrafficDensity(int x, int y)
+{
+    if (!testBounds2(x, y)) {
+        return 0;
+    }
+
+    return trafficDensityMap[x][y];
+}
+
+
+/**
+ * Set a value in the traffic density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @param density the tile value to set.
+ * @note Off-map positions are ignored.
+ */
+void Micropolis::setTrafficDensity(int x, int y, int density)
+{
+    if (!testBounds2(x, y)) {
+        return;
+    }
+
+    trafficDensityMap[x][y] = density;
 }
 
 

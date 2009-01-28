@@ -382,6 +382,7 @@ void Micropolis::simLoop(bool doSim)
        }
 
        moveObjects();
+       simRobots();
 
        newMap = 1;
 
@@ -391,6 +392,7 @@ void Micropolis::simLoop(bool doSim)
        }
 
        moveObjects();
+       simRobots();
    }
 
    simLoops++;
@@ -410,6 +412,12 @@ void Micropolis::simTick()
         }
     }
     simUpdate();
+}
+
+
+void Micropolis::simRobots()
+{
+    callback("UISimRobots", "");
 }
 
 
