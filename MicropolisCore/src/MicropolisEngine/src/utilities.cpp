@@ -310,6 +310,7 @@ void Micropolis::doNewGame()
 /**
  * set the enableDisasters flag, and set the flag to 
  * update the user interface.
+ * @param value New setting for #enableDisasters
  */
 void Micropolis::setEnableDisasters(bool value)
 {
@@ -319,7 +320,8 @@ void Micropolis::setEnableDisasters(bool value)
 
 
 /**
- * Notify the user interface to start a new game.
+ * Set the auto-budget to the given value.
+ * @param value New value for the auto-budget setting.
  */
 void Micropolis::setAutoBudget(bool value)
 {
@@ -333,7 +335,7 @@ void Micropolis::setAutoBudget(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set autoBulldoze to.
+ * @param value The value to set autoBulldoze to.
  */
 void Micropolis::setAutoBulldoze(bool value)
 {
@@ -347,7 +349,7 @@ void Micropolis::setAutoBulldoze(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set autoGoto to.
+ * @param value The value to set autoGoto to.
  */
 void Micropolis::setAutoGoto(bool value)
 {
@@ -361,7 +363,7 @@ void Micropolis::setAutoGoto(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set enableSound to.
+ * @param value The value to set enableSound to.
  */
 void Micropolis::setEnableSound(bool value)
 {
@@ -375,7 +377,7 @@ void Micropolis::setEnableSound(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set doAnimation to.
+ * @param value The value to set doAnimation to.
  */
 void Micropolis::setDoAnimation(bool value)
 {
@@ -389,7 +391,7 @@ void Micropolis::setDoAnimation(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set doMessages to.
+ * @param value The value to set doMessages to.
  */
 void Micropolis::setDoMessages(bool value)
 {
@@ -403,7 +405,7 @@ void Micropolis::setDoMessages(bool value)
  * and set the mustUpdateOptions flag to update 
  * the user interface.
  *
- * @params value bool  The value to set doNotices to.
+ * @param value The value to set doNotices to.
  */
 void Micropolis::setDoNotices(bool value)
 {

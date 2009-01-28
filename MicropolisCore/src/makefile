@@ -104,7 +104,8 @@ tar: all
 # Build documentation
 
 doxygen:
-	doxygen Doxyfile
+	doxygen Doxyfile 2> doxygen_warnings > /dev/null
+	@echo "Warnings stored in 'doxygen_warnings'"
 
 # ----------------------------------------------------------------------
 # build/install tileEngine
