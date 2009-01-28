@@ -244,6 +244,8 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
         self.drawSprites(ctx)
 
+        self.drawRobots(ctx)
+
         self.drawChalk(ctx)
 
         if self.showCursor:
@@ -307,6 +309,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
 
     def drawSprite(self, ctx, sprite):
+
         spriteType = sprite.type
         spriteFrame = sprite.frame
 
@@ -336,6 +339,26 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
             0)
         #rectangle(0, 0, 1, 1)
         ctx.paint()
+
+        ctx.restore()
+
+
+    def drawRobots(self, ctx):
+        engine = self.engine
+        robots = engine.robots
+
+        if not robots:
+            return
+
+        ctx.save()
+
+        tileSize = self.tileSize
+
+        ctx.translate(self.panX, self.panY)
+        ctx.scale(tileSize / 16.0, tileSize / 16.0)
+
+        for robot in robots:
+            robot.draw(ctx)
 
         ctx.restore()
 
@@ -467,7 +490,7 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
         MicropolisDrawingArea.beforeDraw(self)
 
         engine = self.engine
-        self.blinkFlag = (engine.tickCount() % 60) < 30
+        self.blinkFlag = (engine.tickCount() % 30) < 15
 
         sprite = self.sprite
         if sprite != micropolisengine.SPRITE_NOTUSED:

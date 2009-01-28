@@ -6,10 +6,7 @@
 
 
 import pyMicropolis.simEngine
-from pyMicropolis.simEngine import micropolisengine
-from pyMicropolis.simEngine import micropolismodel
-from pyMicropolis.simEngine import micropoliswindow
-from pyMicropolis.simEngine import micropolisdrawingarea
+from pyMicropolis.simEngine import micropolisengine, micropolismodel, micropoliswindow, micropolisrobot
 import gtk
 
 
@@ -20,6 +17,14 @@ def run():
     engine.cityTax = 10
     engine.setPasses(200)
     setTile = engine.setTile
+
+    if True:
+        pacman = micropolisrobot.MicropolisRobot_PacMan(
+            x=(16 * 8) + 8,
+            y=(16 * 7) + 8,
+            speed=1)
+        print "PACMAN", pacman
+        engine.addRobot(pacman)
 
     if False:
         for y in range(0, micropolisengine.WORLD_H):

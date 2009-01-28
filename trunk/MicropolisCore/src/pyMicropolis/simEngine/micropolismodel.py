@@ -460,6 +460,7 @@ You have 10 years to turn this swamp back into a city again.""",
         self.powerDataImage = None
         self.trafficDataImage = None
         self.dataTileEngine = tileengine.TileEngine()
+        self.robots = []
 
         # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
         # So don't do that! I hope this bug in SWIG gets fixed.
@@ -741,6 +742,25 @@ You have 10 years to turn this swamp back into a city again.""",
             print "No handler for", name
   
 
+    def addRobot(self, robot):
+        robots = self.robots
+        self.removeRobot(robot)
+        robots.append(robot)
+        robot.engine = self
+
+
+    def removeRobot(self, robot):
+        robots = self.robots
+        if robot in robots:
+            robot.engine = None
+            robots.remove(robot)
+
+
+    def simRobots(self):
+        for robot in self.robots:
+            robot.simulate()
+
+
     def __repr__(self):
         return "<MicropolisModel>"
 
@@ -909,6 +929,11 @@ You have 10 years to turn this swamp back into a city again.""",
         #print "handle_UIUpdate(self, name, *args)", (self, name, args)
 
         self.sendUpdate(name, *args)
+
+
+    def handle_UISimRobots(self):
+        #print "handle_UISimRobots(self)", (self,)
+        self.simRobots()
 
 
 ########################################################################

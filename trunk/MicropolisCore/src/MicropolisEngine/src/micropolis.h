@@ -2067,6 +2067,7 @@ public:
 
     void simTick();
 
+    void simRobots();
 
 private:
 
@@ -2681,6 +2682,45 @@ public:
         return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
     };
 
+    /**
+     * Check that the given coordinate is within half resolution 
+     * world bounds.
+     * @param wx World x coordinate.
+     * @param wy World y coordinate.
+     * @return Boolean indicating (wx, wy) is inside the half 
+     *                 resolution world bounds.
+     */
+    static inline bool testBounds2(int wx, int wy)
+    {
+        return (wx >= 0 && wx < WORLD_W_2 && wy >= 0 && wy < WORLD_H_2);
+    };
+
+    /**
+     * Check that the given coordinate is within quarter resolution 
+     * world bounds.
+     * @param wx World x coordinate.
+     * @param wy World y coordinate.
+     * @return Boolean indicating (wx, wy) is inside the quarter
+     *                 resolution world bounds.
+     */
+    static inline bool testBounds4(int wx, int wy)
+    {
+        return (wx >= 0 && wx < WORLD_W_4 && wy >= 0 && wy < WORLD_H_4);
+    };
+
+    /**
+     * Check that the given coordinate is within eighth resolution 
+     * world bounds.
+     * @param wx World x coordinate.
+     * @param wy World y coordinate.
+     * @return Boolean indicating (wx, wy) is inside the eighth
+     *                 resolution world bounds.
+     */
+    static inline bool testBounds8(int wx, int wy)
+    {
+        return (wx >= 0 && wx < WORLD_W_8 && wy >= 0 && wy < WORLD_H_8);
+    };
+
     void spend(int dollars);
 
     void setFunds(int dollars);
@@ -2719,27 +2759,47 @@ public:
       int x=-1,
       int y=-1);
 
+    // Map
+
     int getTile(int x, int y);
 
     void setTile(int x, int y, short tile);
 
     void *getMapBuffer();
 
+    // Residential.
+
+    // Commercial.
+
+    // Industrial.
+
+    // Power.
+
     void *getPowerMapBuffer();
 
-    // residential
-    // commercial
-    // industrial
-    // power
-    // roads
-    // population density
-    // rate of growth
+    // Roads.
+
+    // Population density.
+
+    // Rate of growth.
+
+    // Traffic density.
+
+    int getTrafficDensity(int x, int y);
+
+    void setTrafficDensity(int x, int y, int density);
+
     void *getTrafficDensityMapBuffer();
-    // pollution
-    // crime
-    // land value
-    // fire radius
-    // police radius
+
+    // Pollution.
+
+    // Crime .
+
+    // Land value.
+
+    // Fire radius.
+
+    // Police radius.
 
 
     ////////////////////////////////////////////////////////////////////////
