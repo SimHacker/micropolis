@@ -919,7 +919,7 @@ void Micropolis::updateFundEffects()
         fireEffect = (short)((float)fireEffect * (float)fireSpend / (float)fireFund);
     }
 
-    drawCurrPercents();
+    mustDrawBudget = 1;
 }
 
 

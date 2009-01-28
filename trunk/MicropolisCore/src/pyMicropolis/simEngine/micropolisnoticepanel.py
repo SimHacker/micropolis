@@ -1,4 +1,4 @@
-# micropolisnoticeview.py
+# micropolisnoticepanel.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Notice View
+# Micropolis Status View
 # Don Hopkins
 
 
@@ -74,135 +74,72 @@ import cairo
 import pango
 import micropolisengine
 import micropolisview
-
+import micropolisnoticeview
+import micropolisdrawingarea
 
 ########################################################################
-# MicropolisNoticeView
+# MicropolisNoticePanel
 
 
-class MicropolisNoticeView(micropolisview.MicropolisView):
+class MicropolisNoticePanel(gtk.Frame):
 
 
     def __init__(
         self,
-        setCityViewVisible=None,
+        engine=None,
+        centerOnTileHandler=None,
         **args):
 
-        micropolisview.MicropolisView.__init__(
+        gtk.Frame.__init__(
             self,
-            aspect='notice',
-            interests=('city', 'notice', 'message',),
             **args)
 
-        self.zoomable = False
-        self.setCityViewVisible = setCityViewVisible
-        self.messageNumber = 0
-        self.message = ''
-        self.messageX = -1
-        self.messageY = -1
-        self.description = ''
-        self.showPicture = False
-        self.important = False
-        self.sprite = micropolisengine.SPRITE_NOTUSED
+        self.engine = engine
+        self.cityViewVisible = False
+
+        # Views
+
+        hpaned1 = gtk.HPaned()
+        self.hpaned1 = hpaned1
+        self.add(hpaned1)
+
+        self.noticeView = micropolisnoticeview.MicropolisNoticeView(
+            engine=engine, 
+            setCityViewVisible=self.setCityViewVisible)
+
+        hpaned1.pack1(
+            self.noticeView,
+            resize=True,
+            shrink=True)
+
+        cityView = micropolisdrawingarea.NoticeMicropolisDrawingArea(
+            engine=engine,
+            centerOnTileHandler=centerOnTileHandler)
+        self.cityView = cityView
+        cityView.set_size_request(150, 0)
+        cityView.visible = False
+        hpaned1.pack2(
+            cityView,
+            resize=False,
+            shrink=True)
 
 
-    def update(
-        self,
-        name,
-        *args):
-
-        if name == 'message':
-            self.updateMessage(*args)
-
-
-    def updateMessage(
-        self,
-        messageNumber,
-        messageX,
-        messageY,
-        showPicture,
-        important):
-
+    def setCityViewVisible(self, visible, tileX=-1, tileY=-1, sprite=micropolisengine.SPRITE_NOTUSED):
+        #print "setCityViewVisible", visible, tileX, tileY, self.cityViewVisible
         engine = self.engine
-        notices = engine.notices
-
-        notice = notices.get(messageNumber, None)
-        if not notice:
+        cityView = self.cityView
+        if visible and (tileX >= 0) and (tileY >= 0):
+            cityView.centerOnTile(tileX, tileY)
+            cityView.sprite = sprite
+        if self.cityViewVisible == visible:
             return
-
-        sprite = notice.get('sprite', micropolisengine.SPRITE_NOTUSED)
-
-        self.messageNumber = messageNumber
-        self.message = notice['title']
-        self.messageX = messageX
-        self.messageY = messageY
-        self.description = notice['description']
-        self.showPicture = showPicture
-        self.important = important
-        self.sprite = sprite
-
-        setCityViewVisible = self.setCityViewVisible
-        if setCityViewVisible:
-            setCityViewVisible(showPicture, messageX, messageY, sprite)
-
-        self.queue_draw()
-
-
-    def drawContent(
-        self,
-        ctx,
-        playout):
-
-        #print "==== MicropolisNoticeView DRAWCONTENT", self
-
-        engine = self.engine
-
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
-        ctx.save()
-
-        ctx.set_source_rgb(1.0, 1.0, 1.0)
-        ctx.rectangle(0, 0, winWidth, winHeight)
-        ctx.fill()
-
-        gap = 10
-        textX = gap
-        textY = gap
-        textWidth = winWidth - (2 * gap)
-        textHeight = winHeight - (2 * gap)
-
-        if (textWidth > 0) and (textHeight > 0):
-
-            messageNumber = self.messageNumber
-            if messageNumber:
-                message = engine.messages[messageNumber]
-            else:
-                message = ""
-
-            text = self.description
-
-            markup1 = """<span>
-<b>%s</b>
- 
-%s
-</span>
-""" % (
-                message,
-                text,
-            )
-
-            ctx.set_source_rgb(0.0, 0.0, 0.0)
-            playout.set_font_description(self.labelFont)
-            playout.set_width(textWidth * 1024)
-            #playout.set_height(textHeight)
-
-            #print markup1
-            playout.set_markup(markup1)
-            ctx.move_to(10, 10)
-            ctx.show_layout(playout)
-
+        if visible:
+            self.cityView.set_property("visible", True)
+            engine.addView(cityView)
+        else:
+            self.cityView.set_property("visible", False)
+            engine.removeView(cityView)
+        self.cityViewVisible = visible
 
 
 ########################################################################

@@ -155,7 +155,7 @@ void Micropolis::simUpdate()
 
     doUpdateHeads();
     graphDoer();
-    updateBudgetWindow();
+    updateBudget();
     scoreDoer();
 }
 

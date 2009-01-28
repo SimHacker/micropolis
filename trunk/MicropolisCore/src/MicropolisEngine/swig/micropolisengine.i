@@ -69,6 +69,8 @@
 %include "micropolisengine-swig-python.i"
 
 %include "micropolis.h"
+%include "generate.h"
+%include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////

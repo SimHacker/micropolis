@@ -75,7 +75,7 @@ import gtk
 ########################################################################
 
 
-def OldMakeToolPie(setToolAction):
+def MakeToolPie(setToolAction):
 
     ########################################################################
     # Make pie menus.
@@ -87,38 +87,41 @@ def OldMakeToolPie(setToolAction):
         fixed_radius=50,
         neutral_description="Select an option.")
 
-    # top zone
-    zone_pie = piemenu.PieMenu(
-        header="Zone",
-        fixed_radius=50,
-        neutral_description="Select a zoning tool.")
-
-    # top zone build
-    build_pie = piemenu.PieMenu(
-        header="Build",
-        fixed_radius=50,
-        neutral_description="Select a building tool.")
-
-    # top zone tool
+    # top/tool
     tool_pie = piemenu.PieMenu(
         header="Micropolis Tools",
         fixed_radius=50,
         neutral_description="Select a Micropolis editing tool,\nor the zone or build submenu.")
 
-    view_pie = piemenu.PieMenu(
-        header="View",
+    # top/tool/zone
+    zone_pie = piemenu.PieMenu(
+        header="Zone",
         fixed_radius=50,
-        neutral_description="Select a view option.")
+        neutral_description="Select a zoning tool.")
 
+    # top/zone/build
+    build_pie = piemenu.PieMenu(
+        header="Build",
+        fixed_radius=50,
+        neutral_description="Select a building tool.")
+
+    # top/control
     control_pie = piemenu.PieMenu(
         header="Control",
         fixed_radius=50,
         neutral_description="Select a control.")
 
+    # top/foo
     foo_pie = piemenu.PieMenu(
         header="Foo",
         fixed_radius=50,
         neutral_description="Select a foo.")
+
+    # top/view
+    view_pie = piemenu.PieMenu(
+        header="View",
+        fixed_radius=50,
+        neutral_description="Select a view option.")
 
 
     ########################################################################
@@ -129,11 +132,11 @@ def OldMakeToolPie(setToolAction):
 
         {
             'pie': top_pie,
-            'label': 'Zone...',
-            'description': 'Submenu of zoning options.',
+            'label': 'Tool...',
+            'description': 'Submenu of tools.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
-            'sub_pie': zone_pie,
+            'sub_pie': tool_pie,
         },
 
         {
@@ -206,6 +209,45 @@ def OldMakeToolPie(setToolAction):
         },
 
         {
+            'pie': tool_pie,
+            'description': 'Bulldozer editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icdozr.png',
+            'icon_hilite': 'images/simEngine/icdozrhi.png',
+            'action': lambda item: setToolAction('Bulldozer'),
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Road editing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icroad.png',
+            'icon_hilite': 'images/simEngine/icroadhi.png',
+            'action': lambda item: setToolAction('Road'),
+        },
+
+        {
+            'pie': tool_pie,
+            'description': 'Eraser drawing tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'icon': 'images/simEngine/icersr.png',
+            'icon_hilite': 'images/simEngine/icersrhi.png',
+            'action': lambda item: setToolAction('Eraser'),
+        },
+
+        {
+            'pie': tool_pie,
+            'label': 'Build...',
+            'description': 'Submenu of building tools.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'sub_pie': build_pie,
+        },
+
+        {
             'pie': build_pie,
             'description': 'Park building tool.',
             'lolite_fill_color': None,
@@ -267,45 +309,6 @@ def OldMakeToolPie(setToolAction):
 
         {
             'pie': tool_pie,
-            'description': 'Bulldozer editing tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/simEngine/icdozr.png',
-            'icon_hilite': 'images/simEngine/icdozrhi.png',
-            'action': lambda item: setToolAction('Bulldozer'),
-        },
-
-        {
-            'pie': tool_pie,
-            'description': 'Road editing tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/simEngine/icroad.png',
-            'icon_hilite': 'images/simEngine/icroadhi.png',
-            'action': lambda item: setToolAction('Road'),
-        },
-
-        {
-            'pie': tool_pie,
-            'description': 'Eraser drawing tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'icon': 'images/simEngine/icersr.png',
-            'icon_hilite': 'images/simEngine/icersrhi.png',
-            'action': lambda item: setToolAction('Eraser'),
-        },
-
-        {
-            'pie': tool_pie,
-            'label': 'Build...',
-            'description': 'Submenu of building tools.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'sub_pie': build_pie,
-        },
-
-        {
-            'pie': tool_pie,
             'description': 'Chalk drawing tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
@@ -344,12 +347,28 @@ def OldMakeToolPie(setToolAction):
         },
 
         {
+            'pie': control_pie,
+            'label': 'Control',
+            'description': 'Control somehting.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+        },
+
+        {
             'pie': top_pie,
             'label': 'Foo...',
             'description': 'Submenu of foo options.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
             'sub_pie': foo_pie,
+        },
+
+        {
+            'pie': foo_pie,
+            'label': 'Foo',
+            'description': 'Foo somehting.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
         },
 
         {
@@ -361,6 +380,14 @@ def OldMakeToolPie(setToolAction):
             'sub_pie': view_pie,
         },
 
+        {
+            'pie': view_pie,
+            'label': 'View',
+            'description': 'View somehting.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+        },
+
     ):
 
         apply(
@@ -369,13 +396,14 @@ def OldMakeToolPie(setToolAction):
             params)
 
 
+    #return top_pie
     return tool_pie
 
 
 ########################################################################
 
 
-def MakeToolPie(setToolAction):
+def NewMakeToolPie(setToolAction):
 
     ########################################################################
     # Make pie menus.

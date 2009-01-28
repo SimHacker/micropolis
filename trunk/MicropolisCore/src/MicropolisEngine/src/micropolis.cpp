@@ -398,11 +398,8 @@ void Micropolis::init()
     // Quad fireValue;
     fireValue = 0;
 
-    // int mustDrawCurrPercents;
-    mustDrawCurrPercents = 0;
-
-    // int mustDrawBudgetWindow;
-    mustDrawBudgetWindow = 0;
+    // int mustDrawBudget;
+    mustDrawBudget = 0;
 
 
     ////////////////////////////////////////////////////////////////////////

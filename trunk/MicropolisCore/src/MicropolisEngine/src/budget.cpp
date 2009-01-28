@@ -81,8 +81,7 @@ void Micropolis::initFundingLevel()
     policeValue = 0;
     roadPercent = 1.0;
     roadValue = 0;
-    drawBudgetWindow();
-    drawCurrPercents();
+    mustDrawBudget = 1;
 }
 
 /** Game decided to show the budget window */
@@ -254,8 +253,6 @@ void Micropolis::doBudgetNow(bool fromMenu)
 
     }
 
-    drawCurrPercents();
-
 noMoney:
 
     if (!autoBudget || fromMenu) {
@@ -282,8 +279,7 @@ noMoney:
 
         }
 
-        drawBudgetWindow();
-        drawCurrPercents();
+	mustDrawBudget = 1;
         doUpdateHeads();
 
     } else { /* autoBudget & !fromMenu */
@@ -302,8 +298,7 @@ noMoney:
             policeSpend = policeFund;
             roadSpend = roadFund;
 
-            drawBudgetWindow();
-            drawCurrPercents();
+	    mustDrawBudget = 1;
             doUpdateHeads();
 
         } else {
@@ -320,129 +315,16 @@ noMoney:
 }
 
 
-/** Request to the front-end to draw the budget window. */
-void Micropolis::drawBudgetWindow()
-{
-    mustDrawBudgetWindow = 1;
-}
-
-
-void Micropolis::reallyDrawBudgetWindow()
-{
-    /// @todo The scripting language should pull these raw values out
-    ///       and format them, instead of the simulator core formatting
-    ///       them and pushing them out.
-
-    short cashFlow, cashFlow2;
-    char numStr[256], dollarStr[256], collectedStr[256],
-         flowStr[256], previousStr[256], currentStr[256];
-
-    cashFlow =
-        (short)(taxFund - fireValue - policeValue - roadValue);
-
-    cashFlow2 = cashFlow;
-
-    if (cashFlow < 0)   {
-
-        cashFlow = -cashFlow;
-        sprintf(numStr, "%d", cashFlow);
-        makeDollarDecimalStr(numStr, dollarStr);
-        sprintf(flowStr, "-%s", dollarStr);
-
-    } else {
-
-        sprintf(numStr, "%d", cashFlow);
-        makeDollarDecimalStr(numStr, dollarStr);
-        sprintf(flowStr, "+%s", dollarStr);
-
-    }
-
-    sprintf(numStr, "%d", (int)totalFunds);
-    makeDollarDecimalStr(numStr, previousStr);
-
-    sprintf(numStr, "%d", (int)(cashFlow2 + totalFunds));
-    makeDollarDecimalStr(numStr, currentStr);
-
-    sprintf(numStr, "%d", (int)taxFund);
-    makeDollarDecimalStr(numStr, collectedStr);
-
-    setBudget(
-        flowStr,
-        previousStr,
-        currentStr,
-        collectedStr,
-        cityTax);
-}
-
-
-void Micropolis::drawCurrPercents()
-{
-    mustDrawCurrPercents = 1;
-}
-
-
-void Micropolis::reallyDrawCurrPercents()
-{
-    /// @todo The scripting language should pull these raw values out
-    ///       and format them, instead of the simulator core formatting
-    ///       them and pushing them out.
-
-    char num[256];
-    char fireWant[256], policeWant[256], roadWant[256];
-    char fireGot[256], policeGot[256], roadGot[256];
-
-    sprintf(num, "%d", (int)fireFund);
-    makeDollarDecimalStr(num, fireWant);
-
-    sprintf(num, "%d", (int)policeFund);
-    makeDollarDecimalStr(num, policeWant);
-
-    sprintf(num, "%d", (int)roadFund);
-    makeDollarDecimalStr(num, roadWant);
-
-    sprintf(num, "%d", (int)(fireFund * firePercent));
-    makeDollarDecimalStr(num, fireGot);
-
-    sprintf(num, "%d", (int)(policeFund * policePercent));
-    makeDollarDecimalStr(num, policeGot);
-
-    sprintf(num, "%d", (int)(roadFund * roadPercent));
-    makeDollarDecimalStr(num, roadGot);
-
-    setBudgetValues(
-        roadGot,
-        roadWant,
-        policeGot,
-        policeWant,
-        fireGot,
-        fireWant);
-}
-
-
-void Micropolis::updateBudgetWindow()
-{
-    /// @todo The scripting language should pull these raw values out
-    ///       and format them, instead of the simulator core formatting
-    ///       them and pushing them out.
-
-    if (mustDrawCurrPercents) {
-        reallyDrawCurrPercents();
-        mustDrawCurrPercents = 0;
-    }
-
-    if (mustDrawBudgetWindow) {
-        reallyDrawBudgetWindow();
-        mustDrawBudgetWindow = 0;
-    }
-}
-
-
 void Micropolis::updateBudget()
 {
-    drawCurrPercents();
-    drawBudgetWindow();
+    /// @todo The scripting language should pull these raw values out
+    ///       and format them, instead of the simulator core formatting
+    ///       them and pushing them out.
 
-    callback("UIUpdateBudget", "");
+    if (mustDrawBudget) {
+        callback("UIUpdate", "s", "budget");
+        mustDrawBudget = 0;
+    }
 }
 
 
@@ -457,51 +339,7 @@ void Micropolis::showBudgetWindowAndStartWaiting()
 void Micropolis::setCityTax(short tax)
 {
     cityTax = tax;
-    callback(
-	"UIUpdate",
-	"s",
-	"taxrate");
-}
-
-
-void Micropolis::setBudget(
-    char *flowStr,
-    char *previousStr,
-    char *currentStr,
-    char *collectedStr,
-    short tax)
-{
-    callback(
-        "UISetBudget",
-        "ssssd",
-        flowStr,
-        previousStr,
-        currentStr,
-        collectedStr,
-        (int)tax);
-}
-
-
-void Micropolis::setBudgetValues(
-    char *roadGot,
-    char *roadWant,
-    char *policeGot,
-    char *policeWant,
-    char *fireGot,
-    char *fireWant)
-{
-    callback(
-        "UISetBudgetValues",
-        "ssdssdssd",
-        roadGot,
-        roadWant,
-        (int)(roadPercent * 100),
-        policeGot,
-        policeWant,
-        (int)(policePercent * 100),
-        fireGot,
-        fireWant,
-        (int)(firePercent * 100));
+    callback("UIUpdate", "s", "taxrate");
 }
 
 

@@ -138,6 +138,8 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
             interests=('city', 'evaluation',),
             **args)
 
+        self.zoomable = False
+
 
     def update(
         self,
@@ -187,57 +189,86 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         currentScore = engine.formatNumber(engine.cityScore)
         annualChange = engine.formatDelta(engine.cityScoreDelta)
 
-        markup1 = """<span>
-<b>Population:</b>
-    %s
-<b>Net Migration:</b>
-    %s
-<b>Assessed Value:</b>
-    %s
-<b>Category:</b>
-    %s
-<b>Game Level:</b>
-    %s
-<b>Current Score:</b>
-    %s
-<b>Annual Change:</b>
-    %s
- 
-<b>Is The Mayor doing
+        paragraphs = [
+            """<b>Population:</b>
+    %s""" % (
+                population,
+            ),
+            """<b>Net Migration:</b>
+    %s""" % (
+                netMigration,
+            ),
+            """<b>Assessed Value:</b>
+    %s""" % (
+                assessedValue,
+            ),
+            """<b>Category:</b>
+    %s""" % (
+                category,
+            ),
+            """<b>Game Level:</b>
+    %s""" % (
+                gameLevel,
+            ),
+            """<b>Current Score:</b>
+    %s""" % (
+                currentScore
+            ),
+            """<b>Annual Change:</b>
+    %s""" % (
+                annualChange,
+            ),
+            """<b>Is The Mayor doing
 a Good Job?</b>
     Yes: %s%%
-    No: %s%%
- 
-<b>What are the
+    No: %s%%""" % (
+                yesPercent,
+                noPercent,
+            ),
+            """<b>What are the
 Worst Problems?</b>
     %s
     %s
     %s
-    %s
-</span>
-""" % (
-            population,
-            netMigration,
-            assessedValue,
-            category,
-            gameLevel,
-            currentScore,
-            annualChange,
-            yesPercent,
-            noPercent,
-            problems[0],
-            problems[1],
-            problems[2],
-            problems[3],
-        )
+    %s""" % (
+                problems[0],
+                problems[1],
+                problems[2],
+                problems[3],
+            ),
+        ]
+
+        margin = 10
+        hgap = 10
+        vgap = 5
+        x = margin
+        y = margin
+        colWidth = 0
+        firstRow = True
+        bottom = winHeight - margin
 
         ctx.set_source_rgb(0.0, 0.0, 0.0)
         playout.set_font_description(self.labelFont)
 
-        #print markup1
-        playout.set_markup(markup1)
-        ctx.move_to(10, 10)
-        ctx.show_layout(playout)
+        for paragraph in paragraphs:
+
+            playout.set_markup(paragraph)
+            width, height = playout.get_pixel_size()
+
+            if firstRow:
+                firstRow = False
+            else:
+                if y + height > bottom:
+                    x += colWidth + hgap
+                    y = margin
+                    firstRow = True
+            if width > colWidth:
+                colWidth = width
+
+            ctx.move_to(x, y)
+            ctx.show_layout(playout)
+
+            y += height + vgap
 
 
 ########################################################################

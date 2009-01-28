@@ -88,7 +88,7 @@ class MicropolisView(gtk.DrawingArea):
         strokeColor=(0, 0, 0),
         fillColor=(0.75, 0.75, 0.75),
         interests=(),
-        titleFont=pango.FontDescription('Helvetiva 18'),
+        titleFont=pango.FontDescription('Helvetiva 14'),
         labelFont=pango.FontDescription('Helvetiva 12'),
         **args):
 
@@ -172,12 +172,7 @@ class MicropolisView(gtk.DrawingArea):
         ctxWindow.set_source_rgb(
             *self.fillColor)
 
-        ctxWindow.fill_preserve()
-
-        ctxWindow.set_source_rgb(
-            *self.strokeColor)
-
-        ctxWindow.stroke()
+        ctxWindow.fill()
 
         pcontext = self.create_pango_context()
         playout = pango.Layout(pcontext)

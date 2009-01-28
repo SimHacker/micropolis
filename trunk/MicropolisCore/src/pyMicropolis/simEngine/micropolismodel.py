@@ -142,7 +142,16 @@ class MicropolisModel(micropolisengine.Micropolis):
         'Started a new city.', # 45
         'Restored a saved city.',
         'You won the scenario!',
-        'You lost the scenario.', # 48
+        'You lost the scenario.',
+        'About Micropolis.',
+        'Scenario: DULLSVILLE, USA  1900.', # 50
+        'Scenario: SAN FRANCISCO, CA.  1906.',
+        'Scenario: HAMBURG, GERMANY  1944.',
+        'Scenario: BERN, SWITZERLAND  1965.',
+        'Scenario: TOKYO, JAPAN  1957.',
+        'Scenario: DETROIT, MI.  1972.', # 55
+        'Scenario: BOSTON, MA.  2010.',
+        'Scenario: RIO DE JANEIRO, BRAZIL  2047.', # 57
     ]
 
 
@@ -153,9 +162,8 @@ class MicropolisModel(micropolisengine.Micropolis):
             'color': 0xff4f4f,
             'title': 'POLLUTION ALERT!',
             'description': """Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.
-
+ 
 Either clean up your act or open a gas mask concession at city hall.""",
-            'view': 'todo: pan view to pollutionMaxX, pollutionMaxY',
         },
 
         11: {
@@ -163,7 +171,6 @@ Either clean up your act or open a gas mask concession at city hall.""",
             'color': 0xff4f4f,
             'title': 'CRIME ALERT!',
             'description': """Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.""",
-            'view': 'todo: pan view to crimeMaxX, crimeMaxY',
         },
 
         12: {
@@ -171,9 +178,8 @@ Either clean up your act or open a gas mask concession at city hall.""",
             'color': 0xff4f4f,
             'title': 'TRAFFIC WARNING!',
             'description': """Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.
-
+ 
 Either build more roads and rails or get a bulletproof limo.""",
-            'view': 'todo: pan view to frafficMaxX, traficMaxY',
         },
 
         20: {
@@ -181,7 +187,6 @@ Either build more roads and rails or get a bulletproof limo.""",
             'color': 0xff4f4f,
             'title': 'FIRE REPORTED!',
             'description': """A fire has been reported!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         21: {
@@ -189,25 +194,24 @@ Either build more roads and rails or get a bulletproof limo.""",
             'color': 0xff4f4f,
             'title': 'MONSTER ATTACK!',
             'description': """A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.
-
+ 
 All you can do is wait till he leaves, then rebuild from the rubble.""",
-            'view': 'todo: follow monster in view',
+            'sprite': micropolisengine.SPRITE_MONSTER,
         },
 
         22: {
             'id': 22,
             'color': 0xff4f4f,
             'title': 'TORNADO ALERT!',
-            'description': """A tornado has been reported!  There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!""",
-            'view': 'todo: follow tornado in view',
+            'description': """A tornado has been reported! There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!""",
+            'sprite': micropolisengine.SPRITE_TORNADO,
         },
 
         23: {
             'id': 23,
             'color': 0xff4f4f,
             'title': 'EARTHQUAKE!',
-            'description': """A major earthquake has occurred!  Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.""",
-            'view': 'todo: pan view to city center',
+            'description': """A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.""",
         },
 
         24: {
@@ -215,7 +219,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0xff4f4f,
             'title': 'PLANE CRASH!',
             'description': """A plane has crashed!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         25: {
@@ -223,7 +226,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0xff4f4f,
             'title': 'SHIPWRECK!',
             'description': """A ship has wrecked!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         26: {
@@ -231,7 +233,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0xff4f4f,
             'title': 'TRAIN CRASH!',
             'description': """A train has crashed!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         27: {
@@ -239,7 +240,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0xff4f4f,
             'title': 'HELICOPTER CRASH!',
             'description': """A helicopter has crashed!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         30: {
@@ -247,7 +247,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0xff4f4f,
             'title': 'FIREBOMBING REPORTED!',
             'description': """Firebombs are falling!!""",
-            'view': 'todo: pan view to crashX, crashY',
         },
 
         # TODO: 32 explosion detected
@@ -257,7 +256,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'TOWN',
             'description': """Congratulations, your village has grown to town status. You now have 2,000 citizens.""",
-            'view': 'todo: pan view to city center',
         },
 
         36: {
@@ -265,7 +263,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'CITY',
             'description': """Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!""",
-            'view': 'todo: pan view to city center',
         },
 
         37: {
@@ -273,7 +270,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'CAPITAL',
             'description': """Your city has become a capital. The current population here is 50,000. Your political future looks bright.""",
-            'view': 'todo: pan view to city center',
         },
 
         38: {
@@ -281,7 +277,6 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'METROPOLIS',
             'description': """Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.""",
-            'view': 'todo: pan view to city center',
         },
 
         39: {
@@ -289,9 +284,8 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'MEGALOPOLIS',
             'description': """Congratulation, you have reached the highest category of urban development, the megalopolis.
-
+ 
 If you manage to reach this level, send us email at micropolis@laptop.org or send us a copy of your city. We might do something interesting with it.""",
-            'view': 'todo: pan view to city center',
         },
 
         41: {
@@ -299,7 +293,7 @@ If you manage to reach this level, send us email at micropolis@laptop.org or sen
             'color': 0xff4f4f,
             'title': 'HEAVY TRAFFIC!',
             'description': """Sky Watch One reporting heavy traffic!""",
-            'view': 'todo: follow helicopter in view',
+            'sprite': micropolisengine.SPRITE_HELICOPTER,
         },
 
         42: {
@@ -307,7 +301,6 @@ If you manage to reach this level, send us email at micropolis@laptop.org or sen
             'color': 0xff4f4f,
             'title': 'FLOODING REPORTED!',
             'description': """Flooding has been been reported along the water's edge!""",
-            'view': 'todo: pan view to floodX, floodY',
         },
 
         43: {
@@ -315,9 +308,8 @@ If you manage to reach this level, send us email at micropolis@laptop.org or sen
             'color': 0xff4f4f,
             'title': 'NUCLEAR MELTDOWN!',
             'description': """A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.
-
+ 
 Many generations will confront this problem before it goes away, so don't hold your breath.""",
-            'view': 'todo: pan view to meltX, meltY',
         },
 
 
@@ -326,9 +318,8 @@ Many generations will confront this problem before it goes away, so don't hold y
             'color': 0xff4f4f,
             'title': 'RIOTS!',
             'description': """The citizens are rioting in the streets, setting cars and houses on fire, and bombing government buildings and businesses!
-
+ 
 All media coverage is blacked out, while the fascist pigs beat the poor citizens into submission.""",
-            'view': 'todo: pan view to city center',
         },
 
         45: {
@@ -358,7 +349,7 @@ All media coverage is blacked out, while the fascist pigs beat the poor citizens
             'color': 0xff4f4f,
             'title': 'IMPEACHMENT NOTICE!',
             'description': """The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob -- led by your mother -- has been spotted in the vicinity of city hall.
-
+ 
 You should seriously consider taking an extended vacation -- NOW. (Or read the manual and try again.)""",
             'view': 'todo: show impeachment image',
         },
@@ -367,16 +358,11 @@ You should seriously consider taking an extended vacation -- NOW. (Or read the m
             'id': 300,
             'color': 0xffd700,
             'title': 'About Micropolis',
-            'description': """Micropolis Copyright (C) 2007
-    by Electronic Arts.
-Based on the Original Micropolis Concept and Design
-    by Will Wright.
-User Interface Designed and Created
-    by Don Hopkins, DUX Software.
-Ported to Linux, Optimized and Adapted for OLPC
-    by Don Hopkins.
-Licensed under the GNU General Public License,
-    version 3, with additional conditions.""",
+            'description': """Micropolis Copyright (C) 2007 by Electronic Arts.
+Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.
+User Interface Designed and created by Don Hopkins.
+Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.
+Licensed under the GNU General Public License, version 3, with additional conditions.""",
             'view': 'todo: show micropolis logo',
         },
 
@@ -470,11 +456,6 @@ You have 10 years to turn this swamp back into a city again.""",
         self.timerActive = False
         self.timerId = None
         self.views = []
-        self.graphs = []
-        self.demands = []
-        self.evaluations = []
-        self.budgets = []
-        self.evaluation = None
         self.interests = {}
         self.powerDataImage = None
         self.trafficDataImage = None
@@ -545,6 +526,12 @@ You have 10 years to turn this swamp back into a city again.""",
         return '$' + self.formatNumber(money)
 
 
+    def formatPercent(
+        self,
+        percent):
+        return str(int(0.5 + (percent * 100))) + "%"
+
+
     def formatDelta(
         self,
         delta):
@@ -578,38 +565,6 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def removeView(self, view):
         self.views.remove(view)
-
-
-    def addGraph(self, graph):
-        self.graphs.append(graph)
-
-
-    def removeGraph(self, graph):
-        self.graphs.remove(graph)
-
-
-    def addDemand(self, demand):
-        self.demands.append(demand)
-
-
-    def removeDemand(self, demand):
-        self.demands.remove(demand)
-
-
-    def addEvaluation(self, evaluation):
-        self.evaluations.append(evaluation)
-
-
-    def removeEvaluation(self, evaluation):
-        self.evaluations.remove(evaluation)
-
-
-    def addBudget(self, budget):
-        self.budgets.append(budget)
-
-
-    def removeBudget(self, budget):
-        self.budgets.remove(budget)
 
 
     def getDataImage(self, name):
@@ -946,20 +901,8 @@ You have 10 years to turn this swamp back into a city again.""",
         print "handle_UIStartScenario(self, scenario)", (self, scenario)
 
   
-    def handle_UIUpdateBudget(self):
-        #print "handle_UIUpdateBudget(self)", (self,)
-        for budget in self.budgets:
-            budget.update()
-
-  
     def handle_UIWinGame(self):
         print "handle_UIWinGame(self)", (self,)
-
-
-    def handle_UINewGraph(self):
-        #print "handle_UINewGraph(self)", (self,)
-        for graph in self.graphs:
-            graph.update()
 
 
     def handle_UIUpdate(self, name, *args):

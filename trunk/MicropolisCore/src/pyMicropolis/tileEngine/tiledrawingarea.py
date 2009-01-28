@@ -533,6 +533,8 @@ class TileDrawingArea(gtk.DrawingArea):
         widget=None,
         event=None):
 
+        self.beforeDraw()
+
         ctxWindow = self.window.cairo_create()
 
         winRect = self.get_allocation()
@@ -740,6 +742,12 @@ class TileDrawingArea(gtk.DrawingArea):
             0)
 
         ctxWindow.paint()
+
+
+    def beforeDraw(
+        self):
+
+        pass
 
 
     def prepareToRenderTiles(
@@ -980,19 +988,36 @@ class TileDrawingArea(gtk.DrawingArea):
 
 
     def centerOnTile(self, tileX, tileY):
-        px = -self.sourceTileSize * self.scale * tileX
-        py = -self.sourceTileSize * self.scale * tileY
+        tileSize = self.tileSize
+
+        px = -tileSize * tileX
+        py = -tileSize * tileY
 
         rect = self.get_allocation()
         winWidth = rect.width
         winHeight = rect.height
 
-        px += int(winWidth / 2)
-        py += int(winHeight / 2)
+        px += winWidth / 2
+        py += winHeight / 2
 
-        #print "centerOnTile", "tile", tileX, tileY, "sourceTileSize", self.sourceTileSize, "scale", self.scale, "p", px, py
-      
+        #print "centerOnTile", "tile", tileX, tileY, "tileSize", self.tileSize, "scale", self.scale, "p", px, py
+
         self.panTo(px, py)
+
+
+    def getCenterTile(self):
+        tileSize = self.tileSize
+
+        rect = self.get_allocation()
+        winWidth = rect.width
+        winHeight = rect.height
+
+        tileX = ((winWidth / 2) - self.panX)  / tileSize
+        tileY = ((winHeight / 2) - self.panY) / tileSize
+
+        #print "getCenterTile", "tile", tileX, tileY, "tileSize", self.tileSize, "scale", self.scale
+      
+        return tileX, tileY
 
 
     def selectToolByName(self, toolName):

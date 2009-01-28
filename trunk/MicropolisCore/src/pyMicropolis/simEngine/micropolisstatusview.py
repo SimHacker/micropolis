@@ -75,272 +75,105 @@ import pango
 import micropolisengine
 import micropolisview
 import micropolisgaugeview
-import micropolisnoticeview
+import micropolisnoticepanel
+import micropolismessagespanel
 import micropolisdrawingarea
+import micropolisevaluationpanel
+import micropolishistorypanel
+import micropolisbudgetpanel
+import micropolismappanel
+import micropoliscontrolpanel
+import micropolisdisasterspanel
 
 
 ########################################################################
 # MicropolisStatusView
 
 
-class MicropolisStatusView(gtk.VBox):
-
-
-    speedElbow = 50
-    speedSlope = 20
-    speeds = [
-        # Speed, Passes, Label
-        (0, 0, 'Paused',),
-        (1, 1, 'Ultra Slow',),
-        (2, 1, 'Very Slow',),
-        (3, 1, 'Slow',),
-        (3, 5, 'Medium',),
-        (3, 10, 'Fast',),
-        (3, 50, 'Very Fast',),
-        (3, 100, 'Ultra Fast',),
-        (3, 500, 'Ridiculously fast',),
-        (3, 1000, 'Outrageously fast',),
-        (3, 5000, 'Astronomically fast',),
-    ]
+class MicropolisStatusView(gtk.HPaned):
 
 
     def __init__(
         self,
         engine=None,
+        centerOnTileHandler=None,
         **args):
 
-        gtk.VBox.__init__(
+        gtk.HPaned.__init__(
             self,
-            False,
-            5,
             **args)
 
         self.engine = engine
 
-        self.engine.expressInterest(
-            self,
-            ('taxrate', 'speed', 'passes', 'options'))
-
         # Views
 
-        self.menuBar = gtk.MenuBar()
-        self.pack_start(self.menuBar, False, False, 0)
-
-        ########################################################################
-        # Micropolis menu.
-
-        self.menuItem_Micropolis = gtk.MenuItem("Micropolis")
-        self.menuBar.insert(self.menuItem_Micropolis, 1)
-
-        self.menu_Micropolis = gtk.Menu()
-        self.menuItem_Micropolis.set_submenu(self.menu_Micropolis)
-
-        self.menuItem_Micropolis_About = gtk.MenuItem("About")
-        self.menuItem_Micropolis_About.connect('activate', self.doMicropolisMenu, 'about')
-        self.menu_Micropolis.append(self.menuItem_Micropolis_About)
-
-        self.menuItem_Micropolis_SaveCity = gtk.MenuItem("Save City")
-        self.menuItem_Micropolis_SaveCity.connect('activate', self.doMicropolisMenu, 'savecity')
-        self.menu_Micropolis.append(self.menuItem_Micropolis_SaveCity)
-
-        self.menuItem_Micropolis_SaveCityAs = gtk.MenuItem("Save City As...")
-        self.menuItem_Micropolis_SaveCityAs.connect('activate', self.doMicropolisMenu, 'savecityas')
-        self.menu_Micropolis.append(self.menuItem_Micropolis_SaveCityAs)
-
-        self.menuItem_Micropolis_NewCity = gtk.MenuItem("New City")
-        self.menuItem_Micropolis_NewCity.connect('activate', self.doMicropolisMenu, 'newcity')
-        self.menu_Micropolis.append(self.menuItem_Micropolis_NewCity)
-
-        self.menuItem_Micropolis_Quit = gtk.MenuItem("Quit")
-        self.menuItem_Micropolis_Quit.connect('activate', self.doMicropolisMenu, 'quit')
-        self.menu_Micropolis.append(self.menuItem_Micropolis_Quit)
-
-        ########################################################################
-        # Options menu.
-
-        self.menuItem_Options = gtk.MenuItem("Options")
-        self.menuBar.insert(self.menuItem_Options, 2)
-
-        self.menu_Options = gtk.Menu()
-        self.menuItem_Options.set_submenu(self.menu_Options)
-
-        self.menuItem_Options_Disasters = gtk.CheckMenuItem("Disasters")
-        self.menuItem_Options_Disasters.connect('toggled', self.doOptionsMenu, 'disasters')
-        self.menu_Options.append(self.menuItem_Options_Disasters)
-
-        self.menuItem_Options_AutoBudget = gtk.CheckMenuItem("Auto Budget")
-        self.menuItem_Options_AutoBudget.connect('toggled', self.doOptionsMenu, 'autobudget')
-        self.menu_Options.append(self.menuItem_Options_AutoBudget)
-
-        self.menuItem_Options_AutoBulldoze = gtk.CheckMenuItem("Auto Bulldoze")
-        self.menuItem_Options_AutoBulldoze.connect('toggled', self.doOptionsMenu, 'autobulldoze')
-        self.menu_Options.append(self.menuItem_Options_AutoBulldoze)
-
-        self.menuItem_Options_AutoGoto = gtk.CheckMenuItem("Auto Goto")
-        self.menuItem_Options_AutoGoto.connect('toggled', self.doOptionsMenu, 'autogoto')
-        self.menu_Options.append(self.menuItem_Options_AutoGoto)
-
-        self.menuItem_Options_Sound = gtk.CheckMenuItem("Sound")
-        self.menuItem_Options_Sound.connect('toggled', self.doOptionsMenu, 'sound')
-        self.menu_Options.append(self.menuItem_Options_Sound)
-
-        self.menuItem_Options_Animation = gtk.CheckMenuItem("Animation")
-        self.menuItem_Options_Animation.connect('toggled', self.doOptionsMenu, 'animation')
-        self.menu_Options.append(self.menuItem_Options_Animation)
-
-        self.menuItem_Options_Messages = gtk.CheckMenuItem("Messages")
-        self.menuItem_Options_Messages.connect('toggled', self.doOptionsMenu, 'messages')
-        self.menu_Options.append(self.menuItem_Options_Messages)
-
-        self.menuItem_Options_Notices = gtk.CheckMenuItem("Notices")
-        self.menuItem_Options_Notices.connect('toggled', self.doOptionsMenu, 'notices')
-        self.menu_Options.append(self.menuItem_Options_Notices)
-
-        ########################################################################
-        # Disasters menu.
-
-        self.menuItem_Disasters = gtk.MenuItem("Disasters")
-        self.menuBar.insert(self.menuItem_Disasters, 3)
-
-        self.menu_Disasters = gtk.Menu()
-        self.menuItem_Disasters.set_submenu(self.menu_Disasters)
-
-        self.menuItem_Disasters_Monster = gtk.MenuItem("Monster")
-        self.menuItem_Disasters_Monster.connect('activate', self.doDisastersMenu, 'monster')
-        self.menu_Disasters.append(self.menuItem_Disasters_Monster)
-
-        self.menuItem_Disasters_Fire = gtk.MenuItem("Fire")
-        self.menuItem_Disasters_Fire.connect('activate', self.doDisastersMenu, 'fire')
-        self.menu_Disasters.append(self.menuItem_Disasters_Fire)
-
-        self.menuItem_Disasters_Flood = gtk.MenuItem("Flood")
-        self.menuItem_Disasters_Flood.connect('activate', self.doDisastersMenu, 'flood')
-        self.menu_Disasters.append(self.menuItem_Disasters_Flood)
-
-        self.menuItem_Disasters_Meltdown = gtk.MenuItem("Meltdown")
-        self.menuItem_Disasters_Meltdown.connect('activate', self.doDisastersMenu, 'meltdown')
-        self.menu_Disasters.append(self.menuItem_Disasters_Meltdown)
-
-        self.menuItem_Disasters_Tornado = gtk.MenuItem("Tornado")
-        self.menuItem_Disasters_Tornado.connect('activate', self.doDisastersMenu, 'tornado')
-        self.menu_Disasters.append(self.menuItem_Disasters_Tornado)
-
-        self.menuItem_Disasters_Earthquake = gtk.MenuItem("Earthquake")
-        self.menuItem_Disasters_Earthquake.connect('activate', self.doDisastersMenu, 'earthquake')
-        self.menu_Disasters.append(self.menuItem_Disasters_Earthquake)
-
-        ########################################################################
-        # Windows menu.
-
-        self.menuItem_Windows = gtk.MenuItem("Windows")
-        self.menuBar.insert(self.menuItem_Windows, 5)
-
-        self.menu_Windows = gtk.Menu()
-        self.menuItem_Windows.set_submenu(self.menu_Windows)
-
-        self.menuItem_Windows_Budget = gtk.CheckMenuItem("Budget")
-        self.menuItem_Windows_Budget.set_property('active', True)
-        self.menuItem_Windows_Budget.connect('toggled', self.doWindowMenu, 'budget')
-        self.menu_Windows.append(self.menuItem_Windows_Budget)
-
-        self.menuItem_Windows_Evaluation = gtk.CheckMenuItem("Evaluation")
-        self.menuItem_Windows_Evaluation.set_property('active', True)
-        self.menuItem_Windows_Evaluation.connect('toggled', self.doWindowMenu, 'evaluation')
-        self.menu_Windows.append(self.menuItem_Windows_Evaluation)
-
-        self.menuItem_Windows_Graph = gtk.CheckMenuItem("Graph")
-        self.menuItem_Windows_Graph.set_property('active', True)
-        self.menuItem_Windows_Graph.connect('toggled', self.doWindowMenu, 'graph')
-        self.menu_Windows.append(self.menuItem_Windows_Graph)
-
-        self.menuItem_Windows_Map = gtk.CheckMenuItem("Map")
-        self.menuItem_Windows_Map.set_property('active', False)
-        self.menuItem_Windows_Map.connect('toggled', self.doWindowMenu, 'map')
-        self.menu_Windows.append(self.menuItem_Windows_Map)
-
-        self.menuItem_Windows_Editor = gtk.CheckMenuItem("Editor")
-        self.menuItem_Windows_Editor.set_property('active', True)
-        self.menuItem_Windows_Editor.connect('toggled', self.doWindowMenu, 'editor')
-        self.menu_Windows.append(self.menuItem_Windows_Editor)
-
-        ########################################################################
-
-        self.hpaned1 = gtk.HPaned()
-        self.pack_start(self.hpaned1, False, False, 1)
-
         self.vbox2 = gtk.VBox(False, 0)
-        self.hpaned1.pack1(self.vbox2, resize=False, shrink=False)
+        self.pack1(self.vbox2, resize=False, shrink=False)
 
         self.gaugeView = micropolisgaugeview.MicropolisGaugeView(engine=self.engine)
         self.vbox2.pack_start(self.gaugeView, False, False, 0)
 
-        self.vbox3 = gtk.VBox(False, 0)
-        self.vbox3.set_size_request(5, 5)
-        self.vbox2.pack_start(self.vbox3, False, False, 1)
+        self.tileView = \
+            micropolisdrawingarea.MiniMicropolisDrawingArea(
+                engine=self.engine)
+        self.tileView.panTo(0, 0)
+        self.tileView.setScale(
+            1.0 / micropolisengine.EDITOR_TILE_SIZE)
+        self.tileView.set_size_request(
+            micropolisengine.WORLD_W, 
+            micropolisengine.WORLD_H)
+        engine.addView(self.tileView)
 
-        self.labelTaxRate = gtk.Label('')
-        self.vbox2.pack_start(self.labelTaxRate, False, False, 2)
-        self.labelTaxRate.show()
-
-        self.scaleTaxRate = gtk.HScale()
-        self.scaleTaxRate.set_digits(0)
-        self.scaleTaxRate.set_draw_value(False)
-        self.scaleTaxRate.set_value_pos(1)
-        self.scaleTaxRate.set_range(0, 20)
-        self.scaleTaxRate.set_increments(1, 5)
-        self.scaleTaxRate.set_value(engine.cityTax)
-        self.scaleTaxRate.connect('value-changed', self.taxScaleChanged)
-        self.vbox2.pack_start(self.scaleTaxRate, False, False, 3)
-        #self.scaleTaxRate.set_size_request(200, 20)
-        self.scaleTaxRate.show()
-        self.update('taxrate')
-
-        self.labelSpeed = gtk.Label('')
-        self.vbox2.pack_start(self.labelSpeed, False, False, 4)
-        self.labelSpeed.show()
-
-        self.scaleSpeed = gtk.HScale()
-        self.scaleSpeed.set_digits(0)
-        self.scaleSpeed.set_draw_value(False)
-        self.scaleSpeed.set_value_pos(1)
-        self.scaleSpeed.set_range(0, len(self.speeds) - 1)
-        self.scaleSpeed.set_increments(1, 3)
-        self.scaleSpeed.connect('value-changed', self.speedScaleChanged)
-        self.vbox2.pack_start(self.scaleSpeed, False, False, 5)
-        #self.scaleSpeed.set_size_request(200, 20)
-        self.scaleSpeed.show()
-        self.update('speed')
+        self.vbox2.pack_start(self.tileView, True, True, 1)
 
         self.hbox1 = gtk.HBox(False, 0)
-        self.hpaned1.pack2(self.hbox1, resize=False, shrink=False)
+        self.pack2(self.hbox1, resize=False, shrink=False)
 
-        self.noticeView = micropolisnoticeview.MicropolisNoticeView(engine=engine, statusview=self)
-        #self.noticeView.set_size_request(200, 0)
-        self.hbox1.pack_start(self.noticeView, True, True, 0)
+        self.notebook = gtk.Notebook()
+        self.hbox1.pack_start(self.notebook, True, True, 0)
 
-        self.cityView = micropolisdrawingarea.NoticeMicropolisDrawingArea(engine=engine)
-        self.cityViewVisible = False
-        self.setCityViewVisible(True, 119, 99)
+        self.noticePanel = micropolisnoticepanel.MicropolisNoticePanel(
+            engine=engine,
+            centerOnTileHandler=centerOnTileHandler)
+        self.noticeViewLabel = gtk.Label('Notice')
+        self.notebook.append_page(self.noticePanel, self.noticeViewLabel)
 
-        self.hpaned1.set_position(self.gaugeView.viewWidth)
+        self.messagesPanel = micropolismessagespanel.MicropolisMessagesPanel(
+            engine=engine)
+        self.messagesViewLabel = gtk.Label('Messages')
+        self.notebook.append_page(self.messagesPanel, self.messagesViewLabel)
 
+        self.evaluationPanel = micropolisevaluationpanel.MicropolisEvaluationPanel(
+            engine=engine)
+        self.evaluationLabel = gtk.Label("Evaluation")
+        self.notebook.append_page(self.evaluationPanel, self.evaluationLabel)
 
-    def setCityViewVisible(self, visible, tileX=-1, tileY=-1):
-        engine = self.engine
-        cityView = self.cityView
-        #print "setCityViewVisible", visible, self.cityViewVisible, tileX, tileY
-        if visible and (tileX >= 0) and (tileY >= 0):
-            cityView.centerOnTile(tileX, tileY)
-        if self.cityViewVisible == visible:
-            return
-        if visible:
-            cityView.set_size_request(150, 0)
-            self.hbox1.pack_start(cityView, False, False, 1)
-            engine.addView(cityView)
-        else:
-            self.hbox1.remove(cityView)
-            engine.removeView(cityView)
-        self.cityViewVisible = visible
+        self.historyPanel = micropolishistorypanel.MicropolisHistoryPanel(
+            engine=engine)
+        self.historyLabel = gtk.Label("History")
+        self.notebook.append_page(self.historyPanel, self.historyLabel)
+
+        self.budgetPanel = micropolisbudgetpanel.MicropolisBudgetPanel(
+            engine=engine)
+        self.budgetLabel = gtk.Label("Budget")
+        self.notebook.append_page(self.budgetPanel, self.budgetLabel)
+
+        self.mapPanel = micropolismappanel.MicropolisMapPanel(
+            engine=engine)
+        self.mapLabel = gtk.Label("Map")
+        self.notebook.append_page(self.mapPanel, self.mapLabel)
+
+        self.controlPanel = micropoliscontrolpanel.MicropolisControlPanel(
+            engine=engine)
+        self.controlLabel = gtk.Label("Control")
+        self.notebook.append_page(self.controlPanel, self.controlLabel)
+
+        self.disastersPanel = micropolisdisasterspanel.MicropolisDisastersPanel(
+            engine=engine)
+        self.disastersLabel = gtk.Label("Disasters")
+        self.notebook.append_page(self.disastersPanel, self.disastersLabel)
+
+        self.set_position(self.gaugeView.viewWidth)
 
 
     def update(
@@ -375,30 +208,12 @@ class MicropolisStatusView(gtk.VBox):
                 self.scaleSpeed.set_value(simSpeed)
             self.setSpeedLabel(self.speeds[simSpeed][2])
                 
-        elif name == 'options':
-            #print "======================================================================== OPTIONS"
-            #print "enableDisasters", engine.enableDisasters # Disasters
-            self.menuItem_Options_Disasters.set_property('active', engine.enableDisasters)
-            #print "autoBudget", engine.autoBudget # AutoBudget
-            self.menuItem_Options_AutoBudget.set_property('active', engine.autoBudget)
-            #print "autoBulldoze", engine.autoBulldoze # AutoBulldoze
-            self.menuItem_Options_AutoBulldoze.set_property('active', engine.autoBulldoze)
-            #print "autoGoto", engine.autoGoto # AutoGoto
-            self.menuItem_Options_AutoGoto.set_property('active', engine.autoGoto)
-            #print "enableSound", engine.enableSound # Sound
-            self.menuItem_Options_Sound.set_property('active', engine.enableSound)
-            #print "doAnimation", engine.doAnimation # Animation
-            self.menuItem_Options_Animation.set_property('active', engine.doAnimation)
-            #print "doMessages", engine.doMessages # Messages
-            self.menuItem_Options_Messages.set_property('active', engine.doMessages)
-            #print "doNotices", engine.doNotices # Notices
-            self.menuItem_Options_Notices.set_property('active', engine.doNotices)
-
 
     def doMicropolisMenu(self, item, command):
         #print "DOMICROPOLISMENU", command
+        engine = self.engine
         if command == 'about':
-            pass
+            engine.sendMessage(micropolisengine.MESSAGE_ABOUT_MICROPOLIS)
         elif command == 'savecity':
             pass
         elif command == 'savecityas':
@@ -407,36 +222,6 @@ class MicropolisStatusView(gtk.VBox):
             pass
         elif command == 'quit':
             pass
-
-
-    def doOptionsMenu(self, item, option):
-        engine = self.engine
-        flag = item.active
-        #print "OPTIONCHANGED", option, flag
-        if option == 'disasters':
-            print 'DISASTERS', flag
-            engine.setEnableDisasters(flag)
-        elif option == 'autobudget':
-            print 'AUTOBUDGET', flag
-            engine.setAutoBudget(flag)
-        elif option == 'autobulldoze':
-            print 'AUTOBULLDOZE', flag
-            engine.setAutoBulldoze(flag)
-        elif option == 'autogoto':
-            print 'AUTOGOTO', flag
-            engine.setAutoGoto(flag)
-        elif option == 'sound':
-            print 'SOUND', flag
-            engine.setEnableSound(flag)
-        elif option == 'animation':
-            print 'ANIMATION', flag
-            engine.setDoAnimation(flag)
-        elif option == 'messages':
-            print 'MESSAGES', flag
-            engine.setDoMessages(flag)
-        elif option == 'notices':
-            print 'NOTICES', flag
-            engine.setDoNotices(flag)
 
 
     def doDisastersMenu(self, item, disaster):
@@ -453,21 +238,6 @@ class MicropolisStatusView(gtk.VBox):
             engine.makeTornado()
         elif disaster == 'earthquake':
             engine.makeEarthquake()
-
-
-    def doWindowMenu(self, item, window):
-        flag = item.active
-        #print "DOWINDOWMENU", window, flag
-        if window == 'budget':
-            pass
-        elif window == 'evaluation':
-            pass
-        elif window == 'graph':
-            pass
-        elif window == 'map':
-            pass
-        elif window == 'editor':
-            pass
 
 
     def setSpeedLabel(self, label):

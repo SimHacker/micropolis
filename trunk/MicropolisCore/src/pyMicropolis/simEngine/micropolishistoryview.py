@@ -1,4 +1,4 @@
-# micropolisgraphview.py
+# micropolishistoryview.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Graph View
+# Micropolis History View
 # Don Hopkins
 
 
@@ -77,13 +77,13 @@ import micropolisview
 
 
 ########################################################################
-# MicropolisGraphView
+# MicropolisHistoryView
 
 
-class MicropolisGraphView(micropolisview.MicropolisView):
+class MicropolisHistoryView(micropolisview.MicropolisView):
 
 
-    graphColors = (
+    historyColors = (
         (0.00, 1.00, 0.00), # Res: LIGHTGREEN
         (0.00, 0.00, 0.50), # Com: DARKBLUE
         (1.00, 1.00, 0.00), # Ind: YELLOW
@@ -92,7 +92,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         (0.33, 0.42, 0.18), # Pollution: OLIVE
     )
 
-    graphRanges = (
+    historyRanges = (
         (0, 768), # Res
         (0, 768), # Com
         (0, 768), # Ind
@@ -101,7 +101,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         (0, 128), # Pollution
     )
 
-    graphLegends = (
+    historyLegends = (
         "Residential",
         "Commercial",
         "Industrial",
@@ -110,7 +110,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         "Pollution",
     )
 
-    topEdgeHeight = 30
+    topEdgeHeight = 5
     bottomEdgeHeight = 30
     leftEdgeWidth = 100
     rightEdgeWidth = 30
@@ -123,19 +123,18 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         self,
         historyScale=micropolisengine.HISTORY_SCALE_LONG,
         historyTypes=[0, 1, 2, 3, 4, 5],
-        title='Micropolis History Graph',
         **args):
 
         micropolisview.MicropolisView.__init__(
             self,
             aspect='graph',
-            interests=('city', 'graph',),
+            interests=('graph',),
             **args)
 
+        self.zoomable = False
         self.historyScale = historyScale
         self.historyTypes = historyTypes
         self.hiliteTarget = None
-        self.title = title
 
 
     def update(
@@ -143,7 +142,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         name,
         *args):
 
-        #print "GRAPH UPDATE", self, name, args
+        #print "HISTORY UPDATE", self, name, args
 
         self.queue_draw()
 
@@ -163,23 +162,6 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         scaleHeight = self.bottomEdgeHeight - (margin + gap)
 
         return scaleX, scaleY, scaleWidth, scaleHeight
-
-
-    def getTitleRect(self):
-
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
-        margin = self.margin
-        gap = self.gap
-
-        titleX = margin
-        titleY = margin
-        titleWidth = winWidth - (margin + margin)
-        titleHeight = self.topEdgeHeight - (margin + gap)
-
-        return titleX, titleY, titleWidth, titleHeight
 
 
     def getHistoryRect(self):
@@ -235,7 +217,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         legendHeight = winHeight - (self.topEdgeHeight + self.bottomEdgeHeight + gap + gap)
         legendHeight = max(1, legendHeight)
 
-        h = float(legendHeight) / len(self.graphLegends)
+        h = float(legendHeight) / len(self.historyLegends)
 
         boxGap = self.boxGap
 
@@ -254,14 +236,11 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         if self.pointInRect(x, y, self.getHistoryRect()):
             return 'history', 0
 
-        if self.pointInRect(x, y, self.getTitleRect()):
-            return 'title', 0
-
         if self.pointInRect(x, y, self.getScaleRect()):
             return 'scale', 0
 
         if self.pointInRect(x, y, self.getLegendRect()):
-            for i in range(0, len(self.graphLegends)):
+            for i in range(0, len(self.historyLegends)):
                 if self.pointInRect(x, y, self.getLegendBoxRect(i)):
                     return 'legend', i
 
@@ -273,7 +252,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         ctx,
         playout):
 
-        #print "==== MicropolisGraphView DRAWCONTENT", self
+        #print "==== MicropolisHistoryView DRAWCONTENT", self
 
         engine = self.engine
 
@@ -309,7 +288,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             ctx.set_source_rgb(
                 0.75, 0.75, 0.75)
 
-        ctx.fill_preserve()
+        ctx.fill()
 
         ctx.set_source_rgb(
             *self.strokeColor)
@@ -324,15 +303,15 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
         playout.set_font_description(self.labelFont)
 
-        graphLegends = self.graphLegends
+        historyLegends = self.historyLegends
 
-        for i in range(0, len(graphLegends)):
+        for i in range(0, len(historyLegends)):
 
             boxX, boxY, boxWidth, boxHeight = self.getLegendBoxRect(i)
 
             ctx.save()
 
-            rgb = self.graphColors[i]
+            rgb = self.historyColors[i]
 
             ctx.rectangle(
                 boxX,
@@ -369,7 +348,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
 
             ctx.stroke()
 
-            label = graphLegends[i]
+            label = historyLegends[i]
             playout.set_text(label)
             labelWidth, labelHeight = playout.get_pixel_size()
 
@@ -381,32 +360,6 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             self.drawShadowText(label, xx, yy, ctx, playout)
 
             ctx.restore()
-
-        ctx.restore()
-
-        # Draw title.
-
-        ctx.save()
-
-        playout.set_font_description(self.titleFont)
-
-        titleX, titleY, titleWidth, titleHeight = self.getTitleRect()
-
-        ctx.set_source_rgb(
-            0.0, 0.0, 0.0)
-
-        title = self.title
-        title += ': ' + engine.getCityDate()
-
-        playout.set_text(title)
-        labelWidth, labelHeight = playout.get_pixel_size()
-
-        xx = titleX + (titleWidth / 2) - (labelWidth / 2)
-        yy = titleY + (titleHeight / 2) - (labelHeight / 2)
-
-        yy += 1 # Fudge the position.
-        
-        self.drawShadowText(title, xx, yy, ctx, playout)
 
         ctx.restore()
 
@@ -483,7 +436,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
         # Scale the residential, commercial and industrial histories
         # together relative to the max of all three.  Up to 128 they
         # are not scaled. Starting at 128 they are scaled down so the
-        # maximum is always at the top of the graph.
+        # maximum is always at the top of the history.
 
         def calcScale(maxVal):
             if maxVal < 128:
@@ -572,7 +525,7 @@ class MicropolisGraphView(micropolisview.MicropolisView):
             ctx.set_line_width(lineWidth)
 
             ctx.set_source_rgb(
-                *self.graphColors[historyType])
+                *self.historyColors[historyType])
 
             ctx.stroke()
 

@@ -1,4 +1,4 @@
-# micropolisnoticeview.py
+# micropolisdisasterspanel.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Notice View
+# Micropolis Status View
 # Don Hopkins
 
 
@@ -77,132 +77,86 @@ import micropolisview
 
 
 ########################################################################
-# MicropolisNoticeView
+# MicropolisDisastersPanel
 
 
-class MicropolisNoticeView(micropolisview.MicropolisView):
+class MicropolisDisastersPanel(gtk.Frame):
 
 
     def __init__(
         self,
-        setCityViewVisible=None,
+        engine=None,
         **args):
 
-        micropolisview.MicropolisView.__init__(
+        gtk.Frame.__init__(
             self,
-            aspect='notice',
-            interests=('city', 'notice', 'message',),
             **args)
 
-        self.zoomable = False
-        self.setCityViewVisible = setCityViewVisible
-        self.messageNumber = 0
-        self.message = ''
-        self.messageX = -1
-        self.messageY = -1
-        self.description = ''
-        self.showPicture = False
-        self.important = False
-        self.sprite = micropolisengine.SPRITE_NOTUSED
+        self.engine = engine
 
+        # Views
 
-    def update(
-        self,
-        name,
-        *args):
+        hbox1 = gtk.HBox(False, 0)
+        self.hbox1 = hbox1
+        self.add(hbox1)
 
-        if name == 'message':
-            self.updateMessage(*args)
+        spacer1 = gtk.VBox()
+        spacer1.set_size_request(5, 5)
+        hbox1.pack_start(spacer1, False, False, 0)
 
+        vbox1 = gtk.VButtonBox()
+        self.vbox1 = vbox1
+        hbox1.pack_start(vbox1, False, False, 1)
 
-    def updateMessage(
-        self,
-        messageNumber,
-        messageX,
-        messageY,
-        showPicture,
-        important):
+        spacer2 = gtk.VBox()
+        spacer2.set_size_request(5, 5)
+        vbox1.pack_start(spacer2, False, False, 0)
 
-        engine = self.engine
-        notices = engine.notices
+        buttonMonster = gtk.Button("Monster")
+        self.buttonMonster = buttonMonster
+        buttonMonster.connect('clicked', lambda item: engine.makeMonster())
+        vbox1.pack_start(buttonMonster, False, False, 1)
 
-        notice = notices.get(messageNumber, None)
-        if not notice:
-            return
+        buttonFire = gtk.Button("Fire")
+        self.buttonFire = buttonFire
+        buttonFire.connect('clicked', lambda item: engine.setFire())
+        vbox1.pack_start(buttonFire, False, False, 2)
 
-        sprite = notice.get('sprite', micropolisengine.SPRITE_NOTUSED)
+        buttonFlood = gtk.Button("Flood")
+        self.buttonFlood = buttonFlood
+        buttonFlood.connect('clicked', lambda item: engine.makeFlood())
+        vbox1.pack_start(buttonFlood, False, False, 3)
 
-        self.messageNumber = messageNumber
-        self.message = notice['title']
-        self.messageX = messageX
-        self.messageY = messageY
-        self.description = notice['description']
-        self.showPicture = showPicture
-        self.important = important
-        self.sprite = sprite
+        spacer3 = gtk.VBox()
+        spacer3.set_size_request(5, 5)
+        vbox1.pack_start(spacer3, False, False, 4)
 
-        setCityViewVisible = self.setCityViewVisible
-        if setCityViewVisible:
-            setCityViewVisible(showPicture, messageX, messageY, sprite)
+        vbox2 = gtk.VButtonBox()
+        self.vbox2 = vbox2
+        hbox1.pack_start(vbox2, False, False, 2)
 
-        self.queue_draw()
+        spacer4 = gtk.VBox()
+        spacer4.set_size_request(5, 5)
+        vbox2.pack_start(spacer4, False, False, 0)
 
+        buttonTornado = gtk.Button("Tornado")
+        self.buttonTornado = buttonTornado
+        buttonTornado.connect('clicked', lambda item: engine.makeTornado())
+        vbox2.pack_start(buttonTornado, False, False, 0)
 
-    def drawContent(
-        self,
-        ctx,
-        playout):
+        buttonMeltdown = gtk.Button("Meltdown")
+        self.buttonMeltdown = buttonMeltdown
+        buttonMeltdown.connect('clicked', lambda item: engine.makeMeltdown())
+        vbox2.pack_start(buttonMeltdown, False, False, 1)
 
-        #print "==== MicropolisNoticeView DRAWCONTENT", self
+        buttonEarthquake = gtk.Button("Earthquake")
+        self.buttonEarthquake = buttonEarthquake
+        buttonEarthquake.connect('clicked', lambda item: engine.makeEarthquake())
+        vbox2.pack_start(buttonEarthquake, False, False, 2)
 
-        engine = self.engine
-
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
-        ctx.save()
-
-        ctx.set_source_rgb(1.0, 1.0, 1.0)
-        ctx.rectangle(0, 0, winWidth, winHeight)
-        ctx.fill()
-
-        gap = 10
-        textX = gap
-        textY = gap
-        textWidth = winWidth - (2 * gap)
-        textHeight = winHeight - (2 * gap)
-
-        if (textWidth > 0) and (textHeight > 0):
-
-            messageNumber = self.messageNumber
-            if messageNumber:
-                message = engine.messages[messageNumber]
-            else:
-                message = ""
-
-            text = self.description
-
-            markup1 = """<span>
-<b>%s</b>
- 
-%s
-</span>
-""" % (
-                message,
-                text,
-            )
-
-            ctx.set_source_rgb(0.0, 0.0, 0.0)
-            playout.set_font_description(self.labelFont)
-            playout.set_width(textWidth * 1024)
-            #playout.set_height(textHeight)
-
-            #print markup1
-            playout.set_markup(markup1)
-            ctx.move_to(10, 10)
-            ctx.show_layout(playout)
-
+        spacer5 = gtk.VBox()
+        spacer5.set_size_request(5, 5)
+        vbox2.pack_start(spacer5, False, False, 0)
 
 
 ########################################################################
