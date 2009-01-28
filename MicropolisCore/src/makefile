@@ -72,7 +72,7 @@ PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
 all: build_tileEngine build_cellEngine build_micropolisEngine
 
 clean:
-	rm -rf *~ *.suo *.ncb build html
+	rm -rf *~ *.suo *.ncb *.pyc *.pyo build html
 	cd TileEngine ; make clean
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean

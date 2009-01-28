@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Graph View
+# Micropolis Gauge View
 # Don Hopkins
 
 
@@ -107,6 +107,8 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
             self,
             interests=('demand', 'date', 'funds',),
             **args)
+
+        self.zoomable = False
 
         self.set_size_request(self.viewWidth, self.viewHeight)
 

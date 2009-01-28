@@ -170,7 +170,8 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def __init__(
         self,
         engine=None,
-        interests=('city', 'editor'),
+        interests=('city'),
+        sprite=micropolisengine.SPRITE_NOTUSED,
         **args):
 
         args['tileCount'] = micropolisengine.TILE_COUNT
@@ -182,6 +183,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
         tiledrawingarea.TileDrawingArea.__init__(self, **args)
 
+        self.sprite = sprite
         engine.expressInterest(
             self,
             interests)
@@ -225,6 +227,13 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def getCell(self, col, row):
 
         return self.engine.getTile(col, row)
+
+
+    def beforeDraw(
+        self):
+
+        engine = self.engine
+        self.blinkFlag = (engine.tickCount() % 60) < 30
 
 
     def drawOverlays(
@@ -394,6 +403,7 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
     def __init__(
         self,
         follow=None,
+        centerOnTileHandler=None,
         **args):
 
         args['keyable'] = False
@@ -407,6 +417,7 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
         MicropolisDrawingArea.__init__(self, **args)
 
         self.follow = follow
+        self.centerOnTileHandler = centerOnTileHandler
 
 
     def handleMousePoint(
@@ -421,8 +432,10 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
         widget,
         event):
 
-        # TODO: Pan main editor view to the center of this view.
-        pass
+        centerOnTileHandler = self.centerOnTileHandler
+        if centerOnTileHandler:
+            centerX, centerY = self.getCenterTile()
+            centerOnTileHandler(centerX, centerY)
 
 
     def handleMouseDrag(
@@ -446,6 +459,24 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
         event):
 
         pass
+
+
+    def beforeDraw(
+        self):
+
+        MicropolisDrawingArea.beforeDraw(self)
+
+        engine = self.engine
+        self.blinkFlag = (engine.tickCount() % 60) < 30
+
+        sprite = self.sprite
+        if sprite != micropolisengine.SPRITE_NOTUSED:
+            s = engine.getSprite(sprite)
+            if s:
+                fudge = 8
+                x = ((s.x + s.xHot + fudge) / 16.0)
+                y = ((s.y + s.yHot + fudge) / 16.0)
+                self.centerOnTile(x, y)
 
 
 ########################################################################
@@ -475,13 +506,6 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         self.panningStartCursorY = 0
         self.panningStartPanX = 0
         self.panningStartPanY = 0
-
-
-    def prepareToRenderTiles(
-        self,
-        ctx):
-
-        self.blinkFlag = (self.engine.tickCount() % 60) < 30
 
 
     def drawOverlays(self, ctx):

@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Graph View
+# Micropolis Demand Gauge
 # Don Hopkins
 
 
@@ -91,6 +91,8 @@ class MicropolisDemandGauge(micropolisview.MicropolisView):
             self,
             interests=('demand',),
             **args)
+
+        self.zoomable = False
 
 
     def update(

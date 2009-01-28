@@ -91,8 +91,6 @@ import micropolismodel
 import micropolisutils
 import micropolispiemenus
 import micropolisdrawingarea
-import micropolisgraphview
-import micropolisevaluationview
 import micropolisstatusview
 
 
@@ -105,11 +103,6 @@ class MicropolisPanedWindow(gtk.Window):
     def __init__(
         self,
         engine=None,
-        tileViewClass=micropolisdrawingarea.EditableMicropolisDrawingArea,
-        miniTileViewClass=micropolisdrawingarea.MiniMicropolisDrawingArea,
-        evaluationViewClass=micropolisevaluationview.MicropolisEvaluationView,
-        graphViewClass=micropolisgraphview.MicropolisGraphView,
-        statusViewClass=micropolisstatusview.MicropolisStatusView,
         **args):
       
         gtk.Window.__init__(self, **args)
@@ -118,116 +111,50 @@ class MicropolisPanedWindow(gtk.Window):
         self.connect('realize', self.handleRealize)
         self.connect('size-allocate', self.handleResize)
 
-        self.set_title("OLPC Micropolis for Python/Cairo/Pango, by Don Hopkins")
+        self.set_title("Open Source Micropolis on Python / GTK / Cairo / Pango")
 
         self.firstResize = True
 
         self.engine = engine
 
-        # Frames
-
-        self.frameCenter = gtk.Frame()
-        self.frameCenter.set_shadow_type(gtk.SHADOW_IN)
-
-        self.frameTop = gtk.Frame()
-        self.frameTop.set_shadow_type(gtk.SHADOW_IN)
-
-        self.frameBottom = gtk.Frame()
-        self.frameBottom.set_shadow_type(gtk.SHADOW_IN)
-
-        self.frameLeft = gtk.Frame()
-        self.frameLeft.set_shadow_type(gtk.SHADOW_IN)
-
-        self.frameRight = gtk.Frame()
-        self.frameRight.set_shadow_type(gtk.SHADOW_IN)
-
         # Panes
 
         self.vpaned1 = gtk.VPaned()
-        self.vpaned2 = gtk.VPaned()
         self.hpaned1 = gtk.HPaned()
-        self.hpaned2 = gtk.HPaned()
 
         # Put the top level pane in this window.
 
         self.add(
             self.vpaned1)
 
-        # Nest the vertical and horizontal panes into a tree.
+        # Views
 
-        self.vpaned1.pack2(
-            self.vpaned2,
+        self.tileView1 = \
+            micropolisdrawingarea.EditableMicropolisDrawingArea(
+                engine=self.engine)
+        engine.addView(self.tileView1)
+
+        self.statusView = \
+            micropolisstatusview.MicropolisStatusView(
+                engine=engine,
+                centerOnTileHandler=self.centerOnTileHandler)
+
+        # Pack the views into the panes.
+
+        self.vpaned1.pack1(
+            self.statusView,
             resize=False,
             shrink=False)
 
-        self.vpaned2.pack1(
+        self.vpaned1.pack2(
             self.hpaned1,
             resize=False,
             shrink=False)
 
         self.hpaned1.pack2(
-            self.hpaned2,
+            self.tileView1,
             resize=False,
             shrink=False)
-
-        # Populate the leaves of the tree with the view and control panels.
-
-        self.hpaned2.pack1(
-            self.frameCenter,
-            resize=False,
-            shrink=False)
-
-        self.vpaned1.pack1(
-            self.frameTop,
-            resize=False,
-            shrink=False)
-
-        self.vpaned2.pack2(
-            self.frameBottom,
-            resize=False,
-            shrink=False)
-
-        self.hpaned1.pack1(
-            self.frameLeft,
-            resize=False,
-            shrink=False)
-
-        self.hpaned2.pack2(
-            self.frameRight,
-            resize=False,
-            shrink=False)
-
-        # Views
-
-        self.tileView1 = \
-            tileViewClass(
-                engine=self.engine)
-        engine.addView(self.tileView1)
-
-        self.tileView2 = \
-            miniTileViewClass(
-                engine=self.engine)
-        engine.addView(self.tileView2)
-
-        self.evaluationView = \
-            evaluationViewClass(
-                engine=engine)
-        engine.addEvaluation(self.evaluationView)
-
-        self.graphView = \
-            graphViewClass(
-                engine=engine)
-        engine.addGraph(self.graphView)
-
-        self.statusView = \
-            statusViewClass(
-                engine=engine)
-
-        self.frameCenter.add(self.tileView1)
-        self.frameTop.add(self.statusView)
-        self.frameBottom.add(self.graphView)
-        self.frameLeft.add(self.evaluationView)
-        self.frameRight.add(self.tileView2)
 
         # Load a city file.
         cityFileName = 'cities/haight.cty'
@@ -246,6 +173,19 @@ class MicropolisPanedWindow(gtk.Window):
         self.resize(800, 600)
 
 
+    def centerOnTileHandler(
+        self,
+        tileX,
+        tileY):
+
+        #print "CENTERONTILEHANDLER", self, tileX, tileY
+
+        self.tileView1.setScale(1.0)
+        self.tileView1.centerOnTile(
+            tileX,
+            tileY)
+
+
     def resizeEdges(
         self):
 
@@ -258,22 +198,16 @@ class MicropolisPanedWindow(gtk.Window):
         extra = 4
         padding = 14
 
-        leftEdge = 150
-        rightEdge = 120
-        topEdge = 100
-        bottomEdge = 0
+        leftEdge = 120
+        topEdge = 120
+
 
         self.hpaned1.set_position(leftEdge + extra)
-        self.hpaned2.set_position(winWidth - (extra + leftEdge + padding + rightEdge))
-
         self.vpaned1.set_position(topEdge + extra)
-        self.vpaned2.set_position(winHeight - (extra + topEdge + padding + bottomEdge))
 
         self.tileView1.panTo(-200, -200)
         self.tileView1.setScale(1.0)
 
-        self.tileView2.panTo(0, 0)
-        self.tileView2.setScale(0.0625)
 
 
     def handleRealize(

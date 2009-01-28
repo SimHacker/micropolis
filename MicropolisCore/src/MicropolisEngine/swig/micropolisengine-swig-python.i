@@ -86,6 +86,8 @@ void *getPythonCallbackData(PyObject *data);
 
 
 #include "micropolis.h"
+#include "generate.h"
+#include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////

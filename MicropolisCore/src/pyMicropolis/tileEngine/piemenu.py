@@ -695,7 +695,7 @@ class PieMenu(gtk.Window):
         self.connect("show", self.handle_show)
 
         d.connect("expose_event", self.handle_expose)
-        d.connect("size_allocate", self.size_allocate)
+        d.connect("size_allocate", self.handle_size_allocate)
         d.connect("motion_notify_event", self.handle_motion_notify_event)
         d.connect("button_press_event", self.handle_button_press_event)
         d.connect("button_release_event", self.handle_button_release_event)

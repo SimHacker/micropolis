@@ -1601,20 +1601,9 @@ public:
     Quad fireValue;
 
     /**
-     * Flag set when drawCurrPercents called.
-     *
-     * Causes reallyDrawCurrPercents to be called when updateBudgetWindow called.
-     * @todo Clean this up.
+     * Flag set when budget window needs to be updated.
      */
-    int mustDrawCurrPercents;
-
-    /**
-     * Flag set when drawBudgetWindow called.
-     *
-     * Causes reallyDrawBudgetWindow to be called when updateBudgetWindow called.
-     * @todo Clean this up.
-     */
-    int mustDrawBudgetWindow;
+    int mustDrawBudget;
 
 
     void initFundingLevel();
@@ -1625,36 +1614,11 @@ public:
 
     void doBudgetNow(bool fromMenu);
 
-    void drawBudgetWindow();
-
-    void reallyDrawBudgetWindow();
-
-    void drawCurrPercents();
-
-    void reallyDrawCurrPercents();
-
-    void updateBudgetWindow();
-
     void updateBudget();
 
     void showBudgetWindowAndStartWaiting();
 
     void setCityTax(short tax);
-
-    void setBudget(
-        char *flowStr,
-        char *previousStr,
-        char *currentStr,
-        char *collectedStr,
-        short tax);
-
-    void setBudgetValues(
-        char *roadGot,
-        char *roadWant,
-        char *policeGot,
-        char *policeWant,
-        char *fireGot,
-        char *fireWant);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1700,13 +1664,13 @@ public:
 
     void makeFlood();
 
+    void setFire();
+
   private:
 
     void doDisasters();
 
     void scenarioDisaster();
-
-    void setFire();
 
     bool vulnerable(int tem);
 

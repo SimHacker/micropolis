@@ -1,4 +1,4 @@
-# micropolisnoticeview.py
+# micropolishistorypanel.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Notice View
+# Micropolis Status View
 # Don Hopkins
 
 
@@ -73,136 +73,33 @@ import gtk
 import cairo
 import pango
 import micropolisengine
-import micropolisview
+import micropolishistoryview
 
 
 ########################################################################
-# MicropolisNoticeView
+# MicropolisHistoryPanel
 
 
-class MicropolisNoticeView(micropolisview.MicropolisView):
+class MicropolisHistoryPanel(gtk.Frame):
 
 
     def __init__(
         self,
-        setCityViewVisible=None,
+        engine=None,
         **args):
 
-        micropolisview.MicropolisView.__init__(
+        gtk.Frame.__init__(
             self,
-            aspect='notice',
-            interests=('city', 'notice', 'message',),
             **args)
 
-        self.zoomable = False
-        self.setCityViewVisible = setCityViewVisible
-        self.messageNumber = 0
-        self.message = ''
-        self.messageX = -1
-        self.messageY = -1
-        self.description = ''
-        self.showPicture = False
-        self.important = False
-        self.sprite = micropolisengine.SPRITE_NOTUSED
+        self.engine = engine
 
+        # Views
 
-    def update(
-        self,
-        name,
-        *args):
-
-        if name == 'message':
-            self.updateMessage(*args)
-
-
-    def updateMessage(
-        self,
-        messageNumber,
-        messageX,
-        messageY,
-        showPicture,
-        important):
-
-        engine = self.engine
-        notices = engine.notices
-
-        notice = notices.get(messageNumber, None)
-        if not notice:
-            return
-
-        sprite = notice.get('sprite', micropolisengine.SPRITE_NOTUSED)
-
-        self.messageNumber = messageNumber
-        self.message = notice['title']
-        self.messageX = messageX
-        self.messageY = messageY
-        self.description = notice['description']
-        self.showPicture = showPicture
-        self.important = important
-        self.sprite = sprite
-
-        setCityViewVisible = self.setCityViewVisible
-        if setCityViewVisible:
-            setCityViewVisible(showPicture, messageX, messageY, sprite)
-
-        self.queue_draw()
-
-
-    def drawContent(
-        self,
-        ctx,
-        playout):
-
-        #print "==== MicropolisNoticeView DRAWCONTENT", self
-
-        engine = self.engine
-
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
-        ctx.save()
-
-        ctx.set_source_rgb(1.0, 1.0, 1.0)
-        ctx.rectangle(0, 0, winWidth, winHeight)
-        ctx.fill()
-
-        gap = 10
-        textX = gap
-        textY = gap
-        textWidth = winWidth - (2 * gap)
-        textHeight = winHeight - (2 * gap)
-
-        if (textWidth > 0) and (textHeight > 0):
-
-            messageNumber = self.messageNumber
-            if messageNumber:
-                message = engine.messages[messageNumber]
-            else:
-                message = ""
-
-            text = self.description
-
-            markup1 = """<span>
-<b>%s</b>
- 
-%s
-</span>
-""" % (
-                message,
-                text,
-            )
-
-            ctx.set_source_rgb(0.0, 0.0, 0.0)
-            playout.set_font_description(self.labelFont)
-            playout.set_width(textWidth * 1024)
-            #playout.set_height(textHeight)
-
-            #print markup1
-            playout.set_markup(markup1)
-            ctx.move_to(10, 10)
-            ctx.show_layout(playout)
-
+        historyView = micropolishistoryview.MicropolisHistoryView(
+            engine=engine)
+        self.historyView = historyView
+        self.add(historyView)
 
 
 ########################################################################
