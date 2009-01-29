@@ -21,7 +21,7 @@ def run():
     setTile = engine.setTile
 
     if True:
-        for i in range(0, 5):
+        for i in range(0, 20):
             engine.addRobot(
                 micropolisrobot.MicropolisRobot_PacMan(
                     x=(8 * 16) + 3 + (16 * 2 * i),
