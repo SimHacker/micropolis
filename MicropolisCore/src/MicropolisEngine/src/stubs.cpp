@@ -307,13 +307,13 @@ int Micropolis::getTile(int x, int y)
  * @param tile the tile value to set.
  * @note Off-map positions are ignored.
  */
-void Micropolis::setTile(int x, int y, short tile)
+void Micropolis::setTile(int x, int y, int tile)
 {
     if (!testBounds(x, y)) {
         return;
     }
 
-    map[x][y] = tile;
+    map[x][y] = (unsigned short)tile;
 }
 
 

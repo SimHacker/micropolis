@@ -8,6 +8,8 @@
 import pyMicropolis.simEngine
 from pyMicropolis.simEngine import micropolisengine, micropolismodel, micropoliswindow, micropolisrobot
 import gtk
+import random
+import math
 
 
 def run():
@@ -19,12 +21,20 @@ def run():
     setTile = engine.setTile
 
     if True:
-        pacman = micropolisrobot.MicropolisRobot_PacMan(
-            x=(16 * 8) + 8,
-            y=(16 * 7) + 8,
-            speed=1)
-        print "PACMAN", pacman
-        engine.addRobot(pacman)
+        for i in range(0, 5):
+            engine.addRobot(
+                micropolisrobot.MicropolisRobot_PacMan(
+                    x=(8 * 16) + 3 + (16 * 2 * i),
+                    y=(7 * 16) + 3,
+                    direction=0))
+
+    if False:
+        for i in range(0, 20):
+            engine.addRobot(
+                micropolisrobot.MicropolisRobot_PacMan(
+                    x=random.randint(0, (micropolisengine.WORLD_W * 16) - 1),
+                    y=random.randint(0, (micropolisengine.WORLD_H * 16) - 1),
+                    direction = random.randint(0, 3) * math.pi / 2))
 
     if False:
         for y in range(0, micropolisengine.WORLD_H):
