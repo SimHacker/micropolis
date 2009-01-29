@@ -2763,7 +2763,7 @@ public:
 
     int getTile(int x, int y);
 
-    void setTile(int x, int y, short tile);
+    void setTile(int x, int y, int tile);
 
     void *getMapBuffer();
 
