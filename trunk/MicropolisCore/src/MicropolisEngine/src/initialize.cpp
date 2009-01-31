@@ -102,10 +102,10 @@ void Micropolis::initWillStuff()
         for (y = 0; y < WORLD_H_2; y++) {
             populationDensityMap[x][y] = 0;
             trafficDensityMap[x][y] = 0;
-            pollutionMap[x][y] = 0;
         }
     }
 
+    pollutionMap.clear();
     landValueMap.clear();
     crimeMap.clear();
     terrainDensityMap.clear();

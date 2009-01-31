@@ -220,23 +220,27 @@ void Micropolis::makeHospital()
     }
 }
 
-
+/**
+ * Compute land value at (#curMapX, #curMapY), taking pollution into account.
+ * @return Indication of land-value adjusted for pollution
+ *         (\c 0 => low value, \c 3 => high value)
+ */
 short Micropolis::getLandPollutionValue()
 {
-    register short LVal;
+    short landVal;
 
-    LVal = landValueMap.worldGet(curMapX, curMapY);
-    LVal -= pollutionMap[curMapX >>1][curMapY >>1];
+    landVal =  landValueMap.worldGet(curMapX, curMapY);
+    landVal -= pollutionMap.worldGet(curMapX, curMapY);
 
-    if (LVal < 30) {
+    if (landVal < 30) {
         return 0;
     }
 
-    if (LVal < 80) {
+    if (landVal < 80) {
         return 1;
     }
 
-    if (LVal < 150) {
+    if (landVal < 150) {
         return 2;
     }
 
@@ -483,7 +487,7 @@ void Micropolis::doResIn(int pop, int value)
 {
     short z;
 
-    z = pollutionMap[curMapX >>1][curMapY >>1];
+    z = pollutionMap.worldGet(curMapX, curMapY);
 
     if (z > 128) {
         return;
@@ -594,17 +598,13 @@ short Micropolis::evalRes(int traf)
         return -3000;
     }
 
-    value = landValueMap.worldGet(curMapX, curMapY);
-    value -= pollutionMap[curMapX >>1][curMapY >>1];
+    value =  landValueMap.worldGet(curMapX, curMapY);
+    value -= pollutionMap.worldGet(curMapX, curMapY);
 
     if (value < 0) {
         value = 0;          /* Cap at 0 */
     } else {
-        value = value <<5;
-    }
-
-    if (value > 6000) {
-        value = 6000;       /* Cap at 6000 */
+        value = min(value * 32, 6000); /* Cap at 6000 */
     }
 
     value = value - 3000;

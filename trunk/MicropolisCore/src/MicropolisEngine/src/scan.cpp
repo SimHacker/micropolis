@@ -239,7 +239,7 @@ void Micropolis::pollutionTerrainLandValueScan()
                 dis = 34 - getCityCenterDistance(x, y);
                 dis = dis <<2;
                 dis += terrainDensityMap.get(x >>1, y >>1);
-                dis -= (pollutionMap[x][y]);
+                dis -= pollutionMap.get(x, y);
                 if (crimeMap.get(x, y) > 190) {
                     dis -= 20;
                 }
@@ -274,7 +274,7 @@ void Micropolis::pollutionTerrainLandValueScan()
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++)  {
             z = tempMap1[x][y];
-            pollutionMap[x][y] = z;
+            pollutionMap.set(x, y, z);
 
             if (z) { /*  get pollute average  */
                 pnum++;
