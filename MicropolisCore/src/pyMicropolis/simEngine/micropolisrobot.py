@@ -134,6 +134,22 @@ class MicropolisRobot:
 class MicropolisRobot_PacMan(MicropolisRobot):
 
     
+    directionDeltas = {
+        'north': (0, -1,),
+        'south': (0, 1,),
+        'west': (-1, 0,),
+        'east': (1, 0,),
+        'stop': (0, 0,),
+    }
+
+    oppositeDirections = {
+        'north': 'south',
+        'south': 'north',
+        'east': 'west',
+        'west': 'east',
+        'stop': None,
+    }
+
     def __init__(
         self,
         speed=4,
@@ -159,6 +175,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
         self.defaultSpeed = defaultSpeed
         self.hilite = 0
         self.score = 0
+        self.roadMap = {}
 
 
     def simulate(self):
@@ -166,13 +183,18 @@ class MicropolisRobot_PacMan(MicropolisRobot):
         engine = self.engine
         getTile = engine.getTile
 
+        def isRoad(tx, ty):
+            tile = getTile(tx, ty)
+            tile = tile & micropolisengine.LOMASK
+            isRoadTile = ((tile >= micropolisengine.ROADBASE) and
+                          (tile < micropolisengine.POWERBASE))
+            if isRoadTile:
+                self.roadMap[(tx, ty)] = True
+            return isRoadTile
+
+
         def getAny(a):
             return a[random.randint(0, len(a) - 1)]
-
-        def isRoad(tile):
-            tile = tile & micropolisengine.LOMASK
-            return ((tile >= micropolisengine.ROADBASE) and
-                    (tile < micropolisengine.POWERBASE))
 
         self.mouthOpen = (
             ((engine.tickCount() + self.mouthPhase) % self.mouthOpenCycle) <
@@ -184,16 +206,8 @@ class MicropolisRobot_PacMan(MicropolisRobot):
         direction = self.direction
         defaultSpeed = self.defaultSpeed
 
-        maxX = int((micropolisengine.WORLD_W * 16) / defaultSpeed) * defaultSpeed
-        maxY = int((micropolisengine.WORLD_H * 16) / defaultSpeed) * defaultSpeed
-
-        eastDir = 0 * math.pi / 2.0
-        northDir = 1 * math.pi / 2.0
-        westDir = 2 * math.pi / 2.0
-        southDir = 3 * math.pi / 2.0
-        allDirs = [eastDir, northDir, westDir, southDir]
-
         frustrated = False
+        self.hilite = 0
 
         # Snap into grid lanes.
 
@@ -202,27 +216,14 @@ class MicropolisRobot_PacMan(MicropolisRobot):
 
         inLaneVertical = (x % 16) == 8
         inLaneHorizontal = (y % 16) == 8
-        inIntersection = inLaneVertical and inLaneHorizontal
+        inCenter = inLaneVertical and inLaneHorizontal
 
         if (not inLaneVertical) and (not inLaneHorizontal):
             x = (int(x / 16) * 16) + 8
             y = (int(y / 16) * 16) + 8
             inLaneVertical = True
             inLaneHorizontal = True
-            inIntersection = True
-
-        if inIntersection:
-            self.hilite = 1
-            #print "inIntersection"
-        elif inLaneVertical:
-            self.hilite = 2
-            #print "inLaneVertical"
-        elif inLaneHorizontal:
-            self.hilite = 3
-            #print "inLaneHorizontal"
-        else:
-            #print "BAD PACMAN: not in lane or intersection!!!"
-            pass
+            inCenter = True
 
         dx = math.cos(direction) * speed
         dy = -math.sin(direction) * speed
@@ -238,7 +239,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                 dx = 0
                 #print "frustrated horizontal"
                 frustrated = True
-                self.hilite = 5
+                self.hilite = 1
             else:
                 if dx < 0:
                     dx = -defaultSpeed
@@ -253,7 +254,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                 dy = 0
                 #print "frustrated vertical"
                 frustrated = True
-                self.hilite = 5
+                self.hilite = 2
             else:
                 if dy < 0:
                     dy = -defaultSpeed
@@ -263,30 +264,47 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                     #print "force south"
 
         if (dx == 0) and (dy == 0):
-            #print "STOPPED direction", direction
-            pass
-        else:
-            direction = math.atan2(-dy, dx)
-            #print "direction", direction
+            curDir = 'stop'
+        elif (dx != 0) and (dy != 0):
+            print "INVALID DIRECTION!", dx, dy
+            dx = 0
+            dy = 0
+            curDir = 'stop'
+        if dx < 0:
+            curDir = 'west'
+        elif dx > 0:
+            curDir = 'east'
+        elif dy < 0:
+            curDir = 'north'
+        elif dy > 0:
+            curDir = 'south'
 
         # Calculate tile coordinates.
 
         tileX = int(x / 16)
         tileY = int(y / 16)
 
-        tile = getTile(tileX, tileY)
-        onRoad = isRoad(tile)
-        #print "onRoad", onRoad, "x", tileX, "y", tileY, "tile", tile
+        onRoad = isRoad(tileX, tileY)
 
         if not onRoad:
 
+            # Stuck off road.
+
             dx = 0
             dy = 0
+            curDir = 'stop'
+
+            print "frustrated off road"
+            frustrated = True
+            self.hilite = 3
 
         else:
 
+            # On a road.
+
             # Eat traffic.
 
+            # Zero out traffic density.
             trafficX = int(tileX / 2)
             trafficY = int(tileY / 2)
             trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
@@ -295,64 +313,39 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                 self.score += trafficDensity
                 #print "ATE TRAFFIC", trafficDensity, "SCORE", self.score
 
+            # Neutralize traffic tiles.
+            tile = getTile(tileX, tileY)
             tileBits = tile & ~micropolisengine.LOMASK
             tileNumber = tile & micropolisengine.LOMASK
-            if (tileNumber >= 64) and (tileNumber <= 207):
+            if ((tileNumber >= micropolisengine.HBRIDGE) and
+                (tileNumber <= micropolisengine.BRWXXX7)):
                 #print "neutralizing tile", tile
                 tileNumber = (tileNumber & 0x000F) + 64
                 #print "Setting tile", tileX, tileY, tileNumber
                 tile = tileNumber | tileBits
                 engine.setTile(tileX, tileY, tile)
 
-            # Look for adjacent roads.
+            if inCenter:
 
-            roadNorth = isRoad(getTile(tileX, tileY - 1))
-            roadSouth = isRoad(getTile(tileX, tileY + 1))
-            roadEast = isRoad(getTile(tileX + 1, tileY))
-            roadWest = isRoad(getTile(tileX - 1, tileY))
-            #print "e", roadEast, "n", roadNorth, "w", roadWest, "s", roadSouth
+                #print "CENTER"
 
-            if inIntersection:
+                # Look for adjacent roads.
 
-                #print "INTERSECTION"
+                roads = {
+                    'north': isRoad(tileX, tileY - 1),
+                    'south': isRoad(tileX, tileY + 1),
+                    'east': isRoad(tileX + 1, tileY),
+                    'west': isRoad(tileX - 1, tileY),
+                }
+                #print roads
 
-                if inLaneHorizontal:
-                    if dx < 0:
-                        if not roadWest:
-                            #print "blocked to west so no dx", dx
-                            dx = 0
-                    elif dx > 0:
-                        if not roadEast:
-                            #print "blocked to east so no dx", dx
-                            dx = 0
-                else:
-                    #print "not in horizontal lane, so no dx", dx
-                    dx = 0
+                # Make a list of avaliable directions.
 
-                if inLaneVertical:
-                    if dy < 0:
-                        if not roadNorth:
-                            #print "blocked to north so no dy", dy
-                            dy = 0
-                    elif dy > 0:
-                        if not roadSouth:
-                            #print "blocked to south so no dy", dy
-                            dy = 0
-                else:
-                    #print "not in vertical lane, so no dy", dy
-                    dy = 0
-
-                dirs = []
-                if roadEast:
-                    dirs.append((defaultSpeed, 0))
-                if roadWest:
-                    dirs.append((-defaultSpeed, 0))
-                if roadSouth:
-                    dirs.append((0, defaultSpeed))
-                if roadNorth:
-                    dirs.append((0, -defaultSpeed))
-
-                #print "DIRS", len(dirs), dirs
+                dirs = [
+                    d
+                    for d, r in roads.items()
+                    if r
+                ]
 
                 if len(dirs) == 0:
 
@@ -361,24 +354,78 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                     dy = 0
                     #print "frustrated island"
                     frustrated = True
-                    self.hilite = 5
+                    self.hilite = 4
 
                 else:
 
-                    keepGoingProb = 0.95
+                    randomTurnProb = 0.1
 
-                    if ((len(dirs) == 1) or # Dead end? 
-                        (len(dirs) > 2) or # intersection?
-                        ((dx > 0) and (not roadEast)) or # End of east road?
-                        ((dx < 0) and (not roadWest)) or # End if west road?
-                        ((dy > 0) and (not roadSouth)) or # End of south road?
-                        ((dy < 0) and (not roadNorth)) or # End of north road?
-                        (random.random() > keepGoingProb)): # Why the fuck not?
-                        # Choose a random direction to go.
-                        dx, dy = getAny(dirs)
-                        #print "RANDOM DIRECTION", dx, dy
+                    if len(dirs) == 1:
 
-        #print "DX", dx, "DY", dy
+                        # Dead end! Only one way to go.
+                        curDir = dirs[0]
+
+                    else:
+
+                        if random.random() < randomTurnProb:
+
+                            # Choose a direction randomly.
+                            curDir = getAny(dirs)
+                            #print "RANDOM TURN", curDir, "============="
+
+                        else:
+
+                            if False:
+                                # Don't go back the direction we came from.
+                                otherDir = self.oppositeDirections[curDir]
+                                if otherDir and (otherDir in dirs):
+                                    dirs.remove(otherDir)
+
+                            # Choose between the remaining directions.
+                            # Select the directoin with the highest score.
+
+                            oppositeDir = self.oppositeDirections[curDir]
+                            bestDir = None
+                            bestScore = -1
+                            for dir in dirs:
+                                # Base score is random to keep things interesting.
+                                score = random.random() * 50
+
+                                # Extra score for current direction.
+                                if dir == curDir:
+                                    score += random.random() * 100
+
+                                # Less score for current direction.
+                                if dir == oppositeDir:
+                                    score -= random.random() * 100
+
+                                # Scan ahead on each direction, looking for traffic.
+                                tx = tileX
+                                ty = tileY
+                                nextTileX, nextTileY = self.directionDeltas[dir]
+                                dist = 10
+                                for step in range(0, dist):
+                                    tx += nextTileX
+                                    ty += nextTileY
+                                    if isRoad(tx, ty):
+                                        trafficX = int(tx / 2)
+                                        trafficY = int(ty / 2)
+                                        trafficDensity = engine.getTrafficDensity(trafficX, trafficY) 
+                                        attenuation = float(step + 1) / float(dist)
+                                        score += trafficDensity * attenuation
+                                    else:
+                                        break
+                                #print dir, score, 
+                                if score > bestScore:
+                                    bestScore = score
+                                    bestDir = dir
+
+                            #print "BEST", bestDir, "========"
+                            curDir = bestDir or getAny(dirs)
+
+        dx, dy = self.directionDeltas[curDir]
+        dx *= defaultSpeed
+        dy *= defaultSpeed
 
         if (dx == 0) and (dy == 0):
             #print "stopped"
@@ -397,7 +444,6 @@ class MicropolisRobot_PacMan(MicropolisRobot):
         self.y = y
         self.direction = direction
         self.speed = speed
-        self.hilite = 0 # disable hilite
 
         #print "NOW", "x", x, "y", y, "direction", direction, "speed", speed
 

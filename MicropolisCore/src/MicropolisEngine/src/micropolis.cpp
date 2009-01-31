@@ -101,7 +101,8 @@ Micropolis::Micropolis() :
 	tempMap1(0),
 	tempMap2(0),
 	tempMap3(0),
-	tempMap4(0)
+	tempMap4(0),
+	powerMap(0)
 {
     init();
 }
@@ -284,7 +285,7 @@ void Micropolis::init()
     pollutionMap.clear();
     landValueMap.clear();
     crimeMap.clear();
-
+    powerMap.clear();
     terrainDensityMap.clear();
 
     // short rateOfGrowthMap[WORLD_W_8][WORLD_H_8];
@@ -328,9 +329,6 @@ void Micropolis::init()
 
     // short *miscHist;
     miscHist = NULL;
-
-    // char *powerMap;
-    powerMap = NULL;
 
 
     ////////////////////////////////////////////////////////////////////////
