@@ -86,17 +86,6 @@ void Micropolis::initMapArrays()
         map[i] = (unsigned short *)(mapBase + (i * WORLD_H));
     }
 
-    tempMap2Base = newPtr(WORLD_W_2 * WORLD_H_2);
-    tempMap3Base = newPtr(WORLD_W_4 * WORLD_H_4);
-
-    for (i = 0; i < WORLD_W_2; i++) {
-        tempMap2[i] = (Byte *)tempMap2Base + (i * WORLD_H_2);
-    }
-
-    for (i = 0; i < WORLD_W_4; i++) {
-        tempMap3[i] = (Byte *)tempMap3Base + (i * WORLD_H_4);
-    }
-
     resHist = (short *)newPtr(HISTORY_LENGTH);
     comHist = (short *)newPtr(HISTORY_LENGTH);
     indHist = (short *)newPtr(HISTORY_LENGTH);
@@ -126,24 +115,11 @@ void Micropolis::destroyMapArrays()
     crimeMap.clear();
 
     tempMap1.clear();
-    memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
+    tempMap2.clear();
+    tempMap3.clear();
+    tempMap4.clear();
 
     terrainDensityMap.clear();
-
-
-
-    if (tempMap2Base != NULL) {
-        freePtr(tempMap2Base);
-        tempMap2Base = NULL;
-    }
-
-    if (tempMap3Base != NULL) {
-        freePtr(tempMap3Base);
-        tempMap3Base = NULL;
-    }
-
-
 
     if (resHist != NULL) {
         freePtr(resHist);
