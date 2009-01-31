@@ -87,7 +87,6 @@ void Micropolis::initMapArrays()
     }
 
     populationDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
-    trafficDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
 
     tempMap1Base = newPtr(WORLD_W_2 * WORLD_H_2);
     tempMap2Base = newPtr(WORLD_W_2 * WORLD_H_2);
@@ -95,7 +94,6 @@ void Micropolis::initMapArrays()
 
     for (i = 0; i < WORLD_W_2; i++) {
         populationDensityMap[i] = (Byte *)populationDensityMapBase + (i * WORLD_H_2);
-        trafficDensityMap[i] = (Byte *)trafficDensityMapBase + (i * WORLD_H_2);
 
         tempMap1[i] = (Byte *)tempMap1Base + (i * WORLD_H_2);
         tempMap2[i] = (Byte *)tempMap2Base + (i * WORLD_H_2);
@@ -128,7 +126,7 @@ void Micropolis::destroyMapArrays()
     memset(map, 0, sizeof(short *) * WORLD_W);
 
     memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(trafficDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
+    trafficDensityMap.clear();
     pollutionMap.clear();
     landValueMap.clear();
     crimeMap.clear();
@@ -143,11 +141,6 @@ void Micropolis::destroyMapArrays()
     if (populationDensityMapBase != NULL) {
         freePtr(populationDensityMapBase);
         populationDensityMapBase = NULL;
-    }
-
-    if (trafficDensityMapBase != NULL) {
-        freePtr(trafficDensityMapBase);
-        trafficDensityMapBase = NULL;
     }
 
     if (tempMap1Base != NULL) {

@@ -290,10 +290,10 @@ short Micropolis::getTrafficAverage()
 
     trafficTotal = 0;
     count = 1;
-    for (x=0; x < WORLD_W_2; x++) {
-        for (y=0; y < WORLD_H_2; y++) {
-            if (landValueMap.get(x, y) > 0) {
-                trafficTotal += trafficDensityMap[x][y];
+    for (x=0; x < WORLD_W; x += landValueMap.MAP_BLOCKSIZE) {
+        for (y=0; y < WORLD_H; y += landValueMap.MAP_BLOCKSIZE) {
+            if (landValueMap.worldGet(x, y) > 0) {
+                trafficTotal += trafficDensityMap.worldGet(x, y);
                 count++;
             }
         }

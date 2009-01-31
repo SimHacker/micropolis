@@ -414,7 +414,7 @@ bool Micropolis::dynamicFilter(
     int r = row >>1;
     int populationDensity = populationDensityMap[c][r];
     int rateOfGrowth = rateOfGrowthMap[c>>2][r>>2];
-    int traffic = trafficDensityMap[c][r];
+    int traffic = trafficDensityMap.worldGet(col, row);
     int pollution = pollutionMap.worldGet(col, row);
     int crime = crimeMap.worldGet(col, row);
     int landValue = landValueMap.worldGet(col, row);
@@ -537,6 +537,7 @@ void Micropolis::drawRateOfGrowth()
 }
 
 
+/** Draw traffic density overlay at the small map */
 void Micropolis::drawTrafMap()
 {
     short x;
@@ -544,52 +545,54 @@ void Micropolis::drawTrafMap()
 
     drawLilTransMap();
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < WORLD_W; x += trafficDensityMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += trafficDensityMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
-                getCI(trafficDensityMap[x][y]),
-                x * 6,
-                y * 6,
-                6,
-                6);
+                getCI(trafficDensityMap.worldGet(x, y)),
+                x * 3,
+                y * 3,
+                3 * trafficDensityMap.MAP_BLOCKSIZE,
+                3 * trafficDensityMap.MAP_BLOCKSIZE);
         }
     }
 }
 
 
+/** Draw pollution overlay at the small map */
 void Micropolis::drawPollutionMap()
 {
     short x, y;
 
     drawAll(view);
 
-    for (x = 0; x < WORLD_W; x += pollutionMap.BLOCKSIZE) {
-        for (y = 0; y < WORLD_H; y += pollutionMap.BLOCKSIZE) {
+    for (x = 0; x < WORLD_W; x += pollutionMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += pollutionMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
                 getCI(10 + pollutionMap.worldGet(x, y)),
                 x * 3,
                 y * 3,
-                3 * pollutionMap.BLOCKSIZE,
-                3 * pollutionMap.BLOCKSIZE);
+                3 * pollutionMap.MAP_BLOCKSIZE,
+                3 * pollutionMap.MAP_BLOCKSIZE);
         }
     }
 }
 
 
+/** Draw crime overlay at the small map */
 void Micropolis::drawCrimeMap()
 {
     short x, y;
 
     drawAll();
 
-    for (x = 0; x < WORLD_W; x += crimeMap.BLOCKSIZE) {
-        for (y = 0; y < WORLD_H; y += crimeMap.BLOCKSIZE) {
+    for (x = 0; x < WORLD_W; x += crimeMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += crimeMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
                 getCI(crimeMap.worldGet(x, y)),
                 x * 3,
                 y * 3,
-                3 * crimeMap.BLOCKSIZE,
-                3 * crimeMap.BLOCKSIZE);
+                3 * crimeMap.MAP_BLOCKSIZE,
+                3 * crimeMap.MAP_BLOCKSIZE);
         }
     }
 }

@@ -1288,14 +1288,10 @@ public:
      */
     Byte *populationDensityMap[WORLD_W_2];
 
-    /**
-     * Traffic map.
-     */
-    Byte *trafficDensityMap[WORLD_W_2];
-
 #ifndef SWIG
 // SWIG does not support nested classes.
 
+    MapByte2 trafficDensityMap; // Traffic map.
     MapByte2 pollutionMap; ///< Pollution map.
     MapByte2 landValueMap; ///< Land value map.
     MapByte2 crimeMap; ///< Crime map.

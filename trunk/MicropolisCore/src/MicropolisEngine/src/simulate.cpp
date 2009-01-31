@@ -332,22 +332,22 @@ void Micropolis::decTrafficMap()
     /* tends to empty trafficDensityMap */
     short x, y, z;
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
-            z = trafficDensityMap[x][y];
+    for (x = 0; x < WORLD_W; x += trafficDensityMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += trafficDensityMap.MAP_BLOCKSIZE) {
+            z = trafficDensityMap.worldGet(x, y);
             if (z == 0) {
                 continue;
             }
 
             if (z <= 24) {
-                trafficDensityMap[x][y] = 0;
+                trafficDensityMap.worldSet(x, y, 0);
                 continue;
             }
 
             if (z > 200) {
-                trafficDensityMap[x][y] = z - 34;
+                trafficDensityMap.worldSet(x, y, z - 34);
             } else {
-                trafficDensityMap[x][y] = z - 24;
+                trafficDensityMap.worldSet(x, y, z - 24);
             }
         }
     }
@@ -1030,8 +1030,8 @@ void Micropolis::doRadTile()
 /** Handle road tile */
 void Micropolis::doRoad()
 {
-    short Density, tden, z;
-    static short DenTab[3] = { ROADBASE, LTRFBASE, HTRFBASE };
+    short tden, z;
+    static const short densityTable[3] = { ROADBASE, LTRFBASE, HTRFBASE };
 
     roadTotal++;
 
@@ -1070,17 +1070,17 @@ void Micropolis::doRoad()
         tden = 2;
     }
 
-    Density = (trafficDensityMap[curMapX >>1][curMapY >>1]) >>6;  /* Set Traf Density */
+    short trafficDensity = trafficDensityMap.worldGet(curMapX, curMapY) >>6;
 
-    if (Density > 1) {
-        Density--;
+    if (trafficDensity > 1) {
+        trafficDensity--;
     }
 
-    if (tden != Density) { /* tden 0..2   */
-        z = ((curTile - ROADBASE) & 15) + DenTab[Density];
+    if (tden != trafficDensity) { /* tden 0..2   */
+        z = ((curTile - ROADBASE) & 15) + densityTable[trafficDensity];
         z |= curNum & (ALLBITS - ANIMBIT);
 
-        if (Density > 0) {
+        if (trafficDensity > 0) {
             z |= ANIMBIT;
         }
 
