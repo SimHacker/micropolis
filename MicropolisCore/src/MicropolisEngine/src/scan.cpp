@@ -94,14 +94,16 @@ void Micropolis::fireAnalysis()
 }
 
 
-/* comefrom: simulate SpecialInit */
+/** @todo The tempMap1 has MAP_BLOCKSIZE > 1, so we may be able to optimize
+ *        the first x, y loop.
+ */
 void Micropolis::populationDensityScan()
 {
     /*  sets: populationDensityMap, , , comRateMap  */
     Quad Xtot, Ytot, Ztot;
-    register short x, y, z;
+    short x, y, z;
 
-    clearTempMap1();
+    tempMap1.clear();
     Xtot = 0;
     Ytot = 0;
     Ztot = 0;
@@ -116,7 +118,7 @@ void Micropolis::populationDensityScan()
                 if (z > 254) {
                     z = 254;
                 }
-                tempMap1[x >>1][y >>1] = (Byte)z;
+                tempMap1.set(x >>1, y >>1, (Byte)z);
                 Xtot += x;
                 Ytot += y;
                 Ztot++;
@@ -128,6 +130,7 @@ void Micropolis::populationDensityScan()
     doSmooth2(); // tempMap2 -> tempMap1
     doSmooth1(); // tempMap1 -> tempMap2
 
+    assert(populationDensityMap.MAP_BLOCKSIZE == 2);
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
             populationDensityMap.set(x, y, tempMap2[x][y] <<1);
@@ -233,7 +236,9 @@ void Micropolis::pollutionTerrainLandValueScan()
                 Plevel = 255;
             }
 
-            tempMap1[x][y] = Plevel;
+            tempMap1.set(x, y, Plevel);
+
+
 
             if (LVflag) {                     /* LandValue Equation */
                 dis = 34 - getCityCenterDistance(x, y);
@@ -271,10 +276,10 @@ void Micropolis::pollutionTerrainLandValueScan()
     pnum = 0;
     ptot = 0;
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++)  {
-            z = tempMap1[x][y];
-            pollutionMap.set(x, y, z);
+    for (x = 0; x < WORLD_W; x += pollutionMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += pollutionMap.MAP_BLOCKSIZE)  {
+            z = tempMap1.worldGet(x, y);
+            pollutionMap.worldSet(x, y, z);
 
             if (z) { /*  get pollute average  */
                 pnum++;
@@ -282,8 +287,8 @@ void Micropolis::pollutionTerrainLandValueScan()
                 /* find max pol for monster  */
                 if (z > pmax || (z == pmax && (getRandom16() & 3) == 0)) {
                     pmax = z;
-                    pollutionMaxX = x <<1;
-                    pollutionMaxY = y <<1;
+                    pollutionMaxX = x;
+                    pollutionMaxY = y;
                 }
             }
         }
@@ -497,11 +502,11 @@ void Micropolis::doSmooth1()
         for (x = 0; x < WORLD_W_2; x++) {
             for (; y != WORLD_H_2 && y != -1; y += dir) {
                 z +=
-                    tempMap1[(x == 0) ? x : (x - 1)][y] +
-                    tempMap1[(x == (WORLD_W_2 - 1)) ? x : (x + 1)][y] +
-                    tempMap1[x][(y == 0) ? (0) : (y - 1)] +
-                    tempMap1[x][(y == (WORLD_H_2 - 1)) ? y : (y + 1)] +
-                    tempMap1[x][y];
+                    tempMap1.get((x == 0) ? x : (x - 1), y) +
+                    tempMap1.get((x == (WORLD_W_2 - 1)) ? x : (x + 1), y) +
+                    tempMap1.get(x, (y == 0) ? (0) : (y - 1)) +
+                    tempMap1.get(x, (y == (WORLD_H_2 - 1)) ? y : (y + 1)) +
+                    tempMap1.get(x, y);
                 tempMap2[x][y] = (unsigned char)(((unsigned int)z) >>2);
                 z &= 3;
             }
@@ -515,18 +520,18 @@ void Micropolis::doSmooth1()
             for (y = 0; y < WORLD_H_2; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += tempMap1[x - 1][y];
+                    z += tempMap1.get(x - 1, y);
                 }
                 if (x < (WORLD_W_2 - 1)) {
-                    z += tempMap1[x + 1][y];
+                    z += tempMap1.get(x + 1, y);
                 }
                 if (y > 0) {
-                    z += tempMap1[x][y - 1];
+                    z += tempMap1.get(x, y - 1);
                 }
                 if (y < (WORLD_H_2 - 1)) {
-                    z += tempMap1[x][y + 1];
+                    z += tempMap1.get(x, y + 1);
                 }
-                z = (z + tempMap1[x][y]) >>2;
+                z = (z + tempMap1.get(x, y)) >>2;
                 if (z > 255) {
                     z = 255;
                 }
@@ -552,7 +557,8 @@ void Micropolis::doSmooth2()
                     tempMap2[x][(y == 0) ? (0) : (y - 1)] +
                     tempMap2[x][(y == (WORLD_H_2 - 1)) ? y : (y + 1)] +
                     tempMap2[x][y];
-                tempMap1[x][y] = (unsigned char)(((unsigned char)z) >>2);
+                Byte val = (Byte)(z / 4);
+                tempMap1.set(x, y, val);
                 z &= 3;
             }
             dir = -dir;
@@ -580,21 +586,8 @@ void Micropolis::doSmooth2()
                 if (z > 255) {
                     z = 255;
                 }
-                tempMap1[x][y] = (unsigned char)z;
+                tempMap1.set(x, y, (Byte)z);
             }
-        }
-    }
-}
-
-
-/* comefrom: populationDensityScan */
-void Micropolis::clearTempMap1()
-{
-    short x, y;
-
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
-            tempMap1[x][y] = (Byte)0;
         }
     }
 }

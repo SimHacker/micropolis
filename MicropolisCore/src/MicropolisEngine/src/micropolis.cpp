@@ -97,6 +97,7 @@ Micropolis::Micropolis()
           pollutionMap(0),
           landValueMap(0),
           crimeMap(0),
+          tempMap1.clear(0),
           terrainDensityMap(0)
 {
     init();
@@ -281,9 +282,6 @@ void Micropolis::init()
     landValueMap.clear();
     crimeMap.clear();
 
-    // Byte *tempMap1[WORLD_W_2];
-    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
-
     // Byte *tempMap2[WORLD_W_2];
     memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
 
@@ -312,9 +310,6 @@ void Micropolis::init()
 
     // short comRateMap[WORLD_W_8][WORLD_H_8];
     memset(comRateMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // Ptr tempMap1Base;
-    tempMap1Base = NULL;
 
     // Ptr tempMap2Base;
     tempMap2Base = NULL;

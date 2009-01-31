@@ -86,12 +86,10 @@ void Micropolis::initMapArrays()
         map[i] = (unsigned short *)(mapBase + (i * WORLD_H));
     }
 
-    tempMap1Base = newPtr(WORLD_W_2 * WORLD_H_2);
     tempMap2Base = newPtr(WORLD_W_2 * WORLD_H_2);
     tempMap3Base = newPtr(WORLD_W_4 * WORLD_H_4);
 
     for (i = 0; i < WORLD_W_2; i++) {
-        tempMap1[i] = (Byte *)tempMap1Base + (i * WORLD_H_2);
         tempMap2[i] = (Byte *)tempMap2Base + (i * WORLD_H_2);
     }
 
@@ -126,18 +124,14 @@ void Micropolis::destroyMapArrays()
     pollutionMap.clear();
     landValueMap.clear();
     crimeMap.clear();
-    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
+
+    tempMap1.clear();
     memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
     memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
 
     terrainDensityMap.clear();
 
 
-
-    if (tempMap1Base != NULL) {
-        freePtr(tempMap1Base);
-        tempMap1Base = NULL;
-    }
 
     if (tempMap2Base != NULL) {
         freePtr(tempMap2Base);
