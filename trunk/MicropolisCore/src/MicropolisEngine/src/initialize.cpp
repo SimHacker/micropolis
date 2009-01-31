@@ -104,10 +104,10 @@ void Micropolis::initWillStuff()
             trafficDensityMap[x][y] = 0;
             pollutionMap[x][y] = 0;
             landValueMap[x][y] = 0;
-            crimeMap[x][y] = 0;
         }
     }
 
+    crimeMap.clear();
     terrainDensityMap.clear();
 
     for (x = 0; x < WORLD_W_8; x++) {

@@ -741,7 +741,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
         return STR202_LANDVALUE_HIGH_CLASS;
 
     case 2:
-        z = crimeMap[mapH >>1][mapV >>1];
+        z = crimeMap.get(mapH >>1, mapV >>1);
         z = z >> 6;
         z = z & 3;
         return z + STR202_CRIME_NONE;

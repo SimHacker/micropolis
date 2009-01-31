@@ -90,7 +90,6 @@ void Micropolis::initMapArrays()
     trafficDensityMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
     pollutionMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
     landValueMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
-    crimeMapBase = newPtr(WORLD_W_2 * WORLD_H_2);
 
     tempMap1Base = newPtr(WORLD_W_2 * WORLD_H_2);
     tempMap2Base = newPtr(WORLD_W_2 * WORLD_H_2);
@@ -101,7 +100,6 @@ void Micropolis::initMapArrays()
         trafficDensityMap[i] = (Byte *)trafficDensityMapBase + (i * WORLD_H_2);
         pollutionMap[i] = (Byte *)pollutionMapBase + (i * WORLD_H_2);
         landValueMap[i] = (Byte *)landValueMapBase + (i * WORLD_H_2);
-        crimeMap[i] = (Byte *)crimeMapBase + (i * WORLD_H_2);
 
         tempMap1[i] = (Byte *)tempMap1Base + (i * WORLD_H_2);
         tempMap2[i] = (Byte *)tempMap2Base + (i * WORLD_H_2);
@@ -133,6 +131,19 @@ void Micropolis::destroyMapArrays()
 
     memset(map, 0, sizeof(short *) * WORLD_W);
 
+    memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(trafficDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(pollutionMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(landValueMap, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
+    memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
+
+    crimeMap.clear();
+    terrainDensityMap.clear();
+
+
+
     if (populationDensityMapBase != NULL) {
         freePtr(populationDensityMapBase);
         populationDensityMapBase = NULL;
@@ -153,11 +164,6 @@ void Micropolis::destroyMapArrays()
         landValueMapBase = NULL;
     }
 
-    if (crimeMapBase != NULL) {
-        freePtr(crimeMapBase);
-        crimeMapBase = NULL;
-    }
-
     if (tempMap1Base != NULL) {
         freePtr(tempMap1Base);
         tempMap1Base = NULL;
@@ -173,16 +179,7 @@ void Micropolis::destroyMapArrays()
         tempMap3Base = NULL;
     }
 
-    memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(trafficDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(pollutionMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(landValueMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(crimeMap, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(tempMap1, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(tempMap2, 0, sizeof(Byte *) * WORLD_W_2);
-    memset(tempMap3, 0, sizeof(Byte *) * WORLD_W_4);
 
-    terrainDensityMap.clear();
 
     if (resHist != NULL) {
         freePtr(resHist);

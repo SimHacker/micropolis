@@ -1303,13 +1303,13 @@ public:
      */
     Byte *landValueMap[WORLD_W_2];
 
+#ifndef SWIG
+// SWIG does not support nested classes.
+
     /**
      * Crime map.
      */
-    Byte *crimeMap[WORLD_W_2];
-
-#ifndef SWIG
-// SWIG does not support nested classes.
+    MapByte2 crimeMap;
 
     /**
      * Terrain development density map.
@@ -1474,11 +1474,6 @@ private:
      * Memory for landValueMap array.
      */
     Ptr landValueMapBase;
-
-    /**
-     * Memory for crimeMap array.
-     */
-    Ptr crimeMapBase;
 
     /**
      * Memory for map array.

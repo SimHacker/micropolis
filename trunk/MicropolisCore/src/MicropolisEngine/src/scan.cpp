@@ -240,7 +240,7 @@ void Micropolis::pollutionTerrainLandValueScan()
                 dis = dis <<2;
                 dis += terrainDensityMap.get(x >>1, y >>1);
                 dis -= (pollutionMap[x][y]);
-                if (crimeMap[x][y] > 190) {
+                if (crimeMap.get(x, y) > 190) {
                     dis -= 20;
                 }
                 if (dis > 250) {
@@ -382,7 +382,7 @@ void Micropolis::crimeScan()
 {
     short numz;
     Quad totz;
-    register short x, y, z;
+    short x, y, z;
     short cmax;
 
     smoothPoliceStationMap();
@@ -396,7 +396,7 @@ void Micropolis::crimeScan()
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
             z = landValueMap[x][y];
-            if (z) {
+            if (z > 0) {
                 ++numz;
                 z = 128 - z;
                 z += populationDensityMap[x][y];
@@ -405,7 +405,7 @@ void Micropolis::crimeScan()
                 }
                 z -= policeStationMap[x >>2][y >>2];
                 z = clamp(z, (short)0, (short)250);
-                crimeMap[x][y] = (Byte)z;
+                crimeMap.set(x, y, (Byte)z);
                 totz += z;
 
                 // Update new crime hot-spot
@@ -416,7 +416,7 @@ void Micropolis::crimeScan()
                 }
 
             } else {
-                crimeMap[x][y] = 0;
+                crimeMap.set(x, y, 0);
             }
         }
     }
