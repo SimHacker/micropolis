@@ -1302,6 +1302,33 @@ public:
      */
     MapByte4 terrainDensityMap;
 
+    /**
+     * Temporary map 1.
+     *
+     * Used to smooth population density, pollution.
+     */
+    MapByte2 tempMap1;
+
+    /**
+     * Temporary map 2.
+     *
+     * Used to smooth population density, pollution.
+     */
+    MapByte2 tempMap2;
+
+    /**
+     * Temporary map 3.
+     *
+     * Used to smooth development density, for terrainDensityMap.
+     */
+    MapByte4 tempMap3;
+
+    /**
+     * Temporary array for smoothing fire and police station maps.
+     */
+    MapShort8 tempMap4;
+
+
 #endif
 
     /**
@@ -1450,45 +1477,6 @@ private:
      * Memory for map array.
      */
     unsigned short *mapBase;
-
-    /**
-     * Memory for tempMap2 array.
-     */
-    Ptr tempMap2Base;
-
-    /**
-     * Memory for tempMap3 array.
-     */
-    Ptr tempMap3Base;
-
-    /**
-     * Temporary map 1.
-     *
-     * Used to smooth population density, pollution.
-     */
-    MapByte2 tempMap1;
-
-    /**
-     * Temporary map 2.
-     *
-     * Used to smooth population density, pollution.
-     */
-    Byte *tempMap2[WORLD_W_2];
-
-    /**
-     * Temporary map 3.
-     *
-     * Used to smooth development density, for terrainDensityMap.
-     * @todo Can we not use tempMap1 or tempMap2?
-     */
-    Byte *tempMap3[WORLD_W_4];
-
-    /**
-     * Temporary array for smoothing fire and police station maps.
-     * @todo Can we not use tempMap1 or tempMap2 or tempMap3?
-     */
-    short tempMap4[WORLD_W_8][WORLD_H_8];
-
 
 
     void initMapArrays();

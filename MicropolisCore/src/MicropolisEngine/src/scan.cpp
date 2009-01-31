@@ -133,7 +133,7 @@ void Micropolis::populationDensityScan()
     assert(populationDensityMap.MAP_BLOCKSIZE == 2);
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
-            populationDensityMap.set(x, y, tempMap2[x][y] <<1);
+            populationDensityMap.set(x, y, tempMap2.get(x, y) <<1);
         }
     }
 
@@ -194,11 +194,7 @@ void Micropolis::pollutionTerrainLandValueScan()
     int Plevel, LVflag, loc, zx, zy, Mx, My, pnum, LVnum, pmax;
 
     // tempMap3 is a map of development density, smoothed into terrainMap.
-    for (x = 0; x < WORLD_W_4; x++) {
-        for (y = 0; y < WORLD_H_4; y++) {
-            tempMap3[x][y] = 0;
-        }
-    }
+    tempMap3.clear();
 
     LVtot = 0;
     LVnum = 0;
@@ -215,7 +211,9 @@ void Micropolis::pollutionTerrainLandValueScan()
                     loc = (map[Mx][My] & LOMASK);
                     if (loc) {
                         if (loc < RUBBLE) {
-                            tempMap3[x >>1][y >>1] += 15; /* inc terrainMem */
+			    // Incremenet terrain memory.
+			    Byte value = tempMap3.get(x >>1, y >>1);
+                            tempMap3.set(x >>1, y >>1, value + 15);
                             continue;
                         }
                         Plevel += getPollutionValue(loc);
@@ -454,11 +452,11 @@ void Micropolis::smoothTerrain()
         for (x = 0; x < WORLD_W_4; x++) {
             for (; y != WORLD_H_4 && y != -1; y += dir) {
                 z +=
-                    tempMap3[(x == 0) ? x : (x - 1)][y] +
-                    tempMap3[(x == (WORLD_W_4 - 1)) ? x : (x + 1)][y] +
-                    tempMap3[x][(y == 0) ? (0) : (y - 1)] +
-                    tempMap3[x][(y == (WORLD_H_4 - 1)) ? y : (y + 1)] +
-                    (tempMap3[x][y] <<2);
+                    tempMap3.get((x == 0) ? x : (x - 1), y) +
+                    tempMap3.get((x == (WORLD_W_4 - 1)) ? x : (x + 1), y) +
+                    tempMap3.get(x, (y == 0) ? (0) : (y - 1)) +
+                    tempMap3.get(x, (y == (WORLD_H_4 - 1)) ? y : (y + 1)) +
+                    (tempMap3.get(x, y) <<2);
                 Byte val = (Byte)(z / 8);
                 terrainDensityMap.set(x, y, val);
                 z &= 0x7;
@@ -473,18 +471,18 @@ void Micropolis::smoothTerrain()
             for (y = 0; y < WORLD_H_4; y++) {
                 unsigned z = 0;
                 if (x > 0) {
-                    z += tempMap3[x - 1][y];
+                    z += tempMap3.get(x - 1, y);
                 }
                 if (x < (WORLD_W_4 - 1)) {
-                    z += tempMap3[x + 1][y];
+                    z += tempMap3.get(x + 1, y);
                 }
                 if (y > 0) {
-                    z += tempMap3[x][y - 1];
+                    z += tempMap3.get(x, y - 1);
                 }
                 if (y < (WORLD_H_4 - 1)) {
-                    z += tempMap3[x][y + 1];
+                    z += tempMap3.get(x, y + 1);
                 }
-                Byte val = (Byte)(z / 4 + tempMap3[x][y]) / 2;
+                Byte val = (Byte)(z / 4 + tempMap3.get(x, y)) / 2;
                 terrainDensityMap.set(x, y, val);
             }
         }
@@ -495,7 +493,7 @@ void Micropolis::smoothTerrain()
 /* comefrom: populationDensityScan */
 void Micropolis::doSmooth1()
 {
-    /* smooths data in tempMap1[x][y] into tempMap2[x][y]  */
+    /* smooths data in tempMap1 into tempMap2  */
     if (donDither & 2) {
         register int x, y = 0, z = 0, dir = 1;
 
@@ -507,7 +505,7 @@ void Micropolis::doSmooth1()
                     tempMap1.get(x, (y == 0) ? (0) : (y - 1)) +
                     tempMap1.get(x, (y == (WORLD_H_2 - 1)) ? y : (y + 1)) +
                     tempMap1.get(x, y);
-                tempMap2[x][y] = (unsigned char)(((unsigned int)z) >>2);
+                tempMap2.set(x, y, (unsigned char)(((unsigned int)z) >>2));
                 z &= 3;
             }
             dir = -dir;
@@ -535,7 +533,7 @@ void Micropolis::doSmooth1()
                 if (z > 255) {
                     z = 255;
                 }
-                tempMap2[x][y] = (unsigned char)z;
+                tempMap2.set(x, y, (unsigned char)z);
             }
         }
     }
@@ -545,18 +543,18 @@ void Micropolis::doSmooth1()
 /* comefrom: populationDensityScan */
 void Micropolis::doSmooth2()
 {
-    /* smooths data in tempMap2[x][y] into tempMap1[x][y]  */
+    /* smooths data in tempMap2 into tempMap1  */
     if (donDither & 4) {
         int x, y = 0, z = 0, dir = 1;
 
         for (x = 0; x < WORLD_W_2; x++) {
             for (; y != WORLD_H_2 && y != -1; y += dir) {
                 z +=
-                    tempMap2[(x == 0) ? x : (x - 1)][y] +
-                    tempMap2[(x == (WORLD_W_2 - 1)) ? x : (x + 1)][y] +
-                    tempMap2[x][(y == 0) ? (0) : (y - 1)] +
-                    tempMap2[x][(y == (WORLD_H_2 - 1)) ? y : (y + 1)] +
-                    tempMap2[x][y];
+                    tempMap2.get((x == 0) ? x : (x - 1), y) +
+                    tempMap2.get((x == (WORLD_W_2 - 1)) ? x : (x + 1), y) +
+                    tempMap2.get(x, (y == 0) ? (0) : (y - 1)) +
+                    tempMap2.get(x, (y == (WORLD_H_2 - 1)) ? y : (y + 1)) +
+                    tempMap2.get(x, y);
                 Byte val = (Byte)(z / 4);
                 tempMap1.set(x, y, val);
                 z &= 3;
@@ -571,18 +569,18 @@ void Micropolis::doSmooth2()
             for (y = 0; y < WORLD_H_2; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += tempMap2[x - 1][y];
+                    z += tempMap2.get(x - 1, y);
                 }
                 if (x < (WORLD_W_2 - 1)) {
-                    z += tempMap2[x + 1][y];
+                    z += tempMap2.get(x + 1, y);
                 }
                 if (y > 0) {
-                    z += tempMap2[x][y - 1];
+                    z += tempMap2.get(x, y - 1);
                 }
                 if (y < (WORLD_H_2 - 1)) {
-                    z += tempMap2[x][y + 1];
+                    z += tempMap2.get(x, y + 1);
                 }
-                z = (z + tempMap2[x][y]) >>2;
+                z = (z + tempMap2.get(x, y)) >>2;
                 if (z > 255) {
                     z = 255;
                 }
@@ -614,13 +612,13 @@ void Micropolis::smoothFireStationMap()
                 edge += fireStationMap[x][y + 1];
             }
             edge = (edge >>2) + fireStationMap[x][y];
-            tempMap4[x][y] = edge >>1;
+            tempMap4.set(x, y, edge >>1);
         }
     }
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            fireStationMap[x][y] = tempMap4[x][y];
+            fireStationMap[x][y] = tempMap4.get(x, y);
         }
     }
 }
@@ -647,13 +645,13 @@ void Micropolis::smoothPoliceStationMap()
                 edge += policeStationMap[x][y + 1];
             }
             edge = (edge >>2) + policeStationMap[x][y];
-            tempMap4[x][y] = edge >>1;
+            tempMap4.set(x, y, edge >>1);
         }
     }
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            policeStationMap[x][y] = tempMap4[x][y];
+            policeStationMap[x][y] = tempMap4.get(x, y);
         }
     }
 }
