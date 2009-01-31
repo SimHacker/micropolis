@@ -417,7 +417,7 @@ bool Micropolis::dynamicFilter(
     int traffic = trafficDensityMap[c][r];
     int pollution = pollutionMap[c][r];
     int crime = crimeMap.get(c, r);
-    int landValue = landValueMap[c][r];
+    int landValue = landValueMap.get(c, r);
     int police = policeStationMapEffect[c>>2][r>>2];
     int fire = fireStationMapEffect[c>>2][r>>2];
 
@@ -605,7 +605,7 @@ void Micropolis::drawLandMap()
         for (y = 0; y < WORLD_H_2; y++) {
             maybeDrawRect(
                 view,
-                getCI(landValueMap[x][y]),
+                getCI(landValueMap.get(x, y)),
                 x * 6,
                 y * 6,
                 6,

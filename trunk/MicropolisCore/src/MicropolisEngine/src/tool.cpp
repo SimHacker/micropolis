@@ -734,14 +734,14 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
         return z + STR202_POPULATIONDENSITY_LOW;
 
     case 1:
-        z = landValueMap[mapH >>1][mapV >>1];
+        z = landValueMap.worldGet(mapH, mapV);
         if (z < 30) return STR202_LANDVALUE_SLUM;
         if (z < 80) return STR202_LANDVALUE_LOWER_CLASS;
         if (z < 150) return STR202_LANDVALUE_MIDDLE_CLASS;
         return STR202_LANDVALUE_HIGH_CLASS;
 
     case 2:
-        z = crimeMap.get(mapH >>1, mapV >>1);
+        z = crimeMap.worldGet(mapH, mapV);
         z = z >> 6;
         z = z & 3;
         return z + STR202_CRIME_NONE;

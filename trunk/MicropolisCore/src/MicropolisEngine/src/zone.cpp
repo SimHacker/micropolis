@@ -225,7 +225,7 @@ short Micropolis::getLandPollutionValue()
 {
     register short LVal;
 
-    LVal = landValueMap[curMapX >>1][curMapY >>1];
+    LVal = landValueMap.worldGet(curMapX, curMapY);
     LVal -= pollutionMap[curMapX >>1][curMapY >>1];
 
     if (LVal < 30) {
@@ -577,39 +577,39 @@ short Micropolis::getResZonePop(int Ch9)
 }
 
 
-void Micropolis::resPlop(int Den, int Value)
+void Micropolis::resPlop(int den, int value)
 {
     short base;
 
-    base = (((Value * 4) + Den) * 9) + RZB - 4;
+    base = (((value * 4) + den) * 9) + RZB - 4;
     zonePlop(base);
 }
 
 
 short Micropolis::evalRes(int traf)
 {
-    register short Value;
+    short value;
 
     if (traf < 0) {
         return -3000;
     }
 
-    Value = landValueMap[curMapX >>1][curMapY >>1];
-    Value -= pollutionMap[curMapX >>1][curMapY >>1];
+    value = landValueMap.worldGet(curMapX, curMapY);
+    value -= pollutionMap[curMapX >>1][curMapY >>1];
 
-    if (Value < 0) {
-        Value = 0;          /* Cap at 0 */
+    if (value < 0) {
+        value = 0;          /* Cap at 0 */
     } else {
-        Value = Value <<5;
+        value = value <<5;
     }
 
-    if (Value > 6000) {
-        Value = 6000;       /* Cap at 6000 */
+    if (value > 6000) {
+        value = 6000;       /* Cap at 6000 */
     }
 
-    Value = Value - 3000;
+    value = value - 3000;
 
-    return Value;
+    return value;
 }
 
 
@@ -667,7 +667,7 @@ void Micropolis::doComIn(int pop, int value)
 {
     register short z;
 
-    z = landValueMap[curMapX >>1][curMapY >>1];
+    z = landValueMap.worldGet(curMapX, curMapY);
     z = z >>5;
 
     if (pop > z) {

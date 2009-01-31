@@ -249,11 +249,11 @@ void Micropolis::pollutionTerrainLandValueScan()
                 if (dis < 1) {
                     dis = 1;
                 }
-                landValueMap[x][y] = dis;
+                landValueMap.set(x, y, dis);
                 LVtot += dis;
                 LVnum++;
             } else {
-                landValueMap[x][y] = 0;
+                landValueMap.set(x, y, 0);
             }
         }
     }
@@ -395,7 +395,7 @@ void Micropolis::crimeScan()
 
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
-            z = landValueMap[x][y];
+            z = landValueMap.get(x, y);
             if (z > 0) {
                 ++numz;
                 z = 128 - z;

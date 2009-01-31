@@ -1298,18 +1298,11 @@ public:
      */
     Byte *pollutionMap[WORLD_W_2];
 
-    /**
-     * Land value mep.
-     */
-    Byte *landValueMap[WORLD_W_2];
-
 #ifndef SWIG
 // SWIG does not support nested classes.
 
-    /**
-     * Crime map.
-     */
-    MapByte2 crimeMap;
+    MapByte2 landValueMap; ///< Land value map.
+    MapByte2 crimeMap; ///< Crime map.
 
     /**
      * Terrain development density map.
@@ -1469,11 +1462,6 @@ private:
      * Memory for pollutionMap array.
      */
     Ptr pollutionMapBase;
-
-    /**
-     * Memory for landValueMap array.
-     */
-    Ptr landValueMapBase;
 
     /**
      * Memory for map array.
