@@ -100,27 +100,77 @@ class MicropolisBudgetPanel(gtk.Frame):
 
         # Views
 
+        # Taxes Collected: $
+        # Cash Flow: $
+        # Previous Funds: $
+        # Current Funds: $
+
+        vbox0 = gtk.VBox(False, 5)
+        self.vbox0 = vbox0
+        self.add(vbox0)
+
+        spacer0 = gtk.HBox()
+        spacer0.set_size_request(5, 5)
+        vbox0.pack_start(spacer0, False, False, 0)
+
         hbox1 = gtk.HBox(False, 5)
         self.hbox1 = hbox1
-        self.add(hbox1)
+        vbox0.pack_start(hbox1, False, False, 1)
 
-        spacer1 = gtk.VBox()
+        vbox10 = gtk.VBox(False, 5)
+        self.vbox10 = vbox10
+        hbox1.pack_start(vbox10, True, True, 0)
+
+        labelBudget1 = gtk.Label('Taxes Collected: $100,000,000')
+        self.labelBudget1 = labelBudget1
+        vbox10.pack_start(labelBudget1, False, False, 0)
+        labelBudget1.show()
+
+        labelBudget2 = gtk.Label('Cash Flow: +$100,000,000')
+        self.labelBudget2 = labelBudget2
+        vbox10.pack_start(labelBudget2, False, False, 1)
+        labelBudget2.show()
+
+        spacer1 = gtk.HBox()
         spacer1.set_size_request(5, 5)
-        hbox1.pack_start(spacer1, False, False, 0)
+        hbox1.pack_start(spacer1, False, False, 1)
+
+        vbox11 = gtk.VBox(False, 5)
+        self.vbox11 = vbox11
+        hbox1.pack_start(vbox11, True, True, 2)
+
+        labelBudget3 = gtk.Label('Previous Funds: $100,000,000')
+        self.labelBudget3 = labelBudget3
+        vbox11.pack_start(labelBudget3, False, False, 0)
+        labelBudget3.show()
+
+        labelBudget4 = gtk.Label('Current Funds: $100,000,000')
+        self.labelBudget4 = labelBudget4
+        vbox11.pack_start(labelBudget4, False, False, 1)
+        labelBudget4.show()
+
+        spacer2 = gtk.VBox()
+        spacer2.set_size_request(5, 5)
+        vbox0.pack_start(spacer2, False, False, 0)
+
+        hbox2 = gtk.HBox(False, 5)
+        self.hbox2 = hbox2
+        vbox0.pack_start(hbox2, False, False, 3)
 
         vbox1 = gtk.VBox(False, 5)
         self.vbox1 = vbox1
-        hbox1.pack_start(vbox1, False, False, 1)
-        vbox1.set_size_request(200, 0)
+        hbox2.pack_start(vbox1, True, True, 0)
+        vbox1.set_size_request(100, 0)
 
-        spacer2 = gtk.HBox()
-        spacer2.set_size_request(5, 5)
-        vbox1.pack_start(spacer2, False, False, 0)
+        labelTaxTitle = gtk.Label('Tax Rate')
+        self.labelTaxTitle = labelTaxTitle
+        vbox1.pack_start(labelTaxTitle, False, False, 0)
+        labelTaxTitle.show()
 
-        labelTaxRate = gtk.Label('')
-        self.labelTaxRate = labelTaxRate
-        self.vbox1.pack_start(labelTaxRate, False, False, 1)
-        labelTaxRate.show()
+        labelTaxRate1 = gtk.Label('')
+        self.labelTaxRate1 = labelTaxRate1
+        vbox1.pack_start(labelTaxRate1, False, False, 1)
+        labelTaxRate1.show()
 
         scaleTaxRate = gtk.HScale()
         self.scaleTaxRate = scaleTaxRate
@@ -132,24 +182,29 @@ class MicropolisBudgetPanel(gtk.Frame):
         scaleTaxRate.set_increments(1, 5)
         scaleTaxRate.set_value(engine.cityTax)
         scaleTaxRate.connect('value-changed', self.taxScaleChanged)
-        vbox1.pack_start(scaleTaxRate, False, False, 1)
+        vbox1.pack_start(scaleTaxRate, False, False, 2)
         #scaleTaxRate.set_size_request(200, 20)
         scaleTaxRate.show()
-        self.update('taxrate')
+
+        labelTaxRate2 = gtk.Label('0%')
+        self.labelTaxRate2 = labelTaxRate2
+        vbox1.pack_start(labelTaxRate2, False, False, 3)
+        labelTaxRate2.show()
 
         vbox2 = gtk.VBox(False, 5)
         self.vbox2 = vbox2
-        hbox1.pack_start(vbox2, False, False, 2)
-        vbox2.set_size_request(200, 0)
+        hbox2.pack_start(vbox2, True, True, 0)
+        vbox2.set_size_request(100, 0)
 
-        spacer3 = gtk.HBox()
-        spacer3.set_size_request(5, 5)
-        vbox2.pack_start(spacer3, False, False, 0)
+        labelFireTitle = gtk.Label('Fire Station Fund')
+        self.labelFireTitle = labelFireTitle
+        vbox2.pack_start(labelFireTitle, False, False, 0)
+        labelFireTitle.show()
 
-        labelFirePercent = gtk.Label('')
-        self.labelFirePercent = labelFirePercent
-        self.vbox2.pack_start(labelFirePercent, False, False, 1)
-        labelFirePercent.show()
+        labelFireRequest = gtk.Label('Request: $100,000')
+        self.labelFireRequest = labelFireRequest
+        vbox2.pack_start(labelFireRequest, False, False, 1)
+        labelFireRequest.show()
 
         scaleFirePercent = gtk.HScale()
         self.scaleFirePercent = scaleFirePercent
@@ -161,13 +216,28 @@ class MicropolisBudgetPanel(gtk.Frame):
         scaleFirePercent.set_increments(1, 10)
         scaleFirePercent.set_value(engine.cityTax)
         scaleFirePercent.connect('value-changed', self.fireScaleChanged)
-        vbox2.pack_start(scaleFirePercent, False, False, 1)
+        vbox2.pack_start(scaleFirePercent, False, False, 2)
         scaleFirePercent.show()
 
-        labelPolicePercent = gtk.Label('')
-        self.labelPolicePercent = labelPolicePercent
-        self.vbox2.pack_start(labelPolicePercent, False, False, 1)
-        labelPolicePercent.show()
+        labelFirePercent = gtk.Label('100%')
+        self.labelFirePercent = labelFirePercent
+        vbox2.pack_start(labelFirePercent, False, False, 3)
+        labelFirePercent.show()
+
+        vbox3 = gtk.VBox(False, 5)
+        self.vbox3 = vbox3
+        hbox2.pack_start(vbox3, True, True, 0)
+        vbox3.set_size_request(100, 0)
+
+        labelPoliceTitle = gtk.Label('Police Station Fund')
+        self.labelPoliceTitle = labelPoliceTitle
+        vbox3.pack_start(labelPoliceTitle, False, False, 0)
+        labelPoliceTitle.show()
+
+        labelPoliceRequest = gtk.Label('Request: $100,000')
+        self.labelPoliceRequest = labelPoliceRequest
+        vbox3.pack_start(labelPoliceRequest, False, False, 1)
+        labelPoliceRequest.show()
 
         scalePolicePercent = gtk.HScale()
         self.scalePolicePercent = scalePolicePercent
@@ -179,13 +249,28 @@ class MicropolisBudgetPanel(gtk.Frame):
         scalePolicePercent.set_increments(1, 10)
         scalePolicePercent.set_value(engine.cityTax)
         scalePolicePercent.connect('value-changed', self.policeScaleChanged)
-        vbox2.pack_start(scalePolicePercent, False, False, 1)
+        vbox3.pack_start(scalePolicePercent, False, False, 2)
         scalePolicePercent.show()
 
-        labelRoadPercent = gtk.Label('')
-        self.labelRoadPercent = labelRoadPercent
-        self.vbox2.pack_start(labelRoadPercent, False, False, 1)
-        labelRoadPercent.show()
+        labelPolicePercent = gtk.Label('100%')
+        self.labelPolicePercent = labelPolicePercent
+        vbox3.pack_start(labelPolicePercent, False, False, 3)
+        labelPolicePercent.show()
+
+        vbox4 = gtk.VBox(False, 5)
+        self.vbox4 = vbox4
+        hbox2.pack_start(vbox4, True, True, 0)
+        vbox4.set_size_request(100, 0)
+
+        labelRoadTitle = gtk.Label('Road Fund')
+        self.labelRoadTitle = labelRoadTitle
+        vbox4.pack_start(labelRoadTitle, False, False, 0)
+        labelRoadTitle.show()
+
+        labelRoadRequest = gtk.Label('Road Request: $100,000')
+        self.labelRoadRequest = labelRoadRequest
+        vbox4.pack_start(labelRoadRequest, False, False, 1)
+        labelRoadRequest.show()
 
         scaleRoadPercent = gtk.HScale()
         self.scaleRoadPercent = scaleRoadPercent
@@ -197,9 +282,15 @@ class MicropolisBudgetPanel(gtk.Frame):
         scaleRoadPercent.set_increments(1, 10)
         scaleRoadPercent.set_value(engine.cityTax)
         scaleRoadPercent.connect('value-changed', self.roadScaleChanged)
-        vbox2.pack_start(scaleRoadPercent, False, False, 1)
+        vbox4.pack_start(scaleRoadPercent, False, False, 2)
         scaleRoadPercent.show()
 
+        labelRoadPercent = gtk.Label('100%')
+        self.labelRoadPercent = labelRoadPercent
+        vbox4.pack_start(labelRoadPercent, False, False, 3)
+        labelRoadPercent.show()
+
+        self.update('taxrate')
         self.update('budget')
 
 
@@ -208,7 +299,7 @@ class MicropolisBudgetPanel(gtk.Frame):
         name,
         *args):
 
-        #print "MicropolisBudgetPanel update", self, name, args
+        #print "MicropolisBudgetPanel update", name, args
 
         engine = self.engine
 
@@ -218,7 +309,8 @@ class MicropolisBudgetPanel(gtk.Frame):
             scaleTaxRate = self.scaleTaxRate
             if scaleTaxRate.get_value() != taxRate:
                 scaleTaxRate.set_value(taxRate)
-            self.setTaxRateLabel(taxRate)
+            label = str(taxRate) + '%'
+            self.labelTaxRate2.set_text(label)
 
         elif name == 'budget':
 
@@ -262,27 +354,34 @@ class MicropolisBudgetPanel(gtk.Frame):
 
             policeWantString = formatMoney(policeFund)
             policePercentString = formatPercent(policePercent)
-            policeGotString = formatMoney(int(fireFund * roadPercent))
+            policeGotString = formatMoney(int(fireFund * policePercent))
 
             roadWantString = formatMoney(roadFund)
             roadPercentString = formatPercent(roadPercent)
             roadGotString = formatMoney(int(roadFund * roadPercent))
 
-            print (
-                "Cash Flow: " + cashFlowString + "\n" +
-                "Previous: " + previousString + "\n" +
-                "Current: " + currentString + "\n" +
-                "Collected: " + collectedString + "\n" +
-                "Fire Want: " + fireWantString + "\n" +
-                "Fire Percent: " + firePercentString + "\n" +
-                "Fire Got: " + fireGotString + "\n" +
-                "Police Want: " + policeWantString + "\n" +
-                "Police Percent: " + policePercentString + "\n" +
-                "Police Got: " + policeGotString + "\n" +
-                "Road Want: " + roadWantString + "\n" +
-                "Road Percent: " + roadPercentString + "\n" +
-                "Road Got: " + roadGotString + "\n"
-            )
+            self.labelBudget1.set_text('Taxes Collected: ' + collectedString)
+            self.labelBudget2.set_text('Cash Flow: ' + cashFlowString)
+            self.labelBudget3.set_text('Previous Funds: ' + previousString)
+            self.labelBudget4.set_text('Current Funds: ' + currentString)
+
+            self.labelFireRequest.set_text('Request: ' + fireWantString)
+            self.labelFirePercent.set_text(firePercentString + ' = ' + fireGotString)
+            value = int(firePercent * 100.0)
+            if self.scaleFirePercent.get_value() != value:
+                self.scaleFirePercent.set_value(value)
+                                      
+            self.labelPoliceRequest.set_text('Request: ' + policeWantString)
+            self.labelPolicePercent.set_text(policePercentString + ' = ' + policeGotString)
+            value = int(policePercent * 100.0)
+            if self.scalePolicePercent.get_value() != value:
+                self.scalePolicePercent.set_value(value)
+                                      
+            self.labelRoadRequest.set_text('Request: ' + roadWantString)
+            self.labelRoadPercent.set_text(roadPercentString + ' = ' + roadGotString)
+            value = int(roadPercent * 100.0)
+            if self.scaleRoadPercent.get_value() != value:
+                self.scaleRoadPercent.set_value(value)
 
 
     def taxScaleChanged(self, scale):
@@ -292,42 +391,25 @@ class MicropolisBudgetPanel(gtk.Frame):
             engine.setCityTax(tax)
 
 
-    def setTaxRateLabel(self, tax):
-        label = 'Tax Rate: ' + str(tax) + '%'
-        self.labelTaxRate.set_text(label)
-
-
     def fireScaleChanged(self, scale):
         engine = self.engine
         fire = scale.get_value() / 100.0
         engine.firePercent = fire
-
-
-    def setFireRateLabel(self, fire):
-        label = 'Fire Rate: ' + self.engine.formatPercent(fire)
-        self.labelFireRate.set_text(label)
+        engine.mustDrawBudget = True
 
 
     def policeScaleChanged(self, scale):
         engine = self.engine
         police = scale.get_value() / 100.0
         engine.policePercent = police
-
-
-    def setPoliceRateLabel(self, police):
-        label = 'Police Rate: ' + self.engine.formatPercent(police)
-        self.labelPoliceRate.set_text(label)
+        engine.mustDrawBudget = True
 
 
     def roadScaleChanged(self, scale):
         engine = self.engine
         road = scale.get_value() / 100.0
         engine.roadPercent = road
-
-
-    def setRoadRateLabel(self, road):
-        label = 'Road Rate: ' + self.engine.formatPercent(road)
-        self.labelRoadRate.set_text(label)
+        engine.mustDrawBudget = True
 
 
 ########################################################################
