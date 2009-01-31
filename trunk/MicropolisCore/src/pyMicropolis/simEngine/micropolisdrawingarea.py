@@ -149,6 +149,8 @@ for spriteData in Sprites:
             spriteData['id'],
             i,
         )
+        fileName = os.path.join(os.path.dirname(__file__), "../.." , fileName)
+        fileName = os.path.abspath(fileName)
         image = cairo.ImageSurface.create_from_png(fileName)
         images.append(image)
 

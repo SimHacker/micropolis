@@ -105,6 +105,8 @@
 #include <vector>
 #include <map>
 
+#include "data_types.h"
+#include "map_type.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -138,16 +140,6 @@ static const int BITS_PER_TILE = 16;
  * @todo Only used in python/micropolisdrawingarea.py
  */
 static const int BYTES_PER_TILE = 2;
-
-/**
- * Size of the world in horizontal direction.
- */
-static const int WORLD_W = 120;
-
-/**
- * Size of the world in vertical direction.
- */
-static const int WORLD_H = 100;
 
 /**
  * Horizontal size of the world for a map that stores a value for every 2x2
@@ -373,10 +365,12 @@ enum SpriteType {
 // Tiles
 
 /**
- * Status bits of a map tile
+ * Status bits of a map tile.
  * @see MapTile MapCharacters
- * @todo #ALLBITS should end with MASK
- * @todo Decide what to do with #ANIMBIT (since sim-backend shouldn't do animation)
+ * @todo #ALLBITS should end with MASK.
+ * @todo Decide what to do with #ANIMBIT (since sim-backend may not be the
+ *       optimal place to do animation).
+ * @todo How many of these bits can be derived from the displayed tile?
  */
 enum MapTileBits {
     PWRBIT  = 0x8000, ///< bit 15, tile has power
@@ -662,10 +656,11 @@ enum MapTileCharacters {
     TILE_COUNT     = 960,
 };
 
-/*
+/**
+ * Available tools.
+ *
  * These describe the wand values, the object dragged around on the screen.
  */
-
 enum EditingTool {
     TOOL_RESIDENTIAL,
     TOOL_COMMERCIAL,
@@ -875,14 +870,6 @@ class Micropolis;
 ////////////////////////////////////////////////////////////////////////
 // Typedefs
 
-
-typedef unsigned char Byte;
-
-typedef Byte *Ptr;
-
-typedef long Quad;
-
-typedef unsigned long UQuad;
 
 // This is the signature of the scripting language independent
 // callback function.
@@ -1321,12 +1308,17 @@ public:
      */
     Byte *crimeMap[WORLD_W_2];
 
+#ifndef SWIG
+// SWIG does not support nested classes.
+
     /**
      * Terrain development density map.
      *
      * Used to calculate land value.
      */
-    Byte *terrainDensityMap[WORLD_W_4];
+    MapByte4 terrainDensityMap;
+
+#endif
 
     /**
      * Rate of growth map.
@@ -1462,11 +1454,6 @@ private:
      */
     short needChurch;
 
-
-    /**
-     * Memory for terrainDensityMap array.
-     */
-    Ptr terrainDensityMapBase;
 
     /**
      * Memory for populationDensityMap array.
