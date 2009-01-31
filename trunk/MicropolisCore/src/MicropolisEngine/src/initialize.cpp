@@ -98,12 +98,7 @@ void Micropolis::initWillStuff()
     disasterEvent = SC_NONE;
     taxFlag = false;
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
-            populationDensityMap[x][y] = 0;
-        }
-    }
-
+    populationDensityMap.clear();
     trafficDensityMap.clear();
     pollutionMap.clear();
     landValueMap.clear();

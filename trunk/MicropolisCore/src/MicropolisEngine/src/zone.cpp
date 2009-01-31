@@ -483,13 +483,12 @@ void Micropolis::doResidential(int ZonePwrFlg)
 }
 
 
+/** Perform residential immigration into current tile. */
 void Micropolis::doResIn(int pop, int value)
 {
-    short z;
+    short pollution = pollutionMap.worldGet(curMapX, curMapY);
 
-    z = pollutionMap.worldGet(curMapX, curMapY);
-
-    if (z > 128) {
+    if (pollution > 128) {
         return;
     }
 
@@ -501,7 +500,7 @@ void Micropolis::doResIn(int pop, int value)
             return;
         }
 
-        if (populationDensityMap[curMapX >>1][curMapY >>1] > 64) {
+        if (populationDensityMap.worldGet(curMapX, curMapY) > 64) {
             resPlop(0, value);
             incRateOfGrowth(8);
             return;

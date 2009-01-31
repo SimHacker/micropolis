@@ -1283,15 +1283,14 @@ public:
 
     //@}
 
-    /**
-     * Population density map.
-     */
-    Byte *populationDensityMap[WORLD_W_2];
+    /** @name Maps */
+    //@{
 
 #ifndef SWIG
 // SWIG does not support nested classes.
 
-    MapByte2 trafficDensityMap; // Traffic map.
+    MapByte2 populationDensityMap; ///< Population density map.
+    MapByte2 trafficDensityMap; ///< Traffic map.
     MapByte2 pollutionMap; ///< Pollution map.
     MapByte2 landValueMap; ///< Land value map.
     MapByte2 crimeMap; ///< Crime map.
@@ -1354,6 +1353,11 @@ public:
      */
     short comRateMap[WORLD_W_8][WORLD_H_8];
 
+    //@}
+
+    /** @name Historic graphs. */
+    //@{
+
     /**
      * Residential population history.
      */
@@ -1388,6 +1392,8 @@ public:
      * Memory used to save miscelaneous game values in save file.
      */
     short *miscHist;
+
+    //@}
 
     /**
      * Power distribution bitmap.
@@ -1439,16 +1445,6 @@ private:
      */
     short needChurch;
 
-
-    /**
-     * Memory for populationDensityMap array.
-     */
-    Ptr populationDensityMapBase;
-
-    /**
-     * Memory for trafficDensityMap array.
-     */
-    Ptr trafficDensityMapBase;
 
     /**
      * Memory for map array.
