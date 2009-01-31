@@ -292,7 +292,7 @@ short Micropolis::getTrafficAverage()
     count = 1;
     for (x=0; x < WORLD_W_2; x++) {
         for (y=0; y < WORLD_H_2; y++) {
-            if (landValueMap[x][y]) {
+            if (landValueMap.get(x, y) > 0) {
                 trafficTotal += trafficDensityMap[x][y];
                 count++;
             }

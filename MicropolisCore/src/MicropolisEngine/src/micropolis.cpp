@@ -92,7 +92,8 @@ void not_reached(int line, const char *fname)
  * Simulator constructor.
  */
 Micropolis::Micropolis()
-        : crimeMap(0),
+        : landValueMap(0),
+          crimeMap(0),
           terrainDensityMap(0)
 {
     init();
@@ -280,9 +281,7 @@ void Micropolis::init()
     // Byte *pollutionMap[WORLD_W_2];
     memset(pollutionMap, 0, sizeof(Byte *) * WORLD_W_2);
 
-    // Byte *landValueMap[WORLD_W_2];
-    memset(landValueMap, 0, sizeof(Byte *) * WORLD_W_2);
-
+    landValueMap.clear();
     crimeMap.clear();
 
     // Byte *tempMap1[WORLD_W_2];
@@ -334,9 +333,6 @@ void Micropolis::init()
 
     // Ptr pollitionMapBase;
     pollutionMapBase = NULL;
-
-    // Ptr landValueMapBase;
-    landValueMapBase = NULL;
 
     // unsigned short *mapBase;
     mapBase = NULL;

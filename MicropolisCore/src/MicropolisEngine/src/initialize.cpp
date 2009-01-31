@@ -103,10 +103,10 @@ void Micropolis::initWillStuff()
             populationDensityMap[x][y] = 0;
             trafficDensityMap[x][y] = 0;
             pollutionMap[x][y] = 0;
-            landValueMap[x][y] = 0;
         }
     }
 
+    landValueMap.clear();
     crimeMap.clear();
     terrainDensityMap.clear();
 
