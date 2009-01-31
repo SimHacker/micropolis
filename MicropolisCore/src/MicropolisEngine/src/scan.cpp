@@ -130,7 +130,7 @@ void Micropolis::populationDensityScan()
 
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
-            populationDensityMap[x][y] = tempMap2[x][y] <<1;
+            populationDensityMap.set(x, y, tempMap2[x][y] <<1);
         }
     }
 
@@ -140,7 +140,7 @@ void Micropolis::populationDensityScan()
         cityCenterX = (short)(Xtot / Ztot);
         cityCenterY = (short)(Ytot / Ztot);
     } else {
-        cityCenterX = WORLD_W_2;      /* if pop=0 center of map is city center */
+        cityCenterX = WORLD_W_2;  /* if pop==0 center of map is city center */
         cityCenterY = WORLD_H_2;
     }
 
@@ -399,7 +399,7 @@ void Micropolis::crimeScan()
             if (z > 0) {
                 ++numz;
                 z = 128 - z;
-                z += populationDensityMap[x][y];
+                z += populationDensityMap.get(x, y);
                 if (z > 300) {
                     z = 300;
                 }

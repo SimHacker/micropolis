@@ -412,7 +412,7 @@ bool Micropolis::dynamicFilter(
 {
     int c = col >>1;
     int r = row >>1;
-    int populationDensity = populationDensityMap[c][r];
+    int populationDensity = populationDensityMap.worldGet(col, row);
     int rateOfGrowth = rateOfGrowthMap[c>>2][r>>2];
     int traffic = trafficDensityMap.worldGet(col, row);
     int pollution = pollutionMap.worldGet(col, row);
@@ -479,20 +479,20 @@ short Micropolis::getCI(short x)
     return VAL_VERYHIGH;
 }
 
-
+/** Draw population density overlay at small map */
 void Micropolis::drawPopulationDensity()
 {
     short x, y;
 
     drawAll();
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < WORLD_W; x += populationDensityMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += populationDensityMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
-                getCI(populationDensityMap[x][y]),
-                x * 6,
-                y * 6,
-                6,
-                6);
+                getCI(populationDensityMap.worldGet(x, y)),
+                x * 3,
+                y * 3,
+                3 * populationDensityMap.MAP_BLOCKSIZE,
+                3 * populationDensityMap.MAP_BLOCKSIZE);
         }
     }
 }

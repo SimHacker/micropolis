@@ -728,7 +728,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
 
     case 0:
     default:
-        z = populationDensityMap[mapH >>1][mapV >>1];
+        z = populationDensityMap.worldGet(mapH, mapV);
         z = z >> 6;
         z = z & 3;
         return z + STR202_POPULATIONDENSITY_LOW;

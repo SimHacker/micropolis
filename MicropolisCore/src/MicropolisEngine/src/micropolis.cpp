@@ -92,7 +92,8 @@ void not_reached(int line, const char *fname)
  * Simulator constructor.
  */
 Micropolis::Micropolis()
-        : trafficDensityMap(0),
+        : populationDensityMap(0),
+          trafficDensityMap(0),
           pollutionMap(0),
           landValueMap(0),
           crimeMap(0),
@@ -274,9 +275,7 @@ void Micropolis::init()
     // bool taxFlag;
     taxFlag = false;
 
-    // Byte *populationDensityMap[WORLD_W_2];
-    memset(populationDensityMap, 0, sizeof(Byte *) * WORLD_W_2);
-
+    populationDensityMap.clear();
     trafficDensityMap.clear();
     pollutionMap.clear();
     landValueMap.clear();
@@ -322,9 +321,6 @@ void Micropolis::init()
 
     // Ptr tempMap3Base;
     tempMap3Base = NULL;
-
-    // Ptr populationDensityMapBase;
-    populationDensityMapBase = NULL;
 
     // unsigned short *mapBase;
     mapBase = NULL;
