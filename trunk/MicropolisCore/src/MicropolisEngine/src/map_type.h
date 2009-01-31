@@ -98,6 +98,7 @@ public:
     const int MAP_MAX_X; ///< Number of clusters in horizontal direction.
     const int MAP_MAX_Y; ///< Number of clusters in vertical direction.
 
+    void fill(DATA val);
     void clear();
 
     inline void set(int x, int y, DATA val);
@@ -109,6 +110,7 @@ public:
     inline bool worldOnMap(int x, int y) const;
 
     DATA *getBase();
+
 private:
     /** Data fields of the map in column-major mode. */
     DATA _mapData[((WORLD_W + BLKSIZE - 1) / BLKSIZE)
@@ -137,6 +139,21 @@ Map<DATA, BLKSIZE>::~Map()
 }
 
 /**
+ * Generic fill routine.
+ *
+ * Resets all data of the map to #_MAP_DEFAULT_VALUE.
+ *
+ * @param value Value with which to fill the map.
+ */
+template <typename DATA, int BLKSIZE>
+void Map<DATA, BLKSIZE>::fill(DATA value)
+{
+    for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+        this->_mapData[i] = value;
+    }
+}
+
+/**
  * Generic clear routine.
  *
  * Resets all data of the map to #_MAP_DEFAULT_VALUE.
@@ -144,9 +161,7 @@ Map<DATA, BLKSIZE>::~Map()
 template <typename DATA, int BLKSIZE>
 void Map<DATA, BLKSIZE>::clear()
 {
-    for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
-        this->_mapData[i] = this->_MAP_DEFAULT_VALUE;
-    }
+    fill(this->_MAP_DEFAULT_VALUE);
 }
 
 /**
@@ -262,6 +277,7 @@ inline bool Map<DATA, BLKSIZE>::worldOnMap(int x, int y) const
 
 typedef Map<Byte, 4> MapByte4; ///< Map of ::Byte, with cluster size 4
 typedef Map<Byte, 2> MapByte2; ///< Map of ::Byte, with cluster size 2
+typedef Map<Byte, 1> MapByte1; ///< Map of ::Byte, with cluster size 1
 typedef Map<short, 8> MapShort8; ///< Map of ::short, with cluster size 8
 
 ////////////////////////////////////////////////////////////////////////

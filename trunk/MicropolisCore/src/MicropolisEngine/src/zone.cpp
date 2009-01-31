@@ -335,7 +335,7 @@ bool Micropolis::setZonePower()
         return true;
     }
 
-    if (getPowerBit(curMapX, curMapY)) {
+    if (powerMap.get(curMapX, curMapY)) {
         map[curMapX][curMapY] = curNum | PWRBIT;
         return true;
     } else {

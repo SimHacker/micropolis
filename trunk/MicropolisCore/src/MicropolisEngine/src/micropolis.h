@@ -1328,6 +1328,10 @@ public:
      */
     MapShort8 tempMap4;
 
+    /**
+     * Power distribution map.
+     */
+    MapByte1 powerMap;
 
 #endif
 
@@ -1421,11 +1425,6 @@ public:
     short *miscHist;
 
     //@}
-
-    /**
-     * Power distribution bitmap.
-     */
-    char *powerMap;
 
 private:
 
@@ -2180,35 +2179,6 @@ private:
     //@}
 
     bool moveMapSim(Direction mDir);
-
-    /**
-     * Calculate the offset into the power map at x, y.
-     */
-    inline int powerMapOffset(int x, int y)
-    {
-        return x * WORLD_H + y;
-    };
-
-    /**
-     * Return the bit in the power map at x, y.
-     */
-    inline bool getPowerBit(int x, int y)
-    {
-        int offset = powerMapOffset(x, y);
-        return (offset >= 0 && offset < POWER_MAP_LENGTH &&
-                !!powerMap[offset]);
-    }
-
-    /**
-     * Set the bit in the power map at x, y.
-     */
-    inline void setPowerBit(int x, int y)
-    {
-        int offset = powerMapOffset(x, y);
-        if (offset >= 0 && offset < POWER_MAP_LENGTH) {
-            powerMap[offset] = 1;
-        }
-    }
 
 
     ////////////////////////////////////////////////////////////////////////

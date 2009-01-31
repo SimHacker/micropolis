@@ -505,9 +505,7 @@ void Micropolis::simLoadInit()
 
     // Set power map.
     /// @todo What purpose does this serve? Weird...
-    for (int z = 0; z < POWER_MAP_LENGTH; z++) {
-        powerMap[z] = 1;
-    }
+    powerMap.fill(1);
 
     doNilPower();
 

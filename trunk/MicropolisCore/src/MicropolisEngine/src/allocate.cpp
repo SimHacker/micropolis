@@ -93,7 +93,6 @@ void Micropolis::initMapArrays()
     pollutionHist = (short *)newPtr(HISTORY_LENGTH);
     crimeHist = (short *)newPtr(HISTORY_LENGTH);
     miscHist = (short *)newPtr(MISC_HISTORY_LENGTH);
-    powerMap = (char *)newPtr(POWER_MAP_LENGTH);
 }
 
 
@@ -154,11 +153,6 @@ void Micropolis::destroyMapArrays()
     if (miscHist != NULL) {
         freePtr(miscHist);
         miscHist = NULL;
-    }
-
-    if (powerMap != NULL) {
-        freePtr(powerMap);
-        powerMap = NULL;
     }
 
 }

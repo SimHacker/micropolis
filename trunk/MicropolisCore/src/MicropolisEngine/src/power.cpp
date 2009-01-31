@@ -156,7 +156,7 @@ bool Micropolis::testForConductive(Direction tfDir)
     if (moveMapSim(tfDir)) {
         if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
                             && curTile != NUCLEAR && curTile != POWERPLANT) {
-            if (!getPowerBit(curMapX, curMapY)) {
+            if (!powerMap.get(curMapX, curMapY)) {
                 curMapX = xsave;
                 curMapY = ysave;
                 return true;
@@ -182,13 +182,11 @@ void Micropolis::doPowerScan()
     int ConNum, Dir;
 
     // Clear power map.
-    for (int x = 0; x < POWER_MAP_LENGTH; x++) {
-        powerMap[x] = 0;
-    }
+    powerMap.clear();
 
     // Power that the combined coal and nuclear power plants can deliver.
-    Quad maxPower = coalPowerPop * COAL_POWER_STRENGTH
-                    + nuclearPowerPop * NUCLEAR_POWER_STRENGTH;
+    Quad maxPower = coalPowerPop * COAL_POWER_STRENGTH +
+                    nuclearPowerPop * NUCLEAR_POWER_STRENGTH;
 
     Quad numPower = 0; // Amount of power used.
 
@@ -204,7 +202,7 @@ void Micropolis::doPowerScan()
             if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
                 moveMapSim((Direction)ADir);
             }
-            setPowerBit(curMapX, curMapY);
+            powerMap.set(curMapX, curMapY, 1);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {

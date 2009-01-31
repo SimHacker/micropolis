@@ -342,7 +342,7 @@ void *Micropolis::getMapBuffer()
  */
 void *Micropolis::getPowerMapBuffer()
 {
-    return (void *)powerMap;
+    return (void *)powerMap.getBase();
 }
 
 
