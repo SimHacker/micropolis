@@ -238,7 +238,7 @@ void Micropolis::pollutionTerrainLandValueScan()
             if (LVflag) {                     /* LandValue Equation */
                 dis = 34 - getCityCenterDistance(x, y);
                 dis = dis <<2;
-                dis += (terrainDensityMap[x >>1][y >>1] );
+                dis += terrainDensityMap.get(x >>1, y >>1);
                 dis -= (pollutionMap[x][y]);
                 if (crimeMap[x][y] > 190) {
                     dis -= 20;
@@ -443,7 +443,8 @@ void Micropolis::crimeScan()
 void Micropolis::smoothTerrain()
 {
     if (donDither & 1) {
-        int x, y = 0, z = 0, dir = 1;
+        int x, y = 0, dir = 1;
+        unsigned z = 0;
 
         for (x = 0; x < WORLD_W_4; x++) {
             for (; y != WORLD_H_4 && y != -1; y += dir) {
@@ -453,18 +454,19 @@ void Micropolis::smoothTerrain()
                     tempMap3[x][(y == 0) ? (0) : (y - 1)] +
                     tempMap3[x][(y == (WORLD_H_4 - 1)) ? y : (y + 1)] +
                     (tempMap3[x][y] <<2);
-                terrainDensityMap[x][y] = (unsigned char)(((unsigned)z) >>3);
+                Byte val = (Byte)(z / 8);
+                terrainDensityMap.set(x, y, val);
                 z &= 0x7;
             }
             dir = -dir;
             y += dir;
         }
     } else {
-        short x, y, z;
+        short x, y;
 
         for (x = 0; x < WORLD_W_4; x++) {
             for (y = 0; y < WORLD_H_4; y++) {
-                z = 0;
+                unsigned z = 0;
                 if (x > 0) {
                     z += tempMap3[x - 1][y];
                 }
@@ -477,7 +479,8 @@ void Micropolis::smoothTerrain()
                 if (y < (WORLD_H_4 - 1)) {
                     z += tempMap3[x][y + 1];
                 }
-                terrainDensityMap[x][y] = (unsigned char)((z >>2) + tempMap3[x][y]) >>1;
+                Byte val = (Byte)(z / 4 + tempMap3[x][y]) / 2;
+                terrainDensityMap.set(x, y, val);
             }
         }
     }

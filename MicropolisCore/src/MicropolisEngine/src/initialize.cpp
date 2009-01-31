@@ -108,11 +108,7 @@ void Micropolis::initWillStuff()
         }
     }
 
-    for (x = 0; x < WORLD_W_4; x++) {
-        for (y = 0; y < WORLD_H_4; y++) {
-            terrainDensityMap[x][y] = 0;
-        }
-    }
+    terrainDensityMap.clear();
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {

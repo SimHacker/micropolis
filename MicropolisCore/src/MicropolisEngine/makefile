@@ -98,7 +98,9 @@ SOURCES = \
 	src/zone.cpp
 
 HEADERS = \
+	src/data_types.h \
 	src/generate.h \
+	src/map_type.h \
 	src/micropolis.h \
 	src/stdafx.h \
 	src/text.h
@@ -148,6 +150,13 @@ cleanswig: clean
 
 install: all
 	($(PYTHON) setup.py install)
+
+#
+# NOTE: Dependencies below are not used (since Python distutils is building
+#       the binary, and not gcc & make
+#
+
+src/micropolis.h: src/map_type.h src/data_types.h
 
 allocate.cpp:   python/stdafx.h micropolis.h
 animate.cpp:    python/stdafx.h micropolis.h
