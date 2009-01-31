@@ -304,7 +304,9 @@ bool Micropolis::tryGo(int dist)
             dirLast = reverseDirection(dirReal);
 
             if (dist & 1) {
-                /* save pos every other move */
+                /* Save pos every other move.
+                 * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
+                 */
                 pushPos();
             }
 
