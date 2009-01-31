@@ -352,6 +352,7 @@ void *Micropolis::getPowerMapBuffer()
  * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
  * @return Value of the traffic density at the given position.
  * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use trafficDensityMap.worldGet() instead).
  */
 int Micropolis::getTrafficDensity(int x, int y)
 {
@@ -359,7 +360,7 @@ int Micropolis::getTrafficDensity(int x, int y)
         return 0;
     }
 
-    return trafficDensityMap[x][y];
+    return trafficDensityMap.get(x, y);
 }
 
 
@@ -369,6 +370,7 @@ int Micropolis::getTrafficDensity(int x, int y)
  * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
  * @param density the tile value to set.
  * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use trafficDensityMap.worldSet() instead).
  */
 void Micropolis::setTrafficDensity(int x, int y, int density)
 {
@@ -376,7 +378,7 @@ void Micropolis::setTrafficDensity(int x, int y, int density)
         return;
     }
 
-    trafficDensityMap[x][y] = density;
+    trafficDensityMap.set(x, y, density);
 }
 
 
@@ -392,7 +394,7 @@ void Micropolis::setTrafficDensity(int x, int y, int density)
  */
 void *Micropolis::getTrafficDensityMapBuffer()
 {
-    return (void *)trafficDensityMapBase;
+    return (void *)trafficDensityMap.getBase();
 }
 
 

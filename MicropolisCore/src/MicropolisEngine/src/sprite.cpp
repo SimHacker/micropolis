@@ -729,7 +729,6 @@ void Micropolis::doCopterSprite(
 {
     static const short CDx[9] = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
     static const short CDy[9] = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
-    short x, y;
 
     if (sprite->soundCount > 0) {
         sprite->soundCount--;
@@ -789,17 +788,17 @@ void Micropolis::doCopterSprite(
 
     if (sprite->soundCount == 0) { /* send report  */
 
-        // Convert sprite coordinates to traffic density map coordinates.
-        x = (sprite->x + 48) >>5;
-        y = sprite->y >>5;
+        // Convert sprite coordinates to world coordinates.
+        short x = (sprite->x + 48) / 16;
+        short y = sprite->y / 16;
 
-        if (x >= 0 && x < (WORLD_W >>1) && y >= 0 && y < (WORLD_H >>1)) {
+        if (x >= 0 && x < WORLD_W && y >= 0 && y < WORLD_H) {
 
             /* Don changed from 160 to 170 to shut the #$%#$% thing up! */
 
-            int chopperX = (x <<1) + 1;
-            int chopperY = (y <<1) + 1;
-            if ((trafficDensityMap[x][y] > 170) && ((getRandom16() & 7) == 0)) {
+            int chopperX = x + 1;
+            int chopperY = y + 1;
+            if (trafficDensityMap.worldGet(x, y) > 170 && (getRandom16() & 7) == 0) {
                 sendMessage(MESSAGE_HEAVY_TRAFFIC, chopperX, chopperY, true);
                 makeSound("city", "HeavyTraffic", chopperX, chopperY); /* chopper */
                 sprite->soundCount = 200;
@@ -1435,9 +1434,9 @@ void Micropolis::doBusSprite(SimSprite *sprite)
         tx = (sprite->x + sprite->xHot) >>5;
         ty = (sprite->y + sprite->yHot) >>5;
 
-        if (tx >= 0 && tx < (WORLD_W >>1) && ty >= 0 && ty < (WORLD_H >>1)) {
+        if (tx >= 0 && tx < WORLD_W_2 && ty >= 0 && ty < WORLD_H_2) {
 
-            z = trafficDensityMap[tx][ty] >>6;
+            z = trafficDensityMap.worldGet(tx << 1, ty << 1) >>6;
 
             if (z > 1) {
               z--;

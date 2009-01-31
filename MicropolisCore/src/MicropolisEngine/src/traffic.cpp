@@ -113,10 +113,13 @@ short Micropolis::makeTraffic(ZoneType dest)
 }
 
 
-/* comefrom: makeTraffic */
+/**
+ * Update the #trafficDensityMap from the stack positions of #curMapStackX and
+ * #curMapStackY.
+ */
 void Micropolis::setTrafficMap()
 {
-    register short x, z;
+    short x, z;
 
     /* For each saved position of the drive */
     for (x = curMapStackPointer; x > 0; x--) {
@@ -131,7 +134,7 @@ void Micropolis::setTrafficMap()
                 SimSprite *sprite;
 
                 /* check for rail */
-                z = trafficDensityMap[curMapX >>1][curMapY >>1];
+                z = trafficDensityMap.worldGet(curMapX, curMapY);
                 z += 50;
 
                 if (z > 240 && getRandom(5) == 0) {
@@ -144,13 +147,13 @@ void Micropolis::setTrafficMap()
                     sprite = getSprite(SPRITE_HELICOPTER);
                     if (sprite != NULL && sprite->control == -1) {
 
-		        sprite->destX = trafMaxX <<4;
-                        sprite->destY = trafMaxY <<4;
+		        sprite->destX = trafMaxX * 16;
+                        sprite->destY = trafMaxY * 16;
 
                     }
                 }
 
-                trafficDensityMap[curMapX >>1][curMapY >>1] = (Byte)z;
+                trafficDensityMap.worldSet(curMapX, curMapY, (Byte)z);
             }
         }
     }
