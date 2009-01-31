@@ -1452,11 +1452,6 @@ private:
     unsigned short *mapBase;
 
     /**
-     * Memory for tempMap1 array.
-     */
-    Ptr tempMap1Base;
-
-    /**
      * Memory for tempMap2 array.
      */
     Ptr tempMap2Base;
@@ -1471,7 +1466,7 @@ private:
      *
      * Used to smooth population density, pollution.
      */
-    Byte *tempMap1[WORLD_W_2];
+    MapByte2 tempMap1;
 
     /**
      * Temporary map 2.
@@ -1484,11 +1479,13 @@ private:
      * Temporary map 3.
      *
      * Used to smooth development density, for terrainDensityMap.
+     * @todo Can we not use tempMap1 or tempMap2?
      */
     Byte *tempMap3[WORLD_W_4];
 
     /**
      * Temporary array for smoothing fire and police station maps.
+     * @todo Can we not use tempMap1 or tempMap2 or tempMap3?
      */
     short tempMap4[WORLD_W_8][WORLD_H_8];
 
@@ -2322,8 +2319,6 @@ private:
     void doSmooth1();
 
     void doSmooth2();
-
-    void clearTempMap1();
 
     void smoothFireStationMap();
 
