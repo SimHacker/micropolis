@@ -410,14 +410,14 @@ bool Micropolis::dynamicFilter(
   int col,
   int row)
 {
-    int r = row >>1;
     int c = col >>1;
+    int r = row >>1;
     int populationDensity = populationDensityMap[c][r];
     int rateOfGrowth = rateOfGrowthMap[c>>2][r>>2];
     int traffic = trafficDensityMap[c][r];
-    int pollution = pollutionMap[c][r];
-    int crime = crimeMap.get(c, r);
-    int landValue = landValueMap.get(c, r);
+    int pollution = pollutionMap.worldGet(col, row);
+    int crime = crimeMap.worldGet(col, row);
+    int landValue = landValueMap.worldGet(col, row);
     int police = policeStationMapEffect[c>>2][r>>2];
     int fire = fireStationMapEffect[c>>2][r>>2];
 
@@ -563,14 +563,14 @@ void Micropolis::drawPollutionMap()
 
     drawAll(view);
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < WORLD_W; x += pollutionMap.BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += pollutionMap.BLOCKSIZE) {
             maybeDrawRect(
-                getCI(10 + pollutionMap[x][y]),
-                x * 6,
-                y * 6,
-                6,
-                6);
+                getCI(10 + pollutionMap.worldGet(x, y)),
+                x * 3,
+                y * 3,
+                3 * pollutionMap.BLOCKSIZE,
+                3 * pollutionMap.BLOCKSIZE);
         }
     }
 }
@@ -582,14 +582,14 @@ void Micropolis::drawCrimeMap()
 
     drawAll();
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < WORLD_W; x += crimeMap.BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += crimeMap.BLOCKSIZE) {
             maybeDrawRect(
-                getCI(crimeMap.get(x, y)),
-                x * 6,
-                y * 6,
-                6,
-                6);
+                getCI(crimeMap.worldGet(x, y)),
+                x * 3,
+                y * 3,
+                3 * crimeMap.BLOCKSIZE,
+                3 * crimeMap.BLOCKSIZE);
         }
     }
 }

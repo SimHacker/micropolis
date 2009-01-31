@@ -747,7 +747,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
         return z + STR202_CRIME_NONE;
 
     case 3:
-        z = pollutionMap[mapH >>1][mapV >>1];
+        z = pollutionMap.worldGet(mapH, mapV);
         if ((z < 64) && (z > 0)) return 13;
         z = z >> 6;
         z = z & 3;
