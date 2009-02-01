@@ -499,74 +499,29 @@ void Micropolis::smoothTerrain()
     }
 }
 
-
-/* comefrom: populationDensityScan */
-void Micropolis::doSmooth1()
+/**
+ * Perform smoothing with or without dithering.
+ * @param srcMap     Source map.
+ * @param destMap    Destination map.
+ * @param ditherFlag Function should apply dithering.
+ */
+static void smoothDitherMap(const MapByte2 &srcMap,
+                            MapByte2 *destMap,
+                            bool ditherFlag)
 {
-    /* smooths data in tempMap1 into tempMap2  */
-    if (donDither & 2) {
-        register int x, y = 0, z = 0, dir = 1;
-
-        for (x = 0; x < WORLD_W_2; x++) {
-            for (; y != WORLD_H_2 && y != -1; y += dir) {
-                z +=
-                    tempMap1.get((x == 0) ? x : (x - 1), y) +
-                    tempMap1.get((x == (WORLD_W_2 - 1)) ? x : (x + 1), y) +
-                    tempMap1.get(x, (y == 0) ? (0) : (y - 1)) +
-                    tempMap1.get(x, (y == (WORLD_H_2 - 1)) ? y : (y + 1)) +
-                    tempMap1.get(x, y);
-                tempMap2.set(x, y, (unsigned char)(((unsigned int)z) >>2));
-                z &= 3;
-            }
-            dir = -dir;
-            y += dir;
-        }
-    } else {
-        register short x,y,z;
-
-        for (x = 0; x < WORLD_W_2; x++) {
-            for (y = 0; y < WORLD_H_2; y++) {
-                z = 0;
-                if (x > 0) {
-                    z += tempMap1.get(x - 1, y);
-                }
-                if (x < (WORLD_W_2 - 1)) {
-                    z += tempMap1.get(x + 1, y);
-                }
-                if (y > 0) {
-                    z += tempMap1.get(x, y - 1);
-                }
-                if (y < (WORLD_H_2 - 1)) {
-                    z += tempMap1.get(x, y + 1);
-                }
-                z = (z + tempMap1.get(x, y)) >>2;
-                if (z > 255) {
-                    z = 255;
-                }
-                tempMap2.set(x, y, (unsigned char)z);
-            }
-        }
-    }
-}
-
-
-/* comefrom: populationDensityScan */
-void Micropolis::doSmooth2()
-{
-    /* smooths data in tempMap2 into tempMap1  */
-    if (donDither & 4) {
+    if (ditherFlag) {
         int x, y = 0, z = 0, dir = 1;
 
-        for (x = 0; x < WORLD_W_2; x++) {
-            for (; y != WORLD_H_2 && y != -1; y += dir) {
+        for (x = 0; x < srcMap.MAP_MAX_X; x++) {
+            for (; y != srcMap.MAP_MAX_Y && y != -1; y += dir) {
                 z +=
-                    tempMap2.get((x == 0) ? x : (x - 1), y) +
-                    tempMap2.get((x == (WORLD_W_2 - 1)) ? x : (x + 1), y) +
-                    tempMap2.get(x, (y == 0) ? (0) : (y - 1)) +
-                    tempMap2.get(x, (y == (WORLD_H_2 - 1)) ? y : (y + 1)) +
-                    tempMap2.get(x, y);
+                    srcMap.get((x == 0) ? x : (x - 1), y) +
+                    srcMap.get((x == srcMap.MAP_MAX_X - 1) ? x : (x + 1), y) +
+                    srcMap.get(x, (y == 0) ? (0) : (y - 1)) +
+                    srcMap.get(x, (y == (srcMap.MAP_MAX_Y - 1)) ? y : (y + 1)) +
+                    srcMap.get(x, y);
                 Byte val = (Byte)(z / 4);
-                tempMap1.set(x, y, val);
+                destMap->set(x, y, val);
                 z &= 3;
             }
             dir = -dir;
@@ -575,29 +530,43 @@ void Micropolis::doSmooth2()
     } else {
         short x, y, z;
 
-        for (x = 0; x < WORLD_W_2; x++) {
-            for (y = 0; y < WORLD_H_2; y++) {
+        for (x = 0; x < srcMap.MAP_MAX_X; x++) {
+            for (y = 0; y < srcMap.MAP_MAX_Y; y++) {
                 z = 0;
                 if (x > 0) {
-                    z += tempMap2.get(x - 1, y);
+                    z += srcMap.get(x - 1, y);
                 }
-                if (x < (WORLD_W_2 - 1)) {
-                    z += tempMap2.get(x + 1, y);
+                if (x < srcMap.MAP_MAX_X - 1) {
+                    z += srcMap.get(x + 1, y);
                 }
                 if (y > 0) {
-                    z += tempMap2.get(x, y - 1);
+                    z += srcMap.get(x, y - 1);
                 }
-                if (y < (WORLD_H_2 - 1)) {
-                    z += tempMap2.get(x, y + 1);
+                if (y < (srcMap.MAP_MAX_Y - 1)) {
+                    z += srcMap.get(x, y + 1);
                 }
-                z = (z + tempMap2.get(x, y)) >>2;
+                z = (z + srcMap.get(x, y)) >>2;
                 if (z > 255) {
                     z = 255;
                 }
-                tempMap1.set(x, y, (Byte)z);
+                destMap->set(x, y, (Byte)z);
             }
         }
     }
+}
+
+
+/* Smooth Micropolis::tempMap1 to Micropolis::tempMap2 */
+void Micropolis::doSmooth1()
+{
+    smoothDitherMap(tempMap1, &tempMap2, donDither & 2);
+}
+
+
+/* Smooth Micropolis::tempMap2 to Micropolis::tempMap1 */
+void Micropolis::doSmooth2()
+{
+    smoothDitherMap(tempMap2, &tempMap1, donDither & 4);
 }
 
 
