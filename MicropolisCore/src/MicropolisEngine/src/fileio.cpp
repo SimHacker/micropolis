@@ -74,14 +74,26 @@
 
 #ifdef IS_INTEL
 
+/**
+ * Convert an array of short values between MAC and Intel endian formats.
+ * @param buf Array with shorts.
+ * @param len Number of short values in the array.
+ */
+#define SWAP_SHORTS(buf, len)        swap_shorts(buf, len)
 
-#define SWAP_SHORTS(a,b)        swap_shorts(a,b)
-#define HALF_SWAP_LONGS(a,b)    half_swap_longs(a,b)
+/**
+ * Convert an array of long values between MAC and Intel endian formats.
+ * @param buf Array with longs.
+ * @param len Number of long values in the array.
+ */
+#define HALF_SWAP_LONGS(buf, len)    half_swap_longs(buf, len)
 
-
-static void swap_shorts(
-    short *buf,
-    int len)
+/**
+ * Swap upper and lower byte of all shorts in the array.
+ * @param buf Array with shorts.
+ * @param len Number of short values in the array.
+ */
+static void swap_shorts(short *buf, int len)
 {
     int i;
 
@@ -93,9 +105,12 @@ static void swap_shorts(
 }
 
 
-static void half_swap_longs(
-    long *buf,
-    int len)
+/**
+ * Swap upper and lower words of all longs in the array.
+ * @param buf Array with longs.
+ * @param len Number of long values in the array.
+ */
+static void half_swap_longs(long *buf, int len)
 {
     int i;
 
@@ -113,20 +128,40 @@ static void half_swap_longs(
 #else
 
 
-#define SWAP_SHORTS(a, b)
-#define HALF_SWAP_LONGS(a, b)
+/**
+ * Convert an array of short values between MAC and MAC endian formats.
+ * @param buf Array with shorts.
+ * @param len Number of short values in the array.
+ * @note This version does not change anything since the data is already in the
+ *       correct format.
+ */
+#define SWAP_SHORTS(buf, len)
+
+/**
+ * Convert an array of long values between MAC and MAC endian formats.
+ * @param buf Array with longs.
+ * @param len Number of long values in the array.
+ * @note This version does not change anything since the data is already in the
+ *       correct format.
+ */
+#define HALF_SWAP_LONGS(buf, len)
 
 
 #endif
 
-
-static bool load_short(
-    short *buf,
-    int len,
-    FILE *f)
+/**
+ * Load an array of short values from file to memory.
+ *
+ * Convert to the correct processor architecture, if necessary.
+ * @param buf Buffer to put the loaded short values in.
+ * @param len Number of short values to load.
+ * @param f   File handle of the file to load from.
+ * @return Load was succesfull.
+ */
+static bool load_short(short *buf, int len, FILE *f)
 {
-    size_t result =
-        fread(buf, sizeof(short), len, f);
+    size_t result = fread(buf, sizeof(short), len, f);
+
     if ((int)result != len) {
          return false;
     }
@@ -137,10 +172,16 @@ static bool load_short(
 }
 
 
-static bool save_short(
-    short *buf,
-    int len,
-    FILE *f)
+/**
+ * Save an array of short values from memory to file.
+ *
+ * Convert to the correct endianness first, if necessary.
+ * @param buf Buffer containing the short values to save.
+ * @param len Number of short values to save.
+ * @param f   File handle of the file to save to.
+ * @return Save was succesfull.
+ */
+static bool save_short(short *buf, int len, FILE *f)
 {
     SWAP_SHORTS(buf, len);        /* to MAC */
 
@@ -153,29 +194,43 @@ static bool save_short(
     return true;
 }
 
-
+/**
+ * Load a city file from a given filename and (optionally) directory.
+ * @param filename Name of the file to load.
+ * @param dir      If not \c NULL, name of the directory containing the file.
+ * @return Load was succesfull.
+ */
 bool Micropolis::loadFileDir(const char *filename, const char *dir)
 {
-    bool result = false;
     char *path = NULL;
     FILE *f;
     Quad size;
 
+    // If needed, construct a path to the file.
     if (dir != NULL) {
         path = (char *)malloc(strlen(dir) + 1 + strlen(filename) + 1);
         sprintf(path, "%s/%s", dir, filename);
         filename = path;
     }
 
-    if ((f = fopen(filename, "rb")) == NULL) {
-        goto done;
+    // Open the file.
+    f = fopen(filename, "rb");
+
+    // Before checking whether open() succeeded, first drop the path.
+    if (path != NULL) {
+        free(path);
+    }
+
+    // open() failed; report failure.
+    if (f == NULL) {
+        return false;
     }
 
     fseek(f, 0L, SEEK_END);
     size = ftell(f);
     fseek(f, 0L, SEEK_SET);
 
-    result =
+    bool result =
       (size == 27120) &&
       load_short(resHist, HISTORY_LENGTH / sizeof(short), f) &&
       load_short(comHist, HISTORY_LENGTH / sizeof(short), f) &&
@@ -188,15 +243,14 @@ bool Micropolis::loadFileDir(const char *filename, const char *dir)
 
     fclose(f);
 
- done:
-    if (path != NULL) {
-        free(path);
-    }
-
     return result;
 }
 
-
+/**
+ * Load a file, and initialize the game variables.
+ * @param filename Name of the file to load.
+ * @return Load was succesfull.
+ */
 bool Micropolis::loadFile(const char *filename)
 {
     long n;
@@ -253,14 +307,12 @@ bool Micropolis::loadFile(const char *filename)
     cityTime = max((Quad)0, cityTime);
 
     // If the tax is nonsensical, set it to a reasonable value.
-    if ((cityTax > 20) ||
-        (cityTax < 0)) {
+    if (cityTax > 20 || cityTax < 0) {
         setCityTax(7);
     }
 
     // If the speed is nonsensical, set it to a reasonable value.
-    if ((simSpeed < 0) ||
-        (simSpeed > 3)) {
+    if (simSpeed < 0 || simSpeed > 3) {
         setSpeed(3);
     }
 
