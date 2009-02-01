@@ -101,7 +101,6 @@ Micropolis::Micropolis() :
         tempMap1(0),
         tempMap2(0),
         tempMap3(0),
-        tempMap4(0),
         powerMap(0),
         rateOfGrowthMap(0),
         fireStationMap(0),

@@ -1285,9 +1285,6 @@ public:
     /** @name Maps */
     //@{
 
-#ifndef SWIG
-// SWIG does not support nested classes.
-
     MapByte2 populationDensityMap; ///< Population density map.
     MapByte2 trafficDensityMap; ///< Traffic map.
     MapByte2 pollutionMap; ///< Pollution map.
@@ -1321,11 +1318,6 @@ public:
      * Used to smooth development density, for terrainDensityMap.
      */
     MapByte4 tempMap3;
-
-    /**
-     * Temporary array for smoothing fire and police station maps.
-     */
-    MapShort8 tempMap4;
 
     /**
      * Power distribution map.
@@ -1381,9 +1373,8 @@ public:
      */
     MapShort8 comRateMap;
 
-#endif
-
     //@}
+
 
     /** @name Historic graphs. */
     //@{
@@ -2276,10 +2267,6 @@ private:
     void doSmooth1();
 
     void doSmooth2();
-
-    void smoothFireStationMap();
-
-    void smoothPoliceStationMap();
 
     void computeComRateMap();
 
