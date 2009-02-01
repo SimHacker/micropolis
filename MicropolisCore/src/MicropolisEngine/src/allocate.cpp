@@ -116,7 +116,6 @@ void Micropolis::destroyMapArrays()
     tempMap1.clear();
     tempMap2.clear();
     tempMap3.clear();
-    tempMap4.clear();
 
     terrainDensityMap.clear();
 

@@ -92,6 +92,8 @@ class Map
 {
 public:
     Map(DATA defaultValue);
+    Map(const Map<DATA, BLKSIZE>& map);
+    Map& operator=(const Map<DATA, BLKSIZE> &map);
     ~Map();
 
     /** Size of a cluster in number of world positions. */
@@ -126,11 +128,37 @@ private:
  *                     for clearing the map.
  */
 template <typename DATA, int BLKSIZE>
-Map<DATA, BLKSIZE>::Map(DATA defaultValue): MAP_BLOCKSIZE(BLKSIZE)
-            , MAP_MAX_X((WORLD_W + BLKSIZE - 1) / BLKSIZE)
-            , MAP_MAX_Y((WORLD_H + BLKSIZE - 1) / BLKSIZE)
-            , _MAP_DEFAULT_VALUE(defaultValue)
+Map<DATA, BLKSIZE>::Map(DATA defaultValue):
+            MAP_BLOCKSIZE(BLKSIZE),
+            MAP_MAX_X((WORLD_W + BLKSIZE - 1) / BLKSIZE),
+            MAP_MAX_Y((WORLD_H + BLKSIZE - 1) / BLKSIZE),
+            _MAP_DEFAULT_VALUE(defaultValue)
 {
+}
+
+/** Copy constructor */
+template <typename DATA, int BLKSIZE>
+Map<DATA, BLKSIZE>::Map(const Map<DATA, BLKSIZE> &map):
+            MAP_BLOCKSIZE(BLKSIZE),
+            MAP_MAX_X((WORLD_W + BLKSIZE - 1) / BLKSIZE),
+            MAP_MAX_Y((WORLD_H + BLKSIZE - 1) / BLKSIZE),
+            _MAP_DEFAULT_VALUE(map._MAP_DEFAULT_VALUE)
+{
+    for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+        this->_mapData[i] = map._mapData[i];
+    }
+}
+
+/** Assignment operator */
+template <typename DATA, int BLKSIZE>
+Map<DATA, BLKSIZE> &Map<DATA, BLKSIZE>::operator=(const Map<DATA, BLKSIZE> &map)
+{
+    if(this != &map) {
+        for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+            this->_mapData[i] = map._mapData[i];
+        }
+    }
+    return *this;
 }
 
 /** Generic map destructor */

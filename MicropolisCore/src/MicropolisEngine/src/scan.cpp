@@ -71,6 +71,37 @@
 
 ////////////////////////////////////////////////////////////////////////
 
+/**
+ * Smooth a station map.
+ *
+ * Used for smoothing fire station and police station coverage maps.
+ * @param map Map to smooth.
+ */
+static void smoothStationMap(MapShort8 *map)
+{
+    short x, y, edge;
+    MapShort8 tempMap(*map);
+
+    for (x = 0; x < tempMap.MAP_MAX_X; x++) {
+        for (y = 0; y < tempMap.MAP_MAX_Y; y++) {
+            edge = 0;
+            if (x > 0) {
+                edge += tempMap.get(x - 1, y);
+            }
+            if (x < (WORLD_W_8 - 1)) {
+                edge += tempMap.get(x + 1, y);
+            }
+            if (y > 0) {
+                edge += tempMap.get(x, y - 1);
+            }
+            if (y < (WORLD_H_8 - 1)) {
+                edge += tempMap.get(x, y + 1);
+            }
+            edge = tempMap.get(x, y) + edge / 4;
+            map->set(x, y, edge / 2);
+        }
+    }
+}
 
 /* comefrom: simulate SpecialInit */
 void Micropolis::fireAnalysis()
@@ -79,9 +110,9 @@ void Micropolis::fireAnalysis()
 
     register int x, y;
 
-    smoothFireStationMap();
-    smoothFireStationMap();
-    smoothFireStationMap();
+    smoothStationMap(&fireStationMap);
+    smoothStationMap(&fireStationMap);
+    smoothStationMap(&fireStationMap);
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
@@ -380,9 +411,9 @@ void Micropolis::crimeScan()
     short x, y, z;
     short cmax;
 
-    smoothPoliceStationMap();
-    smoothPoliceStationMap();
-    smoothPoliceStationMap();
+    smoothStationMap(&policeStationMap);
+    smoothStationMap(&policeStationMap);
+    smoothStationMap(&policeStationMap);
 
     totz = 0;
     numz = 0;
@@ -578,72 +609,6 @@ void Micropolis::doSmooth2()
                 }
                 tempMap1.set(x, y, (Byte)z);
             }
-        }
-    }
-}
-
-
-/* comefrom: fireAnalysis */
-void Micropolis::smoothFireStationMap()
-{
-    short x, y, edge;
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            edge = 0;
-            if (x > 0) {
-                edge += fireStationMap.get(x - 1, y);
-            }
-            if (x < (WORLD_W_8 - 1)) {
-                edge += fireStationMap.get(x + 1, y);
-            }
-            if (y > 0) {
-                edge += fireStationMap.get(x, y - 1);
-            }
-            if (y < (WORLD_H_8 - 1)) {
-                edge += fireStationMap.get(x, y + 1);
-            }
-            edge = (edge >>2) + fireStationMap.get(x, y);
-            tempMap4.set(x, y, edge >>1);
-        }
-    }
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            fireStationMap.set(x, y, tempMap4.get(x, y));
-        }
-    }
-}
-
-
-/* comefrom: crimeScan */
-void Micropolis::smoothPoliceStationMap()
-{
-    int x, y, edge;
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            edge = 0;
-            if (x > 0) {
-                edge += policeStationMap.get(x - 1, y);
-            }
-            if (x < (WORLD_W_8 - 1)) {
-                edge += policeStationMap.get(x + 1, y);
-            }
-            if (y> 0) {
-                edge += policeStationMap.get(x, y - 1);
-            }
-            if (y < (WORLD_H_8 - 1)) {
-                edge += policeStationMap.get(x, y + 1);
-            }
-            edge = (edge >>2) + policeStationMap.get(x, y);
-            tempMap4.set(x, y, edge >>1);
-        }
-    }
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            policeStationMap.set(x, y, tempMap4.get(x, y));
         }
     }
 }
