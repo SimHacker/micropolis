@@ -88,13 +88,13 @@ static void smoothStationMap(MapShort8 *map)
             if (x > 0) {
                 edge += tempMap.get(x - 1, y);
             }
-            if (x < (WORLD_W_8 - 1)) {
+            if (x < tempMap.MAP_MAX_X - 1) {
                 edge += tempMap.get(x + 1, y);
             }
             if (y > 0) {
                 edge += tempMap.get(x, y - 1);
             }
-            if (y < (WORLD_H_8 - 1)) {
+            if (y < tempMap.MAP_MAX_Y - 1) {
                 edge += tempMap.get(x, y + 1);
             }
             edge = tempMap.get(x, y) + edge / 4;
