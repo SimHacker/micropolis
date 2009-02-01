@@ -75,8 +75,6 @@
 /** Reset many game state variables */
 void Micropolis::initWillStuff()
 {
-    short x, y;
-
     randomlySeedRandom();
     initGraphMax();
     destroyAllSprites();
