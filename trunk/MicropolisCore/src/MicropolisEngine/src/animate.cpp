@@ -63,7 +63,7 @@
 /** @file animate.cpp
  * Animate Tiles, for Unix Micropolis.
  *
- * @todo Generate the table below from, the animation sequences file
+ * @todo Generate the table below from the animation sequences file
  *       doc/AnimationSequences.txt and the doc/genAnimationTable.py
  *       program
  */

@@ -142,8 +142,6 @@ Map<DATA, BLKSIZE>::~Map()
 /**
  * Generic fill routine.
  *
- * Resets all data of the map to #_MAP_DEFAULT_VALUE.
- *
  * @param value Value with which to fill the map.
  */
 template <typename DATA, int BLKSIZE>

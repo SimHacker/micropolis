@@ -410,8 +410,6 @@ bool Micropolis::dynamicFilter(
   int col,
   int row)
 {
-    int c = col >>1;
-    int r = row >>1;
     int populationDensity = populationDensityMap.worldGet(col, row);
     int rateOfGrowth = rateOfGrowthMap.worldGet(col, row);
     int traffic = trafficDensityMap.worldGet(col, row);
