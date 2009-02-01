@@ -190,8 +190,8 @@ void Micropolis::pollutionTerrainLandValueScan()
 {
     /* Does pollution, terrain, land value */
     Quad ptot, LVtot;
-    register int x, y, z, dis;
-    int Plevel, LVflag, loc, zx, zy, Mx, My, pnum, LVnum, pmax;
+    int x, y, z, dis;
+    int pollutionLevel, LVflag, loc, worldX, worldY, Mx, My, pnum, LVnum, pmax;
 
     // tempMap3 is a map of development density, smoothed into terrainMap.
     tempMap3.clear();
@@ -201,22 +201,22 @@ void Micropolis::pollutionTerrainLandValueScan()
 
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
-            Plevel = 0;
+            pollutionLevel = 0;
             LVflag = 0;
-            zx = x <<1;
-            zy = y <<1;
+            worldX = x * 2;
+            worldY = y * 2;
 
-            for (Mx = zx; Mx <= zx + 1; Mx++) {
-                for (My = zy; My <= zy + 1; My++) {
+            for (Mx = worldX; Mx <= worldX + 1; Mx++) {
+                for (My = worldY; My <= worldY + 1; My++) {
                     loc = (map[Mx][My] & LOMASK);
                     if (loc) {
                         if (loc < RUBBLE) {
-                            // Incremenet terrain memory.
+                            // Increment terrain memory.
                             Byte value = tempMap3.get(x >>1, y >>1);
                             tempMap3.set(x >>1, y >>1, value + 15);
                             continue;
                         }
-                        Plevel += getPollutionValue(loc);
+                        pollutionLevel += getPollutionValue(loc);
                         if (loc >= ROADBASE) {
                             LVflag++;
                         }
@@ -225,16 +225,13 @@ void Micropolis::pollutionTerrainLandValueScan()
             }
 
 /* XXX ??? This might have to do with the radiation tile returning -40.
-            if (Plevel < 0) {
-                Plevel = 250;
+            if (pollutionLevel < 0) {
+                pollutionLevel = 250;
             }
 */
 
-            if (Plevel > 255) {
-                Plevel = 255;
-            }
-
-            tempMap1.set(x, y, Plevel);
+            pollutionLevel = min(pollutionLevel, 255);
+            tempMap1.set(x, y, pollutionLevel);
 
 
 
@@ -246,12 +243,7 @@ void Micropolis::pollutionTerrainLandValueScan()
                 if (crimeMap.get(x, y) > 190) {
                     dis -= 20;
                 }
-                if (dis > 250) {
-                    dis = 250;
-                }
-                if (dis < 1) {
-                    dis = 1;
-                }
+                dis = clamp(dis, 1, 250);
                 landValueMap.set(x, y, dis);
                 LVtot += dis;
                 LVnum++;
@@ -261,7 +253,7 @@ void Micropolis::pollutionTerrainLandValueScan()
         }
     }
 
-    if (LVnum) {
+    if (LVnum > 0) {
         landValueAverage = (short)(LVtot / LVnum);
     } else {
         landValueAverage = 0;
