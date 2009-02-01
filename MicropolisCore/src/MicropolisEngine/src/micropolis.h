@@ -2231,9 +2231,6 @@ private:
     short cityCenterX; ///< X coordinate of city center
     short cityCenterY; ///< Y coordinate of city center
 
-    short cityCenterX2; ///< X coordinate of city center divided by 2
-    short cityCenterY2; ///< Y coordinate of city center divided by 2
-
     short pollutionMaxX; ///< X coordinate of most polluted area
     short pollutionMaxY; ///< Y coordinate of most polluted area
 

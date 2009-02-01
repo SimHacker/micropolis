@@ -175,9 +175,6 @@ void Micropolis::populationDensityScan()
         cityCenterY = WORLD_H_2;
     }
 
-    cityCenterX2 = cityCenterX >>1;
-    cityCenterY2 = cityCenterY >>1;
-
     // Set flags for updated maps
     newMapFlags[MAP_TYPE_POPULATION_DENSITY] = 1;
     newMapFlags[MAP_TYPE_RATE_OF_GROWTH] = 1;
@@ -265,7 +262,7 @@ void Micropolis::pollutionTerrainLandValueScan()
 
 
             if (landValueFlag) {              /* LandValue Equation */
-                dis = 34 - getCityCenterDistance(x, y);
+                dis = 34 - getCityCenterDistance(worldX, worldY) / 2;
                 dis = dis <<2;
                 dis += terrainDensityMap.get(x >>1, y >>1);
                 dis -= pollutionMap.get(x, y);
@@ -375,29 +372,30 @@ int Micropolis::getPollutionValue(int loc)
 
 
 /**
- * Compute Manhattan distance from given position to (#cityCenterX2, #cityCenterY2).
- * @param x X coordinate of given position.
- * @param y Y coordinate of given position.
+ * Compute Manhattan distance between given world position and center of the
+ * city.
+ * @param x X world coordinate of given position.
+ * @param y Y world coordinate of given position.
  * @return Manhattan distance (\c dx+dy ) between both positions.
- * @note For long distances (> 32), value 32 is returned.
+ * @note For long distances (> 64), value 64 is returned.
  */
 int Micropolis::getCityCenterDistance(int x, int y)
 {
     int xDis, yDis;
 
-    if (x > cityCenterX2) {
-        xDis = x - cityCenterX2;
+    if (x > cityCenterX) {
+        xDis = x - cityCenterX;
     } else {
-        xDis = cityCenterX2 - x;
+        xDis = cityCenterX - x;
     }
 
-    if (y > cityCenterY2) {
-        yDis = y - cityCenterY2;
+    if (y > cityCenterY) {
+        yDis = y - cityCenterY;
     } else {
-        yDis = cityCenterY2 - y;
+        yDis = cityCenterY - y;
     }
 
-    return min(xDis + yDis, 32);
+    return min(xDis + yDis, 64);
 }
 
 
@@ -580,7 +578,7 @@ void Micropolis::computeComRateMap()
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            z = getCityCenterDistance(x * 4,y * 4); // 0..32
+            z = (short)(getCityCenterDistance(x * 8,y * 8) / 2); // 0..32
             z = z * 4;  // 0..128
             z = 64 - z; // 64..-64
             comRateMap.set(x, y, z);

@@ -584,12 +584,6 @@ void Micropolis::init()
     // short cityCenterY;
     cityCenterY = 0;
 
-    // short cityCenterX2;
-    cityCenterX2 = 0;
-
-    // short cityCenterY2;
-    cityCenterY2 = 0;
-
     // short pollutionMaxX;
     pollutionMaxX = 0;
 
