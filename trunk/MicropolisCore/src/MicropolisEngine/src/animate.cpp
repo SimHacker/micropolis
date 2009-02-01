@@ -1,5 +1,4 @@
 /* animate.cpp
- * Animate Tiles, for Unix Micropolis.
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop

@@ -147,7 +147,7 @@ void Micropolis::setTrafficMap()
                     sprite = getSprite(SPRITE_HELICOPTER);
                     if (sprite != NULL && sprite->control == -1) {
 
-		        sprite->destX = trafMaxX * 16;
+                        sprite->destX = trafMaxX * 16;
                         sprite->destY = trafMaxY * 16;
 
                     }

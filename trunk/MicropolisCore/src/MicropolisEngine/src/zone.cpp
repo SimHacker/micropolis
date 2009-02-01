@@ -250,7 +250,9 @@ short Micropolis::getLandPollutionValue()
 
 void Micropolis::incRateOfGrowth(int amount)
 {
-    rateOfGrowthMap[curMapX>>3][curMapY>>3] += amount<<2;
+    int value = rateOfGrowthMap.worldGet(curMapX, curMapY);
+    value = clamp(value + amount << 2, -200, 200);
+    rateOfGrowthMap.worldSet(curMapX, curMapY, value);
 }
 
 
@@ -726,7 +728,7 @@ short Micropolis::evalCom(int traf)
         return -3000;
     }
 
-    Value = comRateMap[curMapX >>3][curMapY >>3];
+    Value = comRateMap.worldGet(curMapX, curMapY);
 
     return Value;
 }

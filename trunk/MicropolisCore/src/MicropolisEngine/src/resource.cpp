@@ -1,5 +1,4 @@
 /* resource.cpp
- * Get resources (from files)
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -113,10 +112,10 @@ Resource *Micropolis::getResource(const char *name, Quad id)
     /// @bug Not safe (overflow, non-printable chars)
     sprintf(
         fname,
-	"%s/%c%c%c%c.%d",
-	resourceDir.c_str(),
-	r->name[0], r->name[1], r->name[2], r->name[3],
-	(int)r->id);
+        "%s/%c%c%c%c.%d",
+        resourceDir.c_str(),
+        r->name[0], r->name[1], r->name[2], r->name[3],
+        (int)r->id);
 
     struct stat st;
     FILE *fp = NULL;

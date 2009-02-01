@@ -413,13 +413,13 @@ bool Micropolis::dynamicFilter(
     int c = col >>1;
     int r = row >>1;
     int populationDensity = populationDensityMap.worldGet(col, row);
-    int rateOfGrowth = rateOfGrowthMap[c>>2][r>>2];
+    int rateOfGrowth = rateOfGrowthMap.worldGet(col, row);
     int traffic = trafficDensityMap.worldGet(col, row);
     int pollution = pollutionMap.worldGet(col, row);
     int crime = crimeMap.worldGet(col, row);
     int landValue = landValueMap.worldGet(col, row);
-    int police = policeStationMapEffect[c>>2][r>>2];
-    int fire = fireStationMapEffect[c>>2][r>>2];
+    int police = policeStationEffectMap.worldGet(col, row);
+    int fire = fireStationEffectMap.worldGet(col, row);
 
 
     return (
@@ -507,7 +507,7 @@ void Micropolis::drawRateOfGrowth()
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
             short val;
-            short z = rateOfGrowthMap[x][y];
+            short z = rateOfGrowthMap.get(x, y);
 
             if (z > 100) {
                 val = VAL_VERYPLUS;
@@ -626,7 +626,7 @@ void Micropolis::drawFireRadius()
     for (x = 0; x < WORLD_H_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
             maybeDrawRect(
-                getCI(fireStationMapEffect[x][y]),
+                getCI(fireStationEffectMap.get(x, y)),
                 x * 24,
                 y * 24,
                 24,
@@ -644,7 +644,7 @@ void Micropolis::drawPoliceRadius()
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
             maybeDrawRect(
-                getCI(policeStationMapEffect[x][y]),
+                getCI(policeStationEffectMap.get(x, y)),
                 x * 24,
                 y * 24,
                 24,

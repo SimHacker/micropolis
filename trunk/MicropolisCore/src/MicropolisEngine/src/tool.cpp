@@ -754,7 +754,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
         return z + STR202_POLLUTION_NONE;
 
     case 4:
-        z = rateOfGrowthMap[mapH >>3][mapV >>3];
+        z = rateOfGrowthMap.worldGet(mapH, mapV);
         if (z < 0) return STR202_GROWRATE_DECLINING;
         if (z == 0) return STR202_GROWRATE_STABLE;
         if (z > 100) return STR202_GROWRATE_FASTGROWTH;

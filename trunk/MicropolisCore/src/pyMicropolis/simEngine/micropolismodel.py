@@ -162,7 +162,7 @@ class MicropolisModel(micropolisengine.Micropolis):
             'color': 0xff4f4f,
             'title': 'POLLUTION ALERT!',
             'description': """Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.
- 
+
 Either clean up your act or open a gas mask concession at city hall.""",
         },
 
@@ -178,7 +178,7 @@ Either clean up your act or open a gas mask concession at city hall.""",
             'color': 0xff4f4f,
             'title': 'TRAFFIC WARNING!',
             'description': """Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.
- 
+
 Either build more roads and rails or get a bulletproof limo.""",
         },
 
@@ -194,7 +194,7 @@ Either build more roads and rails or get a bulletproof limo.""",
             'color': 0xff4f4f,
             'title': 'MONSTER ATTACK!',
             'description': """A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.
- 
+
 All you can do is wait till he leaves, then rebuild from the rubble.""",
             'sprite': micropolisengine.SPRITE_MONSTER,
         },
@@ -284,7 +284,7 @@ All you can do is wait till he leaves, then rebuild from the rubble.""",
             'color': 0x7fff7f,
             'title': 'MEGALOPOLIS',
             'description': """Congratulation, you have reached the highest category of urban development, the megalopolis.
- 
+
 If you manage to reach this level, send us email at micropolis@laptop.org or send us a copy of your city. We might do something interesting with it.""",
         },
 
@@ -308,7 +308,7 @@ If you manage to reach this level, send us email at micropolis@laptop.org or sen
             'color': 0xff4f4f,
             'title': 'NUCLEAR MELTDOWN!',
             'description': """A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.
- 
+
 Many generations will confront this problem before it goes away, so don't hold your breath.""",
         },
 
@@ -318,7 +318,7 @@ Many generations will confront this problem before it goes away, so don't hold y
             'color': 0xff4f4f,
             'title': 'RIOTS!',
             'description': """The citizens are rioting in the streets, setting cars and houses on fire, and bombing government buildings and businesses!
- 
+
 All media coverage is blacked out, while the fascist pigs beat the poor citizens into submission.""",
         },
 
@@ -349,7 +349,7 @@ All media coverage is blacked out, while the fascist pigs beat the poor citizens
             'color': 0xff4f4f,
             'title': 'IMPEACHMENT NOTICE!',
             'description': """The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob -- led by your mother -- has been spotted in the vicinity of city hall.
- 
+
 You should seriously consider taking an extended vacation -- NOW. (Or read the manual and try again.)""",
             'view': 'todo: show impeachment image',
         },
@@ -655,7 +655,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def startTimer(
         self):
-      
+
         if self.timerActive:
             return
 
@@ -740,7 +740,7 @@ You have 10 years to turn this swamp back into a city again.""",
             #print "Called handler."
         else:
             print "No handler for", name
-  
+
 
     def addRobot(self, robot):
         robots = self.robots
@@ -767,94 +767,94 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def handle_UIAutoGoto(self, x, y):
         print "handle_UIAutoGoto(self, x, y)", (self, x, y)
-  
+
 
     def handle_UIDidGenerateNewCity(self):
         print "handle_UIDidGenerateNewCity(self)", (self,)
 
-  
+
     def handle_UIDidLoadCity(self):
         print "handle_UIDidLoadCity(self)", (self,)
 
-  
+
     def handle_UIDidLoadScenario(self):
         print "handle_UIDidLoadScenario(self)", (self,)
 
-  
+
     def handle_UIDidSaveCity(self):
         print "handle_UIDidSaveCity(self)", (self,)
 
-  
+
     def handle_UIDidTool(self, name, x, y):
         print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
 
-  
+
     def handle_UIDidntLoadCity(self, msg):
         print "handle_UIDidntLoadCity(self, msg)", (self, msg)
 
-  
+
     def handle_UIDidntSaveCity(self, msg):
         print "handle_UIDidntSaveCity(self, msg)", (self, msg)
 
-  
+
     def handle_UIDoPendTool(self, tool, x, y):
         print "handle_DoPendTool(self, tool, x, y)", (self, tool, x, y)
 
-  
+
     def handle_UIDropFireBombs(self):
         print "handle_DropFireBombs(self)", (self,)
 
-  
+
     def handle_UIInitializeSound(self):
         print "handle_UIInitializeSound(self)", (self,)
 
-  
+
     def handle_UILoseGame(self):
         print "handle_UILoseGame(self)", (self,)
 
-  
+
     def handle_UIMakeSound(self, channel, sound, x, y):
         #print "handle_UIMakeSound(self, channel, sound, x, y)", (self, channel, sound, x, y)
         pass # print "SOUND", channel, sound, x, y
 
-  
+
     def handle_UINewGame(self):
         print "handle_UINewGame(self)", (self,)
 
-  
+
     def handle_UIPlayNewCity(self):
         print "handle_UIPlayNewCity(self)", (self,)
 
-  
+
     def handle_UIPopUpMessage(self, msg):
         print "handle_UIPopUpMessage(self, msg)", (self, msg)
 
-  
+
     def handle_UIReallyStartGame(self):
         print "handle_UIReallyStartGame(self)", (self,)
 
-  
+
     def handle_UISaveCityAs(self):
         print "handle_UISaveCityAs(self)", (self,)
 
-  
+
     def handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax):
         pass # print "handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax)", (self, flowStr, previousStr, currentStr, collectedStr, tax)
 
-  
+
     def handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
         pass # print "handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
 
-  
+
     def handle_UISetCityName(self, CityName):
         print "handle_UISetCityName(self, CityName)", (self, CityName)
 
-  
+
     def handle_UISetDate(self, str, m, y):
         #print "handle_UISetDate(self, str, m, d)", (self, str, m, y)
         pass#print "DATE", str, m, y
 
-  
+
     def handle_UISetDemand(self, r, c, i):
         #print "handle_UISetDemand(self, r, c, i)", (self, r, c, i)
         self.r = r
@@ -863,14 +863,14 @@ You have 10 years to turn this swamp back into a city again.""",
         for demand in self.demands:
             demand.update()
 
-  
+
     def handle_UISetEvaluation(self, *args):
         #print "handle_UISetEvaluation(self, args)
         self.evaluation = args
         for evaluation in self.evaluations:
             evaluation.update()
 
-  
+
     def handle_UISetFunds(self, funds):
         #print "handle_UISetFunds(self, funds)", (self, funds)
         pass # print "FUNDS", funds
@@ -879,11 +879,11 @@ You have 10 years to turn this swamp back into a city again.""",
     def handle_UISetGameLevel(self, GameLevel):
         print "handle_UISetGameLevel(self, GameLevel)", (self, GameLevel)
 
-  
+
     def handle_UISetMapState(self, state):
         print "handle_UISetMapState(self, state)", (self, state)
 
-  
+
     def handle_UISetMessage(self, str):
         #print "handle_UISetMessage(self, str)", (self, str)
         print "MESSAGE", str
@@ -895,32 +895,32 @@ You have 10 years to turn this swamp back into a city again.""",
     def handle_UISetSpeed(self, speed):
         print "handle_UISetSpeed(self, speed)", (self, speed)
 
-  
+
     def handle_UIShowBudgetAndWait(self):
         print "handle_UIShowBudgetAndWait(self)", (self,)
 
-  
+
     def handle_UIShowPicture(self, id):
         #print "handle_UIShowPicture(self, id)", (self, id)
         print "SHOWPICTURE", id
 
-  
+
     def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
         print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
 
-  
+
     def handle_UIStartEarthquake(self, magnitude):
         print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
 
-  
+
     def handle_UIStartLoad(self):
         print "handle_UIStartLoad(self)", (self,)
 
-  
+
     def handle_UIStartScenario(self, scenario):
         print "handle_UIStartScenario(self, scenario)", (self, scenario)
 
-  
+
     def handle_UIWinGame(self):
         print "handle_UIWinGame(self)", (self,)
 

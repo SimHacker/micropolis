@@ -1,4 +1,5 @@
-/*
+/* data_types.h
+ *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
  * Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If

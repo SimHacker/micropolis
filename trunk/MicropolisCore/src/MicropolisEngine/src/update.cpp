@@ -111,7 +111,7 @@ void Micropolis::updateHeads()
 {
     mustUpdateFunds = true;
     valveFlag = true;
-    cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast = 
+    cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast =
       resLast = comLast = indLast = -999999;
     doUpdateHeads();
 }
@@ -251,10 +251,10 @@ void Micropolis::updateOptions()
 {
     if (mustUpdateOptions) {
         mustUpdateOptions = false;
-	callback(
-	    "UIUpdate",
-	    "s",
-	    "options");
+        callback(
+            "UIUpdate",
+            "s",
+            "options");
     }
 }
 

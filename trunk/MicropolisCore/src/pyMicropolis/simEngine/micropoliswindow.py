@@ -104,7 +104,7 @@ class MicropolisPanedWindow(gtk.Window):
         self,
         engine=None,
         **args):
-      
+
         gtk.Window.__init__(self, **args)
 
         self.connect('destroy', gtk.main_quit)

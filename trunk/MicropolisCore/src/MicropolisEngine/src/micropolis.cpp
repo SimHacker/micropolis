@@ -93,16 +93,22 @@ void not_reached(int line, const char *fname)
  */
 Micropolis::Micropolis() :
         populationDensityMap(0),
-	trafficDensityMap(0),
-	pollutionMap(0),
-	landValueMap(0),
-	crimeMap(0),
-	terrainDensityMap(0),
-	tempMap1(0),
-	tempMap2(0),
-	tempMap3(0),
-	tempMap4(0),
-	powerMap(0)
+        trafficDensityMap(0),
+        pollutionMap(0),
+        landValueMap(0),
+        crimeMap(0),
+        terrainDensityMap(0),
+        tempMap1(0),
+        tempMap2(0),
+        tempMap3(0),
+        tempMap4(0),
+        powerMap(0),
+        rateOfGrowthMap(0),
+        fireStationMap(0),
+        fireStationEffectMap(0),
+        policeStationMap(0),
+        policeStationEffectMap(0),
+        comRateMap(0)
 {
     init();
 }
@@ -287,24 +293,12 @@ void Micropolis::init()
     crimeMap.clear();
     powerMap.clear();
     terrainDensityMap.clear();
-
-    // short rateOfGrowthMap[WORLD_W_8][WORLD_H_8];
-    memset(rateOfGrowthMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // short fireStationMap[WORLD_W_8][WORLD_H_8];
-    memset(fireStationMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // short policeStationMap[WORLD_W_8][WORLD_H_8];
-    memset(policeStationMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // short policeStationMapEffect[WORLD_W_8][WORLD_H_8];
-    memset(policeStationMapEffect, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // short fireStationMapEffect[WORLD_W_8][WORLD_H_8];
-    memset(fireStationMapEffect, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
-
-    // short comRateMap[WORLD_W_8][WORLD_H_8];
-    memset(comRateMap, 0, sizeof(short) * WORLD_W_8 * WORLD_H_8);
+    rateOfGrowthMap.clear();
+    fireStationMap.clear();
+    fireStationEffectMap.clear();
+    policeStationMap.clear();
+    policeStationEffectMap.clear();
+    comRateMap.clear();
 
     // unsigned short *mapBase;
     mapBase = NULL;

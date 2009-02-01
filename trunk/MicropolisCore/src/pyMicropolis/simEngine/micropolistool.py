@@ -83,7 +83,7 @@ class MicropolisTool(tiletool.TileTool):
         self,
         toolIndex=-1,
         **args):
-      
+
         tiletool.TileTool.__init__(
             self,
             **args)

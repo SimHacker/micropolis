@@ -170,8 +170,8 @@ void Micropolis::initGraphMax()
 
     graph10Max =
         max(resHist10Max,
-	    max(comHist10Max,
-		indHist10Max));
+            max(comHist10Max,
+                indHist10Max));
 
     resHist120Max = 0;
     comHist120Max = 0;
@@ -197,8 +197,8 @@ void Micropolis::initGraphMax()
 
     graph120Max =
         max(resHist120Max,
-	    max(comHist120Max,
-		indHist120Max));
+            max(comHist120Max,
+                indHist120Max));
 }
 
 
@@ -339,8 +339,8 @@ short Micropolis::getHistory(int historyType, int historyScale,
  * @param historyIndex Index in the data to obtain
  * @param historyValue Index in the value to store
  */
-void Micropolis::setHistory(int historyType, int historyScale, 
-			    int historyIndex, short historyValue)
+void Micropolis::setHistory(int historyType, int historyScale,
+                            int historyIndex, short historyValue)
 {
     if (historyType < 0 || historyType >= HISTORY_TYPE_COUNT
             || historyScale < 0 || historyScale >= HISTORY_SCALE_COUNT

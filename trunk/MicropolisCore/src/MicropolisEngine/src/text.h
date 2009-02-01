@@ -151,6 +151,6 @@ enum MessageNumber {
     MESSAGE_SCENARIO_DETROIT, ///< 55: Detroit scenario.
     MESSAGE_SCENARIO_BOSTON, ///< Boston scenario.
     MESSAGE_SCENARIO_RIO_DE_JANEIRO, ///< 57: Rio de Janeiro scenario.
- 
+
     MESSAGE_LAST = 57, ///< Last valid message
 };

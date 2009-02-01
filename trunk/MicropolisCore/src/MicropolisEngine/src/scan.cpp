@@ -85,7 +85,7 @@ void Micropolis::fireAnalysis()
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            fireStationMapEffect[x][y] = fireStationMap[x][y];
+            fireStationEffectMap.set(x, y, fireStationMap.get(x, y));
         }
     }
 
@@ -211,8 +211,8 @@ void Micropolis::pollutionTerrainLandValueScan()
                     loc = (map[Mx][My] & LOMASK);
                     if (loc) {
                         if (loc < RUBBLE) {
-			    // Incremenet terrain memory.
-			    Byte value = tempMap3.get(x >>1, y >>1);
+                            // Incremenet terrain memory.
+                            Byte value = tempMap3.get(x >>1, y >>1);
                             tempMap3.set(x >>1, y >>1, value + 15);
                             continue;
                         }
@@ -406,7 +406,7 @@ void Micropolis::crimeScan()
                 if (z > 300) {
                     z = 300;
                 }
-                z -= policeStationMap[x >>2][y >>2];
+                z -= policeStationMap.get(x >>2, y >>2) ;
                 z = clamp(z, (short)0, (short)250);
                 crimeMap.set(x, y, (Byte)z);
                 totz += z;
@@ -432,7 +432,7 @@ void Micropolis::crimeScan()
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            policeStationMapEffect[x][y] = policeStationMap[x][y];
+            policeStationEffectMap.set(x, y, policeStationMap.get(x, y));
         }
     }
 
@@ -600,25 +600,25 @@ void Micropolis::smoothFireStationMap()
         for (y = 0; y < WORLD_H_8; y++) {
             edge = 0;
             if (x > 0) {
-                edge += fireStationMap[x - 1][y];
+                edge += fireStationMap.get(x - 1, y);
             }
             if (x < (WORLD_W_8 - 1)) {
-                edge += fireStationMap[x + 1][y];
+                edge += fireStationMap.get(x + 1, y);
             }
             if (y > 0) {
-                edge += fireStationMap[x][y - 1];
+                edge += fireStationMap.get(x, y - 1);
             }
             if (y < (WORLD_H_8 - 1)) {
-                edge += fireStationMap[x][y + 1];
+                edge += fireStationMap.get(x, y + 1);
             }
-            edge = (edge >>2) + fireStationMap[x][y];
+            edge = (edge >>2) + fireStationMap.get(x, y);
             tempMap4.set(x, y, edge >>1);
         }
     }
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            fireStationMap[x][y] = tempMap4.get(x, y);
+            fireStationMap.set(x, y, tempMap4.get(x, y));
         }
     }
 }
@@ -633,25 +633,25 @@ void Micropolis::smoothPoliceStationMap()
         for (y = 0; y < WORLD_H_8; y++) {
             edge = 0;
             if (x > 0) {
-                edge += policeStationMap[x - 1][y];
+                edge += policeStationMap.get(x - 1, y);
             }
             if (x < (WORLD_W_8 - 1)) {
-                edge += policeStationMap[x + 1][y];
+                edge += policeStationMap.get(x + 1, y);
             }
             if (y> 0) {
-                edge += policeStationMap[x][y - 1];
+                edge += policeStationMap.get(x, y - 1);
             }
             if (y < (WORLD_H_8 - 1)) {
-                edge += policeStationMap[x][y + 1];
+                edge += policeStationMap.get(x, y + 1);
             }
-            edge = (edge >>2) + policeStationMap[x][y];
+            edge = (edge >>2) + policeStationMap.get(x, y);
             tempMap4.set(x, y, edge >>1);
         }
     }
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            policeStationMap[x][y] = tempMap4.get(x, y);
+            policeStationMap.set(x, y, tempMap4.get(x, y));
         }
     }
 }
@@ -670,7 +670,7 @@ void Micropolis::computeComRateMap()
             z = getCityCenterDistance(x * 4,y * 4); // 0..32
             z = z * 4;  // 0..128
             z = 64 - z; // 64..-64
-            comRateMap[x][y] = z;
+            comRateMap.set(x, y, z);
         }
     }
 }

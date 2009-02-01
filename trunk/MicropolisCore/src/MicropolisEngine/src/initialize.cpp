@@ -104,17 +104,12 @@ void Micropolis::initWillStuff()
     landValueMap.clear();
     crimeMap.clear();
     terrainDensityMap.clear();
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            rateOfGrowthMap[x][y] = 0;
-            comRateMap[x][y] = 0;
-            policeStationMap[x][y] = 0;
-            policeStationMapEffect[x][y] = 0;
-            fireStationMap[x][y] = 0;
-            fireStationMapEffect[x][y] = 0;
-        }
-    }
+    rateOfGrowthMap.clear();
+    comRateMap.clear();
+    policeStationMap.clear();
+    policeStationEffectMap.clear();
+    fireStationMap.clear();
+    fireStationEffectMap.clear();
 
     doNewGame();
     doUpdateHeads();

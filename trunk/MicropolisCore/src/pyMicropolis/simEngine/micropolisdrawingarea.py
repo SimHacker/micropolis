@@ -394,7 +394,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def handleKey(
         self,
         key):
-      
+
         if key == 'm':
             self.engine.heatSteps = 1
             self.engine.heatRule = 0
@@ -570,7 +570,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
                 continue
 
             x, y, width, height = self.getViewBox(view)
-           
+
             if view == currentView:
 
                 pad = 4

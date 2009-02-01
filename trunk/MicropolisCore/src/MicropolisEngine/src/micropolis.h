@@ -1,5 +1,4 @@
 /* micropolis.h
- * Micropolis include file
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -1333,8 +1332,6 @@ public:
      */
     MapByte1 powerMap;
 
-#endif
-
     /**
      * Rate of growth map.
      *
@@ -1342,7 +1339,7 @@ public:
      * explosions from sprites, fire spreading. Doesn't seem to
      * actually feed back into the simulation. Output only.
      */
-    short rateOfGrowthMap[WORLD_W_8][WORLD_H_8];
+    MapShort8 rateOfGrowthMap;
 
     /**
      * Fire station map.
@@ -1353,7 +1350,12 @@ public:
      * access. Affects how long fires burn.
      * @see #fireEffect
      */
-    short fireStationMap[WORLD_W_8][WORLD_H_8];
+    MapShort8 fireStationMap;
+
+    /**
+     * Copy of fire station map to display.
+     */
+    MapShort8 fireStationEffectMap;
 
     /**
      * Police station map.
@@ -1364,17 +1366,12 @@ public:
      * access. Affects crime rate.
      * @see #policeEffect
      */
-    short policeStationMap[WORLD_W_8][WORLD_H_8];
+    MapShort8 policeStationMap;
 
     /**
      * Copy of police station map to display.
      */
-    short policeStationMapEffect[WORLD_W_8][WORLD_H_8];
-
-    /**
-     * Copy of fire station map to display.
-     */
-    short fireStationMapEffect[WORLD_W_8][WORLD_H_8];
+    MapShort8 policeStationEffectMap;
 
     /**
      * Commercial rate map.
@@ -1382,7 +1379,9 @@ public:
      * Depends on distance to city center. Affects commercial zone
      * evaluation.
      */
-    short comRateMap[WORLD_W_8][WORLD_H_8];
+    MapShort8 comRateMap;
+
+#endif
 
     //@}
 
@@ -2589,11 +2588,11 @@ public:
     };
 
     /**
-     * Check that the given coordinate is within half resolution 
+     * Check that the given coordinate is within half resolution
      * world bounds.
      * @param wx World x coordinate.
      * @param wy World y coordinate.
-     * @return Boolean indicating (wx, wy) is inside the half 
+     * @return Boolean indicating (wx, wy) is inside the half
      *                 resolution world bounds.
      */
     static inline bool testBounds2(int wx, int wy)
@@ -2602,7 +2601,7 @@ public:
     };
 
     /**
-     * Check that the given coordinate is within quarter resolution 
+     * Check that the given coordinate is within quarter resolution
      * world bounds.
      * @param wx World x coordinate.
      * @param wy World y coordinate.
@@ -2615,7 +2614,7 @@ public:
     };
 
     /**
-     * Check that the given coordinate is within eighth resolution 
+     * Check that the given coordinate is within eighth resolution
      * world bounds.
      * @param wx World x coordinate.
      * @param wy World y coordinate.

@@ -89,7 +89,7 @@ class MicropolisRobot:
         y=0,
         direction=0.0,
         **args):
-      
+
         self.engine = engine
         self.x = x
         self.y = y
@@ -104,7 +104,7 @@ class MicropolisRobot:
     def draw(self, ctx):
 
         ctx.save()
-        
+
         ctx.translate(self.x, self.y)
 
         ctx.rotate(self.direction)
@@ -133,7 +133,7 @@ class MicropolisRobot:
 
 class MicropolisRobot_PacMan(MicropolisRobot):
 
-    
+
     directionDeltas = {
         'north': (0, -1,),
         'south': (0, 1,),
@@ -410,12 +410,12 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                                     if isRoad(tx, ty):
                                         trafficX = int(tx / 2)
                                         trafficY = int(ty / 2)
-                                        trafficDensity = engine.getTrafficDensity(trafficX, trafficY) 
+                                        trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
                                         attenuation = float(step + 1) / float(dist)
                                         score += trafficDensity * attenuation
                                     else:
                                         break
-                                #print dir, score, 
+                                #print dir, score,
                                 if score > bestScore:
                                     bestScore = score
                                     bestDir = dir
