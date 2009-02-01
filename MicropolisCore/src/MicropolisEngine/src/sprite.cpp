@@ -1798,7 +1798,9 @@ void Micropolis::startFireInZone(int Xloc, int Yloc, int ch)
     short Xtem, Ytem;
     short x, y, XYmax;
 
-    rateOfGrowthMap[Xloc >>3][Yloc >>3] -= 20;
+    int value = rateOfGrowthMap.worldGet(Xloc, Yloc);
+    value = clamp(value - 20, -200, 200);
+    rateOfGrowthMap.worldSet(Xloc, Yloc, value);
 
     ch &= LOMASK;
 

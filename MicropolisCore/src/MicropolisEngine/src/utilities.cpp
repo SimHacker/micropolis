@@ -188,9 +188,9 @@ void Micropolis::setPasses(int passes)
     simPasses = passes;
     simPass = 0;
     callback(
-	"UIUpdate",
-	"s",
-	"passes");
+        "UIUpdate",
+        "s",
+        "passes");
 }
 
 /**
@@ -308,7 +308,7 @@ void Micropolis::doNewGame()
 
 
 /**
- * set the enableDisasters flag, and set the flag to 
+ * set the enableDisasters flag, and set the flag to
  * update the user interface.
  * @param value New setting for #enableDisasters
  */
@@ -332,7 +332,7 @@ void Micropolis::setAutoBudget(bool value)
 
 /**
  * Set the autoBulldoze flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set autoBulldoze to.
@@ -346,7 +346,7 @@ void Micropolis::setAutoBulldoze(bool value)
 
 /**
  * Set the autoGoto flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set autoGoto to.
@@ -360,7 +360,7 @@ void Micropolis::setAutoGoto(bool value)
 
 /**
  * Set the enableSound flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set enableSound to.
@@ -374,7 +374,7 @@ void Micropolis::setEnableSound(bool value)
 
 /**
  * Set the doAnimation flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set doAnimation to.
@@ -388,7 +388,7 @@ void Micropolis::setDoAnimation(bool value)
 
 /**
  * Set the doMessages flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set doMessages to.
@@ -402,7 +402,7 @@ void Micropolis::setDoMessages(bool value)
 
 /**
  * Set the doNotices flag to the given value,
- * and set the mustUpdateOptions flag to update 
+ * and set the mustUpdateOptions flag to update
  * the user interface.
  *
  * @param value The value to set doNotices to.
@@ -415,8 +415,8 @@ void Micropolis::setDoNotices(bool value)
 
 
 /**
- * Return the residential, commercial and industrial 
- * development demands, as floating point numbers 
+ * Return the residential, commercial and industrial
+ * development demands, as floating point numbers
  * from -1 (lowest demand) to 1 (highest demand).
  */
 void Micropolis::getDemands(

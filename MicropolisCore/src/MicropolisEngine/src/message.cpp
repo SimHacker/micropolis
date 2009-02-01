@@ -168,13 +168,13 @@ void Micropolis::sendMessages()
 
     case 35:
         if (pollutionAverage > /* 80 */ 60) {
-	    sendMessage(MESSAGE_HIGH_POLLUTION, -1, -1, true);
+            sendMessage(MESSAGE_HIGH_POLLUTION, -1, -1, true);
         }
         break;
 
     case 42:
         if (crimeAverage > 100) {
-	    sendMessage(MESSAGE_HIGH_CRIME, -1, -1, true);
+            sendMessage(MESSAGE_HIGH_CRIME, -1, -1, true);
         }
         break;
 
@@ -220,7 +220,7 @@ void Micropolis::sendMessages()
 
     case 63:
         if (trafficAverage > 60) {
-	    sendMessage(MESSAGE_TRAFFIC_JAMS, -1, -1, true);
+            sendMessage(MESSAGE_TRAFFIC_JAMS, -1, -1, true);
         }
         break;
 
@@ -269,7 +269,7 @@ void Micropolis::checkGrowth()
         }
 
         if (category > 0 && category != categoryLast) {
-	    sendMessage(category, -1, -1, true);
+            sendMessage(category, -1, -1, true);
             categoryLast = category;
         }
 
@@ -363,14 +363,14 @@ void Micropolis::doScenarioScore(Scenario type)
 void Micropolis::sendMessage(short mesgNum, short x, short y, bool picture, bool important)
 {
     callback(
-	"UIUpdate",
-	"sdddbb",
-	"message",
+        "UIUpdate",
+        "sdddbb",
+        "message",
         (int)mesgNum,
-	(int)x,
-	(int)y,
-	picture ? 1 : 0,
-	important ? 1 : 0);
+        (int)x,
+        (int)y,
+        picture ? 1 : 0,
+        important ? 1 : 0);
 }
 
 

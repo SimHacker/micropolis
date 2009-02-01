@@ -159,7 +159,7 @@ void Micropolis::scenarioDisaster()
 
         case SC_HAMBURG:
             if ((disasterWait % 10) == 0) {
-		dropFireBombs();
+                dropFireBombs();
             }
             break;
 

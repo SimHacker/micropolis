@@ -366,24 +366,22 @@ void Micropolis::decRateOfGrowthMap()
 
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
-            z = rateOfGrowthMap[x][y];
+            z = rateOfGrowthMap.get(x, y);
             if (z == 0) {
                 continue;
             }
 
             if (z > 0) {
-                --rateOfGrowthMap[x][y];
-                if (z > 200) {
-                    rateOfGrowthMap[x][y] = 200;    /* prevent overflow */
-                }
+                z--;
+                z = clamp(z, (short)-200, (short)200);
+                rateOfGrowthMap.set(x, y, z);
                 continue;
             }
 
             if (z < 0)  {
-                ++rateOfGrowthMap[x][y];
-                if (z < -200) {
-                    rateOfGrowthMap[x][y] = -200;
-                }
+                z++;
+                z = clamp(z, (short)-200, (short)200);
+                rateOfGrowthMap.set(x, y, z);
             }
         }
     }
@@ -700,12 +698,10 @@ void Micropolis::clearCensus()
     airportPop = 0;
     powerStackPointer = 0; /* Reset before Mapscan */
 
-    for (short x = 0; x < WORLD_W_8; x++) {
-        for (short y = 0; y < WORLD_H_8; y++) {
-            fireStationMap[x][y] = 0;
-            policeStationMap[x][y] = 0;
-        }
-    }
+    fireStationMap.clear();
+    fireStationEffectMap.clear();
+    policeStationMap.clear();
+    policeStationEffectMap.clear();
 
 }
 
@@ -1274,7 +1270,7 @@ void Micropolis::doFire()
 
     // Compute likelyhood of fire running out of fuel
     short rate = 10; // Likelyhood of extinguishing (bigger means less chance)
-    short z = fireStationMapEffect[curMapX >>3][curMapY >>3];
+    short z = fireStationEffectMap.worldGet(curMapX, curMapY);
 
     if (z > 0) {
         rate = 3;
@@ -1306,7 +1302,9 @@ void Micropolis::fireZone(int Xloc, int Yloc, int ch)
 {
     short XYmax;
 
-    rateOfGrowthMap[Xloc >>3][Yloc >>3] -= 20;
+    int value = rateOfGrowthMap.worldGet(Xloc, Yloc);
+    value = clamp(value - 20, -200, 200);
+    rateOfGrowthMap.worldSet(Xloc, Yloc, value);
 
     ch = ch & LOMASK;
 
@@ -1450,7 +1448,9 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = z / 2;                        /* post FD's need roads  */
             }
 
-            fireStationMap[curMapX >>3][curMapY >>3] += z;
+            int value = fireStationMap.worldGet(curMapX, curMapY);
+            value += z;
+            fireStationMap.worldSet(curMapX, curMapY, value);
 
             return;
         }
@@ -1475,7 +1475,9 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = z / 2; /* post PD's need roads */
             }
 
-            policeStationMap[curMapX >>3][curMapY >>3] += z;
+            int value = policeStationMap.worldGet(curMapX, curMapY);
+            value += z;
+            policeStationMap.worldSet(curMapX, curMapY, value);
 
             return;
         }

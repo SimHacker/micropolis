@@ -279,7 +279,7 @@ noMoney:
 
         }
 
-	mustDrawBudget = 1;
+        mustDrawBudget = 1;
         doUpdateHeads();
 
     } else { /* autoBudget & !fromMenu */
@@ -298,12 +298,12 @@ noMoney:
             policeSpend = policeFund;
             roadSpend = roadFund;
 
-	    mustDrawBudget = 1;
+            mustDrawBudget = 1;
             doUpdateHeads();
 
         } else {
 
-	    setAutoBudget(false); /* force autobudget */
+            setAutoBudget(false); /* force autobudget */
             mustUpdateOptions = true;
             sendMessage(MESSAGE_NO_MONEY, NOWHERE, NOWHERE, false, true);
             goto noMoney;
