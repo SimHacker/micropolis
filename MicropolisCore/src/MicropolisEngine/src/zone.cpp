@@ -300,21 +300,19 @@ bool Micropolis::zonePlop(int base)
     return true;
 }
 
-
+/** Count the number of single tile houses in the city */
 short Micropolis::doFreePop()
 {
     short count;
-    register short loc, x, y;
+    short x, y;
 
     count = 0;
 
     for (x = curMapX - 1; x <= curMapX + 1; x++) {
         for (y = curMapY - 1; y <= curMapY + 1; y++) {
-            if (x >= 0 && x < WORLD_W &&
-                y >= 0 && y < WORLD_H) {
-                loc = map[x][y] & LOMASK;
-                if ((loc >= LHTHR) &&
-                    (loc <= HHTHR)) {
+            if (x >= 0 && x < WORLD_W && y >= 0 && y < WORLD_H) {
+                short loc = map[x][y] & LOMASK;
+                if (loc >= LHTHR && loc <= HHTHR) {
                     count++;
                 }
             }

@@ -522,22 +522,23 @@ enum MapTileCharacters {
 
     ROADVPOWERH    = 239, /* bogus? */
 
-    RESBASE        = 240,
-    // tile 241 -- 243 ?
-    FREEZ          = 244,
-    // tile 245 -- 248 ?
-    HOUSE          = 249,
+    // Residential zone tiles
+
+    RESBASE        = 240, // Empty residential, tiles 240--248
+    FREEZ          = 244, // center-tile of 3x3 empty residential
+
+    HOUSE          = 249, // Single tile houses until 260
     LHTHR          = HOUSE,
-    // tile 249 -- 259 ?
     HHTHR          = 260,
-    // tile 261 -- 264 ?
-    RZB            = 265,
-    // tile 266 -- 408 ?
-    HOSPITAL       = 409,
-    // tile 410 -- 417 ?
-    CHURCH         = 418,
-    // tile 419 -- 422 ?
-    COMBASE        = 423,
+
+    RZB            = 265, // center tile first 3x3 tile residential
+
+    HOSPITAL       = 409, // Center of hospital (tiles 405--413)
+    CHURCH         = 418, // Center of churh (tiles 414--422)
+
+    // Commercial zone tiles
+
+    COMBASE        = 423, // Empty commercial, tiles 423--431
     // tile 424 -- 426 ?
     COMCLR         = 427,
     // tile 428 -- 435 ?
