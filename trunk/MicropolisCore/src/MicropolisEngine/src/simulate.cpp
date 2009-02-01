@@ -699,9 +699,9 @@ void Micropolis::clearCensus()
     powerStackPointer = 0; /* Reset before Mapscan */
 
     fireStationMap.clear();
-    fireStationEffectMap.clear();
+    fireStationEffectMap.clear(); // Added in rev293
     policeStationMap.clear();
-    policeStationEffectMap.clear();
+    policeStationEffectMap.clear(); // Added in rev293
 
 }
 
