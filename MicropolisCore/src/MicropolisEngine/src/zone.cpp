@@ -251,7 +251,7 @@ short Micropolis::getLandPollutionValue()
 void Micropolis::incRateOfGrowth(int amount)
 {
     int value = rateOfGrowthMap.worldGet(curMapX, curMapY);
-    value = clamp(value + amount << 2, -200, 200);
+    value = clamp(value + amount * 4, -200, 200);
     rateOfGrowthMap.worldSet(curMapX, curMapY, value);
 }
 
