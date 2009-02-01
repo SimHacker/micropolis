@@ -103,13 +103,12 @@ static void smoothStationMap(MapShort8 *map)
     }
 }
 
-/* comefrom: simulate SpecialInit */
+/**
+ * Make firerate map from firestation map.
+ * @todo Comment seems wrong; what's a firerate map?
+ */
 void Micropolis::fireAnalysis()
 {
-    /* Make firerate map from firestation map */
-
-    register int x, y;
-
     smoothStationMap(&fireStationMap);
     smoothStationMap(&fireStationMap);
     smoothStationMap(&fireStationMap);
@@ -127,16 +126,13 @@ void Micropolis::fireAnalysis()
 void Micropolis::populationDensityScan()
 {
     /*  sets: populationDensityMap, , , comRateMap  */
-    Quad Xtot, Ytot, Ztot;
-    short x, y, z;
-
     tempMap1.clear();
-    Xtot = 0;
-    Ytot = 0;
-    Ztot = 0;
-    for (x = 0; x < WORLD_W; x++) {
-        for (y = 0; y < WORLD_H; y++) {
-            z = map[x][y];
+    Quad Xtot = 0;
+    Quad Ytot = 0;
+    Quad Ztot = 0;
+    for (int x = 0; x < WORLD_W; x++) {
+        for (int y = 0; y < WORLD_H; y++) {
+            short z = map[x][y];
             if (z & ZONEBIT) {
                 z = z & LOMASK;
                 curMapX = x;
@@ -145,7 +141,7 @@ void Micropolis::populationDensityScan()
                 if (z > 254) {
                     z = 254;
                 }
-                tempMap1.set(x >>1, y >>1, (Byte)z);
+                tempMap1.worldSet(x, y, (Byte)z);
                 Xtot += x;
                 Ytot += y;
                 Ztot++;
@@ -157,15 +153,20 @@ void Micropolis::populationDensityScan()
     doSmooth2(); // tempMap2 -> tempMap1
     doSmooth1(); // tempMap1 -> tempMap2
 
-    assert(populationDensityMap.MAP_BLOCKSIZE == 2);
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
-            populationDensityMap.set(x, y, tempMap2.get(x, y) <<1);
-        }
+    assert(populationDensityMap.MAP_MAX_X == tempMap2.MAP_MAX_X);
+    assert(populationDensityMap.MAP_MAX_Y == tempMap2.MAP_MAX_Y);
+
+    // Copy tempMap2 to populationDensityMap, multiplying by 2
+    Byte *srcMap = tempMap2.getBase();
+    Byte *destMap = populationDensityMap.getBase();
+    for (int i = 0; i < tempMap2.MAP_MAX_X * tempMap2.MAP_MAX_Y; i++) {
+        destMap[i] = srcMap[i] * 2;
     }
 
     computeComRateMap();          /* Compute the comRateMap */
 
+
+    // Compute new city center
     if (Ztot > 0) {               /* Find Center of Mass for City */
         cityCenterX = (short)(Xtot / Ztot);
         cityCenterY = (short)(Ytot / Ztot);
@@ -177,6 +178,7 @@ void Micropolis::populationDensityScan()
     cityCenterX2 = cityCenterX >>1;
     cityCenterY2 = cityCenterY >>1;
 
+    // Set flags for updated maps
     newMapFlags[MAP_TYPE_POPULATION_DENSITY] = 1;
     newMapFlags[MAP_TYPE_RATE_OF_GROWTH] = 1;
     newMapFlags[MAP_TYPE_DYNAMIC] = 1;
@@ -399,46 +401,39 @@ int Micropolis::getCityCenterDistance(int x, int y)
 }
 
 
-/* comefrom: simulate SpecialInit */
+/** Smooth police station map and compute crime rate */
 void Micropolis::crimeScan()
 {
-    short numz;
-    Quad totz;
-    short x, y, z;
-    short cmax;
-
     smoothStationMap(&policeStationMap);
     smoothStationMap(&policeStationMap);
     smoothStationMap(&policeStationMap);
 
-    totz = 0;
-    numz = 0;
-    cmax = 0;
+    Quad totz = 0;
+    int numz = 0;
+    int cmax = 0;
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
-            z = landValueMap.get(x, y);
+    for (int x = 0; x < WORLD_W; x += crimeMap.MAP_BLOCKSIZE) {
+        for (int y = 0; y < WORLD_H; y += crimeMap.MAP_BLOCKSIZE) {
+            int z = landValueMap.worldGet(x, y);
             if (z > 0) {
                 ++numz;
                 z = 128 - z;
-                z += populationDensityMap.get(x, y);
-                if (z > 300) {
-                    z = 300;
-                }
-                z -= policeStationMap.get(x >>2, y >>2) ;
-                z = clamp(z, (short)0, (short)250);
-                crimeMap.set(x, y, (Byte)z);
+                z += populationDensityMap.worldGet(x, y);
+                z = min(z, 300);
+                z -= policeStationMap.worldGet(x, y);
+                z = clamp(z, 0, 250);
+                crimeMap.worldSet(x, y, (Byte)z);
                 totz += z;
 
                 // Update new crime hot-spot
                 if (z > cmax || (z == cmax && (getRandom16() & 3) == 0)) {
                     cmax = z;
-                    crimeMaxX = x <<1;
-                    crimeMaxY = y <<1;
+                    crimeMaxX = x;
+                    crimeMaxY = y;
                 }
 
             } else {
-                crimeMap.set(x, y, 0);
+                crimeMap.worldSet(x, y, 0);
             }
         }
     }
