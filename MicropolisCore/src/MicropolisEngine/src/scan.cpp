@@ -114,11 +114,7 @@ void Micropolis::fireAnalysis()
     smoothStationMap(&fireStationMap);
     smoothStationMap(&fireStationMap);
 
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            fireStationEffectMap.set(x, y, fireStationMap.get(x, y));
-        }
-    }
+    fireStationEffectMap = fireStationMap;
 
     newMapFlags[MAP_TYPE_FIRE_RADIUS] = 1;
     newMapFlags[MAP_TYPE_DYNAMIC] = 1;
@@ -222,7 +218,7 @@ void Micropolis::pollutionTerrainLandValueScan()
     /* Does pollution, terrain, land value */
     Quad ptot, LVtot;
     int x, y, z, dis;
-    int pollutionLevel, LVflag, loc, worldX, worldY, Mx, My, pnum, LVnum, pmax;
+    int pollutionLevel, loc, worldX, worldY, Mx, My, pnum, LVnum, pmax;
 
     // tempMap3 is a map of development density, smoothed into terrainMap.
     tempMap3.clear();
@@ -233,7 +229,7 @@ void Micropolis::pollutionTerrainLandValueScan()
     for (x = 0; x < WORLD_W_2; x++) {
         for (y = 0; y < WORLD_H_2; y++) {
             pollutionLevel = 0;
-            LVflag = 0;
+            bool landValueFlag = false;
             worldX = x * 2;
             worldY = y * 2;
 
@@ -249,7 +245,7 @@ void Micropolis::pollutionTerrainLandValueScan()
                         }
                         pollutionLevel += getPollutionValue(loc);
                         if (loc >= ROADBASE) {
-                            LVflag++;
+                            landValueFlag = true;
                         }
                     }
                 }
@@ -266,7 +262,7 @@ void Micropolis::pollutionTerrainLandValueScan()
 
 
 
-            if (LVflag) {                     /* LandValue Equation */
+            if (landValueFlag) {              /* LandValue Equation */
                 dis = 34 - getCityCenterDistance(x, y);
                 dis = dis <<2;
                 dis += terrainDensityMap.get(x >>1, y >>1);
@@ -453,11 +449,7 @@ void Micropolis::crimeScan()
         crimeAverage = 0;
     }
 
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
-            policeStationEffectMap.set(x, y, policeStationMap.get(x, y));
-        }
-    }
+    policeStationEffectMap =  policeStationMap;
 
     newMapFlags[MAP_TYPE_CRIME] = 1;
     newMapFlags[MAP_TYPE_POLICE_RADIUS] = 1;
