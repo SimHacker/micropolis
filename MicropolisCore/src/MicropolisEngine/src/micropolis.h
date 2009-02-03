@@ -1001,7 +1001,7 @@ public:
     short firePop;
 
     /**
-     * Residential zone population.
+     * Number of people in the residential zones.
      *
      * Depends on level of zone development.
      */
@@ -1036,35 +1036,17 @@ public:
      */
     short totalPopLast;
 
-    /**
-     * Residential zone population.
-     */
-    short resZonePop;
-
-    /**
-     * Commercial zone population.
-     */
-    short comZonePop;
-
-    /**
-     * Industrial zone population.
-     */
-    short indZonePop;
+    short resZonePop; ///< Number of residential zones.
+    short comZonePop; ///< Number of commercial zones.
+    short indZonePop; ///< Number of industrial zones.
 
     /**
      * Total zone population.
      */
     short totalZonePop;
 
-    /**
-     * Hospital population.
-     */
-    short hospitalPop;
-
-    /**
-     * Church population.
-     */
-    short churchPop;
+    short hospitalPop; ///< Number of hospitals.
+    short churchPop; ///< Number of churches.
 
     /**
      * Stadium population.
