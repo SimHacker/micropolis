@@ -155,23 +155,26 @@ Residential (3x3):
 Single tile houses (from small to big)
 249: x0f9 x0fa x0fb x0fc x0fd x0fe x0ff x100 x101 x102 x103 x104
 
+// 'population' means number of people in the residential zone.
+// 'value' means land value - pollution. Higher is better.
+
 Residential:
-261: x105 x106 x107  x108 x109 x10a  x10b x10c x10d
-270: x10e x10f x110  x111 x112 x113  x114 x115 x116
-279: x117 x118 x119  x11a x11b x11c  x11d x11e x11f
-288: x120 x121 x122  x123 x124 x125  x126 x127 x128
-297: x129 x12a x12b  x12c x12d x12e  x12f x130 x131
-306: x132 x133 x134  x135 x136 x137  x138 x139 x13a
-315: x13b x13c x13d  x13e x13f x140  x141 x142 x143
-324: x144 x145 x146  x147 x148 x149  x14a x14b x14c
-333: x14d x14e x14f  x150 x151 x152  x153 x154 x155
-342: x156 x157 x158  x159 x15a x15b  x15c x15d x15e
-351: x15f x160 x161  x162 x163 x164  x165 x166 x167
-360: x168 x169 x16a  x16b x16c x16d  x16e x16f x170
-369: x171 x172 x173  x174 x175 x176  x177 x178 x179
-378: x17a x17b x17c  x17d x17e x17f  x180 x181 x182
-387: x183 x184 x185  x186 x187 x188  x189 x18a x18b
-396: x18c x18d x18e  x18f x190 x191  x192 x193 x194
+261: x105 x106 x107  x108 x109 x10a  x10b x10c x10d // population 16, value 0
+270: x10e x10f x110  x111 x112 x113  x114 x115 x116 // population 24, value 0
+279: x117 x118 x119  x11a x11b x11c  x11d x11e x11f // population 32, value 0
+288: x120 x121 x122  x123 x124 x125  x126 x127 x128 // population 40, value 0
+297: x129 x12a x12b  x12c x12d x12e  x12f x130 x131 // population 16, value 1
+306: x132 x133 x134  x135 x136 x137  x138 x139 x13a // population 24, value 1
+315: x13b x13c x13d  x13e x13f x140  x141 x142 x143 // population 32, value 1
+324: x144 x145 x146  x147 x148 x149  x14a x14b x14c // population 40, value 1
+333: x14d x14e x14f  x150 x151 x152  x153 x154 x155 // population 16, value 2
+342: x156 x157 x158  x159 x15a x15b  x15c x15d x15e // population 24, value 2
+351: x15f x160 x161  x162 x163 x164  x165 x166 x167 // population 32, value 2
+360: x168 x169 x16a  x16b x16c x16d  x16e x16f x170 // population 40, value 2
+369: x171 x172 x173  x174 x175 x176  x177 x178 x179 // population 16, value 3
+378: x17a x17b x17c  x17d x17e x17f  x180 x181 x182 // population 24, value 3
+387: x183 x184 x185  x186 x187 x188  x189 x18a x18b // population 32, value 3
+396: x18c x18d x18e  x18f x190 x191  x192 x193 x194 // population 40, value 3
 
 405: x195 x196 x197  x198 x199 x19a  x19b x19c x19d:   Hospital
 414: x19e x19f x1a0  x1a1 x1a2 x1a3  x1a4 x1a5 x1a6:   Church
