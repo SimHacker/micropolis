@@ -828,7 +828,7 @@ void Micropolis::indPlop(int Den, int Value)
 {
     short base;
 
-    base = (((Value * 4) + Den) * 9) + IZB - 4
+    base = (((Value * 4) + Den) * 9) + IZB - 4;
     zonePlop(base);
 }
 
