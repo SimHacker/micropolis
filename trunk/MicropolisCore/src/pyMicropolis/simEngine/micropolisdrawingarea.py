@@ -174,6 +174,12 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         engine=None,
         interests=('city'),
         sprite=micropolisengine.SPRITE_NOTUSED,
+        showData=True,
+        showRobots=True,
+        showSprites=True,
+        showChalk=True,
+        mapStyle='all',
+        overlayAlpha=0.5,
         **args):
 
         args['tileCount'] = micropolisengine.TILE_COUNT
@@ -182,6 +188,12 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         args['worldRows'] = micropolisengine.WORLD_H
 
         self.engine = engine
+        self.showData = showData
+        self.showRobots = showRobots
+        self.showSprites = showSprites
+        self.showChalk = showChalk
+        self.mapStyle = mapStyle
+        self.overlayAlpha = overlayAlpha
 
         tiledrawingarea.TileDrawingArea.__init__(self, **args)
 
@@ -190,8 +202,6 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
             self,
             interests)
 
-        self.flickerData = True
-        self.dataImages = []
         self.blinkFlag = True
 
         self.reset()
@@ -242,13 +252,17 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         self,
         ctx):
 
-        self.drawData(ctx)
+        if self.showData:
+            self.drawData(ctx)
 
-        self.drawSprites(ctx)
+        if self.showRobots:
+            self.drawRobots(ctx)
 
-        self.drawRobots(ctx)
+        if self.showSprites:
+            self.drawSprites(ctx)
 
-        self.drawChalk(ctx)
+        if self.showChalk:
+            self.drawChalk(ctx)
 
         if self.showCursor:
             tool = self.getActiveTool()
@@ -256,48 +270,37 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
                 tool.drawCursor(self, ctx)
 
 
-    def getDataImages(self):
-        #return self.dataImages
-        if self.flickerData:
-            trafficAlpha = random.random() * 0.2 + 0.5
-            powerAlpha = random.random() * 0.2 + 0.5
-        else:
-            trafficAlpha = 0.5
-            powerAlpha = 0.5
-        return [
-            [trafficAlpha, self.engine.getDataImage('traffic'),],
-            #[powerAlpha, self.engine.getDataImage('power'),],
-        ]
+    def setMapStyle(self, mapStyle):
+        self.mapStyle = mapStyle
 
 
     def drawData(self, ctx):
-
-        dataImages = self.getDataImages()
-        if not dataImages:
+        mapStyle = self.mapStyle
+        engine = self.engine
+        dataImage, dataAlpha = engine.getDataImageAlpha(mapStyle)
+        if not dataImage:
             return
 
-        for opacity, dataImage in dataImages:
+        ctx.save()
 
-            ctx.save()
+        tileSize = self.tileSize
 
-            tileSize = self.tileSize
+        ctx.translate(self.panX, self.panY)
 
-            ctx.translate(self.panX, self.panY)
+        imageWidth = dataImage.get_width()
+        imageHeight = dataImage.get_height()
 
-            imageWidth = dataImage.get_width()
-            imageHeight = dataImage.get_height()
+        ctx.scale(
+            (self.worldCols * tileSize) / imageWidth,
+            (self.worldRows * tileSize) / imageHeight)
 
-            ctx.scale(
-                (self.worldCols * tileSize) / imageWidth,
-                (self.worldRows * tileSize) / imageHeight)
+        ctx.set_source_surface(
+            dataImage,
+            0,
+            0)
+        ctx.paint_with_alpha(dataAlpha)
 
-            ctx.set_source_surface(
-                dataImage,
-                0,
-                0)
-            ctx.paint_with_alpha(opacity)
-
-            ctx.restore()
+        ctx.restore()
 
 
     def drawSprites(self, ctx):
@@ -520,7 +523,10 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         args['pannable'] = False
         args['menuable'] = False
         args['showCursor'] = False
-        args['scale'] = 0.0625
+        args['showRobots'] = False
+        args['showSprites'] = False
+        args['scale'] = 1.0 / micropolisengine.EDITOR_TILE_SIZE
+        args['overlayAlpha'] = 0.8
 
         MicropolisDrawingArea.__init__(self, **args)
 

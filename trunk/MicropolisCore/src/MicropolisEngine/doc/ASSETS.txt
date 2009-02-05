@@ -31,14 +31,14 @@ Micropolis Assets:
 
     Icons should look good and be readable when shown in desaturated
     gray scale on the OLPC's monochrome screen in low power reflective
-    mode. The the brightness detail can be full resolution but the
-    color detail should be lower resolution by about half (not
-    depending on color detail as fine as brightness detail), because
-    of the nature of the OLPC's screen: 200 dots per inch monochrome
-    gray scale, with lower resolution color. For example, text on an
-    icon should be a noticeably different brightness than the
-    background color, instead of relying on color variation, which is
-    not as detailed and won't show up in monochrome mode.
+    mode. The brightness detail can be full resolution but the color
+    detail should be lower resolution by about half (not depending on
+    color detail as fine as brightness detail), because of the nature
+    of the OLPC's screen: 200 dots per inch monochrome gray scale,
+    with lower resolution color. For example, text on an icon should
+    be a noticeably different brightness than the background color,
+    instead of relying on color variation, which is not as detailed
+    and won't show up in monochrome mode.
 
     SVG is the idea source format, because it can be scaled to any
     size, rendered with antialiased edges, and will be easily used in

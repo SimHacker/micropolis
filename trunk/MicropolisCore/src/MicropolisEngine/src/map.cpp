@@ -291,7 +291,7 @@ void Micropolis::drawLilTransMap()
 }
 
 
-void Micropolis::drawPower()
+void Micropolis::drawPowerGrid()
 {
     short col, row;
     unsigned short tile;
@@ -413,8 +413,8 @@ bool Micropolis::dynamicFilter(
     int populationDensity = populationDensityMap.worldGet(col, row);
     int rateOfGrowth = rateOfGrowthMap.worldGet(col, row);
     int traffic = trafficDensityMap.worldGet(col, row);
-    int pollution = pollutionMap.worldGet(col, row);
-    int crime = crimeMap.worldGet(col, row);
+    int pollution = pollutionDensityMap.worldGet(col, row);
+    int crime = crimeRateMap.worldGet(col, row);
     int landValue = landValueMap.worldGet(col, row);
     int police = policeStationEffectMap.worldGet(col, row);
     int fire = fireStationEffectMap.worldGet(col, row);
@@ -536,7 +536,7 @@ void Micropolis::drawRateOfGrowth()
 
 
 /** Draw traffic density overlay at the small map */
-void Micropolis::drawTrafMap()
+void Micropolis::drawTrafficDensityMap()
 {
     short x;
     short y;
@@ -563,40 +563,40 @@ void Micropolis::drawPollutionMap()
 
     drawAll(view);
 
-    for (x = 0; x < WORLD_W; x += pollutionMap.MAP_BLOCKSIZE) {
-        for (y = 0; y < WORLD_H; y += pollutionMap.MAP_BLOCKSIZE) {
+    for (x = 0; x < WORLD_W; x += pollutionDensityMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += pollutionDensityMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
-                getCI(10 + pollutionMap.worldGet(x, y)),
+                getCI(10 + pollutionDensityMap.worldGet(x, y)),
                 x * 3,
                 y * 3,
-                3 * pollutionMap.MAP_BLOCKSIZE,
-                3 * pollutionMap.MAP_BLOCKSIZE);
+                3 * pollutionDensityMap.MAP_BLOCKSIZE,
+                3 * pollutionDensityMap.MAP_BLOCKSIZE);
         }
     }
 }
 
 
 /** Draw crime overlay at the small map */
-void Micropolis::drawCrimeMap()
+void Micropolis::drawCrimeRateMap()
 {
     short x, y;
 
     drawAll();
 
-    for (x = 0; x < WORLD_W; x += crimeMap.MAP_BLOCKSIZE) {
-        for (y = 0; y < WORLD_H; y += crimeMap.MAP_BLOCKSIZE) {
+    for (x = 0; x < WORLD_W; x += crimeRateMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += crimeRateMap.MAP_BLOCKSIZE) {
             maybeDrawRect(
-                getCI(crimeMap.worldGet(x, y)),
+                getCI(crimeRateMap.worldGet(x, y)),
                 x * 3,
                 y * 3,
-                3 * crimeMap.MAP_BLOCKSIZE,
-                3 * crimeMap.MAP_BLOCKSIZE);
+                3 * crimeRateMap.MAP_BLOCKSIZE,
+                3 * crimeRateMap.MAP_BLOCKSIZE);
         }
     }
 }
 
 
-void Micropolis::drawLandMap()
+void Micropolis::drawLandValueMap()
 {
     short x, y;
 
@@ -674,7 +674,7 @@ void Micropolis::memDrawMap()
           break;
 
       case MAP_TYPE_POWER:
-          drawPower(view);
+          drawPowerGrid(view);
           break;
 
       case MAP_TYPE_ROAD:
@@ -690,19 +690,19 @@ void Micropolis::memDrawMap()
           break;
 
       case MAP_TYPE_TRAFFIC:
-          drawTrafficMap(view);
+          drawTrafficDensityMap(view);
           break;
 
       case MAP_TYPE_POLLUTION:
-          drawPollutionMap(view);
+          drawPollutionDensityMap(view);
           break;
 
       case MAP_TYPE_CRIME:
-          drawCrimeMap(view);
+          drawCrimeRateMap(view);
           break;
 
       case MAP_TYPE_LAND_VALUE:
-          drawLandMap(view);
+          drawLandValueMap(view);
           break;
 
       case MAP_TYPE_FIRE_RADIUS:

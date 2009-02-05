@@ -94,14 +94,14 @@ void not_reached(int line, const char *fname)
 Micropolis::Micropolis() :
         populationDensityMap(0),
         trafficDensityMap(0),
-        pollutionMap(0),
+        pollutionDensityMap(0),
         landValueMap(0),
-        crimeMap(0),
+        crimeRateMap(0),
         terrainDensityMap(0),
         tempMap1(0),
         tempMap2(0),
         tempMap3(0),
-        powerMap(0),
+        powerGridMap(0),
         rateOfGrowthMap(0),
         fireStationMap(0),
         fireStationEffectMap(0),
@@ -287,10 +287,10 @@ void Micropolis::init()
 
     populationDensityMap.clear();
     trafficDensityMap.clear();
-    pollutionMap.clear();
+    pollutionDensityMap.clear();
     landValueMap.clear();
-    crimeMap.clear();
-    powerMap.clear();
+    crimeRateMap.clear();
+    powerGridMap.clear();
     terrainDensityMap.clear();
     rateOfGrowthMap.clear();
     fireStationMap.clear();

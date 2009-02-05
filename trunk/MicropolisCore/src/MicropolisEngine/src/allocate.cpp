@@ -109,9 +109,9 @@ void Micropolis::destroyMapArrays()
 
     populationDensityMap.clear();
     trafficDensityMap.clear();
-    pollutionMap.clear();
+    pollutionDensityMap.clear();
     landValueMap.clear();
-    crimeMap.clear();
+    crimeRateMap.clear();
 
     tempMap1.clear();
     tempMap2.clear();

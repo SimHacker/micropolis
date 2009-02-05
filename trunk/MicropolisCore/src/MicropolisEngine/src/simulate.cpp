@@ -299,7 +299,7 @@ void Micropolis::doSimInit()
 
 
 /**
- * Copy bits from powerMap to the #PWRBIT in the map for all zones in the
+ * Copy bits from powerGridMap to the #PWRBIT in the map for all zones in the
  * world.
  */
 void Micropolis::doNilPower()
@@ -503,7 +503,7 @@ void Micropolis::simLoadInit()
 
     // Set power map.
     /// @todo What purpose does this serve? Weird...
-    powerMap.fill(1);
+    powerGridMap.fill(1);
 
     doNilPower();
 
@@ -954,7 +954,7 @@ void Micropolis::mapScan(int x1, int x2)
                     }
 
                     if (newPower && (curNum & CONDBIT)) {
-                        setZonePower(); // Set PWRBIT from powerMap
+                        setZonePower(); // Set PWRBIT from powerGridMap
                     }
 
                     if ((curTile >= ROADBASE) &&

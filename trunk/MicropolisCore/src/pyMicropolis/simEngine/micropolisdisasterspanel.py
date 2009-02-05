@@ -106,7 +106,7 @@ class MicropolisDisastersPanel(gtk.Frame):
 
         vbox1 = gtk.VButtonBox()
         self.vbox1 = vbox1
-        hbox1.pack_start(vbox1, False, False, 1)
+        hbox1.pack_start(vbox1, False, False, 0)
 
         spacer2 = gtk.VBox()
         spacer2.set_size_request(5, 5)
@@ -115,25 +115,25 @@ class MicropolisDisastersPanel(gtk.Frame):
         buttonMonster = gtk.Button("Monster")
         self.buttonMonster = buttonMonster
         buttonMonster.connect('clicked', lambda item: engine.makeMonster())
-        vbox1.pack_start(buttonMonster, False, False, 1)
+        vbox1.pack_start(buttonMonster, False, False, 0)
 
         buttonFire = gtk.Button("Fire")
         self.buttonFire = buttonFire
         buttonFire.connect('clicked', lambda item: engine.setFire())
-        vbox1.pack_start(buttonFire, False, False, 2)
+        vbox1.pack_start(buttonFire, False, False, 0)
 
         buttonFlood = gtk.Button("Flood")
         self.buttonFlood = buttonFlood
         buttonFlood.connect('clicked', lambda item: engine.makeFlood())
-        vbox1.pack_start(buttonFlood, False, False, 3)
+        vbox1.pack_start(buttonFlood, False, False, 0)
 
         spacer3 = gtk.VBox()
         spacer3.set_size_request(5, 5)
-        vbox1.pack_start(spacer3, False, False, 4)
+        vbox1.pack_start(spacer3, False, False, 0)
 
         vbox2 = gtk.VButtonBox()
         self.vbox2 = vbox2
-        hbox1.pack_start(vbox2, False, False, 2)
+        hbox1.pack_start(vbox2, False, False, 0)
 
         spacer4 = gtk.VBox()
         spacer4.set_size_request(5, 5)
@@ -147,12 +147,12 @@ class MicropolisDisastersPanel(gtk.Frame):
         buttonMeltdown = gtk.Button("Meltdown")
         self.buttonMeltdown = buttonMeltdown
         buttonMeltdown.connect('clicked', lambda item: engine.makeMeltdown())
-        vbox2.pack_start(buttonMeltdown, False, False, 1)
+        vbox2.pack_start(buttonMeltdown, False, False, 0)
 
         buttonEarthquake = gtk.Button("Earthquake")
         self.buttonEarthquake = buttonEarthquake
         buttonEarthquake.connect('clicked', lambda item: engine.makeEarthquake())
-        vbox2.pack_start(buttonEarthquake, False, False, 2)
+        vbox2.pack_start(buttonEarthquake, False, False, 0)
 
         spacer5 = gtk.VBox()
         spacer5.set_size_request(5, 5)

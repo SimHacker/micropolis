@@ -86,6 +86,7 @@ class MicropolisMapPanel(gtk.Frame):
     def __init__(
         self,
         engine=None,
+        mapViews=None,
         **args):
 
         gtk.Frame.__init__(
@@ -93,12 +94,116 @@ class MicropolisMapPanel(gtk.Frame):
             **args)
 
         self.engine = engine
+        self.mapViews = mapViews
 
         # Views
 
+        vbox0 = gtk.VBox(False, 5)
+        self.vbox0 = vbox0
+        self.add(vbox0)
+
+        spacer1 = gtk.HBox(False, 5)
+        spacer1.set_size_request(5, 5)
+        vbox0.pack_start(spacer1, False, False, 0)
+
+        panelLabel = gtk.Label('Zone Filters and Overlays')
+        self.panelLabel = panelLabel
+        vbox0.pack_start(panelLabel, False, False, 0)
+
         hbox1 = gtk.HBox(False, 0)
         self.hbox1 = hbox1
-        self.add(hbox1)
+        vbox0.pack_start(hbox1, False, False, 0)
+
+        vbox1 = gtk.VBox(False, 0)
+        self.vbox1 = vbox1
+        hbox1.pack_start(vbox1, False, False, 0)
+
+        radioAll = gtk.RadioButton(None, 'All Zones')
+        self.radioAll = radioAll
+        radioAll.connect('clicked', self.setMapStyle, 'all')
+        vbox1.pack_start(radioAll, False, False, 0)
+
+        radioResidential = gtk.RadioButton(radioAll, 'Residential Zones')
+        self.radioResidential = radioResidential
+        radioResidential.connect('clicked', self.setMapStyle, 'residential')
+        vbox1.pack_start(radioResidential, False, False, 0)
+
+        radioCommercial = gtk.RadioButton(radioAll, 'Commercial Zones')
+        self.radioCommercial = radioCommercial
+        radioCommercial.connect('clicked', self.setMapStyle, 'commercial')
+        vbox1.pack_start(radioCommercial, False, False, 0)
+
+        radioIndustrial = gtk.RadioButton(radioAll, 'Industrial Zones')
+        self.radioIndustrial = radioIndustrial
+        radioIndustrial.connect('clicked', self.setMapStyle, 'industrial')
+        vbox1.pack_start(radioIndustrial, False, False, 0)
+
+        radioTransportation = gtk.RadioButton(radioAll, 'Transportation Zones')
+        self.radioTransportation = radioTransportation
+        radioTransportation.connect('clicked', self.setMapStyle, 'transportation')
+        vbox1.pack_start(radioTransportation, False, False, 0)
+
+        vbox2 = gtk.VBox(False, 0)
+        self.vbox2 = vbox2
+        hbox1.pack_start(vbox2, False, False, 0)
+
+        radioPopulationDensity = gtk.RadioButton(radioAll, 'Population Density')
+        self.radioPopulationDensity = radioPopulationDensity
+        radioPopulationDensity.connect('clicked', self.setMapStyle, 'populationdensity')
+        vbox2.pack_start(radioPopulationDensity, False, False, 0)
+
+        radioRateOfGrowth = gtk.RadioButton(radioAll, 'Rate of Growth')
+        self.radioRateOfGrowth = radioRateOfGrowth
+        radioRateOfGrowth.connect('clicked', self.setMapStyle, 'rateofgrowth')
+        vbox2.pack_start(radioRateOfGrowth, False, False, 0)
+
+        radioLandValue = gtk.RadioButton(radioAll, 'Land Value')
+        self.radioLandValue = radioLandValue
+        radioLandValue.connect('clicked', self.setMapStyle, 'landvalue')
+        vbox2.pack_start(radioLandValue, False, False, 0)
+
+        radioCrimeRate = gtk.RadioButton(radioAll, 'Crime Rate')
+        self.radioCrimeRate = radioCrimeRate
+        radioCrimeRate.connect('clicked', self.setMapStyle, 'crimerate')
+        vbox2.pack_start(radioCrimeRate, False, False, 0)
+
+        radioPollutionDensity = gtk.RadioButton(radioAll, 'Pollution Density')
+        self.radioPollutionDensity = radioPollutionDensity
+        radioPollutionDensity.connect('clicked', self.setMapStyle, 'pollutiondensity')
+        vbox2.pack_start(radioPollutionDensity, False, False, 0)
+
+        vbox3 = gtk.VBox(False, 0)
+        self.vbox3 = vbox3
+        hbox1.pack_start(vbox3, False, False, 0)
+
+        radioTrafficDensity = gtk.RadioButton(radioAll, 'Traffic Density')
+        self.radioTrafficDensity = radioTrafficDensity
+        radioTrafficDensity.connect('clicked', self.setMapStyle, 'trafficdensity')
+        vbox3.pack_start(radioTrafficDensity, False, False, 0)
+
+        radioPowerGrid = gtk.RadioButton(radioAll, 'Power Grid')
+        self.radioPowerGrid = radioPowerGrid
+        radioPowerGrid.connect('clicked', self.setMapStyle, 'powergrid')
+        vbox3.pack_start(radioPowerGrid, False, False, 0)
+
+        radioFireCoverage = gtk.RadioButton(radioAll, 'Fire Coverage')
+        self.radioFireCoverage = radioFireCoverage
+        radioFireCoverage.connect('clicked', self.setMapStyle, 'firecoverage')
+        vbox3.pack_start(radioFireCoverage, False, False, 0)
+
+        radioPoliceCoverage = gtk.RadioButton(radioAll, 'Police Coverage')
+        self.radioPoliceCoverage = radioPoliceCoverage
+        radioPoliceCoverage.connect('clicked', self.setMapStyle, 'policecoverage')
+        vbox3.pack_start(radioPoliceCoverage, False, False, 0)
+
+
+    def setMapStyle(self, widget, mapStyle):
+        mapViews = self.mapViews
+        if not mapViews:
+            return
+
+        for mapView in mapViews:
+            mapView.setMapStyle(mapStyle)
 
 
 ########################################################################
