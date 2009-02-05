@@ -98,9 +98,9 @@ void Micropolis::initWillStuff()
 
     populationDensityMap.clear();
     trafficDensityMap.clear();
-    pollutionMap.clear();
+    pollutionDensityMap.clear();
     landValueMap.clear();
-    crimeMap.clear();
+    crimeRateMap.clear();
     terrainDensityMap.clear();
     rateOfGrowthMap.clear();
     comRateMap.clear();

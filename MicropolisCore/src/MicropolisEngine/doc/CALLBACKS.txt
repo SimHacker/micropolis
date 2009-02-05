@@ -60,4 +60,4 @@ Callback("UIUpdate", "s", name);
     speed: when speed changes
     delay: when delay changes
     option: when options change
-    taxrate: tax rate [TODO]
+    taxrate: tax rate

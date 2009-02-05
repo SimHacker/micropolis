@@ -119,40 +119,44 @@ class MicropolisPanedWindow(gtk.Window):
 
         # Panes
 
-        self.vpaned1 = gtk.VPaned()
-        self.hpaned1 = gtk.HPaned()
+        vpaned1 = gtk.VPaned()
+        self.vpaned1 = vpaned1
+
+        hpaned1 = gtk.HPaned()
+        self.hpaned1 = hpaned1
 
         # Put the top level pane in this window.
 
         self.add(
-            self.vpaned1)
+            vpaned1)
 
         # Views
 
-        self.tileView1 = \
-            micropolisdrawingarea.EditableMicropolisDrawingArea(
+        bigMapView = micropolisdrawingarea.EditableMicropolisDrawingArea(
                 engine=self.engine)
-        engine.addView(self.tileView1)
+        self.bigMapView = bigMapView
+        engine.addView(bigMapView)
 
-        self.statusView = \
-            micropolisstatusview.MicropolisStatusView(
+        statusView = micropolisstatusview.MicropolisStatusView(
                 engine=engine,
+                bigMapView=bigMapView,
                 centerOnTileHandler=self.centerOnTileHandler)
+        self.statusView = statusView
 
         # Pack the views into the panes.
 
-        self.vpaned1.pack1(
-            self.statusView,
+        vpaned1.pack1(
+            statusView,
             resize=False,
             shrink=False)
 
-        self.vpaned1.pack2(
-            self.hpaned1,
+        vpaned1.pack2(
+            hpaned1,
             resize=False,
             shrink=False)
 
-        self.hpaned1.pack2(
-            self.tileView1,
+        hpaned1.pack2(
+            bigMapView,
             resize=False,
             shrink=False)
 
@@ -180,8 +184,9 @@ class MicropolisPanedWindow(gtk.Window):
 
         #print "CENTERONTILEHANDLER", self, tileX, tileY
 
-        self.tileView1.setScale(1.0)
-        self.tileView1.centerOnTile(
+        bigMapView = self.bigMapView
+        bigMapView.setScale(1.0)
+        bigMapView.centerOnTile(
             tileX,
             tileY)
 
@@ -205,9 +210,9 @@ class MicropolisPanedWindow(gtk.Window):
         self.hpaned1.set_position(leftEdge + extra)
         self.vpaned1.set_position(topEdge + extra)
 
-        self.tileView1.panTo(-200, -200)
-        self.tileView1.setScale(1.0)
-
+        bigMapView = self.bigMapView
+        bigMapView.panTo(-200, -200)
+        bigMapView.setScale(1.0)
 
 
     def handleRealize(

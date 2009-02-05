@@ -265,8 +265,8 @@ void Micropolis::pollutionTerrainLandValueScan()
                 dis = 34 - getCityCenterDistance(worldX, worldY) / 2;
                 dis = dis <<2;
                 dis += terrainDensityMap.get(x >>1, y >>1);
-                dis -= pollutionMap.get(x, y);
-                if (crimeMap.get(x, y) > 190) {
+                dis -= pollutionDensityMap.get(x, y);
+                if (crimeRateMap.get(x, y) > 190) {
                     dis -= 20;
                 }
                 dis = clamp(dis, 1, 250);
@@ -292,10 +292,10 @@ void Micropolis::pollutionTerrainLandValueScan()
     pnum = 0;
     ptot = 0;
 
-    for (x = 0; x < WORLD_W; x += pollutionMap.MAP_BLOCKSIZE) {
-        for (y = 0; y < WORLD_H; y += pollutionMap.MAP_BLOCKSIZE)  {
+    for (x = 0; x < WORLD_W; x += pollutionDensityMap.MAP_BLOCKSIZE) {
+        for (y = 0; y < WORLD_H; y += pollutionDensityMap.MAP_BLOCKSIZE)  {
             z = tempMap1.worldGet(x, y);
-            pollutionMap.worldSet(x, y, z);
+            pollutionDensityMap.worldSet(x, y, z);
 
             if (z) { /*  get pollute average  */
                 pnum++;
@@ -410,8 +410,8 @@ void Micropolis::crimeScan()
     int numz = 0;
     int cmax = 0;
 
-    for (int x = 0; x < WORLD_W; x += crimeMap.MAP_BLOCKSIZE) {
-        for (int y = 0; y < WORLD_H; y += crimeMap.MAP_BLOCKSIZE) {
+    for (int x = 0; x < WORLD_W; x += crimeRateMap.MAP_BLOCKSIZE) {
+        for (int y = 0; y < WORLD_H; y += crimeRateMap.MAP_BLOCKSIZE) {
             int z = landValueMap.worldGet(x, y);
             if (z > 0) {
                 ++numz;
@@ -420,7 +420,7 @@ void Micropolis::crimeScan()
                 z = min(z, 300);
                 z -= policeStationMap.worldGet(x, y);
                 z = clamp(z, 0, 250);
-                crimeMap.worldSet(x, y, (Byte)z);
+                crimeRateMap.worldSet(x, y, (Byte)z);
                 totz += z;
 
                 // Update new crime hot-spot
@@ -431,7 +431,7 @@ void Micropolis::crimeScan()
                 }
 
             } else {
-                crimeMap.worldSet(x, y, 0);
+                crimeRateMap.worldSet(x, y, 0);
             }
         }
     }

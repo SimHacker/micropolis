@@ -82,8 +82,8 @@ import micropolisevaluationpanel
 import micropolishistorypanel
 import micropolisbudgetpanel
 import micropolismappanel
-import micropoliscontrolpanel
 import micropolisdisasterspanel
+import micropoliscontrolpanel
 
 
 ########################################################################
@@ -96,6 +96,7 @@ class MicropolisStatusView(gtk.HPaned):
     def __init__(
         self,
         engine=None,
+        bigMapView=None,
         centerOnTileHandler=None,
         **args):
 
@@ -104,76 +105,96 @@ class MicropolisStatusView(gtk.HPaned):
             **args)
 
         self.engine = engine
+        self.bigMapView = bigMapView
 
         # Views
 
-        self.vbox2 = gtk.VBox(False, 0)
-        self.pack1(self.vbox2, resize=False, shrink=False)
+        vbox2 = gtk.VBox(False, 0)
+        self.vbox2 = vbox2
+        self.pack1(vbox2, resize=False, shrink=False)
 
-        self.gaugeView = micropolisgaugeview.MicropolisGaugeView(engine=self.engine)
-        self.vbox2.pack_start(self.gaugeView, False, False, 0)
+        gaugeView = micropolisgaugeview.MicropolisGaugeView(engine=self.engine)
+        self.gaugeView = gaugeView
+        vbox2.pack_start(gaugeView, False, False, 0)
 
-        self.tileView = \
-            micropolisdrawingarea.MiniMicropolisDrawingArea(
+        smallMapView = micropolisdrawingarea.MiniMicropolisDrawingArea(
                 engine=self.engine)
-        self.tileView.panTo(0, 0)
-        self.tileView.setScale(
-            1.0 / micropolisengine.EDITOR_TILE_SIZE)
-        self.tileView.set_size_request(
+        self.smallMapView = smallMapView
+        smallMapView.set_size_request(
             micropolisengine.WORLD_W,
             micropolisengine.WORLD_H)
-        engine.addView(self.tileView)
+        engine.addView(smallMapView)
 
-        self.vbox2.pack_start(self.tileView, True, True, 1)
+        vbox2.pack_start(self.smallMapView, True, True, 0)
 
-        self.hbox1 = gtk.HBox(False, 0)
-        self.pack2(self.hbox1, resize=False, shrink=False)
+        hbox1 = gtk.HBox(False, 0)
+        self.hbox1 = hbox1
+        self.pack2(hbox1, resize=False, shrink=False)
 
-        self.notebook = gtk.Notebook()
-        self.hbox1.pack_start(self.notebook, True, True, 0)
+        notebook = gtk.Notebook()
+        self.notebook = notebook
+        hbox1.pack_start(notebook, True, True, 0)
 
-        self.noticePanel = micropolisnoticepanel.MicropolisNoticePanel(
+        noticePanel = micropolisnoticepanel.MicropolisNoticePanel(
             engine=engine,
             centerOnTileHandler=centerOnTileHandler)
-        self.noticeViewLabel = gtk.Label('Notice')
-        self.notebook.append_page(self.noticePanel, self.noticeViewLabel)
+        self.noticePanel = noticePanel
 
-        self.messagesPanel = micropolismessagespanel.MicropolisMessagesPanel(
+        noticeViewLabel = gtk.Label('Notice')
+        self.noticeViewLabel = noticeViewLabel
+        notebook.append_page(noticePanel, noticeViewLabel)
+
+        messagesPanel = micropolismessagespanel.MicropolisMessagesPanel(
             engine=engine)
-        self.messagesViewLabel = gtk.Label('Messages')
-        self.notebook.append_page(self.messagesPanel, self.messagesViewLabel)
+        self.messagesPanel = messagesPanel
+        messagesViewLabel = gtk.Label('Messages')
+        self.messagesViewLabel = messagesViewLabel
+        notebook.append_page(messagesPanel, messagesViewLabel)
 
-        self.evaluationPanel = micropolisevaluationpanel.MicropolisEvaluationPanel(
+        evaluationPanel = micropolisevaluationpanel.MicropolisEvaluationPanel(
             engine=engine)
-        self.evaluationLabel = gtk.Label("Evaluation")
-        self.notebook.append_page(self.evaluationPanel, self.evaluationLabel)
+        self.evaluationPanel = evaluationPanel
+        evaluationLabel = gtk.Label("Evaluation")
+        self.evaluationLabel = evaluationLabel
+        notebook.append_page(evaluationPanel, evaluationLabel)
 
-        self.historyPanel = micropolishistorypanel.MicropolisHistoryPanel(
+        historyPanel = micropolishistorypanel.MicropolisHistoryPanel(
             engine=engine)
-        self.historyLabel = gtk.Label("History")
-        self.notebook.append_page(self.historyPanel, self.historyLabel)
+        self.historyPanel = historyPanel
+        historyLabel = gtk.Label("History")
+        self.historyLabel = historyLabel
+        notebook.append_page(historyPanel, historyLabel)
 
-        self.budgetPanel = micropolisbudgetpanel.MicropolisBudgetPanel(
+        budgetPanel = micropolisbudgetpanel.MicropolisBudgetPanel(
             engine=engine)
-        self.budgetLabel = gtk.Label("Budget")
-        self.notebook.append_page(self.budgetPanel, self.budgetLabel)
+        self.budgetPanel = budgetPanel
+        budgetLabel = gtk.Label("Budget")
+        self.budgetLabel = budgetLabel
+        notebook.append_page(budgetPanel, budgetLabel)
 
-        self.mapPanel = micropolismappanel.MicropolisMapPanel(
+        mapPanel = micropolismappanel.MicropolisMapPanel(
+            engine=engine,
+            mapViews=[self.smallMapView, self.bigMapView,])
+        self.mapPanel = mapPanel
+        mapLabel = gtk.Label("Map")
+        self.mapLabel = mapLabel
+        notebook.append_page(mapPanel, mapLabel)
+
+        disastersPanel = micropolisdisasterspanel.MicropolisDisastersPanel(
             engine=engine)
-        self.mapLabel = gtk.Label("Map")
-        self.notebook.append_page(self.mapPanel, self.mapLabel)
+        self.disastersPanel = disastersPanel
+        disastersLabel = gtk.Label("Disasters")
+        self.disastersLabel = disastersLabel
+        notebook.append_page(disastersPanel, disastersLabel)
 
-        self.controlPanel = micropoliscontrolpanel.MicropolisControlPanel(
+        controlPanel = micropoliscontrolpanel.MicropolisControlPanel(
             engine=engine)
-        self.controlLabel = gtk.Label("Control")
-        self.notebook.append_page(self.controlPanel, self.controlLabel)
+        self.controlPanel = controlPanel
+        controlLabel = gtk.Label("Control")
+        self.controlLabel = controlLabel
+        notebook.append_page(controlPanel, controlLabel)
 
-        self.disastersPanel = micropolisdisasterspanel.MicropolisDisastersPanel(
-            engine=engine)
-        self.disastersLabel = gtk.Label("Disasters")
-        self.notebook.append_page(self.disastersPanel, self.disastersLabel)
-
-        self.set_position(self.gaugeView.viewWidth)
+        self.set_position(gaugeView.viewWidth)
 
 
     def update(

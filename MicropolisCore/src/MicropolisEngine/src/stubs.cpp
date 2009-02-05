@@ -318,11 +318,8 @@ void Micropolis::setTile(int x, int y, int tile)
 
 
 /**
- * Get the address of the internal buffer containing the map.
- *
- * This is used to enable the tile engine to access the
- * tiles directly.
- *
+ * Get the address of the internal buffer containing the map. This is
+ * used to enable the tile engine to access the tiles directly.
  * @return Pointer to the start of the world map buffer.
  */
 void *Micropolis::getMapBuffer()
@@ -332,17 +329,122 @@ void *Micropolis::getMapBuffer()
 
 
 /**
- * Get the address of the internal buffer containing the
- * power map.
- *
- * This is used to enable the tile engine to access the
- * power map directly.
- *
- * @return Pointer to the start of the power map buffer.
+ * Get a value from the power grid map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H.
+ * @return Value of the power grid map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use powerGridMap.worldGet() instead).
  */
-void *Micropolis::getPowerMapBuffer()
+int Micropolis::getPowerGrid(int x, int y)
 {
-    return (void *)powerMap.getBase();
+    return powerGridMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the power grid map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H.
+ * @param power the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use powerGridMap.worldSet() instead).
+ */
+void Micropolis::setPowerGrid(int x, int y, int power)
+{
+  powerGridMap.set(x, y, power);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the power grid
+ * map.  This is used to enable the tile engine to access the power
+ * grid map directly.
+ * @return Pointer to the start of the power grid map buffer.
+ */
+void *Micropolis::getPowerGridMapBuffer()
+{
+    return (void *)powerGridMap.getBase();
+}
+
+
+/**
+ * Get a value from the population density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @return Value of the population density map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use populationDensityMap.worldGet() instead).
+ */
+int Micropolis::getPopulationDensity(int x, int y)
+{
+    return populationDensityMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the population density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @param density the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use populationDensityMap.worldSet() instead).
+ */
+void Micropolis::setPopulationDensity(int x, int y, int density)
+{
+    populationDensityMap.set(x, y, density);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the population
+ * density map. This is used to enable the tile engine to access the
+ * population density map directly.
+ * @return Pointer to the start of the population density map buffer.
+ */
+void *Micropolis::getPopulationDensityMapBuffer()
+{
+    return (void *)populationDensityMap.getBase();
+}
+
+
+/**
+ * Get a value from the rate of growth map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @return Value of the rate of growth map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use rateOfGrowthMap.worldGet() instead).
+ */
+int Micropolis::getRateOfGrowth(int x, int y)
+{
+    return rateOfGrowthMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the rate of growth map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @param rate the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use rateOfGrowthMap.worldSet() instead).
+ */
+void Micropolis::setRateOfGrowth(int x, int y, int rate)
+{
+    rateOfGrowthMap.set(x, y, rate);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the rate of
+ * growth map.  This is used to enable the tile engine to access the
+ * rate of growth map directly.
+ * @return Pointer to the start of the rate of growth map buffer.
+ */
+void *Micropolis::getRateOfGrowthMapBuffer()
+{
+    return (void *)rateOfGrowthMap.getBase();
 }
 
 
@@ -356,10 +458,6 @@ void *Micropolis::getPowerMapBuffer()
  */
 int Micropolis::getTrafficDensity(int x, int y)
 {
-    if (!testBounds2(x, y)) {
-        return 0;
-    }
-
     return trafficDensityMap.get(x, y);
 }
 
@@ -368,33 +466,224 @@ int Micropolis::getTrafficDensity(int x, int y)
  * Set a value in the traffic density map.
  * @param x X coordinate of the position to get, 0 to WORLD_W_2.
  * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
- * @param density the tile value to set.
+ * @param density the value to set.
  * @note Off-map positions are ignored.
  * @todo Use world coordinates instead (use trafficDensityMap.worldSet() instead).
  */
 void Micropolis::setTrafficDensity(int x, int y, int density)
 {
-    if (!testBounds2(x, y)) {
-        return;
-    }
-
     trafficDensityMap.set(x, y, density);
 }
 
 
 /**
- * Get the address of the internal buffer containing the
- * traffic density map.
- *
- * This is used to enable the tile engine to access the
+ * Get the address of the internal buffer containing the traffic
+ * density map. This is used to enable the tile engine to access the
  * traffic density map directly.
- *
- * @return Pointer to the start of the traffic density
- *         map buffer.
+ * @return Pointer to the start of the traffic density map buffer.
  */
 void *Micropolis::getTrafficDensityMapBuffer()
 {
     return (void *)trafficDensityMap.getBase();
+}
+
+
+/**
+ * Get a value from the pollution density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @return Value of the rate of pollution density map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use pollutionDensityMap.worldGet() instead).
+ */
+int Micropolis::getPollutionDensity(int x, int y)
+{
+    return pollutionDensityMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the pollition density map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @param density the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use pollutionDensityMap.worldSet() instead).
+ */
+void Micropolis::setPollutionDensity(int x, int y, int density)
+{
+    pollutionDensityMap.set(x, y, density);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the pollution
+ * density map. This is used to enable the tile engine to access the
+ * pollution density map directly.
+ * @return Pointer to the start of the pollution density map buffer.
+ */
+void *Micropolis::getPollutionDensityMapBuffer()
+{
+    return (void *)pollutionDensityMap.getBase();
+}
+
+
+/**
+ * Get a value from the crime rate map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @return Value of the population density map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use crimeRateMap.worldGet() instead).
+ */
+int Micropolis::getCrimeRate(int x, int y)
+{
+    return crimeRateMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the crime rate map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @param rate the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use crimeRateMap.worldSet() instead).
+ */
+void Micropolis::setCrimeRate(int x, int y, int rate)
+{
+    crimeRateMap.set(x, y, rate);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the crime rate
+ * map. This is used to enable the tile engine to access the crime
+ * rate map directly.
+ * @return Pointer to the start of the crime rate map buffer.
+ */
+void *Micropolis::getCrimeRateMapBuffer()
+{
+    return (void *)crimeRateMap.getBase();
+}
+
+
+/**
+ * Get a value from the land value map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @return Value of the land value map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use landValueMap.worldGet() instead).
+ */
+int Micropolis::getLandValue(int x, int y)
+{
+    return landValueMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the land value map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_2.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_2.
+ * @param value the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use landValueMap.worldSet() instead).
+ */
+void Micropolis::setLandValue(int x, int y, int value)
+{
+    landValueMap.set(x, y, value);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the land value
+ * map. This is used to enable the tile engine to access the land
+ * value map directly.
+ * @return Pointer to the start of the land value map buffer.
+ */
+void *Micropolis::getLandValueMapBuffer()
+{
+    return (void *)landValueMap.getBase();
+}
+
+
+/**
+ * Get a value from the fire coverage map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @return Value of the fir coverage map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use fireStationEffectMap.worldGet() instead).
+ */
+int Micropolis::getFireCoverage(int x, int y)
+{
+    return fireStationEffectMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the fire coverage map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @param coverage the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use fireStationEffectMap.worldSet() instead).
+ */
+void Micropolis::setFireCoverage(int x, int y, int coverage)
+{
+    fireStationEffectMap.set(x, y, coverage);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the fire coverage
+ * map. This is used to enable the tile engine to access the fire
+ * coverage map directly.
+ * @return Pointer to the start of the fire coverage map buffer.
+ */
+void *Micropolis::getFireCoverageMapBuffer()
+{
+    return (void *)fireStationEffectMap.getBase();
+}
+
+/**
+ * Get a value from the police coverage map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @return Value of the fir coverage map at the given position.
+ * @note Off-map positions are considered to contain 0.
+ * @todo Use world coordinates instead (use policeStationEffectMap.worldGet() instead).
+ */
+int Micropolis::getPoliceCoverage(int x, int y)
+{
+    return policeStationEffectMap.get(x, y);
+}
+
+
+/**
+ * Set a value in the police coverage map.
+ * @param x X coordinate of the position to get, 0 to WORLD_W_8.
+ * @param y Y coordinate of the position to get, 0 to WORLD_H_8.
+ * @param coverage the value to set.
+ * @note Off-map positions are ignored.
+ * @todo Use world coordinates instead (use policeStationEffectMap.worldSet() instead).
+ */
+void Micropolis::setPoliceCoverage(int x, int y, int coverage)
+{
+    policeStationEffectMap.set(x, y, coverage);
+}
+
+
+/**
+ * Get the address of the internal buffer containing the police coverage
+ * map. This is used to enable the tile engine to access the police
+ * coverage map directly.
+ * @return Pointer to the start of the police coverage map buffer.
+ */
+void *Micropolis::getPoliceCoverageMapBuffer()
+{
+    return (void *)policeStationEffectMap.getBase();
 }
 
 

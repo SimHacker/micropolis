@@ -128,7 +128,7 @@ class MicropolisControlPanel(gtk.Frame):
 
         vbox1 = gtk.VBox(False, 5)
         self.vbox1 = vbox1
-        hbox1.pack_start(vbox1, False, False, 1)
+        hbox1.pack_start(vbox1, False, False, 0)
         vbox1.set_size_request(200, 0)
 
         spacer2 = gtk.HBox()
@@ -137,7 +137,7 @@ class MicropolisControlPanel(gtk.Frame):
 
         labelSpeed = gtk.Label('')
         self.labelSpeed = labelSpeed
-        vbox1.pack_start(labelSpeed, False, False, 1)
+        vbox1.pack_start(labelSpeed, False, False, 0)
         labelSpeed.show()
 
         scaleSpeed = gtk.HScale()
@@ -148,13 +148,13 @@ class MicropolisControlPanel(gtk.Frame):
         scaleSpeed.set_range(0, len(self.speeds) - 1)
         scaleSpeed.set_increments(1, 3)
         scaleSpeed.connect('value-changed', self.speedScaleChanged)
-        vbox1.pack_start(scaleSpeed, False, False, 1)
+        vbox1.pack_start(scaleSpeed, False, False, 0)
         scaleSpeed.show()
         self.update('speed')
 
         vbox2 = gtk.VBox(False, 0)
         self.vbox2 = vbox2
-        hbox1.pack_start(vbox2, False, False, 2)
+        hbox1.pack_start(vbox2, False, False, 0)
 
         spacer3 = gtk.HBox()
         spacer3.set_size_request(5, 5)
@@ -162,23 +162,23 @@ class MicropolisControlPanel(gtk.Frame):
 
         self.checkButtonDisasters = gtk.CheckButton("Disasters")
         self.checkButtonDisasters.connect('toggled', self.doOptionsCheckbox, 'disasters')
-        self.vbox2.pack_start(self.checkButtonDisasters, False, False, 1)
+        self.vbox2.pack_start(self.checkButtonDisasters, False, False, 0)
 
         self.checkButtonAutoBudget = gtk.CheckButton("Auto Budget")
         self.checkButtonAutoBudget.connect('toggled', self.doOptionsCheckbox, 'autobudget')
-        self.vbox2.pack_start(self.checkButtonAutoBudget, False, False, 2)
+        self.vbox2.pack_start(self.checkButtonAutoBudget, False, False, 0)
 
         self.checkButtonAutoBulldoze = gtk.CheckButton("Auto Bulldoze")
         self.checkButtonAutoBulldoze.connect('toggled', self.doOptionsCheckbox, 'autobulldoze')
-        self.vbox2.pack_start(self.checkButtonAutoBulldoze, False, False, 3)
+        self.vbox2.pack_start(self.checkButtonAutoBulldoze, False, False, 0)
 
         self.checkButtonAutoGoto = gtk.CheckButton("Auto Goto")
         self.checkButtonAutoGoto.connect('toggled', self.doOptionsCheckbox, 'autogoto')
-        self.vbox2.pack_start(self.checkButtonAutoGoto, False, False, 4)
+        self.vbox2.pack_start(self.checkButtonAutoGoto, False, False, 0)
 
         vbox3 = gtk.VBox(False, 0)
         self.vbox3 = vbox3
-        hbox1.pack_start(vbox3, False, False, 3)
+        hbox1.pack_start(vbox3, False, False, 0)
 
         spacer4 = gtk.HBox()
         spacer4.set_size_request(5, 5)
@@ -190,21 +190,21 @@ class MicropolisControlPanel(gtk.Frame):
 
         self.checkButtonAnimation = gtk.CheckButton("Animation")
         self.checkButtonAnimation.connect('toggled', self.doOptionsCheckbox, 'animation')
-        self.vbox3.pack_start(self.checkButtonAnimation, False, False, 1)
+        self.vbox3.pack_start(self.checkButtonAnimation, False, False, 0)
 
         self.checkButtonMessages = gtk.CheckButton("Messages")
         self.checkButtonMessages.connect('toggled', self.doOptionsCheckbox, 'messages')
-        self.vbox3.pack_start(self.checkButtonMessages, False, False, 2)
+        self.vbox3.pack_start(self.checkButtonMessages, False, False, 0)
 
         self.checkButtonNotices = gtk.CheckButton("Notices")
         self.checkButtonNotices.connect('toggled', self.doOptionsCheckbox, 'notices')
-        self.vbox3.pack_start(self.checkButtonNotices, False, False, 3)
+        self.vbox3.pack_start(self.checkButtonNotices, False, False, 0)
 
         self.update('options')
 
         vbox4 = gtk.VButtonBox()
         self.vbox4 = vbox4
-        hbox1.pack_start(vbox4, False, False, 4)
+        hbox1.pack_start(vbox4, False, False, 0)
 
         buttonAbout = gtk.Button("About")
         self.buttonAbout = buttonAbout
@@ -212,19 +212,19 @@ class MicropolisControlPanel(gtk.Frame):
 
         buttonSaveCity = gtk.Button("Save City")
         self.buttonSaveCity = buttonSaveCity
-        vbox4.pack_start(buttonSaveCity, False, False, 1)
+        vbox4.pack_start(buttonSaveCity, False, False, 0)
 
         buttonSaveCityAs = gtk.Button("Save City As...")
         self.buttonSaveCityAs = buttonSaveCityAs
-        vbox4.pack_start(buttonSaveCityAs, False, False, 2)
+        vbox4.pack_start(buttonSaveCityAs, False, False, 0)
 
         buttonNewCity = gtk.Button("New City")
         self.buttonNewCity = buttonNewCity
-        vbox4.pack_start(buttonNewCity, False, False, 3)
+        vbox4.pack_start(buttonNewCity, False, False, 0)
 
         buttonQuit = gtk.Button("Quit")
         self.buttonQuit = buttonQuit
-        vbox4.pack_start(buttonQuit, False, False, 4)
+        vbox4.pack_start(buttonQuit, False, False, 0)
 
 
     def update(

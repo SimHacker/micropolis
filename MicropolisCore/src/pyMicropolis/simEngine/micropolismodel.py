@@ -447,7 +447,7 @@ You have 10 years to turn this swamp back into a city again.""",
             timeDelay=10,
             *args,
             **kwargs):
-        print "MicropolisModel.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
+        #print "MicropolisModel.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
 
         micropolisengine.Micropolis.__init__(self, *args, **kwargs)
 
@@ -457,8 +457,15 @@ You have 10 years to turn this swamp back into a city again.""",
         self.timerId = None
         self.views = []
         self.interests = {}
-        self.powerDataImage = None
-        self.trafficDataImage = None
+        self.populationDensityImage = None
+        self.rateOfGrowthImage = None
+        self.landValueImage = None
+        self.crimeRateImage = None
+        self.pollutionDensityImage = None
+        self.trafficDensityImage = None
+        self.powerGridImage = None
+        self.fireCoverageImage = None
+        self.policeCoverageImage = None
         self.dataTileEngine = tileengine.TileEngine()
         self.robots = []
 
@@ -485,7 +492,7 @@ You have 10 years to turn this swamp back into a city again.""",
         if self.running:
             self.startTimer()
 
-        print "MicropolisModel.__init__ done", self
+        #print "MicropolisModel.__init__ done", self
 
 
     def __del__(
@@ -568,30 +575,75 @@ You have 10 years to turn this swamp back into a city again.""",
         self.views.remove(view)
 
 
-    def getDataImage(self, name):
+    def getDataImageAlpha(self, name):
         # @todo: cache images
-        if name == 'power':
-            return self.getPowerDataImage()
-        elif name == 'traffic':
-            return self.getTrafficDataImage()
+        if name == 'all':
+            return self.getAllImageAlpha()
+        elif name == 'residential':
+            return self.getResidentialImageAlpha()
+        elif name == 'commercial':
+            return self.getCommercialImageAlpha()
+        elif name == 'industrial':
+            return self.getIndustrialImageAlpha()
+        elif name == 'transportation':
+            return self.getTransportationImageAlpha()
+        elif name == 'populationdensity':
+            return self.getPopulationDensityImageAlpha()
+        elif name == 'rateofgrowth':
+            return self.getRateOfGrowthImageAlpha()
+        elif name == 'landvalue':
+            return self.getLandValueImageAlpha()
+        elif name == 'crimerate':
+            return self.getCrimeRateImageAlpha()
+        elif name == 'pollutiondensity':
+            return self.getPollutionDensityImageAlpha()
+        elif name == 'trafficdensity':
+            return self.getTrafficDensityImageAlpha()
+        elif name == 'powergrid':
+            return self.getPowerGridImageAlpha()
+        elif name == 'firecoverage':
+            return self.getFireCoverageImageAlpha()
+        elif name == 'policecoverage':
+            return self.getPoliceCoverageImageAlpha()
+        else:
+            print "MicropolisModel: getImageAlpha: Invalid data image name:", name
+            return None
 
-        return None
+
+    def getAllImageAlpha(self):
+        return None, 1
 
 
-    def getTrafficDataImage(self):
-        image = self.trafficDataImage
+    def getResidentialImageAlpha(self):
+        return None, 1
+
+
+    def getCommercialImageAlpha(self):
+        return None, 1
+
+
+    def getIndustrialImageAlpha(self):
+        return None, 1
+
+
+    def getTransportationImageAlpha(self):
+        return None, 1
+
+
+    def getPopulationDensityImageAlpha(self):
+        image = self.populationDensityImage
         if not image:
             image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
-            self.trafficDataImage = image
+            self.populationDensityImage = image
         tengine = self.dataTileEngine
 
-        buffer = self.getTrafficDensityMapBuffer()
+        buffer = self.getPopulationDensityMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
         tengine.width = micropolisengine.WORLD_W_2
         tengine.height = micropolisengine.WORLD_H_2
 
-        # Unsigned short tile values, in column major order.
+        # Unsigned byte tile values, in column major order.
         tengine.typeCode = 'b'
         tengine.colBytes = micropolisengine.WORLD_H_2
         tengine.rowBytes = 1
@@ -606,17 +658,172 @@ You have 10 years to turn this swamp back into a city again.""",
             micropolisengine.WORLD_W_2,
             micropolisengine.WORLD_H_2)
 
-        return image
+        return image, 0.5
 
 
-    def getPowerDataImage(self):
-        image = self.powerDataImage
+    def getRateOfGrowthImageAlpha(self):
+        image = self.rateOfGrowthImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W, micropolisengine.WORLD_H)
-            self.powerDataImage = image
+            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            self.rateOfGrowthImage = image
         tengine = self.dataTileEngine
 
-        buffer = self.getPowerMapBuffer()
+        buffer = self.getRateOfGrowthMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_8
+        tengine.height = micropolisengine.WORLD_H_8
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'h'
+        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        tengine.rowBytes = 2
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_8,
+            micropolisengine.WORLD_H_8)
+
+        return image, 0.5
+
+
+    def getLandValueImageAlpha(self):
+        image = self.landValueImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            self.landValueImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getLandValueMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_2
+        tengine.height = micropolisengine.WORLD_H_2
+
+        # Unsigned byte tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.rowBytes = 1
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_2,
+            micropolisengine.WORLD_H_2)
+
+        return image, 0.5
+
+
+    def getCrimeRateImageAlpha(self):
+        image = self.crimeRateImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            self.crimeRateImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getCrimeRateMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_2
+        tengine.height = micropolisengine.WORLD_H_2
+
+        # Unsigned byte tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.rowBytes = 1
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_2,
+            micropolisengine.WORLD_H_2)
+
+        return image, 0.5
+
+
+    def getPollutionDensityImageAlpha(self):
+        image = self.pollutionDensityImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            self.pollutionDensityImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getPollutionDensityMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_2
+        tengine.height = micropolisengine.WORLD_H_2
+
+        # Unsigned byte tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.rowBytes = 1
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_2,
+            micropolisengine.WORLD_H_2)
+
+        return image, 0.5
+
+
+    def getTrafficDensityImageAlpha(self):
+        image = self.trafficDensityImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            self.trafficDensityImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getTrafficDensityMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_2
+        tengine.height = micropolisengine.WORLD_H_2
+
+        # Unsigned byte tile values, in column major order.
+        tengine.typeCode = 'b'
+        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.rowBytes = 1
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_2,
+            micropolisengine.WORLD_H_2)
+
+        return image, 0.5
+
+
+    def getPowerGridImageAlpha(self):
+        image = self.powerGridImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W, micropolisengine.WORLD_H)
+            self.powerGridImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getPowerGridMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
         tengine.width = micropolisengine.WORLD_W
@@ -626,7 +833,6 @@ You have 10 years to turn this swamp back into a city again.""",
         tengine.typeCode = 'b'
         tengine.colBytes = micropolisengine.WORLD_H
         tengine.rowBytes = 1
-        getTile = self.getTile
 
         from micropolisengine import ZONEBIT, PWRBIT, ALLBITS
 
@@ -645,7 +851,69 @@ You have 10 years to turn this swamp back into a city again.""",
             micropolisengine.WORLD_W,
             micropolisengine.WORLD_H)
 
-        return image
+        return image, 0.5
+
+
+    def getFireCoverageImageAlpha(self):
+        image = self.fireCoverageImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            self.fireCoverageImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getFireCoverageMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_8
+        tengine.height = micropolisengine.WORLD_H_8
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'h'
+        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        tengine.rowBytes = 2
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_8,
+            micropolisengine.WORLD_H_8)
+
+        return image, 0.5
+
+
+    def getPoliceCoverageImageAlpha(self):
+        image = self.policeCoverageImage
+        if not image:
+            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            self.policeCoverageImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getPoliceCoverageMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = micropolisengine.WORLD_W_8
+        tengine.height = micropolisengine.WORLD_H_8
+
+        # Unsigned short tile values, in column major order.
+        tengine.typeCode = 'h'
+        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        tengine.rowBytes = 2
+
+        tengine.renderPixels(
+            image,
+            self.dataImageColorMap,
+            None,
+            None,
+            0,
+            0,
+            micropolisengine.WORLD_W_8,
+            micropolisengine.WORLD_H_8)
+
+        return image, 0.5
 
 
     def makeImage(self, width, height):

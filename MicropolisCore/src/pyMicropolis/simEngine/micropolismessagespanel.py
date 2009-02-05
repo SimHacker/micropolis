@@ -146,7 +146,12 @@ class MicropolisMessagesPanel(gtk.Frame):
         message = messages[messageNumber]
 
         textBuffer = self.textBuffer
+        textView = self.textView
+
         textBuffer.insert(textBuffer.get_end_iter(), message + "\n")
+
+        # @bug Why doesn't place_cursor_onscreen work?
+        textView.place_cursor_onscreen()
 
 
 ########################################################################

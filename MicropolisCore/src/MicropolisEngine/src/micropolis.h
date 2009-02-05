@@ -1269,10 +1269,10 @@ public:
     //@{
 
     MapByte2 populationDensityMap; ///< Population density map.
-    MapByte2 trafficDensityMap; ///< Traffic map.
-    MapByte2 pollutionMap; ///< Pollution map.
+    MapByte2 trafficDensityMap; ///< Traffic density map.
+    MapByte2 pollutionDensityMap; ///< Pollution density map.
     MapByte2 landValueMap; ///< Land value map.
-    MapByte2 crimeMap; ///< Crime map.
+    MapByte2 crimeRateMap; ///< Crime rate map.
 
     /**
      * Terrain development density map.
@@ -1303,9 +1303,9 @@ public:
     MapByte4 tempMap3;
 
     /**
-     * Power distribution map.
+     * Power grid map.
      */
-    MapByte1 powerMap;
+    MapByte1 powerGridMap;
 
     /**
      * Rate of growth map.
@@ -2053,13 +2053,13 @@ public:
 
     void drawRateOfGrowth();
 
-    void drawTrafficMap();
+    void drawTrafficDensityMap();
 
-    void drawPollutionMap();
+    void drawPollutionDensityMap();
 
-    void drawCrimeMap();
+    void drawCrimeRateMap();
 
-    void drawLandMap();
+    void drawLandValueMap();
 
     void drawFireRadius();
 
@@ -2391,10 +2391,6 @@ public:
 
     SimSprite *makeSprite(int type, int x, int y);
 
-    void drawObjects();
-
-    void drawSprite(SimSprite *sprite);
-
 
 private:
 
@@ -2647,13 +2643,29 @@ public:
 
     // Power.
 
-    void *getPowerMapBuffer();
+    int getPowerGrid(int x, int y);
+
+    void setPowerGrid(int x, int y, int power);
+
+    void *getPowerGridMapBuffer();
 
     // Roads.
 
     // Population density.
 
+    int getPopulationDensity(int x, int y);
+
+    void setPopulationDensity(int x, int y, int density);
+
+    void *getPopulationDensityMapBuffer();
+
     // Rate of growth.
+
+    int getRateOfGrowth(int x, int y);
+
+    void setRateOfGrowth(int x, int y, int rate);
+
+    void *getRateOfGrowthMapBuffer();
 
     // Traffic density.
 
@@ -2663,15 +2675,45 @@ public:
 
     void *getTrafficDensityMapBuffer();
 
-    // Pollution.
+    // Pollution density.
 
-    // Crime .
+    int getPollutionDensity(int x, int y);
+
+    void setPollutionDensity(int x, int y, int density);
+
+    void *getPollutionDensityMapBuffer();
+
+    // Crime rate.
+
+    int getCrimeRate(int x, int y);
+
+    void setCrimeRate(int x, int y, int rate);
+
+    void *getCrimeRateMapBuffer();
 
     // Land value.
 
-    // Fire radius.
+    int getLandValue(int x, int y);
 
-    // Police radius.
+    void setLandValue(int x, int y, int value);
+
+    void *getLandValueMapBuffer();
+
+    // Fire coverage.
+
+    int getFireCoverage(int x, int y);
+
+    void setFireCoverage(int x, int y, int coverage);
+
+    void *getFireCoverageMapBuffer();
+
+    // Police coverage.
+
+    int getPoliceCoverage(int x, int y);
+
+    void setPoliceCoverage(int x, int y, int coverage);
+
+    void *getPoliceCoverageMapBuffer();
 
 
     ////////////////////////////////////////////////////////////////////////

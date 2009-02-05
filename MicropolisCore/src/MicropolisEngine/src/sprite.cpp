@@ -361,43 +361,6 @@ SimSprite *Micropolis::makeSprite(int type, int x, int y)
 }
 
 
-/** Draw all sprites */
-void Micropolis::drawObjects()
-{
-    SimSprite *sprite;
-
-    for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
-        drawSprite(sprite);
-    }
-}
-
-
-/**
- * Draw sprite.
- * @param sprite Sprite to draw.
- * @bug Sprite is not actually drawn.
- */
-void Micropolis::drawSprite(SimSprite *sprite)
-{
-    int x, y, i;
-
-    if (sprite->frame == 0) {
-        return;
-    }
-
-    i = (sprite->frame - 1) * 2;
-
-    x = sprite->x + sprite->xOffset;
-    y = sprite->y + sprite->yOffset;
-
-    // TODO: draw sprite
-
-    // pict = spriteImages[sprite->type][i];
-    // mask = spriteImages[sprite->type][i + 1];
-
-}
-
-
 /**
  * Get character from the map.
  * @param x X coordinate in pixels.

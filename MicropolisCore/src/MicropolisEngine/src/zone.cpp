@@ -75,7 +75,7 @@
 
 void Micropolis::doZone()
 {
-    bool ZonePwrFlg = setZonePower(); // Set Power Bit in Map from powerMap
+    bool ZonePwrFlg = setZonePower(); // Set Power Bit in Map from powerGridMap
 
     if (ZonePwrFlg) {
         poweredZoneCount++;
@@ -229,7 +229,7 @@ short Micropolis::getLandPollutionValue()
     short landVal;
 
     landVal =  landValueMap.worldGet(curMapX, curMapY);
-    landVal -= pollutionMap.worldGet(curMapX, curMapY);
+    landVal -= pollutionDensityMap.worldGet(curMapX, curMapY);
 
     if (landVal < 30) {
         return 0;
@@ -330,7 +330,7 @@ short Micropolis::doFreePop()
 
 /**
  * Set #PWRBIT in the map at #curMapX and #curMapY based on the corresponding
- * bit in the #powerMap.
+ * bit in the #powerGridMap.
  * @return Does the tile have power?
  */
 bool Micropolis::setZonePower()
@@ -340,7 +340,7 @@ bool Micropolis::setZonePower()
         return true;
     }
 
-    if (powerMap.get(curMapX, curMapY)) {
+    if (powerGridMap.get(curMapX, curMapY)) {
         map[curMapX][curMapY] = curNum | PWRBIT;
         return true;
     } else {
@@ -490,7 +490,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
 /** Perform residential immigration into current tile. */
 void Micropolis::doResIn(int pop, int value)
 {
-    short pollution = pollutionMap.worldGet(curMapX, curMapY);
+    short pollution = pollutionDensityMap.worldGet(curMapX, curMapY);
 
     if (pollution > 128) {
         return;
@@ -608,7 +608,7 @@ short Micropolis::evalRes(int traf)
     }
 
     value =  landValueMap.worldGet(curMapX, curMapY);
-    value -= pollutionMap.worldGet(curMapX, curMapY);
+    value -= pollutionDensityMap.worldGet(curMapX, curMapY);
 
     if (value < 0) {
         value = 0;          /* Cap at 0 */
