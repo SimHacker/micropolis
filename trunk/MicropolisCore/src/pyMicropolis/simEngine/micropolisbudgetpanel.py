@@ -395,6 +395,8 @@ class MicropolisBudgetPanel(gtk.Frame):
         engine = self.engine
         fire = scale.get_value() / 100.0
         engine.firePercent = fire
+        engine.fireSpend = int(fire * engine.fireFund)
+        engine.updateFundEffects()
         engine.mustDrawBudget = True
 
 
@@ -402,6 +404,8 @@ class MicropolisBudgetPanel(gtk.Frame):
         engine = self.engine
         police = scale.get_value() / 100.0
         engine.policePercent = police
+        engine.policeSpend = int(police * engine.policeFund)
+        engine.updateFundEffects()
         engine.mustDrawBudget = True
 
 
@@ -409,6 +413,8 @@ class MicropolisBudgetPanel(gtk.Frame):
         engine = self.engine
         road = scale.get_value() / 100.0
         engine.roadPercent = road
+        engine.roadSpend = int(road * engine.roadFund)
+        engine.updateFundEffects()
         engine.mustDrawBudget = True
 
 

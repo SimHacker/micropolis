@@ -90,7 +90,7 @@ import micropolisengine
 import micropolismodel
 import micropolisutils
 import micropolispiemenus
-from pyMicropolis.tileEngine import tiledrawingarea
+from pyMicropolis.tileEngine import tileengine, tiledrawingarea
 import micropolistool
 
 
@@ -222,7 +222,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
         from micropolisengine import ZONEBIT, PWRBIT, ALLBITS, LIGHTNINGBOLT
 
-        def tileFunction(row, col, tile):
+        def tileFunction(col, row, tile):
             if (tile & ZONEBIT) and not (tile & PWRBIT) and random.random() < 0.5:
                 tile = LIGHTNINGBOLT | (tile & ALLBITS)
             return tile
@@ -230,7 +230,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         self.tileFunction = tileFunction
 
         # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'H'
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
         tengine.tileMask = micropolisengine.LOMASK
@@ -277,9 +277,13 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def drawData(self, ctx):
         mapStyle = self.mapStyle
         engine = self.engine
-        dataImage, dataAlpha = engine.getDataImageAlpha(mapStyle)
+        dataImage, dataAlpha, width, height = \
+            engine.getDataImageAlphaSize(mapStyle)
         if not dataImage:
             return
+
+        width = 1.0 / width
+        height = 1.0 / height
 
         ctx.save()
 
@@ -287,12 +291,19 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
         ctx.translate(self.panX, self.panY)
 
+        ctx.scale(
+            self.worldCols * tileSize,
+            self.worldRows * tileSize)
+
+        ctx.rectangle(0, 0, 1, 1)
+        ctx.clip()
+
         imageWidth = dataImage.get_width()
         imageHeight = dataImage.get_height()
 
         ctx.scale(
-            (self.worldCols * tileSize) / imageWidth,
-            (self.worldRows * tileSize) / imageHeight)
+            width / imageWidth,
+            height / imageHeight)
 
         ctx.set_source_surface(
             dataImage,
@@ -342,7 +353,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
             image,
             0,
             0)
-        #rectangle(0, 0, 1, 1)
+        #ctx.rectangle(0, 0, 1, 1)
         ctx.paint()
 
         ctx.restore()

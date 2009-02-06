@@ -302,9 +302,9 @@ inline bool Map<DATA, BLKSIZE>::worldOnMap(int x, int y) const
 ////////////////////////////////////////////////////////////////////////
 // Type definitions
 
-typedef Map<Byte, 4> MapByte4; ///< Map of ::Byte, with cluster size 4
-typedef Map<Byte, 2> MapByte2; ///< Map of ::Byte, with cluster size 2
 typedef Map<Byte, 1> MapByte1; ///< Map of ::Byte, with cluster size 1
+typedef Map<Byte, 2> MapByte2; ///< Map of ::Byte, with cluster size 2
+typedef Map<Byte, 4> MapByte4; ///< Map of ::Byte, with cluster size 4
 typedef Map<short, 8> MapShort8; ///< Map of ::short, with cluster size 8
 
 ////////////////////////////////////////////////////////////////////////

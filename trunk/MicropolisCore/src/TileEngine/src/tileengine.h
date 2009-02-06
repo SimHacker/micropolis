@@ -122,6 +122,23 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+// Enumerated Types
+
+
+/** Tile format codes for different tile data types. */
+enum TileFormat {
+  TILE_FORMAT_BYTE_SIGNED,
+  TILE_FORMAT_BYTE_UNSIGNED,
+  TILE_FORMAT_SHORT_SIGNED,
+  TILE_FORMAT_SHORT_UNSIGNED,
+  TILE_FORMAT_LONG_SIGNED,
+  TILE_FORMAT_LONG_UNSIGNED,
+  TILE_FORMAT_FLOAT,
+  TILE_FORMAT_DOUBLE,
+  TILE_FORMAT_COUNT,
+};
+
+////////////////////////////////////////////////////////////////////////
 // Classes
 
 
@@ -129,96 +146,95 @@ class TileEngine {
 
 public:
 
-
-  int width;
-  int height;
-  void *bufData;
-  int colBytes;
-  int rowBytes;
-  char typeCode;
-  float floatOffset;
-  float floatScale;
-  unsigned int tileShift;
-  unsigned int tileMask;
-
-
-  ////////////////////////////////////////////////////////////////////////
+    int width;
+    int height;
+    void *bufData;
+    int colBytes;
+    int rowBytes;
+    char tileFormat;
+    float floatOffset;
+    float floatScale;
+    unsigned int tileShift;
+    unsigned int tileMask;
 
 
-  TileEngine();
-
-  ~TileEngine();
+    ////////////////////////////////////////////////////////////////////////
 
 
-  ////////////////////////////////////////////////////////////////////////
+    TileEngine();
+
+    ~TileEngine();
 
 
-  void setBuffer(
-    void *buf);
+    ////////////////////////////////////////////////////////////////////////
 
 
-  unsigned long getValue(
-    int col,
-    int row,
-    PyObject *tileFunction = NULL,
-    const int *tileMapData = NULL,
-    unsigned int tileMapCount = 0);
+    void setBuffer(
+	void *buf);
 
 
-  void renderTiles(
-    cairo_t *ctx,
-    cairo_surface_t *tilesSurf,
-    int tilesWidth,
-    int tilesHeight,
-    PyObject *tileFunction,
-    PyObject *tileMap,
-    int tileSize,
-    int renderCol,
-    int renderRow,
-    int renderCols,
-    int renderRows,
-    double alpha);
+    unsigned long getValue(
+	int col,
+	int row,
+	PyObject *tileFunction = NULL,
+	const int *tileMapData = NULL,
+	unsigned int tileMapCount = 0);
 
 
-  void renderTilesLazy(
-    cairo_t *ctx,
-    PyObject *tileFunction,
-    PyObject *tileMap,
-    int tileSize,
-    int renderCol,
-    int renderRow,
-    int renderCols,
-    int renderRows,
-    double alpha,
-    PyObject *tileGenerator,
-    PyObject *tileCache,
-    PyObject *tileCacheSurfaces,
-    PyObject *tileState);
+    void renderTiles(
+	cairo_t *ctx,
+	cairo_surface_t *tilesSurf,
+	int tilesWidth,
+	int tilesHeight,
+	PyObject *tileFunction,
+	PyObject *tileMap,
+	int tileSize,
+	int renderCol,
+	int renderRow,
+	int renderCols,
+	int renderRows,
+	double alpha);
 
 
-  void renderPixels(
-    cairo_surface_t *destSurf,
-    cairo_surface_t *cmapSurf,
-    PyObject *tileFunction,
-    PyObject *tileMap,
-    int renderCol,
-    int renderRow,
-    int renderCols,
-    int renderRows);
+    void renderTilesLazy(
+	cairo_t *ctx,
+	PyObject *tileFunction,
+	PyObject *tileMap,
+	int tileSize,
+	int renderCol,
+	int renderRow,
+	int renderCols,
+	int renderRows,
+	double alpha,
+	PyObject *tileGenerator,
+	PyObject *tileCache,
+	PyObject *tileCacheSurfaces,
+	PyObject *tileState);
 
 
-  PyObject *getTileData(
-    PyObject *tileFunction,
-    PyObject *tileMap,
-    int col,
-    int row,
-    int cols,
-    int rows,
-    int code,
-    PyObject *tileViewCache);
+    void renderPixels(
+	cairo_surface_t *destSurf,
+	cairo_surface_t *cmapSurf,
+	PyObject *tileFunction,
+	PyObject *tileMap,
+	int renderCol,
+	int renderRow,
+	int renderCols,
+	int renderRows);
 
 
-  ////////////////////////////////////////////////////////////////////////
+    PyObject *getTileData(
+	PyObject *tileFunction,
+	PyObject *tileMap,
+	int col,
+	int row,
+	int cols,
+	int rows,
+	int code,
+	PyObject *tileViewCache);
+
+
+    ////////////////////////////////////////////////////////////////////////
 
 
 };

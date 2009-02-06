@@ -635,7 +635,7 @@ class MicropolisHistoryView(micropolisview.MicropolisView):
         widget,
         event):
 
-        print "handleMouseRelease", self, event, event.x, event.y
+        #print "handleMouseRelease", self, event, event.x, event.y
 
         if not self.clickable:
             return
