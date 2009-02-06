@@ -110,8 +110,15 @@
 /*
 
 static short valMap[] = {
-    -1, COLOR_LIGHTGRAY, COLOR_YELLOW, COLOR_ORANGE, COLOR_RED,
-    COLOR_DARKGREEN, COLOR_LIGHTGREEN, COLOR_ORANGE, COLOR_YELLOW
+    -1,                // VAL_NONE
+    COLOR_LIGHTGRAY,   // VAL_LOW
+    COLOR_YELLOW,      // VAL_MEDIUM
+    COLOR_ORANGE,      // VAL_HIGH
+    COLOR_RED,         // VAL_VERYHIGH
+    COLOR_DARKGREEN,   // VAL_PLUS
+    COLOR_LIGHTGREEN,  // VAL_VERYPLUS
+    COLOR_ORANGE,      // VAL_MINUS
+    COLOR_YELLOW,      // VAL_VERYMINUS
 };
 
 
@@ -283,7 +290,7 @@ void Micropolis::drawLilTransMap()
 {
     DRAW_BEGIN
         if ((tile >= RESBASE) ||
-            ((tile >= BRWXXX7) && tile <= LVPOWER10) ||
+            ((tile >= BRWXXX7) && (tile <= LVPOWER10)) ||
             (tile == UNUSED_TRASH6)) {
             tile = DIRT;
         }
@@ -502,11 +509,13 @@ void Micropolis::drawRateOfGrowth()
 
     drawAll();
 
+  int minZ = 0;
+  int maxZ = 0;
+
     for (x = 0; x < WORLD_W_8; x++) {
         for (y = 0; y < WORLD_H_8; y++) {
             short val;
             short z = rateOfGrowthMap.get(x, y);
-
             if (z > 100) {
                 val = VAL_VERYPLUS;
             } else {

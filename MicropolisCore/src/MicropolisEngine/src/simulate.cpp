@@ -699,9 +699,9 @@ void Micropolis::clearCensus()
     powerStackPointer = 0; /* Reset before Mapscan */
 
     fireStationMap.clear();
-    fireStationEffectMap.clear(); // Added in rev293
+    //fireStationEffectMap.clear(); // Added in rev293
     policeStationMap.clear();
-    policeStationEffectMap.clear(); // Added in rev293
+    //policeStationEffectMap.clear(); // Added in rev293
 
 }
 
@@ -889,14 +889,18 @@ void Micropolis::collectTax()
  * It updates effects with respect to roads, police, and fire.
  * @note This function should probably not be used when #totalPop is
  *       clear (ie with an empty) city. See also bugs of #collectTax()
+ * @bug I think this should be called after loading a city, or any
+ *      time anything it depends on changes.
  */
 void Micropolis::updateFundEffects()
 {
+printf("updateFindEffects\n");
     // Compute road effects of funding
     roadEffect = MAX_ROAD_EFFECT;
     if (roadFund > 0) {
         // Multiply with funding fraction
         roadEffect = (short)((float)roadEffect * (float)roadSpend / (float)roadFund);
+printf("roadEffect %d roadSpend %d, roadFund, %d\n", (int)roadEffect, (int)roadSpend, (int)roadFund);
     }
 
     // Compute police station effects of funding

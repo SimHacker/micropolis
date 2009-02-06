@@ -1223,17 +1223,17 @@ public:
     Quad fireFund;
 
     /**
-     * Ratio of road spending over road funding, times 32.
+     * Ratio of road spending over road funding, times #MAX_ROAD_EFFECT.
      */
     Quad roadEffect;
 
     /**
-     * Ratio of police spending over road funding, times 32.
+     * Ratio of police spending over police funding, times #MAX_POLICE_EFFECT.
      */
     Quad policeEffect;
 
     /**
-     * Ratio of fire spending over road funding, times 32.
+     * Ratio of fire spending over fire funding, times #MAX_FIRE_EFFECT.
      */
     Quad fireEffect;
 
@@ -2299,6 +2299,13 @@ private:
     short indValve;
 
 
+public:
+
+    void updateFundEffects();
+
+
+private:
+
     /** Generate a random animated MapTileCharacters::FIRE tile */
     inline short randomFire()
     {
@@ -2338,8 +2345,6 @@ private:
     void take120Census();
 
     void collectTax();
-
-    void updateFundEffects();
 
     void mapScan(int x1, int x2);
 

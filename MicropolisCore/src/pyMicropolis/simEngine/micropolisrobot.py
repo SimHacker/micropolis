@@ -294,7 +294,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
             dy = 0
             curDir = 'stop'
 
-            print "frustrated off road"
+            #print "frustrated off road"
             frustrated = True
             self.hilite = 3
 

@@ -77,6 +77,10 @@ import micropolisengine
 import gobject
 import cairo
 from pyMicropolis.tileEngine import tileengine
+from micropolisengine import WORLD_W, WORLD_H
+from micropolisengine import WORLD_W_2, WORLD_H_2
+from micropolisengine import WORLD_W_4, WORLD_H_4
+from micropolisengine import WORLD_W_8, WORLD_H_8
 
 
 ########################################################################
@@ -457,6 +461,10 @@ You have 10 years to turn this swamp back into a city again.""",
         self.timerId = None
         self.views = []
         self.interests = {}
+        self.residentialImage = None
+        self.commercialImage = None
+        self.industrialImage = None
+        self.transportationImage = None
         self.populationDensityImage = None
         self.rateOfGrowthImage = None
         self.landValueImage = None
@@ -469,25 +477,45 @@ You have 10 years to turn this swamp back into a city again.""",
         self.dataTileEngine = tileengine.TileEngine()
         self.robots = []
 
-        # NOTE: Because of a bug in SWIG, printing out the wrapped objects results in a crash.
-        # So don't do that! I hope this bug in SWIG gets fixed.
+        # NOTE: Because of a bug in SWIG, printing out the wrapped
+        # objects results in a crash.  So don't do that! I hope this
+        # bug in SWIG gets fixed.
         # TODO: Report SWIG bug, if it's not already known or fixed.
 
         # Hook the engine up so it has a handle on its Python object side.
         self.userData = micropolisengine.getPythonCallbackData(self)
         #print "USERDATA"#, self.userData
 
-        # Hook up the language independent callback mechanism to our low level C++ Python dependent callback handler.
+        # Hook up the language independent callback mechanism to our
+        # low level C++ Python dependent callback handler.
+
         self.callbackHook = micropolisengine.getPythonCallbackHook()
         #print "CALLBACKHOOK"#, self.callbackHook
 
-        # Hook up the Python side of the callback handler, defined in our scripted subclass of the SWIG wrapper.
+        # Hook up the Python side of the callback handler, defined in
+        # our scripted subclass of the SWIG wrapper.
+
         self._invokeCallback = self.invokeCallback # Cache to prevent GC
-        self.callbackData = micropolisengine.getPythonCallbackData(self._invokeCallback)
+        self.callbackData = \
+            micropolisengine.getPythonCallbackData(
+                self._invokeCallback)
         #print "CALLBACKDATA"#, self.callbackData
 
-        self.dataImageColorMap = \
-            cairo.ImageSurface.create_from_png('images/simEngine/transparentYellowOrangeRed.png')
+        self.dataColorMap = \
+            cairo.ImageSurface.create_from_png(
+                'images/simEngine/dataColorMap.png')
+
+        self.rateColorMap = \
+            cairo.ImageSurface.create_from_png(
+                'images/simEngine/rateColorMap.png')
+
+        self.powerGridColorMap = \
+            cairo.ImageSurface.create_from_png(
+                'images/simEngine/powerGridColorMap.png')
+
+        self.terrainColorMap = \
+            cairo.ImageSurface.create_from_png(
+                'images/simEngine/terrainColorMap.png')
 
         if self.running:
             self.startTimer()
@@ -575,349 +603,570 @@ You have 10 years to turn this swamp back into a city again.""",
         self.views.remove(view)
 
 
-    def getDataImageAlpha(self, name):
+    def getDataImageAlphaSize(self, name):
         # @todo: cache images
         if name == 'all':
-            return self.getAllImageAlpha()
+            return self.getAllImageAlphaSize()
         elif name == 'residential':
-            return self.getResidentialImageAlpha()
+            return self.getResidentialImageAlphaSize()
         elif name == 'commercial':
-            return self.getCommercialImageAlpha()
+            return self.getCommercialImageAlphaSize()
         elif name == 'industrial':
-            return self.getIndustrialImageAlpha()
+            return self.getIndustrialImageAlphaSize()
         elif name == 'transportation':
-            return self.getTransportationImageAlpha()
+            return self.getTransportationImageAlphaSize()
         elif name == 'populationdensity':
-            return self.getPopulationDensityImageAlpha()
+            return self.getPopulationDensityImageAlphaSize()
         elif name == 'rateofgrowth':
-            return self.getRateOfGrowthImageAlpha()
+            return self.getRateOfGrowthImageAlphaSize()
         elif name == 'landvalue':
-            return self.getLandValueImageAlpha()
+            return self.getLandValueImageAlphaSize()
         elif name == 'crimerate':
-            return self.getCrimeRateImageAlpha()
+            return self.getCrimeRateImageAlphaSize()
         elif name == 'pollutiondensity':
-            return self.getPollutionDensityImageAlpha()
+            return self.getPollutionDensityImageAlphaSize()
         elif name == 'trafficdensity':
-            return self.getTrafficDensityImageAlpha()
+            return self.getTrafficDensityImageAlphaSize()
         elif name == 'powergrid':
-            return self.getPowerGridImageAlpha()
+            return self.getPowerGridImageAlphaSize()
         elif name == 'firecoverage':
-            return self.getFireCoverageImageAlpha()
+            return self.getFireCoverageImageAlphaSize()
         elif name == 'policecoverage':
-            return self.getPoliceCoverageImageAlpha()
+            return self.getPoliceCoverageImageAlphaSize()
         else:
-            print "MicropolisModel: getImageAlpha: Invalid data image name:", name
-            return None
+            print "MicropolisModel: getImageAlphaSize: Invalid data image name:", name
+            return None, 0.0, 0.0, 0.0
 
 
-    def getAllImageAlpha(self):
-        return None, 1
+    def getAllImageAlphaSize(self):
+        return None, 1.0, 1.0, 1.0
 
 
-    def getResidentialImageAlpha(self):
-        return None, 1
+    def getResidentialImageAlphaSize(self):
+        image = self.residentialImage
+        if not image:
+            image = self.makeImage(WORLD_W, WORLD_H)
+            self.residentialImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = WORLD_W
+        tengine.height = WORLD_H
+
+        # Unsigned byte tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
+
+        from micropolisengine import \
+            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
+            COMBASE
+
+        transparent = 0
+        land = 1
+        water = 2
+
+        def tileFunction(col, row, tile):
+            tileMasked = tile & LOMASK
+            if tileMasked == RIVER:
+                result = water
+            elif tileMasked >= COMBASE:
+                result = land
+            else:
+                result = transparent
+            return result
+
+        tengine.renderPixels(
+            image,
+            self.terrainColorMap,
+            tileFunction,
+            None,
+            0,
+            0,
+            WORLD_W,
+            WORLD_H)
+
+        return image, 0.8, 1.0, 1.0
 
 
-    def getCommercialImageAlpha(self):
-        return None, 1
+    def getCommercialImageAlphaSize(self):
+        image = self.commercialImage
+        if not image:
+            image = self.makeImage(WORLD_W, WORLD_H)
+            self.commercialImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = WORLD_W
+        tengine.height = WORLD_H
+
+        # Unsigned byte tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
+
+        from micropolisengine import \
+            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
+            COMBASE, COMLAST, LVRAIL6
+
+        transparent = 0
+        land = 1
+        water = 2
+
+        def tileFunction(col, row, tile):
+            tileMasked = tile & LOMASK
+            if tileMasked == RIVER:
+                result = water
+            elif ((tileMasked > COMLAST) or
+                  ((tileMasked >= LVRAIL6) and
+                   (tileMasked < COMBASE))):
+                result = land
+            else:
+                result = transparent
+            return result
+
+        tengine.renderPixels(
+            image,
+            self.terrainColorMap,
+            tileFunction,
+            None,
+            0,
+            0,
+            WORLD_W,
+            WORLD_H)
+
+        return image, 0.8, 1.0, 1.0
 
 
-    def getIndustrialImageAlpha(self):
-        return None, 1
+    def getIndustrialImageAlphaSize(self):
+        image = self.industrialImage
+        if not image:
+            image = self.makeImage(WORLD_W, WORLD_H)
+            self.industrialImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = WORLD_W
+        tengine.height = WORLD_H
+
+        # Unsigned byte tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
+
+        from micropolisengine import \
+            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
+            RESBASE, INDBASE, PORTBASE, SMOKEBASE, TINYEXP, \
+            TINYEXPLAST, FOOTBALLGAME1
+
+        transparent = 0
+        land = 1
+        water = 2
+
+        def tileFunction(col, row, tile):
+            tileMasked = tile & LOMASK
+            if tileMasked == RIVER:
+                result = water
+            elif (((tileMasked >= RESBASE) and (tileMasked < INDBASE)) or
+                  ((tileMasked >= PORTBASE) and (tileMasked < SMOKEBASE)) or
+                  ((tileMasked >= TINYEXP) and (tileMasked <= TINYEXPLAST)) or
+                  (tileMasked >= FOOTBALLGAME1)):
+                result = land
+            else:
+                result = transparent
+            return result
+
+        tengine.renderPixels(
+            image,
+            self.terrainColorMap,
+            tileFunction,
+            None,
+            0,
+            0,
+            WORLD_W,
+            WORLD_H)
+
+        return image, 0.8, 1.0, 1.0
 
 
-    def getTransportationImageAlpha(self):
-        return None, 1
+    def getTransportationImageAlphaSize(self):
+        image = self.commercialImage
+        if not image:
+            image = self.makeImage(WORLD_W, WORLD_H)
+            self.commercialImage = image
+        tengine = self.dataTileEngine
+
+        buffer = self.getMapBuffer()
+        #print "Map buffer", buffer
+        tengine.setBuffer(buffer)
+        tengine.width = WORLD_W
+        tengine.height = WORLD_H
+
+        # Unsigned byte tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
+        tengine.rowBytes = micropolisengine.BYTES_PER_TILE
+
+        from micropolisengine import \
+            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
+            RESBASE, BRWXXX7, LVPOWER10, UNUSED_TRASH6
+
+        transparent = 0
+        land = 1
+        water = 2
+
+        # FIXME: Exclude the smokestack animations used by the coal power plant.
+
+        def tileFunction(col, row, tile):
+            tileMasked = tile & LOMASK
+            if tileMasked == RIVER:
+                result = water
+            elif ((tileMasked >= RESBASE) or
+                  ((tileMasked >= BRWXXX7) and (tileMasked <= LVPOWER10)) or
+                  (tileMasked == UNUSED_TRASH6)):
+                result = land
+            else:
+                result = transparent
+            return result
+
+        tengine.renderPixels(
+            image,
+            self.terrainColorMap,
+            tileFunction,
+            None,
+            0,
+            0,
+            WORLD_W,
+            WORLD_H)
+
+        return image, 0.8, 1.0, 1.0
 
 
-    def getPopulationDensityImageAlpha(self):
+    def getPopulationDensityImageAlphaSize(self):
         image = self.populationDensityImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            image = self.makeImage(WORLD_W_2, WORLD_H_2)
             self.populationDensityImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getPopulationDensityMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_2
-        tengine.height = micropolisengine.WORLD_H_2
+        tengine.width = WORLD_W_2
+        tengine.height = WORLD_H_2
 
         # Unsigned byte tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H_2
         tengine.rowBytes = 1
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.dataColorMap,
             None,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_2,
-            micropolisengine.WORLD_H_2)
+            WORLD_W_2,
+            WORLD_H_2)
 
-        return image, 0.5
+        return image, 0.5, 1.0, 1.0
 
 
-    def getRateOfGrowthImageAlpha(self):
+    def getRateOfGrowthImageAlphaSize(self):
         image = self.rateOfGrowthImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            image = self.makeImage(WORLD_W_8, WORLD_H_8)
             self.rateOfGrowthImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getRateOfGrowthMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_8
-        tengine.height = micropolisengine.WORLD_H_8
+        tengine.width = WORLD_W_8
+        tengine.height = WORLD_H_8
 
-        # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'h'
-        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        # Signed short tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_SIGNED
+        tengine.colBytes = WORLD_H_8 * 2
         tengine.rowBytes = 2
+
+        def tileFunction(col, row, tile):
+            return max(0, min(int(((tile * 256) / 200) + 128), 255))
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
-            None,
+            self.rateColorMap,
+            tileFunction,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_8,
-            micropolisengine.WORLD_H_8)
+            WORLD_W_8,
+            WORLD_H_8)
 
-        return image, 0.5
+        ratio = (float(WORLD_H) / 8.0) / float(WORLD_H_8)
+        return image, 0.5, 1.0, ratio
 
 
-    def getLandValueImageAlpha(self):
+    def getLandValueImageAlphaSize(self):
         image = self.landValueImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            image = self.makeImage(WORLD_W_2, WORLD_H_2)
             self.landValueImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getLandValueMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_2
-        tengine.height = micropolisengine.WORLD_H_2
+        tengine.width = WORLD_W_2
+        tengine.height = WORLD_H_2
 
         # Unsigned byte tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H_2
         tengine.rowBytes = 1
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.dataColorMap,
             None,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_2,
-            micropolisengine.WORLD_H_2)
+            WORLD_W_2,
+            WORLD_H_2)
 
-        return image, 0.5
+        return image, 0.5, 1.0, 1.0
 
 
-    def getCrimeRateImageAlpha(self):
+    def getCrimeRateImageAlphaSize(self):
         image = self.crimeRateImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            image = self.makeImage(WORLD_W_2, WORLD_H_2)
             self.crimeRateImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getCrimeRateMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_2
-        tengine.height = micropolisengine.WORLD_H_2
+        tengine.width = WORLD_W_2
+        tengine.height = WORLD_H_2
 
         # Unsigned byte tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H_2
         tengine.rowBytes = 1
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.dataColorMap,
             None,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_2,
-            micropolisengine.WORLD_H_2)
+            WORLD_W_2,
+            WORLD_H_2)
 
-        return image, 0.5
+        return image, 0.5, 1.0, 1.0
 
 
-    def getPollutionDensityImageAlpha(self):
+    def getPollutionDensityImageAlphaSize(self):
         image = self.pollutionDensityImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            image = self.makeImage(WORLD_W_2, WORLD_H_2)
             self.pollutionDensityImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getPollutionDensityMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_2
-        tengine.height = micropolisengine.WORLD_H_2
+        tengine.width = WORLD_W_2
+        tengine.height = WORLD_H_2
 
         # Unsigned byte tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H_2
         tengine.rowBytes = 1
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.dataColorMap,
             None,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_2,
-            micropolisengine.WORLD_H_2)
+            WORLD_W_2,
+            WORLD_H_2)
 
-        return image, 0.5
+        return image, 0.5, 1.0, 1.0
 
 
-    def getTrafficDensityImageAlpha(self):
+    def getTrafficDensityImageAlphaSize(self):
         image = self.trafficDensityImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_2, micropolisengine.WORLD_H_2)
+            image = self.makeImage(WORLD_W_2, WORLD_H_2)
             self.trafficDensityImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getTrafficDensityMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_2
-        tengine.height = micropolisengine.WORLD_H_2
+        tengine.width = WORLD_W_2
+        tengine.height = WORLD_H_2
 
         # Unsigned byte tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H_2
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H_2
         tengine.rowBytes = 1
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.dataColorMap,
             None,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_2,
-            micropolisengine.WORLD_H_2)
+            WORLD_W_2,
+            WORLD_H_2)
 
-        return image, 0.5
+        return image, 0.5, 1.0, 1.0
 
 
-    def getPowerGridImageAlpha(self):
+    def getPowerGridImageAlphaSize(self):
         image = self.powerGridImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W, micropolisengine.WORLD_H)
+            image = self.makeImage(WORLD_W, WORLD_H)
             self.powerGridImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getPowerGridMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W
-        tengine.height = micropolisengine.WORLD_H
+        tengine.width = WORLD_W
+        tengine.height = WORLD_H
 
-        # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'b'
-        tengine.colBytes = micropolisengine.WORLD_H
+        # Unsigned byte tile values, in column major order.
+        tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
+        tengine.colBytes = WORLD_H
         tengine.rowBytes = 1
 
-        from micropolisengine import ZONEBIT, PWRBIT, ALLBITS
+        from micropolisengine import \
+            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, LASTFIRE
 
-        def tileFunction(row, col, tile):
-            if tile > 0:
-                tile = 255
-            return tile
+        transparent = 0
+        unpowered = 1
+        powered = 2
+        conductive = 3
+        getTile = self.getTile
+
+        def tileFunction(col, row, tile):
+            t = getTile(col, row)
+            tileMasked = t & LOMASK
+            if tileMasked < LASTFIRE:
+                result = transparent
+            elif t & ZONEBIT:
+                if t & PWRBIT:
+                    result = powered
+                else:
+                    result = unpowered
+            else:
+                if t & CONDBIT:
+                    result = conductive
+                else:
+                    result = transparent
+            return result
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
+            self.powerGridColorMap,
             tileFunction,
             None,
             0,
             0,
-            micropolisengine.WORLD_W,
-            micropolisengine.WORLD_H)
+            WORLD_W,
+            WORLD_H)
 
-        return image, 0.5
+        return image, 1.0, 1.0, 1.0
 
 
-    def getFireCoverageImageAlpha(self):
+    def getFireCoverageImageAlphaSize(self):
         image = self.fireCoverageImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            image = self.makeImage(WORLD_W_8, WORLD_H_8)
             self.fireCoverageImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getFireCoverageMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_8
-        tengine.height = micropolisengine.WORLD_H_8
+        tengine.width = WORLD_W_8
+        tengine.height = WORLD_H_8
 
         # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'h'
-        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = WORLD_H_8 * 2
         tengine.rowBytes = 2
+
+        def tileFunction(col, row, tile):
+            return max(0, min(tile, 255))
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
-            None,
+            self.dataColorMap,
+            tileFunction,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_8,
-            micropolisengine.WORLD_H_8)
+            WORLD_W_8,
+            WORLD_H_8)
 
-        return image, 0.5
+        ratio = (float(WORLD_H) / 8.0) / float(WORLD_H_8)
+        return image, 0.5, 1.0, ratio
 
 
-    def getPoliceCoverageImageAlpha(self):
+    def getPoliceCoverageImageAlphaSize(self):
         image = self.policeCoverageImage
         if not image:
-            image = self.makeImage(micropolisengine.WORLD_W_8, micropolisengine.WORLD_H_8)
+            image = self.makeImage(WORLD_W_8, WORLD_H_8)
             self.policeCoverageImage = image
         tengine = self.dataTileEngine
 
         buffer = self.getPoliceCoverageMapBuffer()
         #print "Map buffer", buffer
         tengine.setBuffer(buffer)
-        tengine.width = micropolisengine.WORLD_W_8
-        tengine.height = micropolisengine.WORLD_H_8
+        tengine.width = WORLD_W_8
+        tengine.height = WORLD_H_8
 
         # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'h'
-        tengine.colBytes = micropolisengine.WORLD_H_8 * 2
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
+        tengine.colBytes = WORLD_H_8 * 2
         tengine.rowBytes = 2
+
+        def tileFunction(col, row, tile):
+            return max(0, min(tile, 255))
 
         tengine.renderPixels(
             image,
-            self.dataImageColorMap,
-            None,
+            self.dataColorMap,
+            tileFunction,
             None,
             0,
             0,
-            micropolisengine.WORLD_W_8,
-            micropolisengine.WORLD_H_8)
+            WORLD_W_8,
+            WORLD_H_8)
 
-        return image, 0.5
+        ratio = (float(WORLD_H) / 8.0) / float(WORLD_H_8)
+        return image, 0.5, 1.0, ratio
 
 
     def makeImage(self, width, height):
-        return self.dataImageColorMap.create_similar(
+        return self.dataColorMap.create_similar(
             cairo.CONTENT_COLOR_ALPHA, width, height)
 
 
