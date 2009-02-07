@@ -1537,19 +1537,19 @@ public:
 private:
 
 
-    int connectTile(short x, short y, unsigned short *TileAdrPtr, short Command);
+    int connectTile(short x, short y, short command);
 
-    int layDoze(int x, int y, unsigned short *TileAdrPtr);
+    int layDoze(int x, int y);
 
-    int layRoad(int x, int y, unsigned short *TileAdrPtr);
+    int layRoad(int x, int y);
 
-    int layRail(int x, int y, unsigned short *TileAdrPtr);
+    int layRail(int x, int y);
 
-    int layWire(int x, int y, unsigned short *TileAdrPtr);
+    int layWire(int x, int y);
 
-    void fixZone(int x, int y, unsigned short *TileAdrPtr);
+    void fixZone(int x, int y);
 
-    void fixSingle(int x, int y, unsigned short *TileAdrPtr);
+    void fixSingle(int x, int y);
 
 
     ////////////////////////////////////////////////////////////////////////

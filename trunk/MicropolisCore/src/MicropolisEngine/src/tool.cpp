@@ -99,7 +99,7 @@ static const short gToolSize[] = {
  * Put a park down at the give tile.
  * @param mapH X coordinate of the tile.
  * @param mapV Y coordinate of the tile.
- * @return Build result (-2 = no money, -1 = cannot build, 1 = built).
+ * @return Build result (-2 = no money, -1 = needs bulldoze, 1 = built).
  * @todo Add auto-bulldoze? (seems to be missing).
  */
 int Micropolis::putDownPark(short mapH, short mapV)
@@ -131,7 +131,7 @@ int Micropolis::putDownPark(short mapH, short mapV)
  * Put down a communication network.
  * @param mapH X coordinate of the tile.
  * @param mapV Y coordinate of the tile.
- * @return Build result (-2 = no money, -1 = cannot build, 1 = built).
+ * @return Build result (-2 = no money, -1 = needs bulldoze, 1 = built).
  * @todo Auto-bulldoze deducts always 1.
  * @todo Auto-bulldoze costs should be pulled from a table/constant.
  */
@@ -347,7 +347,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the upper bordering row */
-        connectTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, 0);
         xPos++;
     }
 
@@ -356,7 +356,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the left bordering row */
-        connectTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, 0);
         yPos++;
     }
 
@@ -365,7 +365,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the bottom bordering row */
-        connectTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, 0);
         xPos++;
     }
 
@@ -374,7 +374,7 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
 
     for (cnt = 0; cnt < size; cnt++) {
         /* this will do the right bordering row */
-        connectTile(xPos, yPos, &map[xPos][yPos], 0);
+        connectTile(xPos, yPos, 0);
         yPos++;
     }
 }
@@ -391,7 +391,7 @@ int Micropolis::check3x3(
     short xPos, yPos;
     short cost = 0;
     short tileValue;
-    short flag;
+    bool flag;
 
     mapH--; mapV--;
 
@@ -403,7 +403,7 @@ int Micropolis::check3x3(
     xPos = holdMapH = mapH;
     yPos = holdMapV = mapV;
 
-    flag = 1;
+    flag = true;
 
     for (rowNum = 0; rowNum <= 2; rowNum++) {
 
@@ -421,7 +421,7 @@ int Micropolis::check3x3(
                     if (tally(tileValue)) {
                         cost++;
                     } else {
-                        flag = 0;
+                        flag = false;
                     }
 
                 }
@@ -429,7 +429,7 @@ int Micropolis::check3x3(
             } else {
 
                 /* check and see if the tile is clear or not  */
-                if (tileValue != 0) flag = 0;
+                if (tileValue != DIRT) flag = false;
 
             }
         }
@@ -437,11 +437,11 @@ int Micropolis::check3x3(
         mapV++;
     }
 
-    if (flag == 0) return -1;
+    if (!flag) return -1;
 
     cost += (short)gCostOf[tool];
 
-    if ((totalFunds - cost) < 0) return -2;
+    if (totalFunds - cost < 0) return -2;
 
     /* take care of the money situtation here */
     spend(cost);
@@ -455,8 +455,7 @@ int Micropolis::check3x3(
 
       for (columnNum = 0; columnNum <= 2; columnNum++) {
 
-        if ((columnNum == 1) &&
-            (rowNum == 1)) {
+        if (columnNum == 1 && rowNum == 1) {
           map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
         } else {
           map[mapH++][mapV] = base + BNCNBIT;
@@ -485,23 +484,20 @@ short Micropolis::check4x4(
     short holdMapH;
     short xMap, yMap;
     short tileValue;
-    short flag;
+    bool flag;
     short cost = 0;
 
     mapH--;
     mapV--;
 
-    if ((mapH < 0) ||
-        (mapH > (WORLD_W - 4)) ||
-        (mapV < 0) ||
-        (mapV > (WORLD_H - 4))) {
+    if (mapH < 0 || mapH > WORLD_W - 4 || mapV < 0 || mapV > WORLD_H - 4) {
         return -1;
     }
 
     h = xMap = holdMapH = mapH;
     v = yMap = mapV;
 
-    flag = 1;
+    flag = true;
 
     for (rowNum = 0; rowNum <= 3; rowNum++) {
 
@@ -519,7 +515,7 @@ short Micropolis::check4x4(
                     if (tally(tileValue)) {
                         cost++;
                     } else {
-                        flag = 0;
+                        flag = false;
                     }
 
                 }
@@ -527,7 +523,7 @@ short Micropolis::check4x4(
             } else {
 
                 /* check and see if the tile is clear or not  */
-                if (tileValue != 0) flag = 0;
+                if (tileValue != DIRT) flag = false;
 
             }
 
@@ -536,11 +532,11 @@ short Micropolis::check4x4(
         mapV++;
     }
 
-    if (flag == 0) return -1;
+    if (!flag) return -1;
 
     cost += (short)gCostOf[tool];
 
-    if ((totalFunds - cost) < 0) return -2;
+    if (totalFunds - cost < 0) return -2;
 
     /* take care of the money situtation here */
     spend(cost);
@@ -555,9 +551,9 @@ short Micropolis::check4x4(
 
         for (columnNum = 0; columnNum <= 3; columnNum++) {
 
-            if ((columnNum == 1) && (rowNum == 1)) {
+            if (columnNum == 1 && rowNum == 1) {
                 map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-            } else if ((columnNum == 1) && (rowNum == 2) && aniFlag) {
+            } else if (columnNum == 1 && rowNum == 2 && aniFlag) {
                 map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
             } else {
                 map[mapH++][mapV] = base + BNCNBIT;
@@ -585,22 +581,19 @@ short Micropolis::check6x6(
     short h, v;
     short holdMapH;
     short xMap, yMap;
-    short flag;
+    bool flag;
     short tileValue;
     short cost = 0;
 
     mapH--; mapV--;
-    if ((mapH < 0) ||
-        (mapH > (WORLD_W - 6)) ||
-        (mapV < 0) ||
-        (mapV > (WORLD_H - 6))) {
+    if (mapH < 0 || mapH > WORLD_W - 6 || mapV < 0 || mapV > WORLD_H - 6) {
         return -1;
     }
 
     h = xMap = holdMapH = mapH;
     v = yMap = mapV;
 
-    flag = 1;
+    flag = true;
 
     for (rowNum = 0; rowNum <= 5; rowNum++) {
 
@@ -618,7 +611,7 @@ short Micropolis::check6x6(
                     if (tally(tileValue)) {
                         cost++;
                     } else {
-                        flag = 0;
+                        flag = false;
                     }
 
                 }
@@ -626,7 +619,7 @@ short Micropolis::check6x6(
             } else {
 
               /* check and see if the tile is clear or not  */
-              if (tileValue != DIRT) flag = 0;
+              if (tileValue != DIRT) flag = false;
 
             }
 
@@ -635,11 +628,11 @@ short Micropolis::check6x6(
         mapV++;
     }
 
-    if (flag == 0) return -1;
+    if (!flag) return -1;
 
     cost += (short)gCostOf[tool];
 
-    if ((totalFunds - cost) < 0) return -2;
+    if (totalFunds - cost < 0) return -2;
 
     /* take care of the money situtation here */
     spend(cost);
@@ -654,7 +647,7 @@ short Micropolis::check6x6(
 
         for (columnNum = 0; columnNum <= 5; columnNum++) {
 
-            if ((columnNum == 1) && (rowNum == 1)) {
+            if (columnNum == 1 && rowNum == 1) {
                 map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
             } else {
                 map[mapH++][mapV] = base + BNCNBIT;
@@ -748,7 +741,7 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
 
     case 3:
         z = pollutionDensityMap.worldGet(mapH, mapV);
-        if ((z < 64) && (z > 0)) return 13;
+        if (z < 64 && z > 0) return 13;
         z = z >> 6;
         z = z & 3;
         return z + STR202_POLLUTION_NONE;
@@ -972,7 +965,7 @@ int Micropolis::bulldozerTool(short x, short y)
 
             if (totalFunds >= 6) {
 
-                result = connectTile(x, y, &map[x][y], 1);
+                result = connectTile(x, y, 1);
 
                 if (temp != (map[x][y] & LOMASK)) {
                   spend(5);
@@ -982,7 +975,7 @@ int Micropolis::bulldozerTool(short x, short y)
                 result = 0;
             }
         } else {
-            result = connectTile(x, y, &map[x][y], 1);
+            result = connectTile(x, y, 1);
         }
 
     }
@@ -1006,7 +999,7 @@ int Micropolis::roadTool(short x, short y)
         return -1;
     }
 
-    result = connectTile(x, y, &map[x][y], 2);
+    result = connectTile(x, y, 2);
     updateFunds();
 
     if (result == 1) {
@@ -1025,7 +1018,7 @@ int Micropolis::railroadTool(short x, short y)
         return -1;
     }
 
-    result = connectTile(x, y, &map[x][y], 3);
+    result = connectTile(x, y, 3);
     updateFunds();
 
     if (result == 1) {
@@ -1044,7 +1037,7 @@ int Micropolis::wireTool(short x, short y)
         return -1;
     }
 
-    result = connectTile(x, y, &map[x][y], 4);
+    result = connectTile(x, y, 4);
     updateFunds();
 
     if (result == 1) {
