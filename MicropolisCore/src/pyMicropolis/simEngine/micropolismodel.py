@@ -447,7 +447,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def __init__(
             self,
-            running=True,
+            running=False,
             timeDelay=10,
             *args,
             **kwargs):
@@ -516,6 +516,10 @@ You have 10 years to turn this swamp back into a city again.""",
         self.terrainColorMap = \
             cairo.ImageSurface.create_from_png(
                 'images/simEngine/terrainColorMap.png')
+
+        self.expressInterest(
+            self,
+            ('paused',))
 
         if self.running:
             self.startTimer()
@@ -596,11 +600,17 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def addView(self, view):
-        self.views.append(view)
+        print "ADDVIEW", view
+        views = self.views
+        if view not in views:
+            self.views.append(view)
 
 
     def removeView(self, view):
-        self.views.remove(view)
+        print "REMOVEVIEW", view
+        views = self.views
+        if view in views:
+            views.remove(view)
 
 
     def getDataImageAlphaSize(self, name):
@@ -1217,6 +1227,27 @@ You have 10 years to turn this swamp back into a city again.""",
             self.animateTiles()
 
 
+    def update(
+        self,
+        name,
+        *args):
+
+        print "MicropolisEngine update", self, name, args
+
+        if name == 'paused':
+            self.running = not self.simPaused
+            print "PAUSED", self.simPaused, "running", self.running
+            if self.running:
+                self.startTimer()
+            else:
+                self.stopTimer()
+
+
+    def updateViews(self):
+        for view in self.views:
+            view.updateView()
+
+
     def sendUpdate(self, name, *args):
         #print "SENDUPDATE", name, args
         interests = self.interests
@@ -1415,6 +1446,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def handle_UIShowBudgetAndWait(self):
         print "handle_UIShowBudgetAndWait(self)", (self,)
+        # @todo Show budget window. Actually pause the engine here. Maybe start a timeout to un-pause it.
 
 
     def handle_UIShowPicture(self, id):
@@ -1451,6 +1483,14 @@ You have 10 years to turn this swamp back into a city again.""",
     def handle_UISimRobots(self):
         #print "handle_UISimRobots(self)", (self,)
         self.simRobots()
+
+
+    def handle_UIInvalidateEditors(self):
+        self.updateViews() # @todo Use the normal update system.
+
+
+    def handle_UIInvalidateMaps(self):
+        self.updateViews() # @todo Use the normal update system.
 
 
 ########################################################################

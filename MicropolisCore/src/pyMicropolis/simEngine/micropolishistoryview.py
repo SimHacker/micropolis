@@ -117,6 +117,8 @@ class MicropolisHistoryView(micropolisview.MicropolisView):
     margin = 5
     gap = 2
     boxGap = 1
+    viewWidth = 150
+    viewHeight = 150
 
 
     def __init__(
@@ -136,6 +138,7 @@ class MicropolisHistoryView(micropolisview.MicropolisView):
         self.historyTypes = historyTypes
         self.hiliteTarget = None
 
+        self.set_size_request(self.viewWidth, self.viewHeight)
 
     def update(
         self,

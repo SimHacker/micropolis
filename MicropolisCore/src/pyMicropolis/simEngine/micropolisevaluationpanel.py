@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Evaluation View
+# Micropolis Evaluation Panel
 # Don Hopkins
 
 

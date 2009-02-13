@@ -1,4 +1,4 @@
-# micropolisdemandgauge.py
+# micropolisnotebook.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Demand Gauge
+# Micropolis Notebook
 # Don Hopkins
 
 
@@ -69,220 +69,149 @@
 # Import stuff
 
 
+import sys
+import os
+import time
 import gtk
+import gobject
 import cairo
 import pango
-import micropolisengine
-import micropolisview
+import math
+import thread
+import random
+import array
 
 
 ########################################################################
-# MicropolisDemandGauge
+# MicropolisNotebook
 
-
-class MicropolisDemandGauge(micropolisview.MicropolisView):
+class MicropolisNotebook(gtk.Notebook):
 
 
     def __init__(
         self,
+        target=None,
+        groupID=1,
         **args):
 
-        micropolisview.MicropolisView.__init__(
-            self,
-            interests=('demand',),
-            **args)
+        gtk.Notebook.__init__(self, **args)
 
-        self.zoomable = False
+        self.target = target
+
+        self.set_group_id(groupID)
+
+        self.drag_dest_set(
+            gtk.DEST_DEFAULT_ALL, # gtk.DEST_DEFAULT_MOTION,
+            [("tab-move", gtk.TARGET_SAME_APP, groupID)],
+            gtk.gdk.ACTION_MOVE)
+
+        def on_dnd_drag_leave(sender, context, time):
+            print "on_dnd_drag_leave"
+            sender.modify_bg(gtk.STATE_NORMAL, None)
+
+        def on_dnd_drag_motion(sender, context, x, y, time):
+            print "on_dnd_drag_motion"
+            color = gtk.gdk.Color(65535,0,0)
+            sender.modify_bg(gtk.STATE_NORMAL, color)
+
+        def on_dnd_drag_drop(sender, context, x, y, time):
+            print "on_dnd_drag_drop"
+
+        self.connect("drag-leave", on_dnd_drag_leave)
+        self.connect("drag-motion", on_dnd_drag_motion)
+        self.connect("drag-drop", on_dnd_drag_drop)
+        self.connect('change-current-page', self.changeCurrentPage)
+        self.connect('create-window', self.createWindow)
+        self.connect('focus-tab', self.focusTab)
+        self.connect('move-focus-out', self.moveFocusOut)
+        self.connect('page-added', self.pageAdded)
+        self.connect('page-removed', self.pageRemoved)
+        self.connect('page-reordered', self.pageReordered)
+        self.connect('select-page', self.selectPage)
+        self.connect('switch-page', self.switchPage)
 
 
-    def update(
+    def addLabelTab(self, label, tab):
+        tabLabel = gtk.Label(label)
+        self.append_page(tab, tabLabel)
+        self.set_tab_reorderable(tab, True)
+        self.set_tab_detachable(tab, True)
+
+
+    def changeCurrentPage(
         self,
-        name,
-        *args):
-
-        #print "DEMAND GAUGE UPDATE", self, name, args
-
-        self.queue_draw()
+        notebook,
+        offset):
+        print "CHANGECURRENTPAGE", self, notebook, offset
 
 
-    def drawContent(
+    def createWindow(
         self,
-        ctx,
-        playout):
-
-        #print "==== MicropolisDemandGauge DRAWCONTENT", self
-
-        engine = self.engine
-
-        ctx.save()
-
-        # Measure window.
-
-        winRect = self.get_allocation()
-        winWidth = winRect.width
-        winHeight = winRect.height
-
-        # Draw gauge.
-
-        ctx.rectangle(
-            0,
-            0,
-            winWidth,
-            winHeight)
-
-        ctx.set_source_rgb(
-            0.5, 0.5, 1.0)
-
-        ctx.fill_preserve()
-
-        ctx.set_source_rgb(
-            0.0, 0.0, 0.0)
-
-        ctx.set_line_width(
-            2)
-
-        ctx.stroke()
-
-        # Measure bar.
-
-        barGap = 5
-        barHeight = 10
-        barWidth = winWidth - (2 * barGap)
-        barX = barGap
-        barY = int((winHeight - barHeight) / 2)
-
-        # Measure columns.
-
-        colGap = 2
-        colWidth = int((barWidth - (colGap * 4)) / 3)
-        rColX = barX + colGap
-        cColX = rColX + colWidth + colGap
-        iColX = cColX + colWidth + colGap
-
-        colHeight = int((winHeight - barHeight - (2 * barGap)) / 2)
-
-        resDemand, comDemand, indDemand = engine.getDemands()
-        print "RES", resDemand, "COM", comDemand, "IND", indDemand
-
-        res = -resDemand * colHeight
-        com = -comDemand * colHeight
-        ind = -indDemand * colHeight
-
-        # Draw columns.
-
-        if res != 0:
-            if res < 0:
-                y = barY + res
-                h = -res
-            else:
-                y = barY + barHeight
-                h = res
-
-            ctx.rectangle(
-                rColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                0.0,
-                1.0,
-                0.0)
-
-            ctx.fill()
-
-        if com != 0:
-            if com < 0:
-                y = barY + com
-                h = -com
-            else:
-                y = barY + barHeight
-                h = com
-
-            ctx.rectangle(
-                cColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                0.0,
-                0.0,
-                1.0)
-
-            ctx.fill()
-
-        if ind != 0:
-            if ind < 0:
-                y = barY + ind
-                h = -ind
-            else:
-                y = barY + barHeight
-                h = ind
-
-            ctx.rectangle(
-                iColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                1.0,
-                1.0,
-                0.0)
-
-            ctx.fill()
-
-        # Draw bar.
-
-        ctx.save()
-
-        ctx.rectangle(
-            barX,
-            barY,
-            barWidth,
-            barHeight)
-
-        ctx.set_source_rgb(
-            1.0, 1.0, 1.0)
-
-        ctx.clip_preserve()
-
-        ctx.fill_preserve()
-
-        ctx.set_source_rgb(
-            0.0, 0.0, 0.0)
-
-        ctx.set_line_width(
-            2)
-
-        ctx.stroke()
-
-        ctx.restore()
-
-        ctx.restore()
+        notebook,
+        page,
+        x,
+        y):
+        print "==== CREATEWINDOW", self, notebook, page, x, y
+        return self.target.createWindowNotebook(self, notebook, page, x, y)
 
 
-    def handleMouseDrag(
+    def focusTab(
         self,
-        event):
+        notebook,
+        type):
+        print "FOCUSTAB", self, notebook, type
+        return False
 
-        pass
 
-
-    def handleMousePoint(
+    def moveFocusOut(
         self,
-        event):
+        notebook,
+        directionType):
+        print "MOVEFOCUSOUT", self, notebook, directionType
 
-        pass
 
-
-    def handleButtonRelease(
+    def pageAdded(
         self,
-        widget,
-        event):
+        notebook,
+        child,
+        pageNumber):
+        print "PAGEADDED", self, child, pageNumber
 
-        pass
+
+    def pageRemoved(
+        self,
+        notebook,
+        child,
+        pageNumber):
+        print "PAGEREMOVED", self, notebook, child, pageNumber
+
+
+    def pageReordered(
+        self,
+        notebook,
+        child,
+        pageNumber):
+        print "PAGEREORDERED", self, notebook, child, pageNumber
+
+
+    def selectPage(
+        self,
+        notebook,
+        moveFocus):
+        print "SELECTPAGE", self, notebook, moveFocus
+        return False
+
+
+    def switchPage(
+        self,
+        notebook,
+        page,
+        pageNum):
+
+        # This gets called when the user switches to a page, and while
+        # we're adding them.
+
+        print "SWITCHPAGE", self, notebook, page, pageNum
 
 
 ########################################################################

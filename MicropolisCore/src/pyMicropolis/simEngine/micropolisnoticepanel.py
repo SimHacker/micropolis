@@ -107,22 +107,17 @@ class MicropolisNoticePanel(gtk.Frame):
             engine=engine,
             setCityViewVisible=self.setCityViewVisible)
 
-        hpaned1.pack1(
-            self.noticeView,
-            resize=True,
-            shrink=True)
+        hpaned1.pack1(self.noticeView, resize=False, shrink=False)
 
         cityView = micropolisdrawingarea.NoticeMicropolisDrawingArea(
             engine=engine,
             centerOnTileHandler=centerOnTileHandler)
         self.cityView = cityView
-        cityView.set_size_request(150, 0)
+        cityView.set_size_request(150, -1)
         cityView.visible = False
-        hpaned1.pack2(
-            cityView,
-            resize=False,
-            shrink=True)
+        hpaned1.pack2(cityView, resize=False, shrink=False)
 
+        hpaned1.set_position(1000)
 
     def setCityViewVisible(self, visible, tileX=-1, tileY=-1, sprite=micropolisengine.SPRITE_NOTUSED):
         #print "setCityViewVisible", visible, tileX, tileY, self.cityViewVisible

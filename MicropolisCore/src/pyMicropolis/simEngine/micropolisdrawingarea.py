@@ -735,6 +735,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
 
         view.panX = self.panningStartPanX + dx
         view.panY = self.panningStartPanY + dy
+        view.updateView()
 
 
     def handleButtonRelease(
@@ -768,6 +769,68 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
             view.changeScale(view.scale * view.scrollWheelZoomScale)
         elif direction == gtk.gdk.SCROLL_DOWN:
             view.changeScale(view.scale / view.scrollWheelZoomScale)
+
+
+########################################################################
+
+
+class MediumMicropolisDrawingArea(MicropolisDrawingArea):
+
+
+    def __init__(
+        self,
+        **args):
+
+        args['keyable'] = False
+        args['clickable'] = False
+        args['zoomable'] = False
+        args['pannable'] = False
+        args['menuable'] = False
+        args['showCursor'] = False
+        args['showRobots'] = False
+        args['showSprites'] = False
+        args['scale'] = 3.0 / micropolisengine.EDITOR_TILE_SIZE
+        args['overlayAlpha'] = 0.8
+
+        MicropolisDrawingArea.__init__(self, **args)
+
+
+    def handleMousePoint(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonPress(
+        self,
+        widget,
+        event):
+
+        pass
+
+
+    def handleMouseDrag(
+        self,
+        event):
+
+        pass
+
+
+    def handleButtonRelease(
+        self,
+        widget,
+        event):
+
+        pass
+
+
+    def handleMouseScroll(
+        self,
+        widget,
+        event):
+
+        pass
 
 
 ########################################################################

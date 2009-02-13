@@ -83,6 +83,10 @@ import micropolisview
 class MicropolisMessagesPanel(gtk.Frame):
 
 
+    viewWidth = 150
+    viewHeight = 150
+
+
     def __init__(
         self,
         engine=None,
@@ -121,6 +125,8 @@ class MicropolisMessagesPanel(gtk.Frame):
         textBuffer.set_text("Micropolis ready!\n")
 
         self.add(scrolledWindow)
+
+        self.set_size_request(self.viewWidth, self.viewHeight)
 
 
     def update(

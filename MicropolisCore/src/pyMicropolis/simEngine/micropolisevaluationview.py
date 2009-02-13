@@ -127,6 +127,9 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
         'Hard',
     )
 
+    viewWidth = 150
+    viewHeight = 150
+
 
     def __init__(
         self,
@@ -139,6 +142,8 @@ class MicropolisEvaluationView(micropolisview.MicropolisView):
             **args)
 
         self.zoomable = False
+
+        self.set_size_request(self.viewWidth, self.viewHeight)
 
 
     def update(

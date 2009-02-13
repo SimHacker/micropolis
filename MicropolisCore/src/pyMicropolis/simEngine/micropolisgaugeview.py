@@ -85,18 +85,14 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
 
     gap = 5
 
-    gaugeX = 0
-    gaugeY = 0
-    gaugeWidth = 42
-    gaugeHeight = 60
+    barHeight = 20
 
-    textX = gaugeX + gaugeWidth + gap
-    textY = gap
-    textWidth = 20
-    textHeight = gaugeHeight - (2 * gap)
+    colWidth = 10
+    colHeight = 25
+    colGap = 5
 
     viewWidth = 150
-    viewHeight = 60
+    viewHeight = (2 * gap) + (2 * colHeight) + barHeight
 
 
     def __init__(
@@ -142,50 +138,35 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
 
         ctx.save()
 
+        playout.set_font_description(self.labelFont)
+
         # Draw background.
 
-        ctx.translate(
-            self.gaugeX,
-            self.gaugeY)
-
-        ctx.rectangle(
-            0,
-            0,
-            winWidth,
-            winHeight)
-
-        ctx.set_source_rgb(
-            0.9, 0.9, 1.0)
-
+        ctx.rectangle(0, 0, winWidth, winHeight)
+        ctx.set_source_rgb(0.9, 0.9, 1.0)
         ctx.clip_preserve()
-
         ctx.fill_preserve()
-
-        ctx.set_source_rgb(
-            0.0, 0.0, 0.0)
-
-        ctx.set_line_width(
-            2)
-
+        ctx.set_source_rgb(0.0, 0.0, 0.0)
+        ctx.set_line_width(2)
         ctx.stroke()
 
         # Measure bar.
 
-        barGap = 5
-        barHeight = 10
-        barWidth = self.gaugeWidth - (2 * barGap)
-        barX = barGap
-        barY = int((self.gaugeHeight - barHeight) / 2)
+        colWidth = self.colWidth
+        colHeight = self.colHeight
+        colGap = self.colGap
+
+        gap = self.gap
+        barHeight = self.barHeight
+        barWidth = (4 * colGap) + (3 * colWidth)
+        barX = gap
+        barY = gap + colHeight
 
         # Measure columns.
 
-        colGap = 2
-        colWidth = int((barWidth - (colGap * 4)) / 3)
         rColX = barX + colGap
         cColX = rColX + colWidth + colGap
         iColX = cColX + colWidth + colGap
-
-        colHeight = int((winHeight - barHeight - (2 * barGap)) / 2)
 
         resDemand, comDemand, indDemand = engine.getDemands()
         #print "RES", resDemand, "COM", comDemand, "IND", indDemand
@@ -196,6 +177,8 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
 
         # Draw columns.
 
+        ctx.set_line_width(2)
+
         if res != 0:
             if res < 0:
                 y = barY + res
@@ -204,17 +187,10 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
                 y = barY + barHeight
                 h = res
 
-            ctx.rectangle(
-                rColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                0.0,
-                1.0,
-                0.0)
-
+            ctx.rectangle(rColX, y, colWidth, h)
+            ctx.set_source_rgb(0.0, 0.0, 0.0) # Black.
+            ctx.stroke_preserve()
+            ctx.set_source_rgb(0.0, 1.0, 0.0) # Green.
             ctx.fill()
 
         if com != 0:
@@ -225,17 +201,10 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
                 y = barY + barHeight
                 h = com
 
-            ctx.rectangle(
-                cColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                0.0,
-                0.0,
-                1.0)
-
+            ctx.rectangle(cColX, y, colWidth, h)
+            ctx.set_source_rgb(0.0, 0.0, 0.0) # Black.
+            ctx.stroke_preserve()
+            ctx.set_source_rgb(0.0, 0.0, 1.0) # Blue.
             ctx.fill()
 
         if ind != 0:
@@ -246,45 +215,39 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
                 y = barY + barHeight
                 h = ind
 
-            ctx.rectangle(
-                iColX,
-                y,
-                colWidth,
-                h)
-
-            ctx.set_source_rgb(
-                1.0,
-                1.0,
-                0.0)
-
+            ctx.rectangle(iColX, y, colWidth, h)
+            ctx.set_source_rgb(0.0, 0.0, 0.0) # Black.
+            ctx.stroke_preserve()
+            ctx.set_source_rgb(1.0, 1.0, 0.0) # Yellow.
             ctx.fill()
 
         # Draw bar.
 
         ctx.save()
 
-        ctx.rectangle(
-            barX,
-            barY,
-            barWidth,
-            barHeight)
-
-        ctx.set_source_rgb(
-            1.0, 1.0, 1.0)
-
+        ctx.rectangle(barX, barY, barWidth, barHeight)
+        ctx.set_source_rgb(1.0, 1.0, 1.0)
         ctx.clip_preserve()
-
         ctx.fill_preserve()
-
-        ctx.set_source_rgb(
-            0.0, 0.0, 0.0)
-
-        ctx.set_line_width(
-            2)
-
+        ctx.set_source_rgb(0.0, 0.0, 0.0)
+        ctx.set_line_width(2)
         ctx.stroke()
-
         ctx.restore()
+
+        # Draw text on bar.
+
+        def centerText(text, x, y):
+            textX, textY = self.pinMarkupXY(
+                text, x, y, 0.5, 0.5, playout)
+            ctx.move_to(textX, textY)
+            ctx.show_layout(playout)
+
+        ctx.set_source_rgb(0.0, 0.0, 0.0)
+
+        cy = barY + (barHeight / 2) + 1
+        centerText('<b>R</b>', rColX + (colWidth / 2), cy)
+        centerText('<b>C</b>', cColX + (colWidth / 2), cy)
+        centerText('<b>I</b>', iColX + (colWidth / 2), cy)
 
         # Finish drawing gauge.
 
@@ -294,23 +257,21 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
 
         ctx.save()
 
-        ctx.translate(self.textX, self.textY)
+        textX = barX + barWidth + gap
+        textY = gap
+        textWidth = winWidth - (textX + gap)
+        textHeight = winHeight - (textY + gap)
 
-        markup1 = """<span>
-<b>Date:</b>
-  %s
-<b>Funds:</b>
-   %s
-</span>""" % (
+        ctx.translate(textX, textY)
+
+        markup = (
+            "<span><b>Date:</b>\n%s\n\n<b>Funds:</b>\n%s\n</span>" % (
             engine.getCityDate(),
             '$' + engine.formatNumber(engine.totalFunds),
-        )
+        ))
 
         ctx.set_source_rgb(0.0, 0.0, 0.0)
-        playout.set_font_description(self.labelFont)
-
-        #print markup1
-        playout.set_markup(markup1)
+        playout.set_markup(markup)
         ctx.move_to(0, 0)
         ctx.show_layout(playout)
 
