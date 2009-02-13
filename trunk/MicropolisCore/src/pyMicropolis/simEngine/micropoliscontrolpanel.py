@@ -104,6 +104,7 @@ class MicropolisControlPanel(gtk.Frame):
     def __init__(
         self,
         engine=None,
+        target=None,
         **args):
 
         gtk.Frame.__init__(
@@ -111,6 +112,7 @@ class MicropolisControlPanel(gtk.Frame):
             **args)
 
         self.engine = engine
+        self.target = target
 
         self.engine.expressInterest(
             self,
@@ -129,7 +131,7 @@ class MicropolisControlPanel(gtk.Frame):
         vbox1 = gtk.VBox(False, 5)
         self.vbox1 = vbox1
         hbox1.pack_start(vbox1, False, False, 0)
-        vbox1.set_size_request(200, 0)
+        vbox1.set_size_request(200, -1)
 
         spacer2 = gtk.HBox()
         spacer2.set_size_request(5, 5)
@@ -202,28 +204,33 @@ class MicropolisControlPanel(gtk.Frame):
 
         self.update('options')
 
-        vbox4 = gtk.VButtonBox()
+        vbox4 = gtk.VBox(False, 0)
         self.vbox4 = vbox4
         hbox1.pack_start(vbox4, False, False, 0)
 
         buttonAbout = gtk.Button("About")
         self.buttonAbout = buttonAbout
+        buttonAbout.connect('clicked', lambda item: self.target.aboutDialog())
         vbox4.pack_start(buttonAbout, False, False, 0)
 
         buttonSaveCity = gtk.Button("Save City")
         self.buttonSaveCity = buttonSaveCity
+        buttonSaveCity.connect('clicked', lambda item: self.target.saveCityDialog())
         vbox4.pack_start(buttonSaveCity, False, False, 0)
 
         buttonSaveCityAs = gtk.Button("Save City As...")
         self.buttonSaveCityAs = buttonSaveCityAs
+        buttonSaveCityAs.connect('clicked', lambda item: self.target.saveCityAsDialog())
         vbox4.pack_start(buttonSaveCityAs, False, False, 0)
 
         buttonNewCity = gtk.Button("New City")
         self.buttonNewCity = buttonNewCity
+        buttonNewCity.connect('clicked', lambda item: self.target.newCityDialog())
         vbox4.pack_start(buttonNewCity, False, False, 0)
 
         buttonQuit = gtk.Button("Quit")
         self.buttonQuit = buttonQuit
+        buttonQuit.connect('clicked', lambda item: self.target.quitDialog())
         vbox4.pack_start(buttonQuit, False, False, 0)
 
 
@@ -237,23 +244,37 @@ class MicropolisControlPanel(gtk.Frame):
         engine = self.engine
 
         if name in ('speed', 'passes',):
+            scaleSpeed = self.scaleSpeed
             simSpeed = engine.simSpeed
             simPasses = engine.simPasses
-            #print "SIMULATOR CHANGED SPEED/PASSES", simSpeed, simPasses
+            print "SIMULATOR CHANGED SPEED/PASSES", simSpeed, simPasses
             found = None
             i = 0
-            scaleSpeed = self.scaleSpeed
             for speed, passes, label in self.speeds:
                 if ((speed == simSpeed) and
                     (passes == simPasses)):
                     if scaleSpeed.get_value() != i:
                         scaleSpeed.set_value(i)
+                    print "found speed", speed, "passes", passes, "i", i, "label", label
                     self.setSpeedLabel(label)
                     return
                 i += 1
-            if scaleSpeed.get_value() != simSpeed:
-                scaleSpeed.set_value(simSpeed)
-            self.setSpeedLabel(self.speeds[simSpeed][2])
+            i = 0
+            for speed, passes, label in self.speeds:
+                if (speed == simSpeed):
+                    if scaleSpeed.get_value() != i:
+                        scaleSpeed.set_value(i)
+                    print "found speed", speed, "any passes", passes, "current", engine.simPasses, "i", i, "label", label
+                    if passes != engine.simPasses:
+                        engine.setPasses(passes)
+                    self.setSpeedLabel(label)
+                    return
+                i += 1
+            i = 3 # Default: "slow", fast speed, no skips
+            if scaleSpeed.get_value() != i:
+                scaleSpeed.set_value()
+            self.setSpeedLabel(self.speeds[i][2])
+            print "default", i, self.speeds[i][2]
         elif name == 'options':
             self.checkButtonDisasters.set_property('active', engine.enableDisasters)
             self.checkButtonAutoBudget.set_property('active', engine.autoBudget)

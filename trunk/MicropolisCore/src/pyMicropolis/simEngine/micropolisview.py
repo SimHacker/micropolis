@@ -88,8 +88,8 @@ class MicropolisView(gtk.DrawingArea):
         strokeColor=(0, 0, 0),
         fillColor=(0.75, 0.75, 0.75),
         interests=(),
-        titleFont=pango.FontDescription('Helvetiva 14'),
-        labelFont=pango.FontDescription('Helvetiva 12'),
+        titleFont=pango.FontDescription('Sans 14'),
+        labelFont=pango.FontDescription('Sans 12'),
         **args):
 
         gtk.DrawingArea.__init__(
@@ -176,6 +176,7 @@ class MicropolisView(gtk.DrawingArea):
 
         pcontext = self.create_pango_context()
         playout = pango.Layout(pcontext)
+        playout.set_font_description(self.labelFont)
 
         self.drawContent(ctxWindow, playout)
 
@@ -196,6 +197,7 @@ class MicropolisView(gtk.DrawingArea):
         playout):
 
         pass
+
 
     def drawShadowText(
         self,
@@ -218,6 +220,23 @@ class MicropolisView(gtk.DrawingArea):
         ctx.set_source_rgb(0.0, 0.0, 0.0)
         ctx.move_to(x, y)
         ctx.show_layout(playout)
+
+
+    def pinMarkupXY(
+        self,
+        text,
+        x,
+        y,
+        pinX,
+        pinY,
+        playout):
+
+        playout.set_markup(text)
+        textWidth, textHeight = playout.get_pixel_size()
+        x -= (pinX * textWidth)
+        y -= (pinY * textHeight)
+
+        return x, y
 
 
     def handleEnterNotify(

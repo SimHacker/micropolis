@@ -100,17 +100,9 @@ class MicropolisDisastersPanel(gtk.Frame):
         self.hbox1 = hbox1
         self.add(hbox1)
 
-        spacer1 = gtk.VBox()
-        spacer1.set_size_request(5, 5)
-        hbox1.pack_start(spacer1, False, False, 0)
-
-        vbox1 = gtk.VButtonBox()
+        vbox1 = gtk.VBox(False, 0)
         self.vbox1 = vbox1
         hbox1.pack_start(vbox1, False, False, 0)
-
-        spacer2 = gtk.VBox()
-        spacer2.set_size_request(5, 5)
-        vbox1.pack_start(spacer2, False, False, 0)
 
         buttonMonster = gtk.Button("Monster")
         self.buttonMonster = buttonMonster
@@ -127,17 +119,9 @@ class MicropolisDisastersPanel(gtk.Frame):
         buttonFlood.connect('clicked', lambda item: engine.makeFlood())
         vbox1.pack_start(buttonFlood, False, False, 0)
 
-        spacer3 = gtk.VBox()
-        spacer3.set_size_request(5, 5)
-        vbox1.pack_start(spacer3, False, False, 0)
-
-        vbox2 = gtk.VButtonBox()
+        vbox2 = gtk.VBox(False, 0)
         self.vbox2 = vbox2
         hbox1.pack_start(vbox2, False, False, 0)
-
-        spacer4 = gtk.VBox()
-        spacer4.set_size_request(5, 5)
-        vbox2.pack_start(spacer4, False, False, 0)
 
         buttonTornado = gtk.Button("Tornado")
         self.buttonTornado = buttonTornado
@@ -153,10 +137,6 @@ class MicropolisDisastersPanel(gtk.Frame):
         self.buttonEarthquake = buttonEarthquake
         buttonEarthquake.connect('clicked', lambda item: engine.makeEarthquake())
         vbox2.pack_start(buttonEarthquake, False, False, 0)
-
-        spacer5 = gtk.VBox()
-        spacer5.set_size_request(5, 5)
-        vbox2.pack_start(spacer5, False, False, 0)
 
 
 ########################################################################

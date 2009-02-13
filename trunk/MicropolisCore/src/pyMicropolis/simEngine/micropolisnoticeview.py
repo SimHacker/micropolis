@@ -83,6 +83,10 @@ import micropolisview
 class MicropolisNoticeView(micropolisview.MicropolisView):
 
 
+    viewWidth = 150
+    viewHeight = 150
+
+
     def __init__(
         self,
         setCityViewVisible=None,
@@ -104,6 +108,8 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
         self.showPicture = False
         self.important = False
         self.sprite = micropolisengine.SPRITE_NOTUSED
+
+        self.set_size_request(self.viewWidth, self.viewHeight)
 
 
     def update(
