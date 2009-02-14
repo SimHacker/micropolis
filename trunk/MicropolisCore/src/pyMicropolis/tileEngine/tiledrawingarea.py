@@ -241,7 +241,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self):
 
         self.tickEngine()
-        self.queue_draw()
+        self.updateView()
 
 
     def tickActiveTool(
@@ -334,7 +334,7 @@ class TileDrawingArea(gtk.DrawingArea):
         ctxWindow = self.window.cairo_create()
         self.loadGraphics(ctxWindow, True)
 
-        self.queue_draw()
+        self.updateView()
 
 
     def loadGraphics(
@@ -924,7 +924,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
 
     def cursorMoved(self):
-        self.queue_draw()
+        self.updateView()
 
 
     def moveCursorToMouse(
@@ -975,10 +975,15 @@ class TileDrawingArea(gtk.DrawingArea):
         return (col, row)
 
 
+    def updateView(self):
+        self.queue_draw()
+        self.parent.queue_draw() # @bug Why is this necessary? Doesn't draw without it. Are we really a window?
+
+
     def panTo(self, x, y):
         self.panX = x
         self.panY = y
-        self.queue_draw()
+        self.updateView()
 
 
     def panBy(self, dx, dy):
@@ -1016,7 +1021,7 @@ class TileDrawingArea(gtk.DrawingArea):
         tileY = ((winHeight / 2) - self.panY) / tileSize
 
         #print "getCenterTile", "tile", tileX, tileY, "tileSize", self.tileSize, "scale", self.scale
-      
+     
         return tileX, tileY
 
 

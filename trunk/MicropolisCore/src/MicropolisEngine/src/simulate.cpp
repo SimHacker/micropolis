@@ -364,8 +364,8 @@ void Micropolis::decRateOfGrowthMap()
     /* tends to empty rateOfGrowthMap */
     short x, y, z;
 
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
+    for (x = 0; x < rateOfGrowthMap.MAP_W; x++) {
+        for (y = 0; y < rateOfGrowthMap.MAP_H; y++) {
             z = rateOfGrowthMap.get(x, y);
             if (z == 0) {
                 continue;
@@ -894,13 +894,11 @@ void Micropolis::collectTax()
  */
 void Micropolis::updateFundEffects()
 {
-printf("updateFindEffects\n");
     // Compute road effects of funding
     roadEffect = MAX_ROAD_EFFECT;
     if (roadFund > 0) {
         // Multiply with funding fraction
         roadEffect = (short)((float)roadEffect * (float)roadSpend / (float)roadFund);
-printf("roadEffect %d roadSpend %d, roadFund, %d\n", (int)roadEffect, (int)roadSpend, (int)roadFund);
     }
 
     // Compute police station effects of funding

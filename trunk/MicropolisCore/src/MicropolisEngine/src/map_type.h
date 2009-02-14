@@ -98,8 +98,8 @@ public:
 
     /** Size of a cluster in number of world positions. */
     const int MAP_BLOCKSIZE;
-    const int MAP_MAX_X; ///< Number of clusters in horizontal direction.
-    const int MAP_MAX_Y; ///< Number of clusters in vertical direction.
+    const int MAP_W; ///< Number of clusters in horizontal direction.
+    const int MAP_H; ///< Number of clusters in vertical direction.
 
     void fill(DATA val);
     void clear();
@@ -130,8 +130,8 @@ private:
 template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE>::Map(DATA defaultValue):
             MAP_BLOCKSIZE(BLKSIZE),
-            MAP_MAX_X((WORLD_W + BLKSIZE - 1) / BLKSIZE),
-            MAP_MAX_Y((WORLD_H + BLKSIZE - 1) / BLKSIZE),
+            MAP_W((WORLD_W + BLKSIZE - 1) / BLKSIZE),
+            MAP_H((WORLD_H + BLKSIZE - 1) / BLKSIZE),
             _MAP_DEFAULT_VALUE(defaultValue)
 {
 }
@@ -140,11 +140,11 @@ Map<DATA, BLKSIZE>::Map(DATA defaultValue):
 template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE>::Map(const Map<DATA, BLKSIZE> &map):
             MAP_BLOCKSIZE(BLKSIZE),
-            MAP_MAX_X((WORLD_W + BLKSIZE - 1) / BLKSIZE),
-            MAP_MAX_Y((WORLD_H + BLKSIZE - 1) / BLKSIZE),
+            MAP_W((WORLD_W + BLKSIZE - 1) / BLKSIZE),
+            MAP_H((WORLD_H + BLKSIZE - 1) / BLKSIZE),
             _MAP_DEFAULT_VALUE(map._MAP_DEFAULT_VALUE)
 {
-    for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+    for (int i = 0; i < this->MAP_W * this->MAP_H; i++) {
         this->_mapData[i] = map._mapData[i];
     }
 }
@@ -154,7 +154,7 @@ template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE> &Map<DATA, BLKSIZE>::operator=(const Map<DATA, BLKSIZE> &map)
 {
     if(this != &map) {
-        for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+        for (int i = 0; i < this->MAP_W * this->MAP_H; i++) {
             this->_mapData[i] = map._mapData[i];
         }
     }
@@ -175,7 +175,7 @@ Map<DATA, BLKSIZE>::~Map()
 template <typename DATA, int BLKSIZE>
 void Map<DATA, BLKSIZE>::fill(DATA value)
 {
-    for (int i = 0; i < this->MAP_MAX_X * this->MAP_MAX_Y; i++) {
+    for (int i = 0; i < this->MAP_W * this->MAP_H; i++) {
         this->_mapData[i] = value;
     }
 }
@@ -213,7 +213,7 @@ template <typename DATA, int BLKSIZE>
 inline void Map<DATA, BLKSIZE>::set(int x, int y, DATA value)
 {
     if(this->onMap(x, y)) {
-        this->_mapData[x * MAP_MAX_Y + y] = value;
+        this->_mapData[x * MAP_H + y] = value;
     }
 }
 
@@ -232,7 +232,7 @@ inline DATA Map<DATA, BLKSIZE>::get(int x, int y) const
         return this->_MAP_DEFAULT_VALUE;
     }
 
-    return this->_mapData[x * MAP_MAX_Y + y];
+    return this->_mapData[x * MAP_H + y];
 }
 
 
@@ -245,7 +245,7 @@ inline DATA Map<DATA, BLKSIZE>::get(int x, int y) const
 template <typename DATA, int BLKSIZE>
 inline bool Map<DATA, BLKSIZE>::onMap(int x, int y) const
 {
-    return (x >= 0 && x < this->MAP_MAX_X) && (y >= 0 && y < this->MAP_MAX_Y);
+    return (x >= 0 && x < this->MAP_W) && (y >= 0 && y < this->MAP_H);
 }
 
 
@@ -263,7 +263,7 @@ inline void Map<DATA, BLKSIZE>::worldSet(int x, int y, DATA value)
     if(this->worldOnMap(x, y)) {
         x /= BLKSIZE;
         y /= BLKSIZE;
-        this->_mapData[x * MAP_MAX_Y + y] = value;
+        this->_mapData[x * MAP_H + y] = value;
     }
 }
 
@@ -284,7 +284,7 @@ inline DATA Map<DATA, BLKSIZE>::worldGet(int x, int y) const
 
     x /= BLKSIZE;
     y /= BLKSIZE;
-    return this->_mapData[x * MAP_MAX_Y + y];
+    return this->_mapData[x * MAP_H + y];
 }
 
 /**

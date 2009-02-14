@@ -3,7 +3,7 @@
 ########################################################################
 # Pie Menus for pygtk and OLPC Sugar.
 # Copyright (C) 1986-2007 by Don Hopkins. All rights reserved.
-# 
+#
 # Designed and implemented by Don Hopkins (dhopkins@DonHopkins.com).
 #
 # This library is free software; you can redistribute it and/or
@@ -65,7 +65,7 @@ def NormalizeAngleRad(ang):
 
 
 ########################################################################
-# Font cache. 
+# Font cache.
 
 
 FontCache = {}
@@ -83,18 +83,18 @@ def GetFont(s):
 
 
 ########################################################################
-# Image cache. 
+# Image cache.
 
 
 ImageCache = {}
 
 def GetImage(s):
-    
+   
     if ImageCache.has_key(s):
         return ImageCache[s]
-    
+   
     image = None
-    
+   
     if s[-4:].lower() == '.png':
         try:
             image = cairo.ImageSurface.create_from_png(s)
@@ -106,10 +106,10 @@ def GetImage(s):
         except: pass
     else:
         print "Don't know how to load image file type:", s
-    
+   
     if image:
         ImageCache[s] = image
-    
+   
     return image
 
 
@@ -128,7 +128,7 @@ class PieItem:
             y=0,
             width=0,
             height=0,
-            label_font='Helvetica 14',
+            label_font='Sans 14',
             label_padding=2,
             label_x_adjust=0,
             label_y_adjust=2,
@@ -623,7 +623,7 @@ class PieMenu(gtk.Window):
             header_fill_color=(0, 0, 0),
             header_stroke_color=None,
             header_text_color=(1, 1, 1),
-            header_font='Helvetica 24',
+            header_font='Sans 24',
             header_padding=2,
             header_margin=4,
             header_gap=4,
@@ -633,7 +633,7 @@ class PieMenu(gtk.Window):
             footer_fill_color=(1, 1, 0),
             footer_stroke_color=(0, 0, 1),
             footer_text_color=(0, 0, 1),
-            footer_font='Helvetica 12',
+            footer_font='Sans 12',
             footer_padding=2,
             footer_margin=4,
             footer_gap=4,
@@ -717,7 +717,7 @@ class PieMenu(gtk.Window):
             gtk.gdk.KEY_RELEASE_MASK |
             gtk.gdk.PROXIMITY_IN_MASK |
             gtk.gdk.PROXIMITY_OUT_MASK)
-        
+       
         self.action = action
         self.outside_fill_color = outside_fill_color
         self.outside_stroke_color = outside_stroke_color
@@ -872,7 +872,7 @@ class PieMenu(gtk.Window):
             angle = DegToRad(deg)
             deg = \
                 int(
-                    math.floor(0.5 + 
+                    math.floor(0.5 +
                         RadToDeg(
                             NormalizeAngleRad(
                                 angle))))
@@ -926,7 +926,7 @@ class PieMenu(gtk.Window):
         self.linear_items = linear_items
 
         # Map of item direction to array of items in that direction.
-        # Note: Think about how this interacts with rings and linear menu items. 
+        # Note: Think about how this interacts with rings and linear menu items.
         item_directions = {}
         self.item_directions = item_directions
 
@@ -938,7 +938,7 @@ class PieMenu(gtk.Window):
         # Count the visible items.
         item_count = len(visible_items)
 
-        # We're done if no items. 
+        # We're done if no items.
         if item_count == 0:
             return
 
@@ -955,7 +955,7 @@ class PieMenu(gtk.Window):
         for i in max_pie_items:
             max_pie_items_total += i
 
-        # Categorize items into pie_items and linear_items arrays. 
+        # Categorize items into pie_items and linear_items arrays.
         item_index = 0
         pie_item_count = 0
         max_ring_items = max_pie_items[0]
@@ -965,7 +965,7 @@ class PieMenu(gtk.Window):
           item_index += 1
           item.valid = False
 
-          # Limit the number of pie items to max_pie_items_total. 
+          # Limit the number of pie items to max_pie_items_total.
           # Classify overflow items as linear.
           if pie_item_count >= max_pie_items_total:
               item.linear = True
@@ -983,7 +983,7 @@ class PieMenu(gtk.Window):
               if len(pie_rings) == 0:
                   pie_rings.append(pie_items)
 
-              # If this item will overflow the current ring, then make a new ring. 
+              # If this item will overflow the current ring, then make a new ring.
               if len(pie_items) >= max_ring_items:
                   pie_items = []
                   pie_rings.append(pie_items)
@@ -1006,9 +1006,9 @@ class PieMenu(gtk.Window):
         ring_count = len(pie_rings)
         linear_item_count = len(linear_items)
 
-        # If there are any pie items, then calculate the pie menu parameters. 
+        # If there are any pie items, then calculate the pie menu parameters.
         if ring_count > 0:
-            
+           
             ring_index = 0
             for pie_items in pie_rings:
 
@@ -1068,13 +1068,13 @@ class PieMenu(gtk.Window):
 
             # Use the fixed radius that has been specified.
             radius = fixed_radius
-            
+           
         else:
 
             # Start with the min_radius.
             radius = self.min_radius
 
-            # If there are any pie items, then make sure they don't overlap. 
+            # If there are any pie items, then make sure they don't overlap.
             if ring_count > 0:
 
                 # Only apply this to the inner ring of the pie menu, for now.
@@ -1082,31 +1082,31 @@ class PieMenu(gtk.Window):
                 # I think it's better to have explicit control over the
                 # inner fixed_radius and outer ring_radius, so designers can
                 # tune it to be easy to use, instead of leaving it up to the
-                # label layout algorithm to determine (which could badly effect usability). 
+                # label layout algorithm to determine (which could badly effect usability).
                 # Otherwise pie menus would be too big and the ring sizes would be irregular.
                 # Could implement an array of ring_radius numbers to explicitly control
-                # the radius of each ring, but that seems control-freakish, so not yet. 
+                # the radius of each ring, but that seems control-freakish, so not yet.
 
                 pie_items = pie_rings[0]
 
-                # Increase the radius until there are no overlaps between 
+                # Increase the radius until there are no overlaps between
                 # any pie items.
-                # Start by wrapping last around to the end of the 
+                # Start by wrapping last around to the end of the
                 # circular menu.
 
                 # Last index and last pie item, used to test for overlap.
-                # Only test for last item overlap if more than one pie item. 
+                # Only test for last item overlap if more than one pie item.
                 last_index = len(pie_items) - 1
                 last = None
                 if last_index > 0:
                     last = pie_items[last_index]
 
                 # Loop over all pie items testing for overlap with last adjacent
-                # pie item. 
+                # pie item.
                 for item in pie_items:
 
-                    # Ignore fixed_radius items. 
-                    # XXX: The behavior of mixing adjacent fixed_radius and not 
+                    # Ignore fixed_radius items.
+                    # XXX: The behavior of mixing adjacent fixed_radius and not
                     # fixed_radius pie menu items is not well defined.
                     # XXX: fixed_radius should be inherited from the piemenu.
                     if item.fixed_radius > 0:
@@ -1122,12 +1122,12 @@ class PieMenu(gtk.Window):
                         # Lay out the item at the current radius.
                         item.layoutForPie(radius + label_gap_radius)
 
-                        # If there is only one item, then we're done pushing out. 
+                        # If there is only one item, then we're done pushing out.
                         if last == None:
                             # Done pushing out.
                             break
 
-                        # If there are more than one pie items, then test for adjacent overlaps. 
+                        # If there are more than one pie items, then test for adjacent overlaps.
                         # Lay out the last item at the current radius.
                         last.layoutForPie(radius + label_gap_radius)
 
@@ -1175,7 +1175,7 @@ class PieMenu(gtk.Window):
 
         ring_index = 0
         for pie_items in pie_rings:
-            
+           
             for item in pie_items:
 
                 # Lay out the pie item at the current radius.
@@ -1205,12 +1205,12 @@ class PieMenu(gtk.Window):
                 fary = max(abs(ity0), abs(ity1))
                 rad = (farx * farx) + (fary * fary)
 
-                if rad > self.max_radius: 
-                    max_radius = rad; 
+                if rad > self.max_radius:
+                    max_radius = rad;
 
             ring_index += 1
 
-        # Loop over the linear items, lay them out, 
+        # Loop over the linear items, lay them out,
         # and calculate their bounding box and max_radius.
 
         # Calculate the max width of the north and south linear items.
@@ -1258,10 +1258,10 @@ class PieMenu(gtk.Window):
           farx = max(abs(itx0), abs(itx1))
           fary = max(abs(ity0), abs(ity1))
           rad = (farx * farx) + (fary * fary)
-          if rad > max_radius: 
-              max_radius = rad; 
+          if rad > max_radius:
+              max_radius = rad;
 
-        # Go over the linear items and fix the x and width of all vertical items. 
+        # Go over the linear items and fix the x and width of all vertical items.
         for item in linear_items:
           #print "item.dx", item.dx, item
           if abs(item.dx) < 0.01:
@@ -1278,7 +1278,7 @@ class PieMenu(gtk.Window):
         max_radius = (
             int(
                 math.floor(
-                    0.95 + 
+                    0.95 +
                     math.sqrt(
                         max_radius)) +
                 self.margin_radius))
@@ -1305,7 +1305,7 @@ class PieMenu(gtk.Window):
         header_width = self.header_width
         header_height = self.header_height
         header_margin = self.header_margin
-        
+       
         if self.header == None:
             header_x = 0
             header_y = 0
@@ -1329,7 +1329,7 @@ class PieMenu(gtk.Window):
         footer_width = self.footer_width
         footer_height = self.footer_height
         footer_margin = self.footer_margin
-        
+       
         if self.footer == None:
             footer_x = 0
             footer_y = 0
@@ -1376,7 +1376,7 @@ class PieMenu(gtk.Window):
             x = self.pin_x + min_x
             y = self.pin_y + min_y
         else:
-            # If it's a linear menu, then center on its header, or just below the mouse if no header. 
+            # If it's a linear menu, then center on its header, or just below the mouse if no header.
             x = self.pin_x - (width / 2)
             y = self.pin_y - (header_height / 2)
 
@@ -1535,11 +1535,11 @@ class PieMenu(gtk.Window):
         self.invalidate()
         self.shapeWindow()
         self.redraw()
-        
+       
         self.show_all()
 
         d = self.d
-        
+       
         d.grab_add()
         d.grab_focus()
 
@@ -1570,7 +1570,7 @@ class PieMenu(gtk.Window):
         gtk.gdk.pointer_ungrab()
 
         self.hide()
-        
+       
         self.handlePopdown()
 
         cur_item = self.cur_item
@@ -1638,10 +1638,10 @@ class PieMenu(gtk.Window):
                 if ((not item.linear) and
                     (item.ring_index < cur_ring_index)):
                     continue
-                
+               
                 item.draw(rect, context, pcontext, playout)
 
-        # Draw the current item last so it overlaps all other items. 
+        # Draw the current item last so it overlaps all other items.
         if draw_item_later:
             draw_item_later.draw(rect, context, pcontext, playout)
 
@@ -1657,7 +1657,7 @@ class PieMenu(gtk.Window):
         context.clip()
 
         fill_color = self.outside_fill_color
-        
+       
         if fill_color:
             context.rectangle(rect)
 
@@ -1802,7 +1802,7 @@ class PieMenu(gtk.Window):
 
             ########################################################################
             # Draw the hilited slice.
-            
+           
             slice_hilite_fill_color = self.slice_hilite_fill_color
             slice_hilite_stroke_color = self.slice_hilite_stroke_color
 
@@ -1889,7 +1889,7 @@ class PieMenu(gtk.Window):
         context.rectangle(x, y, width, height)
 
         fill_color = self.header_fill_color
-        
+       
         if fill_color:
             context.rectangle(x, y, width, height)
 
@@ -1897,7 +1897,7 @@ class PieMenu(gtk.Window):
             context.fill()
 
         stroke_color = self.header_stroke_color
-        
+       
         if stroke_color:
             context.rectangle(x, y, width, height)
 
@@ -1939,7 +1939,7 @@ class PieMenu(gtk.Window):
         context.rectangle(x, y, width, height)
 
         fill_color = self.footer_fill_color
-        
+       
         if fill_color:
             context.rectangle(x, y, width, height)
 
@@ -1947,7 +1947,7 @@ class PieMenu(gtk.Window):
             context.fill()
 
         stroke_color = self.footer_stroke_color
-        
+       
         if stroke_color:
             context.rectangle(x, y, width, height)
 
@@ -1977,7 +1977,7 @@ class PieMenu(gtk.Window):
     def drawOverlay(self, rect, context, pcontext, playout):
 
         stroke_color = self.outside_stroke_color
-        
+       
         if stroke_color:
             context.rectangle(rect)
 
@@ -1998,17 +1998,17 @@ class PieMenu(gtk.Window):
 
         cur_x = self.cur_x
         cur_y = self.cur_y
-        
+       
         if ((cx == cur_x) and
             (cy == cur_y)):
             return
-        
+       
         self.last_x = cur_x
         self.lasy_y = cur_y
         self.cur_x = cx
         self.cur_y = cy
 
-        # Track the selection based on the cursor offset from the menu center. 
+        # Track the selection based on the cursor offset from the menu center.
 
         two_pi = 2 * math.pi
 
@@ -2100,7 +2100,7 @@ class PieMenu(gtk.Window):
                     if cur_item_entered != -1:
                         new_item = cur_item_entered
                     else:
-                        
+                       
                         if pie_item_count > 0:
                             twist = math.pi / pie_item_count
 
@@ -2108,7 +2108,7 @@ class PieMenu(gtk.Window):
                             ang = DegToRad(ring_initial_angle)
 
                             ring_clockwise = self.getRingClockwise(cur_ring_index)
-                            
+                           
                             if ring_clockwise:
                                 ang = ang - self.direction + twist
                             else:
@@ -2251,7 +2251,7 @@ class PieMenu(gtk.Window):
             return
 
         item = self.visible_items[cur_item]
-        
+       
         #print "DOACTION", self, self.cur_item, item, item.label
 
         sub_pie = item.sub_pie
@@ -2363,7 +2363,7 @@ class PieMenuTarget(gtk.Button):
         self.connect("button_release_event", self.handle_button_release_event)
 
         #print "INIT"
-        
+       
         self.set_events(
             gtk.gdk.EXPOSURE_MASK |
             gtk.gdk.BUTTON_PRESS_MASK |
@@ -2383,7 +2383,7 @@ class PieMenuTarget(gtk.Button):
             return False
 
         win_x, win_y, state = event.window.get_pointer()
-        
+       
         #print "WIN", win_x, win_y
 
         x, y = event.get_root_coords()
@@ -2398,7 +2398,7 @@ class PieMenuTarget(gtk.Button):
     def handle_button_release_event(self, widget, event):
 
         return False
-    
+   
 
     def setPie(self, pie):
 
@@ -2419,7 +2419,7 @@ class LinearMenu(PieMenu):
             max_pie_items=0,
             **args)
 
-    
+   
 ########################################################################
 
 
@@ -2449,7 +2449,7 @@ class DozenPieMenu(PieMenu):
             max_pie_items=12,
             **args)
 
-    
+   
 ########################################################################
 
 
@@ -2467,7 +2467,7 @@ class DonutPieMenu(PieMenu):
             label_gap_radius=-85,
             **args)
 
-    
+   
 ########################################################################
 
 
@@ -2547,7 +2547,7 @@ def main():
         clock_pie.add_item(
             PieItem(
                 label=label,
-                label_font='Helvetica 12',
+                label_font='Sans 12',
                 lolite_fill_color=None,
                 lolite_stroke_color=None))
 
@@ -2573,7 +2573,7 @@ def main():
         two_ringed_pie.add_item(
             PieItem(
                 label=label,
-                label_font='Helvetica 12',
+                label_font='Sans 12',
                 lolite_fill_color=None,
                 lolite_stroke_color=None))
 
@@ -2600,7 +2600,7 @@ def main():
         three_ringed_pie.add_item(
             PieItem(
                 label=label,
-                label_font='Helvetica 12',
+                label_font='Sans 12',
                 lolite_fill_color=None,
                 lolite_stroke_color=None))
 
@@ -2624,7 +2624,7 @@ def main():
         four_ringed_pie.add_item(
             PieItem(
                 label=label,
-                label_font='Helvetica 10',
+                label_font='Sans 10',
                 lolite_fill_color=None,
                 lolite_stroke_color=None))
 

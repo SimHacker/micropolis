@@ -82,19 +82,19 @@ static void smoothStationMap(MapShort8 *map)
     short x, y, edge;
     MapShort8 tempMap(*map);
 
-    for (x = 0; x < tempMap.MAP_MAX_X; x++) {
-        for (y = 0; y < tempMap.MAP_MAX_Y; y++) {
+    for (x = 0; x < tempMap.MAP_W; x++) {
+        for (y = 0; y < tempMap.MAP_H; y++) {
             edge = 0;
             if (x > 0) {
                 edge += tempMap.get(x - 1, y);
             }
-            if (x < tempMap.MAP_MAX_X - 1) {
+            if (x < tempMap.MAP_W - 1) {
                 edge += tempMap.get(x + 1, y);
             }
             if (y > 0) {
                 edge += tempMap.get(x, y - 1);
             }
-            if (y < tempMap.MAP_MAX_Y - 1) {
+            if (y < tempMap.MAP_H - 1) {
                 edge += tempMap.get(x, y + 1);
             }
             edge = tempMap.get(x, y) + edge / 4;
@@ -153,13 +153,13 @@ void Micropolis::populationDensityScan()
     doSmooth2(); // tempMap2 -> tempMap1
     doSmooth1(); // tempMap1 -> tempMap2
 
-    assert(populationDensityMap.MAP_MAX_X == tempMap2.MAP_MAX_X);
-    assert(populationDensityMap.MAP_MAX_Y == tempMap2.MAP_MAX_Y);
+    assert(populationDensityMap.MAP_W == tempMap2.MAP_W);
+    assert(populationDensityMap.MAP_H == tempMap2.MAP_H);
 
     // Copy tempMap2 to populationDensityMap, multiplying by 2
     Byte *srcMap = tempMap2.getBase();
     Byte *destMap = populationDensityMap.getBase();
-    for (int i = 0; i < tempMap2.MAP_MAX_X * tempMap2.MAP_MAX_Y; i++) {
+    for (int i = 0; i < tempMap2.MAP_W * tempMap2.MAP_H; i++) {
         destMap[i] = srcMap[i] * 2;
     }
 
@@ -171,8 +171,8 @@ void Micropolis::populationDensityScan()
         cityCenterX = (short)(Xtot / Ztot);
         cityCenterY = (short)(Ytot / Ztot);
     } else {
-        cityCenterX = WORLD_W_2;  /* if pop==0 center of map is city center */
-        cityCenterY = WORLD_H_2;
+        cityCenterX = WORLD_W / 2;  /* if pop==0 center of map is city center */
+        cityCenterY = WORLD_H / 2;
     }
 
     // Set flags for updated maps
@@ -225,8 +225,8 @@ void Micropolis::pollutionTerrainLandValueScan()
     LVtot = 0;
     LVnum = 0;
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < landValueMap.MAP_W; x++) {
+        for (y = 0; y < landValueMap.MAP_H; y++) {
             pollutionLevel = 0;
             bool landValueFlag = false;
             worldX = x * 2;
@@ -258,8 +258,6 @@ void Micropolis::pollutionTerrainLandValueScan()
 
             pollutionLevel = min(pollutionLevel, 255);
             tempMap1.set(x, y, pollutionLevel);
-
-
 
             if (landValueFlag) {              /* LandValue Equation */
                 dis = 34 - getCityCenterDistance(worldX, worldY) / 2;
@@ -457,13 +455,13 @@ void Micropolis::smoothTerrain()
         int x, y = 0, dir = 1;
         unsigned z = 0;
 
-        for (x = 0; x < WORLD_W_4; x++) {
-            for (; y != WORLD_H_4 && y != -1; y += dir) {
+        for (x = 0; x < terrainDensityMap.MAP_W; x++) {
+            for (; y != terrainDensityMap.MAP_H && y != -1; y += dir) {
                 z +=
                     tempMap3.get((x == 0) ? x : (x - 1), y) +
-                    tempMap3.get((x == (WORLD_W_4 - 1)) ? x : (x + 1), y) +
+                    tempMap3.get((x == (terrainDensityMap.MAP_W - 1)) ? x : (x + 1), y) +
                     tempMap3.get(x, (y == 0) ? (0) : (y - 1)) +
-                    tempMap3.get(x, (y == (WORLD_H_4 - 1)) ? y : (y + 1)) +
+                    tempMap3.get(x, (y == (terrainDensityMap.MAP_H - 1)) ? y : (y + 1)) +
                     (tempMap3.get(x, y) <<2);
                 Byte val = (Byte)(z / 8);
                 terrainDensityMap.set(x, y, val);
@@ -475,19 +473,19 @@ void Micropolis::smoothTerrain()
     } else {
         short x, y;
 
-        for (x = 0; x < WORLD_W_4; x++) {
-            for (y = 0; y < WORLD_H_4; y++) {
+        for (x = 0; x < terrainDensityMap.MAP_W; x++) {
+            for (y = 0; y < terrainDensityMap.MAP_H; y++) {
                 unsigned z = 0;
                 if (x > 0) {
                     z += tempMap3.get(x - 1, y);
                 }
-                if (x < (WORLD_W_4 - 1)) {
+                if (x < (terrainDensityMap.MAP_W - 1)) {
                     z += tempMap3.get(x + 1, y);
                 }
                 if (y > 0) {
                     z += tempMap3.get(x, y - 1);
                 }
-                if (y < (WORLD_H_4 - 1)) {
+                if (y < (terrainDensityMap.MAP_H - 1)) {
                     z += tempMap3.get(x, y + 1);
                 }
                 Byte val = (Byte)(z / 4 + tempMap3.get(x, y)) / 2;
@@ -510,13 +508,13 @@ static void smoothDitherMap(const MapByte2 &srcMap,
     if (ditherFlag) {
         int x, y = 0, z = 0, dir = 1;
 
-        for (x = 0; x < srcMap.MAP_MAX_X; x++) {
-            for (; y != srcMap.MAP_MAX_Y && y != -1; y += dir) {
+        for (x = 0; x < srcMap.MAP_W; x++) {
+            for (; y != srcMap.MAP_H && y != -1; y += dir) {
                 z +=
                     srcMap.get((x == 0) ? x : (x - 1), y) +
-                    srcMap.get((x == srcMap.MAP_MAX_X - 1) ? x : (x + 1), y) +
+                    srcMap.get((x == srcMap.MAP_W - 1) ? x : (x + 1), y) +
                     srcMap.get(x, (y == 0) ? (0) : (y - 1)) +
-                    srcMap.get(x, (y == (srcMap.MAP_MAX_Y - 1)) ? y : (y + 1)) +
+                    srcMap.get(x, (y == (srcMap.MAP_H - 1)) ? y : (y + 1)) +
                     srcMap.get(x, y);
                 Byte val = (Byte)(z / 4);
                 destMap->set(x, y, val);
@@ -528,19 +526,19 @@ static void smoothDitherMap(const MapByte2 &srcMap,
     } else {
         short x, y, z;
 
-        for (x = 0; x < srcMap.MAP_MAX_X; x++) {
-            for (y = 0; y < srcMap.MAP_MAX_Y; y++) {
+        for (x = 0; x < srcMap.MAP_W; x++) {
+            for (y = 0; y < srcMap.MAP_H; y++) {
                 z = 0;
                 if (x > 0) {
                     z += srcMap.get(x - 1, y);
                 }
-                if (x < srcMap.MAP_MAX_X - 1) {
+                if (x < srcMap.MAP_W - 1) {
                     z += srcMap.get(x + 1, y);
                 }
                 if (y > 0) {
                     z += srcMap.get(x, y - 1);
                 }
-                if (y < (srcMap.MAP_MAX_Y - 1)) {
+                if (y < (srcMap.MAP_H - 1)) {
                     z += srcMap.get(x, y + 1);
                 }
                 z = (z + srcMap.get(x, y)) >>2;
@@ -576,8 +574,8 @@ void Micropolis::computeComRateMap()
 {
     short x, y, z;
 
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
+    for (x = 0; x < comRateMap.MAP_W; x++) {
+        for (y = 0; y < comRateMap.MAP_H; y++) {
             z = (short)(getCityCenterDistance(x * 8,y * 8) / 2); // 0..32
             z = z * 4;  // 0..128
             z = 64 - z; // 64..-64
