@@ -73,6 +73,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 
+
 /**
  * Find a connection over a road from the current place to a specified zone type
  * @param dest Zone type to go to
@@ -282,7 +283,7 @@ bool Micropolis::tryDrive(ZoneType destZone)
 /* comefrom: tryDrive */
 bool Micropolis::tryGo(int dist)
 {
-    short x, dirRandom;
+    short dir, dirRandom;
     Direction dirReal;
 
 #if 0
@@ -291,9 +292,9 @@ bool Micropolis::tryGo(int dist)
     dirRandom = getRandom16() & 3;
 #endif
 
-    for (x = dirRandom; x < (dirRandom + 4); x++) { /* for the 4 directions */
+    for (dir = dirRandom; dir < (dirRandom + 4); dir++) { /* for the 4 directions */
 
-        dirReal = (Direction)(x & 3);
+        dirReal = (Direction)(dir & 3);
 
         if (dirReal == dirLast) {
             continue; /* skip last direction */
@@ -371,14 +372,14 @@ short Micropolis::getFromMap(Direction d)
 bool Micropolis::driveDone(ZoneType destZone)
 {
     /* commercial, industrial, residential destinations */
-    static const short TARGL[3] = {COMBASE, LHTHR, LHTHR};
-    static const short TARGH[3] = {NUCLEAR, PORT, COMBASE};
+    static const short targetLow[3] = {COMBASE, LHTHR, LHTHR};
+    static const short targetHigh[3] = {NUCLEAR, PORT, COMBASE};
 
-    assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGL));
-    assert(ZT_NUM_DESTINATIONS == LENGTH_OF(TARGH));
+    assert(ZT_NUM_DESTINATIONS == LENGTH_OF(targetLow));
+    assert(ZT_NUM_DESTINATIONS == LENGTH_OF(targetHigh));
 
-    short l = TARGL[destZone]; // Lowest acceptable tile value
-    short h = TARGH[destZone]; // Highest acceptable tile value
+    short l = targetLow[destZone]; // Lowest acceptable tile value
+    short h = targetHigh[destZone]; // Highest acceptable tile value
 
     if (curMapY > 0) {
         short z = map[curMapX][curMapY - 1] & LOMASK;

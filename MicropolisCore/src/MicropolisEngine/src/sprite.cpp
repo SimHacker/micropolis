@@ -1402,7 +1402,7 @@ void Micropolis::doBusSprite(SimSprite *sprite)
             z = trafficDensityMap.worldGet(tx << 1, ty << 1) >>6;
 
             if (z > 1) {
-              z--;
+                z--;
             }
 
         } else {
@@ -1905,6 +1905,9 @@ void Micropolis::makeShipHere(int x, int y)
 
 /**
  * Start a new monster sprite.
+ * @todo Make monster over land, because it disappears if it's made over water.
+ *       Better yet make monster not disappear for a while after it's created,
+ *       over land or water. Should never disappear prematurely.
  */
 void Micropolis::makeMonster()
 {
@@ -1970,7 +1973,7 @@ void Micropolis::generateCopter(int x, int y)
 
 
 /**
- * Ensure a airplane sprite exists.
+ * Ensure an airplane sprite exists.
  *
  * If it does not exist, create one at the given coordinates.
  * @param x X coordinate in map coordinate.
@@ -1986,7 +1989,7 @@ void Micropolis::generatePlane(int x, int y)
 }
 
 
-/** Ensure a airplane sprite exists. */
+/** Ensure a tornado sprite exists. */
 void Micropolis::makeTornado()
 {
     short x, y;

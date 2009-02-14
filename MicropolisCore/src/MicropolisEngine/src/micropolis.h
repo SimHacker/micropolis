@@ -694,7 +694,7 @@ enum Scenario {
     SC_NONE,           ///< No scenario (free playing)
 
     SC_DULLSVILLE,     ///< Dullsville (boredom)
-    SC_SAN_FRANCISCO,  ///< San francisco (earth quake)
+    SC_SAN_FRANCISCO,  ///< San francisco (earthquake)
     SC_HAMBURG,        ///< Hamburg (fire bombs)
     SC_BERN,           ///< Bern (traffic)
     SC_TOKYO,          ///< Tokyo (scary monster)
@@ -2553,45 +2553,6 @@ public:
     static inline bool testBounds(int wx, int wy)
     {
         return (wx >= 0 && wx < WORLD_W && wy >= 0 && wy < WORLD_H);
-    };
-
-    /**
-     * Check that the given coordinate is within half resolution
-     * world bounds.
-     * @param wx World x coordinate.
-     * @param wy World y coordinate.
-     * @return Boolean indicating (wx, wy) is inside the half
-     *                 resolution world bounds.
-     */
-    static inline bool testBounds2(int wx, int wy)
-    {
-        return (wx >= 0 && wx < WORLD_W_2 && wy >= 0 && wy < WORLD_H_2);
-    };
-
-    /**
-     * Check that the given coordinate is within quarter resolution
-     * world bounds.
-     * @param wx World x coordinate.
-     * @param wy World y coordinate.
-     * @return Boolean indicating (wx, wy) is inside the quarter
-     *                 resolution world bounds.
-     */
-    static inline bool testBounds4(int wx, int wy)
-    {
-        return (wx >= 0 && wx < WORLD_W_4 && wy >= 0 && wy < WORLD_H_4);
-    };
-
-    /**
-     * Check that the given coordinate is within eighth resolution
-     * world bounds.
-     * @param wx World x coordinate.
-     * @param wy World y coordinate.
-     * @return Boolean indicating (wx, wy) is inside the eighth
-     *                 resolution world bounds.
-     */
-    static inline bool testBounds8(int wx, int wy)
-    {
-        return (wx >= 0 && wx < WORLD_W_8 && wy >= 0 && wy < WORLD_H_8);
     };
 
     void spend(int dollars);

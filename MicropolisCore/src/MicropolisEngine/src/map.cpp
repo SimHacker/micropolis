@@ -509,11 +509,8 @@ void Micropolis::drawRateOfGrowth()
 
     drawAll();
 
-  int minZ = 0;
-  int maxZ = 0;
-
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
+    for (x = 0; x < rateOfGrowthMap.MAP_W; x++) {
+        for (y = 0; y < rateOfGrowthMap.MAP_H; y++) {
             short val;
             short z = rateOfGrowthMap.get(x, y);
             if (z > 100) {
@@ -611,8 +608,8 @@ void Micropolis::drawLandValueMap()
 
     drawAll();
 
-    for (x = 0; x < WORLD_W_2; x++) {
-        for (y = 0; y < WORLD_H_2; y++) {
+    for (x = 0; x < landValueMap.MAP_W; x++) {
+        for (y = 0; y < landValueMap.MAP_H; y++) {
             maybeDrawRect(
                 view,
                 getCI(landValueMap.get(x, y)),
@@ -630,8 +627,8 @@ void Micropolis::drawFireRadius()
     short x, y;
 
     drawAll();
-    for (x = 0; x < WORLD_H_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
+    for (x = 0; x < fireStationEffectMap.MAP_W; x++) {
+        for (y = 0; y < fireStationEffectMap.MAP_H; y++) {
             maybeDrawRect(
                 getCI(fireStationEffectMap.get(x, y)),
                 x * 24,
@@ -648,8 +645,8 @@ void Micropolis::drawPoliceRadius()
     short x, y;
 
     drawAll();
-    for (x = 0; x < WORLD_W_8; x++) {
-        for (y = 0; y < WORLD_H_8; y++) {
+    for (x = 0; x < policeStationEffectMap.MAP_W; x++) {
+        for (y = 0; y < policeStationEffectMap.MAP_H; y++) {
             maybeDrawRect(
                 getCI(policeStationEffectMap.get(x, y)),
                 x * 24,

@@ -144,6 +144,12 @@ void Micropolis::pause()
         setSpeed(0);
         simPaused = true;
     }
+
+    // Call back even if the state did not change.
+    callback(
+        "UIUpdate",
+        "s",
+        "paused");
 }
 
 /**
@@ -156,6 +162,12 @@ void Micropolis::resume()
         simPaused = false;
         setSpeed(simPausedSpeed);
     }
+
+    // Call back even if the state did not change.
+    callback(
+        "UIUpdate",
+        "s",
+        "paused");
 }
 
 

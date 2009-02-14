@@ -331,8 +331,6 @@ void Micropolis::updateBudget()
 void Micropolis::showBudgetWindowAndStartWaiting()
 {
     callback("UIShowBudgetAndWait", "");
-
-    pause();
 }
 
 
