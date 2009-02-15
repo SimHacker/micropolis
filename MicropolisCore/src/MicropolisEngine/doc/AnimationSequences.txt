@@ -99,21 +99,21 @@ x38c -> x38d -> x38e -> x38f -> x38c
 x2b1 -> x390
 x390 -> x391 -> x392 -> x393 -> x390
 
-# Chimney
-x2eb -> x394
-x394 -> x395 -> x396 -> x397 -> x394
+# Chimney at coal powerplant, relative position (2, 0)
+747 -> 916
+916 -> 917 -> 918 -> 919 -> 916
 
-# Chimney
-x2ec -> x398
-x398 -> x399 -> x39a -> x39b -> x398
+# Chimney at coal powerplant, relative position (3, 0)
+748 -> 920
+920 -> 921 -> 922 -> 923 -> 920
 
-# Chimney
-x2ef -> x39c
-x39c -> x39d -> x39e -> x39f -> x39c
+# Chimney at coal powerplant, relative position (2, 1)
+751 -> 924
+924 -> 925 -> 926 -> 927 -> 924
 
-# Chimney
-x2f0 -> x3a0
-x3a0 -> x3a1 -> x3a2 -> x3a3 -> x3a0
+# Chimney at coal powerplant, relative position (3, 1)
+752 -> 928
+928 -> 929 -> 930 -> 931 -> 928
 
 # Stadium (top part, bottom part)
 x3a4 -> x3a5 -> x3a6 -> x3a7 -> x3a8 -> x3a9 -> x3aa -> x3ab -> x3a4

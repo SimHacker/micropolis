@@ -580,31 +580,36 @@ enum MapTileCharacters {
     // tile 712 -- 715 ?
     AIRPORT        = 716,
     // tile 717 -- 744 ?
-    COALBASE       = 745,
-    // tile 746 -- 749 ?
-    POWERPLANT     = 750,
-    // tile 751 -- 759 ?
-    LASTPOWERPLANT = 760, // Why is NUCLEAR further down?
 
-    FIRESTBASE     = 761,
-    // tile 762 -- 764 ?
-    FIRESTATION    = 765,
-    // tile 766 -- 769 ?
+    // Coal power plant (4x4).
+    COALBASE       = 745, ///< First tile of coal power plant.
+    POWERPLANT     = 750, ///< 'Center' tile of coal power plant.
+    LASTPOWERPLANT = 760, ///< Last tile of coal power plant.
+
+    // Fire station (3x3).
+    FIRESTBASE     = 761, ///< First tile of fire station.
+    FIRESTATION    = 765, ///< 'Center tile' of fire station.
+    // 769 last tile fire station.
+
     POLICESTBASE   = 770,
     // tile 771 -- 773 ?
     POLICESTATION  = 774,
     // tile 775 -- 778 ?
-    STADIUMBASE    = 779,
-    // tile 780 -- 783 ?
-    STADIUM        = 784,
+
+    // Stadium (4x4).
+    STADIUMBASE    = 779, ///< First tile stadium.
+    STADIUM        = 784, ///< 'Center tile' stadium.
+    // Last tile stadium 794.
+
     // tile 785 -- 799 ?
     FULLSTADIUM    = 800,
     // tile 801 -- 810 ?
-    NUCLEARBASE    = 811,
-    // tile 812 -- 815 ?
-    NUCLEAR        = 816, ///< Nuclear power plant
-    // tile 817 -- 825 ?
-    LASTZONE       = 826,
+
+    // Nuclear power plant (4x4).
+    NUCLEARBASE    = 811, ///< First tile nuclear power plant.
+    NUCLEAR        = 816, ///< 'Center' tile nuclear power plant.
+    LASTZONE       = 826, ///< Also last tile nuclear power plant.
+
     LIGHTNINGBOLT  = 827,
     HBRDG0         = 828,
     HBRDG1         = 829,
@@ -635,14 +640,19 @@ enum MapTileCharacters {
     // tile 868 -- 882 ?
     TINYEXPLAST    = 883,
     // tile 884 -- 915 ?
-    COALSMOKE1     = 916,
-    // tile 917 -- 919 ?
-    COALSMOKE2     = 920,
-    // tile 921 -- 923 ?
-    COALSMOKE3     = 924,
-    // tile 925 -- 927 ?
-    COALSMOKE4     = 928,
-    // tile 929 -- 931 ?
+
+    COALSMOKE1     = 916, ///< Chimney animation at coal power plant (2, 0).
+    ///< 919 last animation tile for chimney at coal power plant (2, 0).
+
+    COALSMOKE2     = 920, ///< Chimney animation at coal power plant (3, 0).
+    ///< 923 last animation tile for chimney at coal power plant (3, 0).
+
+    COALSMOKE3     = 924, ///< Chimney animation at coal power plant (2, 1).
+    ///< 927 last animation tile for chimney at coal power plant (2, 1).
+
+    COALSMOKE4     = 928, ///< Chimney animation at coal power plant (3, 1).
+    ///< 931 last animation tile for chimney at coal power plant (3, 1).
+
     FOOTBALLGAME1  = 932,
     // tile 933 -- 939 ?
     FOOTBALLGAME2  = 940,
@@ -2745,9 +2755,14 @@ private:
 
     short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
+    void putBuilding(int leftX, int topY, int sizeX, int sizeY,
+                    unsigned short baseTile, bool aniFlag = false);
+
+    int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
+
     int check3x3(short mapH, short mapV, short base, short tool);
 
-    short check4x4(short mapH, short mapV, short base, short aniFlag, short tool);
+    short check4x4(short mapH, short mapV, short base, bool aniFlag, short tool);
 
     short check6x6(short mapH, short mapV, short base, short tool);
 
