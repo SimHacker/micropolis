@@ -333,49 +333,33 @@ short Micropolis::checkSize(short tileValue)
 
 /**
  * Check and connect a new zone around the border.
- * @param xMap X coordinate of top-left tile.
- * @param yMap Y coordinate of top-left tile.
- * @param size Square size of the new zone.
+ * @param xMap  X coordinate of top-left tile.
+ * @param yMap  Y coordinate of top-left tile.
+ * @param sizeX Horizontal size of the new zone.
+ * @param sizeY Vertical size of the new zone.
  */
-void Micropolis::checkBorder(short xMap, short yMap, int size)
+void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY)
 {
-    short xPos, yPos;
     short cnt;
 
-    xPos = xMap;
-    yPos = yMap - 1;
-
-    for (cnt = 0; cnt < size; cnt++) {
-        /* this will do the upper bordering row */
-        connectTile(xPos, yPos, 0);
-        xPos++;
+    /* this will do the upper bordering row */
+    for (cnt = 0; cnt < sizeX; cnt++) {
+        connectTile(xMap + cnt, yMap - 1, 0);
     }
 
-    xPos = xMap - 1;
-    yPos = yMap;
-
-    for (cnt = 0; cnt < size; cnt++) {
-        /* this will do the left bordering row */
-        connectTile(xPos, yPos, 0);
-        yPos++;
+    /* this will do the left bordering row */
+    for (cnt = 0; cnt < sizeY; cnt++) {
+        connectTile(xMap - 1, yMap + cnt, 0);
     }
 
-    xPos = xMap;
-    yPos = yMap + size;
-
-    for (cnt = 0; cnt < size; cnt++) {
-        /* this will do the bottom bordering row */
-        connectTile(xPos, yPos, 0);
-        xPos++;
+    /* this will do the bottom bordering row */
+    for (cnt = 0; cnt < sizeX; cnt++) {
+        connectTile(xMap + cnt, yMap + sizeY, 0);
     }
 
-    xPos = xMap + size;
-    yPos = yMap;
-
-    for (cnt = 0; cnt < size; cnt++) {
-        /* this will do the right bordering row */
-        connectTile(xPos, yPos, 0);
-        yPos++;
+    /* this will do the right bordering row */
+    for (cnt = 0; cnt < sizeY; cnt++) {
+        connectTile(xMap + sizeX, yMap + cnt, 0);
     }
 }
 
@@ -471,57 +455,24 @@ int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
 
 
 /**
- * Place a 3x3 building.
- * @param mapH Horizontal position of the 'center' tile in the world.
- * @param mapV Vertical position of the 'center' tile in the world.
- * @param base Tile number for the top-left position.
- * @param tool Identification of the tool used.
- * @return Build result. -2=no money, -1=cannot build here, 1=ok
- */
-int Micropolis::check3x3(short mapH, short mapV, short base, short tool)
-{
-    mapH--; mapV--; // Move position to top-left
-
-    int result = checkBuildingSite(mapH, mapV, 3, 3);
-    if (result < 0) {
-        return -1;
-    }
-    assert(result == 0 || this->autoBulldoze);
-
-    int cost = result + gCostOf[tool];
-    /// @todo Multiply survey result with bulldoze cost
-    ///       (or better, ask bulldoze tool).
-
-    if (totalFunds - cost < 0) return -2;
-
-    /* take care of the money situtation here */
-    spend(cost);
-    updateFunds();
-
-    putBuilding(mapH, mapV, 3, 3, base);
-
-    checkBorder(mapH, mapV, 3);
-
-    return 1;
-}
-
-/* 4x4 */
-
-/**
- * Place a 4x4 building.
+ * Build a building.
  * @param mapH    Horizontal position of the 'center' tile in the world.
  * @param mapV    Vertical position of the 'center' tile in the world.
+ * @param sizeX   Horizontal size of the building.
+ * @param sizeY   Vertical size of the building.
  * @param base    Tile number for the top-left position.
- * @param aniFlag Set animation flag at relative position (1, 2)
  * @param tool    Identification of the tool used.
+ * @param aniFlag Set animation flag at relative position (1, 2)
  * @return Build result. -2=no money, -1=cannot build here, 1=ok
  */
-short Micropolis::check4x4(short mapH, short mapV,
-                            short base, bool aniFlag, short tool)
+int Micropolis::buildBuilding(int mapH, int mapV,
+                                int sizeX, int sizeY,
+                                unsigned short base,
+                                short tool, bool aniFlag)
 {
     mapH--; mapV--; // Move position to top-left
 
-    int result = checkBuildingSite(mapH, mapV, 4, 4);
+    int result = checkBuildingSite(mapH, mapV, sizeX, sizeY);
     if (result < 0) {
         return -1;
     }
@@ -537,45 +488,9 @@ short Micropolis::check4x4(short mapH, short mapV,
     spend(cost);
     updateFunds();
 
-    putBuilding(mapH, mapV, 4, 4, base, aniFlag);
+    putBuilding(mapH, mapV, sizeX, sizeY, base, aniFlag);
 
-    checkBorder(mapH, mapV, 4);
-
-    return 1;
-}
-
-
-/**
- * Place a 6x6 building.
- * @param mapH Horizontal position of the 'center' tile in the world.
- * @param mapV Vertical position of the 'center' tile in the world.
- * @param base Tile number for the top-left position.
- * @param tool Identification of the tool used.
- * @return Build result. -2=no money, -1=cannot build here, 1=ok
- */
-short Micropolis::check6x6(short mapH, short mapV, short base, short tool)
-{
-    mapH--; mapV--; // Move position to top-left
-
-    int result = checkBuildingSite(mapH, mapV, 6, 6);
-    if (result < 0) {
-        return -1;
-    }
-    assert(result == 0 || this->autoBulldoze);
-
-    int cost = result + gCostOf[tool];
-    /// @todo Multiply survey result with bulldoze cost
-    ///       (or better, ask bulldoze tool).
-
-    if (totalFunds - cost < 0) return -2;
-
-    /* take care of the money situtation here */
-    spend(cost);
-    updateFunds();
-
-    putBuilding(mapH, mapV, 6, 6, base);
-
-    checkBorder(mapH, mapV, 6);
+    checkBorder(mapH, mapV, sizeX, sizeY);
 
     return 1;
 }
@@ -906,7 +821,6 @@ int Micropolis::bulldozerTool(short x, short y)
 }
 
 
-/** @todo Generalize ::testBounds for different upper bounds */
 int Micropolis::roadTool(short x, short y)
 {
     int result;
@@ -986,11 +900,7 @@ int Micropolis::residentialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check3x3(x, y, RESBASE, TOOL_RESIDENTIAL);
+    result = buildBuilding(x, y, 3, 3, RESBASE, TOOL_RESIDENTIAL, false);
 
     if (result == 1) {
         didTool("Res", x, y);
@@ -1004,11 +914,7 @@ int Micropolis::commercialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check3x3(x, y, COMBASE, TOOL_COMMERCIAL);
+    result = buildBuilding(x, y, 3, 3, COMBASE, TOOL_COMMERCIAL, false);
 
     if (result == 1) {
         didTool("Com", x, y);
@@ -1022,11 +928,7 @@ int Micropolis::industrialTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check3x3(x, y, INDBASE, TOOL_INDUSTRIAL);
+    result = buildBuilding(x, y, 3, 3, INDBASE, TOOL_INDUSTRIAL, false);
 
     if (result == 1) {
         didTool("Ind", x, y);
@@ -1040,11 +942,7 @@ int Micropolis::policeStationTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check3x3(x, y, POLICESTBASE, TOOL_POLICESTATION);
+    result = buildBuilding(x, y, 3, 3, POLICESTBASE, TOOL_POLICESTATION, false);
 
     if (result == 1) {
         didTool("Pol", x, y);
@@ -1058,11 +956,7 @@ int Micropolis::fireStationTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check3x3(x, y, FIRESTBASE, TOOL_FIRESTATION);
+    result = buildBuilding(x, y, 3, 3, FIRESTBASE, TOOL_FIRESTATION, false);
 
     if (result == 1) {
         didTool("Fire", x, y);
@@ -1076,11 +970,7 @@ int Micropolis::stadiumTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check4x4(x, y, STADIUMBASE, 0, TOOL_STADIUM);
+    result = buildBuilding(x, y, 4, 4, STADIUMBASE, TOOL_STADIUM, false);
 
     if (result == 1) {
         didTool("Stad", x, y);
@@ -1094,12 +984,8 @@ int Micropolis::coalPowerTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    // TODO: animation flag should be false (I think)
-    result = check4x4(x, y, COALBASE, 1, TOOL_COALPOWER);
+    // XXX Modified animation flag
+    result = buildBuilding(x, y, 4, 4, COALBASE, TOOL_COALPOWER, false);
 
     if (result == 1) {
         didTool("Coal", x, y);
@@ -1113,11 +999,7 @@ int Micropolis::nuclearPowerTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check4x4(x, y, NUCLEARBASE, 1, TOOL_NUCLEARPOWER);
+    result = buildBuilding(x, y, 4, 4, NUCLEARBASE, TOOL_NUCLEARPOWER, true);
 
     if (result == 1) {
         didTool("Nuc", x, y);
@@ -1131,11 +1013,7 @@ int Micropolis::seaportTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check4x4(x, y, PORTBASE, 0, TOOL_SEAPORT);
+    result = buildBuilding(x, y, 4, 4, PORTBASE, TOOL_SEAPORT, false);
 
     if (result == 1) {
         didTool("Seap", x, y);
@@ -1149,11 +1027,7 @@ int Micropolis::airportTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
-        return -1;
-    }
-
-    result = check6x6(x, y, AIRPORTBASE, TOOL_AIRPORT);
+    result = buildBuilding(x, y, 6, 6, AIRPORTBASE, TOOL_AIRPORT, false);
 
     if (result == 1) {
         didTool("Airp", x, y);
@@ -1171,8 +1045,7 @@ int Micropolis::networkTool(short x, short y)
         return -1;
     }
 
-    result =
-        putDownNetwork(x, y);
+    result = putDownNetwork(x, y);
 
     if (result == 1) {
         didTool("Net", x, y);

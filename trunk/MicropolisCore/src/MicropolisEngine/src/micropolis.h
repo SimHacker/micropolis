@@ -2760,11 +2760,8 @@ private:
 
     int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
 
-    int check3x3(short mapH, short mapV, short base, short tool);
-
-    short check4x4(short mapH, short mapV, short base, bool aniFlag, short tool);
-
-    short check6x6(short mapH, short mapV, short base, short tool);
+    int buildBuilding(int mapH, int mapV, int sizeX, int sizeY,
+                    unsigned short base, short tool, bool aniFlag);
 
     int getDensityStr(short catNo, short mapH, short mapV);
 
@@ -2772,7 +2769,7 @@ private:
 
     short checkSize(short tileValue);
 
-    void checkBorder(short xMap, short yMap, int size);
+    void checkBorder(short xMap, short yMap, int sizeX, int sizeY);
 
     void putRubble(int x, int y, int size);
 
