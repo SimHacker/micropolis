@@ -74,11 +74,11 @@
 
 
 static const short gCostOf[] = {
-     100,    100,    100,    500,
-     500,      0,      5,      1,
-      20,     10,   5000,     10,
-    3000,   3000,   5000,  10000,
-     100,      0,
+     100,    100,    100,    500, /* res, com, ind, fire */
+     500,      0,      5,      1, /* police, query, wire, bulldozer */
+      20,     10,   5000,     10, /* rail, road, stadium, park */
+    3000,   3000,   5000,  10000, /* seaport, coal, nuclear, airport */
+     100,      0,                 /* network */
 };
 
 
@@ -379,67 +379,118 @@ void Micropolis::checkBorder(short xMap, short yMap, int size)
     }
 }
 
-
-/* 3x3 */
-
-int Micropolis::check3x3(
-    short mapH, short mapV,
-    short base, short tool)
+/**
+ * Put down a building, starting at (\a leftX, \a topY) with size
+ * (\a sizeX, \a sizeY).
+ * @param leftX    Position of left column of tiles of the building.
+ * @param topY     Position of top row of tiles of the building.
+ * @param sizeX    Horizontal size of the building.
+ * @param sizeY    Vertical size of the building.
+ * @param baseTile Tile value to use at the top-left position. Tiles are laid
+ *                 in column major mode.
+ * @param aniFlag  Set animation flag at relative position (1, 2)
+ *
+ * @pre All tiles are within world boundaries.
+ *
+ * @todo We should ask the buildings themselves how they should be drawn.
+ */
+void Micropolis::putBuilding(int leftX, int topY, int sizeX, int sizeY,
+                            unsigned short baseTile, bool aniFlag)
 {
-    short rowNum, columnNum;
-    short holdMapH, holdMapV;
-    short xPos, yPos;
-    short cost = 0;
-    short tileValue;
-    bool flag;
+    for (int dy = 0; dy < sizeY; dy++) {
+        int posY = topY + dy;
 
-    mapH--; mapV--;
+        for (int dx = 0; dx < sizeX; dx++) {
+            int posX = leftX + dx;
 
-    // Tool partly sticking outside world boundaries?
-    if (mapH < 0 || mapH > WORLD_W - 3 || mapV < 0 || mapV > WORLD_H - 3) {
+            unsigned short tileValue = baseTile | BNCNBIT;
+            if (dx == 1) {
+                if (dy == 1) {
+                    tileValue = baseTile | BNCNBIT | ZONEBIT;
+                } else if (dy == 2 && aniFlag) {
+                    tileValue = baseTile | BNCNBIT | ANIMBIT;
+                }
+            }
+            this->map[posX][posY] = tileValue;
+
+            baseTile++;
+        }
+    }
+}
+
+/**
+ * Check the site where a building is about to be put down.
+ * @param leftX    Position of left column of tiles of the building.
+ * @param topY     Position of top row of tiles of the building.
+ * @param sizeX    Horizontal size of the building.
+ * @param sizeY    Vertical size of the building.
+ * @return: Suitability of the site.
+ *          <0: not-buildable,
+ *          >=0: number of tiles to bulldoze before construction can start.
+ *
+ * @note With Micropolis::autoBulldoze off, the function never returns
+ *       a non-zero number of bulldozable tiles.
+ */
+int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
+{
+    // Check that the entire site is on the map
+    if (leftX < 0 || leftX + sizeX > WORLD_W) {
+        return -1;
+    }
+    if (topY < 0 || topY + sizeY > WORLD_H) {
         return -1;
     }
 
-    xPos = holdMapH = mapH;
-    yPos = holdMapV = mapV;
+    // Check whether the tiles are clear
+    int numToDoze = 0; // Number of tiles that need bull-dozing
+    for (int dy = 0; dy < sizeY; dy++) {
+        int posY = topY + dy;
 
-    flag = true;
+        for (int dx = 0; dx < sizeX; dx++) {
+            int posX = leftX + dx;
 
-    for (rowNum = 0; rowNum <= 2; rowNum++) {
+            unsigned short tileValue = map[posX][posY] & LOMASK;
 
-        mapH = holdMapH;
-
-        for (columnNum = 0; columnNum <= 2; columnNum++) {
-
-            tileValue = map[mapH++][mapV] & LOMASK;
-
-            if (autoBulldoze) {
-
-                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-                if (tileValue != DIRT) {
-
-                    if (tally(tileValue)) {
-                        cost++;
-                    } else {
-                        flag = false;
-                    }
-
-                }
-
-            } else {
-
-                /* check and see if the tile is clear or not  */
-                if (tileValue != DIRT) flag = false;
-
+            if (tileValue == DIRT) { // DIRT tile is buidable
+                continue;
             }
-        }
 
-        mapV++;
+            if (!this->autoBulldoze) {
+                return -1; // No DIRT and no bull-dozer => not buildable
+            }
+            if (!this->tally(tileValue)) {
+                return -1; // tilevalue cannot be auto-bulldozed
+            }
+
+            numToDoze++;
+        }
     }
 
-    if (!flag) return -1;
+    return numToDoze;
+}
 
-    cost += (short)gCostOf[tool];
+
+/**
+ * Place a 3x3 building.
+ * @param mapH Horizontal position of the 'center' tile in the world.
+ * @param mapV Vertical position of the 'center' tile in the world.
+ * @param base Tile number for the top-left position.
+ * @param tool Identification of the tool used.
+ * @return Build result. -2=no money, -1=cannot build here, 1=ok
+ */
+int Micropolis::check3x3(short mapH, short mapV, short base, short tool)
+{
+    mapH--; mapV--; // Move position to top-left
+
+    int result = checkBuildingSite(mapH, mapV, 3, 3);
+    if (result < 0) {
+        return -1;
+    }
+    assert(result == 0 || this->autoBulldoze);
+
+    int cost = result + gCostOf[tool];
+    /// @todo Multiply survey result with bulldoze cost
+    ///       (or better, ask bulldoze tool).
 
     if (totalFunds - cost < 0) return -2;
 
@@ -447,94 +498,38 @@ int Micropolis::check3x3(
     spend(cost);
     updateFunds();
 
-    mapV = holdMapV;
+    putBuilding(mapH, mapV, 3, 3, base);
 
-    for (rowNum = 0; rowNum <= 2; rowNum++) {
-
-      mapH = holdMapH;
-
-      for (columnNum = 0; columnNum <= 2; columnNum++) {
-
-        if (columnNum == 1 && rowNum == 1) {
-          map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-        } else {
-          map[mapH++][mapV] = base + BNCNBIT;
-        }
-
-        base++;
-      }
-
-      mapV++;
-    }
-
-    checkBorder(xPos, yPos, 3);
+    checkBorder(mapH, mapV, 3);
 
     return 1;
 }
-
 
 /* 4x4 */
 
-short Micropolis::check4x4(
-    short mapH, short mapV,
-    short base, short aniFlag, short tool)
+/**
+ * Place a 4x4 building.
+ * @param mapH    Horizontal position of the 'center' tile in the world.
+ * @param mapV    Vertical position of the 'center' tile in the world.
+ * @param base    Tile number for the top-left position.
+ * @param aniFlag Set animation flag at relative position (1, 2)
+ * @param tool    Identification of the tool used.
+ * @return Build result. -2=no money, -1=cannot build here, 1=ok
+ */
+short Micropolis::check4x4(short mapH, short mapV,
+                            short base, bool aniFlag, short tool)
 {
-    short rowNum, columnNum;
-    short h, v;
-    short holdMapH;
-    short xMap, yMap;
-    short tileValue;
-    bool flag;
-    short cost = 0;
+    mapH--; mapV--; // Move position to top-left
 
-    mapH--;
-    mapV--;
-
-    if (mapH < 0 || mapH > WORLD_W - 4 || mapV < 0 || mapV > WORLD_H - 4) {
+    int result = checkBuildingSite(mapH, mapV, 4, 4);
+    if (result < 0) {
         return -1;
     }
+    assert(result == 0 || this->autoBulldoze);
 
-    h = xMap = holdMapH = mapH;
-    v = yMap = mapV;
-
-    flag = true;
-
-    for (rowNum = 0; rowNum <= 3; rowNum++) {
-
-        mapH = holdMapH;
-
-        for (columnNum = 0; columnNum <= 3; columnNum++) {
-
-            tileValue = map[mapH++][mapV] & LOMASK;
-
-            if (autoBulldoze) {
-
-                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-                if (tileValue != DIRT) {
-
-                    if (tally(tileValue)) {
-                        cost++;
-                    } else {
-                        flag = false;
-                    }
-
-                }
-
-            } else {
-
-                /* check and see if the tile is clear or not  */
-                if (tileValue != DIRT) flag = false;
-
-            }
-
-        }
-
-        mapV++;
-    }
-
-    if (!flag) return -1;
-
-    cost += (short)gCostOf[tool];
+    int cost = result + gCostOf[tool];
+    /// @todo Multiply survey result with bulldoze cost
+    ///       (or better, ask bulldoze tool).
 
     if (totalFunds - cost < 0) return -2;
 
@@ -542,95 +537,35 @@ short Micropolis::check4x4(
     spend(cost);
     updateFunds();
 
-    mapV = v;
-    holdMapH = h;
+    putBuilding(mapH, mapV, 4, 4, base, aniFlag);
 
-    for (rowNum = 0; rowNum <= 3; rowNum++) {
-
-        mapH = holdMapH;
-
-        for (columnNum = 0; columnNum <= 3; columnNum++) {
-
-            if (columnNum == 1 && rowNum == 1) {
-                map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-            } else if (columnNum == 1 && rowNum == 2 && aniFlag) {
-                map[mapH++][mapV] = base + BNCNBIT + ANIMBIT;
-            } else {
-                map[mapH++][mapV] = base + BNCNBIT;
-            }
-
-            base++;
-        }
-
-        mapV++;
-    }
-
-    checkBorder(xMap, yMap, 4);
+    checkBorder(mapH, mapV, 4);
 
     return 1;
 }
 
 
-/* 6x6 */
-
-short Micropolis::check6x6(
-  short mapH, short mapV,
-  short base, short tool)
+/**
+ * Place a 6x6 building.
+ * @param mapH Horizontal position of the 'center' tile in the world.
+ * @param mapV Vertical position of the 'center' tile in the world.
+ * @param base Tile number for the top-left position.
+ * @param tool Identification of the tool used.
+ * @return Build result. -2=no money, -1=cannot build here, 1=ok
+ */
+short Micropolis::check6x6(short mapH, short mapV, short base, short tool)
 {
-    short rowNum, columnNum;
-    short h, v;
-    short holdMapH;
-    short xMap, yMap;
-    bool flag;
-    short tileValue;
-    short cost = 0;
+    mapH--; mapV--; // Move position to top-left
 
-    mapH--; mapV--;
-    if (mapH < 0 || mapH > WORLD_W - 6 || mapV < 0 || mapV > WORLD_H - 6) {
+    int result = checkBuildingSite(mapH, mapV, 6, 6);
+    if (result < 0) {
         return -1;
     }
+    assert(result == 0 || this->autoBulldoze);
 
-    h = xMap = holdMapH = mapH;
-    v = yMap = mapV;
-
-    flag = true;
-
-    for (rowNum = 0; rowNum <= 5; rowNum++) {
-
-        mapH = holdMapH;
-
-        for (columnNum = 0; columnNum <= 5; columnNum++) {
-
-            tileValue = map[mapH++][mapV] & LOMASK;
-
-            if (autoBulldoze) {
-
-                /* if autoDoze is enabled, add up the cost of bulldozed tiles */
-                if (tileValue != DIRT) {
-
-                    if (tally(tileValue)) {
-                        cost++;
-                    } else {
-                        flag = false;
-                    }
-
-                }
-
-            } else {
-
-              /* check and see if the tile is clear or not  */
-              if (tileValue != DIRT) flag = false;
-
-            }
-
-        }
-
-        mapV++;
-    }
-
-    if (!flag) return -1;
-
-    cost += (short)gCostOf[tool];
+    int cost = result + gCostOf[tool];
+    /// @todo Multiply survey result with bulldoze cost
+    ///       (or better, ask bulldoze tool).
 
     if (totalFunds - cost < 0) return -2;
 
@@ -638,28 +573,9 @@ short Micropolis::check6x6(
     spend(cost);
     updateFunds();
 
-    mapV = v;
-    holdMapH = h;
+    putBuilding(mapH, mapV, 6, 6, base);
 
-    for (rowNum = 0; rowNum <= 5; rowNum++) {
-
-        mapH = holdMapH;
-
-        for (columnNum = 0; columnNum <= 5; columnNum++) {
-
-            if (columnNum == 1 && rowNum == 1) {
-                map[mapH++][mapV] = base + BNCNBIT + ZONEBIT;
-            } else {
-                map[mapH++][mapV] = base + BNCNBIT;
-            }
-
-            base++;
-        }
-
-        mapV++;
-    }
-
-    checkBorder(xMap, yMap, 6);
+    checkBorder(mapH, mapV, 6);
 
     return 1;
 }
@@ -1182,6 +1098,7 @@ int Micropolis::coalPowerTool(short x, short y)
         return -1;
     }
 
+    // TODO: animation flag should be false (I think)
     result = check4x4(x, y, COALBASE, 1, TOOL_COALPOWER);
 
     if (result == 1) {
