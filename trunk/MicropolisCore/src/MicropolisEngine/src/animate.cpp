@@ -62,10 +62,6 @@
 
 /** @file animate.cpp
  * Animate Tiles, for Unix Micropolis.
- *
- * @todo Generate the table below from the animation sequences file
- *       doc/AnimationSequences.txt and the doc/genAnimationTable.py
- *       program
  */
 
 ////////////////////////////////////////////////////////////////////////
@@ -77,7 +73,15 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-
+/**
+ * Tile animation table. For each tile, it states the next tile to display.
+ *
+ * @bug Tile 620 points to 852. That should be tile 621.
+ *
+ * @todo Generate the table below from the animation sequences file
+ *       doc/AnimationSequences.txt and the doc/genAnimationTable.py
+ *       program
+ */
 static short aniTile[1024] = {
     0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
     16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
