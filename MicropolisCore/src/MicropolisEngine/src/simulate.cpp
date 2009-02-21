@@ -313,13 +313,7 @@ void Micropolis::doNilPower()
                 curMapX = x;
                 curMapY = y;
                 curNum = z;
-                /// @bug: Should set Micropolis::curTile to
-                ///       (Micropolis::curNum & #LOMASK), since it is used by
-                ///       Micropolis::setZonePower to distinguish nuclear and
-                ///       coal power plants. Better yet, pass all parameters
-                ///       into Micropolis::setZonePower and rewrite it not to
-                ///       use globals.
-                setZonePower();
+                setZonePower(Position(x, y));
             }
         }
     }
@@ -956,7 +950,8 @@ void Micropolis::mapScan(int x1, int x2)
                     }
 
                     if (newPower && (curNum & CONDBIT)) {
-                        setZonePower(); // Set PWRBIT from powerGridMap
+                        // Copy PWRBIT from powerGridMap
+                        setZonePower(Position(curMapX, curMapY));
                     }
 
                     if ((curTile >= ROADBASE) &&

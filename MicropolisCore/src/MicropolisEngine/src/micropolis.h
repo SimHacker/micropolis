@@ -2979,7 +2979,7 @@ private:
 
     short doFreePop();
 
-    bool setZonePower();
+    bool setZonePower(const Position& pos);
 
     void buildHouse(int value);
 
