@@ -123,7 +123,7 @@ void Micropolis::doHospitalChurch()
 
         if (needHospital == -1) { // Too many hospitals
             if (!getRandom(20)) {
-                zonePlop(RESBASE); // Remove hospital
+                zonePlop(Position(curMapX, curMapY), RESBASE); // Remove hospital
             }
         }
 
@@ -139,7 +139,7 @@ void Micropolis::doHospitalChurch()
 
         if (needChurch == -1) { // Too many churches
             if (!getRandom(20)) {
-                zonePlop(RESBASE); // Remove church
+                zonePlop(Position(curMapX, curMapY), RESBASE); // Remove church
             }
         }
 
@@ -208,29 +208,30 @@ void Micropolis::setSmoke(int ZonePower)
 void Micropolis::makeHospital()
 {
     if (needHospital > 0) {
-        zonePlop(HOSPITAL - 4);
+        zonePlop(Position(curMapX, curMapY), HOSPITAL - 4);
         needHospital = 0;
         return;
     }
 
     if (needChurch > 0) {
-        zonePlop(CHURCH - 4);
+        zonePlop(Position(curMapX, curMapY), CHURCH - 4);
         needChurch = 0;
         return;
     }
 }
 
 /**
- * Compute land value at (#curMapX, #curMapY), taking pollution into account.
+ * Compute land value at \a pos, taking pollution into account.
+ * @param pos Position of interest.
  * @return Indication of land-value adjusted for pollution
  *         (\c 0 => low value, \c 3 => high value)
  */
-short Micropolis::getLandPollutionValue()
+short Micropolis::getLandPollutionValue(const Position &pos)
 {
     short landVal;
 
-    landVal =  landValueMap.worldGet(curMapX, curMapY);
-    landVal -= pollutionDensityMap.worldGet(curMapX, curMapY);
+    landVal =  landValueMap.worldGet(pos.posX, pos.posY);
+    landVal -= pollutionDensityMap.worldGet(pos.posX, pos.posY);
 
     if (landVal < 30) {
         return 0;
@@ -258,19 +259,20 @@ void Micropolis::incRateOfGrowth(int amount)
 
 
 /**
- * Put down a 3x3 zone around the center tile at (#curMapX, #curMapY).
+ * Put down a 3x3 zone around the center tile at \a pos..
  * @param base Tile number of the top-left tile. @see MapTileCharacters
  * @return Build was a success.
+ * @todo This function allows partial on-map construction. Is that intentional?
  */
-bool Micropolis::zonePlop(int base)
+bool Micropolis::zonePlop(const Position &pos, int base)
 {
     short z, x;
     static const short Zx[9] = {-1, 0, 1,-1, 0, 1,-1, 0, 1};
     static const short Zy[9] = {-1,-1,-1, 0, 0, 0, 1, 1, 1};
 
     for (z = 0; z < 9; z++) {             /* check for fire  */
-        int xx = curMapX + Zx[z];
-        int yy = curMapY + Zy[z];
+        int xx = pos.posX + Zx[z];
+        int yy = pos.posY + Zy[z];
 
         if (testBounds(xx, yy)) {
             x = map[xx][yy] & LOMASK;
@@ -284,8 +286,8 @@ bool Micropolis::zonePlop(int base)
     }
 
     for (z = 0; z < 9; z++) {
-        int xx = curMapX + Zx[z];
-        int yy = curMapY + Zy[z];
+        int xx = pos.posX + Zx[z];
+        int yy = pos.posY + Zy[z];
 
         if (testBounds(xx, yy)) {
             map[xx][yy] = base + BNCNBIT;
@@ -294,9 +296,9 @@ bool Micropolis::zonePlop(int base)
         base++;
     }
 
-    curNum = map[curMapX][curMapY];
-    setZonePower(Position(curMapX, curMapY));
-    map[curMapX][curMapY] |= ZONEBIT + BULLBIT;
+    curNum = map[pos.posX][pos.posY];
+    setZonePower(pos);
+    map[pos.posX][pos.posY] |= ZONEBIT + BULLBIT;
 
     return true;
 }
@@ -313,8 +315,8 @@ short Micropolis::doFreePop(const Position &pos)
     for (short x = pos.posX - 1; x <= pos.posX + 1; x++) {
         for (short y = pos.posY - 1; y <= pos.posY + 1; y++) {
             if (x >= 0 && x < WORLD_W && y >= 0 && y < WORLD_H) {
-                short loc = map[x][y] & LOMASK;
-                if (loc >= LHTHR && loc <= HHTHR) {
+                MapTile tile = map[x][y] & LOMASK;
+                if (tile >= LHTHR && tile <= HHTHR) {
                     count++;
                 }
             }
@@ -448,7 +450,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
     }
 
     if (TrfGood == -1) {
-        value = getLandPollutionValue();
+        value = getLandPollutionValue(Position(curMapX, curMapY));
         doResOut(tpop, value);
         return;
     }
@@ -470,7 +472,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
                 return;
             }
 
-            value = getLandPollutionValue();
+            value = getLandPollutionValue(Position(curMapX, curMapY));
             doResIn(tpop, value);
 
             return;
@@ -478,7 +480,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
 
         if (zscore < 350 &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue();
+            value = getLandPollutionValue(Position(curMapX, curMapY));
             doResOut(tpop, value);
         }
 
@@ -595,7 +597,7 @@ void Micropolis::resPlop(int den, int value)
     short base;
 
     base = ((value * 4 + den) * 9) + RZB - 4;
-    zonePlop(base);
+    zonePlop(Position(curMapX, curMapY), base);
 }
 
 
@@ -639,7 +641,7 @@ void Micropolis::doCommercial(int ZonePwrFlg)
     }
 
     if (TrfGood == -1) {
-        value = getLandPollutionValue();
+        value = getLandPollutionValue(Position(curMapX, curMapY));
         doComOut(tpop, value);
         return;
     }
@@ -656,14 +658,14 @@ void Micropolis::doCommercial(int ZonePwrFlg)
         if (TrfGood &&
             (zscore > -350) &&
             (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue();
+            value = getLandPollutionValue(Position(curMapX, curMapY));
             doComIn(tpop, value);
             return;
         }
 
         if ((zscore < 350) &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue();
+            value = getLandPollutionValue(Position(curMapX, curMapY));
             doComOut(tpop, value);
         }
 
@@ -699,7 +701,7 @@ void Micropolis::doComOut(int pop, int value)
     }
 
     if (pop == 1) {
-        zonePlop(COMBASE);
+        zonePlop(Position(curMapX, curMapY), COMBASE);
         incRateOfGrowth(-8);
     }
 }
@@ -721,7 +723,7 @@ void Micropolis::comPlop(int Den, int Value)
     short base;
 
     base = (((Value * 5) + Den) * 9) + CZB - 4;
-    zonePlop(base);
+    zonePlop(Position(curMapX, curMapY), base);
 }
 
 
@@ -801,7 +803,7 @@ void Micropolis::doIndOut(int pop, int value)
     }
 
     if (pop == 1) {
-        zonePlop(INDCLR - 4);
+        zonePlop(Position(curMapX, curMapY), INDCLR - 4);
         incRateOfGrowth(-8);
     }
 }
@@ -823,7 +825,7 @@ void Micropolis::indPlop(int Den, int Value)
     short base;
 
     base = (((Value * 4) + Den) * 9) + IZB - 4;
-    zonePlop(base);
+    zonePlop(Position(curMapX, curMapY), base);
 }
 
 
