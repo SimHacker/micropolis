@@ -556,34 +556,49 @@ enum MapTileCharacters {
     // tile 437 -- 608 ?
     COMLAST        = 609,
     // tile 610, 611 ?
-    INDBASE        = 612,
-    // tile 613 -- 615 ?
-    INDCLR         = 616,
-    // tile 617 -- 619 ?
-    LASTIND        = 620,
-    IND1           = 621,
-    // tile 622 -- 624 ?
-    IZB            = 625,
-    // tile 626 -- 640 ?
+
+    // Industrial zone tiles.
+    INDBASE        = 612, ///< Top-left tile of empty industrial zone.
+    INDCLR         = 616, ///< Center tile of empty industrial zone.
+    LASTIND        = 620, ///< Last tile of empty industrial zone.
+
+    // Industrial zone population 0, value 0: 621 -- 629
+    IND1           = 621, ///< Top-left tile of first non-empty industry zone.
+    IZB            = 625, ///< Center tile of first non-empty industry zone.
+
+    // Industrial zone population 1, value 0: 630 -- 638
+
+    // Industrial zone population 2, value 0: 639 -- 647
     IND2           = 641,
-    // tile 642, 643 ?
     IND3           = 644,
-    // tile 645 -- 648 ?
+
+    // Industrial zone population 3, value 0: 648 -- 656
     IND4           = 649,
     IND5           = 650,
-    // tile 651 -- 675 ?
+
+    // Industrial zone population 0, value 1: 657 -- 665
+
+    // Industrial zone population 1, value 1: 666 -- 674
+
+    // Industrial zone population 2, value 1: 675 -- 683
     IND6           = 676,
     IND7           = 677,
-    // tile 678 -- 685 ?
+
+    // Industrial zone population 3, value 1: 684 -- 692
     IND8           = 686,
-    // tile 687, 688 ?
     IND9           = 689,
-    // tile 690 -- 692 ?
-    PORTBASE       = 693,
-    // tile 694 -- 697 ?
-    PORT           = 698,
-    // tile 699 -- 707 ?
-    LASTPORT       = 708,
+
+
+
+
+
+
+
+    // Seaport
+    PORTBASE       = 693, ///< Top-left tile of the seaport.
+    PORT           = 698, ///< Center tile of the seaport.
+    LASTPORT       = 708, ///< Last tile of the seaport.
+
     AIRPORTBASE    = 709,
     // tile 710 ?
     RADAR          = 711,
@@ -2976,13 +2991,13 @@ private:
 
     void doHospitalChurch();
 
-    void setSmoke(int ZonePower);
+    void setSmoke(const Position &pos, int zonePower);
 
     void makeHospital();
 
     short getLandPollutionValue(const Position &pos);
 
-    void incRateOfGrowth(int amount);
+    void incRateOfGrowth(const Position &pos, int amount);
 
     bool zonePlop(const Position &pos, int base);
 
@@ -3020,13 +3035,13 @@ private:
 
     void doIndustrial(int ZonePwrFlg);
 
-    void doIndIn(int pop, int value);
+    void doIndIn(const Position &pos, int pop, int value);
 
-    void doIndOut(int pop, int value);
+    void doIndOut(const Position &pos, int pop, int value);
 
     short getIndZonePop(MapTile tile);
 
-    void indPlop(int Den, int Value);
+    void indPlop(const Position &pos, int den, int value);
 
     short evalInd(int traf);
 
