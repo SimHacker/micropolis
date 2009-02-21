@@ -118,7 +118,7 @@ void Micropolis::doHospitalChurch()
         hospitalPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(HOSPITAL, 3); /*post*/
+            repairZone(Position(curMapX, curMapY), HOSPITAL, 3); /*post*/
         }
 
         if (needHospital == -1) { // Too many hospitals
@@ -134,7 +134,7 @@ void Micropolis::doHospitalChurch()
         churchPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(CHURCH, 3); /*post*/
+            repairZone(Position(curMapX, curMapY), CHURCH, 3); /*post*/
         }
 
         if (needChurch == -1) { // Too many churches
