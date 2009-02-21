@@ -301,16 +301,17 @@ bool Micropolis::zonePlop(int base)
     return true;
 }
 
-/** Count the number of single tile houses in the city */
-short Micropolis::doFreePop()
+/**
+ * Count the number of single tile houses in a residential zone.
+ * @param pos Position of the residential zone.
+ * @return Number of single tile houses.
+ */
+short Micropolis::doFreePop(const Position &pos)
 {
-    short count;
-    short x, y;
+    short count = 0;
 
-    count = 0;
-
-    for (x = curMapX - 1; x <= curMapX + 1; x++) {
-        for (y = curMapY - 1; y <= curMapY + 1; y++) {
+    for (short x = pos.posX - 1; x <= pos.posX + 1; x++) {
+        for (short y = pos.posY - 1; y <= pos.posY + 1; y++) {
             if (x >= 0 && x < WORLD_W && y >= 0 && y < WORLD_H) {
                 short loc = map[x][y] & LOMASK;
                 if (loc >= LHTHR && loc <= HHTHR) {
@@ -331,19 +332,19 @@ short Micropolis::doFreePop()
  */
 bool Micropolis::setZonePower(const Position &pos)
 {
-    unsigned short tileValue = map[pos.posX][pos.posY];
-    unsigned short tile = tileValue & LOMASK;
+    MapValue mapValue = map[pos.posX][pos.posY];
+    MapTile tile = mapValue & LOMASK;
 
     if (tile == NUCLEAR || tile == POWERPLANT) {
-        map[pos.posX][pos.posY] = tileValue | PWRBIT;
+        map[pos.posX][pos.posY] = mapValue | PWRBIT;
         return true;
     }
 
     if (powerGridMap.worldGet(pos.posX, pos.posY)) {
-        map[pos.posX][pos.posY] = tileValue | PWRBIT;
+        map[pos.posX][pos.posY] = mapValue | PWRBIT;
         return true;
     } else {
-        map[pos.posX][pos.posY] = tileValue & (~PWRBIT);
+        map[pos.posX][pos.posY] = mapValue & (~PWRBIT);
         return false;
     }
 }
@@ -432,7 +433,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
     resZonePop++;
 
     if (curTile == FREEZ) {
-        tpop = doFreePop();
+        tpop = doFreePop(Position(curMapX, curMapY));
     } else {
         tpop = getResZonePop(curTile);
     }
@@ -573,13 +574,13 @@ void Micropolis::doResOut(int pop, int value)
  * Return population of a residential zone center tile
  * (RZB, RZB+9, ..., HOSPITAL - 9).
  *
- * @param Ch9 Center tile of a residential zone.
+ * @param mapTile Center tile of a residential zone.
  * @return Population of the residential zone.
  *         (16, 24, 32, 40, 16, ..., 40 )
  */
-short Micropolis::getResZonePop(int Ch9)
+short Micropolis::getResZonePop(MapTile mapTile)
 {
-    short CzDen = ((Ch9 - RZB) / 9) % 4;
+    short CzDen = ((mapTile - RZB) / 9) % 4;
 
     return CzDen * 8 + 16;
 }
@@ -704,17 +705,14 @@ void Micropolis::doComOut(int pop, int value)
 }
 
 
-short Micropolis::getComZonePop(int Ch9)
+short Micropolis::getComZonePop(MapTile tile)
 {
-    short CzDen;
-
-    if (Ch9 == COMCLR) {
+    if (tile == COMCLR) {
         return (0);
     }
 
-    CzDen = (((Ch9 - CZB) / 9) % 5) + 1;
-
-    return (CzDen);
+    short CzDen = (((tile - CZB) / 9) % 5) + 1;
+    return CzDen;
 }
 
 
@@ -809,17 +807,14 @@ void Micropolis::doIndOut(int pop, int value)
 }
 
 
-short Micropolis::getIndZonePop(int Ch9)
+short Micropolis::getIndZonePop(MapTile tile)
 {
-    short CzDen;
-
-    if (Ch9 == INDCLR) {
-        return (0);
+    if (tile == INDCLR) {
+        return 0;
     }
 
-    CzDen = (((Ch9 - IZB) / 9) % 4) + 1;
-
-    return (CzDen);
+    short CzDen = (((tile - IZB) / 9) % 4) + 1;
+    return CzDen;
 }
 
 
