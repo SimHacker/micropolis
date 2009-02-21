@@ -156,7 +156,7 @@ bool Micropolis::testForConductive(Direction tfDir)
     if (moveMapSim(tfDir)) {
         if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
                             && curTile != NUCLEAR && curTile != POWERPLANT) {
-            if (!powerGridMap.getWorld(curMapX, curMapY)) {
+            if (!powerGridMap.worldGet(curMapX, curMapY)) {
                 curMapX = xsave;
                 curMapY = ysave;
                 return true;
@@ -202,7 +202,7 @@ void Micropolis::doPowerScan()
             if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
                 moveMapSim((Direction)ADir);
             }
-            powerGridMap.setWorld(curMapX, curMapY, 1);
+            powerGridMap.worldSet(curMapX, curMapY, 1);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
@@ -222,14 +222,13 @@ void Micropolis::doPowerScan()
 
 /**
  * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
- * @see powerStackPointer, powerStackX, powerStackY
+ * @see powerStackPointer, powerStackXY
  */
 void Micropolis::pushPowerStack()
 {
     if (powerStackPointer < (POWER_STACK_SIZE - 2)) {
         powerStackPointer++;
-        powerStackX[powerStackPointer] = curMapX;
-        powerStackY[powerStackPointer] = curMapY;
+        powerStackXY[powerStackPointer] = Position(curMapX, curMapY);
     }
 }
 
@@ -237,13 +236,13 @@ void Micropolis::pushPowerStack()
 /**
  * Pull a position from the power stack and store it in Micropolis::curMapX and
  * Micropolis::curMapY.
- * @see powerStackPointer, powerStackX, powerStackY
+ * @see powerStackPointer, powerStackXY
  */
 void Micropolis::pullPowerStack()
 {
     if (powerStackPointer > 0)  {
-        curMapX = powerStackX[powerStackPointer];
-        curMapY = powerStackY[powerStackPointer];
+        curMapX = powerStackXY[powerStackPointer].posX;
+        curMapY = powerStackXY[powerStackPointer].posY;
         powerStackPointer--;
     }
 }

@@ -538,10 +538,10 @@ void Micropolis::init()
 
     powerStackPointer = 0;
 
-    // short powerStackX[POWER_STACK_SIZE];
-    // short powerStackY[POWER_STACK_SIZE];
-    memset(powerStackX, 0, sizeof(short) * POWER_STACK_SIZE);
-    memset(powerStackY, 0, sizeof(short) * POWER_STACK_SIZE);
+    // Position powerStackXY[POWER_STACK_SIZE];
+    for (int i = 0; i < POWER_STACK_SIZE; i++) {
+        powerStackXY[i] = Position();
+    }
 
 
     ////////////////////////////////////////////////////////////////////////

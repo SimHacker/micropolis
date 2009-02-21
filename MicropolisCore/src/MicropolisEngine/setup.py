@@ -91,6 +91,7 @@ setup(
             'src/map.cpp',
             'src/message.cpp',
             'src/micropolis.cpp',
+            'src/position.cpp',
             'src/power.cpp',
             'src/random.cpp',
             'src/resource.cpp',
