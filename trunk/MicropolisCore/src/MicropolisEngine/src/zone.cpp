@@ -75,7 +75,8 @@
 
 void Micropolis::doZone()
 {
-    bool ZonePwrFlg = setZonePower(); // Set Power Bit in Map from powerGridMap
+    // Set Power Bit in Map from powerGridMap
+    bool ZonePwrFlg = setZonePower(Position(curMapX, curMapY));
 
     if (ZonePwrFlg) {
         poweredZoneCount++;
@@ -294,12 +295,7 @@ bool Micropolis::zonePlop(int base)
     }
 
     curNum = map[curMapX][curMapY];
-    /// @bug: Should set Micropolis::curTile to (Micropolis::curNum & ::LOMASK),
-    ///       since it is used by Micropolis::setZonePower to distinguish
-    ///       nuclear and coal power plants.
-    ///       Better yet, pass all parameters into Micropolis::setZonePower and
-    ///       rewrite it not to use globals.
-    setZonePower();
+    setZonePower(Position(curMapX, curMapY));
     map[curMapX][curMapY] |= ZONEBIT + BULLBIT;
 
     return true;
@@ -329,22 +325,25 @@ short Micropolis::doFreePop()
 
 
 /**
- * Set #PWRBIT in the map at #curMapX and #curMapY based on the corresponding
- * bit in the #powerGridMap.
+ * Copy the value of #powerGridMap at position \a pos to the map.
+ * @param pos Position to copy.
  * @return Does the tile have power?
  */
-bool Micropolis::setZonePower()
+bool Micropolis::setZonePower(const Position &pos)
 {
-    if (curTile == NUCLEAR || curTile == POWERPLANT) {
-        map[curMapX][curMapY] = curNum | PWRBIT;
+    unsigned short tileValue = map[pos.posX][pos.posY];
+    unsigned short tile = tileValue & LOMASK;
+
+    if (tile == NUCLEAR || tile == POWERPLANT) {
+        map[pos.posX][pos.posY] = tileValue | PWRBIT;
         return true;
     }
 
-    if (powerGridMap.worldGet(curMapX, curMapY)) {
-        map[curMapX][curMapY] = curNum | PWRBIT;
+    if (powerGridMap.worldGet(pos.posX, pos.posY)) {
+        map[pos.posX][pos.posY] = tileValue | PWRBIT;
         return true;
     } else {
-        map[curMapX][curMapY] = curNum & (~PWRBIT);
+        map[pos.posX][pos.posY] = tileValue & (~PWRBIT);
         return false;
     }
 }
