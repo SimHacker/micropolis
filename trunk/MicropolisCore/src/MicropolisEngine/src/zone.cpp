@@ -148,51 +148,52 @@ void Micropolis::doHospitalChurch()
 }
 
 
-#define T 1
-#define F 0
 #define ASCBIT (ANIMBIT | CONDBIT | BURNBIT)
 #define REGBIT (CONDBIT | BURNBIT)
 
-void Micropolis::setSmoke(int ZonePower)
+void Micropolis::setSmoke(const Position &pos, int zonePower)
 {
-    static short AniThis[8] = {    T,    F,    T,    T,    F,    F,    T,    T };
-    static short DX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
-    static short DY1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
+    static bool aniThis[8] = {  true, false, true, true, false, false, true, true };
+    static short dX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
+    static short dY1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
     //static short DX2[8]     = {   -1,    0,    1,    1,    0,    0,    1,    1 };
     //static short DY2[8]     = {   -1,    0,    0,   -1,    0,    0,   -1,    0 };
-    static short AniTabA[8] = {    0,    0,   32,   40,    0,    0,   48,   56 };
-    static short AniTabB[8] = {    0,    0,   36,   44,    0,    0,   52,   60 };
-    static short AniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
-    static short AniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
-    register short z;
+    static short aniTabA[8] = {    0,    0,   32,   40,    0,    0,   48,   56 };
+    static short aniTabB[8] = {    0,    0,   36,   44,    0,    0,   52,   60 };
+    static MapTile aniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
+    static MapTile aniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
 
-    if (curTile < IZB) {
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+    curTile = tile;
+
+    if (tile < IZB) {
         return;
     }
 
-    z = (curTile - IZB) >>3;
+    int z = (tile - IZB) >>3; /// @todo Why div 8? Industry is 9 tiles long!!
     z = z & 7;
 
-    if (AniThis[z]) {
-        int xx = curMapX + DX1[z];
-        int yy = curMapY + DY1[z];
+    if (aniThis[z]) {
+        int xx = pos.posX + dX1[z];
+        int yy = pos.posY + dY1[z];
 
         if (testBounds(xx, yy)) {
 
-            if (ZonePower) {
+            if (zonePower) {
 
                 /// @todo Why do we assign the same map position twice?
-                if ((map[xx][yy] & LOMASK) == AniTabC[z]) {
-                    map[xx][yy] = ASCBIT | (SMOKEBASE + AniTabA[z]);
-                    map[xx][yy] = ASCBIT | (SMOKEBASE + AniTabB[z]);
+                /// @todo Add #SMOKEBASE into aniTabA and aniTabB tables?
+                if ((map[xx][yy] & LOMASK) == aniTabC[z]) {
+                    map[xx][yy] = ASCBIT | (SMOKEBASE + aniTabA[z]);
+                    map[xx][yy] = ASCBIT | (SMOKEBASE + aniTabB[z]);
                 }
 
             } else {
 
                 /// @todo Why do we assign the same map position twice?
-                if ((map[xx][yy] & LOMASK) > AniTabC[z]) {
-                  map[xx][yy] = REGBIT | AniTabC[z];
-                  map[xx][yy] = REGBIT | AniTabD[z];
+                if ((map[xx][yy] & LOMASK) > aniTabC[z]) {
+                  map[xx][yy] = REGBIT | aniTabC[z];
+                  map[xx][yy] = REGBIT | aniTabD[z];
                 }
 
             }
@@ -249,12 +250,17 @@ short Micropolis::getLandPollutionValue(const Position &pos)
 }
 
 
-void Micropolis::incRateOfGrowth(int amount)
+/**
+ * Update the rate of growth at position \a pos by \a amount.
+ * @param pos Position to modify.
+ * @param amount Amount of change (can both be positive and negative).
+ */
+void Micropolis::incRateOfGrowth(const Position &pos, int amount)
 {
-    int value = rateOfGrowthMap.worldGet(curMapX, curMapY);
+    int value = rateOfGrowthMap.worldGet(pos.posX, pos.posY);
 
     value = clamp(value + amount * 4, -200, 200);
-    rateOfGrowthMap.worldSet(curMapX, curMapY, value);
+    rateOfGrowthMap.worldSet(pos.posX, pos.posY, value);
 }
 
 
@@ -502,13 +508,13 @@ void Micropolis::doResIn(int pop, int value)
 
         if (pop < 8) {
             buildHouse(value);
-            incRateOfGrowth(1);
+            incRateOfGrowth(Position(curMapX, curMapY), 1);
             return;
         }
 
         if (populationDensityMap.worldGet(curMapX, curMapY) > 64) {
             resPlop(0, value);
-            incRateOfGrowth(8);
+            incRateOfGrowth(Position(curMapX, curMapY), 8);
             return;
         }
 
@@ -517,7 +523,7 @@ void Micropolis::doResIn(int pop, int value)
 
     if (pop < 40) {
         resPlop((pop / 8) - 1, value);
-        incRateOfGrowth(8);
+        incRateOfGrowth(Position(curMapX, curMapY), 8);
     }
 
 }
@@ -534,12 +540,12 @@ void Micropolis::doResOut(int pop, int value)
 
     if (pop > 16) {
         resPlop((pop - 24) / 8, value);
-        incRateOfGrowth(-8);
+        incRateOfGrowth(Position(curMapX, curMapY), -8);
         return;
     }
 
     if (pop == 16) {
-        incRateOfGrowth(-8);
+        incRateOfGrowth(Position(curMapX, curMapY), -8);
         map[curMapX][curMapY] = (FREEZ | BLBNCNBIT | ZONEBIT);
         for (x = curMapX - 1; x <= curMapX + 1; x++) {
             for (y = curMapY - 1; y <= curMapY + 1; y++) {
@@ -553,7 +559,7 @@ void Micropolis::doResOut(int pop, int value)
     }
 
     if (pop < 16) {
-        incRateOfGrowth(-1);
+        incRateOfGrowth(Position(curMapX, curMapY), -1);
         z = 0;
         for (x = curMapX - 1; x <= curMapX + 1; x++) {
             for (y = curMapY - 1; y <= curMapY + 1; y++) {
@@ -687,7 +693,7 @@ void Micropolis::doComIn(int pop, int value)
 
     if (pop < 5) {
         comPlop(pop, value);
-        incRateOfGrowth(8);
+        incRateOfGrowth(Position(curMapX, curMapY), 8);
     }
 }
 
@@ -696,13 +702,13 @@ void Micropolis::doComOut(int pop, int value)
 {
     if (pop > 1) {
         comPlop(pop - 2, value);
-        incRateOfGrowth(-8);
+        incRateOfGrowth(Position(curMapX, curMapY), -8);
         return;
     }
 
     if (pop == 1) {
         zonePlop(Position(curMapX, curMapY), COMBASE);
-        incRateOfGrowth(-8);
+        incRateOfGrowth(Position(curMapX, curMapY), -8);
     }
 }
 
@@ -746,7 +752,7 @@ void Micropolis::doIndustrial(int ZonePwrFlg)
     short tpop, zscore, TrfGood;
 
     indZonePop++;
-    setSmoke(ZonePwrFlg);
+    setSmoke(Position(curMapX, curMapY), ZonePwrFlg);
     tpop = getIndZonePop(curTile);
     indPop += tpop;
 
@@ -758,7 +764,7 @@ void Micropolis::doIndustrial(int ZonePwrFlg)
     }
 
     if (TrfGood == -1) {
-        doIndOut(tpop, getRandom16() & 1);
+        doIndOut(Position(curMapX, curMapY), tpop, getRandom16() & 1);
         return;
     }
 
@@ -769,15 +775,15 @@ void Micropolis::doIndustrial(int ZonePwrFlg)
             zscore = -500;
         }
 
-        if ((zscore > -350) &&
+        if (zscore > -350 &&
             (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
-            doIndIn(tpop, getRandom16() & 1);
+            doIndIn(Position(curMapX, curMapY), tpop, getRandom16() & 1);
             return;
         }
 
-        if ((zscore < 350) &&
+        if (zscore < 350 &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            doIndOut(tpop, getRandom16() & 1);
+            doIndOut(Position(curMapX, curMapY), tpop, getRandom16() & 1);
         }
 
     }
@@ -785,26 +791,26 @@ void Micropolis::doIndustrial(int ZonePwrFlg)
 }
 
 
-void Micropolis::doIndIn(int pop, int value)
+void Micropolis::doIndIn(const Position &pos, int pop, int value)
 {
     if (pop < 4) {
-        indPlop(pop, value);
-        incRateOfGrowth(8);
+        indPlop(pos, pop, value);
+        incRateOfGrowth(pos, 8);
     }
 }
 
 
-void Micropolis::doIndOut(int pop, int value)
+void Micropolis::doIndOut(const Position &pos, int pop, int value)
 {
     if (pop > 1) {
-        indPlop(pop - 2, value);
-        incRateOfGrowth(-8);
+        indPlop(pos, pop - 2, value);
+        incRateOfGrowth(pos, -8);
         return;
     }
 
     if (pop == 1) {
-        zonePlop(Position(curMapX, curMapY), INDCLR - 4);
-        incRateOfGrowth(-8);
+        zonePlop(pos, INDBASE); // empty industrial zone
+        incRateOfGrowth(pos, -8);
     }
 }
 
@@ -819,13 +825,16 @@ short Micropolis::getIndZonePop(MapTile tile)
     return CzDen;
 }
 
-
-void Micropolis::indPlop(int Den, int Value)
+/**
+ * Place an industrial zone around center tile \a pos.
+ * @param pos   Center of the industrial zone.
+ * @param den   Population density of the industrial zone (0, 1, 2, or 3).
+ * @param value Landvalue of the industrial zone (0 or 1).
+ */
+void Micropolis::indPlop(const Position &pos, int den, int value)
 {
-    short base;
-
-    base = (((Value * 4) + Den) * 9) + IZB - 4;
-    zonePlop(Position(curMapX, curMapY), base);
+    short base = ((value * 4) + den) * 9 + IND1;
+    zonePlop(pos, base);
 }
 
 

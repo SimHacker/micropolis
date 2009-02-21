@@ -204,14 +204,14 @@ Commercial buildings:
 
 Industrial buildings:
 612: x264 x265 x266  x267 x268 x269  x26a x26b x26c: Empty
-621: x26d x26e x26f  x270 x271 x272  x273 x274 x275
-630: x276 x277 x278  x279 x27a x27b  x27c x27d x27e
-639: x27f x280 x281  x282 x283 x284  x285 x286 x287
-648: x288 x289 x28a  x28b x28c x28d  x28e x28f x290
-657: x291 x292 x293  x294 x295 x296  x297 x298 x299
-666: x29a x29b x29c  x29d x29e x29f  x2a0 x2a1 x2a2
-675: x2a3 x2a4 x2a5  x2a6 x2a7 x2a8  x2a9 x2aa x2ab
-684: x2ac x2ad x2ae  x2af x2b0 x2b1  x2b2 x2b3 x2b4
+621: x26d x26e x26f  x270 x271 x272  x273 x274 x275 // population ?*0, value 0
+630: x276 x277 x278  x279 x27a x27b  x27c x27d x27e // population ?*1, value 0
+639: x27f x280 x281  x282 x283 x284  x285 x286 x287 // population ?*2, value 0
+648: x288 x289 x28a  x28b x28c x28d  x28e x28f x290 // population ?*3, value 0
+657: x291 x292 x293  x294 x295 x296  x297 x298 x299 // population ?*0, value 1
+666: x29a x29b x29c  x29d x29e x29f  x2a0 x2a1 x2a2 // population ?*1, value 1
+675: x2a3 x2a4 x2a5  x2a6 x2a7 x2a8  x2a9 x2aa x2ab // population ?*2, value 1
+684: x2ac x2ad x2ae  x2af x2b0 x2b1  x2b2 x2b3 x2b4 // population ?*3, value 1
 
 Port (4x4):
 693: x2b5 x2b6 x2b7 x2b8
@@ -263,30 +263,31 @@ Animations:
 832: x340 x341 x342 x343 x344 x345 x346 x347:  Rotating radar (at top)
 840: x348 x349 x34a x34b:                      Fountain
 844: x34c x34d x34e x34f x350 x351 x352 x353:  Rotating radar (elsewhere)
+
+//SMOKEBASE
 852: x354 x355 x356 x357 x358 x359 x35a x35b:  Smoking chimneys (0,0)
 860: x35c x35d x35e x35f x360 x361 x362 x363:  Explosion
 ???  x364 x365 x366 x367:                      ?? (Black and white animation)
 ???  x368 x369 x36a x36b x36c x36d x36e x36f
      x370 x371 x372 x373:                      ?? (Black and white animation)
 
-884: x374 x375 x376 x377: Animation industry (top right)
-888: x378 x379 x37a x37b: Animation industry (right)
-892: x37c x37d x37e x37f: Animation industry (middle)
-896: x380 x381 x382 x383: Animation industry (right middle)
-900: x384 x385 x386 x387: Animation industry (top)
-904: x388 x389 x38a x38b: Animation industry (top right)
-908: x38c x38d x38e x38f: Animation industry (top right)
-912: x390 x391 x392 x393: Animation industry (right)
-916: x394 x395 x396 x397: Animation industry (top)
-920: x398 x399 x39a x39b: Animation industry (top right)
-924: x39c x39d x39e x39f: Animation industry (middle)
-928: x3a0 x3a1 x3a2 x3a3: Animation industry (right)
+884: x374 x375 x376 x377: Animation industry IND2 (top right)
+888: x378 x379 x37a x37b: Animation industry IND3 (right)
+892: x37c x37d x37e x37f: Animation industry IND4 (middle)
+896: x380 x381 x382 x383: Animation industry IND5 (right middle)
+900: x384 x385 x386 x387: Animation industry IND6 (top)
+904: x388 x389 x38a x38b: Animation industry IND7 (top right)
+908: x38c x38d x38e x38f: Animation industry IND8 (top right)
+912: x390 x391 x392 x393: Animation industry IND9 (right)
+916: x394 x395 x396 x397: Animation coal powerplant (top)
+920: x398 x399 x39a x39b: Animation coal powerplant (top right)
+924: x39c x39d x39e x39f: Animation coal powerplant (middle)
+928: x3a0 x3a1 x3a2 x3a3: Animation coal powerplant (right)
 932: x3a4 x3a5 x3a6 x3a7 x3a8 x3a9 x3aa x3ab: Match in stadium (top part)
 940: x3ac x3ad x3ae x3af x3b0 x3b1 x3b2 x3b3: Match in stadium (bottom part)
 948: x3b4 x3b5:                               North open bridge
 950: x3b6 x3b7:                               South open bridge
-952: x3b8 x3b9 x3ba x3bb:                     Nuclear atom animation
-956: x3bc x3bd x3be x3bf:                     Not used (blank tiles)
+952: x3b8 x3b9 x3ba x3bb: Nuclear atom animation at nuclear power plant
 
 
 Duplicate tiles:

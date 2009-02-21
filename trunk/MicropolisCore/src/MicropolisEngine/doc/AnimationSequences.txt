@@ -60,7 +60,8 @@ x348 -> x349 -> x34a -> x34b -> x348
 x34c -> x34d -> x34e -> x34f -> x350 -> x351 -> x352 -> x353 -> x34c
 
 # Smoking chimney
-x26c -> x354
+# BUG-FIX: x26d was x26c originally! (which is the last tile of empty industry)
+x26d -> x354  # IND1
 x354 -> x355 -> x356 -> x357 -> x358 -> x359 -> x35a -> x35b -> x354
 
 # Explosion
@@ -68,35 +69,35 @@ x35c -> x35d -> x35e -> x35f -> x360 -> x361 -> x362 -> x363
 x363 -> x363
 
 # Chimney
-x281 -> x374
+x281 -> x374 # IND2
 x374 -> x375 -> x376 -> x377 -> x374
 
 # Chimney
-x284 -> x378
+x284 -> x378 # IND3
 x378 -> x379 -> x37a -> x37b -> x378
 
 # Chimney
-x289 -> x37c
+x289 -> x37c # IND4
 x37c -> x37d -> x37e -> x37f -> x37c
 
 # Chimney
-x28a -> x380
+x28a -> x380 # IND5
 x380 -> x381 -> x382 -> x383 -> x380
 
 # Chimney
-x2a4 -> x384
+x2a4 -> x384 # IND6
 x384 -> x385 -> x386 -> x387 -> x384
 
 # Chimney
-x2a5 -> x388
+x2a5 -> x388 # IND7
 x388 -> x389 -> x38a -> x38b -> x388
 
 # Chimney
-x2ae -> x38c
+x2ae -> x38c # IND8
 x38c -> x38d -> x38e -> x38f -> x38c
 
 # Chimney
-x2b1 -> x390
+x2b1 -> x390 # IND9
 x390 -> x391 -> x392 -> x393 -> x390
 
 # Chimney at coal powerplant, relative position (2, 0)
@@ -120,8 +121,8 @@ x3a4 -> x3a5 -> x3a6 -> x3a7 -> x3a8 -> x3a9 -> x3aa -> x3ab -> x3a4
 x3ac -> x3ad -> x3ae -> x3af -> x3b0 -> x3b1 -> x3b2 -> x3b3 -> x3ac
 
 # Nuclear swirl (at nuclear power plant?)
-x334 -> x3b8
-x3b8 -> x3b9 -> x3ba -> x3bb -> x3b8
+820 -> 952
+952 -> 953 -> 954 -> 955 -> 952
 
 # Non-used tiles
 956 -> 0
