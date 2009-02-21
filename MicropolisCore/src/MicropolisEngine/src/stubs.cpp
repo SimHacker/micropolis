@@ -338,7 +338,7 @@ void *Micropolis::getMapBuffer()
  */
 int Micropolis::getPowerGrid(int x, int y)
 {
-    return powerGridMap.get(x, y);
+    return powerGridMap.getWorld(x, y);
 }
 
 
@@ -352,7 +352,7 @@ int Micropolis::getPowerGrid(int x, int y)
  */
 void Micropolis::setPowerGrid(int x, int y, int power)
 {
-  powerGridMap.set(x, y, power);
+  powerGridMap.setWorld(x, y, power);
 }
 
 
