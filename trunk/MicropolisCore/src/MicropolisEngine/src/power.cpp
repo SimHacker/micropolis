@@ -156,7 +156,7 @@ bool Micropolis::testForConductive(Direction tfDir)
     if (moveMapSim(tfDir)) {
         if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
                             && curTile != NUCLEAR && curTile != POWERPLANT) {
-            if (!powerGridMap.get(curMapX, curMapY)) {
+            if (!powerGridMap.getWorld(curMapX, curMapY)) {
                 curMapX = xsave;
                 curMapY = ysave;
                 return true;
@@ -202,7 +202,7 @@ void Micropolis::doPowerScan()
             if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
                 moveMapSim((Direction)ADir);
             }
-            powerGridMap.set(curMapX, curMapY, 1);
+            powerGridMap.setWorld(curMapX, curMapY, 1);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
