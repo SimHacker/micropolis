@@ -2342,13 +2342,13 @@ public:
 private:
 
     /** Generate a random animated MapTileCharacters::FIRE tile */
-    inline short randomFire()
+    inline MapValue randomFire()
     {
         return (FIRE + (getRandom16() & 7)) | ANIMBIT;
     };
 
     /** Generate a random MapTileCharacters::RUBBLE tile */
-    inline short randomRubble()
+    inline MapValue randomRubble()
     {
         return (RUBBLE + (getRandom16() & 3)) | BULLBIT;
     };
@@ -2397,7 +2397,7 @@ private:
 
     void fireZone(int Xloc, int Yloc, int ch);
 
-    void repairZone(short ZCent, short zsize);
+    void repairZone(const Position &pos, MapTile zCent, short zSize);
 
     void doSpecialZone(bool PwrOn);
 
@@ -2405,9 +2405,9 @@ private:
 
     void doAirport();
 
-    void coalSmoke(int mx, int my);
+    void coalSmoke(const Position &pos);
 
-    void doMeltdown(int SX, int SY);
+    void doMeltdown(const Position &pos);
 
 
     ////////////////////////////////////////////////////////////////////////

@@ -1338,43 +1338,40 @@ void Micropolis::fireZone(int Xloc, int Yloc, int ch)
 
 
 /**
- * Repair a zone at (#curMapX, #curMapY).
- * @param ZCent Value of the center tile.
- * @param zsize Size of the zone (in both directions).
+ * Repair a zone at \a pos.
+ * @param pos   Center-tile position of the zone.
+ * @param zCent Value of the center tile.
+ * @param zSize Size of the zone (in both directions).
  */
-void Micropolis::repairZone(short ZCent, short zsize)
+void Micropolis::repairZone(const Position &pos, MapTile zCent, short zSize)
 {
-    short cnt;
-    short x, y, ThCh;
+    MapTile tile = zCent - 2 - zSize;
 
-    zsize--;
-    cnt = 0;
+    // y and x loops one position shifted to compensate for the center-tile position.
+    for (short y = -1; y < zSize - 1; y++) {
+        for (short x = -1; x < zSize - 1; x++) {
 
-    for (y = -1; y < zsize; y++) {
+            int xx = pos.posX + x;
+            int yy = pos.posY + y;
 
-        for (x = -1; x < zsize; x++) {
-
-            int xx = curMapX + x;
-            int yy = curMapY + y;
-
-            cnt++;
+            tile++;
 
             if (testBounds(xx, yy)) {
 
-                ThCh = map[xx][yy];
+                MapValue mapValue = map[xx][yy];
 
-                if (ThCh & ZONEBIT) {
+                if (mapValue & ZONEBIT) {
                     continue;
                 }
 
-                if (ThCh & ANIMBIT) {
+                if (mapValue & ANIMBIT) {
                     continue;
                 }
 
-                ThCh = ThCh & LOMASK;
+                MapTile mapTile = mapValue & LOMASK;
 
-                if (ThCh < RUBBLE || ThCh >= ROADBASE) {
-                    map[xx][yy] = ZCent - 3 - zsize + cnt + CONDBIT + BURNBIT;
+                if (mapTile < RUBBLE || mapTile >= ROADBASE) {
+                    map[xx][yy] = tile | CONDBIT | BURNBIT;
                 }
             }
         }
@@ -1389,7 +1386,7 @@ void Micropolis::repairZone(short ZCent, short zsize)
 void Micropolis::doSpecialZone(bool powerOn)
 {
     // Bigger numbers reduce chance of nuclear melt down
-    static const short MeltdownTable[3] = { 30000, 20000, 10000 };
+    static const short meltdownTable[3] = { 30000, 20000, 10000 };
 
     switch (curTile) {
 
@@ -1398,11 +1395,11 @@ void Micropolis::doSpecialZone(bool powerOn)
             coalPowerPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(POWERPLANT, 4); /* post */
+                repairZone(Position(curMapX, curMapY), POWERPLANT, 4); /* post */
             }
 
             pushPowerStack();
-            coalSmoke(curMapX, curMapY);
+            coalSmoke(Position(curMapX, curMapY));
 
             return;
 
@@ -1410,15 +1407,15 @@ void Micropolis::doSpecialZone(bool powerOn)
 
             assert(LEVEL_COUNT == LENGTH_OF(MeltdownTable));
 
-            if (enableDisasters && !getRandom(MeltdownTable[gameLevel])) {
-                doMeltdown(curMapX, curMapY);
+            if (enableDisasters && !getRandom(meltdownTable[gameLevel])) {
+                doMeltdown(Position(curMapX, curMapY));
                 return;
             }
 
             nuclearPowerPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(NUCLEAR, 4); /* post */
+                repairZone(Position(curMapX, curMapY), NUCLEAR, 4); /* post */
             }
 
             pushPowerStack();
@@ -1432,7 +1429,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             fireStationPop++;
 
             if (!(cityTime & 7)) {
-                repairZone(FIRESTATION, 3); /* post */
+                repairZone(Position(curMapX, curMapY), FIRESTATION, 3); /* post */
             }
 
             if (powerOn) {
@@ -1459,7 +1456,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             policeStationPop++;
 
             if (!(cityTime & 7)) {
-                repairZone(POLICESTATION, 3); /* post */
+                repairZone(Position(curMapX, curMapY), POLICESTATION, 3); /* post */
             }
 
             if (powerOn) {
@@ -1484,7 +1481,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             stadiumPop++;
 
             if (!(cityTime & 15)) {
-                repairZone(STADIUM, 4);
+                repairZone(Position(curMapX, curMapY), STADIUM, 4);
             }
 
             if (powerOn) {
@@ -1514,7 +1511,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             airportPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(AIRPORT, 6);
+                repairZone(Position(curMapX, curMapY), AIRPORT, 6);
             }
 
             // If powered, display a rotating radar
@@ -1537,7 +1534,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             seaportPop++;
 
             if ((cityTime & 15) == 0) {
-                repairZone(PORT, 4);
+                repairZone(Position(curMapX, curMapY), PORT, 4);
             }
 
             // If port has power and there is no ship, generate one
@@ -1586,10 +1583,9 @@ void Micropolis::doAirport()
 
 /**
  * Draw coal smoke tiles around given position (of a coal power plant).
- * @param mx X coordinate of the position.
- * @param my Y coordinate of the position.
+ * @param pos Center tile of the coal power plant
  */
-void Micropolis::coalSmoke(int mx, int my)
+void Micropolis::coalSmoke(const Position &pos)
 {
     static const short SmTb[4] = {
         COALSMOKE1, COALSMOKE2,
@@ -1599,7 +1595,7 @@ void Micropolis::coalSmoke(int mx, int my)
     static const short dy[4] = { -1, -1,  0,  0 };
 
     for (short x = 0; x < 4; x++) {
-        map[mx + dx[x]][my + dy[x]] =
+        map[pos.posX + dx[x]][pos.posY + dy[x]] =
             SmTb[x] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT;
     }
 }
@@ -1607,34 +1603,33 @@ void Micropolis::coalSmoke(int mx, int my)
 
 /**
  * Perform a nuclear melt-down disaster
- * @param SX X coordinate of the disaster
- * @param SY Y coordinate of the disaster
+ * @param pos Position of the nuclear power plant that melts.
  */
-void Micropolis::doMeltdown(int SX, int SY)
+void Micropolis::doMeltdown(const Position &pos)
 {
-    makeExplosion(SX - 1, SY - 1);
-    makeExplosion(SX - 1, SY + 2);
-    makeExplosion(SX + 2, SY - 1);
-    makeExplosion(SX + 2, SY + 2);
+    makeExplosion(pos.posX - 1, pos.posY - 1);
+    makeExplosion(pos.posX - 1, pos.posY + 2);
+    makeExplosion(pos.posX + 2, pos.posY - 1);
+    makeExplosion(pos.posX + 2, pos.posY + 2);
 
     // Whole power plant is at fire
-    for (int x = SX - 1; x < SX + 3; x++) {
-        for (int y = SY - 1; y < SY + 3; y++) {
+    for (int x = pos.posX - 1; x < pos.posX + 3; x++) {
+        for (int y = pos.posY - 1; y < pos.posY + 3; y++) {
             map[x][y] = randomFire();
         }
     }
 
-    // and lots of radiation tiles around the plant
+    // Add lots of radiation tiles around the plant
     for (int z = 0; z < 200; z++)  {
 
-        int x = SX - 20 + getRandom(40);
-        int y = SY - 15 + getRandom(30);
+        int x = pos.posX - 20 + getRandom(40);
+        int y = pos.posY - 15 + getRandom(30);
 
         if (!testBounds(x, y)) { // Ignore off-map positions
             continue;
         }
 
-        int t = map[x][y];
+        MapValue t = map[x][y];
 
         if (t & ZONEBIT) {
             continue; // Ignore zones
@@ -1647,7 +1642,7 @@ void Micropolis::doMeltdown(int SX, int SY)
     }
 
     // Report disaster to the user
-    sendMessage(MESSAGE_NUCLEAR_MELTDOWN, SX, SY, true, true);
+    sendMessage(MESSAGE_NUCLEAR_MELTDOWN, pos.posX, pos.posY, true, true);
 }
 
 

@@ -211,7 +211,7 @@ void Micropolis::makeMeltdown()
     for (x = 0; x < (WORLD_W - 1); x++) {
         for (y = 0; y < (WORLD_H - 1); y++) {
             if ((map[x][y] & LOMASK) == NUCLEAR) {
-                doMeltdown(x, y);
+                doMeltdown(Position(x, y));
                 return;
             }
         }
