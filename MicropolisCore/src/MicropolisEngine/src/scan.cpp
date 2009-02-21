@@ -132,16 +132,15 @@ void Micropolis::populationDensityScan()
     Quad Ztot = 0;
     for (int x = 0; x < WORLD_W; x++) {
         for (int y = 0; y < WORLD_H; y++) {
-            short z = map[x][y];
-            if (z & ZONEBIT) {
-                z = z & LOMASK;
+            MapValue mapValue = map[x][y];
+            if (mapValue & ZONEBIT) {
+                MapTile mapTile = mapValue & LOMASK;
                 curMapX = x;
                 curMapY = y;
-                z = getPopulationDensity(z) <<3;
-                if (z > 254) {
-                    z = 254;
-                }
-                tempMap1.worldSet(x, y, (Byte)z);
+                int pop = getPopulationDensity(mapTile) * 8;
+                pop = min(pop, 254);
+
+                tempMap1.worldSet(x, y, (Byte)pop);
                 Xtot += x;
                 Ytot += y;
                 Ztot++;
@@ -182,28 +181,32 @@ void Micropolis::populationDensityScan()
 }
 
 
-/* comefrom: populationDensityScan */
-int Micropolis::getPopulationDensity(int Ch9)
+/**
+ * Compute population of a zone.
+ * @param tile Zone to compute population of.
+ * @return Population of the zone.
+ */
+int Micropolis::getPopulationDensity(MapTile tile)
 {
     int pop;
 
-    if (Ch9 == FREEZ) {
-        pop = doFreePop();
+    if (tile == FREEZ) {
+        pop = doFreePop(Position(curMapX, curMapX));
         return pop;
     }
 
-    if (Ch9 < COMBASE) {
-        pop = getResZonePop(Ch9);
+    if (tile < COMBASE) {
+        pop = getResZonePop(tile);
         return pop;
     }
 
-    if (Ch9 < INDBASE) {
-        pop = (getComZonePop(Ch9) <<3);
+    if (tile < INDBASE) {
+        pop = getComZonePop(tile) * 8;
         return pop;
     }
 
-    if (Ch9 < PORTBASE) {
-        pop = (getIndZonePop(Ch9) <<3);
+    if (tile < PORTBASE) {
+        pop = getIndZonePop(tile) * 8;
         return pop;
     }
 

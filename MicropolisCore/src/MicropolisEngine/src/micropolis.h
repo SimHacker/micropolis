@@ -364,6 +364,15 @@ enum SpriteType {
 ///////////////////////////////////////////////////
 // Tiles
 
+/** Value of a tile in the map array incuding the #MapTileBits. */
+typedef unsigned short MapValue;
+
+/**
+ * Value of a tile in the map array excluding the #MapTileBits (that is, just
+ * a value from #MapCharacters).
+ */
+typedef unsigned short MapTile;
+
 /**
  * Status bits of a map tile.
  * @see MapTile MapCharacters
@@ -2243,7 +2252,7 @@ private:
 
     void populationDensityScan();
 
-    int getPopulationDensity(int Ch9);
+    int getPopulationDensity(MapTile tile);
 
     void pollutionTerrainLandValueScan();
 
@@ -2977,7 +2986,7 @@ private:
 
     bool zonePlop(int base);
 
-    short doFreePop();
+    short doFreePop(const Position &pos);
 
     bool setZonePower(const Position& pos);
 
@@ -2991,7 +3000,7 @@ private:
 
     void doResOut(int pop, int value);
 
-    short getResZonePop(int Ch9);
+    short getResZonePop(MapTile mapTile);
 
     void resPlop(int Den, int Value);
 
@@ -3003,7 +3012,7 @@ private:
 
     void doComOut(int pop, int value);
 
-    short getComZonePop(int Ch9);
+    short getComZonePop(MapTile tile);
 
     void comPlop(int Den, int Value);
 
@@ -3015,7 +3024,7 @@ private:
 
     void doIndOut(int pop, int value);
 
-    short getIndZonePop(int Ch9);
+    short getIndZonePop(MapTile tile);
 
     void indPlop(int Den, int Value);
 
