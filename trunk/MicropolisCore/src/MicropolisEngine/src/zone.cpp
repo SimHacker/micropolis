@@ -340,7 +340,7 @@ bool Micropolis::setZonePower()
         return true;
     }
 
-    if (powerGridMap.getWorld(curMapX, curMapY)) {
+    if (powerGridMap.worldGet(curMapX, curMapY)) {
         map[curMapX][curMapY] = curNum | PWRBIT;
         return true;
     } else {

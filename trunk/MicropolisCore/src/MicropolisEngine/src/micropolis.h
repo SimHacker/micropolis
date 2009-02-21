@@ -106,6 +106,7 @@
 
 #include "data_types.h"
 #include "map_type.h"
+#include "position.h"
 
 ////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -2147,8 +2148,8 @@ private:
 
     int powerStackPointer; ///< Stack counter, points to top-most item.
 
-    short powerStackX[POWER_STACK_SIZE]; ///< X coordinates at the power stack.
-    short powerStackY[POWER_STACK_SIZE]; ///< Y coordinates at the power stack.
+    /** Stack of X/Y positions for traversing setting the power grid. */
+    Position powerStackXY[POWER_STACK_SIZE];
 
 
     void doPowerScan();
