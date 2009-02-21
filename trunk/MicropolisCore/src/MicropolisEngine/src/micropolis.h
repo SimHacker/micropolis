@@ -2980,11 +2980,11 @@ private:
 
     void makeHospital();
 
-    short getLandPollutionValue();
+    short getLandPollutionValue(const Position &pos);
 
     void incRateOfGrowth(int amount);
 
-    bool zonePlop(int base);
+    bool zonePlop(const Position &pos, int base);
 
     short doFreePop(const Position &pos);
 
