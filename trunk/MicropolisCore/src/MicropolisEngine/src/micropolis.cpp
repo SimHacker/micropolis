@@ -71,22 +71,6 @@
 
 ////////////////////////////////////////////////////////////////////////
 
-/**
- * Give a fatal error and exit the program.
- * @param line  Source line number of the fatal error.
- * @param fname Filename of the source file.
- * @return Does not return to the caller.
- * @todo Generalize error handling/exiting of the simulator.
- */
-void not_reached(int line, const char *fname)
-{
-    fprintf(stderr, "Code unexpectedly executed at line %d, at file %s\n", line, fname);
-    exit(1);
-}
-
-
-////////////////////////////////////////////////////////////////////////
-
 
 /**
  * Simulator constructor.
