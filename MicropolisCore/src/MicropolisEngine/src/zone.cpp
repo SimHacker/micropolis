@@ -85,7 +85,7 @@ void Micropolis::doZone()
     }
 
     if (curTile > PORTBASE) {       /* do Special Zones  */
-        doSpecialZone(ZonePwrFlg);
+        doSpecialZone(Position(curMapX, curMapY), ZonePwrFlg);
         return;
     }
 

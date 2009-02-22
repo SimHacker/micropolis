@@ -2405,7 +2405,7 @@ private:
 
     void repairZone(const Position &pos, MapTile zCent, short zSize);
 
-    void doSpecialZone(bool PwrOn);
+    void doSpecialZone(const Position &pos, bool PwrOn);
 
     void drawStadium(const Position &center, MapTile z);
 
