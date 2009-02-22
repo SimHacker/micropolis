@@ -918,65 +918,62 @@ void Micropolis::mapScan(int x1, int x2)
     for (x = x1; x < x2; x++) {
         for (y = 0; y < WORLD_H; y++) {
 
-            curNum = map[x][y];
-            if (curNum == DIRT) {
+            MapValue mapVal = map[x][y];
+            if (mapVal == DIRT) {
                 continue;
             }
 
-            curTile = curNum & LOMASK;  /* Mask off status bits  */
+            MapTile tile = mapVal & LOMASK;  /* Mask off status bits  */
 
-            if (curTile < FLOOD) {
+            if (tile < FLOOD) {
                 continue;
             }
 
-            // curTile >= FLOOD
+            // tile >= FLOOD
 
-            curMapX = x;
-            curMapY = y;
+            Position pos(x, y);
 
-            if (curTile < ROADBASE) {
 
-                if (curTile >= FIREBASE) {
+            if (tile < ROADBASE) {
+
+                if (tile >= FIREBASE) {
                     firePop++;
                     if (!(getRandom16() & 3)) {
-                        doFire();    /* 1 in 4 times */
+                        doFire(pos);    /* 1 in 4 times */
                     }
                     continue;
                 }
 
-                if (curTile < RADTILE) {
-                    doFlood();
+                if (tile < RADTILE) {
+                    doFlood(pos);
                 } else {
-                    doRadTile();
+                    doRadTile(pos);
                 }
 
                 continue;
             }
 
-            if (newPower && (curNum & CONDBIT)) {
+            if (newPower && (mapVal & CONDBIT)) {
                 // Copy PWRBIT from powerGridMap
-                setZonePower(Position(curMapX, curMapY));
+                setZonePower(pos);
             }
 
-            if ((curTile >= ROADBASE) &&
-                (curTile < POWERBASE)) {
-                doRoad();
+            if (tile >= ROADBASE && tile < POWERBASE) {
+                doRoad(pos);
                 continue;
             }
 
-            if (curNum & ZONEBIT) { /* process Zones */
-                doZone();
+            if (mapVal & ZONEBIT) { /* process Zones */
+                doZone(pos);
                 continue;
             }
 
-            if ((curTile >= RAILBASE) &&
-                (curTile < RESBASE)) {
-                doRail();
+            if (tile >= RAILBASE && tile < RESBASE) {
+                doRail(pos);
                 continue;
             }
 
-            if ((curTile >= SOMETINYEXP) &&
-                (curTile <= LASTTINYEXP)) {
+            if (tile >= SOMETINYEXP && tile <= LASTTINYEXP) {
                 /* clear AniRubble */
                 map[x][y] = randomRubble();
             }
@@ -985,23 +982,33 @@ void Micropolis::mapScan(int x1, int x2)
 }
 
 
-/** Handle rail tail */
-void Micropolis::doRail()
+/**
+ * Handle rail track.
+ * Generate a train, and handle road deteriorating effects.
+ * @param pos Position of the rail.
+ */
+void Micropolis::doRail(const Position &pos)
 {
     railTotal++;
 
-    generateTrain(curMapX, curMapY);
+    generateTrain(pos.posX, pos.posY);
 
     if (roadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
+
         // roadEffect < 15/16 of max road, enable deteriorating rail
         if (!(getRandom16() & 511)) {
-            if (!(curNum & CONDBIT)) {
-                assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(getRandom16() & 31)' makes no sense
+
+            MapValue curValue = map[pos.posX][pos.posY];
+            if (!(curValue & CONDBIT)) {
+
+                // Otherwise the '(getRandom16() & 31)' makes no sense
+                assert(MAX_ROAD_EFFECT == 32);
                 if (roadEffect < (getRandom16() & 31)) {
-                    if (curTile < (RAILBASE + 2)) {
-                        map[curMapX][curMapY] = RIVER;
+                    MapTile tile = curValue & LOMASK;
+                    if (tile < RAILBASE + 2) {
+                        map[pos.posX][pos.posY] = RIVER;
                     } else {
-                        map[curMapX][curMapY] = randomRubble();
+                        map[pos.posX][pos.posY] = randomRubble();
                     }
                     return;
                 }
@@ -1011,35 +1018,44 @@ void Micropolis::doRail()
 }
 
 
-/** Handle decay of radio-active tile */
-void Micropolis::doRadTile()
+/**
+ * Handle decay of radio-active tile
+ * @param pos Position of the radio-active tile.
+ */
+void Micropolis::doRadTile(const Position &pos)
 {
     if ((getRandom16() & 4095) == 0) {
-        map[curMapX][curMapY] = DIRT; /* Radioactive decay */
+        map[pos.posX][pos.posY] = DIRT; /* Radioactive decay */
     }
 }
 
 
-/** Handle road tile */
-void Micropolis::doRoad()
+/**
+ * Handle road tile.
+ * @param pos Position of the road.
+ */
+void Micropolis::doRoad(const Position &pos)
 {
     short tden, z;
     static const short densityTable[3] = { ROADBASE, LTRFBASE, HTRFBASE };
 
     roadTotal++;
 
-    /* generateBus(curMapX, curMapY); */
+    MapValue mapValue = map[pos.posX][pos.posY];
+    MapTile tile = mapValue & LOMASK;
+
+    /* generateBus(pos.posX, pos.posY); */
 
     if (roadEffect < (15 * MAX_ROAD_EFFECT / 16)) {
         // roadEffect < 15/16 of max road, enable deteriorating road
         if ((getRandom16() & 511) == 0) {
-            if (!(curNum & CONDBIT)) {
+            if (!(mapValue & CONDBIT)) {
                 assert(MAX_ROAD_EFFECT == 32); // Otherwise the '(getRandom16() & 31)' makes no sense
                 if (roadEffect < (getRandom16() & 31)) {
-                    if ((curTile & 15) < 2 || (curTile & 15) == 15) {
-                        map[curMapX][curMapY] = RIVER;
+                    if ((tile & 15) < 2 || (tile & 15) == 15) {
+                        map[pos.posX][pos.posY] = RIVER;
                     } else {
-                        map[curMapX][curMapY] = randomRubble();
+                        map[pos.posX][pos.posY] = randomRubble();
                     }
                     return;
                 }
@@ -1047,43 +1063,51 @@ void Micropolis::doRoad()
         }
     }
 
-    if ((curNum & BURNBIT) == 0) { /* If Bridge */
+    if ((mapValue & BURNBIT) == 0) { /* If Bridge */
         roadTotal += 4; // Bridge counts as 4 road tiles
-        if (doBridge()) {
+        if (doBridge(Position(pos.posX, pos.posY), tile)) {
             return;
         }
     }
 
-    if (curTile < LTRFBASE) {
+    if (tile < LTRFBASE) {
         tden = 0;
-    } else if (curTile < HTRFBASE) {
+    } else if (tile < HTRFBASE) {
         tden = 1;
     } else {
-        roadTotal++;
+        roadTotal++; // Heavy traffic counts as 2 roads.
         tden = 2;
     }
 
-    short trafficDensity = trafficDensityMap.worldGet(curMapX, curMapY) >>6;
+    short trafficDensity = trafficDensityMap.worldGet(pos.posX, pos.posY) >>6;
 
     if (trafficDensity > 1) {
         trafficDensity--;
     }
 
     if (tden != trafficDensity) { /* tden 0..2   */
-        z = ((curTile - ROADBASE) & 15) + densityTable[trafficDensity];
-        z |= curNum & (ALLBITS - ANIMBIT);
+        z = ((tile - ROADBASE) & 15) + densityTable[trafficDensity];
+        z |= mapValue & (ALLBITS - ANIMBIT);
 
         if (trafficDensity > 0) {
             z |= ANIMBIT;
         }
 
-        map[curMapX][curMapY] = z;
+        map[pos.posX][pos.posY] = z;
     }
 }
 
 
-/** Handle bridge */
-bool Micropolis::doBridge()
+/**
+ * Handle a bridge.
+ * @param pos Position of the bridge.
+ * @param tile Tile value of the bridge.
+ * @return ???
+ *
+ * @todo What does this function return?
+ * @todo Discover the structure of all the magic constants.
+ */
+bool Micropolis::doBridge(const Position &pos, MapTile tile)
 {
     static short HDx[7] = { -2,  2, -2, -1,  0,  1,  2 };
     static short HDy[7] = { -1, -1,  0,  0,  0,  0,  0 };
@@ -1107,14 +1131,14 @@ bool Micropolis::doBridge()
     };
     int z, x, y, MPtem;
 
-    if (curTile == BRWV) { /*  Vertical bridge close */
+    if (tile == BRWV) { /*  Vertical bridge close */
 
-        if ((!(getRandom16() & 3)) && getBoatDistance() > 340) {
+        if ((!(getRandom16() & 3)) && getBoatDistance(pos) > 340) {
 
             for (z = 0; z < 7; z++) { /* Close */
 
-                x = curMapX + VDx[z];
-                y = curMapY + VDy[z];
+                x = pos.posX + VDx[z];
+                y = pos.posY + VDy[z];
 
                 if (testBounds(x, y)) {
 
@@ -1128,14 +1152,14 @@ bool Micropolis::doBridge()
         return true;
     }
 
-    if (curTile == BRWH) { /*  Horizontal bridge close  */
+    if (tile == BRWH) { /*  Horizontal bridge close  */
 
-        if ((!(getRandom16() & 3)) && getBoatDistance() > 340) {
+        if ((!(getRandom16() & 3)) && getBoatDistance(pos) > 340) {
 
             for (z = 0; z < 7; z++) { /* Close */
 
-                x = curMapX + HDx[z];
-                y = curMapY + HDy[z];
+                x = pos.posX + HDx[z];
+                y = pos.posY + HDy[z];
 
                 if (testBounds(x, y)) {
 
@@ -1150,15 +1174,15 @@ bool Micropolis::doBridge()
         return true;
     }
 
-    if (getBoatDistance() < 300 || (!(getRandom16() & 7))) {
-        if (curTile & 1) {
-            if (curMapX < WORLD_W - 1) {
-                if (map[curMapX + 1][curMapY] == CHANNEL) { /* Vertical open */
+    if (getBoatDistance(pos) < 300 || (!(getRandom16() & 7))) {
+        if (tile & 1) {
+            if (pos.posX < WORLD_W - 1) {
+                if (map[pos.posX + 1][pos.posY] == CHANNEL) { /* Vertical open */
 
                     for (z = 0; z < 7; z++) {
 
-                        x = curMapX + VDx[z];
-                        y = curMapY + VDy[z];
+                        x = pos.posX + VDx[z];
+                        y = pos.posY + VDy[z];
 
                         if (testBounds(x, y)) {
 
@@ -1175,14 +1199,14 @@ bool Micropolis::doBridge()
 
         } else {
 
-            if (curMapY > 0) {
-                if (map[curMapX][curMapY - 1] == CHANNEL) {
+            if (pos.posY > 0) {
+                if (map[pos.posX][pos.posY - 1] == CHANNEL) {
 
                     /* Horizontal open  */
                     for (z = 0; z < 7; z++) {
 
-                        x = curMapX + HDx[z];
-                        y = curMapY + HDy[z];
+                        x = pos.posX + HDx[z];
+                        y = pos.posY + HDy[z];
 
                         if (testBounds(x, y)) {
 
@@ -1204,17 +1228,18 @@ bool Micropolis::doBridge()
 
 
 /**
- * Compute distance to nearest boat.
+ * Compute distance to nearest boat from a given bridge.
+ * @param pos Position of bridge.
  * @return Distance to nearest boat.
  */
-int Micropolis::getBoatDistance()
+int Micropolis::getBoatDistance(const Position &pos)
 {
-    int dist, mx, my, sprDist;
+    int sprDist;
     SimSprite *sprite;
 
-    dist = 99999;
-    mx = (curMapX <<4) + 8;
-    my = (curMapY <<4) + 8;
+    int dist = 99999;
+    int mx = pos.posX * 16 + 8;
+    int my = pos.posY * 16 + 8;
 
     for (sprite = spriteList; sprite != NULL; sprite = sprite->next) {
         if (sprite->type == SPRITE_SHIP && sprite->frame != 0) {
@@ -1230,10 +1255,14 @@ int Micropolis::getBoatDistance()
 
 
 /**
- * Handle tile being on fire
- * @todo Needs a notion of iterative neighbour tiles computing
+ * Handle tile being on fire.
+ * @param pos Position of the fire.
+ *
+ * @todo Needs a notion of iterative neighbour tiles computing.
+ * @todo Use a getFromMap()-like function here.
+ * @todo Extract constants of fire station effectiveness from here.
  */
-void Micropolis::doFire()
+void Micropolis::doFire(const Position &pos)
 {
     static const short DX[4] = { -1,  0,  1,  0 };
     static const short DY[4] = {  0, -1,  0,  1 };
@@ -1243,33 +1272,33 @@ void Micropolis::doFire()
 
         if ((getRandom16() & 7) == 0) {
 
-            short Xtem = curMapX + DX[z];
-            short Ytem = curMapY + DY[z];
+            short xTem = pos.posX + DX[z];
+            short yTem = pos.posY + DY[z];
 
-            if (testBounds(Xtem, Ytem)) {
+            if (testBounds(xTem, yTem)) {
 
-                short c = map[Xtem][Ytem];
+                MapValue c = map[xTem][yTem];
                 if (!(c & BURNBIT)) {
                     continue;
                 }
 
                 if (c & ZONEBIT) {
                     // Neighbour is a zone and burnable
-                    fireZone(Xtem, Ytem, c);
+                    fireZone(Position(xTem, yTem), c);
 
                     if ((c & LOMASK) > IZB) { /* Explode */
-                          makeExplosionAt((Xtem <<4) + 8, (Ytem <<4) + 8);
+                          makeExplosionAt(xTem *16 + 8, yTem * 16 + 8);
                     }
                 }
 
-                map[Xtem][Ytem] = randomFire();
+                map[xTem][yTem] = randomFire();
             }
         }
     }
 
     // Compute likelyhood of fire running out of fuel
     short rate = 10; // Likelyhood of extinguishing (bigger means less chance)
-    short z = fireStationEffectMap.worldGet(curMapX, curMapY);
+    short z = fireStationEffectMap.worldGet(pos.posX, pos.posY);
 
     if (z > 0) {
         rate = 3;
@@ -1283,7 +1312,7 @@ void Micropolis::doFire()
 
     // Decide whether to put out the fire.
     if (getRandom(rate) == 0) {
-        map[curMapX][curMapY] = randomRubble();
+        map[pos.posX][pos.posY] = randomRubble();
     }
 }
 
@@ -1293,17 +1322,16 @@ void Micropolis::doFire()
  *
  * Decreases rate of growth of the zone, and makes remaining tiles bulldozable.
  *
- * @param Xloc X coordinate of the zone.
- * @param Yloc Y coordinate of the zone.
- * @param ch   Character of the zone.
+ * @param pos Position of the zone on fire.
+ * @param ch  Character of the zone.
  */
-void Micropolis::fireZone(int Xloc, int Yloc, int ch)
+void Micropolis::fireZone(const Position &pos, MapValue ch)
 {
     short XYmax;
 
-    int value = rateOfGrowthMap.worldGet(Xloc, Yloc);
+    int value = rateOfGrowthMap.worldGet(pos.posX, pos.posY);
     value = clamp(value - 20, -200, 200);
-    rateOfGrowthMap.worldSet(Xloc, Yloc, value);
+    rateOfGrowthMap.worldSet(pos.posX, pos.posY, value);
 
     ch = ch & LOMASK;
 
@@ -1321,17 +1349,16 @@ void Micropolis::fireZone(int Xloc, int Yloc, int ch)
     for (short x = -1; x < XYmax; x++) {
         for (short y = -1; y < XYmax; y++) {
 
-            short Xtem = Xloc + x;
-            short Ytem = Yloc + y;
+            short xTem = pos.posX + x;
+            short yTem = pos.posY + y;
 
-            if (Xtem < 0 || Xtem > WORLD_W - 1 ||
-                Ytem < 0 || Ytem > WORLD_H - 1) {
+            if (!testBounds(xTem, yTem)) {
                 continue;
             }
 
-            if ((short)(map[Xtem][Ytem] & LOMASK) >= ROADBASE) {
+            if ((MapTile)(map[xTem][yTem] & LOMASK) >= ROADBASE) {
                 /* post release */
-                map[Xtem][Ytem] |= BULLBIT;
+                map[xTem][yTem] |= BULLBIT;
             }
 
         }
@@ -1391,7 +1418,9 @@ void Micropolis::doSpecialZone(const Position &pos, bool powerOn)
     // Bigger numbers reduce chance of nuclear melt down
     static const short meltdownTable[3] = { 30000, 20000, 10000 };
 
-    switch (curTile) {
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
+    switch (tile) {
 
         case POWERPLANT:
 

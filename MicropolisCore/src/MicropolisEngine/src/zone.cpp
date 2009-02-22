@@ -72,74 +72,83 @@
 ////////////////////////////////////////////////////////////////////////
 
 
-
-void Micropolis::doZone()
+/**
+ * Handle zone.
+ * @param pos Position of the zone.
+ */
+void Micropolis::doZone(const Position &pos)
 {
     // Set Power Bit in Map from powerGridMap
-    bool ZonePwrFlg = setZonePower(Position(curMapX, curMapY));
+    bool zonePwrFlg = setZonePower(pos);
 
-    if (ZonePwrFlg) {
+    if (zonePwrFlg) {
         poweredZoneCount++;
     } else {
         unpoweredZoneCount++;
     }
 
-    if (curTile > PORTBASE) {       /* do Special Zones  */
-        doSpecialZone(Position(curMapX, curMapY), ZonePwrFlg);
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
+    if (tile > PORTBASE) {       /* do Special Zones  */
+        doSpecialZone(pos, zonePwrFlg);
         return;
     }
 
-    if (curTile < HOSPITAL) {
-        doResidential(ZonePwrFlg);
+    if (tile < HOSPITAL) {
+        doResidential(pos, zonePwrFlg);
         return;
     }
 
-    if (curTile < COMBASE) {
-        doHospitalChurch();
+    if (tile < COMBASE) {
+        doHospitalChurch(pos);
         return;
     }
 
-    if (curTile < INDBASE)  {
-        doCommercial(ZonePwrFlg);
+    if (tile < INDBASE)  {
+        doCommercial(pos, zonePwrFlg);
         return;
     }
 
-    doIndustrial(ZonePwrFlg);
+    doIndustrial(pos, zonePwrFlg);
 
     return;
 }
 
-
-void Micropolis::doHospitalChurch()
+/**
+ * Handle repairing or removing of hospitals and churches.
+ * @param pos Position of the hospital or church.
+ */
+void Micropolis::doHospitalChurch(const Position &pos)
 {
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
-    if (curTile == HOSPITAL) {
+    if (tile == HOSPITAL) {
 
         hospitalPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(Position(curMapX, curMapY), HOSPITAL, 3); /*post*/
+            repairZone(pos, HOSPITAL, 3); /*post*/
         }
 
         if (needHospital == -1) { // Too many hospitals
             if (!getRandom(20)) {
-                zonePlop(Position(curMapX, curMapY), RESBASE); // Remove hospital
+                zonePlop(pos, RESBASE); // Remove hospital
             }
         }
 
     }
 
-    if (curTile == CHURCH) {
+    if (tile == CHURCH) {
 
         churchPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(Position(curMapX, curMapY), CHURCH, 3); /*post*/
+            repairZone(pos, CHURCH, 3); /*post*/
         }
 
         if (needChurch == -1) { // Too many churches
             if (!getRandom(20)) {
-                zonePlop(Position(curMapX, curMapY), RESBASE); // Remove church
+                zonePlop(pos, RESBASE); // Remove church
             }
         }
 
@@ -164,7 +173,6 @@ void Micropolis::setSmoke(const Position &pos, int zonePower)
     static MapTile aniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
 
     MapTile tile = map[pos.posX][pos.posY] & LOMASK;
-    curTile = tile;
 
     if (tile < IZB) {
         return;
@@ -205,17 +213,20 @@ void Micropolis::setSmoke(const Position &pos, int zonePower)
 }
 
 
-/** If needed, add a new hospital or a new church. */
-void Micropolis::makeHospital()
+/**
+ * If needed, add a new hospital or a new church.
+ * @param pos Center position of the new hospital or church.
+ */
+void Micropolis::makeHospital(const Position &pos)
 {
     if (needHospital > 0) {
-        zonePlop(Position(curMapX, curMapY), HOSPITAL - 4);
+        zonePlop(pos, HOSPITAL - 4);
         needHospital = 0;
         return;
     }
 
     if (needChurch > 0) {
-        zonePlop(Position(curMapX, curMapY), CHURCH - 4);
+        zonePlop(pos, CHURCH - 4);
         needChurch = 0;
         return;
     }
@@ -302,7 +313,6 @@ bool Micropolis::zonePlop(const Position &pos, int base)
         base++;
     }
 
-    curNum = map[pos.posX][pos.posY];
     setZonePower(pos);
     map[pos.posX][pos.posY] |= ZONEBIT + BULLBIT;
 
@@ -358,7 +368,13 @@ bool Micropolis::setZonePower(const Position &pos)
 }
 
 
-void Micropolis::buildHouse(int value)
+/**
+ * Try to build a house at the zone at \a pos.
+ * @param pos Center tile of the zone.
+ * @param value Value to build (land value?)
+ * @todo Have some form of looking around the center tile (like getFromMap())
+ */
+void Micropolis::buildHouse(const Position &pos, int value)
 {
     short z, score, hscore, BestLoc;
     static short ZeX[9] = { 0,-1, 0, 1,-1, 1,-1, 0, 1};
@@ -368,13 +384,14 @@ void Micropolis::buildHouse(int value)
     hscore = 0;
 
     for (z = 1; z < 9; z++) {
-        int xx = curMapX + ZeX[z];
-        int yy = curMapY + ZeY[z];
+        int xx = pos.posX + ZeX[z];
+        int yy = pos.posY + ZeY[z];
 
         if (testBounds(xx, yy)) {
 
             score = evalLot(xx, yy);
 
+            /// @bug score is never 0 !!
             if (score != 0) {
 
                 if (score > hscore) {
@@ -382,7 +399,10 @@ void Micropolis::buildHouse(int value)
                     BestLoc = z;
                 }
 
-                if ((score == hscore) && !(getRandom16() & 7)) {
+                /// @todo Move the code below to a better place.
+                ///       If we just updated hscore above, we could
+                //        trigger this code too.
+                if (score == hscore && !(getRandom16() & 7)) {
                     BestLoc = z;
                 }
 
@@ -393,18 +413,22 @@ void Micropolis::buildHouse(int value)
     }
 
     if (BestLoc) {
-        int xx = curMapX + ZeX[BestLoc];
-        int yy = curMapY + ZeY[BestLoc];
+        int xx = pos.posX + ZeX[BestLoc];
+        int yy = pos.posY + ZeY[BestLoc];
 
         if (testBounds(xx, yy)) {
-            map[xx][yy] =
-                HOUSE + BLBNCNBIT + getRandom(2) + (value * 3);
+            /// @todo Is HOUSE the proper constant here?
+            map[xx][yy] = HOUSE + BLBNCNBIT + getRandom(2) + value * 3;
         }
 
     }
 }
 
 
+/**
+ * Evaluate suitability of the position for placing a new house.
+ * @return Suitability.
+ */
 short Micropolis::evalLot(int x, int y)
 {
     short z, score;
@@ -434,39 +458,46 @@ short Micropolis::evalLot(int x, int y)
     return score;
 }
 
-void Micropolis::doResidential(int ZonePwrFlg)
+/**
+ * Handle residential zone.
+ * @param pos Center tile of the residential zone.
+ * @param zonePwrFlg Does the zone have power?
+ */
+void Micropolis::doResidential(const Position &pos, int zonePwrFlg)
 {
     short tpop, zscore, locvalve, value, TrfGood;
 
     resZonePop++;
 
-    if (curTile == FREEZ) {
-        tpop = doFreePop(Position(curMapX, curMapY));
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
+    if (tile == FREEZ) {
+        tpop = doFreePop(pos);
     } else {
-        tpop = getResZonePop(curTile);
+        tpop = getResZonePop(tile);
     }
 
     resPop += tpop;
 
     if (tpop > getRandom(35)) {
         /* Try driving from residential to commercial */
-        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_COMMERCIAL);
+        TrfGood = makeTraffic(pos, ZT_COMMERCIAL);
     } else {
         TrfGood = 1;
     }
 
     if (TrfGood == -1) {
-        value = getLandPollutionValue(Position(curMapX, curMapY));
-        doResOut(tpop, value);
+        value = getLandPollutionValue(pos);
+        doResOut(pos, tpop, value);
         return;
     }
 
-    if (curTile == FREEZ || !(getRandom16() & 7)) {
+    if (tile == FREEZ || !(getRandom16() & 7)) {
 
-        locvalve = evalRes(TrfGood);
+        locvalve = evalRes(pos, TrfGood);
         zscore = resValve + locvalve;
 
-        if (!ZonePwrFlg) {
+        if (!zonePwrFlg) {
             zscore = -500;
         }
 
@@ -474,47 +505,51 @@ void Micropolis::doResidential(int ZonePwrFlg)
             ((short)(zscore - 26380) > ((short)getRandom16Signed()))) {
 
             if (!tpop && !(getRandom16() & 3)) {
-                makeHospital();
+                makeHospital(pos);
                 return;
             }
 
-            value = getLandPollutionValue(Position(curMapX, curMapY));
-            doResIn(tpop, value);
-
+            value = getLandPollutionValue(pos);
+            doResIn(pos, tpop, value);
             return;
         }
 
         if (zscore < 350 &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue(Position(curMapX, curMapY));
-            doResOut(tpop, value);
+            value = getLandPollutionValue(pos);
+            doResOut(pos, tpop, value);
         }
-
     }
-
 }
 
 
-/** Perform residential immigration into current tile. */
-void Micropolis::doResIn(int pop, int value)
+/**
+ * Perform residential immigration into the current residential tile.
+ * @param pos Position of the tile.
+ * @param pop Population ?
+ * @param value Land value corrected for pollution.
+ */
+void Micropolis::doResIn(const Position &pos, int pop, int value)
 {
-    short pollution = pollutionDensityMap.worldGet(curMapX, curMapY);
+    short pollution = pollutionDensityMap.worldGet(pos.posX, pos.posY);
 
     if (pollution > 128) {
         return;
     }
 
-    if (curTile == FREEZ) {
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
+    if (tile == FREEZ) {
 
         if (pop < 8) {
-            buildHouse(value);
-            incRateOfGrowth(Position(curMapX, curMapY), 1);
+            buildHouse(pos, value);
+            incRateOfGrowth(pos, 1);
             return;
         }
 
-        if (populationDensityMap.worldGet(curMapX, curMapY) > 64) {
-            resPlop(0, value);
-            incRateOfGrowth(Position(curMapX, curMapY), 8);
+        if (populationDensityMap.worldGet(pos.posX, pos.posY) > 64) {
+            resPlop(pos, 0, value);
+            incRateOfGrowth(pos, 8);
             return;
         }
 
@@ -522,33 +557,39 @@ void Micropolis::doResIn(int pop, int value)
     }
 
     if (pop < 40) {
-        resPlop((pop / 8) - 1, value);
-        incRateOfGrowth(Position(curMapX, curMapY), 8);
+        resPlop(pos, (pop / 8) - 1, value);
+        incRateOfGrowth(pos, 8);
     }
 
 }
 
 
-void Micropolis::doResOut(int pop, int value)
+/**
+ * Perform residential emigration from the current residential tile.
+ * @param pos Position of the tile.
+ * @param pop Population ?
+ * @param value Land value corrected for pollution.
+ */
+void Micropolis::doResOut(const Position &pos, int pop, int value)
 {
     static short Brdr[9] = {0,3,6,1,4,7,2,5,8};
-    register short x, y, loc, z;
+    short x, y, loc, z;
 
     if (!pop) {
         return;
     }
 
     if (pop > 16) {
-        resPlop((pop - 24) / 8, value);
-        incRateOfGrowth(Position(curMapX, curMapY), -8);
+        resPlop(pos, (pop - 24) / 8, value);
+        incRateOfGrowth(pos, -8);
         return;
     }
 
     if (pop == 16) {
-        incRateOfGrowth(Position(curMapX, curMapY), -8);
-        map[curMapX][curMapY] = (FREEZ | BLBNCNBIT | ZONEBIT);
-        for (x = curMapX - 1; x <= curMapX + 1; x++) {
-            for (y = curMapY - 1; y <= curMapY + 1; y++) {
+        incRateOfGrowth(pos, -8);
+        map[pos.posX][pos.posY] = (FREEZ | BLBNCNBIT | ZONEBIT);
+        for (x = pos.posX - 1; x <= pos.posX + 1; x++) {
+            for (y = pos.posY - 1; y <= pos.posY + 1; y++) {
                 if (testBounds(x, y)) {
                     if ((map[x][y] & LOMASK) != FREEZ) {
                         map[x][y] = LHTHR + value + getRandom(2) + BLBNCNBIT;
@@ -559,10 +600,10 @@ void Micropolis::doResOut(int pop, int value)
     }
 
     if (pop < 16) {
-        incRateOfGrowth(Position(curMapX, curMapY), -1);
+        incRateOfGrowth(pos, -1);
         z = 0;
-        for (x = curMapX - 1; x <= curMapX + 1; x++) {
-            for (y = curMapY - 1; y <= curMapY + 1; y++) {
+        for (x = pos.posX - 1; x <= pos.posX + 1; x++) {
+            for (y = pos.posY - 1; y <= pos.posY + 1; y++) {
                 if (testBounds(x, y)) {
                     loc = map[x][y] & LOMASK;
                     if ((loc >= LHTHR) && (loc <= HHTHR)) {
@@ -574,7 +615,6 @@ void Micropolis::doResOut(int pop, int value)
             }
         }
     }
-
 }
 
 
@@ -595,19 +635,23 @@ short Micropolis::getResZonePop(MapTile mapTile)
 
 /**
  * Put down a residential zone.
+ * @param pos Center tile of the residential zone.
  * @param den Population density (0..3)
  * @param value Land value - pollution (0..3), higher is better.
  */
-void Micropolis::resPlop(int den, int value)
+void Micropolis::resPlop(const Position &pos, int den, int value)
 {
     short base;
 
     base = ((value * 4 + den) * 9) + RZB - 4;
-    zonePlop(Position(curMapX, curMapY), base);
+    zonePlop(pos, base);
 }
 
 
-short Micropolis::evalRes(int traf)
+/**
+ * Evaluate residential zone.
+ */
+short Micropolis::evalRes(const Position &pos, int traf)
 {
     short value;
 
@@ -615,8 +659,8 @@ short Micropolis::evalRes(int traf)
         return -3000;
     }
 
-    value =  landValueMap.worldGet(curMapX, curMapY);
-    value -= pollutionDensityMap.worldGet(curMapX, curMapY);
+    value =  landValueMap.worldGet(pos.posX, pos.posY);
+    value -= pollutionDensityMap.worldGet(pos.posX, pos.posY);
 
     if (value < 0) {
         value = 0;          /* Cap at 0 */
@@ -630,49 +674,57 @@ short Micropolis::evalRes(int traf)
 }
 
 
-void Micropolis::doCommercial(int ZonePwrFlg)
+/**
+ * Handle commercial zone.
+ * @param pos        Position of the commercial zone.
+ * @param zonePwrFlg Does the zone have power?
+ * @todo Make zonePwrFlg a boolean.
+ */
+void Micropolis::doCommercial(const Position &pos, int zonePwrFlg)
 {
     short tpop, TrfGood;
     short zscore, locvalve, value;
 
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
     comZonePop++;
-    tpop = getComZonePop(curTile);
+    tpop = getComZonePop(tile);
     comPop += tpop;
 
     if (tpop > getRandom(5)) {
         /* Try driving from commercial to industrial */
-        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_INDUSTRIAL);
+        TrfGood = makeTraffic(pos, ZT_INDUSTRIAL);
     } else {
         TrfGood = 1;
     }
 
     if (TrfGood == -1) {
-        value = getLandPollutionValue(Position(curMapX, curMapY));
-        doComOut(tpop, value);
+        value = getLandPollutionValue(pos);
+        doComOut(pos, tpop, value);
         return;
     }
 
     if (!(getRandom16() & 7)) {
 
-        locvalve = evalCom(TrfGood);
+        locvalve = evalCom(pos, TrfGood);
         zscore = comValve + locvalve;
 
-        if (!ZonePwrFlg) {
+        if (!zonePwrFlg) {
             zscore = -500;
         }
 
         if (TrfGood &&
             (zscore > -350) &&
             (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue(Position(curMapX, curMapY));
-            doComIn(tpop, value);
+            value = getLandPollutionValue(pos);
+            doComIn(pos, tpop, value);
             return;
         }
 
         if ((zscore < 350) &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            value = getLandPollutionValue(Position(curMapX, curMapY));
-            doComOut(tpop, value);
+            value = getLandPollutionValue(pos);
+            doComOut(pos, tpop, value);
         }
 
     }
@@ -680,11 +732,17 @@ void Micropolis::doCommercial(int ZonePwrFlg)
 }
 
 
-void Micropolis::doComIn(int pop, int value)
+/**
+ * Handle immigration of commercial zone.
+ * @param pos Position of the commercial zone.
+ * @param pop Population ?
+ * @param value Land value corrected for pollution.
+ */
+void Micropolis::doComIn(const Position &pos, int pop, int value)
 {
-    register short z;
+    short z;
 
-    z = landValueMap.worldGet(curMapX, curMapY);
+    z = landValueMap.worldGet(pos.posX, pos.posY);
     z = z >>5;
 
     if (pop > z) {
@@ -692,48 +750,69 @@ void Micropolis::doComIn(int pop, int value)
     }
 
     if (pop < 5) {
-        comPlop(pop, value);
-        incRateOfGrowth(Position(curMapX, curMapY), 8);
+        comPlop(pos, pop, value);
+        incRateOfGrowth(pos, 8);
     }
 }
 
-
-void Micropolis::doComOut(int pop, int value)
+/**
+ * Handle emigration of commercial zone.
+ * @param pos Position of the commercial zone.
+ * @param pop Population ?
+ * @param value Land value corrected for pollution.
+ */
+void Micropolis::doComOut(const Position &pos, int pop, int value)
 {
     if (pop > 1) {
-        comPlop(pop - 2, value);
-        incRateOfGrowth(Position(curMapX, curMapY), -8);
+        comPlop(pos, pop - 2, value);
+        incRateOfGrowth(pos, -8);
         return;
     }
 
     if (pop == 1) {
-        zonePlop(Position(curMapX, curMapY), COMBASE);
-        incRateOfGrowth(Position(curMapX, curMapY), -8);
+        zonePlop(pos, COMBASE);
+        incRateOfGrowth(pos, -8);
     }
 }
 
 
+/**
+ * Get commercial zone population number.
+ * @param tile Tile of the commercial zone.
+ * @return Population number of the zone.
+ */
 short Micropolis::getComZonePop(MapTile tile)
 {
     if (tile == COMCLR) {
-        return (0);
+        return 0;
     }
 
-    short CzDen = (((tile - CZB) / 9) % 5) + 1;
+    short CzDen = ((tile - CZB) / 9) % 5 + 1;
     return CzDen;
 }
 
 
-void Micropolis::comPlop(int Den, int Value)
+/**
+ * Build a commercial zone.
+ * @param pos Position of the commercial zone.
+ * @param Den Density
+ * @param Value Land value corrected for pollution.
+ */
+void Micropolis::comPlop(const Position &pos, int Den, int Value)
 {
     short base;
 
-    base = (((Value * 5) + Den) * 9) + CZB - 4;
-    zonePlop(Position(curMapX, curMapY), base);
+    base = ((Value * 5) + Den) * 9 + CZB - 4;
+    zonePlop(pos, base);
 }
 
 
-short Micropolis::evalCom(int traf)
+/**
+ * Compute evaluation of a commercial zone.
+ * @param traf Result if traffic attempt.
+ * @return Evaluation value of the commercial zone.
+ */
+short Micropolis::evalCom(const Position &pos, int traf)
 {
     short Value;
 
@@ -741,56 +820,68 @@ short Micropolis::evalCom(int traf)
         return -3000;
     }
 
-    Value = comRateMap.worldGet(curMapX, curMapY);
+    Value = comRateMap.worldGet(pos.posX, pos.posY);
 
     return Value;
 }
 
 
-void Micropolis::doIndustrial(int ZonePwrFlg)
+/**
+ * Handle industrial zone.
+ * @param pos Position of the industrial zone.
+ * @param zonePwrFlg Does the zone have power?
+ * @todo Make zonePwrFlg a boolean.
+ */
+void Micropolis::doIndustrial(const Position &pos, int zonePwrFlg)
 {
     short tpop, zscore, TrfGood;
 
+    MapTile tile = map[pos.posX][pos.posY] & LOMASK;
+
     indZonePop++;
-    setSmoke(Position(curMapX, curMapY), ZonePwrFlg);
-    tpop = getIndZonePop(curTile);
+    setSmoke(pos, zonePwrFlg);
+    tpop = getIndZonePop(tile);
     indPop += tpop;
 
     if (tpop > getRandom(5)) {
         /* Try driving from industrial to residential */
-        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_RESIDENTIAL);
+        TrfGood = makeTraffic(pos, ZT_RESIDENTIAL);
     } else {
         TrfGood = 1;
     }
 
     if (TrfGood == -1) {
-        doIndOut(Position(curMapX, curMapY), tpop, getRandom16() & 1);
+        doIndOut(pos, tpop, getRandom16() & 1);
         return;
     }
 
     if (!(getRandom16() & 7)) {
         zscore = indValve + evalInd(TrfGood);
 
-        if (!ZonePwrFlg) {
+        if (!zonePwrFlg) {
             zscore = -500;
         }
 
         if (zscore > -350 &&
             (((short)(zscore - 26380)) > ((short)getRandom16Signed()))) {
-            doIndIn(Position(curMapX, curMapY), tpop, getRandom16() & 1);
+            doIndIn(pos, tpop, getRandom16() & 1);
             return;
         }
 
         if (zscore < 350 &&
             (((short)(zscore + 26380)) < ((short)getRandom16Signed()))) {
-            doIndOut(Position(curMapX, curMapY), tpop, getRandom16() & 1);
+            doIndOut(pos, tpop, getRandom16() & 1);
         }
-
     }
-
 }
 
 
+/**
+ * Handle immigration of industrial zone.
+ * @param pos   Position of the center tile of the industrial tile.
+ * @param pos   Population value of the industrial zone.
+ * @param value Random land value (it seems).
+ */
 void Micropolis::doIndIn(const Position &pos, int pop, int value)
 {
     if (pop < 4) {
@@ -799,7 +890,12 @@ void Micropolis::doIndIn(const Position &pos, int pop, int value)
     }
 }
 
-
+/**
+ * Handle industrial zone emigration.
+ * @param pos   Position of the center tile of the industrial tile.
+ * @param pos   Population value of the industrial zone.
+ * @param value Random land value (it seems).
+ */
 void Micropolis::doIndOut(const Position &pos, int pop, int value)
 {
     if (pop > 1) {
@@ -815,6 +911,11 @@ void Micropolis::doIndOut(const Position &pos, int pop, int value)
 }
 
 
+/**
+ * Get the population value for the given industrial tile.
+ * @param tile Center tile value of the industrial zone.
+ * @return Population value.
+ */
 short Micropolis::getIndZonePop(MapTile tile)
 {
     if (tile == INDCLR) {
@@ -838,6 +939,11 @@ void Micropolis::indPlop(const Position &pos, int den, int value)
 }
 
 
+/**
+ * Compute evaluation of an industrial zone.
+ * @param traf Result if traffic attempt.
+ * @return Evaluation value of the industrial zone.
+ */
 short Micropolis::evalInd(int traf)
 {
     if (traf < 0) {

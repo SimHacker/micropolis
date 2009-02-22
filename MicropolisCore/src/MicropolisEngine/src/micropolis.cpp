@@ -113,18 +113,6 @@ void Micropolis::init()
     // allocate.cpp
 
 
-    // short curMapX;
-    curMapX = 0;
-
-    // short curMapY;
-    curMapY = 0;
-
-    // short curNum;
-    curNum = 0;
-
-    // short curTile;
-    curTile = 0;
-
     // short roadTotal;
     roadTotal = 0;
 

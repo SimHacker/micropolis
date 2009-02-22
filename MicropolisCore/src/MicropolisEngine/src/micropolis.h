@@ -1442,36 +1442,8 @@ public:
 
     //@}
 
+
 private:
-
-
-    /**
-     * Communication variable with map scan x position.
-     *
-     * Used all over.
-     */
-    short curMapX;
-
-    /**
-     * Communication variable with map scan y position.
-     *
-     * Used all over.
-     */
-    short curMapY;
-
-    /**
-     * Current number at curMapX, curMapY, raw.
-     *
-     * Used all over.
-     */
-    short curNum;
-
-    /**
-     * Current tile at curMapX, curMapY, the number masked with TILEMASK.
-     *
-     * Used all over.
-     */
-    short curTile;
 
     /**
      * Need hospital?
@@ -1627,7 +1599,7 @@ public:
 
     bool vulnerable(int tem);
 
-    void doFlood();
+    void doFlood(const Position &pos);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2273,7 +2245,7 @@ private:
 
     void populationDensityScan();
 
-    int getPopulationDensity(MapTile tile);
+    int getPopulationDensity(const Position &pos, MapTile tile);
 
     void pollutionTerrainLandValueScan();
 
@@ -2389,19 +2361,19 @@ private:
 
     void mapScan(int x1, int x2);
 
-    void doRail();
+    void doRail(const Position &pos);
 
-    void doRadTile();
+    void doRadTile(const Position &pos);
 
-    void doRoad();
+    void doRoad(const Position &pos);
 
-    bool doBridge();
+    bool doBridge(const Position &pos, MapTile tile);
 
-    int getBoatDistance();
+    int getBoatDistance(const Position &pos);
 
-    void doFire();
+    void doFire(const Position &pos);
 
-    void fireZone(int Xloc, int Yloc, int ch);
+    void fireZone(const Position &pos, MapValue ch);
 
     void repairZone(const Position &pos, MapTile zCent, short zSize);
 
@@ -2992,13 +2964,13 @@ private:
 private:
 
 
-    void doZone();
+    void doZone(const Position &pos);
 
-    void doHospitalChurch();
+    void doHospitalChurch(const Position &pos);
 
     void setSmoke(const Position &pos, int zonePower);
 
-    void makeHospital();
+    void makeHospital(const Position &pos);
 
     short getLandPollutionValue(const Position &pos);
 
@@ -3010,35 +2982,39 @@ private:
 
     bool setZonePower(const Position& pos);
 
-    void buildHouse(int value);
+    void buildHouse(const Position &pos, int value);
 
     short evalLot(int x, int y);
 
-    void doResidential(int ZonePwrFlg);
+    void doResidential(const Position &pos, int zonePwrFlg);
 
-    void doResIn(int pop, int value);
+    void doResIn(const Position &pos, int pop, int value);
 
-    void doResOut(int pop, int value);
+    void doResOut(const Position &pos, int pop, int value);
 
     short getResZonePop(MapTile mapTile);
 
-    void resPlop(int Den, int Value);
+    void resPlop(const Position &pos, int Den, int Value);
 
-    short evalRes(int traf);
+    short evalRes(const Position &pos, int traf);
 
-    void doCommercial(int ZonePwrFlg);
+    // Commercial zone handling
 
-    void doComIn(int pop, int value);
+    void doCommercial(const Position &pos, int zonePwrFlg);
 
-    void doComOut(int pop, int value);
+    void doComIn(const Position &pos, int pop, int value);
+
+    void doComOut(const Position &pos, int pop, int value);
 
     short getComZonePop(MapTile tile);
 
-    void comPlop(int Den, int Value);
+    void comPlop(const Position &pos, int Den, int Value);
 
-    short evalCom(int traf);
+    short evalCom(const Position &pos, int traf);
 
-    void doIndustrial(int ZonePwrFlg);
+    // Industrial zone handling
+
+    void doIndustrial(const Position &pos, int zonePwrFlg);
 
     void doIndIn(const Position &pos, int pop, int value);
 
