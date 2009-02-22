@@ -204,7 +204,7 @@ void Micropolis::doPowerScan()
                     conNum++;
                     anyDir = dir;
                 }
-                dir = rotate90(dir);
+                dir = increment90(dir);
             }
             if (conNum > 1) {
                 pushPowerStack(pos);

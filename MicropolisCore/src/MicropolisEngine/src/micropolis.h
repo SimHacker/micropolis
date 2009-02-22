@@ -888,11 +888,23 @@ static inline T absoluteValue(const T val)
 #define LENGTH_OF(array) (sizeof(array) / sizeof((array)[0]))
 
 /**
- * Give a fatal error and exit
+ * Give a fatal error and exit.
  */
 #define NOT_REACHED() not_reached(__LINE__, __FILE__)
 
-void not_reached(int line, const char *fname);
+
+/**
+ * Give a fatal error and exit the program.
+ * @param line  Source line number of the fatal error.
+ * @param fname Filename of the source file.
+ * @return Does not return to the caller.
+ * @todo Generalize error handling/exiting of the simulator.
+ */
+static inline void not_reached(int line, const char *fname)
+{
+    fprintf(stderr, "Code unexpectedly executed at line %d, at file %s\n", line, fname);
+    exit(1);
+}
 
 
 ////////////////////////////////////////////////////////////////////////
