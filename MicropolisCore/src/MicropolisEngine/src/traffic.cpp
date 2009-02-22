@@ -82,37 +82,23 @@
  */
 short Micropolis::makeTraffic(ZoneType dest)
 {
-    short xtem, ytem;
-
-    xtem = curMapX; // Temporarily save curMapX
-    ytem = curMapY; // Temporarily save curMapY
     curMapStackPointer = 0; // Clear position stack
 
+    Position pos(curMapX, curMapY);
+
 #if 0
-      if ((!getRandom(2)) && findPermeterTelecom()) {
+      if ((!getRandom(2)) && findPerimeterTelecom(pos)) {
         /* printf("Telecom!\n"); */
         return 1;
       }
 #endif
 
-    Position pos(curMapX, curMapY);
-    bool found = findPerimeterRoad(&pos);
-    if (found) {
-        curMapX = pos.posX;
-        curMapY = pos.posY;
-    }
+    if (findPerimeterRoad(&pos)) { /* look for road on zone perimeter */
 
-    if (found) {            /* look for road on zone perimeter */
-
-        if (tryDrive(dest)) {     /* attempt to drive somewhere */
+        if (tryDrive(pos, dest)) { /* attempt to drive somewhere */
             setTrafficMap();      /* if sucessful, inc trafdensity */
-            curMapX = xtem;
-            curMapY = ytem;
             return 1;             /* traffic passed */
         }
-
-        curMapX = xtem;
-        curMapY = ytem;
 
         return 0;                 /* traffic failed */
     } else {
@@ -225,11 +211,13 @@ bool Micropolis::findPerimeterRoad(Position *pos)
 
 
 /**
- * Find a telecom connection at the perimeter
- * @return Indication that a telecom connection has been found
- * @pre  curMapX and curMapY contain the starting coordinates
+ * Find a telecom connection at the perimeter.
+ * @param pos Position to start searching.
+ * @return A telecom connection has been found.
+ *
+ * @todo Decide whether we want telecomm code.
  */
-bool Micropolis::findPerimeterTelecom()
+bool Micropolis::findPerimeterTelecom(const Position &pos)
 {
     /* look for telecom on edges of zone */
     static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
@@ -238,8 +226,8 @@ bool Micropolis::findPerimeterTelecom()
 
     for (short z = 0; z < 12; z++) {
 
-        tx = curMapX + PerimX[z];
-        ty = curMapY + PerimY[z];
+        tx = pos.posX + PerimX[z];
+        ty = pos.posX + PerimY[z];
 
         if (testBounds(tx, ty)) {
 
@@ -256,22 +244,25 @@ bool Micropolis::findPerimeterTelecom()
 
 /**
  * Try to drive to a destination.
+ * @param startPos Starting position.
  * @param destZone Zonetype to drive to.
  * @return Was drive succesful?
- * @post Position stack (curMapStackX, curMapStackY, curMapStackPointer)
- *       is filled with some intermediate positions of the drive
- * @todo Find out why the stack is popped, but curMapX and curMapY are not updated
+ * @post Position stack (curMapStackXY) is filled with some intermediate
+ *       positions of the drive.
+ *
+ * @bug The stack is popped, but position is not updated.
  */
-bool Micropolis::tryDrive(ZoneType destZone)
+bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
 {
-    short dist;
+    Direction2 dirLast = DIR2_INVALID;
+    Position drivePos(startPos);
 
-    Direction dirLast = DIR_INVALID;
-    for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
+    /* Maximum distance to try */
+    for (short dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {
 
-        if (tryGo(&dirLast, dist)) { /* if it got a road */
+        if (tryGo(&drivePos, &dirLast, dist)) { /* if it got a road */
 
-            if (driveDone(Position(curMapX, curMapY), destZone)) { /* if destination is reached */
+            if (driveDone(drivePos, destZone)) { /* if destination is reached */
                 return true; /* pass */
             }
 
@@ -293,34 +284,43 @@ bool Micropolis::tryDrive(ZoneType destZone)
 
 /**
  * Try to drive one tile in a random direction.
+ * @param pos     Current position. Updated by function.
  * @param dirLast Last direction traveled in. Updated by the function.
- * @param dist Distance traveled.
+ * @param dist    Distance traveled.
  * @return A move has been made.
  */
-bool Micropolis::tryGo(Direction *dirLast, int dist)
+bool Micropolis::tryGo(Position *pos, Direction2 *dirLast, int dist)
 {
-    short dir, dirRandom;
-    Direction dirReal;
+    Direction2 dirReal;
 
-    dirRandom = getRandom16() & 3;
+    // Initialize to a random direction.
+    switch(getRandom16() & 3) {
+        case 0: dirReal = DIR2_NORTH; break;
+        case 1: dirReal = DIR2_EAST; break;
+        case 2: dirReal = DIR2_SOUTH; break;
+        case 3: dirReal = DIR2_WEST; break;
+        default:
+            NOT_REACHED();
+            dirReal = DIR2_NORTH; // to keep the compiler happy.
+    }
 
-    for (dir = dirRandom; dir < (dirRandom + 4); dir++) { /* for the 4 directions */
+    for (int i = 0; i < 4; i++) { /* for the 4 directions */
 
-        dirReal = (Direction)(dir & 3);
+        dirReal = rotate90(dirReal); // Rotate direction.
 
         if (dirReal == *dirLast) {
             continue; /* skip last direction */
         }
 
-        if (roadTest(getFromMap(Position(curMapX, curMapY), dirReal))) {
-            moveMapSim(dirReal);
-            *dirLast = reverseDirection(dirReal);
+        if (roadTest(getFromMap(*pos, dirReal))) {
+            pos->move(dirReal); // Found road, move forward.
+            *dirLast = rotate180(dirReal); // Don't allow moving back.
 
             if (dist & 1) {
                 /* Save pos every other move.
                  * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
                  */
-                pushPos(Position(curMapX, curMapY));
+                pushPos(*pos);
             }
 
             return true;
@@ -338,32 +338,32 @@ bool Micropolis::tryGo(Direction *dirLast, int dist)
  * @return The tile in the indicated direction. If tile is off-world or an
  *         incorrect direction is given, \c DIRT is returned.
  */
-MapTile Micropolis::getFromMap(const Position &pos, Direction d)
+MapTile Micropolis::getFromMap(const Position &pos, Direction2 dir)
 {
-    switch (d) {
+    switch (dir) {
 
-        case DIR_NORTH:
+        case DIR2_NORTH:
             if (pos.posY > 0) {
               return map[pos.posX][pos.posY - 1] & LOMASK;
             }
 
             return DIRT;
 
-        case DIR_EAST:
+        case DIR2_EAST:
             if (pos.posX < WORLD_W - 1) {
               return map[pos.posX + 1][pos.posY] & LOMASK;
             }
 
             return DIRT;
 
-        case DIR_SOUTH:
+        case DIR2_SOUTH:
             if (pos.posY < WORLD_H - 1) {
               return map[pos.posX][pos.posY + 1] & LOMASK;
             }
 
             return DIRT;
 
-        case DIR_WEST:
+        case DIR2_WEST:
             if (pos.posX > 0) {
               return map[pos.posX - 1][pos.posY] & LOMASK;
             }

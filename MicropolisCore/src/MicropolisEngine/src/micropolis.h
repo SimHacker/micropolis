@@ -2859,13 +2859,13 @@ private:
 
     bool findPerimeterRoad(Position *pos);
 
-    bool findPerimeterTelecom();
+    bool findPerimeterTelecom(const Position &pos);
 
-    bool tryDrive(ZoneType destZone);
+    bool tryDrive(const Position &startPos, ZoneType destZone);
 
-    bool tryGo(Direction *dirLast, int dist);
+    bool tryGo(Position *pos, Direction2 *dirLast, int dist);
 
-    MapTile getFromMap(const Position &pos, Direction d);
+    MapTile getFromMap(const Position &pos, Direction2 d);
 
     bool driveDone(const Position &pos, ZoneType destZone);
 
