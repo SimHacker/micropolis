@@ -740,20 +740,6 @@ enum Scenario {
     SC_COUNT,          ///< Number of scenarios
 };
 
-///////////////////////////////////////////////////
-// Directions
-
-/** Directions on the map */
-enum Direction {
-    DIR_NORTH, ///< North (0, -1)
-    DIR_EAST,  ///< East  (+1, 0)
-    DIR_SOUTH, ///< South (0, +1)
-    DIR_WEST,  ///< West  (-1, 0)
-
-    DIR_DIR4,
-
-    DIR_INVALID ///< Invalid direction (to 'nowhere')
-};
 
 ///////////////////////////////////////////////////
 // Zones
@@ -2791,16 +2777,6 @@ private:
     short trafMaxX; ///< X coordinate of a position with heavy traffic
     short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
-
-    /**
-     * Return reverse direction.
-     * @param d Direction to reverse.
-     * @return Reversed direction.
-     */
-    inline Direction reverseDirection(Direction d)
-    {
-        return (Direction)((d + 2) & 0x3);
-    };
 
     /**
      * Remove road from the tile.
