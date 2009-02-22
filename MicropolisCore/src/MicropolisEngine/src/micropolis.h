@@ -2855,9 +2855,9 @@ private:
 
     bool tryGo(int dist);
 
-    short getFromMap(Direction d);
+    MapTile getFromMap(const Position &pos, Direction d);
 
-    bool driveDone(ZoneType destZone);
+    bool driveDone(const Position &pos, ZoneType destZone);
 
     bool roadTest(MapValue tile);
 
