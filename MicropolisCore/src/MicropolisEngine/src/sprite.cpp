@@ -1959,16 +1959,15 @@ void Micropolis::makeMonsterAt(int x, int y)
  * Ensure a helicopter sprite exists.
  *
  * If it does not exist, create one at the given coordinates.
- * @param x X coordinate in map coordinate.
- * @param y Y coordinate in map coordinate.
+ * @param pos Start position in map coordinates.
  */
-void Micropolis::generateCopter(int x, int y)
+void Micropolis::generateCopter(const Position &pos)
 {
     if (getSprite(SPRITE_HELICOPTER) != NULL) {
         return;
     }
 
-    makeSprite(SPRITE_HELICOPTER, (x << 4), (y << 4) + 30);
+    makeSprite(SPRITE_HELICOPTER, (pos.posX << 4), (pos.posY << 4) + 30);
 }
 
 
@@ -1976,16 +1975,15 @@ void Micropolis::generateCopter(int x, int y)
  * Ensure an airplane sprite exists.
  *
  * If it does not exist, create one at the given coordinates.
- * @param x X coordinate in map coordinate.
- * @param y Y coordinate in map coordinate.
+ * @param pos Start position in map coordinates.
  */
-void Micropolis::generatePlane(int x, int y)
+void Micropolis::generatePlane(const Position &pos)
 {
     if (getSprite(SPRITE_AIRPLANE) != NULL) {
         return;
     }
 
-    makeSprite(SPRITE_AIRPLANE, (x <<4) + 48, (y <<4) + 12);
+    makeSprite(SPRITE_AIRPLANE, (pos.posX <<4) + 48, (pos.posY <<4) + 12);
 }
 
 

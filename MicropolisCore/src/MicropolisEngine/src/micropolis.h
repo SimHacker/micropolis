@@ -1094,11 +1094,7 @@ public:
 
     short hospitalPop; ///< Number of hospitals.
     short churchPop; ///< Number of churches.
-
-    /**
-     * Stadium population.
-     */
-    short stadiumPop;
+    short stadiumPop; ///< Number of stadiums.
 
     /**
      * Police station population.
@@ -2411,9 +2407,9 @@ private:
 
     void doSpecialZone(bool PwrOn);
 
-    void drawStadium(int z);
+    void drawStadium(const Position &center, MapTile z);
 
-    void doAirport();
+    void doAirport(const Position &pos);
 
     void coalSmoke(const Position &pos);
 
@@ -2511,9 +2507,9 @@ public:
 
     void makeMonsterAt(int x, int y);
 
-    void generateCopter(int x, int y);
+    void generateCopter(const Position &pos);
 
-    void generatePlane(int x, int y);
+    void generatePlane(const Position &pos);
 
     void makeTornado();
 
