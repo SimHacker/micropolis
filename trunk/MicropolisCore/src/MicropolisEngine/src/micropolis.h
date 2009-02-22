@@ -2805,9 +2805,10 @@ private:
 private:
 
     /* Position stack */
-    short curMapStackPointer; ///< Position stack top pointer, points to top position
-    short curMapStackX[MAX_TRAFFIC_DISTANCE + 1]; ///< X positions
-    short curMapStackY[MAX_TRAFFIC_DISTANCE + 1]; ///< Y positions
+
+    /** Position stack top pointer, points to top position. */
+    short curMapStackPointer;
+    Position curMapStackXY[MAX_TRAFFIC_DISTANCE + 1]; ///< Position stack.
 
     Direction dirLast; ///< Last moved direction
 
@@ -2842,9 +2843,9 @@ private:
 
     void setTrafficMap();
 
-    void pushPos();
+    void pushPos(const Position &pos);
 
-    void pullPos();
+    Position pullPos();
 
     bool findPerimeterRoad();
 
