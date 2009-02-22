@@ -353,29 +353,29 @@ void Micropolis::makeFlood()
 
 
 /**
- * Flood around the (curMapX, curMapY) tile
- * @todo Use Direction and some form of XYPosition class here
+ * Flood around the given position.
+ * @param pos Position around which to flood further.
+ * @todo Use some form of rotating around a position.
  */
-void Micropolis::doFlood()
+void Micropolis::doFlood(const Position& pos)
 {
     static const short Dx[4] = {  0,  1,  0, -1 };
     static const short Dy[4] = { -1,  0,  1,  0 };
-    register short z, c, xx, yy, t;
 
     if (floodCount > 0) {
         // Flood is not over yet
-        for (z = 0; z < 4; z++) {
+        for (int z = 0; z < 4; z++) {
             if ((getRandom16() & 7) == 0) { // 12.5% chance
-                xx = curMapX + Dx[z];
-                yy = curMapY + Dy[z];
+                int xx = pos.posX + Dx[z];
+                int yy = pos.posY + Dy[z];
                 if (testBounds(xx, yy)) {
-                    c = map[xx][yy];
-                    t = c & LOMASK;
+                    MapValue c = map[xx][yy];
+                    MapTile t = c & LOMASK;
 
                     if ((c & BURNBIT) == BURNBIT || c == DIRT
                                             || (t >= WOODS5 && t < FLOOD)) {
                         if ((c & ZONEBIT) == ZONEBIT) {
-                            fireZone(xx, yy, c);
+                            fireZone(Position(xx, yy), c);
                         }
                         map[xx][yy] = FLOOD + getRandom(2);
                     }
@@ -384,7 +384,7 @@ void Micropolis::doFlood()
          }
     } else {
         if ((getRandom16() & 15) == 0) { // 1/16 chance
-            map[curMapX][curMapY] = DIRT;
+            map[pos.posX][pos.posY] = DIRT;
         }
     }
 }

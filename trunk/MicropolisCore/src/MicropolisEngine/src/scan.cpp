@@ -135,9 +135,7 @@ void Micropolis::populationDensityScan()
             MapValue mapValue = map[x][y];
             if (mapValue & ZONEBIT) {
                 MapTile mapTile = mapValue & LOMASK;
-                curMapX = x;
-                curMapY = y;
-                int pop = getPopulationDensity(mapTile) * 8;
+                int pop = getPopulationDensity(Position(x, y), mapTile) * 8;
                 pop = min(pop, 254);
 
                 tempMap1.worldSet(x, y, (Byte)pop);
@@ -182,16 +180,17 @@ void Micropolis::populationDensityScan()
 
 
 /**
- * Compute population of a zone.
- * @param tile Zone to compute population of.
+ * Get population of a zone.
+ * @param pos Position of the zone to count.
+ * @param tile Tile of the zone.
  * @return Population of the zone.
  */
-int Micropolis::getPopulationDensity(MapTile tile)
+int Micropolis::getPopulationDensity(const Position &pos, MapTile tile)
 {
     int pop;
 
     if (tile == FREEZ) {
-        pop = doFreePop(Position(curMapX, curMapX));
+        pop = doFreePop(pos);
         return pop;
     }
 
