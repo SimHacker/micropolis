@@ -83,64 +83,6 @@ static const Quad NUCLEAR_POWER_STRENGTH = 2000L;
 
 
 /**
- * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
- * @param moveDir Direction to move in.
- * @return Movement was succesfull.
- * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
- *       back onto the map in the reverse direction if off-map.
- */
-bool Micropolis::moveMapSim(Direction moveDir)
-{
-    switch (moveDir) {
-
-        case DIR_NORTH:
-            if (curMapY > 0) {
-                curMapY--;
-                return true;
-            }
-            if (curMapY < 0) {
-                curMapY = 0;
-            }
-            return false;
-
-        case DIR_EAST:
-            if (curMapX < WORLD_W - 1) {
-                curMapX++;
-                return true;
-            }
-            if (curMapX > WORLD_W - 1) {
-                curMapX = WORLD_W - 1;
-            }
-            return false;
-
-        case DIR_SOUTH:
-            if (curMapY < WORLD_H - 1) {
-                curMapY++;
-                return true;
-            }
-            if (curMapY > WORLD_H - 1) {
-                curMapY = WORLD_H - 1;
-            }
-            return false;
-
-        case DIR_WEST:
-            if (curMapX > 0) {
-                curMapX--;
-                return true;
-            }
-            if (curMapX < 0) {
-                curMapX = 0;
-            }
-            return false;
-
-        default:
-            NOT_REACHED();
-            return false; // Never reached, but keeps the compiler happy
-    }
-}
-
-
-/**
  * Check at position \a pos for a power-less conducting tile in the
  * direction \a testDir.
  * @param pos     Position to start from.
@@ -215,8 +157,8 @@ void Micropolis::doPowerScan()
 
 
 /**
- * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
- * @see powerStackPointer, powerStackXY
+ * Push position \a pos onto the power stack if there is room.
+ * @param pos Position to push.
  */
 void Micropolis::pushPowerStack(const Position &pos)
 {

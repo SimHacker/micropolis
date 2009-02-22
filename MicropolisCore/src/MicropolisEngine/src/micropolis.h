@@ -2198,8 +2198,6 @@ private:
 
     //@}
 
-    bool moveMapSim(Direction moveDir);
-
 
     ////////////////////////////////////////////////////////////////////////
     // random.cpp
@@ -2849,9 +2847,9 @@ private:
         return tile;
     };
 
-    short makeTraffic(ZoneType dest);
+    short makeTraffic(const Position &startPos, ZoneType dest);
 
-    void setTrafficMap();
+    void addToTrafficDensityMap();
 
     void pushPos(const Position &pos);
 

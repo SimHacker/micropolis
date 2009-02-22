@@ -450,7 +450,7 @@ void Micropolis::doResidential(int ZonePwrFlg)
 
     if (tpop > getRandom(35)) {
         /* Try driving from residential to commercial */
-        TrfGood = makeTraffic(ZT_COMMERCIAL);
+        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_COMMERCIAL);
     } else {
         TrfGood = 1;
     }
@@ -641,7 +641,7 @@ void Micropolis::doCommercial(int ZonePwrFlg)
 
     if (tpop > getRandom(5)) {
         /* Try driving from commercial to industrial */
-        TrfGood = makeTraffic(ZT_INDUSTRIAL);
+        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_INDUSTRIAL);
     } else {
         TrfGood = 1;
     }
@@ -758,7 +758,7 @@ void Micropolis::doIndustrial(int ZonePwrFlg)
 
     if (tpop > getRandom(5)) {
         /* Try driving from industrial to residential */
-        TrfGood = makeTraffic(ZT_RESIDENTIAL);
+        TrfGood = makeTraffic(Position(curMapX, curMapY), ZT_RESIDENTIAL);
     } else {
         TrfGood = 1;
     }

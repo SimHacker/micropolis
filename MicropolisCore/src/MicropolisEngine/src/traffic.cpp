@@ -60,9 +60,7 @@
  * NOT APPLY TO YOU.
  */
 
-/** @file traffic.cpp Traffic generation
- * @todo Introduce a XY position class that can be passed around
- */
+/** @file traffic.cpp Traffic generation. */
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -75,16 +73,17 @@
 
 
 /**
- * Find a connection over a road from the current place to a specified zone type
- * @param dest Zone type to go to
+ * Find a connection over a road from \a startPos to a specified zone type.
+ * @param startPos Start position of the attempt.
+ * @param dest     Zone type to go to.
  * @return \c 1 if connection found, \c 0 if not found,
- *         \c -1 if no connection to road found
+ *         \c -1 if no connection to road found.
  */
-short Micropolis::makeTraffic(ZoneType dest)
+short Micropolis::makeTraffic(const Position &startPos, ZoneType dest)
 {
     curMapStackPointer = 0; // Clear position stack
 
-    Position pos(curMapX, curMapY);
+    Position pos(startPos);
 
 #if 0
       if ((!getRandom(2)) && findPerimeterTelecom(pos)) {
@@ -96,7 +95,7 @@ short Micropolis::makeTraffic(ZoneType dest)
     if (findPerimeterRoad(&pos)) { /* look for road on zone perimeter */
 
         if (tryDrive(pos, dest)) { /* attempt to drive somewhere */
-            setTrafficMap();      /* if sucessful, inc trafdensity */
+            addToTrafficDensityMap(); /* if sucessful, inc trafdensity */
             return 1;             /* traffic passed */
         }
 
@@ -110,7 +109,7 @@ short Micropolis::makeTraffic(ZoneType dest)
 /**
  * Update the #trafficDensityMap from the positions at the #curMapStackXY stack.
  */
-void Micropolis::setTrafficMap()
+void Micropolis::addToTrafficDensityMap()
 {
     /* For each saved position of the drive */
     while (curMapStackPointer > 0) {
