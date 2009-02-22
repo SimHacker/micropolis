@@ -304,15 +304,12 @@ void Micropolis::doSimInit()
  */
 void Micropolis::doNilPower()
 {
-    short x, y, z;
+    short x, y;
 
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
-            z = map[x][y];
+            MapValue z = map[x][y];
             if (z & ZONEBIT) {
-                curMapX = x;
-                curMapY = y;
-                curNum = z;
                 setZonePower(Position(x, y));
             }
         }
@@ -920,63 +917,68 @@ void Micropolis::mapScan(int x1, int x2)
 
     for (x = x1; x < x2; x++) {
         for (y = 0; y < WORLD_H; y++) {
+
             curNum = map[x][y];
-            if (curNum) {
+            if (curNum == DIRT) {
+                continue;
+            }
 
-                curTile = curNum & LOMASK;  /* Mask off status bits  */
+            curTile = curNum & LOMASK;  /* Mask off status bits  */
 
-                if (curTile >= FLOOD) {
+            if (curTile < FLOOD) {
+                continue;
+            }
 
-                    curMapX = x;
-                    curMapY = y;
+            // curTile >= FLOOD
 
-                    if (curTile < ROADBASE) {
+            curMapX = x;
+            curMapY = y;
 
-                        if (curTile >= FIREBASE) {
-                            firePop++;
-                            if (!(getRandom16() & 3)) {
-                                doFire();    /* 1 in 4 times */
-                            }
-                            continue;
-                        }
+            if (curTile < ROADBASE) {
 
-                        if (curTile < RADTILE) {
-                            doFlood();
-                        } else {
-                            doRadTile();
-                        }
-
-                        continue;
+                if (curTile >= FIREBASE) {
+                    firePop++;
+                    if (!(getRandom16() & 3)) {
+                        doFire();    /* 1 in 4 times */
                     }
-
-                    if (newPower && (curNum & CONDBIT)) {
-                        // Copy PWRBIT from powerGridMap
-                        setZonePower(Position(curMapX, curMapY));
-                    }
-
-                    if ((curTile >= ROADBASE) &&
-                        (curTile < POWERBASE)) {
-                        doRoad();
-                        continue;
-                    }
-
-                    if (curNum & ZONEBIT) { /* process Zones */
-                        doZone();
-                        continue;
-                    }
-
-                    if ((curTile >= RAILBASE) &&
-                        (curTile < RESBASE)) {
-                        doRail();
-                        continue;
-                    }
-
-                    if ((curTile >= SOMETINYEXP) &&
-                        (curTile <= LASTTINYEXP)) {
-                        /* clear AniRubble */
-                        map[x][y] = randomRubble();
-                    }
+                    continue;
                 }
+
+                if (curTile < RADTILE) {
+                    doFlood();
+                } else {
+                    doRadTile();
+                }
+
+                continue;
+            }
+
+            if (newPower && (curNum & CONDBIT)) {
+                // Copy PWRBIT from powerGridMap
+                setZonePower(Position(curMapX, curMapY));
+            }
+
+            if ((curTile >= ROADBASE) &&
+                (curTile < POWERBASE)) {
+                doRoad();
+                continue;
+            }
+
+            if (curNum & ZONEBIT) { /* process Zones */
+                doZone();
+                continue;
+            }
+
+            if ((curTile >= RAILBASE) &&
+                (curTile < RESBASE)) {
+                doRail();
+                continue;
+            }
+
+            if ((curTile >= SOMETINYEXP) &&
+                (curTile <= LASTTINYEXP)) {
+                /* clear AniRubble */
+                map[x][y] = randomRubble();
             }
         }
     }
@@ -1380,10 +1382,11 @@ void Micropolis::repairZone(const Position &pos, MapTile zCent, short zSize)
 
 
 /**
- * Manage special zones.
+ * Update special zones.
+ * @param pos     Position of the zone.
  * @param powerOn Zone is powered.
  */
-void Micropolis::doSpecialZone(bool powerOn)
+void Micropolis::doSpecialZone(const Position &pos, bool powerOn)
 {
     // Bigger numbers reduce chance of nuclear melt down
     static const short meltdownTable[3] = { 30000, 20000, 10000 };
@@ -1395,11 +1398,11 @@ void Micropolis::doSpecialZone(bool powerOn)
             coalPowerPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(Position(curMapX, curMapY), POWERPLANT, 4); /* post */
+                repairZone(pos, POWERPLANT, 4); /* post */
             }
 
-            pushPowerStack(Position(curMapX, curMapY));
-            coalSmoke(Position(curMapX, curMapY));
+            pushPowerStack(pos);
+            coalSmoke(pos);
 
             return;
 
@@ -1408,17 +1411,17 @@ void Micropolis::doSpecialZone(bool powerOn)
             assert(LEVEL_COUNT == LENGTH_OF(meltdownTable));
 
             if (enableDisasters && !getRandom(meltdownTable[gameLevel])) {
-                doMeltdown(Position(curMapX, curMapY));
+                doMeltdown(pos);
                 return;
             }
 
             nuclearPowerPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(Position(curMapX, curMapY), NUCLEAR, 4); /* post */
+                repairZone(pos, NUCLEAR, 4); /* post */
             }
 
-            pushPowerStack(Position(curMapX, curMapY));
+            pushPowerStack(pos);
 
             return;
 
@@ -1429,7 +1432,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             fireStationPop++;
 
             if (!(cityTime & 7)) {
-                repairZone(Position(curMapX, curMapY), FIRESTATION, 3); /* post */
+                repairZone(pos, FIRESTATION, 3); /* post */
             }
 
             if (powerOn) {
@@ -1438,20 +1441,16 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = fireEffect / 2;               /* from the funding ratio  */
             }
 
-            Position pos(curMapX, curMapY);
-            bool foundRoad = findPerimeterRoad(&pos);
-            if (foundRoad) {
-                curMapX = pos.posX;
-                curMapY = pos.posY;
-            }
+            Position pos2(pos);
+            bool foundRoad = findPerimeterRoad(&pos2);
 
             if (!foundRoad) {
                 z = z / 2;                        /* post FD's need roads  */
             }
 
-            int value = fireStationMap.worldGet(curMapX, curMapY);
+            int value = fireStationMap.worldGet(pos2.posX, pos2.posY);
             value += z;
-            fireStationMap.worldSet(curMapX, curMapY, value);
+            fireStationMap.worldSet(pos2.posX, pos2.posY, value);
 
             return;
         }
@@ -1463,7 +1462,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             policeStationPop++;
 
             if (!(cityTime & 7)) {
-                repairZone(Position(curMapX, curMapY), POLICESTATION, 3); /* post */
+                repairZone(pos, POLICESTATION, 3); /* post */
             }
 
             if (powerOn) {
@@ -1472,20 +1471,16 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = policeEffect / 2;
             }
 
-            Position pos(curMapX, curMapY);
-            bool foundRoad = findPerimeterRoad(&pos);
-            if (foundRoad) {
-                curMapX = pos.posX;
-                curMapY = pos.posY;
-            }
+            Position pos2(pos);
+            bool foundRoad = findPerimeterRoad(&pos2);
 
             if (!foundRoad) {
                 z = z / 2; /* post PD's need roads */
             }
 
-            int value = policeStationMap.worldGet(curMapX, curMapY);
+            int value = policeStationMap.worldGet(pos2.posX, pos2.posY);
             value += z;
-            policeStationMap.worldSet(curMapX, curMapY, value);
+            policeStationMap.worldSet(pos2.posX, pos2.posY, value);
 
             return;
         }
@@ -1495,15 +1490,15 @@ void Micropolis::doSpecialZone(bool powerOn)
             stadiumPop++;
 
             if (!(cityTime & 15)) {
-                repairZone(Position(curMapX, curMapY), STADIUM, 4);
+                repairZone(pos, STADIUM, 4);
             }
 
             if (powerOn) {
                 // Every now and then, display a match
-                if (((cityTime + curMapX + curMapY) & 31) == 0) {
-                    drawStadium(Position(curMapX, curMapY), FULLSTADIUM);
-                    map[curMapX + 1][curMapY] = FOOTBALLGAME1 + ANIMBIT;
-                    map[curMapX + 1][curMapY + 1] = FOOTBALLGAME2 + ANIMBIT;
+                if (((cityTime + pos.posX + pos.posY) & 31) == 0) {
+                    drawStadium(pos, FULLSTADIUM);
+                    map[pos.posX + 1][pos.posY] = FOOTBALLGAME1 + ANIMBIT;
+                    map[pos.posX + 1][pos.posY + 1] = FOOTBALLGAME2 + ANIMBIT;
                 }
             }
 
@@ -1513,9 +1508,9 @@ void Micropolis::doSpecialZone(bool powerOn)
 
             stadiumPop++;
 
-            if (((cityTime + curMapX + curMapY) & 7) == 0) {
+            if (((cityTime + pos.posX + pos.posY) & 7) == 0) {
                 // Stop the match
-                drawStadium(Position(curMapX, curMapY), STADIUM);
+                drawStadium(pos, STADIUM);
             }
 
             return;
@@ -1525,20 +1520,20 @@ void Micropolis::doSpecialZone(bool powerOn)
             airportPop++;
 
             if ((cityTime & 7) == 0) {
-                repairZone(Position(curMapX, curMapY), AIRPORT, 6);
+                repairZone(pos, AIRPORT, 6);
             }
 
             // If powered, display a rotating radar
             if (powerOn) {
-                if ((map[curMapX + 1][curMapY - 1] & LOMASK) == RADAR) {
-                    map[curMapX + 1][curMapY - 1] = RADAR + ANIMBIT + CONDBIT + BURNBIT;
+                if ((map[pos.posX + 1][pos.posY - 1] & LOMASK) == RADAR) {
+                    map[pos.posX + 1][pos.posY - 1] = RADAR + ANIMBIT + CONDBIT + BURNBIT;
                 }
             } else {
-                map[curMapX + 1][curMapY - 1] = RADAR + CONDBIT + BURNBIT;
+                map[pos.posX + 1][pos.posY - 1] = RADAR + CONDBIT + BURNBIT;
             }
 
             if (powerOn) { // Handle the airport only if there is power
-                doAirport(Position(curMapX, curMapY));
+                doAirport(pos);
             }
 
             return;
@@ -1548,7 +1543,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             seaportPop++;
 
             if ((cityTime & 15) == 0) {
-                repairZone(Position(curMapX, curMapY), PORT, 4);
+                repairZone(pos, PORT, 4);
             }
 
             // If port has power and there is no ship, generate one
