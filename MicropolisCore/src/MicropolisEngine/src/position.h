@@ -125,6 +125,16 @@ static inline Direction2 rotate90(Direction2 dir)
     return (Direction2)(((dir - DIR2_NORTH + 2) & 7) + DIR2_NORTH);
 }
 
+/**
+ * Rotate the direction by 180 degrees.
+ * @param dir Direction to rotate.
+ * @return Rotated direction.
+ */
+static inline Direction2 rotate180(Direction2 dir)
+{
+    return (Direction2)(((dir - DIR2_NORTH + 4) & 7) + DIR2_NORTH);
+}
+
 
 /** X/Y position. */
 class Position {
