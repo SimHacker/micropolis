@@ -205,4 +205,15 @@ bool Position::move(Direction2 dir)
 }
 
 
+/**
+ * Test whether the position is on-map.
+ * @return Position is on-map.
+ */
+inline bool Position::testBounds()
+{
+    return (this->posX >= 0 && this->posX < WORLD_W
+                && this->posY >= 0 && this->posY < WORLD_H);
+}
+
+
 /////////////////////////////////////////////////////////////////////////////
