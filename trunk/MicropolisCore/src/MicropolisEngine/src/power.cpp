@@ -81,17 +81,48 @@ static const Quad NUCLEAR_POWER_STRENGTH = 2000L;
 
 ////////////////////////////////////////////////////////////////////////
 
+/** Temporary function to convert directions */
+static Direction2 convertDirection(Direction dir)
+{
+    switch (dir) {
+        case DIR_NORTH: return DIR2_NORTH;
+        case DIR_EAST:  return DIR2_EAST;
+        case DIR_WEST:  return DIR2_WEST;
+        case DIR_SOUTH: return DIR2_SOUTH;
+        default: NOT_REACHED(); return DIR2_INVALID;
+    }
+}
+
 
 /**
  * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
- * @param mDir Direction to move in.
+ * @param moveDir Direction to move in.
  * @return Movement was succesfull.
  * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
  *       back onto the map in the reverse direction if off-map.
  */
-bool Micropolis::moveMapSim(Direction mDir)
+bool Micropolis::moveMapSim2(Direction2 moveDir)
 {
-    switch (mDir) {
+    Position pos(curMapX, curMapY);
+    bool result = pos.move(moveDir);
+
+    curMapX = pos.posX;
+    curMapY = pos.posY;
+
+    return result;
+}
+
+
+/**
+ * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
+ * @param moveDir Direction to move in.
+ * @return Movement was succesfull.
+ * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
+ *       back onto the map in the reverse direction if off-map.
+ */
+bool Micropolis::moveMapSim(Direction moveDir)
+{
+    switch (moveDir) {
 
         case DIR_NORTH:
             if (curMapY > 0) {
@@ -142,20 +173,21 @@ bool Micropolis::moveMapSim(Direction mDir)
 
 /**
  * Check whether from position (Micropolis::curMapX, Micropolis::curMapY) in the
- * direction \a tfDir for a conducting tile that has no power.
- * @param tfDir Direction to investigate.
+ * direction \a testDir for a conducting tile that has no power.
+ * @param testDir Direction to investigate.
  * @return Unpowered tile has been found in the indicated direction.
  */
-bool Micropolis::testForConductive(Direction tfDir)
+bool Micropolis::testForConductive(Direction2 testDir)
 {
     int xsave, ysave;
 
     xsave = curMapX;
     ysave = curMapY;
 
-    if (moveMapSim(tfDir)) {
-        if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT
-                            && curTile != NUCLEAR && curTile != POWERPLANT) {
+    if (moveMapSim2(testDir)) {
+        // Removed tests in rev 326: (curTile is never updated in this code)
+        // "curTile != NUCLEAR && curTile != POWERPLANT"
+        if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT) {
             if (!powerGridMap.worldGet(curMapX, curMapY)) {
                 curMapX = xsave;
                 curMapY = ysave;
@@ -178,7 +210,7 @@ bool Micropolis::testForConductive(Direction tfDir)
  */
 void Micropolis::doPowerScan()
 {
-    short ADir;
+    Direction2 anyDir;
     int ConNum, Dir;
 
     // Clear power map.
@@ -194,23 +226,23 @@ void Micropolis::doPowerScan()
         Position pos = pullPowerStack();
         curMapX = pos.posX;
         curMapY = pos.posY;
-        ADir = 4;
+        anyDir = DIR2_INVALID;
         do {
             numPower++;
             if (numPower > maxPower) {
                 sendMessage(MESSAGE_NOT_ENOUGH_POWER);
                 return;
             }
-            if (ADir < 4) {  // ADir == 4 does nothing in moveMapSim()
-                moveMapSim((Direction)ADir);
+            if (anyDir != DIR2_INVALID) {
+                moveMapSim2(anyDir);
             }
             powerGridMap.worldSet(curMapX, curMapY, 1);
             ConNum = 0;
             Dir = 0;
             while ((Dir < 4) && (ConNum < 2)) {
-                if (testForConductive((Direction)Dir)) {
+                if (testForConductive(convertDirection((Direction)Dir))) {
                     ConNum++;
-                    ADir = Dir;
+                    anyDir = convertDirection((Direction)Dir);
                 }
                 Dir++;
             }
