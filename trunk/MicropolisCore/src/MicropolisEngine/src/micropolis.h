@@ -2178,7 +2178,7 @@ private:
 
     void doPowerScan();
 
-    bool testForConductive(Direction2 testDir);
+    bool testForConductive(const Position &pos, Direction2 testDir);
 
     void pushPowerStack(const Position &pos);
 
@@ -2186,7 +2186,6 @@ private:
 
     //@}
 
-    bool moveMapSim2(Direction2 moveDir);
     bool moveMapSim(Direction moveDir);
 
 
