@@ -82,10 +82,28 @@ enum Direction2 {
 
     DIR2_BEGIN = DIR2_NORTH,        ///< First valid direction.
     DIR2_END = DIR2_NORTH_WEST + 1, ///< End-condition for directions
-
-    DIR2_ROTATE45 = 1, ///< Increment with this value to rotate 45 degrees.
-    DIR2_ROTATE90 = 2, ///< Increment with this value to rotate 90 degrees.
 };
+
+/**
+ * Rotate the direction by 45 degrees.
+ * @param dir Direction to rotate.
+ * @return Rotated direction, possibly >= DIR2_END.
+ */
+static inline Direction2 rotate45(Direction2 dir)
+{
+    return (Direction2)(dir + 1);
+}
+
+/**
+ * Rotate the direction by 90 degrees.
+ * @param dir Direction to rotate.
+ * @return Rotated direction, possibly >= DIR2_END.
+ */
+static inline Direction2 rotate90(Direction2 dir)
+{
+    return (Direction2)(dir + 2);
+}
+
 
 /** X/Y position. */
 class Position {

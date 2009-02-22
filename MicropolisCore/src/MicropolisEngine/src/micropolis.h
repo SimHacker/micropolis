@@ -544,7 +544,7 @@ enum MapTileCharacters {
     RZB            = 265, // center tile first 3x3 tile residential
 
     HOSPITAL       = 409, // Center of hospital (tiles 405--413)
-    CHURCH         = 418, // Center of churh (tiles 414--422)
+    CHURCH         = 418, // Center of church (tiles 414--422)
 
     // Commercial zone tiles
 
