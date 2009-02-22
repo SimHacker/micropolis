@@ -1501,7 +1501,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             if (powerOn) {
                 // Every now and then, display a match
                 if (((cityTime + curMapX + curMapY) & 31) == 0) {
-                    drawStadium(FULLSTADIUM);
+                    drawStadium(Position(curMapX, curMapY), FULLSTADIUM);
                     map[curMapX + 1][curMapY] = FOOTBALLGAME1 + ANIMBIT;
                     map[curMapX + 1][curMapY + 1] = FOOTBALLGAME2 + ANIMBIT;
                 }
@@ -1515,7 +1515,7 @@ void Micropolis::doSpecialZone(bool powerOn)
 
             if (((cityTime + curMapX + curMapY) & 7) == 0) {
                 // Stop the match
-                drawStadium(STADIUM);
+                drawStadium(Position(curMapX, curMapY), STADIUM);
             }
 
             return;
@@ -1538,7 +1538,7 @@ void Micropolis::doSpecialZone(bool powerOn)
             }
 
             if (powerOn) { // Handle the airport only if there is power
-                doAirport();
+                doAirport(Position(curMapX, curMapY));
             }
 
             return;
@@ -1562,35 +1562,42 @@ void Micropolis::doSpecialZone(bool powerOn)
 
 
 /**
- * Draw the stadium.
- * @param z Base character.
+ * Draw a stadium (either full or empty).
+ * @param center Center tile position of the stadium.
+ * @param z Base tile value.
+ *
+ * @todo Merge with zonePlop()-like function.
  */
-void Micropolis::drawStadium(int z)
+void Micropolis::drawStadium(const Position &center, MapTile z)
 {
     int x, y;
 
     z = z - 5;
 
-    for (y = (curMapY - 1); y < (curMapY + 3); y++) {
-        for (x = (curMapX - 1); x < (curMapX + 3); x++) {
-            map[x][y] = (z++) | BNCNBIT;
+    for (y = center.posY - 1; y < center.posY + 3; y++) {
+        for (x = center.posX - 1; x < center.posX + 3; x++) {
+            map[x][y] = z++ | BNCNBIT;
+            z++;
         }
     }
 
-    map[curMapX][curMapY] |= ZONEBIT | PWRBIT;
+    map[center.posX][center.posY] |= ZONEBIT | PWRBIT;
 }
 
 
-/** Generate a airplane or helicopter every now and then. */
-void Micropolis::doAirport()
+/**
+ * Generate a airplane or helicopter every now and then.
+ * @param pos Position of the airport to start from.
+ */
+void Micropolis::doAirport(const Position &pos)
 {
     if (getRandom(5) == 0) {
-        generatePlane(curMapX, curMapY);
+        generatePlane(pos);
         return;
     }
 
     if (getRandom(12) == 0) {
-        generateCopter(curMapX, curMapY);
+        generateCopter(pos);
     }
 }
 
