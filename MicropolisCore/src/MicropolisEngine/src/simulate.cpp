@@ -1438,7 +1438,14 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = fireEffect / 2;               /* from the funding ratio  */
             }
 
-            if (!findPerimeterRoad()) {
+            Position pos(curMapX, curMapY);
+            bool foundRoad = findPerimeterRoad(&pos);
+            if (foundRoad) {
+                curMapX = pos.posX;
+                curMapY = pos.posY;
+            }
+
+            if (!foundRoad) {
                 z = z / 2;                        /* post FD's need roads  */
             }
 
@@ -1465,7 +1472,14 @@ void Micropolis::doSpecialZone(bool powerOn)
                 z = policeEffect / 2;
             }
 
-            if (!findPerimeterRoad()) {
+            Position pos(curMapX, curMapY);
+            bool foundRoad = findPerimeterRoad(&pos);
+            if (foundRoad) {
+                curMapX = pos.posX;
+                curMapY = pos.posY;
+            }
+
+            if (!foundRoad) {
                 z = z / 2; /* post PD's need roads */
             }
 
