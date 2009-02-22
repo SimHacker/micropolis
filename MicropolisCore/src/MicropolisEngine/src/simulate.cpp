@@ -1405,7 +1405,7 @@ void Micropolis::doSpecialZone(bool powerOn)
 
         case NUCLEAR:
 
-            assert(LEVEL_COUNT == LENGTH_OF(MeltdownTable));
+            assert(LEVEL_COUNT == LENGTH_OF(meltdownTable));
 
             if (enableDisasters && !getRandom(meltdownTable[gameLevel])) {
                 doMeltdown(Position(curMapX, curMapY));
