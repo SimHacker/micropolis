@@ -95,7 +95,14 @@ short Micropolis::makeTraffic(ZoneType dest)
       }
 #endif
 
-    if (findPerimeterRoad()) {            /* look for road on zone perimeter */
+    Position pos(curMapX, curMapY);
+    bool found = findPerimeterRoad(&pos);
+    if (found) {
+        curMapX = pos.posX;
+        curMapY = pos.posY;
+    }
+
+    if (found) {            /* look for road on zone perimeter */
 
         if (tryDrive(dest)) {     /* attempt to drive somewhere */
             setTrafficMap();      /* if sucessful, inc trafdensity */
@@ -134,7 +141,7 @@ void Micropolis::setTrafficMap()
                 int traffic = trafficDensityMap.worldGet(pos.posX, pos.posY);
                 traffic += 50;
                 traffic = min(traffic, 240);
-                traficDensityMap.worldSet(pos.posX, pos.posY, (Byte)traffic);
+                trafficDensityMap.worldSet(pos.posX, pos.posY, (Byte)traffic);
 
                 // Check for heavy traffic.
                 if (traffic >= 240 && getRandom(5) == 0) {
@@ -184,12 +191,12 @@ Position Micropolis::pullPos()
 
 
 /**
- * Find a connection to a road at the perimeter
- * @return Indication that a connection has been found
- * @pre  curMapX and curMapY contain the starting coordinates
- * @post If a connection is found, it is stored in curMapX and curMapY
+ * Find a connection to a road at the perimeter.
+ * @param pos Starting position.
+ *            Gets updated when a perimeter has been found.
+ * @return Indication that a connection has been found.
  */
-bool Micropolis::findPerimeterRoad()
+bool Micropolis::findPerimeterRoad(Position *pos)
 {
     /* look for road on edges of zone */
     static const short PerimX[12] = {-1, 0, 1, 2, 2, 2, 1, 0,-1,-2,-2,-2};
@@ -198,15 +205,15 @@ bool Micropolis::findPerimeterRoad()
 
     for (short z = 0; z < 12; z++) {
 
-        tx = curMapX + PerimX[z];
-        ty = curMapY + PerimY[z];
+        tx = pos->posX + PerimX[z];
+        ty = pos->posY + PerimY[z];
 
         if (testBounds(tx, ty)) {
 
             if (roadTest(map[tx][ty])) {
 
-                curMapX = tx;
-                curMapY = ty;
+                pos->posX = tx;
+                pos->posY = ty;
 
                 return true;
             }
@@ -419,18 +426,18 @@ bool Micropolis::driveDone(ZoneType destZone)
 
 /**
  * Can the given tile be used as road?
- * @param t Tile
+ * @param mv Value from the map.
  * @return Indication that you can drive on the given tile
  */
-bool Micropolis::roadTest(int t)
+bool Micropolis::roadTest(MapValue mv)
 {
-    t = t & LOMASK;
+    MapTile tile = mv & LOMASK;
 
-    if (t < ROADBASE || t > LASTRAIL) {
+    if (tile < ROADBASE || tile > LASTRAIL) {
         return false;
     }
 
-    if (t >= POWERBASE && t < LASTPOWER) {
+    if (tile >= POWERBASE && tile < LASTPOWER) {
         return false;
     }
 

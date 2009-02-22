@@ -2847,7 +2847,7 @@ private:
 
     Position pullPos();
 
-    bool findPerimeterRoad();
+    bool findPerimeterRoad(Position *pos);
 
     bool findPerimeterTelecom();
 
@@ -2859,7 +2859,7 @@ private:
 
     bool driveDone(ZoneType destZone);
 
-    bool roadTest(int tile);
+    bool roadTest(MapValue tile);
 
 
     ////////////////////////////////////////////////////////////////////////

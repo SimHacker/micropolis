@@ -117,11 +117,22 @@ public:
     Position &operator=(const Position &pos);
 
     bool move(Direction2 dir);
-    bool testBounds();
+    inline bool testBounds();
 
     int posX; ///< Horizontal coordinate of the position.
     int posY; ///< Vertical coordnate of the position.
 };
+
+
+/**
+ * Test whether the position is on-map.
+ * @return Position is on-map.
+ */
+inline bool Position::testBounds()
+{
+    return (this->posX >= 0 && this->posX < WORLD_W
+                && this->posY >= 0 && this->posY < WORLD_H);
+}
 
 #endif
 
