@@ -115,36 +115,32 @@ short Micropolis::makeTraffic(ZoneType dest)
 
 
 /**
- * Update the #trafficDensityMap from the stack positions of #curMapStackX and
- * #curMapStackY.
+ * Update the #trafficDensityMap from the positions at the #curMapStackXY stack.
  */
 void Micropolis::setTrafficMap()
 {
-    short x, z;
-
     /* For each saved position of the drive */
-    for (x = curMapStackPointer; x > 0; x--) {
+    while (curMapStackPointer > 0) {
 
         Position pos = pullPos();
-        curMapX = pos.posX;
-        curMapY = pos.posY;
+        if (pos.testBounds()) {
 
-        if (testBounds(curMapX, curMapY)) {
+            MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
-            z = map[curMapX][curMapY] & LOMASK;
-
-            if (z >= ROADBASE && z < POWERBASE) {
+            if (tile >= ROADBASE && tile < POWERBASE) {
                 SimSprite *sprite;
 
-                /* check for rail */
-                z = trafficDensityMap.worldGet(curMapX, curMapY);
-                z += 50;
+                // Update traffic density.
+                int traffic = trafficDensityMap.worldGet(pos.posX, pos.posY);
+                traffic += 50;
+                traffic = min(traffic, 240);
+                traficDensityMap.worldSet(pos.posX, pos.posY, (Byte)traffic);
 
-                if (z > 240 && getRandom(5) == 0) {
+                // Check for heavy traffic.
+                if (traffic >= 240 && getRandom(5) == 0) {
 
-                    z = 240;
-                    trafMaxX = curMapX;
-                    trafMaxY = curMapY;
+                    trafMaxX = pos.posX;
+                    trafMaxY = pos.posY;
 
                     /* Direct helicopter towards heavy traffic */
                     sprite = getSprite(SPRITE_HELICOPTER);
@@ -155,8 +151,6 @@ void Micropolis::setTrafficMap()
 
                     }
                 }
-
-                trafficDensityMap.worldSet(curMapX, curMapY, (Byte)z);
             }
         }
     }
