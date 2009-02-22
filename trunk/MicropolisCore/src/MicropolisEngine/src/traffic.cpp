@@ -336,7 +336,7 @@ short Micropolis::getFromMap(Direction d)
 
             return DIRT;
 
-        case DIR_WEST:
+        case DIR_EAST:
             if (curMapX < (WORLD_W - 1)) {
               return map[curMapX + 1][curMapY] & LOMASK;
             }
@@ -350,7 +350,7 @@ short Micropolis::getFromMap(Direction d)
 
             return DIRT;
 
-        case DIR_EAST:
+        case DIR_WEST:
             if (curMapX > 0) {
               return map[curMapX - 1][curMapY] & LOMASK;
             }
