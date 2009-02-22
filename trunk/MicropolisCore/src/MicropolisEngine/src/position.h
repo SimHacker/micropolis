@@ -62,6 +62,31 @@
 
 /** @file position.h Position handling. */
 
+#ifndef H_POSITION
+#define H_POSITION
+
+/** Another direction enumeration class, with 8 possible directions.
+ * @todo Eliminate #Direction.
+ * @todo After eliminating #Direction, rename this enum to Direction.
+ */
+enum Direction2 {
+    DIR2_INVALID,    ///< Invalid direction.
+    DIR2_NORTH,      ///< Direction pointing north.
+    DIR2_NORTH_EAST, ///< Direction pointing north-east.
+    DIR2_EAST,       ///< Direction pointing east.
+    DIR2_SOUTH_EAST, ///< Direction pointing south-east.
+    DIR2_SOUTH,      ///< Direction pointing south.
+    DIR2_SOUTH_WEST, ///< Direction pointing south-west.
+    DIR2_WEST,       ///< Direction pointing west.
+    DIR2_NORTH_WEST, ///< Direction pointing north-west.
+
+    DIR2_BEGIN = DIR2_NORTH,        ///< First valid direction.
+    DIR2_END = DIR2_NORTH_WEST + 1, ///< End-condition for directions
+
+    DIR2_ROTATE45 = 1, ///< Increment with this value to rotate 45 degrees.
+    DIR2_ROTATE90 = 2, ///< Increment with this value to rotate 90 degrees.
+};
+
 /** X/Y position. */
 class Position {
 
@@ -70,9 +95,14 @@ public:
     Position();
     Position(int x, int y);
     Position(const Position &pos);
+    Position(const Position &pos, Direction2 dir);
     Position &operator=(const Position &pos);
+
+    bool move(Direction2 dir);
 
     int posX; ///< Horizontal coordinate of the position.
     int posY; ///< Vertical coordnate of the position.
 };
+
+#endif
 
