@@ -738,18 +738,15 @@ void Micropolis::init()
     // short curMapStackPointer;
     curMapStackPointer = 0;
 
-    // short curMapStackX[MAX_TRAFFIC_DISTANCE+1];
-    memset(curMapStackX, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
-
-    // short curMapStackY[MAX_TRAFFIC_DISTANCE+1];
-    memset(curMapStackY, 0, sizeof(short) * (MAX_TRAFFIC_DISTANCE + 1));
+    // Position curMapStackXY[MAX_TRAFFIC_DISTANCE+1];
+    for (int i = 0; i < MAX_TRAFFIC_DISTANCE + 1; i++) {
+        curMapStackXY[i] = Position();
+    }
 
     dirLast = DIR_INVALID;
 
-    // short trafMaxX;
+    // short trafMaxX, trafMaxY;
     trafMaxX = 0;
-
-    // short trafMaxY;
     trafMaxY = 0;
 
 

@@ -125,7 +125,9 @@ void Micropolis::setTrafficMap()
     /* For each saved position of the drive */
     for (x = curMapStackPointer; x > 0; x--) {
 
-        pullPos();
+        Position pos = pullPos();
+        curMapX = pos.posX;
+        curMapY = pos.posY;
 
         if (testBounds(curMapX, curMapY)) {
 
@@ -161,21 +163,29 @@ void Micropolis::setTrafficMap()
 }
 
 
-/** Push current position (curMapX, curMapY) onto position stack */
-void Micropolis::pushPos()
+/**
+ * Push a position onto the position stack.
+ * @param pos Position to push.
+ * @pre Stack may not be full.
+ */
+void Micropolis::pushPos(const Position &pos)
 {
     curMapStackPointer++;
-    curMapStackX[curMapStackPointer] = curMapX;
-    curMapStackY[curMapStackPointer] = curMapY;
+    assert(curMapStackPointer < MAX_TRAFFIC_DISTANCE + 1);
+    curMapStackXY[curMapStackPointer] = pos;
 }
 
 
-/** Pull top-most position from stack and store in curMapX and curMapY */
-void Micropolis::pullPos()
+/**
+ * Pull top-most position from the position stack.
+ * @return Pulled position.
+ * @pre Stack may not be empty (curMapStackPointer > 0)
+ */
+Position Micropolis::pullPos()
 {
-    curMapX = curMapStackX[curMapStackPointer];
-    curMapY = curMapStackY[curMapStackPointer];
+    assert(curMapStackPointer > 0);
     curMapStackPointer--;
+    return curMapStackXY[curMapStackPointer + 1];
 }
 
 
@@ -308,7 +318,7 @@ bool Micropolis::tryGo(int dist)
                 /* Save pos every other move.
                  * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
                  */
-                pushPos();
+                pushPos(Position(curMapX, curMapY));
             }
 
             return true;
@@ -383,28 +393,28 @@ bool Micropolis::driveDone(ZoneType destZone)
 
     if (curMapY > 0) {
         short z = map[curMapX][curMapY - 1] & LOMASK;
-        if ((z >= l) && (z <= h)) {
+        if (z >= l && z <= h) {
             return true;
         }
     }
 
     if (curMapX < (WORLD_W - 1)) {
         short z = map[curMapX + 1][curMapY] & LOMASK;
-        if ((z >= l) && (z <= h)) {
+        if (z >= l && z <= h) {
             return true;
         }
     }
 
     if (curMapY < (WORLD_H - 1)) {
         short z = map[curMapX][curMapY + 1] & LOMASK;
-        if ((z >= l) && (z <= h)) {
+        if (z >= l && z <= h) {
             return true;
         }
     }
 
     if (curMapX > 0) {
         short z = map[curMapX - 1][curMapY] & LOMASK;
-        if ((z >= l) && (z <= h)) {
+        if (z >= l && z <= h) {
             return true;
         }
     }
