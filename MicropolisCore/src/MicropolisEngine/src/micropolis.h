@@ -2180,9 +2180,9 @@ private:
 
     bool testForConductive(Direction TFDir);
 
-    void pushPowerStack();
+    void pushPowerStack(const Position &pos);
 
-    void pullPowerStack();
+    Position pullPowerStack();
 
     //@}
 

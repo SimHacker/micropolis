@@ -1398,7 +1398,7 @@ void Micropolis::doSpecialZone(bool powerOn)
                 repairZone(Position(curMapX, curMapY), POWERPLANT, 4); /* post */
             }
 
-            pushPowerStack();
+            pushPowerStack(Position(curMapX, curMapY));
             coalSmoke(Position(curMapX, curMapY));
 
             return;
@@ -1418,7 +1418,7 @@ void Micropolis::doSpecialZone(bool powerOn)
                 repairZone(Position(curMapX, curMapY), NUCLEAR, 4); /* post */
             }
 
-            pushPowerStack();
+            pushPowerStack(Position(curMapX, curMapY));
 
             return;
 

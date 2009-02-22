@@ -191,7 +191,9 @@ void Micropolis::doPowerScan()
     Quad numPower = 0; // Amount of power used.
 
     while (powerStackPointer > 0) {
-        pullPowerStack();
+        Position pos = pullPowerStack();
+        curMapX = pos.posX;
+        curMapY = pos.posY;
         ADir = 4;
         do {
             numPower++;
@@ -213,7 +215,7 @@ void Micropolis::doPowerScan()
                 Dir++;
             }
             if (ConNum > 1) {
-                pushPowerStack();
+                pushPowerStack(Position(curMapX, curMapY));
             }
         } while (ConNum);
     }
@@ -224,27 +226,25 @@ void Micropolis::doPowerScan()
  * Push the (Micropolis::curMapX, Micropolis::curMapY) pair onto the power stack.
  * @see powerStackPointer, powerStackXY
  */
-void Micropolis::pushPowerStack()
+void Micropolis::pushPowerStack(const Position &pos)
 {
     if (powerStackPointer < (POWER_STACK_SIZE - 2)) {
         powerStackPointer++;
-        powerStackXY[powerStackPointer] = Position(curMapX, curMapY);
+        powerStackXY[powerStackPointer] = pos;
     }
 }
 
 
 /**
- * Pull a position from the power stack and store it in Micropolis::curMapX and
- * Micropolis::curMapY.
- * @see powerStackPointer, powerStackXY
+ * Pull a position from the power stack.
+ * @return Pulled position.
+ * @pre Stack must be non-empty (powerStackPointer > 0).
  */
-void Micropolis::pullPowerStack()
+Position Micropolis::pullPowerStack()
 {
-    if (powerStackPointer > 0)  {
-        curMapX = powerStackXY[powerStackPointer].posX;
-        curMapY = powerStackXY[powerStackPointer].posY;
-        powerStackPointer--;
-    }
+    assert(powerStackPointer > 0);
+    powerStackPointer--;
+    return powerStackXY[powerStackPointer + 1];
 }
 
 

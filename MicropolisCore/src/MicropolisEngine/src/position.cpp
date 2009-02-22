@@ -64,28 +64,55 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+#include "micropolis.h"
 #include "position.h"
 
 /////////////////////////////////////////////////////////////////////////////
 
+/** Default constructor. */
 Position::Position()
 {
     this->posX = 0;
     this->posY = 0;
 }
 
+/**
+ * Construct a position at a given \a x and \a y coordinate.
+ * @param x X coordinate of the new position.
+ * @param y Y coordinate of the new position.
+ */
 Position::Position(int x, int y)
 {
     this->posX = x;
     this->posY = y;
 }
 
+/**
+ * Copy constructor.
+ * @param pos Position to copy.
+ */
 Position::Position(const Position &pos)
 {
     this->posX = pos.posX;
     this->posY = pos.posY;
 }
 
+/**
+ * Copy constructor with a single tile movement.
+ * @param pos Position to copy.
+ * @param dir Direction to move into.
+ */
+Position::Position(const Position &pos, Direction2 dir)
+{
+    this->posX = pos.posX;
+    this->posY = pos.posY;
+    this->move(dir);
+}
+
+/**
+ * Assignment operator.
+ * @param pos Position to copy.
+ */
 Position &Position::operator=(const Position &pos)
 {
     if (this != &pos) {
@@ -94,5 +121,88 @@ Position &Position::operator=(const Position &pos)
     }
     return *this;
 }
+
+
+/**
+ * Move the position one step in the indicated direction.
+ * @param dir Direction to move into.
+ * @return Position moved in the indicated direction.
+ */
+bool Position::move(Direction2 dir)
+{
+    switch (dir) {
+        case DIR2_INVALID:
+            return true;
+
+        case DIR2_NORTH:
+            if (this->posY > 0) {
+                this->posY--;
+                return true;
+            }
+            break;
+
+        case DIR2_NORTH_EAST:
+            if (this->posX < WORLD_W - 1 && this->posY > 0) {
+                this->posX++;
+                this->posY--;
+                return true;
+            }
+        case DIR2_EAST:
+            if (this->posX < WORLD_W) {
+                this->posX++;
+                return true;
+            }
+            break;
+
+        case DIR2_SOUTH_EAST:
+            if (this->posX < WORLD_W -1 && this->posY < WORLD_H - 1) {
+                this->posX++;
+                this->posY++;
+                return true;
+            }
+            break;
+
+        case DIR2_SOUTH:
+            if (this->posY < WORLD_H - 1) {
+                this->posY++;
+                return true;
+            }
+            break;
+
+        case DIR2_SOUTH_WEST: this->posX--; this->posY++; break;
+            if (this->posX > 0 && this->posY < WORLD_H - 1) {
+                this->posX--;
+                this->posY++;
+                return true;
+            }
+            break;
+
+        case DIR2_WEST:
+            if (this->posX > 0) {
+                this->posX--;
+                return true;
+            }
+            break;
+
+        case DIR2_NORTH_WEST:
+            if (this->posX > 0 && this->posY > 0) {
+                this->posX--;
+                this->posY--;
+                return true;
+            }
+            break;
+
+
+        default: NOT_REACHED();
+    }
+
+    // Movement was not possible, silently repair the position.
+    if (this->posX < 0)        this->posX = 0;
+    if (this->posX >= WORLD_W) this->posX = WORLD_W - 1;
+    if (this->posY < 0)        this->posY = 0;
+    if (this->posY >= WORLD_H) this->posY = WORLD_H - 1;
+    return false;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
