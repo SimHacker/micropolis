@@ -746,9 +746,9 @@ enum Scenario {
 /** Directions on the map */
 enum Direction {
     DIR_NORTH, ///< North (0, -1)
-    DIR_WEST,  ///< West  (-1, 0)
-    DIR_SOUTH, ///< South (0, +1)
     DIR_EAST,  ///< East  (+1, 0)
+    DIR_SOUTH, ///< South (0, +1)
+    DIR_WEST,  ///< West  (-1, 0)
 
     DIR_DIR4,
 

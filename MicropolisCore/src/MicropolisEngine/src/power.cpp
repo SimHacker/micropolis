@@ -103,7 +103,7 @@ bool Micropolis::moveMapSim(Direction mDir)
             }
             return false;
 
-        case DIR_WEST:
+        case DIR_EAST:
             if (curMapX < WORLD_W - 1) {
                 curMapX++;
                 return true;
@@ -123,7 +123,7 @@ bool Micropolis::moveMapSim(Direction mDir)
             }
             return false;
 
-        case DIR_EAST:
+        case DIR_WEST:
             if (curMapX > 0) {
                 curMapX--;
                 return true;
