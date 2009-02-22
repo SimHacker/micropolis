@@ -117,6 +117,7 @@ public:
     Position &operator=(const Position &pos);
 
     bool move(Direction2 dir);
+    bool testBounds();
 
     int posX; ///< Horizontal coordinate of the position.
     int posY; ///< Vertical coordnate of the position.
