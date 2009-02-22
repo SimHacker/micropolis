@@ -81,37 +81,6 @@ static const Quad NUCLEAR_POWER_STRENGTH = 2000L;
 
 ////////////////////////////////////////////////////////////////////////
 
-/** Temporary function to convert directions */
-static Direction2 convertDirection(Direction dir)
-{
-    switch (dir) {
-        case DIR_NORTH: return DIR2_NORTH;
-        case DIR_EAST:  return DIR2_EAST;
-        case DIR_WEST:  return DIR2_WEST;
-        case DIR_SOUTH: return DIR2_SOUTH;
-        default: NOT_REACHED(); return DIR2_INVALID;
-    }
-}
-
-
-/**
- * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
- * @param moveDir Direction to move in.
- * @return Movement was succesfull.
- * @note Also silently moves (Micropolis::curMapX, Micropolis::curMapY)
- *       back onto the map in the reverse direction if off-map.
- */
-bool Micropolis::moveMapSim2(Direction2 moveDir)
-{
-    Position pos(curMapX, curMapY);
-    bool result = pos.move(moveDir);
-
-    curMapX = pos.posX;
-    curMapY = pos.posY;
-
-    return result;
-}
-
 
 /**
  * Move (Micropolis::curMapX, Micropolis::curMapY) in direction \a mDir.
@@ -172,32 +141,23 @@ bool Micropolis::moveMapSim(Direction moveDir)
 
 
 /**
- * Check whether from position (Micropolis::curMapX, Micropolis::curMapY) in the
- * direction \a testDir for a conducting tile that has no power.
+ * Check at position \a pos for a power-less conducting tile in the
+ * direction \a testDir.
+ * @param pos     Position to start from.
  * @param testDir Direction to investigate.
  * @return Unpowered tile has been found in the indicated direction.
  */
-bool Micropolis::testForConductive(Direction2 testDir)
+bool Micropolis::testForConductive(const Position& pos, Direction2 testDir)
 {
-    int xsave, ysave;
+    Position movedPos(pos);
 
-    xsave = curMapX;
-    ysave = curMapY;
-
-    if (moveMapSim2(testDir)) {
-        // Removed tests in rev 326: (curTile is never updated in this code)
-        // "curTile != NUCLEAR && curTile != POWERPLANT"
-        if ((map[curMapX][curMapY] & CONDBIT) == CONDBIT) {
-            if (!powerGridMap.worldGet(curMapX, curMapY)) {
-                curMapX = xsave;
-                curMapY = ysave;
+    if (movedPos.move(testDir)) {
+        if ((map[movedPos.posX][movedPos.posY] & CONDBIT) == CONDBIT) {
+            if (!powerGridMap.worldGet(movedPos.posX, movedPos.posY)) {
                 return true;
             }
         }
     }
-
-    curMapX = xsave;
-    curMapY = ysave;
 
     return false;
 }
@@ -210,8 +170,8 @@ bool Micropolis::testForConductive(Direction2 testDir)
  */
 void Micropolis::doPowerScan()
 {
-    Direction2 anyDir;
-    int ConNum, Dir;
+    Direction2 anyDir,dir;
+    int conNum;
 
     // Clear power map.
     powerGridMap.clear();
@@ -224,8 +184,6 @@ void Micropolis::doPowerScan()
 
     while (powerStackPointer > 0) {
         Position pos = pullPowerStack();
-        curMapX = pos.posX;
-        curMapY = pos.posY;
         anyDir = DIR2_INVALID;
         do {
             numPower++;
@@ -234,22 +192,22 @@ void Micropolis::doPowerScan()
                 return;
             }
             if (anyDir != DIR2_INVALID) {
-                moveMapSim2(anyDir);
+                pos.move(anyDir);
             }
-            powerGridMap.worldSet(curMapX, curMapY, 1);
-            ConNum = 0;
-            Dir = 0;
-            while ((Dir < 4) && (ConNum < 2)) {
-                if (testForConductive(convertDirection((Direction)Dir))) {
-                    ConNum++;
-                    anyDir = convertDirection((Direction)Dir);
+            powerGridMap.worldSet(pos.posX, pos.posY, 1);
+            conNum = 0;
+            dir = DIR2_BEGIN;
+            while (dir < DIR2_END && conNum < 2) {
+                if (testForConductive(pos, dir)) {
+                    conNum++;
+                    anyDir = dir;
                 }
-                Dir++;
+                dir = rotate90(dir);
             }
-            if (ConNum > 1) {
-                pushPowerStack(Position(curMapX, curMapY));
+            if (conNum > 1) {
+                pushPowerStack(pos);
             }
-        } while (ConNum);
+        } while (conNum);
     }
 }
 
