@@ -2822,8 +2822,6 @@ private:
     short curMapStackPointer;
     Position curMapStackXY[MAX_TRAFFIC_DISTANCE + 1]; ///< Position stack.
 
-    Direction dirLast; ///< Last moved direction
-
     short trafMaxX; ///< X coordinate of a position with heavy traffic
     short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
@@ -2865,7 +2863,7 @@ private:
 
     bool tryDrive(ZoneType destZone);
 
-    bool tryGo(int dist);
+    bool tryGo(Direction *dirLast, int dist);
 
     MapTile getFromMap(const Position &pos, Direction d);
 

@@ -727,8 +727,6 @@ void Micropolis::init()
         curMapStackXY[i] = Position();
     }
 
-    dirLast = DIR_INVALID;
-
     // short trafMaxX, trafMaxY;
     trafMaxX = 0;
     trafMaxY = 0;

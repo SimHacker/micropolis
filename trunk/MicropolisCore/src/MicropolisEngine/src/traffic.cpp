@@ -266,10 +266,10 @@ bool Micropolis::tryDrive(ZoneType destZone)
 {
     short dist;
 
-    dirLast = DIR_INVALID;
+    Direction dirLast = DIR_INVALID;
     for (dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {  /* Maximum distance to try */
 
-        if (tryGo(dist)) { /* if it got a road */
+        if (tryGo(&dirLast, dist)) { /* if it got a road */
 
             if (driveDone(Position(curMapX, curMapY), destZone)) { /* if destination is reached */
                 return true; /* pass */
@@ -293,10 +293,11 @@ bool Micropolis::tryDrive(ZoneType destZone)
 
 /**
  * Try to drive one tile in a random direction.
+ * @param dirLast Last direction traveled in. Updated by the function.
  * @param dist Distance traveled.
  * @return A move has been made.
  */
-bool Micropolis::tryGo(int dist)
+bool Micropolis::tryGo(Direction *dirLast, int dist)
 {
     short dir, dirRandom;
     Direction dirReal;
@@ -307,13 +308,13 @@ bool Micropolis::tryGo(int dist)
 
         dirReal = (Direction)(dir & 3);
 
-        if (dirReal == dirLast) {
+        if (dirReal == *dirLast) {
             continue; /* skip last direction */
         }
 
         if (roadTest(getFromMap(Position(curMapX, curMapY), dirReal))) {
             moveMapSim(dirReal);
-            dirLast = reverseDirection(dirReal);
+            *dirLast = reverseDirection(dirReal);
 
             if (dist & 1) {
                 /* Save pos every other move.
