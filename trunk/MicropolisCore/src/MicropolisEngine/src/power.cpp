@@ -146,6 +146,8 @@ bool Micropolis::moveMapSim(Direction moveDir)
  * @param pos     Position to start from.
  * @param testDir Direction to investigate.
  * @return Unpowered tile has been found in the indicated direction.
+ * @todo Re-use something like Micropolis::getFromMap(), and fold this function
+ *       into its caller.
  */
 bool Micropolis::testForConductive(const Position& pos, Direction2 testDir)
 {

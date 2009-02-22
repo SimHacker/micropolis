@@ -271,7 +271,7 @@ bool Micropolis::tryDrive(ZoneType destZone)
 
         if (tryGo(dist)) { /* if it got a road */
 
-            if (driveDone(destZone)) { /* if destination is reached */
+            if (driveDone(Position(curMapX, curMapY), destZone)) { /* if destination is reached */
                 return true; /* pass */
             }
 
@@ -291,17 +291,17 @@ bool Micropolis::tryDrive(ZoneType destZone)
 }
 
 
-/* comefrom: tryDrive */
+/**
+ * Try to drive one tile in a random direction.
+ * @param dist Distance traveled.
+ * @return A move has been made.
+ */
 bool Micropolis::tryGo(int dist)
 {
     short dir, dirRandom;
     Direction dirReal;
 
-#if 0
-    dirRandom = getRandom(3); /* XXX: Heaviest user of Rand */
-#else
     dirRandom = getRandom16() & 3;
-#endif
 
     for (dir = dirRandom; dir < (dirRandom + 4); dir++) { /* for the 4 directions */
 
@@ -311,7 +311,7 @@ bool Micropolis::tryGo(int dist)
             continue; /* skip last direction */
         }
 
-        if (roadTest(getFromMap(dirReal))) {
+        if (roadTest(getFromMap(Position(curMapX, curMapY), dirReal))) {
             moveMapSim(dirReal);
             dirLast = reverseDirection(dirReal);
 
@@ -332,38 +332,39 @@ bool Micropolis::tryGo(int dist)
 
 /**
  * Get neighbouring tile from the map.
- * @param d Direction of neighbouring tile
+ * @param pos Current position.
+ * @param d   Direction of neighbouring tile.
  * @return The tile in the indicated direction. If tile is off-world or an
  *         incorrect direction is given, \c DIRT is returned.
  */
-short Micropolis::getFromMap(Direction d)
+MapTile Micropolis::getFromMap(const Position &pos, Direction d)
 {
     switch (d) {
 
         case DIR_NORTH:
-            if (curMapY > 0) {
-              return map[curMapX][curMapY - 1] & LOMASK;
+            if (pos.posY > 0) {
+              return map[pos.posX][pos.posY - 1] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_EAST:
-            if (curMapX < (WORLD_W - 1)) {
-              return map[curMapX + 1][curMapY] & LOMASK;
+            if (pos.posX < WORLD_W - 1) {
+              return map[pos.posX + 1][pos.posY] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_SOUTH:
-            if (curMapY < (WORLD_H - 1)) {
-              return map[curMapX][curMapY + 1] & LOMASK;
+            if (pos.posY < WORLD_H - 1) {
+              return map[pos.posX][pos.posY + 1] & LOMASK;
             }
 
             return DIRT;
 
         case DIR_WEST:
-            if (curMapX > 0) {
-              return map[curMapX - 1][curMapY] & LOMASK;
+            if (pos.posX > 0) {
+              return map[pos.posX - 1][pos.posY] & LOMASK;
             }
 
             return DIRT;
@@ -377,44 +378,45 @@ short Micropolis::getFromMap(Direction d)
 
 /**
  * Has the journey arrived at its destination?
+ * @param pos      Current position.
  * @param destZone Zonetype to drive to.
- * @return Indication that destination has been reached.
+ * @return Destination has been reached.
  */
-bool Micropolis::driveDone(ZoneType destZone)
+bool Micropolis::driveDone(const Position &pos, ZoneType destZone)
 {
     /* commercial, industrial, residential destinations */
-    static const short targetLow[3] = {COMBASE, LHTHR, LHTHR};
-    static const short targetHigh[3] = {NUCLEAR, PORT, COMBASE};
+    static const MapTile targetLow[3] = {COMBASE, LHTHR, LHTHR};
+    static const MapTile targetHigh[3] = {NUCLEAR, PORT, COMBASE};
 
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(targetLow));
     assert(ZT_NUM_DESTINATIONS == LENGTH_OF(targetHigh));
 
-    short l = targetLow[destZone]; // Lowest acceptable tile value
-    short h = targetHigh[destZone]; // Highest acceptable tile value
+    MapTile l = targetLow[destZone]; // Lowest acceptable tile value
+    MapTile h = targetHigh[destZone]; // Highest acceptable tile value
 
-    if (curMapY > 0) {
-        short z = map[curMapX][curMapY - 1] & LOMASK;
+    if (pos.posY > 0) {
+        MapTile z = map[pos.posX][pos.posY - 1] & LOMASK;
         if (z >= l && z <= h) {
             return true;
         }
     }
 
-    if (curMapX < (WORLD_W - 1)) {
-        short z = map[curMapX + 1][curMapY] & LOMASK;
+    if (pos.posX < (WORLD_W - 1)) {
+        MapTile z = map[pos.posX + 1][pos.posY] & LOMASK;
         if (z >= l && z <= h) {
             return true;
         }
     }
 
-    if (curMapY < (WORLD_H - 1)) {
-        short z = map[curMapX][curMapY + 1] & LOMASK;
+    if (pos.posY < (WORLD_H - 1)) {
+        MapTile z = map[pos.posX][pos.posY + 1] & LOMASK;
         if (z >= l && z <= h) {
             return true;
         }
     }
 
-    if (curMapX > 0) {
-        short z = map[curMapX - 1][curMapY] & LOMASK;
+    if (pos.posX > 0) {
+        MapTile z = map[pos.posX - 1][pos.posY] & LOMASK;
         if (z >= l && z <= h) {
             return true;
         }
