@@ -148,7 +148,7 @@ bool Position::move(Direction2 dir)
                 return true;
             }
         case DIR2_EAST:
-            if (this->posX < WORLD_W) {
+            if (this->posX < WORLD_W - 1) {
                 this->posX++;
                 return true;
             }
