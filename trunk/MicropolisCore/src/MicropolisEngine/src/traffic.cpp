@@ -261,10 +261,18 @@ bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
     /* Maximum distance to try */
     for (short dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {
 
-        Direction2 dir = tryGo(drivePos, dirLast, dist);
+        Direction2 dir = tryGo(drivePos, dirLast);
         if (dir != DIR2_INVALID) { // we found a road
             drivePos.move(dir);
             dirLast = rotate180(dir);
+
+            /* Save pos every other move.
+             * This also relates to
+             * Micropolis::trafficDensityMap::MAP_BLOCKSIZE
+             */
+            if (dist & 1) {
+                pushPos(drivePos);
+            }
 
             if (driveDone(drivePos, destZone)) { // if destination is reached
                 return true; /* pass */
@@ -290,11 +298,9 @@ bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
  * Try to drive one tile in a random direction.
  * @param pos     Current position.
  * @param dirLast Forbidden direction for movement (to prevent reversing).
- * @param dist    Distance traveled.
  * @return Direction of movement, \c #DIR2_INVALID is returned if not moved.
  */
-Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast,
-                            int dist)
+Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast)
 {
     Direction2 directions[4];
 
@@ -318,13 +324,6 @@ Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast,
     }
 
     // We have at least one way to go.
-
-    /* Save pos every other move.
-     * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
-     */
-    if (dist & 1) {
-        pushPos(pos);
-    }
 
     if (count == 1) { // only one solution
         for (int i = 0; i < 4; i++) {
