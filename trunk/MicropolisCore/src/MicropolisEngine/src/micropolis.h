@@ -2805,7 +2805,7 @@ private:
 
     bool tryDrive(const Position &startPos, ZoneType destZone);
 
-    bool tryGo(Position *pos, Direction2 *dirLast, int dist);
+    Direction2 tryGo(const Position &pos, Direction2 dirLast, int dist);
 
     MapTile getFromMap(const Position &pos, Direction2 d);
 
