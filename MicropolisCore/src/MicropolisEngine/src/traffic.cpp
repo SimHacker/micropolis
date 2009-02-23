@@ -296,43 +296,50 @@ bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
 Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast,
                             int dist)
 {
-    Direction2 dirReal;
+    Direction2 directions[4];
 
-    // Initialize to a random direction.
-    switch(getRandom16() & 3) {
-        case 0: dirReal = DIR2_NORTH; break;
-        case 1: dirReal = DIR2_EAST; break;
-        case 2: dirReal = DIR2_SOUTH; break;
-        case 3: dirReal = DIR2_WEST; break;
-        default:
-            NOT_REACHED();
-            dirReal = DIR2_NORTH; // to keep the compiler happy.
-    }
-
-    for (int i = 0; i < 4; i++) { /* for the 4 directions */
-
-        dirReal = rotate90(dirReal); // Rotate direction.
-
-        if (dirReal == dirLast) {
-            continue; /* skip forbidden direction */
+    // Find connections from current position.
+    Direction2 dir = DIR2_NORTH;
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+        if (dir != dirLast && roadTest(getFromMap(pos, dir))) {
+            // found a road in an allowed direction
+            directions[i] = dir;
+            count++;
+        } else {
+            directions[i] = DIR2_INVALID;
         }
 
-        if (roadTest(getFromMap(pos, dirReal))) {
-            // Found road
+        dir = rotate90(dir);
+    }
 
-            if (dist & 1) {
-                /* Save pos every other move.
-                 * This also relates to
-                 * Micropolis::trafficDensityMap::MAP_BLOCKSIZE
-                 */
-                pushPos(pos);
+    if (count == 0) { // dead end
+        return DIR2_INVALID;
+    }
+
+    // We have at least one way to go.
+
+    /* Save pos every other move.
+     * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
+     */
+    if (dist & 1) {
+        pushPos(pos);
+    }
+
+    if (count == 1) { // only one solution
+        for (int i = 0; i < 4; i++) {
+            if (directions[i] != DIR2_INVALID) {
+                return directions[i];
             }
-
-            return dirReal;
         }
     }
 
-    return DIR2_INVALID;
+    // more than one choice, draw a random number.
+    int i = getRandom16() & 3;
+    while (directions[i] == DIR2_INVALID) {
+        i = (i + 1) & 3;
+    }
+    return directions[i];
 }
 
 
