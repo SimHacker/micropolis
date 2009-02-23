@@ -180,6 +180,8 @@ Position Micropolis::pullPos()
  * @param pos Starting position.
  *            Gets updated when a perimeter has been found.
  * @return Indication that a connection has been found.
+ *
+ * @todo We could randomize the search.
  */
 bool Micropolis::findPerimeterRoad(Position *pos)
 {
@@ -249,7 +251,7 @@ bool Micropolis::findPerimeterTelecom(const Position &pos)
  * @post Position stack (curMapStackXY) is filled with some intermediate
  *       positions of the drive.
  *
- * @bug The stack is popped, but position is not updated.
+ * @bug The stack is popped, but position (and dirLast) is not updated.
  */
 bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
 {
@@ -259,9 +261,12 @@ bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
     /* Maximum distance to try */
     for (short dist = 0; dist < MAX_TRAFFIC_DISTANCE; dist++) {
 
-        if (tryGo(&drivePos, &dirLast, dist)) { /* if it got a road */
+        Direction2 dir = tryGo(drivePos, dirLast, dist);
+        if (dir != DIR2_INVALID) { // we found a road
+            drivePos.move(dir);
+            dirLast = rotate180(dir);
 
-            if (driveDone(drivePos, destZone)) { /* if destination is reached */
+            if (driveDone(drivePos, destZone)) { // if destination is reached
                 return true; /* pass */
             }
 
@@ -283,12 +288,13 @@ bool Micropolis::tryDrive(const Position &startPos, ZoneType destZone)
 
 /**
  * Try to drive one tile in a random direction.
- * @param pos     Current position. Updated by function.
- * @param dirLast Last direction traveled in. Updated by the function.
+ * @param pos     Current position.
+ * @param dirLast Forbidden direction for movement (to prevent reversing).
  * @param dist    Distance traveled.
- * @return A move has been made.
+ * @return Direction of movement, \c #DIR2_INVALID is returned if not moved.
  */
-bool Micropolis::tryGo(Position *pos, Direction2 *dirLast, int dist)
+Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast,
+                            int dist)
 {
     Direction2 dirReal;
 
@@ -307,26 +313,26 @@ bool Micropolis::tryGo(Position *pos, Direction2 *dirLast, int dist)
 
         dirReal = rotate90(dirReal); // Rotate direction.
 
-        if (dirReal == *dirLast) {
-            continue; /* skip last direction */
+        if (dirReal == dirLast) {
+            continue; /* skip forbidden direction */
         }
 
-        if (roadTest(getFromMap(*pos, dirReal))) {
-            pos->move(dirReal); // Found road, move forward.
-            *dirLast = rotate180(dirReal); // Don't allow moving back.
+        if (roadTest(getFromMap(pos, dirReal))) {
+            // Found road
 
             if (dist & 1) {
                 /* Save pos every other move.
-                 * This also relates to Micropolis::trafficDensityMap::MAP_BLOCKSIZE
+                 * This also relates to
+                 * Micropolis::trafficDensityMap::MAP_BLOCKSIZE
                  */
-                pushPos(*pos);
+                pushPos(pos);
             }
 
-            return true;
+            return dirReal;
         }
     }
 
-    return false;
+    return DIR2_INVALID;
 }
 
 
