@@ -1600,7 +1600,7 @@ void Micropolis::drawStadium(const Position &center, MapTile z)
 
     for (y = center.posY - 1; y < center.posY + 3; y++) {
         for (x = center.posX - 1; x < center.posX + 3; x++) {
-            map[x][y] = z++ | BNCNBIT;
+            map[x][y] = z | BNCNBIT;
             z++;
         }
     }
