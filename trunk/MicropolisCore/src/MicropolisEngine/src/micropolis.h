@@ -1841,7 +1841,7 @@ private:
 
     void treeSplash(short xloc, short yloc);
 
-    bool isTree(int cell);
+    bool isTree(MapValue cell);
 
     void smoothTrees();
 
@@ -1865,7 +1865,7 @@ private:
 
     void moveMap(short dir);
 
-    void putOnMap(short Mchar, short Xoff, short Yoff);
+    void putOnMap(MapValue mChar, short xLoc, short yLoc);
 
     //@}
 
