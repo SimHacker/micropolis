@@ -158,8 +158,8 @@ void Micropolis::scenarioDisaster()
             break;
 
         case SC_HAMBURG:
-            if ((disasterWait % 10) == 0) {
-                dropFireBombs();
+            if (disasterWait % 10 == 0) {
+                makeFireBombs();
             }
             break;
 
@@ -227,6 +227,18 @@ void Micropolis::fireBomb()
     sendMessage(MESSAGE_FIREBOMBING, crashX, crashY, true, true);
 }
 
+/** Throw several bombs onto the city. */
+void Micropolis::makeFireBombs()
+{
+    int count = 2 + (getRandom16() & 1);
+
+    while (count > 0) {
+        fireBomb();
+        count--;
+    }
+
+    dropFireBombs();
+}
 
 /** Change random tiles to fire or dirt as result of the earthquake */
 void Micropolis::makeEarthquake()
