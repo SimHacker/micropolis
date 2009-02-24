@@ -1567,7 +1567,7 @@ public:
 
     void makeMeltdown();
 
-    void fireBomb();
+    void makeFireBombs();
 
     void makeEarthquake();
 
@@ -1578,6 +1578,8 @@ public:
     void setFire();
 
   private:
+
+    void fireBomb();
 
     void doDisasters();
 
