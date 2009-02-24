@@ -689,6 +689,8 @@ enum MapTileCharacters {
     // tile 952 -- 959 ?
 
     TILE_COUNT     = 960,
+
+    TILE_INVALID   = 1023, ///< Invalid tile (not used in the world map).
 };
 
 /**
@@ -2809,7 +2811,8 @@ private:
 
     Direction2 tryGo(const Position &pos, Direction2 dirLast);
 
-    MapTile getFromMap(const Position &pos, Direction2 d);
+    MapTile getTileFromMap(const Position &pos,
+                            Direction2 dir, MapTile defaultTile);
 
     bool driveDone(const Position &pos, ZoneType destZone);
 

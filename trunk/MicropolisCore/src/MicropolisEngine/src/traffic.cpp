@@ -308,7 +308,7 @@ Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast)
     Direction2 dir = DIR2_NORTH;
     int count = 0;
     for (int i = 0; i < 4; i++) {
-        if (dir != dirLast && roadTest(getFromMap(pos, dir))) {
+        if (dir != dirLast && roadTest(getTileFromMap(pos, dir, DIRT))) {
             // found a road in an allowed direction
             directions[i] = dir;
             count++;
@@ -344,12 +344,15 @@ Direction2 Micropolis::tryGo(const Position &pos, Direction2 dirLast)
 
 /**
  * Get neighbouring tile from the map.
- * @param pos Current position.
- * @param d   Direction of neighbouring tile.
+ * @param pos         Current position.
+ * @param dir         Direction of neighbouring tile, only horizontal and
+ *                    vertical directions are supported.
+ * @param defaultTile Tile to return if off-map.
  * @return The tile in the indicated direction. If tile is off-world or an
  *         incorrect direction is given, \c DIRT is returned.
  */
-MapTile Micropolis::getFromMap(const Position &pos, Direction2 dir)
+MapTile Micropolis::getTileFromMap(const Position &pos,
+                                    Direction2 dir, MapTile defaultTile)
 {
     switch (dir) {
 
@@ -358,31 +361,31 @@ MapTile Micropolis::getFromMap(const Position &pos, Direction2 dir)
               return map[pos.posX][pos.posY - 1] & LOMASK;
             }
 
-            return DIRT;
+            return defaultTile;
 
         case DIR2_EAST:
             if (pos.posX < WORLD_W - 1) {
               return map[pos.posX + 1][pos.posY] & LOMASK;
             }
 
-            return DIRT;
+            return defaultTile;
 
         case DIR2_SOUTH:
             if (pos.posY < WORLD_H - 1) {
               return map[pos.posX][pos.posY + 1] & LOMASK;
             }
 
-            return DIRT;
+            return defaultTile;
 
         case DIR2_WEST:
             if (pos.posX > 0) {
               return map[pos.posX - 1][pos.posY] & LOMASK;
             }
 
-            return DIRT;
+            return defaultTile;
 
         default:
-            return DIRT;
+            return defaultTile;
 
     }
 }
