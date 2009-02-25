@@ -268,6 +268,94 @@ class MicropolisEraserTool(MicropolisTool):
 
 
 ########################################################################
+
+
+class MicropolisTerrainTool(MicropolisTool):
+
+    pass
+
+
+class MicropolisWaterTool(MicropolisTerrainTool):
+
+    pass
+
+
+class MicropolisLandTool(MicropolisTerrainTool):
+
+    pass
+
+
+class MicropolisTreeTool(MicropolisTerrainTool):
+
+    pass
+
+
+
+
+    def getCursorHotSpot(self, view):
+        return (
+            view.cursorX,
+            view,cursorY,
+        )
+
+
+    def drawCursor(self, view, ctx):
+
+        cursorX = view.cursorX
+        cursorY = view.cursorY
+        panX = view.panX
+        panY = view.panY
+
+        x = cursorX + panX
+        y = cursorY + panY
+
+        ctx.save()
+
+        ctx.translate(
+            x,
+            y)
+
+        ctx.set_line_width(
+            4.0)
+
+        ctx.move_to(
+            0,
+            -10)
+        ctx.line_to(
+            10,
+            0)
+        ctx.line_to(
+            0,
+            10)
+        ctx.line_to(
+            -10,
+            0)
+        ctx.line_to(
+            00,
+            -10)
+        ctx.close_path()
+
+        ctx.set_source_rgb(
+            1.0,
+            1.0,
+            1.0)
+
+        ctx.stroke_preserve()
+
+        ctx.set_line_width(
+            2.0)
+
+        ctx.set_source_rgb(
+            0.0,
+            0.0,
+            0.0)
+
+        ctx.stroke()
+
+        ctx.restore()
+
+
+########################################################################
 # Define all the tools.
 
 
@@ -367,6 +455,39 @@ MicropolisTool(
 MicropolisTool(
     name='Park',
     toolIndex=micropolisengine.TOOL_PARK,
+    cursorRows=1,
+    cursorCols=1,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    iconNormal='images/icpark.png',
+    iconHilite='images/icparkhi.png',
+    iconX=47,
+    iconY=254)
+
+MicropolisWaterTool(
+    name='Water',
+    cursorRows=1,
+    cursorCols=1,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    iconNormal='images/icpark.png',
+    iconHilite='images/icparkhi.png',
+    iconX=47,
+    iconY=254)
+
+MicropolisLandTool(
+    name='Land',
+    cursorRows=1,
+    cursorCols=1,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    iconNormal='images/icpark.png',
+    iconHilite='images/icparkhi.png',
+    iconX=47,
+    iconY=254)
+
+MicropolisTreeTool(
+    name='Tree',
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,

@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Start View
+# Micropolis Start Panel
 # Don Hopkins
 
 
@@ -83,66 +83,6 @@ import micropolisdrawingarea
 class MicropolisStartPanel(gtk.Frame):
 
 
-    scenarios = [
-        {
-            'id': micropolisengine.SC_DULLSVILLE,
-            'title': 'Dullsville, USA  1900',
-            'description': """Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.
-
-It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.""",
-        },
-        {
-            'id': micropolisengine.SC_SAN_FRANCISCO,
-            'title': 'San Francisco, CA.  1906',
-            'description': """Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.
-
-Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.""",
-        },
-        {
-            'id': micropolisengine.SC_HAMBURG,
-            'title': 'Hamburg, Germany  1944',
-            'description': """Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.
-
-You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.""",
-        },
-        {
-            'id': micropolisengine.SC_BERN,
-            'title': 'Bern, Switzerland  1965',
-            'description': """The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.
-
-Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.""",
-        },
-        {
-            'id': micropolisengine.SC_TOKYO,
-            'title': 'Tokyo, Japan  1957',
-            'description': """A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.
-
-Try to control the fires, then rebuild the industrial center. You have 5 years.""",
-        },
-        {
-            'id': micropolisengine.SC_DETROIT,
-            'title': 'Detroit, MI.  1972',
-            'description': """By 1970, competition from overseas and other economic factors pushed the once "automobile capital of the world" into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.
-
-You have 10 years to reduce crime and rebuild the industrial base of the city."""
-        },
-        {
-            'id': micropolisengine.SC_BOSTON,
-            'title': 'Boston, MA.  2010',
-            'description': """A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.
-
-You have 5 years to get the situation under control.""",
-        },
-        {
-            'id': micropolisengine.SC_RIO,
-            'title': 'Rio de Janeiro, Brazil  2047',
-            'description': """In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.
-
-You have 10 years to turn this swamp back into a city again.""",
-        },
-    ]
-
-
     def __init__(
         self,
         engine=None,
@@ -155,6 +95,10 @@ You have 10 years to turn this swamp back into a city again.""",
 
         self.engine = engine
         self.target = target
+
+        engine.expressInterest(
+            self,
+            ('load', 'gamemode',))
 
         controls = []
         self.controls = controls
@@ -173,21 +117,21 @@ You have 10 years to turn this swamp back into a city again.""",
         self.hbox2 = hbox2
         vbox1.pack_start(hbox2, False, False, 10)
 
-        mediumMapView = micropolisdrawingarea.MediumMicropolisDrawingArea(
-                engine=self.engine)
-        self.mediumMapView = mediumMapView
-        mediumMapView.set_size_request(
+        previewMapView = micropolisdrawingarea.PreviewMicropolisDrawingArea(
+                engine=engine)
+        self.previewMapView = previewMapView
+        previewMapView.set_size_request(
             micropolisengine.WORLD_W * 3,
             micropolisengine.WORLD_H * 3)
 
-        hbox2.pack_start(mediumMapView, False, False, 5)
+        hbox2.pack_start(previewMapView, False, False, 5)
 
         vbox2 = gtk.VBox(False, 5)
         self.vbox2 = vbox2
         hbox2.pack_start(vbox2, True, True, 0)
 
         markup = (
-            '<b><span size="xx-large">Micropolis</span></b>'
+            '<b><span size="xx-large">Micropolis City Simulator</span></b>'
         )
 
         labelMicropolis = gtk.Label()
@@ -195,35 +139,33 @@ You have 10 years to turn this swamp back into a city again.""",
         labelMicropolis.set_markup(markup)
         vbox2.pack_start(labelMicropolis, False, False, 5)
 
-        markup = (
-            '<b><span size="x-large">'
-            'Pick a City'
-            '</span></b>'
-        )
-
         labelTitle = gtk.Label()
         self.labelTitle = labelTitle
-        labelTitle.set_markup(markup)
         vbox2.pack_start(labelTitle, False, False, 5)
-
-
-        markup = (
-            '<span size="large">'
-            'You may pick a scenario, generate a random city, or load a city from disk.\n\n'
-            'After you have picked a city, press the button at the bottom to play.\n'
-            '</span>'
-        )
 
         labelDescription = gtk.Label()
         self.labelDescription = labelDescription
         labelDescription.set_line_wrap(True)
-        labelDescription.set_markup(markup)
         vbox2.pack_start(labelDescription, True, True, 5)
 
-        vbox3 = gtk.VBox(False, 0)
-        self.vbox3 = vbox3
-       
-        vbox1.pack_start(vbox3, False, False, 5)
+        button = gtk.Button('Play with This City')
+        controls.append(button)
+        button.connect('clicked', lambda item: target.playCity())
+        vbox2.pack_start(button, False, False, 0)
+
+        hbox3 = gtk.HBox(False, 5)
+        self.hbox3 = hbox3
+        vbox2.pack_start(hbox3, False, False, 0)
+
+        button = gtk.Button('Generate City')
+        controls.append(button)
+        button.connect('clicked', lambda item: target.generateCity())
+        hbox3.pack_start(button, True, True, 0)
+
+        button = gtk.Button('Load City')
+        controls.append(button)
+        button.connect('clicked', lambda item: target.loadCityDialog())
+        hbox3.pack_start(button, True, True, 0)
 
         scenariosPerGroup = 2
         scenarioInGroup = scenariosPerGroup
@@ -233,24 +175,28 @@ You have 10 years to turn this swamp back into a city again.""",
         hbox2 = gtk.HBox(False, 5)
         self.hbox2 = hbox2
 
-        vbox1.pack_start(hbox2, False, False, 10)
+        vbox1.pack_start(hbox2, False, False, 5)
 
-        for scenario in self.scenarios:
+        for scenario in engine.scenarios[1:]: # Skip SC_NONE.
+
+            scenarioID = scenario['id']
+            scenarioTitle = scenario['title']
 
             if scenarioInGroup == scenariosPerGroup:
                 scenarioInGroup = 0
                 scenarioGroup = gtk.VBox(False, 5)
                 hbox2.pack_start(scenarioGroup, True, True, 0)
+
             scenarioInGroup += 1
 
             vbox = gtk.VBox(False, 5)
             controls.append(vbox)
             scenarioGroup.pack_start(vbox, False, False, 0)
 
-            button = gtk.Button(scenario['title'])
+            button = gtk.Button(scenarioTitle)
+            button.scenarioID = scenarioID
             controls.append(button)
-            button.scenario = scenario
-            button.connect('clicked', lambda item: self.startScenario(item.scenario))
+            button.connect('clicked', lambda item: self.startScenario(item.scenarioID))
             vbox.pack_start(button, False, False, 0)
 
             image = gtk.Image()
@@ -260,89 +206,50 @@ You have 10 years to turn this swamp back into a city again.""",
                 'Icon.png')
             vbox.pack_start(image, False, False, 0)
 
-        markup = (
-            '<span size="large">'
-            '\nYou can also load a city from disk:'
-            '</span>'
-        )
 
-        labelDescription1 = gtk.Label()
-        self.labelDescription1 = labelDescription1
-        labelDescription1.set_markup(markup)
-        vbox1.pack_start(labelDescription1, False, False, 0)
+    def update(self, name, *args):
 
-        button = gtk.Button('Load City')
-        controls.append(button)
-        button.connect('clicked', lambda item: target.loadCityDialog())
-        vbox1.pack_start(button, False, False, 0)
+        engine = self.engine
 
-        mediumMapView = micropolisdrawingarea.MediumMicropolisDrawingArea(
-                engine=self.engine)
-        self.mediumMapView = mediumMapView
-        vbox1.pack_start(mediumMapView, False, False, 0)
+        if name == 'load':
 
-        markup = (
-            '<span size="large">'
-            '\nYou can also randomly generate a new city:'
-            '</span>'
-        )
+            title = engine.title
+            description = engine.description
+            
+            titleMarkup = (
+                '<b><span size="x-large">' +
+                title +
+                '</span></b>'
+            )
 
-        labelDescription2 = gtk.Label()
-        self.labelDescription2 = labelDescription2
-        labelDescription2.set_markup(markup)
-        vbox1.pack_start(labelDescription2, False, False, 0)
+            descriptionMarkup = (
+                '<span size="large">' +
+                description +
+                '</span>'
+            )
 
-        button = gtk.Button('Generate City')
-        controls.append(button)
-        button.connect('clicked', lambda item: target.generateCity())
-        vbox1.pack_start(button, False, False, 0)
+            self.labelTitle.set_markup(titleMarkup)
+            self.labelDescription.set_markup(descriptionMarkup)
 
-        # Make the medium map view.
+        elif name == 'gamemode':
+            
+            gameMode = engine.gameMode
+            previewMapView = self.previewMapView
 
-        mediumMapView = micropolisdrawingarea.MediumMicropolisDrawingArea(
-                engine=self.engine)
-        self.mediumMapView = mediumMapView
-        vbox1.pack_start(mediumMapView, False, False, 0)
+            if gameMode == 'start':
 
-        markup = (
-            '<span size="large">'
-            '\nAfter selecting a city, press this button to play:'
-            '</span>'
-        )
+                previewMapView.engage()
+                previewMapView.updateView()
 
-        labelDescription3 = gtk.Label()
-        self.labelDescription3 = labelDescription3
-        labelDescription3.set_markup(markup)
-        vbox1.pack_start(labelDescription3, False, False, 0)
+            elif gameMode == 'play':
 
-        button = gtk.Button('Play with This City')
-        controls.append(button)
-        button.connect('clicked', lambda item: target.playCity())
-        vbox1.pack_start(button, False, False, 0)
+                previewMapView.disengage()
 
 
-    def startScenario(self, scenario):
-        print "STARTSCENARIO", scenario
-        title = scenario['title']
-        description = scenario['description']
-        print title
-        print description
+    def startScenario(self, scenarioID):
+        print "STARTSCENARIO", scenarioID
 
-        titleMarkup = (
-            '<b><span size="xx-large">' +
-            title +
-            '</span></b>'
-        )
-
-        descriptionMarkup = (
-            '<span size="large">' +
-            description +
-            '</span>'
-        )
-
-        self.labelTitle.set_markup(titleMarkup)
-        self.labelDescription.set_markup(descriptionMarkup)
-        self.target.startScenario(scenario['id'])
+        self.target.startScenario(scenarioID)
 
 
 ########################################################################

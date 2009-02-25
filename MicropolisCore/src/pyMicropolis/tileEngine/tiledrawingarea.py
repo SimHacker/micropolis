@@ -288,6 +288,7 @@ class TileDrawingArea(gtk.DrawingArea):
             cursorCols = tool.cursorCols
             cursorRows = tool.cursorRows
         else:
+            # FIXME: This should zoom around the center, I think.
             cursorCol = int(math.floor(self.cursorX / tileSize)) # TODO: get rid of cursorX and cursorY and track it in the tool instead.
             cursorRow = int(math.floor(self.cursorY / tileSize)) # TODO: get rid of cursorX and cursorY and track it in the tool instead.
             cursorRows = 1

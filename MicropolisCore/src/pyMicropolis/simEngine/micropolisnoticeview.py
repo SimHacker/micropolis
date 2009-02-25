@@ -89,7 +89,7 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
 
     def __init__(
         self,
-        setCityViewVisible=None,
+        setMapViewVisible=None,
         **args):
 
         micropolisview.MicropolisView.__init__(
@@ -99,7 +99,7 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
             **args)
 
         self.zoomable = False
-        self.setCityViewVisible = setCityViewVisible
+        self.setMapViewVisible = setMapViewVisible
         self.messageNumber = 0
         self.message = ''
         self.messageX = -1
@@ -112,10 +112,7 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
         self.set_size_request(self.viewWidth, self.viewHeight)
 
 
-    def update(
-        self,
-        name,
-        *args):
+    def update(self, name, *args):
 
         if name == 'message':
             self.updateMessage(*args)
@@ -147,9 +144,9 @@ class MicropolisNoticeView(micropolisview.MicropolisView):
         self.important = important
         self.sprite = sprite
 
-        setCityViewVisible = self.setCityViewVisible
-        if setCityViewVisible:
-            setCityViewVisible(showPicture, messageX, messageY, sprite)
+        setMapViewVisible = self.setMapViewVisible
+        if setMapViewVisible:
+            setMapViewVisible(showPicture, messageX, messageY, sprite)
 
         self.queue_draw()
 

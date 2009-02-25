@@ -136,11 +136,7 @@ class MicropolisView(gtk.DrawingArea):
         self.connect('scroll_event', self.handleMouseScroll)
 
 
-    def handleExpose(
-        self,
-        widget,
-        event,
-        *args):
+    def handleExpose(self, widget, event, *args):
 
         if args:
             pass # print "handleExpose MicropolisView", self, "WIDGET", widget, "EVENT", event, "ARGS", args
@@ -150,10 +146,7 @@ class MicropolisView(gtk.DrawingArea):
         return False
 
 
-    def draw(
-        self,
-        widget=None,
-        event=None):
+    def draw(self, widget=None, event=None):
 
         ctxWindow = self.window.cairo_create()
 
@@ -181,20 +174,14 @@ class MicropolisView(gtk.DrawingArea):
         self.drawContent(ctxWindow, playout)
 
 
-    def update(
-        self,
-        name,
-        *args):
+    def update(self, name, *args):
 
         #print "MicropolisView update", self, name, args
 
         self.queue_draw()
 
 
-    def drawContent(
-        self,
-        ctx,
-        playout):
+    def drawContent(self, ctx, playout):
 
         pass
 
@@ -225,10 +212,8 @@ class MicropolisView(gtk.DrawingArea):
     def pinMarkupXY(
         self,
         text,
-        x,
-        y,
-        pinX,
-        pinY,
+        x, y,
+        pinX, pinY,
         playout):
 
         playout.set_markup(text)
@@ -239,35 +224,24 @@ class MicropolisView(gtk.DrawingArea):
         return x, y
 
 
-    def handleEnterNotify(
-        self,
-        widget,
-        event):
+    def handleEnterNotify(self, widget, event):
 
         self.grab_focus()
 
 
-    def handleLeaveNotify(
-        self,
-        widget,
-        event):
+    def handleLeaveNotify(self, widget, event):
 
         pass
 
 
-    def handleMotionNotify(
-        self,
-        widget,
-        event):
+    def handleMotionNotify(self, widget, event):
 
         #print "handleMotionNotify MicropolisView", self, widget, event
 
         self.updateCursorPosition(event)
 
 
-    def updateCursorPosition(
-        self,
-        event):
+    def updateCursorPosition(self, event):
 
         if not event:
             x, y, state = self.window.get_pointer()
@@ -288,9 +262,7 @@ class MicropolisView(gtk.DrawingArea):
             self.handleMousePoint(event)
 
 
-    def handleMouseDrag(
-        self,
-        event):
+    def handleMouseDrag(self, event):
 
         if not self.clickable:
             return
@@ -298,9 +270,7 @@ class MicropolisView(gtk.DrawingArea):
         #print "handleMouseDrag", self, event, event.x, event.y
 
 
-    def handleMousePoint(
-        self,
-        event):
+    def handleMousePoint(self, event):
 
         if not self.clickable:
             return
@@ -308,10 +278,7 @@ class MicropolisView(gtk.DrawingArea):
         #print "handleMousePoint", self, event, event.x, event.y
 
 
-    def handleButtonPress(
-        self,
-        widget,
-        event):
+    def handleButtonPress(self, widget, event):
 
         #print "handleButtonPress", self, event, event.x, event.y
 
@@ -323,10 +290,7 @@ class MicropolisView(gtk.DrawingArea):
         self.downY = event.y
 
 
-    def handleButtonRelease(
-        self,
-        widget,
-        event):
+    def handleButtonRelease(self, widget, event):
 
         #print "handleMouseRelease", self, event, event.x, event.y
 
@@ -338,10 +302,7 @@ class MicropolisView(gtk.DrawingArea):
         self.down = False
 
 
-    def handleMouseScroll(
-        self,
-        widget,
-        event):
+    def handleMouseScroll(self, widget, event):
 
         if not self.zoomable:
             return

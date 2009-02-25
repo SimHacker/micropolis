@@ -81,6 +81,10 @@ from micropolisengine import WORLD_W, WORLD_H
 from micropolisengine import WORLD_W_2, WORLD_H_2
 from micropolisengine import WORLD_W_4, WORLD_H_4
 from micropolisengine import WORLD_W_8, WORLD_H_8
+import xml.dom.minidom
+from xml.dom.minidom import Node
+import pprint
+from StringIO import StringIO
 
 
 ########################################################################
@@ -88,6 +92,110 @@ from micropolisengine import WORLD_W_8, WORLD_H_8
 
 
 __version__ = "0.9"
+
+
+########################################################################
+# Utilities
+
+
+def GetElementText(el, default=u''):
+    if not el:
+        return default
+    text = default
+    foundText = False
+    el = el.firstChild
+    while el:
+        if el.nodeType == el.TEXT_NODE:
+            value = el.nodeValue
+            if not foundText:
+                # Replace the default with the first text.
+                foundText = True
+                text = value
+            else:
+                text += value
+        el = el.nextSibling
+    return text
+
+
+def GetElementBool(el, default=False):
+    if not el:
+        return default
+    text = GetElementText(el).lower()
+    if text == 'true':
+        return True
+    if text == 'false':
+        return False
+    return default
+
+
+def GetElementInt(el, default=0):
+    if not el:
+        return default
+    try:
+        val = int(GetElementText(el))
+    except:
+        val = default
+    return val
+
+
+def GetElementFloat(el, default=0.0):
+    if not el:
+        return default
+    try:
+        val = float(GetElementText(el))
+    except:
+        val = default
+    return val
+
+
+def GetSubElement(el, key):
+    # Isn't there a faster way to do this? (Only searching direct children.)
+    el = el.firstChild
+    while el:
+        if ((el.nodeType == el.ELEMENT_NODE) and
+            (el.nodeName == key)):
+            return el
+        el = el.nextSibling
+    return None
+
+
+def GetSubElementText(el, key, default=u''):
+    return GetElementText(GetSubElement(el, key), default)
+
+
+def GetSubElementBool(el, key, default=False):
+    return GetElementBool(GetSubElement(el, key), default)
+
+
+def GetSubElementInt(el, key, default=0):
+    return GetElementInt(GetSubElement(el, key), default)
+
+
+def GetSubElementFloat(el, key, default=0.0):
+    return GetElementFloat(GetSubElement(el, key), default)
+
+
+def SetSubElementText(el, key, value):
+    subEl = el.createElement(key)
+    text = el.createTextNode(value)
+    subEl.appendChild(text)
+    el.appendChild(subEl)
+
+
+def SetSubElementBool(el, key, value):
+    if value:
+        value = 'true'
+    else:
+        value = 'false'
+    SetSubElementText(el, key, value)
+
+
+def SetSubElementInt(el, key, value):
+    SetSubElementText(el, key, str(value))
+
+
+def SetSubElementFloat(el, key, value):
+    SetSubElementText(el, key, str(value))
 
 
 ########################################################################
@@ -445,6 +553,67 @@ You have 10 years to turn this swamp back into a city again.""",
     }
 
 
+    scenarios = [
+        None, # SC_NONE
+        {
+            'id': micropolisengine.SC_DULLSVILLE,
+            'title': 'Dullsville, USA  1900',
+            'description': """Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.
+
+It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.""",
+        },
+        {
+            'id': micropolisengine.SC_SAN_FRANCISCO,
+            'title': 'San Francisco, CA.  1906',
+            'description': """Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.
+
+Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.""",
+        },
+        {
+            'id': micropolisengine.SC_HAMBURG,
+            'title': 'Hamburg, Germany  1944',
+            'description': """Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.
+
+You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.""",
+        },
+        {
+            'id': micropolisengine.SC_BERN,
+            'title': 'Bern, Switzerland  1965',
+            'description': """The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.
+
+Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.""",
+        },
+        {
+            'id': micropolisengine.SC_TOKYO,
+            'title': 'Tokyo, Japan  1957',
+            'description': """A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.
+
+Try to control the fires, then rebuild the industrial center. You have 5 years.""",
+        },
+        {
+            'id': micropolisengine.SC_DETROIT,
+            'title': 'Detroit, MI.  1972',
+            'description': """By 1970, competition from overseas and other economic factors pushed the once "automobile capital of the world" into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.
+
+You have 10 years to reduce crime and rebuild the industrial base of the city."""
+        },
+        {
+            'id': micropolisengine.SC_BOSTON,
+            'title': 'Boston, MA.  2010',
+            'description': """A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.
+
+You have 5 years to get the situation under control.""",
+        },
+        {
+            'id': micropolisengine.SC_RIO,
+            'title': 'Rio de Janeiro, Brazil  2047',
+            'description': """In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.
+
+You have 10 years to turn this swamp back into a city again.""",
+        },
+    ]
+
+
     def __init__(
             self,
             running=False,
@@ -476,6 +645,14 @@ You have 10 years to turn this swamp back into a city again.""",
         self.policeCoverageImage = None
         self.dataTileEngine = tileengine.TileEngine()
         self.robots = []
+        self.saveFileDir = None
+        self.saveFileName = None
+        self.metaFileName = None
+        self.title = ''
+        self.description = ''
+        self.readOnly = False
+        self.gameMode = 'stopped'
+
 
         # NOTE: Because of a bug in SWIG, printing out the wrapped
         # objects results in a crash.  So don't do that! I hope this
@@ -600,17 +777,17 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def addView(self, view):
-        print "ADDVIEW", view
         views = self.views
         if view not in views:
             self.views.append(view)
+            print "ADDVIEW", view
 
 
     def removeView(self, view):
-        print "REMOVEVIEW", view
         views = self.views
         if view in views:
             views.remove(view)
+            print "REMOVEVIEW", view
 
 
     def getDataImageAlphaSize(self, name):
@@ -1102,7 +1279,7 @@ You have 10 years to turn this swamp back into a city again.""",
             WORLD_W,
             WORLD_H)
 
-        return image, 1.0, 1.0, 1.0
+        return image, 0.75, 1.0, 1.0
 
 
     def getFireCoverageImageAlphaSize(self):
@@ -1278,9 +1455,110 @@ You have 10 years to turn this swamp back into a city again.""",
                     a.remove(view)
 
 
+    def loadMetaCity(self, metaFilePath):
+
+        doc = xml.dom.minidom.parse(metaFilePath)
+        el = doc.firstChild
+        if el.nodeName != 'metaCity':
+            raise Exception("Expected top level 'metaCity' element in meta city file")
+
+        saveFileDir, metaFileName = os.path.split(os.path.abspath(metaFilePath))
+        saveFileName = GetSubElementText(el, u'saveFileName', None)
+        title = GetSubElementText(el, u'title', '')
+        description = GetSubElementText(el, u'description', '')
+        readOnly = GetSubElementBool(el, u'readOnly', False)
+
+        self.saveFileDir = saveFileDir
+        self.metaFileName = metaFileName
+        self.saveFileName = saveFileName
+        self.title = title
+        self.description = description
+        self.readOnly = readOnly
+
+        saveFilePath = os.path.join(saveFileDir, saveFileName)
+
+        saveFilePath = saveFilePath.encode('utf8')
+        print "Loading city file:", saveFilePath
+        success = self.loadCity(saveFilePath)
+
+        if not success:
+            raise Exception('Error loading city file')
+
+        self.sendUpdate('load')
+
+
+    def saveMetaCity(self, metaFileName=None):
+
+        saveFileDir = self.saveFileDir
+        metaFileName = metaFileName or self.metaFileName
+        saveFileName = self.saveFileName
+        readOnly = self.readOnly
+
+        if not metaFileName:
+            raise Exception('Undefined metaFileName')
+
+        if readOnly or not saveFileDir:
+            readOnly = False
+            self.readOnly = readOnly
+            saveFileDir = os.path.expanduser('~/cities')
+            self.saveFileDir = saveFileDir
+            os.makedirs(saveFileDir)
+
+        baseName, ext = os.path.splitext(metaFileName)
+
+        saveFileName = baseName + '.cty'
+        self.saveFileName = saveFileName
+
+        success = self.saveCityAs(saveFilePath)
+
+        if not success:
+            raise('Error writing to city file')
+
+        doc = xml.dom.minidom.Document()
+        el = doc.createElement(u'metaCity')
+        
+        SetSubElementText(el, u'saveFileName', saveFileName)
+        SetSubElementText(el, u'title', self.title)
+        SetSubElementText(el, u'description', self.description)
+        SetSubElementText(el, u'readOnly', readOnly)
+
+        metaFilePath = os.path.join(saveFileDir, metaFileName)
+        f = open(metaFilePath, 'wb')
+        xmlText = doc.toxml()
+        print xmlText
+        f.write(xmlText)
+        f.close()
+
+
+    def loadMetaScenario(self, id):
+        if ((id <= micropolisengine.SC_NONE) or
+            (id >= micropolisengine.SC_COUNT)):
+            print "loadMetaScenario: Invalid scenario id:", id
+            return
+
+        scenario = self.scenarios[id]
+        self.title = scenario['title']
+        self.description = scenario['description']
+        self.loadScenario(id)
+        self.sendUpdate('load')
+
+        self.sendUpdate('message', id, -1, -1, True, True)
+
+    def generateNewMetaCity(self):
+        self.title = 'New City'
+        self.description = 'A randomly generated city.'
+        self.generateNewCity()
+        self.sendUpdate('load')
+
+
+    def setGameMode(self, gameMode):
+        self.gameMode = gameMode
+        self.sendUpdate('gamemode')
+
+
     def invokeCallback(self, micropolis, name, *args):
         #print "==== MicropolisDrawingArea invokeCallback", "SELF", sys.getrefcount(self), self, "micropolis", sys.getrefcount(micropolis), micropolis, "name", name
-        # In this case, micropolis is the same is self, so ignore it.
+        # In this case, micropolis is the same as self, so ignore it.
         handler = getattr(self, 'handle_' + name, None)
         if handler:
             #print "Calling handler", handler, args
@@ -1345,16 +1623,9 @@ You have 10 years to turn this swamp back into a city again.""",
         print "handle_UIDidntSaveCity(self, msg)", (self, msg)
 
 
-    def handle_UIDoPendTool(self, tool, x, y):
-        print "handle_DoPendTool(self, tool, x, y)", (self, tool, x, y)
-
-
     def handle_UIDropFireBombs(self):
         print "handle_DropFireBombs(self)", (self,)
-
-
-    def handle_UIInitializeSound(self):
-        print "handle_UIInitializeSound(self)", (self,)
+        self.fireBomb()
 
 
     def handle_UILoseGame(self):
@@ -1374,74 +1645,12 @@ You have 10 years to turn this swamp back into a city again.""",
         print "handle_UIPlayNewCity(self)", (self,)
 
 
-    def handle_UIPopUpMessage(self, msg):
-        print "handle_UIPopUpMessage(self, msg)", (self, msg)
-
-
     def handle_UIReallyStartGame(self):
         print "handle_UIReallyStartGame(self)", (self,)
 
 
     def handle_UISaveCityAs(self):
         print "handle_UISaveCityAs(self)", (self,)
-
-
-    def handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax):
-        pass # print "handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax)", (self, flowStr, previousStr, currentStr, collectedStr, tax)
-
-
-    def handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
-        pass # print "handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)
-
-
-    def handle_UISetCityName(self, CityName):
-        print "handle_UISetCityName(self, CityName)", (self, CityName)
-
-
-    def handle_UISetDate(self, str, m, y):
-        #print "handle_UISetDate(self, str, m, d)", (self, str, m, y)
-        pass#print "DATE", str, m, y
-
-
-    def handle_UISetDemand(self, r, c, i):
-        #print "handle_UISetDemand(self, r, c, i)", (self, r, c, i)
-        self.r = r
-        self.c = c
-        self.i = i
-        for demand in self.demands:
-            demand.update()
-
-
-    def handle_UISetEvaluation(self, *args):
-        #print "handle_UISetEvaluation(self, args)
-        self.evaluation = args
-        for evaluation in self.evaluations:
-            evaluation.update()
-
-
-    def handle_UISetFunds(self, funds):
-        #print "handle_UISetFunds(self, funds)", (self, funds)
-        pass # print "FUNDS", funds
-
-
-    def handle_UISetGameLevel(self, GameLevel):
-        print "handle_UISetGameLevel(self, GameLevel)", (self, GameLevel)
-
-
-    def handle_UISetMapState(self, state):
-        print "handle_UISetMapState(self, state)", (self, state)
-
-
-    def handle_UISetMessage(self, str):
-        #print "handle_UISetMessage(self, str)", (self, str)
-        print "MESSAGE", str
-
-
-    def handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
-        print "handle_UISetOptions(self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, autoBudget, gotoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
-
-    def handle_UISetSpeed(self, speed):
-        print "handle_UISetSpeed(self, speed)", (self, speed)
 
 
     def handle_UIShowBudgetAndWait(self):

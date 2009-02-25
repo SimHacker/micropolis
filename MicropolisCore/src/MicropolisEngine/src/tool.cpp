@@ -635,8 +635,11 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
         getIndString(statusStr[i], 202, id);
     }
 
-    doShowZoneStatus(localStr, statusStr[0], statusStr[1], statusStr[2],
-                    statusStr[3], statusStr[4], mapH, mapV);
+    doShowZoneStatus(
+        localStr, 
+        statusStr[0], statusStr[1], statusStr[2],
+        statusStr[3], statusStr[4], 
+        mapH, mapV);
 }
 
 

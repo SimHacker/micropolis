@@ -79,9 +79,10 @@
 void Micropolis::doZone(const Position &pos)
 {
     // Set Power Bit in Map from powerGridMap
-    bool zonePwrFlg = setZonePower(pos);
+    bool zonePowerFlag = setZonePower(pos);
 
-    if (zonePwrFlg) {
+
+    if (zonePowerFlag) {
         poweredZoneCount++;
     } else {
         unpoweredZoneCount++;
@@ -89,29 +90,32 @@ void Micropolis::doZone(const Position &pos)
 
     MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
-    if (tile > PORTBASE) {       /* do Special Zones  */
-        doSpecialZone(pos, zonePwrFlg);
+    // Do special zones.
+    if (tile > PORTBASE) {
+        doSpecialZone(pos, zonePowerFlag);
         return;
     }
 
+    // Do residential zones.
     if (tile < HOSPITAL) {
-        doResidential(pos, zonePwrFlg);
+        doResidential(pos, zonePowerFlag);
         return;
     }
 
+    // Do hospitals and churches.
     if (tile < COMBASE) {
         doHospitalChurch(pos);
         return;
     }
 
+    // Do commercial zones.
     if (tile < INDBASE)  {
-        doCommercial(pos, zonePwrFlg);
+        doCommercial(pos, zonePowerFlag);
         return;
     }
 
-    doIndustrial(pos, zonePwrFlg);
-
-    return;
+    // Do industrial zones.
+    doIndustrial(pos, zonePowerFlag);
 }
 
 /**
@@ -127,28 +131,26 @@ void Micropolis::doHospitalChurch(const Position &pos)
         hospitalPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(pos, HOSPITAL, 3); /*post*/
+            repairZone(pos, HOSPITAL, 3);
         }
 
-        if (needHospital == -1) { // Too many hospitals
+        if (needHospital == -1) { // Too many hospitals!
             if (!getRandom(20)) {
-                zonePlop(pos, RESBASE); // Remove hospital
+                zonePlop(pos, RESBASE); // Remove hospital.
             }
         }
 
-    }
-
-    if (tile == CHURCH) {
+    } else if (tile == CHURCH) {
 
         churchPop++;
 
         if (!(cityTime & 15)) {
-            repairZone(pos, CHURCH, 3); /*post*/
+            repairZone(pos, CHURCH, 3);
         }
 
-        if (needChurch == -1) { // Too many churches
+        if (needChurch == -1) { // Too many churches!
             if (!getRandom(20)) {
-                zonePlop(pos, RESBASE); // Remove church
+                zonePlop(pos, RESBASE); // Remove church.
             }
         }
 
@@ -160,17 +162,15 @@ void Micropolis::doHospitalChurch(const Position &pos)
 #define ASCBIT (ANIMBIT | CONDBIT | BURNBIT)
 #define REGBIT (CONDBIT | BURNBIT)
 
-void Micropolis::setSmoke(const Position &pos, int zonePower)
+void Micropolis::setSmoke(const Position &pos, bool zonePower)
 {
     static bool aniThis[8] = {  true, false, true, true, false, false, true, true };
-    static short dX1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
-    static short dY1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
-    //static short DX2[8]     = {   -1,    0,    1,    1,    0,    0,    1,    1 };
-    //static short DY2[8]     = {   -1,    0,    0,   -1,    0,    0,   -1,    0 };
+    static short dx1[8]     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
+    static short dy1[8]     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
     static short aniTabA[8] = {    0,    0,   32,   40,    0,    0,   48,   56 };
     static short aniTabB[8] = {    0,    0,   36,   44,    0,    0,   52,   60 };
-    static MapTile aniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
-    static MapTile aniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
+    static short aniTabC[8] = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
+    static short aniTabD[8] = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
 
     MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
@@ -182,8 +182,8 @@ void Micropolis::setSmoke(const Position &pos, int zonePower)
     z = z & 7;
 
     if (aniThis[z]) {
-        int xx = pos.posX + dX1[z];
-        int yy = pos.posY + dY1[z];
+        int xx = pos.posX + dx1[z];
+        int yy = pos.posY + dy1[z];
 
         if (testBounds(xx, yy)) {
 
@@ -463,7 +463,7 @@ short Micropolis::evalLot(int x, int y)
  * @param pos Center tile of the residential zone.
  * @param zonePwrFlg Does the zone have power?
  */
-void Micropolis::doResidential(const Position &pos, int zonePwrFlg)
+void Micropolis::doResidential(const Position &pos, bool zonePower)
 {
     short tpop, zscore, locvalve, value, TrfGood;
 
@@ -497,7 +497,7 @@ void Micropolis::doResidential(const Position &pos, int zonePwrFlg)
         locvalve = evalRes(pos, TrfGood);
         zscore = resValve + locvalve;
 
-        if (!zonePwrFlg) {
+        if (!zonePower) {
             zscore = -500;
         }
 
@@ -680,7 +680,7 @@ short Micropolis::evalRes(const Position &pos, int traf)
  * @param zonePwrFlg Does the zone have power?
  * @todo Make zonePwrFlg a boolean.
  */
-void Micropolis::doCommercial(const Position &pos, int zonePwrFlg)
+void Micropolis::doCommercial(const Position &pos, bool zonePower)
 {
     short tpop, TrfGood;
     short zscore, locvalve, value;
@@ -709,7 +709,7 @@ void Micropolis::doCommercial(const Position &pos, int zonePwrFlg)
         locvalve = evalCom(pos, TrfGood);
         zscore = comValve + locvalve;
 
-        if (!zonePwrFlg) {
+        if (!zonePower) {
             zscore = -500;
         }
 
@@ -832,14 +832,14 @@ short Micropolis::evalCom(const Position &pos, int traf)
  * @param zonePwrFlg Does the zone have power?
  * @todo Make zonePwrFlg a boolean.
  */
-void Micropolis::doIndustrial(const Position &pos, int zonePwrFlg)
+void Micropolis::doIndustrial(const Position &pos, bool zonePower)
 {
     short tpop, zscore, TrfGood;
 
     MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
     indZonePop++;
-    setSmoke(pos, zonePwrFlg);
+    setSmoke(pos, zonePower);
     tpop = getIndZonePop(tile);
     indPop += tpop;
 
@@ -858,7 +858,7 @@ void Micropolis::doIndustrial(const Position &pos, int zonePwrFlg)
     if (!(getRandom16() & 7)) {
         zscore = indValve + evalInd(TrfGood);
 
-        if (!zonePwrFlg) {
+        if (!zonePower) {
             zscore = -500;
         }
 

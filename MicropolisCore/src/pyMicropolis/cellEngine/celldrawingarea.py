@@ -81,6 +81,7 @@ import array
 
 from pyMicropolis.cellEngine import cellpiemenus
 from pyMicropolis.cellEngine import celltool
+from pyMicropolis.tileEngine import tileengine
 from pyMicropolis.tileEngine.tiledrawingarea import TileDrawingArea
 from pyMicropolis.tileEngine.tiletool import TileTool
 
@@ -114,17 +115,21 @@ class CellDrawingArea(TileDrawingArea):
         tengine.height = engine.height
         tengine.colBytes = 1
         tengine.rowBytes = engine.width
-        tengine.typeCode = 'B'
+        tengine.typeCode = tileengine.TILE_FORMAT_BYTE_UNSIGNED
         tengine.tileMask = 0xff
 
 
     def makeTileMap(
         self):
 
+        #self.tileMap = None
+        #return
+
+        # Disabled
         tileMap = array.array('i')
         self.tileMap = tileMap
         for i in range(0, self.tileCount):
-            tileMap.append(random.randint(0, 959))
+            tileMap.append(random.randint(300, 500))
 
 
     def destroyEngine(self):

@@ -2588,8 +2588,6 @@ public:
 
     void invalidateMaps();
 
-    void initializeSound();
-
     void makeSound(
       const char *channel,
       const char *sound,
@@ -2749,12 +2747,12 @@ private:
     short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
-                    unsigned short baseTile, bool aniFlag = false);
+                     unsigned short baseTile, bool aniFlag = false);
 
     int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
 
     int buildBuilding(int mapH, int mapV, int sizeX, int sizeY,
-                    unsigned short base, short tool, bool aniFlag);
+                      unsigned short base, short tool, bool aniFlag);
 
     int getDensityStr(short catNo, short mapH, short mapV);
 
@@ -2949,7 +2947,7 @@ private:
 
     void doHospitalChurch(const Position &pos);
 
-    void setSmoke(const Position &pos, int zonePower);
+    void setSmoke(const Position &pos, bool zonePower);
 
     void makeHospital(const Position &pos);
 
@@ -2967,7 +2965,7 @@ private:
 
     short evalLot(int x, int y);
 
-    void doResidential(const Position &pos, int zonePwrFlg);
+    void doResidential(const Position &pos, bool zonePower);
 
     void doResIn(const Position &pos, int pop, int value);
 
@@ -2981,7 +2979,7 @@ private:
 
     // Commercial zone handling
 
-    void doCommercial(const Position &pos, int zonePwrFlg);
+    void doCommercial(const Position &pos, bool zonePower);
 
     void doComIn(const Position &pos, int pop, int value);
 
@@ -2995,7 +2993,7 @@ private:
 
     // Industrial zone handling
 
-    void doIndustrial(const Position &pos, int zonePwrFlg);
+    void doIndustrial(const Position &pos, bool zonePower);
 
     void doIndIn(const Position &pos, int pop, int value);
 

@@ -257,16 +257,6 @@ void Micropolis::invalidateMaps()
 
 
 /**
- * Tell the front-end to initialize its sound system.
- * @todo Should be handled by the front-end entirely?
- */
-void Micropolis::initializeSound()
-{
-    callback("UIInitializeSound", "");
-}
-
-
-/**
  * Instruct the front-end to make a sound.
  * @param channel Name of the sound channel, which can effect the
  *                sound (location, volume, spatialization, etc).

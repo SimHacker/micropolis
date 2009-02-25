@@ -45,23 +45,18 @@ def run():
             for x in range(10, 15):
                 setTile(x, y, micropolisengine.FIRE | micropolisengine.ANIMBIT)
 
-    fudge = 0
-    width = int((120 * 4) + fudge)
-    height = int((100 * 4) + fudge)
+    x = 0
+    y = 0
 
-    w = width
-    h = height
-
-    x1 = 0
-    y1 = 0
-    x2 = w + 20
-    y2 = h + 40
+    w = 800
+    h = 600
 
     if True:
-        win2 = micropoliswindow.MicropolisPanedWindow(engine=engine)
-        win2.set_default_size(800, 800)
-        win2.move(x1, y1)
-        win2.show_all()
+        win1 = micropoliswindow.MicropolisPanedWindow(engine=engine)
+        #win1.set_default_size(w, h)
+        win1.set_size_request(w, h)
+        win1.move(x, y)
+        win1.show_all()
 
     gtk.main()
 
