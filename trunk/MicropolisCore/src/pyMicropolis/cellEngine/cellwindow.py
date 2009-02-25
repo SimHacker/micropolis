@@ -92,10 +92,12 @@ class CellWindow(gtk.Window):
     def __init__(
         self,
         running=True,
-        timeDelay=50,
+        engine=None,
         **args):
 
         gtk.Window.__init__(self, **args)
+
+        self.engine = engine
 
         self.connect('destroy', gtk.main_quit)
 
@@ -103,47 +105,20 @@ class CellWindow(gtk.Window):
 
         self.views = []
 
-        self.createEngine()
-
-        self.running = running
-        self.timeDelay = timeDelay
-        self.timerActive = False
-        self.timerId = None
-
-        self.da = \
+        da = \
             CellDrawingArea(
                 engine=self.engine)
+        self.da = da
 
-        self.add(self.da)
-        self.views.append(self.da)
+        self.add(da)
+        self.views.append(da)
 
-        if self.running:
-            self.startTimer()
-
+        engine.addView(da)
 
     def __del__(
         self):
 
-        self.stopTimer()
         self.destroyEngine()
-
-
-    def createEngine(self):
-
-        w = 256
-        h = 256
-
-        engine = cellengine.CellEngine()
-        self.engine = engine
-        engine.InitScreen(w, h)
-        engine.SetRect(0, 0, w, h)
-        engine.wrap = 3
-        engine.steps = 1
-        engine.frob = 5
-        engine.neighborhood = 46
-        #engine.neighborhood = 37
-        #engine.LoadRule('WORMS')
-        engine.Garble()
 
 
     def destroyEngine(self):
@@ -152,60 +127,6 @@ class CellWindow(gtk.Window):
         # TODO: Make sure there are no memory leaks.
 
         TileDrawingArea.destroyEngine(self)
-
-
-    def startTimer(
-        self):
-
-        #print "startTimer"
-
-        if self.timerActive:
-            return
-
-        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
-        self.timerActive = True
-
-
-    def stopTimer(
-        self):
-
-        # FIXME: Is there some way to immediately cancel self.timerId?
-
-        #print "stopTimer"
-
-        self.timerActive = False
-
-
-    def tickTimer(
-        self):
-
-        #print "tickTimer"
-
-        if not self.timerActive:
-            return False
-
-        self.stopTimer()
-
-        self.tickEngine()
-
-        for view in self.views:
-            view.tickActiveTool()
-
-        for view in self.views:
-            view.tickTimer()
-
-        if self.running:
-            self.startTimer()
-
-        return False
-
-
-    def tickEngine(self):
-
-        #print "tickEngine", self, self.engine, self.engine.DoRule
-
-        engine = self.engine
-        engine.DoRule()
 
 
 ########################################################################

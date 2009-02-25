@@ -554,10 +554,7 @@ void Micropolis::didLoadCity()
  */
 void Micropolis::didntLoadCity(const char *msg)
 {
-    callback(
-        "UIDidntLoadCity",
-        "s",
-        msg);
+    callback("UIDidntLoadCity", "s", msg);
 }
 
 
@@ -606,10 +603,7 @@ void Micropolis::didSaveCity()
  */
 void Micropolis::didntSaveCity(const char *msg)
 {
-    callback(
-        "UIDidntSaveCity",
-        "s",
-        msg);
+    callback("UIDidntSaveCity", "s", msg);
 }
 
 

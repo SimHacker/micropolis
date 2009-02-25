@@ -95,7 +95,11 @@ class MicropolisNoticePanel(gtk.Frame):
             **args)
 
         self.engine = engine
-        self.cityViewVisible = False
+        self.mapViewVisible = False
+
+        engine.expressInterest(
+            self,
+            ('gamemode',))
 
         # Views
 
@@ -105,36 +109,54 @@ class MicropolisNoticePanel(gtk.Frame):
 
         self.noticeView = micropolisnoticeview.MicropolisNoticeView(
             engine=engine,
-            setCityViewVisible=self.setCityViewVisible)
+            setMapViewVisible=self.setMapViewVisible)
 
         hpaned1.pack1(self.noticeView, resize=False, shrink=False)
 
-        cityView = micropolisdrawingarea.NoticeMicropolisDrawingArea(
+        mapView = micropolisdrawingarea.NoticeMicropolisDrawingArea(
             engine=engine,
             centerOnTileHandler=centerOnTileHandler)
-        self.cityView = cityView
-        cityView.set_size_request(150, -1)
-        cityView.visible = False
-        hpaned1.pack2(cityView, resize=False, shrink=False)
+        self.mapView = mapView
+        mapView.set_size_request(150, -1)
+        mapView.visible = False
+        hpaned1.pack2(mapView, resize=False, shrink=False)
 
         hpaned1.set_position(1000)
 
-    def setCityViewVisible(self, visible, tileX=-1, tileY=-1, sprite=micropolisengine.SPRITE_NOTUSED):
-        #print "setCityViewVisible", visible, tileX, tileY, self.cityViewVisible
+
+    def update(self, name, *args):
+
         engine = self.engine
-        cityView = self.cityView
-        if visible and (tileX >= 0) and (tileY >= 0):
-            cityView.centerOnTile(tileX, tileY)
-            cityView.sprite = sprite
-        if self.cityViewVisible == visible:
-            return
-        if visible:
-            self.cityView.set_property("visible", True)
-            engine.addView(cityView)
+
+        if name == 'gamemode':
+            
+            self.updateMapViewAdded()
+
+
+    def updateMapViewAdded(self):
+        engine = self.engine
+        mapView = self.mapView
+
+        if ((engine.gameMode == 'play') and 
+            self.mapViewVisible):
+            mapView.set_property("visible", True)
+            mapView.engage()
         else:
-            self.cityView.set_property("visible", False)
-            engine.removeView(cityView)
-        self.cityViewVisible = visible
+            mapView.set_property("visible", False)
+            mapView.disengage()
+
+
+    def setMapViewVisible(self, visible, tileX=-1, tileY=-1, sprite=micropolisengine.SPRITE_NOTUSED):
+        #print "setMapViewVisible", visible, tileX, tileY, self.mapViewVisible
+        engine = self.engine
+        mapView = self.mapView
+
+        if visible and (tileX >= 0) and (tileY >= 0):
+            mapView.centerOnTile(tileX, tileY)
+            mapView.sprite = sprite
+
+        self.mapViewVisible = visible
+        self.updateMapViewAdded()
 
 
 ########################################################################

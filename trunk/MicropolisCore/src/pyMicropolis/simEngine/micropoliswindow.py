@@ -125,12 +125,15 @@ class MicropolisPanedWindow(gtk.Window):
 
         self.engine = engine
 
+        engine.expressInterest(
+            self,
+            ('gamemode',))
+
         # Make the big map view.
 
         bigMapView = micropolisdrawingarea.EditableMicropolisDrawingArea(
                 engine=self.engine)
         self.bigMapView = bigMapView
-        engine.addView(bigMapView)
 
         # Make the small map view.
 
@@ -261,7 +264,37 @@ class MicropolisPanedWindow(gtk.Window):
         self.startGame()
 
 
+    def update(self, name, *args):
+
+        if name == 'gamemode':
+
+            engine = self.engine
+            gameMode = engine.gameMode
+
+            smallMapView = self.smallMapView
+            bigMapView = self.bigMapView
+            modeNotebook = self.modeNotebook
+
+            if gameMode == 'start':
+
+                smallMapView.disengage()
+                bigMapView.disengage()
+                engine.pause()
+                modeNotebook.set_current_page(0)
+
+            elif gameMode == 'play':
+
+                smallMapView.engage()
+                bigMapView.engage()
+                smallMapView.updateView()
+                bigMapView.updateView()
+                engine.resume()
+                modeNotebook.set_current_page(1)
+
+
     def startGame(self):
+
+        print "==== STARTGAME"
 
         engine = self.engine
 
@@ -278,17 +311,14 @@ class MicropolisPanedWindow(gtk.Window):
         engine.setSpeed(2)
         engine.setCityTax(9)
         engine.setEnableDisasters(False)
-        engine.setFunds(1000000000)
 
         self.startMode()
-
-        self.resize(800, 600)
 
 
     def startScenario(self, id):
         print "STARTSCENARIO", id
         engine = self.engine
-        engine.loadScenario(id)
+        engine.loadMetaScenario(id)
 
 
     def loadCityDialog(self):
@@ -306,7 +336,7 @@ class MicropolisPanedWindow(gtk.Window):
        
         filter = gtk.FileFilter()
         filter.set_name("Micropolis Cities")
-        filter.add_pattern("*.cty")
+        filter.add_pattern("*.xml")
         dialog.add_filter(filter)
 
         citiesFolder = 'cities'
@@ -316,7 +346,14 @@ class MicropolisPanedWindow(gtk.Window):
         if response == gtk.RESPONSE_OK:
             fileName = dialog.get_filename()
             print "FILENAME", fileName
-            result = self.engine.loadFile(fileName)
+            result = False
+            try:
+                self.engine.loadMetaCity(fileName)
+                result = True
+            except Exception, e:
+                print "FAILED TO LOAD META CITY", fileName
+                print str(e)
+                result = False
             print "RESULT", result
         elif response == gtk.RESPONSE_CANCEL:
             print 'Closed, no files selected'
@@ -325,7 +362,7 @@ class MicropolisPanedWindow(gtk.Window):
 
     def generateCity(self):
         print "GENERATECITY"
-        self.engine.generateNewCity()
+        self.engine.generateNewMetaCity()
 
 
     def playCity(self):
@@ -338,34 +375,12 @@ class MicropolisPanedWindow(gtk.Window):
 
     def startMode(self):
         print "STARTMODE"
-        engine = self.engine
-        mediumMapView = self.startPanel.mediumMapView
-        smallMapView = self.smallMapView
-        bigMapView = self.bigMapView
-        smallMapView = self.smallMapView
-
-        engine.removeView(smallMapView)
-        engine.removeView(bigMapView)
-        engine.addView(mediumMapView)
-        mediumMapView.updateView()
-        engine.pause()
-        self.modeNotebook.set_current_page(0)
+        self.engine.setGameMode('start')
 
 
     def playMode(self):
-        engine = self.engine
-        mediumMapView = self.startPanel.mediumMapView
-        smallMapView = self.smallMapView
-        bigMapView = self.bigMapView
-        smallMapView = self.smallMapView
-
-        engine.addView(smallMapView)
-        engine.addView(bigMapView)
-        engine.removeView(mediumMapView)
-        smallMapView.updateView()
-        bigMapView.updateView()
-        engine.resume()
-        self.modeNotebook.set_current_page(1)
+        print "PLAYMODE"
+        self.engine.setGameMode('play')
 
 
     def aboutDialog(self):
@@ -481,21 +496,20 @@ class MicropolisPanedWindow(gtk.Window):
             self.resizeEdges()
 
 
-    def createNotebookWindowNotebook(
-        otherNotebook, notebook, page, x, y):
+    def createWindowNotebook(self, otherNotebook, notebook, page, x, y):
 
         print "createWindowNotebook", otherNotebook, notebook, page, x, y
 
         parent = page.get_parent()
-        print "parent", parent, parent == self.target.notebook1, parent == self.target.notebook2, parent == self.target.notebook3
+        print "parent", parent, parent == self.notebook1, parent == self.notebook2, parent == self.notebook3
 
         for n in (self.notebook1, self.notebook2, self.notebook3):
             print n
 
-        if parent == self.target.notebook1:
-            return self.target.notebook2
+        if parent == self.notebook1:
+            return self.notebook2
         else:
-            return self.target.notebook1
+            return self.notebook1
 
 
 ########################################################################

@@ -424,6 +424,14 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         return False
 
 
+    def engage(self):
+        self.engine.addView(self)
+
+
+    def disengage(self):
+        self.engine.removeView(self)
+
+
 ########################################################################
 
 
@@ -760,7 +768,8 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         event):
 
         view = self.currentView
-        if not view:
+        if ((not view) and
+            (not view.zoomable)):
             pass
 
         direction = event.direction
@@ -774,7 +783,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
 ########################################################################
 
 
-class MediumMicropolisDrawingArea(MicropolisDrawingArea):
+class PreviewMicropolisDrawingArea(MicropolisDrawingArea):
 
 
     def __init__(
@@ -782,7 +791,7 @@ class MediumMicropolisDrawingArea(MicropolisDrawingArea):
         **args):
 
         args['keyable'] = False
-        args['clickable'] = False
+        args['clickable'] = True
         args['zoomable'] = False
         args['pannable'] = False
         args['menuable'] = False

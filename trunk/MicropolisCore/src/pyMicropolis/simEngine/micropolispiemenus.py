@@ -131,15 +131,6 @@ def MakeToolPie(setToolAction):
     for params in (
 
         {
-            'pie': top_pie,
-            'label': 'Tool...',
-            'description': 'Submenu of tools.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'sub_pie': tool_pie,
-        },
-
-        {
             'pie': tool_pie,
             'label': 'Zone...',
             'description': "Submenu of zoning tools.",
@@ -259,6 +250,42 @@ def MakeToolPie(setToolAction):
 
         {
             'pie': build_pie,
+            'description': 'Tree building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'linear': True,
+            'linear_direction': 'n',
+            'icon': 'images/simEngine/icpark.png',
+            'icon_hilite': 'images/simEngine/icparkhi.png',
+            'action': lambda item: setToolAction('Tree'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Land building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'linear': True,
+            'linear_direction': 'n',
+            'icon': 'images/simEngine/icpark.png',
+            'icon_hilite': 'images/simEngine/icparkhi.png',
+            'action': lambda item: setToolAction('Land'),
+        },
+
+        {
+            'pie': build_pie,
+            'description': 'Water building tool.',
+            'lolite_fill_color': None,
+            'lolite_stroke_color': None,
+            'linear': True,
+            'linear_direction': 'n',
+            'icon': 'images/simEngine/icpark.png',
+            'icon_hilite': 'images/simEngine/icparkhi.png',
+            'action': lambda item: setToolAction('Water'),
+        },
+
+        {
+            'pie': build_pie,
             'description': 'Seaport building tool.',
             'lolite_fill_color': None,
             'lolite_stroke_color': None,
@@ -335,57 +362,6 @@ def MakeToolPie(setToolAction):
             'icon': 'images/simEngine/icwire.png',
             'icon_hilite': 'images/simEngine/icwirehi.png',
             'action': lambda item: setToolAction('Wire'),
-        },
-
-        {
-            'pie': top_pie,
-            'label': 'Control...',
-            'description': 'Submenu of controls.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'sub_pie': control_pie,
-        },
-
-        {
-            'pie': control_pie,
-            'label': 'Control',
-            'description': 'Control somehting.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-        },
-
-        {
-            'pie': top_pie,
-            'label': 'Foo...',
-            'description': 'Submenu of foo options.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'sub_pie': foo_pie,
-        },
-
-        {
-            'pie': foo_pie,
-            'label': 'Foo',
-            'description': 'Foo somehting.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-        },
-
-        {
-            'pie': top_pie,
-            'label': 'View...',
-            'description': 'Submenu of view options.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
-            'sub_pie': view_pie,
-        },
-
-        {
-            'pie': view_pie,
-            'label': 'View',
-            'description': 'View somehting.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
         },
 
     ):

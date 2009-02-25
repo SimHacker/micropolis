@@ -134,7 +134,7 @@ void Micropolis::environmentInit()
 /** Initialize for a simulation */
 void Micropolis::simInit()
 {
-  setEnableSound(true); // Enable sound
+    setEnableSound(true); // Enable sound
     mustUpdateOptions = true; // Update options displayed at user
     scenario = SC_NONE;
     startingYear = 1900;
@@ -153,7 +153,6 @@ void Micropolis::simInit()
     simLoops = 0;
     initSimLoad = 2;
 
-    initializeSound();
     initMapArrays();
     initGraphs();
     initFundingLevel();

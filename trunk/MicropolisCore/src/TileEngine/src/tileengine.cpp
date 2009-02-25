@@ -399,7 +399,8 @@ void TileEngine::renderTilesLazy(
 
     // The tileMap should be an array of 4 byte integers,
     // mapping virtual tiles indices to absolute tile numbers.
-    if (!PySequence_Check(tileMap)) {
+    if ((tileMap != Py_None) &&
+        !PySequence_Check(tileMap)) {
 	PyErr_SetString(
 	    PyExc_TypeError,
 	    "expected tileMap to be a sequence of 4 byte integers");
@@ -751,7 +752,8 @@ PyObject *TileEngine::getTileData(
     const int *tileMapData = NULL;
     unsigned int tileMapCount = 0;
 
-    if (tileMap != Py_None) {
+    if ((tileMap != Py_None) &&
+	!PySequence_Check(tileMap)) {
 	tileMapCount = (unsigned int)PySequence_Size(tileMap);
 	Py_ssize_t tileMapLength = 0;
 	if (PyObject_AsReadBuffer(

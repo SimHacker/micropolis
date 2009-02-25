@@ -362,10 +362,7 @@ void Micropolis::doScenarioScore(Scenario type)
  */
 void Micropolis::sendMessage(short mesgNum, short x, short y, bool picture, bool important)
 {
-    callback(
-        "UIUpdate",
-        "sdddbb",
-        "message",
+    callback( "UIUpdate", "sdddbb", "message",
         (int)mesgNum,
         (int)x,
         (int)y,
