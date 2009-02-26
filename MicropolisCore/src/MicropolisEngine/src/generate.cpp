@@ -208,27 +208,27 @@ void Micropolis::makeNakedIsland()
     }
 
     for (x = 0; x < WORLD_W - 5; x += 2) {
-        terrainMapX = x ;
-        terrainMapY = getERandom(terrainIslandRadius);
-        plopBRiver();
-        terrainMapY = (WORLD_H - 10) - getERandom(terrainIslandRadius);
-        plopBRiver();
-        terrainMapY = 0;
-        plopSRiver();
-        terrainMapY = (WORLD_H - 6);
-        plopSRiver();
+
+        int mapY = getERandom(terrainIslandRadius);
+        plopBRiver(Position(x, mapY));
+
+        mapY = (WORLD_H - 10) - getERandom(terrainIslandRadius);
+        plopBRiver(Position(x, mapY));
+
+        plopSRiver(Position(x, 0));
+        plopSRiver(Position(x, WORLD_H - 6));
     }
 
     for (y = 0; y < WORLD_H - 5; y += 2) {
-        terrainMapY = y ;
-        terrainMapX = getERandom(terrainIslandRadius);
-        plopBRiver();
-        terrainMapX = (WORLD_W - 10) - getERandom(terrainIslandRadius);
-        plopBRiver();
-        terrainMapX = 0;
-        plopSRiver();
-        terrainMapX = (WORLD_W - 6);
-        plopSRiver();
+
+        int mapX = getERandom(terrainIslandRadius);
+        plopBRiver(Position(mapX, y));
+
+        mapX = (WORLD_W - 10) - getERandom(terrainIslandRadius);
+        plopBRiver(Position(mapX, y));
+
+        plopSRiver(Position(0, y));
+        plopSRiver(Position(WORLD_W - 6, y));
     }
 
 }
@@ -243,32 +243,47 @@ void Micropolis::makeIsland()
 }
 
 
+/**
+ * Make a number of lakes, depending on the Micropolis::terrainLakeLevel.
+ */
 void Micropolis::makeLakes()
 {
-    short Lim1, Lim2, t, z;
-    short x, y;
+    short numLakes;
 
     if (terrainLakeLevel < 0) {
-        Lim1 = getRandom(10);
+        numLakes = getRandom(10);
     } else {
-        Lim1 = terrainLakeLevel / 2;
+        numLakes = terrainLakeLevel / 2;
     }
 
-    for (t = 0; t < Lim1; t++) {
-        x = getRandom(WORLD_W - 21) + 10;
-        y = getRandom(WORLD_H - 20) + 10;
-        Lim2 = getRandom(12) + 2;
+    while (numLakes > 0) {
+        int x = getRandom(WORLD_W - 21) + 10;
+        int y = getRandom(WORLD_H - 20) + 10;
 
-        for (z = 0; z < Lim2; z++) {
-            terrainMapX = x - 6 + getRandom(12);
-            terrainMapY = y - 6 + getRandom(12);
+        makeSingleLake(Position(x, y));
 
-            if (getRandom(4)) {
-                plopSRiver();
-            } else {
-                plopBRiver();
-            }
+        numLakes--;
+    }
+}
+
+/**
+ * Make a random lake at \a pos.
+ * @param pos Rough position of the lake.
+ */
+void Micropolis::makeSingleLake(const Position &pos)
+{
+    int numPlops = getRandom(12) + 2;
+
+    while (numPlops > 0) {
+        Position plopPos(pos, getRandom(12) - 6, getRandom(12) - 6);
+
+        if (getRandom(4)) {
+            plopSRiver(plopPos);
+        } else {
+            plopBRiver(plopPos);
         }
+
+        numPlops--;
     }
 }
 
@@ -303,30 +318,29 @@ void Micropolis::moveMap(short dir)
  */
 void Micropolis::treeSplash(short xloc, short yloc)
 {
-    short dis, dir;
-    short z;
+    short numTrees;
 
     if (terrainTreeLevel < 0) {
-        dis = getRandom(150) + 50;
+        numTrees = getRandom(150) + 50;
     } else {
-        dis = getRandom(100 + (terrainTreeLevel * 2)) + 50;
+        numTrees = getRandom(100 + (terrainTreeLevel * 2)) + 50;
     }
 
-    terrainMapX = xloc;
-    terrainMapY = yloc;
+    Position treePos(xloc, yloc);
 
-    for (z = 0; z < dis; z++) {
-        dir = getRandom(7);
-        moveMap(dir);
+    while (numTrees > 0) {
+        Direction2 dir = (Direction2)(DIR2_NORTH + getRandom(7));
+        treePos.move(dir);
 
-        if (!(testBounds(terrainMapX, terrainMapY))) {
+        if (!treePos.testBounds()) {
             return;
         }
 
-        if ((map[terrainMapX][terrainMapY] & LOMASK) == DIRT) {
-            map[terrainMapX][terrainMapY] = WOODS | BLBNBIT;
+        if ((map[treePos.posX][treePos.posY] & LOMASK) == DIRT) {
+            map[treePos.posX][treePos.posY] = WOODS | BLBNBIT;
         }
 
+        numTrees--;
     }
 }
 
@@ -430,8 +444,7 @@ void Micropolis::smoothTrees()
                     bitindex = bitindex << 1;
                     Xtem = x + DX[z];
                     Ytem = y + DY[z];
-                    if (testBounds(Xtem, Ytem) &&
-                        isTree(map[Xtem][Ytem])) {
+                    if (testBounds(Xtem, Ytem) && isTree(map[Xtem][Ytem])) {
                         bitindex++;
                     }
                 }
@@ -461,44 +474,48 @@ void Micropolis::doRivers(short terrainXStart, short terrainYStart)
 {
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
-    terrainDirLast = getRandom(3);
-    terrainDir = terrainDirLast;
-    doBRiver();
+    riverDir = getRandom(3);
+    terrainDir = riverDir;
+    doBRiver(riverDir);
 
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
-    terrainDirLast = terrainDirLast ^ 4;
-    terrainDir = terrainDirLast;
-    doBRiver();
+    riverDir = riverDir ^ 4;
+    terrainDir = riverDir;
+    doBRiver(riverDir);
 
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
-    terrainDirLast = getRandom(3);
-    doSRiver();
+    riverDir = getRandom(3);
+    doSRiver(riverDir);
 }
 
 
-void Micropolis::doBRiver()
+/**
+ * Make a small river.
+ * @param riverDir Direction of the river.
+ */
+void Micropolis::doBRiver(short riverDir)
 {
-    int r1, r2;
+    int rate1, rate2;
 
     if (terrainCurveLevel < 0) {
-        r1 = 100;
-        r2 = 200;
+        rate1 = 100;
+        rate2 = 200;
     } else {
-        r1 = terrainCurveLevel + 10;
-        r2 = terrainCurveLevel + 100;
+        rate1 = terrainCurveLevel + 10;
+        rate2 = terrainCurveLevel + 100;
     }
 
     while (testBounds (terrainMapX + 4, terrainMapY + 4)) {
-        plopBRiver();
-        if (getRandom(r1) < 10) {
-            terrainDir = terrainDirLast;
+        plopBRiver(Position(terrainMapX, terrainMapY));
+        if (getRandom(rate1) < 10) {
+            terrainDir = riverDir;
         } else {
-            if (getRandom(r2) > 90) {
+            if (getRandom(rate2) > 90) {
                 terrainDir++;
             }
-            if (getRandom(r2) > 90) {
+            if (getRandom(rate2) > 90) {
                 terrainDir--;
             }
         }
@@ -506,28 +523,31 @@ void Micropolis::doBRiver()
     }
 }
 
-
-void Micropolis::doSRiver()
+/**
+ * Make a small river.
+ * @param riverDir Direction of the river.
+ */
+void Micropolis::doSRiver(short riverDir)
 {
-    int r1, r2;
+    int rate1, rate2;
 
     if (terrainCurveLevel < 0) {
-        r1 = 100;
-        r2 = 200;
+        rate1 = 100;
+        rate2 = 200;
     } else {
-        r1 = terrainCurveLevel + 10;
-        r2 = terrainCurveLevel + 100;
+        rate1 = terrainCurveLevel + 10;
+        rate2 = terrainCurveLevel + 100;
     }
 
     while (testBounds (terrainMapX + 3, terrainMapY + 3)) {
-        plopSRiver();
-        if (getRandom(r1) < 10) {
-            terrainDir = terrainDirLast;
+        plopSRiver(Position(terrainMapX, terrainMapY));
+        if (getRandom(rate1) < 10) {
+            terrainDir = riverDir;
         } else {
-            if (getRandom(r2) > 90) {
+            if (getRandom(rate2) > 90) {
                 terrainDir++;
             }
-            if (getRandom(r2) > 90) {
+            if (getRandom(rate2) > 90) {
                 terrainDir--;
             }
         }
@@ -562,8 +582,11 @@ void Micropolis::putOnMap(MapValue mChar, short xLoc, short yLoc)
     map[xLoc][yLoc] = mChar;
 }
 
-
-void Micropolis::plopBRiver()
+/**
+ * Put down a big river diamond-like shape.
+ * @param pos Base coordinate of the blob (top-left position).
+ */
+void Micropolis::plopBRiver(const Position &pos)
 {
     short x, y;
     static MapValue BRMatrix[9][9] = {
@@ -580,13 +603,17 @@ void Micropolis::plopBRiver()
 
     for (x = 0; x < 9; x++) {
         for (y = 0; y < 9; y++) {
-            putOnMap(BRMatrix[y][x], terrainMapX + x, terrainMapY + y);
+            putOnMap(BRMatrix[y][x], pos.posX + x, pos.posY + y);
         }
     }
 }
 
 
-void Micropolis::plopSRiver()
+/**
+ * Put down a small river diamond-like shape.
+ * @param pos Base coordinate of the blob (top-left position).
+ */
+void Micropolis::plopSRiver(const Position &pos)
 {
     short x, y;
     static MapValue SRMatrix[6][6] = {
@@ -600,7 +627,7 @@ void Micropolis::plopSRiver()
 
     for (x = 0; x < 6; x++) {
         for (y = 0; y < 6; y++) {
-          putOnMap(SRMatrix[y][x], terrainMapX + x, terrainMapY + y);
+          putOnMap(SRMatrix[y][x], pos.posX + x, pos.posY + y);
         }
     }
 }
