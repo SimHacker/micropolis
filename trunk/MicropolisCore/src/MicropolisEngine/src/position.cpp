@@ -110,6 +110,18 @@ Position::Position(const Position &pos, Direction2 dir)
 }
 
 /**
+ * Copy sonstructor with arbitrary movement.
+ * @param pos Position to copy.
+ * @param dx  Horizontal offset.
+ * @param dy  Vertical offset.
+ */
+Position::Position(const Position &pos, int dx, int dy)
+{
+    this->posX = pos.posX + dx;
+    this->posY = pos.posY + dy;
+}
+
+/**
  * Assignment operator.
  * @param pos Position to copy.
  */

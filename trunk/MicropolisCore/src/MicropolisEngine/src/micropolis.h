@@ -1822,12 +1822,6 @@ private:
      */
     short terrainDir;
 
-    /**
-     * Last direction of the terrain generator.
-     * Only used internally by the terrain generator.
-     */
-    short terrainDirLast;
-
 
 
     void generateSomeCity(int seed);
@@ -1847,18 +1841,19 @@ private:
 
 
     void makeLakes();
+    void makeSingleLake(const Position &pos);
 
     void doRivers(short terrainXStart, short terrainYStart);
 
-    void doBRiver();
+    void doBRiver(short riverDir);
 
-    void doSRiver();
+    void doSRiver(short riverDir);
 
     void smoothRiver();
 
-    void plopBRiver();
+    void plopBRiver(const Position &pos);
 
-    void plopSRiver();
+    void plopSRiver(const Position &pos);
 
     void smoothWater();
 

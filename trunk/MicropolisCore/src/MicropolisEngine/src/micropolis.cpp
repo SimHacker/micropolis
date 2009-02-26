@@ -390,9 +390,6 @@ void Micropolis::init()
     // short Dir;
     terrainDir = 0;
 
-    // short LastDir;
-    terrainDirLast = 0;
-
     // int TreeLevel; /* level for tree creation */
     terrainTreeLevel = -1;
 
