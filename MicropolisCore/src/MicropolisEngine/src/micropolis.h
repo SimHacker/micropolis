@@ -191,41 +191,6 @@ static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 static const int EDITOR_TILE_SIZE = 16;
 
 /**
- * The width of the city editor view, in pixels.
- * @todo Not used at all, it seems.
- *       Either remove this, or move it to the (generic) frontend.
- */
-static const int EDITOR_W = WORLD_W * EDITOR_TILE_SIZE;
-
-/**
- * The height of the city editor view, in pixels.
- * @todo Not used at all, it seems.
- *       Either remove this, or move it to the (generic) frontend.
- */
-static const int EDITOR_H = WORLD_H * EDITOR_TILE_SIZE;
-
-/**
- * The size of the map view tiles, in pixels.
- * @todo Not used at all (except in #MAP_W and #MAP_H below), it seems.
- *       Either remove this, or move it to the (generic) frontend.
- */
-static const int MAP_TILE_SIZE = 3;
-
-/**
- * The width of the city map view, in pixels.
- * @todo Not used at all, it seems.
- *       Either remove this, or move it to the (generic) frontend.
- */
-static const int MAP_W = WORLD_W * MAP_TILE_SIZE;
-
-/**
- * The height of the city map view, in pixels.
- * @todo Not used at all, it seems.
- *       Either remove this, or move it to the (generic) frontend.
- */
-static const int MAP_H = WORLD_H * MAP_TILE_SIZE;
-
-/**
  * The number of history entries.
  */
 static const int HISTORY_LENGTH = 480;
@@ -242,12 +207,7 @@ static const int MISC_HISTORY_LENGTH = 240;
 static const int HISTORY_COUNT = 120;
 
 /**
- * The length in bytes of the power map memory.
- */
-static const int POWER_MAP_LENGTH = WORLD_W * WORLD_H;
-
-/**
- * The size in shorts of the power stack.
+ * The size of the power stack.
  */
 static const int POWER_STACK_SIZE = (WORLD_W * WORLD_H) / 4;
 
