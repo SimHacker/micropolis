@@ -472,6 +472,8 @@ void Micropolis::smoothTrees()
  */
 void Micropolis::doRivers(short terrainXStart, short terrainYStart)
 {
+    short riverDir;
+
     terrainMapX = terrainXStart;
     terrainMapY = terrainYStart;
     riverDir = getRandom(3);
