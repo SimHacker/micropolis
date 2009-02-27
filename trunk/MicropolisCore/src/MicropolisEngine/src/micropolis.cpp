@@ -381,15 +381,6 @@ void Micropolis::init()
     // generate.cpp
 
 
-    // short terrainMapX;
-    terrainMapX = 0;
-
-    // short terrainMapY;
-    terrainMapY = 0;
-
-    // short Dir;
-    terrainDir = 0;
-
     // int TreeLevel; /* level for tree creation */
     terrainTreeLevel = -1;
 

@@ -118,11 +118,9 @@ void Micropolis::generateSomeCity(int seed)
  */
 void Micropolis::generateMap(int seed)
 {
-    short terrainXStart; // Starting X location of the terrain generator.
-    short terrainYStart; // Starting Y location of the terrain generator.
-
     seedRandom(seed);
 
+    // Construct land.
     if (terrainCreateIsland < 0) {
         if (getRandom(100) < 10) { /* chance that island is generated */
             makeIsland();
@@ -136,23 +134,25 @@ void Micropolis::generateMap(int seed)
         clearMap();
     }
 
-    terrainXStart = 40 + getRandom(WORLD_W - 80);
-    terrainYStart = 33 + getRandom(WORLD_H - 67);
 
-    terrainMapX = terrainXStart;
-    terrainMapY = terrainYStart;
-
-
+    // Lay a river.
     if (terrainCurveLevel != 0) {
-        doRivers(terrainXStart, terrainYStart);
+        int terrainXStart = 40 + getRandom(WORLD_W - 80);
+        int terrainYStart = 33 + getRandom(WORLD_H - 67);
+
+        Position terrainPos(terrainXStart, terrainYStart);
+
+        doRivers(terrainPos);
     }
 
+    // Lay a few lakes.
     if (terrainLakeLevel != 0) {
         makeLakes();
     }
 
     smoothRiver();
 
+    // And add trees.
     if (terrainTreeLevel != 0) {
         doTrees();
     }
@@ -285,25 +285,6 @@ void Micropolis::makeSingleLake(const Position &pos)
 
         numPlops--;
     }
-}
-
-
-/**
- * Move (Micropolis::terrainMapX, Micropolis::terrainMapY) a tile in the
- * indicated direction.
- * @param dir Direction to move in (0..7).
- * @todo Merge with moveMapSim()
- */
-void Micropolis::moveMap(short dir)
-{
-    static short dirTab[2][8] = {
-        {  0,  1,  1,  1,  0, -1, -1, -1 },
-        { -1, -1,  0,  1,  1,  1,  0, -1 },
-    };
-
-    dir = dir & 7;
-    terrainMapX += dirTab[0][dir];
-    terrainMapY += dirTab[1][dir];
 }
 
 
@@ -467,37 +448,33 @@ void Micropolis::smoothTrees()
 
 /**
  * Construct rivers.
- * @param terrainXStart Horizontal coordinate of the start position.
- * @param terrainYStart Vertical coordinate of the start position.
+ * @param terrainPos Coordinate to start making a river.
  */
-void Micropolis::doRivers(short terrainXStart, short terrainYStart)
+void Micropolis::doRivers(const Position &terrainPos)
 {
-    short riverDir;
+    Direction2 riverDir;   // Global direction of the river
+    Direction2 terrainDir; // Local direction of the river
 
-    terrainMapX = terrainXStart;
-    terrainMapY = terrainYStart;
-    riverDir = getRandom(3);
-    terrainDir = riverDir;
-    doBRiver(riverDir);
+    riverDir = (Direction2)(DIR2_NORTH + getRandom(3));
+    doBRiver(terrainPos, riverDir, riverDir);
 
-    terrainMapX = terrainXStart;
-    terrainMapY = terrainYStart;
-    riverDir = riverDir ^ 4;
-    terrainDir = riverDir;
-    doBRiver(riverDir);
+    riverDir = rotate180(riverDir);
+    terrainDir = doBRiver(terrainPos, riverDir, riverDir);
 
-    terrainMapX = terrainXStart;
-    terrainMapY = terrainYStart;
-    riverDir = getRandom(3);
-    doSRiver(riverDir);
+    riverDir = (Direction2)(DIR2_NORTH + getRandom(3));
+    doSRiver(terrainPos, riverDir, terrainDir);
 }
 
 
 /**
- * Make a small river.
- * @param riverDir Direction of the river.
+ * Make a big river.
+ * @param pos        Start position of making a river.
+ * @param riverDir   Global direction of the river.
+ * @param terrainDir Local direction of the terrain.
+ * @return Last used local terrain direction.
  */
-void Micropolis::doBRiver(short riverDir)
+Direction2 Micropolis::doBRiver(const Position &riverPos,
+                                Direction2 riverDir, Direction2 terrainDir)
 {
     int rate1, rate2;
 
@@ -509,27 +486,35 @@ void Micropolis::doBRiver(short riverDir)
         rate2 = terrainCurveLevel + 100;
     }
 
-    while (testBounds (terrainMapX + 4, terrainMapY + 4)) {
-        plopBRiver(Position(terrainMapX, terrainMapY));
+    Position pos(riverPos);
+
+    while (testBounds(pos.posX + 4, pos.posY + 4)) {
+        plopBRiver(pos);
         if (getRandom(rate1) < 10) {
             terrainDir = riverDir;
         } else {
             if (getRandom(rate2) > 90) {
-                terrainDir++;
+                terrainDir = rotate45(terrainDir);
             }
             if (getRandom(rate2) > 90) {
-                terrainDir--;
+                terrainDir = rotate45(terrainDir, 7);
             }
         }
-        moveMap(terrainDir);
+        pos.move(terrainDir);
     }
+
+    return terrainDir;
 }
 
 /**
  * Make a small river.
- * @param riverDir Direction of the river.
+ * @param pos        Start position of making a river.
+ * @param riverDir   Global direction of the river.
+ * @param terrainDir Local direction of the terrain.
+ * @return Last used local terrain direction.
  */
-void Micropolis::doSRiver(short riverDir)
+Direction2 Micropolis::doSRiver(const Position &riverPos,
+                                Direction2 riverDir, Direction2 terrainDir)
 {
     int rate1, rate2;
 
@@ -541,23 +526,33 @@ void Micropolis::doSRiver(short riverDir)
         rate2 = terrainCurveLevel + 100;
     }
 
-    while (testBounds (terrainMapX + 3, terrainMapY + 3)) {
-        plopSRiver(Position(terrainMapX, terrainMapY));
+    Position pos(riverPos);
+
+    while (testBounds(pos.posX + 3, pos.posY + 3)) {
+        plopSRiver(pos);
         if (getRandom(rate1) < 10) {
             terrainDir = riverDir;
         } else {
             if (getRandom(rate2) > 90) {
-                terrainDir++;
+                terrainDir = rotate45(terrainDir);
             }
             if (getRandom(rate2) > 90) {
-                terrainDir--;
+                terrainDir = rotate45(terrainDir, 7);
             }
         }
-        moveMap(terrainDir);
+        pos.move(terrainDir);
     }
+
+    return terrainDir;
 }
 
 
+/**
+ * Put \a mChar onto the map at position \a xLoc, \a yLoc if possible.
+ * @param mChar Map value to put ont the map.
+ * @param xLoc  Horizontal position at the map to put \a mChar.
+ * @param yLoc  Vertical position at the map to put \a mChar.
+ */
 void Micropolis::putOnMap(MapValue mChar, short xLoc, short yLoc)
 {
     if (mChar == 0) {
