@@ -89,9 +89,9 @@ enum Direction2 {
  * @param dir Direction to rotate.
  * @return Rotated direction, possibly >= DIR2_END.
  */
-static inline Direction2 increment45(Direction2 dir)
+static inline Direction2 increment45(Direction2 dir, int count = 1)
 {
-    return (Direction2)(dir + 1);
+    return (Direction2)(dir + count);
 }
 
 
@@ -102,7 +102,7 @@ static inline Direction2 increment45(Direction2 dir)
  */
 static inline Direction2 increment90(Direction2 dir)
 {
-    return (Direction2)(dir + 2);
+    return increment45(dir, 2);
 }
 
 /**
@@ -110,9 +110,9 @@ static inline Direction2 increment90(Direction2 dir)
  * @param dir Direction to rotate.
  * @return Rotated direction.
  */
-static inline Direction2 rotate45(Direction2 dir)
+static inline Direction2 rotate45(Direction2 dir, int count = 1)
 {
-    return (Direction2)(((dir - DIR2_NORTH + 1) & 7) + DIR2_NORTH);
+    return (Direction2)(((dir - DIR2_NORTH + count) & 7) + DIR2_NORTH);
 }
 
 /**
@@ -122,7 +122,7 @@ static inline Direction2 rotate45(Direction2 dir)
  */
 static inline Direction2 rotate90(Direction2 dir)
 {
-    return (Direction2)(((dir - DIR2_NORTH + 2) & 7) + DIR2_NORTH);
+    return rotate45(dir, 2);
 }
 
 /**
@@ -132,7 +132,7 @@ static inline Direction2 rotate90(Direction2 dir)
  */
 static inline Direction2 rotate180(Direction2 dir)
 {
-    return (Direction2)(((dir - DIR2_NORTH + 4) & 7) + DIR2_NORTH);
+    return rotate45(dir, 4);
 }
 
 

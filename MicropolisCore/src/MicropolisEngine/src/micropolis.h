@@ -185,8 +185,6 @@ static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 
 /**
  * The size of the editor view tiles, in pixels.
- * @todo Not used at all (except in #EDITOR_W and #EDITOR_H below), it seems.
- *       Either remove this, or move it to the (generic) frontend.
  */
 static const int EDITOR_TILE_SIZE = 16;
 
@@ -1762,27 +1760,14 @@ public:
 
     void makeIsland();
 
+    void treeSplash(short xloc, short yloc);
+
+    void makeSingleLake(const Position &pos);
+
+    void plopBRiver(const Position &pos);
+    void plopSRiver(const Position &pos);
+
 private:
-
-    /**
-     * Current X location of the terrain generator.
-     * Only used internally by the terrain generator.
-     */
-    short terrainMapX;
-
-    /**
-     * Current Y location of the terrain generator.
-     * Only used internally by the terrain generator.
-     */
-    short terrainMapY;
-
-    /**
-     * Current direction of the terrain generator.
-     * Only used internally by the terrain generator.
-     */
-    short terrainDir;
-
-
 
     void generateSomeCity(int seed);
 
@@ -1790,10 +1775,7 @@ private:
 
     void makeNakedIsland();
 
-
     void doTrees();
-
-    void treeSplash(short xloc, short yloc);
 
     bool isTree(MapValue cell);
 
@@ -1801,24 +1783,17 @@ private:
 
 
     void makeLakes();
-    void makeSingleLake(const Position &pos);
 
-    void doRivers(short terrainXStart, short terrainYStart);
+    void doRivers(const Position &terrainPos);
 
-    void doBRiver(short riverDir);
-
-    void doSRiver(short riverDir);
+    Direction2 doBRiver(const Position &riverPos,
+                        Direction2 riverDir, Direction2 terrainDir);
+    Direction2 doSRiver(const Position &riverPos,
+                        Direction2 riverDir, Direction2 terrainDir);
 
     void smoothRiver();
 
-    void plopBRiver(const Position &pos);
-
-    void plopSRiver(const Position &pos);
-
     void smoothWater();
-
-
-    void moveMap(short dir);
 
     void putOnMap(MapValue mChar, short xLoc, short yLoc);
 
