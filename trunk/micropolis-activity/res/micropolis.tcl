@@ -3108,7 +3108,7 @@ proc ShowSplashOf {head} {
 
 
 proc WithdrawSplashOf {head} {
-  set win WindowLink $head.splash]
+  set win [WindowLink $head.splash]
   if {$win != {}} {
     wm withdraw $win
   }
