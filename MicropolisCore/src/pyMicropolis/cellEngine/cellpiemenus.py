@@ -69,7 +69,7 @@
 
 
 import gtk
-from pyMicropolis.tileEngine import piemenu
+from pyMicropolis.piemenu import piemenu
 
 
 ########################################################################
@@ -81,10 +81,10 @@ def MakeToolPie(setToolAction):
     # Make pie menus.
 
 
-    tool_pie = piemenu.PieMenu(
+    toolPie = pie.PieMenu(
         header="Cell Tools",
-        fixed_radius=50,
-        neutral_description="Select a Cell tool.")
+        fixedRadius=50,
+        neutralDescription="Select a Cell tool.")
 
 
     ########################################################################
@@ -94,24 +94,24 @@ def MakeToolPie(setToolAction):
     for params in (
 
         {
-            'pie': tool_pie,
+            'pie': toolPie,
             'description': 'Query tool.',
-            'lolite_fill_color': None,
-            'lolite_stroke_color': None,
+            'loliteFillColor': None,
+            'loliteStrokeColor': None,
             'icon': 'images/icquery.png',
-            'icon_hilite': 'images/icqueryhi.png',
+            'iconHilite': 'images/icqueryhi.png',
             'action': lambda item: setToolAction('Query'),
         },
 
     ):
 
         apply(
-            piemenu.PieItem,
+            pie.PieItem,
             (),
             params)
 
 
-    return tool_pie
+    return toolPie
 
 
 ########################################################################

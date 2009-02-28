@@ -356,6 +356,30 @@ enum MapTileBits {
     BNCNBIT   =           BURNBIT | CONDBIT,
 };
 
+
+/**
+ * Connect tile commands.
+ */
+enum ConnectTileCommand {
+    CONNECT_TILE_FIX,
+    CONNECT_TILE_BULLDOZE,
+    CONNECT_TILE_ROAD,
+    CONNECT_TILE_RAILROAD,
+    CONNECT_TILE_WIRE,
+};
+
+
+/**
+ * Build result.
+ * @todo Make the rest of the code use this instead of magic numbers.
+ */
+enum BuildResult {
+    BUILD_NO_MONEY = -2,
+    BUILD_FAILED = 0,
+    BUILD_OK = 1,
+};
+
+
 /**
  * Characters of the map tiles, the lower 10 bits (0--9).
  * @see LOMASK MapTileBitmasks
@@ -674,10 +698,13 @@ enum EditingTool {
     TOOL_NUCLEARPOWER,
     TOOL_AIRPORT,
     TOOL_NETWORK,
+    TOOL_WATER,
+    TOOL_LAND,
+    TOOL_FOREST,
 
     TOOL_COUNT,
     TOOL_FIRST = TOOL_RESIDENTIAL,
-    TOOL_LAST = TOOL_NETWORK,
+    TOOL_LAST = TOOL_FOREST,
 };
 
 
@@ -1498,7 +1525,7 @@ public:
 private:
 
 
-    int connectTile(short x, short y, short command);
+    int connectTile(short x, short y, ConnectTileCommand command);
 
     int layDoze(int x, int y);
 
@@ -1781,6 +1808,7 @@ private:
 
     void smoothTrees();
 
+    void smoothTreesAt(int x, int y);
 
     void makeLakes();
 
@@ -2623,6 +2651,12 @@ public:
 
     int putDownNetwork(short mapH, short mapV);
 
+    int putDownWater(short mapH, short mapV);
+
+    int putDownLand(short mapH, short mapV);
+
+    int putDownForest(short mapH, short mapV);
+
     void doZoneStatus(short mapH, short mapV);
 
     void doShowZoneStatus(
@@ -2665,6 +2699,12 @@ public:
     int airportTool(short x, short y);
 
     int networkTool(short x, short y);
+
+    int waterTool(short x, short y);
+
+    int landTool(short x, short y);
+
+    int forestTool(short x, short y);
 
     int doTool(EditingTool tool, short tileX, short tileY);
 

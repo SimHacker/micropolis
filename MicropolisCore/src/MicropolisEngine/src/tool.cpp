@@ -78,7 +78,8 @@ static const short gCostOf[] = {
      500,      0,      5,      1, /* police, query, wire, bulldozer */
       20,     10,   5000,     10, /* rail, road, stadium, park */
     3000,   3000,   5000,  10000, /* seaport, coal, nuclear, airport */
-     100,      0,                 /* network */
+     100,     50,     50,     50, /* network, water, land, forest */
+       0,
 };
 
 
@@ -87,7 +88,8 @@ static const short gToolSize[] = {
     3, 1, 1, 1,
     1, 1, 4, 1,
     4, 4, 4, 6,
-    1, 0,
+    1, 1, 1, 1,
+    0,
 };
 
 
@@ -152,6 +154,86 @@ int Micropolis::putDownNetwork(short mapH, short mapV)
     map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
 
     spend(gCostOf[TOOL_NETWORK]);
+    updateFunds();
+
+    return 1;
+}
+
+
+/**
+ * Put down a water tile.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @return Build result (-2 = no money, -1 = needs bulldoze, 1 = built).
+ * @todo Auto-bulldoze deducts always 1.
+ * @todo Auto-bulldoze costs should be pulled from a table/constant.
+ */
+int Micropolis::putDownWater(short mapH, short mapV)
+{
+    int tile = map[mapH][mapV] & LOMASK;
+
+    if (tile == RIVER) return 0;
+
+    if (totalFunds - gCostOf[TOOL_WATER] < 0) return -2;
+
+    map[mapH][mapV] = RIVER;
+
+    spend(gCostOf[TOOL_WATER]);
+    updateFunds();
+
+    return 1;
+}
+
+
+/**
+ * Put down a land tile.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @return Build result (-2 = no money, -1 = needs bulldoze, 1 = built).
+ * @todo Auto-bulldoze deducts always 1.
+ * @todo Auto-bulldoze costs should be pulled from a table/constant.
+ */
+int Micropolis::putDownLand(short mapH, short mapV)
+{
+    int tile = map[mapH][mapV] & LOMASK;
+
+    if (tile == DIRT) return 0;
+
+    if (totalFunds - gCostOf[TOOL_LAND] < 0) return -2;
+
+    map[mapH][mapV] = DIRT;
+
+    spend(gCostOf[TOOL_LAND]);
+    updateFunds();
+
+    return 1;
+}
+
+
+/**
+ * Put down a forest tile.
+ * @param mapH X coordinate of the tile.
+ * @param mapV Y coordinate of the tile.
+ * @return Build result (-2 = no money, -1 = needs bulldoze, 1 = built).
+ * @todo Auto-bulldoze deducts always 1.
+ * @todo Auto-bulldoze costs should be pulled from a table/constant.
+ */
+int Micropolis::putDownForest(short mapH, short mapV)
+{
+    int tile = map[mapH][mapV];
+
+      if (isTree(tile)) {
+          printf("already forest\n");
+          return 0;
+      }
+    
+    if (totalFunds - gCostOf[TOOL_FOREST] < 0) return -2;
+
+    printf("drawing tree\n");
+
+    map[mapH][mapV] = WOODS | BLBNBIT;
+
+    spend(gCostOf[TOOL_FOREST]);
     updateFunds();
 
     return 1;
@@ -344,22 +426,22 @@ void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY)
 
     /* this will do the upper bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap - 1, 0);
+        connectTile(xMap + cnt, yMap - 1, CONNECT_TILE_FIX);
     }
 
     /* this will do the left bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap - 1, yMap + cnt, 0);
+        connectTile(xMap - 1, yMap + cnt, CONNECT_TILE_FIX);
     }
 
     /* this will do the bottom bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap + sizeY, 0);
+        connectTile(xMap + cnt, yMap + sizeY, CONNECT_TILE_FIX);
     }
 
     /* this will do the right bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap + sizeX, yMap + cnt, 0);
+        connectTile(xMap + sizeX, yMap + cnt, CONNECT_TILE_FIX);
     }
 }
 
@@ -395,7 +477,8 @@ void Micropolis::putBuilding(int leftX, int topY, int sizeX, int sizeY,
                     tileValue = baseTile | BNCNBIT | ANIMBIT;
                 }
             }
-            this->map[posX][posY] = tileValue;
+
+            map[posX][posY] = tileValue;
 
             baseTile++;
         }
@@ -439,10 +522,10 @@ int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
                 continue;
             }
 
-            if (!this->autoBulldoze) {
+            if (!autoBulldoze) {
                 return -1; // No DIRT and no bull-dozer => not buildable
             }
-            if (!this->tally(tileValue)) {
+            if (!tally(tileValue)) {
                 return -1; // tilevalue cannot be auto-bulldozed
             }
 
@@ -476,7 +559,7 @@ int Micropolis::buildBuilding(int mapH, int mapV,
     if (result < 0) {
         return -1;
     }
-    assert(result == 0 || this->autoBulldoze);
+    assert(result == 0 || autoBulldoze);
 
     int cost = result + gCostOf[tool];
     /// @todo Multiply survey result with bulldoze cost
@@ -710,7 +793,7 @@ void Micropolis::didTool(const char *name, short x, short y)
  */
 int Micropolis::queryTool(short x, short y)
 {
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
@@ -728,7 +811,7 @@ int Micropolis::bulldozerTool(short x, short y)
     short zoneSize, deltaH, deltaV;
     int result = 1;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
@@ -799,7 +882,7 @@ int Micropolis::bulldozerTool(short x, short y)
 
             if (totalFunds >= 6) {
 
-                result = connectTile(x, y, 1);
+                result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
 
                 if (temp != (map[x][y] & LOMASK)) {
                   spend(5);
@@ -809,7 +892,7 @@ int Micropolis::bulldozerTool(short x, short y)
                 result = 0;
             }
         } else {
-            result = connectTile(x, y, 1);
+            result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
         }
 
     }
@@ -828,11 +911,11 @@ int Micropolis::roadTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
-    result = connectTile(x, y, 2);
+    result = connectTile(x, y, CONNECT_TILE_ROAD);
     updateFunds();
 
     if (result == 1) {
@@ -847,11 +930,11 @@ int Micropolis::railroadTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
-    result = connectTile(x, y, 3);
+    result = connectTile(x, y, CONNECT_TILE_RAILROAD);
     updateFunds();
 
     if (result == 1) {
@@ -866,11 +949,11 @@ int Micropolis::wireTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
-    result = connectTile(x, y, 4);
+    result = connectTile(x, y, CONNECT_TILE_WIRE);
     updateFunds();
 
     if (result == 1) {
@@ -885,7 +968,7 @@ int Micropolis::parkTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
@@ -1044,7 +1127,7 @@ int Micropolis::networkTool(short x, short y)
 {
     int result;
 
-    if (x < 0 || x > WORLD_W - 1 || y < 0 || y > WORLD_H - 1) {
+    if (!testBounds(x, y)) {
         return -1;
     }
 
@@ -1052,6 +1135,72 @@ int Micropolis::networkTool(short x, short y)
 
     if (result == 1) {
         didTool("Net", x, y);
+    }
+
+    return result;
+}
+
+
+int Micropolis::waterTool(short x, short y)
+{
+    int result;
+
+    if (!testBounds(x, y)) {
+        return -1;
+    }
+
+    result = bulldozerTool(x, y);
+
+    if (result == 1) {
+        result = putDownWater(x, y);
+    }
+
+    if (result == 1) {
+        didTool("Water", x, y);
+    }
+
+    return result;
+}
+
+
+int Micropolis::landTool(short x, short y)
+{
+    int result;
+
+    if (!testBounds(x, y)) {
+        return -1;
+    }
+
+    result = bulldozerTool(x, y);
+
+    if (result == 1) {
+        result = putDownLand(x, y);
+    }
+
+    if (result == 1) {
+        didTool("Land", x, y);
+    }
+
+    return result;
+}
+
+
+int Micropolis::forestTool(short x, short y)
+{
+    int result;
+
+    if (!testBounds(x, y)) {
+        return -1;
+    }
+
+    result = bulldozerTool(x, y);
+
+    if (result == 1) {
+        result = putDownForest(x, y);
+    }
+
+    if (result == 1) {
+        didTool("Forest", x, y);
     }
 
     return result;
@@ -1112,6 +1261,15 @@ int Micropolis::doTool(EditingTool tool, short tileX, short tileY)
 
     case TOOL_NETWORK:
         return networkTool(tileX, tileY);
+
+    case TOOL_WATER:
+        return waterTool(tileX, tileY);
+
+    case TOOL_LAND:
+        return landTool(tileX, tileY);
+
+    case TOOL_FOREST:
+        return forestTool(tileX, tileY);
 
     default:
         return 0;

@@ -105,64 +105,79 @@ static const unsigned short WireTable[16] = {
  *                0=fix zone, 1=bulldoze, 2=lay road, 3=layrail, 4=lay wire.
  * @return -2=no money, 0=failed, 1=ok.
  */
-int Micropolis::connectTile(short x, short y, short command)
+int Micropolis::connectTile(short x, short y, ConnectTileCommand command)
 {
     unsigned short tile;
     int result = 1;
 
-    /* make sure the array subscripts are in bounds */
+    // Make sure the array subscripts are in bounds.
     if (!testBounds(x, y)) {
         return 0;
     }
 
-    /* AutoDoze */
-    if (command >= 2 && command <= 4) {
-
-        if (autoBulldoze && totalFunds > 0) {
-
-            tile = map[x][y];
-
-            if (tile & BULLBIT) {
-                tile &= LOMASK;
-                tile = neutralizeRoad(tile);
-
-                /* Maybe this should check BULLBIT instead of checking tile values? */
-                if ((tile >= TINYEXP && tile <= LASTTINYEXP) ||
-                        (tile < HBRIDGE && tile != DIRT)) {
-
-                    spend(1);
-
-                    map[x][y] = DIRT;
-
-                }
-            }
-        }
-    }
-
+    // Perform auto-doze if appropriate.
     switch (command) {
 
-    case 0:       /* Fix zone */
+        case CONNECT_TILE_ROAD:
+        case CONNECT_TILE_RAILROAD:
+	case CONNECT_TILE_WIRE:
+
+	    if (autoBulldoze && totalFunds > 0) {
+
+		tile = map[x][y];
+
+		if (tile & BULLBIT) {
+		    tile &= LOMASK;
+		    tile = neutralizeRoad(tile);
+
+		    /* Maybe this should check BULLBIT instead of checking tile values? */
+		    if ((tile >= TINYEXP && tile <= LASTTINYEXP) ||
+			    (tile < HBRIDGE && tile != DIRT)) {
+
+			spend(1);
+
+			map[x][y] = DIRT;
+
+		    }
+		}
+	    }
+            break;
+
+        default:
+            // Do nothing.
+            break;
+    
+    }
+
+    // Perform the command.
+    switch (command) {
+
+    case CONNECT_TILE_FIX: // Fix zone.
         fixZone(x, y);
         break;
 
-    case 1:       /* Doze zone */
+    case CONNECT_TILE_BULLDOZE: // Bulldoze zone.
         result = layDoze(x, y);
         fixZone(x, y);
         break;
 
-    case 2:       /* Lay Road */
+    case CONNECT_TILE_ROAD: // Lay road.
         result = layRoad(x, y);
         fixZone(x, y);
         break;
 
-    case 3:       /* Lay Rail */
+    case CONNECT_TILE_RAILROAD: // Lay railroad.
         result = layRail(x, y);
         fixZone(x, y);
         break;
 
-    case 4:       /* Lay Wire */
+    case CONNECT_TILE_WIRE: // Lay wire.
         result = layWire(x, y);
         fixZone(x, y);
+        break;
+
+    default:
+        assert("Unknown ConnectTileCommand.");
         break;
 
     }

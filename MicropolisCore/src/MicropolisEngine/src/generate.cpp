@@ -350,36 +350,36 @@ void Micropolis::doTrees()
 
 void Micropolis::smoothRiver()
 {
-    static short DX[4] = { -1,  0,  1,  0 };
-    static short DY[4] = {  0,  1,  0, -1 };
+    static short dx[4] = { -1,  0,  1,  0 };
+    static short dy[4] = {  0,  1,  0, -1 };
     static short REdTab[16] = {
         13 | BULLBIT,   13 | BULLBIT,     17 | BULLBIT,     15 | BULLBIT,
         5 | BULLBIT,    2,                19 | BULLBIT,     17 | BULLBIT,
         9 | BULLBIT,    11 | BULLBIT,     2,                13 | BULLBIT,
         7 | BULLBIT,    9 | BULLBIT,      5 | BULLBIT,      2 };
 
-    short bitindex, z, Xtem, Ytem;
+    short bitIndex, z, xTemp, yTemp;
     short temp, x, y;
 
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
 
             if (map[x][y] == REDGE) {
-                bitindex = 0;
+                bitIndex = 0;
 
                 for (z = 0; z < 4; z++) {
-                    bitindex = bitindex << 1;
-                    Xtem = x + DX[z];
-                    Ytem = y + DY[z];
-                    if (testBounds(Xtem, Ytem) &&
-                        ((map[Xtem][Ytem] & LOMASK) != DIRT) &&
-                        (((map[Xtem][Ytem]&LOMASK) < WOODS_LOW) ||
-                         ((map[Xtem][Ytem]&LOMASK) > WOODS_HIGH))) {
-                        bitindex++;
+                    bitIndex = bitIndex << 1;
+                    xTemp = x + dx[z];
+                    yTemp = y + dy[z];
+                    if (testBounds(xTemp, yTemp) &&
+                        ((map[xTemp][yTemp] & LOMASK) != DIRT) &&
+                        (((map[xTemp][yTemp]&LOMASK) < WOODS_LOW) ||
+                         ((map[xTemp][yTemp]&LOMASK) > WOODS_HIGH))) {
+                        bitIndex++;
                     }
                 }
 
-                temp = REdTab[bitindex & 15];
+                temp = REdTab[bitIndex & 15];
 
                 if ((temp != RIVER) &&
                     getRandom(1)) {
@@ -405,43 +405,52 @@ bool Micropolis::isTree(MapValue cell)
 
 void Micropolis::smoothTrees()
 {
-    static short DX[4] = { -1,  0,  1,  0 };
-    static short DY[4] = {  0,  1,  0, -1 };
-    static short TEdTab[16] = {
+    short x, y;
+    for (x = 0; x < WORLD_W; x++) {
+        for (y = 0; y < WORLD_H; y++) {
+            if (isTree(map[x][y])) {
+		smoothTreesAt(x, y);
+            }
+        }
+    }
+}
+
+
+void Micropolis::smoothTreesAt(int x, int y)
+{
+    static short dx[4] = { -1,  0,  1,  0 };
+    static short dy[4] = {  0,  1,  0, -1 };
+    static short treeTable[16] = {
         0,  0,  0,  34,
         0,  0,  36, 35,
         0,  32, 0,  33,
         30, 31, 29, 37,
     };
 
-    short bitindex, z, Xtem, Ytem;
-    short temp, x, y;
+    if (isTree(map[x][y])) {
+	int bitIndex = 0;
+	int z;
+	for (z = 0; z < 4; z++) {
+	    bitIndex = bitIndex << 1;
+	    int xTemp = x + dx[z];
+	    int yTemp = y + dy[z];
+	    if (testBounds(xTemp, yTemp) &&
+		isTree(map[xTemp][yTemp])) {
+		bitIndex++;
+	    }
+	}
 
-    for (x = 0; x < WORLD_W; x++) {
-        for (y = 0; y < WORLD_H; y++) {
-            if (isTree(map[x][y])) {
-                bitindex = 0;
-                for (z = 0; z < 4; z++) {
-                    bitindex = bitindex << 1;
-                    Xtem = x + DX[z];
-                    Ytem = y + DY[z];
-                    if (testBounds(Xtem, Ytem) && isTree(map[Xtem][Ytem])) {
-                        bitindex++;
-                    }
-                }
-                temp = TEdTab[bitindex & 15];
-                if (temp) {
-                    if (temp != WOODS) {
-                        if ((x + y) & 1) {
-                            temp = temp - 8;
-                        }
-                    }
-                    map[x][y] = temp | BLBNBIT;
-                } else {
-                    map[x][y] = temp;
-                }
-            }
-        }
+	int temp = treeTable[bitIndex & 15];
+	if (temp) {
+	    if (temp != WOODS) {
+		if ((x + y) & 1) {
+		    temp = temp - 8;
+		}
+	    }
+	    map[x][y] = temp | BLBNBIT;
+	} else {
+	    map[x][y] = temp;
+	}
     }
 }
 
