@@ -48,7 +48,6 @@ def ErrorMessage(
 
 def StringToElement(s):
     f = StringIO(s)
-    f = StringIO(s)
     et = ElementTree.parse(f)
     el = et.getroot()
     return el
