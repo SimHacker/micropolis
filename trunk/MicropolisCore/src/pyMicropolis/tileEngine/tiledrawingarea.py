@@ -1244,7 +1244,7 @@ class TileDrawingArea(gtk.DrawingArea):
 
                 #print "ROOT", x, y
 
-                toolPie.popup(x, y, False)
+                toolPie.popUp(x, y, False)
 
 
     def handleButtonPress(
