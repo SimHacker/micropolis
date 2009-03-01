@@ -241,7 +241,7 @@ void Micropolis::checkGrowth()
 {
     if ((cityTime & 3) == 0) {
         short category = 0;
-        Quad thisCityPop = (resPop + (comPop + indPop) * 8) * 20;
+        Quad thisCityPop = getPopulation();
 
         if (cityPopLast > 0) {
 

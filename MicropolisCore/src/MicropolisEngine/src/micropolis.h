@@ -1681,6 +1681,7 @@ private:
 
     void doPopNum();
 
+    Quad getPopulation();
     CityClass getCityClass(Quad cityPop);
 
     void doProblems(short problemTable[PROBNUM]);

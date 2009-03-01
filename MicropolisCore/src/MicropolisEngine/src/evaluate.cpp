@@ -172,7 +172,7 @@ void Micropolis::doPopNum()
 {
     Quad oldCityPop = cityPop;
 
-    cityPop = (resPop + (comPop + indPop) * 8L) * 20L;
+    cityPop = getPopulation();
 
     if (oldCityPop == -1) {
         oldCityPop = cityPop;
@@ -180,6 +180,13 @@ void Micropolis::doPopNum()
 
     cityPopDelta = cityPop - oldCityPop;
     cityClass = getCityClass(cityPop);
+}
+
+/** Compute city population. */
+Quad Micropolis::getPopulation()
+{
+    Quad pop = (resPop + (comPop + indPop) * 8L) * 20L;
+    return pop;
 }
 
 
