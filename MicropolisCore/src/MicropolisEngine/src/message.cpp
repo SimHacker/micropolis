@@ -231,45 +231,56 @@ void Micropolis::sendMessages()
 /**
  * Detect a change in city class, and produce a message if the player has
  * reached the next class.
- * @todo Replace magic population numbers with constants in a table.
- * @todo City class detection seems duplicated. Find other instances, and merge
- *       them to a single function.
+ * @todo This code is very closely related to Micropolis::doPopNum().
+ *       Maybe merge both in some way?
+ *       (This function gets called much more often however then doPopNum().
+ *        Also, at the first call, the difference between thisCityPop and
+ *        cityPop is huge.)
  */
 void Micropolis::checkGrowth()
 {
-    Quad thisCityPop;
-    short category;
-
     if ((cityTime & 3) == 0) {
-        category = 0;
-        thisCityPop = (resPop + (comPop + indPop) * 8) * 20;
+        short category = 0;
+        Quad thisCityPop = (resPop + (comPop + indPop) * 8) * 20;
 
         if (cityPopLast > 0) {
 
-            if (cityPopLast < 2000 && thisCityPop >= 2000) {
-                category = MESSAGE_REACHED_TOWN;
-            }
+            CityClass lastClass = getCityClass(cityPopLast);
+            CityClass newClass = getCityClass(thisCityPop);
 
-            if (cityPopLast < 10000 && thisCityPop >= 10000) {
-                category = MESSAGE_REACHED_CITY;
-            }
+            if (lastClass != newClass) {
 
-            if (cityPopLast < 50000L && thisCityPop >= 50000L) {
-                category = MESSAGE_REACHED_CAPITAL;
-            }
+                // Switched class, find appropiate message.
+                switch (newClass) {
+                    case CC_TOWN:
+                        category = MESSAGE_REACHED_TOWN;
+                        break;
 
-            if (cityPopLast < 100000L && thisCityPop >= 100000L) {
-                category = MESSAGE_REACHED_METROPOLIS;
-            }
+                    case CC_CITY:
+                        category = MESSAGE_REACHED_CITY;
+                        break;
 
-            if (cityPopLast < 500000L && thisCityPop >= 500000L) {
-                category = MESSAGE_REACHED_MEGALOPOLIS;
-            }
+                    case CC_CAPITAL:
+                        category = MESSAGE_REACHED_CAPITAL;
+                        break;
 
+                    case CC_METROPOLIS:
+                        category = MESSAGE_REACHED_METROPOLIS;
+                        break;
+
+                    case CC_MEGALOPOLIS:
+                        category = MESSAGE_REACHED_MEGALOPOLIS;
+                        break;
+
+                    default:
+                        NOT_REACHED();
+                        break;
+                }
+            }
         }
 
         if (category > 0 && category != categoryLast) {
-            sendMessage(category, -1, -1, true);
+            sendMessage(category, NOWHERE, NOWHERE, true);
             categoryLast = category;
         }
 

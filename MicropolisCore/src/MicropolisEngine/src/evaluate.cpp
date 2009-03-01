@@ -167,7 +167,6 @@ void Micropolis::getAssessedValue()
 /**
  * Compute city population and city classification.
  * @see cityPop cityClass.
- * @todo Put people counts into a table.
  */
 void Micropolis::doPopNum()
 {
@@ -180,26 +179,38 @@ void Micropolis::doPopNum()
     }
 
     cityPopDelta = cityPop - oldCityPop;
-
-    // Compute cityClass
-    cityClass = CC_VILLAGE;
-    if (cityPop > 2000) {
-        cityClass = CC_TOWN;
-    }
-    if (cityPop > 10000) {
-        cityClass = CC_CITY;
-    }
-    if (cityPop > 50000) {
-        cityClass = CC_CAPITAL;
-    }
-    if (cityPop > 100000) {
-        cityClass = CC_METROPOLIS;
-    }
-    if (cityPop > 500000) {
-        cityClass = CC_MEGALOPOLIS;
-    }
+    cityClass = getCityClass(cityPop);
 }
 
+
+/**
+ * Classify the city based on its population.
+ * @param cityPopulation Number of people in the city.
+ * @return City classification.
+ * @todo Put people counts into a table.
+ */
+CityClass Micropolis::getCityClass(Quad cityPopulation)
+{
+    CityClass cityClassification = CC_VILLAGE;
+
+    if (cityPopulation > 2000) {
+        cityClassification = CC_TOWN;
+    }
+    if (cityPopulation > 10000) {
+        cityClassification = CC_CITY;
+    }
+    if (cityPopulation > 50000) {
+        cityClassification = CC_CAPITAL;
+    }
+    if (cityPopulation > 100000) {
+        cityClassification = CC_METROPOLIS;
+    }
+    if (cityPopulation > 500000) {
+        cityClassification = CC_MEGALOPOLIS;
+    }
+
+    return cityClassification;
+}
 
 /**
  * Evaluate problems of the city, take votes, and decide which are the most

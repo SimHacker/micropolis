@@ -180,15 +180,15 @@ void Micropolis::simulate(int phase)
 
         case 9:
 
-            if ((cityTime % CENSUS_FREQUENCY_10) == 0) {
+            if (cityTime % CENSUS_FREQUENCY_10 == 0) {
                 take10Census();
             }
 
-            if ((cityTime % (CENSUS_FREQUENCY_120)) == 0) {
+            if (cityTime % CENSUS_FREQUENCY_120 == 0) {
                 take120Census();
             }
 
-            if ((cityTime % TAX_FREQUENCY) == 0)  {
+            if (cityTime % TAX_FREQUENCY == 0)  {
                 collectTax();
                 cityEvaluation();
             }

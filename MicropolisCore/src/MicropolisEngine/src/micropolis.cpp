@@ -360,7 +360,6 @@ void Micropolis::init()
     // Quad cityAssessedValue;
     cityAssessedValue = 0;
 
-    // CityClass cityClass;
     cityClass = CC_VILLAGE;
 
     // short cityScore;
