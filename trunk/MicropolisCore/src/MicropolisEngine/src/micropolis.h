@@ -1630,14 +1630,7 @@ public:
      */
     Quad cityAssessedValue;
 
-    /**
-     * City class.
-     *
-     * 0: village, 1: town, 2: city, 3: capital,
-     * 4: metropolis, 5: megalopolis.
-     * Affected by city population.
-     */
-    short cityClass;
+    CityClass cityClass; ///< City class, affected by city population.
 
     /**
      * City score.
@@ -1687,6 +1680,8 @@ private:
     void getAssessedValue();
 
     void doPopNum();
+
+    CityClass getCityClass(Quad cityPop);
 
     void doProblems(short problemTable[PROBNUM]);
 
