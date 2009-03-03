@@ -317,7 +317,7 @@ class Root(controllers.RootController):
         game = self.game
 
         tengine = game.tengine
-        tiles = self.tengine.getTileData(None, None, col, row, cols, rows, code)
+        tiles = tengine.getTileData(None, None, col, row, cols, rows, code)
         #print "TILES", tiles
 
         return tiles

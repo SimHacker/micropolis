@@ -6,7 +6,7 @@
 
 
 import pyMicropolis.simEngine
-from pyMicropolis.simEngine import micropolisengine, micropolismodel, micropoliswindow, micropolisrobot
+from pyMicropolis.simEngine import micropolisengine, micropolisgtkengine, micropoliswindow, micropolisrobot
 import gtk
 import random
 import math
@@ -14,7 +14,7 @@ import math
 
 def run():
 
-    engine = micropolismodel.CreateTestEngine()
+    engine = micropolisgtkengine.CreateGTKEngine()
 
     engine.cityTax = 10
     engine.setPasses(200)

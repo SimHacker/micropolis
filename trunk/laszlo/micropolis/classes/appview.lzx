@@ -159,7 +159,7 @@
                                                         953, 954, 955, 952
             ];
 
-            ds_session.setAttribute("src", "/micropolisSessionStart");
+            ds_session.setAttribute("src", "/server/micropolisSessionStart");
             ds_session.doRequest();
           ]]>
         </handler>
@@ -345,7 +345,7 @@
                 body: body
             };
 
-            ds_tick.setAttribute("src", "/micropolisTick");
+            ds_tick.setAttribute("src", "/server/micropolisTick");
             ds_tick.setQueryParams(params);
             ds_tick.setAttribute("querytype", "post");
             ds_tick.doRequest();
