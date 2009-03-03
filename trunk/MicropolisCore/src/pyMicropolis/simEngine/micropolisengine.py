@@ -1,4 +1,4 @@
-# micropolismodel.py
+# micropolisengine.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -199,10 +199,10 @@ def SetSubElementFloat(el, key, value):
 
 
 ########################################################################
-# MicropolisModel Class
+# MicropolisEngine Class
 
 
-class MicropolisModel(micropolisengine.Micropolis):
+class MicropolisEngine(micropolisengine.Micropolis):
 
 
     messages = [
@@ -620,10 +620,11 @@ You have 10 years to turn this swamp back into a city again.""",
             timeDelay=10,
             *args,
             **kwargs):
-        #print "MicropolisModel.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
+        #print "MicropolisEngine.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
 
         micropolisengine.Micropolis.__init__(self, *args, **kwargs)
 
+        self.resourceDir = 'res'
         self.running = running
         self.timeDelay = timeDelay
         self.timerActive = False
@@ -698,10 +699,12 @@ You have 10 years to turn this swamp back into a city again.""",
             self,
             ('paused',))
 
+        self.initGame()
+
         if self.running:
             self.startTimer()
 
-        #print "MicropolisModel.__init__ done", self
+        #print "MicropolisEngine.__init__ done", self
 
 
     def __del__(
@@ -821,7 +824,7 @@ You have 10 years to turn this swamp back into a city again.""",
         elif name == 'policecoverage':
             return self.getPoliceCoverageImageAlphaSize()
         else:
-            print "MicropolisModel: getImageAlphaSize: Invalid data image name:", name
+            print "MicropolisEngine: getImageAlphaSize: Invalid data image name:", name
             return None, 0.0, 0.0, 0.0
 
 
@@ -1360,19 +1363,13 @@ You have 10 years to turn this swamp back into a city again.""",
     def startTimer(
         self):
 
-        if self.timerActive:
-            return
-
-        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
-        self.timerActive = True
+        pass # Override in subclasses.
 
 
     def stopTimer(
         self):
 
-        # FIXME: Is there some way to immediately cancel self.timerId?
-
-        self.timerActive = False
+        pass # Override in subclasses.
 
 
     def tickTimer(
@@ -1588,7 +1585,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def __repr__(self):
-        return "<MicropolisModel>"
+        return "<MicropolisEngine>"
 
 
     def handle_UIAutoGoto(self, x, y):
@@ -1703,15 +1700,67 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
 ########################################################################
+# MicropolisGTKEngine Class
 
 
-def CreateTestEngine():
+class MicropolisGTKEngine(MicropolisEngine):
+
+
+    def startTimer(
+        self):
+
+        if self.timerActive:
+            return
+
+        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
+        self.timerActive = True
+
+
+    def stopTimer(
+        self):
+
+        # FIXME: Is there some way to immediately cancel self.timerId?
+
+        self.timerActive = False
+
+
+########################################################################
+
+
+def CreateGTKEngine():
 
     # Get our nice scriptable subclass of the SWIG Micropolis wrapper object.
-    engine = MicropolisModel()
+    engine = MicropolisGTKEngine()
 
-    engine.resourceDir = 'res'
-    engine.initGame()
+    return engine
+
+
+########################################################################
+# MicropolisTurboGearsEngine Class
+
+
+class MicropolisTurboGearsEngine(MicropolisEngine):
+
+
+    def startTimer(
+        self):
+
+        # TODO
+
+
+    def stopTimer(
+        self):
+
+        # TODO
+
+
+########################################################################
+
+
+def CreateTurboGearsEngine():
+
+    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object.
+    engine = MicropolisTurboGearsEngine()
 
     return engine
 

@@ -87,7 +87,6 @@ import array
 
 
 import micropolisengine
-import micropolismodel
 import micropolisutils
 import micropolispiemenus
 from pyMicropolis.tileEngine import tileengine, tiledrawingarea
