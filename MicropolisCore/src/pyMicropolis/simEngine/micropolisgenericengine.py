@@ -1,4 +1,4 @@
-# micropolisengine.py
+# micropolisgenericengine.py
 #
 # Micropolis, Unix Version.  This game was released for the Unix platform
 # in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Model
+# Micropolis Generic Engine
 # Don Hopkins
 
 
@@ -199,10 +199,10 @@ def SetSubElementFloat(el, key, value):
 
 
 ########################################################################
-# MicropolisEngine Class
+# MicropolisGenericEngine Class
 
 
-class MicropolisEngine(micropolisengine.Micropolis):
+class MicropolisGenericEngine(micropolisengine.Micropolis):
 
 
     messages = [
@@ -620,7 +620,7 @@ You have 10 years to turn this swamp back into a city again.""",
             timeDelay=10,
             *args,
             **kwargs):
-        #print "MicropolisEngine.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
+        #print "MicropolisGenericEngine.__init__", self, "calling micropolisengine.Micropolis.__init__", micropolisengine.Micropolis.__init__, args, kwargs
 
         micropolisengine.Micropolis.__init__(self, *args, **kwargs)
 
@@ -824,7 +824,7 @@ You have 10 years to turn this swamp back into a city again.""",
         elif name == 'policecoverage':
             return self.getPoliceCoverageImageAlphaSize()
         else:
-            print "MicropolisEngine: getImageAlphaSize: Invalid data image name:", name
+            print "MicropolisGenericEngine: getImageAlphaSize: Invalid data image name:", name
             return None, 0.0, 0.0, 0.0
 
 
@@ -1697,72 +1697,6 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def handle_UIInvalidateMaps(self):
         self.updateViews() # @todo Use the normal update system.
-
-
-########################################################################
-# MicropolisGTKEngine Class
-
-
-class MicropolisGTKEngine(MicropolisEngine):
-
-
-    def startTimer(
-        self):
-
-        if self.timerActive:
-            return
-
-        self.timerId = gobject.timeout_add(self.timeDelay, self.tickTimer)
-        self.timerActive = True
-
-
-    def stopTimer(
-        self):
-
-        # FIXME: Is there some way to immediately cancel self.timerId?
-
-        self.timerActive = False
-
-
-########################################################################
-
-
-def CreateGTKEngine():
-
-    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object.
-    engine = MicropolisGTKEngine()
-
-    return engine
-
-
-########################################################################
-# MicropolisTurboGearsEngine Class
-
-
-class MicropolisTurboGearsEngine(MicropolisEngine):
-
-
-    def startTimer(
-        self):
-
-        # TODO
-
-
-    def stopTimer(
-        self):
-
-        # TODO
-
-
-########################################################################
-
-
-def CreateTurboGearsEngine():
-
-    # Get our nice scriptable subclass of the SWIG Micropolis wrapper object.
-    engine = MicropolisTurboGearsEngine()
-
-    return engine
 
 
 ########################################################################

@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Model
+# Micropolis GTK Engine
 # Don Hopkins
 
 
@@ -69,14 +69,14 @@
 # Import stuff
 
 
-import micropolisengine
+import micropolisgenericengine
 
 
 ########################################################################
 # MicropolisGTKEngine Class
 
 
-class MicropolisGTKEngine(micropolisengine.MicropolisEngine):
+class MicropolisGTKEngine(micropolisgenericengine.MicropolisGenericEngine):
 
 
     def startTimer(

@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Model
+# Micropolis TurboGears Engine
 # Don Hopkins
 
 
@@ -69,14 +69,24 @@
 # Import stuff
 
 
-import micropolisengine
+import micropolisgenericengine
 
 
 ########################################################################
 # MicropolisTurboGearsEngine Class
 
 
-class MicropolisTurboGearsEngine(micropolisengine.MicropolisEngine):
+class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine):
+
+
+    def __init__(
+            self,
+            *args,
+            **kw):
+
+        super(MicropolisTurboGearsEngine, self).__init__(*args, **kw)
+
+        self.sessions = []
 
 
     def startTimer(
@@ -89,6 +99,250 @@ class MicropolisTurboGearsEngine(micropolisengine.MicropolisEngine):
         self):
 
         pass
+
+
+    def addSession(self, session):
+        sessions = self.sessions
+        if session not in sessions:
+            self.sessions.append(session)
+
+
+    def removeSession(self, session):
+        sessions = self.sessions
+        if session in sessions:
+            self.sessions.remove(session)
+
+
+    def sendSessions(self, message):
+        for session in self.sessions:
+            session.sendMessage(message)
+
+
+    def handle_UIAutoGoto(self, x, y):
+        print "handle_UIAutoGoto(self, x, y)", (self, x, y)
+        self.sendSessions({
+            'message': "UIAutoGoto",
+            'x': x,
+            'y': y,
+        })
+    
+
+    def handle_UIDidGenerateNewCity(self):
+        print "handle_UIDidGenerateNewCity(self)", (self,)
+        self.sendSessions({
+            'message': "UIDidGenerateNewCity",
+        })
+
+    
+    def handle_UIDidLoadCity(self):
+        print "handle_UIDidLoadCity(self)", (self,)
+        self.sendSessions({
+            'message': "UIDidLoadCity",
+        })
+
+    
+    def handle_UIDidLoadScenario(self):
+        print "handle_UIDidLoadScenario(self)", (self,)
+        self.sendSessions({
+            'message': "UIDidLoadScenario",
+        })
+
+    
+    def handle_UIDidSaveCity(self):
+        print "handle_UIDidSaveCity(self)", (self,)
+        self.sendSessions({
+            'message': "UIDidSaveCity",
+        })
+
+    
+    def handle_UIDidTool(self, name, x, y):
+        print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
+        self.sendSessions({
+            'message': "UIDidTool",
+            'name': name,
+            'x': x,
+            'y': y,
+        })
+
+    
+    def handle_UIDidntLoadCity(self, msg):
+        print "handle_UIDidntLoadCity(self, msg)", (self, msg)
+        self.sendSessions({
+            'message': "UIDidntLoadCity",
+            'msg': msg,
+        })
+
+    
+    def handle_UIDidntSaveCity(self, msg):
+        print "handle_UIDidntSaveCity(self, msg)", (self, msg)
+        self.sendSessions({
+            'message': "UIDidntSaveCity",
+            'msg': msg,
+        })
+
+    
+    def handle_UILoseGame(self):
+        print "handle_UILoseGame(self)", (self,)
+        self.sendSessions({
+            'message': "UILoseGame",
+        })
+
+    
+    def handle_UIMakeSound(self, channel, sound, x, y):
+        print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound, x, y)
+        self.sendSessions({
+            'message': "UIMakeSound",
+            'channel': channel,
+            'sound': sound,
+            'x': x,
+            'y': y,
+        })
+
+    
+    def handle_UINewGame(self):
+        print "handle_UINewGame(self)", (self,)
+        self.sendSessions({
+            'message': "UINewGame",
+        })
+
+    
+    def handle_UIPlayNewCity(self):
+        print "handle_UIPlayNewCity(self)", (self,)
+        self.sendSessions({
+            'message': "UIPlayNewCity",
+        })
+
+    
+    def handle_UIReallyStartGame(self):
+        print "handle_UIReallyStartGame(self)", (self,)
+        self.sendSessions({
+            'message': "UIReallyStartGame",
+        })
+
+    
+    def handle_UISaveCityAs(self):
+        print "handle_UISaveCityAs(self)", (self,)
+        self.sendSessions({
+            'message': "UISaveCityAs",
+        })
+
+    
+    def handle_UIShowBudgetAndWait(self):
+        print "handle_UIShowBudgetAndWait(self)", (self,)
+        self.sendSessions({
+            'message': "UIShowBudgetAndWait",
+        })
+
+    
+    def handle_UIShowPicture(self, id):
+        print "handle_UIShowPicture(self, id)", (self, id)
+        self.sendSessions({
+            'message': "UIShowPicture",
+            'id': id,
+        })
+
+    
+    def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
+        print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
+        self.sendSessions({
+            'message': "UIShowZoneStatus",
+            'str': str,
+            's0': s0,
+            's1': s1,
+            's2': s2,
+            's3': s3,
+            's4': s4,
+            'x': x,
+            'y': y,
+        })
+
+    
+    def handle_UIStartEarthquake(self, magnitude):
+        print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
+        self.sendSessions({
+            'message': "UIStartEarthquake",
+            'magnitude': magnitude,
+        })
+
+    
+    def handle_UIStartLoad(self):
+        print "handle_UIStartLoad(self)", (self,)
+        self.sendSessions({
+            'message': "UIStartLoad",
+        })
+
+    
+    def handle_UIStartScenario(self, scenario):
+        print "handle_UIStartScenario(self, scenario)", (self, scenario)
+        self.sendSessions({
+            'message': "UIStartScenario",
+            'scenario': scenario,
+        })
+
+    
+    def handle_UIStopEarthquake(self):
+        print "handle_UIStopEarthquake(self)", (self,)
+        self.sendSessions({
+            'message': "UIStopEarthquake",
+        })
+
+
+    def handle_UIWinGame(self):
+        print "handle_UIWinGame(self)", (self,)
+        self.sendSessions({
+            'message': "UIWinGame",
+        })
+
+
+    def handle_UIUpdate(self, aspect):
+        print "handle_UIUpdate(self, aspect)", (self, aspect)
+
+        if aspect == "funds":
+
+            self.sendSessions({
+                'message': "UIUpdateFunds",
+                'funds': self.totalFunds,
+            })
+
+        elif aspect == "date":
+
+            self.sendSessions({
+                'message': "UIUpdateDate",
+                'cityTime': self.cityTime,
+            })
+
+        elif aspect == "graph":
+
+            self.sendSessions({
+                'message': "UIUpdateGraph",
+                # TODO
+            })
+
+        elif aspect == "evaluation":
+
+            problems = []
+            for i in range(0, self.countProblems()):
+                problems.append((
+                    self.getProblemNumber(i),
+                    self.getProblemVotes(i)))
+
+            self.sendSessions({
+                'message': "UIUpdateEvaluation",
+                'currentYear': self.currentYear(),
+                'cityYes': self.cityYes,
+                'cityScore': self.cityScore,
+                'deltaCityScore': self.cityScoreDelta,
+                'cityPop': self.cityPop,
+                'deltaCityPop': self.deltaCityPop,
+                'cityAssessedValue': self.cityAssessedValue,
+                'cityClass': self.cityClass,
+                'gameLevel': self.gameLevel,
+                'problems': problems,
+            })
+
+        else:
+            print "UPDATE unknown aspect", aspect
+
 
 
 ########################################################################

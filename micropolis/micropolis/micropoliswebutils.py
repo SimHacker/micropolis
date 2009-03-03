@@ -10,7 +10,7 @@
 
 
 import sys, os, time, array, random
-import micropolisengine
+import micropolisgtkengine
 import tileengine
 import cairo
 import math
@@ -27,30 +27,30 @@ MicropolisTileSize = 16
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
 CityNames = {
-    'about': MicropolisCorePath + '/cities/about.cty',
-    'badnews': MicropolisCorePath + '/cities/badnews.cty',
-    'bluebird': MicropolisCorePath + '/cities/bluebird.cty',
-    'bruce': MicropolisCorePath + '/cities/bruce.cty',
-    'deadwood': MicropolisCorePath + '/cities/deadwood.cty',
-    'finnigan': MicropolisCorePath + '/cities/finnigan.cty',
-    'freds': MicropolisCorePath + '/cities/freds.cty',
-    'haight': MicropolisCorePath + '/cities/haight.cty',
-    'happisle': MicropolisCorePath + '/cities/happisle.cty',
-    'joffburg': MicropolisCorePath + '/cities/joffburg.cty',
-    'kamakura': MicropolisCorePath + '/cities/kamakura.cty',
-    'kobe': MicropolisCorePath + '/cities/kobe.cty',
-    'kowloon': MicropolisCorePath + '/cities/kowloon.cty',
-    'kyoto': MicropolisCorePath + '/cities/kyoto.cty',
-    'linecity': MicropolisCorePath + '/cities/linecity.cty',
-    'med_isle': MicropolisCorePath + '/cities/med_isle.cty',
-    'ndulls': MicropolisCorePath + '/cities/ndulls.cty',
-    'neatmap': MicropolisCorePath + '/cities/neatmap.cty',
-    'radial': MicropolisCorePath + '/cities/radial.cty',
-    'senri': MicropolisCorePath + '/cities/senri.cty',
-    'southpac': MicropolisCorePath + '/cities/southpac.cty',
-    'splats': MicropolisCorePath + '/cities/splats.cty',
-    'wetcity': MicropolisCorePath + '/cities/wetcity.cty',
-    'yokohama': MicropolisCorePath + '/cities/yokohama.cty',
+    'about': MicropolisCorePath + '/cities/about.xml',
+    'badnews': MicropolisCorePath + '/cities/badnews.xml',
+    'bluebird': MicropolisCorePath + '/cities/bluebird.xml',
+    'bruce': MicropolisCorePath + '/cities/bruce.xml',
+    'deadwood': MicropolisCorePath + '/cities/deadwood.xml',
+    'finnigan': MicropolisCorePath + '/cities/finnigan.xml',
+    'freds': MicropolisCorePath + '/cities/freds.xml',
+    'haight': MicropolisCorePath + '/cities/haight.xml',
+    'happisle': MicropolisCorePath + '/cities/happisle.xml',
+    'joffburg': MicropolisCorePath + '/cities/joffburg.xml',
+    'kamakura': MicropolisCorePath + '/cities/kamakura.xml',
+    'kobe': MicropolisCorePath + '/cities/kobe.xml',
+    'kowloon': MicropolisCorePath + '/cities/kowloon.xml',
+    'kyoto': MicropolisCorePath + '/cities/kyoto.xml',
+    'linecity': MicropolisCorePath + '/cities/linecity.xml',
+    'med_isle': MicropolisCorePath + '/cities/med_isle.xml',
+    'ndulls': MicropolisCorePath + '/cities/ndulls.xml',
+    'neatmap': MicropolisCorePath + '/cities/neatmap.xml',
+    'radial': MicropolisCorePath + '/cities/radial.xml',
+    'senri': MicropolisCorePath + '/cities/senri.xml',
+    'southpac': MicropolisCorePath + '/cities/southpac.xml',
+    'splats': MicropolisCorePath + '/cities/splats.xml',
+    'wetcity': MicropolisCorePath + '/cities/wetcity.xml',
+    'yokohama': MicropolisCorePath + '/cities/yokohama.xml',
 }
 
 
@@ -465,30 +465,6 @@ class WebMicropolis(micropolisengine.Micropolis):
         })
 
     
-    def handle_UIDoPendTool(self, tool, x, y):
-        print "handle_DoPendTool(self, tool, x, y)", (self, tool, x, y)
-        self.sendSessions({
-            'message': "DoPendTool",
-            'tool': tool,
-            'x': x,
-            'y': y,
-        })
-
-    
-    def handle_UIDropFireBombs(self):
-        print "handle_DropFireBombs(self)", (self,)
-        self.sendSessions({
-            'message': "DropFireBombs",
-        })
-
-    
-    def handle_UIInitializeSound(self):
-        print "handle_UIInitializeSound(self)", (self,)
-        self.sendSessions({
-            'message': "UIInitializeSound",
-        })
-
-    
     def handle_UILoseGame(self):
         print "handle_UILoseGame(self)", (self,)
         self.sendSessions({
@@ -521,14 +497,6 @@ class WebMicropolis(micropolisengine.Micropolis):
         })
 
     
-    def handle_UIPopUpMessage(self, msg):
-        print "handle_UIPopUpMessage(self, msg)", (self, msg)
-        self.sendSessions({
-            'message': "UIPopUpMessage",
-            'msg': msg,
-        })
-
-    
     def handle_UIReallyStartGame(self):
         print "handle_UIReallyStartGame(self)", (self,)
         self.sendSessions({
@@ -540,109 +508,6 @@ class WebMicropolis(micropolisengine.Micropolis):
         print "handle_UISaveCityAs(self)", (self,)
         self.sendSessions({
             'message': "UISaveCityAs",
-        })
-
-    
-    def handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax):
-        #print "handle_UISetBudget(self, flowStr, previousStr, currentStr, collectedStr, tax)", (self, flowStr, previousStr, currentStr, collectedStr, tax)
-        self.sendSessions({
-            'message': "UISetBudget",
-            'flowStr': flowStr,
-            'previousStr': previousStr,
-            'currentStr': currentStr,
-            'collectedStr': collectedStr,
-            'tax': tax,
-        })
-
-    
-    def handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent):
-        #print "handle_UISetBudgetValues(self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent)", (self, roadGot, roadWant, roadPercent, policeGot, policeWant, policePercent, fireGot, fireWant, firePercent))
-        self.sendSessions({
-            'message': "UISetBudgetValues",
-            'roadGot': roadGot,
-            'roadWant': roadWant,
-            'roadPercent': roadPercent,
-            'policeGot': policeGot,
-            'policeWant': policeWant,
-            'policePercent': policePercent,
-            'fireGot': fireGot,
-            'fireWant': fireWant,
-            'firePercent': firePercent,
-        })
-
-    
-    def handle_UISetCityName(self, CityName):
-        print "handle_UISetCityName(self, CityName)", (self, CityName)
-        self.sendSessions({
-            'message': "UISetCityName",
-            'cityName': CityName,
-        })
-
-    
-    def handle_UISetDate(self, str, m, y):
-        #print "handle_UISetDate(self, str, m, d)", (self, str, m, y)
-        self.sendSessions({
-            'message': "UISetDate",
-            'str': str,
-            'm': m,
-            'y': y,
-        })
-
-    
-    def handle_UISetDemand(self, r, c, i):
-        #print "handle_UISetDemand(self, r, c, i)", (self, r, c, i)
-        self.sendSessions({
-            'message': "UISetDemand",
-            'r': r,
-            'c': c,
-            'i': i,
-        })
-
-    
-    def handle_UISetGameLevel(self, GameLevel):
-        print "handle_UISetGameLevel(self, GameLevel)", (self, GameLevel)
-        self.sendSessions({
-            'message': "UISetGameLevel",
-            'gameLevel': GameLevel,
-        })
-
-    
-    def handle_UISetMapState(self, state):
-        print "handle_UISetMapState(self, state)", (self, state)
-        self.sendSessions({
-            'message': "UISetMapState",
-            'state': state,
-        })
-
-    
-    def handle_UISetMessage(self, str):
-        print "handle_UISetMessage(self, str)", (self, str)
-        self.sendSessions({
-            'message': "UISetMessage",
-            'str': str,
-        })
-
-
-    def handle_UISetOptions(self, autoBudget, autoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices):
-        print "handle_UISetOptions(self, autoBudget, autoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)", (self, autoBudget, autoGoto, autoBulldoze, noDisasters, sound, doAnimation, doMessages, doNotices)
-        self.sendSessions({
-            'message': "UISetOptions",
-            'autoBudget': autoBudget,
-            'autoGoto': autoGoto,
-            'autoBulldoze': autoBulldoze,
-            'noDisasters': noDisasters,
-            'sound': sound,
-            'doAnimation': doAnimation,
-            'doMessages': doMessages,
-            'doNotices': doNotices,
-        })
-
-
-    def handle_UISetSpeed(self, speed):
-        print "handle_UISetSpeed(self, speed)", (self, speed)
-        self.sendSessions({
-            'message': "UISetSpeed",
-            'speed': speed,
         })
 
     
@@ -706,24 +571,10 @@ class WebMicropolis(micropolisengine.Micropolis):
         })
 
 
-    def handle_UIUpdateBudget(self):
-        print "handle_UIUpdateBudget(self)", (self,)
-        self.sendSessions({
-            'message': "UIUpdateBudget",
-        })
-
-    
     def handle_UIWinGame(self):
         print "handle_UIWinGame(self)", (self,)
         self.sendSessions({
             'message': "UIWinGame",
-        })
-
-
-    def handle_UINewGraph(self):
-        print "handle_UINewGraph(self)", (self,)
-        self.sendSessions({
-            'message': "UINewGraph",
         })
 
 
@@ -767,11 +618,14 @@ class WebMicropolis(micropolisengine.Micropolis):
                 'deltaCityScore': self.cityScoreDelta,
                 'cityPop': self.cityPop,
                 'deltaCityPop': self.deltaCityPop,
-                'cityAssValue': self.cityAssessedValue,
+                'cityAssessedValue': self.cityAssessedValue,
                 'cityClass': self.cityClass,
                 'gameLevel': self.gameLevel,
                 'problems': problems,
             })
+
+        else:
+            print "UPDATE unknown aspect", aspect
 
 
 ########################################################################
@@ -784,15 +638,15 @@ class Game(object):
 
         super(Game, self).__init__(*args, **kw)
 
-        m = WebMicropolis()
+        m = micropolisgtkengine.MicropolisGTKEngine()
         self.m = m
         m.resourceDir = MicropolisCorePath + '/res'
         m.initGame()
 
         # Load a city file.
-        cityFileName = MicropolisCorePath + '/cities/haight.cty'
+        cityFileName = MicropolisCorePath + '/cities/haight.xml'
         print "Loading city file:", cityFileName
-        m.loadFile(cityFileName)
+        m.loadMetaCity(cityFileName)
 
         # Initialize the simulator engine.
 
@@ -800,9 +654,9 @@ class Game(object):
         m.setSpeed(2)
         m.setSkips(500)
         m.setFunds(1000000000)
-        m.autoGoto = 0
-        m.cityTax = 10
-        m.enableDisasters = False
+        m.setCityTax(10)
+        m.setAutoGoto(False)
+        m.setEnableDisasters(False)
 
         tengine = tileengine.TileEngine()
         self.tengine = tengine
@@ -812,7 +666,7 @@ class Game(object):
         tengine.height = micropolisengine.WORLD_H
 
         # Unsigned short tile values, in column major order.
-        tengine.typeCode = 'H'
+        tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
         tengine.tileMask = micropolisengine.LOMASK
@@ -850,7 +704,7 @@ class Game(object):
                 return None
             cityFileName = CityNames[cityName]
             print "cityFileName", cityFileName
-            m.loadFile(cityFileName)
+            m.loadMetaCity(cityFileName)
 
         elif command == 'Disaster':
 
@@ -929,7 +783,7 @@ class Game(object):
             if cityName in CityNames:
                 cityFileName = CityNames[cityName]
                 print "cityFileName", cityFileName
-                m.loadFile(cityFileName)
+                m.loadMetaCity(cityFileName)
 
         elif command == 'loadScenario':
 
@@ -954,13 +808,13 @@ class Game(object):
 
         m.resume()
         
-        lastSkips = m.simSkips
-        m.setSkips(ticks - 1)
+        lastPasses = m.simPasses
+        m.setPasses(ticks)
         #print "TICK", ticks
         #print "CityTime", m.cityTime, "CityMonth", m.cityMonth, "CityYear", m.cityYear
-        #print "simPaused", m.simPaused, "simSkips", m.simSkips, "simSkip", m.simSkip
+        #print "simPaused", m.simPaused, "simPasses", m.simPasses, "simPass", m.simPass
         m.simTick()
-        m.setSkips(lastSkips)
+        m.setPasses(lastPasses)
         m.animateTiles()
         m.simUpdate()
 
