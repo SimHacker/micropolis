@@ -7,8 +7,14 @@ directory. When the project is installed, easy_install will create a
 proper start script.
 """
 
-import sys
+import sys, os
 from micropolis.commands import start, ConfigurationError
+
+sys.path.append(
+    os.path.normpath(
+        os.path.join(
+            os.getcwd(),
+            '../MicropolisCore/src')))
 
 if __name__ == "__main__":
     try:

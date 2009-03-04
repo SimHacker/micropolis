@@ -10,11 +10,11 @@
     <class name="appview">
 
 
-        <attribute name="tickDelay" value="50"/>
-        <attribute name="tickActive" value="false"/>
-        <attribute name="tickDelegate" value="null"/>
-        <attribute name="ticks" value="1"/>
-        <attribute name="tickers" value="[]"/>
+        <attribute name="pollDelay" value="50"/>
+        <attribute name="pollActive" value="false"/>
+        <attribute name="pollDelegate" value="null"/>
+        <attribute name="polls" value="1"/>
+        <attribute name="pollers" value="[]"/>
         <attribute name="idles" value="1"/>
         <attribute name="idlers" value="[]"/>
         <attribute name="panelWidth" value="200"/>
@@ -175,7 +175,7 @@
 
         <method name="startSession" args="sessionID"><![CDATA[
             this.setAttribute("sessionID", sessionID);
-            this.tickStart();
+            this.pollStart();
           ]]>
         </method>
 
@@ -249,94 +249,97 @@
         </handler>
 
 
-        <method name="addTicker" args="ticker"><![CDATA[
-            //Debug.write("appview addTicker", ticker);
-            var i = this.indexOf(this.tickers, ticker);
+        <method name="addPoller" args="poller"><![CDATA[
+            //Debug.write("appview addPoller", poller);
+            var i = this.indexOf(this.pollers, poller);
             if (i < 0) {
-                this.tickers.push(ticker);
+                this.pollers.push(poller);
             }
           ]]>
         </method>
 
 
-        <method name="removeTicker" args="ticker"><![CDATA[
-            //Debug.write("appview removeTicker", ticker);
-            var i = this.indexOf(this.tickers, ticker);
+        <method name="removePoller" args="poller"><![CDATA[
+            //Debug.write("appview removePoller", poller);
+            var i = this.indexOf(this.pollers, poller);
             if (i >= 0) {
-                this.tickers.splice(i, 1);
+                this.pollers.splice(i, 1);
             }
           ]]>
         </method>
 
 
-        <method name="tickStart"><![CDATA[
-            if (this.tickActive) {
-                //Debug.write("tickStart already started");
+        <method name="pollStart"><![CDATA[
+            if (this.pollActive) {
+                //Debug.write("pollStart already started");
                 return;
             }
-            if (!this.tickDelegate) {
-                this.tickDelegate = new lz.Delegate(this, 'tick');
+            if (!this.pollDelegate) {
+                this.pollDelegate = new lz.Delegate(this, 'poll');
             }
-            var t = lz.Timer.addTimer(this.tickDelegate, this.tickDelay);
-            this.tickActive = true;
+            var t = lz.Timer.addTimer(this.pollDelegate, this.pollDelay);
+            this.pollActive = true;
           ]]>
         </method>
 
 
-        <method name="tickContinue" args="soon"><![CDATA[
-            // This is a bit confused, and violates DRY. Refactor tickStart and tickContinue.
-            if (!this.tickDelegate) {
-                this.tickDelegate = new lz.Delegate(this, 'tick');
+        <method name="pollContinue" args="soon"><![CDATA[
+            // This is a bit confused, and violates DRY. Refactor pollStart and pollContinue.
+            if (!this.pollDelegate) {
+                this.pollDelegate = new lz.Delegate(this, 'poll');
             }
-            lz.Timer.resetTimer(this.tickDelegate, soon ? this.tickDelaySoon : this.tickDelay);
-            this.tickActive = true;
-            //Debug.write("tickContinue");
+            lz.Timer.resetTimer(this.pollDelegate, soon ? this.pollDelaySoon : this.pollDelay);
+            this.pollActive = true;
+            //Debug.write("pollContinue");
           ]]>
         </method>
 
 
-        <method name="tickStop"><![CDATA[
-            if (!this.tickActive) {
+        <method name="pollStop"><![CDATA[
+            if (!this.pollActive) {
                 return;
             }
-            lz.Timer.removeTimer(this.tickDelegate);
+            lz.Timer.removeTimer(this.pollDelegate);
           ]]>
         </method>
 
 
-        <method name="tick" args="ignore"><![CDATA[
+        <method name="poll" args="ignore"><![CDATA[
             var i, n;
-            var body = "";
-            body += "<tick>";
-            
-            var tickers = this.tickers;
-            n = tickers.length;
+            var body = [];
+
+            var ref = this.polls;
+            this.polls++;
+
+            body.push("<poll ref=\"" + ref + "\" sessionID=\"" + this.sessionID + "\">");
+
+            var pollers = this.pollers;
+            n = pollers.length;
             if (n > 0) {
-                body += "<tickers>";
+                body.push("<pollers>")
                 for (i = 0; i < n; i++) {
-                    body += tickers[i].tick();
+                    body.push(pollers[i].poll());
                 }
-                body += "</tickers>";
+                body.push("</pollers>");
             }
 
             var commandQueue = this.commandQueue;
             if (commandQueue && commandQueue.length > 0) {
                 this.commandQueue = [];
-                body += "<commands>";
+                body.push("<commands>");
                 n = commandQueue.length;
                 for (i = 0; i < n; i++) {
                     var command = commandQueue[i];
-                    body += command;
+                    body.push(command);
                 }
-                body += "</commands>";
+                body.push("</commands>");
             }
 
-            body += "</tick>";
+            body.push("</poll>");
+
+	    body = body.join("");
 
             //Debug.write(body);
-
-            var ref =
-                this.ticks;
 
             var params = {
                 ref: ref,
@@ -345,12 +348,10 @@
                 body: body
             };
 
-            ds_tick.setAttribute("src", "/server/micropolisTick");
-            ds_tick.setQueryParams(params);
-            ds_tick.setAttribute("querytype", "post");
-            ds_tick.doRequest();
-
-            this.ticks++;
+            ds_poll.setAttribute("src", "/server/micropolisPoll");
+            ds_poll.setQueryParams(params);
+            ds_poll.setAttribute("querytype", "post");
+            ds_poll.doRequest();
 
           ]]>
         </method>
@@ -604,8 +605,8 @@
         </node>
 
 
-        <node id="tickData"
-            datapath="ds_tick:/tick"
+        <node id="pollData"
+            datapath="ds_poll:/poll"
         >
 
 
@@ -613,26 +614,26 @@
 
 
             <handler name="ondata"><![CDATA[
-                //Debug.write("ds_tick");
+                //Debug.write("ds_poll");
 
-                var tick = ds_tick.data;
-                var tickChildren = tick['childNodes'];
-                if (tickChildren && (tickChildren.length > 0)) {
+                var poll = ds_poll.data;
+                var pollChildren = poll['childNodes'];
+                if (pollChildren && (pollChildren.length > 0)) {
                     var i;
-                    var n = tickChildren.length;
+                    var n = pollChildren.length;
                     for (i = 0; i < n; i++) {
-                        var tickChild = tickChildren[i];
-                        if (tickChild.nodeType != 1) {
+                        var pollChild = pollChildren[i];
+                        if (pollChild.nodeType != 1) {
                             continue;
                         }
 
-			Debug.write(tickChild.nodeName, tickChild);
+			//Debug.write(pollChild.nodeName, pollChild);
 
-                        switch (tickChild.nodeName) {
+                        switch (pollChild.nodeName) {
 
                             case "tileviews": {
 
-                                var tileviews = tickChild['childNodes'];
+                                var tileviews = pollChild['childNodes'];
                                 if (!tileviews) {
                                     break;
                                 }
@@ -687,7 +688,7 @@
 
                             case "messages": {
 
-                                var messages = tickChild['childNodes'];
+                                var messages = pollChild['childNodes'];
 Debug.write("MESSAGES", messages);
                                 if (!messages || (messages.length == 0)) {
                                     break;
@@ -723,7 +724,7 @@ Debug.write(classroot, methodName, method);
                     }
                 }
 
-                classroot.tickContinue(false);
+                classroot.pollContinue(false);
               ]]>
             </handler>
 

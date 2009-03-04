@@ -191,21 +191,21 @@ class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
         m.resourceDir = 'res'
         m.initGame()
 
-        # Load a city file.
-        path = os.path.basename(__file__)
-        path = os.path.abspath(os.path.join(path, "../cities"))
-        cityFileName = path + os.sep + 'haight.cty'
-        print "Loading city file:", cityFileName
-        m.loadFile(cityFileName)
+        if False:
+            # Load a city file.
+            path = os.path.basename(__file__)
+            path = os.path.abspath(os.path.join(path, "../cities"))
+            cityFileName = path + os.sep + 'haight.cty'
+            print "Loading city file:", cityFileName
+            m.loadFile(cityFileName)
 
-        # Initialize the simulator engine.
-
-        m.resume()
-        m.setSpeed(2)
-        m.setPasses(1000)
-        m.setFunds(1000000000)
-        m.autoGoto = 0
-        m.cityTax = 12
+            # Initialize the simulator engine.
+            m.resume()
+            m.setSpeed(2)
+            m.setPasses(1000)
+            m.setFunds(1000000000)
+            m.autoGoto = 0
+            m.cityTax = 12
 
         view = micropolisutils.MicropolisView(m)
         self.view = view

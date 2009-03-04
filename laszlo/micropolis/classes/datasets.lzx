@@ -12,7 +12,7 @@
     />
 
 
-    <dataset name="ds_tick"
+    <dataset name="ds_poll"
         autoload="false"
 	querytype="post"
     />

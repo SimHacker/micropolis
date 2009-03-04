@@ -147,10 +147,10 @@
 	        py:for="rate in range(0, 21)"
 	    >
 	        <b
-		    py:strip="rate != m.CityTax"
+		    py:strip="rate != engine.CityTax"
 		>
 		    <a
-			py:strip="rate == m.CityTax"
+			py:strip="rate == engine.CityTax"
 			href="/micropolisView?command=SetTaxRate&amp;rate=${str(rate)}&amp;ticks=${ticks}&amp;col=${col}&amp;row=${row}&amp;cols=${cols}&amp;rows=${rows}"
 		    >${str(rate)}%</a>
 		</b>
@@ -181,35 +181,35 @@
 	<hr/>
 
 	<p>
-            <b>Micropolis City Evaluation, ${m.getCityDate()}</b>
+            <b>Micropolis City Evaluation, ${engine.getCityDate()}</b>
 	    <br/>
-            Score: ${m.evalScore},
-	    Changed: ${m.evalChanged},
-	    Class: ${m.evalCityClass},
-	    Level: ${m.evalCityLevel},
-	    Tax Rate: ${m.CityTax}%
+            Score: ${engine.evalScore},
+	    Changed: ${engine.evalChanged},
+	    Class: ${engine.evalCityClass},
+	    Level: ${engine.evalCityLevel},
+	    Tax Rate: ${engine.CityTax}%
 	    <br/>
             Demand:
-	    Residential: ${m.LastR},
-	    Commercial: ${m.LastR},
-	    Industrial: ${m.LastI}
+	    Residential: ${engine.LastR},
+	    Commercial: ${engine.LastR},
+	    Industrial: ${engine.LastI}
 	    <br/>
-            Funds: $$${m.TotalFunds},
-	    Assessed: ${m.evalAssessedDollars},
-	    Population: ${m.evalPop},
-	    Delta: ${m.evalDelta}
+            Funds: $$${engine.TotalFunds},
+	    Assessed: ${engine.evalAssessedDollars},
+	    Population: ${engine.evalPop},
+	    Delta: ${engine.evalDelta}
 	    <br/>
             Survey: Is the Mayor doing a good job? 
-	    Yes: ${m.evalGoodYes}, No: ${m.evalGoodNo}<br/>
+	    Yes: ${engine.evalGoodYes}, No: ${engine.evalGoodNo}<br/>
             Problems:
-	    ${m.evalPs0}
-	    ${m.evalPv0}
-	    ${m.evalPs1}
-	    ${m.evalPv1}
-	    ${m.evalPs2}
-	    ${m.evalPv2}
-	    ${m.evalPs3}
-	    ${m.evalPv3}
+	    ${engine.evalPs0}
+	    ${engine.evalPv0}
+	    ${engine.evalPs1}
+	    ${engine.evalPv1}
+	    ${engine.evalPs2}
+	    ${engine.evalPv2}
+	    ${engine.evalPs3}
+	    ${engine.evalPv3}
 	</p>
 
 	<hr/>

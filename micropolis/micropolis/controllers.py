@@ -28,9 +28,8 @@ import logging
 log = logging.getLogger("micropolis.controllers")
 
 import cairo, pango
-import micropolisengine
-import micropoliswebutils
-import tileengine
+from pyMicropolis.simEngine import micropolisengine, micropolisturbogearsengine
+from pyMicropolis.tileEngine import tileengine
 
 
 ########################################################################
@@ -73,7 +72,7 @@ class StreamFilter(cherrypy.filters.basefilter.BaseFilter):
     def before_request_body(self):
 
         print "STREAMFILTER BEFORE_REQUEST_BODY PATH", cherrypy.request.path
-        if cherrypy.request.path == '/micropolisTick':
+        if cherrypy.request.path == '/micropolisPoll':
             # If you don't check that it is a post method the server might lock up
             # we also check to make sure something was submitted
             if not 'Content-Length' in cherrypy.request.headerMap or \
@@ -138,7 +137,7 @@ class Root(controllers.RootController):
 
         self.sessions = {}
 
-        self.game = micropoliswebutils.Game()
+        self.engine = micropolisturbogearsengine.CreateTurboGearsEngine()
 
 
     ####################################
@@ -152,10 +151,10 @@ class Root(controllers.RootController):
             session.touch()
             return session
 
-        session = micropoliswebutils.Session(sessionID)
+        session = micropolisturbogearsengine.Session(sessionID)
         sessions[sessionID] = session
 
-        session.setGame(self.game)
+        session.setEngine(self.engine)
         session.touch()
 
         return session
@@ -187,13 +186,7 @@ class Root(controllers.RootController):
     def index(
         self):
 
-        game = self.game
-        game.tickSim(1)
-
-        return {
-            'game': game,
-            'm': game.m,
-        }
+        return {}
 
 
     ####################################
@@ -285,7 +278,7 @@ class Root(controllers.RootController):
         content_type="text/xml")
     def micropolisSessionStart(
         self):
-        session = self.getSession(micropoliswebutils.UniqueID('SESSION_'))
+        session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
         return {
             'session': session,
         }
@@ -314,25 +307,22 @@ class Root(controllers.RootController):
 
         self.checkTileBounds(col, row, cols, rows)
 
-        game = self.game
-
-        tengine = game.tengine
-        tiles = tengine.getTileData(None, None, col, row, cols, rows, code)
-        #print "TILES", tiles
+        engine = self.engine
+        tiles = engine.getTileData(col, row, cols, rows, code)
 
         return tiles
 
 
     ####################################
-    # micropolisTick
+    # micropolisPoll
 
     @expose(
-        template="micropolis.templates.micropolisTick",
+        template="micropolis.templates.micropolisPoll",
         content_type="text/xml")
     @validate(validators = {
         'ref': validators.Int(),
     })
-    def micropolisTick(
+    def micropolisPoll(
         self,
         ref=0,
         sessionID='',
@@ -350,17 +340,12 @@ class Root(controllers.RootController):
 
         # FIXME: should get this from the post reqest body, but that doesn't work.
         #print "BODY", body
-        tick = StringToElement(body)
         try:
-            tick = StringToElement(body)
+            poll = StringToElement(body)
         except Exception, e:
             self.expectationFailed("Error parsing XML body: " + str(e))
 
-        tileviews = \
-            self.game.handleTick(
-                tick,
-                session.tileViewCache)
-
+        tileviews = session.handlePoll(poll)
         messages = session.receiveMessages()
 
         return {
@@ -399,8 +384,8 @@ class Root(controllers.RootController):
             ((row + rows) > micropolisengine.WORLD_H)):
             self.expectationFailed("Invalid tile coordinates.");
 
-        game = self.game
-        game.tickSim(ticks)
+        engine = self.engine
+        engine.tickSim(ticks)
 
         tileSize = 16
         width = cols * tileSize
@@ -409,19 +394,11 @@ class Root(controllers.RootController):
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         ctx = cairo.Context(surface)
 
-        game = self.game
-        tengine = game.tengine
-
+        engine = self.engine
         alpha = 1.0
 
-        tengine.renderTiles(
+        engine.renderTiles(
             ctx,
-            game.tilesSurface,
-            game.tilesWidth,
-            game.tilesHeight,
-            None,
-            game.tileMap,
-            game.tileSize,
             col,
             row,
             cols,
@@ -472,11 +449,9 @@ class Root(controllers.RootController):
             (ticks > 1000000)):
             self.expectationFailed("Invalid parameter.");
 
-        game = self.game
+        engine = self.engine
         
-        game.handleCommands(kw)
-
-        game.tickSim(ticks)
+        engine.tickSim(ticks)
 
         return {
             'col': col,
@@ -484,9 +459,8 @@ class Root(controllers.RootController):
             'cols': cols,
             'rows': rows,
             'ticks': ticks,
-            'game': game,
-            'm': game.m,
-            'CityNames': micropoliswebutils.CityNames,
+            'engine': engine,
+            'CityNames': micropolisturbogearsengine.CityNames,
         }
 
 
