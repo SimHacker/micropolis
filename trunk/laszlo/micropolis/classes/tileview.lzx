@@ -30,7 +30,7 @@
 
 
         <handler name="oninit"><![CDATA[
-            Debug.write("tileview init", this);
+            //Debug.write("tileview init", this);
 
             this.uniqueID = gApp.makeUniqueID();
 
@@ -43,7 +43,7 @@
             }
 
             if (this.visible) {
-                gApp.addTicker(this);
+                gApp.addPoller(this);
                 gApp.addIdler(this);
             }
 
@@ -52,19 +52,19 @@
 
 
         <handler name="ondestroy"><![CDATA[
-            gApp.removeTicker(this);
+            gApp.removePoller(this);
             gApp.removeIdler(this);
           ]]>
         </handler>
 
 
         <handler name="onvisible"><![CDATA[
-            Debug.write("tileview onvisible", this.visible);
+            //Debug.write("tileview onvisible", this.visible);
             if (this.visible) {
-                gApp.addTicker(this);
+                gApp.addPoller(this);
                 gApp.addIdler(this);
             } else {
-                gApp.removeTicker(this);
+                gApp.removePoller(this);
                 gApp.removeIdler(this);
             }
           ]]>
@@ -109,8 +109,8 @@
         </method>
 
 
-        <method name="tick"><![CDATA[
-            //Debug.write("tick", this, this.viewCols, this.viewRows);
+        <method name="poll"><![CDATA[
+            //Debug.write("poll", this, this.viewCols, this.viewRows);
 
             // TODO: extend tiles in the direction of motion, for scroll look-ahead.
 
