@@ -178,7 +178,7 @@ class TileDrawingArea(gtk.DrawingArea):
         self.down = False
         self.downX = 0
         self.downY = 0
-        self.tileSize = 1
+        self.tileSize = 16
         self.buffer = None
         self.bufferWidth = 0
         self.bufferHeight = 0

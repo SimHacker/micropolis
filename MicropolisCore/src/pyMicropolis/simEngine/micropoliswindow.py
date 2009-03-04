@@ -183,6 +183,9 @@ class MicropolisPanedWindow(gtk.Window):
         self.noticePanel = noticePanel
         notebook1.addLabelTab('Notice', noticePanel)
 
+        # @fixme Try to fix the problem of the view's rect being huge on the mini map.
+        noticePanel.resize_children()
+
         messagesPanel = micropolismessagespanel.MicropolisMessagesPanel(
             engine=engine)
         self.messagesPanel = messagesPanel

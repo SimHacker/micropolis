@@ -252,6 +252,11 @@ void Micropolis::checkGrowth()
 
                 // Switched class, find appropiate message.
                 switch (newClass) {
+
+                    case CC_VILLAGE:
+		        // Don't mention it.
+                        break;
+
                     case CC_TOWN:
                         category = MESSAGE_REACHED_TOWN;
                         break;
@@ -275,6 +280,7 @@ void Micropolis::checkGrowth()
                     default:
                         NOT_REACHED();
                         break;
+
                 }
             }
         }

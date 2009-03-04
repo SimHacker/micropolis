@@ -1,0 +1,53 @@
+Notes on the client/server tile engine:
+
+  Animated tiles
+
+    The client tells the server a list of its views, each with the
+    bounding box of the tiles it's displaying. 
+
+    The coordinates are in pixel coordinates (i.e. tiles are 16x1), so
+    the server can tell other clients where this client is looking in
+    pixel coordinates, and figure out the exact tiles using the same
+    rounding algorithm as the client.
+
+    The client can send a "reset" command to the server to flush its
+    cache of the client state, in case it gets out of sync or
+    reconnects.
+
+    The server keeps track of the tiles in the client's buffer (which
+    is filled lazily), and the client's animating tile set (the
+    animated tiles being displayed by any view).
+
+    Tiles in the animation set are displayed in at least one of the
+    views the client told the server about, so they should be lazily
+    animated once every time one or more ticks pass, and the client
+    displays one or more views.
+
+    Server returns edits to the tiles, and edits to the animated tile
+    set, to keep them in sync.
+
+    Client only animates the tiles in the animated tile set, after one
+    or more tick has passed.
+
+    So the client does not have to loop over the tiles in the view after each tick,
+    to animate the tiles, and keep track of each tile's animated bit. 
+
+    Make sure it works properly for animations that are not loops. 
+
+      i.e. bulldozer destructon animation.
+
+      Actually animate the tiles on the server side, so we know when to stop animating. 
+
+      But map the tiles sent through the client 
+        to the lowest tile number in the animation sequence, 
+	so we do not send tile edits for the animations. 
+
+      Last frame of the loop is not considered part of the animation group. 
+
+      To end an animation sequence:
+	Send a tile edit: switch to the last non-animated tile.
+        Send an animation set edit: remove the tile from the animation set.
+
+      Animation set keys are strings x_y, like 0_0 to 119_99.
+
+
