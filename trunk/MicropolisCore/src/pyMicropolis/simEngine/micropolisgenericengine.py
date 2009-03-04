@@ -1282,7 +1282,7 @@ You have 10 years to turn this swamp back into a city again.""",
             WORLD_W,
             WORLD_H)
 
-        return image, 0.75, 1.0, 1.0
+        return image, 0.85, 1.0, 1.0
 
 
     def getFireCoverageImageAlphaSize(self):

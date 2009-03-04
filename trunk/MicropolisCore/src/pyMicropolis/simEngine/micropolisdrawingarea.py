@@ -576,6 +576,8 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         width = (viewWidth / view.tileSize) * self.tileSize
         height = (viewHeight / view.tileSize) * self.tileSize
 
+        #print "GETVIEWBOX", "view", view, "pan", view.panX, view.panY, "tileSize", view.tileSize, "pos", x, y, "size", width, height
+
         return x, y, width, height
 
 
