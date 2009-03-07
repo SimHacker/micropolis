@@ -142,10 +142,10 @@ class CellDrawingArea(TileDrawingArea):
         return self.engine.GetCell(col, row)
 
 
-    def makeToolPie(self):
+    def makePie(self):
 
-        toolPie = cellpiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
-        self.toolPie = toolPie
+        pie = cellpiemenus.MakePie(lambda toolName: self.selectToolByName(toolName))
+        self.pie = pie
 
 
     def handleButtonPress(
@@ -153,7 +153,7 @@ class CellDrawingArea(TileDrawingArea):
         widget,
         event):
 
-        self.handleToolPieButtonPress(
+        self.handlePieButtonPress(
             widget,
             event)
 

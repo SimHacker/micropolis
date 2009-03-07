@@ -87,7 +87,6 @@ import array
 
 
 import micropolisengine
-import micropolisutils
 import micropolisnotebook
 import micropolisstartpanel
 import micropolisgaugeview

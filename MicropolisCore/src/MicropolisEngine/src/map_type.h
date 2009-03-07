@@ -62,8 +62,10 @@
 
 /** @file map_type.h Map data structures */
 
+
 ////////////////////////////////////////////////////////////////////////
 // Constants
+
 
 /**
  * Size of the world in horizontal direction.
@@ -75,8 +77,10 @@ static const int WORLD_W = 120;
  */
 static const int WORLD_H = 100;
 
+
 ////////////////////////////////////////////////////////////////////////
 // Template class definitions
+
 
 /**
  * Generic class for maps in the Micropolis game.
@@ -122,6 +126,7 @@ private:
     const DATA _MAP_DEFAULT_VALUE; ///< Default value of a cluster.
 };
 
+
 /**
  * Generic map constructor.
  * @param defaultValue Default value to use for off-map positions, and
@@ -136,6 +141,7 @@ Map<DATA, BLKSIZE>::Map(DATA defaultValue):
 {
 }
 
+
 /** Copy constructor */
 template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE>::Map(const Map<DATA, BLKSIZE> &map):
@@ -149,6 +155,7 @@ Map<DATA, BLKSIZE>::Map(const Map<DATA, BLKSIZE> &map):
     }
 }
 
+
 /** Assignment operator */
 template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE> &Map<DATA, BLKSIZE>::operator=(const Map<DATA, BLKSIZE> &map)
@@ -161,11 +168,13 @@ Map<DATA, BLKSIZE> &Map<DATA, BLKSIZE>::operator=(const Map<DATA, BLKSIZE> &map)
     return *this;
 }
 
+
 /** Generic map destructor */
 template <typename DATA, int BLKSIZE>
 Map<DATA, BLKSIZE>::~Map()
 {
 }
+
 
 /**
  * Generic fill routine.
@@ -180,6 +189,7 @@ void Map<DATA, BLKSIZE>::fill(DATA value)
     }
 }
 
+
 /**
  * Generic clear routine.
  *
@@ -191,6 +201,7 @@ void Map<DATA, BLKSIZE>::clear()
     fill(this->_MAP_DEFAULT_VALUE);
 }
 
+
 /**
  * Return the base address of the map data.
  * @note Data is stored in column-major mode.
@@ -200,6 +211,7 @@ DATA *Map<DATA, BLKSIZE>::getBase()
 {
     return this->_mapData;
 }
+
 
 /**
  * Set the value of a cluster.
@@ -216,6 +228,7 @@ inline void Map<DATA, BLKSIZE>::set(int x, int y, DATA value)
         this->_mapData[x * MAP_H + y] = value;
     }
 }
+
 
 /**
  * Return the value of a cluster.
@@ -267,6 +280,7 @@ inline void Map<DATA, BLKSIZE>::worldSet(int x, int y, DATA value)
     }
 }
 
+
 /**
  * Return the value of a cluster.
  *
@@ -287,6 +301,7 @@ inline DATA Map<DATA, BLKSIZE>::worldGet(int x, int y) const
     return this->_mapData[x * MAP_H + y];
 }
 
+
 /**
  * Verify that world coordinates are within map boundaries.
  * @param x X world position.
@@ -299,12 +314,15 @@ inline bool Map<DATA, BLKSIZE>::worldOnMap(int x, int y) const
     return (x >= 0 && x < WORLD_W) && (y >= 0 && y < WORLD_H);
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 // Type definitions
+
 
 typedef Map<Byte, 1> MapByte1; ///< Map of ::Byte, with cluster size 1
 typedef Map<Byte, 2> MapByte2; ///< Map of ::Byte, with cluster size 2
 typedef Map<Byte, 4> MapByte4; ///< Map of ::Byte, with cluster size 4
 typedef Map<short, 8> MapShort8; ///< Map of ::short, with cluster size 8
+
 
 ////////////////////////////////////////////////////////////////////////

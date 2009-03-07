@@ -75,13 +75,13 @@ from pyMicropolis.piemenu import piemenu
 ########################################################################
 
 
-def MakeToolPie(setToolAction):
+def MakePie(setToolAction):
 
     ########################################################################
     # Make pie menus.
 
 
-    toolPie = pie.PieMenu(
+    pie = piemenu.PieMenu(
         header="Cell Tools",
         fixedRadius=50,
         neutralDescription="Select a Cell tool.")
@@ -94,24 +94,34 @@ def MakeToolPie(setToolAction):
     for params in (
 
         {
-            'pie': toolPie,
-            'description': 'Query tool.',
+            'pie': pie,
+            'description': 'Cell 0',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
             'icon': 'images/icquery.png',
             'iconHilite': 'images/icqueryhi.png',
-            'action': lambda item: setToolAction('Query'),
+            'action': lambda item: setToolAction('0'),
+        },
+
+        {
+            'pie': pie,
+            'description': 'Cell 1',
+            'loliteFillColor': None,
+            'loliteStrokeColor': None,
+            'icon': 'images/icquery.png',
+            'iconHilite': 'images/icqueryhi.png',
+            'action': lambda item: setToolAction('1'),
         },
 
     ):
 
         apply(
-            pie.PieItem,
+            piemenu.PieItem,
             (),
             params)
 
 
-    return toolPie
+    return pie
 
 
 ########################################################################

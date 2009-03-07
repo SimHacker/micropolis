@@ -76,3 +76,17 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+// Templates
+//
+// Tell SWIG to write wrappers for the templates that we're 
+// instantiating for the maps (and any other necessary templates), 
+// so we can access them from the scripting language.
+
+
+%template(MapByte1) Map<Byte, 1>;
+%template(MapByte2) Map<Byte, 2>;
+%template(MapByte4) Map<Byte, 4>;
+%template(MapShort8) Map<short, 8>;
+
+
+////////////////////////////////////////////////////////////////////////

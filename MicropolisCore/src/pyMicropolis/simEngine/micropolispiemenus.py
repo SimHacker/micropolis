@@ -75,7 +75,7 @@ import gtk
 ########################################################################
 
 
-def MakeToolPie(setToolAction):
+def MakePie(setToolAction):
 
     ########################################################################
     # Make pie menus.
@@ -375,7 +375,7 @@ def MakeToolPie(setToolAction):
 ########################################################################
 
 
-def NewMakeToolPie(setToolAction):
+def NewMakePie(setToolAction):
 
     ########################################################################
     # Make pie menus.
@@ -428,7 +428,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # SouthEast
-            'pie':toolPie,
+            'pie':pie,
             'description': 'Park building tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -500,7 +500,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # West
-            'pie':toolPie,
+            'pie': toolPie,
             'description': 'Seaport building tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -510,7 +510,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # SouthWest
-            'pie':toolPie,
+            'pie': toolPie,
             'description': 'Nuclear power plant\nbuilding tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -520,7 +520,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # South
-            'pie':toolPie,
+            'pie': toolPie,
             'description': 'Airport building tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -530,7 +530,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # SouthEast
-            'pie':toolPie,
+            'pie': toolPie,
             'description': 'Coal power plant\nbuilding tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -540,7 +540,7 @@ def NewMakeToolPie(setToolAction):
         },
 
         { # East
-            'pie':toolPie,
+            'pie': toolPie,
             'description': 'Stadium building tool.',
             'loliteFillColor': None,
             'loliteStrokeColor': None,
@@ -589,7 +589,7 @@ def main():
     def setToolAction(toolName):
         print "setToolAction", toolName
 
-    pie = MakeToolPie(setToolAction)
+    pie = MakePie(setToolAction)
     target.setPie(pie)
 
     win.resize(300, 300)

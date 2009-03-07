@@ -78,7 +78,46 @@ from pyMicropolis.tileEngine import tiletool
 class CellTool(tiletool.TileTool):
 
 
-    pass
+    def __init__(
+        self,
+        cellValue=0,
+        **args):
+
+        tiletool.TileTool.__init__(
+            self,
+            **args)
+
+        self.cellValue = cellValue
+
+
+    def drawCell(self, view, x, y, value):
+
+        engine = view.engine.SetCell(x, y, value)
+
+
+    def handleMouseDown(self, view, event):
+
+        self.handleMouseDrag(view, event)
+
+
+    def handleMouseDrag(self, view, event):
+
+        x, y = view.getEventXY(event)
+        x = int(x)
+        y = int(y)
+        #print "DRAG", self.lastX, self.lastY, x, y, "index", self.toolIndex, view.engine.toolDrag
+        self.drawCell(view, x, y, self.cellValue)
+
+
+    def handleMouseUp(self, view, event):
+
+        #print "UP"
+        self.handleMouseDrag(view, event)
+
+
+    def tick(self, view):
+
+        pass
 
 
 ########################################################################
@@ -98,12 +137,24 @@ tiletool.PanTool(
     iconY=0)
 
 CellTool(
-    name='Query',
+    name='0',
     cursorRows=1,
     cursorCols=1,
     cursorHotCol=0,
     cursorHotRow=0,
-    toolIndex=0,
+    cellValue=0,
+    iconNormal='images/icquery.png',
+    iconHilite='images/icqueryhi.png',
+    iconX=0,
+    iconY=0)
+
+CellTool(
+    name='1',
+    cursorRows=1,
+    cursorCols=1,
+    cursorHotCol=0,
+    cursorHotRow=0,
+    cellValue=1,
     iconNormal='images/icquery.png',
     iconHilite='images/icqueryhi.png',
     iconX=0,

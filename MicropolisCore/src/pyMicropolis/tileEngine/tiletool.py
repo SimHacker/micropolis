@@ -368,7 +368,7 @@ class TileTool:
         return False
 
 
-    def handleMousePoint(self, view, event):
+    def handleMouseHover(self, view, event):
 
         pass
 

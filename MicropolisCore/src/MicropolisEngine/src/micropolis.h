@@ -570,12 +570,6 @@ enum MapTileCharacters {
     IND8           = 686,
     IND9           = 689,
 
-
-
-
-
-
-
     // Seaport
     PORTBASE       = 693, ///< Top-left tile of the seaport.
     PORT           = 698, ///< Center tile of the seaport.
@@ -1804,7 +1798,7 @@ private:
 
     void smoothTrees();
 
-    void smoothTreesAt(int x, int y);
+    void smoothTreesAt(int x, int y, bool preserve);
 
     void makeLakes();
 
