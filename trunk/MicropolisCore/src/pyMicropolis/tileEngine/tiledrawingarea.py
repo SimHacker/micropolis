@@ -117,10 +117,10 @@ class TileDrawingArea(gtk.DrawingArea):
         panKeys=(65505, 65506,), # left shift, right shift
         zoomable=True,
         clickable=True,
-        clickButton=1, # left button
+        pointButton=1, # left button
         menuable=True,
         menuButton=3, # right button
-        toolPie=None,
+        pie=None,
         showCursor=True,
         **args):
 
@@ -156,10 +156,10 @@ class TileDrawingArea(gtk.DrawingArea):
         self.panKeys = panKeys
         self.zoomable = zoomable
         self.clickable = clickable
-        self.clickButton = clickButton
+        self.pointButton = pointButton
         self.menuable = menuable
         self.menuButton = menuButton
-        self.toolPie = toolPie
+        self.pie = pie
         self.showCursor = showCursor
 
         self.tilesSourceSurface = None
@@ -480,18 +480,18 @@ class TileDrawingArea(gtk.DrawingArea):
             self.configTileEngine(tengine)
 
 
-    def getToolPie(self):
+    def getPie(self):
 
-        toolPie = self.toolPie
-        if toolPie:
-            return toolPie
+        pie = self.pie
+        if pie:
+            return pie
 
-        self.makeToolPie()
+        self.makePie()
 
-        return self.toolPie
+        return self.pie
 
 
-    def makeToolPie(self):
+    def makePie(self):
 
         pass
 
@@ -1178,7 +1178,7 @@ class TileDrawingArea(gtk.DrawingArea):
         if self.down:
             self.handleMouseDrag(event)
         else:
-            self.handleMousePoint(event)
+            self.handleMouseHover(event)
 
 
     def handleMouseDrag(
@@ -1193,7 +1193,7 @@ class TileDrawingArea(gtk.DrawingArea):
             tool.handleMouseDrag(self, event)
 
 
-    def handleMousePoint(
+    def handleMouseHover(
         self,
         event):
 
@@ -1201,23 +1201,23 @@ class TileDrawingArea(gtk.DrawingArea):
             return
 
         tool = self.getActiveTool()
-        #print "handleMousePoint", tool
+        #print "handleMouseHover", tool
         if tool:
-            tool.handleMousePoint(self, event)
+            tool.handleMouseHover(self, event)
 
 
-    def handleToolPieButtonPress(
+    def handlePieButtonPress(
         self,
         widget,
         event):
 
-        #print "handleButtonPress TileDrawingArea", self
+        print "handleButtonPress TileDrawingArea", self
 
         #print "EVENT", event
         #print dir(event)
 
         if (self.clickable and
-            (event.button == self.clickButton)):
+            (event.button == self.pointButton)):
 
             self.down = True
             self.downX = event.x
@@ -1231,20 +1231,20 @@ class TileDrawingArea(gtk.DrawingArea):
         elif (self.menuable and
               (event.button == self.menuButton)):
 
-            toolPie = self.getToolPie()
+            pie = self.getPie()
 
-            if toolPie:
+            if pie:
 
                 win_x, win_y, state = event.window.get_pointer()
 
-                #print "POP UP TOOLPIE", toolPie, win_x, win_y, state
+                #print "POP UP PIE", pie, win_x, win_y, state
                 #print "WIN", win_x, win_y
 
                 x, y = event.get_root_coords()
 
                 #print "ROOT", x, y
 
-                toolPie.popUp(x, y, False)
+                pie.popUp(x, y, False)
 
 
     def handleButtonPress(

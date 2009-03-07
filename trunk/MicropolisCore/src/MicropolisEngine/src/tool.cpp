@@ -78,7 +78,7 @@ static const short gCostOf[] = {
      500,      0,      5,      1, /* police, query, wire, bulldozer */
       20,     10,   5000,     10, /* rail, road, stadium, park */
     3000,   3000,   5000,  10000, /* seaport, coal, nuclear, airport */
-     100,     50,     50,     50, /* network, water, land, forest */
+     100,      0,      0,      0, /* network, water, land, forest */
        0,
 };
 
@@ -196,12 +196,24 @@ int Micropolis::putDownWater(short mapH, short mapV)
 int Micropolis::putDownLand(short mapH, short mapV)
 {
     int tile = map[mapH][mapV] & LOMASK;
+    static short dx[8] = { -1,  0,  1, -1, 1, -1,  0,  1, };
+    static short dy[8] = { -1, -1, -1,  0, 0,  1,  1,  1, };
+
 
     if (tile == DIRT) return 0;
 
     if (totalFunds - gCostOf[TOOL_LAND] < 0) return -2;
 
     map[mapH][mapV] = DIRT;
+
+    int i;
+    for (i = 0; i < 8; i++) {
+	int xx = mapH + dx[i];
+	int yy = mapV + dy[i];
+	if (testBounds(xx, yy)) {
+	    //smoothTreesAt(xx, yy, true);
+	}
+    }
 
     spend(gCostOf[TOOL_LAND]);
     updateFunds();
@@ -220,18 +232,21 @@ int Micropolis::putDownLand(short mapH, short mapV)
  */
 int Micropolis::putDownForest(short mapH, short mapV)
 {
-    int tile = map[mapH][mapV];
+    static short dx[8] = { -1,  0,  1, -1, 1, -1,  0,  1, };
+    static short dy[8] = { -1, -1, -1,  0, 0,  1,  1,  1, };
 
-      if (isTree(tile)) {
-          printf("already forest\n");
-          return 0;
-      }
-    
     if (totalFunds - gCostOf[TOOL_FOREST] < 0) return -2;
 
-    printf("drawing tree\n");
-
     map[mapH][mapV] = WOODS | BLBNBIT;
+
+    int i;
+    for (i = 0; i < 8; i++) {
+	int xx = mapH + dx[i];
+	int yy = mapV + dy[i];
+	if (testBounds(xx, yy)) {
+	    smoothTreesAt(xx, yy, true);
+	}
+    }
 
     spend(gCostOf[TOOL_FOREST]);
     updateFunds();
@@ -1173,9 +1188,7 @@ int Micropolis::landTool(short x, short y)
 
     result = bulldozerTool(x, y);
 
-    if (result == 1) {
-        result = putDownLand(x, y);
-    }
+    result = putDownLand(x, y);
 
     if (result == 1) {
         didTool("Land", x, y);
@@ -1193,15 +1206,30 @@ int Micropolis::forestTool(short x, short y)
         return -1;
     }
 
-    result = bulldozerTool(x, y);
+    int tile = map[x][y];
 
-    if (result == 1) {
-        result = putDownForest(x, y);
+    if (isTree(tile)) {
+	return 0;
     }
 
-    if (result == 1) {
-        didTool("Forest", x, y);
+    if ((tile & LOMASK) != DIRT) {
+        /// @todo bulldozer should be free in terrain mode or from a free tool.
+	result = bulldozerTool(x, y);
     }
+
+    tile = map[x][y];
+
+    if (tile == DIRT) {
+	result = putDownForest(x, y);
+
+	if (result == 1) {
+	    didTool("Forest", x, y);
+	}
+
+    } else {
+        result = 0;
+    }
+  
 
     return result;
 }
@@ -1313,6 +1341,9 @@ void Micropolis::toolDrag(EditingTool tool, short fromX, short fromY, short toX,
 
     if ((dx == 0) && (dy == 0)) return;
 
+    // @bug This is crap code that needs to be rewritten.
+    // @todo Use a proper breshenham that draws the corners.
+
     int toolSize = gToolSize[tool];
     float rx = (float)(dx < 0 ? 1 : 0);
     float ry = (float)(dy < 0 ? 1 : 0);
@@ -1337,7 +1368,7 @@ void Micropolis::toolDrag(EditingTool tool, short fromX, short fromY, short toX,
                 // fill in corners
                 if ((dtx >= 1) && (dty >= 1)) {
                     if (dtx > dty) {
-                        doTool(tool, ((int)(tx + rx)), ly);
+                        doTool(tool, (int)(tx + rx), ly);
                     } else {
                         doTool(tool, lx, (int)(ty + ry));
                     }

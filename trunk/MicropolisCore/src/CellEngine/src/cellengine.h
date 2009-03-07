@@ -227,22 +227,22 @@ public:
 
     void Init();
 
-        void InitScreen(
-                long ww,
-                long hh);
+    void InitScreen(
+	long ww,
+	long hh);
 
     void SetRect(
-                long xx,
+	long xx,
         long yy,
         long ww,
         long hh);
 
     void SetPos(
-                long xx,
+	long xx,
         long yy);
 
     void SetSize(
-                long ww,
+	long ww,
         long hh);
 
     void ForceOnScreen();
@@ -252,16 +252,16 @@ public:
     void Garble();
     
     void GarbleRect(
-                long xx,
+	long xx,
         long yy,
         long ww,
         long hh);
     
     void Fill(
-                Byte c);
+	Byte c);
 
     void FillRect(
-                Byte c,
+	Byte c,
         long xx,
         long yy,
         long ww,
@@ -270,7 +270,7 @@ public:
     void ResetMask();
 
     void SetMask(
-                long ww,
+	long ww,
         long hh,
         Byte *data,
         long rb);
@@ -278,7 +278,7 @@ public:
     void UpdateClip();
 
     void LoadRule(
-                const char *name);
+	const char *name);
 
     void LoadRuleData(
         const char *stream);
@@ -310,15 +310,15 @@ public:
     void PumpToFront();
 
     Byte GetCell(
-                int col, 
-                int row);
+	int col, 
+	int row);
     
-        void SetCell(
-                int col, 
-                int row, 
-                Byte cell);
+    void SetCell(
+	int col, 
+	int row, 
+	Byte cell);
 
-        void *GetCellBuffer();
+    void *GetCellBuffer();
 
     void n_moore_a();
     void n_moore_ab();
@@ -382,8 +382,8 @@ public:
 
 
     void SetRuleBuffer(
-            PyObject *buf,
-            int neigh)
+	PyObject *buf,
+	int neigh)
     {
         char *buffer =
             NULL;

@@ -397,20 +397,22 @@ void TileEngine::renderTilesLazy(
 	return;
     }
 
-    // The tileMap should be an array of 4 byte integers,
+    // The tileMap should be None, or an array of 4 byte integers,
     // mapping virtual tiles indices to absolute tile numbers.
-    if ((tileMap != Py_None) &&
-        !PySequence_Check(tileMap)) {
-	PyErr_SetString(
-	    PyExc_TypeError,
-	    "expected tileMap to be a sequence of 4 byte integers");
-	return;
-    }
 
     const int *tileMapData = NULL;
     unsigned int tileMapCount = 0;
 
     if (tileMap != Py_None) {
+
+      if (!PySequence_Check(tileMap)) {
+	    PyErr_SetString(
+		PyExc_TypeError,
+		"expected tileMap to be an array "
+		"of 4 byte integers or None");
+	    return;
+	}
+
 	tileMapCount = (unsigned int)PySequence_Size(tileMap);
 	Py_ssize_t tileMapLength = 0;
 	if (PyObject_AsReadBuffer(
@@ -651,21 +653,22 @@ void TileEngine::renderPixels(
 	return;
     }
 
-    // The tileMap should be an array of 4 byte integers,
+    // The tileMap should be None, or an array of 4 byte integers,
     // mapping virtual tiles indices to absolute tile numbers.
-    if ((tileMap != Py_None) &&
-	!PySequence_Check(tileMap)) {
-	PyErr_SetString(
-	    PyExc_TypeError,
-	    "expected tileMap to be an array of 4 byte integers "
-	    "or None");
-	return;
-    }
 
     const int *tileMapData = NULL;
     unsigned int tileMapCount = 0;
 
     if (tileMap != Py_None) {
+
+        if (!PySequence_Check(tileMap)) {
+	    PyErr_SetString(
+		PyExc_TypeError,
+		"expected tileMap to be an array "
+		"of 4 byte integers or None");
+	    return;
+	}
+
 	tileMapCount = (unsigned int)PySequence_Size(tileMap);
 	Py_ssize_t tileMapLength = 0;
 	if (PyObject_AsReadBuffer(
@@ -752,8 +755,17 @@ PyObject *TileEngine::getTileData(
     const int *tileMapData = NULL;
     unsigned int tileMapCount = 0;
 
-    if ((tileMap != Py_None) &&
-	!PySequence_Check(tileMap)) {
+    if (tileMap != Py_None) {
+
+        if (!PySequence_Check(tileMap)) {
+	    PyErr_SetString(
+		PyExc_TypeError,
+		"expected tileMap to be an array "
+		"of 4 byte integers or None");
+	    Py_INCREF(Py_None);
+	    return Py_None;
+	}
+
 	tileMapCount = (unsigned int)PySequence_Size(tileMap);
 	Py_ssize_t tileMapLength = 0;
 	if (PyObject_AsReadBuffer(

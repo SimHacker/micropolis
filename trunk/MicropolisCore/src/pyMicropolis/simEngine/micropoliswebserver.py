@@ -91,7 +91,6 @@ except ImportError:
 
 
 from pyMicropolis.simEngine import micropolisengine
-from pyMicropolis.simEngine import micropolisutils
 
 from pyMicropolis.tileEngine import tileengine
 
@@ -104,6 +103,144 @@ __version__ = "0.9"
 
 
 StaticContentRoot = 'http://toronto.activlab.com/static'
+
+
+########################################################################
+# MicropolisView Class
+
+
+class MicropolisView:
+
+    def __init__(
+            self,
+            m=None,
+            x=0,
+            y=0,
+            width=micropolisengine.WORLD_W,
+            height=micropolisengine.WORLD_H,
+            **args):
+        self.m = m
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+
+    def applyToClippedTiles(self, onTilesBegin, onRowBegin, onTile, onRowEnd, onTilesEnd):
+
+        left = max(self.x, 0)
+        top = max(self.y, 0)
+        right = min(self.x + self.width, micropolisengine.WORLD_W)
+        bottom = min(self.y + self.height, micropolisengine.WORLD_H)
+
+        w = right - left
+        h = bottom - top
+
+        onTilesBegin(left, top, right, bottom, w, h)
+
+        if (w != 0) and (h != 0):
+
+            getTile = self.m.getTile
+            lowMask = micropolisengine.LOMASK
+            flagsMask = ~lowMask
+
+            for y in range(top, bottom):
+                onRowBegin(y, w, h)
+                for x in range(left, right):
+                    rawTile = getTile(x, y)
+                    onTile(x, y, rawTile & lowMask, rawTile & flagsMask)
+                onRowEnd(y, w, h)
+
+        onTilesEnd(left, top, right, bottom, w, h)
+
+
+    def renderSummaryAsHtml(self):
+
+        m = self.m
+
+        out = [
+            "<p>\n",
+            """<b>Micropolis City Evaluation, %s</b><br/>\n""" % (
+                m.cityDate,
+            ),
+            "Score: %s, Changed: %s, Class: %s, Level: %s, Tax Rate: %s%%<br/>\n" % (
+                m.evalScore, m.evalChanged, m.evalCityClass, m.evalCityLevel, m.cityTax,
+            ),
+            "Demand: Residential: %s, Commercial: %s, Industrial: %s<br/>\n" % (
+              m.resLast, m.comLast, m.indLast,
+            ),
+            "Funds: $%s, Assessed: %s, Population: %s, Delta: %s<br/>\n" % (
+              m.totalFunds, m.evalAssessedDollars, m.evalPopulation, m.evalDelta,
+            ),
+            "Survey: Is the Mayor doing a good job? Yes: %s, No: %s<br/>" % (
+              m.evalGoodYes, 100 - m.evalGoodYes,
+            ),
+            "</p>\n",
+            "<hr/>\n",
+        ]
+
+        return "".join(out)
+
+
+    def renderClippedTilesAsHtml(self):
+
+        out = []
+
+        def onTilesBegin(left, top, right, bottom, w, h):
+
+            out.append(
+                """<style><!--
+.tile {
+  width: 16px;
+  height: 16px;
+  background-image: url(http://localhost/micropolis/tiles/tiles.png)
+}
+</style>""")
+
+            out.append(
+                """<div style="width: %dpx; height: %dpx">\n""" % (
+                    w * 16,
+                    h * 16,
+                ))
+
+            out.append(
+                """<table gap="0" cellpadding="0" cellspacing="0"> <!-- Tiles: left %d top %d right %d bottom %d w %d h %d -->\n""" % (
+                    left, top, right, bottom, w, h,
+                ))
+
+        def onRowBegin(y, w, h):
+            out.append(
+                """<tr height="16"> <!-- Row %d: --> """ % (
+                    y,
+                ))
+
+        def onTile(x, y, tile, flags):
+            out.append(
+                """<td width="16" class="tile" style="background-position: %dpx %dpx"/>""" % (
+                    -16 * (tile % 16),
+                    -16 * (tile / 16),
+                ))
+
+        def onRowEnd(y, w, h):
+            out.append(
+                """<tr/>\n""")
+
+        def onTilesEnd(left, top, right, bottom, w, h):
+
+            out.append(
+                """</table>\n""")
+
+            out.append(
+                """</div>\n""")
+
+        self.applyToClippedTiles(
+            onTilesBegin,
+            onRowBegin,
+            onTile,
+            onRowEnd,
+            onTilesEnd)
+
+        return "".join(out)
 
 
 ########################################################################
@@ -207,7 +344,7 @@ class MicropolisHTTPServer(BaseHTTPServer.HTTPServer):
             m.autoGoto = 0
             m.cityTax = 12
 
-        view = micropolisutils.MicropolisView(m)
+        view = MicropolisView(m)
         self.view = view
 
 

@@ -87,7 +87,6 @@ import array
 
 
 import micropolisengine
-import micropolisutils
 import micropolispiemenus
 from pyMicropolis.tileEngine import tileengine, tiledrawingarea
 import micropolistool
@@ -205,6 +204,13 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
         self.reset()
 
+
+    def makeTileMap(self):
+        tiledrawingarea.TileDrawingArea.makeTileMap(self)
+
+        if True:
+            self.tileMap[micropolisengine.REDGE] = micropolisengine.FIRE
+            self.tileMap[micropolisengine.CHANNEL] = micropolisengine.RADTILE
 
     def reset(self):
         self.selectToolByName('Bulldozer')
@@ -388,10 +394,10 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         return
 
 
-    def makeToolPie(self):
+    def makePie(self):
 
-        toolPie = micropolispiemenus.MakeToolPie(lambda toolName: self.selectToolByName(toolName))
-        self.toolPie = toolPie
+        pie = micropolispiemenus.MakePie(lambda toolName: self.selectToolByName(toolName))
+        self.pie = pie
 
 
     def handleButtonPress(
@@ -399,7 +405,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         widget,
         event):
 
-        self.handleToolPieButtonPress(
+        self.handlePieButtonPress(
             widget,
             event)
 
@@ -466,7 +472,7 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
         self.centerOnTileHandler = centerOnTileHandler
 
 
-    def handleMousePoint(
+    def handleMouseHover(
         self,
         event):
 
@@ -570,11 +576,15 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         viewWidth = viewRect.width
         viewHeight = viewRect.height
 
-        x = self.panX - ((view.panX / view.tileSize) * self.tileSize)
-        y = self.panY - ((view.panY / view.tileSize) * self.tileSize)
+        tileSize = self.tileSize
+        # @todo Validate the view.tileSize before using it. View might not be drawn yet, and we get the wrong size.
+        viewTileSize = view.tileSize
+        viewScale = float(tileSize) / float(viewTileSize)
 
-        width = (viewWidth / view.tileSize) * self.tileSize
-        height = (viewHeight / view.tileSize) * self.tileSize
+        x = self.panX - (view.panX * viewScale)
+        y = self.panY - (view.panY * viewScale)
+        width = viewWidth * viewScale
+        height = viewHeight * viewScale
 
         #print "GETVIEWBOX", "view", view, "pan", view.panX, view.panY, "tileSize", view.tileSize, "pos", x, y, "size", width, height
 
@@ -676,7 +686,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
         return x, y
 
 
-    def handleMousePoint(
+    def handleMouseHover(
         self,
         event):
 
@@ -805,7 +815,7 @@ class PreviewMicropolisDrawingArea(MicropolisDrawingArea):
         MicropolisDrawingArea.__init__(self, **args)
 
 
-    def handleMousePoint(
+    def handleMouseHover(
         self,
         event):
 

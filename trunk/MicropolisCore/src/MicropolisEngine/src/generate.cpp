@@ -134,7 +134,6 @@ void Micropolis::generateMap(int seed)
         clearMap();
     }
 
-
     // Lay a river.
     if (terrainCurveLevel != 0) {
         int terrainXStart = 40 + getRandom(WORLD_W - 80);
@@ -197,13 +196,12 @@ void Micropolis::makeNakedIsland()
 
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
-            map[x][y] = RIVER;
-        }
-    }
-
-    for (x = 5; x < WORLD_W - 5; x++) {
-        for (y = 5; y < WORLD_H - 5; y++) {
-            map[x][y] = DIRT;
+	    if ((x < 5) || (x >= WORLD_W - 5) ||
+	        (y < 5) || (y >= WORLD_H - 5)) {
+	        map[x][y] = RIVER;
+	    } else {
+	        map[x][y] = DIRT;
+	    }
         }
     }
 
@@ -373,8 +371,8 @@ void Micropolis::smoothRiver()
                     yTemp = y + dy[z];
                     if (testBounds(xTemp, yTemp) &&
                         ((map[xTemp][yTemp] & LOMASK) != DIRT) &&
-                        (((map[xTemp][yTemp]&LOMASK) < WOODS_LOW) ||
-                         ((map[xTemp][yTemp]&LOMASK) > WOODS_HIGH))) {
+                        (((map[xTemp][yTemp] & LOMASK) < WOODS_LOW) ||
+                         ((map[xTemp][yTemp] & LOMASK) > WOODS_HIGH))) {
                         bitIndex++;
                     }
                 }
@@ -409,14 +407,14 @@ void Micropolis::smoothTrees()
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
             if (isTree(map[x][y])) {
-		smoothTreesAt(x, y);
+		smoothTreesAt(x, y, false);
             }
         }
     }
 }
 
 
-void Micropolis::smoothTreesAt(int x, int y)
+void Micropolis::smoothTreesAt(int x, int y, bool preserve)
 {
     static short dx[4] = { -1,  0,  1,  0 };
     static short dy[4] = {  0,  1,  0, -1 };
@@ -449,7 +447,9 @@ void Micropolis::smoothTreesAt(int x, int y)
 	    }
 	    map[x][y] = temp | BLBNBIT;
 	} else {
-	    map[x][y] = temp;
+	    if (!preserve) {
+	        map[x][y] = temp;
+	    }
 	}
     }
 }
@@ -464,13 +464,13 @@ void Micropolis::doRivers(const Position &terrainPos)
     Direction2 riverDir;   // Global direction of the river
     Direction2 terrainDir; // Local direction of the river
 
-    riverDir = (Direction2)(DIR2_NORTH + getRandom(3));
+    riverDir = (Direction2)(DIR2_NORTH + (getRandom(3) * 2));
     doBRiver(terrainPos, riverDir, riverDir);
 
     riverDir = rotate180(riverDir);
     terrainDir = doBRiver(terrainPos, riverDir, riverDir);
 
-    riverDir = (Direction2)(DIR2_NORTH + getRandom(3));
+    riverDir = (Direction2)(DIR2_NORTH + (getRandom(3) * 2));
     doSRiver(terrainPos, riverDir, terrainDir);
 }
 
@@ -538,6 +538,7 @@ Direction2 Micropolis::doSRiver(const Position &riverPos,
     Position pos(riverPos);
 
     while (testBounds(pos.posX + 3, pos.posY + 3)) {
+	//printf("doSRiver %d %d td %d rd %d\n", pos.posX, pos.posY, terrainDir, riverDir);
         plopSRiver(pos);
         if (getRandom(rate1) < 10) {
             terrainDir = riverDir;
@@ -596,15 +597,15 @@ void Micropolis::plopBRiver(const Position &pos)
 {
     short x, y;
     static MapValue BRMatrix[9][9] = {
-        { 0, 0, 0, 3, 3, 3, 0, 0, 0 },
-        { 0, 0, 3, 2, 2, 2, 3, 0, 0 },
-        { 0, 3, 2, 2, 2, 2, 2, 3, 0 },
-        { 3, 2, 2, 2, 2, 2, 2, 2, 3 },
-        { 3, 2, 2, 2, 4, 2, 2, 2, 3 },
-        { 3, 2, 2, 2, 2, 2, 2, 2, 3 },
-        { 0, 3, 2, 2, 2, 2, 2, 3, 0 },
-        { 0, 0, 3, 2, 2, 2, 3, 0, 0 },
-        { 0, 0, 0, 3, 3, 3, 0, 0, 0 },
+        {     0,       0,       0,   REDGE,   REDGE,   REDGE,       0,       0,       0 },
+        {     0,       0,   REDGE,   RIVER,   RIVER,   RIVER,   REDGE,       0,       0 },
+        {     0,   REDGE,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   REDGE,       0 },
+        { REDGE,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   REDGE },
+        { REDGE,   RIVER,   RIVER,   RIVER, CHANNEL,   RIVER,   RIVER,   RIVER,   REDGE },
+        { REDGE,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   REDGE },
+        {     0,   REDGE,   RIVER,   RIVER,   RIVER,   RIVER,   RIVER,   REDGE,       0 },
+        {     0,       0,   REDGE,   RIVER,   RIVER,   RIVER,   REDGE,       0,       0 },
+        {     0,       0,       0,   REDGE,   REDGE,   REDGE,       0,       0,       0 },
     };
 
     for (x = 0; x < 9; x++) {
@@ -623,17 +624,17 @@ void Micropolis::plopSRiver(const Position &pos)
 {
     short x, y;
     static MapValue SRMatrix[6][6] = {
-        { 0, 0, 3, 3, 0, 0 },
-        { 0, 3, 2, 2, 3, 0 },
-        { 3, 2, 2, 2, 2, 3 },
-        { 3, 2, 2, 2, 2, 3 },
-        { 0, 3, 2, 2, 3, 0 },
-        { 0, 0, 3, 3, 0, 0 },
+        {     0,     0, REDGE, REDGE,     0,     0 },
+        {     0, REDGE, RIVER, RIVER, REDGE,     0 },
+        { REDGE, RIVER, RIVER, RIVER, RIVER, REDGE },
+        { REDGE, RIVER, RIVER, RIVER, RIVER, REDGE },
+        {     0, REDGE, RIVER, RIVER, REDGE,     0 },
+        {     0,     0, REDGE, REDGE,     0,     0 },
     };
 
     for (x = 0; x < 6; x++) {
         for (y = 0; y < 6; y++) {
-          putOnMap(SRMatrix[y][x], pos.posX + x, pos.posY + y);
+            putOnMap(SRMatrix[y][x], pos.posX + x, pos.posY + y);
         }
     }
 }
@@ -657,11 +658,13 @@ void Micropolis::smoothWater()
                 for (dir = DIR2_BEGIN; dir < DIR2_END; dir = increment90(dir)) {
 
                     /* If getting a tile off-map, condition below fails. */
-                    tile = getTileFromMap(pos, DIR2_WEST, WATER_LOW);
+		    // @note I think this may have been a bug, since it always uses DIR2_WEST instead of dir.
+                    //tile = getTileFromMap(pos, DIR2_WEST, WATER_LOW);
+                    tile = getTileFromMap(pos, dir, WATER_LOW);
 
                     /* If nearest object is not water: */
                     if (tile < WATER_LOW || tile > WATER_HIGH) {
-                        map[x][y]=REDGE; /* set river edge */
+                        map[x][y] = REDGE; /* set river edge */
                         break; // Continue with next tile
                     }
                 }
@@ -683,7 +686,9 @@ void Micropolis::smoothWater()
                 for (dir = DIR2_BEGIN; dir < DIR2_END; dir = increment90(dir)) {
 
                     /* If getting a tile off-map, condition below fails. */
-                    tile = getTileFromMap(pos, DIR2_WEST, WATER_LOW);
+		    // @note I think this may have been a bug, since it always uses DIR2_WEST instead of dir.
+                    //tile = getTileFromMap(pos, DIR2_WEST, WATER_LOW);
+                    tile = getTileFromMap(pos, dir, WATER_LOW);
 
                     /* If nearest object is not water: */
                     if (tile < WATER_LOW || tile > WATER_HIGH) {
@@ -711,7 +716,9 @@ void Micropolis::smoothWater()
                 for (dir = DIR2_BEGIN; dir < DIR2_END; dir = increment90(dir)) {
 
                     /* If getting a tile off-map, condition below fails. */
-                    tile = getTileFromMap(pos, DIR2_WEST, TILE_INVALID);
+		    // @note I think this may have been a bug, since it always uses DIR2_WEST instead of dir.
+                    //tile = getTileFromMap(pos, DIR2_WEST, WATER_LOW);
+                    tile = getTileFromMap(pos, dir, TILE_INVALID);
 
                     if (tile == RIVER || tile == CHANNEL) {
                         map[x][y] = REDGE; /* make it water's edge */

@@ -149,7 +149,7 @@ class PieItem:
             labelFont='Sans 14',
             labelPadding=2,
             labelXAdjust=0,
-            labelYAdjust=0,
+            labelYAdjust=2,
             icon=None,
             iconHilite=None,
             iconPadding=2,
@@ -356,9 +356,6 @@ class PieItem:
 
         self.width = width
         self.height = height
-
-        labelX += self.labelXAdjust
-        labelY += self.labelYAdjust
 
         self.labelX = labelX
         self.labelY = labelY
@@ -618,12 +615,11 @@ class PieItem:
 ########################################################################
 
 
-class PieMenu(gtk.Window):
+class PieMenu:
 
 
     def __init__(
             self,
-            parent=None,
             action=None,
             outsideFillColor=(.9, .9, .9),
             outsideStrokeColor=(0, 0, 0),
@@ -818,36 +814,6 @@ class PieMenu(gtk.Window):
         self.y = 0
         self.width = 1
         self.height = 1
-
-        d = PieMenuDrawingArea()
-        self.d = d
-        self.add(self.d)
-
-        self.connect("show", self.handleShow)
-
-        d.connect("expose_event", self.handleExpose)
-        d.connect("size_allocate", self.handleSizeAllocate)
-        d.connect("motion_notify_event", self.handleMotionNotifyEvent)
-        d.connect("button_press_event", self.handleButtonPressEvent)
-        d.connect("button_release_event", self.handleButtonReleaseEvent)
-        d.connect("proximity_in_event", self.handleProximityInEvent)
-        d.connect("proximity_out_event", self.handleProximityOutEvent)
-        d.connect("grab_notify", self.handleGrabNotify)
-        d.connect("grab_broken_event", self.handleGrabBrokenEvent)
-        d.connect("key_press_event", self.handleKeyPressEvent)
-        d.connect("key_release_event", self.handleKeyReleaseEvent)
-
-        d.set_events(
-            gtk.gdk.EXPOSURE_MASK |
-            gtk.gdk.POINTER_MOTION_MASK |
-            gtk.gdk.POINTER_MOTION_HINT_MASK |
-            gtk.gdk.BUTTON_MOTION_MASK |
-            gtk.gdk.BUTTON_PRESS_MASK |
-            gtk.gdk.BUTTON_RELEASE_MASK |
-            gtk.gdk.KEY_PRESS_MASK |
-            gtk.gdk.KEY_RELEASE_MASK |
-            gtk.gdk.PROXIMITY_IN_MASK |
-            gtk.gdk.PROXIMITY_OUT_MASK)
 
 
     def addItem(self, item):
@@ -1439,9 +1405,6 @@ class PieMenu(gtk.Window):
 
 
     def measureFooter(self, context, pcontext, playout):
-
-        # @todo Measure self.neutralDescription and each item.description to find the largest.
-        # @todo Set the footer width to the width of the window, and center the text.
 
         footer = self.footer
         footerFixedHeight = self.footerFixedHeight
@@ -2332,144 +2295,6 @@ class PieMenu(gtk.Window):
         else:
             self.handleAction()
             item.handleAction()
-
-
-    def handleShow(self, widget):
-
-        print "handleShow", self, widget
-        pass
-
-
-    def handleSizeAllocate(self, widget, rect):
-
-        self.d.queue_draw()
-
-
-    def handleMotionNotifyEvent(self, widget, event, *args):
-        #print "handleMotionNotifyEvent", self, widget, event, args
-
-        if (hasattr(event, 'is_hint') and
-            event.is_hint):
-            x, y, state = event.window.get_pointer()
-        else:
-            x = event.x
-            y = event.y
-            state = event.state
-
-        self.trackMouseMove(x, y)
-
-
-    def handleButtonPressEvent(self, widget, event, *args):
-        print "handleButtonPressEvent", self, widget, event, args
-        self.handleMotionNotifyEvent(widget, event, *args)
-        self.trackMouseDown()
-
-
-    def handleButtonReleaseEvent(self, widget, event, *args):
-        print "handleButtonReleaseEvent", self, widget, event, args
-        self.handleMotionNotifyEvent(widget, event, *args)
-        self.trackMouseUp()
-
-
-    def handleProximityInEvent(self, widget, event, *args):
-        #print "handleProximityInEvent", self, widget, event, args
-        self.handleMotionNotifyEvent(widget, event, *args)
-
-
-    def handleProximityOutEvent(self, widget, event, *args):
-        #print "handleProximityOutEvent", self, widget, event, args
-        self.handleMotionNotifyEvent(widget, event, *args)
-
-
-    def handleGrabNotify(self, widget, event, *args):
-        print "handleGrabNotify", self, widget, event, args
-        pass
-
-
-    def handleGrabBrokenEvent(self, widget, event, *args):
-        print "handleGrabBrokenEvent", self, widget, event, args
-        self.popDown()
-
-
-    def handleKeyPressEvent(self, widget, event, *args):
-        #print "handleKeyPressEvent", self, widget, event, args
-        #print help(event)
-        pass
-
-
-    def handleKeyReleaseEvent(self, widget, event, *args):
-        #print "handleKeyReleaseEvent", self, widget, event, args
-        pass
-
-
-########################################################################
-
-
-class PieMenuDrawingArea(gtk.DrawingArea):
-
-
-    def __init__(self):
-
-        gtk.DrawingArea.__init__(self)
-
-
-########################################################################
-
-
-class PieMenuTarget(gtk.Button):
-
-
-    def __init__(
-        self,
-        label='',
-        **args):
-
-        gtk.Button.__init__(self, label=label, **args)
-
-        self.connect("button_press_event", self.handleButtonPressEvent)
-        self.connect("button_release_event", self.handleButtonReleaseEvent)
-
-        #print "INIT"
-       
-        self.set_events(
-            gtk.gdk.EXPOSURE_MASK |
-            gtk.gdk.BUTTON_PRESS_MASK |
-            gtk.gdk.BUTTON_RELEASE_MASK)
-
-
-        self.pie = None
-
-
-    def handleButtonPressEvent(self, widget, event):
-
-        #print "PRESS"
-
-        pie = self.pie
-
-        if not pie:
-            return False
-
-        winX, winY, state = event.window.get_pointer()
-       
-        #print "WIN", winX, winY
-
-        x, y = event.get_root_coords()
-
-        #print "ROOT", x, y
-
-        pie.popUp(x, y, False)
-
-        return False
-
-
-    def handleButtonReleaseEvent(self, widget, event):
-
-        return False
-   
-
-    def setPie(self, pie):
-
-        self.pie = pie
 
 
 ########################################################################
