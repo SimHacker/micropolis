@@ -102,17 +102,15 @@ static const unsigned short WireTable[16] = {
  * @param x       X world position to perform the command.
  * @param y       Y world position to perform the command.
  * @param command Command to perform.
- *                0=fix zone, 1=bulldoze, 2=lay road, 3=layrail, 4=lay wire.
- * @return -2=no money, 0=failed, 1=ok.
+ * @return Tool result.
  */
-int Micropolis::connectTile(short x, short y, ConnectTileCommand command)
+ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand command)
 {
-    unsigned short tile;
-    int result = 1;
+    ToolResult result = TOOLRESULT_OK;
 
     // Make sure the array subscripts are in bounds.
     if (!testBounds(x, y)) {
-        return 0;
+        return TOOLRESULT_FAILED;
     }
 
     // Perform auto-doze if appropriate.
@@ -120,33 +118,34 @@ int Micropolis::connectTile(short x, short y, ConnectTileCommand command)
 
         case CONNECT_TILE_ROAD:
         case CONNECT_TILE_RAILROAD:
-	case CONNECT_TILE_WIRE:
+        case CONNECT_TILE_WIRE:
 
-	    if (autoBulldoze && totalFunds > 0) {
+            // Silently skip auto-bulldoze if no money.
+            if (autoBulldoze && totalFunds > 0) {
 
-		tile = map[x][y];
+                MapValue tile = map[x][y];
 
-		if (tile & BULLBIT) {
-		    tile &= LOMASK;
-		    tile = neutralizeRoad(tile);
+                if (tile & BULLBIT) {
+                    tile &= LOMASK;
+                    tile = neutralizeRoad(tile);
 
-		    /* Maybe this should check BULLBIT instead of checking tile values? */
-		    if ((tile >= TINYEXP && tile <= LASTTINYEXP) ||
-			    (tile < HBRIDGE && tile != DIRT)) {
+                    /* Maybe this should check BULLBIT instead of checking tile values? */
+                    if ((tile >= TINYEXP && tile <= LASTTINYEXP) ||
+                            (tile < HBRIDGE && tile != DIRT)) {
 
-			spend(1);
+                        spend(1);
 
-			map[x][y] = DIRT;
+                        map[x][y] = DIRT;
 
-		    }
-		}
-	    }
+                    }
+                }
+            }
             break;
 
         default:
             // Do nothing.
             break;
-    
+
     }
 
     // Perform the command.
@@ -177,7 +176,7 @@ int Micropolis::connectTile(short x, short y, ConnectTileCommand command)
         break;
 
     default:
-        assert("Unknown ConnectTileCommand.");
+        NOT_REACHED();
         break;
 
     }
@@ -190,20 +189,18 @@ int Micropolis::connectTile(short x, short y, ConnectTileCommand command)
  * Builldoze a tile (make it a #RIVER or #DIRT).
  * @param x X map coordinate.
  * @param y Y map coordinate.
- * @return -2=no money, 0=failed, 1=ok.
+ * @return Tool result.
  */
-int Micropolis::layDoze(int x, int y)
+ToolResult Micropolis::layDoze(int x, int y)
 {
-    unsigned short tile;
-
     if (totalFunds == 0) {
-        return -2;                  /* no mas dinero. */
+        return TOOLRESULT_NO_MONEY;       /* no mas dinero. */
     }
 
-    tile = map[x][y];
+    MapValue tile = map[x][y];
 
     if (!(tile & BULLBIT)) {
-        return 0;                   /* Check dozeable bit. */
+        return TOOLRESULT_FAILED;         /* Check dozeable bit. */
     }
 
     tile &= LOMASK;
@@ -236,7 +233,7 @@ int Micropolis::layDoze(int x, int y)
 
     spend(1);                     /* Costs $1.00.... */
 
-    return 1;
+    return TOOLRESULT_OK;
 }
 
 
@@ -244,17 +241,17 @@ int Micropolis::layDoze(int x, int y)
  * Lay a road, and update road around it.
  * @param x X map coordinate.
  * @param y Y map coordinate.
- * @return -2=no money, 0=failed, 1=ok.
+ * @return Tool result.
  */
-int Micropolis::layRoad(int x, int y)
+ToolResult Micropolis::layRoad(int x, int y)
 {
     int cost = 10;
 
     if (totalFunds < cost) {
-        return -2;
+        return TOOLRESULT_NO_MONEY;
     }
 
-    unsigned short tile = map[x][y] & LOMASK;
+    MapTile tile = map[x][y] & LOMASK;
 
     switch (tile) {
 
@@ -268,7 +265,7 @@ int Micropolis::layRoad(int x, int y)
         cost = 50;
 
         if (totalFunds < cost) {
-            return -2;
+            return TOOLRESULT_NO_MONEY;
         }
 
         if (x < WORLD_W - 1) {
@@ -312,7 +309,7 @@ int Micropolis::layRoad(int x, int y)
         }
 
         /* Can't do road... */
-        return 0;
+        return TOOLRESULT_FAILED;
 
     case LHPOWER:         /* Road on power */
         map[x][y] = VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
@@ -331,29 +328,30 @@ int Micropolis::layRoad(int x, int y)
         break;
 
     default:              /* Can't do road */
-        return 0;
+        return TOOLRESULT_FAILED;
 
     }
 
     spend(cost);
-    return 1;
+    return TOOLRESULT_OK;
 }
 
 
 /**
  * Lay a rail, and update connections (rail, road, and wire) around it.
- * @param x          X map coordinate.
- * @param y          Y map coordinate.
+ * @param x X map coordinate.
+ * @param y Y map coordinate.
+ * @return Tool result.
  */
-int Micropolis::layRail(int x, int y)
+ToolResult Micropolis::layRail(int x, int y)
 {
     int cost = 20;
 
     if (totalFunds < cost) {
-        return -2;
+        return TOOLRESULT_NO_MONEY;
     }
 
-    unsigned short tile = map[x][y] & LOMASK;
+    MapTile tile = map[x][y] & LOMASK;
 
     tile = neutralizeRoad(tile);
 
@@ -371,7 +369,7 @@ int Micropolis::layRail(int x, int y)
         cost = 100;
 
         if (totalFunds < cost) {
-            return -2;
+            return TOOLRESULT_NO_MONEY;
         }
 
         if (x < WORLD_W - 1) {
@@ -415,7 +413,7 @@ int Micropolis::layRail(int x, int y)
         }
 
         /* Can't do rail... */
-        return 0;
+        return TOOLRESULT_FAILED;
 
     case LHPOWER:             /* Rail on power */
         map[x][y] = RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
@@ -434,28 +432,29 @@ int Micropolis::layRail(int x, int y)
         break;
 
     default:              /* Can't do rail */
-        return 0;
+        return TOOLRESULT_FAILED;
     }
 
     spend(cost);
-    return 1;
+    return TOOLRESULT_OK;
 }
 
 
 /**
  * Lay a wire, and update connections (rail, road, and wire) around it.
- * @param x          X map coordinate.
- * @param y          Y map coordinate.
+ * @param x X map coordinate.
+ * @param y Y map coordinate.
+ * @return Tool result.
  */
-int Micropolis::layWire(int x, int y)
+ToolResult Micropolis::layWire(int x, int y)
 {
     int cost = 5;
 
     if (totalFunds < cost) {
-        return -2;
+        return TOOLRESULT_NO_MONEY;
     }
 
-    unsigned short tile = map[x][y] & LOMASK;
+    MapTile tile = map[x][y] & LOMASK;
 
     tile = neutralizeRoad(tile);
 
@@ -474,7 +473,7 @@ int Micropolis::layWire(int x, int y)
         cost = 25;
 
         if (totalFunds < cost) {
-            return -2;
+            return TOOLRESULT_NO_MONEY;
         }
 
         if (x < WORLD_W - 1) {
@@ -526,7 +525,7 @@ int Micropolis::layWire(int x, int y)
         }
 
         /* Can't do wire... */
-        return 0;
+        return TOOLRESULT_FAILED;
 
     case ROADS:              /* Wire on Road */
         map[x][y] = HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
@@ -545,12 +544,12 @@ int Micropolis::layWire(int x, int y)
         break;
 
     default:              /* Can't do wire */
-        return 0;
+        return TOOLRESULT_FAILED;
 
     }
 
     spend(cost);
-    return 1;
+    return TOOLRESULT_OK;
 }
 
 
@@ -590,7 +589,7 @@ void Micropolis::fixSingle(int x, int y)
 {
     unsigned short adjTile = 0;
 
-    unsigned short tile = map[x][y] & LOMASK;
+    MapTile tile = map[x][y] & LOMASK;
 
     tile = neutralizeRoad(tile);
 
