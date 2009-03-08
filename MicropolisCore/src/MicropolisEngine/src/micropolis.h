@@ -333,19 +333,19 @@ typedef unsigned short MapTile;
 
 /**
  * Status bits of a map tile.
- * @see MapTile MapCharacters
+ * @see MapTile MapCharacters MapTile MapValue
  * @todo #ALLBITS should end with MASK.
  * @todo Decide what to do with #ANIMBIT (since sim-backend may not be the
  *       optimal place to do animation).
  * @todo How many of these bits can be derived from the displayed tile?
  */
 enum MapTileBits {
-    PWRBIT  = 0x8000, ///< bit 15, tile has power
-    CONDBIT = 0x4000, ///< bit 14. tile can conduct electricity
-    BURNBIT = 0x2000, ///< bit 13
-    BULLBIT = 0x1000, ///< bit 12, tile is bulldozable
-    ANIMBIT = 0x0800, ///< bit 11, tile is animated
-    ZONEBIT = 0x0400, ///< bit 10, tile is a zone
+    PWRBIT  = 0x8000, ///< bit 15, tile has power.
+    CONDBIT = 0x4000, ///< bit 14. tile can conduct electricity.
+    BURNBIT = 0x2000, ///< bit 13, tile can be lit.
+    BULLBIT = 0x1000, ///< bit 12, tile is bulldozable.
+    ANIMBIT = 0x0800, ///< bit 11, tile is animated.
+    ZONEBIT = 0x0400, ///< bit 10, tile is the center tile of the zone.
 
     /// Mask for the bits-part of the tile
     ALLBITS = ZONEBIT | ANIMBIT | BULLBIT | BURNBIT | CONDBIT | PWRBIT,
@@ -361,22 +361,23 @@ enum MapTileBits {
  * Connect tile commands.
  */
 enum ConnectTileCommand {
-    CONNECT_TILE_FIX,
-    CONNECT_TILE_BULLDOZE,
-    CONNECT_TILE_ROAD,
-    CONNECT_TILE_RAILROAD,
-    CONNECT_TILE_WIRE,
+    CONNECT_TILE_FIX, ///< Fix zone (connect wire, road, and rail).
+    CONNECT_TILE_BULLDOZE, ///< Bulldoze and fix zone.
+    CONNECT_TILE_ROAD, ///< Lay road and fix zone.
+    CONNECT_TILE_RAILROAD, ///< Lay rail and fix zone.
+    CONNECT_TILE_WIRE, ///< Lay wire and fix zone.
 };
 
 
 /**
- * Build result.
+ * Tool result.
  * @todo Make the rest of the code use this instead of magic numbers.
  */
-enum BuildResult {
-    BUILD_NO_MONEY = -2,
-    BUILD_FAILED = 0,
-    BUILD_OK = 1,
+enum ToolResult {
+    TOOLRESULT_NO_MONEY = -2,  ///< User has not enough money for tool.
+    TOOLRESULT_NEED_BULLDOZE = -1, ///< Clear the area first.
+    TOOLRESULT_FAILED = 0, ///< Cannot build here.
+    TOOLRESULT_OK = 1, ///< Build succeeded.
 };
 
 
@@ -1519,15 +1520,15 @@ public:
 private:
 
 
-    int connectTile(short x, short y, ConnectTileCommand command);
+    ToolResult connectTile(short x, short y, ConnectTileCommand command);
 
-    int layDoze(int x, int y);
+    ToolResult layDoze(int x, int y);
 
-    int layRoad(int x, int y);
+    ToolResult layRoad(int x, int y);
 
-    int layRail(int x, int y);
+    ToolResult layRail(int x, int y);
 
-    int layWire(int x, int y);
+    ToolResult layWire(int x, int y);
 
     void fixZone(int x, int y);
 
