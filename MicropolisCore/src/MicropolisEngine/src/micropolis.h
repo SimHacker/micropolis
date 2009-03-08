@@ -2637,16 +2637,65 @@ public:
 
 public:
 
+    ToolResult doTool(EditingTool tool, short tileX, short tileY);
 
-    int putDownPark(short mapH, short mapV);
+    void toolDown(EditingTool tool, short tileX, short tileY);
 
-    int putDownNetwork(short mapH, short mapV);
+    void toolDrag(EditingTool tool, short fromX, short fromY,
+                                    short toX, short toY);
 
-    int putDownWater(short mapH, short mapV);
 
-    int putDownLand(short mapH, short mapV);
+private:
 
-    int putDownForest(short mapH, short mapV);
+    ToolResult queryTool(short x, short y);
+
+    ToolResult bulldozerTool(short x, short y);
+
+    ToolResult roadTool(short x, short y);
+
+    ToolResult railroadTool(short x, short y);
+
+    ToolResult wireTool(short x, short y);
+
+    ToolResult parkTool(short x, short y);
+
+    ToolResult residentialTool(short x, short y);
+
+    ToolResult commercialTool(short x, short y);
+
+    ToolResult industrialTool(short x, short y);
+
+    ToolResult policeStationTool(short x, short y);
+
+    ToolResult fireStationTool(short x, short y);
+
+    ToolResult stadiumTool(short x, short y);
+
+    ToolResult coalPowerTool(short x, short y);
+
+    ToolResult nuclearPowerTool(short x, short y);
+
+    ToolResult seaportTool(short x, short y);
+
+    ToolResult airportTool(short x, short y);
+
+    ToolResult networkTool(short x, short y);
+
+    ToolResult waterTool(short x, short y);
+
+    ToolResult landTool(short x, short y);
+
+    ToolResult forestTool(short x, short y);
+
+    ToolResult putDownPark(short mapH, short mapV);
+
+    ToolResult putDownNetwork(short mapH, short mapV);
+
+    ToolResult putDownWater(short mapH, short mapV);
+
+    ToolResult putDownLand(short mapH, short mapV);
+
+    ToolResult putDownForest(short mapH, short mapV);
 
     void doZoneStatus(short mapH, short mapV);
 
@@ -2657,54 +2706,6 @@ public:
 
     void didTool(const char *name, short x, short y);
 
-    int queryTool(short x, short y);
-
-    int bulldozerTool(short x, short y);
-
-    int roadTool(short x, short y);
-
-    int railroadTool(short x, short y);
-
-    int wireTool(short x, short y);
-
-    int parkTool(short x, short y);
-
-    int residentialTool(short x, short y);
-
-    int commercialTool(short x, short y);
-
-    int industrialTool(short x, short y);
-
-    int policeStationTool(short x, short y);
-
-    int fireStationTool(short x, short y);
-
-    int stadiumTool(short x, short y);
-
-    int coalPowerTool(short x, short y);
-
-    int nuclearPowerTool(short x, short y);
-
-    int seaportTool(short x, short y);
-
-    int airportTool(short x, short y);
-
-    int networkTool(short x, short y);
-
-    int waterTool(short x, short y);
-
-    int landTool(short x, short y);
-
-    int forestTool(short x, short y);
-
-    int doTool(EditingTool tool, short tileX, short tileY);
-
-    void toolDown(EditingTool tool, short tileX, short tileY);
-
-    void toolDrag(EditingTool tool, short fromX, short fromY, short toX, short toY);
-
-private:
-
     short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
 
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
@@ -2712,7 +2713,7 @@ private:
 
     int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
 
-    int buildBuilding(int mapH, int mapV, int sizeX, int sizeY,
+    ToolResult buildBuilding(int mapH, int mapV, int sizeX, int sizeY,
                       unsigned short base, short tool, bool aniFlag);
 
     int getDensityStr(short catNo, short mapH, short mapV);
