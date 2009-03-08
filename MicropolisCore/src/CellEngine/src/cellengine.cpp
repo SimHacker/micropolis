@@ -5279,12 +5279,12 @@ enum {
 
 
 typedef struct StateInfo {
-  char *name;
+  const char *name;
   unsigned char code;
 } StateInfo;
 
-const int jvnStates = 29;
-StateInfo States[jvnStates] = {
+const int JVNSTATES = 29;
+StateInfo states[JVNSTATES] = {
   { "U",    U     },
 
   { "S",    S     },
@@ -5323,8 +5323,8 @@ StateInfo States[jvnStates] = {
 };
 
 
-int jvnInitialized = 0;
-char *codeToName[256];
+static bool jvnInitialized = false;
+const char *codeToName[256];
 
 
 /* Return 1 if pointed by an excited special transmission state,
@@ -5477,16 +5477,16 @@ Byte decay(Byte state)
 void CellEngine::n_jvn29()
 {
     if (!jvnInitialized) {
-        jvnInitialized = 1;
+        jvnInitialized = true;
+
         int i;
         for (i = 0; i < 256; i++) {
-            codeToName[i] = 0;
-        } // for i
-        for (i = 0; i < jvnStates; i++) {
-            codeToName[States[i].code] =
-                States[i].name;
-        } // for i
-    } // if
+            codeToName[i] = NULL;
+        }
+        for (i = 0; i < JVNSTATES; i++) {
+            codeToName[states[i].code] = states[i].name;
+        }
+    }
 
     Byte *front = frontMem;
     Byte *back = backMem +
