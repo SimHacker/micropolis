@@ -1,4 +1,4 @@
-/* position.h
+/* tool.h
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -60,124 +60,102 @@
  * NOT APPLY TO YOU.
  */
 
-/** @file position.h Position handling. */
+/** @file tool.h */
 
-#ifndef H_POSITION
-#define H_POSITION
+////////////////////////////////////////////////////////////////////////
 
-/** Another direction enumeration class, with 8 possible directions.
- * @todo Eliminate #Direction.
- * @todo After eliminating #Direction, rename this enum to Direction.
- */
-enum Direction2 {
-    DIR2_INVALID,    ///< Invalid direction.
-    DIR2_NORTH,      ///< Direction pointing north.
-    DIR2_NORTH_EAST, ///< Direction pointing north-east.
-    DIR2_EAST,       ///< Direction pointing east.
-    DIR2_SOUTH_EAST, ///< Direction pointing south-east.
-    DIR2_SOUTH,      ///< Direction pointing south.
-    DIR2_SOUTH_WEST, ///< Direction pointing south-west.
-    DIR2_WEST,       ///< Direction pointing west.
-    DIR2_NORTH_WEST, ///< Direction pointing north-west.
 
-    DIR2_BEGIN = DIR2_NORTH,        ///< First valid direction.
-    DIR2_END = DIR2_NORTH_WEST + 1, ///< End-condition for directions
-};
+#include <map>
+
+
+////////////////////////////////////////////////////////////////////////
+// Forward declarations
+
+
+class Micropolis;
+class Position;
+
+
+////////////////////////////////////////////////////////////////////////
+
+typedef std::map<Position, MapValue> WorldModificationsMap;
 
 /**
- * Increment the direction by 45 degrees.
- * @param dir Direction to rotate.
- * @return Rotated direction, possibly >= DIR2_END.
+ * Class for storing effects of applying a tool to the world.
+ *
+ * When applying a tool, two things change:
+ *  - The world map.
+ *  - The funds of the player.
+ *
+ * The latter gives a decision problem. To decide whether the tool can be
+ * applied, you need to know the cost. To know the cost you need to know the
+ * exact changes being made.
+ * The simplest way to compute the exact changes is to simply apply the tool to
+ * the world. This holds especially when tools get stacked on top of each
+ * other.
+ *
+ * This class provides an easy way out, greatly simplifying the problem.
+ * All tools do not modify the world directly, but instead put their results
+ * in an instance of this class, thus collecting all the modifications.
+ * After the whole operation is 'done', the #ToolEffects instance can tell the
+ * precise cost and what has been changed in the world. At that moment, the
+ * yes/no decision can be made, and the effects can be copied to the real map
+ * and funds.
  */
-static inline Direction2 increment45(Direction2 dir, int count = 1)
+class ToolEffects
 {
-    return (Direction2)(dir + count);
-}
-
-
-/**
- * Increment the direction by 90 degrees.
- * @param dir Direction to rotate.
- * @return Rotated direction, possibly >= DIR2_END.
- */
-static inline Direction2 increment90(Direction2 dir)
-{
-    return increment45(dir, 2);
-}
-
-/**
- * Increment the direction by 45 degrees.
- * @param dir Direction to rotate.
- * @return Rotated direction.
- */
-static inline Direction2 rotate45(Direction2 dir, int count = 1)
-{
-    return (Direction2)(((dir - DIR2_NORTH + count) & 7) + DIR2_NORTH);
-}
-
-/**
- * Rotate the direction by 90 degrees.
- * @param dir Direction to rotate.
- * @return Rotated direction.
- */
-static inline Direction2 rotate90(Direction2 dir)
-{
-    return rotate45(dir, 2);
-}
-
-/**
- * Rotate the direction by 180 degrees.
- * @param dir Direction to rotate.
- * @return Rotated direction.
- */
-static inline Direction2 rotate180(Direction2 dir)
-{
-    return rotate45(dir, 4);
-}
-
-
-/** X/Y position. */
-class Position {
-
 public:
+    ToolEffects(Micropolis *sim);
+    ~ToolEffects();
 
-    Position();
-    Position(int x, int y);
-    Position(const Position &pos);
-    Position(const Position &pos, Direction2 dir);
-    Position(const Position &pos, int dx, int dy);
-    Position &operator=(const Position &pos);
+    void clear();
+    void modifyWorld();
+    bool modifyIfEnoughFunding();
 
-    bool move(Direction2 dir);
-    inline bool testBounds();
+    MapValue getMapValue(const Position& pos) const;
+    inline MapTile getMapTile(const Position& pos) const;
+    inline int getCost() const;
 
-    int posX; ///< Horizontal coordinate of the position.
-    int posY; ///< Vertical coordnate of the position.
+    inline void addCost(int amount);
+    void setMapValue(const Position& pos, MapValue mapVal);
+
+private:
+    Micropolis *sim; ///< Simulator to get map values from, and to apply changes
+    int cost; ///< Accumulated costs
+    WorldModificationsMap modifications;
 };
 
+////////////////////////////////////////////////////////////////////////
 
 /**
- * Test whether the position is on-map.
- * @return Position is on-map.
+ * Get the tile of a map position.
+ * @param pos Position being queried.
+ * @return Tile at the specified position.
+ *
+ * @pre Position must be within map limits
  */
-inline bool Position::testBounds()
+inline MapTile ToolEffects::getMapTile(const Position& pos) const
 {
-    return (this->posX >= 0 && this->posX < WORLD_W
-                && this->posY >= 0 && this->posY < WORLD_H);
+    return this->getMapValue(pos) & LOMASK;
 }
 
 /**
- * Less-than comparison on positions (needed for map since Position is used as
- * key value).
- * @param pos1 First position.
- * @param pos2 Second position.
- * @return First position is smaller than second position.
+ * Get the total cost collected so far.
+ * @return Total cost.
  */
-inline bool operator<(const Position &pos1, const Position &pos2)
+inline int ToolEffects::getCost() const
 {
-    if (pos1.posX != pos2.posX) return pos1.posX < pos2.posX;
-    return pos1.posY < pos2.posY;
+    return this->cost;
 }
 
-#endif
+/**
+ * Add some amount to the total.
+ */
+inline void ToolEffects::addCost(int amount)
+{
+    assert(amount >= 0); // To be on the safe side.
+    this->cost += amount;
+}
+
+////////////////////////////////////////////////////////////////////////
 

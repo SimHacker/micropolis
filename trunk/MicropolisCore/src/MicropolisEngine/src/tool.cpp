@@ -68,7 +68,100 @@
 #include "stdafx.h"
 #include "micropolis.h"
 #include "text.h"
+#include "tool.h"
 
+
+////////////////////////////////////////////////////////////////////////
+
+/** Constructor. */
+ToolEffects::ToolEffects(Micropolis *mpolis)
+{
+    this->sim = mpolis;
+
+    this->clear();
+}
+
+ToolEffects::~ToolEffects()
+{
+    // Nothing to do
+}
+
+/** Reset all effects. */
+void ToolEffects::clear()
+{
+    this->cost = 0;
+    this->modifications.clear();
+}
+
+/**
+ * Perform the effects stored in the object to the simulator world.
+ * @param sim Simulator object to modify.
+ * @post Effects have been copied to the simulator world, and the #ToolEffect
+ *       object is ready for the next use.
+ */
+void ToolEffects::modifyWorld()
+{
+    WorldModificationsMap::const_iterator iter;
+    Micropolis *mpolis = this->sim;
+
+    mpolis->spend(this->cost);
+
+    for (iter = this->modifications.begin();
+                    iter != this->modifications.end(); iter++) {
+        Position pos(iter->first);
+        mpolis->map[pos.posX][pos.posY] = iter->second;
+    }
+
+    this->clear();
+}
+
+/**
+ * If there are enough funds, apply the effects.
+ * @return The effects have been applied.
+ * @note If funding was not adequate, the object is not modified (that is, the
+ *       effects are still available).
+ */
+bool ToolEffects::modifyIfEnoughFunding()
+{
+    if (this->sim->totalFunds < this->cost) {
+        return false; // Not enough money
+    }
+
+    this->modifyWorld();
+    return true;
+}
+
+/**
+ * Get a map value from the world.
+ * Unlike the simulator world, this method takes modifications made
+ * previously by (other) tools into account.
+ * @param pos Position of queried map value. Position must be on-map.
+ * @return Map value of the queried position.
+ */
+MapValue ToolEffects::getMapValue(const Position &pos) const
+{
+    WorldModificationsMap::const_iterator iter;
+
+    iter = this->modifications.find(pos);
+    if (iter == this->modifications.end()) {
+        assert(pos.testBounds());
+
+        return this->sim->map[pos.posX][pos.posY];
+    }
+
+    return (*iter).second;
+}
+
+/**
+ * Set a new map value.
+ * @param pos    Position to set.
+ * @param mapVal Value to set.
+ */
+void ToolEffects::setMapValue(const Position &pos, MapValue mapVal)
+{
+    assert(pos.testBounds());
+    this->modifications[pos] = mapVal;
+}
 
 ////////////////////////////////////////////////////////////////////////
 
