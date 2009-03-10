@@ -61,7 +61,7 @@
 
 
 ########################################################################
-# Micropolis Status View
+# Micropolis Map Panel
 # Don Hopkins
 
 

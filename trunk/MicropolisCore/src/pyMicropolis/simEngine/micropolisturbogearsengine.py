@@ -539,7 +539,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 self.loadScenario(scenario)
 
 
-    def tickSim(self, ticks=1):
+    def tickEngine(self, ticks=1):
 
         now = time.time()
         fracTime = now - math.floor(now)
@@ -559,7 +559,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': 'tick',
         })
-
 
         self.sendSessions({
             'message': 'editor',
@@ -631,7 +630,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                             'tiles': tiles,
                         })
 
-        self.tickSim(1)
+        self.tickEngine(1)
 
         return tileviews
 

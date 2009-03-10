@@ -98,6 +98,56 @@ class MicropolisGTKEngine(micropolisgenericengine.MicropolisGenericEngine):
         self.timerActive = False
 
 
+    def tickTimer(
+        self):
+
+        if not self.timerActive:
+            return False
+
+        self.stopTimer()
+
+        self.tickEngine()
+
+        if self.running:
+            self.startTimer()
+
+        return False
+
+
+    def tickEngine(self):
+
+        self.simTick()
+        if self.doAnimation and not self.tilesAnimated:
+            self.animateTiles()
+
+        self.simUpdate()
+
+        self.sendUpdate('tick')
+        self.sendUpdate('editor')
+        self.sendUpdate('map')
+
+
+    def handle_UIDidGenerateNewCity(self):
+        print "handle_UIDidGenerateNewCity(self)", (self,)
+        self.sendUpdate('tick')
+        self.sendUpdate('editor')
+        self.sendUpdate('map')
+
+
+    def handle_UIDidLoadCity(self):
+        print "handle_UIDidLoadCity(self)", (self,)
+        self.sendUpdate('tick')
+        self.sendUpdate('editor')
+        self.sendUpdate('map')
+
+
+    def handle_UIDidLoadScenario(self):
+        print "handle_UIDidLoadScenario(self)", (self,)
+        self.sendUpdate('tick')
+        self.sendUpdate('editor')
+        self.sendUpdate('map')
+
+
 ########################################################################
 
 

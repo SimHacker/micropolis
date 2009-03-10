@@ -1372,35 +1372,6 @@ You have 10 years to turn this swamp back into a city again.""",
         pass # Override in subclasses.
 
 
-    def tickTimer(
-        self):
-
-        if not self.timerActive:
-            return False
-
-        self.stopTimer()
-
-        self.tickEngine()
-
-        for view in self.views:
-            view.tickActiveTool()
-
-        for view in self.views:
-            view.tickTimer()
-
-        if self.running:
-            self.startTimer()
-
-        return False
-
-
-    def tickEngine(self):
-
-        self.simTick()
-        if self.doAnimation and not self.tilesAnimated:
-            self.animateTiles()
-
-
     def update(
         self,
         name,
@@ -1415,12 +1386,6 @@ You have 10 years to turn this swamp back into a city again.""",
                 self.startTimer()
             else:
                 self.stopTimer()
-
-
-    def updateViews(self):
-        print "UPDATEVIEWS"
-        for view in self.views:
-            view.updateView()
 
 
     def sendUpdate(self, name, *args):
@@ -1693,11 +1658,11 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def handle_UIInvalidateEditors(self):
-        self.updateViews() # @todo Use the normal update system.
+        pass
 
 
     def handle_UIInvalidateMaps(self):
-        self.updateViews() # @todo Use the normal update system.
+        pass
 
 
 ########################################################################
