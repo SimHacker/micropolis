@@ -245,14 +245,16 @@ void Micropolis::doEarthquake(int strength)
 /** Tell the front-end that the editors are not valid any more */
 void Micropolis::invalidateEditors()
 {
-    callback("UIInvalidateEditors", "");
+    callback("UIInvalidateEditors", ""); // old
+    callback("UIUpdate", "s", "editor"); // new
 }
 
 
 /** Tell the front-end that the maps are not valid any more */
 void Micropolis::invalidateMaps()
 {
-    callback("UIInvalidateMaps", "");
+    callback("UIInvalidateMaps", ""); // old
+    callback("UIUpdate", "s", "editor"); // new
 }
 
 

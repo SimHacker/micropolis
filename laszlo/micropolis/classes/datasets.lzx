@@ -51,41 +51,49 @@
     <dataset name="ds_scenarios">
 	<scenarios>
 	    <scenario
+		id="1"
 		name="Dullsville"
 		year="1900"
 		description="Boredom"
 	    ><command name="loadScenario" scenario="1"/></scenario>
 	    <scenario
+		id="2"
 		name="San Francsico"
 		year="1906"
 		description="Earthquake"
 	    ><command name="loadScenario" scenario="2"/></scenario>
 	    <scenario
+		id="3"
 		name="Hamburg"
 		year="1944"
 		description="Bombing"
 	    ><command name="loadScenario" scenario="3"/></scenario>
 	    <scenario
+		id="4"
 		name="Bern"
 		year="1965"
 		description="Traffic"
 	    ><command name="loadScenario" scenario="4"/></scenario>
 	    <scenario
+		id="5"
 		name="Tokyo"
 		year="1957"
 		description="Monster Attack"
 	    ><command name="loadScenario" scenario="5"/></scenario>
 	    <scenario
+		id="6"
 		name="Detroit"
 		year="1972"
 		description="Crime"
 	    ><command name="loadScenario" scenario="6"/></scenario>
 	    <scenario
+		id="7"
 		name="Boston"
 		year="2010"
 		description="Nuclear Meltdown"
 	    ><command name="loadScenario" scenario="7"/></scenario>
 	    <scenario
+		id="8"
 		name="Rio de Janeiro"
 		year="2047"
 		description="Coastal Flooding"

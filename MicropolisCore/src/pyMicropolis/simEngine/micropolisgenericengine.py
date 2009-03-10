@@ -1418,6 +1418,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def updateViews(self):
+        print "UPDATEVIEWS"
         for view in self.views:
             view.updateView()
 
