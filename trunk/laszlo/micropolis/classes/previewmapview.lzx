@@ -1,15 +1,17 @@
 <library>
 
 
-    <!-- Map View -->
+    <!-- Preview Map View -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="mapview"
-	bgcolor="0xffff00"
+    <class name="previewmapview" extends="mapview"
+	width="$once{120 * 3}"
+	height="$once{100 * 3}"
     >
+
 
     </class>
 

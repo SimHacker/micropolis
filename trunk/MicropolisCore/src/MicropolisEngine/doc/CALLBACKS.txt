@@ -47,17 +47,23 @@ Callback("UIInvalidateMaps", "");
 Callback("UISimRobots", "");
 Callback("UIUpdate", "s", name);
   Called when an aspect of the model has changed:
-    city: after load file, load scenario, or generate city
-    map: when small overall map changes
-    editor: when large close-up map changes
+    city: after load file, load scenario, or generate city [TODO]
+    map: when small overall map changes [TODO]
+    editor: when large close-up map changes [TODO]
     graph: when graph changes
     evaluation: when evaluation changes
     budget: when budget changes
     date: when date changes
     funds: when funds change
     demand: when demand changes
-    level: when level changes
+    gamelevel: when game level changes
+    cityname: when city name changes
+    paused: when game is paused or resumed
     speed: when speed changes
-    delay: when delay changes
-    option: when options change
+    passes: when passes changes
+    delay: when delay changes [TODO]
+    options: when an option changed
     taxrate: tax rate
+    message(dddbb): message changed
+
+    

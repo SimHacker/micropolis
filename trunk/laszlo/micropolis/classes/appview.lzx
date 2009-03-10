@@ -18,10 +18,9 @@
         <attribute name="idles" value="1"/>
         <attribute name="idlers" value="[]"/>
         <attribute name="panelWidth" value="200"/>
-        <attribute name="panelResizeBarX" value="200"/>
-        <attribute name="panelResizeBar1Y" value="200"/>
-        <attribute name="panelResizeBar2Y" value="$once{parent.height - 200}"/>
-        <attribute name="panelResizeBarSize" value="16"/>
+        <attribute name="panelResizeBarY" value="200"/>
+        <attribute name="panelResizeBar2X" value="200"/>
+        <attribute name="panelResizeBarSize" value="8"/>
         <attribute name="commandQueue" value="[]"/>
         <attribute name="nextUniqueID" value="1"/>
         <attribute name="worldCols" value="120"/>
@@ -33,6 +32,10 @@
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
         <attribute name="quaking" value="0"/>
+	<attribute name="gameMode" type="string" value="start"/>
+	<attribute name="demandWidth" value="60"/>
+	<attribute name="demandHeight" value="80"/>
+	<attribute name="gap" value="5"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -219,16 +222,17 @@
 	    var dy = 0;
 	    var quaking = this.quaking;
 	    if (quaking > 0) {
-		dx = (Math.random() * quaking) - (quaking / 2);
-		dy = (Math.random() * quaking) - (quaking / 2);
+		var q = quaking * 0.1;
+		dx = (Math.random() * q) - (q / 2);
+		dy = (Math.random() * q) - (q / 2);
 		quaking *= 0.9;
 		if (quaking < 1) {
 		    quaking = 0;
 		}
 		this.quaking = quaking;
 	    }
-	    this.top.setAttribute("x", dx, true);
-	    this.top.setAttribute("y", dy, true);
+	    this.playScreen.setAttribute("x", dx, true);
+	    this.playScreen.setAttribute("y", dy, true);
 
             this.newTiles = 0;
             this.idles++;
@@ -436,6 +440,16 @@
                         return codeMap[c1] + (codeMap[c2] * 64) + (codeMap[c2] * 4096);
                     }
 
+		    var charHandlers = {
+			'.': function() { tileOffset += 1; },
+			':': function() { tileOffset += 2; },
+			',': function() { tileOffset += 3; },
+			';': function() { tileOffset += 4; },
+			'!': function() { tileOffset += getNumber1() + 2; },
+			'@': function() { tileOffset += getNumber2() + 2; },
+			'#': function() { tileOffset += getNumber3() + 2; }
+		    };
+
                     while ((tileOffset >= 0) && 
                            (tileOffset < tileOffsetMax) &&
                            (codeOffset < codeOffsetMax)) {
@@ -443,29 +457,11 @@
                         var c1 = codedTiles.substr(codeOffset, 1);
                         codeOffset++;
 
-                        if (c1 == '.') {
-                            tileOffset++;
-                            continue;
-                        } else if (c1 == ':') {
-                            tileOffset += 2;
-                            continue;
-                        } else if (c1 == ',') {
-                            tileOffset += 3;
-                            continue;
-                        } else if (c1 == ';') {
-                            tileOffset += 4;
-                            continue;
-                        } else if (c1 == '!') {
-                            var skip = getNumber1() + 2;
-                            tileOffset += skip;
-                            continue;
-                        } else if (c1 == '@') {
-                            tileOffset += getNumber2() + 2;
-                            continue;
-                        } else if (c1 == '#') {
-                            tileOffset += getNumber3() + 2;
-                            continue;
-                        }
+			var charHandler = charHandlers[c1];
+			if (charHandler) {
+			    charHandler();
+			    continue;
+			}
 
                         var c2 = codedTiles.substr(codeOffset, 1);
                         codeOffset++
@@ -551,6 +547,12 @@
         </method>
 
 
+	<method name="handle_UIUpdate" args="args"><![CDATA[
+	    Debug.write("UIUpdate", args);
+	  ]]>
+	</method>
+
+
 	<method name="handle_UIDidGenerateNewCity"><![CDATA[
 	    this.resetCity();
 	  ]]>
@@ -583,6 +585,39 @@
 
 	<method name="handle_UIMakeSound" args="channel, sound"><![CDATA[
 	    Debug.write("MAKE SOUND", channel, sound);
+	  ]]>
+	</method>
+
+
+	<method name="playWithThisCity"><![CDATA[
+	    this.setAttribute("gameMode", "play");
+	  ]]>
+	</method>
+
+
+	<method name="chooseCity"><![CDATA[
+	    this.setAttribute("gameMode", "start");
+	  ]]>
+	</method>
+
+
+	<method name="generateCity"><![CDATA[
+	    // @todo generateCity
+	    Debug.write("generateCity");
+	  ]]>
+	</method>
+
+
+	<method name="loadCity"><![CDATA[
+	    // @todo loadCity
+	    Debug.write("loadCity");
+	  ]]>
+	</method>
+
+
+	<method name="loadScenario" args="scenarioID"><![CDATA[
+	    // @todo loadCity
+	    Debug.write("loadScenario", scenarioID);
 	  ]]>
 	</method>
 
@@ -689,7 +724,6 @@
                             case "messages": {
 
                                 var messages = pollChild['childNodes'];
-Debug.write("MESSAGES", messages);
                                 if (!messages || (messages.length == 0)) {
                                     break;
                                 }
@@ -698,17 +732,14 @@ Debug.write("MESSAGES", messages);
 				var m = messages.length;
 				for (j = 0; j < m; j++) {
 				    var messageEl = messages[j];
-Debug.write("messagesEl", messageEl);
 				    var attributes = messageEl.attributes;
-Debug.write("attributes", attributes);
 				    var messageName = attributes['message'];
-Debug.write("messageName", messageName);
 				    if (!messageName) {
 					continue;
 				    }
 				    var methodName = "handle_" + messageName;
 				    var method = classroot[methodName];
-Debug.write(classroot, methodName, method);
+				    Debug.write(classroot, "method", methodName, method, "atts", attributes);
 				    if (!method) {
 					Debug.write("Undefined message:", messageName, messageEl, attributes);
 					continue;
@@ -731,137 +762,289 @@ Debug.write(classroot, methodName, method);
 
         </node>
 
-	<view name="top" id="gTop"
+	<view name="startScreen" id="gStartScreen"
 	    x="0"
 	    y="0"
 	    width="${parent.width}"
 	    height="${parent.height}"
+	    visible="${classroot.gameMode == 'start'}"
 	>
 
-	    <vresizebar name="vsep1" id="gVSep1"
-	      trackvar="'panelResizeBarX'"
-	      maxx="${parent.width - this.width}"
-	      defaultx="$once{classroot.panelResizeBarX}"
-	      x="$once{classroot.panelResizeBarX}"
-	      width="${classroot.panelResizeBarSize}"
-	      overhang="0"
+	    <simplelayout axis="y"/>
+
+	    <text
+		text="Start Screen"
+		resize="true"
 	    />
 
-	    <view name="tvs"
-		x="${parent.vsep1.x + parent.vsep1.width}"
-		y="0"
-		width="${parent.width - this.x}"
-		height="${parent.height}"
+	    <previewmapview/>
+
+	   <button
+		text="Play with This City"
+		onclick="classroot.playWithThisCity()"
+	   />
+
+	   <button
+		text="Generate City"
+		onclick="classroot.generateCity()"
+	   />
+
+	   <button
+		text="Load City"
+		onclick="classroot.loadCity()"
+	   />
+
+	   <text
+		text="Scenarios"
+		resize="true"
+	    />
+
+	    <view
+		width="${parent.width}"
 	    >
-
-		<hresizebar name="hsep1" id="gHSep1"
-		  trackvar="'panelResizeBar1Y'"
-		  maxy="${parent.height - this.height}"
-		  defaulty="$once{classroot.panelResizeBar1Y}"
-		  y="$once{classroot.panelResizeBar1Y}"
-		  x="0"
-		  height="${classroot.panelResizeBarSize}"
-		  width="${parent.width - this.x}"
-		  overhang="0"
+		<wrappinglayout
+		    spacing="4"
 		/>
 
-		<tileview id="tv1" name="tv1"
-		    x="0"
-		    y="0"
-		    width="${parent.width}"
-		    height="${parent.hsep1.y}"
-		    bgcolor="0xBC6F56"
-		/>
-
-		<tileview id="tv2" name="tv2"
-		    x="0"
-		    y="${parent.hsep1.y + parent.hsep1.height}"
-		    width="${parent.width}"
-		    height="${parent.height - this.y}"
-		    bgcolor="0xBC6F56"
-		/>
-
+		<button
+		    datapath="ds_scenarios:/scenarios/scenario"
+		    text="${this.scenarioName + ', ' + this.scenarioYear + '\n' + this.scenarioDescription}"
+		    onclick="classroot.sendCommand(this.data.childNodes[0].serialize())"
+		>
+		    <attribute name="scenarioID" value="$path{'@id'}"/>
+		    <attribute name="scenarioName" value="$path{'@name'}"/>
+		    <attribute name="scenarioYear" value="$path{'@year'}"/>
+		    <attribute name="scenarioDescription" value="$path{'@description'}"/>
+		</button>
 	    </view>
 
-	    <view name="left"
+	</view>
+
+	<view name="playScreen" id="gPlayScreen"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.height}"
+	    visible="${classroot.gameMode == 'play'}"
+	>
+
+	    <hresizebar name="hsep1" id="gHSep1"
+		trackvar="'panelResizeBarY'"
+		maxy="${parent.height - this.height}"
+		defaulty="$once{classroot.panelResizeBarY}"
+		x="0"
+		y="$once{classroot.panelResizeBarY}"
+		width="${parent.width}"
+		height="${classroot.panelResizeBarSize}"
+		overhang="0"
+	    />
+
+	    <tileview name="tileView" id="gTileView"
+		x="0"
+		y="${parent.hsep1.y + parent.hsep1.height}"
+		width="${parent.width}"
+		height="${parent.height - this.y}"
+		bgcolor="0xBC6F56"
+	    />
+
+
+	    <view name="top"
 		x="0"
 		y="0"
-		width="${parent.vsep1.x}"
-		height="${parent.height}"
+		width="${parent.width}"
+		height="${parent.hsep1.y}"
 		clip="true"
 	    >
 
-		<hresizebar name="hsep2" id="gHSep2"
-		  trackvar="'panelResizeBar2Y'"
-		  maxy="${parent.height - this.height}"
-		  defaulty="$once{classroot.panelResizeBar2Y}"
-		  y="$once{classroot.panelResizeBar2Y}"
-		  x="0"
-		  height="${classroot.panelResizeBarSize}"
-		  width="${parent.width - this.x}"
-		  overhang="0"
+		<vresizebar name="vsep1" id="gVSep1"
+		    trackvar="'panelResizeBar2X'"
+		    maxx="${parent.width - this.width}"
+		    defaultx="$once{classroot.panelResizeBar2X}"
+		    x="$once{classroot.panelResizeBar2X}"
+		    y="0"
+		    width="${classroot.panelResizeBarSize}"
+		    height="${parent.height - this.y}"
+		    overhang="0"
 		/>
 
-		<view name="cp"
-		    x="0"
+		<view name="topRight" id="gTopRight"
+		    x="${parent.vsep1.x + parent.vsep1.width}"
 		    y="0"
-		    width="${parent.width}"
-		    height="${parent.hsep2.y}"
+		    width="${parent.width - this.x}"
+		    height="${parent.height}"
 		    clip="true"
 		>
 
-		    <view
-			x="10"
-			width="${parent.width - 30}"
+		    <tabs
+			width="${parent.width}"
+			height="${parent.height}"
 		    >
 
-			<simplelayout axis="y" spacing="5"/>
-
-			<view/>
-
-			<controlpanel
+			<tabpane
+			    text="Notice"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			    <messageview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-			<newcityview
+			<tabpane
+			    text="Messages"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			    <messageview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-			<budgetview
+			<tabpane
+			    text="Evaluation"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			    <evaluationview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-			<evaluationview
+			<tabpane
+			    text="History"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			    <graphview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-			<messageview
+			<tabpane
+			    text="Budget"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			    <budgetview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-			<graphview
+			<tabpane
+			    text="Map"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			</tabpane>
 
-			<mapview
+			<tabpane
+			    text="Disasters"
 			    width="${parent.width}"
-			/>
+			    height="${parent.height}"
+			>
+			</tabpane>
 
-			<view/>
+			<tabpane
+			    text="Control"
+			    width="${parent.width}"
+			    height="${parent.height}"
+			>
+			    <controlpanel
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-		    </view>
+			<tabpane
+			    text="New City"
+			    width="${parent.width}"
+			    height="${parent.height}"
+			>
+			    <newcityview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
 
-		    <vscrollbar/>
+			<tabpane
+			    text="Map"
+			    width="${parent.width}"
+			    height="${parent.height}"
+			>
+			    <mapview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
+			</tabpane>
+
+		    </tabs>
 
 		</view>
 
-		<drawview id="dv" name="dv"
+		<view name="topLeft" id="gTopLeft"
 		    bgcolor="0x808080"
 		    x="0"
-		    y="${parent.hsep2.y + parent.hsep2.height}"
-		    width="${parent.width}"
-		    height="${parent.height - this.y}"
-		/>
+		    y="0"
+		    width="${parent.vsep1.x}"
+		    height="${parent.parent.height}"
+		    clip="true"
+		>
+
+		    <view width="${parent.width}">
+
+			<view name="demandGauge"
+			    x="${classroot.gap}"
+			    y="${classroot.gap}"
+			    width="${classroot.demandWidth}"
+			    height="${classroot.demandHeight}"
+			    bgcolor="${0x404040}"
+			/>
+
+			<view name="dateFundsDisplay"
+			    x="${parent.demandGauge.x + parent.demandGauge.width + classroot.gap}"
+			    y="${classroot.gap}"
+			    width="${(parent.width - classroot.gap) - this.x}"
+			    height="${parent.demandGauge.height}"
+			    bgcolor="${0xffffff}"
+			    clip="true"
+			>
+
+			    <simplelayout axis="y"/>
+
+			    <text
+				text="Date:"
+			    />
+
+			    <text
+				text="Apr 1966"
+				resize="true"
+			    />
+
+			    <text
+				text="Funds:"
+				resize="true"
+			    />
+
+			    <text
+				text="$472,332"
+				resize="true"
+			    />
+
+			</view>
+
+			<navigationmapview
+			    x="${classroot.gap}"
+			    y="${parent.dateFundsDisplay.y + parent.dateFundsDisplay.height + classroot.gap}"
+			/>
+
+		    </view>
+
+		</view>
 
 	    </view>
 

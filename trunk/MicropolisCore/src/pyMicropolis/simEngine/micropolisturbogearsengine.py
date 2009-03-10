@@ -328,6 +328,8 @@ class Session(object):
         self.engine = None
         self.views = []
         self.messages = []
+        self.updateEditor = False
+        self.updateMap = False
 
         self.touch()
 
@@ -357,6 +359,19 @@ class Session(object):
     def receiveMessages(self):
         messages = self.messages
         self.messages = []
+
+        if self.updateEditor:
+            messages.append({
+                'message': 'editor',
+            })
+            self.updateEditor = False
+
+        if self.updateMap:
+            messages.append({
+                'message': 'map',
+            })
+            self.updateMap = False
+
         return messages
 
 
@@ -531,8 +546,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.blinkFlag = fracTime < 0.5
 
-        self.resume()
-        
         lastPasses = self.simPasses
         self.setPasses(ticks)
         #print "TICK", ticks
@@ -542,6 +555,19 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.setPasses(lastPasses)
         self.animateTiles()
         self.simUpdate()
+
+        self.sendSessions({
+            'message': 'tick',
+        })
+
+
+        self.sendSessions({
+            'message': 'editor',
+        })
+
+        self.sendSessions({
+            'message': 'map',
+        })
 
 
     def handlePoll(self, poll, session):
@@ -829,26 +855,24 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def handle_UIUpdate(self, aspect, *args):
         #print "handle_UIUpdate(self, aspect)", (self, aspect)
 
+        message = {
+            'message': 'UIUpdate',
+            'aspect': aspect,
+            'args': args,
+        }
+
         if aspect == "funds":
 
-            self.sendSessions({
-                'message': "UIUpdateFunds",
-                'funds': self.totalFunds,
-            })
+            message['funds'] = self.totalFunds
 
         elif aspect == "date":
 
-            self.sendSessions({
-                'message': "UIUpdateDate",
-                'cityTime': self.cityTime,
-            })
+            message['cityTime'] = self.cityTime
 
         elif aspect == "graph":
 
-            self.sendSessions({
-                'message': "UIUpdateGraph",
-                # TODO
-            })
+            graphData = [1, 2, 3, 2, 1]; # @todo make graph data to send
+            message['graphData'] = graphData
 
         elif aspect == "evaluation":
 
@@ -858,8 +882,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     self.getProblemNumber(i),
                     self.getProblemVotes(i)))
 
-            self.sendSessions({
-                'message': "UIUpdateEvaluation",
+            message.update({
                 'currentYear': self.currentYear(),
                 'cityYes': self.cityYes,
                 'cityScore': self.cityScore,
@@ -874,47 +897,62 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif aspect == "paused":
 
-            pass
+            message['paused'] = self.simPaused and 1 or 0
 
         elif aspect == "passes":
 
-            pass
+            return
 
         elif aspect == "speed":
 
-            pass
+            message['speed'] = self.speed
 
         elif aspect == "taxrate":
 
-            pass
+            message['cityTax'] = self.cityTax
 
         elif aspect == "demand":
 
-            pass
+            resDemand, comDemand, indDemand = self.getDemands()
+            message['resDemand'] = resDemand
+            message['comDemand'] = comDemand
+            message['imdDemand'] = indDemand
 
         elif aspect == "options":
 
-            pass
+            pass # TODO: copy options to message
 
         elif aspect == "gamelevel":
 
-            pass
+            message['gameLevel'] = self.gameLevel
 
         elif aspect == "cityname":
 
-            pass
+            message['cityName'] = self.cityName
 
         elif aspect == "budget":
 
-            pass
+            pass # TODO: copy budget data to message
 
         elif aspect == "message":
 
-            pass
+            message.update({
+                'number': args[0],
+                'x': args[1],
+                'y': args[2],
+                'picture': args[3],
+                'important': args[4],
+            })
 
-        else:
-            print "UPDATE unknown aspect", aspect
+        elif aspect == "editor":
+            for session in self.sessions:
+                session.updateEditor = True
 
+        elif aspect == "map":
+            for session in self.sessions:
+                session.updateMap = True
+
+        self.sendSessions(message)
 
 
 ########################################################################

@@ -20,6 +20,8 @@
     <include href="evaluationview.lzx"/>
     <include href="graphview.lzx"/>
     <include href="mapview.lzx"/>
+    <include href="previewmapview.lzx"/>
+    <include href="navigationmapview.lzx"/>
     <include href="messageview.lzx"/>
     <include href="newcityview.lzx"/>
     <include href="appview.lzx"/>

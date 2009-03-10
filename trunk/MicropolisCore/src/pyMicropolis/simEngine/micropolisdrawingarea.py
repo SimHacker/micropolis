@@ -170,7 +170,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def __init__(
         self,
         engine=None,
-        interests=('city'),
+        interests=('city', 'map', 'editor', 'tool'),
         sprite=micropolisengine.SPRITE_NOTUSED,
         showData=True,
         showRobots=True,
@@ -178,6 +178,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         showChalk=True,
         mapStyle='all',
         overlayAlpha=0.5,
+        engaged=True,
         **args):
 
         args['tileCount'] = micropolisengine.TILE_COUNT
@@ -192,10 +193,12 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         self.showChalk = showChalk
         self.mapStyle = mapStyle
         self.overlayAlpha = overlayAlpha
+        self.engaged = engaged
 
         tiledrawingarea.TileDrawingArea.__init__(self, **args)
 
         self.sprite = sprite
+
         engine.expressInterest(
             self,
             interests)
@@ -211,6 +214,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         if True:
             self.tileMap[micropolisengine.REDGE] = micropolisengine.FIRE
             self.tileMap[micropolisengine.CHANNEL] = micropolisengine.RADTILE
+
 
     def reset(self):
         self.selectToolByName('Bulldozer')
@@ -430,11 +434,11 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
 
 
     def engage(self):
-        self.engine.addView(self)
+        self.engaged = True
 
 
     def disengage(self):
-        self.engine.removeView(self)
+        self.engaged = False
 
 
 ########################################################################
