@@ -40,15 +40,11 @@ Budget
 	<simplelayout axis="y"/>
 
 
-	<checkbox name="visibleCheck"
-	    text="Budget"
-	    value="false"
-	/>
-
 	<view name="v"
 	    x="5"
-	    width="${parent.width - 5}"
-	    visible="${parent.visibleCheck.value}"
+	    y="5"
+	    width="${parent.width - 10}"
+	    height="${parent.height - 10}"
 	>
 
 	    <simplelayout axis="y" spacing="5"/>
@@ -56,14 +52,14 @@ Budget
 	    <text name="taxLabel"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Tax rate: ' + Math.floor(parent.taxSlider.value + 0.5) + '%'}"
 	    />
 
 	    <slider name="taxSlider"
 		x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width - 20}"
 		minvalue="0"
 		maxvalue="20"
 		keystep="1"
@@ -76,21 +72,21 @@ Budget
 	    <text name="fireLabel1"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Fire request: $' + classroot.fireRequest}"
 	    />
 
 	    <text name="fireLabel2"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Funds: ' + classroot.firePercent + '% = $' + classroot.fireFunds}"
 	    />
 
 	    <slider name="fireSlider"
 		x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width - 20}"
 		minvalue="0"
 		maxvalue="100"
 		keystep="10"
@@ -103,21 +99,21 @@ Budget
 	    <text name="policeLabel1"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Police request: $' + classroot.policeRequest}"
 	    />
 
 	    <text name="policeLabel2"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Funds: ' + classroot.policePercent + '% = $' + classroot.policeFunds}"
 	    />
 
 	    <slider name="policeSlider"
 		x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width - 20}"
 		minvalue="0"
 		maxvalue="100"
 		keystep="10"
@@ -130,21 +126,21 @@ Budget
 	    <text name="roadLabel1"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		resize="true"
 		text="${'Road request: $' + classroot.roadRequest}"
 	    />
 
 	    <text name="roadLabel2"
 	        x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width - 20}"
 		text="${'Funds: ' + classroot.roadPercent + '% = $' + classroot.roadFunds}"
 	    />
 
 	    <slider name="roadSlider"
 		x="10"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width - 20}"
 		minvalue="0"
 		maxvalue="100"
 		keystep="10"

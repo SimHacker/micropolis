@@ -10,13 +10,18 @@
     <class name="appview">
 
 
-        <attribute name="pollDelay" value="50"/>
+        <attribute name="pollDelay" value="250"/>
         <attribute name="pollActive" value="false"/>
         <attribute name="pollDelegate" value="null"/>
         <attribute name="polls" value="1"/>
         <attribute name="pollers" value="[]"/>
         <attribute name="idles" value="1"/>
         <attribute name="idlers" value="[]"/>
+        <attribute name="animateDelay" value="100"/>
+        <attribute name="animateActive" value="false"/>
+        <attribute name="animateDelegate" value="null"/>
+        <attribute name="animationTicks" value="1"/>
+        <attribute name="animatorsList" value="[]"/>
         <attribute name="panelWidth" value="200"/>
         <attribute name="panelResizeBarY" value="200"/>
         <attribute name="panelResizeBar2X" value="200"/>
@@ -179,6 +184,7 @@
         <method name="startSession" args="sessionID"><![CDATA[
             this.setAttribute("sessionID", sessionID);
             this.pollStart();
+	    this.animateStart();
           ]]>
         </method>
 
@@ -216,41 +222,110 @@
         </method>
 
 
+<!--
         <handler name="onidle" reference="LzIdleService.LzIdle"><![CDATA[
 
-	    var dx = 0;
-	    var dy = 0;
-	    var quaking = this.quaking;
-	    if (quaking > 0) {
-		var q = quaking * 0.1;
-		dx = (Math.random() * q) - (q / 2);
-		dy = (Math.random() * q) - (q / 2);
-		quaking *= 0.9;
-		if (quaking < 1) {
-		    quaking = 0;
-		}
-		this.quaking = quaking;
-	    }
-	    this.playScreen.setAttribute("x", dx, true);
-	    this.playScreen.setAttribute("y", dy, true);
-
-            this.newTiles = 0;
             this.idles++;
 
             var idlers = this.idlers;
             var n = idlers.length;
             var i;
 
-            // TODO: For now, zero idlers means zero viewers of tiles, but that might change. 
-            // TODO: Only animate tiles if anyone is viewing them, but call idlers anyway.
-            if (n > 0) {
-                for (i = 0; i < n; i++) {
-                    idlers[i].idle();
-                }
-            }
+	    for (i = 0; i < n; i++) {
+		idlers[i].idle();
+	    }
 
           ]]>
         </handler>
+-->
+
+
+        <method name="addAnimator" args="animator"><![CDATA[
+            //Debug.write("appview addAnimator", animator);
+            var i = this.indexOf(this.animatorsList, animator);
+            if (i < 0) {
+                this.animatorsList.push(animator);
+            }
+
+	    if (!this.animateActive) {
+	        this.animateStart();
+	    }
+          ]]>
+        </method>
+
+
+        <method name="removeAnimator" args="animator"><![CDATA[
+            //Debug.write("appview removeAnimator", animator);
+            var i = this.indexOf(this.animatorsList, animator);
+            if (i >= 0) {
+                this.animatorsList.splice(i, 1);
+            }
+
+	    if (this.animateActive &&
+	        this.animatorsList.length == 0) {
+		this.animateStop();
+	    }
+          ]]>
+        </method>
+
+
+        <method name="animateStart"><![CDATA[
+	    Debug.write("animateStart");
+            if (this.animateActive) {
+                //Debug.write("animateStart already started");
+                return;
+            }
+            if (!this.animateDelegate) {
+                this.animateDelegate = new lz.Delegate(this, 'doAnimate');
+            }
+            var t = lz.Timer.addTimer(this.animateDelegate, this.animateDelay);
+            this.animateActive = true;
+          ]]>
+        </method>
+
+
+        <method name="animateContinue"><![CDATA[
+            // This is a bit confused, and violates DRY. Refactor animateStart and animateContinue.
+            if (!this.animateDelegate) {
+                this.animateDelegate = new lz.Delegate(this, 'doAnimate');
+            }
+            lz.Timer.resetTimer(this.animateDelegate, this.animateDelay);
+            this.animateActive = true;
+            //Debug.write("animateContinue");
+          ]]>
+        </method>
+
+
+        <method name="animateStop"><![CDATA[
+	    Debug.write("animateStop");
+            if (!this.animateActive) {
+                return;
+            }
+            lz.Timer.removeTimer(this.pollDelegate);
+          ]]>
+        </method>
+
+
+	<method name="doAnimate" args="ignore"><![CDATA[
+
+	    //Debug.write("doAnimate");
+
+	    this.animationTicks++;
+	    this.newTiles = 0;
+
+	    //this.animateTiles();
+
+            var animatorsList = this.animatorsList;
+            var n = animatorsList.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        animatorsList[i].doAnimate();
+	    }
+
+	    this.animateContinue();
+
+	  ]]>
+	</method>
 
 
         <method name="addPoller" args="poller"><![CDATA[
@@ -352,6 +427,8 @@
                 body: body
             };
 
+	    this.pollStop();
+
             ds_poll.setAttribute("src", "/server/micropolisPoll");
             ds_poll.setQueryParams(params);
             ds_poll.setAttribute("querytype", "post");
@@ -396,7 +473,7 @@
                             var tileDict = tileDictRow[c];
                             if (!tileDict) {
                                 tileDict = {
-                                    'idles': -1
+                                    'animationTicks': -1
                                 };
                                 tileDictRow[c] = tileDict;
                             }
@@ -477,7 +554,7 @@
                         
                         if (!tileDict) {
                             tileDict = {
-                                'idles': -1
+                                'animationTicks': -1
                             };
                             tileDictRow[col + c] = tileDict;
                         }
@@ -497,6 +574,7 @@
 
 
         <method name="animateTiles"><![CDATA[
+
             var cols = this.worldCols;
             var rows = this.worldRows;
             var aniTiles = this.aniTiles;
@@ -553,19 +631,19 @@
 	</method>
 
 
-	<method name="handle_UIDidGenerateNewCity"><![CDATA[
+	<method name="handle_UIDidGenerateNewCity" args="args"><![CDATA[
 	    this.resetCity();
 	  ]]>
 	</method>
 
 
-	<method name="handle_UIDidLoadCity"><![CDATA[
+	<method name="handle_UIDidLoadCity" args="args"><![CDATA[
 	    this.resetCity();
 	  ]]>
 	</method>
 
 
-	<method name="handle_UIDidLoadScenario"><![CDATA[
+	<method name="handle_UIDidLoadScenario" args="args"><![CDATA[
 	    this.resetCity();
 	  ]]>
 	</method>
@@ -577,14 +655,31 @@
 	</method>
 
 
-	<method name="handle_UIStopEarthquake"><![CDATA[
+	<method name="handle_UIStopEarthquake" args="args"><![CDATA[
 	    this.setAttribute("quaking", 0);
 	  ]]>
 	</method>
 
 
-	<method name="handle_UIMakeSound" args="channel, sound"><![CDATA[
-	    Debug.write("MAKE SOUND", channel, sound);
+	<method name="handle_UIMakeSound" args="args"><![CDATA[
+	    var channel = args['channel'];
+	    var sound = args['sound'];
+	    Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
+	  ]]>
+	</method>
+
+
+	<method name="handle_tick" args="args"><![CDATA[
+	  ]]>
+	</method>
+
+
+	<method name="handle_editor" args="args"><![CDATA[
+	  ]]>
+	</method>
+
+
+	<method name="handle_map" args="args"><![CDATA[
 	  ]]>
 	</method>
 
@@ -739,7 +834,7 @@
 				    }
 				    var methodName = "handle_" + messageName;
 				    var method = classroot[methodName];
-				    Debug.write(classroot, "method", methodName, method, "atts", attributes);
+				    //Debug.write(classroot, "method", methodName, method, "atts", attributes);
 				    if (!method) {
 					Debug.write("Undefined message:", messageName, messageEl, attributes);
 					continue;
@@ -808,7 +903,7 @@
 
 		<button
 		    datapath="ds_scenarios:/scenarios/scenario"
-		    text="${this.scenarioName + ', ' + this.scenarioYear + '\n' + this.scenarioDescription}"
+		    text="${this.scenarioName + ', ' + this.scenarioYear + '\n' + this.scenarioDescription + '\n'}"
 		    onclick="classroot.sendCommand(this.data.childNodes[0].serialize())"
 		>
 		    <attribute name="scenarioID" value="$path{'@id'}"/>
