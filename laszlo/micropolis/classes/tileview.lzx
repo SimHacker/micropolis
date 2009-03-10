@@ -44,7 +44,7 @@
 
             if (this.visible) {
                 gApp.addPoller(this);
-                gApp.addIdler(this);
+                gApp.addAnimator(this);
             }
 
           ]]>
@@ -53,7 +53,7 @@
 
         <handler name="ondestroy"><![CDATA[
             gApp.removePoller(this);
-            gApp.removeIdler(this);
+            gApp.removeAnimator(this);
           ]]>
         </handler>
 
@@ -62,10 +62,10 @@
             //Debug.write("tileview onvisible", this.visible);
             if (this.visible) {
                 gApp.addPoller(this);
-                gApp.addIdler(this);
+                gApp.addAnimator(this);
             } else {
                 gApp.removePoller(this);
-                gApp.removeIdler(this);
+                gApp.removeAnimator(this);
             }
           ]]>
         </handler>
@@ -134,7 +134,12 @@
 
 
         <method name="idle"><![CDATA[
-            //Debug.write("idle", this);
+	  ]]>
+	</method>
+
+
+	<method name="doAnimate"><![CDATA[
+            //Debug.write("doAnimate", this);
             var newTilesMax = gApp.newTilesMax;
             var tileDictRows = gApp.tileDictRows;
             var tileRows = this.tileRows;
@@ -144,7 +149,7 @@
             var viewRows = this.viewRows;
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
-            var idles = gApp.idles;
+            var animationTicks = gApp.animationTicks;
             var aniTiles = gApp.aniTiles;
 
             var col, row;
@@ -172,9 +177,9 @@
                     }
 
                     var tileIndex = tileDict['index'];
-                    if ((tileDict['idles'] < idles) &&
+                    if ((tileDict['animationTicks'] < animationTicks) &&
                         tileDict['animated']) {
-                        tileDict['idles'] = idles;
+                        tileDict['animationTicks'] = animationTicks;
                         var newTileIndex = aniTiles[tileIndex];
                         var animated = tileIndex != newTileIndex;
                         if (animated) {
