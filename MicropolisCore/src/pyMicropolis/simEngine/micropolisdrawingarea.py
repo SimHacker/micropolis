@@ -170,7 +170,7 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def __init__(
         self,
         engine=None,
-        interests=('city', 'map', 'editor', 'tool'),
+        interests=('city', 'tick'),
         sprite=micropolisengine.SPRITE_NOTUSED,
         showData=True,
         showRobots=True,
@@ -202,10 +202,18 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
         engine.expressInterest(
             self,
             interests)
+        engine.addView(self)
 
         self.blinkFlag = True
 
         self.reset()
+
+
+    def update(self, name, *args):
+
+        #print "MicropolisDrawingArea update", self, name, args
+
+        self.queue_draw()
 
 
     def makeTileMap(self):
@@ -538,7 +546,7 @@ class NoticeMicropolisDrawingArea(MicropolisDrawingArea):
 ########################################################################
 
 
-class MiniMicropolisDrawingArea(MicropolisDrawingArea):
+class NavigationMicropolisDrawingArea(MicropolisDrawingArea):
 
 
     def __init__(
@@ -603,10 +611,11 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
             currentView = self.currentView
 
         views = self.engine.views
+        #print "drawOtherViews", views
 
         for view in views:
 
-            if view == self:
+            if not view.pannable:
                 continue
 
             x, y, width, height = self.getViewBox(view)
@@ -701,7 +710,7 @@ class MiniMicropolisDrawingArea(MicropolisDrawingArea):
 
         for view in views:
 
-            if view == self:
+            if not view.pannable:
                 continue
 
             viewX, viewY, viewWidth, viewHeight = self.getViewBox(view)

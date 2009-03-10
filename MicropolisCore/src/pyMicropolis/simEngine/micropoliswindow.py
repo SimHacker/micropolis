@@ -130,16 +130,16 @@ class MicropolisPanedWindow(gtk.Window):
 
         # Make the big map view.
 
-        bigMapView = micropolisdrawingarea.EditableMicropolisDrawingArea(
+        editMapView = micropolisdrawingarea.EditableMicropolisDrawingArea(
                 engine=self.engine)
-        self.bigMapView = bigMapView
+        self.editMapView = editMapView
 
-        # Make the small map view.
+        # Make the navigation map view.
 
-        smallMapView = micropolisdrawingarea.MiniMicropolisDrawingArea(
+        navigationMapView = micropolisdrawingarea.NavigationMicropolisDrawingArea(
                 engine=self.engine)
-        self.smallMapView = smallMapView
-        smallMapView.set_size_request(
+        self.navigationMapView = navigationMapView
+        navigationMapView.set_size_request(
             micropolisengine.WORLD_W,
             micropolisengine.WORLD_H)
 
@@ -148,7 +148,7 @@ class MicropolisPanedWindow(gtk.Window):
         gaugeView = micropolisgaugeview.MicropolisGaugeView(engine=self.engine)
         self.gaugeView = gaugeView
 
-        # Make the vbox for the gauge and small map views.
+        # Make the vbox for the gauge and navigation map views.
 
         vbox1 = gtk.VBox(False, 0)
         self.vbox1 = vbox1
@@ -207,7 +207,7 @@ class MicropolisPanedWindow(gtk.Window):
 
         mapPanel = micropolismappanel.MicropolisMapPanel(
             engine=engine,
-            mapViews=[self.smallMapView, self.bigMapView,])
+            mapViews=[self.navigationMapView, self.editMapView,])
         self.mapPanel = mapPanel
         notebook1.addLabelTab('Map', mapPanel)
 
@@ -239,7 +239,7 @@ class MicropolisPanedWindow(gtk.Window):
         # Pack the views into the panes.
 
         vbox1.pack_start(gaugeView, False, False, 0)
-        vbox1.pack_start(smallMapView, True, True, 0)
+        vbox1.pack_start(navigationMapView, True, True, 0)
 
         hpaned1.pack1(vbox1, resize=False, shrink=False)
         hpaned1.pack2(notebook1, resize=False, shrink=False)
@@ -250,7 +250,7 @@ class MicropolisPanedWindow(gtk.Window):
         vpaned1.pack1(hpaned1, resize=False, shrink=False)
         vpaned1.pack2(vpaned2, resize=False, shrink=False)
 
-        vpaned2.pack1(bigMapView, resize=False, shrink=False)
+        vpaned2.pack1(editMapView, resize=False, shrink=False)
         vpaned2.pack2(hpaned2, resize=False, shrink=False)
 
         modeNotebook.append_page(startPanel)
@@ -273,23 +273,23 @@ class MicropolisPanedWindow(gtk.Window):
             engine = self.engine
             gameMode = engine.gameMode
 
-            smallMapView = self.smallMapView
-            bigMapView = self.bigMapView
+            navigationMapView = self.navigationMapView
+            editMapView = self.editMapView
             modeNotebook = self.modeNotebook
 
             if gameMode == 'start':
 
-                smallMapView.disengage()
-                bigMapView.disengage()
+                navigationMapView.disengage()
+                editMapView.disengage()
                 engine.pause()
                 modeNotebook.set_current_page(0)
 
             elif gameMode == 'play':
 
-                smallMapView.engage()
-                bigMapView.engage()
-                smallMapView.updateView()
-                bigMapView.updateView()
+                navigationMapView.engage()
+                editMapView.engage()
+                navigationMapView.updateView()
+                editMapView.updateView()
                 engine.resume()
                 modeNotebook.set_current_page(1)
 
@@ -444,9 +444,9 @@ class MicropolisPanedWindow(gtk.Window):
 
         #print "CENTERONTILEHANDLER", self, tileX, tileY
 
-        bigMapView = self.bigMapView
-        bigMapView.setScale(1.0)
-        bigMapView.centerOnTile(
+        editMapView = self.editMapView
+        editMapView.setScale(1.0)
+        editMapView.centerOnTile(
             tileX,
             tileY)
 
@@ -471,9 +471,9 @@ class MicropolisPanedWindow(gtk.Window):
         self.hpaned1.set_position(150)
         self.hpaned2.set_position(1000)
 
-        bigMapView = self.bigMapView
-        bigMapView.panTo(-200, -200)
-        bigMapView.setScale(1.0)
+        editMapView = self.editMapView
+        editMapView.panTo(-200, -200)
+        editMapView.setScale(1.0)
 
 
     def handleRealize(

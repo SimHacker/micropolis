@@ -176,7 +176,7 @@ class MicropolisView(gtk.DrawingArea):
 
     def update(self, name, *args):
 
-        #print "MicropolisView update", self, name, args
+        print "MicropolisView update", self, name, args
 
         self.queue_draw()
 
