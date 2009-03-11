@@ -1543,59 +1543,89 @@ void Micropolis::toolDown(EditingTool tool, short tileX, short tileY)
     invalidateEditors();
 }
 
-
-void Micropolis::toolDrag(EditingTool tool, short fromX, short fromY, short toX, short toY)
+/**
+ * Drag a tool from (\a fromX, \a fromY) to (\a toX, \a toY).
+ * @param tool Tool being dragged.
+ * @param fromX Horizontal coordinate of the starting position.
+ * @param fromY Vertical coordinate of the starting position.
+ * @param toX Horizontal coordinate of the ending position.
+ * @param toY Vertical coordinate of the ending position.
+ */
+void Micropolis::toolDrag(EditingTool tool,
+                            short fromX, short fromY, short toX, short toY)
 {
-    short x = toX;
-    short y = toY;
-    short lx = fromX;
-    short ly = fromY;
-    short dx = x - lx;
-    short dy = y - ly;
-
-    if ((dx == 0) && (dy == 0)) return;
-
-    /// @bug This is crap code that needs to be rewritten.
-    /// @todo Use a proper breshenham that draws the corners.
-
+    // Do not drag big tools.
     int toolSize = gToolSize[tool];
-    float rx = (float)(dx < 0 ? 1 : 0);
-    float ry = (float)(dy < 0 ? 1 : 0);
-    short adx = absoluteValue(dx);
-    short ady = absoluteValue(dy);
+    if (toolSize > 1) {
+        doTool(tool, toX, toY);
 
-    float step;
-    if (adx > ady) {
-        step = (float)0.3 / adx;
-    } else {
-        step = (float)0.3 / ady;
+        simPass = 0; // update editors overlapping this one
+        invalidateEditors();
+        return;
     }
 
-    float i;
-    for (i = 0.0; i <= 1 + step; i += step) {
-        float tx = fromX + i * dx;
-        float ty = fromY + i * dy;
-        float dtx = absoluteValue(tx - lx);
-        float dty = absoluteValue(ty - ly);
-        if (toolSize == 1) {
-            if ((dtx >= 1) || (dty >= 1)) {
-                // fill in corners
-                if ((dtx >= 1) && (dty >= 1)) {
-                    if (dtx > dty) {
-                        doTool(tool, (int)(tx + rx), ly);
-                    } else {
-                        doTool(tool, lx, (int)(ty + ry));
-                    }
-                }
-            }
+    short dirX = (toX > fromX) ? 1 : -1; // Horizontal step direction.
+    short dirY = (toY > fromY) ? 1 : -1; // Vertical step direction.
+
+
+    if (fromX == toX && fromY == toY) {
+        return;
+    }
+
+    doTool(tool, fromX, fromY); // Ensure the start position is done.
+
+    // Vertical line up or down
+    if (fromX == toX && fromY != toY) {
+
+        while (fromY != toY) {
+            fromY += dirY;
+            doTool(tool, fromX, fromY);
         }
-        lx = (int)(tx + rx);
-        ly = (int)(ty + ry);
-        doTool(tool, lx, ly);
+
+        simPass = 0; // update editors overlapping this one
+        invalidateEditors();
+        return;
+    }
+
+    // Horizontal line left/right
+    if (fromX != toX && fromY == toY) {
+
+        while (fromX != toX) {
+            fromX += dirX;
+            doTool(tool, fromX, fromY);
+        }
+
+        simPass = 0; // update editors overlapping this one
+        invalidateEditors();
+        return;
+    }
+
+    // General case: both X and Y change.
+
+    short dx = absoluteValue(fromX - toX); // number of horizontal steps.
+    short dy = absoluteValue(fromY - toY); // number of vertical steps.
+
+    short subX = 0; // Each X step is dy sub-steps.
+    short subY = 0; // Each Y step is dx sub-steps.
+    short numSubsteps = min(dx, dy); // Number of sub-steps we can do.
+
+    while (fromX != toX || fromY != toY) {
+        subX += numSubsteps;
+        if (subX >= dy) {
+            subX -= dy;
+            fromX += dirX;
+            doTool(tool, fromX, fromY);
+        }
+
+        subY += numSubsteps;
+        if (subY >= dx) {
+            subY -= dx;
+            fromY += dirY;
+            doTool(tool, fromX, fromY);
+        }
     }
 
     simPass = 0; // update editors overlapping this one
-
     invalidateEditors();
 }
 
