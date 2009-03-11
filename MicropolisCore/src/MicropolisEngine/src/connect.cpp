@@ -67,7 +67,8 @@
 
 #include "stdafx.h"
 #include "micropolis.h"
-
+#include "tool.h"
+#include "position.h"
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -96,15 +97,57 @@ static const unsigned short WireTable[16] = {
 
 ////////////////////////////////////////////////////////////////////////
 
+/**
+ * Remove road from the tile.
+ * @param tile Current tile value.
+ * @return Equivalent tile without road.
+ */
+static inline MapTile neutralizeRoad(MapTile tile)
+{
+    if (tile >= 64 && tile <= 207) {
+        tile = (tile & 0x000F) + 64;
+    }
+    return tile;
+};
 
 /**
  * Perform the command, and fix wire/road/rail/zone connections around it.
- * @param x       X world position to perform the command.
- * @param y       Y world position to perform the command.
- * @param command Command to perform.
+ * @param x   X world position to perform the command.
+ * @param y   Y world position to perform the command.
+ * @param cmd Command to perform.
+ * @return Tool result.
+ *
+ * @note Temporary function to prevent breaking a lot of code.
+ */
+ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand cmd)
+{
+    ToolEffects effects(this);
+
+    effects.clear();
+
+    ToolResult result = connectTile(x, y, cmd, &effects);
+    if (result == TOOLRESULT_OK) {
+        if (effects.modifyIfEnoughFunding()) {
+            return TOOLRESULT_OK;
+        }
+
+        return TOOLRESULT_NO_MONEY;
+    }
+
+    return result;
+}
+
+/**
+ * Perform the command, and fix wire/road/rail/zone connections around it.
+ * Store modification in the \a effects object.
+ * @param x      X world position to perform the command.
+ * @param y      Y world position to perform the command.
+ * @param cmd    Command to perform.
+ * @param effects Modification collecting object.
  * @return Tool result.
  */
-ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand command)
+ToolResult Micropolis::connectTile(short x, short y,
+                                   ConnectTileCommand cmd, ToolEffects *effects)
 {
     ToolResult result = TOOLRESULT_OK;
 
@@ -114,28 +157,28 @@ ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand command)
     }
 
     // Perform auto-doze if appropriate.
-    switch (command) {
+    switch (cmd) {
 
         case CONNECT_TILE_ROAD:
         case CONNECT_TILE_RAILROAD:
         case CONNECT_TILE_WIRE:
 
             // Silently skip auto-bulldoze if no money.
-            if (autoBulldoze && totalFunds > 0) {
+            if (autoBulldoze) {
 
-                MapValue tile = map[x][y];
+                MapValue mapVal = effects->getMapValue(x, y);
 
-                if (tile & BULLBIT) {
-                    tile &= LOMASK;
-                    tile = neutralizeRoad(tile);
+                if (mapVal & BULLBIT) {
+                    mapVal &= LOMASK;
+                    mapVal = neutralizeRoad(mapVal);
 
                     /* Maybe this should check BULLBIT instead of checking tile values? */
-                    if ((tile >= TINYEXP && tile <= LASTTINYEXP) ||
-                            (tile < HBRIDGE && tile != DIRT)) {
+                    if ((mapVal >= TINYEXP && mapVal <= LASTTINYEXP) ||
+                            (mapVal < HBRIDGE && mapVal != DIRT)) {
 
-                        spend(1);
+                        effects->addCost(1);
 
-                        map[x][y] = DIRT;
+                        effects->setMapValue(x, y, DIRT);
 
                     }
                 }
@@ -149,30 +192,30 @@ ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand command)
     }
 
     // Perform the command.
-    switch (command) {
+    switch (cmd) {
 
     case CONNECT_TILE_FIX: // Fix zone.
-        fixZone(x, y);
+        fixZone(x, y, effects);
         break;
 
     case CONNECT_TILE_BULLDOZE: // Bulldoze zone.
-        result = layDoze(x, y);
-        fixZone(x, y);
+        result = layDoze(x, y, effects);
+        fixZone(x, y, effects);
         break;
 
     case CONNECT_TILE_ROAD: // Lay road.
-        result = layRoad(x, y);
-        fixZone(x, y);
+        result = layRoad(x, y, effects);
+        fixZone(x, y, effects);
         break;
 
     case CONNECT_TILE_RAILROAD: // Lay railroad.
-        result = layRail(x, y);
-        fixZone(x, y);
+        result = layRail(x, y, effects);
+        fixZone(x, y, effects);
         break;
 
     case CONNECT_TILE_WIRE: // Lay wire.
-        result = layWire(x, y);
-        fixZone(x, y);
+        result = layWire(x, y, effects);
+        fixZone(x, y, effects);
         break;
 
     default:
@@ -187,17 +230,14 @@ ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand command)
 
 /**
  * Builldoze a tile (make it a #RIVER or #DIRT).
- * @param x X map coordinate.
- * @param y Y map coordinate.
+ * @param x      X map coordinate.
+ * @param y      Y map coordinate.
+ * @param effects Modification collecting object.
  * @return Tool result.
  */
-ToolResult Micropolis::layDoze(int x, int y)
+ToolResult Micropolis::layDoze(int x, int y, ToolEffects *effects)
 {
-    if (totalFunds == 0) {
-        return TOOLRESULT_NO_MONEY;       /* no mas dinero. */
-    }
-
-    MapValue tile = map[x][y];
+    MapValue tile = effects->getMapValue(x, y);
 
     if (!(tile & BULLBIT)) {
         return TOOLRESULT_FAILED;         /* Check dozeable bit. */
@@ -223,15 +263,15 @@ ToolResult Micropolis::layDoze(int x, int y)
     case VPOWER:
     case HRAIL:
     case VRAIL:           /* Dozing over water, replace with water. */
-        map[x][y] = RIVER;
+        effects->setMapValue(x, y, RIVER);
         break;
 
     default:              /* Dozing on land, replace with land.  Simple, eh? */
-        map[x][y] = DIRT;
+        effects->setMapValue(x, y, DIRT);
         break;
     }
 
-    spend(1);                     /* Costs $1.00.... */
+    effects->addCost(1);                     /* Costs $1.00.... */
 
     return TOOLRESULT_OK;
 }
@@ -241,22 +281,19 @@ ToolResult Micropolis::layDoze(int x, int y)
  * Lay a road, and update road around it.
  * @param x X map coordinate.
  * @param y Y map coordinate.
+ * @param effects Modification collecting object.
  * @return Tool result.
  */
-ToolResult Micropolis::layRoad(int x, int y)
+ToolResult Micropolis::layRoad(int x, int y, ToolEffects *effects)
 {
     int cost = 10;
 
-    if (totalFunds < cost) {
-        return TOOLRESULT_NO_MONEY;
-    }
-
-    MapTile tile = map[x][y] & LOMASK;
+    MapTile tile = effects->getMapTile(x, y);
 
     switch (tile) {
 
     case DIRT:
-        map[x][y] = ROADS | BULLBIT | BURNBIT;
+        effects->setMapValue(x, y, ROADS | BULLBIT | BURNBIT);
         break;
 
     case RIVER:                   /* Road on Water */
@@ -264,46 +301,42 @@ ToolResult Micropolis::layRoad(int x, int y)
     case CHANNEL:                 /* Check how to build bridges, if possible. */
         cost = 50;
 
-        if (totalFunds < cost) {
-            return TOOLRESULT_NO_MONEY;
-        }
-
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y] & LOMASK;
+            tile = effects->getMapTile(x + 1, y);
             tile = neutralizeRoad(tile);
             if (tile == VRAILROAD || tile == HBRIDGE
                                 || (tile >= ROADS && tile <= HROADPOWER)) {
-                map[x][y] = HBRIDGE | BULLBIT;
+                effects->setMapValue(x, y, HBRIDGE | BULLBIT);
                 break;
             }
         }
 
         if (x > 0) {
-            tile = map[x - 1][y] & LOMASK;
+            tile = effects->getMapTile(x - 1, y);
             tile = neutralizeRoad(tile);
             if (tile == VRAILROAD || tile == HBRIDGE
                                 || (tile >= ROADS && tile <= INTERSECTION)) {
-                map[x][y] = HBRIDGE | BULLBIT;
+                effects->setMapValue(x, y, HBRIDGE | BULLBIT);
                 break;
             }
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1] & LOMASK;
+            tile = effects->getMapTile(x, y + 1);
             tile = neutralizeRoad(tile);
             if (tile == HRAILROAD || tile == VROADPOWER
                                 || (tile >= VBRIDGE && tile <= INTERSECTION)) {
-                map[x][y] = VBRIDGE | BULLBIT;
+                effects->setMapValue(x, y, VBRIDGE | BULLBIT);
                 break;
             }
         }
 
         if (y > 0) {
-            tile = map[x][y - 1] & LOMASK;
+            tile = effects->getMapTile(x, y - 1);
             tile = neutralizeRoad(tile);
             if (tile == HRAILROAD || tile == VROADPOWER
                                 || (tile >= VBRIDGE && tile <= INTERSECTION)) {
-                map[x][y] = VBRIDGE | BULLBIT;
+                effects->setMapValue(x, y, VBRIDGE | BULLBIT);
                 break;
             }
         }
@@ -312,19 +345,19 @@ ToolResult Micropolis::layRoad(int x, int y)
         return TOOLRESULT_FAILED;
 
     case LHPOWER:         /* Road on power */
-        map[x][y] = VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, VROADPOWER | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case LVPOWER:         /* Road on power #2 */
-        map[x][y] = HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, HROADPOWER | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case LHRAIL:          /* Road on rail */
-        map[x][y] = HRAILROAD | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, HRAILROAD | BURNBIT | BULLBIT);
         break;
 
     case LVRAIL:          /* Road on rail #2 */
-        map[x][y] = VRAILROAD | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, VRAILROAD | BURNBIT | BULLBIT);
         break;
 
     default:              /* Can't do road */
@@ -332,33 +365,30 @@ ToolResult Micropolis::layRoad(int x, int y)
 
     }
 
-    spend(cost);
+    effects->addCost(cost);
     return TOOLRESULT_OK;
 }
 
 
 /**
  * Lay a rail, and update connections (rail, road, and wire) around it.
- * @param x X map coordinate.
- * @param y Y map coordinate.
+ * @param x      X map coordinate.
+ * @param y      Y map coordinate.
+ * @param effects Modification collecting object.
  * @return Tool result.
  */
-ToolResult Micropolis::layRail(int x, int y)
+ToolResult Micropolis::layRail(int x, int y, ToolEffects *effects)
 {
     int cost = 20;
 
-    if (totalFunds < cost) {
-        return TOOLRESULT_NO_MONEY;
-    }
-
-    MapTile tile = map[x][y] & LOMASK;
+    MapTile tile = effects->getMapTile(x, y);
 
     tile = neutralizeRoad(tile);
 
     switch (tile) {
     case DIRT:                   /* Rail on Dirt */
 
-        map[x][y] = LHRAIL | BULLBIT | BURNBIT;
+        effects->setMapValue(x, y, LHRAIL | BULLBIT | BURNBIT);
 
         break;
 
@@ -368,46 +398,42 @@ ToolResult Micropolis::layRail(int x, int y)
 
         cost = 100;
 
-        if (totalFunds < cost) {
-            return TOOLRESULT_NO_MONEY;
-        }
-
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y] & LOMASK;
+            tile = effects->getMapTile(x + 1, y);
             tile = neutralizeRoad(tile);
             if (tile == RAILHPOWERV || tile == HRAIL
                                     || (tile >= LHRAIL && tile <= HRAILROAD)) {
-                map[x][y] = HRAIL | BULLBIT;
+                effects->setMapValue(x, y, HRAIL | BULLBIT);
                 break;
             }
         }
 
         if (x > 0) {
-            tile = map[x - 1][y] & LOMASK;
+            tile = effects->getMapTile(x - 1, y);
             tile = neutralizeRoad(tile);
             if (tile == RAILHPOWERV || tile == HRAIL
                                     || (tile > VRAIL && tile < VRAILROAD)) {
-                map[x][y] = HRAIL | BULLBIT;
+                effects->setMapValue(x, y, HRAIL | BULLBIT);
                 break;
             }
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1] & LOMASK;
+            tile = effects->getMapTile(x, y + 1);
             tile = neutralizeRoad(tile);
             if (tile == RAILVPOWERH || tile == VRAILROAD
                                     || (tile > HRAIL && tile < HRAILROAD)) {
-                map[x][y] = VRAIL | BULLBIT;
+                effects->setMapValue(x, y, VRAIL | BULLBIT);
                 break;
             }
         }
 
         if (y > 0) {
-            tile = map[x][y - 1] & LOMASK;
+            tile = effects->getMapTile(x, y - 1);
             tile = neutralizeRoad(tile);
             if (tile == RAILVPOWERH || tile == VRAILROAD
                                     || (tile > HRAIL && tile < HRAILROAD)) {
-                map[x][y] = VRAIL | BULLBIT;
+                effects->setMapValue(x, y, VRAIL | BULLBIT);
                 break;
             }
         }
@@ -416,26 +442,26 @@ ToolResult Micropolis::layRail(int x, int y)
         return TOOLRESULT_FAILED;
 
     case LHPOWER:             /* Rail on power */
-        map[x][y] = RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case LVPOWER:             /* Rail on power #2 */
-        map[x][y] = RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case ROADS:              /* Rail on road */
-        map[x][y] = VRAILROAD | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, VRAILROAD | BURNBIT | BULLBIT);
         break;
 
     case ROADS2:              /* Rail on road #2 */
-        map[x][y] = HRAILROAD | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, HRAILROAD | BURNBIT | BULLBIT);
         break;
 
     default:              /* Can't do rail */
         return TOOLRESULT_FAILED;
     }
 
-    spend(cost);
+    effects->addCost(cost);
     return TOOLRESULT_OK;
 }
 
@@ -444,17 +470,14 @@ ToolResult Micropolis::layRail(int x, int y)
  * Lay a wire, and update connections (rail, road, and wire) around it.
  * @param x X map coordinate.
  * @param y Y map coordinate.
+ * @param effects Modification collecting object.
  * @return Tool result.
  */
-ToolResult Micropolis::layWire(int x, int y)
+ToolResult Micropolis::layWire(int x, int y, ToolEffects *effects)
 {
     int cost = 5;
 
-    if (totalFunds < cost) {
-        return TOOLRESULT_NO_MONEY;
-    }
-
-    MapTile tile = map[x][y] & LOMASK;
+    MapTile tile = effects->getMapTile(x, y);
 
     tile = neutralizeRoad(tile);
 
@@ -462,7 +485,7 @@ ToolResult Micropolis::layWire(int x, int y)
 
     case DIRT:            /* Wire on Dirt */
 
-        map[x][y] = LHPOWER | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, LHPOWER | CONDBIT | BURNBIT | BULLBIT);
 
         break;
 
@@ -472,53 +495,49 @@ ToolResult Micropolis::layWire(int x, int y)
 
         cost = 25;
 
-        if (totalFunds < cost) {
-            return TOOLRESULT_NO_MONEY;
-        }
-
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y];
+            tile = effects->getMapValue(x + 1, y);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
                 if (tile != HROADPOWER && tile != RAILHPOWERV && tile != HPOWER) {
-                    map[x][y] = VPOWER | CONDBIT | BULLBIT;
+                    effects->setMapValue(x, y, VPOWER | CONDBIT | BULLBIT);
                     break;
                 }
             }
         }
 
         if (x > 0) {
-            tile = map[x - 1][y];
+            tile = effects->getMapValue(x - 1, y);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
                 if (tile != HROADPOWER && tile != RAILHPOWERV && tile != HPOWER) {
-                    map[x][y] = VPOWER | CONDBIT | BULLBIT;
+                    effects->setMapValue(x, y, VPOWER | CONDBIT | BULLBIT);
                     break;
                 }
             }
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1];
+            tile = effects->getMapValue(x, y + 1);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
                 if (tile != VROADPOWER && tile != RAILVPOWERH && tile != VPOWER) {
-                    map[x][y] = HPOWER | CONDBIT | BULLBIT;
+                    effects->setMapValue(x, y, HPOWER | CONDBIT | BULLBIT);
                     break;
                 }
             }
         }
 
         if (y > 0) {
-            tile = map[x][y - 1];
+            tile = effects->getMapValue(x, y - 1);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
                 if (tile != VROADPOWER && tile != RAILVPOWERH && tile != VPOWER) {
-                    map[x][y] = HPOWER | CONDBIT | BULLBIT;
+                    effects->setMapValue(x, y, HPOWER | CONDBIT | BULLBIT);
                     break;
                 }
             }
@@ -528,19 +547,19 @@ ToolResult Micropolis::layWire(int x, int y)
         return TOOLRESULT_FAILED;
 
     case ROADS:              /* Wire on Road */
-        map[x][y] = HROADPOWER | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, HROADPOWER | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case ROADS2:              /* Wire on Road #2 */
-        map[x][y] = VROADPOWER | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, VROADPOWER | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case LHRAIL:             /* Wire on rail */
-        map[x][y] = RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, RAILHPOWERV | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     case LVRAIL:             /* Wire on rail #2 */
-        map[x][y] = RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT;
+        effects->setMapValue(x, y, RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT);
         break;
 
     default:              /* Can't do wire */
@@ -548,7 +567,7 @@ ToolResult Micropolis::layWire(int x, int y)
 
     }
 
-    spend(cost);
+    effects->addCost(cost);
     return TOOLRESULT_OK;
 }
 
@@ -557,25 +576,26 @@ ToolResult Micropolis::layWire(int x, int y)
  * Update connections (rails, and wire connections) to a zone.
  * @param x X map coordinate
  * @param y Y map coordinate.
+ * @param effects Modification collecting object.
  */
-void Micropolis::fixZone(int x, int y)
+void Micropolis::fixZone(int x, int y, ToolEffects *effects)
 {
-    fixSingle(x, y);
+    fixSingle(x, y, effects);
 
     if (y > 0) {
-        fixSingle(x, y - 1);
+        fixSingle(x, y - 1, effects);
     }
 
     if (x < WORLD_W - 1) {
-        fixSingle(x + 1, y);
+        fixSingle(x + 1, y, effects);
     }
 
     if (y < WORLD_H - 1) {
-        fixSingle(x, y + 1);
+        fixSingle(x, y + 1, effects);
     }
 
     if (x > 0) {
-        fixSingle(x - 1, y);
+        fixSingle(x - 1, y, effects);
     }
 }
 
@@ -584,19 +604,20 @@ void Micropolis::fixZone(int x, int y)
  * Modify road, rails, and wire connections at a given tile.
  * @param x X map coordinate.
  * @param y Y map coordinate.
+ * @param effects Modification collecting object.
  */
-void Micropolis::fixSingle(int x, int y)
+void Micropolis::fixSingle(int x, int y, ToolEffects *effects)
 {
     unsigned short adjTile = 0;
 
-    MapTile tile = map[x][y] & LOMASK;
+    MapTile tile = effects->getMapTile(x, y);
 
     tile = neutralizeRoad(tile);
 
     if (tile >= ROADS && tile <= INTERSECTION) {           /* Cleanup Road */
 
         if (y > 0) {
-            tile = map[x][y - 1] & LOMASK;
+            tile = effects->getMapTile(x, y - 1);
             tile = neutralizeRoad(tile);
             if ((tile == HRAILROAD || (tile >= ROADBASE && tile <= VROADPOWER))
                                 && tile != HROADPOWER && tile != VRAILROAD
@@ -606,7 +627,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y] & LOMASK;
+            tile = effects->getMapTile(x + 1, y);
             tile = neutralizeRoad(tile);
             if ((tile == VRAILROAD || (tile >= ROADBASE && tile <= VROADPOWER))
                                 && tile != VROADPOWER && tile != HRAILROAD
@@ -616,7 +637,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1] & LOMASK;
+            tile = effects->getMapTile(x, y + 1);
             tile = neutralizeRoad(tile);
             if ((tile == HRAILROAD || (tile >= ROADBASE && tile <= VROADPOWER))
                                 && tile != HROADPOWER && tile != VRAILROAD
@@ -626,7 +647,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x > 0) {
-            tile = map[x - 1][y] & LOMASK;
+            tile = effects->getMapTile(x - 1, y);
             tile = neutralizeRoad(tile);
             if ((tile == VRAILROAD || (tile >= ROADBASE && tile <= VROADPOWER))
                                 && tile != VROADPOWER && tile != HRAILROAD
@@ -635,14 +656,14 @@ void Micropolis::fixSingle(int x, int y)
             }
         }
 
-        map[x][y] = RoadTable[adjTile] | BULLBIT | BURNBIT;
+        effects->setMapValue(x, y, RoadTable[adjTile] | BULLBIT | BURNBIT);
         return;
     }
 
     if (tile >= LHRAIL && tile <= LVRAIL10) {         /* Cleanup Rail */
 
         if (y > 0) {
-            tile = map[x][y - 1] & LOMASK;
+            tile = effects->getMapTile(x, y - 1);
             tile = neutralizeRoad(tile);
             if (tile >= RAILHPOWERV && tile <= VRAILROAD
                                 && tile != RAILHPOWERV && tile != HRAILROAD
@@ -652,7 +673,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y] & LOMASK;
+            tile = effects->getMapTile(x + 1, y);
             tile = neutralizeRoad(tile);
             if (tile >= RAILHPOWERV && tile <= VRAILROAD
                                 && tile != RAILVPOWERH && tile != VRAILROAD
@@ -662,7 +683,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1] & LOMASK;
+            tile = effects->getMapTile(x, y + 1);
             tile = neutralizeRoad(tile);
             if (tile >= RAILHPOWERV && tile <= VRAILROAD
                                 && tile != RAILHPOWERV && tile != HRAILROAD
@@ -672,7 +693,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x > 0) {
-            tile = map[x - 1][y] & LOMASK;
+            tile = effects->getMapTile(x - 1, y);
             tile = neutralizeRoad(tile);
             if (tile >= RAILHPOWERV && tile <= VRAILROAD
                                 && tile != RAILVPOWERH && tile != VRAILROAD
@@ -681,14 +702,14 @@ void Micropolis::fixSingle(int x, int y)
             }
         }
 
-        map[x][y] = RailTable[adjTile] | BULLBIT | BURNBIT;
+        effects->setMapValue(x, y, RailTable[adjTile] | BULLBIT | BURNBIT);
         return;
     }
 
     if (tile >= LHPOWER && tile <= LVPOWER10) {         /* Cleanup Wire */
 
         if (y > 0) {
-            tile = map[x][y - 1];
+            tile = effects->getMapValue(x, y - 1);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
@@ -699,7 +720,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x < WORLD_W - 1) {
-            tile = map[x + 1][y];
+            tile = effects->getMapValue(x + 1, y);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
@@ -710,7 +731,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (y < WORLD_H - 1) {
-            tile = map[x][y + 1];
+            tile = effects->getMapValue(x, y + 1);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
@@ -721,7 +742,7 @@ void Micropolis::fixSingle(int x, int y)
         }
 
         if (x > 0) {
-            tile = map[x - 1][y];
+            tile = effects->getMapValue(x - 1, y);
             if (tile & CONDBIT) {
                 tile &= LOMASK;
                 tile = neutralizeRoad(tile);
@@ -731,7 +752,7 @@ void Micropolis::fixSingle(int x, int y)
             }
         }
 
-        map[x][y] = WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT;
+        effects->setMapValue(x, y, WireTable[adjTile] | BLBNCNBIT);
         return;
     }
 }

@@ -101,6 +101,8 @@ typedef std::map<Position, MapValue> WorldModificationsMap;
  * precise cost and what has been changed in the world. At that moment, the
  * yes/no decision can be made, and the effects can be copied to the real map
  * and funds.
+ *
+ * @todo Introduce this class in the connect.cpp file first.
  */
 class ToolEffects
 {
@@ -113,16 +115,19 @@ public:
     bool modifyIfEnoughFunding();
 
     MapValue getMapValue(const Position& pos) const;
+    inline MapValue getMapValue(int x, int y) const;
     inline MapTile getMapTile(const Position& pos) const;
+    inline MapTile getMapTile(int x, int y) const;
     inline int getCost() const;
 
     inline void addCost(int amount);
     void setMapValue(const Position& pos, MapValue mapVal);
+    inline void setMapValue(int x, int y, MapValue mapVal);
 
 private:
-    Micropolis *sim; ///< Simulator to get map values from, and to apply changes
-    int cost; ///< Accumulated costs
-    WorldModificationsMap modifications;
+    Micropolis *sim; ///< Simulator to get map values from, and to apply changes.
+    int cost; ///< Accumulated costs.
+    WorldModificationsMap modifications; ///< Collected world modifications.
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -140,6 +145,18 @@ inline MapTile ToolEffects::getMapTile(const Position& pos) const
 }
 
 /**
+ * Get the tile of a map position.
+ * @param x Horizontal coordinate of position being queried.
+ * @param y Vertical coordinate of position being queried.
+ * @return Tile at the specified position.
+ *
+ * @pre Position must be within map limits
+ */
+inline MapValue ToolEffects::getMapTile(int x, int y) const
+{
+    return this->getMapValue(Position(x, y)) & LOMASK;
+}
+/**
  * Get the total cost collected so far.
  * @return Total cost.
  */
@@ -155,6 +172,31 @@ inline void ToolEffects::addCost(int amount)
 {
     assert(amount >= 0); // To be on the safe side.
     this->cost += amount;
+}
+
+/**
+ * Get the value of a map position.
+ * @param x Horizontal coordinate of position being queried.
+ * @param y Vertical coordinate of position being queried.
+ * @return Map value at the specified position.
+ *
+ * @pre Position must be within map limits
+ */
+inline MapValue ToolEffects::getMapValue(int x, int y) const
+{
+    return this->getMapValue(Position(x, y));
+}
+
+/**
+ * Set a new map value.
+ * @param pos    Position to set.
+ * @param x      Horizontal coordinate of position to set.
+ * @param y      Vertical coordinate of position to set.
+ * @param mapVal Value to set.
+ */
+inline void ToolEffects::setMapValue(int x, int y, MapValue mapVal)
+{
+    this->setMapValue(Position(x, y), mapVal);
 }
 
 ////////////////////////////////////////////////////////////////////////

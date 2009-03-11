@@ -117,6 +117,7 @@ void Micropolis::updateHeads()
 }
 
 
+/** Set a flag that the funds display is out of date. */
 void Micropolis::updateFunds()
 {
     mustUpdateFunds = true;

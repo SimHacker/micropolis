@@ -880,6 +880,7 @@ static inline void not_reached(int line, const char *fname)
 
 
 class Micropolis;
+class ToolEffects;
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -1520,19 +1521,21 @@ public:
 private:
 
 
-    ToolResult connectTile(short x, short y, ConnectTileCommand command);
+    ToolResult connectTile(short x, short y, ConnectTileCommand cmd);
+    ToolResult connectTile(short x, short y,
+                           ConnectTileCommand cmd, ToolEffects *effects);
 
-    ToolResult layDoze(int x, int y);
+    ToolResult layDoze(int x, int y, ToolEffects *effects);
 
-    ToolResult layRoad(int x, int y);
+    ToolResult layRoad(int x, int y, ToolEffects *effects);
 
-    ToolResult layRail(int x, int y);
+    ToolResult layRail(int x, int y, ToolEffects *effects);
 
-    ToolResult layWire(int x, int y);
+    ToolResult layWire(int x, int y, ToolEffects *effects);
 
-    void fixZone(int x, int y);
+    void fixZone(int x, int y, ToolEffects *effects);
 
-    void fixSingle(int x, int y);
+    void fixSingle(int x, int y, ToolEffects *effects);
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -2741,19 +2744,6 @@ private:
     short trafMaxX; ///< X coordinate of a position with heavy traffic
     short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
-
-    /**
-     * Remove road from the tile.
-     * @param tile Current tile value.
-     * @return Equivalent tool without road.
-     */
-    inline short neutralizeRoad(short tile)
-    {
-        if (tile >= 64 && tile <= 207) {
-            tile = (tile & 0x000F) + 64;
-        }
-        return tile;
-    };
 
     short makeTraffic(const Position &startPos, ZoneType dest);
 
