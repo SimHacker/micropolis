@@ -201,3 +201,26 @@ inline void ToolEffects::setMapValue(int x, int y, MapValue mapVal)
 
 ////////////////////////////////////////////////////////////////////////
 
+/** Properties of a building with respect to its construction. */
+class BuildingProperties
+{
+public:
+    BuildingProperties(int xs, int ys, MapTile base, EditingTool tool,
+                        const char *tName, bool anim);
+    ~BuildingProperties();
+
+    const int sizeX; ///< Number of tiles in horizontal direction.
+    const int sizeY; ///< Number of tiles in vertical direction.
+
+    const MapTile baseTile; ///< Tile value at top-left in the map.
+
+    const EditingTool tool; ///< Tool needed for making the building.
+
+    /** Name of the tool needed for making the building. */
+    const char *toolName;
+
+    const bool buildingIsAnimated; ///< Building has animated tiles.
+};
+
+////////////////////////////////////////////////////////////////////////
+

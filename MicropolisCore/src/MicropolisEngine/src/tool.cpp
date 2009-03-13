@@ -96,7 +96,7 @@ void ToolEffects::clear()
 /**
  * Perform the effects stored in the object to the simulator world.
  * @param sim Simulator object to modify.
- * @post Effects have been copied to the simulator world, and the #ToolEffect
+ * @post Effects have been copied to the simulator world, and the #ToolEffects
  *       object is ready for the next use.
  */
 void ToolEffects::modifyWorld()
@@ -164,18 +164,30 @@ void ToolEffects::setMapValue(const Position &pos, MapValue mapVal)
 }
 
 ////////////////////////////////////////////////////////////////////////
+// BuildingProperties
+
+BuildingProperties::BuildingProperties(int xs, int ys, MapTile base,
+                                EditingTool tl, const char *tName, bool anim) :
+        sizeX(xs),
+        sizeY(ys),
+        baseTile(base),
+        tool(tl),
+        toolName(tName),
+        buildingIsAnimated(anim)
+{
+}
+
+BuildingProperties::~BuildingProperties()
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////
 
 /**
- * @todo Make a Tool class containing size, cost, name, function to call, etc
- *       of each tool.
- *       (or better: Actually, we want a Building class with building
- *       properties, and exactly 1 build-this-building tool instance).
- *
- * @todo Make a 'fund' class that handles deducting of money.
- *       Allow that class to be 'free'.
+ * Cost of each tool.
+ * Maybe move this information to eg #BuildingProperties?
  */
-
-/** Cost of each tool. */
 static const short gCostOf[] = {
      100,    100,    100,    500, /* res, com, ind, fire */
      500,      0,      5,      1, /* police, query, wire, bulldozer */
@@ -188,6 +200,7 @@ static const short gCostOf[] = {
 /**
  * Size of each tool.
  * @note Actually it is the size of the building rather than the tool.
+ * @todo This information is duplicated in the #BuildingProperties at least.
  */
 static const short gToolSize[] = {
     3, 3, 3, 3,
@@ -668,29 +681,24 @@ int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
 
 /**
  * Build a building.
- * @param mapH    Horizontal position of the 'center' tile in the world.
- * @param mapV    Vertical position of the 'center' tile in the world.
- * @param sizeX   Horizontal size of the building.
- * @param sizeY   Vertical size of the building.
- * @param base    Tile number for the top-left position.
- * @param tool    Identification of the tool used.
- * @param aniFlag Set animation flag at relative position (1, 2)
+ * @param mapH          Horizontal position of the 'center' tile in the world.
+ * @param mapV          Vertical position of the 'center' tile in the world.
+ * @param buildingProps Building properties of the building being constructed.
  * @return Tool result.
  */
 ToolResult Micropolis::buildBuilding(int mapH, int mapV,
-                                int sizeX, int sizeY,
-                                unsigned short base,
-                                short tool, bool aniFlag)
+                                     const BuildingProperties *buildingProps)
 {
     mapH--; mapV--; // Move position to top-left
 
-    int result = checkBuildingSite(mapH, mapV, sizeX, sizeY);
+    int result = checkBuildingSite(mapH, mapV, buildingProps->sizeX,
+                                                buildingProps->sizeY);
     if (result < 0) {
         return TOOLRESULT_NEED_BULLDOZE;
     }
     assert(result == 0 || autoBulldoze);
 
-    int cost = result + gCostOf[tool];
+    int cost = result + gCostOf[buildingProps->tool];
     /// @todo Multiply survey result with bulldoze cost
     ///       (or better, ask bulldoze tool about costs).
 
@@ -700,9 +708,10 @@ ToolResult Micropolis::buildBuilding(int mapH, int mapV,
     spend(cost);
     updateFunds();
 
-    putBuilding(mapH, mapV, sizeX, sizeY, base, aniFlag);
+    putBuilding(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY,
+                buildingProps->baseTile, buildingProps->buildingIsAnimated);
 
-    checkBorder(mapH, mapV, sizeX, sizeY);
+    checkBorder(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY);
 
     return TOOLRESULT_OK;
 }
@@ -1147,203 +1156,62 @@ ToolResult Micropolis::parkTool(short x, short y)
 
 
 /**
- * Build a residential zone.
- * @param x Horizontal posiion of 'center tile' of the new zone.
- * @param x Vertical posiion of 'center tile' of the new zone.
+ * Build a building.
+ * @param x Horizontal posiion of 'center tile' of the new building.
+ * @param x Vertical posiion of 'center tile' of the new building.
  * @return Tool result.
  */
-ToolResult Micropolis::residentialTool(short x, short y)
+ToolResult Micropolis::buildBuildingTool(short x, short y,
+                                    const BuildingProperties *buildingProps)
 {
-    ToolResult result;
-
-    result = buildBuilding(x, y, 3, 3, RESBASE, TOOL_RESIDENTIAL, false);
+    ToolResult result = buildBuilding(x, y, buildingProps);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Res", x, y);
+        didTool(buildingProps->toolName, x, y);
     }
 
     return result;
 }
 
+/** Building properties of a residential zone. */
+static const BuildingProperties residentialZoneBuilding =
+    BuildingProperties(3, 3, RESBASE, TOOL_RESIDENTIAL, "Res", false);
 
-/**
- * Build a commercial zone.
- * @param x Horizontal posiion of 'center tile' of the new zone.
- * @param x Vertical posiion of 'center tile' of the new zone.
- * @return Tool result.
- */
-ToolResult Micropolis::commercialTool(short x, short y)
-{
-    ToolResult result;
+/** Building properties of a commercial zone. */
+static const BuildingProperties commercialZoneBuilding =
+    BuildingProperties(3, 3, COMBASE, TOOL_COMMERCIAL, "Com", false);
 
-    result = buildBuilding(x, y, 3, 3, COMBASE, TOOL_COMMERCIAL, false);
+/** Building properties of a industrial zone. */
+static const BuildingProperties industrialZoneBuilding =
+    BuildingProperties(3, 3, INDBASE, TOOL_INDUSTRIAL, "Ind", false);
 
-    if (result == TOOLRESULT_OK) {
-        didTool("Com", x, y);
-    }
+/** Building properties of a police station. */
+static const BuildingProperties policeStationBuilding =
+    BuildingProperties(3, 3, POLICESTBASE, TOOL_POLICESTATION, "Pol", false);
 
-    return result;
-}
+/** Building properties of a fire station. */
+static const BuildingProperties fireStationBuilding =
+    BuildingProperties(3, 3, FIRESTBASE, TOOL_FIRESTATION, "Fire", false);
 
+/** Building properties of a stadium. */
+static const BuildingProperties stadiumBuilding =
+    BuildingProperties(4, 4, STADIUMBASE, TOOL_STADIUM, "Stad", false);
 
-/**
- * Build an industrial zone.
- * @param x Horizontal posiion of 'center tile' of the new zone.
- * @param x Vertical posiion of 'center tile' of the new zone.
- * @return Tool result.
- */
-ToolResult Micropolis::industrialTool(short x, short y)
-{
-    ToolResult result;
+/** Building properties of a coal power station. */
+static const BuildingProperties coalPowerBuilding =
+    BuildingProperties(4, 4, COALBASE, TOOL_COALPOWER, "Coal", false);
 
-    result = buildBuilding(x, y, 3, 3, INDBASE, TOOL_INDUSTRIAL, false);
+/** Building properties of a nuclear power station. */
+static const BuildingProperties nuclearPowerBuilding =
+    BuildingProperties(4, 4, NUCLEARBASE, TOOL_NUCLEARPOWER, "Nuc", true);
 
-    if (result == TOOLRESULT_OK) {
-        didTool("Ind", x, y);
-    }
+/** Building properties of a seaport. */
+static const BuildingProperties seaportBuilding =
+    BuildingProperties(4, 4, PORTBASE, TOOL_SEAPORT, "Seap", false);
 
-    return result;
-}
-
-
-/**
- * Build a police station.
- * @param x Horizontal posiion of 'center tile' of the new police station.
- * @param x Vertical posiion of 'center tile' of the new police station.
- * @return Tool result.
- */
-ToolResult Micropolis::policeStationTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 3, 3, POLICESTBASE, TOOL_POLICESTATION, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Pol", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build a fire station.
- * @param x Horizontal posiion of 'center tile' of the new fire station.
- * @param x Vertical posiion of 'center tile' of the new fire station.
- * @return Tool result.
- */
-ToolResult Micropolis::fireStationTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 3, 3, FIRESTBASE, TOOL_FIRESTATION, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Fire", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build a stadium.
- * @param x Horizontal posiion of 'center tile' of the new stadium.
- * @param x Vertical posiion of 'center tile' of the new stadium.
- * @return Tool result.
- */
-ToolResult Micropolis::stadiumTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 4, 4, STADIUMBASE, TOOL_STADIUM, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Stad", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build a coal power plant.
- * @param x Horizontal posiion of 'center tile' of the coal power plant.
- * @param x Vertical posiion of 'center tile' of the coal power plant.
- * @return Tool result.
- */
-ToolResult Micropolis::coalPowerTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 4, 4, COALBASE, TOOL_COALPOWER, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Coal", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build a nuclear power plant.
- * @param x Horizontal posiion of 'center tile' of the nuclear power plant.
- * @param x Vertical posiion of 'center tile' of the nuclear power plant.
- * @return Tool result.
- */
-ToolResult Micropolis::nuclearPowerTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 4, 4, NUCLEARBASE, TOOL_NUCLEARPOWER, true);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Nuc", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build a seaport.
- * @param x Horizontal posiion of 'center tile' of the seaport.
- * @param x Vertical posiion of 'center tile' of the seaport.
- * @return Tool result.
- */
-ToolResult Micropolis::seaportTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 4, 4, PORTBASE, TOOL_SEAPORT, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Seap", x, y);
-    }
-
-    return result;
-}
-
-
-/**
- * Build an airport.
- * @param x Horizontal posiion of 'center tile' of the airport.
- * @param x Vertical posiion of 'center tile' of the airport.
- * @return Tool result.
- */
-ToolResult Micropolis::airportTool(short x, short y)
-{
-    ToolResult result;
-
-    result = buildBuilding(x, y, 6, 6, AIRPORTBASE, TOOL_AIRPORT, false);
-
-    if (result == TOOLRESULT_OK) {
-        didTool("Airp", x, y);
-    }
-
-    return result;
-}
+/** Building properties of a airport. */
+static const BuildingProperties airportBuilding =
+    BuildingProperties(6, 6, AIRPORTBASE, TOOL_AIRPORT, "Airp", false);
 
 
 ToolResult Micropolis::networkTool(short x, short y)
@@ -1456,19 +1324,19 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
     switch (tool) {
 
     case TOOL_RESIDENTIAL:
-        return residentialTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &residentialZoneBuilding);
 
     case TOOL_COMMERCIAL:
-        return commercialTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &commercialZoneBuilding);
 
     case TOOL_INDUSTRIAL:
-        return industrialTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &industrialZoneBuilding);
 
     case TOOL_FIRESTATION:
-        return fireStationTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &fireStationBuilding);
 
     case TOOL_POLICESTATION:
-        return policeStationTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &policeStationBuilding);
 
     case TOOL_QUERY:
         return queryTool(tileX, tileY);
@@ -1486,22 +1354,22 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         return roadTool(tileX, tileY);
 
     case TOOL_STADIUM:
-        return stadiumTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &stadiumBuilding);
 
     case TOOL_PARK:
         return parkTool(tileX, tileY);
 
     case TOOL_SEAPORT:
-        return seaportTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &seaportBuilding);
 
     case TOOL_COALPOWER:
-        return coalPowerTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &coalPowerBuilding);
 
     case TOOL_NUCLEARPOWER:
-        return nuclearPowerTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &nuclearPowerBuilding);
 
     case TOOL_AIRPORT:
-        return airportTool(tileX, tileY);
+        return buildBuildingTool(tileX, tileY, &airportBuilding);
 
     case TOOL_NETWORK:
         return networkTool(tileX, tileY);
