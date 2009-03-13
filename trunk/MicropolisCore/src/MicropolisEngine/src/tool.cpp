@@ -553,31 +553,29 @@ short Micropolis::checkSize(short tileValue)
  * @param yMap  Y coordinate of top-left tile.
  * @param sizeX Horizontal size of the new zone.
  * @param sizeY Vertical size of the new zone.
- * @param effects Modification collecting object.
  */
-void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY,
-                             ToolEffects *effects)
+void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY)
 {
     short cnt;
 
     /* this will do the upper bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap - 1, CONNECT_TILE_FIX, effects);
+        connectTile(xMap + cnt, yMap - 1, CONNECT_TILE_FIX);
     }
 
     /* this will do the left bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap - 1, yMap + cnt, CONNECT_TILE_FIX, effects);
+        connectTile(xMap - 1, yMap + cnt, CONNECT_TILE_FIX);
     }
 
     /* this will do the bottom bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap + sizeY, CONNECT_TILE_FIX, effects);
+        connectTile(xMap + cnt, yMap + sizeY, CONNECT_TILE_FIX);
     }
 
     /* this will do the right bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap + sizeX, yMap + cnt, CONNECT_TILE_FIX, effects);
+        connectTile(xMap + sizeX, yMap + cnt, CONNECT_TILE_FIX);
     }
 }
 
@@ -713,10 +711,7 @@ ToolResult Micropolis::buildBuilding(int mapH, int mapV,
     putBuilding(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY,
                 buildingProps->baseTile, buildingProps->buildingIsAnimated);
 
-    ToolEffects effects(this);
-    checkBorder(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY,
-                &effects);
-    effects.modifyWorld();
+    checkBorder(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY);
 
     return TOOLRESULT_OK;
 }
@@ -946,47 +941,6 @@ ToolResult Micropolis::queryTool(short x, short y)
     return TOOLRESULT_OK;
 }
 
-
-
-/**
- * Perform the effects caused by bulldozing an area.
- * @param dozeX   Horizontal position of the tile being dozed.
- * @param dozeY   Vertical position of the tile being dozed.
- * @param centerX Horizontal position of the 'center' tile of the area
- *                being dozed.
- * @param centerY Vertical position of the 'center' tile of the area
- *                being dozed.
- * @param size    Size of the square being dozed.
- */
-void Micropolis::doBulldozeEffects(short dozeX, short dozeY,
-                                    short centerX, short centerY, int size)
-{
-    switch (size) {
-
-    case 3:
-        makeSound("city", "Explosion-High", dozeX, dozeY);
-        putRubble(centerX - 1, centerY - 1, 3);
-        break;
-
-    case 4:
-        makeSound("city", "Explosion-Low", dozeX, dozeY);
-        putRubble(centerX - 1, centerY - 1, 4);
-        break;
-
-    case 6:
-        makeSound("city", "Explosion-High", dozeX, dozeY);
-        makeSound("city", "Explosion-Low", dozeX, dozeY);
-        putRubble(centerX - 1, centerY - 1, 6);
-        break;
-
-    default:
-        NOT_REACHED();
-        break;
-
-    }
-}
-
-
 /**
  * Apply bulldozer tool.
  * @param x X coordinate of the position of the query.
@@ -1016,7 +970,31 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
         if (totalFunds > 0) { /// @todo Return TOOLRESULT_NO_MONEY if no money
 
             spend(1);
-            doBulldozeEffects(x, y, x, y, checkSize(temp));
+
+            switch (checkSize(temp)) {
+
+            case 3:
+                makeSound("city", "Explosion-High", x, y);
+                putRubble(x - 1, y - 1, 3);
+                break;
+
+            case 4:
+                makeSound("city", "Explosion-Low", x, y);
+                putRubble(x - 1, y - 1, 4);
+                break;
+
+            case 6:
+                /// @bug This code is never executed.
+                makeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-Low", x, y);
+                putRubble(x - 1, y - 1, 6);
+                break;
+
+            default:
+                break;
+
+            }
+
         }
 
     } else if ((zoneSize = checkBigZone(temp, &deltaH, &deltaV))) {
@@ -1025,7 +1003,26 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
         if (totalFunds > 0) { /// @todo Return TOOLRESULT_NO_MONEY if no money
 
             spend(1);
-            doBulldozeEffects(x, y, x + deltaH, y + deltaV, zoneSize);
+
+            switch (zoneSize) {
+
+            case 3:
+                makeSound("city", "Explosion-High", x, y);
+                break;
+
+            case 4:
+                makeSound("city", "Explosion-Low", x, y);
+                putRubble(x + deltaH - 1, y + deltaV - 1, 4);
+                break;
+
+            case 6:
+                makeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-Low", x, y);
+                putRubble(x + deltaH - 1, y + deltaV - 1, 6);
+                break;
+
+            }
+
         }
 
     } else {

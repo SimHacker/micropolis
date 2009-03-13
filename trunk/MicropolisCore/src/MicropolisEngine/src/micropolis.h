@@ -2653,9 +2653,6 @@ private:
 
     ToolResult queryTool(short x, short y);
 
-    void doBulldozeEffects(short dozeX, short dozeY,
-                            short centerX, short centerY, int size);
-
     ToolResult bulldozerTool(short x, short y);
 
     ToolResult roadTool(short x, short y);
@@ -2713,8 +2710,7 @@ private:
 
     short checkSize(short tileValue);
 
-    void checkBorder(short xMap, short yMap, int sizeX, int sizeY,
-                     ToolEffects *effects);
+    void checkBorder(short xMap, short yMap, int sizeX, int sizeY);
 
     void putRubble(int x, int y, int size);
 
