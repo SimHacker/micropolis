@@ -881,6 +881,7 @@ static inline void not_reached(int line, const char *fname)
 
 class Micropolis;
 class ToolEffects;
+class BuildingProperties;
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -2662,25 +2663,9 @@ private:
 
     ToolResult parkTool(short x, short y);
 
-    ToolResult residentialTool(short x, short y);
+    ToolResult buildBuildingTool(short x, short y,
+                                  const BuildingProperties *bprops);
 
-    ToolResult commercialTool(short x, short y);
-
-    ToolResult industrialTool(short x, short y);
-
-    ToolResult policeStationTool(short x, short y);
-
-    ToolResult fireStationTool(short x, short y);
-
-    ToolResult stadiumTool(short x, short y);
-
-    ToolResult coalPowerTool(short x, short y);
-
-    ToolResult nuclearPowerTool(short x, short y);
-
-    ToolResult seaportTool(short x, short y);
-
-    ToolResult airportTool(short x, short y);
 
     ToolResult networkTool(short x, short y);
 
@@ -2716,8 +2701,8 @@ private:
 
     int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
 
-    ToolResult buildBuilding(int mapH, int mapV, int sizeX, int sizeY,
-                      unsigned short base, short tool, bool aniFlag);
+    ToolResult buildBuilding(int mapH, int mapV,
+                                  const BuildingProperties *bprops);
 
     int getDensityStr(short catNo, short mapH, short mapV);
 
