@@ -949,101 +949,96 @@ ToolResult Micropolis::queryTool(short x, short y)
  *
  * @todo Code is too complex/long.
  * @bug Tool does not return TOOLRESULT_NO_MONEY.
+ * @bug Sometimes we can delete parts of a residential zone, but not always.
+ *      Decide what rule we should have, and fix accordingly.
  *
  * @note Auto-bulldoze functionality is in Micropolis::checkBuildingSite()
  */
 ToolResult Micropolis::bulldozerTool(short x, short y)
 {
-    unsigned short currTile, temp;
-    short zoneSize, deltaH, deltaV;
     ToolResult result = TOOLRESULT_OK;
 
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    currTile = map[x][y];
-    temp = currTile & LOMASK;
+    MapValue mapVal = map[x][y];
+    MapTile tile = mapVal & LOMASK;
 
-    if (currTile & ZONEBIT) { /* zone center bit is set */
+    short zoneSize = 0; // size of the zone, 0 means invalid.
+    short deltaH; // Amount of horizontal shift to the center tile of the zone.
+    short deltaV; // Amount of vertical shift to the center tile of the zone.
 
+    if (mapVal & ZONEBIT) { /* zone center bit is set */
+        zoneSize = checkSize(tile);
+        deltaH = 0;
+        deltaV = 0;
+    } else {
+        zoneSize = checkBigZone(tile, &deltaH, &deltaV);
+    }
+
+    if (zoneSize > 0) {
         if (totalFunds > 0) { /// @todo Return TOOLRESULT_NO_MONEY if no money
 
             spend(1);
 
-            switch (checkSize(temp)) {
-
-            case 3:
-                makeSound("city", "Explosion-High", x, y);
-                putRubble(x - 1, y - 1, 3);
-                break;
-
-            case 4:
-                makeSound("city", "Explosion-Low", x, y);
-                putRubble(x - 1, y - 1, 4);
-                break;
-
-            case 6:
-                /// @bug This code is never executed.
-                makeSound("city", "Explosion-High", x, y);
-                makeSound("city", "Explosion-Low", x, y);
-                putRubble(x - 1, y - 1, 6);
-                break;
-
-            default:
-                break;
-
-            }
-
-        }
-
-    } else if ((zoneSize = checkBigZone(temp, &deltaH, &deltaV))) {
-
-        /// @todo Merge this code with previous
-        if (totalFunds > 0) { /// @todo Return TOOLRESULT_NO_MONEY if no money
-
-            spend(1);
+            int dozeX = x;
+            int dozeY = y;
+            int centerX = x + deltaH;
+            int centerY = y + deltaV;
 
             switch (zoneSize) {
 
             case 3:
-                makeSound("city", "Explosion-High", x, y);
+                makeSound("city", "Explosion-High", dozeX, dozeY);
+                putRubble(centerX - 1, centerY - 1, 3);
                 break;
 
             case 4:
-                makeSound("city", "Explosion-Low", x, y);
-                putRubble(x + deltaH - 1, y + deltaV - 1, 4);
+                makeSound("city", "Explosion-Low", dozeX, dozeY);
+                putRubble(centerX - 1, centerY - 1, 4);
                 break;
 
             case 6:
-                makeSound("city", "Explosion-High", x, y);
-                makeSound("city", "Explosion-Low", x, y);
-                putRubble(x + deltaH - 1, y + deltaV - 1, 6);
+                makeSound("city", "Explosion-High", dozeX, dozeY);
+                makeSound("city", "Explosion-Low", dozeX, dozeY);
+                putRubble(centerX - 1, centerY - 1, 6);
+                break;
+
+            default:
+                NOT_REACHED();
                 break;
 
             }
 
         }
 
-    } else {
+        updateFunds();
 
-        if (temp == RIVER || temp == REDGE || temp == CHANNEL) {
-
-            if (totalFunds >= 6) {  /// @todo Demand 6 credit while using 5?
-
-                result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
-
-                if (temp != (map[x][y] & LOMASK)) {
-                  spend(5);
-                }
-
-            } else {
-                result = TOOLRESULT_NO_MONEY;
-            }
-        } else {
-            result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
+        if (result == TOOLRESULT_OK) {
+            didTool("Dozr", x, y);
         }
 
+        return result;
+
+    }
+
+
+    if (tile == RIVER || tile == REDGE || tile == CHANNEL) {
+
+        if (totalFunds >= 6) {  /// @todo Demand 6 credit while using 5?
+
+            result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
+
+            if (tile != (map[x][y] & LOMASK)) {
+              spend(5);
+            }
+
+        } else {
+            result = TOOLRESULT_NO_MONEY;
+        }
+    } else {
+        result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
     }
 
     updateFunds();
