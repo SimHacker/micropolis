@@ -2694,8 +2694,6 @@ private:
 
     void didTool(const char *name, short x, short y);
 
-    short checkBigZone(short id, short *deltaHPtr, short *deltaVPtr);
-
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
                      unsigned short baseTile, bool aniFlag = false);
 

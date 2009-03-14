@@ -347,7 +347,6 @@ ToolResult Micropolis::putDownLand(short mapH, short mapV)
  * @param mapV Y coordinate of the tile.
  * @return Tool result.
  * @todo Auto-bulldoze deducts always 1.
- * @todo Auto-bulldoze costs should be pulled from a table/constant.
  */
 ToolResult Micropolis::putDownForest(short mapH, short mapV)
 {
@@ -377,13 +376,17 @@ ToolResult Micropolis::putDownForest(short mapH, short mapV)
 /**
  * Compute where the 'center' (at (1,1)) of the zone is, depending on where the
  * user clicked.
+ *
+ * Only inner tiles are recognized, and possibly not even complete (ie stadium
+ * while game is playing).
+ *
  * @param id Tile character value of the tile that the user clicked on.
  * @param deltaHPtr Pointer where horizontal position correction is written to.
  * @param deltaVPtr Pointer where vertical position correction is written to.
  * @return Size of the zone clicked at (or \c 0 if clicked outside zone).
  * @todo Make this table driven.
  */
-short Micropolis::checkBigZone(short id, short *deltaHPtr, short *deltaVPtr)
+static short checkBigZone(MapTile id, short *deltaHPtr, short *deltaVPtr)
 {
     switch (id) {
 
