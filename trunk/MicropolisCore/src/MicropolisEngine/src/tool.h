@@ -86,8 +86,10 @@ typedef std::map<Position, MapValue> WorldModificationsMap;
  * When applying a tool, two things change:
  *  - The world map.
  *  - The funds of the player.
+ *  - Messages sent to the player.
+ *  - Sounds played for the player.
  *
- * The latter gives a decision problem. To decide whether the tool can be
+ * The funds gives a decision problem. To decide whether the tool can be
  * applied, you need to know the cost. To know the cost you need to know the
  * exact changes being made.
  * The simplest way to compute the exact changes is to simply apply the tool to
@@ -102,7 +104,7 @@ typedef std::map<Position, MapValue> WorldModificationsMap;
  * yes/no decision can be made, and the effects can be copied to the real map
  * and funds.
  *
- * @todo Introduce this class in the connect.cpp file first.
+ * @todo Extend the class for storing messages and sounds.
  */
 class ToolEffects
 {
