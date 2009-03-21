@@ -69,6 +69,7 @@
 #include "micropolis.h"
 #include "text.h"
 #include "tool.h"
+#include "stubs.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -83,7 +84,11 @@ ToolEffects::ToolEffects(Micropolis *mpolis)
 
 ToolEffects::~ToolEffects()
 {
-    // Nothing to do
+    /* free all frontend messages */
+    while(!this->frontendMessages.empty()) {
+        delete this->frontendMessages.back();
+        this->frontendMessages.pop_back();
+    }
 }
 
 /** Reset all effects. */
@@ -91,6 +96,12 @@ void ToolEffects::clear()
 {
     this->cost = 0;
     this->modifications.clear();
+
+    /* free all frontend messages */
+    while(!this->frontendMessages.empty()) {
+        delete this->frontendMessages.back();
+        this->frontendMessages.pop_back();
+    }
 }
 
 /**
@@ -101,15 +112,21 @@ void ToolEffects::clear()
  */
 void ToolEffects::modifyWorld()
 {
-    WorldModificationsMap::const_iterator iter;
+    WorldModificationsMap::const_iterator modIter;
+    FrontendMessages::const_iterator msgIter;
     Micropolis *mpolis = this->sim;
 
     mpolis->spend(this->cost);
 
-    for (iter = this->modifications.begin();
-                    iter != this->modifications.end(); iter++) {
-        Position pos(iter->first);
-        mpolis->map[pos.posX][pos.posY] = iter->second;
+    for (modIter = this->modifications.begin();
+                    modIter != this->modifications.end(); modIter++) {
+        Position pos(modIter->first);
+        mpolis->map[pos.posX][pos.posY] = modIter->second;
+    }
+
+    for (msgIter = this->frontendMessages.begin();
+                    msgIter != this->frontendMessages.end(); msgIter++) {
+        (*msgIter)->sendMessage(mpolis);
     }
 
     this->clear();

@@ -2140,7 +2140,7 @@ private:
 public:
 
 
-    /** Name of the Micrpolis top level home directory. */
+    /** Name of the Micropolis top level home directory. */
     std::string homeDir;
 
     /** Name of the sub-directory where the resources are located. */
@@ -2649,6 +2649,8 @@ public:
                                     short toX, short toY);
 
 
+    void didTool(const char *name, short x, short y);
+
 private:
 
     ToolResult queryTool(short x, short y);
@@ -2691,8 +2693,6 @@ private:
         char *str,
         char *s0, char *s1, char *s2, char *s3, char *s4,
         int x, int y);
-
-    void didTool(const char *name, short x, short y);
 
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
                      unsigned short baseTile, bool aniFlag = false);
