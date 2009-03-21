@@ -2666,7 +2666,8 @@ private:
     ToolResult parkTool(short x, short y);
 
     ToolResult buildBuildingTool(short x, short y,
-                                  const BuildingProperties *bprops);
+                                  const BuildingProperties *bprops,
+                                  ToolEffects *effects);
 
 
     ToolResult networkTool(short x, short y);
@@ -2695,12 +2696,15 @@ private:
         int x, int y);
 
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
-                     unsigned short baseTile, bool aniFlag = false);
+                     MapTile baseTile, bool aniFlag,
+                     ToolEffects *effects);
 
-    int checkBuildingSite(int leftX, int topY, int sizeX, int sizeY);
+    ToolResult prepareBuildingSite(int leftX, int topY, int sizeX, int sizeY,
+                                   ToolEffects *effects);
 
     ToolResult buildBuilding(int mapH, int mapV,
-                                  const BuildingProperties *bprops);
+                                  const BuildingProperties *bprops,
+                                  ToolEffects *effects);
 
     int getDensityStr(short catNo, short mapH, short mapV);
 
@@ -2708,7 +2712,8 @@ private:
 
     short checkSize(short tileValue);
 
-    void checkBorder(short xMap, short yMap, int sizeX, int sizeY);
+    void checkBorder(short xMap, short yMap, int sizeX, int sizeY,
+                     ToolEffects *effects);
 
     void putRubble(int x, int y, int size);
 

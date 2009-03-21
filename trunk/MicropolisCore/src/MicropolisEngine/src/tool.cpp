@@ -116,14 +116,17 @@ void ToolEffects::modifyWorld()
     FrontendMessages::const_iterator msgIter;
     Micropolis *mpolis = this->sim;
 
-    mpolis->spend(this->cost);
+    mpolis->spend(this->cost); // Spend the costs
+    mpolis->updateFunds();
 
+    /* Modify the world. */
     for (modIter = this->modifications.begin();
                     modIter != this->modifications.end(); modIter++) {
         Position pos(modIter->first);
         mpolis->map[pos.posX][pos.posY] = modIter->second;
     }
 
+    /* And finally send the messages. */
     for (msgIter = this->frontendMessages.begin();
                     msgIter != this->frontendMessages.end(); msgIter++) {
         (*msgIter)->sendMessage(mpolis);
@@ -569,33 +572,35 @@ short Micropolis::checkSize(short tileValue)
 
 /**
  * Check and connect a new zone around the border.
- * @param xMap  X coordinate of top-left tile.
- * @param yMap  Y coordinate of top-left tile.
- * @param sizeX Horizontal size of the new zone.
- * @param sizeY Vertical size of the new zone.
+ * @param xMap    X coordinate of top-left tile.
+ * @param yMap    Y coordinate of top-left tile.
+ * @param sizeX   Horizontal size of the new zone.
+ * @param sizeY   Vertical size of the new zone.
+ * @param effects Storage of the effects.
  */
-void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY)
+void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY,
+                             ToolEffects *effects)
 {
     short cnt;
 
     /* this will do the upper bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap - 1, CONNECT_TILE_FIX);
+        connectTile(xMap + cnt, yMap - 1, CONNECT_TILE_FIX, effects);
     }
 
     /* this will do the left bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap - 1, yMap + cnt, CONNECT_TILE_FIX);
+        connectTile(xMap - 1, yMap + cnt, CONNECT_TILE_FIX, effects);
     }
 
     /* this will do the bottom bordering row */
     for (cnt = 0; cnt < sizeX; cnt++) {
-        connectTile(xMap + cnt, yMap + sizeY, CONNECT_TILE_FIX);
+        connectTile(xMap + cnt, yMap + sizeY, CONNECT_TILE_FIX, effects);
     }
 
     /* this will do the right bordering row */
     for (cnt = 0; cnt < sizeY; cnt++) {
-        connectTile(xMap + sizeX, yMap + cnt, CONNECT_TILE_FIX);
+        connectTile(xMap + sizeX, yMap + cnt, CONNECT_TILE_FIX, effects);
     }
 }
 
@@ -609,13 +614,15 @@ void Micropolis::checkBorder(short xMap, short yMap, int sizeX, int sizeY)
  * @param baseTile Tile value to use at the top-left position. Tiles are laid
  *                 in column major mode.
  * @param aniFlag  Set animation flag at relative position (1, 2)
+ * @param effects  Storage of the effects.
  *
  * @pre All tiles are within world boundaries.
  *
  * @todo We should ask the buildings themselves how they should be drawn.
  */
 void Micropolis::putBuilding(int leftX, int topY, int sizeX, int sizeY,
-                            unsigned short baseTile, bool aniFlag)
+                             MapTile baseTile, bool aniFlag,
+                             ToolEffects *effects)
 {
     for (int dy = 0; dy < sizeY; dy++) {
         int posY = topY + dy;
@@ -623,16 +630,16 @@ void Micropolis::putBuilding(int leftX, int topY, int sizeX, int sizeY,
         for (int dx = 0; dx < sizeX; dx++) {
             int posX = leftX + dx;
 
-            unsigned short tileValue = baseTile | BNCNBIT;
+            MapValue tileValue = baseTile | BNCNBIT;
             if (dx == 1) {
                 if (dy == 1) {
-                    tileValue = baseTile | BNCNBIT | ZONEBIT;
+                    tileValue |= ZONEBIT;
                 } else if (dy == 2 && aniFlag) {
-                    tileValue = baseTile | BNCNBIT | ANIMBIT;
+                    tileValue |= ANIMBIT;
                 }
             }
 
-            map[posX][posY] = tileValue;
+            effects->setMapValue(posX, posY, tileValue);
 
             baseTile++;
         }
@@ -640,62 +647,59 @@ void Micropolis::putBuilding(int leftX, int topY, int sizeX, int sizeY,
 }
 
 /**
- * Check the site where a building is about to be put down.
+ * Prepare the site where a building is about to be put down.
  *
- * This function implements the auto-bulldoze functionality by counting how
- * many bulldoze-operations need to be done before putting down a building.
- * The caller should add this count to the cost so a proper total is computed
- * for the atomic decision whether or not to go ahead.
- * Note that the tiles are never actually cleared since the caller will
- * immediately overwrite them any way.
+ * This function performs some basic sanity checks, and implements the
+ * auto-bulldoze functionality to prepare the site.
+ * All effects are stored in the \a effects object.
  *
  * @param leftX    Position of left column of tiles of the building.
  * @param topY     Position of top row of tiles of the building.
  * @param sizeX    Horizontal size of the building.
  * @param sizeY    Vertical size of the building.
- * @return: Suitability of the site.
- *          <0: not-buildable,
- *          >=0: number of tiles to bulldoze before construction can start.
- *
- * @note With Micropolis::autoBulldoze off, the function never returns
- *       a non-zero number of bulldozable tiles.
+ * @param effects  Storage of effects of preparing the site.
+ * @return: Result of preparation.
  */
-int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
+ToolResult Micropolis::prepareBuildingSite(int leftX, int topY,
+                                           int sizeX, int sizeY,
+                                           ToolEffects *effects)
 {
     // Check that the entire site is on the map
     if (leftX < 0 || leftX + sizeX > WORLD_W) {
-        return -1;
+        return TOOLRESULT_FAILED;
     }
     if (topY < 0 || topY + sizeY > WORLD_H) {
-        return -1;
+        return TOOLRESULT_FAILED;
     }
 
     // Check whether the tiles are clear
-    int numToDoze = 0; // Number of tiles that need bull-dozing
     for (int dy = 0; dy < sizeY; dy++) {
         int posY = topY + dy;
 
         for (int dx = 0; dx < sizeX; dx++) {
             int posX = leftX + dx;
 
-            unsigned short tileValue = map[posX][posY] & LOMASK;
+            unsigned short tileValue = effects->getMapTile(posX, posY);
 
             if (tileValue == DIRT) { // DIRT tile is buidable
                 continue;
             }
 
             if (!autoBulldoze) {
-                return -1; // No DIRT and no bull-dozer => not buildable
+                // No DIRT and no bull-dozer => not buildable
+                return TOOLRESULT_NEED_BULLDOZE;
             }
             if (!tally(tileValue)) {
-                return -1; // tilevalue cannot be auto-bulldozed
+                // tilevalue cannot be auto-bulldozed
+                return TOOLRESULT_NEED_BULLDOZE;
             }
 
-            numToDoze++;
+            effects->setMapValue(posX, posY, DIRT);
+            effects->addCost(gCostOf[TOOL_BULLDOZER]);
         }
     }
 
-    return numToDoze;
+    return TOOLRESULT_OK;
 }
 
 
@@ -704,34 +708,36 @@ int Micropolis::checkBuildingSite(int leftX, int topY, int sizeX, int sizeY)
  * @param mapH          Horizontal position of the 'center' tile in the world.
  * @param mapV          Vertical position of the 'center' tile in the world.
  * @param buildingProps Building properties of the building being constructed.
+ * @param effects       Storage of effects of putting down the building.
  * @return Tool result.
+ *
+ * @todo Give #putBuilding a #BuildingProperties pointer instead.
+ * @todo Move cost into building properties?
  */
 ToolResult Micropolis::buildBuilding(int mapH, int mapV,
-                                     const BuildingProperties *buildingProps)
+                                     const BuildingProperties *buildingProps,
+                                     ToolEffects *effects)
 {
     mapH--; mapV--; // Move position to top-left
 
-    int result = checkBuildingSite(mapH, mapV, buildingProps->sizeX,
-                                                buildingProps->sizeY);
-    if (result < 0) {
-        return TOOLRESULT_NEED_BULLDOZE;
+    ToolResult prepareResult = prepareBuildingSite(mapH, mapV,
+                                                buildingProps->sizeX,
+                                                buildingProps->sizeY,
+                                                effects);
+    if (prepareResult != TOOLRESULT_OK) {
+        return prepareResult;
     }
-    assert(result == 0 || autoBulldoze);
 
-    int cost = result + gCostOf[buildingProps->tool];
-    /// @todo Multiply survey result with bulldoze cost
-    ///       (or better, ask bulldoze tool about costs).
-
-    if (totalFunds - cost < 0) return TOOLRESULT_NO_MONEY;
-
-    /* take care of the money situtation here */
-    spend(cost);
-    updateFunds();
+    /* Preparation was ok, put down the building. */
+    effects->addCost(gCostOf[buildingProps->tool]);
 
     putBuilding(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY,
-                buildingProps->baseTile, buildingProps->buildingIsAnimated);
+                buildingProps->baseTile, buildingProps->buildingIsAnimated,
+                effects);
 
-    checkBorder(mapH, mapV, buildingProps->sizeX, buildingProps->sizeY);
+    checkBorder(mapH, mapV,
+                buildingProps->sizeX, buildingProps->sizeY,
+                effects);
 
     return TOOLRESULT_OK;
 }
@@ -972,7 +978,7 @@ ToolResult Micropolis::queryTool(short x, short y)
  * @bug Sometimes we can delete parts of a residential zone, but not always.
  *      Decide what rule we should have, and fix accordingly.
  *
- * @note Auto-bulldoze functionality is in Micropolis::checkBuildingSite()
+ * @note Auto-bulldoze functionality is in Micropolis::prepareBuildingSite()
  */
 ToolResult Micropolis::bulldozerTool(short x, short y)
 {
@@ -1172,17 +1178,22 @@ ToolResult Micropolis::parkTool(short x, short y)
 
 /**
  * Build a building.
- * @param x Horizontal posiion of 'center tile' of the new building.
- * @param x Vertical posiion of 'center tile' of the new building.
+ * @param x             Horizontal posiion of 'center tile' of the new building.
+ * @param x             Vertical posiion of 'center tile' of the new building.
+ * @param buildingProps Building properties of the building being constructed.
+ * @param effects       Storage of effects of putting down the building.
  * @return Tool result.
  */
 ToolResult Micropolis::buildBuildingTool(short x, short y,
-                                    const BuildingProperties *buildingProps)
+                                    const BuildingProperties *buildingProps,
+                                    ToolEffects *effects)
 {
-    ToolResult result = buildBuilding(x, y, buildingProps);
+    ToolResult result = buildBuilding(x, y, buildingProps, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool(buildingProps->toolName, x, y);
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool(buildingProps->toolName, x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
@@ -1336,22 +1347,35 @@ ToolResult Micropolis::forestTool(short x, short y)
  */
 ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
 {
+    ToolEffects effects(this);
+    ToolResult result;
+
     switch (tool) {
 
     case TOOL_RESIDENTIAL:
-        return buildBuildingTool(tileX, tileY, &residentialZoneBuilding);
+        result = buildBuildingTool(tileX, tileY, &residentialZoneBuilding,
+                                   &effects);
+        break;
 
     case TOOL_COMMERCIAL:
-        return buildBuildingTool(tileX, tileY, &commercialZoneBuilding);
+        result = buildBuildingTool(tileX, tileY, &commercialZoneBuilding,
+                                   &effects);
+        break;
 
     case TOOL_INDUSTRIAL:
-        return buildBuildingTool(tileX, tileY, &industrialZoneBuilding);
+        result = buildBuildingTool(tileX, tileY, &industrialZoneBuilding,
+                                   &effects);
+        break;
 
     case TOOL_FIRESTATION:
-        return buildBuildingTool(tileX, tileY, &fireStationBuilding);
+        result = buildBuildingTool(tileX, tileY, &fireStationBuilding,
+                                   &effects);
+        break;
 
     case TOOL_POLICESTATION:
-        return buildBuildingTool(tileX, tileY, &policeStationBuilding);
+        result = buildBuildingTool(tileX, tileY, &policeStationBuilding,
+                                   &effects);
+        break;
 
     case TOOL_QUERY:
         return queryTool(tileX, tileY);
@@ -1369,22 +1393,32 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         return roadTool(tileX, tileY);
 
     case TOOL_STADIUM:
-        return buildBuildingTool(tileX, tileY, &stadiumBuilding);
+        result = buildBuildingTool(tileX, tileY, &stadiumBuilding,
+                                   &effects);
+        break;
 
     case TOOL_PARK:
         return parkTool(tileX, tileY);
 
     case TOOL_SEAPORT:
-        return buildBuildingTool(tileX, tileY, &seaportBuilding);
+        result = buildBuildingTool(tileX, tileY, &seaportBuilding,
+                                   &effects);
+        break;
 
     case TOOL_COALPOWER:
-        return buildBuildingTool(tileX, tileY, &coalPowerBuilding);
+        result = buildBuildingTool(tileX, tileY, &coalPowerBuilding,
+                                   &effects);
+        break;
 
     case TOOL_NUCLEARPOWER:
-        return buildBuildingTool(tileX, tileY, &nuclearPowerBuilding);
+        result = buildBuildingTool(tileX, tileY, &nuclearPowerBuilding,
+                                   &effects);
+        break;
 
     case TOOL_AIRPORT:
-        return buildBuildingTool(tileX, tileY, &airportBuilding);
+        result = buildBuildingTool(tileX, tileY, &airportBuilding,
+                                   &effects);
+        break;
 
     case TOOL_NETWORK:
         return networkTool(tileX, tileY);
@@ -1402,6 +1436,15 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         return TOOLRESULT_FAILED;
 
     }
+
+    // Perform the effects of applying the tool if enough funds.
+    if (result == TOOLRESULT_OK) {
+        if (!effects.modifyIfEnoughFunding()) {
+            return TOOLRESULT_NO_MONEY;
+        }
+    }
+
+    return result;
 }
 
 
