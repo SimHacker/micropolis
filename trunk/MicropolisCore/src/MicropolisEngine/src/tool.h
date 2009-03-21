@@ -66,6 +66,7 @@
 
 
 #include <map>
+#include <list>
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -74,11 +75,15 @@
 
 class Micropolis;
 class Position;
-
+class FrontendMessage;
 
 ////////////////////////////////////////////////////////////////////////
 
+/** Set of modifications in the world accessible by position. */
 typedef std::map<Position, MapValue> WorldModificationsMap;
+
+/** List of messages to send to the frontend. */
+typedef std::list<FrontendMessage *> FrontendMessages;
 
 /**
  * Class for storing effects of applying a tool to the world.
@@ -86,7 +91,7 @@ typedef std::map<Position, MapValue> WorldModificationsMap;
  * When applying a tool, two things change:
  *  - The world map.
  *  - The funds of the player.
- *  - Messages sent to the player.
+ *  - Messages sent to the player and the front-end.
  *  - Sounds played for the player.
  *
  * The funds gives a decision problem. To decide whether the tool can be
@@ -125,11 +130,13 @@ public:
     inline void addCost(int amount);
     void setMapValue(const Position& pos, MapValue mapVal);
     inline void setMapValue(int x, int y, MapValue mapVal);
+    inline void addFrontendMessage(FrontendMessage *msg);
 
 private:
     Micropolis *sim; ///< Simulator to get map values from, and to apply changes.
     int cost; ///< Accumulated costs.
     WorldModificationsMap modifications; ///< Collected world modifications.
+    FrontendMessages frontendMessages; ///< Collected messages to send.
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -199,6 +206,15 @@ inline MapValue ToolEffects::getMapValue(int x, int y) const
 inline void ToolEffects::setMapValue(int x, int y, MapValue mapVal)
 {
     this->setMapValue(Position(x, y), mapVal);
+}
+
+/**
+ * Add a #FrontendMessage to the queue to send.
+ * @param msg Frontend message to send.
+ */
+inline void ToolEffects::addFrontendMessage(FrontendMessage *msg)
+{
+    this->frontendMessages.push_back(msg);
 }
 
 ////////////////////////////////////////////////////////////////////////
