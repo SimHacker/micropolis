@@ -112,33 +112,6 @@ static inline MapTile neutralizeRoad(MapTile tile)
 
 /**
  * Perform the command, and fix wire/road/rail/zone connections around it.
- * @param x   X world position to perform the command.
- * @param y   Y world position to perform the command.
- * @param cmd Command to perform.
- * @return Tool result.
- *
- * @note Temporary function to prevent breaking a lot of code.
- */
-ToolResult Micropolis::connectTile(short x, short y, ConnectTileCommand cmd)
-{
-    ToolEffects effects(this);
-
-    effects.clear();
-
-    ToolResult result = connectTile(x, y, cmd, &effects);
-    if (result == TOOLRESULT_OK) {
-        if (effects.modifyIfEnoughFunding()) {
-            return TOOLRESULT_OK;
-        }
-
-        return TOOLRESULT_NO_MONEY;
-    }
-
-    return result;
-}
-
-/**
- * Perform the command, and fix wire/road/rail/zone connections around it.
  * Store modification in the \a effects object.
  * @param x      X world position to perform the command.
  * @param y      Y world position to perform the command.

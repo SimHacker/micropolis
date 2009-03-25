@@ -64,7 +64,9 @@
 
 ////////////////////////////////////////////////////////////////////////
 
+class Micropolis; // Forward declaration.
 
+/** A message to the GUI frontend. */
 class FrontendMessage {
 
 public:
@@ -78,6 +80,7 @@ public:
 };
 
 
+/** Store a 'UIDidTool' message. */
 class FrontendMessageDidTool : public FrontendMessage {
 
 public:
@@ -88,12 +91,13 @@ public:
     FrontendMessageDidTool(const char *tool, int x, int y);
 
     ~FrontendMessageDidTool();
-       
+
     virtual void sendMessage(Micropolis *sim) const;
 
 };
 
 
+/** Store a 'UIMakeSound' message. */
 class FrontendMessageMakeSound : public FrontendMessage {
 
 public:

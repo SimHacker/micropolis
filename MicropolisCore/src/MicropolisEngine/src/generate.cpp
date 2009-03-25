@@ -68,6 +68,7 @@
 #include "stdafx.h"
 #include "micropolis.h"
 #include "generate.h"
+#include "tool.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -195,12 +196,12 @@ void Micropolis::makeNakedIsland()
 
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
-	    if ((x < 5) || (x >= WORLD_W - 5) ||
-	        (y < 5) || (y >= WORLD_H - 5)) {
-	        map[x][y] = RIVER;
-	    } else {
-	        map[x][y] = DIRT;
-	    }
+            if ((x < 5) || (x >= WORLD_W - 5) ||
+                (y < 5) || (y >= WORLD_H - 5)) {
+                map[x][y] = RIVER;
+            } else {
+                map[x][y] = DIRT;
+            }
         }
     }
 
@@ -406,50 +407,65 @@ void Micropolis::smoothTrees()
     for (x = 0; x < WORLD_W; x++) {
         for (y = 0; y < WORLD_H; y++) {
             if (isTree(map[x][y])) {
-		smoothTreesAt(x, y, false);
+                smoothTreesAt(x, y, false);
             }
         }
     }
 }
 
-
+/** Temporary function to prevent breaking a lot of code. */
 void Micropolis::smoothTreesAt(int x, int y, bool preserve)
+{
+    ToolEffects effects(this);
+
+    smoothTreesAt(x, y, preserve, &effects);
+    effects.modifyWorld();
+}
+
+
+/**
+ * Smooth trees at a position.
+ */
+void Micropolis::smoothTreesAt(int x, int y, bool preserve,
+                               ToolEffects *effects)
 {
     static short dx[4] = { -1,  0,  1,  0 };
     static short dy[4] = {  0,  1,  0, -1 };
-    static short treeTable[16] = {
+    static const short treeTable[16] = {
         0,  0,  0,  34,
         0,  0,  36, 35,
         0,  32, 0,  33,
         30, 31, 29, 37,
     };
 
-    if (isTree(map[x][y])) {
-	int bitIndex = 0;
-	int z;
-	for (z = 0; z < 4; z++) {
-	    bitIndex = bitIndex << 1;
-	    int xTemp = x + dx[z];
-	    int yTemp = y + dy[z];
-	    if (testBounds(xTemp, yTemp) &&
-		isTree(map[xTemp][yTemp])) {
-		bitIndex++;
-	    }
-	}
+    if (!isTree(effects->getMapValue(x, y))) {
+        return;
+    }
 
-	int temp = treeTable[bitIndex & 15];
-	if (temp) {
-	    if (temp != WOODS) {
-		if ((x + y) & 1) {
-		    temp = temp - 8;
-		}
-	    }
-	    map[x][y] = temp | BLBNBIT;
-	} else {
-	    if (!preserve) {
-	        map[x][y] = temp;
-	    }
-	}
+    int bitIndex = 0;
+    int z;
+    for (z = 0; z < 4; z++) {
+        bitIndex = bitIndex << 1;
+        int xTemp = x + dx[z];
+        int yTemp = y + dy[z];
+        if (testBounds(xTemp, yTemp)
+                            && isTree(effects->getMapValue(xTemp, yTemp))) {
+            bitIndex++;
+        }
+    }
+
+    int temp = treeTable[bitIndex & 15];
+    if (temp) {
+        if (temp != WOODS) {
+            if ((x + y) & 1) {
+                temp = temp - 8;
+            }
+        }
+        effects->setMapValue(x, y, temp | BLBNBIT);
+    } else {
+        if (!preserve) {
+            effects->setMapValue(x, y, temp);
+        }
     }
 }
 
