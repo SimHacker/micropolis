@@ -1,0 +1,28 @@
+<disasters>
+<!--
+    <disaster
+	name="Eco"
+    ><command name="disaster" disaster="eco"/></disaster>
+    <disaster
+	name="Melt"
+    ><command name="disaster" disaster="melt"/></disaster>
+-->
+    <disaster
+	name="Monster"
+    ><command name="disaster" disaster="monster"/></disaster>
+    <disaster
+	name="Fire"
+    ><command name="disaster" disaster="fire"/></disaster>
+    <disaster
+	name="Flood"
+    ><command name="disaster" disaster="flood"/></disaster>
+    <disaster
+	name="Meltdown"
+    ><command name="disaster" disaster="meltdown"/></disaster>
+    <disaster
+	name="Tornado"
+    ><command name="disaster" disaster="tornado"/></disaster>
+    <disaster
+	name="Earthquake"
+    ><command name="disaster" disaster="earthquake"/></disaster>
+</disasters>

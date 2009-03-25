@@ -1466,7 +1466,7 @@ void Micropolis::toolDown(EditingTool tool, short tileX, short tileY)
     }
 
     simPass = 0;
-    invalidateEditors();
+    invalidateMaps();
 }
 
 /**
@@ -1486,7 +1486,7 @@ void Micropolis::toolDrag(EditingTool tool,
         doTool(tool, toX, toY);
 
         simPass = 0; // update editors overlapping this one
-        invalidateEditors();
+        invalidateMaps();
         return;
     }
 
@@ -1509,7 +1509,7 @@ void Micropolis::toolDrag(EditingTool tool,
         }
 
         simPass = 0; // update editors overlapping this one
-        invalidateEditors();
+        invalidateMaps();
         return;
     }
 
@@ -1522,7 +1522,7 @@ void Micropolis::toolDrag(EditingTool tool,
         }
 
         simPass = 0; // update editors overlapping this one
-        invalidateEditors();
+        invalidateMaps();
         return;
     }
 
@@ -1551,8 +1551,8 @@ void Micropolis::toolDrag(EditingTool tool,
         }
     }
 
-    simPass = 0; // update editors overlapping this one
-    invalidateEditors();
+    simPass = 0;
+    invalidateMaps();
 }
 
 

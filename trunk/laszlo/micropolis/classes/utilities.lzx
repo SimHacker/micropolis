@@ -1,18 +1,17 @@
 <library>
 
 
-    <!-- Navigation Map View -->
+    <!-- Utilities -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="navigationmapview" extends="mapview"
-	tileSize="1"
-    >
+    <script><![CDATA[
 
 
-    </class>
+      ]]>
+    </script>
 
 
 </library>

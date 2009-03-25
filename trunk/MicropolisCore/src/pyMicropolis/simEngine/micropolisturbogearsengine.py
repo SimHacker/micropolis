@@ -305,8 +305,12 @@ for group in AniTileGroups:
 # Utilities
 
 
+def PRINT(*args):
+    print args
+
+
 def Now():
-    return datetime.now()
+    return time.time()
 
 
 def UniqueID(prefix="ID_"):
@@ -328,8 +332,11 @@ class Session(object):
         self.engine = None
         self.views = []
         self.messages = []
-        self.updateEditor = False
-        self.updateMap = False
+        self.messageNames = {}
+        self.createTime = time.time()
+        self.lastPollTime = 0
+        self.lastTouchTime = 0
+        self.expireDelay = 60 * 10 # ten minutes
 
         self.touch()
 
@@ -345,47 +352,66 @@ class Session(object):
 
 
     def touch(self):
-        self.timeTouched = Now()
+        self.lastTouchTime = Now()
 
 
-    def age(self):
-        return Now() - self.timeTouched
+    def handlePoll(self, poll):
+        self.lastPollTime = Now()
+        return self.engine.handlePoll(
+            poll,
+            self)
 
 
-    def sendMessage(self, message):
-        self.messages.append(message)
+    def touchAge(self):
+        return Now() - self.lastTouchTime
+
+
+    def pollAge(self):
+        return Now() - self.lastPollTime
+
+
+    def isExpired(self):
+        return self.pollAge < self.expireDelay
+
+
+    def expire(self):
+        print "Expiring session", self
+        self.setEngine(None)
+
+
+    def sendMessage(self, msg):
+        self.messages.append(msg)
+        self.touch()
 
 
     def receiveMessages(self):
         messages = self.messages
+
         self.messages = []
+        self.messageNames = {}
 
-        if self.updateEditor:
-            messages.append({
-                'message': 'editor',
-            })
-            self.updateEditor = False
-
-        if self.updateMap:
-            messages.append({
-                'message': 'map',
-            })
-            self.updateMap = False
+        if True:
+            print "=" * 72
+            for message in messages:
+                print message
+            print "=" * 72
 
         return messages
 
 
     def setEngine(self, engine):
+        print "setEngine", self, engine
         if self.engine:
             self.engine.removeSession(self)
         self.engine = engine
-        engine.addSession(self)
+        if engine:
+            engine.addSession(self)
 
 
-    def handlePoll(self, poll):
-        return self.engine.handlePoll(
-            poll,
-            self)
+    def createEngine(self):
+        if self.engine:
+            return
+        self.setEngine(CreateTurboGearsEngine())
 
 
 ########################################################################
@@ -395,17 +421,11 @@ class Session(object):
 class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine):
 
 
-    def __init__(
-            self,
-            *args,
-            **kw):
-
-        super(MicropolisTurboGearsEngine, self).__init__(*args, **kw)
+    def initGamePython(self):
 
         self.sessions = []
 
         self.resourceDir = MicropolisCorePath + '/res'
-        self.initGame()
 
         tengine = tileengine.TileEngine()
         self.tengine = tengine
@@ -426,15 +446,22 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.tilesSurface = cairo.ImageSurface.create_from_png(MicropolisTilesPath)
         self.tilesWidth = self.tilesSurface.get_width()
         self.tilesHeight = self.tilesSurface.get_height()
-        self.tilesCols = int(math.floor(self.tilesWidth / self.tileSize))
-        self.tilesRows = int(math.floor(self.tilesHeight / self.tileSize))
+        self.tilesCols = self.tilesWidth / micropolisengine.EDITOR_TILE_SIZE
+
+        self.tileSurface = self.tilesSurface.create_similar(cairo.CONTENT_COLOR, self.tileSize, self.tileSize)
+        self.tileCtx = cairo.Context(self.tileSurface)
+        self.tileCtx.set_antialias(cairo.ANTIALIAS_NONE)
 
         self.tileMap = AniTileMap
+
+        self.tileSizeCache = {}
 
         self.loadInitialCity()
 
 
     def loadInitialCity(self):
+
+        print "LOADINITIALCITY"
 
         # Load a city file.
         cityFileName = MicropolisCorePath + '/cities/haight.xml'
@@ -443,9 +470,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         # Initialize the simulator engine.
 
-        self.resume()
+        self.pause()
         self.setSpeed(2)
-        self.setPasses(100)
+        self.setPasses(10)
         self.setFunds(1000000000)
         self.setCityTax(10)
         self.setAutoGoto(False)
@@ -475,8 +502,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def sendSessions(self, message):
-        for session in self.sessions:
-            session.sendMessage(message)
+        try:
+            for session in self.sessions:
+                session.sendMessage(message)
+        except Exception, e:
+            print "======== XXX sendSessions exception:", e
 
 
     def doCommand(self, params):
@@ -538,6 +568,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if scenario:
                 self.loadScenario(scenario)
 
+        elif command == 'generateCity':
+
+            print "GenerateCity"
+            self.generateNewCity()
+
 
     def tickEngine(self, ticks=1):
 
@@ -546,32 +581,26 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.blinkFlag = fracTime < 0.5
 
-        lastPasses = self.simPasses
-        self.setPasses(ticks)
+        if self.simPasses != ticks:
+            self.setPasses(ticks)
         #print "TICK", ticks
         #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
         #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
         self.simTick()
-        self.setPasses(lastPasses)
         self.animateTiles()
         self.simUpdate()
 
-        self.sendSessions({
-            'message': 'tick',
-        })
+        self.handle_UIUpdate('tick')
 
-        self.sendSessions({
-            'message': 'editor',
-        })
-
-        self.sendSessions({
-            'message': 'map',
-        })
+        if not self.simPaused:
+            self.updateMapView()
 
 
     def handlePoll(self, poll, session):
         
         tileviews = []
+
+        print "handlePoll simPaused", self.simPaused
 
         commands = poll.find('commands')
         if commands:
@@ -638,23 +667,192 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def renderTiles(
         self,
         ctx,
+        tileSize,
         col, row,
         cols, rows,
         alpha):
 
-        self.tengine.renderTiles(
+        if False:
+            self.tengine.renderTiles(
+                ctx,
+                self.tilesSurface,
+                self.tilesWidth,
+                self.tilesHeight,
+                None,
+                None, #self.tileMap,
+                tileSize,
+                col,
+                row,
+                cols,
+                rows,
+                alpha)
+        else:
+            self.renderTilesLazy(
+                ctx,
+                tileSize,
+                col, row,
+                cols, rows,
+                alpha)
+
+
+    def renderTilesLazy(
+        self,
+        ctx,
+        tileSize,
+        col, row,
+        cols, rows,
+        alpha):
+
+        tileSizeCache = self.tileSizeCache
+        d = tileSizeCache.get(tileSize, None)
+        if not d:
+            d = {
+                'tileSize': tileSize,
+                'tileCache': array.array('i', (0, 0, 0, 0,) * (self.tileCount)),
+                'tileCacheSurfaces': [],
+                'tileCacheCount': 0,
+            }
+            tileSizeCache[tileSize] = d
+
+        self.tengine.renderTilesLazy(
             ctx,
-            self.tilesSurface,
-            self.tilesWidth,
-            self.tilesHeight,
             None,
             self.tileMap,
-            self.tileSize,
+            tileSize,
             col,
             row,
             cols,
             rows,
-            alpha)
+            alpha,
+            lambda tile: self.generateTile(tile, d),
+            d['tileCache'],
+            d['tileCacheSurfaces'],
+            None)
+
+
+    # This function is called from the C++ code in self.tengine.renderTilesLazy.
+    # It renders a tile, and returns a tuple with a surface index, tile x and tile y position.
+    # This function is totally in charge of the scaled tile cache, and can implement a variety
+    # of different policies.
+    def generateTile(
+        self,
+        tile,
+        d):
+        #print "======== GENERATETILE", tile, d
+
+        try:
+            tileSize = d['tileSize']
+            #print "======== tileSize", tileSize
+
+            # Get the various tile measurements.
+            sourceTileSize = micropolisengine.EDITOR_TILE_SIZE
+            tilesSurface = self.tilesSurface
+            tilesCols = self.tilesCols
+            maxSurfaceSize = 512
+
+            # Calculate the measurements per surface, each of which contains one or more tiles,
+            # depending on the tile size.
+            # If the tiles are small, we will put a lot of them per surface, but as they get
+            # bigger, we limit the size of the surface by reducing the number of tiles, so the
+            # surfaces to not get too big.
+
+            tileColsPerSurface = max(1, int(math.floor(maxSurfaceSize / tileSize)))
+            #print "tileColsPerSurface", tileColsPerSurface
+
+            tilesPerSurface = tileColsPerSurface * tileColsPerSurface
+            #print "tilesPerSurface", tilesPerSurface
+
+            surfaceSize = tileColsPerSurface * tileSize
+            #print "surfaceSize", surfaceSize
+
+            cacheTile = d['tileCacheCount']
+            d['tileCacheCount'] += 1
+
+            surfaceIndex = int(math.floor(cacheTile / tilesPerSurface))
+            #print "surfaceIndex", surfaceIndex
+
+            tileCacheSurfaces = d['tileCacheSurfaces']
+            while len(tileCacheSurfaces) <= surfaceIndex:
+                #print "MAKING SURFACE", len(tileCacheSurfaces), tilesPerSurface, surfaceSize
+                surface = self.tileSurface.create_similar(cairo.CONTENT_COLOR, surfaceSize, surfaceSize)
+                tileCacheSurfaces.append(surface)
+                #print "DONE"
+
+            surface = tileCacheSurfaces[surfaceIndex]
+            tileOnSurface = cacheTile % tilesPerSurface
+            #print "tileOnSurface", tileOnSurface
+            tileCol = tileOnSurface % tileColsPerSurface
+            tileRow = int(math.floor(tileOnSurface / tileColsPerSurface))
+            #print "tileCol", tileCol, "tileRow", tileRow
+            tileX = tileCol * tileSize
+            tileY = tileRow * tileSize
+            #print "tileX", tileX, "tileY", tileY
+            sourceTileCol = tile % tilesCols
+            sourceTileRow = int(math.floor(tile / tilesCols))
+            #print "sourceTileCol", sourceTileCol, "sourceTileRow", sourceTileRow
+
+            # Make a temporary tile the size of a source tile.
+            tileCtx = self.tileCtx
+            tileCtx.set_source_surface(
+                self.tilesSurface,
+                -sourceTileCol * sourceTileSize,
+                -sourceTileRow * sourceTileSize)
+            tileCtx.paint()
+
+            tilesCtx = cairo.Context(surface)
+            tilesCtx.set_source_surface(tilesSurface, 0, 0)
+
+            # Scale it down into the tilesSurface.
+            tilesCtx.save()
+
+            x = tileCol * tileSize
+            y = tileRow * tileSize
+
+            tilesCtx.rectangle(
+                x,
+                y,
+                tileSize,
+                tileSize)
+            tilesCtx.clip()
+
+            # Try to keep the tiles centered.
+            fudge = 0 # (0.5 * (scale - tileSize))
+
+            x += fudge
+            y += fudge
+
+            tilesCtx.translate(
+                x,
+                y)
+
+            #print "X", x, "Y", y, "FUDGE", fudge, "SCALE", scale, "TILESIZE", tileSize
+
+            # Make it a pixel bigger to eliminate the fuzzy black edges.
+            #zoomScale = float(tileSize) / float(sourceTileSize)
+            zoomScale = float(tileSize) / float(sourceTileSize - 1.0)
+
+            #print "ZOOMSCALE", zoomScale, "TILESIZE", tileSize, "SOURCETILESIZE", sourceTileSize
+
+            tilesCtx.scale(
+                zoomScale,
+                zoomScale)
+
+            tilesCtx.set_source_surface(
+                self.tileSurface,
+                -0.5,
+                -0.5)
+            tilesCtx.paint()
+
+            tilesCtx.restore()
+
+            #print "GENERATETILE", tile, "surfaceIndex", surfaceIndex, "tileX", tileX, "tileY", tileY
+
+            result = (surfaceIndex, tileX, tileY)
+            #print "GENERATETILE", tile, "RESULT", result
+            return result
+
+        except Exception, e:
+            print "GENERATE TILE ERROR", e
 
 
     def getTileData(
@@ -675,6 +873,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         return tiles
     
 
+    def updateMapView(self):
+        print "UPDATEMAPVIEW"
+        self.handle_UIUpdate('map')
+
+
     def handle_UIAutoGoto(self, x, y):
         print "handle_UIAutoGoto(self, x, y)", (self, x, y)
         self.sendSessions({
@@ -689,6 +892,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': "UIDidGenerateNewCity",
         })
+        self.updateMapView()
 
     
     def handle_UIDidLoadCity(self):
@@ -696,6 +900,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': "UIDidLoadCity",
         })
+        self.updateMapView()
 
     
     def handle_UIDidLoadScenario(self):
@@ -703,8 +908,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': "UIDidLoadScenario",
         })
+        self.updateMapView()
 
-    
+
     def handle_UIDidSaveCity(self):
         print "handle_UIDidSaveCity(self)", (self,)
         self.sendSessions({
@@ -761,6 +967,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': "UINewGame",
         })
+        self.updateMapView()
 
     
     def handle_UIPlayNewCity(self):
@@ -852,7 +1059,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_UIUpdate(self, aspect, *args):
-        #print "handle_UIUpdate(self, aspect)", (self, aspect)
+        print "==== handle_UIUpdate(self, aspect)", self, aspect, args
 
         message = {
             'message': 'UIUpdate',
@@ -904,7 +1111,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif aspect == "speed":
 
-            message['speed'] = self.speed
+            message['speed'] = self.simSpeed
 
         elif aspect == "taxrate":
 
@@ -915,7 +1122,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             resDemand, comDemand, indDemand = self.getDemands()
             message['resDemand'] = resDemand
             message['comDemand'] = comDemand
-            message['imdDemand'] = indDemand
+            message['indDemand'] = indDemand
 
         elif aspect == "options":
 
@@ -928,6 +1135,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif aspect == "cityname":
 
             message['cityName'] = self.cityName
+            print "now message", message
 
         elif aspect == "budget":
 
@@ -942,14 +1150,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'picture': args[3],
                 'important': args[4],
             })
-
-        elif aspect == "editor":
-            for session in self.sessions:
-                session.updateEditor = True
-
-        elif aspect == "map":
-            for session in self.sessions:
-                session.updateMap = True
 
         self.sendSessions(message)
 

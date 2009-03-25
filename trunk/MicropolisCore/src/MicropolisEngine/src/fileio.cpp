@@ -326,7 +326,6 @@ bool Micropolis::loadFile(const char *filename)
     initSimLoad = 1;
     doInitialEval = false;
     doSimInit();
-    invalidateEditors();
     invalidateMaps();
 
     return true;
@@ -488,7 +487,6 @@ void Micropolis::loadScenario(Scenario s)
     initWillStuff();
     initFundingLevel();
     updateFunds();
-    invalidateEditors();
     invalidateMaps();
     initSimLoad = 1;
     doInitialEval = false;

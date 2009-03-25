@@ -611,7 +611,11 @@ void Micropolis::init()
     // short speedCycle;
     speedCycle = 0;
 
+    // bool doInitialEval
     doInitialEval = false;
+
+    // int mapSerial;
+    mapSerial = 1;
 
     // short resValve;
     resValve = 0;

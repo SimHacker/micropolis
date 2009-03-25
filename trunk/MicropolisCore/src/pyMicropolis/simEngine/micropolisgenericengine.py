@@ -699,12 +699,17 @@ You have 10 years to turn this swamp back into a city again.""",
             self,
             ('paused',))
 
+        self.initGamePython()
         self.initGame()
 
         if self.running:
             self.startTimer()
 
         #print "MicropolisEngine.__init__ done", self
+
+
+    def initGamePython(self):
+        pass
 
 
     def __del__(

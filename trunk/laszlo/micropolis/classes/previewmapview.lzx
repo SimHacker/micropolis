@@ -8,8 +8,7 @@
 
 
     <class name="previewmapview" extends="mapview"
-	width="$once{120 * 3}"
-	height="$once{100 * 3}"
+	tileSize="3"
     >
 
 

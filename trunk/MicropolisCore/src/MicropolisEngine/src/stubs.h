@@ -1,4 +1,4 @@
-/* update.cpp
+/* stubs.h
  *
  * Micropolis, Unix Version.  This game was released for the Unix platform
  * in or about 1990 and has been modified for inclusion in the One Laptop
@@ -60,210 +60,55 @@
  * NOT APPLY TO YOU.
  */
 
-/** @file update.cpp */
+/** @file stubs.h */
 
 ////////////////////////////////////////////////////////////////////////
 
 
-#include "stdafx.h"
-#include "micropolis.h"
-#include "text.h"
+class FrontendMessage {
+
+public:
+
+    FrontendMessage();
+
+    ~FrontendMessage();
+
+    virtual void sendMessage(Micropolis *sim) const = 0;
+
+};
 
 
-/////////////////////////////////////////////////////////////////////////
+class FrontendMessageDidTool : public FrontendMessage {
+
+public:
+
+    const char *tool;
+    int x, y;
+
+    FrontendMessageDidTool(const char *tool, int x, int y);
+
+    ~FrontendMessageDidTool();
+       
+    virtual void sendMessage(Micropolis *sim) const;
+
+};
 
 
-void Micropolis::doUpdateHeads()
-{
-    showValves();
-    doTimeStuff();
-    reallyUpdateFunds();
-    updateOptions();
-}
+class FrontendMessageMakeSound : public FrontendMessage {
 
+public:
 
-void Micropolis::updateMaps()
-{
-    invalidateMaps();
-    doUpdateHeads();
-}
+    const char *channel;
+    const char *sound;
+    int x, y;
 
+    FrontendMessageMakeSound(const char *channel, const char *sound, int x, int y);
 
-void Micropolis::updateGraphs()
-{
-    changeCensus();
-}
+    ~FrontendMessageMakeSound();
 
+    virtual void sendMessage(Micropolis *sim) const;
 
-void Micropolis::updateEvaluation()
-{
-    changeEval();
-}
-
-
-void Micropolis::updateHeads()
-{
-    mustUpdateFunds = true;
-    valveFlag = true;
-    cityTimeLast = cityYearLast = cityMonthLast = totalFundsLast =
-      resLast = comLast = indLast = -999999;
-    doUpdateHeads();
-}
-
-
-/** Set a flag that the funds display is out of date. */
-void Micropolis::updateFunds()
-{
-    mustUpdateFunds = true;
-}
-
-
-void Micropolis::reallyUpdateFunds()
-{
-    if (!mustUpdateFunds) {
-        return;
-    }
-
-    mustUpdateFunds = false;
-
-    if (totalFunds != totalFundsLast) {
-        totalFundsLast = totalFunds;
-
-        callback("UIUpdate", "s", "funds");
-    }
-
-}
-
-
-void Micropolis::doTimeStuff()
-{
-    updateDate();
-}
-
-
-/**
- * @bug Message is wrong.
- */
-void Micropolis::updateDate()
-{
-    int megalinium = 1000000;
-
-    cityTimeLast = cityTime >> 2;
-
-    cityYear = ((int)cityTime / 48) + (int)startingYear;
-    cityMonth = ((int)cityTime % 48) >> 2;
-
-    if (cityYear >= megalinium) {
-        setYear(startingYear);
-        cityYear = startingYear;
-        sendMessage(MESSAGE_NOT_ENOUGH_POWER, NOWHERE, NOWHERE, true);
-
-    }
-
-    if ((cityYearLast != cityYear) ||
-        (cityMonthLast != cityMonth)) {
-
-        cityYearLast = cityYear;
-        cityMonthLast = cityMonth;
-
-        callback("UIUpdate", "s", "date");
-    }
-}
-
-
-void Micropolis::showValves()
-{
-    if (valveFlag) {
-        drawValve();
-        valveFlag = false;
-    }
-}
-
-
-void Micropolis::drawValve()
-{
-    float r, c, i;
-
-    r = resValve;
-
-    if (r < -1500) {
-        r = -1500;
-    }
-
-    if (r > 1500) {
-        r = 1500;
-    }
-
-    c = comValve;
-
-    if (c < -1500) {
-        c = -1500;
-    }
-
-    if (c > 1500) {
-        c = 1500;
-    }
-
-    i = indValve;
-
-    if (i < -1500) {
-        i = -1500;
-    }
-
-    if (i > 1500) {
-        i = 1500;
-    }
-
-    if ((r != resLast) ||
-        (c != comLast) ||
-        (i != indLast)) {
-
-        resLast = (int)r;
-        comLast = (int)c;
-        indLast = (int)i;
-
-        setDemand(r, c, i);
-    }
-}
-
-
-void Micropolis::setDemand(float r, float c, float i)
-{
-    callback("UIUpdate", "s", "demand");
-}
-
-
-void Micropolis::updateOptions()
-{
-    if (mustUpdateOptions) {
-        mustUpdateOptions = false;
-        callback("UIUpdate", "s", "options");
-    }
-}
-
-
-/** @todo Keeping track of pending updates should be moved to the interface
- *        (the simulator generates events, the interface forwards them to
- *        the GUI when possible/allowed.
- */
-void Micropolis::updateUserInterface()
-{
-    /// @todo Send all pending update messages to the user interface.
-
-    // city: after load file, load scenario, or generate city
-    // map: when small overall map changes
-    // editor: when large close-up map changes
-    // graph: when graph changes
-    // evaluation: when evaluation changes
-    // budget: when budget changes
-    // date: when date changes
-    // funds: when funds change
-    // demand: when demand changes
-    // level: when level changes
-    // speed: when speed changes
-    // delay: when delay changes
-    // option: when options change
-}
+};
 
 
 ////////////////////////////////////////////////////////////////////////

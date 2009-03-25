@@ -1937,6 +1937,16 @@ public:
 
     void simRobots();
 
+public:
+
+    std::string cityFileName; ///< Filename of the last loaded city
+
+    /**
+     * Name of the city.
+     * @todo Write-only variable, should it be removed?
+     */
+    std::string cityName;     ///< Name of the city
+
 private:
 
     int heatSteps;
@@ -1952,14 +1962,6 @@ private:
      * @todo Always 3, should this variable be moved or removed?
      */
     int heatWrap;
-
-    std::string cityFileName; ///< Filename of the last loaded city
-
-    /**
-     * Name of the city.
-     * @todo Write-only variable, should it be removed?
-     */
-    std::string cityName;     ///< Name of the city
 
     short *cellSrc;
 
@@ -2247,6 +2249,7 @@ public:
 
     bool doInitialEval; ///< Need to perform initial city evaluation.
 
+    int mapSerial; ///< The invalidateMaps method increases the map serial number every time the maps changes.
 
 private:
 
@@ -2537,8 +2540,6 @@ public:
 
     void doEarthquake(int strength);
 
-    void invalidateEditors();
-
     void invalidateMaps();
 
     void makeSound(
@@ -2783,8 +2784,6 @@ public:
 
 
     void doUpdateHeads();
-
-    void updateEditors();
 
     void updateMaps();
 

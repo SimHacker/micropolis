@@ -36,15 +36,9 @@ from pyMicropolis.tileEngine import tileengine
 # Utilities
 
 
-def ErrorMessage(
-    message):
-    
-    return {
-        'tg_template': 'micropolis.templates.error',
-        'message': message,
-    }
-
-
+########################################################################
+# Takes a string, and parses it into an XML element.
+#
 def StringToElement(s):
     f = StringIO(s)
     et = ElementTree.parse(f)
@@ -69,6 +63,9 @@ def StringToElement(s):
 class StreamFilter(cherrypy.filters.basefilter.BaseFilter):
 
 
+    ####################################
+    # Before request body callback.
+    #
     def before_request_body(self):
 
         print "STREAMFILTER BEFORE_REQUEST_BODY PATH", cherrypy.request.path
@@ -95,6 +92,11 @@ class Root(controllers.RootController):
     #_cpFilterList = [StreamFilter()]
 
 
+    ########################################################################
+    # Initialization.
+    #
+    # Initialize the web server.
+    #
     def __init__(self, *args, **kw):
         super(Root, self).__init__(*args, **kw)
 
@@ -105,9 +107,24 @@ class Root(controllers.RootController):
     # Utilities
 
 
-    ####################################
-    # expectationFailed
+    ########################################################################
+    # initMicropolis
+    #
+    # Initialize the global Micropolis engine.
+    # TODO: Don't use the global engine. Use an anonymous session's engine.
+    #
+    def initMicropolis(self):
 
+        self.sessions = {}
+
+        self.engine = micropolisturbogearsengine.CreateTurboGearsEngine()
+
+
+    ########################################################################
+    # expectationFailed
+    #
+    # Report an unexpected error, given a message.
+    #
     def expectationFailed(
         self,
         message):
@@ -117,9 +134,11 @@ class Root(controllers.RootController):
             message)
 
         
-    ####################################
+    ########################################################################
     # fatalError
-
+    #
+    # Report a fatal error, given a status code and a message.
+    #
     def fatalError(
         self,
         status,
@@ -130,20 +149,15 @@ class Root(controllers.RootController):
             message)
 
 
-    ####################################
-    # initMicropolis
-
-    def initMicropolis(self):
-
-        self.sessions = {}
-
-        self.engine = micropolisturbogearsengine.CreateTurboGearsEngine()
-
-
-    ####################################
+    ########################################################################
     # getSession
-
+    #
+    # Return a session, given a session id, or create a new session if it's not defined.
+    # Touch the session to update its last used time.
+    #
     def getSession(self, sessionID):
+
+        self.expireSessions()
 
         sessions = self.sessions
         session = sessions.get(sessionID, None)
@@ -154,15 +168,31 @@ class Root(controllers.RootController):
         session = micropolisturbogearsengine.Session(sessionID)
         sessions[sessionID] = session
 
-        session.setEngine(self.engine)
+        session.createEngine()
         session.touch()
 
         return session
 
 
-    ####################################
-    # checkTileBounds
+    ########################################################################
+    # expireSessions
+    #
+    # Expire any sessions that have not been used in a while.
+    #
+    def expireSessions(self):
+        oldSessions = []
+        for session in self.sessions.values():
+            if session.isExpired():
+                oldSessions.append(session)
+        for session in oldSessions:
+            session.expire()
 
+
+    ########################################################################
+    # checkTileBounds
+    #
+    # Check to see if the rectangle is within the bounds of the map.
+    #
     def checkTileBounds(self, col, row, cols, rows):
         if ((col < 0) or
             (row < 0) or
@@ -177,21 +207,24 @@ class Root(controllers.RootController):
     # Web pages and services.
 
 
-    ####################################
+    ########################################################################
     # index
-
+    #
+    # Main index page.
+    #
     @expose(
         template="micropolis.templates.index")
-    
     def index(
         self):
 
         return {}
 
 
-    ####################################
+    ########################################################################
     # console
-
+    #
+    # Administrative command console.
+    #
     @expose(
         template="micropolis.templates.console")
     @identity.require(
@@ -215,9 +248,11 @@ class Root(controllers.RootController):
         }
 
 
-    ####################################
+    ########################################################################
     # login
-
+    #
+    # Login page.
+    #
     @expose(template="micropolis.templates.login")
     def login(
         self,
@@ -259,9 +294,11 @@ class Root(controllers.RootController):
         }
 
 
-    ####################################
+    ########################################################################
     # logout
-
+    #
+    # Logout page.
+    #
     @expose()
     def logout(
         self):
@@ -270,9 +307,11 @@ class Root(controllers.RootController):
         redirect("/")
 
 
-    ####################################
+    ########################################################################
     # micropolisSessionStart
-
+    #
+    # Start a new session.
+    #
     @expose(
         template="micropolis.templates.micropolisSessionStart",
         content_type="text/xml")
@@ -284,9 +323,11 @@ class Root(controllers.RootController):
         }
 
 
-    ####################################
+    ########################################################################
     # micropolisGetTiles
-
+    #
+    # Get some tiles from the session's engine.
+    #
     @expose(
         content_type="application/x-micropolis-tiles")
     @validate(validators = {
@@ -298,6 +339,7 @@ class Root(controllers.RootController):
     })
     def micropolisGetTiles(
         self,
+        sessionID='',
         col=0,
         row=0,
         cols=micropolisengine.WORLD_W,
@@ -307,15 +349,21 @@ class Root(controllers.RootController):
 
         self.checkTileBounds(col, row, cols, rows)
 
-        engine = self.engine
+        if not sessionID:
+            self.expectationFailed("Invalid sessionID parameter.");
+        session = self.getSession(sessionID)
+        engine = session.engine
+
         tiles = engine.getTileData(col, row, cols, rows, code)
 
         return tiles
 
 
-    ####################################
+    ########################################################################
     # micropolisPoll
-
+    #
+    # Poll the session.
+    #
     @expose(
         template="micropolis.templates.micropolisPoll",
         content_type="text/xml")
@@ -324,8 +372,8 @@ class Root(controllers.RootController):
     })
     def micropolisPoll(
         self,
-        ref=0,
         sessionID='',
+        ref=0,
         body='',
         **kw):
 
@@ -355,9 +403,86 @@ class Root(controllers.RootController):
         }
 
 
-    ####################################
-    # micropolisGetTilesImage
+    ########################################################################
+    # micropolisGetMapPicture
+    #
+    # Get a picture of the session's map.
+    #
+    @expose(
+        content_type="image/png")
+    @validate(validators = {
+        'width': validators.Int(),
+        'height': validators.Int(),
+    })
+    def micropolisGetMapImage(
+        self,
+        sessionID='',
+        width=120,
+        height=100,
+        **kw):
 
+        tileSize = micropolisengine.EDITOR_TILE_SIZE
+
+        worldW = micropolisengine.WORLD_W
+        worldH = micropolisengine.WORLD_H
+
+        tileWidth = int(width / worldW)
+        tileHeight = int(height / worldH)
+
+        #print width, height, tileSize, width % tileWidth, height % tileHeight, tileWidth != tileHeight
+
+        if (# Size must not be zero or negative.
+            (width < worldW) or
+            (height < worldH) or
+            # Size must not be bigger than 16x16 tile.
+            (width > worldW * tileSize) or
+            (height > worldH * tileSize) or
+            # Size must be multiple of tile size.
+            ((width % tileWidth) != 0) or
+            ((height % tileHeight) != 0) or
+            # Size must be 1:1 aspect ratio.
+            (tileWidth != tileHeight)):
+            self.expectationFailed("Invalid size.");
+
+        session = self.getSession(sessionID)
+        engine = session.engine
+
+        tileSize = tileWidth
+
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        ctx = cairo.Context(surface)
+
+        alpha = 1.0
+
+        engine.renderTiles(
+            ctx,
+            tileSize,
+            0,
+            0,
+            worldW,
+            worldH,
+            alpha)
+
+        fd, tempFileName = tempfile.mkstemp()
+        os.close(fd)
+        
+        surface.write_to_png(tempFileName)
+        surface.finish()
+        f = open(tempFileName, 'rb')
+        data = f.read()
+        f.close()
+        os.unlink(tempFileName)
+
+        return data
+
+
+    ########################################################################
+    # micropolisGetTilesImage
+    #
+    # Get an image of some tiles.
+    #
+    # TODO: Don't use the global engine. Use an anonymous session's engine.
+    #
     @expose(
         content_type="image/png")
     @validate(validators = {
@@ -394,11 +519,11 @@ class Root(controllers.RootController):
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
         ctx = cairo.Context(surface)
 
-        engine = self.engine
         alpha = 1.0
 
         engine.renderTiles(
             ctx,
+            micropolisengine.EDITOR_TILE_SIZE,
             col,
             row,
             cols,
@@ -416,52 +541,6 @@ class Root(controllers.RootController):
         os.unlink(tempFileName)
 
         return data
-
-
-    ####################################
-    # micropolisView
-
-    @expose(
-        template="micropolis.templates.micropolisView")
-    @validate(validators = {
-        'col': validators.Int(),
-        'row': validators.Int(),
-        'cols': validators.Int(),
-        'rows': validators.Int(),
-        'ticks': validators.Int(),
-    })
-    def micropolisView(
-        self,
-        col=0,
-        row=0,
-        cols=micropolisengine.WORLD_W / 4,
-        rows=micropolisengine.WORLD_H / 4,
-        ticks=1,
-        **kw):
-
-        if ((col < 0) or
-            (row < 0) or
-            (cols <= 0) or
-            (rows <= 0) or
-            ((col + cols) > micropolisengine.WORLD_W) or
-            ((row + rows) > micropolisengine.WORLD_H) or
-            (ticks < 0) or
-            (ticks > 1000000)):
-            self.expectationFailed("Invalid parameter.");
-
-        engine = self.engine
-        
-        engine.tickSim(ticks)
-
-        return {
-            'col': col,
-            'row': row,
-            'cols': cols,
-            'rows': rows,
-            'ticks': ticks,
-            'engine': engine,
-            'CityNames': micropolisturbogearsengine.CityNames,
-        }
 
 
 ########################################################################
