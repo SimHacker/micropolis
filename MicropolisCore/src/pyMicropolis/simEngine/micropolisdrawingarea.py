@@ -219,7 +219,8 @@ class MicropolisDrawingArea(tiledrawingarea.TileDrawingArea):
     def makeTileMap(self):
         tiledrawingarea.TileDrawingArea.makeTileMap(self)
 
-        if True:
+        if False:
+            # Remap some of the tiles so we can see them for debugging.
             self.tileMap[micropolisengine.REDGE] = micropolisengine.FIRE
             self.tileMap[micropolisengine.CHANNEL] = micropolisengine.RADTILE
 

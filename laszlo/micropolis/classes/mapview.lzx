@@ -9,7 +9,109 @@
 
     <class name="mapview"
 	bgcolor="0xffff00"
+	width="${gApp.worldW * this.tileSize}"
+	height="${gApp.worldH * this.tileSize}"
     >
+
+
+        <attribute name="updateDelay" value="1000"/>
+	<attribute name="lastUpdateTime" value="0"/>
+	<attribute name="damaged" value="false"/>
+	<attribute name="damageSoon" value="false"/>
+	<attribute name="updateTimerActive" value="false"/>
+	<attribute name="updateTimerDelegate" value="$once{new LzDelegate(this, 'handleTimer')}"/>
+	<attribute name="tileSize" value="16"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("==== mapview oninit", this);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<handler name="onvisible"><![CDATA[
+	    //Debug.write("==== mapview onvisible", this, this.visible);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<method name="updateVisible"><![CDATA[
+	    //Debug.write("==== mapView updateVisible", this.visible);
+	    if (this.visible) {
+	        gApp.expressInterest(this, ['map']);
+	    } else {
+	        gApp.revokeInterest(this, ['map']);
+	    }
+
+	    this.damage();
+	  ]]>
+	</method>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    //Debug.write("**** mapview handleUpdate", this, args);
+	    this.damage();
+	  ]]>
+	</method>
+
+
+	<method name="damage"><![CDATA[
+	    if (!this.visible) {
+	        return;
+	    }
+
+	    if (this.updateTimerActive) {
+	        this.damageSoon = true;
+		return;
+	    }
+
+	    this.damageNow();
+
+	    this.damageSoon = false;
+	    this.updateTimerActive = true;
+	    lz.Timer.addTimer(this.updateTimerDelegate, this.updateDelay);
+	  ]]>
+	</method>
+
+
+	<method name="damageNow"><![CDATA[
+	    //Debug.write("damageNow", this);
+	    this.setAttribute("bgcolor", Math.floor(Math.random() * 0xffffff));
+
+	    var sessionID = gSessionData.sessionID;
+	    var tileSize = this.tileSize;
+	    var width = gApp.worldW * tileSize;
+	    var height = gApp.worldH * tileSize;
+	    var uniqueID = gApp.makeUniqueID();
+	    var src = 
+	        "http:/server/micropolisGetMapImage?sessionID=" + 
+		sessionID +
+		"&width=" +
+		width +
+		"&height=" +
+		height +
+		"&uniqueID=" +
+		uniqueID;
+	    //Debug.write(this, "SRC", src)
+	    this.setAttribute("resource", src);
+	  ]]>
+	</method>
+
+
+	<method name="handleTimer" args="arg"><![CDATA[
+	    //Debug.write("handleTimer", this, arg);
+	    this.updateTimerActive = false;
+
+	    if (this.damageSoon) {
+	        this.damageSoon = false;
+	        this.damageNow();
+	        lz.Timer.addTimer(this.updateTimerDelegate, this.updateDelay);
+	    }
+	  ]]>
+	</method>
+
 
     </class>
 

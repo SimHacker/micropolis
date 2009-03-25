@@ -382,7 +382,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                                     dirs.remove(otherDir)
 
                             # Choose between the remaining directions.
-                            # Select the directoin with the highest score.
+                            # Select the direction with the highest score.
 
                             oppositeDir = self.oppositeDirections[curDir]
                             bestDir = None
@@ -395,7 +395,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
                                 if dir == curDir:
                                     score += random.random() * 100
 
-                                # Less score for current direction.
+                                # Less score for opposite direction.
                                 if dir == oppositeDir:
                                     score -= random.random() * 100
 

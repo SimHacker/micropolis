@@ -150,7 +150,6 @@
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
             var animationTicks = gApp.animationTicks;
-            var aniTiles = gApp.aniTiles;
 
             var col, row;
             for (row = viewRow; row < lastRow; row++) {
@@ -180,7 +179,7 @@
                     if ((tileDict['animationTicks'] < animationTicks) &&
                         tileDict['animated']) {
                         tileDict['animationTicks'] = animationTicks;
-                        var newTileIndex = aniTiles[tileIndex];
+                        var newTileIndex = gAniTiles[tileIndex];
                         var animated = tileIndex != newTileIndex;
                         if (animated) {
                             tileDict['index'] = tileIndex = newTileIndex;

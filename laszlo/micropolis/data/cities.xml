@@ -1,0 +1,98 @@
+<cities>
+    <city
+	id="about"
+	name="about"
+    ><command name="loadCity" city="about"/></city>
+    <city
+	id="badnews"
+	name="badnews"
+    ><command name="loadCity" city="badnews"/></city>
+    <city
+	id="bluebird"
+	name="bluebird"
+    ><command name="loadCity" city="bluebird"/></city>
+    <city
+	id="bruce"
+	name="bruce"
+    ><command name="loadCity" city="bruce"/></city>
+    <city
+	id="deadwood"
+	name="deadwood"
+    ><command name="loadCity" city="deadwood"/></city>
+    <city
+	id="finnigan"
+	name="finnigan"
+    ><command name="loadCity" city="finnigan"/></city>
+    <city
+	id="freds"
+	name="freds"
+    ><command name="loadCity" city="freds"/></city>
+    <city
+	id="haight"
+	name="haight"
+    ><command name="loadCity" city="haight"/></city>
+    <city
+	id="happisle"
+	name="happisle"
+    ><command name="loadCity" city="happisle"/></city>
+    <city
+	id="joffburg"
+	name="joffburg"
+    ><command name="loadCity" city="joffburg"/></city>
+    <city
+	id="kamakura"
+	name="kamakura"
+    ><command name="loadCity" city="kamakura"/></city>
+    <city
+	id="kobe"
+	name="kobe"
+    ><command name="loadCity" city="kobe"/></city>
+    <city
+	id="kowloon"
+	name="kowloon"
+    ><command name="loadCity" city="kowloon"/></city>
+    <city
+	id="kyoto"
+	name="kyoto"
+    ><command name="loadCity" city="kyoto"/></city>
+    <city
+	id="linecity"
+	name="linecity"
+    ><command name="loadCity" city="linecity"/></city>
+    <city
+	id="med_isle"
+	name="med_isle"
+    ><command name="loadCity" cit="medy_isle"/></city>
+    <city
+	id="ndulls"
+	name="ndulls"
+    ><command name="loadCity" city="ndulls"/></city>
+    <city
+	id="neatmap"
+	name="neatmap"
+    ><command name="loadCity" city="neatmap"/></city>
+    <city
+	id="radial"
+	name="radial"
+    ><command name="loadCity" city="radial"/></city>
+    <city
+	id="senri"
+	name="senri"
+    ><command name="loadCity" city="senri"/></city>
+    <city
+	id="southpac"
+	name="southpac"
+    ><command name="loadCity" city="southpac"/></city>
+    <city
+	id="splats"
+	name="splats"
+    ><command name="loadCity" city="splats"/></city>
+    <city
+	id="wetcity"
+	name="wetcity"
+    ><command name="loadCity" city="wetcity"/></city>
+    <city
+	id="yokohama"
+	name="yokohama"
+    ><command name="loadCity" city="yokohama"/></city>
+</cities>

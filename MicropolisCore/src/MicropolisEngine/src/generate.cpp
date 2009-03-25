@@ -101,7 +101,6 @@ void Micropolis::generateSomeCity(int seed)
     initWillStuff();
     resetMapState();
     resetEditorState();
-    invalidateEditors();
     invalidateMaps();
     updateFunds();
     doSimInit();

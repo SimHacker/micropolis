@@ -20,7 +20,6 @@ Callback("UIDidntLoadCity", "s", msg);
 Callback("UIDidntSaveCity", "s", msg);
 Callback("UIDoPendTool", "ddd", tool, x, y);
 Callback("UIDropFireBombs", "");
-Callback("UIInitializeSound", "");
 Callback("UILoseGame", "");
 Callback("UIMakeSound", "ssdd", channel, sound, x, y);
 Callback("UINewGame", "");
@@ -42,28 +41,39 @@ Callback("UIStartScenario", "d", scenario);
 Callback("UIStopEarthquake", "d", magnitude);
 Callback("UIWinGame", "");
 Callback("UINewEvaluation", "");
-Callback("UIInvalidateEditors", "");
-Callback("UIInvalidateMaps", "");
 Callback("UISimRobots", "");
 Callback("UIUpdate", "s", name);
   Called when an aspect of the model has changed:
-    city: after load file, load scenario, or generate city [TODO]
-    map: when small overall map changes [TODO]
-    editor: when large close-up map changes [TODO]
+    map: when small overall map changes
+      Called by stubs.cpp.
+      Called by python micropolis engine subclass.
     graph: when graph changes
+      Called by graph.cpp.
     evaluation: when evaluation changes
+      Called by evaluation.cpp.
     budget: when budget changes
+      Called by budget.cpp.
     date: when date changes
+      Called by update.cpp.
     funds: when funds change
+      Called by update.cpp.
     demand: when demand changes
+      Called by update.cpp.
     gamelevel: when game level changes
+      Called by utilities.cpp.
     cityname: when city name changes
+      Called by utilities.cpp.
     paused: when game is paused or resumed
+      Called by utilities.cpp.
     speed: when speed changes
+      Called by utilities.cpp.
     passes: when passes changes
-    delay: when delay changes [TODO]
+      Called by utilities.cpp.
     options: when an option changed
+      Called by update.cpp.
     taxrate: tax rate
+      Called by budget.cpp.
     message(dddbb): message changed
+      Called by message.cpp.
 
     

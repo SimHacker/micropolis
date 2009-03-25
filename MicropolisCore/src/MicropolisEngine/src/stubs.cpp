@@ -111,8 +111,6 @@ void FrontendMessageDidTool::sendMessage(Micropolis *sim) const
 }
 
 
-
-
 FrontendMessageMakeSound::FrontendMessageMakeSound(
                                 const char *channel, const char *sound,
                                 int x, int y)
@@ -133,6 +131,7 @@ void FrontendMessageMakeSound::sendMessage(Micropolis *sim) const
 {
     sim->makeSound(this->channel, this->sound, this->x, this->y);
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -307,19 +306,11 @@ void Micropolis::doEarthquake(int strength)
 }
 
 
-/** Tell the front-end that the editors are not valid any more */
-void Micropolis::invalidateEditors()
-{
-    callback("UIInvalidateEditors", ""); // old
-    callback("UIUpdate", "s", "editor"); // new
-}
-
-
 /** Tell the front-end that the maps are not valid any more */
 void Micropolis::invalidateMaps()
 {
-    callback("UIInvalidateMaps", ""); // old
-    callback("UIUpdate", "s", "editor"); // new
+    mapSerial++;
+    callback("UIUpdate", "s", "map"); // new
 }
 
 
