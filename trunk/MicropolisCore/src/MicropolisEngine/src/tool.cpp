@@ -238,31 +238,29 @@ static const short gToolSize[] = {
 
 /**
  * Put a park down at the give tile.
- * @param mapH X coordinate of the tile.
- * @param mapV Y coordinate of the tile.
+ * @param mapH    X coordinate of the tile.
+ * @param mapV    Y coordinate of the tile.
+ * @param effects Storage of effects of putting down the park.
  * @return Tool result.
  * @todo Add auto-bulldoze? (seems to be missing).
  */
-ToolResult Micropolis::putDownPark(short mapH, short mapV)
+ToolResult Micropolis::putDownPark(short mapH, short mapV, ToolEffects *effects)
 {
-    short value, tile;
-
-    if (totalFunds - gCostOf[TOOL_PARK] < 0) return TOOLRESULT_NO_MONEY;
-
-    value = getRandom(4);
+    short value = getRandom(4);
+    MapValue tile = BURNBIT | BULLBIT;
 
     if (value == 4) {
-        tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
+        tile |= FOUNTAIN | ANIMBIT;
     } else {
-        tile = (value + WOODS2) | BURNBIT | BULLBIT;
+        tile |= value + WOODS2;
     }
 
-    if (map[mapH][mapV] != DIRT) return TOOLRESULT_NEED_BULLDOZE;
+    if (effects->getMapValue(mapH, mapV) != DIRT) {
+        return TOOLRESULT_NEED_BULLDOZE;
+    }
 
-    map[mapH][mapV] = tile;
-
-    spend(gCostOf[TOOL_PARK]);
-    updateFunds();
+    effects->addCost(gCostOf[TOOL_PARK]);
+    effects->setMapValue(mapH, mapV, tile);
 
     return TOOLRESULT_OK;
 }
@@ -273,27 +271,26 @@ ToolResult Micropolis::putDownPark(short mapH, short mapV)
  * @param mapH X coordinate of the tile.
  * @param mapV Y coordinate of the tile.
  * @return Tool result.
- * @todo Auto-bulldoze deducts always 1.
+ * @param effects Storage of effects of putting down the park.
  * @todo Auto-bulldoze costs should be pulled from a table/constant.
  */
-ToolResult Micropolis::putDownNetwork(short mapH, short mapV)
+ToolResult Micropolis::putDownNetwork(short mapH, short mapV,
+                                      ToolEffects *effects)
 {
-    MapTile tile = map[mapH][mapV] & LOMASK;
+    MapTile tile = effects->getMapTile(mapH, mapV);
 
-    if (totalFunds > 0 && tally(tile)) {
-        map[mapH][mapV] = DIRT;
+    if (tile != DIRT && tally(tile)) {
+        effects->addCost(gCostOf[TOOL_BULLDOZER]);
+        effects->setMapValue(mapH, mapV, DIRT);
         tile = DIRT;
-        spend(1);
     }
 
     if (tile != DIRT) return TOOLRESULT_NEED_BULLDOZE;
 
-    if (totalFunds - gCostOf[TOOL_NETWORK] < 0) return TOOLRESULT_NO_MONEY;
+    effects->setMapValue(mapH, mapV,
+                         TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT);
 
-    map[mapH][mapV] = TELEBASE | CONDBIT | BURNBIT | BULLBIT | ANIMBIT;
-
-    spend(gCostOf[TOOL_NETWORK]);
-    updateFunds();
+    effects->addCost(gCostOf[TOOL_NETWORK]);
 
     return TOOLRESULT_OK;
 }
@@ -304,21 +301,17 @@ ToolResult Micropolis::putDownNetwork(short mapH, short mapV)
  * @param mapH X coordinate of the tile.
  * @param mapV Y coordinate of the tile.
  * @return Tool result.
- * @todo Auto-bulldoze deducts always 1.
- * @todo Auto-bulldoze costs should be pulled from a table/constant.
  */
-ToolResult Micropolis::putDownWater(short mapH, short mapV)
+ToolResult Micropolis::putDownWater(short mapH, short mapV,
+                                    ToolEffects *effects)
 {
-    int tile = map[mapH][mapV] & LOMASK;
+    MapTile tile = effects->getMapTile(mapH, mapV);
 
     if (tile == RIVER) return TOOLRESULT_FAILED;
 
-    if (totalFunds - gCostOf[TOOL_WATER] < 0) return TOOLRESULT_NO_MONEY;
+    effects->setMapValue(mapH, mapV, RIVER);
 
-    map[mapH][mapV] = RIVER;
-
-    spend(gCostOf[TOOL_WATER]);
-    updateFunds();
+    effects->addCost(gCostOf[TOOL_WATER]);
 
     return TOOLRESULT_OK;
 }
@@ -332,30 +325,27 @@ ToolResult Micropolis::putDownWater(short mapH, short mapV)
  * @todo Auto-bulldoze deducts always 1.
  * @todo Auto-bulldoze costs should be pulled from a table/constant.
  */
-ToolResult Micropolis::putDownLand(short mapH, short mapV)
+ToolResult Micropolis::putDownLand(short mapH, short mapV, ToolEffects *effects)
 {
-    int tile = map[mapH][mapV] & LOMASK;
-    static short dx[8] = { -1,  0,  1, -1, 1, -1,  0,  1, };
-    static short dy[8] = { -1, -1, -1,  0, 0,  1,  1,  1, };
+    int tile = effects->getMapTile(mapH, mapV);
+//    static short dx[8] = { -1,  0,  1, -1, 1, -1,  0,  1, };
+//    static short dy[8] = { -1, -1, -1,  0, 0,  1,  1,  1, };
 
 
     if (tile == DIRT) return TOOLRESULT_FAILED;
 
-    if (totalFunds - gCostOf[TOOL_LAND] < 0) return TOOLRESULT_NO_MONEY;
+    effects->setMapValue(mapH, mapV, DIRT);
 
-    map[mapH][mapV] = DIRT;
+//    int i;
+//    for (i = 0; i < 8; i++) {
+//        int xx = mapH + dx[i];
+//        int yy = mapV + dy[i];
+//        if (testBounds(xx, yy)) {
+//            //smoothTreesAt(xx, yy, true);
+//        }
+//    }
 
-    int i;
-    for (i = 0; i < 8; i++) {
-        int xx = mapH + dx[i];
-        int yy = mapV + dy[i];
-        if (testBounds(xx, yy)) {
-            //smoothTreesAt(xx, yy, true);
-        }
-    }
-
-    spend(gCostOf[TOOL_LAND]);
-    updateFunds();
+    effects->addCost(gCostOf[TOOL_LAND]);
 
     return TOOLRESULT_OK;
 }
@@ -368,26 +358,24 @@ ToolResult Micropolis::putDownLand(short mapH, short mapV)
  * @return Tool result.
  * @todo Auto-bulldoze deducts always 1.
  */
-ToolResult Micropolis::putDownForest(short mapH, short mapV)
+ToolResult Micropolis::putDownForest(short mapH, short mapV,
+                                     ToolEffects *effects)
 {
     static short dx[8] = { -1,  0,  1, -1, 1, -1,  0,  1, };
     static short dy[8] = { -1, -1, -1,  0, 0,  1,  1,  1, };
 
-    if (totalFunds - gCostOf[TOOL_FOREST] < 0) return TOOLRESULT_NO_MONEY;
-
-    map[mapH][mapV] = WOODS | BLBNBIT;
+    effects->setMapValue(mapH, mapV, WOODS | BLBNBIT);
 
     int i;
     for (i = 0; i < 8; i++) {
         int xx = mapH + dx[i];
         int yy = mapV + dy[i];
         if (testBounds(xx, yy)) {
-            smoothTreesAt(xx, yy, true);
+            smoothTreesAt(xx, yy, true, effects);
         }
     }
 
-    spend(gCostOf[TOOL_FOREST]);
-    updateFunds();
+    effects->addCost(gCostOf[TOOL_FOREST]);
 
     return TOOLRESULT_OK;
 }
@@ -915,17 +903,17 @@ void Micropolis::doShowZoneStatus(
  * @param y    Vertical position of the left-most tile
  * @param size Size of the rubble square
  */
-void Micropolis::putRubble(int x, int y, int size)
+void Micropolis::putRubble(int x, int y, int size, ToolEffects *effects)
 {
     for (int xx = x; xx < x + size; xx++) {
         for (int yy = y; yy < y + size; yy++)  {
 
             if (testBounds(xx, yy)) {
-                int tile = map[xx][yy] & LOMASK;
+                int tile = effects->getMapTile(xx, yy);
 
                 if (tile != RADTILE && tile != DIRT) {
                     tile = (doAnimation ? (TINYEXP + getRandom(2)) : SOMETINYEXP);
-                    map[xx][yy] = tile | ANIMBIT | BULLBIT;
+                    effects->setMapValue(xx, yy, tile | ANIMBIT | BULLBIT);
                 }
             }
         }
@@ -967,6 +955,19 @@ ToolResult Micropolis::queryTool(short x, short y)
     return TOOLRESULT_OK;
 }
 
+ToolResult Micropolis::bulldozerTool(short x, short y)
+{
+    ToolEffects effects(this);
+
+    ToolResult result = bulldozerTool(x, y, &effects);
+
+    if (result == TOOLRESULT_OK) {
+        effects.modifyWorld();
+    }
+
+    return result;
+}
+
 /**
  * Apply bulldozer tool.
  * @param x X coordinate of the position of the query.
@@ -980,7 +981,7 @@ ToolResult Micropolis::queryTool(short x, short y)
  *
  * @note Auto-bulldoze functionality is in Micropolis::prepareBuildingSite()
  */
-ToolResult Micropolis::bulldozerTool(short x, short y)
+ToolResult Micropolis::bulldozerTool(short x, short y, ToolEffects *effects)
 {
     ToolResult result = TOOLRESULT_OK;
 
@@ -988,12 +989,13 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
         return TOOLRESULT_FAILED;
     }
 
-    MapValue mapVal = map[x][y];
+    MapValue mapVal = effects->getMapValue(x, y);
     MapTile tile = mapVal & LOMASK;
 
     short zoneSize = 0; // size of the zone, 0 means invalid.
     short deltaH; // Amount of horizontal shift to the center tile of the zone.
     short deltaV; // Amount of vertical shift to the center tile of the zone.
+    FrontendMessage *frontendMsg;
 
     if (mapVal & ZONEBIT) { /* zone center bit is set */
         zoneSize = checkSize(tile);
@@ -1004,45 +1006,54 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
     }
 
     if (zoneSize > 0) {
-        if (totalFunds > 0) { /// @todo Return TOOLRESULT_NO_MONEY if no money
+        effects->addCost(gCostOf[TOOL_BULLDOZER]);
 
-            spend(1);
+        int dozeX = x;
+        int dozeY = y;
+        int centerX = x + deltaH;
+        int centerY = y + deltaV;
 
-            int dozeX = x;
-            int dozeY = y;
-            int centerX = x + deltaH;
-            int centerY = y + deltaV;
+        switch (zoneSize) {
 
-            switch (zoneSize) {
+        case 3:
+            frontendMsg = new FrontendMessageMakeSound(
+                                "city", "Explosion-High", dozeX, dozeY);
+            effects->addFrontendMessage(frontendMsg);
 
-            case 3:
-                makeSound("city", "Explosion-High", dozeX, dozeY);
-                putRubble(centerX - 1, centerY - 1, 3);
-                break;
+            putRubble(centerX - 1, centerY - 1, 3, effects);
+            break;
 
-            case 4:
-                makeSound("city", "Explosion-Low", dozeX, dozeY);
-                putRubble(centerX - 1, centerY - 1, 4);
-                break;
+        case 4:
+            frontendMsg = new FrontendMessageMakeSound(
+                                "city", "Explosion-Low", dozeX, dozeY);
+            effects->addFrontendMessage(frontendMsg);
 
-            case 6:
-                makeSound("city", "Explosion-High", dozeX, dozeY);
-                makeSound("city", "Explosion-Low", dozeX, dozeY);
-                putRubble(centerX - 1, centerY - 1, 6);
-                break;
+            putRubble(centerX - 1, centerY - 1, 4, effects);
+            break;
 
-            default:
-                NOT_REACHED();
-                break;
+        case 6:
+            frontendMsg = new FrontendMessageMakeSound(
+                                "city", "Explosion-High", dozeX, dozeY);
+            effects->addFrontendMessage(frontendMsg);
 
-            }
+            frontendMsg = new FrontendMessageMakeSound(
+                                "city", "Explosion-Low", dozeX, dozeY);
+            effects->addFrontendMessage(frontendMsg);
+
+            putRubble(centerX - 1, centerY - 1, 6, effects);
+            break;
+
+        default:
+            NOT_REACHED();
+            break;
 
         }
 
-        updateFunds();
 
         if (result == TOOLRESULT_OK) {
-            didTool("Dozr", x, y);
+            /* send 'didtool' message */
+            frontendMsg = new FrontendMessageDidTool("Dozr", x, y);
+            effects->addFrontendMessage(frontendMsg);
         }
 
         return result;
@@ -1052,25 +1063,20 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
 
     if (tile == RIVER || tile == REDGE || tile == CHANNEL) {
 
-        if (totalFunds >= 6) {  /// @todo Demand 6 credit while using 5?
+        result = connectTile(x, y, CONNECT_TILE_BULLDOZE, effects);
 
-            result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
-
-            if (tile != (map[x][y] & LOMASK)) {
-              spend(5);
-            }
-
-        } else {
-            result = TOOLRESULT_NO_MONEY;
+        if (tile != effects->getMapTile(x, y)) {
+            effects->addCost(5);
         }
     } else {
-        result = connectTile(x, y, CONNECT_TILE_BULLDOZE);
+        result = connectTile(x, y, CONNECT_TILE_BULLDOZE, effects);
     }
 
-    updateFunds();
-
     if (result == TOOLRESULT_OK) {
+        /* send 'didtool' message */
+        frontendMsg = new FrontendMessageDidTool("Dozr", x, y);
         didTool("Dozr", x, y);
+        effects->addFrontendMessage(frontendMsg);
     }
 
     return result;
@@ -1079,23 +1085,25 @@ ToolResult Micropolis::bulldozerTool(short x, short y)
 
 /**
  * Build a road at a tile.
- * @param x Horizontal posiion of the tile.
- * @param x Vertical posiion of the tile.
+ * @param x       Horizontal position of the tile to lay road.
+ * @param y       Vertical position of the tile to lay road.
+ * @param effects Storage of effects of laying raod at the tile.
  * @return Tool result.
+ * @todo Merge roadTool, railroadTool, wireTool, and parkTool functions.
  */
-ToolResult Micropolis::roadTool(short x, short y)
+ToolResult Micropolis::roadTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = connectTile(x, y, CONNECT_TILE_ROAD);
-    updateFunds();
+    ToolResult result = connectTile(x, y, CONNECT_TILE_ROAD, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Road", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Road", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
@@ -1104,23 +1112,24 @@ ToolResult Micropolis::roadTool(short x, short y)
 
 /**
  * Build a rail track at a tile.
- * @param x Horizontal posiion of the tile.
- * @param x Vertical posiion of the tile.
+ * @param x       Horizontal position of the tile.
+ * @param y       Vertical position of the tile.
+ * @param effects Storage of effects of laying the rail.
  * @return Tool result.
  */
-ToolResult Micropolis::railroadTool(short x, short y)
+ToolResult Micropolis::railroadTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = connectTile(x, y, CONNECT_TILE_RAILROAD);
-    updateFunds();
+    ToolResult result = connectTile(x, y, CONNECT_TILE_RAILROAD, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Rail", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Rail", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
@@ -1129,23 +1138,24 @@ ToolResult Micropolis::railroadTool(short x, short y)
 
 /**
  * Build a wire at a tile.
- * @param x Horizontal posiion of the tile to wire.
- * @param x Vertical posiion of the tile to wire.
+ * @param x       Horizontal position of the tile to wire.
+ * @param y       Vertical position of the tile to wire.
+ * @param effects Storage of effects of wiring the tile.
  * @return Tool result.
  */
-ToolResult Micropolis::wireTool(short x, short y)
+ToolResult Micropolis::wireTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = connectTile(x, y, CONNECT_TILE_WIRE);
-    updateFunds();
+    ToolResult result = connectTile(x, y, CONNECT_TILE_WIRE, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Wire", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Wire", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
@@ -1154,22 +1164,24 @@ ToolResult Micropolis::wireTool(short x, short y)
 
 /**
  * Build a park.
- * @param x Horizontal posiion of 'center tile' of the park.
- * @param x Vertical posiion of 'center tile' of the park.
+ * @param x       Horizontal position of 'center tile' of the park.
+ * @param y       Vertical position of 'center tile' of the park.
+ * @param effects Storage of effects of putting down the park.
  * @return Tool result.
  */
-ToolResult Micropolis::parkTool(short x, short y)
+ToolResult Micropolis::parkTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = putDownPark(x, y);
+    ToolResult result = putDownPark(x, y, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Park", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Park", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
@@ -1178,8 +1190,8 @@ ToolResult Micropolis::parkTool(short x, short y)
 
 /**
  * Build a building.
- * @param x             Horizontal posiion of 'center tile' of the new building.
- * @param x             Vertical posiion of 'center tile' of the new building.
+ * @param x             Horizontal position of center tile of the new building.
+ * @param y             Vertical position of center tile of the new building.
  * @param buildingProps Building properties of the building being constructed.
  * @param effects       Storage of effects of putting down the building.
  * @return Tool result.
@@ -1191,6 +1203,7 @@ ToolResult Micropolis::buildBuildingTool(short x, short y,
     ToolResult result = buildBuilding(x, y, buildingProps, effects);
 
     if (result == TOOLRESULT_OK) {
+        /* send 'didtool' message */
         FrontendMessage *didToolMsg;
         didToolMsg = new FrontendMessageDidTool(buildingProps->toolName, x, y);
         effects->addFrontendMessage(didToolMsg);
@@ -1240,77 +1253,84 @@ static const BuildingProperties airportBuilding =
     BuildingProperties(6, 6, AIRPORTBASE, TOOL_AIRPORT, "Airp", false);
 
 
-ToolResult Micropolis::networkTool(short x, short y)
+/**
+ * Put down a network.
+ * @todo Is this ever used?
+ */
+ToolResult Micropolis::networkTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = putDownNetwork(x, y);
+    ToolResult result = putDownNetwork(x, y, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Net", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Net", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
 }
 
 
-ToolResult Micropolis::waterTool(short x, short y)
+ToolResult Micropolis::waterTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    result = bulldozerTool(x, y);
+    ToolResult result = bulldozerTool(x, y, effects);
 
     if (result == TOOLRESULT_OK) {
-        result = putDownWater(x, y);
+        result = putDownWater(x, y, effects);
     }
 
     if (result == TOOLRESULT_OK) {
-        didTool("Water", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Water", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
 }
 
 
-ToolResult Micropolis::landTool(short x, short y)
+ToolResult Micropolis::landTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
-
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
     /// @todo: Is this good? It is not auto-bulldoze!!
     /// @todo: Handle result value (probably)
-    result = bulldozerTool(x, y);
+    ToolResult result = bulldozerTool(x, y, effects);
 
-    result = putDownLand(x, y);
+    result = putDownLand(x, y, effects);
 
     if (result == TOOLRESULT_OK) {
-        didTool("Land", x, y);
+        /* send 'didtool' message */
+        FrontendMessage *didToolMsg;
+        didToolMsg = new FrontendMessageDidTool("Land", x, y);
+        effects->addFrontendMessage(didToolMsg);
     }
 
     return result;
 }
 
 
-ToolResult Micropolis::forestTool(short x, short y)
+ToolResult Micropolis::forestTool(short x, short y, ToolEffects *effects)
 {
-    ToolResult result;
+    ToolResult result = TOOLRESULT_OK;
 
     if (!testBounds(x, y)) {
         return TOOLRESULT_FAILED;
     }
 
-    MapValue tile = map[x][y];
+    MapValue tile = effects->getMapValue(x, y);
 
     if (isTree(tile)) {
         return TOOLRESULT_OK;
@@ -1318,16 +1338,19 @@ ToolResult Micropolis::forestTool(short x, short y)
 
     if ((tile & LOMASK) != DIRT) {
         /// @todo bulldozer should be free in terrain mode or from a free tool.
-        result = bulldozerTool(x, y);
+        result = bulldozerTool(x, y, effects);
     }
 
-    tile = map[x][y];
+    tile = effects->getMapValue(x, y);
 
     if (tile == DIRT) {
-        result = putDownForest(x, y);
+        result = putDownForest(x, y, effects);
 
         if (result == TOOLRESULT_OK) {
-            didTool("Forest", x, y);
+            /* send 'didtool' message */
+            FrontendMessage *didToolMsg;
+            didToolMsg = new FrontendMessageDidTool("Forest", x, y);
+            effects->addFrontendMessage(didToolMsg);
         }
 
     } else {
@@ -1381,16 +1404,20 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         return queryTool(tileX, tileY);
 
     case TOOL_WIRE:
-        return wireTool(tileX, tileY);
+        result = wireTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_BULLDOZER:
-        return bulldozerTool(tileX, tileY);
+        result = bulldozerTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_RAILROAD:
-        return railroadTool(tileX, tileY);
+        result = railroadTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_ROAD:
-        return roadTool(tileX, tileY);
+        result = roadTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_STADIUM:
         result = buildBuildingTool(tileX, tileY, &stadiumBuilding,
@@ -1398,7 +1425,8 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         break;
 
     case TOOL_PARK:
-        return parkTool(tileX, tileY);
+        result = parkTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_SEAPORT:
         result = buildBuildingTool(tileX, tileY, &seaportBuilding,
@@ -1421,16 +1449,20 @@ ToolResult Micropolis::doTool(EditingTool tool, short tileX, short tileY)
         break;
 
     case TOOL_NETWORK:
-        return networkTool(tileX, tileY);
+        result = networkTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_WATER:
-        return waterTool(tileX, tileY);
+        result = waterTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_LAND:
-        return landTool(tileX, tileY);
+        result = landTool(tileX, tileY, &effects);
+        break;
 
     case TOOL_FOREST:
-        return forestTool(tileX, tileY);
+        result = forestTool(tileX, tileY, &effects);
+        break;
 
     default:
         return TOOLRESULT_FAILED;

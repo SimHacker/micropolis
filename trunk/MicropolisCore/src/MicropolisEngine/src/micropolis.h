@@ -1522,7 +1522,6 @@ public:
 private:
 
 
-    ToolResult connectTile(short x, short y, ConnectTileCommand cmd);
     ToolResult connectTile(short x, short y,
                            ConnectTileCommand cmd, ToolEffects *effects);
 
@@ -1804,6 +1803,7 @@ private:
     void smoothTrees();
 
     void smoothTreesAt(int x, int y, bool preserve);
+    void smoothTreesAt(int x, int y, bool preserve, ToolEffects *effects);
 
     void makeLakes();
 
@@ -2657,37 +2657,38 @@ private:
     ToolResult queryTool(short x, short y);
 
     ToolResult bulldozerTool(short x, short y);
+    ToolResult bulldozerTool(short x, short y, ToolEffects *effects);
 
-    ToolResult roadTool(short x, short y);
+    ToolResult roadTool(short x, short y, ToolEffects *effects);
 
-    ToolResult railroadTool(short x, short y);
+    ToolResult railroadTool(short x, short y, ToolEffects *effects);
 
-    ToolResult wireTool(short x, short y);
+    ToolResult wireTool(short x, short y, ToolEffects *effects);
 
-    ToolResult parkTool(short x, short y);
+    ToolResult parkTool(short x, short y, ToolEffects *effects);
 
     ToolResult buildBuildingTool(short x, short y,
                                   const BuildingProperties *bprops,
                                   ToolEffects *effects);
 
 
-    ToolResult networkTool(short x, short y);
+    ToolResult networkTool(short x, short y, ToolEffects *effects);
 
-    ToolResult waterTool(short x, short y);
+    ToolResult waterTool(short x, short y, ToolEffects *effects);
 
-    ToolResult landTool(short x, short y);
+    ToolResult landTool(short x, short y, ToolEffects *effects);
 
-    ToolResult forestTool(short x, short y);
+    ToolResult forestTool(short x, short y, ToolEffects *effects);
 
-    ToolResult putDownPark(short mapH, short mapV);
+    ToolResult putDownPark(short mapH, short mapV, ToolEffects *effects);
 
-    ToolResult putDownNetwork(short mapH, short mapV);
+    ToolResult putDownNetwork(short mapH, short mapV, ToolEffects *effects);
 
-    ToolResult putDownWater(short mapH, short mapV);
+    ToolResult putDownWater(short mapH, short mapV, ToolEffects *effects);
 
-    ToolResult putDownLand(short mapH, short mapV);
+    ToolResult putDownLand(short mapH, short mapV, ToolEffects *effects);
 
-    ToolResult putDownForest(short mapH, short mapV);
+    ToolResult putDownForest(short mapH, short mapV, ToolEffects *effects);
 
     void doZoneStatus(short mapH, short mapV);
 
@@ -2716,7 +2717,7 @@ private:
     void checkBorder(short xMap, short yMap, int sizeX, int sizeY,
                      ToolEffects *effects);
 
-    void putRubble(int x, int y, int size);
+    void putRubble(int x, int y, int size, ToolEffects *effects);
 
 
     ////////////////////////////////////////////////////////////////////////
