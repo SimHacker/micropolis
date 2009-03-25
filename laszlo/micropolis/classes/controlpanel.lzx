@@ -45,35 +45,15 @@ Control Panel
 	<simplelayout axis="y"/>
 
 
-	<checkbox name="visibleCheck"
-	    text="Micropolis Controls"
-	    value="true"
-	/>
-
 	<view
 	    x="5"
 	    width="${parent.width - 5}"
-	    visible="${parent.visibleCheck.value}"
-	    >
-
-	    <simplelayout axis="y"/>
+	>
 
 	    <text
 		resize="true"
-	    >Disasters</text>
-
-	    <view
-		width="${parent.width}"
-	    >
-		<wrappinglayout/>
-
-		<button 
-		    datapath="ds_disasters:/disasters/disaster"
-		    text="$path{'@name'}"
-		    onclick="gApp.sendCommand(this.data.childNodes[0].serialize())"
-		/>
-
-	    </view>
+		text="[TODO: Control Panel]"
+	    />
 
 	</view>
 

@@ -11,9 +11,9 @@
 
 
 <!--
-        <attribute name="pollDelay" value="250"/>
--->
         <attribute name="pollDelay" value="1000"/>
+-->
+        <attribute name="pollDelay" value="100"/>
         <attribute name="pollActive" value="false"/>
         <attribute name="pollDelegate" value="null"/>
         <attribute name="polls" value="1"/>
@@ -1143,7 +1143,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    width="${parent.width}"
 			    height="${parent.height}"
 			>
-			    <messageview
+			    <noticeview
 				width="${parent.width}"
 				height="${parent.height}"
 			    />
@@ -1194,10 +1194,14 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			</tabpane>
 
 			<tabpane
-			    text="Map"
+			    text="Overlays"
 			    width="${parent.width}"
 			    height="${parent.height}"
 			>
+			    <overlaysview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
 			</tabpane>
 
 			<tabpane
@@ -1205,6 +1209,10 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    width="${parent.width}"
 			    height="${parent.height}"
 			>
+			    <disastersview
+				width="${parent.width}"
+				height="${parent.height}"
+			    />
 			</tabpane>
 
 			<tabpane

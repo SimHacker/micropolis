@@ -1,0 +1,63 @@
+<library>
+
+
+    <!-- Disasters View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Disasters
+  Buttons to trigger disasters.
+
+-->
+
+
+    <class name="disastersview">
+
+
+	<view
+	    width="${parent.width - 20}"
+	    height="${parent.height - 45}"
+	    clip="true"
+	>
+
+            <vscrollbar/>
+
+	    <view
+		width="${parent.width - 20}"
+	    >
+
+		<simplelayout
+		    axis="y"
+		    spacing="5"
+		/>
+
+		<button
+		    datapath="ds_disasters:/disasters/disaster"
+		    text="${this['disasterName'] || ''}"
+		    onclick="this.doDisaster()"
+		    width="${parent.width}"
+		>
+
+		    <attribute name="disasterName" value="$path{'@name'}"/>
+		    <attribute name="disasterCommand" value="$path{'command'}"/>
+
+		    <method name="doDisaster"><![CDATA[
+			Debug.write(this.disasterCommand.serialize());
+			gApp.sendCommand(this.disasterCommand.serialize())
+		      ]]>
+		    </method>
+
+		</button>
+
+	    </view>
+
+	</view>
+
+    </class>
+
+
+</library>

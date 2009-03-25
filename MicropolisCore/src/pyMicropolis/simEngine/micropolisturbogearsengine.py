@@ -470,8 +470,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         # Initialize the simulator engine.
 
-        self.pause()
         self.setSpeed(2)
+        self.pause()
         self.setPasses(10)
         self.setFunds(1000000000)
         self.setCityTax(10)
@@ -583,9 +583,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
-        #print "TICK", ticks
-        #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
-        #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
+        print "TICK", ticks
+        print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
+        print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
         self.simTick()
         self.animateTiles()
         self.simUpdate()
@@ -1103,7 +1103,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif aspect == "paused":
 
-            message['paused'] = self.simPaused and 1 or 0
+            paused = self.simPaused and 1 or 0
+            print "PAUSED", paused
+            message['paused'] = paused
 
         elif aspect == "passes":
 

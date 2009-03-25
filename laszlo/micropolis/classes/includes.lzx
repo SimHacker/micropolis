@@ -23,6 +23,9 @@
     <include href="mapview.lzx"/>
     <include href="previewmapview.lzx"/>
     <include href="navigationmapview.lzx"/>
+    <include href="noticeview.lzx"/>
+    <include href="overlaysview.lzx"/>
+    <include href="disastersview.lzx"/>
     <include href="messageview.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
