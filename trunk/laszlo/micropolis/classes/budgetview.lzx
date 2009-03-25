@@ -73,14 +73,7 @@ Budget
 	        x="10"
 		y="0"
 		resize="true"
-		text="${'Fire request: $' + classroot.fireRequest}"
-	    />
-
-	    <text name="fireLabel2"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Funds: ' + classroot.firePercent + '% = $' + classroot.fireFunds}"
+		text="${'Fire request: $' + classroot.fireRequest + ' Funds: ' + classroot.firePercent + '% = $' + classroot.fireFunds}"
 	    />
 
 	    <slider name="fireSlider"
@@ -100,14 +93,7 @@ Budget
 	        x="10"
 		y="0"
 		resize="true"
-		text="${'Police request: $' + classroot.policeRequest}"
-	    />
-
-	    <text name="policeLabel2"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Funds: ' + classroot.policePercent + '% = $' + classroot.policeFunds}"
+		text="${'Police request: $' + classroot.policeRequest + ' Funds: ' + classroot.policePercent + '% = $' + classroot.policeFunds}"
 	    />
 
 	    <slider name="policeSlider"
@@ -127,14 +113,7 @@ Budget
 	        x="10"
 		y="0"
 		resize="true"
-		text="${'Road request: $' + classroot.roadRequest}"
-	    />
-
-	    <text name="roadLabel2"
-	        x="10"
-		y="0"
-		width="${parent.width - 20}"
-		text="${'Funds: ' + classroot.roadPercent + '% = $' + classroot.roadFunds}"
+		text="${'Road request: $' + classroot.roadRequest + ' Funds: ' + classroot.roadPercent + '% = $' + classroot.roadFunds}"
 	    />
 
 	    <slider name="roadSlider"

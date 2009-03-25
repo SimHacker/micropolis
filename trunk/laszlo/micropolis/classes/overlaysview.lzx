@@ -1,7 +1,7 @@
 <library>
 
 
-    <!-- Message View -->
+    <!-- Overlays View -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
@@ -9,13 +9,13 @@
 
 <!--
 
-Messages
-  Scrolling text window
+Overlays
+  Radio buttons to pick a map overlay.
 
 -->
 
 
-    <class name="messageview">
+    <class name="overlaysview">
 
 
 	<simplelayout axis="y"/>
@@ -30,7 +30,7 @@ Messages
 
 	    <text
 	        multiline="true"
-		text="[TODO: Messages Panel]"
+		text="[TODO: Overlays Panel]"
 		width="${parent.width}"
 	    />
 

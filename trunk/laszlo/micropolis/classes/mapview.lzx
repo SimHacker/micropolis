@@ -14,13 +14,17 @@
     >
 
 
+<!--
         <attribute name="updateDelay" value="1000"/>
+-->
+        <attribute name="updateDelay" value="500"/>
 	<attribute name="lastUpdateTime" value="0"/>
 	<attribute name="damaged" value="false"/>
 	<attribute name="damageSoon" value="false"/>
 	<attribute name="updateTimerActive" value="false"/>
 	<attribute name="updateTimerDelegate" value="$once{new LzDelegate(this, 'handleTimer')}"/>
 	<attribute name="tileSize" value="16"/>
+	<attribute name="phase" value="0"/>
 
 
 	<handler name="oninit"><![CDATA[
@@ -95,7 +99,11 @@
 		"&uniqueID=" +
 		uniqueID;
 	    //Debug.write(this, "SRC", src)
-	    this.setAttribute("resource", src);
+	    var phase = this.phase;
+	    this.phase = phase ? 0 : 1;
+	    var v = this['view' + phase];
+	    v.setAttribute("resource", src);
+	    v.bringToFront();
 	  ]]>
 	</method>
 
@@ -112,6 +120,10 @@
 	  ]]>
 	</method>
 
+
+	<view name="view0"/>
+
+	<view name="view1"/>
 
     </class>
 

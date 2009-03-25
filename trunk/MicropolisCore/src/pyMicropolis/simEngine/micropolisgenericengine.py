@@ -699,8 +699,8 @@ You have 10 years to turn this swamp back into a city again.""",
             self,
             ('paused',))
 
-        self.initGamePython()
         self.initGame()
+        self.initGamePython()
 
         if self.running:
             self.startTimer()
