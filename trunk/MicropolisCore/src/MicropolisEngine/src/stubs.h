@@ -73,7 +73,7 @@ public:
 
     FrontendMessage();
 
-    ~FrontendMessage();
+    virtual ~FrontendMessage();
 
     virtual void sendMessage(Micropolis *sim) const = 0;
 
@@ -90,7 +90,7 @@ public:
 
     FrontendMessageDidTool(const char *tool, int x, int y);
 
-    ~FrontendMessageDidTool();
+    virtual ~FrontendMessageDidTool();
 
     virtual void sendMessage(Micropolis *sim) const;
 
@@ -108,7 +108,7 @@ public:
 
     FrontendMessageMakeSound(const char *channel, const char *sound, int x, int y);
 
-    ~FrontendMessageMakeSound();
+    virtual ~FrontendMessageMakeSound();
 
     virtual void sendMessage(Micropolis *sim) const;
 

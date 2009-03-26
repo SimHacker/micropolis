@@ -492,13 +492,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def addSession(self, session):
         sessions = self.sessions
         if session not in sessions:
-            self.sessions.append(session)
+            sessions.append(session)
 
 
     def removeSession(self, session):
         sessions = self.sessions
         if session in sessions:
-            self.sessions.remove(session)
+            sessions.remove(session)
 
 
     def sendSessions(self, message):
@@ -583,9 +583,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
-        print "TICK", ticks
-        print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
-        print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
+        #print "TICK", ticks
+        #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
+        #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
         self.simTick()
         self.animateTiles()
         self.simUpdate()
