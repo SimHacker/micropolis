@@ -174,6 +174,7 @@ void Micropolis::simInit()
  */
 void Micropolis::simUpdate()
 {
+    //printf("simUpdate\n");
     blinkFlag = ((tickCount() % 60) < 30) ? 1 : -1;
 
     if (simSpeed && !heatSteps) {

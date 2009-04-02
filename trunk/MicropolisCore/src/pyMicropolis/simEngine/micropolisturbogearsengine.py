@@ -380,6 +380,7 @@ class Session(object):
 
 
     def sendMessage(self, msg):
+        #print "SENDMESSAGE", msg
         self.messages.append(msg)
         self.touch()
 
@@ -390,11 +391,17 @@ class Session(object):
         self.messages = []
         self.messageNames = {}
 
-        if True:
+        if False:
             print "=" * 72
             for message in messages:
                 print message
             print "=" * 72
+        
+        if True:
+            print [
+                (message['message'], message.get('aspect', None))
+                for message in messages
+            ]
 
         return messages
 
@@ -472,7 +479,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.setSpeed(2)
         self.pause()
-        self.setPasses(10)
         self.setFunds(1000000000)
         self.setCityTax(10)
         self.setAutoGoto(False)
@@ -551,7 +557,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif command == 'loadCity':
 
             cityName = params.get('city', None)
-            print "LoadCity", cityName
+            print "loadCity", cityName
             if cityName in CityNames:
                 cityFileName = CityNames[cityName]
                 print "cityFileName", cityFileName
@@ -560,7 +566,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif command == 'loadScenario':
 
             scenarioStr = params.get('scenario', None)
-            print "LoadScenario", scenarioStr
+            print "loadScenario", scenarioStr
             scenario = 0
             try:
                 scenario = int(scenarioStr)
@@ -570,8 +576,18 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif command == 'generateCity':
 
-            print "GenerateCity"
+            print "generateCity"
             self.generateNewCity()
+
+        elif command == 'setGameMode':
+
+            gameMode = params.get('gameMode')
+
+            print "setGameMode", gameMode
+            if gameMode == "start":
+                self.pause()
+            elif gameMode == "play":
+                self.resume()
 
 
     def tickEngine(self, ticks=1):
@@ -583,10 +599,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
-        #print "TICK", ticks
+
+        #print "****", "PASSES", self.simPasses, "PAUSED", self.simPaused, "SPEED", self.simSpeed
         #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
         #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
-        self.simTick()
+
+        try:
+            self.simTick()
+        except Exception, e:
+            print "SIMTICK EXCEPTION:", e
+
         self.animateTiles()
         self.simUpdate()
 
@@ -597,10 +619,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handlePoll(self, poll, session):
-        
+         
         tileviews = []
 
-        print "handlePoll simPaused", self.simPaused
+        #print "handlePoll simPaused", self.simPaused
 
         commands = poll.find('commands')
         if commands:
@@ -659,7 +681,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                             'tiles': tiles,
                         })
 
-        self.tickEngine(1)
+        ticks = 100
+        self.tickEngine(ticks)
 
         return tileviews
 
@@ -873,8 +896,23 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         return tiles
     
 
+    def updateAll(self):
+        self.handle_UIUpdate('funds')
+        self.handle_UIUpdate('date')
+        self.handle_UIUpdate('history')
+        self.handle_UIUpdate('evaluation')
+        self.handle_UIUpdate('date')
+        self.handle_UIUpdate('paused')
+        self.handle_UIUpdate('speed')
+        self.handle_UIUpdate('demand')
+        self.handle_UIUpdate('options')
+        self.handle_UIUpdate('gamelevel')
+        self.handle_UIUpdate('cityname')
+        self.updateMapView()
+
+
     def updateMapView(self):
-        print "UPDATEMAPVIEW"
+        #print "UPDATEMAPVIEW"
         self.handle_UIUpdate('map')
 
 
@@ -967,7 +1005,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': "UINewGame",
         })
-        self.updateMapView()
+        self.updateAll()
 
     
     def handle_UIPlayNewCity(self):
@@ -1059,101 +1097,188 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_UIUpdate(self, aspect, *args):
-        print "==== handle_UIUpdate(self, aspect)", self, aspect, args
+        #print "==== handle_UIUpdate(self, aspect, args)", self, "aspect", aspect, "args", args
 
-        message = {
-            'message': 'UIUpdate',
-            'aspect': aspect,
-            'args': args,
-        }
+        try:
 
-        if aspect == "funds":
+            message = {
+                'message': 'UIUpdate',
+                'aspect': aspect,
+                'args': args,
+            }
 
-            message['funds'] = self.totalFunds
+            if aspect == "funds":
 
-        elif aspect == "date":
+                message['funds'] = self.totalFunds
 
-            message['cityTime'] = self.cityTime
+            elif aspect == "date":
 
-        elif aspect == "graph":
+                message['cityTime'] = self.cityTime
 
-            graphData = [1, 2, 3, 2, 1]; # @todo make graph data to send
-            message['graphData'] = graphData
+            elif aspect == "history":
 
-        elif aspect == "evaluation":
+                # Scale the residential, commercial and industrial histories
+                # together relative to the max of all three.  Up to 128 they
+                # are not scaled. Starting at 128 they are scaled down so the
+                # maximum is always at the top of the history.
 
-            problems = []
-            for i in range(0, self.countProblems()):
-                problems.append((
-                    self.getProblemNumber(i),
-                    self.getProblemVotes(i)))
+                def calcScale(maxVal):
+                    if maxVal < 128:
+                        maxVal = 0
+                    if maxVal > 0:
+                        return 128.0 / float(maxVal)
+                    else:
+                        return 1.0
 
-            message.update({
-                'currentYear': self.currentYear(),
-                'cityYes': self.cityYes,
-                'cityScore': self.cityScore,
-                'deltaCityScore': self.cityScoreDelta,
-                'cityPop': self.cityPop,
-                'cityPopDelta': self.cityPopDelta,
-                'cityAssessedValue': self.cityAssessedValue,
-                'cityClass': self.cityClass,
-                'gameLevel': self.gameLevel,
-                'problems': problems,
-            })
+                historyScales = []
+                message['historyScales'] = historyScales
 
-        elif aspect == "paused":
+                getHistoryRange = self.getHistoryRange
+                getHistory = self.getHistory
 
-            paused = self.simPaused and 1 or 0
-            print "PAUSED", paused
-            message['paused'] = paused
+                for historyScale in range(0, micropolisengine.HISTORY_SCALE_COUNT):
 
-        elif aspect == "passes":
+                    resHistoryMin, resHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_RES,
+                        historyScale)
+                    comHistoryMin, comHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_COM,
+                        historyScale)
+                    indHistoryMin, indHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_IND,
+                        historyScale)
+                    allMax = max(resHistoryMax,
+                                 max(comHistoryMax,
+                                     indHistoryMax))
+                    rciScale = calcScale(allMax)
 
-            return
+                    # Scale the money, crime and pollution histories
+                    # independently of each other.
 
-        elif aspect == "speed":
+                    moneyHistoryMin, moneyHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_MONEY,
+                        historyScale)
+                    crimeHistoryMin, crimeHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_CRIME,
+                        historyScale)
+                    pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
+                        micropolisengine.HISTORY_TYPE_POLLUTION,
+                        historyScale)
+                    moneyScale = calcScale(moneyHistoryMax)
+                    crimeScale = calcScale(crimeHistoryMax)
+                    pollutionScale = calcScale(pollutionHistoryMax)
 
-            message['speed'] = self.simSpeed
+                    historyRange = 128.0
 
-        elif aspect == "taxrate":
+                    valueScales = (
+                        rciScale, rciScale, rciScale, # res, com, ind
+                        moneyScale, crimeScale, pollutionScale, # money, crime, pollution
+                    )
 
-            message['cityTax'] = self.cityTax
+                    histories = []
 
-        elif aspect == "demand":
+                    historyScales.append({
+                        'historyScale': historyScale,
+                        'range': 128,
+                        'histories': histories,
+                    })
 
-            resDemand, comDemand, indDemand = self.getDemands()
-            message['resDemand'] = resDemand
-            message['comDemand'] = comDemand
-            message['indDemand'] = indDemand
+                    for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
 
-        elif aspect == "options":
+                        valueScale = valueScales[historyType]
 
-            pass # TODO: copy options to message
+                        values = [
+                                getHistory(
+                                    historyType,
+                                    historyScale,
+                                    historyIndex)
+                                for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
+                        ]
 
-        elif aspect == "gamelevel":
+                        histories.append({
+                            'historyType': historyType,
+                            'valueScale': valueScale,
+                            'values': values,
+                        })
 
-            message['gameLevel'] = self.gameLevel
+            elif aspect == "evaluation":
 
-        elif aspect == "cityname":
+                problems = []
+                for i in range(0, self.countProblems()):
+                    problems.append((
+                        self.getProblemNumber(i),
+                        self.getProblemVotes(i)))
 
-            message['cityName'] = self.cityName
-            print "now message", message
+                message.update({
+                    'year': self.currentYear(),
+                    'population': self.cityPop,
+                    'migration': self.cityPopDelta,
+                    'assessedValue': self.cityAssessedValue,
+                    'category': self.cityClass,
+                    'gameLevel': self.gameLevel,
+                    'currentScore': self.cityScore,
+                    'annualChange': self.cityScoreDelta,
+                    'goodJob': self.cityYes,
+                    'worstProblems': problems,
+                })
 
-        elif aspect == "budget":
+            elif aspect == "paused":
 
-            pass # TODO: copy budget data to message
+                paused = self.simPaused and 1 or 0
+                print "PAUSED", paused
+                message['paused'] = paused
 
-        elif aspect == "message":
+            elif aspect == "passes":
 
-            message.update({
-                'number': args[0],
-                'x': args[1],
-                'y': args[2],
-                'picture': args[3],
-                'important': args[4],
-            })
+                return
 
-        self.sendSessions(message)
+            elif aspect == "speed":
+
+                message['speed'] = self.simSpeed
+
+            elif aspect == "taxrate":
+
+                message['cityTax'] = self.cityTax
+
+            elif aspect == "demand":
+
+                resDemand, comDemand, indDemand = self.getDemands()
+                message['resDemand'] = resDemand
+                message['comDemand'] = comDemand
+                message['indDemand'] = indDemand
+                print "======== DEMAND", message
+
+            elif aspect == "options":
+
+                pass # TODO: copy options to message
+
+            elif aspect == "gamelevel":
+
+                message['gameLevel'] = self.gameLevel
+
+            elif aspect == "cityname":
+
+                message['cityName'] = self.cityName
+                print "now message", message
+
+            elif aspect == "budget":
+
+                pass # TODO: copy budget data to message
+
+            elif aspect == "message":
+
+                message.update({
+                    'number': args[0],
+                    'x': args[1],
+                    'y': args[2],
+                    'picture': args[3],
+                    'important': args[4],
+                })
+
+            self.sendSessions(message)
+
+        except Exception, e:
+            print "XXX handle_UIUpdate ERROR:", e
 
 
 ########################################################################

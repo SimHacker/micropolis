@@ -10,17 +10,18 @@
     <class name="appview">
 
 
+        <attribute name="pollDelay" value="250"/>
+        <attribute name="animateDelay" value="250"/>
 <!--
-        <attribute name="pollDelay" value="1000"/>
--->
         <attribute name="pollDelay" value="100"/>
+        <attribute name="animateDelay" value="100"/>
+-->
         <attribute name="pollActive" value="false"/>
         <attribute name="pollDelegate" value="null"/>
         <attribute name="polls" value="1"/>
         <attribute name="pollers" value="[]"/>
         <attribute name="idles" value="1"/>
         <attribute name="idlers" value="[]"/>
-        <attribute name="animateDelay" value="100"/>
         <attribute name="animateActive" value="false"/>
         <attribute name="animateDelegate" value="null"/>
         <attribute name="animationTicks" value="1"/>
@@ -42,8 +43,6 @@
 	<attribute name="connecting" value="false"/>
 	<attribute name="connectionFailed" value="false"/>
 	<attribute name="gameMode" type="string" value="start"/>
-	<attribute name="demandWidth" value="60"/>
-	<attribute name="demandHeight" value="80"/>
 	<attribute name="gap" value="5"/>
 	<attribute name="nextUniqueID" value="1"/>
 	<attribute name="interests" value="$once{{}}"/>
@@ -168,6 +167,7 @@
 	    this.setAttribute("connecting", false);
 	    this.setAttribute("connectionFailed", true);
             this.setAttribute("sessionID", null);
+	    this.setAttribute("gameMode", "start");
             this.pollStop();
 	    this.animateStop();
           ]]>
@@ -612,13 +612,14 @@
 	<method name="handle_UIUpdate" args="args"><![CDATA[
 	    var aspect = args['aspect'];
 	    var interests = this.interests;
-	    //Debug.write("UIUpdate", aspect, args);
+	    //Debug.write("**** UIUpdate", aspect, args);
 	    
 	    if (!(aspect in interests)) {
 	       return;
 	    }
 
 	    var a = interests[aspect];
+	    //Debug.write("UPDATE ASPECT", aspect, a, args);
 	    var n = a.length;
 	    var i;
 	    for (i = 0; i < n; i++) {
@@ -675,12 +676,14 @@
 
 	<method name="playWithThisCity"><![CDATA[
 	    this.setAttribute("gameMode", "play");
+	    this.sendCommand('<command name="setGameMode" gameMode="play"/>');
 	  ]]>
 	</method>
 
 
 	<method name="chooseCity"><![CDATA[
 	    this.setAttribute("gameMode", "start");
+	    this.sendCommand('<command name="setGameMode" gameMode="start"/>');
 	  ]]>
 	</method>
 
@@ -816,12 +819,24 @@
 				    }
 				    var methodName = "handle_" + messageName;
 				    var method = classroot[methodName];
-				    //Debug.write("method", methodName, method, "atts", attributes);
+				    //Debug.write("message", messageName, "method", methodName, method, "atts", attributes, "el", messageEl);
 				    if (!method) {
 					Debug.write("Undefined message:", messageName, messageEl, attributes);
 					continue;
 				    }
-				    method.call(classroot, attributes);
+				    var text =
+				    	messageEl.childNodes &&
+					messageEl.childNodes[0];
+				    var json = null;
+				    if (text == null) {
+					json = null;
+				    } else {
+				        json = JSON.parse(text);
+				    }
+
+				    //Debug.write("JSON", json)
+
+				    method.call(classroot, json);
 				}
 
 				break;
@@ -935,10 +950,13 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		/>
 
 	        <button name="playButton"
-		    text="Play with This City"
+		    text="Simulate This City"
+		    fontsize="30"
+		    fontstyle="bold"
 		    onclick="classroot.playWithThisCity()"
 		    y="${parent.height - this.height - 5}"
 		    width="${parent.preview.width}"
+		    height="60"
 	        />
 
 	    </view>
@@ -950,12 +968,13 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 
 		<tabpane
 		    text="Scenarios"
+		    width="${parent.width}"
 		    height="${parent.height}"
 		>
 
 		    <view
-			width="${parent.width - 20}"
-			height="${parent.height - 50}"
+			width="${parent.width - (immediateparent.x * 2)}"
+			height="${parent.height - (immediateparent.y * 2)}"
 			clip="true"
 		    >
 
@@ -964,9 +983,12 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			/>
 
 			<button
+			    fontsize="18"
+			    fontstyle="bold"
 			    datapath="ds_scenarios:/scenarios/scenario"
 			    onclick="this.selectScenario()"
 			    width="${parent.width}"
+			    height="50"
 			>
 
 			    <attribute name="scenarioID" value="$path{'@id'}" type="string"/>
@@ -1004,8 +1026,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		>
 
 		    <view
-			width="${parent.width - 20}"
-			height="${parent.height - 50}"
+			width="${parent.width - (immediateparent.x * 2)}"
+			height="${parent.height - (immediateparent.y * 2)}"
 			clip="true"
 		    >
 
@@ -1014,14 +1036,17 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			/>
 
 			<button
-			    text="Generate Random City"
-			    onclick="this.generateCity()"
+			    text="Generate Random Map"
+			    fontsize="18"
+			    fontstyle="bold"
+			    onclick="this.generateMap()"
 			    width="${parent.width}"
+			    height="50"
 			>
 
-			    <method name="generateCity"><![CDATA[
+			    <method name="generateMap"><![CDATA[
 			        classroot.sendCommand('<command name="generateCity"/>');
-				classroot.setDescription("Generated a new random city.");
+				classroot.setDescription("Generated a new random map.");
 			      ]]>
 			    </method>
 
@@ -1038,8 +1063,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		>
 
 		    <view
-			width="${parent.width - 20}"
-			height="${parent.height - 50}"
+			width="${parent.width - (immediateparent.x * 2)}"
+			height="${parent.height - (immediateparent.y * 2)}"
 			clip="true"
 		    >
 
@@ -1048,6 +1073,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    y="0"
 			    width="${parent.width}"
 			    height="${parent.height}"
+			    fontsize="18"
+			    fontstyle="bold"
 			>
 
 			    <textlistitem
@@ -1055,6 +1082,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 				onclick="this.loadCity()"
 				text="$path{'@name'}"
 				value="$path{'@id'}"
+				height="28"
 			    >
 
 				<attribute name="loadCityCommand" value="$path{'command'}"/>
@@ -1144,8 +1172,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <noticeview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1155,8 +1183,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <messageview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1166,8 +1194,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <evaluationview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1176,9 +1204,9 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    width="${parent.width}"
 			    height="${parent.height}"
 			>
-			    <graphview
-				width="${parent.width}"
-				height="${parent.height}"
+			    <historyview
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1188,8 +1216,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <budgetview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1199,8 +1227,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <overlaysview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1210,8 +1238,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <disastersview
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1221,8 +1249,8 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 			    height="${parent.height}"
 			>
 			    <controlpanel
-				width="${parent.width}"
-				height="${parent.height}"
+				width="${parent.width - (immediateparent.x * 2)}"
+				height="${parent.height - (immediateparent.y * 2)}"
 			    />
 			</tabpane>
 
@@ -1241,12 +1269,9 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 
 		    <view width="${parent.width}">
 
-			<view name="demandGauge"
+			<demandgauge name="demandGauge" id="demandGauge"
 			    x="${classroot.gap}"
 			    y="${classroot.gap}"
-			    width="${classroot.demandWidth}"
-			    height="${classroot.demandHeight}"
-			    bgcolor="${0x404040}"
 			/>
 
 			<view name="dateFundsDisplay"

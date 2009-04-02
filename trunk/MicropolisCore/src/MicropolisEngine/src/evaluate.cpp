@@ -99,6 +99,7 @@
  */
 void Micropolis::cityEvaluation()
 {
+    //printf("cityEvaluation totalPop %d\n", totalPop);
     if (totalPop > 0) {
         short problemTable[PROBNUM]; // Score for each problem, higher the more severe the problem is.
         for (int z = 0; z < PROBNUM; z++) {
@@ -495,6 +496,7 @@ void Micropolis::doScoreCard()
 /** Request that new score is displayed to the user. */
 void Micropolis::changeEval()
 {
+    //printf("changeEval\n");
     evalChanged = true;
 }
 
@@ -502,6 +504,7 @@ void Micropolis::changeEval()
 /** Update the score after being requested. */
 void Micropolis::scoreDoer()
 {
+    //printf("scoreDoer evalChanged %d\n", evalChanged);
     if (evalChanged) {
         doScoreCard();
         evalChanged = false;

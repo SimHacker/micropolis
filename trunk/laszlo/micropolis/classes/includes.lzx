@@ -7,6 +7,7 @@
     <!-- Licensed under GPLv3 -->
 
 
+    <script src="rpc/library/json.js"/>
     <include href="resources.lzx"/>
     <include href="datasets.lzx"/>
     <include href="global.lzx"/>
@@ -15,11 +16,12 @@
     <include href="vresizebar.lzx"/>
     <include href="tile.lzx"/>
     <include href="tileview.lzx"/>
+    <include href="demandgauge.lzx"/>
     <include href="budgetview.lzx"/>
     <include href="controlpanel.lzx"/>
     <include href="editorview.lzx"/>
     <include href="evaluationview.lzx"/>
-    <include href="graphview.lzx"/>
+    <include href="historyview.lzx"/>
     <include href="mapview.lzx"/>
     <include href="previewmapview.lzx"/>
     <include href="navigationmapview.lzx"/>

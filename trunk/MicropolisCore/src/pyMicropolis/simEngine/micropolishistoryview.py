@@ -129,8 +129,8 @@ class MicropolisHistoryView(micropolisview.MicropolisView):
 
         micropolisview.MicropolisView.__init__(
             self,
-            aspect='graph',
-            interests=('graph',),
+            aspect='history',
+            interests=('history',),
             **args)
 
         self.zoomable = False
