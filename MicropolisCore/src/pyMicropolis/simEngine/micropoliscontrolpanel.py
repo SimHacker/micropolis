@@ -247,7 +247,7 @@ class MicropolisControlPanel(gtk.Frame):
             scaleSpeed = self.scaleSpeed
             simSpeed = engine.simSpeed
             simPasses = engine.simPasses
-            print "SIMULATOR CHANGED SPEED/PASSES", simSpeed, simPasses
+            #print "SIMULATOR CHANGED SPEED/PASSES", simSpeed, simPasses
             found = None
             i = 0
             for speed, passes, label in self.speeds:

@@ -1,0 +1,258 @@
+<library>
+
+
+    <!-- Demand Gauge -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="demandgauge"
+        width="${this.viewWidth}"
+        height="${this.viewHeight}"
+	bgcolor="0x808080"
+    >
+
+
+        <attribute name="gap" value="5" type="number"/>
+        <attribute name="resDemand" value="0" type="number"/>
+        <attribute name="comDemand" value="0" type="number"/>
+        <attribute name="indDemand" value="0" type="number"/>
+	<attribute name="barHeight" value="20" type="number"/>
+	<attribute name="colWidth" value="10" type="number"/>
+	<attribute name="colHeight" value="25" type="number"/>
+	<attribute name="colGap" value="5" type="number"/>
+	<attribute name="viewWidth" value="60" type="number"/>
+	<attribute name="viewHeight" value="${(2 * this.gap) + (2 * this.colHeight) + this.barHeight}" type="number"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    Debug.write("==== demandgauge oninit", this);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<handler name="onvisible"><![CDATA[
+	    Debug.write("==== demandgauge onvisible", this, this.visible);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<method name="updateVisible"><![CDATA[
+	    Debug.write("==== demandgauge updateVisible", this.visible);
+	    if (this.visible) {
+	        gApp.expressInterest(this, ['demand']);
+	    } else {
+	        gApp.revokeInterest(this, ['demand']);
+	    }
+
+	    // TODO: cause graph to be redrawn?
+	  ]]>
+	</method>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    Debug.write("demandgauge handleUpdate args", args);
+	    this.setAttribute("resDemand", args['resDemand']);
+	    this.setAttribute("comDemand", args['comDemand']);
+	    this.setAttribute("indDemand", args['indDemand']);
+	    this.redrawView();
+	  ]]>
+	</method>
+
+
+	<method name="redrawView"><![CDATA[
+	    var dv = this.dv;
+
+	    Debug.write("drawview", dv, "redrawView", "demands", this.resDemand, this.comDemand, this.indDemand);
+
+	    // Draw background.
+
+	    var bgWidth = this.viewWidth;
+	    var bgHeight = this.viewHeight;
+
+	    dv.fillStyle = 0xd0d0ff;
+	    dv.beginPath();
+	    dv.rect(0, 0, bgWidth, bgHeight);
+	    dv.fill()
+
+	    dv.strokeStyle = 0x000000;
+	    dv.lineWidth = 1;
+	    dv.beginPath();
+	    dv.rect(0, 0, bgWidth, bgHeight);
+	    dv.stroke();
+
+	    //Debug.write("drawview redrawView drew background");
+
+	    // Measure bar.
+
+	    var colWidth = this.colWidth;
+	    var colHeight = this.colHeight;
+	    var colGap = this.colGap;
+
+	    var gap = this.gap;
+	    var barHeight = this.barHeight;
+	    var barWidth = (4 * colGap) + (3 * colWidth);
+	    var barX = gap;
+	    var barY = gap + colHeight;
+
+	    // Measure columns.
+
+	    var rColX = barX + colGap;
+	    var cColX = rColX + colWidth + colGap;
+	    var iColX = cColX + colWidth + colGap;
+
+	    var resDemand = this.resDemand;
+	    var comDemand = this.comDemand;
+	    var indDemand = this.indDemand;
+
+	    var res = -resDemand * colHeight;
+	    var com = -comDemand * colHeight;
+	    var ind = -indDemand * colHeight;
+
+	    // Draw columns.
+
+	    //Debug.write("Drawing columns.");
+
+	    dv.lineWidth = 2;
+
+	    var y, h;
+
+	    // Draw res.
+
+	    if (res != 0) {
+		//Debug.write("Drawing res", res);
+		if (res < 0) {
+		    y = barY + res
+		    h = -res
+		} else {
+		    y = barY + barHeight
+		    h = res
+		}
+
+		dv.strokeStyle = 0x000000;
+		dv.beginPath();
+		dv.rect(rColX, y, colWidth, h);
+		dv.stroke();
+
+		dv.fillStyle = 0x00ff00;
+		dv.beginPath();
+		dv.rect(rColX, y, colWidth, h);
+		dv.fill();
+	    }
+
+	    // Draw com.
+
+	    if (com != 0) {
+		//Debug.write("Drawing com", com);
+		if (com < 0) {
+		    y = barY + com;
+		    h = -com;
+		} else {
+		    y = barY + barHeight;
+		    h = com;
+		}
+
+		dv.strokeStyle = 0x000000;
+		dv.beginPath();
+		dv.rect(cColX, y, colWidth, h);
+		dv.stroke();
+
+		dv.fillStyle = 0x0000ff;
+		dv.beginPath();
+		dv.rect(cColX, y, colWidth, h);
+		dv.fill();
+	    }
+
+	    // Draw ind.
+
+	    if (ind != 0) {
+		//Debug.write("Drawing ind", ind);
+		if (ind < 0) {
+		    y = barY + ind;
+		    h = -ind;
+		} else {
+		    y = barY + barHeight;
+		    h = ind;
+		}
+
+		dv.strokeStyle = 0x000000;
+		dv.beginPath();
+		dv.rect(iColX, y, colWidth, h);
+		dv.stroke();
+
+		dv.fillStyle = 0xffff00;
+		dv.beginPath();
+		dv.rect(iColX, y, colWidth, h);
+		dv.fill();
+	    }
+
+	    // Draw bar.
+
+	    //Debug.write("Drawing bar.");
+
+	    dv.fillStyle = 0xffffff;
+	    dv.beginPath();
+	    dv.rect(barX, barY, barWidth, barHeight);
+	    dv.fill();
+
+	    dv.strokeStyle = 0x00000;
+	    dv.lineWidth = 2;
+	    dv.beginPath();
+	    dv.rect(barX, barY, barWidth, barHeight);
+	    dv.stroke();
+
+	    // Draw text on bar.
+
+	    //Debug.write("Drawing text.");
+
+	    function centerText(text, x, y) {
+/*
+		var a = 
+		    this.pinMarkupXY(
+			text, x, y, 0.5, 0.5);
+		dv.moveTo(a[0], a[1]);
+		dv.showText(text);
+*/
+	    }
+
+	    dv.strokeStyle = 0x000000; // XXX: set text color
+
+	    var cy = barY + (barHeight / 2) + 1;
+
+	    centerText('<b>R</b>', rColX + (colWidth / 2), cy);
+	    centerText('<b>C</b>', cColX + (colWidth / 2), cy);
+	    centerText('<b>I</b>', iColX + (colWidth / 2), cy);
+
+	    //Debug.write("Drawing DONE!");
+
+	  ]]>
+	</method>
+
+	<drawview name="dv"
+	    width="${parent.width}"
+	    height="${parent.height}"
+	>
+
+	    <handler name="oncontext"><![CDATA[
+		classroot.redrawView();
+	      ]]>
+	    </handler>
+
+	</drawview>
+
+	<text
+	  x="7"
+	  y="29"
+	  fontsize="14"
+	  fontstyle="bold"
+	  resize="true"
+	  text="R C I"
+	/>
+
+    </class>
+
+
+</library>

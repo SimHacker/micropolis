@@ -126,7 +126,7 @@ void Micropolis::graphDoer()
     }
 
     if (newGraph) {
-        callback("UIUpdate", "s", "graph");
+        callback("UIUpdate", "s", "history");
         newGraph = false;
     }
 }

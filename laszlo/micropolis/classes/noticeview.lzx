@@ -1,0 +1,68 @@
+<library>
+
+
+    <!-- Notice View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+Notices
+  Notice View
+  Illustration
+  City View
+  Answer Buttons
+
+-->
+
+
+    <class name="noticeview">
+
+
+        <attribute name="lastMessage" value="null"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    Debug.write("==== noticeview oninit", this);
+	    gApp.expressInterest(this, ['message']);
+	  ]]>
+	</handler>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    Debug.write("noticeview handleUpdate args", args);
+	    this.setAttribute("lastMessage", args);
+	  ]]>
+	</method>
+
+
+	<attribute name="viewWidth" value="100" type="number"/>
+	<attribute name="gap" value="5" type="number"/>
+
+	<text name="t"
+	    x="0"
+	    y="0"
+	    width="${parent.width - parent.v.width - classroot.gap}"
+	    height="${parent.height}"
+	    multiline="true"
+	>Welcome to Micropolis.<br/>
+This is a work in progress -- it doesn't all work yet.<br/>
+But most of the hard parts are done!
+</text>
+
+	<view name="v"
+	    x="${parent.width - classroot.viewWidth}"
+	    y="0"
+	    width="${classroot.viewWidth}"
+	    height="${parent.height}"
+	    bgcolor="0x0000ff"
+	>
+	</view>
+
+
+    </class>
+
+
+</library>

@@ -28,21 +28,338 @@ Evaluation
     <class name="evaluationview">
 
 
-	<simplelayout axis="y"/>
+        <attribute name="evaluationData" value="null"/>
+
+	<attribute name="problemNames" value="$once{[
+	    'Crime',
+	    'Pollution',
+	    'Housing',
+	    'Taxes',
+	    'Traffic',
+	    'Unemployment',
+	    'Fire'
+	]}"/>
+
+	<attribute name="categoryNames" value="$once{[
+	    'Village',
+	    'Town',
+	    'City',
+	    'Capital',
+	    'Metropolis',
+	    'Megalopolis'
+	]}"/>
+
+	<attribute name="levelNames" value="$once{[
+	    'Easy',
+	    'Medium',
+	    'Hard'
+	]}"/>
+
+        <attribute name="narrowColumnWidth" value="100"/>
+        <attribute name="mediumColumnWidth" value="120"/>
+        <attribute name="wideColumnWidth" value="150"/>
+        <attribute name="indent" value="5"/>
+        <attribute name="textSize" value="10"/>
 
 
-	<view
-	    x="5"
-	    width="${parent.width - 5}"
-        >
+	<handler name="oninit"><![CDATA[
+	    Debug.write("==== evaluationview oninit", this);
+	    this.updateVisible();
+	  ]]>
+	</handler>
 
-	    <text
-		resize="true"
-		text="[TODO: Evaluation Panel]"
+	<handler name="onvisible"><![CDATA[
+	    Debug.write("==== evaluationview onvisible", this, this.visible);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<method name="updateVisible"><![CDATA[
+	    Debug.write("==== evaluationview updateVisible", this.visible);
+	    if (this.visible) {
+	        gApp.expressInterest(this, ['evaluation']);
+	    } else {
+	        gApp.revokeInterest(this, ['evaluation']);
+	    }
+
+	    this.redrawView();
+	  ]]>
+	</method>
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    Debug.write("evaluationview handleUpdate args", args);
+	    this.evaluationData = args;
+	    this.redrawView();
+	  ]]>
+	</method>
+
+	<method name="redrawView"><![CDATA[
+	    var year = "";
+	    var population = "";
+	    var migration = "";
+	    var assessedValue = "";
+	    var category = "0";
+	    var gameLevel = "";
+	    var currentScore = "";
+	    var annualChange = "";
+	    var goodJob = "0";
+	    var worstProblems = [];
+
+	    var d = this.evaluationData;
+	    Debug.write("==== evaluationView redrawView evaluationData", d);
+
+	    if (d) {
+	         year = d['year'];
+	         population = d['population'];
+		 migration = d['migration'];
+		 assessedValue = d['assessedValue'];
+		 category = d['category'];
+		 gameLevel = d['gameLevel'];
+                 currentScore = d['currentScore'];
+                 annualChange = d['annualChange'],
+                 goodJob = d['goodJob'];
+                 worstProblems = d['worstProblems'];
+	    }
+
+	    //Debug.write("population", population, this.v.populationView.t, this.v.populationView.t.text);
+	    this.v.populationView.t.setAttribute(
+	        "text",
+	        population);
+
+	    //Debug.write("migration", migration);
+	    this.v.migrationView.t.setAttribute(
+	        "text",
+	        migration);
+
+	    //Debug.write("assessedValue", assessedValue);
+	    this.v.assessedValueView.t.setAttribute(
+	        "text",
+	        "$" + assessedValue);
+
+	    //Debug.write("category", category);
+	    this.v.categoryView.t.setAttribute(
+	        "text",
+	        this.categoryNames[category]);
+
+	    //Debug.write("gameLevel", gameLevel);
+	    this.v.gameLevelView.t.setAttribute(
+	        "text",
+	        this.levelNames[gameLevel]);
+
+	    //Debug.write("currentScore", currentScore);
+	    this.v.currentScoreView.t.setAttribute(
+	        "text",
+	        currentScore);
+
+	    //Debug.write("annualChange", annualChange);
+	    this.v.annualChange.t.setAttribute(
+	        "text",
+	        annualChange);
+
+            //Debug.write("goodJob", goodJob);
+	    var goodJobText =
+	        "Approve: " + goodJob + "%<br/>" +
+		"Disapprove: " + (100 - goodJob) + "%"
+	    this.v.goodJobView.t.setAttribute(
+	        "text",
+		goodJobText);
+
+	    //Debug.write("worstProblems", worstProblems);
+	    var worstProblemsText = "";
+	    var i;
+	    var n = worstProblems.length;
+	    var a = [];
+	    for (i = 0; i < n; i++) {
+		var pair = worstProblems[i];
+		var problemNameIndex = pair[0];
+		var problemPercent = pair[1]; 
+		var s = 
+		    this.problemNames[problemNameIndex] + ": " + 
+		    problemPercent + "%";
+	        a.push(s);
+	    }
+	    worstProblemsText = a.join('<br/>');
+	    //Debug.write("worstProblemsText", worstProblemsText);
+	    this.v.worstProblemsView.t.setAttribute(
+	        "text",
+		worstProblemsText);
+
+	  ]]>
+	</method>
+
+
+	<view name="v"
+	    width="${parent.width - 20}"
+	    height="${parent.height - 45}"
+	>
+
+	    <handler name="onwidth"><![CDATA[
+	        this.l.update();
+	      ]]>
+	    </handler>
+
+	    <handler name="onheight"><![CDATA[
+	        this.l.update();
+	      ]]>
+	    </handler>
+
+	    <wrappinglayout name="l"
+	        axis="x"
+		xspacing="10"
+		yspacing="5"
 	    />
 
-	</view>
 
+	    <view name="populationView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Population:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="migrationView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Migration:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="assessedValueView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="City Value:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="categoryView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Category:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="gameLevelView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Game Level:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="currentScoreView"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Current Score:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="annualChange"
+	        width="${classroot.narrowColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Annual Change:"
+		    fontstyle="bold"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		/>
+	    </view>
+
+	    <view name="goodJobView"
+	        width="${classroot.mediumColumnWidth}"
+ 	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Popularity:"
+		    fontstyle="bold"
+		    multiline="true"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		    multiline="true"
+		/>
+	    </view>
+
+	    <view name="worstProblemsView"
+	        width="${classroot.wideColumnWidth}"
+	    >
+	        <simplelayout axis="y"/>
+		<text
+		    width="${parent.width}"
+		    text="Problems:"
+		    fontstyle="bold"
+		    multiline="true"
+		/>
+		<text name="t"
+		    x="${classroot.indent}"
+		    width="${parent.width - this.x}"
+		    text=""
+		    multiline="true"
+		/>
+	    </view>
+
+	</view>
 
     </class>
 

@@ -132,6 +132,7 @@ void Micropolis::simFrame()
 /* comefrom: simFrame */
 void Micropolis::simulate(int phase)
 {
+    //printf("================ simulate phase %d\n", phase);
     static const short SpdPwr[4] = { 1,  2,  4,  5 };
     static const short SpdPtl[4] = { 1,  2,  7, 17 };
     static const short SpdCri[4] = { 1,  1,  8, 18 };
@@ -179,7 +180,6 @@ void Micropolis::simulate(int phase)
             break;
 
         case 9:
-
             if (cityTime % CENSUS_FREQUENCY_10 == 0) {
                 take10Census();
             }

@@ -1,0 +1,100 @@
+<library>
+
+
+    <!-- History View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+<!--
+
+History
+  10/120 Years
+  Residential
+  Commercial
+  Industrial
+  Money
+  Crime
+  Pollution
+  
+-->
+
+
+    <class name="historyview">
+
+
+        <attribute name="historyScales" value="null"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    Debug.write("==== historyview oninit", this);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<handler name="onvisible"><![CDATA[
+	    Debug.write("==== historyview onvisible", this, this.visible);
+	    this.updateVisible();
+	  ]]>
+	</handler>
+
+
+	<method name="updateVisible"><![CDATA[
+	    Debug.write("==== historyview updateVisible", this.visible);
+	    if (this.visible) {
+	        gApp.expressInterest(this, ['history']);
+	    } else {
+	        gApp.revokeInterest(this, ['history']);
+	    }
+
+	    // TODO: cause graph to be redrawn?
+	  ]]>
+	</method>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    Debug.write("historyview handleUpdate args", args);
+	    this.setAttribute("historyScales", args['historyScales']);
+	  ]]>
+	</method>
+
+
+	<view name="v"
+	    width="${parent.width}"
+	    height="${parent.height - 30}"
+	>
+
+	    <drawview name="dv"
+		width="${parent.width}"
+		height="${parent.height}"
+		bgcolor="0x808080"
+	    >
+
+	        <handler name="oncontext"><![CDATA[
+		    Debug.write("drawview oncontext", this);
+		    this.redrawView();
+		  ]]>
+		</handler>
+
+	        <method name="handleUpdate"><![CDATA[
+		    Debug.write("drawview handleUpdate", classroot.historyScales);
+		    this.redrawView();
+		  ]]>
+		</method>
+
+	        <method name="redrawView"><![CDATA[
+		    Debug.write("drawview redrawView", "historyScales", classroot.historyScales);
+		  ]]>
+		</method>
+
+	    </drawview>
+
+	</view>
+
+
+    </class>
+
+
+</library>

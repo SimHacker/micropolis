@@ -4,6 +4,9 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     ref="${ref}"
 >
+    <?python
+        from turbojson import jsonify
+    ?>
     <tileviews
         py:if="tileviews"
     >
@@ -22,7 +25,7 @@
     >
         <message
             py:for="message in messages"
-	    py:attrs="message"
-	>${repr(message)}</message>
+	    message="${message['message']}"
+	>${jsonify.encode(message)}</message>
     </messages>
 </poll>
