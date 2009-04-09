@@ -26,10 +26,6 @@
         <attribute name="animateDelegate" value="null"/>
         <attribute name="animationTicks" value="1"/>
         <attribute name="animatorsList" value="[]"/>
-        <attribute name="panelWidth" value="200"/>
-        <attribute name="panelResizeBarY" value="200"/>
-        <attribute name="panelResizeBar2X" value="200"/>
-        <attribute name="panelResizeBarSize" value="8"/>
         <attribute name="commandQueue" value="[]"/>
         <attribute name="worldCols" value="120"/>
         <attribute name="worldRows" value="100"/>
@@ -644,6 +640,9 @@
 
 	<method name="handle_UIDidLoadScenario" args="args"><![CDATA[
 	    this.resetCity();
+            var scenario = args['scenario'];
+	    var number = 49 + scenario;
+	    gNoticeView.setCurrentNotice(number, null, null);
 	  ]]>
 	</method>
 
@@ -656,6 +655,12 @@
 
 	<method name="handle_UIStopEarthquake" args="args"><![CDATA[
 	    this.setAttribute("quaking", 0);
+	  ]]>
+	</method>
+
+
+	<method name="handle_UIShowBudgetAndWait" args="args"><![CDATA[
+	    Debug.write("Show budget and wait...");
 	  ]]>
 	</method>
 
@@ -868,458 +873,31 @@
 
         </node>
 
-	<view name="connectScreen" id="gConnectScreen"
+
+	<connectscreen id="gConnectScreen" name="connectScreen"
 	    x="5"
 	    y="5"
 	    width="${parent.width - 10}"
 	    height="${parent.height - 10}"
 	    visible="${!classroot.connected}"
-	>
+	/>
 
-	    <simplelayout 
-	        axis="y" 
-	        spacing="5"
-	    />
-
-	    <text
-		visible="${classroot.connecting}"
-		text="Connecting to server..."
-		resize="true"
-	    />
-
-	    <text
-		visible="${classroot.connectionFailed}"
-		text="Connection to server failed."
-		resize="true"
-	    />
-
-	    <button
-		visible="${classroot.connectionFailed}"
-		text="Reconnect"
-		onclick="classroot.requestStartSession()"
-	    />
-
-	</view>
-
-	<view name="startScreen" id="gStartScreen"
+	<startscreen id="gStartScreen" name="startScreen"
 	    x="5"
 	    y="5"
 	    width="${parent.width - 10}"
 	    height="${parent.height - 10}"
 	    visible="${(classroot.gameMode == 'start') &amp;&amp; classroot.connected}"
-	>
+	/>
 
-	    <simplelayout axis="x"
-		spacing="5"
-	    />
-
-	    <view name="v1"
-	        height="${parent.height}"
-		width="${this.preview.width + 10}"
-	    >
-
-		<text name="title"
-		    text="Micropolis: Choose a City"
-		    fontsize="20"
-		    fontstyle="bold"
-		    resize="true"
-		    x="${(parent.width - this.width) / 2}"
-		    y="5"
-		/>
-
-		<view name="descriptionView"
-		    y="${parent.title.y + parent.title.height + 5}"
-		    width="${parent.preview.width}"
-		    height="${parent.preview.y - this.y - 5}"
-		>
-
-		    <vscrollbar/>
-
-		    <text name="description"
-			fontsize="14"
-			multiline="true"
-			width="${parent.width - 15}"
-		    >Welcome to Micropolis!<br/><br/>
-Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.<br/><br/>
-Then press the 'Play with This City' button below, to start playing Micropolis!</text>
-
-    	       </view>
-
-		<previewmapview name="preview"
-		    y="${parent.playButton.y - this.height - 5}"
-		/>
-
-	        <button name="playButton"
-		    text="Simulate This City"
-		    fontsize="30"
-		    fontstyle="bold"
-		    onclick="classroot.playWithThisCity()"
-		    y="${parent.height - this.height - 5}"
-		    width="${parent.preview.width}"
-		    height="60"
-	        />
-
-	    </view>
-
-	    <tabs
-		width="${parent.width - this.x}"
-		height="${parent.height}"
-	    >
-
-		<tabpane
-		    text="Scenarios"
-		    width="${parent.width}"
-		    height="${parent.height}"
-		>
-
-		    <view
-			width="${parent.width - (immediateparent.x * 2)}"
-			height="${parent.height - (immediateparent.y * 2)}"
-			clip="true"
-		    >
-
-			<simplelayout axis="y"
-			    spacing="5"
-			/>
-
-			<button
-			    fontsize="18"
-			    fontstyle="bold"
-			    datapath="ds_scenarios:/scenarios/scenario"
-			    onclick="this.selectScenario()"
-			    width="${parent.width}"
-			    height="50"
-			>
-
-			    <attribute name="scenarioID" value="$path{'@id'}" type="string"/>
-			    <attribute name="scenarioName" value="$path{'@name'}" type="string"/>
-			    <attribute name="scenarioYear" value="$path{'@year'}" type="string"/>
-			    <attribute name="scenarioTagLine" value="$path{'@tagline'}" type="string"/>
-			    <attribute name="scenarioDescription" value="$path{'description/text()'}" type="string"/>
-			    <attribute name="scenarioCommand" value="$path{'command'}"/>
-
-			    <handler name="ondata"><![CDATA[
-				var label =
-				    this.scenarioName + ', ' + this.scenarioYear + ': ' + 
-				    this.scenarioTagLine;
-				Debug.write("scenario button ondata", this, label);
-				this.setAttribute("text", label);
-			      ]]>
-			    </handler>
-
-			    <method name="selectScenario"><![CDATA[
-			        classroot.sendCommand(this.scenarioCommand.serialize());
-				classroot.setDescription(this.scenarioDescription);
-			      ]]>
-			    </method>
-
-			</button>
-
-		    </view>
-
-		</tabpane>
-
-		<tabpane
-		    text="Generator"
-		    width="${parent.width}"
-		    height="${parent.height}"
-		>
-
-		    <view
-			width="${parent.width - (immediateparent.x * 2)}"
-			height="${parent.height - (immediateparent.y * 2)}"
-			clip="true"
-		    >
-
-			<simplelayout axis="y"
-			    spacing="5"
-			/>
-
-			<button
-			    text="Generate Random Map"
-			    fontsize="18"
-			    fontstyle="bold"
-			    onclick="this.generateMap()"
-			    width="${parent.width}"
-			    height="50"
-			>
-
-			    <method name="generateMap"><![CDATA[
-			        classroot.sendCommand('<command name="generateCity"/>');
-				classroot.setDescription("Generated a new random map.");
-			      ]]>
-			    </method>
-
-			</button>
-
-		    </view>
-
-		</tabpane>
-
-		<tabpane
-		    text="Library"
-		    width="${parent.width}"
-		    height="${parent.height}"
-		>
-
-		    <view
-			width="${parent.width - (immediateparent.x * 2)}"
-			height="${parent.height - (immediateparent.y * 2)}"
-			clip="true"
-		    >
-
-			<list
-			    x="0"
-			    y="0"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			    fontsize="18"
-			    fontstyle="bold"
-			>
-
-			    <textlistitem
-				datapath="ds_cities:/cities/city"
-				onclick="this.loadCity()"
-				text="$path{'@name'}"
-				value="$path{'@id'}"
-				height="28"
-			    >
-
-				<attribute name="loadCityCommand" value="$path{'command'}"/>
-
-			        <method name="loadCity"><![CDATA[
-				    classroot.sendCommand(this.loadCityCommand.serialize())
-				    classroot.setDescription("Loaded city: " + this.text);
-				  ]]>
-				</method>
-
-			    </textlistitem>
-
-			</list>
-
-
-		    </view>
-
-		</tabpane>
-
-	    </tabs>
-
-	</view>
-
-	<view name="playScreen" id="gPlayScreen"
+	<playscreen id="gPlayScreen" name="playScreen"
 	    x="0"
 	    y="0"
 	    width="${parent.width}"
 	    height="${parent.height}"
 	    visible="${(classroot.gameMode == 'play') &amp;&amp; classroot.connected}"
-	>
+	/>
 
-	    <hresizebar name="hsep1" id="gHSep1"
-		trackvar="'panelResizeBarY'"
-		maxy="${parent.height - this.height}"
-		defaulty="$once{classroot.panelResizeBarY}"
-		x="0"
-		y="$once{classroot.panelResizeBarY}"
-		width="${parent.width}"
-		height="${classroot.panelResizeBarSize}"
-		overhang="0"
-	    />
-
-	    <tileview name="tileView" id="gTileView"
-		x="0"
-		y="${parent.hsep1.y + parent.hsep1.height}"
-		width="${parent.width}"
-		height="${parent.height - this.y}"
-		bgcolor="0xBC6F56"
-	    />
-
-
-	    <view name="top"
-		x="0"
-		y="0"
-		width="${parent.width}"
-		height="${parent.hsep1.y}"
-		clip="true"
-	    >
-
-		<vresizebar name="vsep1" id="gVSep1"
-		    trackvar="'panelResizeBar2X'"
-		    maxx="${parent.width - this.width}"
-		    defaultx="$once{classroot.panelResizeBar2X}"
-		    x="$once{classroot.panelResizeBar2X}"
-		    y="0"
-		    width="${classroot.panelResizeBarSize}"
-		    height="${parent.height - this.y}"
-		    overhang="0"
-		/>
-
-		<view name="topRight" id="gTopRight"
-		    x="${parent.vsep1.x + parent.vsep1.width}"
-		    y="0"
-		    width="${parent.width - this.x}"
-		    height="${parent.height}"
-		    clip="true"
-		>
-
-		    <tabs
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-
-			<tabpane
-			    text="Notice"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <noticeview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Messages"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <messageview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Evaluation"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <evaluationview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="History"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <historyview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Budget"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <budgetview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Overlays"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <overlaysview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Disasters"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <disastersview
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-			<tabpane
-			    text="Control"
-			    width="${parent.width}"
-			    height="${parent.height}"
-			>
-			    <controlpanel
-				width="${parent.width - (immediateparent.x * 2)}"
-				height="${parent.height - (immediateparent.y * 2)}"
-			    />
-			</tabpane>
-
-		    </tabs>
-
-		</view>
-
-		<view name="topLeft" id="gTopLeft"
-		    bgcolor="0x808080"
-		    x="0"
-		    y="0"
-		    width="${parent.vsep1.x}"
-		    height="${parent.parent.height}"
-		    clip="true"
-		>
-
-		    <view width="${parent.width}">
-
-			<demandgauge name="demandGauge" id="demandGauge"
-			    x="${classroot.gap}"
-			    y="${classroot.gap}"
-			/>
-
-			<view name="dateFundsDisplay"
-			    x="${parent.demandGauge.x + parent.demandGauge.width + classroot.gap}"
-			    y="${classroot.gap}"
-			    width="${(parent.width - classroot.gap) - this.x}"
-			    height="${parent.demandGauge.height}"
-			    bgcolor="${0xffffff}"
-			    clip="true"
-			>
-
-			    <simplelayout 
-				axis="y" 
-			    />
-
-			    <text
-				text="Date:"
-			    />
-
-			    <text
-				text="Apr 1966"
-				resize="true"
-			    />
-
-			    <text
-				text="Funds:"
-				resize="true"
-			    />
-
-			    <text
-				text="$472,332"
-				resize="true"
-			    />
-
-			</view>
-
-			<navigationmapview
-			    x="${classroot.gap}"
-			    y="${parent.dateFundsDisplay.y + parent.dateFundsDisplay.height + classroot.gap}"
-			/>
-
-		    </view>
-
-		</view>
-
-	    </view>
-
-	</view>
 
     </class>
 

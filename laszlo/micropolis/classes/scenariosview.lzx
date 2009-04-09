@@ -1,0 +1,57 @@
+<library>
+
+
+    <!-- Scenarios View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="scenariosview"
+	clip="true"
+    >
+
+
+	<simplelayout axis="y"
+	    spacing="5"
+	/>
+
+
+	<button
+	    fontsize="18"
+	    fontstyle="bold"
+	    datapath="ds_scenarios:/scenarios/scenario"
+	    onclick="this.selectScenario()"
+	    width="${parent.width}"
+	    height="50"
+	>
+
+	    <attribute name="scenarioID" value="$path{'@id'}" type="string"/>
+	    <attribute name="scenarioName" value="$path{'@name'}" type="string"/>
+	    <attribute name="scenarioYear" value="$path{'@year'}" type="string"/>
+	    <attribute name="scenarioTagLine" value="$path{'@tagline'}" type="string"/>
+	    <attribute name="scenarioDescription" value="$path{'description/text()'}" type="string"/>
+	    <attribute name="scenarioCommand" value="$path{'command'}"/>
+
+	    <handler name="ondata"><![CDATA[
+		var label =
+		    this.scenarioName + ', ' + this.scenarioYear + ': ' + 
+		    this.scenarioTagLine;
+		Debug.write("scenario button ondata", this, label);
+		this.setAttribute("text", label);
+	      ]]>
+	    </handler>
+
+	    <method name="selectScenario"><![CDATA[
+		gApp.sendCommand(this.scenarioCommand.serialize());
+		gApp.setDescription(this.scenarioDescription);
+	      ]]>
+	    </method>
+
+	</button>
+
+
+    </class>
+
+
+</library>

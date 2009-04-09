@@ -1,0 +1,48 @@
+<library>
+
+
+    <!-- Library View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="libraryview"
+	clip="true"
+    >
+
+
+	<list
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.height}"
+	    fontsize="18"
+	    fontstyle="bold"
+	>
+
+	    <textlistitem
+		datapath="ds_cities:/cities/city"
+		onclick="this.loadCity()"
+		text="$path{'@name'}"
+		value="$path{'@id'}"
+		height="28"
+	    >
+
+		<attribute name="loadCityCommand" value="$path{'command'}"/>
+
+		<method name="loadCity"><![CDATA[
+		    gApp.sendCommand(this.loadCityCommand.serialize())
+		    gApp.setDescription("Loaded city: " + this.text);
+		  ]]>
+		</method>
+
+	    </textlistitem>
+
+	</list>
+
+
+    </class>
+
+
+</library>

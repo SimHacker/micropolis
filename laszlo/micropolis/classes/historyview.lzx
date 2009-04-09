@@ -21,7 +21,9 @@ History
 -->
 
 
-    <class name="historyview">
+    <class name="historyview"
+        clip="true"
+    >
 
 
         <attribute name="historyScales" value="null"/>
@@ -55,7 +57,7 @@ History
 
 
 	<method name="handleUpdate" args="args"><![CDATA[
-	    Debug.write("historyview handleUpdate args", args);
+	    //Debug.write("historyview handleUpdate args", args);
 	    this.setAttribute("historyScales", args['historyScales']);
 	  ]]>
 	</method>
@@ -63,7 +65,7 @@ History
 
 	<view name="v"
 	    width="${parent.width}"
-	    height="${parent.height - 30}"
+	    height="${parent.height}"
 	>
 
 	    <drawview name="dv"

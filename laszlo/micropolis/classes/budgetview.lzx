@@ -22,7 +22,9 @@ Budget
 -->
 
 
-    <class name="budgetview">
+    <class name="budgetview"
+        clip="true"
+    >
 
 
 	<attribute name="taxRate" value="7"/>

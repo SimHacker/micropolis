@@ -1,0 +1,41 @@
+<library>
+
+
+    <!-- Generator View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="generatorview"
+	clip="true"
+    >
+
+
+	<simplelayout axis="y"
+	    spacing="5"
+	/>
+
+
+	<button
+	    text="Generate Random Map"
+	    fontsize="18"
+	    fontstyle="bold"
+	    onclick="this.generateMap()"
+	    width="${parent.width}"
+	    height="50"
+	>
+
+	    <method name="generateMap"><![CDATA[
+		gApp.sendCommand('<command name="generateCity"/>');
+		gApp.setDescription("Generated a new random map.");
+	      ]]>
+	    </method>
+
+	</button>
+
+
+    </class>
+
+
+</library>

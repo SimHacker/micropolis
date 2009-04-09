@@ -195,6 +195,20 @@
         </method>
 
 
+	<method name="centerOnTile" args="tileX, tileY"><![CDATA[
+	    Debug.write("tileview centerOnTile", this, tileX, tileY);
+	    var tileSize = this.tileSize;
+	    var tileCenterX = (tileX * tileSize) + (tileSize / 2);
+	    var tileCenterY = (tileY * tileSize) + (tileSize / 2);
+	    var cornerX = Math.floor(tileCenterX - (this.width / 2));
+	    var cornerY = Math.floor(tileCenterY - (this.height / 2));
+Debug.write("center", tileCenterX, tileCenterY, "corner", cornerX, cornerY);
+	    this.container.setAttribute("x", -cornerX);
+	    this.container.setAttribute("y", -cornerY);
+	  ]]>
+	</method>
+
+
         <view name="container"
             width="${classroot.worldCols * classroot.tileSize}"
             height="${classroot.worldRows * classroot.tileSize}"

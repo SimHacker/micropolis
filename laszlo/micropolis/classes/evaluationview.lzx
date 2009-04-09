@@ -25,7 +25,9 @@ Evaluation
 -->
 
 
-    <class name="evaluationview">
+    <class name="evaluationview"
+        clip="true"
+    >
 
 
         <attribute name="evaluationData" value="null"/>
@@ -88,7 +90,7 @@ Evaluation
 	</method>
 
 	<method name="handleUpdate" args="args"><![CDATA[
-	    Debug.write("evaluationview handleUpdate args", args);
+	    //Debug.write("evaluationview handleUpdate args", args);
 	    this.evaluationData = args;
 	    this.redrawView();
 	  ]]>

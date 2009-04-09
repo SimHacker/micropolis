@@ -1,0 +1,41 @@
+<library>
+
+
+    <!-- Connect Screen -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="connectscreen">
+
+
+	<simplelayout
+	    axis="y" 
+	    spacing="5"
+	/>
+
+
+	<text
+	    visible="${gApp.connecting}"
+	    text="Connecting to server..."
+	    resize="true"
+	/>
+
+	<text
+	    visible="${gApp.connectionFailed}"
+	    text="Connection to server failed."
+	    resize="true"
+	/>
+
+	<button
+	    visible="${gApp.connectionFailed}"
+	    text="Reconnect"
+	    onclick="gApp.requestStartSession()"
+	/>
+
+
+    </class>
+
+
+</library>

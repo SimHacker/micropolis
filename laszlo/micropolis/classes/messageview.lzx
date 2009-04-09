@@ -15,7 +15,9 @@ Messages
 -->
 
 
-    <class name="messageview">
+    <class name="messageview"
+        clip="true"
+    >
 
 
 	<simplelayout axis="y"/>

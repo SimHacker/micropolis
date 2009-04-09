@@ -8,6 +8,7 @@
 
 
     <include href="resources_tiles.lzx"/>
+    <include href="resources_icons.lzx"/>
 
 
 </library>

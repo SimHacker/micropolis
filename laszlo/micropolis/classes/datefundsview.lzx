@@ -1,0 +1,40 @@
+<library>
+
+
+    <!-- Date Funds View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="datefundsview">
+	bgcolor="${0xffffff}"
+	clip="true"
+    >
+	<simplelayout 
+	    axis="y" 
+	/>
+
+	<text
+	    text="Date:"
+	/>
+
+	<text
+	    text="Apr 1966"
+	    resize="true"
+	/>
+
+	<text
+	    text="Funds:"
+	    resize="true"
+	/>
+
+	<text
+	    text="$472,332"
+	    resize="true"
+	/>
+
+    </class>
+
+
+</library>

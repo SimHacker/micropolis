@@ -17,6 +17,11 @@
     <include href="tile.lzx"/>
     <include href="tileview.lzx"/>
     <include href="demandgauge.lzx"/>
+    <include href="datefundsview.lzx"/>
+    <include href="statusview.lzx"/>
+    <include href="scenariosview.lzx"/>
+    <include href="generatorview.lzx"/>
+    <include href="libraryview.lzx"/>
     <include href="budgetview.lzx"/>
     <include href="controlpanel.lzx"/>
     <include href="editorview.lzx"/>
@@ -29,6 +34,9 @@
     <include href="overlaysview.lzx"/>
     <include href="disastersview.lzx"/>
     <include href="messageview.lzx"/>
+    <include href="connectscreen.lzx"/>
+    <include href="startscreen.lzx"/>
+    <include href="playscreen.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
 
