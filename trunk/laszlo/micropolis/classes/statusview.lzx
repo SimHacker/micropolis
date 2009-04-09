@@ -1,0 +1,38 @@
+<library>
+
+
+    <!-- Status View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="statusview"
+	clip="true"
+    >
+
+
+        <attribute name="gap" value="5"/>
+
+
+	<demandgauge name="demandGauge" id="demandGauge"
+	    x="${classroot.gap}"
+	    y="${classroot.gap}"
+	/>
+
+	<datefundsview name="dateFundsDisplay"
+	    x="${parent.demandGauge.x + parent.demandGauge.width + classroot.gap}"
+	    y="${classroot.gap}"
+	    width="${(parent.width - classroot.gap) - this.x}"
+	    height="${parent.demandGauge.height}"
+	/>
+
+	<navigationmapview
+	    x="${classroot.gap}"
+	    y="${parent.dateFundsDisplay.y + parent.dateFundsDisplay.height + classroot.gap}"
+	/>
+
+    </class>
+
+
+</library>

@@ -1,0 +1,24 @@
+<library>
+
+
+    <!-- Icon Resources -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <resource name="micropolis_logo_rsrc" src="../resources/micropolis_logo.png"/>
+    <resource name="pollution_icon_rsrc" src="../resources/pollution_icon.png"/>
+    <resource name="crime_icon_rsrc" src="../resources/crime_icon.png"/>
+    <resource name="traffic_icon_rsrc" src="../resources/traffic_icon.png"/>
+    <resource name="town_icon_rsrc" src="../resources/town_icon.png"/>
+    <resource name="city_icon_rsrc" src="../resources/city_icon.png"/>
+    <resource name="capital_icon_rsrc" src="../resources/capital_icon.png"/>
+    <resource name="metropolis_icon_rsrc" src="../resources/metropolis_icon.png"/>
+    <resource name="megalopolis_icon_rsrc" src="../resources/megalopolis_icon.png"/>
+    <resource name="keytothecity_icon_rsrc" src="../resources/keytothecity_icon.png"/>
+    <resource name="impeached_icon_rsrc" src="../resources/impeached_icon.png"/>
+    <resource name="about_icon_rsrc" src="../resources/about_icon.png"/>
+
+
+</library>

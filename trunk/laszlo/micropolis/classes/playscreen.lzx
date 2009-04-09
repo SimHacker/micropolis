@@ -1,0 +1,175 @@
+<library>
+
+
+    <!-- Play Screen -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="playscreen">
+
+
+        <attribute name="panelWidth" value="200"/>
+        <attribute name="panelResizeBarY" value="200"/>
+        <attribute name="panelResizeBar2X" value="200"/>
+        <attribute name="panelResizeBarSize" value="8"/>
+
+
+	<hresizebar name="hsep1" id="gHSep1"
+	    trackvar="'panelResizeBarY'"
+	    maxy="${parent.height - this.height}"
+	    defaulty="$once{classroot.panelResizeBarY}"
+	    x="0"
+	    y="$once{classroot.panelResizeBarY}"
+	    width="${parent.width}"
+	    height="${classroot.panelResizeBarSize}"
+	    overhang="0"
+	/>
+
+	<tileview name="tileView" id="gTileView"
+	    x="0"
+	    y="${parent.hsep1.y + parent.hsep1.height}"
+	    width="${parent.width}"
+	    height="${parent.height - this.y}"
+	    bgcolor="0xBC6F56"
+	/>
+
+	<view name="top"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.hsep1.y}"
+	    clip="true"
+	>
+
+	    <vresizebar name="vsep1" id="gVSep1"
+		trackvar="'panelResizeBar2X'"
+		maxx="${parent.width - this.width}"
+		defaultx="$once{classroot.panelResizeBar2X}"
+		x="$once{classroot.panelResizeBar2X}"
+		y="0"
+		width="${classroot.panelResizeBarSize}"
+		height="${parent.height - this.y}"
+		overhang="0"
+	    />
+
+	    <view name="tabsView"
+		x="${parent.vsep1.x + parent.vsep1.width}"
+		y="0"
+		width="${parent.width - this.x}"
+		height="${parent.height}"
+		clip="true"
+	    >
+
+		<tabs id="gPlayTabs"
+		    width="${parent.width}"
+		    height="${parent.height + 2}"
+		>
+
+		    <tabpane
+			text="Notice"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<noticeview id="gNoticeView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Messages"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<messageview id="gMessageView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Evaluation"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<evaluationview id="gEvaluationView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="History"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<historyview id="gHistoryView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Budget"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<budgetview id="gBudgetView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Overlays"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<overlaysview id="gOverlaysView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Disasters"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<disastersview id="gDisastersView"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		    <tabpane
+			text="Control"
+			width="${parent.width}"
+			height="${parent.height}"
+		    >
+			<controlpanel id="gControlPanel"
+			    width="${parent.width - (immediateparent.x * 2)}"
+			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			/>
+		    </tabpane>
+
+		</tabs>
+
+	    </view>
+
+	    <statusview name="statusView" id="gStatusView"
+		x="0"
+		y="0"
+		width="${parent.vsep1.x}"
+		height="${parent.parent.height}"
+	    />
+
+	</view>
+
+
+    </class>
+
+
+</library>

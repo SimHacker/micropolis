@@ -15,7 +15,9 @@ Overlays
 -->
 
 
-    <class name="overlaysview">
+    <class name="overlaysview"
+        clip="true"
+    >
 
 
 	<simplelayout axis="y"/>

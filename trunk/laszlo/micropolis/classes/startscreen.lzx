@@ -1,0 +1,110 @@
+<library>
+
+
+    <!-- Start Screen -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="startscreen">
+
+
+	<simplelayout axis="x"
+	    spacing="5"
+	/>
+
+
+	<view name="v1"
+	    height="${parent.height}"
+	    width="${this.previewMapView.width + 10}"
+	>
+
+	    <text name="title"
+		text="Micropolis: Choose a City"
+		fontsize="20"
+		fontstyle="bold"
+		resize="true"
+		x="${(parent.width - this.width) / 2}"
+		y="5"
+	    />
+
+	    <view name="descriptionView"
+		y="${parent.title.y + parent.title.height + 5}"
+		width="${parent.previewMapView.width}"
+		height="${parent.previewMapView.y - this.y - 5}"
+	    >
+
+		<vscrollbar/>
+
+		<text name="description"
+		    fontsize="14"
+		    multiline="true"
+		    width="${parent.width - 15}"
+		>Welcome to Micropolis!<br/><br/>
+Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.<br/><br/>
+Then press the 'Play with This City' button below, to start playing Micropolis!</text>
+
+	   </view>
+
+	    <previewmapview name="previewMapView" id="gPreviewMapView"
+		y="${parent.playButton.y - this.height - 5}"
+	    />
+
+	    <button name="playButton"
+		text="Simulate This City"
+		fontsize="30"
+		fontstyle="bold"
+		onclick="gApp.playWithThisCity()"
+		y="${parent.height - this.height - 5}"
+		width="${parent.previewMapView.width}"
+		height="60"
+	    />
+
+	</view>
+
+	<tabs id="gStartTabs"
+	    width="${parent.width - this.x}"
+	    height="${parent.height + 2}"
+	>
+
+	    <tabpane
+		text="Scenarios"
+		width="${parent.width}"
+		height="${parent.height}"
+	    >
+		<scenariosview id="gScenariosView"
+		    width="${parent.width - (immediateparent.x * 2)}"
+		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		/>
+	    </tabpane>
+
+	    <tabpane
+		text="Generator"
+		width="${parent.width}"
+		height="${parent.height}"
+	    >
+		<generatorview id="gGeneratorView"
+		    width="${parent.width - (immediateparent.x * 2)}"
+		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		/>
+	    </tabpane>
+
+	    <tabpane
+		text="Library"
+		width="${parent.width}"
+		height="${parent.height}"
+	    >
+		<libraryview id="gLibraryView"
+		    width="${parent.width - (immediateparent.x * 2)}"
+		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		/>
+	    </tabpane>
+
+	</tabs>
+
+
+    </class>
+
+
+</library>

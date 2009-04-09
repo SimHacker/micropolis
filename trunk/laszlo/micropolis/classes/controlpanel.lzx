@@ -39,7 +39,9 @@ Control Panel
 -->
 
 
-    <class name="controlpanel">
+    <class name="controlpanel"
+        clip="true"
+    >
 
 
 	<simplelayout axis="y"/>

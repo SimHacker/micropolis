@@ -945,6 +945,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         print "handle_UIDidLoadScenario(self)", (self,)
         self.sendSessions({
             'message': "UIDidLoadScenario",
+            'scenario': self.scenario,
         })
         self.updateMapView()
 
@@ -1246,7 +1247,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['resDemand'] = resDemand
                 message['comDemand'] = comDemand
                 message['indDemand'] = indDemand
-                print "======== DEMAND", message
+                #print "======== DEMAND", message
 
             elif aspect == "options":
 

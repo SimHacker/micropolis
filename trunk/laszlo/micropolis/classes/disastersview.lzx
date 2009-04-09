@@ -15,7 +15,9 @@ Disasters
 -->
 
 
-    <class name="disastersview">
+    <class name="disastersview"
+        clip="true"
+    >
 
 
         <attribute name="columnWidth" value="100"/>

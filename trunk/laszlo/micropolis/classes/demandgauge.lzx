@@ -27,7 +27,7 @@
 
 
 	<handler name="oninit"><![CDATA[
-	    Debug.write("==== demandgauge oninit", this);
+	    //Debug.write("==== demandgauge oninit", this);
 	    this.updateVisible();
 	  ]]>
 	</handler>
@@ -54,7 +54,7 @@
 
 
 	<method name="handleUpdate" args="args"><![CDATA[
-	    Debug.write("demandgauge handleUpdate args", args);
+	    //Debug.write("demandgauge handleUpdate args", args);
 	    this.setAttribute("resDemand", args['resDemand']);
 	    this.setAttribute("comDemand", args['comDemand']);
 	    this.setAttribute("indDemand", args['indDemand']);
@@ -66,7 +66,7 @@
 	<method name="redrawView"><![CDATA[
 	    var dv = this.dv;
 
-	    Debug.write("drawview", dv, "redrawView", "demands", this.resDemand, this.comDemand, this.indDemand);
+	    //Debug.write("drawview", dv, "redrawView", "demands", this.resDemand, this.comDemand, this.indDemand);
 
 	    // Draw background.
 
