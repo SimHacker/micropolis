@@ -11,16 +11,78 @@
 	bgcolor="${0xffffff}"
 	clip="true"
     >
+
+
+        <attribute name="active" value="true"/>
+        <attribute name="dateLabel" type="string" value="Apr 1966"/>
+	<attribute name="fundsLabel" type="string" value="$472,332"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("==== demandgauge oninit", this);
+	    this.updateInterests();
+	  ]]>
+	</handler>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	    this.updateInterests();
+	  ]]>
+	</handler>
+
+
+	<method name="updateInterests"><![CDATA[
+	    //Debug.write("==== datefundsview updateInterests", this.active);
+	    if (this.active) {
+	        gApp.expressInterest(this, ['date', 'funds']);
+	    } else {
+	        gApp.revokeInterest(this, ['date', 'funds']);
+	    }
+
+	    // TODO: cause values to be redrawn?
+	  ]]>
+	</method>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    //Debug.write("datefundsview", this, "handleUpdate args", args);
+	    var aspect = args['aspect'];
+
+	    switch (aspect) {
+
+		case 'date': {
+		    var year = args['year'];
+		    var month = args['month'];
+		    var dateLabel = gApp.formatMonthYear(month, year);
+		    this.setAttribute("dateLabel", dateLabel);
+		    break;
+		}
+
+		case 'funds': {
+		    var funds = args['funds'];
+		    var fundsLabel = gApp.formatFunds(funds);
+		    this.setAttribute("fundsLabel", fundsLabel);
+		    break;
+		}
+
+	    }
+
+	  ]]>
+	</method>
+
+
 	<simplelayout 
 	    axis="y" 
 	/>
+
 
 	<text
 	    text="Date:"
 	/>
 
 	<text
-	    text="Apr 1966"
+	    text="${classroot.dateLabel}"
 	    resize="true"
 	/>
 
@@ -30,9 +92,10 @@
 	/>
 
 	<text
-	    text="$472,332"
+	    text="${classroot.fundsLabel}"
 	    resize="true"
 	/>
+
 
     </class>
 

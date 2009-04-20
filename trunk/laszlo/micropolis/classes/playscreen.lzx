@@ -7,13 +7,23 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="playscreen">
+    <class name="playscreen"
+        clip="true"
+	initstage="late"
+    >
 
 
+	<attribute name="active" value="true"/>
         <attribute name="panelWidth" value="200"/>
         <attribute name="panelResizeBarY" value="200"/>
-        <attribute name="panelResizeBar2X" value="200"/>
-        <attribute name="panelResizeBarSize" value="8"/>
+        <attribute name="panelResizeBar2X" value="250"/>
+        <attribute name="panelResizeBarSize" value="10"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
 
 
 	<hresizebar name="hsep1" id="gHSep1"
@@ -27,19 +37,12 @@
 	    overhang="0"
 	/>
 
-	<tileview name="tileView" id="gTileView"
+	
+	<view name="bottom"
 	    x="0"
 	    y="${parent.hsep1.y + parent.hsep1.height}"
 	    width="${parent.width}"
 	    height="${parent.height - this.y}"
-	    bgcolor="0xBC6F56"
-	/>
-
-	<view name="top"
-	    x="0"
-	    y="0"
-	    width="${parent.width}"
-	    height="${parent.hsep1.y}"
 	    clip="true"
 	>
 
@@ -54,8 +57,36 @@
 		overhang="0"
 	    />
 
-	    <view name="tabsView"
+	    <statusview name="statusView" id="gStatusView"
+		x="0"
+		y="0"
+		width="${parent.vsep1.x}"
+		height="${parent.parent.height}"
+		tileView="${classroot.tileView}"
+		active="${classroot.active}"
+	    />
+
+	    <tileview name="tileView" id="gTileView"
 		x="${parent.vsep1.x + parent.vsep1.width}"
+		y="0"
+		width="${parent.width - this.x}"
+		height="${parent.height - this.y}"
+		bgcolor="0xBC6F56"
+		active="${classroot.active}"
+	    />
+
+	</view>
+
+	<view name="top"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.hsep1.y}"
+	    clip="true"
+	>
+
+	    <view name="tabsView"
+		x="0"
 		y="0"
 		width="${parent.width - this.x}"
 		height="${parent.height}"
@@ -75,6 +106,7 @@
 			<noticeview id="gNoticeView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -86,6 +118,7 @@
 			<messageview id="gMessageView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -97,6 +130,7 @@
 			<evaluationview id="gEvaluationView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -108,6 +142,7 @@
 			<historyview id="gHistoryView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -119,6 +154,7 @@
 			<budgetview id="gBudgetView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -130,6 +166,7 @@
 			<overlaysview id="gOverlaysView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -141,6 +178,7 @@
 			<disastersview id="gDisastersView"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
@@ -152,19 +190,13 @@
 			<controlpanel id="gControlPanel"
 			    width="${parent.width - (immediateparent.x * 2)}"
 			    height="${parent.height - (immediateparent.y * 2) - 30}"
+			    active="${classroot.active &amp;&amp; parent.visible}"
 			/>
 		    </tabpane>
 
 		</tabs>
 
 	    </view>
-
-	    <statusview name="statusView" id="gStatusView"
-		x="0"
-		y="0"
-		width="${parent.vsep1.x}"
-		height="${parent.parent.height}"
-	    />
 
 	</view>
 

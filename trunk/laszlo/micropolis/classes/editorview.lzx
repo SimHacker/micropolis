@@ -32,7 +32,9 @@ Editor
 -->
 
 
-    <class name="editorview">
+    <class name="editorview"
+        clip="true"
+    >
 
 
 	<simplelayout axis="y"/>

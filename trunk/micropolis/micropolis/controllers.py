@@ -419,6 +419,7 @@ class Root(controllers.RootController):
         sessionID='',
         width=120,
         height=100,
+        overlay='',
         **kw):
 
         tileSize = micropolisengine.EDITOR_TILE_SIZE
@@ -462,6 +463,37 @@ class Root(controllers.RootController):
             worldW,
             worldH,
             alpha)
+
+        overlayImage, overlayAlpha, overlayWidth, overlayHeight = \
+            engine.getDataImageAlphaSize(overlay)
+        print "OVERLAY", overlay, "IMAGE", overlayImage, overlayAlpha, overlayWidth, overlayHeight
+        if overlayImage:
+            overlayWidth = 1.0 / overlayWidth
+            overlayHeight = 1.0 / overlayHeight
+
+            ctx.save()
+
+            ctx.scale(
+                worldW * tileSize,
+                worldH * tileSize)
+
+            ctx.rectangle(0, 0, 1, 1)
+            ctx.clip()
+
+            imageWidth = overlayImage.get_width()
+            imageHeight = overlayImage.get_height()
+
+            ctx.scale(
+                overlayWidth / imageWidth,
+                overlayHeight / imageHeight)
+
+            ctx.set_source_surface(
+                overlayImage,
+                0,
+                0)
+            ctx.paint_with_alpha(overlayAlpha)
+
+            ctx.restore()
 
         fd, tempFileName = tempfile.mkstemp()
         os.close(fd)

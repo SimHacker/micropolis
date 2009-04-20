@@ -12,24 +12,36 @@
     >
 
 
+        <attribute name="active" value="true"/>
         <attribute name="gap" value="5"/>
+        <attribute name="tileView" value="null"/>
 
 
-	<demandgauge name="demandGauge" id="demandGauge"
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
+	<navigationmapview name="navigationMapView" id="gNavigationMapView"
 	    x="${classroot.gap}"
 	    y="${classroot.gap}"
+	    tileView="${this.tileView}"
+	    active="${classroot.active}"
+	    overlay="${gApp.overlay}"
 	/>
 
-	<datefundsview name="dateFundsDisplay"
+	<demandgauge name="demandGauge" id="gDemandGauge"
+	    x="${classroot.gap}"
+	    y="${parent.navigationMapView.y + parent.navigationMapView.height + classroot.gap}"
+	    active="${classroot.active}"
+	/>
+
+	<datefundsview name="dateFundsDisplay" id="gDateFundsDisplay"
 	    x="${parent.demandGauge.x + parent.demandGauge.width + classroot.gap}"
-	    y="${classroot.gap}"
+	    y="${parent.demandGauge.y}"
 	    width="${(parent.width - classroot.gap) - this.x}"
-	    height="${parent.demandGauge.height}"
-	/>
-
-	<navigationmapview
-	    x="${classroot.gap}"
-	    y="${parent.dateFundsDisplay.y + parent.dateFundsDisplay.height + classroot.gap}"
+	    active="${classroot.active}"
 	/>
 
     </class>

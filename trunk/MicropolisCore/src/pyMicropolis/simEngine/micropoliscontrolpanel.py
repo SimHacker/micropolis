@@ -95,9 +95,9 @@ class MicropolisControlPanel(gtk.Frame):
         (3, 10, 'Fast',),
         (3, 50, 'Very Fast',),
         (3, 100, 'Ultra Fast',),
-        (3, 500, 'Ridiculously fast',),
-        (3, 1000, 'Outrageously fast',),
-        (3, 5000, 'Astronomically fast',),
+        (3, 500, 'Ridiculously Fast',),
+        (3, 1000, 'Outrageously Fast',),
+        (3, 5000, 'Astronomically Fast',),
     ]
 
 

@@ -428,6 +428,9 @@ class Session(object):
 class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine):
 
 
+    sessions = [] # Back stop.
+
+
     def initGamePython(self):
 
         self.sessions = []
@@ -463,6 +466,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
+        self.maxLoops = 10000
+        self.loopsPerSecond = 100
+
+        self.resetRealTime()
+
         self.loadInitialCity()
 
 
@@ -493,6 +501,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def stopTimer(self):
 
         pass
+
+
+    def resetRealTime(self):
+        self.lastLoopTime = time.time()
 
 
     def addSession(self, session):
@@ -542,17 +554,58 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             elif disaster == 'melt':
                 self.heatSteps = 1
                 self.heatRule = 0
+            else:
+                print "Invalid disaster name:", disaster
 
         elif command == 'setTaxRate':
 
-            rateStr = params.get('rate', self.cityTax)
-            rate = self.cityTax
-            print "setTaxRate", rate
+            taxRateStr = params.get('taxRate', self.cityTax)
+            taxRate = self.cityTax
             try:
-                rate = int(rateStr)
+                taxRate = int(taxRateStr)
             except: pass
-            if (rate >= 0) and (rate <= 20):
-                self.cityTax = rate
+            taxRate = max(0, min(taxRate, 20))
+            self.cityTax = taxRate
+            print "==== TAXRATE", taxRate
+
+        elif command == 'setRoadPercent':
+
+            roadPercent = int(self.roadPercent * 100.0)
+            roadPercentStr = params.get('roadPercent', roadPercent)
+            try:
+                roadPercent = int(roadPercentStr)
+            except: pass
+            roadPercent = max(0, min(roadPercent, 100))
+            self.roadPercent = float(roadPercent) / 100.0
+            self.roadSpend = int(self.roadPercent * self.roadFund)
+            self.updateFundEffects()
+            print "==== ROADPERCENT", self.roadPercent
+
+        elif command == 'setFirePercent':
+
+            firePercent = int(self.firePercent * 100.0)
+            firePercentStr = params.get('firePercent', firePercent)
+            try:
+                firePercent = int(firePercentStr)
+            except: pass
+            firePercent = max(0, min(firePercent, 100))
+            self.firePercent = float(firePercent) / 100.0
+            self.fireSpend = int(self.firePercent * self.fireFund)
+            self.updateFundEffects()
+            print "==== FIREPERCENT", self.firePercent
+
+        elif command == 'setPolicePercent':
+
+            policePercent = int(self.policePercent * 100.0)
+            policePercentStr = params.get('policePercent', policePercent)
+            try:
+                policePercent = int(policePercentStr)
+            except: pass
+            policePercent = max(0, min(policePercent, 100))
+            self.policePercent = float(policePercent) / 100.0
+            self.policeSpend = int(self.policePercent * self.policeFund)
+            self.updateFundEffects()
+            print "==== POLICEPERCENT", self.policePercent
 
         elif command == 'loadCity':
 
@@ -587,15 +640,45 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if gameMode == "start":
                 self.pause()
             elif gameMode == "play":
+                self.resetRealTime()
+                self.updateFundEffects()
                 self.resume()
 
+        elif command == 'setPaused':
 
-    def tickEngine(self, ticks=1):
+            paused = params.get('paused')
+
+            print "setPaused", paused
+            if paused == "true":
+                self.pause()
+            elif paused == "false":
+                self.resume()
+            else:
+                print "Bad paused value, should be true or false, not", paused
+
+        elif command == 'abandonCity':
+
+            print "ABANDON CITY"
+
+        elif command == 'saveCity':
+
+            print "SAVE CITY"
+
+
+    def tickEngine(self, ticks=None):
 
         now = time.time()
         fracTime = now - math.floor(now)
 
         self.blinkFlag = fracTime < 0.5
+
+        if ticks == None:
+            print "NOW", now, "lastLoopTime", self.lastLoopTime
+            elapsed = now - self.lastLoopTime
+            self.lastLoopTime = now
+            ticks = int(max(1, math.ceil(elapsed * self.loopsPerSecond)))
+
+        print "TICKS", ticks, "ELAPSED", elapsed
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
@@ -651,6 +734,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     except Exception, e:
                         self.expectationFailed("Invalid parameters: " + str(e));
 
+                    cols = max(cols, 1)
+                    rows = max(rows, 1)
+
                     if ((col < 0) or
                         (row < 0) or
                         (cols <= 0) or
@@ -681,8 +767,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                             'tiles': tiles,
                         })
 
-        ticks = 100
-        self.tickEngine(ticks)
+        self.tickEngine()
 
         return tileviews
 
@@ -901,7 +986,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.handle_UIUpdate('date')
         self.handle_UIUpdate('history')
         self.handle_UIUpdate('evaluation')
-        self.handle_UIUpdate('date')
         self.handle_UIUpdate('paused')
         self.handle_UIUpdate('speed')
         self.handle_UIUpdate('demand')
@@ -1108,15 +1192,23 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'args': args,
             }
 
-            if aspect == "funds":
+            if aspect == 'funds':
 
                 message['funds'] = self.totalFunds
 
-            elif aspect == "date":
+            elif aspect == 'date':
 
-                message['cityTime'] = self.cityTime
+                cityTime = self.cityTime
+                startingYear = self.startingYear
+                year = int(cityTime / 48) + startingYear
+                month = int(cityTime % 48) >> 2;
 
-            elif aspect == "history":
+                message['cityTime'] = cityTime
+                message['startingYear'] = startingYear;
+                message['year'] = year
+                message['month'] = month
+
+            elif aspect == 'history':
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they
@@ -1133,6 +1225,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 historyScales = []
                 message['historyScales'] = historyScales
+
+                cityTime = self.cityTime
+                startingYear = self.startingYear
+                year = int(cityTime / 48) + startingYear
+                month = int(cityTime % 48) >> 2;
+                message['year'] = year
+                message['month'] = month
 
                 getHistoryRange = self.getHistoryRange
                 getHistory = self.getHistory
@@ -1176,6 +1275,15 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         moneyScale, crimeScale, pollutionScale, # money, crime, pollution
                     )
 
+                    valueRanges = (
+                        (resHistoryMin, resHistoryMax,),
+                        (comHistoryMin, comHistoryMax,),
+                        (indHistoryMin, indHistoryMax,),
+                        (moneyHistoryMin, moneyHistoryMax,),
+                        (crimeHistoryMin, crimeHistoryMax,),
+                        (pollutionHistoryMin, pollutionHistoryMax,),
+                    )
+
                     histories = []
 
                     historyScales.append({
@@ -1187,6 +1295,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
 
                         valueScale = valueScales[historyType]
+                        valueRange = valueRanges[historyType]
 
                         values = [
                                 getHistory(
@@ -1199,10 +1308,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         histories.append({
                             'historyType': historyType,
                             'valueScale': valueScale,
+                            'valueRange': valueRange,
                             'values': values,
                         })
 
-            elif aspect == "evaluation":
+            elif aspect == 'evaluation':
 
                 problems = []
                 for i in range(0, self.countProblems()):
@@ -1223,50 +1333,90 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     'worstProblems': problems,
                 })
 
-            elif aspect == "paused":
+            elif aspect == 'paused':
 
-                paused = self.simPaused and 1 or 0
-                print "PAUSED", paused
+                paused = self.simPaused and 'true' or 'false'
+                print 'PAUSED', paused
                 message['paused'] = paused
 
-            elif aspect == "passes":
+            elif aspect == 'passes':
 
                 return
 
-            elif aspect == "speed":
+            elif aspect == 'speed':
 
                 message['speed'] = self.simSpeed
 
-            elif aspect == "taxrate":
-
-                message['cityTax'] = self.cityTax
-
-            elif aspect == "demand":
+            elif aspect == 'demand':
 
                 resDemand, comDemand, indDemand = self.getDemands()
                 message['resDemand'] = resDemand
                 message['comDemand'] = comDemand
                 message['indDemand'] = indDemand
-                #print "======== DEMAND", message
+                #print '======== DEMAND', message
 
-            elif aspect == "options":
+            elif aspect == 'options':
 
                 pass # TODO: copy options to message
 
-            elif aspect == "gamelevel":
+            elif aspect == 'gamelevel':
 
                 message['gameLevel'] = self.gameLevel
 
-            elif aspect == "cityname":
+            elif aspect == 'cityname':
 
                 message['cityName'] = self.cityName
-                print "now message", message
+                print 'now message', message
 
-            elif aspect == "budget":
+            elif aspect == 'taxrate':
 
-                pass # TODO: copy budget data to message
+                message['taxRate'] = self.cityTax
 
-            elif aspect == "message":
+            elif aspect == 'budget':
+
+                taxRate = self.cityTax
+                totalFunds = self.totalFunds
+                taxFund = self.taxFund
+
+                firePercent = math.floor(self.firePercent * 100.0)
+                fireFund = self.fireFund
+                fireValue = self.fireValue
+
+                policePercent = math.floor(self.policePercent * 100.0)
+                policeFund = self.policeFund
+                policeValue = self.policeValue
+
+                roadPercent = math.floor(self.roadPercent * 100.0)
+                roadFund = self.roadFund
+                roadValue = self.roadValue
+
+                cashFlow = taxFund - fireValue - policeValue - roadValue
+                cashFlow2 = cashFlow
+
+                previousFunds = totalFunds
+                currentFunds = cashFlow2 + totalFunds
+                collectedFunds = taxFund
+
+                message['taxRate'] = taxRate
+                message['firePercent'] = firePercent
+                message['fireFund'] = fireFund
+                message['fireValue'] = fireValue
+                message['policePercent'] = policePercent
+                message['policeFund'] = policeFund
+                message['policeValue'] = policeValue
+                message['roadPercent'] = roadPercent
+                message['roadFund'] = roadFund
+                message['roadValue'] = roadValue
+                message['totalFunds'] = totalFunds
+                message['taxFund'] = taxFund
+                message['cashFlow'] = cashFlow
+                message['previousFunds'] = previousFunds
+                message['currentFunds'] = currentFunds
+                message['collectedFunds'] = collectedFunds
+
+                print 'BUDGET', message
+
+            elif aspect == 'message':
 
                 message.update({
                     'number': args[0],
@@ -1279,7 +1429,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.sendSessions(message)
 
         except Exception, e:
-            print "XXX handle_UIUpdate ERROR:", e
+            print 'XXX handle_UIUpdate ERROR:', e
 
 
 ########################################################################

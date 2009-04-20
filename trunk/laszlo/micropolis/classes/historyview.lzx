@@ -7,91 +7,748 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-History
-  10/120 Years
-  Residential
-  Commercial
-  Industrial
-  Money
-  Crime
-  Pollution
-  
--->
-
-
     <class name="historyview"
         clip="true"
     >
 
 
+	<attribute name="active" value="true"/>
         <attribute name="historyScales" value="null"/>
+	<attribute name="year" value="1900"/>
+	<attribute name="month" value="0"/>
+	<attribute name="yearLabels" value="$once{[]}"/>
+
+	<attribute name="historyColors" value="$once{[
+	    0x00ff00, /* Res: Light Green */
+	    0x0000a0, /* Com: Dark Blue */
+	    0xffff00, /* Ind: Yellow */
+	    0x008000, /* Money: Dark Green */
+	    0xff0000, /* Crime: Red */
+	    0x507020  /* Pollution: Olive */
+	]}"/>
+
+	<attribute name="historyRanges" value="$once{[
+	    [0, 768], /* Res */
+	    [0, 768], /* Com */
+	    [0, 768], /* Ind */
+	    [0, 256], /* Money */
+	    [0, 128], /* Crime */
+	    [0, 128]  /* Pollution */
+	]}"/>
+
+	<attribute name="historyTypes" value="$once{[
+	    0, 1, 2, 3, 4, 5
+	]}"/>
+
+	<attribute name="legendWidth" value="100"/>
+	<attribute name="legendItemHeight" value="18"/>
+	<attribute name="bottomEdgeHeight" value="30"/>
+	<attribute name="gap" value="5"/>
+	<attribute name="border" value="3"/>
+	<attribute name="historyScale" value="1"/>
+	<attribute name="fillColorNormal" value="0xb0b0b0"/>
+	<attribute name="fillColorSelected" value="0xffffff"/>
+	<attribute name="strokeColor" value="0x000000"/>
+	<attribute name="redrawDelegate" value="null"/>
+	<attribute name="redrawDelay" value="100"/>
+	<attribute name="redrawingSoon" value="false"/>
 
 
 	<handler name="oninit"><![CDATA[
-	    Debug.write("==== historyview oninit", this);
-	    this.updateVisible();
+	    //Debug.write("==== historyview oninit", this);
+	    gApp.expressInterest(this, ['history']);
 	  ]]>
 	</handler>
 
 
-	<handler name="onvisible"><![CDATA[
-	    Debug.write("==== historyview onvisible", this, this.visible);
-	    this.updateVisible();
+	<handler name="onwidth"><![CDATA[
+	    if (this.inited) {
+    	        this.redrawSoon();
+	    }
 	  ]]>
 	</handler>
 
 
-	<method name="updateVisible"><![CDATA[
-	    Debug.write("==== historyview updateVisible", this.visible);
-	    if (this.visible) {
-	        gApp.expressInterest(this, ['history']);
-	    } else {
-	        gApp.revokeInterest(this, ['history']);
+	<handler name="onheight"><![CDATA[
+	    if (this.inited) {
+	        this.redrawSoon();
+	    }
+	  ]]>
+	</handler>
+
+
+	<handler name="onactive"><![CDATA[
+	    //Debug.write("==== historyview onactive", this, this.active);
+	  ]]>
+	</handler>
+
+
+	<method name="redrawSoon"><![CDATA[
+	    if (this.redrawingSoon) {
+	        return;
 	    }
 
-	    // TODO: cause graph to be redrawn?
+	    if (!this.redrawDelegate) {
+	        this.redrawDelegate = 
+		    new LzDelegate(this, 'handleRedraw');
+	    }
+
+	    lz.Timer.resetTimer(this.redrawDelegate, this.redrawDelay);
+	    this.redrawingSoon = true;
+	  ]]>
+	</method>
+
+
+	<method name="handleRedraw" args="arg"><![CDATA[
+	    //Debug.write("================ handleRedraw", this, this.redrawingSoon, arg);
+	    this.redrawingSoon = false;
+	    lz.Timer.removeTimer(this.redrawDelegate);
+	    this.drawHistory();
 	  ]]>
 	</method>
 
 
 	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("historyview handleUpdate args", args);
+	    //Debug.write("********** historyview handleUpdate args", args);
 	    this.setAttribute("historyScales", args['historyScales']);
+	    this.setAttribute('year', args['year']);
+	    this.setAttribute('month', args['month']);
+	    this.drawHistory();
+	  ]]>
+	</method>
+
+
+	<method name="removeHistoryType" args="type"><![CDATA[
+	    var historyTypes = this.historyTypes;
+	    var index = 
+	        gApp.indexOf(historyTypes, type);
+
+	    if (index < 0) {
+	        return;
+	    }
+
+	    historyTypes.splice(index, 1);
+	    this.redrawSoon();
+	  ]]>
+	</method>
+
+
+	<method name="addHistoryType" args="type"><![CDATA[
+	    var historyTypes = this.historyTypes;
+	    var index = 
+	        gApp.indexOf(historyTypes, type);
+
+	    if (index >= 0) {
+	        return;
+	    }
+
+	    historyTypes.push(type);
+	    this.redrawSoon();
+	  ]]>
+	</method>
+
+
+	<method name="setHistoryType" args="type, value"><![CDATA[
+	    if (value) {
+	        this.addHistoryType(type);
+	    } else {
+	        this.removeHistoryType(type);
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="setHistoryScale" args="historyScale"><![CDATA[
+	    if (historyScale == this.historyScale) {
+	        return;
+	    }
+
+	    this.setAttribute("historyScale", historyScale);
+	    this.redrawSoon(); 
+	  ]]>
+	</method>
+
+
+	<method name="getHistoryRect"><![CDATA[
+	    var dv = this.v.dv;
+	    var histX = 0;
+	    var histY = 0;
+	    var histWidth = dv.width;
+	    var histHeight = dv.height - this.bottomEdgeHeight;
+	    histWidth = Math.max(1, histWidth);
+	    histHeight = Math.max(1, histHeight);
+	    return [histX, histY, histWidth, histHeight];
+	  ]]>
+	</method>
+
+
+	<method name="drawHistory"><![CDATA[
+	    //Debug.write("==== DRAWHISTORY");
+	    var historyScales = this.historyScales;
+
+	    if (!historyScales) {
+	        return;
+	    }
+
+	    var dv = this.v.dv;
+	    var historyCount = 120;
+	    var historyTypeCount = 6;
+	    var historyScaleCount = 2;
+
+	    var historyTypes = this.historyTypes;
+
+	    var historyRect = this.getHistoryRect();
+	    var histX = historyRect[0];
+	    var histY = historyRect[1];
+	    var histWidth = historyRect[2];
+	    var histHeight = historyRect[3];
+
+	    function getHistoryRange(scale, type)
+	    {
+	        var scaleDict = historyScales[scale];
+		var histories = scaleDict['histories'];
+		var historyDict = histories[type];
+		var range = historyDict['valueRange'];
+		return range;
+	    }
+
+	    function getHistory(scale, type, index)
+	    {
+	        var scaleDict = historyScales[scale];
+		var histories = scaleDict['histories'];
+		var historyDict = histories[type];
+		var valueScale = historyDict['valueScale'];
+		var values = historyDict['values'];
+		var val = values[index];
+		return val * valueScale;
+	    }
+
+	    // Draw background.
+
+	    dv.beginPath();
+	    dv.rect(
+		0,
+		0,
+		dv.width,
+		dv.height,
+		0);
+	    dv.fillStyle = 0xffffff;
+	    dv.fill();
+
+	    histX += 2;
+	    histWidth -= 4;
+	    histY += 2;
+	    histHeight -= 4;
+
+	    dv.beginPath();
+	    dv.rect(
+	        histX,
+		histY,
+		histWidth,
+		histHeight,
+		0);
+
+	    dv.fillStyle = this.fillColorNormal;
+	    dv.fill();
+
+	    // Draw histories.
+
+	    // Scale the residential, commercial and industrial histories
+	    // together relative to the max of all three.  Up to 128 they
+	    // are not scaled. Starting at 128 they are scaled down so the
+	    // maximum is always at the top of the history.
+
+	    function calcScale(maxVal)
+	    {
+		if (maxVal < 128) {
+		    maxVal = 0;
+		}
+		if (maxVal > 0) {
+		    return 128.0 / maxVal;
+		} else {
+		    return 1.0;
+		}
+	    }
+
+	    var range;
+
+	    range = getHistoryRange(
+		historyScale,
+		0);
+	    //Debug.write("GETHISTORYRANGE", historyScale, 0, range);
+	    var resHistoryMin = range[0];
+	    var resHistoryMax = range[1];
+
+	    range = getHistoryRange(
+		historyScale,
+		1);
+	    var comHistoryMin = range[0];
+	    var comHistoryMax = range[1];
+
+	    range = getHistoryRange(
+		historyScale,
+		2);
+	    var indHistoryMin = range[0];
+	    var indHistoryMax = range[1];
+
+	    var allMax = 
+	        Math.max(
+		    resHistoryMax,
+		    Math.max(
+		        comHistoryMax,
+			indHistoryMax));
+
+	    var rciScale = calcScale(allMax);
+
+	    // Scale the money, crime and pollution histories
+	    // independently of each other.
+
+	    range = getHistoryRange(
+		historyScale,
+		3);
+	    var moneyHistoryMin = range[0];
+	    var moneyHistoryMax = range[1];
+
+	    range = getHistoryRange(
+		historyScale,
+		4);
+	    var crimeHistoryMin = range[0];
+	    var crimeHistoryMax = range[1];
+
+	    range = getHistoryRange(
+		historyScale,
+		5);
+	    var pollutionHistoryMin = range[0];
+	    var pollutionHistoryMax = range[1];
+
+	    var moneyScale = calcScale(moneyHistoryMax);
+	    var crimeScale = calcScale(crimeHistoryMax);
+	    var pollutionScale = calcScale(pollutionHistoryMax);
+
+	    var historyRange = 128.0
+	    var scales = [
+		rciScale, rciScale, rciScale, // res, com, ind
+		moneyScale, crimeScale, pollutionScale, // money, crime, pollution
+	    ];
+
+	    var i;
+	    var n = historyTypes.length;
+	    for (i = 0; i < n; i++) {
+	        var historyType = historyTypes[i];
+
+		var scaleValue = scales[historyType];
+
+		var first = true;
+		dv.beginPath();
+
+		var historyIndex;
+		for (historyIndex = historyCount - 1;
+		     historyIndex >= 0;
+		     historyIndex -= 1) {
+
+		    var rawVal = getHistory(
+			historyScale,
+			historyType,
+			historyIndex);
+
+		    //var val = rawVal * scaleValue;
+		    var val = rawVal;
+
+		    var x = (
+		        histX +
+			(historyIndex * (histWidth / (historyCount - 1))));
+
+		    var y = (
+		        histY +
+			histHeight -
+			(val * (histHeight / historyRange)));
+
+		    if (first) {
+		        dv.moveTo(x, y);
+			first = false;
+		    } else {
+			dv.lineTo(x, y);
+		    }
+		}
+
+		dv.lineWidth = 2;
+		dv.strokeStyle = this.historyColors[historyType];
+		dv.stroke();
+	    }
+
+	    // Draw years.
+
+	    var year = this.year;
+	    var month = this.month;
+
+	    dv.lineWidth = 1;
+
+	    dv.strokeStyle = this.strokeColor;
+
+	    var sx = histWidth / 120.0;
+	    var r;
+
+	    if (historyScale == 0) {
+		var dur = 120;
+		r = [dur - month, -dur / 10];
+	    } else if (historyScale == 1) {
+		sx /= 10;
+		var past = 10 * (year % 10);
+		year = Math.floor(year / 10) * 10;
+		var dur = 1200;
+		r = [dur - past, -dur / 10];
+	    } else {
+		Debug.write("Invalid historyScale", historyScale);
+		return;
+	    }
+
+	    var y = histHeight + this.bottomEdgeHeight;
+
+	    var yearLabels = this.yearLabels;
+	    var labelIndex;
+	    for (i = r[0], labelIndex = 0; 
+	         i >= -dur;
+		 i += r[1], labelIndex++) {
+
+		var x = i * sx;
+
+		dv.beginPath();
+		dv.moveTo(histX + x, histY + 0);
+		dv.lineTo(histX + x, histY + y);
+		dv.stroke();
+
+		var label;
+		if (historyScale == 0) {
+		    label = "" + year;
+		    year -= 1;
+		} else if (historyScale == 1) {
+		    label = "" + year;
+		    year -= 10;
+		}
+
+		var xx = histX + x + 4;
+		var yy = histY + histHeight + (this.bottomEdgeHeight / 2);
+
+		yy += 1; // Fudge the position.
+
+		// TODO: Move and configure text label.
+
+		while (labelIndex >= yearLabels.length) {
+		    var newLabel = 
+		        new lz.text(
+			    v.labelView,
+			    {
+				resize: true,
+				fontsize: 14,
+				fontstyle: 'bold'
+			    });
+		    yearLabels.push(newLabel);
+		}
+
+		var yearLabel = yearLabels[labelIndex];
+
+		if (yearLabel.text != label) {
+		    yearLabel.setAttribute("text", label);
+		}
+
+		if (yearLabel.x != xx) {
+		    yearLabel.setAttribute("x", xx);
+		}
+
+		if (!yearLabel.visible) {
+		    yearLabel.setAttribute("visible", true);
+		}
+
+	    }
+
+	    for (;
+	         labelIndex < yearLabels.length;
+		 labelIndex++) {
+	        var label = yearLabels[labelIndex];
+		label.setAttribute("visible", false);
+	    }
+
+	    dv.beginPath();
+	    dv.rect(
+	        histX,
+		histY,
+		histWidth,
+		histHeight,
+		0);
+
+	    dv.strokeStyle = this.strokeColor;
+	    dv.lineWidth = 2;
+	    dv.stroke();
+
 	  ]]>
 	</method>
 
 
 	<view name="v"
+	    x="0"
+	    y="0"
 	    width="${parent.width}"
 	    height="${parent.height}"
 	>
 
 	    <drawview name="dv"
-		width="${parent.width}"
+	        x="0"
+		width="${parent.width - this.x - classroot.gap - parent.legend.width}"
 		height="${parent.height}"
 		bgcolor="0x808080"
+		clip="true"
 	    >
 
 	        <handler name="oncontext"><![CDATA[
-		    Debug.write("drawview oncontext", this);
+		    //Debug.write("drawview oncontext", this);
 		    this.redrawView();
 		  ]]>
 		</handler>
 
 	        <method name="handleUpdate"><![CDATA[
-		    Debug.write("drawview handleUpdate", classroot.historyScales);
+		    //Debug.write("drawview handleUpdate", classroot.historyScales);
 		    this.redrawView();
 		  ]]>
 		</method>
 
 	        <method name="redrawView"><![CDATA[
-		    Debug.write("drawview redrawView", "historyScales", classroot.historyScales);
+		    //Debug.write("drawview redrawView", "historyScales", classroot.historyScales);
 		  ]]>
 		</method>
 
 	    </drawview>
+
+	    <view name="labelView"
+	        x="0"
+		y="${parent.dv.y + parent.dv.height - classroot.bottomEdgeHeight + classroot.gap}"
+		width="${parent.dv.width}"
+		height="${parent.dv.y + parent.dv.height - this.y}"
+		clip="true"
+	    />
+
+	    <view name="legend"
+	        x="${parent.width - this.width}"
+		y="0"
+		width="${classroot.legendWidth}"
+		height="${parent.height}"
+	    >
+
+	        <simplelayout
+		    axis="y" 
+		    inset="0" 
+		    spacing="1"
+		/>
+
+
+		<view name="histories"
+		    width="${parent.width}"
+		>
+
+		    <simplelayout
+			axis="y" 
+			inset="0" 
+			spacing="1"
+		    />
+
+
+<!--
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0x00ff00"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Residential"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(0, this.value)"
+			/>
+		    </view>
+
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0x0000a0"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Commercial"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(1, this.value)"
+			/>
+		    </view>
+
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0xffff00"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Industrial"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(2, this.value)"
+			/>
+		    </view>
+
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0x008000"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Money"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(3, this.value)"
+			/>
+		    </view>
+
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0xff0000"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Crime"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(4, this.value)"
+			/>
+		    </view>
+
+		    <view
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="0x507020"
+		    >
+			<mycheckbox
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="Pollution"
+			    bgcolor="0xffffff"
+			    value="true"
+			    onchanged="classroot.setHistoryType(5, this.value)"
+			/>
+		    </view>
+-->
+
+		    <view
+			datapath="ds_histories:/histories/history"
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			bgcolor="${this.color}"
+		    >
+
+
+			<attribute name="label" type="string" value="$path{'@label'}"/>
+			<attribute name="description" type="string" value="$path{'@description'}"/>
+			<attribute name="typeString" type="string" value="$path{'@type'}"/>
+			<attribute name="colorString" type="string" value="$path{'@color'}"/>
+			<attribute name="rangeString" type="string" value="$path{'@range'}"/>
+			<attribute name="type" type="number" value="${parseInt(this.typeString)}"/>
+			<attribute name="color" type="number" value="${parseInt(this.colorString)}"/>
+			<attribute name="range" type="number" value="${parseInt(this.rangeString)}"/>
+
+
+			<handler name="ondata" args="arg"><![CDATA[
+			    var value = 
+				gApp.indexOf(classroot.historyTypes, this.type) >= 0;
+			    this.cb.setAttribute("value", value);
+			    var attributes = this.data.attributes;
+			    Debug.write(attributes);
+			    this.setAttribute("label", attributes['label']);
+			    this.setAttribute("description", attributes['description']);
+			    this.setAttribute("type", parseInt(attributes['type']));
+			    this.setAttribute("color", parseInt(attributes['color']));
+			    this.setAttribute("range", parseInt(attributes['range']));
+			  ]]>
+			</handler>
+
+
+			<mycheckbox name="cb"
+			    x="${classroot.border}"
+			    y="${classroot.border}"
+			    width="${parent.width - (2 * classroot.border)}"
+			    height="${parent.height - (2 * classroot.border)}"
+			    text="${parent.label}"
+			    bgcolor="0xffffff"
+			>
+
+			    <handler name="onchanged" args="arg"><![CDATA[
+				if (!this.inited) {
+				    //Debug.write("History checkbox ONCHANGED too early", this, this.value);
+				    return;
+				}
+				//Debug.write("==== History checkbox ONCHANGED", this, this.value);
+				if (this.value) {
+				    classroot.addHistoryType(parent.type);
+				} else {
+				    classroot.removeHistoryType(parent.type);
+				}
+			      ]]>
+			    </handler>
+
+			</mycheckbox>
+
+		    </view>
+
+	        </view>
+
+		<radiogroup name="timeScale"
+		    width="${parent.width}"
+		    layout="class:simplelayout; axis:y; spacing:1"
+		    bgcolor="0xffffff"
+		>
+
+
+		    <handler name="oninit" args="arg"><![CDATA[
+			this.setAttribute("value", classroot.historyScale);
+		      ]]>
+		    </handler>
+
+		    <handler name="onvalue" args="arg"><![CDATA[
+			 classroot.setHistoryScale(this.value);
+		      ]]>
+		    </handler>
+
+
+		    <myradiobutton
+		        value="0"
+		        text="10 Years"
+		    />
+
+		    <myradiobutton
+		        value="1"
+		        text="120 Years"
+		    />
+
+
+		</radiogroup>
+
+	    </view>
 
 	</view>
 

@@ -1,0 +1,206 @@
+<library>
+    <include href="base/baselist.lzx" />
+    <include href="base/baselistitem.lzx" />
+    <include href="base/multistatebutton.lzx" />
+    <include href="utils/layouts/simplelayout.lzx" />
+
+    <resource name="lzradio_rsrc">
+        <frame src="lz/resources/radio/radiobtn_up.swf" />
+        <frame src="lz/resources/radio/radiobtn_mo.swf" />
+        <frame src="lz/resources/radio/radiobtn_dn.swf" />
+        <frame src="lz/resources/radio/radiobtn_dsbl_up.swf" />
+        <frame src="lz/resources/radio/radiobtn_dn.swf" />
+        <frame src="lz/resources/radio/radiobtn_dn.swf" />
+        <frame src="lz/resources/radio/radiobtn_dn.swf" />
+        <frame src="lz/resources/radio/radiobtn_dsbl_dn.swf" />
+    </resource>
+
+    <class name="myradiogroup" extends="baselist"
+        itemclassname="myradiobutton" defaultselection="0">
+
+        <!--- The layout to use for the radiogroup. The default is simplelayout
+              with spacing 5. Note: if you use another layout, be sure to
+              include the layout library file. -->
+        <attribute name="layout"
+            value="class: simplelayout; axis: y; spacing:5"/>
+
+        <!--- @keywords private -->
+        <attribute name="value" setter="_setvalue(value)" value="null"/>
+        <!--- @keywords private -->
+        <event name="onvalue"/>
+
+        <!--- @keywords private -->
+        <method name="acceptValue" args="d, type=null">
+            if (type == null) type = this.type;
+            var val = this.acceptTypeValue(type, d);
+            //try to find the relevant radio button, or clear selection if none
+            this._setvalue( val );
+            var item = null;
+            if (val != null) {
+                item = this.getItem( val );
+            }
+            if ( item ) this.select( item );
+            else this.clearSelection();
+        </method>
+
+        <!--- @keywords private -->
+        <method name="_setvalue" args="val">
+            if ( val == this.value ) return;
+            if ( this._initcomplete ){
+                var item = null;
+                if ( val != null ){
+                    item = this.getItem( val );
+                }
+                this.value = val;
+            } else {
+                this.value = val;
+            }
+            if( this.onvalue ) this.onvalue.sendEvent( val );
+        </method>
+            
+        <doc>
+          <tag name="shortdesc"><text>Enables a one-of-many selection of its children.</text></tag>
+          <text>
+            <p>The <tagname>radiogroup</tagname> component encloses a list of
+            <tagname link="true">radiobutton</tagname>s.  It ensures that a single
+            item is selected at a time. Initially it will select the first item in
+            a group if none is set to be selected.  By default the radio buttons
+            are spaced vertically.</p>
+            
+            <p>
+            In the following example, the second radio button is selected.  The text
+            that appears is separate from the value that is represented by each item.
+            In this example, <tt>group1.value</tt> is 2.
+            </p>
+            
+            <example>
+            &lt;canvas width="200" height="100"&gt;
+              &lt;radiogroup id="group1"&gt;
+                &lt;radiobutton value="1" text="one"/&gt;
+                &lt;radiobutton value="2" text="two" selected="true"/&gt;
+                &lt;radiobutton value="3" text="three"/&gt;
+              &lt;/radiogroup&gt;
+            &lt;/canvas&gt;
+            </example>
+            
+            <p>
+            You can use radio group with your own layout attribute, by overriding the
+            <tagname>view</tagname> layout attribute. The example below uses a wrapping layout
+            to create two columns of radio buttons.  Note that a height must be given to
+            indicate to the layout where to wrap.
+            </p>
+            
+            <example>
+            &lt;canvas width="200" height="100"&gt;
+              &lt;radiogroup height="60" layout="class:wrappinglayout; axis:y"&gt;
+                &lt;radiobutton value="1" text="one"/&gt;
+                &lt;radiobutton value="2" text="two"/&gt;
+                &lt;radiobutton value="3" text="three"/&gt;
+                &lt;radiobutton value="4" text="four"/&gt;
+                &lt;radiobutton value="5" text="five"/&gt;
+                &lt;radiobutton value="6" text="six"/&gt;
+              &lt;/radiogroup&gt;
+            &lt;/canvas&gt;
+            </example>
+            
+            <p>
+            A <tt>radiogroup</tt> can contain a set of any <tagname>baselistitem</tagname>.
+            To make radio buttons with
+            a different look and feel, create a subclass of <tagname>baselistitem</tagname> to use instead
+            of the <tagname>radiobutton</tagname> class.
+            </p>
+            
+            <seealso>
+            <tags>radiobutton baselistitem</tags>
+            <component-design id="radio" title="Radio Button"/>
+            </seealso>
+          </text>
+        </doc>
+    </class>
+
+    <!--- Implements a "radio" button, allows a one-of-many selection when
+          several of these are in a radiogroup. Radiobutton expects its parent
+          to be radiogroup. -->
+    <class name="myradiobutton" extends="baselistitem" focusable="false"
+        clickable="true">
+
+        <!--- the y position of the text label. default: centered -->
+	<!-- FIXME: [dhopkins 2009-04] This was getting an undefined error, so I put in checking for 
+	     the cb and _title keys. 
+            value="${this.cb.height/2 - this._title.height/2+1}" type="number"/>
+	-->
+        <attribute name="text_y"
+            value="${(this['cb'] &amp;&amp; this['_title']) ? (this.cb.height/2 - this._title.height/2+1) : 0}" type="number"/>
+
+        <!--- @keywords private -->
+        <attribute name="initcomplete" value="0"/>
+
+        <multistatebutton name="rb" resource="lzradio_rsrc" text=""
+            statenum="${parent.selected ? 1 : 0}"
+            statelength="4" maxstate="1"
+            reference="parent">
+        </multistatebutton>
+
+        <!--- @keywords private -->
+        <method name="_applystyle" args="s"><![CDATA[
+            // FIXME: [dhopkins 2009-04] This was getting an undefined error, 
+	    // so I put in checking for _title.
+            // if (this.style != null) {
+            if ((this.style != null) && (_title != null)) {
+                if (_enabled) {
+                    _title.setAttribute('fgcolor', this.style.textcolor);
+                } else {
+                    _title.setAttribute('fgcolor', this.style.textdisabledcolor);
+                }
+                setTint(this.rb, s.basecolor);
+            }
+	  ]]>
+        </method>
+
+        <!--- @keywords private -->
+        <method name="_showEnabled">
+            if (this.style != null) {
+                if (_enabled) {
+                   _title.setAttribute("fgcolor", style.textcolor);
+                } else {
+                   _title.setAttribute("fgcolor", style.textdisabledcolor);
+                }
+            }
+        </method>
+        
+        <!--- @keywords private -->
+        <method name="setHilite" args="dohilite">
+            _title.setAttribute('fgcolor',
+                dohilite ? style.texthilitecolor : style.textcolor);
+        </method>
+
+        <!-- FIXME: [hqm 2006-09] LPP-2244 This used to be y="$once{classroot.text_y}"
+        but the DHTML runtime fires an early text onheight  event, which has the wrong value,
+        so we need to use an 'always' constraint till we fix it
+        -->
+
+        <text name="_title" resize="true"
+            x="17" y="${classroot.text_y}" text="${parent.text}"/>
+
+        <doc>
+          <tag name="shortdesc"><text>
+              The radio tag provides a simple radio button.
+          </text></tag>
+          <text>
+
+            <p>The <classname>radiobutton</classname> class provides a simple
+              two-state button with a text label, for use in
+              <classname>radiogroup</classname>.</p>
+
+            <p>See <tagname library="lz" link="true">radiogroup</tagname> for
+              details on use.</p>
+          </text>
+        </doc>
+
+    </class>
+</library>
+<!-- * X_LZ_COPYRIGHT_BEGIN ***************************************************
+* Copyright 2001-2008 Laszlo Systems, Inc.  All Rights Reserved.              *
+* Use is subject to license terms.                                            *
+* X_LZ_COPYRIGHT_END ****************************************************** -->
+<!-- @LZX_VERSION@                                                         -->

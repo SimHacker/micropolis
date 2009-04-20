@@ -7,10 +7,11 @@
     <!-- Licensed under GPLv3 -->
 
 
+    <!-- Dynamically loaded datasets. -->
+
     <dataset name="ds_session"
         autoload="false"
     />
-
 
     <dataset name="ds_poll"
         autoload="false"
@@ -18,13 +19,35 @@
     />
 
 
-    <dataset name="ds_disasters" src="../data/disasters.xml"/>
+    <!-- Built-in datasets. -->
 
+    <dataset name="ds_disasters"
+        src="../data/disasters.xml"
+    />
 
-    <dataset name="ds_scenarios" src="../data/scenarios.xml"/>
+    <dataset name="ds_scenarios"
+        src="../data/scenarios.xml"
+    />
 
+    <dataset name="ds_cities"
+        src="../data/cities.xml"
+    />
 
-    <dataset name="ds_cities" src="../data/cities.xml"/>
+    <dataset name="ds_notices"
+        src="../data/notices.xml"
+    />
+
+    <dataset name="ds_histories"
+        src="../data/histories.xml"
+    />
+
+    <dataset name="ds_overlays"
+        src="../data/overlays.xml"
+    />
+
+    <dataset name="ds_options"
+        src="../data/options.xml"
+    />
 
 
 </library>

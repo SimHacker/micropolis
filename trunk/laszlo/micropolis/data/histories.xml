@@ -1,0 +1,44 @@
+<histories>
+    <history
+        type="0"
+        label="Residential"
+        description="Show the residential population history."
+        color="0x00ff00"
+        range="768"
+    />
+    <history
+        type="1"
+        label="Commercial"
+        description="Show the commercial population history."
+        color="0x0000a0"
+        range="768"
+    />
+    <history
+        type="2"
+        label="Industrial"
+        description="Show the industrial population history."
+        color="0xffff00"
+        range="768"
+    />
+    <history
+        type="3"
+        label="Money"
+        description="Show the city funds history."
+        color="0x008000"
+        range="256"
+    />
+    <history
+        type="4"
+        label="Crime"
+        color="0xff0000"
+        description="Show the crime rate history."
+        range="128"
+    />
+    <history
+        type="5"
+        label="Pollution"
+        description="Show the pollution rate history."
+        color="0x507020"
+        range="128"
+    />
+</histories>

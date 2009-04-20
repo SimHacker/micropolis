@@ -12,6 +12,15 @@
     >
 
 
+	<attribute name="active" value="true"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
 	<simplelayout axis="y"
 	    spacing="5"
 	/>
@@ -33,11 +42,11 @@
 	    <attribute name="scenarioDescription" value="$path{'description/text()'}" type="string"/>
 	    <attribute name="scenarioCommand" value="$path{'command'}"/>
 
-	    <handler name="ondata"><![CDATA[
+	    <handler name="ondata" args="arg"><![CDATA[
 		var label =
 		    this.scenarioName + ', ' + this.scenarioYear + ': ' + 
 		    this.scenarioTagLine;
-		Debug.write("scenario button ondata", this, label);
+		//Debug.write("scenario button ondata", this, label);
 		this.setAttribute("text", label);
 	      ]]>
 	    </handler>

@@ -7,36 +7,91 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Overlays
-  Radio buttons to pick a map overlay.
-
--->
-
-
     <class name="overlaysview"
         clip="true"
     >
 
 
-	<simplelayout axis="y"/>
+	<attribute name="active" value="true"/>
+        <attribute name="buttonWidth" value="180"/>
+        <attribute name="buttonHeight" value="25"/>
 
 
-	<view
-	    x="5"
+	<handler name="oninit" args="arg"><![CDATA[
+	    // TODO: Express interest to reset when game initializes.
+	  ]]>
+	</handler>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
+	<handler name="onwidth"><![CDATA[
+	    this.rg.l.update();
+	  ]]>
+	</handler>
+
+
+	<handler name="onheight"><![CDATA[
+	    this.rg.l.update();
+	  ]]>
+	</handler>
+
+
+	<method name="setOverlayStyle" args="style"><![CDATA[
+	    Debug.write("overlaysview setOverlayStyle", style);
+	    gApp.setAttribute("overlay", style, true);
+	  ]]>
+	</method>
+
+
+	<myradiogroup name="rg"
 	    width="${parent.width - 5}"
-        >
+	    height="${parent.height - 5}"
+	    clip="true"
+	    value="$once{gApp.overlay}"
+	>
 
-	    <vscrollbar/>
 
-	    <text
-	        multiline="true"
-		text="[TODO: Overlays Panel]"
-		width="${parent.width}"
+	    <handler name="onvalue" args="arg"><![CDATA[
+		Debug.write("==== overlay radiogroup ONVALUE", this, this.value);
+		classroot.setOverlayStyle(this.value);
+	      ]]>
+	    </handler>
+
+
+	    <wrappinglayout name="l"
+		axis="y"
+		xspacing="5"
+		yspacing="1"
 	    />
 
-	</view>
+
+	    <myradiobutton
+		width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		datapath="ds_overlays:/overlays/overlay"
+		text="${this.overlayTitle}"
+		value="${this.overlayName}"
+	    >
+
+		<attribute name="overlayName" type="string" value="$path{'@name'}"/>
+		<attribute name="overlayTitle" type="string" value="$path{'@title'}"/>
+
+		<handler name="ondata" args="arg"><![CDATA[
+		    //Debug.write("myradiobutton ondata", this, this.data);
+		    var attributes = this.data.attributes;
+		    this.setAttribute("overlayName", attributes['name']);
+		    this.setAttribute("overlayTitle", attributes['title']);
+		  ]]>
+		</handler>
+
+	    </myradiobutton>
+
+	</myradiogroup>
 
 
     </class>

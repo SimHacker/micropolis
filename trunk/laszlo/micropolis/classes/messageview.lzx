@@ -7,36 +7,95 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Messages
-  Scrolling text window
-
--->
-
-
     <class name="messageview"
         clip="true"
     >
 
 
-	<simplelayout axis="y"/>
+	<attribute name="active" value="true"/>
+        <attribute name="messages" value="$once{[]}"/>
+	<attribute name="maxMessages" value="100"/>
 
 
-	<view
-	    x="5"
-	    width="${parent.width - 5}"
-        >
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("==== noticeview oninit", this);
+	    gApp.expressInterest(this, ['message']);
+	  ]]>
+	</handler>
 
-	    <vscrollbar/>
 
-	    <text
-	        multiline="true"
-		text="[TODO: Messages Panel]"
-		width="${parent.width}"
-	    />
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
 
-	</view>
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    //Debug.write("========= messageview handleUpdate args", args);
+
+	    var aspect = args['aspect'];
+
+	    switch (aspect) {
+
+	        case 'message': {
+		    var number = args['number'];
+		    this.addNotice(number, args['x'], args['y']);
+		    break;
+		}
+
+	    }
+
+	  ]]>
+	</method>
+
+
+	<method name="addNotice" args="number, x, y"><![CDATA[
+	    if (!number) {
+	        return;
+	    }
+	    var notice = gNoticeView.findNotice(number);
+	    if (!notice) {
+	        return;
+	    }
+	    var attributes = notice.attributes;
+	    var title = attributes['title'];
+	    var description = gNoticeView.getNoticeDescription(notice);
+	    var html =
+	        '<b>' + title + '</b>' + '<br/>' + 
+		description;
+	    this.addMessage(html);
+	  ]]>
+	</method>
+
+
+	<method name="addMessage" args="message"><![CDATA[
+	    var messages = this.messages;
+	    var maxMessages = this.maxMessages;
+	    messages.push(message);
+	    while (messages.length > maxMessages) {
+	        messages.shift();
+	    }
+	    var html = messages.join('<br/>');
+	    var t = this.t;
+	    t.setAttribute("text", html);
+	    var viewHeight = this.height;
+	    var textHeight = t.height;
+	    var textBottom = t.y + textHeight;
+	    var pastBottom = textBottom - viewHeight;
+	    if (pastBottom < viewHeight) {
+	        t.setAttribute("y", -textHeight + viewHeight);
+	    }
+	  ]]>
+	</method>
+
+
+	<vscrollbar/>
+
+	<text name="t"
+	    multiline="true"
+	    text=""
+	    width="${parent.width - 20}"
+	/>
 
 
     </class>
