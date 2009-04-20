@@ -41,7 +41,7 @@
 		<attribute name="loadCityCommand" value="$path{'command'}"/>
 
 		<method name="loadCity"><![CDATA[
-		    gApp.sendCommand(this.loadCityCommand.serialize())
+		    gApp.sendCommand(this.loadCityCommand);
 		    gApp.setDescription("Loaded city: " + this.text);
 		  ]]>
 		</method>

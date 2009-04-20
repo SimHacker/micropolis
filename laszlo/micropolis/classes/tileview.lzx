@@ -16,7 +16,7 @@
         <attribute name="uniqueID" value="null"/>
         <attribute name="worldCols" value="120"/>
         <attribute name="worldRows" value="100"/>
-        <attribute name="tileSize" value="16"/>
+        <attribute name="tileSize" value="32"/>
         <attribute name="viewCol" value="0"/>
         <attribute name="viewRow" value="0"/>
         <attribute name="viewCols" value="0"/>
@@ -75,7 +75,7 @@
 	<method name="handleUpdateSize"><![CDATA[
 	    var v = (this.width > 0) && (this.height > 0);
 	    if (v != this.visible) {
-                this.setAttribute("visible", v, true);
+                this.setAttribute("visible", v);
 	    }
             this.refreshView();
 	  ]]>
@@ -179,6 +179,8 @@
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
             var animationTicks = gApp.animationTicks;
+	    var maxNewTiles = 500;
+	    var newTiles = 0;
 
 	    var tileIndex = 0;
 
@@ -193,6 +195,10 @@
 
 		    //Debug.write("this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
 		    if (tileIndex >= this.container.subviews.length) {
+			if (newTiles >= maxNewTiles) {
+			    continue;
+			}
+			newTiles++;
 			var v =
 			    new lz.tile(this.container);
 		        //Debug.write("NOW this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
@@ -208,8 +214,12 @@
 		    var x = col * tileSize;
 		    var y = row * tileSize;
 		    //Debug.write("TILE", tile);
-		    tile.setAttribute("x", x, true);
-		    tile.setAttribute("y", y, true);
+		    if (tile.x != x) {
+		        tile.setAttribute("x", x);
+		    }
+		    if (tile.y != y) {
+		        tile.setAttribute("y", y);
+		    }
 
                     var frame = tileDict['index'];
                     if ((tileDict['animationTicks'] < animationTicks) &&
@@ -224,8 +234,13 @@
                         }
                     }
 
-		    tile.setAttribute("frame", frame + 1, true);
-		    tile.setAttribute("visible", true, true);
+		    if (tile.frame != (frame + 1)) {
+		        tile.setAttribute("frame", frame + 1);
+		    }
+
+		   if (tile.visible != true) {
+		       tile.setAttribute("visible", true);
+		    }
                 }
             }
 
@@ -233,7 +248,9 @@
 	    var n = subviews.length;
 	    while (tileIndex < n) {
 	        var tile = subviews[tileIndex];
-		tile.setAttribute("visible", false, true);
+		if (tile.visible) {
+		    tile.setAttribute("visible", false);
+		}
 		tileIndex++;
 	    }
           ]]>

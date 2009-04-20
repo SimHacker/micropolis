@@ -9,6 +9,9 @@
 
     <class name="tile"
 	resource="micropolis_tiles_rsrc"
+	stretches="both"
+	width="32"
+	height="32"
     >
 
     </class>

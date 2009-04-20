@@ -64,8 +64,8 @@
 		    <attribute name="disasterCommand" value="$path{'command'}"/>
 
 		    <method name="doDisaster"><![CDATA[
-			Debug.write(this.disasterCommand.serialize());
-			gApp.sendCommand(this.disasterCommand.serialize())
+			//Debug.write(this.disasterCommand);
+			gApp.sendCommand(this.disasterCommand)
 		      ]]>
 		    </method>
 

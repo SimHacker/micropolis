@@ -41,7 +41,7 @@
 	]}"/>
 
 	<attribute name="legendWidth" value="100"/>
-	<attribute name="legendItemHeight" value="18"/>
+	<attribute name="legendItemHeight" value="19"/>
 	<attribute name="bottomEdgeHeight" value="30"/>
 	<attribute name="gap" value="5"/>
 	<attribute name="border" value="3"/>
@@ -678,7 +678,7 @@
 				gApp.indexOf(classroot.historyTypes, this.type) >= 0;
 			    this.cb.setAttribute("value", value);
 			    var attributes = this.data.attributes;
-			    Debug.write(attributes);
+			    //Debug.write(attributes);
 			    this.setAttribute("label", attributes['label']);
 			    this.setAttribute("description", attributes['description']);
 			    this.setAttribute("type", parseInt(attributes['type']));
