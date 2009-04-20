@@ -41,9 +41,11 @@
 	</handler>
 
 
-	<method name="setOverlayStyle" args="style"><![CDATA[
-	    Debug.write("overlaysview setOverlayStyle", style);
-	    gApp.setAttribute("overlay", style, true);
+	<method name="setOverlayStyle" args="overlay"><![CDATA[
+	    Debug.write("overlaysview setOverlayStyle", overlay);
+	    if (gApp.overlay != overlay) {
+	        gApp.setAttribute("overlay", overlay);
+	    }
 	  ]]>
 	</method>
 
@@ -57,7 +59,7 @@
 
 
 	    <handler name="onvalue" args="arg"><![CDATA[
-		Debug.write("==== overlay radiogroup ONVALUE", this, this.value);
+		//Debug.write("==== overlay radiogroup ONVALUE", this, this.value);
 		classroot.setOverlayStyle(this.value);
 	      ]]>
 	    </handler>

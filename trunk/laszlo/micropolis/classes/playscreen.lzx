@@ -62,7 +62,7 @@
 		y="0"
 		width="${parent.vsep1.x}"
 		height="${parent.parent.height}"
-		tileView="${classroot.tileView}"
+		tileView="${parent.tileView}"
 		active="${classroot.active}"
 	    />
 

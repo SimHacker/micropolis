@@ -120,25 +120,33 @@
 
 
 	<method name="updateTaxRate" args="taxRate"><![CDATA[
-	    gApp.setAttribute("taxRate", taxRate, true);
+	    if (gApp.taxRate != taxRate) {
+	        gApp.setAttribute("taxRate", taxRate);
+	    }
 	  ]]>
 	</method>
 
 
 	<method name="updateRoadPercent" args="roadPercent"><![CDATA[
-	    gApp.setAttribute("roadPercent", roadPercent, true);
+	    if (gApp.roadPercent != roadPercent) {
+	        gApp.setAttribute("roadPercent", roadPercent);
+	    }
 	  ]]>
 	</method>
 
 
 	<method name="updateFirePercent" args="firePercent"><![CDATA[
-	    gApp.setAttribute("firePercent", firePercent, true);
+	    if (gApp.firePercent != firePercent) {
+	        gApp.setAttribute("firePercent", firePercent);
+	    }
 	  ]]>
 	</method>
 
 
 	<method name="updatePolicePercent" args="policePercent"><![CDATA[
-	    gApp.setAttribute("policePercent", policePercent, true);
+	    if (gApp.policePercent != policePercent) {
+	        gApp.setAttribute("policePercent", policePercent);
+	    }
 	  ]]>
 	</method>
 
@@ -237,7 +245,10 @@
 		    thumbheight="20"
 		    thumbwidth="20"
 		    value="${gApp.taxRate}"
-		    onvalue="gApp.setAttribute('taxRate', this.value, true)"
+		    onvalue="
+			if (gApp.taxRate != this.value) {
+			    gApp.setAttribute('taxRate', this.value);
+			}"
 		/>
 
 	    </view>
@@ -270,7 +281,10 @@
 		    thumbheight="20"
 		    thumbwidth="20"
 		    value="${gApp.roadPercent}"
-		    onvalue="gApp.setAttribute('roadPercent', this.value, true)"
+		    onvalue="
+			if (gApp.roadPercent != this.value) {
+			    gApp.setAttribute('roadPercent', this.value);
+			}"
 		/>
 
 	    </view>
@@ -303,7 +317,10 @@
 		    thumbheight="20"
 		    thumbwidth="20"
 		    value="${gApp.firePercent}"
-		    onvalue="gApp.setAttribute('firePercent', this.value, true)"
+		    onvalue="
+			if (gApp.firePercent != this.value) {
+			    gApp.setAttribute('firePercent', this.value);
+			}"
 		/>
 
 	    </view>
@@ -336,7 +353,10 @@
 		    thumbheight="20"
 		    thumbwidth="20"
 		    value="${gApp.policePercent}"
-		    onvalue="gApp.setAttribute('policePercent', this.value, true)"
+		    onvalue="
+			if (gApp.policePercent != this.value) {
+			    gApp.setAttribute('policePercent', this.value);
+			}"
 		/>
 
 	    </view>

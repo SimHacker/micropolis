@@ -59,8 +59,8 @@
 	<attribute name="worldW" value="120"/>
 	<attribute name="worldH" value="100"/>
 	<attribute name="overlay" type="string" value="all"/>
-	<attribute name="aboutURL" type="string" value="http://wwww.MicropolisOnline.com/about"/>
-	<attribute name="helpURL" type="string" value="http://wwww.MicropolisOnline.com/help"/>
+	<attribute name="aboutURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/About"/>
+	<attribute name="helpURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/Help"/>
 	<attribute name="monthNames" value="$once{[
 	    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 	    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -246,12 +246,17 @@
 
 		case 'paused': {
 		    var paused = args['paused'] == "true";
-	            this.setAttribute("paused", paused, true);
+		    if (this.paused != paused) {
+	                this.setAttribute("paused", paused);
+		    }
 		    break;
 		}
 
 		case 'taxrate': {
-	            this.setAttribute("taxRate", parseInt(args['taxRate']), true);
+		    var taxRate = parseInt(args['taxRate']);
+		    if (taxRate != this.taxRate) {
+	                this.setAttribute("taxRate", taxRate);
+		    }
 		    break;
 		}
 
@@ -272,7 +277,10 @@
 		    var i;
 		    for (i = 0; i < n; i++) {
 		        var name = names[i];
-	                this.setAttribute(name, parseInt(args[name]), true);
+			var val = parseInt(args[name]);
+			if (this[name] != val) {
+	                    this.setAttribute(name, val);
+			}
 		    }
 		    break;
 		}
