@@ -34,7 +34,7 @@
 
             this.uniqueID = gApp.makeUniqueID();
 
-	    this.updateInterests();
+            this.updateInterests();
           ]]>
         </handler>
 
@@ -48,76 +48,67 @@
 
         <handler name="onactive"><![CDATA[
             //Debug.write("tileview onactive", this.active);
-	    this.updateInterests();
+            this.updateInterests();
           ]]>
         </handler>
 
 
         <handler name="onvisible"><![CDATA[
             //Debug.write("tileview onvisible", this.visible);
-	    this.updateInterests();
+            this.updateInterests();
           ]]>
         </handler>
 
 
         <handler name="onwidth"><![CDATA[
-	    this.handleUpdateSize();
+            this.handleUpdateSize();
           ]]>
         </handler>
 
 
         <handler name="onheight"><![CDATA[
-	    this.handleUpdateSize();
+            this.handleUpdateSize();
           ]]>
         </handler>
 
 
-	<method name="handleUpdateSize"><![CDATA[
-	    var v = (this.width > 0) && (this.height > 0);
-	    if (v != this.visible) {
+        <handler name="onpaused" reference="${gApp}"><![CDATA[
+            this.updateInterests();
+          ]]>
+        </handler>
+
+
+        <method name="handleUpdateSize"><![CDATA[
+            var v = (this.width > 0) && (this.height > 0);
+            if (v != this.visible) {
                 this.setAttribute("visible", v);
-	    }
+            }
             this.refreshView();
-	  ]]>
-	</method>
-
-
-        <method name="refreshView"><![CDATA[
-	    // TODO: tileview refreshView
-	    //this.doAnimate();
           ]]>
         </method>
 
 
-	<method name="updateInterests"><![CDATA[
+        <method name="refreshView"><![CDATA[
+            // TODO: tileview refreshView
+            //this.doAnimate();
+          ]]>
+        </method>
+
+
+        <method name="updateInterests"><![CDATA[
             if (this.active && this.visible) {
-	        gApp.expressInterest(this, ['map']);
                 gApp.addPoller(this);
-                gApp.addAnimator(this);
+                if (gApp.paused) {
+                    gApp.removeAnimator(this);
+                } else {
+                    gApp.addAnimator(this);
+                }
             } else {
-	        gApp.revokeInterest(this, ['map']);
                 gApp.removePoller(this);
                 gApp.removeAnimator(this);
             }
-	  ]]>
-	</method>
-
-
-	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("**** tileview handleUpdate", this, args);
-
-	    var aspect = args['aspect'];
-
-	    switch (aspect) {
-
-	        case 'map': {
-		    break;
-		}
-
-	    }
-
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
         <method name="updateViewRect"><![CDATA[
@@ -157,32 +148,32 @@
                 '" worldWidth="' + Math.floor(this.width + 0.5) +
                 '" worldHeight="' + Math.floor(this.height + 0.5) +
                 '"/>');
-	    //Debug.write(xml);
+            //Debug.write(xml);
             return xml;
           ]]>
         </method>
 
 
         <method name="idle"><![CDATA[
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
-	<method name="doAnimate"><![CDATA[
+        <method name="doAnimate"><![CDATA[
             //Debug.write("doAnimate", this);
             var tileDictRows = gApp.tileDictRows;
             var viewCol = this.viewCol;
             var viewRow = this.viewRow;
             var viewCols = this.viewCols;
             var viewRows = this.viewRows;
-	    var tileSize = this.tileSize;
+            var tileSize = this.tileSize;
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
             var animationTicks = gApp.animationTicks;
-	    var maxNewTiles = 500;
-	    var newTiles = 0;
+            var maxNewTiles = 500;
+            var newTiles = 0;
 
-	    var tileIndex = 0;
+            var tileIndex = 0;
 
             var col, row;
             for (row = viewRow; row < lastRow; row++) {
@@ -193,33 +184,33 @@
                         continue;
                     }
 
-		    //Debug.write("this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
-		    if (tileIndex >= this.container.subviews.length) {
-			if (newTiles >= maxNewTiles) {
-			    continue;
-			}
-			newTiles++;
-			var v =
-			    new lz.tile(this.container);
-		        //Debug.write("NOW this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
-		    }
+                    //Debug.write("this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
+                    if (tileIndex >= this.container.subviews.length) {
+                        if (newTiles >= maxNewTiles) {
+                            continue;
+                        }
+                        newTiles++;
+                        var v =
+                            new lz.tile(this.container);
+                        //Debug.write("NOW this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
+                    }
 
-		    var tile = this.container.subviews[tileIndex];
-		    if (!tile) {
-		        Debug.write("No tile!", this.container.subviews.length, tileIndex, this.container.subviews);
-		        return;
-		    }
-		    tileIndex++;
+                    var tile = this.container.subviews[tileIndex];
+                    if (!tile) {
+                        Debug.write("No tile!", this.container.subviews.length, tileIndex, this.container.subviews);
+                        return;
+                    }
+                    tileIndex++;
 
-		    var x = col * tileSize;
-		    var y = row * tileSize;
-		    //Debug.write("TILE", tile);
-		    if (tile.x != x) {
-		        tile.setAttribute("x", x);
-		    }
-		    if (tile.y != y) {
-		        tile.setAttribute("y", y);
-		    }
+                    var x = col * tileSize;
+                    var y = row * tileSize;
+                    //Debug.write("TILE", tile);
+                    if (tile.x != x) {
+                        tile.setAttribute("x", x);
+                    }
+                    if (tile.y != y) {
+                        tile.setAttribute("y", y);
+                    }
 
                     var frame = tileDict['index'];
                     if ((tileDict['animationTicks'] < animationTicks) &&
@@ -234,41 +225,41 @@
                         }
                     }
 
-		    if (tile.frame != (frame + 1)) {
-		        tile.setAttribute("frame", frame + 1);
-		    }
+                    if (tile.frame != (frame + 1)) {
+                        tile.setAttribute("frame", frame + 1);
+                    }
 
-		   if (tile.visible != true) {
-		       tile.setAttribute("visible", true);
-		    }
+                   if (tile.visible != true) {
+                       tile.setAttribute("visible", true);
+                    }
                 }
             }
 
-	    var subviews = this.container.subviews;
-	    var n = subviews.length;
-	    while (tileIndex < n) {
-	        var tile = subviews[tileIndex];
-		if (tile.visible) {
-		    tile.setAttribute("visible", false);
-		}
-		tileIndex++;
-	    }
+            var subviews = this.container.subviews;
+            var n = subviews.length;
+            while (tileIndex < n) {
+                var tile = subviews[tileIndex];
+                if (tile.visible) {
+                    tile.setAttribute("visible", false);
+                }
+                tileIndex++;
+            }
           ]]>
         </method>
 
 
-	<method name="centerOnTile" args="tileX, tileY"><![CDATA[
-	    //Debug.write("tileview centerOnTile", this, tileX, tileY);
-	    var tileSize = this.tileSize;
-	    var tileCenterX = (tileX * tileSize) + (tileSize / 2);
-	    var tileCenterY = (tileY * tileSize) + (tileSize / 2);
-	    var cornerX = Math.floor(tileCenterX - (this.width / 2));
-	    var cornerY = Math.floor(tileCenterY - (this.height / 2));
-	    //Debug.write("center", tileCenterX, tileCenterY, "corner", cornerX, cornerY);
-	    this.container.setAttribute("x", -cornerX);
-	    this.container.setAttribute("y", -cornerY);
-	  ]]>
-	</method>
+        <method name="centerOnTile" args="tileX, tileY"><![CDATA[
+            //Debug.write("tileview centerOnTile", this, tileX, tileY);
+            var tileSize = this.tileSize;
+            var tileCenterX = (tileX * tileSize) + (tileSize / 2);
+            var tileCenterY = (tileY * tileSize) + (tileSize / 2);
+            var cornerX = Math.floor(tileCenterX - (this.width / 2));
+            var cornerY = Math.floor(tileCenterY - (this.height / 2));
+            //Debug.write("center", tileCenterX, tileCenterY, "corner", cornerX, cornerY);
+            this.container.setAttribute("x", -cornerX);
+            this.container.setAttribute("y", -cornerY);
+          ]]>
+        </method>
 
 
         <view name="container"
