@@ -1,0 +1,160 @@
+<library>
+
+
+    <!-- Poller Node -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="pollhandler"
+        extends="node"
+        datapath="ds_poll:/poll"
+    >
+
+
+	<attribute name="ref" value="$path{'@ref'}"/>
+
+
+	<handler name="ondata" args="arg"><![CDATA[
+	    //Debug.write("ds_poll");
+
+	    var poll = ds_poll.data;
+	    var pollChildren = poll['childNodes'];
+	    if (pollChildren && (pollChildren.length > 0)) {
+		var i;
+		var n = pollChildren.length;
+		for (i = 0; i < n; i++) {
+		    var pollChild = pollChildren[i];
+		    if (pollChild.nodeType != 1) {
+			continue;
+		    }
+
+		    //Debug.write(pollChild.nodeName, pollChild);
+
+		    switch (pollChild.nodeName) {
+
+			case "tileviews": {
+
+			    var tileviews = pollChild['childNodes'];
+			    if (!tileviews) {
+				break;
+			    }
+
+			    //Debug.write("tileviews", tileviews);
+			    if (!tileviews || tileviews.length == 0) {
+				break;
+			    }
+
+			    var j;
+			    var m = tileviews.length;
+			    for (j = 0; j < m; j++) {
+				var tileview = tileviews[j];
+				if (tileview.nodeType != 1) {
+				    continue;
+				}
+
+				var attributes = tileview.attributes;
+
+				//Debug.write("tileview", attributes);
+
+				var col = parseInt(attributes['col']);
+				var row = parseInt(attributes['row']);
+				var cols = parseInt(attributes['cols']);
+				var rows = parseInt(attributes['rows']);
+				var format = parseInt(attributes['format']);
+				var children = tileview['childNodes'];
+				var codedTiles = (children && (children.length > 0)) ? children[0].data : "";
+
+				//Debug.write(col, row, cols, rows, format, codedTiles);
+
+				if (!isNaN(col) &&
+				    !isNaN(row) &&
+				    !isNaN(cols) &&
+				    !isNaN(rows) &&
+				    !isNaN(format) &&
+				    (rows > 0) &&
+				    (cols > 0) &&
+				    (codedTiles != "")) {
+				    classroot.updateTiles(
+					col,
+					row,
+					cols,
+					rows,
+					format,
+					codedTiles);
+				}
+			    }
+
+			    break;
+			}
+
+			case "messages": {
+
+			    var messages = pollChild['childNodes'];
+			    if (!messages || (messages.length == 0)) {
+				break;
+			    }
+
+			    var j;
+			    var m = messages.length;
+			    for (j = 0; j < m; j++) {
+				var messageEl = messages[j];
+				var attributes = messageEl.attributes;
+				var messageName = attributes['message'];
+				if (!messageName) {
+				    continue;
+				}
+				var methodName = "handle_" + messageName;
+				var method = classroot[methodName];
+				//Debug.write("message", messageName, "method", methodName, method, "atts", attributes, "el", messageEl);
+				if (!method) {
+				    Debug.write("Undefined message:", messageName, messageEl, attributes);
+				    continue;
+				}
+				var text =
+				    messageEl.childNodes &&
+				    messageEl.childNodes[0].data;
+				var json = null;
+				if (text == null) {
+				    json = null;
+				} else {
+				    json = JSON.parse(text);
+				}
+
+				//Debug.write("JSON", json)
+
+				method.call(classroot, json);
+			    }
+
+			    break;
+			}
+
+		    }
+
+		}
+	    }
+
+	    classroot.pollContinue(false);
+	  ]]>
+	</handler>
+
+
+	<handler name="onerror" reference="ds_poll"><![CDATA[
+	    Debug.write("ds_poll onerror", this.sessionID);
+	    classroot.failPoll();
+	  ]]>
+	</handler>
+
+
+	<handler name="ontimeout" reference="ds_poll"><![CDATA[
+	    Debug.write("ds_poll ontimeout", this.sessionID);
+	    classroot.failPoll();
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

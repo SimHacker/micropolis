@@ -7,28 +7,12 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Evaluation
-  Public Opinion
-    Is the mayor doing a good job? (%yes, %no)
-    Worst Problems (top 4 problems and percentages)
-  Statistics
-    Net Migration
-    Assessed Value
-    Category
-    Game Level
-  Overall City Score
-    Current Score
-    Annual Change
-
--->
-
-
     <class name="evaluationview"
         clip="true"
     >
 
+
+	<attribute name="active" value="true"/>
 
         <attribute name="evaluationData" value="null"/>
 
@@ -65,29 +49,17 @@ Evaluation
 
 
 	<handler name="oninit"><![CDATA[
-	    Debug.write("==== evaluationview oninit", this);
-	    this.updateVisible();
-	  ]]>
-	</handler>
-
-	<handler name="onvisible"><![CDATA[
-	    Debug.write("==== evaluationview onvisible", this, this.visible);
-	    this.updateVisible();
+	    //Debug.write("==== evaluationview oninit", this);
+	    gApp.expressInterest(this, ['evaluation']);
 	  ]]>
 	</handler>
 
 
-	<method name="updateVisible"><![CDATA[
-	    Debug.write("==== evaluationview updateVisible", this.visible);
-	    if (this.visible) {
-	        gApp.expressInterest(this, ['evaluation']);
-	    } else {
-	        gApp.revokeInterest(this, ['evaluation']);
-	    }
-
-	    this.redrawView();
+	<handler name="onactive"><![CDATA[
+	    //Debug.write("==== evaluationview onactive", this, this.active);
 	  ]]>
-	</method>
+	</handler>
+
 
 	<method name="handleUpdate" args="args"><![CDATA[
 	    //Debug.write("evaluationview handleUpdate args", args);
@@ -95,6 +67,7 @@ Evaluation
 	    this.redrawView();
 	  ]]>
 	</method>
+
 
 	<method name="redrawView"><![CDATA[
 	    var year = "";
@@ -109,7 +82,7 @@ Evaluation
 	    var worstProblems = [];
 
 	    var d = this.evaluationData;
-	    Debug.write("==== evaluationView redrawView evaluationData", d);
+	    //Debug.write("==== evaluationView redrawView evaluationData", d);
 
 	    if (d) {
 	         year = d['year'];

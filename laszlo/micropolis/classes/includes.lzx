@@ -7,11 +7,14 @@
     <!-- Licensed under GPLv3 -->
 
 
+    <include href="patches.lzx"/>
     <script src="rpc/library/json.js"/>
     <include href="resources.lzx"/>
     <include href="datasets.lzx"/>
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
+    <include href="mycheckbox.lzx"/>
+    <include href="myradio.lzx"/>
     <include href="hresizebar.lzx"/>
     <include href="vresizebar.lzx"/>
     <include href="tile.lzx"/>
@@ -38,6 +41,8 @@
     <include href="startscreen.lzx"/>
     <include href="playscreen.lzx"/>
     <include href="anitiles.lzx"/>
+    <include href="sessionhandler.lzx"/>
+    <include href="pollhandler.lzx"/>
     <include href="appview.lzx"/>
 
 

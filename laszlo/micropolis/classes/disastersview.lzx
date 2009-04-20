@@ -7,27 +7,27 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Disasters
-  Buttons to trigger disasters.
-
--->
-
-
     <class name="disastersview"
         clip="true"
     >
 
 
+	<attribute name="active" value="true"/>
         <attribute name="columnWidth" value="100"/>
         <attribute name="rowHeight" value="50"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
 
 
 	<handler name="onwidth"><![CDATA[
 	    this.v.l.update();
 	  ]]>
 	</handler>
+
 
 	<handler name="onheight"><![CDATA[
 	    this.v.l.update();
@@ -49,7 +49,7 @@ Disasters
 
 	    <view
 		datapath="ds_disasters:/disasters/disaster"
-		width="100"
+		width="90"
 		height="50"
 	    >
 

@@ -7,346 +7,12 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Notices
-  Notice View
-  Illustration
-  City View
-  Answer Buttons
-
--->
-
-
-    <attribute name="gNotices" value="$once{{
-
-        10: {
-            id: 10,
-            color: 0xff4f4f,
-            title: 'POLLUTION ALERT!',
-            description: 'Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br;/&gt;Either clean up your act or open a gas mask concession at city hall.',
-	    picture: 'pollution_icon_rsrc',
-	    showMap: true
-        },
-
-        11: {
-            id: 11,
-            color: 0xff4f4f,
-            title: 'CRIME ALERT!',
-            description: 'Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.',
-	    picture: 'crime_icon_rsrc',
-	    showMap: true
-        },
-
-        12: {
-            id: 12,
-            color: 0xff4f4f,
-            title: 'TRAFFIC WARNING!',
-            description: 'Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.',
-	    picture: 'traffic_icon_rsrc',
-	    showMap: true
-        },
-
-        20: {
-            id: 20,
-            color: 0xff4f4f,
-            title: 'FIRE REPORTED!',
-            description: 'A fire has been reported!',
-	    picture: null,
-	    showMap: true
-        },
-
-        21: {
-            id: 21,
-            color: 0xff4f4f,
-            sprite: 5,
-            title: 'MONSTER ATTACK!',
-            description: 'A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.&lt;br/&gt;All you can do is wait till he leaves, then rebuild from the rubble.',
-	    picture: null,
-	    showMap: true
-        },
-
-        22: {
-            id: 22,
-            color: 0xff4f4f,
-            sprite: 6,
-            title: 'TORNADO ALERT!',
-            description: 'A tornado has been reported! There\'s nothing you can do to stop it, so you\'d better prepare to clean up after the disaster!',
-	    picture: null,
-	    showMap: true
-        },
-
-        23: {
-            id: 23,
-            color: 0xff4f4f,
-            title: 'EARTHQUAKE!',
-            description: 'A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.',
-	    picture: null,
-	    showMap: true
-        },
-
-        24: {
-            id: 24,
-            color: 0xff4f4f,
-            title: 'PLANE CRASH!',
-            description: 'A plane has crashed!',
-	    picture: null,
-	    showMap: true
-        },
-
-        25: {
-            id: 25,
-            color: 0xff4f4f,
-            title: 'SHIPWRECK!',
-            description: 'A ship has wrecked!',
-	    picture: null,
-	    showMap: true
-        },
-
-        26: {
-            id: 26,
-            color: 0xff4f4f,
-            title: 'TRAIN CRASH!',
-            description: 'A train has crashed!',
-	    picture: null,
-	    showMap: true
-        },
-
-        27: {
-            id: 27,
-            color: 0xff4f4f,
-            title: 'HELICOPTER CRASH!',
-            description: 'A helicopter has crashed!',
-	    picture: null,
-	    showMap: true
-        },
-
-        30: {
-            id: 30,
-            color: 0xff4f4f,
-            title: 'FIREBOMBING REPORTED!',
-            description: 'Firebombs are falling!!',
-	    picture: null,
-	    showMap: true
-        },
-
-        32: {
-            id: 32,
-            color: 0xff4f4f,
-            title: 'EXPLOSION REPORTED!',
-            description: 'There has been an explosion!!',
-	    picture: null,
-	    showMap: true
-        },
-
-        35: {
-            id: 35,
-            color: 0x7fff7f,
-            title: 'TOWN',
-            description: 'Congratulations, your village has grown to town status. You now have 2,000 citizens.',
-	    picture: 'town_icon_rsrc',
-	    showMap: false
-        },
-
-        36: {
-            id: 36,
-            color: 0x7fff7f,
-            title: 'CITY',
-            description: 'Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!',
-	    picture: 'city_icon_rsrc',
-	    showMap: false
-        },
-
-        37: {
-            id: 37,
-            color: 0x7fff7f,
-            title: 'CAPITAL',
-            description: 'Your city has become a capital. The current population here is 50,000. Your political future looks bright.',
-	    picture: 'capital_icon_rsrc',
-	    showMap: false
-        },
-
-        38: {
-            id: 38,
-            color: 0x7fff7f,
-            title: 'METROPOLIS',
-            description: 'Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.',
-	    picture: null,
-	    showMap: false
-        },
-
-        39: {
-            id: 39,
-            color: 0x7fff7f,
-            title: 'MEGALOPOLIS',
-            description: 'Congratulation, you have reached the highest category of urban development, the megalopolis.&lt;br/&gt;If you manage to reach this level, send us email at micropolis@laptop.org or send us a copy of your city. We might do something interesting with it.',
-	    picture: null,
-	    showMap: false
-        },
-
-        41: {
-            id: 41,
-            color: 0xff4f4f,
-            sprite: 2,
-            title: 'HEAVY TRAFFIC!',
-            description: 'Sky Watch One reporting heavy traffic!',
-	    picture: null,
-	    showMap: true
-        },
-
-        42: {
-            id: 42,
-            color: 0xff4f4f,
-            title: 'FLOODING REPORTED!',
-            description: 'Flooding has been been reported along the water\'s edge!',
-	    picture: null,
-	    showMap: true
-        },
-
-        43: {
-            id: 43,
-            color: 0xff4f4f,
-            title: 'NUCLEAR MELTDOWN!',
-            description: 'A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.&lt;br/&gt;Many generations will confront this problem before it goes away, so don\'t hold your breath.',
-	    picture: null,
-	    showMap: true
-        },
-
-
-        44: {
-            id: 44,
-            color: 0xff4f4f,
-            title: 'RIOTS!',
-            description: 'The citizens are rioting in the streets, setting cars and houses on fire, and bombing government buildings and businesses!&lt;br/&gt;All media coverage is blacked out, while the fascist pigs beat the poor citizens into submission.',
-	    picture: null,
-	    showMap: false
-        },
-
-        45: {
-            id: 48,
-            color: 0x7f7fff,
-            title: 'Start a New City',
-            description: 'Build your very own city from the ground up, starting with this map of uninhabited land.',
-	    picture: null,
-	    showMap: false
-        },
-
-        46: {
-            id: 49,
-            color: 0x7f7fff,
-            title: 'Restore a Saved City',
-            description: 'The city was saved.',
-	    picture: null,
-	    showMap: false
-        },
-
-        47: {
-            id: 100,
-            color: 0x7fff7f,
-            title: 'YOU\'RE A WINNER!',
-            description: 'Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?',
-	    picture: 'keytothecity_icon_rsrc',
-	    showMap: false
-        },
-
-        48: {
-            id: 200,
-            color: 0xff4f4f,
-            title: 'IMPEACHMENT NOTICE!',
-            description: 'The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)',
-	    picture: 'impeached_icon_rsrc',
-	    showMap: false
-        },
-
-        49: {
-            id: 300,
-            color: 0xffd700,
-            title: 'About Micropolis',
-            description: 'Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.',
-	    picture: 'about_icon_rsrc',
-	    showMap: false
-        },
-
-        50: {
-            id: 1,
-            color: 0x7f7fff,
-            title: 'DULLSVILLE, USA  1900',
-            description: 'Things haven\'t changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.&lt;br/&gt;It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.',
-	    picture: null,
-	    showMap: false
-        },
-
-        51: {
-            id: 2,
-            color: 0x7f7fff,
-            title: 'SAN FRANCISCO, CA.  1906',
-            description: 'Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.&lt;br/&gt;Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.',
-	    picture: null,
-	    showMap: false
-        },
-
-        52: {
-            id: 3,
-            color: 0x7f7fff,
-            title: 'HAMBURG, GERMANY  1944',
-            description: 'Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.&lt;br/&gt;You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.',
-	    picture: null,
-	    showMap: false
-        },
-
-        53: {
-            id: 4,
-            color: 0x7f7fff,
-            title: 'BERN, SWITZERLAND  1965',
-            description: 'The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.&lt;br/&gt;Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.',
-	    picture: null,
-	    showMap: false
-        },
-
-        54: {
-            id: 5,
-            color: 0x7f7fff,
-            title: 'TOKYO, JAPAN  1957',
-            description: 'A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.&lt;br/&gt;Try to control the fires, then rebuild the industrial center. You have 5 years.',
-	    picture: null,
-	    showMap: false
-        },
-
-        55: {
-            id: 6,
-            color: 0x7f7fff,
-            title: 'DETROIT, MI.  1972',
-            description: 'By 1970, competition from overseas and other economic factors pushed the once \'automobile capital of the world\' into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.&lt;br/&gt;You have 10 years to reduce crime and rebuild the industrial base of the city.',
-	    picture: null,
-	    showMap: false
-        },
-
-        56: {
-            id: 7,
-            color: 0x7f7fff,
-            title: 'BOSTON, MA.  2010',
-            description: 'A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.&lt;br/&gt;You have 5 years to get the situation under control.',
-	    picture: null,
-	    showMap: false
-        },
-
-        57: {
-            id: 8,
-            color: 0x7f7fff,
-            title: 'RIO DE JANEIRO, BRAZIL  2047',
-            description: 'In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.',
-	    picture: null,
-	    showMap: false
-        }
-
-    }}"/>
-
-
     <class name="noticeview"
         clip="true"
     >
 
 
+	<attribute name="active" value="true"/>
         <attribute name="currentNotice" value="null"/>
         <attribute name="currentX" value="-1"/>
         <attribute name="currentY" value="-1"/>
@@ -373,6 +39,12 @@ Notices
 	</handler>
 
 
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
 	<method name="handleUpdate" args="args"><![CDATA[
 	    //Debug.write("========= noticeview handleUpdate args", args);
 	    var number = args['number'];
@@ -395,21 +67,47 @@ Notices
 	</method>
 
 
+	<method name="findNotice" args="id"><![CDATA[
+	    //Debug.write("FINDNOTICE", this, id);
+	    id = "" + id;
+	    var notices = canvas.ds_notices.data[0].childNodes;
+	    //Debug.write("notices", notices);
+	    var n = notices.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        var notice = notices[i];
+		if (id == notice.attributes['id']) {
+		    return notice;
+		}
+	    }
+	    return null;
+	  ]]>
+	</method>
+
+
+	<method name="getNoticeDescription" args="notice"><![CDATA[
+	    var textNode = notice.childNodes && notice.childNodes[0];
+	    var description = textNode ? textNode.data : '';
+	    return description;
+	  ]]>
+	</method>
+
+
 	<method name="updateNotice"><![CDATA[
-	    var notices = canvas.gNotices;
-	    var currentNotice = this.currentNotice
-	    var notice = notices[currentNotice];
+	    //Debug.write("updateNotice", this, this.currentNotice);
+	    var notice = this.findNotice(this.currentNotice);
 	    if (!notice) {
 	        return;
 	    }
 
 	    //Debug.write("==== NOTICE", notice);
-	    var title = notice['title'];
-	    var description = notice['description'];
-	    var picture = notice['picture'];
-	    var showPicture = picture ? true : false;
-	    var showMap = notice['showMap'];
-	    var currentSprite = notice['sprite'];
+	    var attributes = notice.attributes;
+	    var title = attributes['title'];
+	    var description = this.getNoticeDescription(notice);
+	    var picture = attributes['picture'];
+	    var showPicture = (picture && (picture != "")) ? true : false;
+	    var showMap = attributes['showMap'] == "true";
+	    var currentSprite = attributes['sprite'] ? parseInt(attributes['sprite']) : 0;
 	    var currentX = this.currentX;
 	    var currentY = this.currentY;
 
@@ -452,7 +150,7 @@ Notices
 	    y="0"
 	    bgcolor="0x0000ff"
 	    visible="${classroot.showPicture}"
-	    resource="${classroot.picture}"
+	    source="${classroot.picture}"
 	/>
 
 	<tileview name="mapView" id="gNoticeMapView"
@@ -462,6 +160,7 @@ Notices
 	    height="${parent.height - this.y}"
 	    visible="${classroot.showMap}"
 	    bgcolor="0xBC6F56"
+	    active="${classroot.active}"
 	/>
 
     </class>

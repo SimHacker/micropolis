@@ -7,131 +7,342 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-Budget
-  Tax Rate (slider, rate)
-  Fire Funds (funding, request, slider)
-  Police Funds (funding, request, slider)
-  Road Funds (funding, request, slider)
-  Taxes Collected
-  Cash Flow
-  Previous Funds
-  Current Funds
-
--->
-
-
     <class name="budgetview"
         clip="true"
     >
 
 
-	<attribute name="taxRate" value="7"/>
-	<attribute name="firePercent" value="${Math.floor(this.v.fireSlider.value + 0.5)}"/>
-	<attribute name="fireRequest" value="1000"/>
-	<attribute name="fireFunds" value="${Math.floor((this.firePercent / 100.0) * this.fireRequest)}"/>
-	<attribute name="policePercent" value="${Math.floor(this.v.policeSlider.value + 0.5)}"/>
-	<attribute name="policeRequest" value="1000"/>
-	<attribute name="policeFunds" value="${Math.floor((this.policePercent / 100.0) * this.policeRequest)}"/>
-	<attribute name="roadPercent" value="${Math.floor(this.v.roadSlider.value + 0.5)}"/>
-	<attribute name="roadRequest" value="1000"/>
-	<attribute name="roadFunds" value="${Math.floor((this.roadPercent / 100.0) * this.roadRequest)}"/>
-	
+	<attribute name="active" value="true"/>
+	<attribute name="gap" value="10"/>
+	<attribute name="sliderWidth" value="140"/>
 
-	<simplelayout axis="y"/>
+	<attribute name="taxRate" value="${this.slidersView.taxView.taxSlider.value}"/>
+	<attribute name="roadPercent" value="${this.slidersView.roadView.roadSlider.value}"/>
+	<attribute name="roadFund" value="1000"/>
+	<attribute name="roadFunds" value="${Math.floor((this.roadPercent / 100.0) * this.roadFund)}"/>
+	<attribute name="firePercent" value="${this.slidersView.fireView.fireSlider.value}"/>
+	<attribute name="fireFund" value="1000"/>
+	<attribute name="fireFunds" value="${Math.floor((this.firePercent / 100.0) * this.fireFund)}"/>
+	<attribute name="policePercent" value="${this.slidersView.policeView.policeSlider.value}"/>
+	<attribute name="policeFund" value="1000"/>
+	<attribute name="policeFunds" value="${Math.floor((this.policePercent / 100.0) * this.policeFund)}"/>
+	<attribute name="taxesCollected" value="0"/>
+	<attribute name="cashFlow" value="0"/>
+	<attribute name="previousFunds" value="0"/>
+	<attribute name="currentFunds" value="0"/>
 
 
-	<view name="v"
-	    x="5"
-	    y="5"
-	    width="${parent.width - 10}"
-	    height="${parent.height - 10}"
+	<handler name="oninit" args="args"><![CDATA[
+	    //Debug.write("==== budgetview oninit", this);
+	  ]]>
+	</handler>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
+	<method name="handleUpdate" args="args"><![CDATA[
+	    //Debug.write("budgetview handleUpdate", this, args);
+
+	    var aspect = args['aspect'];
+
+	    switch (aspect) {
+
+	        case 'taxrate': {
+		    var taxRate = args['taxRate'];
+		    //Debug.write("taxrate TAXRATE", taxRate, args);
+		    if (this.taxRate != taxRate) {
+			this.slidersView.taxView.taxSlider.setAttribute("value", taxRate);
+		    }
+		    break;
+		}
+
+		case 'budget': {
+		    var slider;
+		    var taxRate = args['taxRate'];
+		    //Debug.write("taxrate TAXRATE", taxRate, args);
+		    if (taxRate != this.taxRate) {
+			this.slidersView.taxView.taxSlider.setAttribute("value", taxRate);
+		    }
+
+		    var roadPercent = args['roadPercent'];
+		    if (roadPercent != this.roadPercent) {
+			this.slidersView.roadView.roadSlider.setAttribute('value', roadPercent);
+		    }
+
+		    var roadFund = args['roadFund'];
+		    if (roadFund != this.roadFund) {
+			this.setAttribute('roadFund', roadFund);
+		    }
+
+		    var firePercent = args['firePercent'];
+		    if (firePercent != this.firePercent) {
+			this.slidersView.fireView.fireSlider.setAttribute('value', firePercent);
+		    }
+
+		    var fireFund = args['fireFund'];
+		    if (fireFund != this.fireFund) {
+			this.setAttribute('fireFund', fireFund);
+		    }
+
+		    var policePercent = args['policePercent'];
+		    if (policePercent != this.policePercent) {
+			this.slidersView.policeView.policeSlider.setAttribute('value', policePercent);
+		    }
+
+		    var policeFund = args['policeFund'];
+		    if (policeFund != this.policeFund) {
+			this.setAttribute('policeFund', policeFund);
+		    }
+
+		    var taxesCollected = args['collectedFunds'];
+		    if (taxesCollected != this.taxesCollected) {
+			this.setAttribute("taxesCollected", taxesCollected);
+		    }
+
+		    var cashFlow = args['cashFlow'];
+		    this.setAttribute("cashFlow", cashFlow);
+
+		    var previousFunds = args['previousFunds'];
+		    this.setAttribute("previousFunds", previousFunds);
+
+		    var currentFunds = args['currentFunds'];
+		    this.setAttribute("currentFunds", currentFunds);
+		    break;
+		}
+
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="updateTaxRate" args="taxRate"><![CDATA[
+	    gApp.setAttribute("taxRate", taxRate, true);
+	  ]]>
+	</method>
+
+
+	<method name="updateRoadPercent" args="roadPercent"><![CDATA[
+	    gApp.setAttribute("roadPercent", roadPercent, true);
+	  ]]>
+	</method>
+
+
+	<method name="updateFirePercent" args="firePercent"><![CDATA[
+	    gApp.setAttribute("firePercent", firePercent, true);
+	  ]]>
+	</method>
+
+
+	<method name="updatePolicePercent" args="policePercent"><![CDATA[
+	    gApp.setAttribute("policePercent", policePercent, true);
+	  ]]>
+	</method>
+
+
+	<simplelayout
+	    axis="y"
+	    spacing="${classroot.gap}"
+	/>
+
+
+	<view name="textView"
+	    width="${parent.width}"
 	>
 
-	    <simplelayout axis="y" spacing="5"/>
 
-	    <text name="taxLabel"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Tax rate: ' + Math.floor(parent.taxSlider.value + 0.5) + '%'}"
+	    <wrappinglayout
+		axis="x"
+		xspacing="${classroot.gap}"
+		yspacing="${classroot.gap}"
 	    />
 
-	    <slider name="taxSlider"
-		x="10"
-		y="0"
-		width="${parent.width - 20}"
-		minvalue="0"
-		maxvalue="20"
-		keystep="1"
-		showvalue="false"
-		thumbheight="20"
-		thumbwidth="20"
-		value="7"
+
+	    <text name="taxesCollectedText"
+		width="${classroot.sliderWidth}"
+		text="${
+		    'Taxes Collected:\n' + 
+		    gApp.formatFunds(classroot.taxesCollected)
+		}"
+		multiline="true"
 	    />
 
-	    <text name="fireLabel1"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Fire request: $' + classroot.fireRequest + ' Funds: ' + classroot.firePercent + '% = $' + classroot.fireFunds}"
+	    <text name="cashFlowText"
+		width="${classroot.sliderWidth}"
+		text="${
+		    'Cash flow:\n' +
+		    gApp.formatFunds(classroot.cashFlow)
+		}"
+		multiline="true"
 	    />
 
-	    <slider name="fireSlider"
-		x="10"
-		y="0"
-		width="${parent.width - 20}"
-		minvalue="0"
-		maxvalue="100"
-		keystep="10"
-		showvalue="false"
-		thumbheight="20"
-		thumbwidth="20"
-		value="100"
+	    <text name="previousFundsText"
+		width="${classroot.sliderWidth}"
+		text="${
+		    'Previous funds:\n' +
+		    gApp.formatFunds(classroot.previousFunds)
+		}"
+		multiline="true"
 	    />
 
-	    <text name="policeLabel1"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Police request: $' + classroot.policeRequest + ' Funds: ' + classroot.policePercent + '% = $' + classroot.policeFunds}"
-	    />
-
-	    <slider name="policeSlider"
-		x="10"
-		y="0"
-		width="${parent.width - 20}"
-		minvalue="0"
-		maxvalue="100"
-		keystep="10"
-		showvalue="false"
-		thumbheight="20"
-		thumbwidth="20"
-		value="100"
-	    />
-
-	    <text name="roadLabel1"
-	        x="10"
-		y="0"
-		resize="true"
-		text="${'Road request: $' + classroot.roadRequest + ' Funds: ' + classroot.roadPercent + '% = $' + classroot.roadFunds}"
-	    />
-
-	    <slider name="roadSlider"
-		x="10"
-		y="0"
-		width="${parent.width - 20}"
-		minvalue="0"
-		maxvalue="100"
-		keystep="10"
-		showvalue="false"
-		thumbheight="20"
-		thumbwidth="20"
-		value="100"
+	    <text name="currentFundsText"
+		width="${classroot.sliderWidth}"
+		text="${
+		    'Current funds:\n' +
+		    gApp.formatFunds(classroot.currentFunds)
+		}"
+		multiline="true"
 	    />
 
 	</view>
+
+	<view name="slidersView"
+	    width="${parent.width}"
+	>
+
+
+	    <wrappinglayout
+		axis="x"
+		xspacing="${classroot.gap}"
+		yspacing="${classroot.gap}"
+	    />
+
+
+	    <view name="taxView"
+		width="${classroot.sliderWidth}"
+	    >
+
+		<simplelayout axis="y" spacing="${classroot.gap}"/>
+
+		<text name="taxLabel"
+		    width="${parent.width}"
+		    multiline="true"
+		    text="${
+		        '\n' +
+			'Tax rate: ' + 
+			parent.taxSlider.value + 
+			'%'
+		    }"
+		/>
+
+		<slider name="taxSlider"
+		    width="${parent.width}"
+		    minvalue="0"
+		    maxvalue="20"
+		    keystep="1"
+		    showvalue="false"
+		    thumbheight="20"
+		    thumbwidth="20"
+		    value="${gApp.taxRate}"
+		    onvalue="gApp.setAttribute('taxRate', this.value, true)"
+		/>
+
+	    </view>
+
+	    <view name="roadView"
+		width="${classroot.sliderWidth}"
+	    >
+
+		<simplelayout axis="y" spacing="${classroot.gap}"/>
+
+		<text name="roadLabel1"
+		    width="${parent.width}"
+		    multiline="true"
+		    text="${
+		        'Road request: ' + 
+			gApp.formatFunds(classroot.roadFund) + 
+			'\n' +
+			classroot.roadPercent + 
+			'% = ' + 
+			gApp.formatFunds(classroot.roadFunds)
+		    }"
+		/>
+
+		<slider name="roadSlider"
+		    width="${parent.width}"
+		    minvalue="0"
+		    maxvalue="100"
+		    keystep="10"
+		    showvalue="false"
+		    thumbheight="20"
+		    thumbwidth="20"
+		    value="${gApp.roadPercent}"
+		    onvalue="gApp.setAttribute('roadPercent', this.value, true)"
+		/>
+
+	    </view>
+
+	    <view name="fireView"
+		width="${classroot.sliderWidth}"
+	    >
+
+		<simplelayout axis="y" spacing="${classroot.gap}"/>
+
+		<text name="fireLabel1"
+		    width="${parent.width}"
+		    multiline="true"
+		    text="${
+		        'Fire request: ' + 
+			gApp.formatFunds(classroot.fireFund) + 
+			'\n' +
+			classroot.firePercent + 
+			'% = ' + 
+			gApp.formatFunds(classroot.fireFunds)
+		    }"
+		/>
+
+		<slider name="fireSlider"
+		    width="${parent.width}"
+		    minvalue="0"
+		    maxvalue="100"
+		    keystep="10"
+		    showvalue="false"
+		    thumbheight="20"
+		    thumbwidth="20"
+		    value="${gApp.firePercent}"
+		    onvalue="gApp.setAttribute('firePercent', this.value, true)"
+		/>
+
+	    </view>
+
+	    <view name="policeView"
+		width="${classroot.sliderWidth}"
+	    >
+
+		<simplelayout axis="y" spacing="${classroot.gap}"/>
+
+		<text name="policeLabel1"
+		    width="${parent.width}"
+		    multiline="true"
+		    text="${
+		        'Police request: ' + 
+			gApp.formatFunds(classroot.policeFund) + 
+			'\n' +
+			classroot.policePercent + 
+			'% = ' + 
+			gApp.formatFunds(classroot.policeFunds)
+		    }"
+		/>
+
+		<slider name="policeSlider"
+		    width="${parent.width}"
+		    minvalue="0"
+		    maxvalue="100"
+		    keystep="10"
+		    showvalue="false"
+		    thumbheight="20"
+		    thumbwidth="20"
+		    value="${gApp.policePercent}"
+		    onvalue="gApp.setAttribute('policePercent', this.value, true)"
+		/>
+
+	    </view>
+
+	</view>
+
 
     </class>
 

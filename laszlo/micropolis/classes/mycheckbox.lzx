@@ -1,0 +1,132 @@
+<library>
+    <include href="base/baseformitem.lzx"/>
+    <include href="base/multistatebutton.lzx"/>
+    <resource name="lzcheckbox_rsrc">
+        <frame src="lz/resources/checkbox/checkbox_off.swf" />
+        <frame src="lz/resources/checkbox/checkbox_off_mo.swf" />
+        <frame src="lz/resources/checkbox/checkbox_on.swf" />
+        <frame src="lz/resources/checkbox/checkbox_disable_off.swf" />
+        <frame src="lz/resources/checkbox/checkbox_on.swf" />
+        <frame src="lz/resources/checkbox/checkbox_on_mo.swf" />
+        <frame src="lz/resources/checkbox/checkbox_off.swf" />
+        <frame src="lz/resources/checkbox/checkbox_disable_on.swf" />
+    </resource>
+
+    <!-- A checkbox component representing a boolean -->
+    <class name="mycheckbox" extends="baseformitem" pixellock="true">
+
+        <!-- FIXME: [hqm 2006-09] LPP-2244 This used to be y="$once{classroot.text_y}"
+             but the DHTML runtime fires an early text onheight  event, which has the wrong value,
+             so we need to use an 'always' constraint till we fix it
+        -->
+        <text name="_title" x="16" y="${classroot.text_y}" text="${parent.text}" resize="true"/>
+
+        <!--- the y position of the text label. default: centered -->
+	<!-- FIXME: [dhopkins 2009-04] This was getting an undefined error, so I put in checking for 
+	     the cb and _title keys. 
+            value="${this.cb.height/2 - this._title.height/2+1}" type="number"/>
+	-->
+        <attribute name="text_y"
+            value="${(this['cb'] &amp;&amp; this['_title']) ? (this.cb.height/2 - this._title.height/2+1) : 0}" type="number"/>
+
+        <!--- @keywords private -->
+        <attribute name="value" setter="setValue(value)" value="false"/>
+
+        <!-- views -->
+        <multistatebutton name="cb" resource="lzcheckbox_rsrc" text=""
+            statenum="${parent.value ? 1 : 0}"
+            statelength="4" maxstate="1"
+            reference="parent">
+        </multistatebutton>
+
+        <!--- toggles the value when the space bar is pressed while focused -->
+        <method name="doSpaceUp" >
+            <![CDATA[
+            if ( this._enabled ) {
+               this.setAttribute('value', !this.value);
+            }
+            ]]>
+        </method>
+
+        <handler name="onclick">
+            if (this._enabled)
+                this.setAttribute('value', !this.value);
+        </handler>
+
+        <!--- @keywords private -->
+        <method name="_applystyle" args="s"><![CDATA[
+            // FIXME: [dhopkins 2009-04] This was getting an undefined error, 
+	    // so I put in checking for _title.
+            // if (this.style != null) {
+            if ((this.style != null) && (_title != null)) {
+                if (_enabled) {
+                    _title.setAttribute('fgcolor',s.textcolor);
+                } else {
+                    _title.setAttribute('fgcolor',s.textdisabledcolor);
+                }
+                setTint(this.cb, s.basecolor);
+            }
+	  ]]>
+        </method>
+
+        <!--- @keywords private -->
+        <method name="_showEnabled">
+            _applystyle(this.style);
+        </method>
+        
+        <!--- setter for 'value' attribute.  The checkbox value is
+            always true or false.
+            @param val: can be any Javascript type and is evaluated as its
+            boolean equivalent, strings "true" and "false"
+            are treated specially to represent true and false respectively
+            @param Boolean isinitvalue: if true, the rollbackvalue is set. -->
+        <method name="setValue" args="val, isinitvalue=null">
+            if (val == "false") val = false;
+            else if (val == "true") val = true;
+            else val = !!val;
+            super.setValue(val, isinitvalue);
+        </method>
+        <doc>
+          <tag name="shortdesc"><text>The checkbox tag provides a simple toggle button.</text></tag>
+          <text>
+            <p>
+              The <classname>checkbox</classname> tag provides a simple toggle
+              button that represents a value of <code>true</code> or
+              <code>false</code>. It has a disabled state where it does not
+              respond to mouse events when <code>enabled=false</code>.
+            </p>
+
+            <example title="simple checkbox">
+              &lt;canvas debug="true" height="160"&gt;
+              &lt;debug x="135" y="15"/&gt;
+              &lt;checkbox id="checkMe" text="Show Green Square"/&gt;
+              &lt;view visible="${checkMe.value}" bgcolor="green" width="20" height="20"/&gt;
+
+              &lt;button text="Toggle" onclick="checkMe.setAttribute('value', !checkMe.value)"/&gt;
+              &lt;button text="Disable" onclick="checkMe.setAttribute('enabled', false)"/&gt;
+              &lt;button text="Enable" onclick="checkMe.setAttribute('enabled', true)"/&gt;
+              &lt;button text="status" onclick="Debug.write('value: '+checkMe.value)"/&gt;
+              &lt;simplelayout axis="y" spacing="4"/&gt;
+              &lt;/canvas&gt;
+            </example>
+
+            <p>
+              Note that checkbox attributes may be used as constraints for other attributes.
+              In the example above, clicking the checkbox toggles the visibility of the
+              green square.  Whenever the value of the checkbox changes, so does the
+              visibility attribute of the green view.
+            </p>
+
+            <seealso>
+              <component-design id="checkbox" title="Checkbox"/>
+            </seealso>
+
+          </text>
+        </doc>                
+    </class>
+</library>
+<!-- * X_LZ_COPYRIGHT_BEGIN ***************************************************
+* Copyright 2001-2008 Laszlo Systems, Inc.  All Rights Reserved.              *
+* Use is subject to license terms.                                            *
+* X_LZ_COPYRIGHT_END ****************************************************** -->
+<!-- @LZX_VERSION@                                                         -->

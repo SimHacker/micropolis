@@ -7,7 +7,19 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="connectscreen">
+    <class name="connectscreen"
+        clip="true"
+	initstage="late"
+    >
+
+
+	<attribute name="active" value="true"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
 
 
 	<simplelayout

@@ -1,0 +1,64 @@
+<overlays>
+    <overlay
+	name="all"
+	title="All Zones"
+    />
+    <overlay
+	name="residential"
+	title="Residential Zones"
+    />
+    <overlay
+        name="commercial"
+	title="Commercial Zones"
+    />
+    <overlay
+	name="industrial"
+	title="Industrial Zones"
+    />
+    <overlay
+	name="powergrid"
+	title="Power Connectivity"
+    />
+    <overlay
+	name="transportation"
+	title="Roads"
+    />
+    <overlay
+	name="populationdensity"
+	title="Population Density"
+    />
+    <overlay
+	name="rateofgrowth"
+	title="Rate of Growth"
+    />
+    <overlay
+	name="trafficdensity"
+	title="Traffic"
+    />
+    <overlay
+	name="pollutiondensity"
+	title="Pollution"
+    />
+    <overlay
+	name="crimerate"
+	title="Crime Rate"
+    />
+    <overlay
+	name="landvalue"
+	title="Land Value"
+    />
+    <overlay
+	name="firecoverage"
+	title="Fire Station Coverage"
+    />
+    <overlay
+	name="policecoverage"
+	title="Police Station Coverage"
+    />
+<!--
+    <overlay
+	name="dynamic"
+	title="Dynamic Filter"
+    />
+-->
+</overlays>

@@ -1,0 +1,43 @@
+<library>
+
+
+    <!-- Session Node -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="sessionhandler"
+        extends="node"
+	datapath="ds_session:/session"
+    >
+
+
+	<attribute name="sessionID" type="string" value="$path{'@sessionID'}"/>
+
+
+	<handler name="ondata" args="arg"><![CDATA[
+	    //Debug.write("ds_session ondata", this.sessionID);
+	    classroot.startSession(this.sessionID);
+	  ]]>
+	</handler>
+
+
+	<handler name="onerror" reference="ds_session"><![CDATA[
+	    Debug.write("ds_session onerror", this.sessionID);
+	    classroot.failSession();
+	  ]]>
+	</handler>
+
+
+	<handler name="ontimeout" reference="ds_session"><![CDATA[
+	    Debug.write("ds_session ontimeout", this.sessionID);
+	    classroot.failSession();
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

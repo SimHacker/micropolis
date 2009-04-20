@@ -9,34 +9,88 @@
 
 <!--
 
-Control Panel
-  SimCity
+  Control
     About
+    Save City
+    Save City As...
     New City
     Quit
   Options
     Disasters
+    Auto Budget
+    Auto Bulldoze
+    Auto Goto
     Sound
-  Disasters
-    Monster
-    Fire
-    Flood
-    Meltdown
-    Tornado
-    Earthquake
+    Animation
+    Messages
+    Notices
   Speed
-    Pause
-    Slow
-    Medium
-    Fast
-  Date
-  Funds
-  Tax Rate
-  Demand Gauge
-  History Graph
-  Message Log
 
 -->
+
+
+    <modaldialog name="newCityDialog" id="gNewCityDialog"
+        width="500" 
+	height="230"
+    >
+
+
+        <handler name="ongameMode" reference="gApp"><![CDATA[
+	    // Watch the application's gameMode, 
+	    // so we can close this dialog if the server disconnects.
+	    //Debug.write("ONGAMEMODE", this, this.visible, gApp.gameMode);
+	    if (this.visible &&
+	        gApp.gameMode != 'play') {
+		this.close();
+	    }
+	  ]]>
+	</handler>
+
+
+	<simplelayout
+	    axis="y"
+	    spacing="5"
+	/>
+
+
+	<text
+	    x="0"
+	    width="${immediateparent.width}"
+	    fontsize="32"
+	    fontstyle="bold"
+	    multiline="true"
+	>Are you really sure you want to start a new city?</text>
+
+	<view
+	    x="0" 
+	    y="0"
+	    width="${immediateparent.width}"
+	    height="${immediateparent.height}"
+	    layout="axis:y; spacing:10"
+	>
+
+	    <button
+	        x="0"
+	        width="${parent.width}"
+	        onclick="parent.parent.close()"
+		fontsize="20"
+		fontstyle="bold"
+	    >No, keep playing with this city.</button>
+
+	    <button 
+	        x="0"
+	        width="${parent.width}"
+	        onclick="parent.parent.close(); gApp.saveCity(); gApp.chooseCity()"
+		fontsize="20"
+		fontstyle="bold"
+	    >Yes, choose another city.</button>
+
+	    <view/>
+
+	</view>
+
+
+    </modaldialog>
 
 
     <class name="controlpanel"
@@ -44,20 +98,192 @@ Control Panel
     >
 
 
-	<simplelayout axis="y"/>
+	<attribute name="active" value="true"/>
+	<attribute name="gap" value="5"/>
+	<attribute name="sliderWidth" value="160"/>
+	<attribute name="sliderHeight" value="50"/>
+	<attribute name="pauseButtonWidth" value="80"/>
+	<attribute name="buttonWidth" value="80"/>
+	<attribute name="buttonHeight" value="40"/>
+	<attribute name="checkboxWidth" value="120"/>
+	<attribute name="checkboxHeight" value="18"/>
+
+	<attribute name="speedNames" value="$once{[
+            'Ultra Slow',
+            'Super Slow',
+            'Very Slow',
+            'Slow',
+            'Medium',
+            'Fast',
+            'Very Fast',
+            'Super Fast',
+            'Ultra Fast',
+            'Outrageously Fast',
+	    'Astronomically Fast'
+	]}"/>
 
 
-	<view
-	    x="5"
-	    width="${parent.width - 5}"
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("==== controlpanel oninit", this);
+	  ]]>
+	</handler>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
+	<method name="updateSpeed" args="speed"><![CDATA[
+	    gApp.setAttribute("speed", speed);
+	    Debug.write("UPDATESPEED", speed, this.speedNames[speed]);
+	  ]]>
+	</method>
+
+
+	<method name="togglePaused"><![CDATA[
+	    gApp.setAttribute("paused", !gApp.paused);
+	    Debug.write("togglePaused SET PAUSED", gApp.paused);
+	  ]]>
+	</method>
+
+
+	<simplelayout
+	    axis="y"
+	    spacing="${classroot.gap}"
+	/>
+
+
+	<view name="slidersView"
+	    width="${parent.width}"
 	>
 
-	    <text
-		resize="true"
-		text="[TODO: Control Panel]"
+
+	    <wrappinglayout
+		axis="x"
+		xspacing="${classroot.gap}"
+		yspacing="${classroot.gap}"
+	    />
+
+
+	    <button name="pauseButton"
+	        width="${classroot.pauseButtonWidth}"
+		height="${parent.speedView.height}"
+		text="${gApp.paused ? 'Resume' : 'Pause'}"
+		onclick="classroot.togglePaused()"
+	    />
+
+	    <view name="speedView"
+		width="${classroot.sliderWidth}"
+		height="${classroot.sliderHeight}"
+	    >
+
+		<simplelayout axis="y" spacing="${classroot.gap}"/>
+
+		<text name="speedLabel"
+		    width="${parent.width}"
+		    multiline="true"
+		    text="${
+			'Speed: ' + 
+			(classroot.paused ? 'Paused...\n' : 'Running!\n') +
+			classroot.speedNames[parent.speedSlider.value]
+		    }"
+		/>
+
+		<slider name="speedSlider"
+		    width="${parent.width}"
+		    minvalue="0"
+		    maxvalue="10"
+		    keystep="1"
+		    showvalue="false"
+		    showrange="false"
+		    thumbheight="20"
+		    thumbwidth="20"
+		    value="5"
+		    onvalue="classroot.updateSpeed(this.value)"
+		/>
+
+	    </view>
+
+	</view>
+
+	<view name="buttonsView"
+	    width="${parent.width}"
+	>
+
+
+	    <wrappinglayout
+		axis="x"
+		xspacing="${classroot.gap}"
+		yspacing="${classroot.gap}"
+	    />
+
+
+<!--
+	    <button name="saveCityButton"
+	        width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		text="Save City"
+		onclick="gApp.saveCity()"
+	    />
+-->
+
+	    <button name="newCityButton"
+	        width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		text="New City"
+		onclick="gNewCityDialog.open()"
+	    />
+
+	    <button name="helpButton"
+	        width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		text="Help"
+		onclick="gApp.help()"
+	    />
+
+	    <button name="aboutButton"
+	        width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		text="About"
+		onclick="gApp.about()"
 	    />
 
 	</view>
+
+	<view name="optionsView"
+	    width="${parent.width}"
+	>
+
+
+	    <wrappinglayout
+		axis="x"
+		xspacing="${classroot.gap}"
+		yspacing="2"
+	    />
+
+
+	    <mycheckbox
+		datapath="ds_options:/options/option"
+	        width="${classroot.checkboxWidth}"
+	        height="${classroot.checkboxHeight}"
+		text="${this.optionLabel}"
+		value="${this.optionName}"
+	    >
+
+	        <attribute name="optionName" type="string" value="$path{'@name'}"/>
+	        <attribute name="optionLabel" type="string" value="$path{'@label'}"/>
+
+	        <handler name="onchanged" args="arg"><![CDATA[
+		    Debug.write("CHECKBOX ONCHANGED", this, this.value, this.optionName, this.optionLabel);
+		  ]]>
+		</handler>
+
+	    </mycheckbox>
+
+	</view>
+
 
     </class>
 

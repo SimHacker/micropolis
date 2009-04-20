@@ -11,83 +11,122 @@
 	bgcolor="0xffff00"
 	width="${gApp.worldW * this.tileSize}"
 	height="${gApp.worldH * this.tileSize}"
+	clip="true"
     >
 
 
-<!--
-        <attribute name="updateDelay" value="1000"/>
--->
-        <attribute name="updateDelay" value="500"/>
+        <attribute name="active" value="true"/>
+        <attribute name="updateDelay" value="100"/>
 	<attribute name="lastUpdateTime" value="0"/>
+	<attribute name="loading" value="false"/>
 	<attribute name="damaged" value="false"/>
 	<attribute name="damageSoon" value="false"/>
 	<attribute name="updateTimerActive" value="false"/>
 	<attribute name="updateTimerDelegate" value="$once{new LzDelegate(this, 'handleTimer')}"/>
 	<attribute name="tileSize" value="16"/>
 	<attribute name="phase" value="0"/>
+        <attribute name="overlay" value="0"/>
 
 
-	<handler name="oninit"><![CDATA[
+	<handler name="oninit" args="arg"><![CDATA[
 	    //Debug.write("==== mapview oninit", this);
-	    this.updateVisible();
+	    this.updateInterests();
+	    this.damage();
 	  ]]>
 	</handler>
 
 
-	<handler name="onvisible"><![CDATA[
-	    //Debug.write("==== mapview onvisible", this, this.visible);
-	    this.updateVisible();
+	<handler name="onactive" args="arg"><![CDATA[
+	    if (!this.inited) {
+	        return;
+	    }
+	    //Debug.write("==== mapview onactive", this, this.active);
+	    this.updateInterests();
 	  ]]>
 	</handler>
 
 
-	<method name="updateVisible"><![CDATA[
-	    //Debug.write("==== mapView updateVisible", this.visible);
-	    if (this.visible) {
+	<handler name="onvisible" args="arg"><![CDATA[
+	    if (!this.inited) {
+	        return;
+	    }
+	    //Debug.write("==== mapview onvisible", this, this.active);
+	    this.updateInterests();
+	  ]]>
+	</handler>
+
+
+	<method name="updateInterests"><![CDATA[
+	    //Debug.write("==== mapView updateInterests", this, this.active);
+	    if (this.active && this.visible) {
 	        gApp.expressInterest(this, ['map']);
 	    } else {
 	        gApp.revokeInterest(this, ['map']);
 	    }
 
-	    this.damage();
+	    //this.damage();
 	  ]]>
 	</method>
 
 
 	<method name="handleUpdate" args="args"><![CDATA[
 	    //Debug.write("**** mapview handleUpdate", this, args);
-	    this.damage();
+
+	    var aspect = args['aspect'];
+
+	    switch (aspect) {
+
+	        case 'map': {
+		    this.damage();
+		    break;
+		}
+
+	    }
+
 	  ]]>
 	</method>
 
 
 	<method name="damage"><![CDATA[
-	    if (!this.visible) {
-	        return;
-	    }
+	    //Debug.write("mapview damage", this, "active", this.active, "updateTimerActive", this.updateTimerActive, "damageSoon", this.damageSoon);
+	    this.damageSoon = true
 
-	    if (this.updateTimerActive) {
-	        this.damageSoon = true;
+	    if (!this.active ||
+	        this.updateTimerActive || 
+		this.loading) {
+		//Debug.write("damageSoon", "!active", !this.active, "updateTimerActive", this.updateTimerActive, "loading", this.loading);
 		return;
 	    }
 
-	    this.damageNow();
+	    if (!this.loading) {
+		this.updateTimerActive = true;
+		lz.Timer.resetTimer(this.updateTimerDelegate, this.updateDelay);
+	    }
+	  ]]>
+	</method>
 
-	    this.damageSoon = false;
-	    this.updateTimerActive = true;
-	    lz.Timer.addTimer(this.updateTimerDelegate, this.updateDelay);
+
+	<method name="handleTimer" args="arg"><![CDATA[
+	    //Debug.write("handleTimer", this, arg, "damageSoon", this.damageSoon);
+	    this.updateTimerActive = false;
+
+	    if (!this.loading) {
+	        this.damageSoon = false;
+	        this.damageNow();
+	    }
 	  ]]>
 	</method>
 
 
 	<method name="damageNow"><![CDATA[
-	    //Debug.write("damageNow", this);
+	    //Debug.write("damageNow", this, this.active);
 	    this.setAttribute("bgcolor", Math.floor(Math.random() * 0xffffff));
 
-	    var sessionID = gSessionData.sessionID;
+	    var sessionID = gSessionHandler.sessionID;
 	    var tileSize = this.tileSize;
 	    var width = gApp.worldW * tileSize;
 	    var height = gApp.worldH * tileSize;
+	    var overlay = gApp.overlay;
 	    var uniqueID = gApp.makeUniqueID();
 	    var src = 
 	        "http:/server/micropolisGetMapImage?sessionID=" + 
@@ -96,34 +135,66 @@
 		width +
 		"&height=" +
 		height +
+		"&overlay=" +
+		overlay +
 		"&uniqueID=" +
 		uniqueID;
 	    //Debug.write(this, "SRC", src)
 	    var phase = this.phase;
 	    this.phase = phase ? 0 : 1;
-	    var v = this['view' + phase];
+	    var v = this.v['view' + phase];
 	    v.setAttribute("resource", src);
 	    v.bringToFront();
+	    this.setAttribute("loading", true);
+	    //Debug.write("loading view" + phase, src);
 	  ]]>
 	</method>
 
 
-	<method name="handleTimer" args="arg"><![CDATA[
-	    //Debug.write("handleTimer", this, arg);
-	    this.updateTimerActive = false;
+	<method name="handleLoaded" args="v, success"><![CDATA[
+	    //Debug.write("handleLoaded", this, "v", v, "success", success);
+	    this.setAttribute("loading", false);
 
 	    if (this.damageSoon) {
 	        this.damageSoon = false;
 	        this.damageNow();
-	        lz.Timer.addTimer(this.updateTimerDelegate, this.updateDelay);
 	    }
 	  ]]>
 	</method>
 
 
-	<view name="view0"/>
+	<view name="v"
+	    width="${parent.width}"
+	    height="${parent.height}"
+	>
 
-	<view name="view1"/>
+	    <view name="view0">
+	        <handler name="onload"><![CDATA[
+		    //Debug.write("view0 onload");
+		    classroot.handleLoaded(this, true);
+		  ]]>
+		</handler>
+	        <handler name="onerror"><![CDATA[
+		    //Debug.write("view0 onerror");
+		    classroot.handleLoaded(this, false);
+		  ]]>
+		</handler>
+	    </view>
+
+	    <view name="view1">
+	        <handler name="onload"><![CDATA[
+		    //Debug.write("view1 onload");
+		    classroot.handleLoaded(this, true);
+		  ]]>
+		</handler>
+	        <handler name="onerror"><![CDATA[
+		    //Debug.write("view1 onerror");
+		    classroot.handleLoaded(this, false);
+		  ]]>
+		</handler>
+	    </view>
+
+	</view>
 
     </class>
 

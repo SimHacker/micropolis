@@ -12,6 +12,15 @@
     >
 
 
+	<attribute name="active" value="true"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
 	<list
 	    x="0"
 	    y="0"

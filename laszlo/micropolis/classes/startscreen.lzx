@@ -7,7 +7,19 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="startscreen">
+    <class name="startscreen"
+        clip="true"
+	initstage="late"
+    >
+
+
+	<attribute name="active" value="true"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
 
 
 	<simplelayout axis="x"
@@ -33,6 +45,7 @@
 		y="${parent.title.y + parent.title.height + 5}"
 		width="${parent.previewMapView.width}"
 		height="${parent.previewMapView.y - this.y - 5}"
+		clip="true"
 	    >
 
 		<vscrollbar/>
@@ -49,6 +62,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 
 	    <previewmapview name="previewMapView" id="gPreviewMapView"
 		y="${parent.playButton.y - this.height - 5}"
+		active="${classroot.active}"
 	    />
 
 	    <button name="playButton"
@@ -76,6 +90,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		<scenariosview id="gScenariosView"
 		    width="${parent.width - (immediateparent.x * 2)}"
 		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		    active="${classroot.active &amp;&amp; parent.visible}"
 		/>
 	    </tabpane>
 
@@ -87,6 +102,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		<generatorview id="gGeneratorView"
 		    width="${parent.width - (immediateparent.x * 2)}"
 		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		    active="${classroot.active &amp;&amp; parent.visible}"
 		/>
 	    </tabpane>
 
@@ -98,6 +114,7 @@ Then press the 'Play with This City' button below, to start playing Micropolis!<
 		<libraryview id="gLibraryView"
 		    width="${parent.width - (immediateparent.x * 2)}"
 		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		    active="${classroot.active &amp;&amp; parent.visible}"
 		/>
 	    </tabpane>
 

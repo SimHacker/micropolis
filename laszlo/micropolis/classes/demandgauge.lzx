@@ -14,6 +14,7 @@
     >
 
 
+        <attribute name="active" value="true"/>
         <attribute name="gap" value="5" type="number"/>
         <attribute name="resDemand" value="0" type="number"/>
         <attribute name="comDemand" value="0" type="number"/>
@@ -28,27 +29,27 @@
 
 	<handler name="oninit"><![CDATA[
 	    //Debug.write("==== demandgauge oninit", this);
-	    this.updateVisible();
+	    this.updateInterests();
 	  ]]>
 	</handler>
 
 
-	<handler name="onvisible"><![CDATA[
-	    Debug.write("==== demandgauge onvisible", this, this.visible);
-	    this.updateVisible();
+	<handler name="onactive"><![CDATA[
+	    //Debug.write("==== demandgauge onactive", this, this.active);
+	    this.updateInterests();
 	  ]]>
 	</handler>
 
 
-	<method name="updateVisible"><![CDATA[
-	    Debug.write("==== demandgauge updateVisible", this.visible);
-	    if (this.visible) {
+	<method name="updateInterests"><![CDATA[
+	    //Debug.write("==== demandgauge updateInterests", this.active);
+	    if (this.active) {
 	        gApp.expressInterest(this, ['demand']);
 	    } else {
 	        gApp.revokeInterest(this, ['demand']);
 	    }
 
-	    // TODO: cause graph to be redrawn?
+	    // TODO: cause gauge to be redrawn?
 	  ]]>
 	</method>
 

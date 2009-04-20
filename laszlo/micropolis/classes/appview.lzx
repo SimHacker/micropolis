@@ -10,7 +10,9 @@
     <class name="appview">
 
 
+	<attribute name="active" value="true"/>
         <attribute name="pollDelay" value="250"/>
+        <attribute name="pollDelaySoon" value="10"/>
         <attribute name="animateDelay" value="250"/>
 <!--
         <attribute name="pollDelay" value="100"/>
@@ -38,18 +40,41 @@
 	<attribute name="connected" value="false"/>
 	<attribute name="connecting" value="false"/>
 	<attribute name="connectionFailed" value="false"/>
-	<attribute name="gameMode" type="string" value="start"/>
+	<attribute name="paused" type="string" value="true"/>
+	<attribute name="speed" type="string" value="3"/>
+	<attribute name="taxRate" type="string" value="7"/>
+	<attribute name="roadPercent" type="string" value="100"/>
+	<attribute name="roadFund" type="string" value="0"/>
+	<attribute name="roadValue" type="string" value="0"/>
+	<attribute name="firePercent" type="string" value="100"/>
+	<attribute name="fireFund" type="string" value="0"/>
+	<attribute name="fireValue" type="string" value="0"/>
+	<attribute name="policePercent" type="string" value="100"/>
+	<attribute name="policeFund" type="string" value="0"/>
+	<attribute name="policeValue" type="string" value="0"/>
+	<attribute name="gameMode" type="string" value="disconnected"/>
 	<attribute name="gap" value="5"/>
 	<attribute name="nextUniqueID" value="1"/>
 	<attribute name="interests" value="$once{{}}"/>
 	<attribute name="worldW" value="120"/>
 	<attribute name="worldH" value="100"/>
+	<attribute name="overlay" type="string" value="all"/>
+	<attribute name="aboutURL" type="string" value="http://wwww.MicropolisOnline.com/about"/>
+	<attribute name="helpURL" type="string" value="http://wwww.MicropolisOnline.com/help"/>
+	<attribute name="monthNames" value="$once{[
+	    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+	    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+	]}"/>
 
 
         <handler name="oninit"><![CDATA[
             var codeString = this.codeString;
             var codeMap = {};
             this.codeMap = codeMap;
+
+	    this.expressInterest(this, [
+	        'speed', 'paused', 'taxrate'
+	    ]);
 
             var i;
             for (i = 0; i < codeString.length; i++) {
@@ -61,7 +86,7 @@
             this.tileDictRows = tileDictRows;
             var row;
             for (row = 0; row < this.worldRows; row++) {
-                var tileDictRow = new Array(this.worldCols);;
+                var tileDictRow = new Array(this.worldCols);
                 tileDictRows.push(tileDictRow);
             }
 
@@ -73,6 +98,96 @@
 
           ]]>
         </handler>
+
+
+	<handler name="ongameMode" args="arg"><![CDATA[
+	    switch (this.gameMode) {
+	        case 'disconnected': {
+		    break;
+		}
+	        case 'start': {
+		    break;
+		}
+	        case 'play': {
+		    break;
+		}
+	    }
+	  ]]>
+	</handler>
+
+
+	<handler name="onpaused" args="arg"><![CDATA[
+	    var cmd =
+	        '<command name="setPaused" paused="' +
+		(this.paused ? 'true' : 'false') +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="onspeed" args="arg"><![CDATA[
+	    var cmd =
+	        '<command name="setSpeed" speed="' +
+		this.speed +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="ontaxRate" args="arg"><![CDATA[
+	    var cmd =
+	        '<command name="setTaxRate" taxRate="' +
+		this.taxRate +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="onroadPercent"><![CDATA[
+	    var cmd =
+	        '<command name="setRoadPercent" roadPercent="' + 
+		this.roadPercent +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="onfirePercent"><![CDATA[
+	    var cmd =
+	        '<command name="setFirePercent" firePercent="' + 
+		this.firePercent +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="onpolicePercent"><![CDATA[
+	    var cmd =
+	        '<command name="setPolicePercent" policePercent="' + 
+		this.policePercent +
+		'"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</handler>
+
+
+	<handler name="onconnected" args="arg"><![CDATA[
+	    if (!this.connected) {
+	        this.setAttribute("gameMode", "disconnected");
+	    }
+	  ]]>
+	</handler>
+
+
+	<handler name="onoverlay" args="arg"><![CDATA[
+	    this.updateMap();
+	  ]]>
+	</handler>
 
 
 	<method name="expressInterest" args="target, names"><![CDATA[
@@ -115,6 +230,59 @@
 	</method>
 
 
+	<method name="handleUpdate" args="args"><![CDATA[
+
+	    //Debug.write("appview handleUpdate", this, args);
+
+	    var aspect = args['aspect'];
+
+	    switch (aspect) {
+
+	        case 'speed': {
+		    var paused = parseInt(args['speed']);
+	            this.setAttribute("speed", speed);
+		    break;
+		}
+
+		case 'paused': {
+		    var paused = args['paused'] == "true";
+	            this.setAttribute("paused", paused, true);
+		    break;
+		}
+
+		case 'taxrate': {
+	            this.setAttribute("taxRate", parseInt(args['taxRate']), true);
+		    break;
+		}
+
+		case 'budget': {
+		    var names = [
+			"taxRate",
+			"roadPercent",
+			"roadFund",
+			"roadValue",
+			"firePercent",
+			"fireFund",
+			"fireValue",
+			"policePercent",
+			"policeFund",
+			"policeValue"
+		    ];
+		    var n = names.length;
+		    var i;
+		    for (i = 0; i < n; i++) {
+		        var name = names[i];
+	                this.setAttribute(name, parseInt(args[name]), true);
+		    }
+		    break;
+		}
+
+	    }
+
+	  ]]>
+	</method>
+	
+
 	<method name="indexOf" args="a, obj"><![CDATA[
 	    var i;
 	    var n = a.length;
@@ -137,6 +305,7 @@
 
 
 	<method name="requestStartSession"><![CDATA[
+	    this.setAttribute("gameMode", "disconnected");
 	    this.setAttribute("connected", false);
 	    this.setAttribute("connecting", true);
 	    this.setAttribute("connectionFailed", false);
@@ -148,22 +317,26 @@
 
 
         <method name="startSession" args="sessionID"><![CDATA[
+	    this.setAttribute("gameMode", "start");
 	    this.setAttribute("connected", true);
 	    this.setAttribute("connecting", false);
 	    this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", sessionID);
             this.pollStart();
 	    this.animateStart();
+
+	    this.updateMap();
+
           ]]>
         </method>
 
 
         <method name="failSession"><![CDATA[
+	    this.setAttribute("gameMode", "disconnected");
 	    this.setAttribute("connected", false);
 	    this.setAttribute("connecting", false);
 	    this.setAttribute("connectionFailed", true);
             this.setAttribute("sessionID", null);
-	    this.setAttribute("gameMode", "start");
             this.pollStop();
 	    this.animateStop();
           ]]>
@@ -288,8 +461,6 @@
 	    this.animationTicks++;
 	    this.newTiles = 0;
 
-	    //this.animateTiles();
-
             var animatorsList = this.animatorsList;
             var n = animatorsList.length;
 	    var i;
@@ -338,7 +509,9 @@
 
 
         <method name="pollContinue" args="soon"><![CDATA[
+	    //Debug.write("pollContinue", soon);
             // This is a bit confused, and violates DRY. Refactor pollStart and pollContinue.
+	    //this.pollStop();
             if (!this.pollDelegate) {
                 this.pollDelegate = new lz.Delegate(this, 'poll');
             }
@@ -417,8 +590,17 @@
         <method name="sendCommand" args="command"><![CDATA[
             Debug.write("$$$$ sendCommand", command);
             this.commandQueue.push(command);
+	    this.pollContinue(true);
           ]]>
         </method>
+
+
+	<method name="updateMap"><![CDATA[
+	    this.handle_UIUpdate({
+	        aspect:'map'
+	    });
+	  ]]>
+	</method>
 
 
 	<method name="setDescription" args="txt"><![CDATA[
@@ -433,6 +615,7 @@
 
             var tileDictRows = this.tileDictRows;
             var codeMap = this.codeMap;
+	    var aniTiles = gAniTiles;
 
             switch (format) {
 
@@ -460,7 +643,7 @@
                             }
 
                             tileDict['index'] = tileIndex;
-                            tileDict['animated'] = gAniTiles[tileIndex] != tileIndex;
+                            tileDict['animated'] = aniTiles[tileIndex] != tileIndex;
 
                             codeOffset += 2;
                         }
@@ -541,7 +724,7 @@
                         }
 
                         tileDict['index'] = tileIndex;
-                        tileDict['animated'] = gAniTiles[tileIndex] != tileIndex;
+                        tileDict['animated'] = aniTiles[tileIndex] != tileIndex;
 
                         tileOffset++;
 
@@ -549,30 +732,6 @@
                     break;
                 }
 
-            }
-          ]]>
-        </method>
-
-
-        <method name="animateTiles"><![CDATA[
-
-            var cols = this.worldCols;
-            var rows = this.worldRows;
-            var tileDictRows = this.tileDictRows;
-            var r, c;
-            for (r = 0; r < rows; r++) {
-                var tileDictRow = tileDictRows[r];
-                for (c = 0; c < cols; c++) {
-                    var tileDict = tileDictRow[c];
-                    if (tileDict === null) {
-                        continue;
-                    }
-                    var nextTileIndex = gAniTiles[tileDict];
-                    if (tileDict != nextTileIndex) {
-                        //Debug.write(c, r, cols, rows, tileDict, nextTileIndex);
-                        tileDictRow[c] = nextTileIndex;
-                    }
-                }
             }
           ]]>
         </method>
@@ -603,6 +762,36 @@
 
 	  ]]>
         </method>
+
+
+	<method name="abandonCity"><![CDATA[
+	    Debug.write("abandonCity");
+	    this.sendCommand('<command name="abandonCity"/>');
+	  ]]>
+	</method>
+
+
+	<method name="saveCity"><![CDATA[
+	    Debug.write("saveCity");
+	    this.sendCommand('<command name="saveCity"/>');
+	  ]]>
+	</method>
+
+
+	<method name="help"><![CDATA[
+	    lz.Browser.loadURL(
+	        this.helpURL,
+		'_blank');
+	  ]]>
+	</method>
+
+
+	<method name="about"><![CDATA[
+	    lz.Browser.loadURL(
+	        this.aboutURL,
+		'_blank');
+	  ]]>
+	</method>
 
 
 	<method name="handle_UIUpdate" args="args"><![CDATA[
@@ -668,7 +857,7 @@
 	<method name="handle_UIMakeSound" args="args"><![CDATA[
 	    var channel = args['channel'];
 	    var sound = args['sound'];
-	    Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
+	    //Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
 	  ]]>
 	</method>
 
@@ -693,185 +882,41 @@
 	</method>
 
 
-        <node id="gSessionData"
-            datapath="ds_session:/session"
-        >
+	<method name="formatFunds" args="funds"><![CDATA[
+	    var minus = (funds < 0);
+	    if (minus) {
+	        funds = -funds;
+	    }
+
+	    var digits = "" + funds;
+
+	    var a = [];
+	    while (digits.length > 0) {
+		a.unshift(digits.substr(-3, 3));
+		digits = digits.substr(0, digits.length - 3);
+	    }
+
+	    var fundsStr = 
+	        (minus ? "-" : "") +
+		'$' +
+		a.join(',');
+
+	    return fundsStr;
+	  ]]>
+	</method>
 
 
-            <attribute name="sessionID" type="string" value="$path{'@sessionID'}"/>
+	<method name="formatMonthYear" args="month, year"><![CDATA[
+	    var monthName = this.monthNames[month];
+	    var monthYear = monthName + " " + year;
+	    return monthYear;
+	  ]]>
+	</method>
 
 
-            <handler name="ondata"><![CDATA[
-                //Debug.write("ds_session ondata", this.sessionID);
-                classroot.startSession(this.sessionID);
-              ]]>
-            </handler>
+	<sessionhandler id="gSessionHandler"/>
 
-
-            <handler name="onerror" reference="ds_session"><![CDATA[
-                Debug.write("ds_session onerror", this.sessionID);
-                classroot.failSession();
-              ]]>
-            </handler>
-
-
-            <handler name="ontimeout" reference="ds_session"><![CDATA[
-                Debug.write("ds_session ontimeout", this.sessionID);
-                classroot.failSession();
-              ]]>
-            </handler>
-
-
-        </node>
-
-
-        <node id="pollData"
-            datapath="ds_poll:/poll"
-        >
-
-
-            <attribute name="ref" value="$path{'@ref'}"/>
-
-
-            <handler name="ondata"><![CDATA[
-                //Debug.write("ds_poll");
-
-                var poll = ds_poll.data;
-                var pollChildren = poll['childNodes'];
-                if (pollChildren && (pollChildren.length > 0)) {
-                    var i;
-                    var n = pollChildren.length;
-                    for (i = 0; i < n; i++) {
-                        var pollChild = pollChildren[i];
-                        if (pollChild.nodeType != 1) {
-                            continue;
-                        }
-
-			//Debug.write(pollChild.nodeName, pollChild);
-
-                        switch (pollChild.nodeName) {
-
-                            case "tileviews": {
-
-                                var tileviews = pollChild['childNodes'];
-                                if (!tileviews) {
-                                    break;
-                                }
-
-                                //Debug.write("tileviews", tileviews);
-                                if (!tileviews || tileviews.length == 0) {
-                                    break;
-                                }
-
-                                var j;
-                                var m = tileviews.length;
-                                for (j = 0; j < m; j++) {
-                                    var tileview = tileviews[j];
-                                    if (tileview.nodeType != 1) {
-                                        continue;
-                                    }
-
-                                    var attributes = tileview.attributes;
-
-                                    //Debug.write("tileview", attributes);
-
-                                    var col = parseInt(attributes['col']);
-                                    var row = parseInt(attributes['row']);
-                                    var cols = parseInt(attributes['cols']);
-                                    var rows = parseInt(attributes['rows']);
-                                    var format = parseInt(attributes['format']);
-                                    var children = tileview['childNodes'];
-                                    var codedTiles = (children && (children.length > 0)) ? children[0].data : "";
-
-                                    //Debug.write(col, row, cols, rows, format, codedTiles);
-
-                                    if (!isNaN(col) &&
-                                        !isNaN(row) &&
-                                        !isNaN(cols) &&
-                                        !isNaN(rows) &&
-                                        !isNaN(format) &&
-                                        (rows > 0) &&
-                                        (cols > 0) &&
-                                        (codedTiles != "")) {
-                                        classroot.updateTiles(
-                                            col,
-                                            row,
-                                            cols,
-                                            rows,
-                                            format,
-                                            codedTiles);
-                                    }
-                                }
-
-                                break;
-                            }
-
-                            case "messages": {
-
-                                var messages = pollChild['childNodes'];
-                                if (!messages || (messages.length == 0)) {
-                                    break;
-                                }
-
-				var j;
-				var m = messages.length;
-				for (j = 0; j < m; j++) {
-				    var messageEl = messages[j];
-				    var attributes = messageEl.attributes;
-				    var messageName = attributes['message'];
-				    if (!messageName) {
-					continue;
-				    }
-				    var methodName = "handle_" + messageName;
-				    var method = classroot[methodName];
-				    //Debug.write("message", messageName, "method", methodName, method, "atts", attributes, "el", messageEl);
-				    if (!method) {
-					Debug.write("Undefined message:", messageName, messageEl, attributes);
-					continue;
-				    }
-				    var text =
-				    	messageEl.childNodes &&
-					messageEl.childNodes[0];
-				    var json = null;
-				    if (text == null) {
-					json = null;
-				    } else {
-				        json = JSON.parse(text);
-				    }
-
-				    //Debug.write("JSON", json)
-
-				    method.call(classroot, json);
-				}
-
-				break;
-			    }
-
-                        }
-
-                    }
-                }
-
-                classroot.pollContinue(false);
-              ]]>
-            </handler>
-
-
-            <handler name="onerror" reference="ds_poll"><![CDATA[
-                Debug.write("ds_poll onerror", this.sessionID);
-                classroot.failPoll();
-              ]]>
-            </handler>
-
-
-            <handler name="ontimeout" reference="ds_poll"><![CDATA[
-                Debug.write("ds_poll ontimeout", this.sessionID);
-                classroot.failPoll();
-              ]]>
-            </handler>
-
-
-        </node>
+	<pollhandler id="gPollHandler"/>
 
 
 	<connectscreen id="gConnectScreen" name="connectScreen"
@@ -879,7 +924,8 @@
 	    y="5"
 	    width="${parent.width - 10}"
 	    height="${parent.height - 10}"
-	    visible="${!classroot.connected}"
+	    visible="${classroot.gameMode == 'disconnected'}"
+	    active="${classroot.active &amp;&amp; this.visible}"
 	/>
 
 	<startscreen id="gStartScreen" name="startScreen"
@@ -887,7 +933,8 @@
 	    y="5"
 	    width="${parent.width - 10}"
 	    height="${parent.height - 10}"
-	    visible="${(classroot.gameMode == 'start') &amp;&amp; classroot.connected}"
+	    visible="${classroot.gameMode == 'start'}"
+	    active="${classroot.active &amp;&amp; this.visible}"
 	/>
 
 	<playscreen id="gPlayScreen" name="playScreen"
@@ -895,7 +942,8 @@
 	    y="0"
 	    width="${parent.width}"
 	    height="${parent.height}"
-	    visible="${(classroot.gameMode == 'play') &amp;&amp; classroot.connected}"
+	    visible="${classroot.gameMode == 'play'}"
+	    active="${classroot.active &amp;&amp; this.visible}"
 	/>
 
 

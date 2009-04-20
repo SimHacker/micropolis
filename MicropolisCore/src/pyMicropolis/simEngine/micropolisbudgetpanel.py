@@ -192,9 +192,9 @@ class MicropolisBudgetPanel(gtk.Frame):
         self.labelFireTitle = labelFireTitle
         vbox2.pack_start(labelFireTitle, False, False, 0)
 
-        labelFireRequest = gtk.Label('Request: $100,000')
-        self.labelFireRequest = labelFireRequest
-        vbox2.pack_start(labelFireRequest, False, False, 0)
+        labelFireFund = gtk.Label('Request: $100,000')
+        self.labelFireFund = labelFireFund
+        vbox2.pack_start(labelFireFund, False, False, 0)
 
         scaleFirePercent = gtk.HScale()
         self.scaleFirePercent = scaleFirePercent
@@ -221,9 +221,9 @@ class MicropolisBudgetPanel(gtk.Frame):
         self.labelPoliceTitle = labelPoliceTitle
         vbox3.pack_start(labelPoliceTitle, False, False, 0)
 
-        labelPoliceRequest = gtk.Label('Request: $100,000')
-        self.labelPoliceRequest = labelPoliceRequest
-        vbox3.pack_start(labelPoliceRequest, False, False, 0)
+        labelPoliceFund = gtk.Label('Request: $100,000')
+        self.labelPoliceFund = labelPoliceFund
+        vbox3.pack_start(labelPoliceFund, False, False, 0)
 
         scalePolicePercent = gtk.HScale()
         self.scalePolicePercent = scalePolicePercent
@@ -250,9 +250,9 @@ class MicropolisBudgetPanel(gtk.Frame):
         self.labelRoadTitle = labelRoadTitle
         vbox4.pack_start(labelRoadTitle, False, False, 0)
 
-        labelRoadRequest = gtk.Label('Road Request: $100,000')
-        self.labelRoadRequest = labelRoadRequest
-        vbox4.pack_start(labelRoadRequest, False, False, 0)
+        labelRoadFund = gtk.Label('Request: $100,000')
+        self.labelRoadFund = labelRoadFund
+        vbox4.pack_start(labelRoadFund, False, False, 0)
 
         scaleRoadPercent = gtk.HScale()
         self.scaleRoadPercent = scaleRoadPercent
@@ -345,19 +345,19 @@ class MicropolisBudgetPanel(gtk.Frame):
             self.labelBudget3.set_text('Previous Funds: ' + previousString)
             self.labelBudget4.set_text('Current Funds: ' + currentString)
 
-            self.labelFireRequest.set_text('Request: ' + fireWantString)
+            self.labelFireFund.set_text('Request: ' + fireWantString)
             self.labelFirePercent.set_text(firePercentString + ' = ' + fireGotString)
             value = int(firePercent * 100.0)
             if self.scaleFirePercent.get_value() != value:
                 self.scaleFirePercent.set_value(value)
 
-            self.labelPoliceRequest.set_text('Request: ' + policeWantString)
-            self.labelPolicePercent.set_text(policePercentString + ' = ' + policeGotString)
+            self.labelPoliceFund.set_text('Request: ' + policeWantString)
+p            self.labelPolicePercent.set_text(policePercentString + ' = ' + policeGotString)
             value = int(policePercent * 100.0)
             if self.scalePolicePercent.get_value() != value:
                 self.scalePolicePercent.set_value(value)
 
-            self.labelRoadRequest.set_text('Request: ' + roadWantString)
+            self.labelRoadFund.set_text('Request: ' + roadWantString)
             self.labelRoadPercent.set_text(roadPercentString + ' = ' + roadGotString)
             value = int(roadPercent * 100.0)
             if self.scaleRoadPercent.get_value() != value:
