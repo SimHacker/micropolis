@@ -53,8 +53,8 @@
 
 	    <method name="selectScenario"><![CDATA[
 		gApp.sendCommand(this.scenarioCommand);
-		gApp.setTitle(this.scenarioName);
-		gApp.setDescription(this.scenarioDescription);
+		gApp.setAttribute("title", "Scenario: " + this.scenarioName);
+		gApp.setAttribute("description", this.scenarioDescription);
 	      ]]>
 	    </method>
 

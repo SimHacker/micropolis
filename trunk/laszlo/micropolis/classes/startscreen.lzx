@@ -33,7 +33,7 @@
 	>
 
 	    <text name="title"
-		text="Micropolis: Choose a City"
+		text="${gApp.title}"
 		fontsize="20"
 		fontstyle="bold"
 		resize="true"
@@ -41,10 +41,26 @@
 		y="5"
 	    />
 
-	    <view name="descriptionView"
+	    <previewmapview name="previewMapView" id="gPreviewMapView"
 		y="${parent.title.y + parent.title.height + 5}"
+		active="${classroot.active}"
+		onclick="gApp.playWithThisCity()"
+	    />
+
+	    <button name="playButton"
+		text="Play With This Map"
+		fontsize="18"
+		fontstyle="bold"
+		onclick="gApp.playWithThisCity()"
+		y="${parent.previewMapView.y + parent.previewMapView.height + 5}"
 		width="${parent.previewMapView.width}"
-		height="${parent.previewMapView.y - this.y - 5}"
+		height="50"
+	    />
+
+	    <view name="descriptionView"
+		y="${parent.playButton.y + parent.playButton.height + 5}"
+		width="${parent.previewMapView.width}"
+		height="${parent.height - this.y - 5}"
 		clip="true"
 	    >
 
@@ -54,26 +70,10 @@
 		    fontsize="14"
 		    multiline="true"
 		    width="${parent.width - 15}"
-		>Welcome to Micropolis!<br/><br/>
-Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.<br/><br/>
-Then press the 'Play with This City' button below, to start playing Micropolis!</text>
+		    text="${gApp.description}"
+		/>
 
 	   </view>
-
-	    <previewmapview name="previewMapView" id="gPreviewMapView"
-		y="${parent.playButton.y - this.height - 5}"
-		active="${classroot.active}"
-	    />
-
-	    <button name="playButton"
-		text="Simulate This City"
-		fontsize="30"
-		fontstyle="bold"
-		onclick="gApp.playWithThisCity()"
-		y="${parent.height - this.height - 5}"
-		width="${parent.previewMapView.width}"
-		height="60"
-	    />
 
 	</view>
 

@@ -37,7 +37,7 @@
 
 	<view name="v"
 	    width="${parent.width - 20}"
-	    height="${parent.height - 45}"
+	    height="${parent.height - 20}"
 	    clip="true"
 	>
 

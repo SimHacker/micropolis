@@ -186,7 +186,7 @@
 		    multiline="true"
 		    text="${
 			'Speed: ' + 
-			(classroot.paused ? 'Paused...\n' : 'Running!\n') +
+			(gApp.paused ? 'Paused...\n' : 'Running!\n') +
 			classroot.speedNames[parent.speedSlider.value]
 		    }"
 		/>

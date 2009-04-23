@@ -14,8 +14,6 @@
 
 	<attribute name="active" value="true"/>
 
-        <attribute name="evaluationData" value="null"/>
-
 	<attribute name="problemNames" value="$once{[
 	    'Crime',
 	    'Pollution',
@@ -50,39 +48,31 @@
 
 	<handler name="oninit"><![CDATA[
 	    //Debug.write("==== evaluationview oninit", this);
-	    gApp.expressInterest(this, ['evaluation']);
 	  ]]>
 	</handler>
 
 
-	<handler name="onactive"><![CDATA[
-	    //Debug.write("==== evaluationview onactive", this, this.active);
-	  ]]>
-	</handler>
-
-
-	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("evaluationview handleUpdate args", args);
-	    this.evaluationData = args;
+	<handler name="onevaluation" args="args" reference="gApp"><![CDATA[
+	    //Debug.write("evaluationview onevaluation gApp", args);
 	    this.redrawView();
 	  ]]>
-	</method>
+	</handler>
 
 
 	<method name="redrawView"><![CDATA[
-	    var year = "";
-	    var population = "";
-	    var migration = "";
-	    var assessedValue = "";
-	    var category = "0";
-	    var gameLevel = "";
-	    var currentScore = "";
-	    var annualChange = "";
-	    var goodJob = "0";
+	    var year = 1900;
+	    var population = 0;
+	    var migration = 0;
+	    var assessedValue = 0;
+	    var category = 0;
+	    var gameLevel = 0;
+	    var currentScore = 0;
+	    var annualChange = 0;
+	    var goodJob = 50;
 	    var worstProblems = [];
 
-	    var d = this.evaluationData;
-	    //Debug.write("==== evaluationView redrawView evaluationData", d);
+	    var d = gApp.evaluation;
+	    //Debug.write("==== evaluationView redrawView d", d);
 
 	    if (d) {
 	         year = d['year'];
@@ -97,50 +87,72 @@
                  worstProblems = d['worstProblems'];
 	    }
 
+	    population = gApp.formatNumber(population, null);
 	    //Debug.write("population", population, this.v.populationView.t, this.v.populationView.t.text);
-	    this.v.populationView.t.setAttribute(
-	        "text",
-	        population);
+	    if (this.v.populationView.t.text != population) {
+		this.v.populationView.t.setAttribute(
+		    "text",
+		    population);
+	    }
 
-	    //Debug.write("migration", migration);
-	    this.v.migrationView.t.setAttribute(
-	        "text",
-	        migration);
+	    migration = gApp.formatNumber(migration, null);
+	    //Debug.write("migration", migration, this.v.migrationView.t, this.v.migrationView.t.text);
+	    if (this.v.migrationView.t.text != migration) {
+		this.v.migrationView.t.setAttribute(
+		    "text",
+		    migration);
+	    }
 
-	    //Debug.write("assessedValue", assessedValue);
-	    this.v.assessedValueView.t.setAttribute(
-	        "text",
-	        "$" + assessedValue);
+	    assessedValue = gApp.formatFunds(assessedValue);
+	    //Debug.write("assessedValue", assessedValue, this.v.assessedValueView.t, this.v.assessedValueView.t.text);
+	    if (this.v.assessedValueView.t.text != assessedValue) {
+		this.v.assessedValueView.t.setAttribute(
+		    "text",
+		    assessedValue);
+	    }
 
-	    //Debug.write("category", category);
-	    this.v.categoryView.t.setAttribute(
-	        "text",
-	        this.categoryNames[category]);
+	    category = categoryNames[category];
+	    //Debug.write("category", category, this.v.categoryView.t, this.v.categoryView.t.text);
+	    if (this.v.categoryView.t.text != category) {
+		this.v.categoryView.t.setAttribute(
+		    "text",
+		    category);
+	    }
 
-	    //Debug.write("gameLevel", gameLevel);
-	    this.v.gameLevelView.t.setAttribute(
-	        "text",
-	        this.levelNames[gameLevel]);
+	    gameLevel = this.levelNames[gameLevel];
+	    //Debug.write("gameLevel", gameLevel, this.v.gameLevelView.t, this.v.gameLevelView.t.text);
+	    if (this.v.gameLevelView.t.text != gameLevel) {
+		this.v.gameLevelView.t.setAttribute(
+		    "text",
+		    gameLevel);
+	    }
 
-	    //Debug.write("currentScore", currentScore);
-	    this.v.currentScoreView.t.setAttribute(
-	        "text",
-	        currentScore);
+	    currentScore = gApp.formatNumber(currentScore, null);
+	    //Debug.write("currentScore", currentScore, this.v.currentScoreView.t, this.v.currentScoreView.t.text);
+	    if (this.v.currentScoreView.t.text != currentScore) {
+		this.v.currentScoreView.t.setAttribute(
+		    "text",
+		    currentScore);
+	    }
 
-	    //Debug.write("annualChange", annualChange);
-	    this.v.annualChange.t.setAttribute(
-	        "text",
-	        annualChange);
+	    annualChange = gApp.formatNumber(annualChange, null);
+	    //Debug.write("annualChange", annualChange, this.v.annualChange.t, this.v.annualChange.t.text);
+	    if (this.v.annualChange.t.text != annualChange) {
+		this.v.annualChange.t.setAttribute(
+		    "text",
+		    annualChange);
+	    }
 
-            //Debug.write("goodJob", goodJob);
 	    var goodJobText =
 	        "Approve: " + goodJob + "%<br/>" +
-		"Disapprove: " + (100 - goodJob) + "%"
-	    this.v.goodJobView.t.setAttribute(
-	        "text",
-		goodJobText);
+		"Disapprove: " + (100 - goodJob) + "%";
+            //Debug.write("goodJob", goodJobText, this.v.goodJobView.t, this.v.goodJobView.t.text);
+	    if (this.v.goodJobView.t.text != goodJobText) {
+		this.v.goodJobView.t.setAttribute(
+		    "text",
+		    goodJobText);
+	    }
 
-	    //Debug.write("worstProblems", worstProblems);
 	    var worstProblemsText = "";
 	    var i;
 	    var n = worstProblems.length;
@@ -155,10 +167,12 @@
 	        a.push(s);
 	    }
 	    worstProblemsText = a.join('<br/>');
-	    //Debug.write("worstProblemsText", worstProblemsText);
-	    this.v.worstProblemsView.t.setAttribute(
-	        "text",
-		worstProblemsText);
+	    //Debug.write("worstProblems", worstProblemsText, this.v.worstProblemsView.t, this.v.worstProblemsView.t.text);
+	    if (this.v.worstProblemsView.t.text != worstProblemsText) {
+		this.v.worstProblemsView.t.setAttribute(
+		    "text",
+		    worstProblemsText);
+	    }
 
 	  ]]>
 	</method>
