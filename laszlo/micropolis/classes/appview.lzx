@@ -10,7 +10,7 @@
     <class name="appview">
 
 
-	<attribute name="active" value="true"/>
+        <attribute name="active" value="true"/>
         <attribute name="pollDelay" value="250"/>
         <attribute name="pollDelaySoon" value="10"/>
         <attribute name="animateDelay" value="250"/>
@@ -37,34 +37,41 @@
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
         <attribute name="quaking" value="0"/>
-	<attribute name="connected" value="false"/>
-	<attribute name="connecting" value="false"/>
-	<attribute name="connectionFailed" value="false"/>
-	<attribute name="paused" type="string" value="true"/>
-	<attribute name="speed" type="string" value="3"/>
-	<attribute name="taxRate" type="string" value="7"/>
-	<attribute name="roadPercent" type="string" value="100"/>
-	<attribute name="roadFund" type="string" value="0"/>
-	<attribute name="roadValue" type="string" value="0"/>
-	<attribute name="firePercent" type="string" value="100"/>
-	<attribute name="fireFund" type="string" value="0"/>
-	<attribute name="fireValue" type="string" value="0"/>
-	<attribute name="policePercent" type="string" value="100"/>
-	<attribute name="policeFund" type="string" value="0"/>
-	<attribute name="policeValue" type="string" value="0"/>
-	<attribute name="gameMode" type="string" value="disconnected"/>
-	<attribute name="gap" value="5"/>
-	<attribute name="nextUniqueID" value="1"/>
-	<attribute name="interests" value="$once{{}}"/>
-	<attribute name="worldW" value="120"/>
-	<attribute name="worldH" value="100"/>
-	<attribute name="overlay" type="string" value="all"/>
-	<attribute name="aboutURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/About"/>
-	<attribute name="helpURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/Help"/>
-	<attribute name="monthNames" value="$once{[
-	    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-	    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-	]}"/>
+        <attribute name="connected" value="false"/>
+        <attribute name="connecting" value="false"/>
+        <attribute name="connectionFailed" value="false"/>
+        <attribute name="title" type="string" value=""/>
+        <attribute name="description" type="string" value=""/>
+        <attribute name="paused" value="true"/>
+        <attribute name="speed" type="number" value="3"/>
+        <attribute name="funds" type="number" value="0"/>
+        <attribute name="year" type="number" value="1900"/>
+        <attribute name="month" type="number" value="0"/>
+        <attribute name="dateLabel" type="string" value=""/>
+        <attribute name="demand" value="null"/>
+        <attribute name="evaluation" value="null"/>
+        <attribute name="history" value="null"/>
+        <attribute name="taxRate" type="number" value="7"/>
+        <attribute name="roadPercent" type="number" value="100"/>
+        <attribute name="roadFund" type="number" value="0"/>
+        <attribute name="roadValue" type="number" value="0"/>
+        <attribute name="firePercent" type="number" value="100"/>
+        <attribute name="fireFund" type="number" value="0"/>
+        <attribute name="fireValue" type="number" value="0"/>
+        <attribute name="policePercent" type="number" value="100"/>
+        <attribute name="policeFund" type="number" value="0"/>
+        <attribute name="policeValue" type="number" value="0"/>
+        <attribute name="gameMode" type="string" value="disconnected"/>
+        <attribute name="gap" value="5"/>
+        <attribute name="nextUniqueID" value="1"/>
+        <attribute name="interests" value="$once{{}}"/>
+        <attribute name="overlay" type="string" value="all"/>
+        <attribute name="aboutURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/About"/>
+        <attribute name="helpURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/Help"/>
+        <attribute name="monthNames" value="$once{[
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ]}"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -72,9 +79,10 @@
             var codeMap = {};
             this.codeMap = codeMap;
 
-	    this.expressInterest(this, [
-	        'speed', 'paused', 'taxrate'
-	    ]);
+            this.expressInterest(this, [
+                'speed', 'paused', 'taxrate', 'date', 'funds', 
+                'demand', 'evaluation', 'history'
+            ]);
 
             var i;
             for (i = 0; i < codeString.length; i++) {
@@ -90,269 +98,337 @@
                 tileDictRows.push(tileDictRow);
             }
 
-	    this.requestStartSession();
+            this.requestStartSession();
 
-	    // Note: We must initialize interests above in the attribute once clause.
-	    // Because if we initialize it here, we are running after the children's
-	    // oninit's have been run, so we would wipe out their interests. 
+            // Note: We must initialize interests above in the attribute once clause.
+            // Because if we initialize it here, we are running after the children's
+            // oninit's have been run, so we would wipe out their interests. 
 
           ]]>
         </handler>
 
 
-	<handler name="ongameMode" args="arg"><![CDATA[
-	    switch (this.gameMode) {
-	        case 'disconnected': {
-		    break;
-		}
-	        case 'start': {
-		    break;
-		}
-	        case 'play': {
-		    break;
-		}
-	    }
-	  ]]>
-	</handler>
+        <handler name="ongameMode" args="arg"><![CDATA[
+            switch (this.gameMode) {
+                case 'disconnected': {
+                    break;
+                }
+                case 'start': {
+                    this.setAttribute(
+                        "title",
+                        "Micropolis: Choose a City");
+                    this.setAttribute(
+                        "description",
+                        "Welcome to Micropolis!<br/><br/>\n" +
+                        "Choose a city by selecting a scenario from " +
+                        "the 'Scenarios' tab, or generating a new " +
+                        "random city from the 'Generator' tab, or " +
+                        "loading a city in the library from the " +
+                        "'Library' tab.<br/><br/>\n" +
+                        "Then press the 'Play with This City' button " +
+                        "below, to start playing Micropolis!");
+                    break;
+                }
+                case 'play': {
+                    break;
+                }
+            }
+          ]]>
+        </handler>
 
 
-	<handler name="onpaused" args="arg"><![CDATA[
-	    var cmd =
-	        '<command name="setPaused" paused="' +
-		(this.paused ? 'true' : 'false') +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="onpaused" args="arg"><![CDATA[
+            var cmd =
+                '<command name="setPaused" paused="' +
+                (this.paused ? 'true' : 'false') +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="onspeed" args="arg"><![CDATA[
-	    var cmd =
-	        '<command name="setSpeed" speed="' +
-		this.speed +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="onspeed" args="arg"><![CDATA[
+            var cmd =
+                '<command name="setSpeed" speed="' +
+                this.speed +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="ontaxRate" args="arg"><![CDATA[
-	    var cmd =
-	        '<command name="setTaxRate" taxRate="' +
-		this.taxRate +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="ontaxRate" args="arg"><![CDATA[
+            var cmd =
+                '<command name="setTaxRate" taxRate="' +
+                this.taxRate +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="onroadPercent"><![CDATA[
-	    var cmd =
-	        '<command name="setRoadPercent" roadPercent="' + 
-		this.roadPercent +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="onroadPercent"><![CDATA[
+            var cmd =
+                '<command name="setRoadPercent" roadPercent="' + 
+                this.roadPercent +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="onfirePercent"><![CDATA[
-	    var cmd =
-	        '<command name="setFirePercent" firePercent="' + 
-		this.firePercent +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="onfirePercent"><![CDATA[
+            var cmd =
+                '<command name="setFirePercent" firePercent="' + 
+                this.firePercent +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="onpolicePercent"><![CDATA[
-	    var cmd =
-	        '<command name="setPolicePercent" policePercent="' + 
-		this.policePercent +
-		'"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</handler>
+        <handler name="onpolicePercent"><![CDATA[
+            var cmd =
+                '<command name="setPolicePercent" policePercent="' + 
+                this.policePercent +
+                '"/>';
+            this.sendCommand(cmd);
+          ]]>
+        </handler>
 
 
-	<handler name="onconnected" args="arg"><![CDATA[
-	    if (!this.connected) {
-	        this.setAttribute("gameMode", "disconnected");
-	    }
-	  ]]>
-	</handler>
+        <handler name="onconnected" args="arg"><![CDATA[
+            if (!this.connected) {
+                this.setAttribute("gameMode", "disconnected");
+            }
+          ]]>
+        </handler>
 
 
-	<handler name="onoverlay" args="arg"><![CDATA[
-	    this.updateMap();
-	  ]]>
-	</handler>
+        <handler name="onoverlay" args="arg"><![CDATA[
+            this.updateMap();
+          ]]>
+        </handler>
 
 
-	<method name="expressInterest" args="target, names"><![CDATA[
-	    var interests = this.interests;
-	    var n = names.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	    	var name = names[i];
-		if (!(name in interests)) {
-		    interests[name] = [target];
-		} else {
-		    var a = interests[name];
-		    var j = this.indexOf(a, target);
-		    if (j < 0) {
-			a.push(target);
-		    }
-		}
-	    }
-	  ]]>
-	</method>
+        <method name="expressInterest" args="target, names"><![CDATA[
+            var interests = this.interests;
+            var n = names.length;
+            var i;
+            for (i = 0; i < n; i++) {
+                var name = names[i];
+                if (!(name in interests)) {
+                    interests[name] = [target];
+                } else {
+                    var a = interests[name];
+                    var j = this.indexOf(a, target);
+                    if (j < 0) {
+                        a.push(target);
+                    }
+                }
+            }
+          ]]>
+        </method>
 
 
-	<method name="revokeInterest" args="target, names"><![CDATA[
-	    var interests = this.interests;
-	    var name;
-	    var n = names.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	    	var name = names[i];
-		if (!(name in interests)) {
-		    continue;
-		}
-		var a = interests[name]
-		var j = this.indexOf(a, target);
-		if (j >= 0) {
-		    a.splice(j, 1);
-		}
-	    }
-	  ]]>
-	</method>
+        <method name="revokeInterest" args="target, names"><![CDATA[
+            var interests = this.interests;
+            var name;
+            var n = names.length;
+            var i;
+            for (i = 0; i < n; i++) {
+                var name = names[i];
+                if (!(name in interests)) {
+                    continue;
+                }
+                var a = interests[name]
+                var j = this.indexOf(a, target);
+                if (j >= 0) {
+                    a.splice(j, 1);
+                }
+            }
+          ]]>
+        </method>
 
 
-	<method name="handleUpdate" args="args"><![CDATA[
+        <method name="handleUpdate" args="args"><![CDATA[
 
-	    //Debug.write("appview handleUpdate", this, args);
+            //Debug.write("appview handleUpdate", this, args);
 
-	    var aspect = args['aspect'];
+            var aspect = args['aspect'];
 
-	    switch (aspect) {
+            switch (aspect) {
 
-	        case 'speed': {
-		    var paused = parseInt(args['speed']);
-	            this.setAttribute("speed", speed);
-		    break;
-		}
+                case 'speed': {
+                    var paused = parseInt(args['speed']);
+                    if (this.speed != speed) {
+                        this.setAttribute("speed", speed);
+                    }
+                    break;
+                }
 
-		case 'paused': {
-		    var paused = args['paused'] == "true";
-		    if (this.paused != paused) {
-	                this.setAttribute("paused", paused);
-		    }
-		    break;
-		}
+                case 'paused': {
+                    var paused = args['paused'] == "true";
+                    if (this.paused != paused) {
+                        this.setAttribute("paused", paused);
+                    }
+                    break;
+                }
 
-		case 'taxrate': {
-		    var taxRate = parseInt(args['taxRate']);
-		    if (taxRate != this.taxRate) {
-	                this.setAttribute("taxRate", taxRate);
-		    }
-		    break;
-		}
+                case 'taxrate': {
+                    var taxRate = parseInt(args['taxRate']);
+                    if (taxRate != this.taxRate) {
+                        this.setAttribute("taxRate", taxRate);
+                    }
+                    break;
+                }
 
-		case 'budget': {
-		    var names = [
-			"taxRate",
-			"roadPercent",
-			"roadFund",
-			"roadValue",
-			"firePercent",
-			"fireFund",
-			"fireValue",
-			"policePercent",
-			"policeFund",
-			"policeValue"
-		    ];
-		    var n = names.length;
-		    var i;
-		    for (i = 0; i < n; i++) {
-		        var name = names[i];
-			var val = parseInt(args[name]);
-			if (this[name] != val) {
-	                    this.setAttribute(name, val);
-			}
-		    }
-		    break;
-		}
+                case 'date': {
+                    var year = args['year'];
+                    var month = args['month'];
+                    var dateLabel = this.formatMonthYear(month, year);
+                    if (this.year != year) {
+                        this.setAttribute("year", year);
+                    }
+                    if (this.month != month) {
+                        this.setAttribute("month", month);
+                    }
+                    if (this.dateLabel != dateLabel) {
+                        this.setAttribute("dateLabel", dateLabel);
+                    }
+                    break;
+                }
 
-	    }
+                case 'demand': {
+                    var demand = [
+                        args['resDemand'],
+                        args['comDemand'],
+                        args['indDemand']
+                    ];
+                    this.setAttribute("demand", demand);
+                    break;
+                }
 
-	  ]]>
-	</method>
-	
+                case 'evaluation': {
+                    var evaluation = args['evaluation'];
+                    this.setAttribute('evaluation', evaluation);
+                    break;
+                }
 
-	<method name="indexOf" args="a, obj"><![CDATA[
-	    var i;
-	    var n = a.length;
-	    for (i = 0; i < n; i++) {
-		if (a[i] == obj) {
-		    return i;
-		}
-	    }
-	    return -1;
-	  ]]>
-	</method>
+                case 'history': {
+                    var history = args['history'];
+                    this.setAttribute('history', history);
+                    break;
+                }
+
+                case 'funds': {
+                    var funds = args['funds'];
+                    var fundsLabel = this.formatFunds(funds);
+                    this.setAttribute("funds", funds);
+                    this.setAttribute("fundsLabel", fundsLabel);
+                    break;
+                }
+
+                case 'taxrate': {
+                    var taxRate = parseInt(args['taxRate']);
+                    if (taxRate != this.taxRate) {
+                        this.setAttribute("taxRate", taxRate);
+                    }
+                    break;
+                }
+
+                case 'budget': {
+                    var names = [
+                        "taxRate",
+                        "roadPercent",
+                        "roadFund",
+                        "roadValue",
+                        "firePercent",
+                        "fireFund",
+                        "fireValue",
+                        "policePercent",
+                        "policeFund",
+                        "policeValue"
+                    ];
+                    var n = names.length;
+                    var i;
+                    for (i = 0; i < n; i++) {
+                        var name = names[i];
+                        var val = parseInt(args[name]);
+                        if (this[name] != val) {
+                            this.setAttribute(name, val);
+                        }
+                    }
+                    break;
+                }
+
+            }
+
+          ]]>
+        </method>
+        
+
+        <method name="indexOf" args="a, obj"><![CDATA[
+            var i;
+            var n = a.length;
+            for (i = 0; i < n; i++) {
+                if (a[i] == obj) {
+                    return i;
+                }
+            }
+            return -1;
+          ]]>
+        </method>
 
 
-	<method name="makeUniqueID"><![CDATA[
-	    var uniqueID = this.nextUniqueID;
-	    this.nextUniqueID++;
-	    return uniqueID;
-	  ]]>
-	</method>
+        <method name="makeUniqueID"><![CDATA[
+            var uniqueID = this.nextUniqueID;
+            this.nextUniqueID++;
+            return uniqueID;
+          ]]>
+        </method>
 
 
-	<method name="requestStartSession"><![CDATA[
-	    this.setAttribute("gameMode", "disconnected");
-	    this.setAttribute("connected", false);
-	    this.setAttribute("connecting", true);
-	    this.setAttribute("connectionFailed", false);
+        <method name="requestStartSession"><![CDATA[
+            this.setAttribute("gameMode", "disconnected");
+            this.setAttribute("connected", false);
+            this.setAttribute("connecting", true);
+            this.setAttribute("connectionFailed", false);
 
             ds_session.setAttribute("src", "/server/micropolisSessionStart");
             ds_session.doRequest();
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
         <method name="startSession" args="sessionID"><![CDATA[
-	    this.setAttribute("gameMode", "start");
-	    this.setAttribute("connected", true);
-	    this.setAttribute("connecting", false);
-	    this.setAttribute("connectionFailed", false);
+            this.setAttribute("gameMode", "start");
+            this.setAttribute("connected", true);
+            this.setAttribute("connecting", false);
+            this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", sessionID);
             this.pollStart();
-	    this.animateStart();
+            this.animateStart();
 
-	    this.updateMap();
-
+            this.updateMap();
           ]]>
         </method>
 
 
         <method name="failSession"><![CDATA[
-	    this.setAttribute("gameMode", "disconnected");
-	    this.setAttribute("connected", false);
-	    this.setAttribute("connecting", false);
-	    this.setAttribute("connectionFailed", true);
+            this.setAttribute("gameMode", "disconnected");
+            this.setAttribute("connected", false);
+            this.setAttribute("connecting", false);
+            this.setAttribute("connectionFailed", true);
             this.setAttribute("sessionID", null);
             this.pollStop();
-	    this.animateStop();
+            this.animateStop();
           ]]>
         </method>
 
 
         <method name="failPoll"><![CDATA[
-	    this.failSession();
+            this.failSession();
           ]]>
         </method>
 
@@ -378,7 +454,7 @@
 
 
 <!--
-        <handler name="onidle" reference="LzIdleService.LzIdle"><![CDATA[
+        <handler name="onidle" reference="lz.IdleService.LzIdle"><![CDATA[
 
             this.idles++;
 
@@ -386,9 +462,9 @@
             var n = idlers.length;
             var i;
 
-	    for (i = 0; i < n; i++) {
-		idlers[i].idle();
-	    }
+            for (i = 0; i < n; i++) {
+                idlers[i].idle();
+            }
 
           ]]>
         </handler>
@@ -402,9 +478,9 @@
                 this.animatorsList.push(animator);
             }
 
-	    if (!this.animateActive) {
-	        this.animateStart();
-	    }
+            if (!this.animateActive) {
+                this.animateStart();
+            }
           ]]>
         </method>
 
@@ -416,16 +492,16 @@
                 this.animatorsList.splice(i, 1);
             }
 
-	    if (this.animateActive &&
-	        this.animatorsList.length == 0) {
-		this.animateStop();
-	    }
+            if (this.animateActive &&
+                this.animatorsList.length == 0) {
+                this.animateStop();
+            }
           ]]>
         </method>
 
 
         <method name="animateStart"><![CDATA[
-	    //Debug.write("animateStart");
+            //Debug.write("animateStart");
             if (this.animateActive) {
                 //Debug.write("animateStart already started");
                 return;
@@ -452,38 +528,38 @@
 
 
         <method name="animateStop"><![CDATA[
-	    //Debug.write("animateStop");
+            //Debug.write("animateStop");
             if (!this.animateActive) {
                 return;
             }
             lz.Timer.removeTimer(this.animateDelegate);
-	    this.animateActive = false;
+            this.animateActive = false;
           ]]>
         </method>
 
 
-	<method name="doAnimate" args="ignore"><![CDATA[
+        <method name="doAnimate" args="ignore"><![CDATA[
 
-	    //Debug.write("doAnimate");
+            //Debug.write("doAnimate");
 
-	    this.animationTicks++;
-	    this.newTiles = 0;
+            this.animationTicks++;
+            this.newTiles = 0;
 
             var animatorsList = this.animatorsList;
             var n = animatorsList.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	        animatorsList[i].doAnimate();
-	    }
+            var i;
+            for (i = 0; i < n; i++) {
+                animatorsList[i].doAnimate();
+            }
 
-	    this.animateContinue();
+            this.animateContinue();
 
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
         <method name="addPoller" args="poller"><![CDATA[
-            //Debug.write("appview addPoller", poller);
+            //Debug.write("appview addPoller", poller, this.pollers.length);
             var i = this.indexOf(this.pollers, poller);
             if (i < 0) {
                 this.pollers.push(poller);
@@ -493,7 +569,7 @@
 
 
         <method name="removePoller" args="poller"><![CDATA[
-            //Debug.write("appview removePoller", poller);
+            //Debug.write("appview removePoller", poller, this.pollers.length);
             var i = this.indexOf(this.pollers, poller);
             if (i >= 0) {
                 this.pollers.splice(i, 1);
@@ -503,6 +579,7 @@
 
 
         <method name="pollStart"><![CDATA[
+            //Debug.write("pollStart");
             if (this.pollActive) {
                 //Debug.write("pollStart already started");
                 return;
@@ -517,9 +594,9 @@
 
 
         <method name="pollContinue" args="soon"><![CDATA[
-	    //Debug.write("pollContinue", soon);
+            //Debug.write("pollContinue", soon);
             // This is a bit confused, and violates DRY. Refactor pollStart and pollContinue.
-	    //this.pollStop();
+            //this.pollStop();
             if (!this.pollDelegate) {
                 this.pollDelegate = new lz.Delegate(this, 'poll');
             }
@@ -531,16 +608,18 @@
 
 
         <method name="pollStop"><![CDATA[
+            //Debug.write("pollStop");
             if (!this.pollActive) {
                 return;
             }
             lz.Timer.removeTimer(this.pollDelegate);
-	    this.pollActive = false;
+            this.pollActive = false;
           ]]>
         </method>
 
 
         <method name="poll" args="ignore"><![CDATA[
+            //Debug.write("POLL!");
             var i, n;
             var body = [];
 
@@ -573,7 +652,7 @@
 
             body.push("</poll>");
 
-	    body = body.join("");
+            body = body.join("");
 
             //Debug.write(body);
 
@@ -584,37 +663,35 @@
                 body: body
             };
 
-	    this.pollStop();
+            this.pollStop();
 
             ds_poll.setAttribute("src", "/server/micropolisPoll");
             ds_poll.setQueryParams(params);
             ds_poll.setAttribute("querytype", "post");
             ds_poll.doRequest();
+            //Debug.write("SEND POLL");
 
           ]]>
         </method>
 
 
         <method name="sendCommand" args="command"><![CDATA[
-            Debug.write("$$$$ sendCommand", command);
+            if (typeof(command) != "string") {
+                command = command.serialize();
+            }
+            Debug.write("==== sendCommand", command);
             this.commandQueue.push(command);
-	    this.pollContinue(true);
+            this.pollContinue(true);
           ]]>
         </method>
 
 
-	<method name="updateMap"><![CDATA[
-	    this.handle_UIUpdate({
-	        aspect:'map'
-	    });
-	  ]]>
-	</method>
-
-
-	<method name="setDescription" args="txt"><![CDATA[
-	    this.startScreen.v1.descriptionView.description.setAttribute("text", txt);
-	  ]]>
-	</method>
+        <method name="updateMap"><![CDATA[
+            this.handle_UIUpdate({
+                aspect:'map'
+            });
+          ]]>
+        </method>
 
 
         <method name="updateTiles" args="col, row, cols, rows, format, codedTiles"><![CDATA[
@@ -623,7 +700,7 @@
 
             var tileDictRows = this.tileDictRows;
             var codeMap = this.codeMap;
-	    var aniTiles = gAniTiles;
+            var aniTiles = gAniTiles;
 
             switch (format) {
 
@@ -689,15 +766,15 @@
                         return codeMap[c1] + (codeMap[c2] * 64) + (codeMap[c2] * 4096);
                     }
 
-		    var charHandlers = {
-			'.': function() { tileOffset += 1; },
-			':': function() { tileOffset += 2; },
-			',': function() { tileOffset += 3; },
-			';': function() { tileOffset += 4; },
-			'!': function() { tileOffset += getNumber1() + 2; },
-			'@': function() { tileOffset += getNumber2() + 2; },
-			'#': function() { tileOffset += getNumber3() + 2; }
-		    };
+                    var charHandlers = {
+                        '.': function() { tileOffset += 1; },
+                        ':': function() { tileOffset += 2; },
+                        ',': function() { tileOffset += 3; },
+                        ';': function() { tileOffset += 4; },
+                        '!': function() { tileOffset += getNumber1() + 2; },
+                        '@': function() { tileOffset += getNumber2() + 2; },
+                        '#': function() { tileOffset += getNumber3() + 2; }
+                    };
 
                     while ((tileOffset >= 0) && 
                            (tileOffset < tileOffsetMax) &&
@@ -706,11 +783,11 @@
                         var c1 = codedTiles.substr(codeOffset, 1);
                         codeOffset++;
 
-			var charHandler = charHandlers[c1];
-			if (charHandler) {
-			    charHandler();
-			    continue;
-			}
+                        var charHandler = charHandlers[c1];
+                        if (charHandler) {
+                            charHandler();
+                            continue;
+                        }
 
                         var c2 = codedTiles.substr(codeOffset, 1);
                         codeOffset++
@@ -762,197 +839,207 @@
         </method>
 
 
-	<method name="resetCity"><![CDATA[
+        <method name="resetCity"><![CDATA[
 
-	    // TODO: Reset stuff for a new city.
+            // TODO: Reset stuff for a new city.
 
-	    this.setAttribute("quaking", 0);
+            this.setAttribute("quaking", 0);
+            this.updateMap();
 
-	  ]]>
+          ]]>
         </method>
 
 
-	<method name="abandonCity"><![CDATA[
-	    Debug.write("abandonCity");
-	    this.sendCommand('<command name="abandonCity"/>');
-	  ]]>
-	</method>
+        <method name="abandonCity"><![CDATA[
+            //Debug.write("abandonCity");
+            this.sendCommand('<command name="abandonCity"/>');
+          ]]>
+        </method>
 
 
-	<method name="saveCity"><![CDATA[
-	    Debug.write("saveCity");
-	    this.sendCommand('<command name="saveCity"/>');
-	  ]]>
-	</method>
+        <method name="saveCity"><![CDATA[
+            //Debug.write("saveCity");
+            this.sendCommand('<command name="saveCity"/>');
+          ]]>
+        </method>
 
 
-	<method name="help"><![CDATA[
-	    lz.Browser.loadURL(
-	        this.helpURL,
-		'_blank');
-	  ]]>
-	</method>
+        <method name="help"><![CDATA[
+            lz.Browser.loadURL(
+                this.helpURL,
+                '_blank');
+          ]]>
+        </method>
 
 
-	<method name="about"><![CDATA[
-	    lz.Browser.loadURL(
-	        this.aboutURL,
-		'_blank');
-	  ]]>
-	</method>
+        <method name="about"><![CDATA[
+            lz.Browser.loadURL(
+                this.aboutURL,
+                '_blank');
+          ]]>
+        </method>
 
 
-	<method name="handle_UIUpdate" args="args"><![CDATA[
-	    var aspect = args['aspect'];
-	    var interests = this.interests;
-	    //Debug.write("**** UIUpdate", aspect, args);
-	    
-	    if (!(aspect in interests)) {
-	       return;
-	    }
+        <method name="handle_UIUpdate" args="args"><![CDATA[
+            var aspect = args['aspect'];
+            var interests = this.interests;
+            //Debug.write("==== UIUpdate", aspect, args);
+            
+            if (!(aspect in interests)) {
+               return;
+            }
 
-	    var a = interests[aspect];
-	    //Debug.write("UPDATE ASPECT", aspect, a, args);
-	    var n = a.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	    	var target = a[i];
-	        target.handleUpdate(args);
-	    }
-	  ]]>
-	</method>
-
-
-	<method name="handle_UIDidGenerateNewCity" args="args"><![CDATA[
-	    this.resetCity();
-	  ]]>
-	</method>
+            var a = interests[aspect];
+            //Debug.write("UPDATE ASPECT", aspect, a, args);
+            var n = a.length;
+            var i;
+            for (i = 0; i < n; i++) {
+                var target = a[i];
+                target.handleUpdate(args);
+            }
+          ]]>
+        </method>
 
 
-	<method name="handle_UIDidLoadCity" args="args"><![CDATA[
-	    this.resetCity();
-	  ]]>
-	</method>
+        <method name="handle_UIDidGenerateNewCity" args="args"><![CDATA[
+            //Debug.write("UIDidGenerateNewCity");
+            this.resetCity();
+          ]]>
+        </method>
 
 
-	<method name="handle_UIDidLoadScenario" args="args"><![CDATA[
-	    this.resetCity();
+        <method name="handle_UIDidLoadCity" args="args"><![CDATA[
+            //Debug.write("UIDidLoadCity");
+            this.resetCity();
+          ]]>
+        </method>
+
+
+        <method name="handle_UIDidLoadScenario" args="args"><![CDATA[
+            //Debug.write("UIDidLoadScenario");
+            this.resetCity();
             var scenario = args['scenario'];
-	    var number = 49 + scenario;
-	    gNoticeView.setCurrentNotice(number, null, null);
-	  ]]>
-	</method>
+            var number = 49 + scenario;
+            gNoticeView.setCurrentNotice(number, null, null);
+          ]]>
+        </method>
 
 
-	<method name="handle_UIStartEarthquake" args="args"><![CDATA[
-	    this.setAttribute("quaking", parseInt(args['magnitude']));
-	  ]]>
-	</method>
+        <method name="handle_UIStartEarthquake" args="args"><![CDATA[
+            this.setAttribute("quaking", parseInt(args['magnitude']));
+          ]]>
+        </method>
 
 
-	<method name="handle_UIStopEarthquake" args="args"><![CDATA[
-	    this.setAttribute("quaking", 0);
-	  ]]>
-	</method>
+        <method name="handle_UIStopEarthquake" args="args"><![CDATA[
+            this.setAttribute("quaking", 0);
+          ]]>
+        </method>
 
 
-	<method name="handle_UIShowBudgetAndWait" args="args"><![CDATA[
-	    Debug.write("Show budget and wait...");
-	  ]]>
-	</method>
+        <method name="handle_UIShowBudgetAndWait" args="args"><![CDATA[
+            //Debug.write("Show budget and wait...");
+          ]]>
+        </method>
 
 
-	<method name="handle_UIMakeSound" args="args"><![CDATA[
-	    var channel = args['channel'];
-	    var sound = args['sound'];
-	    //Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
-	  ]]>
-	</method>
+        <method name="handle_UIMakeSound" args="args"><![CDATA[
+            var channel = args['channel'];
+            var sound = args['sound'];
+            //Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
+          ]]>
+        </method>
 
 
-	<method name="handle_UINewGame" args="args"><![CDATA[
-	    Debug.write("UINewGame");
-	  ]]>
-	</method>
+        <method name="handle_UINewGame" args="args"><![CDATA[
+            //Debug.write("UINewGame");
+          ]]>
+        </method>
 
 
-	<method name="playWithThisCity"><![CDATA[
-	    this.setAttribute("gameMode", "play");
-	    this.sendCommand('<command name="setGameMode" gameMode="play"/>');
-	  ]]>
-	</method>
+        <method name="playWithThisCity"><![CDATA[
+            this.setAttribute("gameMode", "play");
+            this.sendCommand('<command name="setGameMode" gameMode="play"/>');
+          ]]>
+        </method>
 
 
-	<method name="chooseCity"><![CDATA[
-	    this.setAttribute("gameMode", "start");
-	    this.sendCommand('<command name="setGameMode" gameMode="start"/>');
-	  ]]>
-	</method>
+        <method name="chooseCity"><![CDATA[
+            this.setAttribute("gameMode", "start");
+            this.sendCommand('<command name="setGameMode" gameMode="start"/>');
+          ]]>
+        </method>
 
 
-	<method name="formatFunds" args="funds"><![CDATA[
-	    var minus = (funds < 0);
-	    if (minus) {
-	        funds = -funds;
-	    }
-
-	    var digits = "" + funds;
-
-	    var a = [];
-	    while (digits.length > 0) {
-		a.unshift(digits.substr(-3, 3));
-		digits = digits.substr(0, digits.length - 3);
-	    }
-
-	    var fundsStr = 
-	        (minus ? "-" : "") +
-		'$' +
-		a.join(',');
-
-	    return fundsStr;
-	  ]]>
-	</method>
+        <method name="formatFunds" args="funds"><![CDATA[
+            return this.formatNumber(funds, '$');
+          ]]>
+        </method>
 
 
-	<method name="formatMonthYear" args="month, year"><![CDATA[
-	    var monthName = this.monthNames[month];
-	    var monthYear = monthName + " " + year;
-	    return monthYear;
-	  ]]>
-	</method>
+        <method name="formatNumber" args="n, dollar"><![CDATA[
+            var minus = (n < 0);
+            if (minus) {
+                n = -n;
+            }
+
+            var digits = "" + n;
+
+            var a = [];
+            while (digits.length > 0) {
+                a.unshift(digits.substr(-3, 3));
+                digits = digits.substr(0, digits.length - 3);
+            }
+
+            var nStr = 
+                (minus ? "-" : "") +
+                (dollar ? dollar : '') +
+                a.join(',');
+
+            return nStr;
+          ]]>
+        </method>
 
 
-	<sessionhandler id="gSessionHandler"/>
+        <method name="formatMonthYear" args="month, year"><![CDATA[
+            var monthName = this.monthNames[month];
+            var monthYear = monthName + " " + year;
+            return monthYear;
+          ]]>
+        </method>
 
-	<pollhandler id="gPollHandler"/>
+
+        <sessionhandler id="gSessionHandler"/>
+
+        <pollhandler id="gPollHandler"/>
 
 
-	<connectscreen id="gConnectScreen" name="connectScreen"
-	    x="5"
-	    y="5"
-	    width="${parent.width - 10}"
-	    height="${parent.height - 10}"
-	    visible="${classroot.gameMode == 'disconnected'}"
-	    active="${classroot.active &amp;&amp; this.visible}"
-	/>
+        <connectscreen id="gConnectScreen" name="connectScreen"
+            x="5"
+            y="5"
+            width="${parent.width - 10}"
+            height="${parent.height - 10}"
+            visible="${classroot.gameMode == 'disconnected'}"
+            active="${classroot.active &amp;&amp; this.visible}"
+        />
 
-	<startscreen id="gStartScreen" name="startScreen"
-	    x="5"
-	    y="5"
-	    width="${parent.width - 10}"
-	    height="${parent.height - 10}"
-	    visible="${classroot.gameMode == 'start'}"
-	    active="${classroot.active &amp;&amp; this.visible}"
-	/>
+        <startscreen id="gStartScreen" name="startScreen"
+            x="5"
+            y="5"
+            width="${parent.width - 10}"
+            height="${parent.height - 10}"
+            visible="${classroot.gameMode == 'start'}"
+            active="${classroot.active &amp;&amp; this.visible}"
+        />
 
-	<playscreen id="gPlayScreen" name="playScreen"
-	    x="0"
-	    y="0"
-	    width="${parent.width}"
-	    height="${parent.height}"
-	    visible="${classroot.gameMode == 'play'}"
-	    active="${classroot.active &amp;&amp; this.visible}"
-	/>
+        <playscreen id="gPlayScreen" name="playScreen"
+            x="0"
+            y="0"
+            width="${parent.width}"
+            height="${parent.height}"
+            visible="${classroot.gameMode == 'play'}"
+            active="${classroot.active &amp;&amp; this.visible}"
+        />
 
 
     </class>

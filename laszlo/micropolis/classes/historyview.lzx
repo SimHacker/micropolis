@@ -13,9 +13,6 @@
 
 
 	<attribute name="active" value="true"/>
-        <attribute name="historyScales" value="null"/>
-	<attribute name="year" value="1900"/>
-	<attribute name="month" value="0"/>
 	<attribute name="yearLabels" value="$once{[]}"/>
 
 	<attribute name="historyColors" value="$once{[
@@ -41,11 +38,14 @@
 	]}"/>
 
 	<attribute name="legendWidth" value="100"/>
-	<attribute name="legendItemHeight" value="19"/>
+	<attribute name="legendItemHeight" value="20"/>
 	<attribute name="bottomEdgeHeight" value="30"/>
 	<attribute name="gap" value="5"/>
 	<attribute name="border" value="3"/>
 	<attribute name="historyScale" value="1"/>
+	<attribute name="historyCount" value="120"/>
+	<attribute name="historyTypeCount" value="6"/>
+	<attribute name="historyScaleCount" value="2"/>
 	<attribute name="fillColorNormal" value="0xb0b0b0"/>
 	<attribute name="fillColorSelected" value="0xffffff"/>
 	<attribute name="strokeColor" value="0x000000"/>
@@ -54,14 +54,13 @@
 	<attribute name="redrawingSoon" value="false"/>
 
 
-	<handler name="oninit"><![CDATA[
+	<handler name="oninit" args="arg"><![CDATA[
 	    //Debug.write("==== historyview oninit", this);
-	    gApp.expressInterest(this, ['history']);
 	  ]]>
 	</handler>
 
 
-	<handler name="onwidth"><![CDATA[
+	<handler name="onwidth" args="width"><![CDATA[
 	    if (this.inited) {
     	        this.redrawSoon();
 	    }
@@ -69,7 +68,7 @@
 	</handler>
 
 
-	<handler name="onheight"><![CDATA[
+	<handler name="onheight" args="height"><![CDATA[
 	    if (this.inited) {
 	        this.redrawSoon();
 	    }
@@ -77,8 +76,10 @@
 	</handler>
 
 
-	<handler name="onactive"><![CDATA[
-	    //Debug.write("==== historyview onactive", this, this.active);
+	<handler name="onhistory" args="arg" reference="gApp"><![CDATA[
+	    if (this.inited) {
+	        this.redrawSoon();
+	    }
 	  ]]>
 	</handler>
 
@@ -103,16 +104,6 @@
 	    //Debug.write("================ handleRedraw", this, this.redrawingSoon, arg);
 	    this.redrawingSoon = false;
 	    lz.Timer.removeTimer(this.redrawDelegate);
-	    this.drawHistory();
-	  ]]>
-	</method>
-
-
-	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("********** historyview handleUpdate args", args);
-	    this.setAttribute("historyScales", args['historyScales']);
-	    this.setAttribute('year', args['year']);
-	    this.setAttribute('month', args['month']);
 	    this.drawHistory();
 	  ]]>
 	</method>
@@ -163,8 +154,10 @@
 	        return;
 	    }
 
-	    this.setAttribute("historyScale", historyScale);
-	    this.redrawSoon(); 
+	    if (historyScale != this.historyScale) {
+		this.setAttribute("historyScale", historyScale);
+		this.redrawSoon(); 
+	    }
 	  ]]>
 	</method>
 
@@ -184,16 +177,13 @@
 
 	<method name="drawHistory"><![CDATA[
 	    //Debug.write("==== DRAWHISTORY");
-	    var historyScales = this.historyScales;
+	    var history = gApp.history;
 
-	    if (!historyScales) {
+	    if (!history) {
 	        return;
 	    }
 
 	    var dv = this.v.dv;
-	    var historyCount = 120;
-	    var historyTypeCount = 6;
-	    var historyScaleCount = 2;
 
 	    var historyTypes = this.historyTypes;
 
@@ -205,7 +195,7 @@
 
 	    function getHistoryRange(scale, type)
 	    {
-	        var scaleDict = historyScales[scale];
+	        var scaleDict = history[scale];
 		var histories = scaleDict['histories'];
 		var historyDict = histories[type];
 		var range = historyDict['valueRange'];
@@ -214,7 +204,7 @@
 
 	    function getHistory(scale, type, index)
 	    {
-	        var scaleDict = historyScales[scale];
+	        var scaleDict = history[scale];
 		var histories = scaleDict['histories'];
 		var historyDict = histories[type];
 		var valueScale = historyDict['valueScale'];
@@ -342,7 +332,7 @@
 		dv.beginPath();
 
 		var historyIndex;
-		for (historyIndex = historyCount - 1;
+		for (historyIndex = this.historyCount - 1;
 		     historyIndex >= 0;
 		     historyIndex -= 1) {
 
@@ -356,7 +346,7 @@
 
 		    var x = (
 		        histX +
-			(historyIndex * (histWidth / (historyCount - 1))));
+			(historyIndex * (histWidth / (this.historyCount - 1))));
 
 		    var y = (
 		        histY +
@@ -378,8 +368,8 @@
 
 	    // Draw years.
 
-	    var year = this.year;
-	    var month = this.month;
+	    var year = gApp.year;
+	    var month = gApp.month;
 
 	    dv.lineWidth = 1;
 
@@ -403,6 +393,9 @@
 	    }
 
 	    var y = histHeight + this.bottomEdgeHeight;
+
+	    var fontsize =
+	        Math.max(1, Math.min(Math.floor((histWidth - 40) / 40), 24));
 
 	    var yearLabels = this.yearLabels;
 	    var labelIndex;
@@ -431,15 +424,13 @@
 
 		yy += 1; // Fudge the position.
 
-		// TODO: Move and configure text label.
-
 		while (labelIndex >= yearLabels.length) {
 		    var newLabel = 
 		        new lz.text(
 			    v.labelView,
 			    {
 				resize: true,
-				fontsize: 14,
+				fontsize: fontsize,
 				fontstyle: 'bold'
 			    });
 		    yearLabels.push(newLabel);
@@ -455,6 +446,10 @@
 		    yearLabel.setAttribute("x", xx);
 		}
 
+		if (yearLabel.fontsize != fontsize) {
+		    yearLabel.setAttribute("fontsize", fontsize);
+		}
+
 		if (!yearLabel.visible) {
 		    yearLabel.setAttribute("visible", true);
 		}
@@ -465,7 +460,9 @@
 	         labelIndex < yearLabels.length;
 		 labelIndex++) {
 	        var label = yearLabels[labelIndex];
-		label.setAttribute("visible", false);
+		if (label.visible) {
+		    label.setAttribute("visible", false);
+		}
 	    }
 
 	    dv.beginPath();
@@ -506,13 +503,13 @@
 		</handler>
 
 	        <method name="handleUpdate"><![CDATA[
-		    //Debug.write("drawview handleUpdate", classroot.historyScales);
+		    //Debug.write("drawview handleUpdate", classroot.history);
 		    this.redrawView();
 		  ]]>
 		</method>
 
 	        <method name="redrawView"><![CDATA[
-		    //Debug.write("drawview redrawView", "historyScales", classroot.historyScales);
+		    //Debug.write("drawview redrawView", "history", classroot.history);
 		  ]]>
 		</method>
 
@@ -520,7 +517,7 @@
 
 	    <view name="labelView"
 	        x="0"
-		y="${parent.dv.y + parent.dv.height - classroot.bottomEdgeHeight + classroot.gap}"
+		y="${parent.dv.y + parent.dv.height - classroot.bottomEdgeHeight}"
 		width="${parent.dv.width}"
 		height="${parent.dv.y + parent.dv.height - this.y}"
 		clip="true"
@@ -536,7 +533,7 @@
 	        <simplelayout
 		    axis="y" 
 		    inset="0" 
-		    spacing="1"
+		    spacing="2"
 		/>
 
 
@@ -547,113 +544,9 @@
 		    <simplelayout
 			axis="y" 
 			inset="0" 
-			spacing="1"
+			spacing="0"
 		    />
 
-
-<!--
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0x00ff00"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Residential"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(0, this.value)"
-			/>
-		    </view>
-
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0x0000a0"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Commercial"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(1, this.value)"
-			/>
-		    </view>
-
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0xffff00"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Industrial"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(2, this.value)"
-			/>
-		    </view>
-
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0x008000"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Money"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(3, this.value)"
-			/>
-		    </view>
-
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0xff0000"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Crime"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(4, this.value)"
-			/>
-		    </view>
-
-		    <view
-			width="${parent.width}"
-			height="${classroot.legendItemHeight}"
-			bgcolor="0x507020"
-		    >
-			<mycheckbox
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="Pollution"
-			    bgcolor="0xffffff"
-			    value="true"
-			    onchanged="classroot.setHistoryType(5, this.value)"
-			/>
-		    </view>
--->
 
 		    <view
 			datapath="ds_histories:/histories/history"
@@ -677,13 +570,6 @@
 			    var value = 
 				gApp.indexOf(classroot.historyTypes, this.type) >= 0;
 			    this.cb.setAttribute("value", value);
-			    var attributes = this.data.attributes;
-			    //Debug.write(attributes);
-			    this.setAttribute("label", attributes['label']);
-			    this.setAttribute("description", attributes['description']);
-			    this.setAttribute("type", parseInt(attributes['type']));
-			    this.setAttribute("color", parseInt(attributes['color']));
-			    this.setAttribute("range", parseInt(attributes['range']));
 			  ]]>
 			</handler>
 

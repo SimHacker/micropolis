@@ -9,24 +9,9 @@
 
     <class name="navigationmapview" extends="mapview"
 	tileSize="2"
+	onmousedown="this.startDragging()"
+	onmouseup="this.stopDragging()"
     >
-
-
-        <attribute name="tileView" value="null"/>
-
-
-	<view name="dragger"
-	    x="10"
-	    y="10"
-	    width="40"
-	    height="40"
-	    opacity="0.5"
-	    bgcolor="0xffffff"
-	    onmousedown="this.dragger.setAttribute('applied', true)"
-	    onmouseup="this.dragger.setAttribute('applied', false)"
-	>
-            <dragstate name="dragger"/>
-	</view>
 
 
     </class>

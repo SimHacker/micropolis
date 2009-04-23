@@ -42,7 +42,8 @@
 
 		<method name="loadCity"><![CDATA[
 		    gApp.sendCommand(this.loadCityCommand);
-		    gApp.setDescription("Loaded city: " + this.text);
+		    gApp.setAttribute("title", "Loaded Map: " + this.text);
+		    gApp.setAttribute("description", "Loaded a map from the library: " + this.text);
 		  ]]>
 		</method>
 

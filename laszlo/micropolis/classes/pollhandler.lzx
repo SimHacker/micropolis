@@ -17,7 +17,7 @@
 
 
 	<handler name="ondata" args="arg"><![CDATA[
-	    //Debug.write("ds_poll");
+	    //Debug.write("ds_poll ondata");
 
 	    var poll = ds_poll.data;
 	    var pollChildren = poll['childNodes'];
@@ -122,9 +122,9 @@
 				    json = JSON.parse(text);
 				}
 
-				//Debug.write("JSON", json)
-
+				//Debug.write("CALLING", method, json)
 				method.call(classroot, json);
+				//Debug.write("CALLED");
 			    }
 
 			    break;

@@ -9,6 +9,7 @@
 
     <class name="statusview"
 	clip="true"
+	height="${this.demandGauge.y + this.demandGauge.height + this.gap}"
     >
 
 
@@ -23,17 +24,9 @@
 	</handler>
 
 
-	<navigationmapview name="navigationMapView" id="gNavigationMapView"
-	    x="${classroot.gap}"
-	    y="${classroot.gap}"
-	    tileView="${this.tileView}"
-	    active="${classroot.active}"
-	    overlay="${gApp.overlay}"
-	/>
-
 	<demandgauge name="demandGauge" id="gDemandGauge"
 	    x="${classroot.gap}"
-	    y="${parent.navigationMapView.y + parent.navigationMapView.height + classroot.gap}"
+	    y="${classroot.gap}"
 	    active="${classroot.active}"
 	/>
 
@@ -41,6 +34,7 @@
 	    x="${parent.demandGauge.x + parent.demandGauge.width + classroot.gap}"
 	    y="${parent.demandGauge.y}"
 	    width="${(parent.width - classroot.gap) - this.x}"
+	    height="${parent.demandGauge.height}"
 	    active="${classroot.active}"
 	/>
 

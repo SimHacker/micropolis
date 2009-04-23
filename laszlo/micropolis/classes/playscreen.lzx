@@ -18,6 +18,7 @@
         <attribute name="panelResizeBarY" value="200"/>
         <attribute name="panelResizeBar2X" value="250"/>
         <attribute name="panelResizeBarSize" value="10"/>
+        <attribute name="gap" value="5"/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -46,6 +47,41 @@
 	    clip="true"
 	>
 
+	    <view name="left"
+		x="${classroot.gap}"
+		y="${classroot.gap}"
+		width="${parent.vsep1.x - (classroot.gap * 2)}"
+		height="${parent.parent.height - (classroot.gap * 2)}"
+	    >
+
+	        <simplelayout
+		    axis="y"
+		    spacing="5"
+		/>
+		    
+		<navigationmapview name="navigationMapView" id="gNavigationMapView"
+		    tileView="${parent.parent.tileView}"
+		    active="${classroot.active}"
+		    overlay="${gApp.overlay}"
+		/>
+
+		<statusview name="statusView" id="gStatusView"
+		    active="${classroot.active}"
+		    width="${parent.width - this.x}"
+		/>
+
+	    </view>
+
+	    <tileview name="tileView" id="gTileView"
+		x="${parent.vsep1.x + parent.vsep1.width}"
+		y="0"
+		width="${parent.width - this.x}"
+		height="${parent.height - this.y}"
+		bgcolor="0xBC6F56"
+		active="${classroot.active}"
+		navigationMapView="${parent.left.navigationMapView}"
+	    />
+
 	    <vresizebar name="vsep1" id="gVSep1"
 		trackvar="'panelResizeBar2X'"
 		maxx="${parent.width - this.width}"
@@ -55,24 +91,6 @@
 		width="${classroot.panelResizeBarSize}"
 		height="${parent.height - this.y}"
 		overhang="0"
-	    />
-
-	    <statusview name="statusView" id="gStatusView"
-		x="0"
-		y="0"
-		width="${parent.vsep1.x}"
-		height="${parent.parent.height}"
-		tileView="${parent.tileView}"
-		active="${classroot.active}"
-	    />
-
-	    <tileview name="tileView" id="gTileView"
-		x="${parent.vsep1.x + parent.vsep1.width}"
-		y="0"
-		width="${parent.width - this.x}"
-		height="${parent.height - this.y}"
-		bgcolor="0xBC6F56"
-		active="${classroot.active}"
 	    />
 
 	</view>

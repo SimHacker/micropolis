@@ -14,19 +14,22 @@
 
         <attribute name="active" value="true"/>
         <attribute name="uniqueID" value="null"/>
-        <attribute name="worldCols" value="120"/>
-        <attribute name="worldRows" value="100"/>
-        <attribute name="tileSize" value="32"/>
+        <attribute name="zoom" value="2"/>
+        <attribute name="tileSize" value="16"/>
+        <attribute name="viewTileSize" value="${this.zoom * this.tileSize}"/>
         <attribute name="viewCol" value="0"/>
         <attribute name="viewRow" value="0"/>
         <attribute name="viewCols" value="0"/>
         <attribute name="viewRows" value="0"/>
-        <attribute name="worldX" value="${-this.container.x}"/>
-        <attribute name="worldY" value="${-this.container.y}"/>
-        <attribute name="screenCol" value="${Math.floor(this.worldX / this.tileSize)}"/>
-        <attribute name="screenRow" value="${Math.floor(this.worldY / this.tileSize)}"/>
-        <attribute name="screenCols" value="${Math.floor(2 + (this.width / this.tileSize))}"/>
-        <attribute name="screenRows" value="${Math.floor(2 + (this.height / this.tileSize))}"/>
+        <attribute name="viewX" value="${-(this.container.x / this.viewTileSize)}"/>
+        <attribute name="viewY" value="${-(this.container.y / this.viewTileSize)}"/>
+        <attribute name="viewWidth" value="${this.width / this.viewTileSize}"/>
+        <attribute name="viewHeight" value="${this.height / this.viewTileSize}"/>
+        <attribute name="screenCol" value="${Math.floor(this.viewX)}"/>
+        <attribute name="screenRow" value="${Math.floor(this.viewY)}"/>
+        <attribute name="screenCols" value="${Math.floor(2 + this.viewWidth)}"/>
+        <attribute name="screenRows" value="${Math.floor(2 + this.viewHeight)}"/>
+        <attribute name="navigationMapView" value="null"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -60,14 +63,26 @@
         </handler>
 
 
-        <handler name="onwidth"><![CDATA[
-            this.handleUpdateSize();
+        <handler name="onviewX"><![CDATA[
+            this.handleUpdateViewRect();
           ]]>
         </handler>
 
 
-        <handler name="onheight"><![CDATA[
-            this.handleUpdateSize();
+        <handler name="onviewY"><![CDATA[
+            this.handleUpdateViewRect();
+          ]]>
+        </handler>
+
+
+        <handler name="onviewWidth"><![CDATA[
+            this.handleUpdateViewRect();
+          ]]>
+        </handler>
+
+
+        <handler name="onviewHeight"><![CDATA[
+            this.handleUpdateViewRect();
           ]]>
         </handler>
 
@@ -78,19 +93,31 @@
         </handler>
 
 
-        <method name="handleUpdateSize"><![CDATA[
-            var v = (this.width > 0) && (this.height > 0);
-            if (v != this.visible) {
-                this.setAttribute("visible", v);
-            }
-            this.refreshView();
-          ]]>
-        </method>
+	<method name="constrainPan"><![CDATA[
+	  ]]>
+	</method>
 
 
-        <method name="refreshView"><![CDATA[
-            // TODO: tileview refreshView
-            //this.doAnimate();
+	<method name="scrollView" args="x, y"><![CDATA[
+	    var container = this.container;
+	    x = -(x * this.viewTileSize);
+	    if (x != container.x) {
+	        container.setAttribute("x", x);
+	    }
+	    y = -(y * this.viewTileSize);
+	    if (y != container.y) {
+	        container.setAttribute("y", y);
+	    }
+	    this.constrainPan();
+	  ]]>
+	</method>
+
+
+        <method name="handleUpdateViewRect"><![CDATA[
+	    var navigationMapView = this.navigationMapView;
+	    if (navigationMapView) {
+	        navigationMapView.updateViewLocation();
+	    }
           ]]>
         </method>
 
@@ -99,6 +126,7 @@
             if (this.active && this.visible) {
                 gApp.addPoller(this);
                 if (gApp.paused) {
+                    //gApp.addAnimator(this);
                     gApp.removeAnimator(this);
                 } else {
                     gApp.addAnimator(this);
@@ -112,6 +140,11 @@
 
 
         <method name="updateViewRect"><![CDATA[
+            var v = (this.width > 0) && (this.height > 0);
+            if (v != this.visible) {
+                this.setAttribute("visible", v);
+            }
+
             var col = this.screenCol;
             var row = this.screenRow;
             var cols = this.screenCols;
@@ -119,8 +152,8 @@
 
             var left = Math.max(0, col);
             var top = Math.max(0, row);
-            var right = Math.min(col + cols, this.worldCols);
-            var bottom = Math.min(row + rows, this.worldRows);
+            var right = Math.min(col + cols, gApp.worldCols);
+            var bottom = Math.min(row + rows, gApp.worldRows);
 
             this.setAttribute("viewCol", left);
             this.setAttribute("viewRow", top);
@@ -128,6 +161,14 @@
             this.setAttribute("viewRows", Math.max(0, bottom - top));
           ]]>
         </method>
+
+
+	<method name="getViewRect"><![CDATA[
+	    return [
+	        this.viewX, this.viewY, this.viewWidth, this.viewHeight
+	    ];
+	  ]]>
+	</method>
 
 
         <method name="poll"><![CDATA[
@@ -143,18 +184,13 @@
                 '" row="' + this.viewRow +
                 '" cols="' + this.viewCols +
                 '" rows="' + this.viewRows +
-                '" worldX="' + Math.floor(this.worldX + 0.5) +
-                '" worldY="' + Math.floor(this.worldY + 0.5) +
-                '" worldWidth="' + Math.floor(this.width + 0.5) +
-                '" worldHeight="' + Math.floor(this.height + 0.5) +
+                '" viewX="' + this.viewX +
+                '" viewY="' + this.viewY +
+                '" viewWidth="' + this.viewWidth +
+                '" viewHeight="' + this.viewHeight +
                 '"/>');
             //Debug.write(xml);
             return xml;
-          ]]>
-        </method>
-
-
-        <method name="idle"><![CDATA[
           ]]>
         </method>
 
@@ -166,7 +202,7 @@
             var viewRow = this.viewRow;
             var viewCols = this.viewCols;
             var viewRows = this.viewRows;
-            var tileSize = this.tileSize;
+            var viewTileSize = this.viewTileSize;
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
             var animationTicks = gApp.animationTicks;
@@ -202,8 +238,8 @@
                     }
                     tileIndex++;
 
-                    var x = col * tileSize;
-                    var y = row * tileSize;
+                    var x = col * viewTileSize;
+                    var y = row * viewTileSize;
                     //Debug.write("TILE", tile);
                     if (tile.x != x) {
                         tile.setAttribute("x", x);
@@ -250,9 +286,9 @@
 
         <method name="centerOnTile" args="tileX, tileY"><![CDATA[
             //Debug.write("tileview centerOnTile", this, tileX, tileY);
-            var tileSize = this.tileSize;
-            var tileCenterX = (tileX * tileSize) + (tileSize / 2);
-            var tileCenterY = (tileY * tileSize) + (tileSize / 2);
+            var viewTileSize = this.viewTileSize;
+            var tileCenterX = (tileX * viewTileSize) + (viewTileSize / 2);
+            var tileCenterY = (tileY * viewTileSize) + (viewTileSize / 2);
             var cornerX = Math.floor(tileCenterX - (this.width / 2));
             var cornerY = Math.floor(tileCenterY - (this.height / 2));
             //Debug.write("center", tileCenterX, tileCenterY, "corner", cornerX, cornerY);
@@ -263,8 +299,8 @@
 
 
         <view name="container"
-            width="${classroot.worldCols * classroot.tileSize}"
-            height="${classroot.worldRows * classroot.tileSize}"
+            width="${gApp.worldCols * classroot.viewTileSize}"
+            height="${gApp.worldRows * classroot.viewTileSize}"
             bgcolor="0xCC7F66"
             onmousedown="this.dragger.setAttribute('applied', true)"
             onmouseup="this.dragger.setAttribute('applied', false)"
@@ -274,16 +310,15 @@
             <dragstate name="dragger"/>
 
 
-            <handler name="onx"><![CDATA[
-                classroot.refreshView();
-              ]]>
-            </handler>
+	    <handler name="onx"><![CDATA[
+	        this.constrainPan();
+	      ]]>
+	    </handler>
 
-
-            <handler name="ony"><![CDATA[
-                classroot.refreshView();
-              ]]>
-            </handler>
+	    <handler name="onx"><![CDATA[
+	        this.constrainPan();
+	      ]]>
+	    </handler>
 
 
         </view>
