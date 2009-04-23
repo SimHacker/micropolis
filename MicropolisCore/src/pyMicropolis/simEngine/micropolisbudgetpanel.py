@@ -352,7 +352,7 @@ class MicropolisBudgetPanel(gtk.Frame):
                 self.scaleFirePercent.set_value(value)
 
             self.labelPoliceFund.set_text('Request: ' + policeWantString)
-p            self.labelPolicePercent.set_text(policePercentString + ' = ' + policeGotString)
+            self.labelPolicePercent.set_text(policePercentString + ' = ' + policeGotString)
             value = int(policePercent * 100.0)
             if self.scalePolicePercent.get_value() != value:
                 self.scalePolicePercent.set_value(value)
