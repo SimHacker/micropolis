@@ -78,7 +78,7 @@ from datetime import datetime
 import cairo
 from pyMicropolis.tileEngine import tileengine
 import micropolisengine
-
+import cherrypy
 
 ########################################################################
 # Globals
@@ -701,6 +701,35 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.updateMapView()
 
 
+    ########################################################################
+    # expectationFailed
+    #
+    # Report an unexpected error, given a message.
+    #
+    def expectationFailed(
+        self,
+        message):
+        
+        self.fatalError(
+            417,
+            message)
+
+        
+    ########################################################################
+    # fatalError
+    #
+    # Report a fatal error, given a status code and a message.
+    #
+    def fatalError(
+        self,
+        status,
+        message):
+        
+        raise cherrypy.HTTPError(
+            status,
+            message)
+
+
     def handlePoll(self, poll, session):
          
         tileviews = []
@@ -717,8 +746,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         pollers = poll.find('pollers')
         if pollers:
             for poller in pollers:
+
                 pollerType = poller.tag
+
                 if pollerType == 'tileview':
+
                     attrib = poller.attrib
                     #print "TILEVIEW", attrib
                     try:
@@ -727,15 +759,21 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         row = int(attrib['row'])
                         cols = int(attrib['cols'])
                         rows = int(attrib['rows'])
-                        worldX = int(attrib['worldX'])
-                        worldY = int(attrib['worldY'])
-                        worldWidth = int(attrib['worldWidth'])
-                        worldHeight = int(attrib['worldHeight'])
+                        viewX = float(attrib['viewX'])
+                        viewY = float(attrib['viewY'])
+                        viewWidth = float(attrib['viewWidth'])
+                        viewHeight = float(attrib['viewHeight'])
                     except Exception, e:
                         self.expectationFailed("Invalid parameters: " + str(e));
 
+                    print "TILE", col, row, cols, rows
+                    print "VIEW", viewX, viewY, viewWidth, viewHeight
+
                     cols = max(cols, 1)
                     rows = max(rows, 1)
+
+                    if (cols <= 0) or (rows <= 0):
+                        continue
 
                     if ((col < 0) or
                         (row < 0) or
@@ -1223,8 +1261,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     else:
                         return 1.0
 
-                historyScales = []
-                message['historyScales'] = historyScales
+                history = []
+                message['history'] = history
 
                 cityTime = self.cityTime
                 startingYear = self.startingYear
@@ -1286,7 +1324,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                     histories = []
 
-                    historyScales.append({
+                    history.append({
                         'historyScale': historyScale,
                         'range': 128,
                         'histories': histories,
@@ -1321,16 +1359,18 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         self.getProblemVotes(i)))
 
                 message.update({
-                    'year': self.currentYear(),
-                    'population': self.cityPop,
-                    'migration': self.cityPopDelta,
-                    'assessedValue': self.cityAssessedValue,
-                    'category': self.cityClass,
-                    'gameLevel': self.gameLevel,
-                    'currentScore': self.cityScore,
-                    'annualChange': self.cityScoreDelta,
-                    'goodJob': self.cityYes,
-                    'worstProblems': problems,
+                    'evaluation': {
+                        'year': self.currentYear(),
+                        'population': self.cityPop,
+                        'migration': self.cityPopDelta,
+                        'assessedValue': self.cityAssessedValue,
+                        'category': self.cityClass,
+                        'gameLevel': self.gameLevel,
+                        'currentScore': self.cityScore,
+                        'annualChange': self.cityScoreDelta,
+                        'goodJob': self.cityYes,
+                        'worstProblems': problems,
+                    },
                 })
 
             elif aspect == 'paused':
