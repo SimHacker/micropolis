@@ -30,18 +30,26 @@
 
 	<text
 	    visible="${gApp.connecting}"
-	    text="Connecting to server..."
-	    resize="true"
+	    fontsize="32"
+	    fontstyle="bold"
+	    text="Connecting to Micropolis Online server..."
+	    multiline="true"
+	    width="${parent.width}"
 	/>
 
 	<text
 	    visible="${gApp.connectionFailed}"
-	    text="Connection to server failed."
-	    resize="true"
+	    text="Connection to Micropolis Online server failed."
+	    fontsize="32"
+	    fontstyle="bold"
+	    multiline="true"
+	    width="${parent.width}"
 	/>
 
 	<button
 	    visible="${gApp.connectionFailed}"
+	    fontsize="32"
+	    fontstyle="bold"
 	    text="Reconnect"
 	    onclick="gApp.requestStartSession()"
 	/>

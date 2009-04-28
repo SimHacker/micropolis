@@ -1,0 +1,717 @@
+<library>
+
+
+    <!-- Tile View Pie -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <piemenu id="gTileViewPie">
+        <html>Tools</html>
+
+	<item>
+	    <html>More...</html>
+
+	    <piemenu>
+
+		<item>
+		    <html>Tab...</html>
+		    <piemenu>
+			<html>Tab</html>
+
+			<item>
+			    <html>Notice</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabNotice.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Messages</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabMessages.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Evaluation</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabEvaluation.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>History</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabHistory.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Budget</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabBudget.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Overlays</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabOverlays.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Disasters</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabDisasters.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>	
+			    <html>Control</html>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabControl.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+		    </piemenu>
+		</item>
+
+		<item>
+		    <html>Speed...</html>
+
+		    <piemenu
+		        initialAngle="0"
+		    >
+		        <html>Speed</html>
+
+			<item>
+			    <html>Resume</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="s"
+			    linearOrderReversed="1"
+			>
+			    <html>Ultra Slow</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="s"
+			    linearOrderReversed="1"
+			>
+			    <html>Super Slow</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="s"
+			    linearOrderReversed="1"
+			>
+			    <html>Very Slow</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="s"
+			    linearOrderReversed="1"
+			>
+			    <html>Slow</html>
+			</item>
+
+			<item>
+			    <html>Pause</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="s"
+			    linearOrderReversed="1"
+			>
+			    <html>Medium</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="n"
+			    linearOrderReversed="0"
+			>
+			    <html>Fast</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="n"
+			    linearOrderReversed="0"
+			>
+			    <html>Very Fast</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="n"
+			    linearOrderReversed="0"
+			>
+			    <html>Super Fast</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="n"
+			    linearOrderReversed="0"
+			>
+			    <html>Ultra Fast</html>
+			</item>
+
+			<item
+			    linear="1"
+			    linearDirection="n"
+			    linearOrderReversed="0"
+			>
+			    <html>Astronomically Fast</html>
+			</item>
+
+		    </piemenu>
+		</item>
+
+		<item>
+		    <html>Overlays...</html>
+
+		    <piemenu id="gTileViewOverlaysPie"
+		        maxPieItems="100"
+			fixedRadius="100"
+		    >
+		        <html>Overlays</html>
+
+			<item
+			    datapath="ds_overlays:/overlays/overlay"
+			>
+
+			    <attribute name="overlayName" value="$path{'@name'}"/>
+			    <attribute name="hilitedLast" value="false"/>
+
+			    <handler name="onhilited"><![CDATA[
+			        if (this.hilited != this.hilitedLast) {
+				    this.hilitedLast = this.hilited;
+				    this.layoutForPie(this, parent.radius);
+				    this.setAttribute("x", x + parent.centerX);
+				    this.setAttribute("y", y + parent.centerY);
+				    if (this.hilited) {
+				        this.bringToFront();
+					if (gApp.overlay != this.overlayName) {
+					    gApp.setAttribute("overlay", this.overlayName);
+					}
+				    }
+				}
+			      ]]>
+			    </handler>
+
+			    <method name="selected"><![CDATA[
+			        Debug.write("OVERLAY", this.overlayName);
+				if (gApp.overlay != this.overlayName) {
+				    gApp.setAttribute("overlay", this.overlayName);
+				}
+			      ]]>
+			    </method>
+
+			    <html
+			        text="$path{'@title'}"
+				fontsize="${parent.hilited ? 24 : 10}"
+			    />
+
+			</item>
+		    </piemenu>
+		</item>
+
+		<item>
+		    <html>Disasters...</html>
+
+		    <piemenu>
+		        <html>Disasters</html>
+
+			<item
+			    datapath="ds_disasters:/disasters/disaster"
+			>
+
+			    <attribute name="disaster" value="$path{'@disaster'}"/>
+			    <attribute name="disasterCommand" value="$path{'command'}"/>
+
+			    <method name="selected"><![CDATA[
+			    	Debug.write("DISASTER", this.disasterCommand);
+				gApp.sendCommand(this.disasterCommand)
+			      ]]>
+			    </method>
+
+			    <html text="$path{'@name'}"/>
+
+			</item>
+		    </piemenu>
+		</item>
+
+		<item>
+		    <html>Help</html>
+
+		    <method name="selected"><![CDATA[
+		        gApp.help();
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item>
+		    <html>New City</html>
+
+		    <method name="selected"><![CDATA[
+		        gNewCityDialog.open();
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item>
+		    <html>Funds...</html>
+
+		    <piemenu>
+		        <html>Funds</html>
+
+			<item>
+			    <html>Tax Rate</html>
+			</item>
+
+			<item>
+			    <html>Police Funds</html>
+			</item>
+
+			<item>
+			    <html>Road Funds</html>
+			</item>
+
+			<item>
+			    <html>Fire Funds</html>
+			</item>
+
+		    </piemenu>
+		</item>
+
+		<item>
+		    <html>About</html>
+
+		    <method name="selected"><![CDATA[
+		        gApp.about();
+		      ]]>
+		    </method>
+
+		</item>
+
+	    </piemenu>
+	</item>
+
+	<item
+	    headercolor="null"
+	>
+	    <simplelayout axis="y"/>
+	    <html
+	        x="0"
+	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	    >Bulldozer</html>
+	    <view
+		x="0"
+		resource="tool_bulldozer_rsrc"
+		frame="${(parent.hilited || (gApp.tool == 'bulldozer')) ? 2 : 1}"
+	    />
+
+	    <method name="selected"><![CDATA[
+		gApp.setAttribute("tool", "bulldozer");
+	      ]]>
+	    </method>
+
+	</item>
+
+	<item
+	    headercolor="null"
+	>
+	    <simplelayout axis="y"/>
+	    <html
+	        x="0"
+	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	    >Road</html>
+	    <view
+		x="0"
+		resource="tool_road_rsrc"
+		frame="${(parent.hilited || (gApp.tool == 'road')) ? 2 : 1}"
+	    />
+
+
+	    <method name="selected"><![CDATA[
+		gApp.setAttribute("tool", "road");
+	      ]]>
+	    </method>
+
+	</item>
+
+	<item>
+	    <html>Build...</html>
+
+	    <piemenu
+	        fixedRadius="50"
+	    >
+	        <html>Build</html>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+		        x="${(parent.width - this.width) / 2}"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Park</html>
+		    <view
+		        x="${(parent.width - this.width) / 2}"
+			resource="tool_park_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'park')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "park");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+		        x="0"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Seaport</html>
+		    <view
+			x="0"
+			resource="tool_seaport_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'seaport')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "seaport");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+			x="0"
+			resource="tool_nuclearpower_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'nuclearpower')) ? 2 : 1}"
+		    />
+		    <html
+		        multiline="true"
+			width="60"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Nuclear<br/>Power</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "nuclearpower");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+			x="${(parent.width - this.width) / 2}"
+			resource="tool_airport_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'airport')) ? 2 : 1}"
+		    />
+		    <html
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Airport</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "airport");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+			x="${parent.width - this.width}"
+			resource="tool_coalpower_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'coalpower')) ? 2 : 1}"
+		    />
+		    <html
+			width="60"
+		        multiline="true"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Coal<br/>Power</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "coalpower");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Stadium</html>
+		    <view
+			x="${parent.width - this.width}"
+			resource="tool_stadium_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'stadium')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "stadium");
+		      ]]>
+		    </method>
+
+		</item>
+
+	    </piemenu>
+
+	</item>
+
+	<item>
+	    <simplelayout axis="y"/>
+	    <html
+	        x="${(parent.width - this.width) / 2}"
+	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	    >Pan</html>
+	    <view
+		x="${(parent.width - this.width) / 2}"
+		resource="tool_pan_rsrc"
+		frame="${(parent.hilited || (gApp.tool == 'pan')) ? 2 : 1}"
+	    />
+
+	    <method name="selected"><![CDATA[
+	        gApp.setAttribute("tool", "pan");
+	      ]]>
+	    </method>
+	</item>
+
+	<item>
+	    <html>Zone...</html>
+
+	    <piemenu
+	        fixedRadius="50"
+	    >
+	        <html>Zone</html>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Commercial</html>
+		    <view
+		        x="${(parent.width - this.width) / 2}"
+		        resource="tool_commercial_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'commercial')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "commercial");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Industrial</html>
+		    <view
+		        x="0"
+		        resource="tool_industrial_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'industrial')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "industrial");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+		        x="0"
+		        resource="tool_policestation_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'policestation')) ? 2 : 1}"
+		    />
+		    <html
+			width="60"
+		        multiline="true"
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Police<br/>Station</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "policestation");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+		        x="${(parent.width - this.width) / 2}"
+		        resource="tool_query_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'query')) ? 2 : 1}"
+		    />
+		    <html
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Query</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "query");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <view
+		        x="${parent.width - this.width}"
+		        resource="tool_firestation_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'firestation')) ? 2 : 1}"
+		    />
+		    <html
+			width="60"
+		        multiline="true"
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Fire<br/>Station</html>
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "firestation");
+		      ]]>
+		    </method>
+
+		</item>
+
+		<item
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+		    <html
+			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+		    >Residential</html>
+		    <view
+		        x="${parent.width - this.width}"
+		        resource="tool_residential_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'residential')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "residential");
+		      ]]>
+		    </method>
+
+		</item>
+
+	    </piemenu>
+
+	</item>
+
+	<item
+	    headercolor="null"
+	>
+	    <simplelayout axis="y"/>
+	    <html
+	        x="${parent.width - this.width}"
+	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	    >Railroad</html>
+	    <view
+		x="${parent.width - this.width}"
+		resource="tool_railroad_rsrc"
+		frame="${(parent.hilited || (gApp.tool == 'railroad')) ? 2 : 1}"
+	    />
+
+	    <method name="selected"><![CDATA[
+	        gApp.setAttribute("tool", "railroad");
+	      ]]>
+	    </method>
+
+	</item>
+
+	<item
+	    headercolor="null"
+	>
+	    <simplelayout axis="y"/>
+	    <html
+		x="${parent.width - this.width}"
+	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	    >Wire</html>
+	    <view
+		x="${parent.width - this.width}"
+		resource="tool_wire_rsrc"
+		frame="${(parent.hilited || (gApp.tool == 'wire')) ? 2 : 1}"
+	    />
+
+	    <method name="selected"><![CDATA[
+	        gApp.setAttribute("tool", "wire");
+	      ]]>
+	    </method>
+
+	</item>
+
+    </piemenu>
+
+
+</library>

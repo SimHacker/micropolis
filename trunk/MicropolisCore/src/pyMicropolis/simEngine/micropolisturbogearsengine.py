@@ -88,6 +88,79 @@ MicropolisCorePath = 'micropolis/MicropolisCore/src'
 
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
+SpeedConfigurations = [
+    { # 0: Ultra Slow
+        'speed': 1,
+        'pollDelay': 5000,
+        'animateDelay': 1000,
+        'loopsPerSecond': 5,
+        'maxLoopsPerPoll': 100,
+    },
+    { # 1: Super Slow
+        'speed': 2, 
+        'pollDelay': 3000,
+        'animateDelay': 800,
+        'loopsPerSecond': 10,
+        'maxLoopsPerPoll': 200,
+    },
+    { # 2: Very Slow
+        'speed': 3, 
+        'pollDelay': 2000,
+        'animateDelay': 600,
+        'loopsPerSecond': 20,
+        'maxLoopsPerPoll': 400,
+    },
+    { # 3: Slow
+        'speed': 3, 
+        'pollDelay': 1000,
+        'animateDelay': 400,
+        'loopsPerSecond': 30,
+        'maxLoopsPerPoll': 600,
+    },
+    { # 4: Medium
+        'speed': 3, 
+        'pollDelay': 1000,
+        'animateDelay': 250,
+        'loopsPerSecond': 40,
+        'maxLoopsPerPoll': 800,
+    },
+    { # 5: Fast
+        'speed': 3, 
+        'pollDelay': 500,
+        'animateDelay': 250,
+        'loopsPerSecond': 50,
+        'maxLoopsPerPoll': 1000,
+    },
+    { # 6: Very Fast
+        'speed': 3, 
+        'pollDelay': 300,
+        'animateDelay': 250,
+        'loopsPerSecond': 100,
+        'maxLoopsPerPoll': 2000,
+    },
+    { # 7: Super Fast
+        'speed': 3, 
+        'pollDelay': 250,
+        'animateDelay': 250,
+        'loopsPerSecond': 250,
+        'maxLoopsPerPoll': 5000,
+    },
+    { # 8: Ultra Fast
+        'speed': 3, 
+        'pollDelay': 250,
+        'animateDelay': 250,
+        'loopsPerSecond': 500,
+        'maxLoopsPerPoll': 10000,
+    },
+    { # 9: Astronomically Fast
+        'speed': 3, 
+        'pollDelay': 250,
+        'animateDelay': 250,
+        'loopsPerSecond': 1000,
+        'maxLoopsPerPoll': 10000,
+    },
+]
+
 CityNames = {
     'about': MicropolisCorePath + '/cities/about.xml',
     'badnews': MicropolisCorePath + '/cities/badnews.xml',
@@ -332,7 +405,7 @@ class Session(object):
         self.engine = None
         self.views = []
         self.messages = []
-        self.messageNames = {}
+        self.messagesSeen = {}
         self.createTime = time.time()
         self.lastPollTime = 0
         self.lastTouchTime = 0
@@ -381,7 +454,19 @@ class Session(object):
 
     def sendMessage(self, msg):
         #print "SENDMESSAGE", msg
-        self.messages.append(msg)
+        collapse = msg.get('collapse', False)
+        if collapse:
+            message = msg.get('message', '')
+            aspect = msg.get('aspect', '')
+            key = (message, aspect)
+            messagesSeen = self.messagesSeen
+            if key in messagesSeen:
+                messagesSeen[key].update(msg)
+            else:
+                messagesSeen[key] = msg
+                self.messages.append(msg)
+        else:
+             self.messages.append(msg)
         self.touch()
 
 
@@ -389,7 +474,7 @@ class Session(object):
         messages = self.messages
 
         self.messages = []
-        self.messageNames = {}
+        self.messagesSeen = {}
 
         if False:
             print "=" * 72
@@ -397,7 +482,7 @@ class Session(object):
                 print message
             print "=" * 72
         
-        if True:
+        if False:
             print [
                 (message['message'], message.get('aspect', None))
                 for message in messages
@@ -429,6 +514,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     sessions = [] # Back stop.
+
+
+    def __init__(self, *args, **kw):
+        micropolisgenericengine.MicropolisGenericEngine.__init__(self, *args, **kw)
 
 
     def initGamePython(self):
@@ -466,8 +555,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.maxLoops = 10000
+        self.startSpeed = 5
+        self.speed = self.startSpeed
         self.loopsPerSecond = 100
+        self.maxLoopsPerPoll = 10000 # Tune this
+
 
         self.resetRealTime()
 
@@ -640,6 +732,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if gameMode == "start":
                 self.pause()
             elif gameMode == "play":
+                self.setVirtualSpeed(self.startSpeed)
                 self.resetRealTime()
                 self.updateFundEffects()
                 self.resume()
@@ -656,6 +749,15 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
                 print "Bad paused value, should be true or false, not", paused
 
+        elif command == 'setSpeed':
+
+            speed = 0
+            speed = int(params.get('speed'))
+            speed = max(0, min(speed, 9))
+
+            print "setSpeed", speed
+            self.setVirtualSpeed(speed)
+
         elif command == 'abandonCity':
 
             print "ABANDON CITY"
@@ -663,6 +765,19 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif command == 'saveCity':
 
             print "SAVE CITY"
+
+
+    def setVirtualSpeed(self, speed):
+        self.speed = speed
+        speedConfiguration = SpeedConfigurations[speed]
+        print "==== setVirtualSpeed", speed, speedConfiguration
+        self.loopsPerSecond = speedConfiguration['loopsPerSecond']
+        self.maxLoopsPerPoll = speedConfiguration['maxLoopsPerPoll']
+        simSpeed = speedConfiguration['speed']
+        if self.simSpeed != simSpeed:
+           #self.setSpeed(simSpeed)
+            self.simSpeed = simSpeed
+        self.handle_UIUpdate('delay')
 
 
     def tickEngine(self, ticks=None):
@@ -673,12 +788,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.blinkFlag = fracTime < 0.5
 
         if ticks == None:
-            print "NOW", now, "lastLoopTime", self.lastLoopTime
+            #print "NOW", now, "lastLoopTime", self.lastLoopTime
             elapsed = now - self.lastLoopTime
             self.lastLoopTime = now
             ticks = int(max(1, math.ceil(elapsed * self.loopsPerSecond)))
+            print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
+            ticks = min(ticks, self.maxLoopsPerPoll)
 
-        print "TICKS", ticks, "ELAPSED", elapsed
+        print "********", "TICKS", ticks, "ELAPSED", elapsed
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
@@ -1044,6 +1161,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             'message': "UIAutoGoto",
             'x': x,
             'y': y,
+            'collapse': true,
         })
     
 
@@ -1179,6 +1297,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             's4': s4,
             'x': x,
             'y': y,
+            'collapse': true,
         })
 
     
@@ -1233,6 +1352,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if aspect == 'funds':
 
                 message['funds'] = self.totalFunds
+                message['collapse'] = True
 
             elif aspect == 'date':
 
@@ -1245,6 +1365,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['startingYear'] = startingYear;
                 message['year'] = year
                 message['month'] = month
+                message['collapse'] = True
 
             elif aspect == 'history':
 
@@ -1263,6 +1384,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 history = []
                 message['history'] = history
+                message['collapse'] = True
 
                 cityTime = self.cityTime
                 startingYear = self.startingYear
@@ -1371,6 +1493,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         'goodJob': self.cityYes,
                         'worstProblems': problems,
                     },
+                    'collapse': True,
                 })
 
             elif aspect == 'paused':
@@ -1378,6 +1501,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 paused = self.simPaused and 'true' or 'false'
                 print 'PAUSED', paused
                 message['paused'] = paused
+                message['collapse'] = True
 
             elif aspect == 'passes':
 
@@ -1385,7 +1509,30 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif aspect == 'speed':
 
-                message['speed'] = self.simSpeed
+                print "SPEED 1", self, 'speed' in self
+                speed = self.speed
+                print "SPEED 2"
+                speedConfiguration = SpeedConfigurations[speed]
+                print "SPEED 3"
+                message['speed'] = self.speed
+                print "SPEED 4"
+                message['pollDelay'] = speedConfiguration['pollDelay']
+                print "SPEED 5"
+                message['animateDelay'] = speedConfiguration['animateDelay']
+                print "SPEED 6"
+                message['collapse'] = True
+                print "SPEED 7"
+                print "SPEED", speed, "MESSAGE", message
+
+            elif aspect == 'delay':
+
+                print "UIUPDATE DELAY", self.speed
+                speed = self.speed
+                speedConfiguration = SpeedConfigurations[speed]
+                message['pollDelay'] = speedConfiguration['pollDelay']
+                message['animateDelay'] = speedConfiguration['animateDelay']
+                message['collapse'] = True
+                print "DELAY", speed, "MESSAGE", message
 
             elif aspect == 'demand':
 
@@ -1393,24 +1540,29 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['resDemand'] = resDemand
                 message['comDemand'] = comDemand
                 message['indDemand'] = indDemand
+                message['collapse'] = True
                 #print '======== DEMAND', message
 
             elif aspect == 'options':
 
                 pass # TODO: copy options to message
+                message['collapse'] = True
 
             elif aspect == 'gamelevel':
 
                 message['gameLevel'] = self.gameLevel
+                message['collapse'] = True
 
             elif aspect == 'cityname':
 
                 message['cityName'] = self.cityName
+                message['collapse'] = True
                 print 'now message', message
 
             elif aspect == 'taxrate':
 
                 message['taxRate'] = self.cityTax
+                message['collapse'] = True
 
             elif aspect == 'budget':
 
@@ -1453,11 +1605,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['previousFunds'] = previousFunds
                 message['currentFunds'] = currentFunds
                 message['collectedFunds'] = collectedFunds
+                message['collapse'] = True
 
                 print 'BUDGET', message
 
             elif aspect == 'message':
 
+                # Do no collapse messages.
                 message.update({
                     'number': args[0],
                     'x': args[1],
@@ -1469,7 +1623,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.sendSessions(message)
 
         except Exception, e:
-            print 'XXX handle_UIUpdate ERROR:', e
+            print 'XXX handle_UIUpdate ERROR:', e, dir(e)
 
 
 ########################################################################

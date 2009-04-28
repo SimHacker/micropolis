@@ -37,14 +37,17 @@
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
         <attribute name="quaking" value="0"/>
+	<attribute name="tool" type="string" value="bulldozer"/>
         <attribute name="connected" value="false"/>
         <attribute name="connecting" value="false"/>
         <attribute name="connectionFailed" value="false"/>
+        <attribute name="sessionID" value="null"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
         <attribute name="paused" value="true"/>
         <attribute name="speed" type="number" value="3"/>
         <attribute name="funds" type="number" value="0"/>
+        <attribute name="fundsLabel" type="string" value="$0"/>
         <attribute name="year" type="number" value="1900"/>
         <attribute name="month" type="number" value="0"/>
         <attribute name="dateLabel" type="string" value=""/>
@@ -80,8 +83,8 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-                'speed', 'paused', 'taxrate', 'date', 'funds', 
-                'demand', 'evaluation', 'history'
+                'speed', 'delay', 'paused', 'taxrate', 'date', 
+                'funds', 'demand', 'evaluation', 'history'
             ]);
 
             var i;
@@ -148,11 +151,11 @@
 
 
         <handler name="onspeed" args="arg"><![CDATA[
-            var cmd =
-                '<command name="setSpeed" speed="' +
-                this.speed +
-                '"/>';
-            this.sendCommand(cmd);
+	    var cmd =
+		'<command name="setSpeed" speed="' +
+		this.speed +
+		'"/>';
+	    this.sendCommand(cmd);
           ]]>
         </handler>
 
@@ -211,6 +214,12 @@
         </handler>
 
 
+        <handler name="ontool" args="arg"><![CDATA[
+            Debug.write("ONTOOL", this.tool);
+          ]]>
+        </handler>
+
+
         <method name="expressInterest" args="target, names"><![CDATA[
             var interests = this.interests;
             var n = names.length;
@@ -253,16 +262,38 @@
 
         <method name="handleUpdate" args="args"><![CDATA[
 
-            //Debug.write("appview handleUpdate", this, args);
+            //Debug.write("appview handleUpdate", this, args['aspect'], args);
 
             var aspect = args['aspect'];
 
             switch (aspect) {
 
                 case 'speed': {
-                    var paused = parseInt(args['speed']);
+                    var speed = parseInt(args['speed']);
+                    var pollDelay = parseInt(args['pollDelay']);
+                    var animateDelay = parseInt(args['animateDelay']);
+		    //Debug.write("SPEED", speed, pollDelay, animateDelay);
                     if (this.speed != speed) {
                         this.setAttribute("speed", speed);
+                    }
+                    if (this.pollDelay != pollDelay) {
+                        this.setAttribute("pollDelay", pollDelay);
+                    }
+                    if (this.animateDelay != animateDelay) {
+                        this.setAttribute("animateDelay", animateDelay);
+                    }
+                    break;
+                }
+
+                case 'delay': {
+                    var pollDelay = parseInt(args['pollDelay']);
+                    var animateDelay = parseInt(args['animateDelay']);
+		    Debug.write("DELAY", pollDelay, animateDelay);
+                    if (this.pollDelay != pollDelay) {
+                        this.setAttribute("pollDelay", pollDelay);
+                    }
+                    if (this.animateDelay != animateDelay) {
+                        this.setAttribute("animateDelay", animateDelay);
                     }
                     break;
                 }
@@ -884,7 +915,7 @@
             var aspect = args['aspect'];
             var interests = this.interests;
             //Debug.write("==== UIUpdate", aspect, args);
-            
+
             if (!(aspect in interests)) {
                return;
             }

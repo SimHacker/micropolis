@@ -70,6 +70,11 @@
 		    width="${parent.width - this.x}"
 		/>
 
+		<toolpalette name="toolPalette" id="gToolPalette"
+		    active="${classroot.active}"
+		    width="${parent.width - this.x}"
+		/>
+
 	    </view>
 
 	    <tileview name="tileView" id="gTileView"
@@ -116,7 +121,7 @@
 		    height="${parent.height + 2}"
 		>
 
-		    <tabpane
+		    <tabpane id="gPlayTabNotice"
 			text="Notice"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -128,7 +133,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabMessages"
 			text="Messages"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -140,7 +145,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabEvaluation"
 			text="Evaluation"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -152,7 +157,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabHistory"
 			text="History"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -164,7 +169,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabBudget"
 			text="Budget"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -176,7 +181,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabOverlays"
 			text="Overlays"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -188,7 +193,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabDisasters"
 			text="Disasters"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -200,7 +205,7 @@
 			/>
 		    </tabpane>
 
-		    <tabpane
+		    <tabpane id="gPlayTabControl"
 			text="Control"
 			width="${parent.width}"
 			height="${parent.height}"

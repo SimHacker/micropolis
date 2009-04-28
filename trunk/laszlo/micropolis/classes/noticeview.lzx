@@ -150,8 +150,19 @@
 	    y="0"
 	    bgcolor="0x0000ff"
 	    visible="${classroot.showPicture}"
-	    source="${classroot.picture}"
-	/>
+	>
+
+	    <handler name="onpicture" reference="classroot"><![CDATA[
+	        var picture = parent['picture'];
+		if (picture && (picture != "")) {
+		    this.setAttribute("source", picture);
+		} else {
+		    this.unload();
+		}
+	      ]]>
+	    </handler>
+
+	</view>
 
 	<tileview name="mapView" id="gNoticeMapView"
 	    x="${parent.width - this.width}"

@@ -7,18 +7,227 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <resource name="micropolis_logo_rsrc" src="../resources/micropolis_logo.png"/>
-    <resource name="pollution_icon_rsrc" src="../resources/pollution_icon.png"/>
-    <resource name="crime_icon_rsrc" src="../resources/crime_icon.png"/>
-    <resource name="traffic_icon_rsrc" src="../resources/traffic_icon.png"/>
-    <resource name="town_icon_rsrc" src="../resources/town_icon.png"/>
-    <resource name="city_icon_rsrc" src="../resources/city_icon.png"/>
-    <resource name="capital_icon_rsrc" src="../resources/capital_icon.png"/>
-    <resource name="metropolis_icon_rsrc" src="../resources/metropolis_icon.png"/>
-    <resource name="megalopolis_icon_rsrc" src="../resources/megalopolis_icon.png"/>
-    <resource name="keytothecity_icon_rsrc" src="../resources/keytothecity_icon.png"/>
-    <resource name="impeached_icon_rsrc" src="../resources/impeached_icon.png"/>
-    <resource name="about_icon_rsrc" src="../resources/about_icon.png"/>
+    <!-- Logos -->
 
+    <resource name="logo_micropolis_rsrc" src="../resources/logo_micropolis.png"/>
+
+    <!-- Icons -->
+
+    <resource name="icon_pollution_rsrc" src="../resources/icon_pollution.png"/>
+    <resource name="icon_crime_rsrc" src="../resources/icon_crime.png"/>
+    <resource name="icon_traffic_rsrc" src="../resources/icon_traffic.png"/>
+    <resource name="icon_town_rsrc" src="../resources/icon_town.png"/>
+    <resource name="icon_city_rsrc" src="../resources/icon_city.png"/>
+    <resource name="icon_capital_rsrc" src="../resources/icon_capital.png"/>
+    <resource name="icon_metropolis_rsrc" src="../resources/icon_metropolis.png"/>
+    <resource name="icon_megalopolis_rsrc" src="../resources/icon_megalopolis.png"/>
+    <resource name="icon_keytothecity_rsrc" src="../resources/icon_keytothecity.png"/>
+    <resource name="icon_impeached_rsrc" src="../resources/icon_impeached.png"/>
+    <resource name="icon_about_rsrc" src="../resources/icon_about.png"/>
+
+    <!-- Scenarios -->
+
+    <resource name="scenario_1" src="../resources/icon_about.png"/> <!-- ../resources/scenario_1.png -->
+    <resource name="scenario_2" src="../resources/scenario_2.png"/>
+    <resource name="scenario_3" src="../resources/scenario_3.png"/>
+    <resource name="scenario_4" src="../resources/scenario_4.png"/>
+    <resource name="scenario_5" src="../resources/scenario_5.png"/>
+    <resource name="scenario_6" src="../resources/scenario_6.png"/>
+    <resource name="scenario_7" src="../resources/scenario_7.png"/>
+    <resource name="scenario_8" src="../resources/scenario_8.png"/>
+
+    <!-- Tools -->
+
+    <resource name="tool_airport_rsrc">
+        <frame src="../resources/tool_airp.png"/>
+        <frame src="../resources/tool_airphi.png"/>
+    </resource>
+
+    <resource name="tool_airport_rsrc">
+        <frame src="../resources/tool_airp.png"/>
+        <frame src="../resources/tool_airphi.png"/>
+    </resource>
+
+    <resource name="tool_airport_rsrc">
+        <frame src="../resources/tool_airp.png"/>
+        <frame src="../resources/tool_airphi.png"/>
+    </resource>
+
+    <resource name="tool_chalk_rsrc">
+        <frame src="../resources/tool_chlk.png"/>
+        <frame src="../resources/tool_chlkhi.png"/>
+    </resource>
+
+    <resource name="tool_coalpower_rsrc">
+        <frame src="../resources/tool_coal.png"/>
+        <frame src="../resources/tool_coalhi.png"/>
+    </resource>
+
+    <resource name="tool_commercial_rsrc">
+        <frame src="../resources/tool_com.png"/>
+        <frame src="../resources/tool_comhi.png"/>
+    </resource>
+
+    <resource name="tool_bulldozer_rsrc">
+        <frame src="../resources/tool_dozr.png"/>
+        <frame src="../resources/tool_dozrhi.png"/>
+    </resource>
+
+    <resource name="tool_eraser_rsrc">
+        <frame src="../resources/tool_ersr.png"/>
+        <frame src="../resources/tool_ersrhi.png"/>
+    </resource>
+
+    <resource name="tool_firestation_rsrc">
+        <frame src="../resources/tool_fire.png"/>
+        <frame src="../resources/tool_firehi.png"/>
+    </resource>
+
+    <resource name="tool_industrial_rsrc">
+        <frame src="../resources/tool_ind.png"/>
+        <frame src="../resources/tool_indhi.png"/>
+    </resource>
+
+    <resource name="tool_nuclearpower_rsrc">
+        <frame src="../resources/tool_nuc.png"/>
+        <frame src="../resources/tool_nuchi.png"/>
+    </resource>
+
+    <resource name="tool_park_rsrc">
+        <frame src="../resources/tool_park.png"/>
+        <frame src="../resources/tool_parkhi.png"/>
+    </resource>
+
+    <resource name="tool_pan_rsrc">
+        <frame src="../resources/tool_pan.png"/>
+        <frame src="../resources/tool_panhi.png"/>
+    </resource>
+
+    <resource name="tool_policestation_rsrc">
+        <frame src="../resources/tool_pol.png"/>
+        <frame src="../resources/tool_polhi.png"/>
+    </resource>
+
+    <resource name="tool_query_rsrc">
+        <frame src="../resources/tool_qry.png"/>
+        <frame src="../resources/tool_qryhi.png"/>
+    </resource>
+
+    <resource name="tool_railroad_rsrc">
+        <frame src="../resources/tool_rail.png"/>
+        <frame src="../resources/tool_railhi.png"/>
+    </resource>
+
+    <resource name="tool_residential_rsrc">
+        <frame src="../resources/tool_res.png"/>
+        <frame src="../resources/tool_reshi.png"/>
+    </resource>
+
+    <resource name="tool_road_rsrc">
+        <frame src="../resources/tool_road.png"/>
+        <frame src="../resources/tool_roadhi.png"/>
+    </resource>
+
+    <resource name="tool_seaport_rsrc">
+        <frame src="../resources/tool_seap.png"/>
+        <frame src="../resources/tool_seaphi.png"/>
+    </resource>
+
+    <resource name="tool_stadium_rsrc">
+        <frame src="../resources/tool_stad.png"/>
+        <frame src="../resources/tool_stadhi.png"/>
+    </resource>
+
+    <resource name="tool_wire_rsrc">
+        <frame src="../resources/tool_wire.png"/>
+        <frame src="../resources/tool_wirehi.png"/>
+    </resource>
+
+    <!-- Sprites -->
+
+    <resource name="sprite_1_rsrc">
+        <frame src="../resources/sprite_1_0.png"/>
+        <frame src="../resources/sprite_1_1.png"/>
+        <frame src="../resources/sprite_1_2.png"/>
+        <frame src="../resources/sprite_1_3.png"/>
+        <frame src="../resources/sprite_1_4.png"/>
+    </resource>
+
+    <resource name="sprite_2_rsrc">
+        <frame src="../resources/sprite_2_0.png"/>
+        <frame src="../resources/sprite_2_1.png"/>
+        <frame src="../resources/sprite_2_2.png"/>
+        <frame src="../resources/sprite_2_3.png"/>
+        <frame src="../resources/sprite_2_4.png"/>
+        <frame src="../resources/sprite_2_5.png"/>
+        <frame src="../resources/sprite_2_6.png"/>
+        <frame src="../resources/sprite_2_7.png"/>
+    </resource>
+
+    <resource name="sprite_3_rsrc">
+        <frame src="../resources/sprite_3_0.png"/>
+        <frame src="../resources/sprite_3_1.png"/>
+        <frame src="../resources/sprite_3_10.png"/>
+        <frame src="../resources/sprite_3_2.png"/>
+        <frame src="../resources/sprite_3_3.png"/>
+        <frame src="../resources/sprite_3_4.png"/>
+        <frame src="../resources/sprite_3_5.png"/>
+        <frame src="../resources/sprite_3_6.png"/>
+        <frame src="../resources/sprite_3_7.png"/>
+        <frame src="../resources/sprite_3_8.png"/>
+        <frame src="../resources/sprite_3_9.png"/>
+    </resource>
+
+    <resource name="sprite_4_rsrc">
+        <frame src="../resources/sprite_4_0.png"/>
+        <frame src="../resources/sprite_4_1.png"/>
+        <frame src="../resources/sprite_4_2.png"/>
+        <frame src="../resources/sprite_4_3.png"/>
+        <frame src="../resources/sprite_4_4.png"/>
+        <frame src="../resources/sprite_4_5.png"/>
+        <frame src="../resources/sprite_4_6.png"/>
+        <frame src="../resources/sprite_4_7.png"/>
+    </resource>
+
+    <resource name="sprite_5_rsrc">
+        <frame src="../resources/sprite_5_0.png"/>
+        <frame src="../resources/sprite_5_1.png"/>
+        <frame src="../resources/sprite_5_10.png"/>
+        <frame src="../resources/sprite_5_11.png"/>
+        <frame src="../resources/sprite_5_12.png"/>
+        <frame src="../resources/sprite_5_13.png"/>
+        <frame src="../resources/sprite_5_14.png"/>
+        <frame src="../resources/sprite_5_15.png"/>
+        <frame src="../resources/sprite_5_2.png"/>
+        <frame src="../resources/sprite_5_3.png"/>
+        <frame src="../resources/sprite_5_4.png"/>
+        <frame src="../resources/sprite_5_5.png"/>
+        <frame src="../resources/sprite_5_6.png"/>
+        <frame src="../resources/sprite_5_7.png"/>
+        <frame src="../resources/sprite_5_8.png"/>
+        <frame src="../resources/sprite_5_9.png"/>
+    </resource>
+
+    <resource name="sprite_6_rsrc">
+        <frame src="../resources/sprite_6_0.png"/>
+        <frame src="../resources/sprite_6_1.png"/>
+        <frame src="../resources/sprite_6_2.png"/>
+    </resource>
+
+    <resource name="sprite_7_rsrc">
+        <frame src="../resources/sprite_7_0.png"/>
+        <frame src="../resources/sprite_7_1.png"/>
+        <frame src="../resources/sprite_7_2.png"/>
+        <frame src="../resources/sprite_7_3.png"/>
+        <frame src="../resources/sprite_7_4.png"/>
+        <frame src="../resources/sprite_7_5.png"/>
+    </resource>
+
+    <resource name="sprite_8_rsrc">
+        <frame src="../resources/sprite_8_0.png"/>
+        <frame src="../resources/sprite_8_1.png"/>
+        <frame src="../resources/sprite_8_2.png"/>
+        <frame src="../resources/sprite_8_3.png"/>
+    </resource>
 
 </library>

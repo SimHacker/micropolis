@@ -1,0 +1,13 @@
+<library>
+
+
+    <!-- Pies Resources -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <resource name="pie_background_rsrc" src="../resources/pie_background.swf"/>
+
+
+</library>
