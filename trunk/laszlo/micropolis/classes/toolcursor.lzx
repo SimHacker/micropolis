@@ -8,88 +8,113 @@
 
 
     <class name="toolcursor"
-	width="${this.tileSize * this.tiles}"
-	height="${this.tileSize * this.tiles}"
-        bgcolor="0xffff00"
-	opacity="0.5"
-	x="${(this.cursorX - this.hotSpot) * this.tileSize}"
-	y="${(this.cursorY - this.hotSpot) * this.tileSize}"
+	width="${(this.tileSize * this.tiles) + (2 * this.margin)}"
+	height="${(this.tileSize * this.tiles) + (2 * this.margin)}"
+	x="${((this.tileCursorX - this.hotSpot) * this.tileSize) - this.margin}"
+	y="${((this.tileCursorY - this.hotSpot) * this.tileSize) - this.margin}"
+	opacity="${this.inBounds ? 1.0 : 0.5}"
     >
 
 
+        <attribute name="margin" value="5"/>
         <attribute name="cursorX" value="0"/>
         <attribute name="cursorY" value="0"/>
+        <attribute name="tileCursorX" value="0"/>
+        <attribute name="tileCursorY" value="0"/>
         <attribute name="tileSize" value="32"/>
         <attribute name="tiles" value="${this.toolInfo[gApp.tool]['tiles']}"/>
         <attribute name="hotSpot" value="${this.toolInfo[gApp.tool]['hotSpot']}"/>
+	<attribute name="inBounds" value="${
+	    (this.tileCursorX &gt;= 0) &amp;&amp;
+	    (this.tileCursorY &gt;= 0) &amp;&amp;
+	    (this.tileCursorX &lt; gApp.worldCols) &amp;&amp;
+	    (this.tileCursorY &lt; gApp.worldRows)
+	}"/>
 	<attribute name="toolInfo" value="$once{{
 	    residential: {
+	        name: 'Residential',
 	        tiles: 3,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    commercial: {
+	        name: 'Commercial',
 	        tiles: 3,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    industrial: {
+                name: 'Industrial',
 	        tiles: 3,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    firestation: {
+                name: 'Fire Station',
 	        tiles: 3,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    query: {
+                name: 'Query',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    policestation: {
+                name: 'Police Station',
 	        tiles: 3,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    wire: {
+                name: 'Wire',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    bulldozer: {
+                name: 'Bulldozer',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    railroad: {
+                name: 'Railroad',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    road: {
+                name: 'Road',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    pan: {
-	        tiles: 1,
-		hotSpot: 2
+                name: 'Pan',
+	        tiles: 0,
+		hotSpot: 0
 	    },
 	    stadium: {
+                name: 'Stadium',
 	        tiles: 4,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    park: {
+                name: 'Park',
 	        tiles: 1,
-		hotSpot: 2
+		hotSpot: 0
 	    },
 	    seaport: {
+                name: 'Seaport',
 	        tiles: 4,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    coalpower: {
+                name: 'Coal Power',
 	        tiles: 4,
-		hotSpot: 2
+		hotSpot: 1
 	    },
 	    airport: {
-	        tiles: 5,
-		hotSpot: 2
+                name: 'Airport',
+	        tiles: 6,
+		hotSpot: 1
 	    },
 	    nuclearpower: {
+                name: 'Nuclear Power',
 	        tiles: 4,
-		hotSpot: 2
+		hotSpot: 1
 	    }
 	}}"/>
 
@@ -106,6 +131,65 @@
 	  ]]>
 	</handler>
 
+
+	<view
+	    x="0"
+	    y="0"
+	    width="${parent.margin}"
+	    height="${parent.height}"
+	    bgcolor="0x000000"
+	    opacity="0.75"
+	/>
+
+
+	<view
+	    x="${parent.width - parent.margin}"
+	    y="0"
+	    width="${parent.margin}"
+	    height="${parent.height}"
+	    bgcolor="0x000000"
+	    opacity="0.75"
+	/>
+
+
+	<view
+	    x="${parent.margin}"
+	    y="0"
+	    width="${parent.width - (2 * parent.margin)}"
+	    height="${parent.margin}"
+	    bgcolor="0x000000"
+	    opacity="0.75"
+	/>
+
+
+	<view
+	    x="${parent.margin}"
+	    y="${parent.height - parent.margin}"
+	    width="${parent.width - (2 * parent.margin)}"
+	    height="${parent.margin}"
+	    bgcolor="0x000000"
+	    opacity="0.75"
+	/>
+
+	<view
+	    x="${parent.margin}"
+	    y="${parent.margin}"
+	    width="${parent.width - (2 * parent.margin)}"
+	    height="${parent.height - (2 * parent.margin)}"
+	    bgcolor="0xffff00"
+	    opacity="0.5"
+	/>
+
+	<text
+	  x="${(parent.width - this.width) / 2}"
+	  y="${parent.height}"
+	  bgcolor="0xffffff"
+	  fgcolor="0x000000"
+	  fontsize="18"
+	  fontstyle="bold"
+	  resize="true"
+	  text="${parent.toolInfo[gApp.tool]['name']}"
+	/>
 
     </class>
 

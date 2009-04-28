@@ -32,12 +32,11 @@
         <attribute name="navigationMapView" value="null"/>
 	<attribute name="cursorX" value="0"/>
 	<attribute name="cursorY" value="0"/>
-        <attribute name="tileCursorX" value="${
-	    Math.floor(this.cursorX / this.viewTileSize)
-	}"/>
-        <attribute name="tileCursorY" value="${
-	    Math.floor(this.cursorY / this.viewTileSize)
-	}"/>
+        <attribute name="tileCursorX" value="0"/>
+        <attribute name="tileCursorY" value="0"/>
+        <attribute name="tileCursorXLast" value="0"/>
+        <attribute name="tileCursorYLast" value="0"/>
+        <attribute name="drawing" value="false"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -113,10 +112,55 @@
         </handler>
 
 
+        <handler name="ontileCursorX" args="arg"><![CDATA[
+	    if (this.drawing) {
+                this.drawHere();
+	    }
+          ]]>
+        </handler>
+
+
+        <handler name="ontileCursorY" args="arg"><![CDATA[
+	    if (this.drawing) {
+                this.drawHere();
+	    }
+          ]]>
+        </handler>
+
+
 	<handler name="onmousedown" args="arg"><![CDATA[
-	    gTileViewPie.popupAtCursor(false);
+	    var controlDown = lz.KeysService.LzKeys.isKeyDown('control');
+	    var shiftDown = lz.KeysService.LzKeys.isKeyDown('shift');
+	    if (shiftDown || controlDown) {
+	        gTileViewPie.popupAtCursor(false);
+	    } else {
+	        this.setAttribute('drawing', true);
+		this.drawHere();
+	    }
 	  ]]>
 	</handler>
+
+
+	<handler name="onmouseup" args="arg"><![CDATA[
+	    if (this.drawing) {
+		this.drawHere();
+	        this.setAttribute("drawing", false);
+	    }
+	  ]]>
+	</handler>
+
+
+	<method name="drawHere"><![CDATA[
+	    if ((this.tileCursorX < 0) ||
+	        (this.tileCursorY < 0) ||
+		(this.tileCursorX >= gApp.worldCols) ||
+		(this.tileCursorY >= gApp.worldRows)) {
+		return;
+	    }
+	    //Debug.write("DRAWHERE", this.tileCursorX, this.tileCursorY);
+	    gApp.drawTool(gApp.tool, this.tileCursorX, this.tileCursorY);
+	  ]]>
+	</method>
 
 
 	<method name="scrollView" args="x, y"><![CDATA[
@@ -331,19 +375,27 @@
                 tileIndex++;
             }
 
-	    //this.trackCursor();
+	    this.trackCursor();
           ]]>
         </method>
 
 
 	<method name="trackCursor"><![CDATA[
-	    var x = this.container.getMouse('x');
-	    if (this.cursorX != x) {
-		this.setAttribute("cursorX", x);
+	    var cursorX = this.container.getMouse('x');
+	    var cursorY = this.container.getMouse('y');
+	    var tileCursorX = Math.floor(cursorX / this.viewTileSize);
+	    var tileCursorY = Math.floor(cursorY / this.viewTileSize);
+	    if (this.cursorX != cursorX) {
+		this.setAttribute("cursorX", cursorX);
 	    }
-	    var y = this.container.getMouse('y');
-	    if (this.cursorY != y) {
-		this.setAttribute("cursorY", y);
+	    if (this.cursorY != cursorY) {
+		this.setAttribute("cursorY", cursorY);
+	    }
+	    if (this.tileCursorX != tileCursorX) {
+	        this.setAttribute("tileCursorX", tileCursorX);
+	    }
+	    if (this.tileCursorY != tileCursorY) {
+	        this.setAttribute("tileCursorY", tileCursorY);
 	    }
 	  ]]>
 	</method>
@@ -395,8 +447,10 @@
 	    />
 
 	    <toolcursor
-	        cursorX="${classroot.tileCursorX}"
-		cursorY="${classroot.tileCursorY}"
+	        cursorX="${classroot.cursorX}"
+		cursorY="${classroot.cursorY}"
+	        tileCursorX="${classroot.tileCursorX}"
+		tileCursorY="${classroot.tileCursorY}"
 		tileSize="${classroot.viewTileSize}"
 	    />
 
