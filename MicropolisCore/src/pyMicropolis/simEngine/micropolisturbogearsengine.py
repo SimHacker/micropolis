@@ -188,6 +188,28 @@ CityNames = {
     'yokohama': MicropolisCorePath + '/cities/yokohama.xml',
 }
 
+ToolNameToIndex = {
+    'residential': 0,
+    'commercial': 1,
+    'industrial': 2,
+    'firestation': 3,
+    'policestation': 4,
+    'query': 5,
+    'wire': 6,
+    'bulldozer': 7,
+    'railroad': 8,
+    'road': 9,
+    'stadium': 10,
+    'park': 11,
+    'seaport': 12,
+    'coalpower': 13,
+    'nuclearpower': 14,
+    'airport': 15,
+    'network': 16,
+    'water': 17,
+    'land': 18,
+    'forest': 19,
+}
 
 AniTiles = (
     0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
@@ -765,6 +787,26 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif command == 'saveCity':
 
             print "SAVE CITY"
+
+        elif command == 'draw':
+
+            tool = params.get('tool')
+            x = int(params.get('x'))
+            y = int(params.get('y'))
+
+            print "DRAW", tool, x, y
+            if ((x < 0) or
+                (y < 0) or
+                (x >= micropolisengine.WORLD_W) or
+                (y >= micropolisengine.WORLD_H) or
+                (tool not in ToolNameToIndex)):
+
+                print "INVALID ARGUMENT TO DRAW", tool, x, y
+
+            else:
+
+                toolIndex = ToolNameToIndex[tool]
+                self.toolDown(toolIndex, x, y)
 
 
     def setVirtualSpeed(self, speed):
