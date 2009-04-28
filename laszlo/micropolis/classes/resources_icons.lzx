@@ -27,14 +27,14 @@
 
     <!-- Scenarios -->
 
-    <resource name="scenario_1" src="../resources/icon_about.png"/> <!-- ../resources/scenario_1.png -->
-    <resource name="scenario_2" src="../resources/scenario_2.png"/>
-    <resource name="scenario_3" src="../resources/scenario_3.png"/>
-    <resource name="scenario_4" src="../resources/scenario_4.png"/>
-    <resource name="scenario_5" src="../resources/scenario_5.png"/>
-    <resource name="scenario_6" src="../resources/scenario_6.png"/>
-    <resource name="scenario_7" src="../resources/scenario_7.png"/>
-    <resource name="scenario_8" src="../resources/scenario_8.png"/>
+    <resource name="scenario_1_rsrc" src="../resources/scenario_1.png"/>
+    <resource name="scenario_2_rsrc" src="../resources/scenario_2.png"/>
+    <resource name="scenario_3_rsrc" src="../resources/scenario_3.png"/>
+    <resource name="scenario_4_rsrc" src="../resources/scenario_4.png"/>
+    <resource name="scenario_5_rsrc" src="../resources/scenario_5.png"/>
+    <resource name="scenario_6_rsrc" src="../resources/scenario_6.png"/>
+    <resource name="scenario_7_rsrc" src="../resources/scenario_7.png"/>
+    <resource name="scenario_8_rsrc" src="../resources/scenario_8.png"/>
 
     <!-- Tools -->
 
