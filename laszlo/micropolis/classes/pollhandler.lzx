@@ -76,7 +76,7 @@
 				    (rows > 0) &&
 				    (cols > 0) &&
 				    (codedTiles != "")) {
-				    classroot.updateTiles(
+				    gApp.updateTiles(
 					col,
 					row,
 					cols,
@@ -106,8 +106,9 @@
 				    continue;
 				}
 				var methodName = "handle_" + messageName;
-				var method = classroot[methodName];
+				var method = gApp[methodName];
 				//Debug.write("message", messageName, "method", methodName, method, "atts", attributes, "el", messageEl);
+				//Debug.write("message", messageName, "method", methodName);
 				if (!method) {
 				    Debug.write("Undefined message:", messageName, messageEl, attributes);
 				    continue;
@@ -123,7 +124,7 @@
 				}
 
 				//Debug.write("CALLING", method, json)
-				method.call(classroot, json);
+				method.call(gApp, json);
 				//Debug.write("CALLED");
 			    }
 
@@ -135,21 +136,21 @@
 		}
 	    }
 
-	    classroot.pollContinue(false);
+	    gApp.pollContinue(false);
 	  ]]>
 	</handler>
 
 
 	<handler name="onerror" reference="ds_poll"><![CDATA[
-	    Debug.write("ds_poll onerror", this.sessionID);
-	    classroot.failPoll();
+	    Debug.write("ds_poll onerror", gApp.sessionID);
+	    gApp.failPoll();
 	  ]]>
 	</handler>
 
 
 	<handler name="ontimeout" reference="ds_poll"><![CDATA[
-	    Debug.write("ds_poll ontimeout", this.sessionID);
-	    classroot.failPoll();
+	    Debug.write("ds_poll ontimeout", gApp.sessionID);
+	    gApp.failPoll();
 	  ]]>
 	</handler>
 

@@ -1,0 +1,113 @@
+<library>
+
+
+    <!-- Tool Cursor -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="toolcursor"
+	width="${this.tileSize * this.tiles}"
+	height="${this.tileSize * this.tiles}"
+        bgcolor="0xffff00"
+	opacity="0.5"
+	x="${(this.cursorX - this.hotSpot) * this.tileSize}"
+	y="${(this.cursorY - this.hotSpot) * this.tileSize}"
+    >
+
+
+        <attribute name="cursorX" value="0"/>
+        <attribute name="cursorY" value="0"/>
+        <attribute name="tileSize" value="32"/>
+        <attribute name="tiles" value="${this.toolInfo[gApp.tool]['tiles']}"/>
+        <attribute name="hotSpot" value="${this.toolInfo[gApp.tool]['hotSpot']}"/>
+	<attribute name="toolInfo" value="$once{{
+	    residential: {
+	        tiles: 3,
+		hotSpot: 2
+	    },
+	    commercial: {
+	        tiles: 3,
+		hotSpot: 2
+	    },
+	    industrial: {
+	        tiles: 3,
+		hotSpot: 2
+	    },
+	    firestation: {
+	        tiles: 3,
+		hotSpot: 2
+	    },
+	    query: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    policestation: {
+	        tiles: 3,
+		hotSpot: 2
+	    },
+	    wire: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    bulldozer: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    railroad: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    road: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    pan: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    stadium: {
+	        tiles: 4,
+		hotSpot: 2
+	    },
+	    park: {
+	        tiles: 1,
+		hotSpot: 2
+	    },
+	    seaport: {
+	        tiles: 4,
+		hotSpot: 2
+	    },
+	    coalpower: {
+	        tiles: 4,
+		hotSpot: 2
+	    },
+	    airport: {
+	        tiles: 5,
+		hotSpot: 2
+	    },
+	    nuclearpower: {
+	        tiles: 4,
+		hotSpot: 2
+	    }
+	}}"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("==== toolcursor oninit", this);
+	  ]]>
+	</handler>
+
+
+	<handler name="ontool" reference="gApp"><![CDATA[
+	    var tiles = this.toolInfo[gApp.tool]['tiles'];
+	    this.setAttribute("tiles", tiles);
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

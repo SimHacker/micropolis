@@ -4,7 +4,7 @@
         id="10"
         color="0xff4f4f"
         title="POLLUTION ALERT!"
-	picture="pollution_icon_rsrc"
+	picture="icon_pollution_rsrc"
 	showMap="true"
     >Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br;/&gt;Either clean up your act or open a gas mask concession at city hall.</notice>
 
@@ -12,7 +12,7 @@
         id="11"
         color="0xff4f4f"
         title="CRIME ALERT!"
-	picture="crime_icon_rsrc"
+	picture="icon_crime_rsrc"
 	showMap="true"
     >Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.</notice>
 
@@ -20,7 +20,7 @@
         id="12"
         color="0xff4f4f"
         title="TRAFFIC WARNING!"
-	picture="traffic_icon_rsrc"
+	picture="icon_traffic_rsrc"
 	showMap="true"
     >Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.</notice>
 
@@ -100,7 +100,7 @@
         id="35"
         color="0x7fff7f"
         title="TOWN"
-	picture="town_icon_rsrc"
+	picture="icon_town_rsrc"
 	showMap="false"
     >Congratulations, your village has grown to town status. You now have 2,000 citizens.</notice>
 
@@ -108,7 +108,7 @@
         id="36"
         color="0x7fff7f"
         title="CITY"
-	picture="city_icon_rsrc"
+	picture="icon_city_rsrc"
 	showMap="false"
     >Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!</notice>
 
@@ -116,7 +116,7 @@
         id="37"
         color="0x7fff7f"
         title="CAPITAL"
-	picture="capital_icon_rsrc"
+	picture="icon_capital_rsrc"
 	showMap="false"
     >Your city has become a capital. The current population here is 50,000. Your political future looks bright.</notice>
 
@@ -181,7 +181,7 @@
         id="47"
         color="0x7fff7f"
         title="YOU'RE A WINNER!"
-	picture="keytothecity_icon_rsrc"
+	picture="icon_keytothecity_rsrc"
 	showMap="false"
     >Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?</notice>
 
@@ -189,7 +189,7 @@
         id="48"
         color="0xff4f4f"
         title="IMPEACHMENT NOTICE!"
-	picture="impeached_icon_rsrc"
+	picture="icon_impeached_rsrc"
 	showMap="false"
     >The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)</notice>
 
@@ -197,7 +197,7 @@
         id="49"
         color="0xffd700"
         title="About Micropolis"
-	picture="about_icon_rsrc"
+	picture="icon_about_rsrc"
 	showMap="false"
     >Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</notice>
 

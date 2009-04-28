@@ -1,0 +1,1579 @@
+<library>
+
+
+  <!-- ======================================================================== -->
+  <!-- Pie Menu Component -->
+
+
+  <!-- ========================================================================
+
+       Pie Menus for Laszlo.
+
+       Copyright (C) 2004 by Don Hopkins.
+       All rights reserved. 
+       Designed and implemented by Don Hopkins. 
+
+      ======================================================================== -->
+
+
+  <!-- ======================================================================== -->
+  <!-- Node piemenumanager -->
+
+
+  <node
+    id="piemenumanager">
+
+
+    <attribute name="piemenustack" value="[]"/>
+
+
+    <method name="clearStack"><![CDATA[
+        this.piemenustack = [];
+      ]]>
+    </method>
+
+
+    <method name="pushStack" args="menu"><![CDATA[
+        this.piemenustack.push(menu);
+      ]]>
+    </method>
+
+
+    <method name="popStack"><![CDATA[
+        return this.piemenustack.pop();
+      ]]>
+    </method>
+
+
+    <method name="stackTop"><![CDATA[
+        var n = this.piemenustack.length;
+        if (n == 0) {
+          return null;
+        } // if
+        return this.piemenustack[n - 1];
+      ]]>
+    </method>
+
+
+    <method name="popup" args="menu, pinned"><![CDATA[
+        this.clearStack();
+        this.pushStack(menu);
+        menu.popupAtCursor(pinned);
+      ]]>
+    </method>
+
+
+  </node>
+
+
+  <!-- ======================================================================== -->
+  <!-- Class piemenupopup -->
+
+
+  <class
+    name="piemenupopup"
+  >
+
+
+    <!-- Attributes -->
+
+
+    <attribute name="popup" value="null"/>
+
+
+    <!-- Event Handlers -->
+
+
+<!--
+    <handler name="oninit"><![CDATA[
+      ]]>
+    </handler>
+-->
+
+
+    <method name="preparePopup"><![CDATA[
+      ]]>
+    </method>
+
+
+    <handler name="onmousedown"><![CDATA[
+        this.preparePopup();
+        if (this.popup == null) {
+          return;
+        } // if
+
+        this.popup.setAttribute("target", this);
+        this.popup.popupAtCursor(false)
+      ]]>
+    </handler>
+
+
+  </class>
+
+
+  <!-- ======================================================================== -->
+  <!-- Class piemenu -->
+
+
+  <class
+    name="piemenu" 
+    visible="false"
+    placement="canvas"
+    defaultplacement="headercontainer">
+<!--
+    bgcolor="#404040" 
+-->
+
+    <!-- Attributes -->
+
+
+    <attribute name="target" value="null"/>
+    <attribute name="clockwise" value="1"/>
+    <attribute name="initialAngle" value="90"/>
+    <attribute name="firstLinearItem" value="0"/>
+    <attribute name="radius" value="0"/>
+    <attribute name="inactiveRadius" value="8"/>
+    <attribute name="fixedRadius" value="0"/>
+    <attribute name="minRadius" value="0"/>
+    <attribute name="maxRadius" value="0"/>
+    <attribute name="extraRadius" value="0"/>
+    <attribute name="marginRadius" value="5"/>
+    <attribute name="radiusNotch" value="2"/>
+    <attribute name="backgroundRadius" value="${this.radius + this.backgroundExtraRadius}"/>
+    <attribute name="backgroundExtraRadius" value="5"/>
+    <attribute name="popupedness" value="1"/>
+    <attribute name="backgroundColor" value="null"/>
+    <attribute name="backgroundOpacity" value="1"/>
+    <attribute name="showBackground" value="true"/>
+    <attribute name="backgroundResource" value="'pie_background_rsrc'"/>
+    <attribute name="border" value="5"/>
+    <attribute name="maxPieItems" value="8"/>
+    <attribute name="pagedPieItems" value="0"/>
+    <attribute name="linear" value="false"/>
+    <attribute name="linearDirection" type="string" value="down"/>
+    <attribute name="linearOrderReversed" value="0"/>
+    <attribute name="headerbgcolor" value="0x4040ff"/>
+    <attribute name="headerfgcolor" value="0xffffff"/>
+    <attribute name="transparentItems" value="1"/>
+    <attribute name="itemBorder" value="2"/>
+    <attribute name="itemMargin" value="2"/>
+    <attribute name="itemWidth" value="0"/>
+    <attribute name="itemHeight" value="0"/>
+    <attribute name="centerMargin" value="16"/>
+    <attribute name="centerBorderWidth" value="2"/>
+    <attribute name="centerVisible" value="1"/>
+    <attribute name="centerX" value="0"/>
+    <attribute name="centerY" value="0"/>
+    <attribute name="curX" value="0"/>
+    <attribute name="curY" value="0"/>
+    <attribute name="lastX" value="0"/>
+    <attribute name="lastY" value="0"/>
+    <attribute name="mouseDeltaX" value="0"/>
+    <attribute name="mouseDeltaY" value="0"/>
+    <attribute name="direction" value="0"/>
+    <attribute name="distance" value="0"/>
+    <attribute name="pinned" value="false"/>
+    <attribute name="items" value="[]"/>
+    <attribute name="pieItems" value="[]"/>
+    <attribute name="linearItems" value="[]"/>
+    <attribute name="itemDirections" value="{}"/>
+    <attribute name="item" value="null"/>
+    <attribute name="curItem" value="-1"/>
+    <attribute name="curItemEntered" value="-1"/>
+    <attribute name="lastItem" value="-1"/>
+    <attribute name="parentPie" value="null"/>
+    <attribute name="parentItem" value="null"/>
+    <attribute name="parentBar" value="null"/>
+    <attribute name="valid" value="0"/>
+    <attribute name="minX" value="0"/>
+    <attribute name="maxX" value="0"/>
+    <attribute name="minY" value="0"/>
+    <attribute name="maxY" value="0"/>
+    <attribute name="trackingFlag" value="false"/>
+    <attribute name="popupAnimationDuration" value="250"/>
+    <attribute name="animatePopupLabels" value="false"/>
+    <attribute name="animatePopupOpacity" value="false"/>
+    <attribute name="animatePopupBackground" value="false"/>
+    <attribute name="idledelegate" value="null"/>
+    <attribute name="downdelegate" value="null"/>
+    <attribute name="updelegate" value="null"/>
+
+
+    <!-- Events -->
+
+    <event name="onselected"/>
+    <event name="onbeforepopup"/>
+    <event name="onpopup"/>
+    <event name="onpopdown"/>
+    <event name="onchanged"/>
+    <event name="onpreview"/>
+
+    <!-- Event Handlers -->
+
+
+    <handler name="oninit"><![CDATA[
+        // Do initialization stuff.
+      ]]>
+    </handler>
+
+
+    <handler name="onmousedown" args="arg"><![CDATA[
+        this.trackMouseDown(arg);
+      ]]>
+    </handler>
+
+
+    <handler name="onmouseup" args="arg"><![CDATA[
+        //this.trackMouseUp(arg);
+      ]]>
+    </handler>
+
+
+    <!-- Initialization -->
+
+
+    <method name="reset"><![CDATA[
+        // Reset to initial tracking state.
+      ]]>
+    </method>
+
+
+    <!-- Layout -->
+
+
+    <method name="updateLayout"><![CDATA[
+        // items: All the menu items.
+        var items = [];
+        this.items = items;
+
+        // pieItems: Just the pie menu items.
+        var pieItems = [];
+        this.pieItems = pieItems;
+
+        // linearItems: Just the linear menu items.
+        var linearItems = [];
+        this.linearItems = linearItems;
+
+        // itemDirections: Map of item direction to array of items in that direction.
+        this.itemDirections = {};
+
+        // children: The sub-elements of itemcontainer are pie menu items. 
+        var children = 
+          this.itemcontainer.subviews;
+
+        // We're done if no items. 
+        var itemCount = 
+          children ? children.length : 0;
+        if (!itemCount) return;
+
+        // Put just the visible items from children into the items array.
+        var itemIndex;
+        for (itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+            var item = 
+              children[itemIndex];
+            if (!item.visible) continue;
+            items.push(item);
+        } // for itemIndex
+
+        // We're done if no items.
+        itemCount = items.length;
+        if (!itemCount) return;
+
+        // Initialize constants and variables for Layout.
+
+        var twoPi = 
+          2 * Math.PI;
+        var pagedPieItems = 0;
+        var maxPieItems = this.maxPieItems;
+        this.valid = 1;
+
+        // Categorize items into pieItems and linearItems arrays. 
+        for (itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+          var item = items[itemIndex];
+          item.index = itemIndex;
+          item.valid = 0;
+
+          // Limit the number of pie items to maxPieItems. 
+          // Classify overflow items as linear.
+          if (pieItems.length >= maxPieItems) {
+            item.linear = true;
+          } // if
+
+          // The first pagedPieItems pie menu items will be classified as linear, 
+          // to enable paging the pie part of the menu through more than maxPieItems.
+          if (!item.linear) {
+            if (pagedPieItems < this.pagedPieItems) {
+              pagedPieItems++;
+              item.linear = true;
+            } // if
+          } // if
+
+          if (item.linear) {
+            // Handle reverse ordering linear items.
+            if (item.linearOrderReversed) {
+              // Prepend the linear item to the beginning of the linearItems array.
+              var j;
+              var m = linearItems.length;
+              for (j = m; j > 0; j--) {
+                linearItems[j] = linearItems[j - 1];
+              } // for j
+              linearItems[0] = item;
+            } else {
+              // Append the linear item to the end of the linearItems array.
+              linearItems.push(item);
+            } // if
+          } else {
+            // Append the pie item to the end of the pieItems array.
+            pieItems.push(item);
+          } // if
+
+        } // for itemIndex
+
+        // Calculate the size of each item.
+        for (itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+          var item = items[itemIndex];
+          // XXX: Update and validate the items here.
+          item.x = 0;
+          item.y = 0;
+        } // for
+
+        var pieItemCount = 
+          pieItems.length;
+        var linearItemCount = 
+          linearItems.length;
+
+        // If there are any pie items, then calculate the pie menu parameters. 
+        if (pieItemCount > 0) {
+          // Calculate the subtend, angle, cosine, sine, quadrant, slope,
+          // and size of each pie menu item.
+
+          // Calculate twist, the angular width of each slice.
+          var twist = 
+            twoPi / pieItemCount;
+
+          // Twist the other way if clockwise.
+          if (clockwise) {
+              twist = -twist;
+          } // if
+
+          // Point ang towards the center of the first slice.
+          var ang =
+              this.degToRad(this.initialAngle);
+
+          // Twist backwards half a slice, to the edge of the slice.
+          ang -= twist / 2.0;
+
+          // Now calculate the size and other properties of the pie items.
+          for (itemIndex = 0; itemIndex < pieItemCount; itemIndex++) {
+            var item = pieItems[itemIndex];
+
+            // Calculate angle, the center of the current slice.
+            var angle = 
+              ang + (twist / 2.0);
+
+            // Add this item to the piemenu's list of items in the same direction.
+            this.addItemDirection(item, this.radToDeg(angle));
+
+            // Calculate the unit vectors of the slice edge directions.
+            item.angle = ang;
+            item.edge1dx = Math.cos(ang);
+            item.edge1dy = -Math.sin(ang);
+            item.edge2dx = Math.cos(ang + twist);
+            item.edge2dy = -Math.sin(ang + twist);
+
+            // Twist ang around to the edge of the next slice.
+            ang += twist;
+
+          } // for itemIndex
+
+        } // if
+
+        // Determine the radius.
+        var radius = 
+            this.fixedRadius;
+
+        // Center the headercontainer.
+        var headercontainer = this.headercontainer;
+        if (headercontainer != null) {
+          headercontainer.x = headercontainer.width / -2;
+          headercontainer.y = headercontainer.height / -2;
+        } // if
+
+        // If the radius is not fixed, then calculate it dynamically.
+        if (radius <= 0) {
+          // Start with the minRadius.
+          radius = 
+            this.minRadius;
+
+          // If there are any pie items, then make sure they don't overlap. 
+          if (pieItemCount > 0) {
+            // Increase the radius until there are no overlaps between 
+            // any pie items or the headercontainer.
+            // Start by wrapping last around to the end of the 
+            // circular menu.
+
+            // Last index and last pie item, used to test for overlap.
+            // Only test for last item overlap if more than one pie item. 
+            var lastIndex = 
+              pieItemCount - 1;
+            var last = null;
+            if (lastIndex > 0) {
+              last = pieItems[lastIndex];
+            } // if            
+
+            // Loop over all pie items testing for overlap with last adjacent
+            // pie item as well as headercontainer. 
+            for (itemIndex = 0; itemIndex < pieItemCount; itemIndex++) {
+              var item = 
+                pieItems[itemIndex];
+
+              // Ignore fixedRadius items. 
+              // XXX: The behavior of mixing adjacent fixedRadius and not 
+              // fixedRadius pie menu items is not well defined.
+              // XXX: fixedRadius should be inherited from the piemenu.
+              if (item.fixedRadius > 0) {
+                continue;
+              } // if
+
+              // Push the radius out until there are no overlaps.
+              // Give up after a while.
+              var maxLoops = 200;
+              var radiusNotch = this.radiusNotch;
+              for (; maxLoops > 0; maxLoops--, radius += radiusNotch) {
+                // Lay out the item at the current radius.
+                item.layoutForPie(this, radius);
+
+                // If the item overlaps the headercontainer, then keep pushing out. 
+                if (item.itemsOverlap(headercontainer)) {
+                  // Keep pushing out until the item doesn't overlap the headercontainer.
+                  continue;
+                } // if
+
+                // If there is only one item, and we don't overlap the headercontainer,
+                // then we're done pushing out. 
+                if (last == null) {
+                  // Done pushing out.
+                  break;
+                } // if
+
+                // If there are more than one pie items, then test for adjacent overlaps. 
+                // Lay out the last item at the current radius.
+                last.layoutForPie(this, radius);
+
+                // Test for overlap. Takes two to tango.
+                if (!item.itemsOverlap(last)) {
+                  // They don't overlap, so we're done pushing out.
+                  break;
+                } // if
+
+                // The two adjacent labels overlap, so we keep looping and
+                // pushing them out until they don't.
+              } // for maxLoops, radius
+
+              last = item;
+            } // for itemIndex
+          } // if
+
+          // Add in the extra radius.
+          radius += 
+            this.extraRadius;
+        } // if
+
+        // Done calculating the radius.
+        this.setAttribute("radius", radius);
+
+        // Calculate the bounding box of the items, as we lay them out.
+        var maxX = -1000000;
+        var minX = 1000000;
+        var maxY = -1000000;
+        var minY = 1000000;
+
+        if (pieItems > 0) {
+          // If there are any pie items, then make sure the bounding box
+          // encompasses the radius.
+          minX = -radius;
+          minY = -radius;
+          maxX = radius;
+          maxY = radius;
+        } else {
+          // If there are not any pie items, then make sure the bounding box
+          // encompasses the centered headercontainer. 
+          minX = headercontainer.width / -2;
+          minY = headercontainer.height / -2;
+          maxX = headercontainer.width / 2;
+          maxY = headercontainer.height / 2;
+        } // if
+
+        // Calculate the maximum radius (squared).
+        var maxRadius = 0;
+
+        // Loop over the headercontainer and the pie items, 
+        // and calculate their bounding box and maxRadius.
+        // The headercontainer is a special case with itemIndex == -1.
+        var item;
+        for (itemIndex = -1; itemIndex < pieItemCount; itemIndex++) {
+          // Handle the special case of the headercontainer. 
+          if (itemIndex == -1) {
+            // Use the headercontainer in its current centered position.
+            item = headercontainer;
+          } else {
+            // Lay out the pie item at the current radius.
+            item = pieItems[itemIndex];
+            item.layoutForPie(this, radius);
+          } // if
+
+          // Calculate the corners of the item bounding box.
+          var itw = item.width;
+          var ith = item.height;
+          var itx0 = item.x;
+          var ity0 = item.y;
+          var itx1 = itx0 + itw;
+          var ity1 = ity0 + ith;
+
+          // Update the bounding box.
+          if (itx0 < minX) { minX = itx0; }
+          if (ity0 < minY) { minY = ity0; }
+          if (itx1 > maxX) { maxX = itx1; }
+          if (ity1 > maxY) { maxY = ity1; }
+
+          // Update the maxRadius.
+          var farx = Math.max(Math.abs(itx0), Math.abs(itx1));
+          var fary = Math.max(Math.abs(ity0), Math.abs(ity1));
+          var rad = (farx * farx) + (fary * fary);
+          if (rad > maxRadius) { 
+            maxRadius = rad; 
+          } // if
+
+        } // for itemIndex
+
+        // Loop over the linear items, lay them out, 
+        // and calculate their bounding box and maxRadius.
+
+        // The first parameter is used to scroll the linear items. 
+        var first = 
+          this.firstLinearItem;
+
+	// Calculate the max width of the north and south linear items.
+	var maxItemWidthNorth = 0;
+	var maxItemWidthSouth = 0;
+
+        for (itemIndex = 0; itemIndex < linearItemCount; itemIndex++) {
+          var index = 
+            (itemIndex + first) % linearItemCount;
+          var item = 
+            linearItems[index];
+
+          // Lay out the linear item.
+          item.layoutForLinear(this, minX, minY, maxX, maxY);
+
+	  // Calculate the max vertical item width.
+	  if (Math.abs(item.dx) < 0.01) {
+	    if (item.dy < 0) {
+	      if (item.width > maxItemWidthNorth) {
+		maxItemWidthNorth = item.width;
+		//Debug.write("maxItemWidthNorth", maxItemWidthNorth);
+	      } // if
+	    } else {
+	      if (item.width > maxItemWidthSouth) {
+		maxItemWidthSouth = item.width;
+		//Debug.write("maxItemWidthSouth", maxItemWidthSouth);
+	      } // if
+	    } // if
+	  } // if
+
+          // Calculate the corners of the item bounding box.
+          var itw = item.width;
+          var ith = item.height;
+          var itx0 = item.x;
+          var ity0 = item.y;
+          var itx1 = itx0 + itw;
+          var ity1 = ity0 + ith;
+
+          // Update the bounding box.
+          if (itx0 < minX) { minX = itx0; }
+          if (ity0 < minY) { minY = ity0; }
+          if (itx1 > maxX) { maxX = itx1; }
+          if (ity1 > maxY) { maxY = ity1; }
+
+          // Update the maxRadius.
+          var farx = Math.max(Math.abs(itx0), Math.abs(itx1));
+          var fary = Math.max(Math.abs(ity0), Math.abs(ity1));
+          var rad = (farx * farx) + (fary * fary);
+          if (rad > maxRadius) { 
+            maxRadius = rad; 
+          } // if
+
+        } // for itemIndex
+
+	// Go over the linear items and fix the x and width of all vertical items. 
+        for (itemIndex = 0; itemIndex < linearItemCount; itemIndex++) {
+          var index = 
+            (itemIndex + first) % linearItemCount;
+          var item = 
+            linearItems[index];
+
+	  //Debug.write("item.dx", item.dx, item);
+	  if (Math.abs(item.dx) < 0.01) {
+	    var w = 0;
+	    if (item.dy < 0) {
+	      w = maxItemWidthNorth;
+	    } else {
+	      w = maxItemWidthSouth;
+	    } // if
+	    item.setAttribute("width", w);
+	    item.setAttribute("x", Math.floor(-0.5 * w) - 1);
+	    var subviews = item.subviews;
+	    var n = subviews.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	      var v = subviews[i];
+	      v.setAttribute("width", w);
+	    } // for i
+	  } // if
+	} // for
+
+        // Calculate the maxRadius.
+        maxRadius = 
+          Math.floor(
+            0.95 + 
+            Math.sqrt(
+              maxRadius)) +
+	  this.marginRadius;
+        this.maxRadius = maxRadius;
+
+        // Expand the bounding box by the border.
+        var border = this.border;
+        minX -= border;
+        minY -= border;
+        maxX += border;
+        maxY += border;
+
+        // Done calculating the bounding box.
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+
+        // Set the piemenu center.
+        var centerX = Math.round(-minX);
+        var centerY = Math.round(-minY);
+        this.setAttribute('centerX', centerX);
+        this.setAttribute('centerY', centerY);
+
+        // Set the piemenu size.
+        this.setAttribute('width', maxX - minX);
+        this.setAttribute('height', maxY - minY);
+
+        // Position the headercontainer.
+        headercontainer.setAttribute('x', headercontainer.x - minX);
+        headercontainer.setAttribute('y', headercontainer.y - minY);
+
+        // Position the items.
+        for (itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+            var item = 
+              items[itemIndex];
+
+            var x = item.x;
+            var y = item.y;
+            x -= minX;
+            y -= minY;
+
+            item.setAttribute('finalx', x);
+            item.setAttribute('finaly', y);
+            item.setAttribute('x', x);
+            item.setAttribute('y', y);
+
+        } // for itemIndex
+
+        // Done laying out the pie menu. (Whew!)
+      ]]>
+    </method>
+
+
+    <method name="startPopupAnimation"><![CDATA[
+        var duration = this.popupAnimationDuration;
+
+        if (this.animatePopupLabels) {
+          var centerX = this.centerX;
+          var centerY = this.centerY;
+          var items = this.items;
+          var itemCount = items.length;
+          var itemIndex;
+          for (itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+            var item =
+              items[itemIndex];
+
+            item.setAttribute('x', centerX - (item.width / 2));
+            item.setAttribute('y', centerY - (item.height / 2));
+            item.animate('x', item.finalx, duration, false, {'motion':'easein'});
+            item.animate('y', item.finaly, duration, false, {'motion':'easein'});
+          } // if
+        } // if
+
+        if (this.animatePopupOpacity) {
+          this.setAttribute('opacity', 0);
+          this.animate('opacity', 1, duration);
+        } // if
+
+	if (this.showBackground && this.animatePopupBackground) {
+          this.setAttribute('popupedness', 0.0);
+          this.animate('popupedness', 1.0, duration, false, {'motion':'linear'});
+	} // if
+
+      ]]>
+    </method>
+
+
+    <method name="addItemDirection" args="item, deg"><![CDATA[
+        // Add an item to the map of directions to items in that direction.
+        // Also set the item's dx and dy. Not sure why that's here.
+        var dx, dy;
+        if (deg == "center") {
+          dx = 0;
+          dy = 0;
+        } else {
+	  var angle = 
+	    this.degToRad(deg);
+	  deg = 
+	    Math.round(
+	      this.radToDeg(
+	        this.normalizeAngleRad(
+	          angle)));
+          dx = Math.cos(angle);
+          dy = -Math.sin(angle);
+        } // if
+
+        item.dx = dx;
+        item.dy = dy;
+
+        var lastItem = null;
+
+        var a =
+          this.itemDirections[deg];
+        if (!a) {
+          a = [];
+          this.itemDirections[deg] = a;
+        } else {
+          lastItem = a[a.length - 1];
+        } // if
+
+        a.push(item);
+
+        // Kludge to layout linear labels against headercontainer.
+        if ((lastItem == null) && (this.pieItems.length == 0)) {
+          lastItem = this.headercontainer;
+        } // if
+
+        return lastItem;
+      ]]>
+    </method>
+
+
+    <!-- Tracking -->
+
+
+    <method name="trackPosition" args="cx, cy"><![CDATA[
+        // Track the selection based on the cursor offset from the menu center. 
+        var twoPi = 
+          2 * Math.PI;
+
+        var dx =
+          cx - this.centerX;
+        var dy =
+          cy - this.centerY;
+
+        dx += this.mouseDeltaX;
+        dy += this.mouseDeltaY;
+
+        this.dx = dx;
+        this.dy = dy
+
+        this.distance = 
+          Math.sqrt(
+            (dx * dx) +
+            (dy * dy));
+
+        if (this.distance <= 0) {
+          this.direction = 0;
+        } else {
+          this.direction =
+            this.normalizeAngleRad(Math.atan2(-dy, dx));
+        } // if
+
+        var itemCount =
+          this.items.length;
+
+        // If there aren't any items, there's nothing to do.
+        if (itemCount == 0) {
+          return;
+        } // if
+
+        var newItem = 
+          -1;
+        var lastItem = 
+          this.curItem;
+
+        this.lastItem =
+          lastItem;
+
+        //Debug.write("trackPosition cx " + cx + " cy " + cy + " dx " + dx + " dy " + dy)
+        this.curItemEntered = -1;
+        var i;
+        for (i = 0; i < itemCount; i++) {
+          var it = this.items[i];
+          var x0 = it.finalx;
+          var y0 = it.finaly;
+          var x1 = x0 + it.width;
+          var y1 = y0 + it.height;
+          //Debug.write("trackPosition ITEM i " + i + " cx " + cx + " cy " + cy + " x0 " + x0 + " y0 " + y0 + " x1 " + x1 + " y1 " + y1)
+          if ((cx >= x0) && (cx < x1) &&
+              (cy >= y0) && (cy < y1)) {
+            //Debug.write("ENTERED " + i);
+            this.curItemEntered = i;
+            break;
+          } // if
+        } // for i
+
+        if (this.curItemEntered != -1) {
+          newItem = this.curItemEntered;
+        } else {
+          if (this.distance > this.inactiveRadius) {
+            if (itemCount == 1) {
+              newItem = 0;
+            } else {
+              if (this.curItemEntered != -1) {
+                newItem = this.curItemEntered;
+              } else {
+                var pieItemCount =
+                  this.pieItems.length;
+
+                if (pieItemCount > 0) {
+                  var twist =
+                    Math.PI / pieItemCount;
+                  var initialAngle =
+                    this.degToRad(this.initialAngle);
+                  var ang;
+                  if (this.clockwise) {
+                    ang =
+                      initialAngle - this.direction + twist;
+                  } else {
+                    ang =
+                      initialAngle + this.direction - twist;
+                  } // if
+
+                  ang = 
+                    this.normalizeAngleRad(ang);
+
+                  var newPieItem =
+                    Math.floor((ang / twoPi) * pieItemCount);
+
+                  if (newPieItem < 0) {
+                    newPieItem = 0;
+                  } else if (newPieItem >= pieItemCount) {
+                    newPieItem = pieItemCount - 1;
+                  } // if
+
+                  newItem =
+                    this.pieItems[newPieItem].index;
+                } // if
+              } // if
+            } // if
+          } // if
+        } // if
+
+        // Now we've figured out the selected newItem,
+        // so update the display if necessary.
+
+        if (newItem >= this.items.length) {
+          newItem = 
+            itemCount - 1;
+        } // if
+
+        if (newItem != lastItem) {
+          this.curItem = newItem;
+
+          for (i = 0; i < itemCount; i++) {
+            var it =
+              this.items[i];
+            var hilited = 
+              (i == newItem);
+            if (hilited) {
+              this.item = it;
+            } // if
+            it.setAttribute('hilited', hilited);
+          } // for i
+
+          var now = 
+            (new Date()).getTime();
+
+          if (lastItem != -1) {
+            var it = this.items[lastItem];
+            if (it.enterTime == 0) {
+              it.enterTime = now;
+            } // if
+            it.exitTime = now;
+            var elapsed = now - it.enterTime;
+            it.totalTime += elapsed;
+          } // if
+
+          if (newItem != -1) {
+            this.items[newItem].enterTime = now;
+          } // if
+
+          if (this.onchanged != null) {
+            this.onchanged.sendEvent(
+              this);
+          } // if
+
+        } // if
+      ]]>
+    </method>
+
+
+    <method name="popupAtCursor" args="pinned"><![CDATA[
+        //Debug.write("popupAtCursor", this, pinned);
+        var x = canvas.getMouse("x");
+        var y = canvas.getMouse("y");
+        //Debug.write("popupAtCursor", "x", x, "y", y);
+        this.popupAt(x, y, pinned);
+        //Debug.write("popupAtCursor done", this.visible);
+      ]]>
+    </method>
+
+
+    <method name="popupAt" args="x, y, pinned"><![CDATA[
+        //Debug.write("popupAt", x, y, pinned);
+
+        if (this.onbeforepopup) {
+          this.onbeforepopup.sendEvent(
+            this);
+        } // if
+
+        this.bringToFront();
+        this.startTracking();
+
+	this.updateLayout();
+
+        this.popupX = x;
+        this.popupY = y;
+        this.setAttribute("x", this.popupX - this.centerX);
+        this.setAttribute("y", this.popupY - this.centerY);
+
+	if (pinned == null) {
+	  pinned = false;
+	} // if
+	this.setAttribute("pinned", pinned);
+
+        if (this.onpopup) {
+          this.onpopup.sendEvent(
+            this);
+        } // if
+
+        this.startPopupAnimation();
+        this.setAttribute("visible", true);
+        this.trackMouseDown(null);
+      ]]>
+    </method>
+
+
+    <method name="popdown"><![CDATA[
+        //Debug.write("popdown", this);
+        this.stopTracking();
+        this.setAttribute("visible", false);
+
+        if (this.onpopdown) {
+          this.onpopdown.sendEvent(
+            this);
+        } // if
+
+      ]]>
+    </method>
+
+
+    <method name="startTracking"><![CDATA[
+        //Debug.write("startTracking", this, this.trackingFlag);
+
+        if (this.trackingFlag) {
+          return;
+        } // if
+
+        var del;
+
+        del =
+          this.idledelegate;
+        if (del == null) {
+          del =
+            new lz.Delegate(
+              this,
+              'trackMouseMove');
+          this.idledelegate =     
+            del;
+        } // if
+        del.unregisterAll();
+        del.register(
+          lz.Idle,
+          'onidle');
+
+        del = 
+          this.downdelegate;
+        if (del == null) {
+          del =
+            new lz.Delegate(
+              this,
+              'trackMouseDown');
+          this.downdelegate =     
+            del;
+        } // if
+        del.unregisterAll();
+        del.register(
+          lz.GlobalMouse,
+          'onmousedown');
+
+        del = 
+          this.updelegate;
+        if (del == null) {
+          del =
+            new lz.Delegate(
+              this,
+              'trackMouseUp');
+          this.updelegate =       
+            del;
+        } // if
+        del.unregisterAll();
+        del.register(
+          lz.GlobalMouse,
+          'onmouseup');
+
+        lz.ModeManager.makeModal(this);
+        lz.ModeManager.globalLockMouseEvents();
+
+        this.setAttribute("trackingFlag", true);
+      ]]>
+    </method>
+
+
+    <method name="stopTracking"><![CDATA[
+        //Debug.write("stopTracking", this.trackingFlag, this.idledelegate);
+
+        if (!this.trackingFlag) {
+          return;
+        } // if
+
+        var del;
+
+        del =
+          this.idledelegate;
+        if (del != null) {
+          del.unregisterAll();
+        } // if
+
+        del =
+          this.downdelegate;
+        if (del != null) {
+          del.unregisterAll();
+        } // if
+
+        del =
+          this.updelegate;
+        if (del != null) {
+          del.unregisterAll();
+        } // if
+
+        lz.ModeManager.release(this);
+        lz.ModeManager.globalUnlockMouseEvents();
+        //LzTrack.deactivate('piemenu');
+
+        this.setAttribute("trackingFlag", false);
+      ]]>
+    </method>
+
+
+    <method name="trackMouseDown" args="arg"><![CDATA[
+        //Debug.write("trackMouseDown", this);
+
+        this.trackMouseMove(arg);
+      ]]>
+    </method>
+
+
+    <method name="trackMouseMove" args="arg"><![CDATA[
+        var lastX = this.lastX;
+        var lastY = this.lastY;
+        var curX = canvas.getMouse("x");
+        var curY = canvas.getMouse("y");
+        if ((curX == lastX) && (curY == lastY)) {
+          return;
+        } // if
+	//Debug.write("trackMouseMove", this, this.x, this.y, this.width, this.height, "cur", curX, curY, "visible", this.visible, "opacity", this.opacity, "item", this.item, "direction", this.direction, "distance", this.distance);
+
+        this.curX = curX;
+        this.curY = curY;
+
+        var localX = this.getMouse("x");
+        var localY = this.getMouse("y");
+        this.localX = localX;
+        this.localY = localY;
+
+        this.trackPosition(localX, localY);
+
+        this.lastX = curX;
+        this.lastY = curY;
+      ]]>
+    </method>
+
+
+    <method name="trackMouseUp" args="arg"><![CDATA[
+        //Debug.write("trackMouseUp", this, arguments.caller);
+
+        this.trackMouseMove(arg);
+
+	if ((this.curItem == -1) &&
+	    (!this.pinned)) {
+	  this.setAttribute("pinned", true);
+	  return;
+	} // if
+
+        this.popdown();
+        this.doAction();
+      ]]>
+    </method>
+
+
+    <method name="doAction"><![CDATA[
+	//Debug.write("doAction", this);
+        var curItem = this.curItem;
+        if (curItem == -1) {
+          return;
+        } // if
+
+        var item = this.items[curItem];
+        if (item == null) {
+          return;
+        } // if
+
+        item.selected();
+        var subPie = item.getSubPie();
+        //Debug.write(item, subPie);
+
+        if (subPie != null) {
+          subPie.setAttribute("target", this.target);
+          subPie.popupAtCursor(true);
+        } // if
+      ]]>
+    </method>
+
+
+    <!-- Utilities -->
+
+
+    <method name="degToRad" args="d"><![CDATA[
+        return (2 * Math.PI * d) / 360.0;
+      ]]>
+    </method>
+
+
+    <method name="radToDeg" args="r"><![CDATA[
+        return (360.0 * r) / (2 * Math.PI);
+      ]]>
+    </method>
+
+
+    <method name="normalizeAngleRad" args="ang"><![CDATA[
+        var twoPi = 
+          2 * Math.PI;
+
+        while (ang < 0) {
+          ang += twoPi;
+        } // while
+
+        while (ang >= twoPi) {
+          ang -= twoPi;
+        } // while
+
+        return ang;
+      ]]>
+    </method>
+
+
+    <!-- Contents -->
+
+
+<!--
+    <view name="underlay" 
+      x="-10000"
+      y="-10000"
+      width="20000"
+      height="20000"
+      opacity="0.25"
+      bgcolor="0x000000"
+    />
+-->
+
+
+    <view name="background"
+      x="${parent.linear 
+             ? (parent.centerX * (1.0 - parent.popupedness))
+             : (parent.centerX - (parent.backgroundRadius * parent.popupedness))}"
+      y="${parent.linear 
+             ? (parent.centerY * (1.0 - parent.popupedness))
+             : (parent.centerY - (parent.backgroundRadius * parent.popupedness))}"
+      width="${parent.linear 
+             ? (parent.width * parent.popupedness)
+             : (parent.backgroundRadius * parent.popupedness * 2)}"
+      height="${parent.linear
+             ? (parent.height * parent.popupedness)
+             : (parent.backgroundRadius * parent.popupedness * 2)}"
+      stretches="both"
+      visible="${parent.showBackground}"
+      resource="${parent.backgroundResource}"
+      bgcolor="${parent.backgroundColor}"
+      opacity="${parent.backgroundOpacity}"
+    />
+
+
+    <view name="itemcontainer"/>
+
+
+    <view name="headercontainer" 
+      bgcolor="${classroot.headerbgcolor}" 
+      fgcolor="${classroot.headerfgcolor}"/>
+
+
+  </class>
+
+
+  <!-- ======================================================================== -->
+  <!-- Class item -->
+
+
+  <class
+    name="item" 
+    placement="itemcontainer" 
+    defaultplacement="headercontainer"
+    bgcolor="${this.hilited ? this.hilitecolor : this.lolitecolor}"
+  >
+
+
+    <!-- Attributes -->
+
+
+    <attribute name="target" value="${parent.target}"/>
+    <attribute name="subPie" value="null"/>
+    <attribute name="fixedRadius" value="0"/>
+    <attribute name="index" value="0"/>
+    <attribute name="dx" value="0"/>
+    <attribute name="dy" value="0"/>
+    <attribute name="xx" value="0"/>
+    <attribute name="yy" value="0"/>
+    <attribute name="enterTime" value="0"/>
+    <attribute name="exitTime" value="0"/>
+    <attribute name="totalTime" value="0"/>
+    <attribute name="linear" value="0"/>
+    <attribute name="linearDirection" type="string" value=""/>
+    <attribute name="linearOrderReversed" value="0"/>
+    <attribute name="linearGap" value="0"/>
+    <attribute name="angle" value="0"/>
+    <attribute name="edge1dx" value="0"/>
+    <attribute name="edge1dy" value="0"/>
+    <attribute name="edge2dx" value="0"/>
+    <attribute name="edge2dy" value="0"/>
+    <attribute name="hilited" value="false"/>
+    <attribute name="onchanged" value="null"/>
+    <attribute name="onpreview" value="null"/>
+    <attribute name="hilitecolor" value="null"/>
+    <attribute name="lolitecolor" value="null"/>
+    <attribute name="headerhilitecolor" value="0xffff00"/>
+    <attribute name="headerlolitecolor" value="0xc0c0ff"/>
+    <attribute name="headercolor" value="${this.hilited ? this.headerhilitecolor : this.headerlolitecolor}"/>
+    <attribute name="onselected" value="null"/>
+
+
+    <!-- Notification -->
+
+
+    <method name="selected"><![CDATA[
+        // Instances can override this, but should call call this via super.selected(). 
+	//Debug.write("ITEM SELECTED", this, this.onselected);
+	if (this.onselected) {
+	  this.onselected.sendEvent(
+	    this);
+	} // if
+      ]]>
+    </method>
+
+
+    <!-- Layout -->
+
+
+    <method name="determinePlacement" args="aSub, placement, args"> <![CDATA[
+        if (placement == "canvas") {
+          this.subPie = aSub;
+          return canvas;
+        }
+        return super.determinePlacement(aSub, placement, args);
+      ]]>
+    </method>
+
+
+    <method name="layoutForPie" args="pie, radius"><![CDATA[
+        if (this.fixedRadius > 0) {
+          radius = this.fixedRadius;
+        } // if
+
+        var gap = 1;
+        var rdx = radius * this.dx;
+        var rdy = radius * this.dy;
+
+        // Special cases for top, bottom, left, and right
+        if ((Math.floor(rdx + 0.5)) == 0) { // top or bottom
+            rdx -= (this.width / 2.0) + 1;
+            if (rdy > 0) {
+                rdy += gap - 3; // top
+            } else {
+                rdy -= this.height + gap - 2; // bottom
+            } // if
+        } else {
+            if ((Math.floor(rdy + 0.5)) == 0) { // left or right
+                rdy -= (this.height / 2.0) + 0.5;
+                if (rdx < 0) {
+                    rdx -= this.width + gap - 2;
+                } else {
+                    rdx += gap - 3;
+                } // if
+            } else { // everwhere else
+                // Justify the label according to its quadrant.
+                var fudge = 2;
+
+                if (rdx < 0) {
+                    rdx -= this.width - fudge;
+                } else {
+                    rdx -= fudge;
+                } // if
+
+                if (rdy < 0) {
+                    rdy -= this.height - fudge;
+                } else {
+                    rdy -= fudge;
+                } // if
+            } // if
+        } // if
+
+	this.x = Math.round(rdx);
+        this.y = Math.round(rdy);
+      ]]>
+    </method>
+
+
+    <method name="layoutForLinear" args="pie, minX, minY, maxX, maxY"><![CDATA[
+        var lastItem;
+
+        var linearDirection =
+          this.linearDirection;
+	if ((linearDirection == null) || 
+	    (linearDirection == "")) {
+	  linearDirection =
+	    pie.linearDirection;
+	} // if
+
+        var gap = this.linearGap;
+        var xCenterOffset = 0;
+        var yCenterOffset = 0;
+
+        switch (linearDirection) {
+
+          case "c":
+          case "center":
+            lastItem =
+              pie.addItemDirection(this, "center");
+            xCenterOffset = Math.floor(this.width / -2.0) - 1;
+            yCenterOffset = Math.floor(this.height / -2.0);
+            break;
+
+          case "e":
+          case "right":
+            lastItem = 
+              pie.addItemDirection(this, 0);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem ? (lastItem.x + lastItem.width) : maxX) + gap;
+              yCenterOffset = Math.floor(this.height / -2.0);
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "ne":
+          case "topright":
+            lastItem = 
+              pie.addItemDirection(this, 45);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem.x + lastItem.width) + gap;
+              yCenterOffset = Math.floor((lastItem.y + lastItem.height) - (this.height));
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "se":
+          case "bottomright":
+            lastItem = 
+              pie.addItemDirection(this, 315);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem.x + lastItem.width) + gap;
+              yCenterOffset = Math.floor(lastItem.y);
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "w":
+          case "left":
+            lastItem = 
+              pie.addItemDirection(this, 180);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem.x - this.width) - gap;
+              yCenterOffset = Math.floor(this.height / -2.0);
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "nw":
+          case "topleft":
+            lastItem = 
+              pie.addItemDirection(this, 135);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem.x - this.width) - gap;
+              yCenterOffset = Math.floor((lastItem.y + lastItem.height) - this.height);
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "sw":
+          case "bottomleft":
+            lastItem = 
+              pie.addItemDirection(this, 225);
+            if (lastItem) {
+              xCenterOffset = Math.floor(lastItem.x - this.width) - gap;
+              yCenterOffset = Math.floor(lastItem.y);
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "n":
+          case "up":
+          case "top":
+            lastItem = 
+              pie.addItemDirection(this, 90);
+            if (lastItem) {
+              xCenterOffset = Math.floor(this.width / -2.0) - 1;
+              yCenterOffset = Math.floor((lastItem ? lastItem.y : minY) - this.height) - gap;
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          case "s":
+          case "down":
+          case "bottom":
+            lastItem = 
+              pie.addItemDirection(this, 270);
+            if (lastItem) {
+              xCenterOffset = Math.floor(this.width / -2.0) - 1;
+              yCenterOffset = Math.floor(lastItem ? (lastItem.y + lastItem.height) : maxY) + gap;
+            } else {
+              this.layoutForPie(pie, pie.radius);
+              return;
+            } // if
+            break;
+
+          default:
+            break;
+
+        } // switch
+
+        this.x = Math.round(xCenterOffset);
+        this.y = Math.round(yCenterOffset);
+      ]]>
+    </method>
+
+
+    <method name="itemsOverlap" args="item"><![CDATA[
+        var fringe = 2;
+        var myLeft = this.x - fringe;
+        var myRight = this.x + this.width + fringe;
+        var yourLeft = item.x - fringe;
+        var yourRight = item.x + item.width + fringe;
+        var myTop = this.y - fringe;
+        var myBottom = this.y + this.height + fringe;
+        var yourTop = item.y - fringe;
+        var yourBottom = item.y + item.height + fringe;
+
+        return ((myBottom > yourTop) &&
+                (myTop < yourBottom) &&
+                (myRight > yourLeft) &&
+                (myLeft < yourRight));
+      ]]>
+    </method>
+
+
+    <method name="getSubPie"><![CDATA[
+        return this.subPie;
+      ]]>
+    </method>
+
+
+    <!-- Contents -->
+
+    <view name="headercontainer" bgcolor="${classroot.headercolor}"/>
+
+
+  </class>
+
+
+  <!-- ======================================================================== -->
+  <!-- Class html -->
+
+
+  <class
+    name="html"
+    extends="text" 
+    fontsize="14"
+    placement="headercontainer"
+  />
+
+
+  <!-- ======================================================================== -->
+  <!-- Class linearmenu -->
+
+
+  <class name="linearmenu"
+    extends="piemenu"
+    linear="1"
+    backgroundResource="null"
+    backgroundColor="0x808080"
+  />
+
+
+  <!-- ======================================================================== -->
+  <!-- Class linearitem -->
+
+
+  <class name="linearitem"
+    extends="item"
+    linear="1"
+  />
+
+
+  <!-- ======================================================================== -->
+
+
+</library>

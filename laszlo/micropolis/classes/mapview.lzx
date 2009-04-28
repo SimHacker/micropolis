@@ -184,7 +184,7 @@
 	    var dy = (y - dragDownY) / tileSize;
 	    var viewX = dragDownViewX + dx;
 	    var viewY = dragDownViewY + dy;
-Debug.write("x,y", x, y, "dragDownX,Y", dragDownX, dragDownY, "dragDownViewX,Y", dragDownViewX, dragDownViewY, "tileSize",  tileSize, "dx,y", dx, dy, "viewX,Y", viewX, viewY);
+	    //Debug.write("x,y", x, y, "dragDownX,Y", dragDownX, dragDownY, "dragDownViewX,Y", dragDownViewX, dragDownViewY, "tileSize",  tileSize, "dx,y", dx, dy, "viewX,Y", viewX, viewY);
 	    tileView.scrollView(viewX, viewY);
 	  ]]>
 	</method>

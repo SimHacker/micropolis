@@ -7,7 +7,11 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <resource name="micropolis_tiles_rsrc">
+<!--
+    <resource name="tiles_micropolis_rsrc" src="../resources/tiles_micropolis.swf"/>
+-->
+
+    <resource name="tiles_micropolis_rsrc">
 	<frame src="../../../micropolis/micropolis/htdocs/static/images/micropolis_tile_0000.png"/>
         <frame src="../../../micropolis/micropolis/htdocs/static/images/micropolis_tile_0001.png"/>
         <frame src="../../../micropolis/micropolis/htdocs/static/images/micropolis_tile_0002.png"/>

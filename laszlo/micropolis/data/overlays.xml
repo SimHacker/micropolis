@@ -2,63 +2,97 @@
     <overlay
 	name="all"
 	title="All Zones"
+	titleBroken="All
+Zones"
     />
     <overlay
 	name="residential"
 	title="Residential Zones"
+	titleBroken="Residential
+Zones"
     />
     <overlay
         name="commercial"
 	title="Commercial Zones"
+	titleBroken="Commercial
+Zones"
     />
     <overlay
 	name="industrial"
 	title="Industrial Zones"
+	titleBroken="Industrial
+Zones"
     />
     <overlay
 	name="powergrid"
 	title="Power Connectivity"
+	titleBroken="Power
+Connectivity"
     />
     <overlay
 	name="transportation"
-	title="Roads"
+	title="Transportation Network"
+	titleBroken="Transportation
+Network"
     />
     <overlay
 	name="populationdensity"
 	title="Population Density"
+	titleBroken="Population
+Density"
     />
     <overlay
 	name="rateofgrowth"
 	title="Rate of Growth"
+	titleBroken="Rate of
+Growth"
     />
     <overlay
 	name="trafficdensity"
-	title="Traffic"
+	title="Traffic Density"
+	titleBroken="Traffic
+Density"
     />
     <overlay
 	name="pollutiondensity"
-	title="Pollution"
+	title="Pollution Density"
+	titleBroken="Pollution
+Density"
     />
     <overlay
 	name="crimerate"
 	title="Crime Rate"
+	titleBroken="Crime
+Rate"
     />
     <overlay
 	name="landvalue"
 	title="Land Value"
+	titleBroken="Land
+Value"
     />
     <overlay
 	name="firecoverage"
 	title="Fire Station Coverage"
+	titleBroken="Fire Station
+Coverage"
+        linear="0"
+        linearDirection=""
     />
     <overlay
 	name="policecoverage"
 	title="Police Station Coverage"
+	titleBroken="Police Station
+Coverage"
+        linear="0"
+        linearDirection=""
     />
 <!--
     <overlay
 	name="dynamic"
 	title="Dynamic Filter"
+	titleBroken="Dynamic
+Filter"
     />
 -->
 </overlays>

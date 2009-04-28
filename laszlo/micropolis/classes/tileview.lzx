@@ -30,6 +30,14 @@
         <attribute name="screenCols" value="${Math.floor(2 + this.viewWidth)}"/>
         <attribute name="screenRows" value="${Math.floor(2 + this.viewHeight)}"/>
         <attribute name="navigationMapView" value="null"/>
+	<attribute name="cursorX" value="0"/>
+	<attribute name="cursorY" value="0"/>
+        <attribute name="tileCursorX" value="${
+	    Math.floor(this.cursorX / this.viewTileSize)
+	}"/>
+        <attribute name="tileCursorY" value="${
+	    Math.floor(this.cursorY / this.viewTileSize)
+	}"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -59,6 +67,18 @@
         <handler name="onvisible"><![CDATA[
             //Debug.write("tileview onvisible", this.visible);
             this.updateInterests();
+          ]]>
+        </handler>
+
+
+        <handler name="onwidth"><![CDATA[
+            this.constrainScroll();
+          ]]>
+        </handler>
+
+
+        <handler name="onheight"><![CDATA[
+            this.constrainScroll();
           ]]>
         </handler>
 
@@ -93,22 +113,52 @@
         </handler>
 
 
-	<method name="constrainPan"><![CDATA[
+	<handler name="onmousedown" args="arg"><![CDATA[
+	    gTileViewPie.popupAtCursor(false);
+	  ]]>
+	</handler>
+
+
+	<method name="scrollView" args="x, y"><![CDATA[
+	    //Debug.write("scrollView 1", x, y);
+	    x = -x * this.viewTileSize;
+	    y = -y * this.viewTileSize;
+	    //Debug.write("scrollView 2", x, y);
+	    this.scrollContainer(x, y);
 	  ]]>
 	</method>
 
 
-	<method name="scrollView" args="x, y"><![CDATA[
-	    var container = this.container;
-	    x = -(x * this.viewTileSize);
-	    if (x != container.x) {
-	        container.setAttribute("x", x);
+	<method name="constrainScroll"><![CDATA[
+	    //Debug.write("constrainScroll", this.container.x, this.container.y);
+	    this.scrollContainer(this.container.x, this.container.y);
+	  ]]>
+	</method>
+
+
+	<method name="scrollContainer" args="x, y"><![CDATA[
+	    //Debug.write("scrollContainer inited", this.inited);
+	    if (!this.inited) {
+	        return;
 	    }
-	    y = -(y * this.viewTileSize);
-	    if (y != container.y) {
-	        container.setAttribute("y", y);
+	    var viewTileSize = this.zoom * this.tileSize; // FIXME: not using member since it's not init'ed before this is run.
+	    var screenWidthHalf = Math.floor(this.width / 2);
+	    var screenHeightHalf = Math.floor(this.height / 2);
+	    var worldWidth = viewTileSize * gApp.worldCols;
+	    var worldHeight = viewTileSize * gApp.worldRows;
+	    //Debug.write("==== scrollContainer", "tileViewSize", this.viewTileSize, "gApp cols rows", gApp, gApp.worldCols, gApp.worldRows);
+	    //Debug.write("==== scrollContainer x,y", x, y, "size", this.width, this.height, "screen", screenWidthHalf, screenHeightHalf, "world", worldWidth, worldHeight);
+	    x = Math.min(screenWidthHalf, Math.max(x, -worldWidth + screenWidthHalf));
+	    y = Math.min(screenHeightHalf, Math.max(y, -worldHeight + screenHeightHalf));
+	    //Debug.write("scrollContainer", x, y, "width,height", this.width, this.height, "/2", this.width/2, this.height/2, "less", x<(this.width/2), y<(this.height/2), "world", worldWidth, worldHeight, "+", -worldWidth + screenWidthHalf, -worldHeight + screenWidthHalf);
+	    x = Math.floor(x);
+	    y = Math.floor(y);
+	    if (x != this.container.x) {
+	        this.container.setAttribute("x", x);
 	    }
-	    this.constrainPan();
+	    if (y != this.container.y) {
+	        this.container.setAttribute("y", y);
+	    }
 	  ]]>
 	</method>
 
@@ -220,20 +270,20 @@
                         continue;
                     }
 
-                    //Debug.write("this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
-                    if (tileIndex >= this.container.subviews.length) {
+                    //Debug.write("this.container.tiles.subviews.length", this.container.tiles.subviews.length, "tileIndex", tileIndex);
+                    if (tileIndex >= this.container.tiles.subviews.length) {
                         if (newTiles >= maxNewTiles) {
                             continue;
                         }
                         newTiles++;
                         var v =
-                            new lz.tile(this.container);
-                        //Debug.write("NOW this.container.subviews.length", this.container.subviews.length, "tileIndex", tileIndex);
+                            new lz.tile(this.container.tiles);
+                        //Debug.write("NOW this.container.tiles.subviews.length", this.container.tiles.subviews.length, "tileIndex", tileIndex);
                     }
 
-                    var tile = this.container.subviews[tileIndex];
+                    var tile = this.container.tiles.subviews[tileIndex];
                     if (!tile) {
-                        Debug.write("No tile!", this.container.subviews.length, tileIndex, this.container.subviews);
+                        Debug.write("No tile!", this.container.tiles.subviews.length, tileIndex, this.container.tiles.subviews);
                         return;
                     }
                     tileIndex++;
@@ -271,7 +321,7 @@
                 }
             }
 
-            var subviews = this.container.subviews;
+            var subviews = this.container.tiles.subviews;
             var n = subviews.length;
             while (tileIndex < n) {
                 var tile = subviews[tileIndex];
@@ -280,8 +330,23 @@
                 }
                 tileIndex++;
             }
+
+	    //this.trackCursor();
           ]]>
         </method>
+
+
+	<method name="trackCursor"><![CDATA[
+	    var x = this.container.getMouse('x');
+	    if (this.cursorX != x) {
+		this.setAttribute("cursorX", x);
+	    }
+	    var y = this.container.getMouse('y');
+	    if (this.cursorY != y) {
+		this.setAttribute("cursorY", y);
+	    }
+	  ]]>
+	</method>
 
 
         <method name="centerOnTile" args="tileX, tileY"><![CDATA[
@@ -302,24 +367,38 @@
             width="${gApp.worldCols * classroot.viewTileSize}"
             height="${gApp.worldRows * classroot.viewTileSize}"
             bgcolor="0xCC7F66"
+        >
+<!--
             onmousedown="this.dragger.setAttribute('applied', true)"
             onmouseup="this.dragger.setAttribute('applied', false)"
-        >
+-->
 
 
+<!--
             <dragstate name="dragger"/>
 
 
 	    <handler name="onx"><![CDATA[
-	        this.constrainPan();
+	        classroot.constrainScroll();
 	      ]]>
 	    </handler>
 
-	    <handler name="onx"><![CDATA[
-	        this.constrainPan();
+	    <handler name="ony"><![CDATA[
+	        classroot.constrainScroll();
 	      ]]>
 	    </handler>
+-->
 
+	    <view name="tiles"
+	        width="${parent.width}"
+		height="${parent.height}"
+	    />
+
+	    <toolcursor
+	        cursorX="${classroot.tileCursorX}"
+		cursorY="${classroot.tileCursorY}"
+		tileSize="${classroot.viewTileSize}"
+	    />
 
         </view>
 

@@ -18,21 +18,21 @@
 
 	<handler name="ondata" args="arg"><![CDATA[
 	    //Debug.write("ds_session ondata", this.sessionID);
-	    classroot.startSession(this.sessionID);
+	    gApp.startSession(this.sessionID);
 	  ]]>
 	</handler>
 
 
 	<handler name="onerror" reference="ds_session"><![CDATA[
 	    Debug.write("ds_session onerror", this.sessionID);
-	    classroot.failSession();
+	    gApp.failSession();
 	  ]]>
 	</handler>
 
 
 	<handler name="ontimeout" reference="ds_session"><![CDATA[
 	    Debug.write("ds_session ontimeout", this.sessionID);
-	    classroot.failSession();
+	    gApp.failSession();
 	  ]]>
 	</handler>
 

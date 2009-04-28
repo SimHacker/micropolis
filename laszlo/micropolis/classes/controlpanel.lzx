@@ -118,7 +118,6 @@
             'Very Fast',
             'Super Fast',
             'Ultra Fast',
-            'Outrageously Fast',
 	    'Astronomically Fast'
 	]}"/>
 
@@ -137,7 +136,7 @@
 
 	<method name="updateSpeed" args="speed"><![CDATA[
 	    gApp.setAttribute("speed", speed);
-	    Debug.write("UPDATESPEED", speed, this.speedNames[speed]);
+	    //Debug.write("UPDATESPEED", speed, this.speedNames[speed]);
 	  ]]>
 	</method>
 
@@ -194,7 +193,7 @@
 		<slider name="speedSlider"
 		    width="${parent.width}"
 		    minvalue="0"
-		    maxvalue="10"
+		    maxvalue="9"
 		    keystep="1"
 		    showvalue="false"
 		    showrange="false"
