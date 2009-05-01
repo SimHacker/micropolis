@@ -37,6 +37,8 @@
         <attribute name="tileCursorXLast" value="0"/>
         <attribute name="tileCursorYLast" value="0"/>
         <attribute name="drawing" value="false"/>
+        <attribute name="tileCursorMoved" value="false"/>
+	<attribute name="drawMoveNowDelegate" value="null"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -114,7 +116,7 @@
 
         <handler name="ontileCursorX" args="arg"><![CDATA[
 	    if (this.drawing) {
-                this.drawHere();
+                this.drawMove();
 	    }
           ]]>
         </handler>
@@ -122,7 +124,7 @@
 
         <handler name="ontileCursorY" args="arg"><![CDATA[
 	    if (this.drawing) {
-                this.drawHere();
+                this.drawMove();
 	    }
           ]]>
         </handler>
@@ -135,7 +137,6 @@
 	        gTileViewPie.popupAtCursor(false);
 	    } else {
 	        this.setAttribute('drawing', true);
-		this.drawHere();
 	    }
 	  ]]>
 	</handler>
@@ -143,22 +144,96 @@
 
 	<handler name="onmouseup" args="arg"><![CDATA[
 	    if (this.drawing) {
-		this.drawHere();
 	        this.setAttribute("drawing", false);
 	    }
 	  ]]>
 	</handler>
 
 
-	<method name="drawHere"><![CDATA[
-	    if ((this.tileCursorX < 0) ||
-	        (this.tileCursorY < 0) ||
-		(this.tileCursorX >= gApp.worldCols) ||
-		(this.tileCursorY >= gApp.worldRows)) {
+	<handler name="ondrawing" args="arg"><![CDATA[
+	    Debug.write("ONDRAWING", arg);
+	    if (this.drawing) {
+		this.drawStart();
+	    } else {
+		this.drawStop();
+	    }
+	  ]]>
+	</handler>
+
+
+	<method name="drawStart"><![CDATA[
+	    Debug.write("DRAWSTART", this.tileCursorX, this.tileCursorY);
+	    var tileCursorX = this.tileCursorX;
+	    var tileCursorY = this.tileCursorY;
+
+	    this.tileCursorXLast = tileCursorX;
+	    this.tileCursorYLast = tileCursorY;
+
+	    gApp.drawToolStart(
+	        gApp.tool, 
+		tileCursorX, 
+		tileCursorY);
+	  ]]>
+	</method>
+
+
+	<method name="drawMove"><![CDATA[
+	    Debug.write("==== DRAWMOVE", this.tileCursorX, this.tileCursorY);
+	    if (this.tileCursorMoved) {
+	        return;
+	    }
+
+	    Debug.write("Setting idle...");
+
+	    this.tileCursorMoved = true;
+
+	    var del = this.drawMoveNowDelegate;
+	    if (del == null) {
+	        del = new lz.Delegate(this, 'drawMoveNow');
+		this.drawMoveNowDelegate = del;
+	    }
+
+	    Debug.write("IDLE CALLONIDLE", del);
+	    lz.Idle.callOnIdle(del)
+	  ]]>
+	</method>
+
+
+	<method name="drawMoveNow" args="arg"><![CDATA[
+	    Debug.write("======== DRAWMOVENOW", this.tileCursorX, this.tileCursorY);
+	    var tileCursorX = this.tileCursorX;
+	    var tileCursorY = this.tileCursorY;
+	    var tileCursorXLast = this.tileCursorXLast;
+	    var tileCursorYLast = this.tileCursorYLast;
+
+	    this.tileCursorMoved = false;
+
+	    if ((tileCursorX == tileCursorXLast) &&
+	        (tileCursorY == tileCursorYLast)) {
 		return;
 	    }
-	    //Debug.write("DRAWHERE", this.tileCursorX, this.tileCursorY);
-	    gApp.drawTool(gApp.tool, this.tileCursorX, this.tileCursorY);
+
+	    this.tileCursorXLast = tileCursorX;
+	    this.tileCursorYLast = tileCursorY;
+
+	    gApp.drawToolMove(
+	        gApp.tool, 
+		tileCursorXLast, 
+		tileCursorYLast, 
+		tileCursorX, 
+		tileCursorY);
+	  ]]>
+	</method>
+
+
+	<method name="drawStop"><![CDATA[
+	    Debug.write("DRAWSTOP", this.tileCursorX, this.tileCursorY);
+	    this.drawMoveNow(null);
+
+	    gApp.drawToolStop(
+	        gApp.tool, 
+		tileCursorX, 
+		tileCursorY);
 	  ]]>
 	</method>
 
@@ -381,22 +456,39 @@
 
 
 	<method name="trackCursor"><![CDATA[
-	    var cursorX = this.container.getMouse('x');
-	    var cursorY = this.container.getMouse('y');
-	    var tileCursorX = Math.floor(cursorX / this.viewTileSize);
-	    var tileCursorY = Math.floor(cursorY / this.viewTileSize);
+
+	    var cursorX = 
+	        this.container.getMouse('x');
+	    var cursorY = 
+	        this.container.getMouse('y');
+
 	    if (this.cursorX != cursorX) {
 		this.setAttribute("cursorX", cursorX);
 	    }
 	    if (this.cursorY != cursorY) {
 		this.setAttribute("cursorY", cursorY);
 	    }
+
+	    var tileCursorX = 
+	        Math.max(
+		    0,
+		    Math.min(
+		        Math.floor(cursorX / this.viewTileSize),
+		    	gApp.worldCols - 1));
+	    var tileCursorY = 
+	        Math.max(
+		    0,
+		    Math.min(
+		        Math.floor(cursorY / this.viewTileSize),
+		    	gApp.worldRows - 1));
+
 	    if (this.tileCursorX != tileCursorX) {
 	        this.setAttribute("tileCursorX", tileCursorX);
 	    }
 	    if (this.tileCursorY != tileCursorY) {
 	        this.setAttribute("tileCursorY", tileCursorY);
 	    }
+
 	  ]]>
 	</method>
 

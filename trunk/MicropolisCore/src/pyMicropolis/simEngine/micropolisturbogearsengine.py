@@ -777,7 +777,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             speed = int(params.get('speed'))
             speed = max(0, min(speed, 9))
 
-            print "setSpeed", speed
+            #print "setSpeed", speed
             self.setVirtualSpeed(speed)
 
         elif command == 'abandonCity':
@@ -788,31 +788,68 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             print "SAVE CITY"
 
-        elif command == 'draw':
+        elif command == 'drawToolStart':
 
+            print "DRAWTOOLSTART", params
             tool = params.get('tool')
             x = int(params.get('x'))
             y = int(params.get('y'))
 
-            print "DRAW", tool, x, y
-            if ((x < 0) or
-                (y < 0) or
-                (x >= micropolisengine.WORLD_W) or
-                (y >= micropolisengine.WORLD_H) or
-                (tool not in ToolNameToIndex)):
+            if ((tool not in ToolNameToIndex) or
+                (not self.testBounds(x, y))):
 
-                print "INVALID ARGUMENT TO DRAW", tool, x, y
+                print "INVALID ARGUMENT TO DRAWTOOLSTART", tool, x, y
 
             else:
 
                 toolIndex = ToolNameToIndex[tool]
                 self.toolDown(toolIndex, x, y)
 
+        elif command == 'drawToolMove':
+
+            print "DRAWTOOLMOVE", params
+            tool = params.get('tool')
+            x0 = int(params.get('x0'))
+            y0 = int(params.get('y0'))
+            x1 = int(params.get('x1'))
+            y1 = int(params.get('y1'))
+
+            print "DRAWTOOLMOVE", tool, x0, y0, x1, x1
+            if ((tool not in ToolNameToIndex) or
+                (not self.testBounds(x0, y0)) or
+                (not self.testBounds(x1, y1))):
+
+                print "INVALID ARGUMENT TO DRAWTOOLMOVE", tool, x0, y0, x1, y1
+
+            else:
+
+                toolIndex = ToolNameToIndex[tool]
+                self.toolDrag(toolIndex, x0, y0, x1, y1)
+
+        elif command == 'drawToolStop':
+
+            print "DRAWTOOLSTOP", params
+            tool = params.get('tool')
+            x = int(params.get('x'))
+            y = int(params.get('y'))
+
+            print "DRAWTOOLSTOP", tool, x, y
+            if ((tool not in ToolNameToIndex) or
+                (not self.testBounds(x, y))):
+
+                print "INVALID ARGUMENT TO DRAWTOOLSTOP", tool, x, y
+
+            else:
+
+                # Nothing to do, since the user interface is
+                # responsible for sending us a move to the endpoint.
+                pass
+
 
     def setVirtualSpeed(self, speed):
         self.speed = speed
         speedConfiguration = SpeedConfigurations[speed]
-        print "==== setVirtualSpeed", speed, speedConfiguration
+        #print "==== setVirtualSpeed", speed, speedConfiguration
         self.loopsPerSecond = speedConfiguration['loopsPerSecond']
         self.maxLoopsPerPoll = speedConfiguration['maxLoopsPerPoll']
         simSpeed = speedConfiguration['speed']
@@ -834,10 +871,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             elapsed = now - self.lastLoopTime
             self.lastLoopTime = now
             ticks = int(max(1, math.ceil(elapsed * self.loopsPerSecond)))
-            print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
+            #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
             ticks = min(ticks, self.maxLoopsPerPoll)
 
-        print "********", "TICKS", ticks, "ELAPSED", elapsed
+        #print "********", "TICKS", ticks, "ELAPSED", elapsed
 
         if self.simPasses != ticks:
             self.setPasses(ticks)
@@ -899,7 +936,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         if commands:
             for command in commands:
                 if command.tag == 'command':
-                    print "COMMAND", command
+                    #print "COMMAND", command
                     self.doCommand(command.attrib)
 
         pollers = poll.find('pollers')
@@ -925,14 +962,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     except Exception, e:
                         self.expectationFailed("Invalid parameters: " + str(e));
 
-                    print "TILE", col, row, cols, rows
-                    print "VIEW", viewX, viewY, viewWidth, viewHeight
-
-                    cols = max(cols, 1)
-                    rows = max(rows, 1)
-
-                    if (cols <= 0) or (rows <= 0):
-                        continue
+                    #print "TILE", col, row, cols, rows
+                    #print "VIEW", viewX, viewY, viewWidth, viewHeight
 
                     if ((col < 0) or
                         (row < 0) or
@@ -953,7 +984,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         session.tileViewCache)
 
                     if tiles:
-                        print "TILES", tiles
+                        #print "TILES", tiles
                         tileviews.append({
                             'id': id,
                             'col': col,
@@ -1551,24 +1582,24 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif aspect == 'speed':
 
-                print "SPEED 1", self, 'speed' in self
+                #print "SPEED 1", self, 'speed' in self
                 speed = self.speed
-                print "SPEED 2"
+                #print "SPEED 2"
                 speedConfiguration = SpeedConfigurations[speed]
-                print "SPEED 3"
+                #print "SPEED 3"
                 message['speed'] = self.speed
-                print "SPEED 4"
+                #print "SPEED 4"
                 message['pollDelay'] = speedConfiguration['pollDelay']
-                print "SPEED 5"
+                #print "SPEED 5"
                 message['animateDelay'] = speedConfiguration['animateDelay']
-                print "SPEED 6"
+                #print "SPEED 6"
                 message['collapse'] = True
-                print "SPEED 7"
-                print "SPEED", speed, "MESSAGE", message
+                #print "SPEED 7"
+                #print "SPEED", speed, "MESSAGE", message
 
             elif aspect == 'delay':
 
-                print "UIUPDATE DELAY", self.speed
+                #print "UIUPDATE DELAY", self.speed
                 speed = self.speed
                 speedConfiguration = SpeedConfigurations[speed]
                 message['pollDelay'] = speedConfiguration['pollDelay']
@@ -1649,7 +1680,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['collectedFunds'] = collectedFunds
                 message['collapse'] = True
 
-                print 'BUDGET', message
+                #print 'BUDGET', message
 
             elif aspect == 'message':
 

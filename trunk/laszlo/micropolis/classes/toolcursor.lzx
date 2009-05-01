@@ -34,87 +34,104 @@
 	    residential: {
 	        name: 'Residential',
 	        tiles: 3,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 100
 	    },
 	    commercial: {
 	        name: 'Commercial',
 	        tiles: 3,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 100
 	    },
 	    industrial: {
                 name: 'Industrial',
 	        tiles: 3,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 100
 	    },
 	    firestation: {
                 name: 'Fire Station',
 	        tiles: 3,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 500
 	    },
 	    query: {
                 name: 'Query',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 0
 	    },
 	    policestation: {
                 name: 'Police Station',
 	        tiles: 3,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 100
 	    },
 	    wire: {
                 name: 'Wire',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 5
 	    },
 	    bulldozer: {
                 name: 'Bulldozer',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 1
 	    },
 	    railroad: {
                 name: 'Railroad',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 20
 	    },
 	    road: {
                 name: 'Road',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 10
 	    },
 	    pan: {
                 name: 'Pan',
 	        tiles: 0,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 0
 	    },
 	    stadium: {
                 name: 'Stadium',
 	        tiles: 4,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 5000
 	    },
 	    park: {
                 name: 'Park',
 	        tiles: 1,
-		hotSpot: 0
+		hotSpot: 0,
+		cost: 10
 	    },
 	    seaport: {
                 name: 'Seaport',
 	        tiles: 4,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 3000
 	    },
 	    coalpower: {
                 name: 'Coal Power',
 	        tiles: 4,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 3000
 	    },
 	    airport: {
                 name: 'Airport',
 	        tiles: 6,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 10000
 	    },
 	    nuclearpower: {
                 name: 'Nuclear Power',
 	        tiles: 4,
-		hotSpot: 1
+		hotSpot: 1,
+		cost: 5000
 	    }
 	}}"/>
 
@@ -180,7 +197,7 @@
 	    opacity="0.5"
 	/>
 
-	<text
+	<text name="toolName"
 	  x="${(parent.width - this.width) / 2}"
 	  y="${parent.height}"
 	  bgcolor="0xffffff"
@@ -189,6 +206,17 @@
 	  fontstyle="bold"
 	  resize="true"
 	  text="${parent.toolInfo[gApp.tool]['name']}"
+	/>
+
+	<text name="toolCost"
+	  x="${(parent.width - this.width) / 2}"
+	  y="${parent.toolName.y + parent.toolName.height}"
+	  bgcolor="0xffffff"
+	  fgcolor="0x000000"
+	  fontsize="18"
+	  fontstyle="bold"
+	  resize="true"
+	  text="${gApp.formatFunds(parent.toolInfo[gApp.tool]['cost'])}"
 	/>
 
     </class>

@@ -1382,7 +1382,7 @@ You have 10 years to turn this swamp back into a city again.""",
         name,
         *args):
 
-        print "MicropolisEngine update", self, name, args
+        #print "MicropolisEngine update", self, name, args
 
         if name == 'paused':
             self.running = not self.simPaused

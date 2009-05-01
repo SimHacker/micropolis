@@ -466,7 +466,7 @@ class Root(controllers.RootController):
 
         overlayImage, overlayAlpha, overlayWidth, overlayHeight = \
             engine.getDataImageAlphaSize(overlay)
-        print "OVERLAY", overlay, "IMAGE", overlayImage, overlayAlpha, overlayWidth, overlayHeight
+        #print "OVERLAY", overlay, "IMAGE", overlayImage, overlayAlpha, overlayWidth, overlayHeight
         if overlayImage:
             overlayWidth = 1.0 / overlayWidth
             overlayHeight = 1.0 / overlayHeight

@@ -24,6 +24,10 @@
         <attribute name="pollers" value="[]"/>
         <attribute name="idles" value="1"/>
         <attribute name="idlers" value="[]"/>
+        <attribute name="idleDelegates" value="[]"/>
+        <attribute name="idleNames" value="{}"/>
+	<attribute name="idleDelegate" value="null"/>
+	<attribute name="idlePending" value="null"/>
         <attribute name="animateActive" value="false"/>
         <attribute name="animateDelegate" value="null"/>
         <attribute name="animationTicks" value="1"/>
@@ -86,6 +90,17 @@
                 'speed', 'delay', 'paused', 'taxrate', 'date', 
                 'funds', 'demand', 'evaluation', 'history'
             ]);
+
+	    var del = new lz.Delegate(this, 'handleKey');
+	    this.keyDelegate = del;
+
+	    lz.Keys.callOnKeyCombo(del, ['~']);
+	    lz.Keys.callOnKeyCombo(del, ['esc']);
+	    lz.Keys.callOnKeyCombo(del, ['leftarrow']);
+	    lz.Keys.callOnKeyCombo(del, ['rightarrow']);
+	    lz.Keys.callOnKeyCombo(del, ['uparrow']);
+	    lz.Keys.callOnKeyCombo(del, ['downarrow']);
+	    lz.Keys.callOnKeyCombo(del, ['spacebar']);
 
             var i;
             for (i = 0; i < codeString.length; i++) {
@@ -218,6 +233,18 @@
             Debug.write("ONTOOL", this.tool);
           ]]>
         </handler>
+
+
+	<handler name="onkey" args="e"><![CDATA[
+	    Debug.write("gApp onkey", e);
+	  ]]>
+	</handler>
+
+
+	<method name="handleKey" args="arg"><![CDATA[
+	    Debug.write("handleKey", arg);
+	  ]]>
+	</method>
 
 
         <method name="expressInterest" args="target, names"><![CDATA[
@@ -469,6 +496,7 @@
             var i = this.indexOf(this.idlers, idler);
             if (i < 0) {
                 this.idlers.push(idler);
+		this.updateIdle();
             }
           ]]>
         </method>
@@ -479,27 +507,90 @@
             var i = this.indexOf(this.idlers, idler);
             if (i >= 0) {
                 this.idlers.splice(i, 1);
+		this.updateIdle();
             }
           ]]>
         </method>
 
 
-<!--
-        <handler name="onidle" reference="lz.IdleService.LzIdle"><![CDATA[
+	<method name="callWhenIdle" args="del"><![CDATA[
+	    Debug.write("callWhenIdle", del);
+	    this.idleDelegates.push(del);
+	    Debug.write("NOW IDLEDELEGATES", this.idleDelegates, "last", this.idleDelegates[this.idleDelegates.length - 1]);
+	    this.updateIdle();
+	  ]]>
+	</method>
 
+
+	<method name="callOnceWhenIdle" args="name, del"><![CDATA[
+	    var idleNames = this.idleNames;
+	    if (name in idleNames) {
+	        return;
+	    }
+	    idleNames[name] = true;
+	    this.callWhenIdle(del);
+	  ]]>
+	</method>
+
+
+	<method name="updateIdle"><![CDATA[
+	    Debug.write("updateIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
+	    var del = this.idleDelegate;
+	    if ((this.idlers.length > 0) ||
+		(this.idleDelegates.length > 0)) {
+		if (!this.idlePending) {
+		    this.idlePending = true;
+		    if (del == null) {
+		        del = new lz.Delegate(this, 'handleIdle');
+			this.idleDelegate = del;
+		    }
+		    lz.Idle.callOnIdle(del);
+		    Debug.write("IDLE REGISTER");
+		}
+	    } else {
+	        if (this.idlePending) {
+		    this.idlePending = false;
+		    Debug.write("IDLE UNREGISTER");
+		    del.unregisterAll();
+		}
+	    }
+	  ]]>
+	</method>
+
+
+        <method name="handleIdle" args="arg"><![CDATA[
+	    //Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
             this.idles++;
 
+	    var n, i;
+
+	    var idleDelegates = this.idleDelegates;
+	    n = idleDelegates.length;
+	    if (n > 0) {
+	        Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, this.idleDelegates);
+		this.idleDelegates = [];
+		if (this.idleNames.length > 0) {
+		    this.idleNames = {};
+		}
+		for (i = 0; i < n; i++) {
+		    var del = idleDelegates[i];
+		    //Debug.write("IDLE DELEGATE", del);
+		    del.execute(null);
+		}
+	    }
+
             var idlers = this.idlers;
-            var n = idlers.length;
-            var i;
+            n = idlers.length;
+	    if (n > 0) {
+	        Debug.write("handleIdle", "idlers", this.idlers.length, this.idlers);
+		for (i = 0; i < n; i++) {
+		    idlers[i].idle();
+		}
+	    }
 
-            for (i = 0; i < n; i++) {
-                idlers[i].idle();
-            }
-
+	    this.updateIdle();
           ]]>
-        </handler>
--->
+        </method>
 
 
         <method name="addAnimator" args="animator"><![CDATA[
@@ -988,6 +1079,12 @@
         </method>
 
 
+        <method name="handle_UIDidTool" args="args"><![CDATA[
+            Debug.write("UIDidTool", args);
+          ]]>
+        </method>
+
+
         <method name="playWithThisCity"><![CDATA[
             this.setAttribute("gameMode", "play");
             this.sendCommand('<command name="setGameMode" gameMode="play"/>');
@@ -1002,11 +1099,48 @@
         </method>
 
 
-	<method name="drawTool" args="tool, x, y"><![CDATA[
-	    Debug.write("drawTool", tool, x, y);
+	<method name="testBounds" args="col, row"><![CDATA[
+	    return ((col >= 0) &&
+	    	    (col < this.worldCols) &&
+		    (row >= 0) &&
+		    (row < this.worldRows));
+	  ]]>
+	</method>
+
+
+	<method name="drawToolStart" args="tool, x, y"><![CDATA[
+	    Debug.write("drawToolStart", tool, x, y);
 	    var cmd =
 	        '<command ' +
-		'name="draw" ' +
+		'name="drawToolStart" ' +
+		'tool="' + tool + '" ' +
+		'x="' + x + '" ' +
+		'y="' + y + '"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</method>
+
+
+	<method name="drawToolMove" args="tool, x0, y0, x1, y1"><![CDATA[
+	    Debug.write("drawToolMove", tool, x0, y0, x1, y1);
+	    var cmd =
+	        '<command ' +
+		'name="drawToolMove" ' +
+		'tool="' + tool + '" ' +
+		'x0="' + x0 + '" ' +
+		'y0="' + y0 + '" '+
+		'x1="' + x1 + '" ' +
+		'y1="' + y1 + '"/>';
+	    this.sendCommand(cmd);
+	  ]]>
+	</method>
+
+
+	<method name="drawToolStop" args="tool, x, y"><![CDATA[
+	    Debug.write("drawToolMove", tool, x, y);
+	    var cmd =
+	        '<command ' +
+		'name="drawToolStop" ' +
 		'tool="' + tool + '" ' +
 		'x="' + x + '" ' +
 		'y="' + y + '"/>';
@@ -1029,10 +1163,20 @@
 
             var digits = "" + n;
 
+	    /// @bug: This results in 1,10 for 10! Fix it!
             var a = [];
-            while (digits.length > 0) {
+	    var n;
+            while (true) {
+	        n = digits.length;
+		if (n == 0) {
+		    break;
+		}
                 a.unshift(digits.substr(-3, 3));
-                digits = digits.substr(0, digits.length - 3);
+		if ((n == 1) || (n == 2)) {
+		  digits = "";
+		} else {
+		  digits = digits.substr(0, digits.length - 3);
+		}
             }
 
             var nStr = 
