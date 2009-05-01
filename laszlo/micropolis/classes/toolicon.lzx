@@ -17,29 +17,21 @@
         <attribute name="pressed" value="false"/>
         <attribute name="inside" value="false"/>
         <attribute name="hilite" value="${((this.pressed &amp;&amp; this.inside) || (gApp.tool == this.toolID))}"/>
-	<attribute name="idleDelegate" value="null"/>
 
 
 	<handler name="onmousedown"><![CDATA[
 	    Debug.write("onmousedown", this, this.toolID);
 	    this.setAttribute("pressed", true);
 
-	    var del = this.idleDelegate;
-	    if (del == null) {
-	        del = new lz.Delegate(this, 'trackIdle');
-		this.idleDelegate = del;
-	    }
-	    del.unregisterAll();
-	    del.register(lz.Idle, 'onidle');
-
-	    this.trackIdle(null);
+	    gApp.addIdler(this);
+	    this.idle();
 	  ]]>
 	</handler>
 
 	
 	<handler name="onmouseup"><![CDATA[
-	    this.idleDelegate.unregisterAll();
-	    this.trackIdle(null);
+	    gApp.removeIdler(this);
+	    this.idle();
 	    this.setAttribute("pressed", false);
 	    if (this.inside) {
 	        gApp.setAttribute("tool", this.toolID);
@@ -48,7 +40,7 @@
 	</handler>
 	
 	
-	<method name="trackIdle" args="arg"><![CDATA[
+	<method name="idle"><![CDATA[
 	    var curX = this.getMouse("x");
 	    var curY = this.getMouse("y");
 	    var inside =

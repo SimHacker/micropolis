@@ -194,9 +194,9 @@
     <attribute name="animatePopupLabels" value="false"/>
     <attribute name="animatePopupOpacity" value="false"/>
     <attribute name="animatePopupBackground" value="false"/>
-    <attribute name="idledelegate" value="null"/>
-    <attribute name="downdelegate" value="null"/>
-    <attribute name="updelegate" value="null"/>
+    <attribute name="idleDelegate" value="null"/>
+    <attribute name="downDelegate" value="null"/>
+    <attribute name="upDelegate" value="null"/>
 
 
     <!-- Events -->
@@ -1000,13 +1000,13 @@
         var del;
 
         del =
-          this.idledelegate;
+          this.idleDelegate;
         if (del == null) {
           del =
             new lz.Delegate(
               this,
               'trackMouseMove');
-          this.idledelegate =     
+          this.idleDelegate =     
             del;
         } // if
         del.unregisterAll();
@@ -1015,13 +1015,13 @@
           'onidle');
 
         del = 
-          this.downdelegate;
+          this.downDelegate;
         if (del == null) {
           del =
             new lz.Delegate(
               this,
               'trackMouseDown');
-          this.downdelegate =     
+          this.downDelegate =     
             del;
         } // if
         del.unregisterAll();
@@ -1030,13 +1030,13 @@
           'onmousedown');
 
         del = 
-          this.updelegate;
+          this.upDelegate;
         if (del == null) {
           del =
             new lz.Delegate(
               this,
               'trackMouseUp');
-          this.updelegate =       
+          this.upDelegate =       
             del;
         } // if
         del.unregisterAll();
@@ -1053,7 +1053,7 @@
 
 
     <method name="stopTracking"><![CDATA[
-        //Debug.write("stopTracking", this.trackingFlag, this.idledelegate);
+        //Debug.write("stopTracking", this.trackingFlag, this.idleDelegate);
 
         if (!this.trackingFlag) {
           return;
@@ -1061,20 +1061,17 @@
 
         var del;
 
-        del =
-          this.idledelegate;
+        del = this.idleDelegate;
         if (del != null) {
           del.unregisterAll();
         } // if
 
-        del =
-          this.downdelegate;
+        del = this.downDelegate;
         if (del != null) {
           del.unregisterAll();
         } // if
 
-        del =
-          this.updelegate;
+        del = this.upDelegate;
         if (del != null) {
           del.unregisterAll();
         } // if
@@ -1101,9 +1098,11 @@
         var lastY = this.lastY;
         var curX = canvas.getMouse("x");
         var curY = canvas.getMouse("y");
+
         if ((curX == lastX) && (curY == lastY)) {
           return;
         } // if
+
 	//Debug.write("trackMouseMove", this, this.x, this.y, this.width, this.height, "cur", curX, curY, "visible", this.visible, "opacity", this.opacity, "item", this.item, "direction", this.direction, "distance", this.distance);
 
         this.curX = curX;

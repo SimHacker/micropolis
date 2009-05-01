@@ -2649,7 +2649,6 @@ public:
     void toolDrag(EditingTool tool, short fromX, short fromY,
                                     short toX, short toY);
 
-
     void didTool(const char *name, short x, short y);
 
 private:
