@@ -30,8 +30,8 @@
     <history
         type="4"
         label="Crime"
-        color="0xff0000"
         description="Show the crime rate history."
+        color="0xff0000"
         range="128"
     />
     <history

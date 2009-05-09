@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<cross-domain-policy>
+    <allow-access-from domain="*" to-ports="*"/>
+    <allow-access-from domain="www.micropolisonline.com" to-ports="80,8080,8082,8089"/>
+    <allow-access-from domain="micropolisonline.com" to-ports="80,8080,8082"/>
+</cross-domain-policy>
