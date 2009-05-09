@@ -114,34 +114,37 @@ void Micropolis::simFrame()
         return;
     }
 
-    if (++phaseCycle > 1023) {
-        phaseCycle = 0;
-    }
-
-    // Why is this disabled? Look useful for initializing after loading.
-/*
-    if (initSimLoad) {
-        phaseCycle = 0;
-    }
-*/
-
-    simulate(phaseCycle & 15);
+    simulate();
 }
 
 
 /* comefrom: simFrame */
-void Micropolis::simulate(int phase)
+void Micropolis::simulate()
 {
-    //printf("================ simulate phase %d\n", phase);
-    static const short SpdPwr[4] = { 1,  2,  4,  5 };
-    static const short SpdPtl[4] = { 1,  2,  7, 17 };
-    static const short SpdCri[4] = { 1,  1,  8, 18 };
-    static const short SpdPop[4] = { 1,  1,  9, 19 };
-    static const short SpdFir[4] = { 1,  1, 10, 20 };
+    static const short speedPowerScan[3] =
+        { 2,  4,  5 };
+    static const short SpeedPollutionTerrainLandValueScan[3] =
+        { 2,  7, 17 };
+    static const short speedCrimeScan[3] =
+        { 1,  8, 18 };
+    static const short speedPopulationDensityScan[3] = 
+        { 1,  9, 19 };
+    static const short speedFireAnalysis[3] =
+        { 1, 10, 20 };
 
-    short x = clamp(simSpeed, (short)1, (short)3);
+    short speedIndex = clamp((short)(simSpeed - 1), (short)0, (short)2);
 
-    switch (phase)  {
+    // The simulator has 16 different phases, which we cycle through
+    // according to phaseCycle, which is incremented and wrapped at
+    // the end of this switch.
+
+    if (initSimLoad) {
+        phaseCycle = 0;
+    } else {
+        phaseCycle &= 15;
+    }
+
+    switch (phaseCycle)  {
 
         case 0:
 
@@ -175,7 +178,7 @@ void Micropolis::simulate(int phase)
         case 8:
 
             // Scan 1/8 of the map for each of the 8 phases 1..8:
-            mapScan((phase - 1) * WORLD_W / 8, phase * WORLD_W / 8);
+            mapScan((phaseCycle - 1) * WORLD_W / 8, phaseCycle * WORLD_W / 8);
 
             break;
 
@@ -217,7 +220,7 @@ void Micropolis::simulate(int phase)
 
         case 11:
 
-            if ((simCycle % SpdPwr[x]) == 0) {
+            if ((simCycle % speedPowerScan[speedIndex]) == 0) {
                 doPowerScan();
                 newMapFlags[MAP_TYPE_POWER] = 1;
                 newPower = true; /* post-release change */
@@ -227,7 +230,7 @@ void Micropolis::simulate(int phase)
 
         case 12:
 
-            if ((simCycle % SpdPtl[x]) == 0) {
+            if ((simCycle % SpeedPollutionTerrainLandValueScan[speedIndex]) == 0) {
                 pollutionTerrainLandValueScan();
             }
 
@@ -235,7 +238,7 @@ void Micropolis::simulate(int phase)
 
         case 13:
 
-            if ((simCycle % SpdCri[x]) == 0) {
+            if ((simCycle % speedCrimeScan[speedIndex]) == 0) {
                 crimeScan();
             }
 
@@ -243,7 +246,7 @@ void Micropolis::simulate(int phase)
 
         case 14:
 
-            if ((simCycle % SpdPop[x]) == 0) {
+            if ((simCycle % speedPopulationDensityScan[speedIndex]) == 0) {
                 populationDensityScan();
             }
 
@@ -251,7 +254,7 @@ void Micropolis::simulate(int phase)
 
         case 15:
 
-            if ((simCycle % SpdFir[x]) == 0) {
+            if ((simCycle % speedFireAnalysis[speedIndex]) == 0) {
                 fireAnalysis();
             }
 
@@ -260,6 +263,9 @@ void Micropolis::simulate(int phase)
             break;
 
     }
+
+    // Go on the the next phase.
+    phaseCycle = (phaseCycle + 1) & 15;
 }
 
 

@@ -114,18 +114,18 @@
 	    title="Railroad"
 	/>
 
-	<toolicon name="pan"
-	    toolID="pan"
+	<toolicon name="center"
+	    toolID="center"
 	    x="${Math.max(parent.railroad.x + parent.railroad.width + parent.gap,
 	                  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.railroad.y}"
-	    resource="tool_pan_rsrc"
-	    title="Pan"
+	    resource="tool_center_rsrc"
+	    title="Center"
 	/>
 
 	<toolicon name="road"
 	    toolID="road"
-	    x="${Math.max(parent.pan.x + parent.pan.width + parent.gap,
+	    x="${Math.max(parent.center.x + parent.center.width + parent.gap,
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.railroad.y}"
 	    resource="tool_road_rsrc"
@@ -135,7 +135,7 @@
 	<toolicon name="stadium"
 	    toolID="stadium"
 	    x="${parent.leftEdge}"
-	    y="${parent.pan.y + parent.pan.height + parent.gap}"
+	    y="${parent.center.y + parent.center.height + parent.gap}"
 	    resource="tool_stadium_rsrc"
 	    title="Stadium"
 	/>

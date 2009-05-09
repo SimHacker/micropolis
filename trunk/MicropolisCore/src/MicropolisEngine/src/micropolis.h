@@ -189,6 +189,21 @@ static const int WORLD_H_8 = (WORLD_H + 7) / 8;
 static const int EDITOR_TILE_SIZE = 16;
 
 /**
+ * The number of simulator passes per #cityTime unit.
+ */
+static const int PASSES_PER_CITYTIME = 16;
+
+/**
+ * The number of #cityTime units per month.
+ */
+static const int CITYTIMES_PER_MONTH = 4;
+
+/**
+ * The number of #cityTime units per year.
+ */
+static const int CITYTIMES_PER_YEAR = CITYTIMES_PER_MONTH * 12;
+
+/**
  * The number of history entries.
  */
 static const int HISTORY_LENGTH = 480;
@@ -1125,14 +1140,16 @@ public:
     //@{
 
     /**
-     * City time tick counter. 48 ticks per year, relative to #startingYear.
+     * City time unit counter, increnented once every 16 runs through
+     * the simulator (at fast speed). A time unit is 7.6 days. 4 units
+     * per month, 48 units per year, relative to #startingYear
      *
-     * Four ticks per 12 months, so one tick is about a week (7.6 days).
+     * Four units per month, so one unit is about a week (7.6 days).
      */
     Quad cityTime;
 
     /**
-     * City month, 4 ticks per month.
+     * City month, 4 time units per month.
      * @todo Remove, can be computed from Micropolis::cityTime.
      */
     Quad cityMonth;
@@ -2279,7 +2296,7 @@ private:
 
     void simFrame();
 
-    void simulate(int phase);
+    void simulate();
 
     void doSimInit();
 

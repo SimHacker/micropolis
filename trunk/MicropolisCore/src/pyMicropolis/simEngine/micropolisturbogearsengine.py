@@ -88,76 +88,80 @@ MicropolisCorePath = 'micropolis/MicropolisCore/src'
 
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
+LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES_PER_YEAR
+
 SpeedConfigurations = [
     { # 0: Ultra Slow
-        'speed': 1,
+        'speed': 3,
         'pollDelay': 5000,
         'animateDelay': 1000,
-        'loopsPerSecond': 5,
+        'loopsPerSecond': round(LoopsPerYear / 60.0), # One year per minute.
         'maxLoopsPerPoll': 100,
     },
     { # 1: Super Slow
-        'speed': 2, 
+        'speed': 3, 
         'pollDelay': 3000,
         'animateDelay': 800,
-        'loopsPerSecond': 10,
+        'loopsPerSecond': round(LoopsPerYear / 30.0), # One year per 30 seconds, 2 years per minute.
+
         'maxLoopsPerPoll': 200,
     },
     { # 2: Very Slow
         'speed': 3, 
         'pollDelay': 2000,
         'animateDelay': 600,
-        'loopsPerSecond': 20,
+        'loopsPerSecond': round(LoopsPerYear / 20.0), # One year per 20 seconds, 3 years per minute.
         'maxLoopsPerPoll': 400,
     },
     { # 3: Slow
         'speed': 3, 
         'pollDelay': 1000,
         'animateDelay': 400,
-        'loopsPerSecond': 30,
+        'loopsPerSecond': round(LoopsPerYear / 15.0), # One year per 15 seconds, 4 years per minute.
         'maxLoopsPerPoll': 600,
     },
     { # 4: Medium
         'speed': 3, 
         'pollDelay': 1000,
         'animateDelay': 250,
-        'loopsPerSecond': 40,
+        'loopsPerSecond': round(LoopsPerYear / 10.0), # One year per 10 seconds, 6 years per minute.
         'maxLoopsPerPoll': 800,
     },
     { # 5: Fast
         'speed': 3, 
         'pollDelay': 500,
         'animateDelay': 250,
-        'loopsPerSecond': 50,
+        'loopsPerSecond': round(LoopsPerYear / 5.0), # One year per 5 seconds, 12 years per minute.
         'maxLoopsPerPoll': 1000,
     },
     { # 6: Very Fast
         'speed': 3, 
         'pollDelay': 300,
         'animateDelay': 250,
-        'loopsPerSecond': 100,
+        'loopsPerSecond': round(LoopsPerYear / 3.0), # One year per 3 seconds, 20 years per minute.
         'maxLoopsPerPoll': 2000,
     },
     { # 7: Super Fast
         'speed': 3, 
         'pollDelay': 250,
         'animateDelay': 250,
-        'loopsPerSecond': 250,
+        'loopsPerSecond': round(LoopsPerYear / 2.0), # One year per 2 seconds, 30 years per minute.
         'maxLoopsPerPoll': 5000,
     },
     { # 8: Ultra Fast
         'speed': 3, 
-        'pollDelay': 250,
+        'pollDelay': 500,
         'animateDelay': 250,
-        'loopsPerSecond': 500,
+        'loopsPerSecond': round(LoopsPerYear / 1.0), # One year per 1 second, 60 years per minute.
         'maxLoopsPerPoll': 10000,
     },
     { # 9: Astronomically Fast
         'speed': 3, 
-        'pollDelay': 250,
+        'pollDelay': 500,
         'animateDelay': 250,
+        'loopsPerSecond': round(4 * LoopsPerYear / 1.0), # Four years per second, 240 years per minute.
         'loopsPerSecond': 1000,
-        'maxLoopsPerPoll': 10000,
+        'maxLoopsPerPoll': 40000,
     },
 ]
 

@@ -39,58 +39,48 @@
     <!-- Tools -->
 
     <resource name="tool_airport_rsrc">
-        <frame src="../resources/tool_airp.png"/>
-        <frame src="../resources/tool_airphi.png"/>
-    </resource>
-
-    <resource name="tool_airport_rsrc">
-        <frame src="../resources/tool_airp.png"/>
-        <frame src="../resources/tool_airphi.png"/>
-    </resource>
-
-    <resource name="tool_airport_rsrc">
-        <frame src="../resources/tool_airp.png"/>
-        <frame src="../resources/tool_airphi.png"/>
+        <frame src="../resources/tool_airport.png"/>
+        <frame src="../resources/tool_airporthi.png"/>
     </resource>
 
     <resource name="tool_chalk_rsrc">
-        <frame src="../resources/tool_chlk.png"/>
-        <frame src="../resources/tool_chlkhi.png"/>
+        <frame src="../resources/tool_chalk.png"/>
+        <frame src="../resources/tool_chalkhi.png"/>
     </resource>
 
     <resource name="tool_coalpower_rsrc">
-        <frame src="../resources/tool_coal.png"/>
-        <frame src="../resources/tool_coalhi.png"/>
+        <frame src="../resources/tool_coalpower.png"/>
+        <frame src="../resources/tool_coalpowerhi.png"/>
     </resource>
 
     <resource name="tool_commercial_rsrc">
-        <frame src="../resources/tool_com.png"/>
-        <frame src="../resources/tool_comhi.png"/>
+        <frame src="../resources/tool_commercial.png"/>
+        <frame src="../resources/tool_commercialhi.png"/>
     </resource>
 
     <resource name="tool_bulldozer_rsrc">
-        <frame src="../resources/tool_dozr.png"/>
-        <frame src="../resources/tool_dozrhi.png"/>
+        <frame src="../resources/tool_bulldozer.png"/>
+        <frame src="../resources/tool_bulldozerhi.png"/>
     </resource>
 
     <resource name="tool_eraser_rsrc">
-        <frame src="../resources/tool_ersr.png"/>
-        <frame src="../resources/tool_ersrhi.png"/>
+        <frame src="../resources/tool_eraser.png"/>
+        <frame src="../resources/tool_eraserhi.png"/>
     </resource>
 
     <resource name="tool_firestation_rsrc">
-        <frame src="../resources/tool_fire.png"/>
-        <frame src="../resources/tool_firehi.png"/>
+        <frame src="../resources/tool_firestation.png"/>
+        <frame src="../resources/tool_firestationhi.png"/>
     </resource>
 
     <resource name="tool_industrial_rsrc">
-        <frame src="../resources/tool_ind.png"/>
-        <frame src="../resources/tool_indhi.png"/>
+        <frame src="../resources/tool_industrial.png"/>
+        <frame src="../resources/tool_industrialhi.png"/>
     </resource>
 
     <resource name="tool_nuclearpower_rsrc">
-        <frame src="../resources/tool_nuc.png"/>
-        <frame src="../resources/tool_nuchi.png"/>
+        <frame src="../resources/tool_nuclearpower.png"/>
+        <frame src="../resources/tool_nuclearpowerhi.png"/>
     </resource>
 
     <resource name="tool_park_rsrc">
@@ -98,29 +88,29 @@
         <frame src="../resources/tool_parkhi.png"/>
     </resource>
 
-    <resource name="tool_pan_rsrc">
-        <frame src="../resources/tool_pan.png"/>
-        <frame src="../resources/tool_panhi.png"/>
+    <resource name="tool_center_rsrc">
+        <frame src="../resources/tool_center.png"/>
+        <frame src="../resources/tool_centerhi.png"/>
     </resource>
 
     <resource name="tool_policestation_rsrc">
-        <frame src="../resources/tool_pol.png"/>
-        <frame src="../resources/tool_polhi.png"/>
+        <frame src="../resources/tool_policestation.png"/>
+        <frame src="../resources/tool_policestationhi.png"/>
     </resource>
 
     <resource name="tool_query_rsrc">
-        <frame src="../resources/tool_qry.png"/>
-        <frame src="../resources/tool_qryhi.png"/>
+        <frame src="../resources/tool_query.png"/>
+        <frame src="../resources/tool_queryhi.png"/>
     </resource>
 
     <resource name="tool_railroad_rsrc">
-        <frame src="../resources/tool_rail.png"/>
-        <frame src="../resources/tool_railhi.png"/>
+        <frame src="../resources/tool_railroad.png"/>
+        <frame src="../resources/tool_railroadhi.png"/>
     </resource>
 
     <resource name="tool_residential_rsrc">
-        <frame src="../resources/tool_res.png"/>
-        <frame src="../resources/tool_reshi.png"/>
+        <frame src="../resources/tool_residential.png"/>
+        <frame src="../resources/tool_residentialhi.png"/>
     </resource>
 
     <resource name="tool_road_rsrc">
@@ -129,13 +119,13 @@
     </resource>
 
     <resource name="tool_seaport_rsrc">
-        <frame src="../resources/tool_seap.png"/>
-        <frame src="../resources/tool_seaphi.png"/>
+        <frame src="../resources/tool_seaport.png"/>
+        <frame src="../resources/tool_seaporthi.png"/>
     </resource>
 
     <resource name="tool_stadium_rsrc">
-        <frame src="../resources/tool_stad.png"/>
-        <frame src="../resources/tool_stadhi.png"/>
+        <frame src="../resources/tool_stadium.png"/>
+        <frame src="../resources/tool_stadiumhi.png"/>
     </resource>
 
     <resource name="tool_wire_rsrc">

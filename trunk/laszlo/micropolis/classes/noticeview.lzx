@@ -168,7 +168,7 @@
 	    x="${parent.width - this.width}"
 	    y="0"
 	    width="${classroot.mapWidth}"
-	    height="${parent.height - this.y}"
+	    height="${Math.max(parent.height - this.y, 0)}"
 	    visible="${classroot.showMap}"
 	    bgcolor="0xBC6F56"
 	    active="${classroot.active}"

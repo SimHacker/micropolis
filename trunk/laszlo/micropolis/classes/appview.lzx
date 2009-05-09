@@ -11,7 +11,7 @@
 
 
         <attribute name="active" value="true"/>
-        <attribute name="pollDelay" value="100"/>
+        <attribute name="pollDelay" value="250"/>
         <attribute name="pollDelaySoon" value="10"/>
         <attribute name="animateDelay" value="100"/>
 <!--

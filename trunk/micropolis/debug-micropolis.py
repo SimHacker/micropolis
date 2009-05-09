@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.5
+#!/usr/bin/env python2.5 -i
 # -*- coding: utf-8 -*-
 """Start script for the micropolis TurboGears project.
 
@@ -19,9 +19,4 @@ sys.path.append(
             os.getcwd(),
             '../MicropolisCore/src')))
 
-if __name__ == "__main__":
-    try:
-        start()
-    except ConfigurationError, exc:
-        sys.stderr.write(str(exc))
-        sys.exit(1)
+from micropolis.controllers import *

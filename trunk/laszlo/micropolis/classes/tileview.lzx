@@ -30,15 +30,26 @@
         <attribute name="screenCols" value="${Math.floor(2 + this.viewWidth)}"/>
         <attribute name="screenRows" value="${Math.floor(2 + this.viewHeight)}"/>
         <attribute name="navigationMapView" value="null"/>
-	<attribute name="cursorX" value="0"/>
-	<attribute name="cursorY" value="0"/>
-        <attribute name="tileCursorX" value="0"/>
-        <attribute name="tileCursorY" value="0"/>
-        <attribute name="tileCursorXLast" value="0"/>
-        <attribute name="tileCursorYLast" value="0"/>
+	<attribute name="doAnimateDelegate" value="null"/>
+	<attribute name="doingAnimate" value="false"/>
         <attribute name="drawing" value="false"/>
-        <attribute name="tileCursorMoved" value="false"/>
-	<attribute name="drawMoveNowDelegate" value="null"/>
+        <attribute name="panning" value="false"/>
+	<attribute name="panCursorStartX" value="0"/>
+	<attribute name="panCursorStartY" value="0"/>
+	<attribute name="panContainerStartX" value="0"/>
+	<attribute name="panContainerStartY" value="0"/>
+	<attribute name="panAutoScrollX" value="0"/>
+	<attribute name="panAutoScrollY" value="0"/>
+	<attribute name="panAutoScrollEdge" value="32"/>
+	<attribute name="panAutoScrollSpeed" value="256"/>
+	<attribute name="panAutoScrollLastTime" value="0"/>
+	<attribute name="panDelegate" value="null"/>
+	<attribute name="viewExtraPan" value="8"/>
+	<attribute name="viewExtraAutoScroll" value="16"/>
+	<attribute name="viewExtraLeft" value="0"/>
+	<attribute name="viewExtraRight" value="0"/>
+	<attribute name="viewExtraTop" value="0"/>
+	<attribute name="viewExtraBottom" value="0"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -108,33 +119,59 @@
         </handler>
 
 
+        <handler name="onpanning"><![CDATA[
+            if (this.panning) {
+	        this.panCursorStartX = this.getMouse("x");
+		this.panCursorStartY = this.getMouse("y");
+		this.panContainerStartX = this.container.x;
+		this.panContainerStartY = this.container.y;
+		this.panAutoScrollX = 0;
+		this.panAutoScrollY = 0;
+		this.panAutoScrollLastTime = (new Date()).time;
+
+		if (!this.doingPan) {
+		    this.doingPan = true;
+		    var del = this.panDelegate;
+		    if (!del) {
+			del = new lz.Delegate(this, 'handlePan');
+			this.panDelegate = del;
+		    }
+		    lz.IdleService.LzIdle.callOnIdle(del);
+		}
+
+		var viewExtraPan = this.viewExtraPan;
+	        this.viewExtraLeft = viewExtraPan;
+	        this.viewExtraRight = viewExtraPan;
+	        this.viewExtraTop = viewExtraPan;
+	        this.viewExtraBottom = viewExtraPan;
+	    } else {
+	        this.viewExtraLeft = 0;
+	        this.viewExtraRight = 0;
+	        this.viewExtraTop = 0;
+	        this.viewExtraBottom = 0;
+	    }
+          ]]>
+        </handler>
+
+
         <handler name="onpaused" reference="gApp"><![CDATA[
             this.updateInterests();
           ]]>
         </handler>
 
 
-        <handler name="ontileCursorX" args="arg"><![CDATA[
-	    if (this.drawing) {
-                this.drawMove();
-	    }
-          ]]>
-        </handler>
-
-
-        <handler name="ontileCursorY" args="arg"><![CDATA[
-	    if (this.drawing) {
-                this.drawMove();
-	    }
-          ]]>
-        </handler>
-
-
 	<handler name="onmousedown" args="arg"><![CDATA[
+	    var altDown = lz.KeysService.LzKeys.isKeyDown('alt');
 	    var controlDown = lz.KeysService.LzKeys.isKeyDown('control');
 	    var shiftDown = lz.KeysService.LzKeys.isKeyDown('shift');
-	    if (shiftDown || controlDown) {
+	    //Debug.write("KEYS", "alt", altDown, "control", controlDown, "shift", shiftDown, lz.KeysService.LzKeys.downKeysArray);
+
+	    this.resetTracking();
+
+	    if (shiftDown) {
 	        gTileViewPie.popupAtCursor(false);
+	    } else if (altDown) {
+	        this.setAttribute('panning', true);
 	    } else {
 	        this.setAttribute('drawing', true);
 	    }
@@ -143,97 +180,129 @@
 
 
 	<handler name="onmouseup" args="arg"><![CDATA[
-	    if (this.drawing) {
-	        this.setAttribute("drawing", false);
-	    }
+	    this.resetTracking();
 	  ]]>
 	</handler>
 
 
-	<handler name="ondrawing" args="arg"><![CDATA[
-	    Debug.write("ONDRAWING", arg);
-	    if (this.drawing) {
-		this.drawStart();
-	    } else {
-		this.drawStop();
-	    }
-	  ]]>
-	</handler>
-
-
-	<method name="drawStart"><![CDATA[
-	    Debug.write("DRAWSTART", this.tileCursorX, this.tileCursorY);
-	    var tileCursorX = this.tileCursorX;
-	    var tileCursorY = this.tileCursorY;
-
-	    this.tileCursorXLast = tileCursorX;
-	    this.tileCursorYLast = tileCursorY;
-
-	    gApp.drawToolStart(
-	        gApp.tool, 
-		tileCursorX, 
-		tileCursorY);
+	<method name="startEdgeScroll"><![CDATA[
+	    this.setAttribute("panning", true);
 	  ]]>
 	</method>
 
 
-	<method name="drawMove"><![CDATA[
-	    Debug.write("==== DRAWMOVE", this.tileCursorX, this.tileCursorY);
-	    if (this.tileCursorMoved) {
+	<method name="stopEdgeScroll"><![CDATA[
+	    this.setAttribute("panning", false);
+	  ]]>
+	</method>
+
+
+	<method name="handlePan" args="arg"><![CDATA[
+	    this.doingPan = false;
+
+	    if (!this.panning) {
 	        return;
 	    }
 
-	    Debug.write("Setting idle...");
+	    var cursorX = this.getMouse("x");
+	    var cursorY = this.getMouse("y");
 
-	    this.tileCursorMoved = true;
+	    var panAutoScrollEdge = this.panAutoScrollEdge;
+	    var scrollLeft = cursorX < panAutoScrollEdge;
+	    var scrollRight = cursorX >= (this.width - panAutoScrollEdge);
+	    var scrollTop = cursorY < panAutoScrollEdge;
+	    var scrollBottom = cursorY >= (this.height - panAutoScrollEdge);
+            var panning = scrollLeft || scrollRight || scrollTop || scrollBottom;
+	    var viewExtraPan = this.viewExtraPan;
+	    var viewExtraAutoScroll = this.viewExtraAutoScroll;
+	    //Debug.write("pan", panning, "LRTB", scrollLeft, scrollRight, scrollTop, scrollBottom, "cur", cursorX, cursorY, "this", this.width, this.height, "edge", panAutoScrollEdge);
 
-	    var del = this.drawMoveNowDelegate;
-	    if (del == null) {
-	        del = new lz.Delegate(this, 'drawMoveNow');
-		this.drawMoveNowDelegate = del;
+
+	    if (panning) {
+		var now = (new Date()).time;
+	        var panAutoScrollLastTime = this.panAutoScrollLastTime;
+		this.panAutoScrollLastTime = now;
+		if (panAutoScrollLastTime) {
+		    var elapsed = (now - panAutoScrollLastTime) / 1000.0;
+		    this.panAutoScrollLastTime = now;
+		    var panDistance = elapsed * this.panAutoScrollSpeed;
+		    //Debug.write("elapsed", elapsed, "distance", panDistance);
+
+		    if (scrollLeft) {
+		       this.panAutoScrollX -= panDistance;
+		        this.viewExtraRight = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraRight = 0;
+		    }
+
+		    if (scrollRight) {
+		       this.panAutoScrollX += panDistance;
+		        this.viewExtraLeft = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraLeft = 0;
+		    }
+
+		    if (scrollTop) {
+		       this.panAutoScrollY -= panDistance;
+		        this.viewExtraBottom = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraBottom = 0;
+		    }
+
+		    if (scrollBottom) {
+		       this.panAutoScrollY += panDistance;
+		        this.viewExtraTop = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraTop = 0;
+		    }
+
+		}
+            } else {
+	        this.panAutoScrollLastTime = 0;
+		this.viewExtraLeft = viewExtraPan;
+		this.viewExtraRight = viewExtraPan;
+		this.viewExtraTop = viewExtraPan;
+		this.viewExtraBottom = viewExtraPan;
 	    }
 
-	    Debug.write("IDLE CALLONIDLE", del);
-	    lz.Idle.callOnIdle(del)
+	    var w2 = this.width / 2;
+	    var h2 = this.height / 2;
+	    var sx = this.panContainerStartX + (cursorX - this.panCursorStartX);
+	    var sy = this.panContainerStartY + (cursorY - this.panCursorStartY);
+	    var x = 
+	        Math.max(
+		    w2 - this.container.width,
+		    Math.min(
+		        sx + this.panAutoScrollX,
+			w2));
+	   //this.panAutoScrollX = x - sx;
+	    var y = 
+	        Math.max(
+		    h2 - this.container.height,
+		    Math.min(
+			sy + this.panAutoScrollY,
+			h2));
+	   //this.panAutoScrollY = y - sy;
+
+	    if (x != this.container.x) {
+	        this.container.setAttribute("x", x);
+	    }
+	    if (y != this.container.y) {
+	        this.container.setAttribute("y", y);
+	    }
+
+	    lz.IdleService.LzIdle.callOnIdle(this.panDelegate);
 	  ]]>
 	</method>
 
 
-	<method name="drawMoveNow" args="arg"><![CDATA[
-	    Debug.write("======== DRAWMOVENOW", this.tileCursorX, this.tileCursorY);
-	    var tileCursorX = this.tileCursorX;
-	    var tileCursorY = this.tileCursorY;
-	    var tileCursorXLast = this.tileCursorXLast;
-	    var tileCursorYLast = this.tileCursorYLast;
-
-	    this.tileCursorMoved = false;
-
-	    if ((tileCursorX == tileCursorXLast) &&
-	        (tileCursorY == tileCursorYLast)) {
-		return;
+	<method name="resetTracking"><![CDATA[
+	    if (this.drawing) {
+	        this.setAttribute("drawing", false);
 	    }
-
-	    this.tileCursorXLast = tileCursorX;
-	    this.tileCursorYLast = tileCursorY;
-
-	    gApp.drawToolMove(
-	        gApp.tool, 
-		tileCursorXLast, 
-		tileCursorYLast, 
-		tileCursorX, 
-		tileCursorY);
-	  ]]>
-	</method>
-
-
-	<method name="drawStop"><![CDATA[
-	    Debug.write("DRAWSTOP", this.tileCursorX, this.tileCursorY);
-	    this.drawMoveNow(null);
-
-	    gApp.drawToolStop(
-	        gApp.tool, 
-		tileCursorX, 
-		tileCursorY);
+	    if (this.panning) {
+	        this.setAttribute("panning", false);
+	    }
 	  ]]>
 	</method>
 
@@ -283,10 +352,7 @@
 
 
         <method name="handleUpdateViewRect"><![CDATA[
-	    var navigationMapView = this.navigationMapView;
-	    if (navigationMapView) {
-	        navigationMapView.updateViewLocation();
-	    }
+	    this.doAnimateSoon();
           ]]>
         </method>
 
@@ -314,10 +380,14 @@
                 this.setAttribute("visible", v);
             }
 
-            var col = this.screenCol;
-            var row = this.screenRow;
-            var cols = this.screenCols;
-            var rows = this.screenRows;
+	    var viewExtraLeft = this.viewExtraLeft;
+	    var viewExtraRight = this.viewExtraRight;
+	    var viewExtraTop = this.viewExtraTop;
+	    var viewExtraBottom = this.viewExtraBottom;
+            var col = this.screenCol - viewExtraLeft;
+            var row = this.screenRow - viewExtraTop;
+            var cols = this.screenCols + viewExtraLeft + viewExtraRight;
+            var rows = this.screenRows + viewExtraTop + viewExtraBottom;
 
             var left = Math.max(0, col);
             var top = Math.max(0, row);
@@ -328,6 +398,8 @@
             this.setAttribute("viewRow", top);
             this.setAttribute("viewCols", Math.max(0, right - left));
             this.setAttribute("viewRows", Math.max(0, bottom - top));
+
+	    //Debug.write("view", this.viewCol, this.viewRow, this.viewCols, this.viewRows, "tiles", this.viewCols * this.viewRows, "extra", this.viewExtraLeft, this.viewExtraRight, this.viewExtraTop, this.viewExtraBottom);
           ]]>
         </method>
 
@@ -335,6 +407,14 @@
 	<method name="getViewRect"><![CDATA[
 	    return [
 	        this.viewX, this.viewY, this.viewWidth, this.viewHeight
+	    ];
+	  ]]>
+	</method>
+
+
+	<method name="getTileRect"><![CDATA[
+	    return [
+	        this.viewCol, this.viewRow, this.viewCols, this.viewRows
 	    ];
 	  ]]>
 	</method>
@@ -364,6 +444,35 @@
         </method>
 
 
+	<method name="doAnimateSoon"><![CDATA[
+	    if (this.doingAnimate) {	
+	        return;
+	    }
+
+	    var del = this.doAnimateDelegate;
+	    if (!del) {
+	       del = new lz.Delegate(this, 'doAnimateNow');
+	       this.doAnimateDelegate = del;
+	    }
+	    lz.IdleService.LzIdle.callOnIdle(del);
+	    this.doingAnimate = true;
+	  ]]>
+	</method>
+
+
+	<method name="doAnimateNow" args="arg"><![CDATA[
+	    this.doingAnimate = false;
+
+	    var navigationMapView = this.navigationMapView;
+	    if (navigationMapView) {
+	        navigationMapView.updateViewLocation();
+	    }
+
+	    this.doAnimate();
+	  ]]>
+	</method>
+
+
         <method name="doAnimate"><![CDATA[
             //Debug.write("doAnimate", this);
             var tileDictRows = gApp.tileDictRows;
@@ -379,36 +488,39 @@
             var newTiles = 0;
 
             var tileIndex = 0;
+	    var tiles = this.container.tiles;
+	    var subviews = tiles.subviews;
+            var subviewCount = subviews.length;
 
             var col, row;
             for (row = viewRow; row < lastRow; row++) {
                 var tileDictRow = tileDictRows[row];
+                var y = row * viewTileSize;
                 for (col = viewCol; col < lastCol; col++) {
                     var tileDict = tileDictRow[col];
                     if (!tileDict) {
                         continue;
                     }
 
-                    //Debug.write("this.container.tiles.subviews.length", this.container.tiles.subviews.length, "tileIndex", tileIndex);
-                    if (tileIndex >= this.container.tiles.subviews.length) {
+                    //Debug.write("subviewCount", subviewCount, "tileIndex", tileIndex);
+                    if (tileIndex >= subviewCount) {
                         if (newTiles >= maxNewTiles) {
                             continue;
                         }
                         newTiles++;
-                        var v =
-                            new lz.tile(this.container.tiles);
-                        //Debug.write("NOW this.container.tiles.subviews.length", this.container.tiles.subviews.length, "tileIndex", tileIndex);
+                        var v = new lz.tile(tiles);
+			subviewCount++;
+                        //Debug.write("NOW subviewCount", subviewCount, "tileIndex", tileIndex);
                     }
 
-                    var tile = this.container.tiles.subviews[tileIndex];
+                    var tile = subviews[tileIndex];
                     if (!tile) {
-                        Debug.write("No tile!", this.container.tiles.subviews.length, tileIndex, this.container.tiles.subviews);
+                        Debug.write("No tile!", subviewCount, tileIndex, subviews);
                         return;
                     }
                     tileIndex++;
 
                     var x = col * viewTileSize;
-                    var y = row * viewTileSize;
                     //Debug.write("TILE", tile);
                     if (tile.x != x) {
                         tile.setAttribute("x", x);
@@ -440,9 +552,7 @@
                 }
             }
 
-            var subviews = this.container.tiles.subviews;
-            var n = subviews.length;
-            while (tileIndex < n) {
+            while (tileIndex < subviewCount) {
                 var tile = subviews[tileIndex];
                 if (tile.visible) {
                     tile.setAttribute("visible", false);
@@ -450,47 +560,9 @@
                 tileIndex++;
             }
 
-	    this.trackCursor();
+	    this.container.cur.doAnimate();
           ]]>
         </method>
-
-
-	<method name="trackCursor"><![CDATA[
-
-	    var cursorX = 
-	        this.container.getMouse('x');
-	    var cursorY = 
-	        this.container.getMouse('y');
-
-	    if (this.cursorX != cursorX) {
-		this.setAttribute("cursorX", cursorX);
-	    }
-	    if (this.cursorY != cursorY) {
-		this.setAttribute("cursorY", cursorY);
-	    }
-
-	    var tileCursorX = 
-	        Math.max(
-		    0,
-		    Math.min(
-		        Math.floor(cursorX / this.viewTileSize),
-		    	gApp.worldCols - 1));
-	    var tileCursorY = 
-	        Math.max(
-		    0,
-		    Math.min(
-		        Math.floor(cursorY / this.viewTileSize),
-		    	gApp.worldRows - 1));
-
-	    if (this.tileCursorX != tileCursorX) {
-	        this.setAttribute("tileCursorX", tileCursorX);
-	    }
-	    if (this.tileCursorY != tileCursorY) {
-	        this.setAttribute("tileCursorY", tileCursorY);
-	    }
-
-	  ]]>
-	</method>
 
 
         <method name="centerOnTile" args="tileX, tileY"><![CDATA[
@@ -512,42 +584,63 @@
             height="${gApp.worldRows * classroot.viewTileSize}"
             bgcolor="0xCC7F66"
         >
-<!--
-            onmousedown="this.dragger.setAttribute('applied', true)"
-            onmouseup="this.dragger.setAttribute('applied', false)"
--->
-
-
-<!--
-            <dragstate name="dragger"/>
-
-
-	    <handler name="onx"><![CDATA[
-	        classroot.constrainScroll();
-	      ]]>
-	    </handler>
-
-	    <handler name="ony"><![CDATA[
-	        classroot.constrainScroll();
-	      ]]>
-	    </handler>
--->
 
 	    <view name="tiles"
 	        width="${parent.width}"
 		height="${parent.height}"
 	    />
 
-	    <toolcursor
-	        cursorX="${classroot.cursorX}"
-		cursorY="${classroot.cursorY}"
-	        tileCursorX="${classroot.tileCursorX}"
-		tileCursorY="${classroot.tileCursorY}"
+	    <toolcursor name="cur" id="gCur"
+	        drawing="${classroot.drawing}"
 		tileSize="${classroot.viewTileSize}"
+		visible="${!classroot.panning}"
 	    />
 
         </view>
 
+	<view name="scrollTop"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.panAutoScrollEdge}"
+	    bgcolor="0xffff00"
+	    opacity="0.25"
+	    onmousedown="parent.startEdgeScroll()"
+	    onmouseup="parent.stopEdgeScroll()"
+	/>
+
+	<view name="scrollBottom"
+	    x="0"
+	    y="${parent.height - parent.panAutoScrollEdge}"
+	    width="${parent.width}"
+	    height="${parent.panAutoScrollEdge}"
+	    bgcolor="0xffff00"
+	    opacity="0.25"
+	    onmousedown="parent.startEdgeScroll()"
+	    onmouseup="parent.stopEdgeScroll()"
+	/>
+
+	<view name="scrollLeft"
+	    x="0"
+	    y="0"
+	    width="${parent.panAutoScrollEdge}"
+	    height="${parent.height}"
+	    bgcolor="0xffff00"
+	    opacity="0.25"
+	    onmousedown="parent.startEdgeScroll()"
+	    onmouseup="parent.stopEdgeScroll()"
+	/>
+
+	<view name="scrollRight"
+	    x="${parent.width - parent.panAutoScrollEdge}"
+	    y="0"
+	    width="${parent.panAutoScrollEdge}"
+	    height="${parent.height}"
+	    bgcolor="0xffff00"
+	    opacity="0.25"
+	    onmousedown="parent.startEdgeScroll()"
+	    onmouseup="parent.stopEdgeScroll()"
+	/>
 
     </class>
 

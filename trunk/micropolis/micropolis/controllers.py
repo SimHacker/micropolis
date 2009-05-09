@@ -575,4 +575,22 @@ class Root(controllers.RootController):
         return data
 
 
+    ########################################################################
+    # amfGateway
+    #
+    # Gateway to Flash AMF protocol.
+    #
+    @expose(
+        content_type="amf")
+    def amfGateway(
+        self,
+        **kw):
+
+        print "AMF GATEWAY", kw
+
+        # @todo: Integrate PyAMF module here.
+
+        return ""
+
+
 ########################################################################
