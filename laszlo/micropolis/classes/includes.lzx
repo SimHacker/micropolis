@@ -34,6 +34,7 @@
     <include href="controlpanel.lzx"/>
     <include href="editorview.lzx"/>
     <include href="evaluationview.lzx"/>
+    <include href="historycheckbox.lzx"/>
     <include href="historyview.lzx"/>
     <include href="mapview.lzx"/>
     <include href="previewmapview.lzx"/>

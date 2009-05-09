@@ -33,9 +33,9 @@
 	    [0, 128]  /* Pollution */
 	]}"/>
 
-	<attribute name="historyTypes" value="$once{[
+	<attribute name="historyTypes" value="[
 	    0, 1, 2, 3, 4, 5
-	]}"/>
+	]"/>
 
 	<attribute name="legendWidth" value="100"/>
 	<attribute name="legendItemHeight" value="20"/>
@@ -547,59 +547,71 @@
 			spacing="0"
 		    />
 
-
-		    <view
-			datapath="ds_histories:/histories/history"
+		    <historycheckbox
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
-			bgcolor="${this.color}"
-		    >
+			type="0"
+			label="Residential"
+			description="Show the residential population history."
+			color="0x00ff00"
+			range="768"
+			history="${classroot}"
+		    />
 
+		    <historycheckbox
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			type="1"
+			label="Commercial"
+			description="Show the commercial population history."
+			color="0x0000a0"
+			range="768"
+			history="${classroot}"
+		    />
 
-			<attribute name="label" type="string" value="$path{'@label'}"/>
-			<attribute name="description" type="string" value="$path{'@description'}"/>
-			<attribute name="typeString" type="string" value="$path{'@type'}"/>
-			<attribute name="colorString" type="string" value="$path{'@color'}"/>
-			<attribute name="rangeString" type="string" value="$path{'@range'}"/>
-			<attribute name="type" type="number" value="${parseInt(this.typeString)}"/>
-			<attribute name="color" type="number" value="${parseInt(this.colorString)}"/>
-			<attribute name="range" type="number" value="${parseInt(this.rangeString)}"/>
+		    <historycheckbox
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			type="2"
+			label="Industrial"
+			description="Show the industrial population history."
+			color="0xffff00"
+			range="768"
+			history="${classroot}"
+		    />
 
+		    <historycheckbox
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			type="3"
+			label="Money"
+			description="Show the city funds history."
+			color="0x008000"
+			range="256"
+			history="${classroot}"
+		    />
 
-			<handler name="ondata" args="arg"><![CDATA[
-			    var value = 
-				gApp.indexOf(classroot.historyTypes, this.type) >= 0;
-			    this.cb.setAttribute("value", value);
-			  ]]>
-			</handler>
+		    <historycheckbox
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			type="4"
+			label="Crime"
+			description="Show the crime rate history."
+			color="0xff0000"
+			range="128"
+			history="${classroot}"
+		    />
 
-
-			<mycheckbox name="cb"
-			    x="${classroot.border}"
-			    y="${classroot.border}"
-			    width="${parent.width - (2 * classroot.border)}"
-			    height="${parent.height - (2 * classroot.border)}"
-			    text="${parent.label}"
-			    bgcolor="0xffffff"
-			>
-
-			    <handler name="onchanged" args="arg"><![CDATA[
-				if (!this.inited) {
-				    //Debug.write("History checkbox ONCHANGED too early", this, this.value);
-				    return;
-				}
-				//Debug.write("==== History checkbox ONCHANGED", this, this.value);
-				if (this.value) {
-				    classroot.addHistoryType(parent.type);
-				} else {
-				    classroot.removeHistoryType(parent.type);
-				}
-			      ]]>
-			    </handler>
-
-			</mycheckbox>
-
-		    </view>
+		    <historycheckbox
+			width="${parent.width}"
+			height="${classroot.legendItemHeight}"
+			type="5"
+			label="Pollution"
+			description="Show the pollution rate history."
+			color="0x507020"
+			range="128"
+			history="${classroot}"
+		    />
 
 	        </view>
 

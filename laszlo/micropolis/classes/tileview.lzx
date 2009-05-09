@@ -603,8 +603,6 @@
 	    y="0"
 	    width="${parent.width}"
 	    height="${parent.panAutoScrollEdge}"
-	    bgcolor="0xffff00"
-	    opacity="0.25"
 	    onmousedown="parent.startEdgeScroll()"
 	    onmouseup="parent.stopEdgeScroll()"
 	/>
@@ -614,8 +612,6 @@
 	    y="${parent.height - parent.panAutoScrollEdge}"
 	    width="${parent.width}"
 	    height="${parent.panAutoScrollEdge}"
-	    bgcolor="0xffff00"
-	    opacity="0.25"
 	    onmousedown="parent.startEdgeScroll()"
 	    onmouseup="parent.stopEdgeScroll()"
 	/>
@@ -625,8 +621,6 @@
 	    y="0"
 	    width="${parent.panAutoScrollEdge}"
 	    height="${parent.height}"
-	    bgcolor="0xffff00"
-	    opacity="0.25"
 	    onmousedown="parent.startEdgeScroll()"
 	    onmouseup="parent.stopEdgeScroll()"
 	/>
@@ -636,8 +630,6 @@
 	    y="0"
 	    width="${parent.panAutoScrollEdge}"
 	    height="${parent.height}"
-	    bgcolor="0xffff00"
-	    opacity="0.25"
 	    onmousedown="parent.startEdgeScroll()"
 	    onmouseup="parent.stopEdgeScroll()"
 	/>
