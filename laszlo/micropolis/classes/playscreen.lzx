@@ -27,7 +27,7 @@
 	</handler>
 
 
-	<hresizebar name="hsep1" id="gHSep1"
+	<resizebarh name="hsep1" id="gHSep1"
 	    trackvar="'panelResizeBarY'"
 	    maxy="${parent.height - this.height}"
 	    defaulty="$once{classroot.panelResizeBarY}"
@@ -87,7 +87,7 @@
 		navigationMapView="${parent.left.navigationMapView}"
 	    />
 
-	    <vresizebar name="vsep1" id="gVSep1"
+	    <resizebarv name="vsep1" id="gVSep1"
 		trackvar="'panelResizeBar2X'"
 		maxx="${parent.width - this.width}"
 		defaultx="$once{classroot.panelResizeBar2X}"

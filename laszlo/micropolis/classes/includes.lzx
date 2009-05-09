@@ -17,8 +17,8 @@
     <include href="tileviewpie.lzx"/>
     <include href="mycheckbox.lzx"/>
     <include href="myradio.lzx"/>
-    <include href="hresizebar.lzx"/>
-    <include href="vresizebar.lzx"/>
+    <include href="resizebarh.lzx"/>
+    <include href="resizebarv.lzx"/>
     <include href="tile.lzx"/>
     <include href="toolcursor.lzx"/>
     <include href="tileview.lzx"/>

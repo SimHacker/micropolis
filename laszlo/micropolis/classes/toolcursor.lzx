@@ -8,129 +8,163 @@
 
 
     <class name="toolcursor"
-	width="${(this.tileSize * this.tiles) + (2 * this.margin)}"
-	height="${(this.tileSize * this.tiles) + (2 * this.margin)}"
-	x="${((this.tileCursorX - this.hotSpot) * this.tileSize) - this.margin}"
-	y="${((this.tileCursorY - this.hotSpot) * this.tileSize) - this.margin}"
-	opacity="${this.inBounds ? 1.0 : 0.5}"
+	width="${this.tileSize * this.tiles}"
+	height="${this.tileSize * this.tiles}"
     >
 
 
         <attribute name="margin" value="5"/>
+        <attribute name="drawing" value="false"/>
         <attribute name="cursorX" value="0"/>
         <attribute name="cursorY" value="0"/>
-        <attribute name="tileCursorX" value="0"/>
-        <attribute name="tileCursorY" value="0"/>
+        <attribute name="cursorXLast" value="0"/>
+        <attribute name="cursorYLast" value="0"/>
         <attribute name="tileSize" value="32"/>
+        <attribute name="toolName" value="${this.toolInfo[gApp.tool]['name']}"/>
         <attribute name="tiles" value="${this.toolInfo[gApp.tool]['tiles']}"/>
         <attribute name="hotSpot" value="${this.toolInfo[gApp.tool]['hotSpot']}"/>
-	<attribute name="inBounds" value="${
-	    (this.tileCursorX &gt;= 0) &amp;&amp;
-	    (this.tileCursorY &gt;= 0) &amp;&amp;
-	    (this.tileCursorX &lt; gApp.worldCols) &amp;&amp;
-	    (this.tileCursorY &lt; gApp.worldRows)
-	}"/>
+        <attribute name="constrained" value="${this.toolInfo[gApp.tool]['constrained']}"/>
+        <attribute name="handler" value="${this.toolInfo[gApp.tool]['handler']}"/>
+        <attribute name="cost" value="${this.toolInfo[gApp.tool]['cost']}"/>
+	<attribute name="updateCursorDelegate" value="null"/>
+	<attribute name="updatingCursor" value="false"/>
+
+
 	<attribute name="toolInfo" value="$once{{
 	    residential: {
 	        name: 'Residential',
 	        tiles: 3,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 100
 	    },
 	    commercial: {
 	        name: 'Commercial',
 	        tiles: 3,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 100
 	    },
 	    industrial: {
                 name: 'Industrial',
 	        tiles: 3,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 100
 	    },
 	    firestation: {
                 name: 'Fire Station',
 	        tiles: 3,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 500
 	    },
 	    query: {
                 name: 'Query',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 0
 	    },
 	    policestation: {
                 name: 'Police Station',
 	        tiles: 3,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 100
 	    },
 	    wire: {
                 name: 'Wire',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 5
 	    },
 	    bulldozer: {
                 name: 'Bulldozer',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 1
 	    },
 	    railroad: {
                 name: 'Railroad',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 20
 	    },
 	    road: {
                 name: 'Road',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 10
 	    },
-	    pan: {
-                name: 'Pan',
-	        tiles: 0,
+	    center: {
+                name: 'Center',
+	        tiles: 1,
 		hotSpot: 0,
+		constrained: false,
+		handler: 'centertool',
 		cost: 0
 	    },
 	    stadium: {
                 name: 'Stadium',
 	        tiles: 4,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 5000
 	    },
 	    park: {
                 name: 'Park',
 	        tiles: 1,
 		hotSpot: 0,
+		constrained: true,
+		handler: 'apptool',
 		cost: 10
 	    },
 	    seaport: {
                 name: 'Seaport',
 	        tiles: 4,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 3000
 	    },
 	    coalpower: {
                 name: 'Coal Power',
 	        tiles: 4,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 3000
 	    },
 	    airport: {
                 name: 'Airport',
 	        tiles: 6,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 10000
 	    },
 	    nuclearpower: {
                 name: 'Nuclear Power',
 	        tiles: 4,
 		hotSpot: 1,
+		constrained: true,
+		handler: 'apptool',
 		cost: 5000
 	    }
 	}}"/>
@@ -143,14 +177,246 @@
 
 
 	<handler name="ontool" reference="gApp"><![CDATA[
-	    var tiles = this.toolInfo[gApp.tool]['tiles'];
-	    this.setAttribute("tiles", tiles);
+	    if (!this.inited) {
+	        return;
+	    }
+
+	    //Debug.write("gApp tool", gApp.tool);
+	    this.trackCursor();
 	  ]]>
 	</handler>
 
 
+	<handler name="ondrawing" args="arg"><![CDATA[
+	    if (!this.inited) {
+	        return;
+	    }
+
+	    this.trackCursor();
+
+	    Debug.write("ONDRAWING", arg, this.cursorX, this.cursorY);
+
+	    if (this.drawing) {
+		this.drawStart();
+	    } else {
+		this.drawStop();
+	    }
+	  ]]>
+	</handler>
+
+
+	<method name="updateCursorSoon"><![CDATA[
+	    if (this.updatingCursor) {	
+	        return;
+	    }
+
+	    var del = this.updateCursorDelegate;
+	    if (!del) {
+	       del = new lz.Delegate(this, 'updateCursorNow');
+	       this.updateCursorDelegate = del;
+	    }
+	    lz.IdleService.LzIdle.callOnIdle(del);
+	    this.updatingCursor = true;
+	  ]]>
+	</method>
+
+
+	<method name="updateCursorNow" args="arg"><![CDATA[
+	    this.updatingCursor = false;
+	    this.trackCursor();
+	  ]]>
+	</method>
+
+
+	<method name="drawStart"><![CDATA[
+	    this.trackCursor();
+
+	    Debug.write("DRAWSTART", this.cursorX, this.cursorY);
+
+	    var handler = this.handler;
+	    var cursorX = this.cursorX;
+	    var cursorY = this.cursorY;
+	    this.cursorXLast = cursorX;
+	    this.cursorYLast = cursorY;
+
+	    switch (handler) {
+
+	        case 'apptool': {
+		    gApp.drawToolStart(
+			gApp.tool, 
+			cursorX, 
+			cursorY);
+		    break;
+		}
+
+		case 'centertool': {
+		    parent.parent.centerOnTile(
+		        cursorX,
+			cursorY);
+		    break;
+		}
+
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="drawMove"><![CDATA[
+	    //Debug.write("======== DRAWMOVE", this.cursorX, this.cursorY);
+	    var handler = this.handler;
+	    var cursorX = this.cursorX;
+	    var cursorY = this.cursorY;
+	    var cursorXLast = this.cursorXLast;
+	    var cursorYLast = this.cursorYLast;
+
+	    if ((cursorX == cursorXLast) &&
+	        (cursorY == cursorYLast)) {
+		return;
+	    }
+
+	    this.cursorXLast = cursorX;
+	    this.cursorYLast = cursorY;
+
+	    switch (handler) {
+
+	        case 'apptool': {
+		    gApp.drawToolMove(
+			gApp.tool, 
+			cursorXLast, 
+			cursorYLast, 
+			cursorX, 
+			cursorY);
+		    break;
+		}
+
+		case 'centertool': {
+		    break;
+		}
+
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="drawStop"><![CDATA[
+	    Debug.write("DRAWSTOP", this.cursorX, this.cursorY);
+	    this.trackCursor();
+	    this.drawMove();
+
+	    var handler = this.handler;
+
+	    switch (handler) {
+
+	        case 'apptool': {
+		    gApp.drawToolStop(
+			gApp.tool, 
+			cursorX, 
+			cursorY);
+		    break;
+		}
+
+		case 'centertool': {
+		    break;
+		}
+
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="doAnimate"><![CDATA[
+	    if (this.trackCursor() && this.drawing) {
+	        this.drawMove();
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="trackCursor"><![CDATA[
+	    var x;
+	    var y;
+	    var tileSize = this.tileSize;
+	    var hotSpot = this.hotSpot;
+	    var constrained = this.constrained;
+	    var tiles = this.tiles;
+	    var cursorX;
+	    var cursorY;
+
+	    if (tiles) {
+		var cursorX = parent.getMouse('x');
+		var cursorY = parent.getMouse('y');
+
+		cursorX =
+		    Math.floor(cursorX / tileSize);
+		cursorY =
+		    Math.floor(cursorY / tileSize);
+
+		if (constrained) {
+		    cursorX =
+			Math.max(
+			    hotSpot,
+			    Math.min(
+				cursorX,
+				gApp.worldCols - (tiles - hotSpot)));
+		    cursorY =
+			Math.max(
+			    hotSpot,
+			    Math.min(
+				cursorY,
+				gApp.worldRows - (tiles - hotSpot)));
+		}
+
+		x = (cursorX - hotSpot) * tileSize;
+		y = (cursorY - hotSpot) * tileSize;
+
+	    } else {
+		var cursorX = parent.getMouse('x');
+		var cursorY = parent.getMouse('y');
+
+		if (constrained) {
+		    cursorX =
+			Math.max(
+			    0,
+			    Math.min(
+				cursorX,
+				(gApp.worldCols * tileSize) - 1));
+		    cursorY =
+			Math.max(
+			    0,
+			    Math.min(
+				cursorY,
+				(gApp.worldRows * tileSize) - 1));
+		}
+
+		x = cursorX;
+		y = cursorY;
+	    }
+
+	    var moved =
+	        (this.cursorX != cursorX) ||
+		(this.cursorY != cursorY);
+
+	    if (this.cursorX != cursorX) {
+		this.setAttribute("cursorX", cursorX);
+	    }
+	    if (this.cursorY != cursorY) {
+		this.setAttribute("cursorY", cursorY);
+	    }
+
+	    if (this.x != x) {
+	        this.setAttribute("x", x);
+	    }
+	    if (this.y != y) {
+	        this.setAttribute("y", y);
+	    }
+
+	    return moved;
+	  ]]>
+	</method>
+
+
 	<view
-	    x="0"
+	    x="${-parent.margin}"
 	    y="0"
 	    width="${parent.margin}"
 	    height="${parent.height}"
@@ -160,7 +426,7 @@
 
 
 	<view
-	    x="${parent.width - parent.margin}"
+	    x="${parent.width}"
 	    y="0"
 	    width="${parent.margin}"
 	    height="${parent.height}"
@@ -170,9 +436,9 @@
 
 
 	<view
-	    x="${parent.margin}"
-	    y="0"
-	    width="${parent.width - (2 * parent.margin)}"
+	    x="${-parent.margin}"
+	    y="${-parent.margin}"
+	    width="${parent.width + (2 * parent.margin)}"
 	    height="${parent.margin}"
 	    bgcolor="0x000000"
 	    opacity="0.75"
@@ -180,43 +446,43 @@
 
 
 	<view
-	    x="${parent.margin}"
-	    y="${parent.height - parent.margin}"
-	    width="${parent.width - (2 * parent.margin)}"
+	    x="${-parent.margin}"
+	    y="${parent.height}"
+	    width="${parent.width + (2 * parent.margin)}"
 	    height="${parent.margin}"
 	    bgcolor="0x000000"
 	    opacity="0.75"
 	/>
 
 	<view
-	    x="${parent.margin}"
-	    y="${parent.margin}"
-	    width="${parent.width - (2 * parent.margin)}"
-	    height="${parent.height - (2 * parent.margin)}"
+	    x="${0}"
+	    y="${0}"
+	    width="${parent.width}"
+	    height="${parent.height}"
 	    bgcolor="0xffff00"
 	    opacity="0.5"
 	/>
 
-	<text name="toolName"
+	<text name="toolNameText"
 	  x="${(parent.width - this.width) / 2}"
-	  y="${parent.height}"
+	  y="${parent.height + parent.margin}"
 	  bgcolor="0xffffff"
 	  fgcolor="0x000000"
 	  fontsize="18"
 	  fontstyle="bold"
 	  resize="true"
-	  text="${parent.toolInfo[gApp.tool]['name']}"
+	  text="${classroot.toolName}"
 	/>
 
-	<text name="toolCost"
+	<text name="toolCostText"
 	  x="${(parent.width - this.width) / 2}"
-	  y="${parent.toolName.y + parent.toolName.height}"
+	  y="${parent.toolNameText.y + parent.toolNameText.height}"
 	  bgcolor="0xffffff"
 	  fgcolor="0x000000"
 	  fontsize="18"
 	  fontstyle="bold"
 	  resize="true"
-	  text="${gApp.formatFunds(parent.toolInfo[gApp.tool]['cost'])}"
+	  text="${gApp.formatFunds(classroot.cost)}"
 	/>
 
     </class>

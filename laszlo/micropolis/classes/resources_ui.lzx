@@ -1,0 +1,15 @@
+<library>
+
+
+    <!-- UI Resources -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <!-- Resize Bars -->
+
+    <resource name="ui_resizebar_h_rsrc" src="../resources/ui_resizebar_h.swf"/>
+    <resource name="ui_resizebar_v_rsrc" src="../resources/ui_resizebar_v.swf"/>
+
+</library>

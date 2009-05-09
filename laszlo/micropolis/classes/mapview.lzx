@@ -253,7 +253,7 @@
 	    dv.beginPath();
 	    dv.rect(x - 2, y - 2, width + 4, height + 4);
 	    dv.strokeStyle = 0xffffff;
-	    dv.lineWidth = 3;
+   	    dv.lineWidth = 3;
 	    dv.stroke();
 
 	    dv.beginPath();
@@ -261,6 +261,21 @@
 	    dv.strokeStyle = 0x000000;
 	    dv.lineWidth = 1;
 	    dv.stroke();
+
+/*
+	    // For debugging the tile scroll extra look-ahead rectangle.
+	    viewRect = tileView.getTileRect();
+	    x = viewRect[0] * tileSize;
+	    y = viewRect[1] * tileSize;
+	    width = viewRect[2] * tileSize;
+	    height = viewRect[3] * tileSize;
+
+	    dv.beginPath();
+	    dv.rect(x, y, width, height);
+	    dv.strokeStyle = 0xffff00;
+	    dv.lineWidth = 1;
+	    dv.stroke();
+*/
 
 	  ]]>
 	</method>
