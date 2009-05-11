@@ -1,0 +1,59 @@
+<library>
+
+
+    <!-- History Checkbox -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="historycheckbox"
+	bgcolor="${this.color}"
+    >
+
+
+	<attribute name="label" type="string" value=""/>
+	<attribute name="description" type="string" value=""/>
+	<attribute name="type" type="number" value="0"/>
+	<attribute name="color" type="number" value="0"/>
+	<attribute name="range" type="number" value="0"/>
+	<attribute name="border" type="number" value="3"/>
+	<attribute name="history" value="null"/>
+
+
+	<mycheckbox name="cb"
+	    x="${parent.border}"
+	    y="${parent.border}"
+	    width="${parent.width - (2 * parent.border)}"
+	    height="${parent.height - (2 * parent.border)}"
+	    text="${parent.label}"
+	    bgcolor="0xffffff"
+	>
+
+	    <handler name="oninit" args="arg"><![CDATA[
+	        var value = 
+		    gApp.indexOf(parent.history.historyTypes, parent.type) >= 0;
+		this.setAttribute("value", value);
+	      ]]>
+	    </handler>
+
+
+	    <handler name="onchanged" args="arg"><![CDATA[
+		if (!this.inited && !parent.inited) {
+		    //Debug.write("History checkbox ONCHANGED too early", this, this.value);
+		    return;
+		}
+		//Debug.write("==== History checkbox ONCHANGED", this, this.value);
+		if (this.value) {
+		    parent.history.addHistoryType(parent.type);
+		} else {
+		    parent.history.removeHistoryType(parent.type);
+		}
+	      ]]>
+	    </handler>
+
+	</mycheckbox>
+
+    </class>
+
+</library>
