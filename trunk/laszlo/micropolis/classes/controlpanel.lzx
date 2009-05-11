@@ -108,7 +108,7 @@
 	<attribute name="checkboxWidth" value="120"/>
 	<attribute name="checkboxHeight" value="18"/>
 
-	<attribute name="speedNames" value="$once{[
+	<attribute name="virtualSpeedNames" value="$once{[
             'Ultra Slow',
             'Super Slow',
             'Very Slow',
@@ -134,9 +134,9 @@
 	</handler>
 
 
-	<method name="updateSpeed" args="speed"><![CDATA[
-	    gApp.setAttribute("speed", speed);
-	    //Debug.write("UPDATESPEED", speed, this.speedNames[speed]);
+	<method name="updateVirtualSpeed" args="virtualSpeed"><![CDATA[
+	    gApp.setAttribute("virtualSpeed", virtualSpeed);
+	    //Debug.write("UPDATEVIRTUALSPEED", virtualSpeed, this.virtualSpeedNames[virtualSpeed]);
 	  ]]>
 	</method>
 
@@ -186,7 +186,7 @@
 		    text="${
 			'Speed: ' + 
 			(gApp.paused ? 'Paused...\n' : 'Running!\n') +
-			classroot.speedNames[parent.speedSlider.value]
+			classroot.virtualSpeedNames[parent.speedSlider.value]
 		    }"
 		/>
 
@@ -200,7 +200,7 @@
 		    thumbheight="20"
 		    thumbwidth="20"
 		    value="5"
-		    onvalue="classroot.updateSpeed(this.value)"
+		    onvalue="classroot.updateVirtualSpeed(this.value)"
 		/>
 
 	    </view>

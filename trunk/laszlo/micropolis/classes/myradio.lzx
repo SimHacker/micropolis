@@ -130,7 +130,7 @@
             value="${this.cb.height/2 - this._title.height/2+1}" type="number"/>
 	-->
         <attribute name="text_y"
-            value="${(this['cb'] &amp;&amp; this['_title']) ? (this.cb.height/2 - this._title.height/2+1) : 0}" type="number"/>
+            value="${(this.inited &amp;&amp; this['cb'] &amp;&amp; this['_title']) ? (this.cb.height/2 - this._title.height/2+1) : 0}" type="number"/>
 
         <!--- @keywords private -->
         <attribute name="initcomplete" value="0"/>
