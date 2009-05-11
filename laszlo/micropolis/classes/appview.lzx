@@ -50,7 +50,7 @@
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
         <attribute name="paused" value="true"/>
-        <attribute name="speed" type="number" value="3"/>
+        <attribute name="virtualSpeed" type="number" value="3"/>
         <attribute name="funds" type="number" value="0"/>
         <attribute name="fundsLabel" type="string" value="$0"/>
         <attribute name="year" type="number" value="1900"/>
@@ -92,9 +92,9 @@
 
             this.expressInterest(this, [
 	        'funds', 'date', 'history', 'evaluation', 'paused',
-	        'passes', 'speed', 'delay', 'demand', 'options',
+	        'passes', 'delay', 'demand', 'options',
 	        'gameLevel', 'cityName', 'taxRate', 'budget',
-	        'message', 'tileViews'
+	        'message', 'virtualSpeed', 'tileViews'
             ]);
 
 	    var del = new lz.Delegate(this, 'handleKey');
@@ -171,10 +171,10 @@
         </handler>
 
 
-        <handler name="onspeed" args="arg"><![CDATA[
+        <handler name="onvirtualSpeed" args="arg"><![CDATA[
 	    var cmd =
-		'<command name="setSpeed" speed="' +
-		this.speed +
+		'<command name="setVirtualSpeed" virtualSpeed="' +
+		this.virtualSpeed +
 		'"/>';
 	    this.sendCommand(cmd);
           ]]>
@@ -343,13 +343,13 @@
                     break;
                 }
 
-                case 'speed': {
-                    var speed = parseInt(args['speed']);
+                case 'virtualSpeed': {
+                    var virtualSpeed = parseInt(args['virtualSpeed']);
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-		    //Debug.write("SPEED", speed, pollDelay, animateDelay);
-                    if (this.speed != speed) {
-                        this.setAttribute("speed", speed);
+		    //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
+                    if (this.virtualSpeed != virtualSpeed) {
+                        this.setAttribute("virtualSpeed", virtualSpeed);
                     }
                     if (this.pollDelay != pollDelay) {
                         this.setAttribute("pollDelay", pollDelay);

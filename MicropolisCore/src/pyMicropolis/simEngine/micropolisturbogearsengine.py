@@ -586,8 +586,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.startSpeed = 4
-        self.speed = self.startSpeed
+        self.startVirtualSpeed = 4
+        self.virtualSpeed = self.startVirtualSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
 
@@ -768,7 +768,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if gameMode == "start":
                 self.pause()
             elif gameMode == "play":
-                self.setVirtualSpeed(self.startSpeed)
+                self.setVirtualSpeed(self.startVirtualSpeed)
                 self.resetRealTime()
                 self.updateFundEffects()
                 self.resume()
@@ -785,14 +785,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
                 print "Bad paused value, should be true or false, not", paused
 
-        elif command == 'setSpeed':
+        elif command == 'setVirtualSpeed':
 
-            speed = 0
-            speed = int(params.get('speed'))
-            speed = max(0, min(speed, 9))
+            virtualSpeed = int(params.get('virtualSpeed'))
+            speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
 
-            #print "setSpeed", speed
-            self.setVirtualSpeed(speed)
+            #print "setVirtualSpeed", virtualSpeed
+            self.setVirtualSpeed(virtualSpeed)
 
         elif command == 'abandonCity':
 
@@ -860,16 +859,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 pass
 
 
-    def setVirtualSpeed(self, speed):
-        print "setVirtualSpeed", speed
-        self.speed = speed
-        speedConfiguration = SpeedConfigurations[speed]
-        #print "==== setVirtualSpeed", speed, speedConfiguration
+    def setVirtualSpeed(self, virtualSpeed):
+        #print "setVirtualSpeed", virtualSpeed
+        self.virtualSpeed = virtualSpeed
+        speedConfiguration = SpeedConfigurations[virtualSpeed]
+        #print "==== setVirtualSpeed", virtualSpeed, speedConfiguration
         self.loopsPerSecond = speedConfiguration['loopsPerSecond']
         self.maxLoopsPerPoll = speedConfiguration['maxLoopsPerPoll']
         simSpeed = speedConfiguration['speed']
         if self.simSpeed != simSpeed:
-           #self.setSpeed(simSpeed)
+            #self.setSpeed(simSpeed)
             self.simSpeed = simSpeed
         self.handle_UIUpdate('delay')
 
@@ -1014,7 +1013,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         if tileViews:
             # @todo: Refactor update message code.
-            print "TILEVIEWS", tileViews
+            #print "TILEVIEWS", tileViews
             session.sendMessage({
                 'message': 'UIUpdate',
                 'variable': 'tileViews',
@@ -1237,7 +1236,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.handle_UIUpdate('history')
         self.handle_UIUpdate('evaluation')
         self.handle_UIUpdate('paused')
-        self.handle_UIUpdate('speed')
+        self.handle_UIUpdate('virtualSpeed')
         self.handle_UIUpdate('demand')
         self.handle_UIUpdate('options')
         self.handle_UIUpdate('gamelevel')
@@ -1326,7 +1325,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIMakeSound(self, channel, sound, x, y):
-        print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound, x, y)
+        #print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound, x, y)
         self.sendSessions({
             'message': "UIMakeSound",
             'channel': channel,
@@ -1335,7 +1334,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             'y': y,
         })
 
-    
+
     def handle_UINewGame(self):
         print "handle_UINewGame(self)", (self,)
         self.sendSessions({
@@ -1613,23 +1612,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif variable == 'speed':
 
-                print "SPEED", self, type(self), getattr(self, 'speed', '???')
-                speed = self.speed # XXX???
-                speedConfiguration = SpeedConfigurations[speed]
-                message['speed'] = speed
-                message['pollDelay'] = speedConfiguration['pollDelay']
-                message['animateDelay'] = speedConfiguration['animateDelay']
-                message['collapse'] = True
+                return
 
             elif variable == 'delay':
 
-                #print "UIUPDATE DELAY", self.speed
-                speed = self.speed
-                speedConfiguration = SpeedConfigurations[speed]
+                #print "UIUPDATE DELAY", self.virtualSpeed
+                virtualSpeed = self.virtualSpeed
+                speedConfiguration = SpeedConfigurations[virtualSpeed]
                 message['pollDelay'] = speedConfiguration['pollDelay']
                 message['animateDelay'] = speedConfiguration['animateDelay']
                 message['collapse'] = True
-                #print "DELAY", speed, "MESSAGE", message
 
             elif variable == 'demand':
 
@@ -1703,6 +1695,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['picture'] = args[3]
                 message['important'] = args[4]
                 message['args'] = None
+
+            elif variable == 'virtualSpeed':
+
+                #print "VIRTUALSPEED", self, type(self), getattr(self, 'virtualSpeed', '???')
+                virtualSpeed = self.virtualSpeed
+                speedConfiguration = SpeedConfigurations[virtualSpeed]
+                message['virtualSpeed'] = virtualSpeed
+                message['pollDelay'] = speedConfiguration['pollDelay']
+                message['animateDelay'] = speedConfiguration['animateDelay']
+                message['collapse'] = True
 
             # Clean up the args parameter, which is usually empty, so
             # we don't send it unnecessarily.
