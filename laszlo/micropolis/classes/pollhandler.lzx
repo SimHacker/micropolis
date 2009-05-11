@@ -34,61 +34,6 @@
 
 		    switch (pollChild.nodeName) {
 
-			case "tileviews": {
-
-			    var tileviews = pollChild['childNodes'];
-			    if (!tileviews) {
-				break;
-			    }
-
-			    //Debug.write("tileviews", tileviews);
-			    if (!tileviews || tileviews.length == 0) {
-				break;
-			    }
-
-			    var j;
-			    var m = tileviews.length;
-			    for (j = 0; j < m; j++) {
-				var tileview = tileviews[j];
-				if (tileview.nodeType != 1) {
-				    continue;
-				}
-
-				var attributes = tileview.attributes;
-
-				//Debug.write("tileview", attributes);
-
-				var col = parseInt(attributes['col']);
-				var row = parseInt(attributes['row']);
-				var cols = parseInt(attributes['cols']);
-				var rows = parseInt(attributes['rows']);
-				var format = parseInt(attributes['format']);
-				var children = tileview['childNodes'];
-				var codedTiles = (children && (children.length > 0)) ? children[0].data : "";
-
-				//Debug.write(col, row, cols, rows, format, codedTiles);
-
-				if (!isNaN(col) &&
-				    !isNaN(row) &&
-				    !isNaN(cols) &&
-				    !isNaN(rows) &&
-				    !isNaN(format) &&
-				    (rows > 0) &&
-				    (cols > 0) &&
-				    (codedTiles != "")) {
-				    gApp.updateTiles(
-					col,
-					row,
-					cols,
-					rows,
-					format,
-					codedTiles);
-				}
-			    }
-
-			    break;
-			}
-
 			case "messages": {
 
 			    var messages = pollChild['childNodes'];

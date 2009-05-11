@@ -31,26 +31,15 @@
 	 }"/>
 
 
-	<handler name="oninit"><![CDATA[
-	    //Debug.write("==== noticeview oninit", this);
-	    gApp.expressInterest(this, ['message']);
-	    this.updateNotice();
+	<handler name="onmessage" reference="gApp"><![CDATA[
+	    var message = gApp.message;
+	    var number = message['number'];
+	    var x = message['x'];
+	    var y = message['y'];
+
+	    this.setCurrentNotice(number, x, y);
 	  ]]>
-	</handler>
-
-
-	<handler name="onactive" args="arg"><![CDATA[
-	    //Debug.write("onactive", this.active, this);
-	  ]]>
-	</handler>
-
-
-	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("========= noticeview handleUpdate args", args);
-	    var number = args['number'];
-	    this.setCurrentNotice(number, args['x'], args['y']);
-	  ]]>
-	</method>
+        </handler>
 
 
 	<method name="setCurrentNotice" args="number, x, y"><![CDATA[

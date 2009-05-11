@@ -337,7 +337,7 @@ void Micropolis::showBudgetWindowAndStartWaiting()
 void Micropolis::setCityTax(short tax)
 {
     cityTax = tax;
-    callback("UIUpdate", "s", "taxrate");
+    callback("UIUpdate", "s", "taxRate");
 }
 
 

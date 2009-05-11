@@ -40,9 +40,9 @@
 	    var dv = this.dv;
 
 	    var demand = gApp.demand;
-	    var resDemand = demand ? demand[0] : 0;
-	    var comDemand = demand ? demand[1] : 0;
-	    var indDemand = demand ? demand[2] : 0;
+	    var resDemand = demand ? demand['resDemand'] : 0;
+	    var comDemand = demand ? demand['comDemand'] : 0;
+	    var indDemand = demand ? demand['indDemand'] : 0;
 
 	    //Debug.write("drawview", dv, "redrawView", "demands", resDemand, comDemand, indDemand);
 

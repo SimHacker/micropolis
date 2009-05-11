@@ -183,6 +183,8 @@
 	        return;
 	    }
 
+	    var scales = history['scales'];
+
 	    var dv = this.v.dv;
 
 	    var historyTypes = this.historyTypes;
@@ -195,7 +197,7 @@
 
 	    function getHistoryRange(scale, type)
 	    {
-	        var scaleDict = history[scale];
+	        var scaleDict = scales[scale];
 		var histories = scaleDict['histories'];
 		var historyDict = histories[type];
 		var range = historyDict['valueRange'];
@@ -204,7 +206,7 @@
 
 	    function getHistory(scale, type, index)
 	    {
-	        var scaleDict = history[scale];
+	        var scaleDict = scales[scale];
 		var histories = scaleDict['histories'];
 		var historyDict = histories[type];
 		var valueScale = historyDict['valueScale'];
@@ -316,7 +318,7 @@
 	    var pollutionScale = calcScale(pollutionHistoryMax);
 
 	    var historyRange = 128.0
-	    var scales = [
+	    var scaleValues = [
 		rciScale, rciScale, rciScale, // res, com, ind
 		moneyScale, crimeScale, pollutionScale, // money, crime, pollution
 	    ];
@@ -326,7 +328,7 @@
 	    for (i = 0; i < n; i++) {
 	        var historyType = historyTypes[i];
 
-		var scaleValue = scales[historyType];
+		var scaleValue = scaleValues[historyType];
 
 		var first = true;
 		dv.beginPath();

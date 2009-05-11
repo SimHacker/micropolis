@@ -1579,9 +1579,9 @@ public:
 
     void setFire();
 
-  private:
-
     void fireBomb();
+
+  private:
 
     void doDisasters();
 
