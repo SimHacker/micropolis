@@ -17,36 +17,15 @@
 	<attribute name="maxMessages" value="100"/>
 
 
-	<handler name="oninit"><![CDATA[
-	    //Debug.write("==== noticeview oninit", this);
-	    gApp.expressInterest(this, ['message']);
+	<handler name="onmessage" reference="gApp"><![CDATA[
+	    var message = gApp.message;
+	    var number = message['number'];
+	    var x = message['x'];
+	    var y = message['y'];
+
+	    this.addNotice(number, x, y);
 	  ]]>
 	</handler>
-
-
-	<handler name="onactive" args="arg"><![CDATA[
-	    //Debug.write("onactive", this.active, this);
-	  ]]>
-	</handler>
-
-
-	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("========= messageview handleUpdate args", args);
-
-	    var aspect = args['aspect'];
-
-	    switch (aspect) {
-
-	        case 'message': {
-		    var number = args['number'];
-		    this.addNotice(number, args['x'], args['y']);
-		    break;
-		}
-
-	    }
-
-	  ]]>
-	</method>
 
 
 	<method name="addNotice" args="number, x, y"><![CDATA[

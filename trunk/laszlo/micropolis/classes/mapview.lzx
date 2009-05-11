@@ -128,11 +128,11 @@
 
 
         <method name="handleUpdate" args="args"><![CDATA[
-            //Debug.write("==== mapview handleUpdate", this, args['aspect'], args);
+            //Debug.write("==== mapview handleUpdate", this, args['variable'], args);
 
-            var aspect = args['aspect'];
+            var variable = args['variable'];
 
-            switch (aspect) {
+            switch (variable) {
 
                 case 'map': {
                     this.updateMap();

@@ -40,6 +40,7 @@
         <attribute name="codeMap" value="null"/>
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
+	<attribute name="tileViews" value="null"/>
         <attribute name="quaking" value="0"/>
 	<attribute name="tool" type="string" value="bulldozer"/>
         <attribute name="connected" value="false"/>
@@ -56,6 +57,9 @@
         <attribute name="month" type="number" value="0"/>
         <attribute name="dateLabel" type="string" value=""/>
         <attribute name="demand" value="null"/>
+        <attribute name="options" value="null"/>
+        <attribute name="gameLevel" value="0"/>
+        <attribute name="message" value="null"/>
         <attribute name="evaluation" value="null"/>
         <attribute name="history" value="null"/>
         <attribute name="taxRate" type="number" value="7"/>
@@ -87,8 +91,10 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-                'speed', 'delay', 'paused', 'taxrate', 'date', 
-                'funds', 'demand', 'evaluation', 'history'
+	        'funds', 'date', 'history', 'evaluation', 'paused',
+	        'passes', 'speed', 'delay', 'demand', 'options',
+	        'gameLevel', 'cityName', 'taxRate', 'budget',
+	        'message', 'tileViews'
             ]);
 
 	    var del = new lz.Delegate(this, 'handleKey');
@@ -289,11 +295,53 @@
 
         <method name="handleUpdate" args="args"><![CDATA[
 
-            //Debug.write("appview handleUpdate", this, args['aspect'], args);
+            //Debug.write("appview handleUpdate", this, args['variable'], args);
 
-            var aspect = args['aspect'];
+            var variable = args['variable'];
 
-            switch (aspect) {
+            switch (variable) {
+
+                case 'funds': {
+                    var funds = args['funds'];
+                    var fundsLabel = this.formatFunds(funds);
+                    this.setAttribute("funds", funds);
+                    this.setAttribute("fundsLabel", fundsLabel);
+                    break;
+                }
+
+                case 'date': {
+                    var year = args['year'];
+                    var month = args['month'];
+                    var dateLabel = this.formatMonthYear(month, year);
+                    if (this.year != year) {
+                        this.setAttribute("year", year);
+                    }
+                    if (this.month != month) {
+                        this.setAttribute("month", month);
+                    }
+                    if (this.dateLabel != dateLabel) {
+                        this.setAttribute("dateLabel", dateLabel);
+                    }
+                    break;
+                }
+
+                case 'history': {
+                    this.setAttribute('history', args['history']);
+                    break;
+                }
+
+                case 'evaluation': {
+                    this.setAttribute('evaluation', args);
+                    break;
+                }
+
+                case 'paused': {
+                    var paused = args['paused'] == 'true';
+                    if (this.paused != paused) {
+                        this.setAttribute('paused', paused);
+                    }
+                    break;
+                }
 
                 case 'speed': {
                     var speed = parseInt(args['speed']);
@@ -315,7 +363,7 @@
                 case 'delay': {
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-		    Debug.write("DELAY", pollDelay, animateDelay);
+		    //Debug.write("DELAY", pollDelay, animateDelay);
                     if (this.pollDelay != pollDelay) {
                         this.setAttribute("pollDelay", pollDelay);
                     }
@@ -325,72 +373,30 @@
                     break;
                 }
 
-                case 'paused': {
-                    var paused = args['paused'] == "true";
-                    if (this.paused != paused) {
-                        this.setAttribute("paused", paused);
-                    }
-                    break;
-                }
-
-                case 'taxrate': {
-                    var taxRate = parseInt(args['taxRate']);
-                    if (taxRate != this.taxRate) {
-                        this.setAttribute("taxRate", taxRate);
-                    }
-                    break;
-                }
-
-                case 'date': {
-                    var year = args['year'];
-                    var month = args['month'];
-                    var dateLabel = this.formatMonthYear(month, year);
-                    if (this.year != year) {
-                        this.setAttribute("year", year);
-                    }
-                    if (this.month != month) {
-                        this.setAttribute("month", month);
-                    }
-                    if (this.dateLabel != dateLabel) {
-                        this.setAttribute("dateLabel", dateLabel);
-                    }
-                    break;
-                }
-
                 case 'demand': {
-                    var demand = [
-                        args['resDemand'],
-                        args['comDemand'],
-                        args['indDemand']
-                    ];
-                    this.setAttribute("demand", demand);
+                    this.setAttribute("demand", args);
                     break;
                 }
 
-                case 'evaluation': {
-                    var evaluation = args['evaluation'];
-                    this.setAttribute('evaluation', evaluation);
+                case 'options': {
+                    this.setAttribute("options", args);
                     break;
                 }
 
-                case 'history': {
-                    var history = args['history'];
-                    this.setAttribute('history', history);
+                case 'gameLevel': {
+                    this.setAttribute("gameLevel", args['gameLevel']);
                     break;
                 }
 
-                case 'funds': {
-                    var funds = args['funds'];
-                    var fundsLabel = this.formatFunds(funds);
-                    this.setAttribute("funds", funds);
-                    this.setAttribute("fundsLabel", fundsLabel);
+                case 'cityName': {
+                    this.setAttribute("cityName", args['cityName']);
                     break;
                 }
 
-                case 'taxrate': {
+                case 'taxRate': {
                     var taxRate = parseInt(args['taxRate']);
                     if (taxRate != this.taxRate) {
-                        this.setAttribute("taxRate", taxRate);
+                        this.setAttribute('taxRate', taxRate);
                     }
                     break;
                 }
@@ -420,6 +426,56 @@
                     break;
                 }
 
+		case 'message':
+		{
+		    this.setAttribute("message", args);
+		    break;
+		}
+
+		case 'tileViews':
+		{
+		    var tileViews = args['tileViews'];
+		    gApp.setAttribute("tileViews", tileViews);
+
+		    //Debug.write("tileViews", tileViews);
+		    if (!tileViews || tileViews.length == 0) {
+			break;
+		    }
+
+		    var i;
+		    var n = tileViews.length;
+		    for (i = 0; i < n; i++) {
+			var tileView = tileViews[i];
+
+			var col = tileView['col'];
+			var row = tileView['row'];
+			var cols = tileView['cols'];
+			var rows = tileView['rows'];
+			var format = tileView['format'];
+			var tiles = tileView['tiles'];
+
+			//Debug.write(col, row, cols, rows, format, tiles);
+
+			if ((rows > 0) &&
+			    (cols > 0) &&
+			    (tiles != "")) {
+			    this.updateTiles(
+				col,
+				row,
+				cols,
+				rows,
+				format,
+				tiles);
+			}
+		    }
+		    break;
+		}
+
+		default:
+		{
+		    Debug.write("Received unknown UIUpdate message from server:", args['message'], args);
+		    break;
+		}
             }
 
           ]]>
@@ -810,15 +866,15 @@
 
         <method name="updateMap"><![CDATA[
             this.handle_UIUpdate({
-                aspect:'map'
+                variable:'map'
             });
           ]]>
         </method>
 
 
-        <method name="updateTiles" args="col, row, cols, rows, format, codedTiles"><![CDATA[
+        <method name="updateTiles" args="col, row, cols, rows, format, tiles"><![CDATA[
             //Debug.write("row", row, "col", col, "rows", rows, "cols", cols, "format", format);
-            //Debug.write("codedTiles.length", codedTiles.length, codedTiles.substr(0, 20));
+            //Debug.write("tiles.length", tiles.length, tiles.substr(0, 20));
 
             var tileDictRows = this.tileDictRows;
             var codeMap = this.codeMap;
@@ -835,9 +891,9 @@
                         var tileDictRow = tileDictRows[r];
                         for (c = col; c < lastCol; c++) {
                             var c1 = 
-                                codedTiles.substr(codeOffset, 1);
+                                tiles.substr(codeOffset, 1);
                             var c2 =
-                                codedTiles.substr(codeOffset + 1, 1);
+                                tiles.substr(codeOffset + 1, 1);
                             var tileIndex = 
                                 (((codeMap[c2] * 64) + codeMap[c1]) & 1023);
 
@@ -862,28 +918,28 @@
                     var tileOffset = 0;
                     var tileOffsetMax = rows * cols;
                     var codeOffset = 0;
-                    var codeOffsetMax = codedTiles.length;
+                    var codeOffsetMax = tiles.length;
 
                     function getNumber1()
                     {
-                        var c1 = codedTiles.substr(codeOffset, 1);
+                        var c1 = tiles.substr(codeOffset, 1);
                         codeOffset += 1;
                         return codeMap[c1];
                     }
 
                     function getNumber2()
                     {
-                        var c1 = codedTiles.substr(codeOffset, 1);
-                        var c2 = codedTiles.substr(codeOffset + 1, 1);
+                        var c1 = tiles.substr(codeOffset, 1);
+                        var c2 = tiles.substr(codeOffset + 1, 1);
                         codeOffset += 2;
                         return codeMap[c1] + (codeMap[c2] * 64);
                     }
 
                     function getNumber3()
                     {
-                        var c1 = codedTiles.substr(codeOffset, 1);
-                        var c2 = codedTiles.substr(codeOffset + 1, 1);
-                        var c3 = codedTiles.substr(codeOffset + 2, 1);
+                        var c1 = tiles.substr(codeOffset, 1);
+                        var c2 = tiles.substr(codeOffset + 1, 1);
+                        var c3 = tiles.substr(codeOffset + 2, 1);
                         codeOffset += 3;
                         return codeMap[c1] + (codeMap[c2] * 64) + (codeMap[c2] * 4096);
                     }
@@ -902,7 +958,7 @@
                            (tileOffset < tileOffsetMax) &&
                            (codeOffset < codeOffsetMax)) {
 
-                        var c1 = codedTiles.substr(codeOffset, 1);
+                        var c1 = tiles.substr(codeOffset, 1);
                         codeOffset++;
 
                         var charHandler = charHandlers[c1];
@@ -911,8 +967,8 @@
                             continue;
                         }
 
-                        var c2 = codedTiles.substr(codeOffset, 1);
-                        codeOffset++
+                        var c2 = tiles.substr(codeOffset, 1);
+                        codeOffset++;
 
                         var tileIndex = 
                             (codeMap[c1] + (codeMap[c2] * 64));
@@ -1003,16 +1059,17 @@
 
 
         <method name="handle_UIUpdate" args="args"><![CDATA[
-            var aspect = args['aspect'];
+            var variable = args['variable'];
             var interests = this.interests;
-            //Debug.write("==== UIUpdate", aspect, args);
+            //Debug.write("==== UIUpdate", variable, args);
 
-            if (!(aspect in interests)) {
-               return;
+            if (!(variable in interests)) {
+	        //Debug.write("uninteresting variable update", variable);
+                return;
             }
 
-            var a = interests[aspect];
-            //Debug.write("UPDATE ASPECT", aspect, a, args);
+            var a = interests[variable];
+            //Debug.write("UPDATE VARIABLE", variable, a, args);
             var n = a.length;
             var i;
             for (i = 0; i < n; i++) {

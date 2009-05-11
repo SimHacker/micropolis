@@ -7,19 +7,6 @@
     <?python
         from turbojson import jsonify
     ?>
-    <tileviews
-        py:if="tileviews"
-    >
-        <tileview
-	    py:for="tileview in tileviews"
-	    id="${tileview['id']}"
-	    col="${tileview['col']}"
-	    row="${tileview['row']}"
-	    cols="${tileview['cols']}"
-	    rows="${tileview['rows']}"
-	    format="${tileview['format']}"
-	>${tileview['tiles']}</tileview>
-    </tileviews>
     <messages
         py:if="messages"
     >

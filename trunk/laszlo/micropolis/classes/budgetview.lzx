@@ -45,13 +45,13 @@
 
 
 	<method name="handleUpdate" args="args"><![CDATA[
-	    //Debug.write("budgetview handleUpdate", this, args);
+	    Debug.write("!!!!!!!! budgetview handleUpdate", this, args);
 
-	    var aspect = args['aspect'];
+	    var variable = args['variable'];
 
-	    switch (aspect) {
+	    switch (variable) {
 
-	        case 'taxrate': {
+	        case 'taxRate': {
 		    var taxRate = args['taxRate'];
 		    //Debug.write("taxrate TAXRATE", taxRate, args);
 		    if (this.taxRate != taxRate) {

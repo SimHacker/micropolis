@@ -393,12 +393,10 @@ class Root(controllers.RootController):
         except Exception, e:
             self.expectationFailed("Error parsing XML body: " + str(e))
 
-        tileviews = session.handlePoll(poll)
-        messages = session.receiveMessages()
+        messages = session.handlePoll(poll)
 
         return {
             'ref': ref,
-            'tileviews': tileviews,
             'messages': messages,
         }
 

@@ -235,7 +235,7 @@ void Micropolis::setGameLevel(GameLevel level)
 /** Report to the front-end that a new game level has been set. */
 void Micropolis::updateGameLevel()
 {
-    callback("UIUpdate", "s", "gamelevel");
+    callback("UIUpdate", "s", "gameLevel");
 }
 
 
@@ -265,7 +265,7 @@ void Micropolis::setCleanCityName(const std::string &name)
 {
     cityName = name;
 
-    callback("UIUpdate", "s", "cityname");
+    callback("UIUpdate", "s", "cityName");
 }
 
 

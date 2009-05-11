@@ -489,8 +489,6 @@
 
             var tileIndex = 0;
 	    var tiles = this.container.tiles;
-	    var subviews = tiles.subviews;
-            var subviewCount = subviews.length;
 
             var col, row;
             for (row = viewRow; row < lastRow; row++) {
@@ -502,20 +500,19 @@
                         continue;
                     }
 
-                    //Debug.write("subviewCount", subviewCount, "tileIndex", tileIndex);
-                    if (tileIndex >= subviewCount) {
+                    //Debug.write("subviewCount", tiles.subviews.length, "tileIndex", tileIndex);
+                    if (tileIndex >= tiles.subviews.length) {
                         if (newTiles >= maxNewTiles) {
                             continue;
                         }
                         newTiles++;
                         var v = new lz.tile(tiles);
-			subviewCount++;
-                        //Debug.write("NOW subviewCount", subviewCount, "tileIndex", tileIndex);
+                        //Debug.write("NOW subviewCount", tiles.subviews.length, "tileIndex", tileIndex);
                     }
 
-                    var tile = subviews[tileIndex];
+                    var tile = tiles.subviews[tileIndex];
                     if (!tile) {
-                        Debug.write("No tile!", subviewCount, tileIndex, subviews);
+                        Debug.write("No tile!", tiles.subviews.length, tileIndex, tiles.subviews);
                         return;
                     }
                     tileIndex++;
@@ -552,8 +549,8 @@
                 }
             }
 
-            while (tileIndex < subviewCount) {
-                var tile = subviews[tileIndex];
+            while (tileIndex < tiles.subviews.length) {
+                var tile = tiles.subviews[tileIndex];
                 if (tile.visible) {
                     tile.setAttribute("visible", false);
                 }

@@ -75,6 +75,7 @@ import math
 import array
 import time
 from datetime import datetime
+import traceback
 import cairo
 from pyMicropolis.tileEngine import tileengine
 import micropolisengine
@@ -456,9 +457,12 @@ class Session(object):
 
     def handlePoll(self, poll):
         self.lastPollTime = Now()
-        return self.engine.handlePoll(
+
+        self.engine.handlePoll(
             poll,
             self)
+
+        return self.receiveMessages()
 
 
     def touchAge(self):
@@ -481,10 +485,11 @@ class Session(object):
     def sendMessage(self, msg):
         #print "SENDMESSAGE", msg
         collapse = msg.get('collapse', False)
+        #print "COLLAPSE", collapse
         if collapse:
             message = msg.get('message', '')
-            aspect = msg.get('aspect', '')
-            key = (message, aspect)
+            variable = msg.get('variable', '')
+            key = (message, variable)
             messagesSeen = self.messagesSeen
             if key in messagesSeen:
                 messagesSeen[key].update(msg)
@@ -510,7 +515,7 @@ class Session(object):
         
         if False:
             print [
-                (message['message'], message.get('aspect', None))
+                (message['message'], message.get('variable', None))
                 for message in messages
             ]
 
@@ -581,11 +586,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.startSpeed = 5
+        self.startSpeed = 4
         self.speed = self.startSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
-
 
         self.resetRealTime()
 
@@ -643,6 +647,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 session.sendMessage(message)
         except Exception, e:
             print "======== XXX sendSessions exception:", e
+            traceback.print_exc(10)
+
+        # Clean up the collapse flag so none of the sessions send it
+        # to the client.
+        if 'collapse' in message:
+            del message['collapse']
 
 
     def doCommand(self, params):
@@ -851,6 +861,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def setVirtualSpeed(self, speed):
+        print "setVirtualSpeed", speed
         self.speed = speed
         speedConfiguration = SpeedConfigurations[speed]
         #print "==== setVirtualSpeed", speed, speedConfiguration
@@ -931,8 +942,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handlePoll(self, poll, session):
-         
-        tileviews = []
+
+        tileViews = []
 
         #print "handlePoll simPaused", self.simPaused
 
@@ -989,7 +1000,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                     if tiles:
                         #print "TILES", tiles
-                        tileviews.append({
+                        tileViews.append({
                             'id': id,
                             'col': col,
                             'row': row,
@@ -1001,7 +1012,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tickEngine()
 
-        return tileviews
+        if tileViews:
+            # @todo: Refactor update message code.
+            print "TILEVIEWS", tileViews
+            session.sendMessage({
+                'message': 'UIUpdate',
+                'variable': 'tileViews',
+                'tileViews': tileViews,
+            })
 
 
     def renderTiles(
@@ -1415,23 +1433,30 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         })
 
 
-    def handle_UIUpdate(self, aspect, *args):
-        #print "==== handle_UIUpdate(self, aspect, args)", self, "aspect", aspect, "args", args
+    def handle_UIUpdate(self, variable, *args):
+        #print "==== handle_UIUpdate(self, variable, args)", self, "variable", variable, "args", args
+
+        # Enrich the messages with parameters that the client will
+        # need.  The args parameter is the variable length array of
+        # arguments passed from the C++ MicropolisCore code with the
+        # message.
+
+        # @todo: Refactor update message code. 
 
         try:
 
             message = {
                 'message': 'UIUpdate',
-                'aspect': aspect,
+                'variable': variable,
                 'args': args,
             }
 
-            if aspect == 'funds':
+            if variable == 'funds':
 
                 message['funds'] = self.totalFunds
                 message['collapse'] = True
 
-            elif aspect == 'date':
+            elif variable == 'date':
 
                 cityTime = self.cityTime
                 startingYear = self.startingYear
@@ -1444,7 +1469,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['month'] = month
                 message['collapse'] = True
 
-            elif aspect == 'history':
+            elif variable == 'history':
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they
@@ -1459,7 +1484,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     else:
                         return 1.0
 
-                history = []
+                scales = []
+                history = {
+                    'scales': scales
+                }
                 message['history'] = history
                 message['collapse'] = True
 
@@ -1523,7 +1551,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                     histories = []
 
-                    history.append({
+                    scales.append({
                         'historyScale': historyScale,
                         'range': 128,
                         'histories': histories,
@@ -1549,7 +1577,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                             'values': values,
                         })
 
-            elif aspect == 'evaluation':
+                #print message
+
+            elif variable == 'evaluation':
 
                 problems = []
                 for i in range(0, self.countProblems()):
@@ -1558,50 +1588,40 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         self.getProblemVotes(i)))
 
                 message.update({
-                    'evaluation': {
-                        'year': self.currentYear(),
-                        'population': self.cityPop,
-                        'migration': self.cityPopDelta,
-                        'assessedValue': self.cityAssessedValue,
-                        'category': self.cityClass,
-                        'gameLevel': self.gameLevel,
-                        'currentScore': self.cityScore,
-                        'annualChange': self.cityScoreDelta,
-                        'goodJob': self.cityYes,
-                        'worstProblems': problems,
-                    },
+                    'year': self.currentYear(),
+                    'population': self.cityPop,
+                    'migration': self.cityPopDelta,
+                    'assessedValue': self.cityAssessedValue,
+                    'category': self.cityClass,
+                    'gameLevel': self.gameLevel,
+                    'currentScore': self.cityScore,
+                    'annualChange': self.cityScoreDelta,
+                    'goodJob': self.cityYes,
+                    'worstProblems': problems,
                     'collapse': True,
                 })
 
-            elif aspect == 'paused':
+            elif variable == 'paused':
 
                 paused = self.simPaused and 'true' or 'false'
-                print 'PAUSED', paused
                 message['paused'] = paused
                 message['collapse'] = True
 
-            elif aspect == 'passes':
+            elif variable == 'passes':
 
                 return
 
-            elif aspect == 'speed':
+            elif variable == 'speed':
 
-                #print "SPEED 1", self, 'speed' in self
-                speed = self.speed
-                #print "SPEED 2"
+                print "SPEED", self, type(self), getattr(self, 'speed', '???')
+                speed = self.speed # XXX???
                 speedConfiguration = SpeedConfigurations[speed]
-                #print "SPEED 3"
-                message['speed'] = self.speed
-                #print "SPEED 4"
+                message['speed'] = speed
                 message['pollDelay'] = speedConfiguration['pollDelay']
-                #print "SPEED 5"
                 message['animateDelay'] = speedConfiguration['animateDelay']
-                #print "SPEED 6"
                 message['collapse'] = True
-                #print "SPEED 7"
-                #print "SPEED", speed, "MESSAGE", message
 
-            elif aspect == 'delay':
+            elif variable == 'delay':
 
                 #print "UIUPDATE DELAY", self.speed
                 speed = self.speed
@@ -1609,9 +1629,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['pollDelay'] = speedConfiguration['pollDelay']
                 message['animateDelay'] = speedConfiguration['animateDelay']
                 message['collapse'] = True
-                print "DELAY", speed, "MESSAGE", message
+                #print "DELAY", speed, "MESSAGE", message
 
-            elif aspect == 'demand':
+            elif variable == 'demand':
 
                 resDemand, comDemand, indDemand = self.getDemands()
                 message['resDemand'] = resDemand
@@ -1620,87 +1640,80 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['collapse'] = True
                 #print '======== DEMAND', message
 
-            elif aspect == 'options':
+            elif variable == 'options':
 
                 pass # TODO: copy options to message
                 message['collapse'] = True
 
-            elif aspect == 'gamelevel':
+            elif variable == 'gameLevel':
 
                 message['gameLevel'] = self.gameLevel
                 message['collapse'] = True
 
-            elif aspect == 'cityname':
+            elif variable == 'cityName':
 
                 message['cityName'] = self.cityName
                 message['collapse'] = True
                 print 'now message', message
 
-            elif aspect == 'taxrate':
+            elif variable == 'taxRate':
 
                 message['taxRate'] = self.cityTax
                 message['collapse'] = True
 
-            elif aspect == 'budget':
+            elif variable == 'budget':
 
-                taxRate = self.cityTax
-                totalFunds = self.totalFunds
-                taxFund = self.taxFund
+                message['taxRate'] = self.cityTax
+                message['totalFunds'] = self.totalFunds
+                message['taxFund'] = self.taxFund
 
-                firePercent = math.floor(self.firePercent * 100.0)
-                fireFund = self.fireFund
-                fireValue = self.fireValue
+                message['firePercent'] = math.floor(self.firePercent * 100.0)
+                message['fireFund'] = self.fireFund
+                message['fireValue'] = self.fireValue
 
-                policePercent = math.floor(self.policePercent * 100.0)
-                policeFund = self.policeFund
-                policeValue = self.policeValue
+                message['policePercent'] = math.floor(self.policePercent * 100.0)
+                message['policeFund'] = self.policeFund
+                message['policeValue'] = self.policeValue
 
-                roadPercent = math.floor(self.roadPercent * 100.0)
-                roadFund = self.roadFund
-                roadValue = self.roadValue
+                message['roadPercent'] = math.floor(self.roadPercent * 100.0)
+                message['roadFund'] = self.roadFund
+                message['roadValue'] = self.roadValue
 
-                cashFlow = taxFund - fireValue - policeValue - roadValue
-                cashFlow2 = cashFlow
+                message['cashFlow'] = (
+                    message['taxFund'] -
+                    message['fireValue'] -
+                    message['policeValue'] -
+                    message['roadValue']
+                )
 
-                previousFunds = totalFunds
-                currentFunds = cashFlow2 + totalFunds
-                collectedFunds = taxFund
+                message['previousFunds'] = message['totalFunds']
+                message['currentFunds'] = message['cashFlow'] + message['totalFunds']
+                message['collectedFunds'] = message['taxFund']
 
-                message['taxRate'] = taxRate
-                message['firePercent'] = firePercent
-                message['fireFund'] = fireFund
-                message['fireValue'] = fireValue
-                message['policePercent'] = policePercent
-                message['policeFund'] = policeFund
-                message['policeValue'] = policeValue
-                message['roadPercent'] = roadPercent
-                message['roadFund'] = roadFund
-                message['roadValue'] = roadValue
-                message['totalFunds'] = totalFunds
-                message['taxFund'] = taxFund
-                message['cashFlow'] = cashFlow
-                message['previousFunds'] = previousFunds
-                message['currentFunds'] = currentFunds
-                message['collectedFunds'] = collectedFunds
                 message['collapse'] = True
 
                 #print 'BUDGET', message
 
-            elif aspect == 'message':
+            elif variable == 'message':
 
                 # Do no collapse messages.
-                message.update({
-                    'number': args[0],
-                    'x': args[1],
-                    'y': args[2],
-                    'picture': args[3],
-                    'important': args[4],
-                })
+                message['number'] = args[0]
+                message['x'] = args[1]
+                message['y'] = args[2]
+                message['picture'] = args[3]
+                message['important'] = args[4]
+                message['args'] = None
+
+            # Clean up the args parameter, which is usually empty, so
+            # we don't send it unnecessarily.
+            if 'args' in message:
+                del message['args']
 
             self.sendSessions(message)
 
         except Exception, e:
-            print 'XXX handle_UIUpdate ERROR:', e, dir(e)
+            print '======== XXX handle_UIUpdate ERROR:', e
+            traceback.print_exc(10)
 
 
 ########################################################################
