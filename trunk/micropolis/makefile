@@ -64,14 +64,14 @@
 all:
 	echo "Nothing to make (yet)."
 
+install: all
+	echo "Nothing to install (yet)."
+
 clean:
 	rm -rf \
 	    *{.py[co],~} \
 	    micropolis/*{.py[co],~} \
 	    micropolis/templates/*{.py[co],~} \
 	    tests/*{.py[co],~}
-
-install: all
-	echo "Nothing to install (yet)."
 
 ########################################################################
