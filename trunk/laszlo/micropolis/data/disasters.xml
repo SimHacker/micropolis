@@ -2,27 +2,35 @@
 <!--
     <disaster
 	name="Eco"
-    ><command name="disaster" disaster="eco"/></disaster>
+        disaster="eco"
+    />
     <disaster
 	name="Melt"
-    ><command name="disaster" disaster="melt"/></disaster>
+        disaster="melt"
+    />
 -->
     <disaster
 	name="Monster"
-    ><command name="disaster" disaster="monster"/></disaster>
+        disaster="monster"
+    />
     <disaster
 	name="Fire"
-    ><command name="disaster" disaster="fire"/></disaster>
+        disaster="fire"
+    />
     <disaster
 	name="Flood"
-    ><command name="disaster" disaster="flood"/></disaster>
+        disaster="flood"
+    />
     <disaster
 	name="Meltdown"
-    ><command name="disaster" disaster="meltdown"/></disaster>
+        disaster="meltdown"
+    />
     <disaster
 	name="Tornado"
-    ><command name="disaster" disaster="tornado"/></disaster>
+        disaster="tornado"
+    />
     <disaster
 	name="Earthquake"
-    ><command name="disaster" disaster="earthquake"/></disaster>
+        disaster="earthquake"
+    />
 </disasters>

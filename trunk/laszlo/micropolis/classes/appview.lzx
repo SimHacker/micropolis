@@ -26,13 +26,13 @@
         <attribute name="idlers" value="[]"/>
         <attribute name="idleDelegates" value="[]"/>
         <attribute name="idleNames" value="{}"/>
-	<attribute name="idleDelegate" value="null"/>
-	<attribute name="idlePending" value="null"/>
+        <attribute name="idleDelegate" value="null"/>
+        <attribute name="idlePending" value="null"/>
         <attribute name="animateActive" value="false"/>
         <attribute name="animateDelegate" value="null"/>
         <attribute name="animationTicks" value="1"/>
         <attribute name="animatorsList" value="[]"/>
-        <attribute name="commandQueue" value="[]"/>
+        <attribute name="messageQueue" value="[]"/>
         <attribute name="worldCols" value="120"/>
         <attribute name="worldRows" value="100"/>
         <attribute name="tileDictRows" value="null"/>
@@ -40,9 +40,9 @@
         <attribute name="codeMap" value="null"/>
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
-	<attribute name="tileViews" value="null"/>
+        <attribute name="tileViews" value="null"/>
         <attribute name="quaking" value="0"/>
-	<attribute name="tool" type="string" value="bulldozer"/>
+        <attribute name="tool" type="string" value="bulldozer"/>
         <attribute name="connected" value="false"/>
         <attribute name="connecting" value="false"/>
         <attribute name="connectionFailed" value="false"/>
@@ -91,22 +91,22 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-	        'funds', 'date', 'history', 'evaluation', 'paused',
-	        'passes', 'delay', 'demand', 'options',
-	        'gameLevel', 'cityName', 'taxRate', 'budget',
-	        'message', 'virtualSpeed', 'tileViews'
+                'funds', 'date', 'history', 'evaluation', 'paused',
+                'passes', 'delay', 'demand', 'options',
+                'gameLevel', 'cityName', 'taxRate', 'budget',
+                'message', 'virtualSpeed', 'tileview',
             ]);
 
-	    var del = new lz.Delegate(this, 'handleKey');
-	    this.keyDelegate = del;
+            var del = new lz.Delegate(this, 'handleKey');
+            this.keyDelegate = del;
 
-	    lz.Keys.callOnKeyCombo(del, ['~']);
-	    lz.Keys.callOnKeyCombo(del, ['esc']);
-	    lz.Keys.callOnKeyCombo(del, ['leftarrow']);
-	    lz.Keys.callOnKeyCombo(del, ['rightarrow']);
-	    lz.Keys.callOnKeyCombo(del, ['uparrow']);
-	    lz.Keys.callOnKeyCombo(del, ['downarrow']);
-	    lz.Keys.callOnKeyCombo(del, ['spacebar']);
+            lz.Keys.callOnKeyCombo(del, ['~']);
+            lz.Keys.callOnKeyCombo(del, ['esc']);
+            lz.Keys.callOnKeyCombo(del, ['leftarrow']);
+            lz.Keys.callOnKeyCombo(del, ['rightarrow']);
+            lz.Keys.callOnKeyCombo(del, ['uparrow']);
+            lz.Keys.callOnKeyCombo(del, ['downarrow']);
+            lz.Keys.callOnKeyCombo(del, ['spacebar']);
 
             var i;
             for (i = 0; i < codeString.length; i++) {
@@ -122,7 +122,7 @@
                 tileDictRows.push(tileDictRow);
             }
 
-            this.requestStartSession();
+            this.sendStartSession();
 
             // Note: We must initialize interests above in the attribute once clause.
             // Because if we initialize it here, we are running after the children's
@@ -162,61 +162,55 @@
 
 
         <handler name="onpaused" args="arg"><![CDATA[
-            var cmd =
-                '<command name="setPaused" paused="' +
-                (this.paused ? 'true' : 'false') +
-                '"/>';
-            this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setPaused',
+                paused: this.paused ? true : false
+            });
           ]]>
         </handler>
 
 
         <handler name="onvirtualSpeed" args="arg"><![CDATA[
-	    var cmd =
-		'<command name="setVirtualSpeed" virtualSpeed="' +
-		this.virtualSpeed +
-		'"/>';
-	    this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setVirtualSpeed',
+                virtualSpeed: this.virtualSpeed
+            });
           ]]>
         </handler>
 
 
         <handler name="ontaxRate" args="arg"><![CDATA[
-            var cmd =
-                '<command name="setTaxRate" taxRate="' +
-                this.taxRate +
-                '"/>';
-            this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setTaxRate',
+                taxRate: this.taxRate
+            });
           ]]>
         </handler>
 
 
         <handler name="onroadPercent"><![CDATA[
-            var cmd =
-                '<command name="setRoadPercent" roadPercent="' + 
-                this.roadPercent +
-                '"/>';
-            this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setRoadPercent',
+                roadPercent: this.roadPercent
+            });
           ]]>
         </handler>
 
 
         <handler name="onfirePercent"><![CDATA[
-            var cmd =
-                '<command name="setFirePercent" firePercent="' + 
-                this.firePercent +
-                '"/>';
-            this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setFirePercent',
+                firePercent: this.firePercent
+            });
           ]]>
         </handler>
 
 
         <handler name="onpolicePercent"><![CDATA[
-            var cmd =
-                '<command name="setPolicePercent" policePercent="' + 
-                this.policePercent +
-                '"/>';
-            this.sendCommand(cmd);
+            this.sendMessage({
+                message: 'setPolicePercent',
+                policePercent: this.policePercent
+            });
           ]]>
         </handler>
 
@@ -236,21 +230,21 @@
 
 
         <handler name="ontool" args="arg"><![CDATA[
-            Debug.write("ONTOOL", this.tool);
+            //Debug.write("ONTOOL", this.tool);
           ]]>
         </handler>
 
 
-	<handler name="onkey" args="e"><![CDATA[
-	    Debug.write("gApp onkey", e);
-	  ]]>
-	</handler>
+        <handler name="onkey" args="e"><![CDATA[
+            Debug.write("gApp onkey", e);
+          ]]>
+        </handler>
 
 
-	<method name="handleKey" args="arg"><![CDATA[
-	    Debug.write("handleKey", arg);
-	  ]]>
-	</method>
+        <method name="handleKey" args="arg"><![CDATA[
+            Debug.write("handleKey", arg);
+          ]]>
+        </method>
 
 
         <method name="expressInterest" args="target, names"><![CDATA[
@@ -347,7 +341,7 @@
                     var virtualSpeed = parseInt(args['virtualSpeed']);
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-		    //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
+                    //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
                     if (this.virtualSpeed != virtualSpeed) {
                         this.setAttribute("virtualSpeed", virtualSpeed);
                     }
@@ -363,7 +357,7 @@
                 case 'delay': {
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-		    //Debug.write("DELAY", pollDelay, animateDelay);
+                    //Debug.write("DELAY", pollDelay, animateDelay);
                     if (this.pollDelay != pollDelay) {
                         this.setAttribute("pollDelay", pollDelay);
                     }
@@ -426,56 +420,43 @@
                     break;
                 }
 
-		case 'message':
-		{
-		    this.setAttribute("message", args);
-		    break;
-		}
+                case 'message':
+                {
+                    this.setAttribute("message", args);
+                    break;
+                }
 
-		case 'tileViews':
-		{
-		    var tileViews = args['tileViews'];
-		    gApp.setAttribute("tileViews", tileViews);
+                case 'tileview':
+                {
+                    var tileviewID = args['id'];
+                    var col = args['col'];
+                    var row = args['row'];
+                    var cols = args['cols'];
+                    var rows = args['rows'];
+                    var format = args['format'];
+                    var tiles = args['tiles'];
 
-		    //Debug.write("tileViews", tileViews);
-		    if (!tileViews || tileViews.length == 0) {
-			break;
-		    }
+                    //Debug.write("UPDATE TILEVIEW", tileviewID, col, row, cols, rows, format, tiles);
 
-		    var i;
-		    var n = tileViews.length;
-		    for (i = 0; i < n; i++) {
-			var tileView = tileViews[i];
+                    if ((rows > 0) &&
+                        (cols > 0) &&
+                        (tiles != "")) {
+                        this.updateTiles(
+                            col,
+                            row,
+                            cols,
+                            rows,
+                            format,
+                            tiles);
+                    }
+                    break;
+                }
 
-			var col = tileView['col'];
-			var row = tileView['row'];
-			var cols = tileView['cols'];
-			var rows = tileView['rows'];
-			var format = tileView['format'];
-			var tiles = tileView['tiles'];
-
-			//Debug.write(col, row, cols, rows, format, tiles);
-
-			if ((rows > 0) &&
-			    (cols > 0) &&
-			    (tiles != "")) {
-			    this.updateTiles(
-				col,
-				row,
-				cols,
-				rows,
-				format,
-				tiles);
-			}
-		    }
-		    break;
-		}
-
-		default:
-		{
-		    Debug.write("Received unknown UIUpdate message from server:", args['message'], args);
-		    break;
-		}
+                default:
+                {
+                    Debug.write("Received unknown UIUpdate message from server:", args['message'], args);
+                    break;
+                }
             }
 
           ]]>
@@ -503,14 +484,13 @@
         </method>
 
 
-        <method name="requestStartSession"><![CDATA[
+        <method name="sendStartSession"><![CDATA[
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", true);
             this.setAttribute("connectionFailed", false);
 
-            ds_session.setAttribute("src", "/server/micropolisSessionStart");
-            ds_session.doRequest();
+            gRemoteServer.sendStartSession();
           ]]>
         </method>
 
@@ -552,7 +532,7 @@
             var i = this.indexOf(this.idlers, idler);
             if (i < 0) {
                 this.idlers.push(idler);
-		this.updateIdle();
+                this.updateIdle();
             }
           ]]>
         </method>
@@ -563,88 +543,88 @@
             var i = this.indexOf(this.idlers, idler);
             if (i >= 0) {
                 this.idlers.splice(i, 1);
-		this.updateIdle();
+                this.updateIdle();
             }
           ]]>
         </method>
 
 
-	<method name="callWhenIdle" args="del"><![CDATA[
-	    Debug.write("callWhenIdle", del);
-	    this.idleDelegates.push(del);
-	    Debug.write("NOW IDLEDELEGATES", this.idleDelegates, "last", this.idleDelegates[this.idleDelegates.length - 1]);
-	    this.updateIdle();
-	  ]]>
-	</method>
+        <method name="callWhenIdle" args="del"><![CDATA[
+            //Debug.write("callWhenIdle", del);
+            this.idleDelegates.push(del);
+            //Debug.write("NOW IDLEDELEGATES", this.idleDelegates, "last", this.idleDelegates[this.idleDelegates.length - 1]);
+            this.updateIdle();
+          ]]>
+        </method>
 
 
-	<method name="callOnceWhenIdle" args="name, del"><![CDATA[
-	    var idleNames = this.idleNames;
-	    if (name in idleNames) {
-	        return;
-	    }
-	    idleNames[name] = true;
-	    this.callWhenIdle(del);
-	  ]]>
-	</method>
+        <method name="callOnceWhenIdle" args="name, del"><![CDATA[
+            var idleNames = this.idleNames;
+            if (name in idleNames) {
+                return;
+            }
+            idleNames[name] = true;
+            this.callWhenIdle(del);
+          ]]>
+        </method>
 
 
-	<method name="updateIdle"><![CDATA[
-	    Debug.write("updateIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
-	    var del = this.idleDelegate;
-	    if ((this.idlers.length > 0) ||
-		(this.idleDelegates.length > 0)) {
-		if (!this.idlePending) {
-		    this.idlePending = true;
-		    if (del == null) {
-		        del = new lz.Delegate(this, 'handleIdle');
-			this.idleDelegate = del;
-		    }
-		    lz.Idle.callOnIdle(del);
-		    Debug.write("IDLE REGISTER");
-		}
-	    } else {
-	        if (this.idlePending) {
-		    this.idlePending = false;
-		    Debug.write("IDLE UNREGISTER");
-		    del.unregisterAll();
-		}
-	    }
-	  ]]>
-	</method>
+        <method name="updateIdle"><![CDATA[
+            //Debug.write("updateIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
+            var del = this.idleDelegate;
+            if ((this.idlers.length > 0) ||
+                (this.idleDelegates.length > 0)) {
+                if (!this.idlePending) {
+                    this.idlePending = true;
+                    if (del == null) {
+                        del = new lz.Delegate(this, 'handleIdle');
+                        this.idleDelegate = del;
+                    }
+                    lz.Idle.callOnIdle(del);
+                    //Debug.write("IDLE REGISTER");
+                }
+            } else {
+                if (this.idlePending) {
+                    this.idlePending = false;
+                    //Debug.write("IDLE UNREGISTER");
+                    del.unregisterAll();
+                }
+            }
+          ]]>
+        </method>
 
 
         <method name="handleIdle" args="arg"><![CDATA[
-	    //Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
+            //Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, "idlers", this.idlers.length);
             this.idles++;
 
-	    var n, i;
+            var n, i;
 
-	    var idleDelegates = this.idleDelegates;
-	    n = idleDelegates.length;
-	    if (n > 0) {
-	        Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, this.idleDelegates);
-		this.idleDelegates = [];
-		if (this.idleNames.length > 0) {
-		    this.idleNames = {};
-		}
-		for (i = 0; i < n; i++) {
-		    var del = idleDelegates[i];
-		    //Debug.write("IDLE DELEGATE", del);
-		    del.execute(null);
-		}
-	    }
+            var idleDelegates = this.idleDelegates;
+            n = idleDelegates.length;
+            if (n > 0) {
+                //Debug.write("handleIdle", "idleDelegates", this.idleDelegates.length, this.idleDelegates);
+                this.idleDelegates = [];
+                if (this.idleNames.length > 0) {
+                    this.idleNames = {};
+                }
+                for (i = 0; i < n; i++) {
+                    var del = idleDelegates[i];
+                    //Debug.write("IDLE DELEGATE", del);
+                    del.execute(null);
+                }
+            }
 
             var idlers = this.idlers;
             n = idlers.length;
-	    if (n > 0) {
-	        Debug.write("handleIdle", "idlers", this.idlers.length, this.idlers);
-		for (i = 0; i < n; i++) {
-		    idlers[i].idle();
-		}
-	    }
+            if (n > 0) {
+                //Debug.write("handleIdle", "idlers", this.idlers.length, this.idlers);
+                for (i = 0; i < n; i++) {
+                    idlers[i].idle();
+                }
+            }
 
-	    this.updateIdle();
+            this.updateIdle();
           ]]>
         </method>
 
@@ -799,66 +779,81 @@
         <method name="poll" args="ignore"><![CDATA[
             //Debug.write("POLL!");
             var i, n;
-            var body = [];
 
             var ref = this.polls;
             this.polls++;
 
-            body.push("<poll ref=\"" + ref + "\" sessionID=\"" + this.sessionID + "\">");
+            var messages = [];
 
             var pollers = this.pollers;
             n = pollers.length;
             if (n > 0) {
-                body.push("<pollers>")
                 for (i = 0; i < n; i++) {
-                    body.push(pollers[i].poll());
+                    var message = pollers[i].poll();
+                    if (message != null) {
+                        messages.push(message);
+                    }
                 }
-                body.push("</pollers>");
             }
 
-            var commandQueue = this.commandQueue;
-            if (commandQueue && commandQueue.length > 0) {
-                this.commandQueue = [];
-                body.push("<commands>");
-                n = commandQueue.length;
+            var messageQueue = this.messageQueue;
+            if (messageQueue && messageQueue.length > 0) {
+                this.messageQueue = [];
+                n = messageQueue.length;
                 for (i = 0; i < n; i++) {
-                    var command = commandQueue[i];
-                    body.push(command);
+                    var message = messageQueue[i];
+                    messages.push(message);
                 }
-                body.push("</commands>");
             }
 
-            body.push("</poll>");
-
-            body = body.join("");
-
-            //Debug.write(body);
-
-            var params = {
-                ref: ref,
-                sessionID: this.sessionID,
-                rand: Math.random(),
-                body: body
-            };
+            //Debug.write("POLL MESSAGES", messages);
 
             this.pollStop();
 
-            ds_poll.setAttribute("src", "/server/micropolisPoll");
-            ds_poll.setQueryParams(params);
-            ds_poll.setAttribute("querytype", "post");
-            ds_poll.doRequest();
-            //Debug.write("SEND POLL");
+            gRemoteServer.sendPoll({
+                sessionID: this.sessionID,
+                ref: ref,
+                messages: messages
+            });
+          ]]>
+        </method>
+
+
+        <method name="handlePoll" args="messageDict"><![CDATA[
+            //Debug.write("HANDLEPOLL", messageDict);
+            var messages = messageDict['messages'];
+            if (messages != null) {
+                var i;
+                var n = messages.length;
+                for (i = 0; i < n; i++) {
+                    var message = messages[i];
+                    var messageName = message['message'];
+                    if (!messageName) {
+                        continue;
+                    }
+                    var methodName = "handle_" + messageName;
+                    var method = this[methodName];
+                    //Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
+                    if (!method) {
+                        Debug.write("Undefined message:", messageName, message);
+                        continue;
+                    }
+
+                    //Debug.write("CALLING", method, message)
+                    method.call(gApp, message);
+                    //Debug.write("CALLED");
+                }
+            }
+
+            gApp.pollContinue(false);
 
           ]]>
         </method>
 
 
-        <method name="sendCommand" args="command"><![CDATA[
-            if (typeof(command) != "string") {
-                command = command.serialize();
-            }
-            Debug.write("==== sendCommand", command);
-            this.commandQueue.push(command);
+        <method name="sendMessage" args="message"><![CDATA[
+            //Debug.write("==== sendMessage", message);
+            this.messageQueue.push(message);
             this.pollContinue(true);
           ]]>
         </method>
@@ -978,7 +973,7 @@
 
                         var tileDictRow = tileDictRows[row + r];
                         var tileDict = tileDictRow[col + c];
-                        
+
                         if (!tileDict) {
                             tileDict = {
                                 'animationTicks': -1
@@ -1030,14 +1025,18 @@
 
         <method name="abandonCity"><![CDATA[
             //Debug.write("abandonCity");
-            this.sendCommand('<command name="abandonCity"/>');
+            this.sendMessage({
+                message: 'abandonCity'
+            });
           ]]>
         </method>
 
 
         <method name="saveCity"><![CDATA[
             //Debug.write("saveCity");
-            this.sendCommand('<command name="saveCity"/>');
+            this.sendMessage({
+                message: 'saveCity'
+            });
           ]]>
         </method>
 
@@ -1064,7 +1063,7 @@
             //Debug.write("==== UIUpdate", variable, args);
 
             if (!(variable in interests)) {
-	        //Debug.write("uninteresting variable update", variable);
+                //Debug.write("uninteresting variable update", variable);
                 return;
             }
 
@@ -1137,73 +1136,77 @@
 
 
         <method name="handle_UIDidTool" args="args"><![CDATA[
-            Debug.write("UIDidTool", args);
+            //Debug.write("UIDidTool", args);
           ]]>
         </method>
 
 
         <method name="playWithThisCity"><![CDATA[
             this.setAttribute("gameMode", "play");
-            this.sendCommand('<command name="setGameMode" gameMode="play"/>');
+            this.sendMessage({
+                message: 'setGameMode',
+                gameMode: 'play'
+            });
           ]]>
         </method>
 
 
         <method name="chooseCity"><![CDATA[
             this.setAttribute("gameMode", "start");
-            this.sendCommand('<command name="setGameMode" gameMode="start"/>');
+            this.sendMessage({
+                message: 'setGameMode',
+                gameMode: 'start'
+            });
           ]]>
         </method>
 
 
-	<method name="testBounds" args="col, row"><![CDATA[
-	    return ((col >= 0) &&
-	    	    (col < this.worldCols) &&
-		    (row >= 0) &&
-		    (row < this.worldRows));
-	  ]]>
-	</method>
+        <method name="testBounds" args="col, row"><![CDATA[
+            return ((col >= 0) &&
+                    (col < this.worldCols) &&
+                    (row >= 0) &&
+                    (row < this.worldRows));
+          ]]>
+        </method>
 
 
-	<method name="drawToolStart" args="tool, x, y"><![CDATA[
-	    Debug.write("drawToolStart", tool, x, y);
-	    var cmd =
-	        '<command ' +
-		'name="drawToolStart" ' +
-		'tool="' + tool + '" ' +
-		'x="' + x + '" ' +
-		'y="' + y + '"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</method>
+        <method name="drawToolStart" args="tool, x, y"><![CDATA[
+            //Debug.write("drawToolStart", tool, x, y);
+            this.sendMessage({
+                message: 'drawToolStart',
+                tool: tool,
+                x: x,
+                y: y
+            });
+          ]]>
+        </method>
 
 
-	<method name="drawToolMove" args="tool, x0, y0, x1, y1"><![CDATA[
-	    Debug.write("drawToolMove", tool, x0, y0, x1, y1);
-	    var cmd =
-	        '<command ' +
-		'name="drawToolMove" ' +
-		'tool="' + tool + '" ' +
-		'x0="' + x0 + '" ' +
-		'y0="' + y0 + '" '+
-		'x1="' + x1 + '" ' +
-		'y1="' + y1 + '"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</method>
+        <method name="drawToolMove" args="tool, x0, y0, x1, y1"><![CDATA[
+            //Debug.write("drawToolMove", tool, x0, y0, x1, y1);
+            this.sendMessage({
+                message: 'drawToolMove',
+                tool: tool,
+                x0: x0,
+                y0: y0,
+                x1: x1,
+                y1: y1
+            });
+
+          ]]>
+        </method>
 
 
-	<method name="drawToolStop" args="tool, x, y"><![CDATA[
-	    Debug.write("drawToolMove", tool, x, y);
-	    var cmd =
-	        '<command ' +
-		'name="drawToolStop" ' +
-		'tool="' + tool + '" ' +
-		'x="' + x + '" ' +
-		'y="' + y + '"/>';
-	    this.sendCommand(cmd);
-	  ]]>
-	</method>
+        <method name="drawToolStop" args="tool, x, y"><![CDATA[
+            //Debug.write("drawToolStop", tool, x, y);
+            this.sendMessage({
+                message: 'drawToolStop',
+                tool: tool,
+                x: x,
+                y: y
+            });
+          ]]>
+        </method>
 
 
         <method name="formatFunds" args="funds"><![CDATA[
@@ -1220,20 +1223,20 @@
 
             var digits = "" + n;
 
-	    /// @bug: This results in 1,10 for 10! Fix it!
+            /// @bug: This results in 1,10 for 10! Fix it!
             var a = [];
-	    var n;
+            var n;
             while (true) {
-	        n = digits.length;
-		if (n == 0) {
-		    break;
-		}
+                n = digits.length;
+                if (n == 0) {
+                    break;
+                }
                 a.unshift(digits.substr(-3, 3));
-		if ((n == 1) || (n == 2)) {
-		  digits = "";
-		} else {
-		  digits = digits.substr(0, digits.length - 3);
-		}
+                if ((n == 1) || (n == 2)) {
+                  digits = "";
+                } else {
+                  digits = digits.substr(0, digits.length - 3);
+                }
             }
 
             var nStr = 
@@ -1254,9 +1257,7 @@
         </method>
 
 
-        <sessionhandler id="gSessionHandler"/>
-
-        <pollhandler id="gPollHandler"/>
+        <remoteserver id="gRemoteServer"/>
 
 
         <connectscreen id="gConnectScreen" name="connectScreen"

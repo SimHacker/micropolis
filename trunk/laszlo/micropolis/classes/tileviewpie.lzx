@@ -598,16 +598,19 @@
 			    datapath="ds_disasters:/disasters/disaster"
 			>
 
+			    <attribute name="disasterName" value="$path{'@name'}"/>
 			    <attribute name="disaster" value="$path{'@disaster'}"/>
-			    <attribute name="disasterCommand" value="$path{'command'}"/>
 
 			    <method name="selected"><![CDATA[
-			    	Debug.write("DISASTER", this.disasterCommand);
-				gApp.sendCommand(this.disasterCommand)
+			    	Debug.write("DISASTER", this.disaster);
+				gApp.sendMessage({
+				    message: 'disaster',
+				    disaster: this.disaster
+				});
 			      ]]>
 			    </method>
 
-			    <html text="$path{'@name'}"/>
+			    <html text="${this.disasterName}"/>
 
 			</item>
 		    </piemenu>

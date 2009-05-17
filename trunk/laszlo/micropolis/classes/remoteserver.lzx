@@ -1,0 +1,94 @@
+<library>
+
+
+    <!-- Remote Server -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="remoteserver" extends="node">
+
+
+	<switch>
+	    <when property="$as3">
+		<passthrough>
+		    import flash.net.*;
+		</passthrough>
+	    </when>
+	</switch>
+
+
+	<attribute name="netConnection" value="null"/>
+	<attribute name="url" type="string" 
+	    value="http://localhost/server/amfGateway"/>
+
+
+	<handler name="oninit"><![CDATA[
+	    //Debug.write("remoteserver ONINIT", this);
+
+	    var netConnection = new NetConnection();
+	    this.netConnection = netConnection;
+	    //Debug.write("NetConnection", netConnection);
+	  ]]>
+	</handler>
+        
+
+	<method name="sendStartSession"><![CDATA[
+	    var netConnection = this.netConnection;
+	    var url = this.url;
+	    var result = netConnection.connect(url);
+	    //Debug.write("remoteserver", this, "connect result", result);
+
+	    function onComplete(sessionID) {
+		//Debug.write("remoteserver startSession onComplete", this, "sessionID", sessionID);
+		gApp.startSession(sessionID);
+	    }
+
+	    function onFail(results) {
+		Debug.write("remoteserver startSession onFail", this, results);
+		gApp.failSession();
+	    }
+
+	    var responder =
+	        new Responder(onComplete, onFail);
+	    netConnection.call(
+	        "micropolis.startSession",
+		responder);
+
+	  ]]>
+	</method>
+
+
+	<method name="sendPoll" args="pollDict"><![CDATA[
+	    var netConnection = this.netConnection;
+
+	    function onComplete(result) {
+		//Debug.write("remoteserver poll onComplete", this, "result", result);
+		gApp.handlePoll(result);
+	    }
+
+	    function onFail(results) {
+		Debug.write("remoteserver poll onFail", this, results);
+		Debug.write(results['level']);
+		Debug.write(results['code']);
+		Debug.write(results['description']);
+		Debug.write(results['details'].split("', '"));
+		gApp.failSession();
+	    }
+
+	    var responder =
+	        new Responder(onComplete, onFail);
+	    netConnection.call(
+	        "micropolis.poll",
+		responder,
+		pollDict);
+
+	  ]]>
+	</method>
+
+
+    </class>
+
+
+</library>

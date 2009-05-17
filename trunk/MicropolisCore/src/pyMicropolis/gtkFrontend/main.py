@@ -20,7 +20,7 @@ def run():
     engine.setPasses(200)
     setTile = engine.setTile
 
-    if False:
+    if True:
         for i in range(0, 4):
             engine.addRobot(
                 micropolisrobot.MicropolisRobot_PacMan(

@@ -455,14 +455,17 @@ class Session(object):
         self.lastTouchTime = Now()
 
 
-    def handlePoll(self, poll):
+    def handlePoll(self, pollDict):
         self.lastPollTime = Now()
 
         self.engine.handlePoll(
-            poll,
+            pollDict,
             self)
 
-        return self.receiveMessages()
+        result = self.receiveMessages()
+        #print "session.handlePoll receiveMessages", result
+
+        return result
 
 
     def touchAge(self):
@@ -598,7 +601,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def loadInitialCity(self):
 
-        print "LOADINITIALCITY"
+        #print "LOADINITIALCITY"
 
         # Load a city file.
         cityFileName = MicropolisCorePath + '/cities/haight.xml'
@@ -655,13 +658,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             del message['collapse']
 
 
-    def doCommand(self, params):
-        command = params.get('name', None)
-        print "DOCOMMAND", command, params
+    def handleMessage(self, session, messageDict):
+        message = messageDict.get('message', None)
+        #print "HANDLEMESSAGE", message
 
-        if command == 'disaster':
+        if message == 'disaster':
 
-            disaster = params.get('disaster', None)
+            disaster = messageDict.get('disaster', None)
             print "disaster", disaster
 
             if disaster == 'monster':
@@ -685,21 +688,21 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
                 print "Invalid disaster name:", disaster
 
-        elif command == 'setTaxRate':
+        elif message == 'setTaxRate':
 
-            taxRateStr = params.get('taxRate', self.cityTax)
+            taxRateStr = messageDict.get('taxRate', self.cityTax)
             taxRate = self.cityTax
             try:
                 taxRate = int(taxRateStr)
             except: pass
             taxRate = max(0, min(taxRate, 20))
             self.cityTax = taxRate
-            print "==== TAXRATE", taxRate
+            #print "==== TAXRATE", taxRate
 
-        elif command == 'setRoadPercent':
+        elif message == 'setRoadPercent':
 
             roadPercent = int(self.roadPercent * 100.0)
-            roadPercentStr = params.get('roadPercent', roadPercent)
+            roadPercentStr = messageDict.get('roadPercent', roadPercent)
             try:
                 roadPercent = int(roadPercentStr)
             except: pass
@@ -709,10 +712,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.updateFundEffects()
             print "==== ROADPERCENT", self.roadPercent
 
-        elif command == 'setFirePercent':
+        elif message == 'setFirePercent':
 
             firePercent = int(self.firePercent * 100.0)
-            firePercentStr = params.get('firePercent', firePercent)
+            firePercentStr = messageDict.get('firePercent', firePercent)
             try:
                 firePercent = int(firePercentStr)
             except: pass
@@ -722,10 +725,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.updateFundEffects()
             print "==== FIREPERCENT", self.firePercent
 
-        elif command == 'setPolicePercent':
+        elif message == 'setPolicePercent':
 
             policePercent = int(self.policePercent * 100.0)
-            policePercentStr = params.get('policePercent', policePercent)
+            policePercentStr = messageDict.get('policePercent', policePercent)
             try:
                 policePercent = int(policePercentStr)
             except: pass
@@ -735,18 +738,18 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.updateFundEffects()
             print "==== POLICEPERCENT", self.policePercent
 
-        elif command == 'loadCity':
+        elif message == 'loadCity':
 
-            cityName = params.get('city', None)
+            cityName = messageDict.get('city', None)
             print "loadCity", cityName
             if cityName in CityNames:
                 cityFileName = CityNames[cityName]
                 print "cityFileName", cityFileName
                 self.loadMetaCity(cityFileName)
 
-        elif command == 'loadScenario':
+        elif message == 'loadScenario':
 
-            scenarioStr = params.get('scenario', None)
+            scenarioStr = messageDict.get('scenario', None)
             print "loadScenario", scenarioStr
             scenario = 0
             try:
@@ -755,14 +758,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if scenario:
                 self.loadScenario(scenario)
 
-        elif command == 'generateCity':
+        elif message == 'generateCity':
 
             print "generateCity"
             self.generateNewCity()
 
-        elif command == 'setGameMode':
+        elif message == 'setGameMode':
 
-            gameMode = params.get('gameMode')
+            gameMode = messageDict.get('gameMode')
 
             print "setGameMode", gameMode
             if gameMode == "start":
@@ -773,11 +776,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 self.updateFundEffects()
                 self.resume()
 
-        elif command == 'setPaused':
+        elif message == 'setPaused':
 
-            paused = params.get('paused')
+            paused = messageDict.get('paused')
 
-            print "setPaused", paused
+            #print "setPaused", paused
             if paused == "true":
                 self.pause()
             elif paused == "false":
@@ -785,28 +788,28 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
                 print "Bad paused value, should be true or false, not", paused
 
-        elif command == 'setVirtualSpeed':
+        elif message == 'setVirtualSpeed':
 
-            virtualSpeed = int(params.get('virtualSpeed'))
+            virtualSpeed = int(messageDict.get('virtualSpeed'))
             speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
 
             #print "setVirtualSpeed", virtualSpeed
             self.setVirtualSpeed(virtualSpeed)
 
-        elif command == 'abandonCity':
+        elif message == 'abandonCity':
 
             print "ABANDON CITY"
 
-        elif command == 'saveCity':
+        elif message == 'saveCity':
 
             print "SAVE CITY"
 
-        elif command == 'drawToolStart':
+        elif message == 'drawToolStart':
 
-            print "DRAWTOOLSTART", params
-            tool = params.get('tool')
-            x = int(params.get('x'))
-            y = int(params.get('y'))
+            #print "DRAWTOOLSTART", messageDict
+            tool = messageDict.get('tool')
+            x = int(messageDict.get('x'))
+            y = int(messageDict.get('y'))
 
             if ((tool not in ToolNameToIndex) or
                 (not self.testBounds(x, y))):
@@ -818,16 +821,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 toolIndex = ToolNameToIndex[tool]
                 self.toolDown(toolIndex, x, y)
 
-        elif command == 'drawToolMove':
+        elif message == 'drawToolMove':
 
-            print "DRAWTOOLMOVE", params
-            tool = params.get('tool')
-            x0 = int(params.get('x0'))
-            y0 = int(params.get('y0'))
-            x1 = int(params.get('x1'))
-            y1 = int(params.get('y1'))
+            #print "DRAWTOOLMOVE", messageDict
+            tool = messageDict.get('tool')
+            x0 = int(messageDict.get('x0'))
+            y0 = int(messageDict.get('y0'))
+            x1 = int(messageDict.get('x1'))
+            y1 = int(messageDict.get('y1'))
 
-            print "DRAWTOOLMOVE", tool, x0, y0, x1, x1
+            #print "DRAWTOOLMOVE", tool, x0, y0, x1, x1
             if ((tool not in ToolNameToIndex) or
                 (not self.testBounds(x0, y0)) or
                 (not self.testBounds(x1, y1))):
@@ -839,14 +842,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 toolIndex = ToolNameToIndex[tool]
                 self.toolDrag(toolIndex, x0, y0, x1, y1)
 
-        elif command == 'drawToolStop':
+        elif message == 'drawToolStop':
 
-            print "DRAWTOOLSTOP", params
-            tool = params.get('tool')
-            x = int(params.get('x'))
-            y = int(params.get('y'))
+            #print "DRAWTOOLSTOP", messageDict
+            tool = messageDict.get('tool')
+            x = int(messageDict.get('x'))
+            y = int(messageDict.get('y'))
 
-            print "DRAWTOOLSTOP", tool, x, y
+            #print "DRAWTOOLSTOP", tool, x, y
             if ((tool not in ToolNameToIndex) or
                 (not self.testBounds(x, y))):
 
@@ -857,6 +860,73 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 # Nothing to do, since the user interface is
                 # responsible for sending us a move to the endpoint.
                 pass
+
+        elif message == 'tileview':
+
+            #print "MESSAGE TILEVIEW"
+            try:
+                id = messageDict['id']
+                col = messageDict['col']
+                row = messageDict['row']
+                cols = messageDict['cols']
+                rows = messageDict['rows']
+                viewX = messageDict['viewX']
+                viewY = messageDict['viewY']
+                viewWidth = messageDict['viewWidth']
+                viewHeight = messageDict['viewHeight']
+            except Exception, e:
+                self.expectationFailed("Invalid parameters: " + str(e))
+
+            #print "ID", id
+            #print "TILE", col, row, cols, rows
+            #print "VIEW", viewX, viewY, viewWidth, viewHeight
+
+            if ((col < 0) or
+                (row < 0) or
+                (cols <= 0) or
+                (rows <= 0) or
+                ((col + cols) > micropolisengine.WORLD_W) or
+                ((row + rows) > micropolisengine.WORLD_H)):
+                self.expectationFailed("Invalid parameters.")
+
+            code = 3
+            format = 1
+            tiles = self.tengine.getTileData(
+                None,
+                self.tileMap,
+                col, row,
+                cols, rows,
+                code,
+                session.tileViewCache)
+
+            session.sendMessage({
+                'message': 'UIUpdate',
+                'variable': 'tileview',
+                'id': id,
+                'col': col,
+                'row': row,
+                'cols': cols,
+                'rows': rows,
+                'viewX': viewX,
+                'viewY': viewY,
+                'viewWidth': viewWidth,
+                'viewHeight': viewHeight,
+                'tiles': tiles,
+                'format': format,
+            })
+
+        elif message == 'historyview':
+
+            try:
+                id = messageDict['id']
+                historyScale = messageDict['scale']
+                historyCount = messageDict['count']
+                historyOffset = messageDict['offset']
+                historyTypes = messageDict['types']
+            except Exception, e:
+                self.expectationFailed("Invalid parameters: " + str(e))
+
+            #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes
 
 
     def setVirtualSpeed(self, virtualSpeed):
@@ -873,14 +943,17 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.handle_UIUpdate('delay')
 
 
-    def tickEngine(self, ticks=None):
+    def tickEngine(self):
+
+        #print "TICKENGINE 1", "PAUSED", self.simPaused, "CITYTIME", self.cityTime
 
         now = time.time()
         fracTime = now - math.floor(now)
 
         self.blinkFlag = fracTime < 0.5
 
-        if ticks == None:
+        if not self.simPaused:
+
             #print "NOW", now, "lastLoopTime", self.lastLoopTime
             elapsed = now - self.lastLoopTime
             self.lastLoopTime = now
@@ -888,28 +961,30 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
             ticks = min(ticks, self.maxLoopsPerPoll)
 
-        #print "********", "TICKS", ticks, "ELAPSED", elapsed
+            #print "********", "TICKS", ticks, "ELAPSED", elapsed
 
-        if self.simPasses != ticks:
-            self.setPasses(ticks)
+            if self.simPasses != ticks:
+                self.setPasses(ticks)
 
-        #print "****", "PASSES", self.simPasses, "PAUSED", self.simPaused, "SPEED", self.simSpeed
-        #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
-        #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
+            #print "****", "PASSES", self.simPasses, "PAUSED", self.simPaused, "SPEED", self.simSpeed
+            #print "CityTime", self.cityTime, "CityMonth", self.cityMonth, "CityYear", self.cityYear
+            #print "simPaused", self.simPaused, "simPasses", self.simPasses, "simPass", self.simPass
 
-        try:
-            self.simTick()
-        except Exception, e:
-            print "SIMTICK EXCEPTION:", e
+            try:
+                self.simTick()
+            except Exception, e:
+                print "SIMTICK EXCEPTION:", e
 
-        self.animateTiles()
-        self.simUpdate()
+            self.animateTiles()
 
-        self.handle_UIUpdate('tick')
+            #self.simUpdate()
 
-        if not self.simPaused:
-            self.updateMapView()
+            if not self.simPaused:
+                self.updateMapView()
 
+        #self.handle_UIUpdate('tick')
+
+        #print "TICKENGINE 2", "PAUSED", self.simPaused, "CITYTIME", self.cityTime
 
     ########################################################################
     # expectationFailed
@@ -940,85 +1015,17 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             message)
 
 
-    def handlePoll(self, poll, session):
+    def handlePoll(self, pollDict, session):
 
-        tileViews = []
+        #print "handlePoll", "PAUSED", self.simPaused, "CITYTIME", self.cityTime, "DICT", pollDict
 
-        #print "handlePoll simPaused", self.simPaused
-
-        commands = poll.find('commands')
-        if commands:
-            for command in commands:
-                if command.tag == 'command':
-                    #print "COMMAND", command
-                    self.doCommand(command.attrib)
-
-        pollers = poll.find('pollers')
-        if pollers:
-            for poller in pollers:
-
-                pollerType = poller.tag
-
-                if pollerType == 'tileview':
-
-                    attrib = poller.attrib
-                    #print "TILEVIEW", attrib
-                    try:
-                        id = int(attrib['id'])
-                        col = int(attrib['col'])
-                        row = int(attrib['row'])
-                        cols = int(attrib['cols'])
-                        rows = int(attrib['rows'])
-                        viewX = float(attrib['viewX'])
-                        viewY = float(attrib['viewY'])
-                        viewWidth = float(attrib['viewWidth'])
-                        viewHeight = float(attrib['viewHeight'])
-                    except Exception, e:
-                        self.expectationFailed("Invalid parameters: " + str(e));
-
-                    #print "TILE", col, row, cols, rows
-                    #print "VIEW", viewX, viewY, viewWidth, viewHeight
-
-                    if ((col < 0) or
-                        (row < 0) or
-                        (cols <= 0) or
-                        (rows <= 0) or
-                        ((col + cols) > micropolisengine.WORLD_W) or
-                        ((row + rows) > micropolisengine.WORLD_H)):
-                        self.expectationFailed("Invalid parameters.");
-
-                    code = 3
-                    format = 1
-                    tiles = self.tengine.getTileData(
-                        None,
-                        self.tileMap,
-                        col, row,
-                        cols, rows,
-                        code,
-                        session.tileViewCache)
-
-                    if tiles:
-                        #print "TILES", tiles
-                        tileViews.append({
-                            'id': id,
-                            'col': col,
-                            'row': row,
-                            'cols': cols,
-                            'rows': rows,
-                            'format': format,
-                            'tiles': tiles,
-                        })
+        messages = pollDict.get('messages', None)
+        if messages:
+            for messageDict in messages:
+                #print "MESSAGEDICT", messageDict
+                self.handleMessage(session, messageDict)
 
         self.tickEngine()
-
-        if tileViews:
-            # @todo: Refactor update message code.
-            #print "TILEVIEWS", tileViews
-            session.sendMessage({
-                'message': 'UIUpdate',
-                'variable': 'tileViews',
-                'tileViews': tileViews,
-            })
 
 
     def renderTiles(
@@ -1231,6 +1238,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     
 
     def updateAll(self):
+        #print "UPDATEALL"
         self.handle_UIUpdate('funds')
         self.handle_UIUpdate('date')
         self.handle_UIUpdate('history')
@@ -1250,7 +1258,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_UIAutoGoto(self, x, y):
-        print "handle_UIAutoGoto(self, x, y)", (self, x, y)
+        #print "handle_UIAutoGoto(self, x, y)", (self, x, y)
         self.sendSessions({
             'message': "UIAutoGoto",
             'x': x,
@@ -1260,7 +1268,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     
 
     def handle_UIDidGenerateNewCity(self):
-        print "handle_UIDidGenerateNewCity(self)", (self,)
+        #print "handle_UIDidGenerateNewCity(self)", (self,)
         self.sendSessions({
             'message': "UIDidGenerateNewCity",
         })
@@ -1268,7 +1276,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIDidLoadCity(self):
-        print "handle_UIDidLoadCity(self)", (self,)
+        #print "handle_UIDidLoadCity(self)", (self,)
         self.sendSessions({
             'message': "UIDidLoadCity",
         })
@@ -1276,7 +1284,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIDidLoadScenario(self):
-        print "handle_UIDidLoadScenario(self)", (self,)
+        #print "handle_UIDidLoadScenario(self)", (self,)
         self.sendSessions({
             'message': "UIDidLoadScenario",
             'scenario': self.scenario,
@@ -1285,14 +1293,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_UIDidSaveCity(self):
-        print "handle_UIDidSaveCity(self)", (self,)
+        #print "handle_UIDidSaveCity(self)", (self,)
         self.sendSessions({
             'message': "UIDidSaveCity",
         })
 
     
     def handle_UIDidTool(self, name, x, y):
-        print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
+        #print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
         self.sendSessions({
             'message': "UIDidTool",
             'name': name,
@@ -1302,7 +1310,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIDidntLoadCity(self, msg):
-        print "handle_UIDidntLoadCity(self, msg)", (self, msg)
+        #print "handle_UIDidntLoadCity(self, msg)", (self, msg)
         self.sendSessions({
             'message': "UIDidntLoadCity",
             'msg': msg,
@@ -1310,7 +1318,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIDidntSaveCity(self, msg):
-        print "handle_UIDidntSaveCity(self, msg)", (self, msg)
+        #print "handle_UIDidntSaveCity(self, msg)", (self, msg)
         self.sendSessions({
             'message': "UIDidntSaveCity",
             'msg': msg,
@@ -1318,7 +1326,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UILoseGame(self):
-        print "handle_UILoseGame(self)", (self,)
+        #print "handle_UILoseGame(self)", (self,)
         self.sendSessions({
             'message': "UILoseGame",
         })
@@ -1336,7 +1344,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_UINewGame(self):
-        print "handle_UINewGame(self)", (self,)
+        #print "handle_UINewGame(self)", (self,)
         self.sendSessions({
             'message': "UINewGame",
         })
@@ -1344,35 +1352,35 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIPlayNewCity(self):
-        print "handle_UIPlayNewCity(self)", (self,)
+        #print "handle_UIPlayNewCity(self)", (self,)
         self.sendSessions({
             'message': "UIPlayNewCity",
         })
 
     
     def handle_UIReallyStartGame(self):
-        print "handle_UIReallyStartGame(self)", (self,)
+        #print "handle_UIReallyStartGame(self)", (self,)
         self.sendSessions({
             'message': "UIReallyStartGame",
         })
 
     
     def handle_UISaveCityAs(self):
-        print "handle_UISaveCityAs(self)", (self,)
+        #print "handle_UISaveCityAs(self)", (self,)
         self.sendSessions({
             'message': "UISaveCityAs",
         })
 
     
     def handle_UIShowBudgetAndWait(self):
-        print "handle_UIShowBudgetAndWait(self)", (self,)
+        #print "handle_UIShowBudgetAndWait(self)", (self,)
         self.sendSessions({
             'message': "UIShowBudgetAndWait",
         })
 
     
     def handle_UIShowPicture(self, id):
-        print "handle_UIShowPicture(self, id)", (self, id)
+        #print "handle_UIShowPicture(self, id)", (self, id)
         self.sendSessions({
             'message': "UIShowPicture",
             'id': id,
@@ -1380,7 +1388,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
-        print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
+        #print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
         self.sendSessions({
             'message': "UIShowZoneStatus",
             'str': str,
@@ -1396,7 +1404,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIStartEarthquake(self, magnitude):
-        print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
+        #print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
         self.sendSessions({
             'message': "UIStartEarthquake",
             'magnitude': magnitude,
@@ -1404,14 +1412,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIStartLoad(self):
-        print "handle_UIStartLoad(self)", (self,)
+        #print "handle_UIStartLoad(self)", (self,)
         self.sendSessions({
             'message': "UIStartLoad",
         })
 
     
     def handle_UIStartScenario(self, scenario):
-        print "handle_UIStartScenario(self, scenario)", (self, scenario)
+        #print "handle_UIStartScenario(self, scenario)", (self, scenario)
         self.sendSessions({
             'message': "UIStartScenario",
             'scenario': scenario,
@@ -1419,14 +1427,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_UIStopEarthquake(self):
-        print "handle_UIStopEarthquake(self)", (self,)
+        #print "handle_UIStopEarthquake(self)", (self,)
         self.sendSessions({
             'message': "UIStopEarthquake",
         })
 
 
     def handle_UIWinGame(self):
-        print "handle_UIWinGame(self)", (self,)
+        #print "handle_UIWinGame(self)", (self,)
         self.sendSessions({
             'message': "UIWinGame",
         })
@@ -1460,10 +1468,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 cityTime = self.cityTime
                 startingYear = self.startingYear
                 year = int(cityTime / 48) + startingYear
-                month = int(cityTime % 48) >> 2;
+                month = int(cityTime % 48) >> 2
 
                 message['cityTime'] = cityTime
-                message['startingYear'] = startingYear;
+                message['startingYear'] = startingYear
                 message['year'] = year
                 message['month'] = month
                 message['collapse'] = True
@@ -1493,7 +1501,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 cityTime = self.cityTime
                 startingYear = self.startingYear
                 year = int(cityTime / 48) + startingYear
-                month = int(cityTime % 48) >> 2;
+                month = int(cityTime % 48) >> 2
                 message['year'] = year
                 message['month'] = month
 
@@ -1606,6 +1614,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['paused'] = paused
                 message['collapse'] = True
 
+            elif variable == 'tick':
+
+                pass # return
+
             elif variable == 'passes':
 
                 return
@@ -1646,7 +1658,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 message['cityName'] = self.cityName
                 message['collapse'] = True
-                print 'now message', message
 
             elif variable == 'taxRate':
 

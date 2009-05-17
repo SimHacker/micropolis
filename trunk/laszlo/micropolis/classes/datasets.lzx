@@ -7,18 +7,6 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <!-- Dynamically loaded datasets. -->
-
-    <dataset name="ds_session"
-        autoload="false"
-    />
-
-    <dataset name="ds_poll"
-        autoload="false"
-	querytype="post"
-    />
-
-
     <!-- Built-in datasets. -->
 
     <dataset name="ds_disasters"

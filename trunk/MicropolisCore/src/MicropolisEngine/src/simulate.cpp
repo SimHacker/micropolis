@@ -298,7 +298,7 @@ void Micropolis::doSimInit()
     populationDensityScan();
     fireAnalysis();
     newMap = 1;
-    newGraph = true;
+    censusChanged = true;
     totalPop = 1;
     doInitialEval = true;
 }

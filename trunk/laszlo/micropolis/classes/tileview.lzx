@@ -421,25 +421,22 @@
 
 
         <method name="poll"><![CDATA[
-            //Debug.write("poll", this, this.viewCols, this.viewRows);
-
-            // TODO: extend tiles in the direction of motion, for scroll look-ahead.
+            //Debug.write("tileview poll", this, this.viewCols, this.viewRows);
 
             this.updateViewRect();
 
-            var xml = (
-                '<tileview id="' + this.uniqueID +
-                '" col="' + this.viewCol +
-                '" row="' + this.viewRow +
-                '" cols="' + this.viewCols +
-                '" rows="' + this.viewRows +
-                '" viewX="' + this.viewX +
-                '" viewY="' + this.viewY +
-                '" viewWidth="' + this.viewWidth +
-                '" viewHeight="' + this.viewHeight +
-                '"/>');
-            //Debug.write(xml);
-            return xml;
+            return {
+	        message: 'tileview',
+		id: this.uniqueID,
+		col: this.viewCol,
+		row: this.viewRow,
+		cols: this.viewCols,
+		rows: this.viewRows,
+		viewX: this.viewX,
+		viewY: this.viewY,
+		viewWidth: this.viewWidth,
+		viewHeight: this.viewHeight
+	    };
           ]]>
         </method>
 

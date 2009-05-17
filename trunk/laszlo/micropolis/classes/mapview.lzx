@@ -194,7 +194,7 @@
             //Debug.write("updateMapNow", this, this.active);
             this.setAttribute("bgcolor", Math.floor(Math.random() * 0xffffff));
 
-            var sessionID = gSessionHandler.sessionID;
+            var sessionID = gApp.sessionID;
             var tileSize = this.tileSize;
             var width = gApp.worldCols * tileSize;
             var height = gApp.worldRows * tileSize;

@@ -1846,12 +1846,6 @@ public:
 
 
     /**
-     * Flag that tells if there is a new graph to draw.
-     * @todo This should be replaced by a general purpose view updating system.
-     */
-    bool newGraph;
-
-    /**
      * @todo Nobody uses this variable. Can it be removed?
      */
     bool historyInitialized;

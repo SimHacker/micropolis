@@ -40,7 +40,6 @@
 	    <attribute name="scenarioYear" value="$path{'@year'}" type="string"/>
 	    <attribute name="scenarioTagLine" value="$path{'@tagline'}" type="string"/>
 	    <attribute name="scenarioDescription" value="$path{'description/text()'}" type="string"/>
-	    <attribute name="scenarioCommand" value="$path{'command'}"/>
 
 	    <handler name="ondata" args="arg"><![CDATA[
 		var label =
@@ -53,7 +52,10 @@
 	    </handler>
 
 	    <method name="selectScenario"><![CDATA[
-		gApp.sendCommand(this.scenarioCommand);
+		gApp.sendMessage({
+		    message: 'loadScenario',
+		    scenario: this.scenarioID
+		});
 		gApp.setAttribute("title", "Scenario: " + this.scenarioName);
 		gApp.setAttribute("description", this.scenarioDescription);
 	      ]]>

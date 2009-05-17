@@ -98,7 +98,7 @@ class MicropolisStartPanel(gtk.Frame):
 
         engine.expressInterest(
             self,
-            ('load', 'gamemode',))
+            ('load', 'gameMode',))
 
         controls = []
         self.controls = controls
@@ -231,7 +231,7 @@ class MicropolisStartPanel(gtk.Frame):
             self.labelTitle.set_markup(titleMarkup)
             self.labelDescription.set_markup(descriptionMarkup)
 
-        elif name == 'gamemode':
+        elif name == 'gameMode':
             
             gameMode = engine.gameMode
             previewMapView = self.previewMapView

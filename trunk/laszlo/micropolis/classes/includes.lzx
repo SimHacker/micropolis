@@ -11,6 +11,7 @@
     <script src="rpc/library/json.js"/>
     <include href="resources.lzx"/>
     <include href="datasets.lzx"/>
+    <include href="remoteserver.lzx"/>
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
     <include href="piemenu.lzx"/>
@@ -47,8 +48,6 @@
     <include href="startscreen.lzx"/>
     <include href="playscreen.lzx"/>
     <include href="anitiles.lzx"/>
-    <include href="sessionhandler.lzx"/>
-    <include href="pollhandler.lzx"/>
     <include href="appview.lzx"/>
 
 

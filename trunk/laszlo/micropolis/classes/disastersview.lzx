@@ -57,17 +57,19 @@
 		    width="${parent.width}"
 		    height="${parent.height}"
 		    text="${this['disasterName'] || ''}"
-		    onclick="this.doDisaster()"
 		>
 
 		    <attribute name="disasterName" value="$path{'@name'}"/>
-		    <attribute name="disasterCommand" value="$path{'command'}"/>
+		    <attribute name="disaster" value="$path{'@disaster'}"/>
 
-		    <method name="doDisaster"><![CDATA[
-			//Debug.write(this.disasterCommand);
-			gApp.sendCommand(this.disasterCommand)
+		    <handler name="onclick"><![CDATA[
+			Debug.write("DISASTER", this.disaster);
+			gApp.sendMessage({
+			    message: 'disaster',
+			    disaster: this.disaster
+			});
 		      ]]>
-		    </method>
+		    </handler>
 
 		</button>
 
