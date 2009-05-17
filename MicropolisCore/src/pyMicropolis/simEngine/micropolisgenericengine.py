@@ -1446,7 +1446,7 @@ You have 10 years to turn this swamp back into a city again.""",
         saveFilePath = os.path.join(saveFileDir, saveFileName)
 
         saveFilePath = saveFilePath.encode('utf8')
-        print "Loading city file:", saveFilePath
+        #print "Loading city file:", saveFilePath
         success = self.loadCity(saveFilePath)
 
         if not success:

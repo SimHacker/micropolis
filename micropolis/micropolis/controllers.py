@@ -659,7 +659,7 @@ class Root(controllers.RootController):
 
     def startSessionService(self, ignore):
         session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
-        print "STARTSESSIONSERVICE", "sessionID", session
+        #print "STARTSESSIONSERVICE", "sessionID", session
         return session.sessionID
 
 

@@ -387,7 +387,7 @@ for group in AniTileGroups:
 
 AniTileGroups.sort()
 
-print len(AniTileGroups), "AniTileGroups"
+#print len(AniTileGroups), "AniTileGroups"
 
 AniTileMap = array.array('i')
 for i in range(0, len(AniTiles)):
@@ -526,7 +526,7 @@ class Session(object):
 
 
     def setEngine(self, engine):
-        print "setEngine", self, engine
+        #print "setEngine", self, engine
         if self.engine:
             self.engine.removeSession(self)
         self.engine = engine
@@ -605,7 +605,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         # Load a city file.
         cityFileName = MicropolisCorePath + '/cities/haight.xml'
-        print "Game loading city file:", cityFileName
+        #print "Game loading city file:", cityFileName
         self.loadMetaCity(cityFileName)
 
         # Initialize the simulator engine.
@@ -665,7 +665,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         if message == 'disaster':
 
             disaster = messageDict.get('disaster', None)
-            print "disaster", disaster
+            #print "disaster", disaster
 
             if disaster == 'monster':
                 self.makeMonster()
@@ -710,7 +710,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.roadPercent = float(roadPercent) / 100.0
             self.roadSpend = int(self.roadPercent * self.roadFund)
             self.updateFundEffects()
-            print "==== ROADPERCENT", self.roadPercent
+            #print "==== ROADPERCENT", self.roadPercent
 
         elif message == 'setFirePercent':
 
@@ -723,7 +723,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.firePercent = float(firePercent) / 100.0
             self.fireSpend = int(self.firePercent * self.fireFund)
             self.updateFundEffects()
-            print "==== FIREPERCENT", self.firePercent
+            #print "==== FIREPERCENT", self.firePercent
 
         elif message == 'setPolicePercent':
 
@@ -736,7 +736,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.policePercent = float(policePercent) / 100.0
             self.policeSpend = int(self.policePercent * self.policeFund)
             self.updateFundEffects()
-            print "==== POLICEPERCENT", self.policePercent
+            #print "==== POLICEPERCENT", self.policePercent
 
         elif message == 'loadCity':
 
@@ -750,7 +750,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif message == 'loadScenario':
 
             scenarioStr = messageDict.get('scenario', None)
-            print "loadScenario", scenarioStr
+            #print "loadScenario", scenarioStr
             scenario = 0
             try:
                 scenario = int(scenarioStr)
@@ -767,7 +767,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             gameMode = messageDict.get('gameMode')
 
-            print "setGameMode", gameMode
+            #print "setGameMode", gameMode
             if gameMode == "start":
                 self.pause()
             elif gameMode == "play":
@@ -781,9 +781,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             paused = messageDict.get('paused')
 
             #print "setPaused", paused
-            if paused == "true":
+            if paused == True:
                 self.pause()
-            elif paused == "false":
+            elif paused == False:
                 self.resume()
             else:
                 print "Bad paused value, should be true or false, not", paused
@@ -1399,7 +1399,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             's4': s4,
             'x': x,
             'y': y,
-            'collapse': true,
+            'collapse': True,
         })
 
     
