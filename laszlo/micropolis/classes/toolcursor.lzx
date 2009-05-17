@@ -194,7 +194,7 @@
 
 	    this.trackCursor();
 
-	    Debug.write("ONDRAWING", arg, this.cursorX, this.cursorY);
+	    //Debug.write("ONDRAWING", arg, this.cursorX, this.cursorY);
 
 	    if (this.drawing) {
 		this.drawStart();
@@ -231,7 +231,7 @@
 	<method name="drawStart"><![CDATA[
 	    this.trackCursor();
 
-	    Debug.write("DRAWSTART", this.cursorX, this.cursorY);
+	    //Debug.write("DRAWSTART", this.cursorX, this.cursorY);
 
 	    var handler = this.handler;
 	    var cursorX = this.cursorX;
@@ -299,7 +299,7 @@
 
 
 	<method name="drawStop"><![CDATA[
-	    Debug.write("DRAWSTOP", this.cursorX, this.cursorY);
+	    //Debug.write("DRAWSTOP", this.cursorX, this.cursorY);
 	    this.trackCursor();
 	    this.drawMove();
 
