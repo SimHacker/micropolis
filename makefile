@@ -61,9 +61,18 @@
 
 ########################################################################
 
+all:
+	cd MicropolisCore ; make all
+	cd micropolis-activity ; make all
+
+install: all
+	cd MicropolisCore ; make install
+	cd micropolis-activity ; make install
+
 clean:
 	cd MicropolisCore ; make clean
 	cd micropolis ; make clean
 	cd laszlo ; make clean
+	cd micropolis-activity ; make clean
 
 ########################################################################

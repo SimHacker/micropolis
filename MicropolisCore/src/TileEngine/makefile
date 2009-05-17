@@ -119,9 +119,5 @@ clean:
 install: all
 	($(PYTHON) setup.py install)
 
-# XXX This is not needed
-cleanswig: clean
-	rm -rf python/tileengine.py python/tileengine_wrap.cpp
-
 
 ########################################################################

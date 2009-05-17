@@ -62,12 +62,12 @@
 ########################################################################
 
 all:
-	echo "Nothing to make (yet)."
+	cd src ; make all
+
+install:
+	cd src ; make install
 
 clean:
 	cd src ; make clean
-
-install: all
-	echo "Nothing to install (yet)."
 
 ########################################################################

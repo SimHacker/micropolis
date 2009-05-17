@@ -78,21 +78,8 @@ clean:
 	cd MicropolisEngine ; make clean
 	cd pyMicropolis ; make clean
 
-cleanswig:
-	rm -f $(TILEENGINEDEST)/tileengine.py
-	rm -f $(TILEENGINEDEST)/_tileengine.so
-	rm -f $(CELLENGINEDEST)/cellengine.py
-	rm -f $(CELLENGINEDEST)/_cellengine.so
-	rm -f $(MICROPOLISENGINEDEST)/micropolisengine.py
-	rm -f $(MICROPOLISENGINEDEST)/_micropolisengine.so
-	rm -rf *~ *.suo *.ncb
-	(cd CellEngine ; make cleanswig)
-	(cd TileEngine ; make cleanswig)
-	(cd MicropolisEngine ; make cleanswig)
-
 install: all
-	rm -rf build
-	mkdir build
+	echo "MicropolisCore install disabled for development."
 	cd TileEngine ; make install
 	cd CellEngine ; make install
 	cd MicropolisEngine ; make install

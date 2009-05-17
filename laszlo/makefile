@@ -64,12 +64,13 @@
 all:
 	echo "Nothing to make (yet)."
 
+install: all
+	echo "Nothing to install (yet)."
+
 clean:
 	rm -rf \
 	    */*~ \
 	    */*/*~ \
 	    micropolis/micropolis/*.lzx.*.swf
-install: all
-	echo "Nothing to install (yet)."
 
 ########################################################################
