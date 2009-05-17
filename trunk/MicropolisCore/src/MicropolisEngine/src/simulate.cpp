@@ -912,10 +912,12 @@ void Micropolis::updateFundEffects()
         fireEffect = (short)((float)fireEffect * (float)fireSpend / (float)fireFund);
     }
 
+#if 0
     printf("========== updateFundEffects road %d %d %d fire %d %d %d police %d %d %d\n",
 	(int)roadEffect, (int)roadSpend, (int)roadFund,
 	(int)fireEffect, (int)fireSpend, (int)fireFund,
 	(int)policeEffect, (int)policeSpend, (int)policeFund);
+#endif
 
     mustDrawBudget = 1;
 }
