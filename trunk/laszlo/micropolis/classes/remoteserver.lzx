@@ -21,7 +21,7 @@
 
 	<attribute name="netConnection" value="null"/>
 	<attribute name="url" type="string" 
-	    value="http://localhost/server/amfGateway"/>
+	    value="http:/server/amfGateway"/>
 
 
 	<handler name="oninit"><![CDATA[
