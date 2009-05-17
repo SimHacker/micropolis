@@ -1521,7 +1521,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def setGameMode(self, gameMode):
         self.gameMode = gameMode
-        self.sendUpdate('gamemode')
+        self.sendUpdate('gameMode')
 
 
     def invokeCallback(self, micropolis, name, *args):
@@ -1537,6 +1537,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def addRobot(self, robot):
+        #print "ADDROBOT", robot
         robots = self.robots
         self.removeRobot(robot)
         robots.append(robot)
@@ -1544,6 +1545,7 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def removeRobot(self, robot):
+        #print "REMOVEROBOT", robot
         robots = self.robots
         if robot in robots:
             robot.engine = None
@@ -1551,8 +1553,11 @@ You have 10 years to turn this swamp back into a city again.""",
 
 
     def simRobots(self):
+        #print "SIMROBOTS"
         for robot in self.robots:
+            #print "SIMROBOT LOOP", robot
             robot.simulate()
+            #print "SIMULATED ROBOT", robot
 
 
     def __repr__(self):

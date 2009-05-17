@@ -96,7 +96,7 @@ class MicropolisBudgetPanel(gtk.Frame):
 
         self.engine.expressInterest(
             self,
-            ('taxrate', 'budget',))
+            ('taxRate', 'budget',))
 
         # Views
 
@@ -270,7 +270,7 @@ class MicropolisBudgetPanel(gtk.Frame):
         self.labelRoadPercent = labelRoadPercent
         vbox4.pack_start(labelRoadPercent, False, False, 0)
 
-        self.update('taxrate')
+        self.update('taxRate')
         self.update('budget')
 
 
@@ -283,7 +283,7 @@ class MicropolisBudgetPanel(gtk.Frame):
 
         engine = self.engine
 
-        if name  == 'taxrate':
+        if name  == 'taxRate':
 
             taxRate = engine.cityTax
             scaleTaxRate = self.scaleTaxRate

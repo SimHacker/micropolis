@@ -33,15 +33,18 @@
 	    <textlistitem
 		datapath="ds_cities:/cities/city"
 		onclick="this.loadCity()"
-		text="$path{'@name'}"
-		value="$path{'@id'}"
+		text="${this.cityName}"
 		height="28"
 	    >
 
-		<attribute name="loadCityCommand" value="$path{'command'}"/>
+		<attribute name="cityID" value="$path{'@id'}"/>
+		<attribute name="cityName" value="$path{'@name'}"/>
 
 		<method name="loadCity"><![CDATA[
-		    gApp.sendCommand(this.loadCityCommand);
+		    gApp.sendMessage({
+		        message: 'loadCity',
+			city: this.cityID
+		    });
 		    gApp.setAttribute("title", "Loaded Map: " + this.text);
 		    gApp.setAttribute("description", "Loaded a map from the library: " + this.text);
 		  ]]>

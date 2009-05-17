@@ -23,6 +23,9 @@ from genshi import XML
 import xml.etree.ElementTree as ElementTree
 #import xml.etree.cElementTree as ElementTree
 from StringIO import StringIO
+import pyamf
+from pyamf import remoting
+from pyamf.remoting import gateway
 
 import logging
 log = logging.getLogger("micropolis.controllers")
@@ -82,6 +85,90 @@ class StreamFilter(cherrypy.filters.basefilter.BaseFilter):
 
 
 ########################################################################
+# AMF <=> TurboGears Gateway
+
+
+class TurboGearsGateway(gateway.BaseGateway):
+
+
+    strict = False
+    controller = None
+
+
+    def __init__(
+        self, 
+        controller=None,
+        *args, 
+        **kw):
+
+        gateway.BaseGateway.__init__(self, *args, **kw);
+
+        self.controller = controller
+
+
+    def getResponse(self, request, rq):
+        #print "TurboGearsGateway getResponse making response"
+        response = remoting.Envelope(rq.amfVersion, rq.clientType)
+
+        for name, message in rq:
+            #print "Getting processor for message", message
+            processor = self.getProcessor(message)
+            #print "Got processor", processor
+            #print "Calling processor with message", message, "request", request
+            result = processor(message)
+            #print "Got result", result
+            #print "Store result name", name, "for message"
+            response[name] = result
+
+        return response
+
+
+    def __call__(self, request):
+
+        body = request.body.read()
+        stream = None
+
+        context = pyamf.get_context(pyamf.AMF0)
+
+        # Decode the request
+        try:
+            rq = remoting.decode(body, context, strict=self.strict)
+        except (pyamf.DecodeError, EOFError):
+            self.controller.fatalError(
+                400,
+                "Bad Request\n\nThe request body was unable to " \
+                "be successfully decoded.")
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except:
+            self.controller.fatalError(
+                500,
+                "Internal server error decoding request.")
+
+        # Process the request
+        if True: #try:
+            response = self.getResponse(request, rq)
+        #except (KeyboardInterrupt, SystemExit):
+        #    raise
+        #except Exception, e:
+        #    self.controller.fatalError(
+        #        500,
+        #        "Internal server error getting response.")
+
+        # Encode the response
+        try:
+            stream = remoting.encode(response, context, strict=self.strict)
+        except:
+            self.controller.fatalError(
+                500,
+                "Internal server error encoding response.")
+
+        response = stream.getvalue()
+
+        return response
+
+
+########################################################################
 # Root controller class.
 
 
@@ -99,6 +186,27 @@ class Root(controllers.RootController):
     #
     def __init__(self, *args, **kw):
         super(Root, self).__init__(*args, **kw)
+
+        gateway = TurboGearsGateway(self)
+        self.gateway = gateway
+
+        gateway.addService(
+            self.startSessionService,
+            name='micropolis.startSession',
+            description='Start a Micropolis session.',
+            expose_request=True)
+
+        gateway.addService(
+            self.pollService,
+            name='micropolis.poll',
+            description='Poll the simulation.',
+            expose_request=True)
+
+        gateway.addService(
+            self.echoService,
+            name='micropolis.echo',
+            description='Echo the parameter.',
+            expose_request=True)
 
         self.initMicropolis()
 
@@ -360,48 +468,6 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # micropolisPoll
-    #
-    # Poll the session.
-    #
-    @expose(
-        template="micropolis.templates.micropolisPoll",
-        content_type="text/xml")
-    @validate(validators = {
-        'ref': validators.Int(),
-    })
-    def micropolisPoll(
-        self,
-        sessionID='',
-        ref=0,
-        body='',
-        **kw):
-
-        global request
-        method = request.method
-        if method != 'POST':
-            self.expectationFailed("Expected post.");
-
-        if not sessionID:
-            self.expectationFailed("Invalid sessionID parameter.");
-        session = self.getSession(sessionID)
-
-        # FIXME: should get this from the post reqest body, but that doesn't work.
-        #print "BODY", body
-        try:
-            poll = StringToElement(body)
-        except Exception, e:
-            self.expectationFailed("Error parsing XML body: " + str(e))
-
-        messages = session.handlePoll(poll)
-
-        return {
-            'ref': ref,
-            'messages': messages,
-        }
-
-
-    ########################################################################
     # micropolisGetMapPicture
     #
     # Get a picture of the session's map.
@@ -584,11 +650,44 @@ class Root(controllers.RootController):
         self,
         **kw):
 
-        print "AMF GATEWAY", kw
+        response = self.gateway(request)
 
-        # @todo: Integrate PyAMF module here.
+        #print "RESPONSE", response
 
-        return ""
+        return response
+
+
+    def startSessionService(self, ignore):
+        session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
+        print "STARTSESSIONSERVICE", "sessionID", session
+        return session.sessionID
+
+
+    def pollService(self, ignore, pollDict):
+        #print "POLLSERVICE", "pollDict", pollDict
+        sessionID = str(pollDict['sessionID'])
+        ref = pollDict['ref']
+        messages = pollDict['messages']
+
+        #print "SESSIONID", sessionID
+        if not sessionID:
+            self.expectationFailed("Invalid sessionID parameter.");
+        session = self.getSession(sessionID)
+
+        #print "Calling session.handlePoll", pollDict
+        messages = session.handlePoll(pollDict)
+        #print "Called session.handlePoll"
+
+        return {
+            'ref': ref,
+            'sessionID': sessionID,
+            'messages': messages,
+        }
+
+
+    def echoService(self, ignore, param):
+        print "ECHOSERVICE", "param", param
+        return param
 
 
 ########################################################################

@@ -99,7 +99,7 @@ class MicropolisNoticePanel(gtk.Frame):
 
         engine.expressInterest(
             self,
-            ('gamemode',))
+            ('gameMode',))
 
         # Views
 
@@ -128,7 +128,7 @@ class MicropolisNoticePanel(gtk.Frame):
 
         engine = self.engine
 
-        if name == 'gamemode':
+        if name == 'gameMode':
             
             self.updateMapViewAdded()
 

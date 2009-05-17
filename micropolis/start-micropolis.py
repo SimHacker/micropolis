@@ -10,8 +10,8 @@ proper start script.
 import sys, os
 from micropolis.commands import start, ConfigurationError
 
-#print "Redirecting stderr to /dev/null ..."
-#sys.stderr = open('/dev/null', 'w')
+print "Redirecting stderr to /dev/null ..."
+sys.stderr = open('/dev/null', 'w')
 
 sys.path.append(
     os.path.normpath(

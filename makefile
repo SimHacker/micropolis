@@ -61,17 +61,9 @@
 
 ########################################################################
 
-all:
-	echo "Nothing to make (yet)."
-
 clean:
-	rm -rf \
-	    *{.py[co],~} \
-	    micropolis/*{.py[co],~} \
-	    micropolis/templates/*{.py[co],~} \
-	    tests/*{.py[co],~}
-
-install: all
-	echo "Nothing to install (yet)."
+	cd MicropolisCore ; make clean
+	cd micropolis ; make clean
+	cd laszlo ; make clean
 
 ########################################################################

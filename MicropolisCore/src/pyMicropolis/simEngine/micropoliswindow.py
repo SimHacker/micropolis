@@ -126,7 +126,7 @@ class MicropolisPanedWindow(gtk.Window):
 
         engine.expressInterest(
             self,
-            ('gamemode',))
+            ('gameMode',))
 
         # Make the big map view.
 
@@ -268,7 +268,7 @@ class MicropolisPanedWindow(gtk.Window):
 
     def update(self, name, *args):
 
-        if name == 'gamemode':
+        if name == 'gameMode':
 
             engine = self.engine
             gameMode = engine.gameMode

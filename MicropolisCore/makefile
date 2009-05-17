@@ -65,11 +65,7 @@ all:
 	echo "Nothing to make (yet)."
 
 clean:
-	rm -rf \
-	    *{.py[co],~} \
-	    micropolis/*{.py[co],~} \
-	    micropolis/templates/*{.py[co],~} \
-	    tests/*{.py[co],~}
+	cd src ; make clean
 
 install: all
 	echo "Nothing to install (yet)."

@@ -397,8 +397,6 @@ void Micropolis::init()
     // graph.cpp
 
 
-    newGraph = false;
-
     graph10Max = 0;
     graph120Max = 0;
 

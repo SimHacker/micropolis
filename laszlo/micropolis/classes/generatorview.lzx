@@ -36,7 +36,9 @@
 	>
 
 	    <method name="generateMap"><![CDATA[
-		gApp.sendCommand('<command name="generateCity"/>');
+		gApp.sendMessage({
+		    message: 'generateCity'
+		});
 		gApp.setAttribute("title", "Generated Map");
 		gApp.setAttribute("description", "Generated a new random map.");
 	      ]]>

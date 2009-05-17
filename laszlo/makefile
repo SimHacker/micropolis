@@ -66,11 +66,9 @@ all:
 
 clean:
 	rm -rf \
-	    *{.py[co],~} \
-	    micropolis/*{.py[co],~} \
-	    micropolis/templates/*{.py[co],~} \
-	    tests/*{.py[co],~}
-
+	    */*~ \
+	    */*/*~ \
+	    micropolis/micropolis/*.lzx.*.swf
 install: all
 	echo "Nothing to install (yet)."
 

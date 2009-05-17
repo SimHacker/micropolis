@@ -42,7 +42,7 @@
 
 
 	<method name="setOverlayStyle" args="overlay"><![CDATA[
-	    Debug.write("overlaysview setOverlayStyle", overlay);
+	    //Debug.write("overlaysview setOverlayStyle", overlay);
 	    if (gApp.overlay != overlay) {
 	        gApp.setAttribute("overlay", overlay);
 	    }
