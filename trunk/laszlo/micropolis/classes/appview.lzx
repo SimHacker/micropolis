@@ -869,7 +869,7 @@
                     }
                     var methodName = "handle_" + messageName;
                     var method = this[methodName];
-                    //Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
+                    Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
                     if (!method) {
                         Debug.write("Undefined message:", messageName, message);
                         continue;
@@ -1180,6 +1180,20 @@
 	        message: 'sendChatText',
 		chatText: chatText
 	    })
+          ]]>
+        </method>
+
+
+        <method name="handle_UIChatMessage" args="args"><![CDATA[
+	    var from = args['from'];
+	    var text = args['text'];
+	    var message = 
+		'<b>' +
+	        this.escapeHTML(from + '> ') +
+		'</b>' +
+		this.escapeHTML(text);
+	    Debug.write("CHATMESSAGE", message);
+	    gMessageView.addMessage(message);
           ]]>
         </method>
 
