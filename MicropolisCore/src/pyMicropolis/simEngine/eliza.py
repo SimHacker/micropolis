@@ -85,6 +85,7 @@ gPats = [
   [r'I need (.*)',
   [  "Why do you need %1?",
     "Would it really help you to get %1?",
+    "Do you want %l for your city?",
     "Are you sure you need %1?"]],
   
   [r'Why don\'?t you ([^\?]*)\??',
@@ -106,12 +107,14 @@ gPats = [
   [r'I am (.*)',
   [  "Did you come to me because you are %1?",
     "How long have you been %1?",
+    "Do you project %l onto your city?",
     "How do you feel about being %1?"]],
   
   [r'I\'?m (.*)',
   [  "How does being %1 make you feel?",
     "Do you enjoy being %1?",
     "Why do you tell me you're %1?",
+    "Is your city %l?",
     "Why do you think you're %1?"]],
   
   [r'Are you ([^\?]*)\??',
@@ -155,6 +158,11 @@ gPats = [
     "When you think of a friend, what comes to mind?",
     "Why don't you tell me about a childhood friend?"]],
   
+  [r'(.*) city (.*)',
+  [  "Tell me more about your city.",
+    "When you think of a city, what comes to mind?",
+    "Why don't you tell me about a childhood city?"]],
+  
   [r'Yes',
   [  "You seem quite sure.",
     "OK, but can you elaborate a bit?"]],
@@ -168,6 +176,7 @@ gPats = [
   [r'Is it (.*)',
   [  "Do you think it is %1?",
     "Perhaps it's %1 -- what do you think?",
+    "Is your city %l?",
     "If it were %1, what would you do?",
     "It could well be that %1."]],
   
@@ -247,14 +256,14 @@ gPats = [
     "What was your relationship with your mother like?",
     "How do you feel about your mother?",
     "How does this relate to your feelings today?",
-    "Good family relations are important."]],
+    "Good city relations are important."]],
   
   [r'(.*) father(.*)',
   [  "Tell me more about your father.",
     "How did your father make you feel?",
     "How do you feel about your father?",
     "Does your relationship with your father relate to your feelings today?",
-    "Do you have trouble showing affection with your family?"]],
+    "Do you have trouble showing affection with your city?"]],
 
   [r'(.*) child(.*)',
   [  "Did you have close friends as a child?",
@@ -276,7 +285,7 @@ gPats = [
   
   [r'(.*)',
   [  "Please tell me more.",
-    "Let's change focus a bit... Tell me about your family.",
+    "Let's change focus a bit... Tell me about your city.",
     "Can you elaborate on that?",
     "Why do you say that %1?",
     "I see.",
