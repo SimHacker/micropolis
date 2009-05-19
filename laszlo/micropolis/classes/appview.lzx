@@ -61,7 +61,6 @@
         <attribute name="gameLevel" value="0"/>
         <attribute name="message" value="null"/>
         <attribute name="evaluation" value="null"/>
-        <attribute name="history" value="null"/>
         <attribute name="taxRate" type="number" value="7"/>
         <attribute name="roadPercent" type="number" value="100"/>
         <attribute name="roadFund" type="number" value="0"/>
@@ -75,6 +74,7 @@
         <attribute name="gameMode" type="string" value="disconnected"/>
         <attribute name="gap" value="5"/>
         <attribute name="nextUniqueID" value="1"/>
+	<attribute name="objectIDs" value="$once{{}}"/>
         <attribute name="interests" value="$once{{}}"/>
         <attribute name="overlay" type="string" value="all"/>
         <attribute name="aboutURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/About"/>
@@ -91,10 +91,12 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-                'funds', 'date', 'history', 'evaluation', 'paused',
-                'passes', 'delay', 'demand', 'options',
-                'gameLevel', 'cityName', 'taxRate', 'budget',
-                'message', 'virtualSpeed', 'tileview',
+                'funds', 'date', 'history', 'evaluation', 
+		'paused', 'passes', 'delay', 'demand', 
+		'options', 'gameLevel', 'cityName', 
+		'taxRate', 'budget',
+                'message', 'virtualSpeed', 
+		'tileview', 'historyview'
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -320,7 +322,7 @@
                 }
 
                 case 'history': {
-                    this.setAttribute('history', args['history']);
+		    //Debug.write("UIUpdate history obsolete!");
                     break;
                 }
 
@@ -428,15 +430,16 @@
 
                 case 'tileview':
                 {
-                    var tileviewID = args['id'];
+                    var id = args['id'];
+		    var tv = this.objectIDs[id];
                     var col = args['col'];
                     var row = args['row'];
                     var cols = args['cols'];
                     var rows = args['rows'];
-                    var format = args['format'];
+                    var code = args['code'];
                     var tiles = args['tiles'];
 
-                    //Debug.write("UPDATE TILEVIEW", tileviewID, col, row, cols, rows, format, tiles);
+                    //Debug.write("UPDATE TILEVIEW", tileviewID, col, row, cols, rows, code, typeof(tiles), tiles.length);
 
                     if ((rows > 0) &&
                         (cols > 0) &&
@@ -446,9 +449,21 @@
                             row,
                             cols,
                             rows,
-                            format,
+                            code,
                             tiles);
                     }
+                    break;
+                }
+
+                case 'historyview':
+                {
+		    //Debug.write("UPDATE HISTORYVIEW", args);
+                    var id = args['id'];
+		    var hv = this.objectIDs[id];
+		    //Debug.write("hv", hv);
+
+		    hv.setAttribute("history", args);
+
                     break;
                 }
 
@@ -472,6 +487,15 @@
                 }
             }
             return -1;
+          ]]>
+        </method>
+
+
+        <method name="escapeHTML" args="str"><![CDATA[
+	    str = str.split('&').join('&amp;');
+	    str = str.split('<').join('&lt;');
+	    str = str.split('>').join('&gt;');
+	    return str;
           ]]>
         </method>
 
@@ -505,6 +529,18 @@
             this.animateStart();
 
             this.updateMap();
+          ]]>
+        </method>
+
+
+        <method name="endSession"><![CDATA[
+            this.setAttribute("gameMode", "disconnected");
+            this.setAttribute("connected", false);
+            this.setAttribute("connecting", false);
+            this.setAttribute("connectionFailed", false);
+            this.setAttribute("sessionID", null);
+            this.pollStop();
+            this.animateStop();
           ]]>
         </method>
 
@@ -867,17 +903,17 @@
         </method>
 
 
-        <method name="updateTiles" args="col, row, cols, rows, format, tiles"><![CDATA[
-            //Debug.write("row", row, "col", col, "rows", rows, "cols", cols, "format", format);
+        <method name="updateTiles" args="col, row, cols, rows, code, tiles"><![CDATA[
+            //Debug.write("row", row, "col", col, "rows", rows, "cols", cols, "code", code);
             //Debug.write("tiles.length", tiles.length, tiles.substr(0, 20));
 
             var tileDictRows = this.tileDictRows;
             var codeMap = this.codeMap;
             var aniTiles = gAniTiles;
 
-            switch (format) {
+            switch (code) {
 
-                case 0: {
+                case 0: { // Raw Text: TILE_CODE_RAW_TEXT
                     var lastCol = col + cols;
                     var lastRow = row + rows;
                     var r, c;
@@ -885,12 +921,12 @@
                     for (r = row; r < lastRow; r++) {
                         var tileDictRow = tileDictRows[r];
                         for (c = col; c < lastCol; c++) {
-                            var c1 = 
+                            var high = 
                                 tiles.substr(codeOffset, 1);
-                            var c2 =
+                            var low =
                                 tiles.substr(codeOffset + 1, 1);
                             var tileIndex = 
-                                (((codeMap[c2] * 64) + codeMap[c1]) & 1023);
+                                (((codeMap[high] * 64) + codeMap[low]) & 1023);
 
                             var tileDict = tileDictRow[c];
                             if (!tileDict) {
@@ -900,8 +936,10 @@
                                 tileDictRow[c] = tileDict;
                             }
 
-                            tileDict['index'] = tileIndex;
-                            tileDict['animated'] = aniTiles[tileIndex] != tileIndex;
+                            tileDict['index'] = 
+			        tileIndex;
+                            tileDict['animated'] = 
+			        aniTiles[tileIndex] != tileIndex;
 
                             codeOffset += 2;
                         }
@@ -909,54 +947,62 @@
                     break;
                 }
 
-                case 1: {
+                case 1: { // Compressed Text: TILE_CODE_COMPRESSED_TEXT
                     var tileOffset = 0;
                     var tileOffsetMax = rows * cols;
                     var codeOffset = 0;
                     var codeOffsetMax = tiles.length;
 
-                    function getNumber1()
+                    function getTextNumber1()
                     {
-                        var c1 = tiles.substr(codeOffset, 1);
+                        var low = tiles.substr(codeOffset, 1);
                         codeOffset += 1;
-                        return codeMap[c1];
+                        return codeMap[low];
                     }
 
-                    function getNumber2()
+                    function getTextNumber2()
                     {
-                        var c1 = tiles.substr(codeOffset, 1);
-                        var c2 = tiles.substr(codeOffset + 1, 1);
+                        var high = tiles.substr(codeOffset, 1);
+                        var low = tiles.substr(codeOffset + 1, 1);
                         codeOffset += 2;
-                        return codeMap[c1] + (codeMap[c2] * 64);
+                        return ((codeMap[high] * 64) +
+			        codeMap[low]);
                     }
 
-                    function getNumber3()
+                    function getTextNumber3()
                     {
-                        var c1 = tiles.substr(codeOffset, 1);
-                        var c2 = tiles.substr(codeOffset + 1, 1);
-                        var c3 = tiles.substr(codeOffset + 2, 1);
+                        var low = tiles.substr(codeOffset, 1);
+                        var high = tiles.substr(codeOffset + 1, 1);
+                        var higher = tiles.substr(codeOffset + 2, 1);
                         codeOffset += 3;
-                        return codeMap[c1] + (codeMap[c2] * 64) + (codeMap[c2] * 4096);
+                        return ((codeMap[higher] * 4096) + 
+			        (codeMap[high] * 64) + 
+				codeMap[low]);
                     }
 
                     var charHandlers = {
-                        '.': function() { tileOffset += 1; },
-                        ':': function() { tileOffset += 2; },
-                        ',': function() { tileOffset += 3; },
-                        ';': function() { tileOffset += 4; },
-                        '!': function() { tileOffset += getNumber1() + 2; },
-                        '@': function() { tileOffset += getNumber2() + 2; },
-                        '#': function() { tileOffset += getNumber3() + 2; }
+                        '.': function() {
+			    tileOffset += 1;
+			},
+                        '!': function() {
+			    tileOffset += getTextNumber1();
+			},
+                        '@': function() {
+			    tileOffset += getTextNumber2();
+			},
+                        '#': function() {
+			    tileOffset += getTextNumber3();
+			}
                     };
 
                     while ((tileOffset >= 0) && 
                            (tileOffset < tileOffsetMax) &&
                            (codeOffset < codeOffsetMax)) {
 
-                        var c1 = tiles.substr(codeOffset, 1);
+                        var high = tiles.substr(codeOffset, 1);
                         codeOffset++;
 
-                        var charHandler = charHandlers[c1];
+                        var charHandler = charHandlers[high];
                         if (charHandler) {
                             charHandler();
                             continue;
@@ -966,7 +1012,7 @@
                         codeOffset++;
 
                         var tileIndex = 
-                            (codeMap[c1] + (codeMap[c2] * 64));
+                            (codeMap[high] * 64) + codeMap[low];
 
                         var c = tileOffset % cols;
                         var r = Math.floor(tileOffset / cols);
@@ -981,8 +1027,80 @@
                             tileDictRow[col + c] = tileDict;
                         }
 
-                        tileDict['index'] = tileIndex;
-                        tileDict['animated'] = aniTiles[tileIndex] != tileIndex;
+                        tileDict['index'] = 
+			    tileIndex;
+                        tileDict['animated'] = 
+			    aniTiles[tileIndex] != tileIndex;
+
+                        tileOffset++;
+
+                    }
+                    break;
+                }
+
+                case 2: { // Compressed Binary 16: TILE_CODE_COMPRESSED_BINARY_16
+                    var tileOffset = 0;
+                    var tileOffsetMax = rows * cols;
+                    var codeOffset = 0;
+                    var codeOffsetMax = tiles.length;
+
+                    function getBinaryNumber1()
+                    {
+                        var low = tiles.charCodeAt(codeOffset) & 0xff;
+                        codeOffset += 1;
+                        return low;
+                    }
+
+                    function getBinaryNumber2()
+                    {
+                        var high = tiles.charCodeAt(codeOffset) & 0xff;
+                        var low = tiles.charCodeAt(codeOffset + 1) & 0xff;
+                        codeOffset += 2;
+                        return (high * 256) + low;
+                    }
+
+                    var charHandlers = {
+                        0xff: function() { tileOffset += 1; },
+                        0xfe: function() { tileOffset += getBinaryNumber1() + 3; },
+                        0xfd: function() { tileOffset += getBinaryNumber2() + 259; }
+                    };
+
+                    while ((tileOffset >= 0) && 
+                           (tileOffset < tileOffsetMax) &&
+                           (codeOffset < codeOffsetMax)) {
+
+                        var high = tiles.charCodeAt(codeOffset) & 0xff;
+                        codeOffset++;
+
+                        var charHandler = charHandlers[high];
+                        if (charHandler) {
+                            charHandler();
+                            continue;
+                        }
+
+                        var low = tiles.charCodeAt(codeOffset) & 0xff;
+                        codeOffset++;
+
+                        var tileIndex = 
+                            (high * 256) + low;
+
+                        var c = tileOffset % cols;
+                        var r = Math.floor(tileOffset / cols);
+
+                        var tileDictRow = tileDictRows[row + r];
+                        var tileDict = tileDictRow[col + c];
+
+                        if (!tileDict) {
+                            tileDict = {
+                                'animationTicks': -1
+                            };
+                            tileDictRow[col + c] = tileDict;
+                        }
+
+                        tileDict['index'] = 
+			    tileIndex;
+                        tileDict['animated'] = 
+			    aniTiles[tileIndex] != tileIndex;
 
                         tileOffset++;
 
@@ -1053,6 +1171,15 @@
             lz.Browser.loadURL(
                 this.aboutURL,
                 '_blank');
+          ]]>
+        </method>
+
+
+        <method name="sendChatText" args="chatText"><![CDATA[
+            this.sendMessage({
+	        message: 'sendChatText',
+		chatText: chatText
+	    })
           ]]>
         </method>
 

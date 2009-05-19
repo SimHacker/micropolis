@@ -21,6 +21,7 @@
         <attribute name="viewRow" value="0"/>
         <attribute name="viewCols" value="0"/>
         <attribute name="viewRows" value="0"/>
+	<attribute name="code" value="2"/>
         <attribute name="viewX" value="${-(this.container.x / this.viewTileSize)}"/>
         <attribute name="viewY" value="${-(this.container.y / this.viewTileSize)}"/>
         <attribute name="viewWidth" value="${this.width / this.viewTileSize}"/>
@@ -56,6 +57,7 @@
             //Debug.write("tileview init", this);
 
             this.uniqueID = gApp.makeUniqueID();
+	    gApp.objectIDs[this.uniqueID] = this;
 
             this.updateInterests();
           ]]>
@@ -435,7 +437,8 @@
 		viewX: this.viewX,
 		viewY: this.viewY,
 		viewWidth: this.viewWidth,
-		viewHeight: this.viewHeight
+		viewHeight: this.viewHeight,
+		code: this.code
 	    };
           ]]>
         </method>

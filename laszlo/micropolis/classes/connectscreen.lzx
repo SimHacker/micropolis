@@ -46,12 +46,20 @@
 	    width="${parent.width}"
 	/>
 
+	<text
+	    visible="${gApp.connectionFailed}"
+	    text="${'Status: ' + gRemoteServer.status}"
+	    fontsize="28"
+	    multiline="true"
+	    width="${parent.width}"
+	/>
+
 	<button
 	    visible="${gApp.connectionFailed}"
 	    fontsize="32"
 	    fontstyle="bold"
 	    text="Reconnect"
-	    onclick="gApp.requestStartSession()"
+	    onclick="gApp.sendStartSession()"
 	/>
 
 

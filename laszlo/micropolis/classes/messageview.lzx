@@ -15,6 +15,7 @@
 	<attribute name="active" value="true"/>
         <attribute name="messages" value="$once{[]}"/>
 	<attribute name="maxMessages" value="100"/>
+	<attribute name="gap" value="5"/>
 
 
 	<handler name="onmessage" reference="gApp"><![CDATA[
@@ -55,27 +56,63 @@
 	        messages.shift();
 	    }
 	    var html = messages.join('<br/>');
-	    var t = this.t;
-	    t.setAttribute("text", html);
-	    var viewHeight = this.height;
-	    var textHeight = t.height;
-	    var textBottom = t.y + textHeight;
+	    var textView = this.v.textView;
+	    textView.setAttribute("text", html);
+	    var viewHeight = this.v.height;
+	    var textHeight = textView.height;
+	    var textBottom = textView.y + textHeight;
 	    var pastBottom = textBottom - viewHeight;
 	    if (pastBottom < viewHeight) {
-	        t.setAttribute("y", -textHeight + viewHeight);
+	        textView.setAttribute("y", -textHeight + viewHeight);
 	    }
 	  ]]>
 	</method>
 
 
-	<vscrollbar/>
+	<method name="enterText" args="text"><![CDATA[
+	    gApp.sendChatText(text);
+	    text = gApp.escapeHTML(text);
+	    this.addMessage('<b>' + text + '</b>');
+	  ]]>
+	</method>
 
-	<text name="t"
-	    multiline="true"
-	    text=""
-	    width="${parent.width - 20}"
-	/>
 
+	<view name="v"
+	    width="${parent.width}"
+	    height="${parent.textField.y - parent.gap}"
+	    clip="true"
+	>
+
+	    <vscrollbar/>
+
+	    <text name="textView"
+		multiline="true"
+		selectable="true"
+		text=""
+		width="${parent.width - 20}"
+	    />
+
+	</view>
+
+	<edittext name="textField" id="gTextField"
+	    x="0"
+	    y="${parent.height - this.height}"
+	    width="${parent.width}"
+	    height="28"
+	    fontsize="14"
+	    fontstyle="bold"
+	>
+
+	    <handler name="onkeydown" args="key"><![CDATA[
+	        //Debug.write("textField onkeydown", key);
+		if (key == 13) {
+		   classroot.enterText(this.text);
+		   this.setAttribute("text", "");
+		}
+	      ]]>
+	    </handler>
+
+	</edittext>
 
     </class>
 

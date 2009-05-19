@@ -24,7 +24,7 @@ import xml.etree.ElementTree as ElementTree
 #import xml.etree.cElementTree as ElementTree
 from StringIO import StringIO
 import pyamf
-from pyamf import remoting
+from pyamf import remoting, amf0, amf3
 from pyamf.remoting import gateway
 
 import logging
@@ -71,7 +71,7 @@ class StreamFilter(cherrypy.filters.basefilter.BaseFilter):
     #
     def before_request_body(self):
 
-        print "STREAMFILTER BEFORE_REQUEST_BODY PATH", cherrypy.request.path
+        #print "STREAMFILTER BEFORE_REQUEST_BODY PATH", cherrypy.request.path
         if cherrypy.request.path == '/micropolisPoll':
             # If you don't check that it is a post method the server might lock up
             # we also check to make sure something was submitted
@@ -80,7 +80,7 @@ class StreamFilter(cherrypy.filters.basefilter.BaseFilter):
                 raise cherrypy.HTTPRedirect('/')
             else:
                 # Tell CherryPy not to parse the POST data itself for this URL
-                print "Don't process request body!", cherrypy.request.processRequestBody
+                #print "Don't process request body!", cherrypy.request.processRequestBody
                 cherrypy.request.processRequestBody = False
 
 
@@ -92,6 +92,8 @@ class TurboGearsGateway(gateway.BaseGateway):
 
 
     strict = False
+    #objectEncoding = pyamf.AMF3
+    objectEncoding = pyamf.AMF0
     controller = None
 
 
@@ -128,22 +130,23 @@ class TurboGearsGateway(gateway.BaseGateway):
         body = request.body.read()
         stream = None
 
-        context = pyamf.get_context(pyamf.AMF0)
+        context = pyamf.get_context(self.objectEncoding)
+        #print "CONTEXT", context
 
         # Decode the request
-        try:
+        if True:#try:
             rq = remoting.decode(body, context, strict=self.strict)
-        except (pyamf.DecodeError, EOFError):
-            self.controller.fatalError(
-                400,
-                "Bad Request\n\nThe request body was unable to " \
-                "be successfully decoded.")
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
-            self.controller.fatalError(
-                500,
-                "Internal server error decoding request.")
+        #except (pyamf.DecodeError, EOFError):
+        #    self.controller.fatalError(
+        #        400,
+        #        "Bad Request\n\nThe request body was unable to " \
+        #        "be successfully decoded.")
+        #except (KeyboardInterrupt, SystemExit):
+        #    raise
+        #except Exception, e:
+        #    self.controller.fatalError(
+        #        500,
+        #        "Internal server error decoding request: " + str(e))
 
         # Process the request
         if True: #try:
@@ -156,12 +159,12 @@ class TurboGearsGateway(gateway.BaseGateway):
         #        "Internal server error getting response.")
 
         # Encode the response
-        try:
+        if True:#try:
             stream = remoting.encode(response, context, strict=self.strict)
-        except:
-            self.controller.fatalError(
-                500,
-                "Internal server error encoding response.")
+        #except:
+        #    self.controller.fatalError(
+        #        500,
+        #        "Internal server error encoding response.")
 
         response = stream.getvalue()
 
@@ -678,6 +681,8 @@ class Root(controllers.RootController):
         messages = session.handlePoll(pollDict)
         #print "Called session.handlePoll"
 
+        #print "POLL MESSAGES", messages
+
         return {
             'ref': ref,
             'sessionID': sessionID,
@@ -686,7 +691,7 @@ class Root(controllers.RootController):
 
 
     def echoService(self, ignore, param):
-        print "ECHOSERVICE", "param", param
+        #print "ECHOSERVICE", "param", param
         return param
 
 

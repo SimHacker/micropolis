@@ -12,6 +12,7 @@
     >
 
 
+	<attribute name="history" value="null"/>
 	<attribute name="active" value="true"/>
         <attribute name="uniqueID" value="null"/>
 	<attribute name="yearLabels" value="$once{[]}"/>
@@ -45,6 +46,7 @@
 	<attribute name="border" value="3"/>
 	<attribute name="historyScale" value="1"/>
 	<attribute name="historyCount" value="120"/>
+	<attribute name="historyOffset" value="0"/>
 	<attribute name="historyTypeCount" value="6"/>
 	<attribute name="historyScaleCount" value="2"/>
 	<attribute name="fillColorNormal" value="0xb0b0b0"/>
@@ -58,6 +60,7 @@
 	<handler name="oninit" args="arg"><![CDATA[
 	    //Debug.write("==== historyview oninit", this);
             this.uniqueID = gApp.makeUniqueID();
+	    gApp.objectIDs[this.uniqueID] = this;
             this.updateInterests();
 	  ]]>
 	</handler>
@@ -99,7 +102,7 @@
 	</handler>
 
 
-	<handler name="onhistory" args="arg" reference="gApp"><![CDATA[
+	<handler name="onhistory" args="history"><![CDATA[
 	    if (this.inited) {
 	        this.redrawSoon();
 	    }
@@ -126,7 +129,9 @@
 		scale: this.historyScale,
 		count: this.historyCount,
 		offset: this.historyOffset,
-		types: this.historyTypes
+		types: this.historyTypes,
+		width: this.width,
+		height: this.height
             };
           ]]>
         </method>
@@ -224,44 +229,21 @@
 
 
 	<method name="drawHistory"><![CDATA[
-	    //Debug.write("==== DRAWHISTORY");
-	    var history = gApp.history;
+	    var history = this.history;
+	    //Debug.write("==== DRAWHISTORY", history);
 
 	    if (!history) {
 	        return;
 	    }
 
-	    var scales = history['scales'];
-
 	    var dv = this.v.dv;
 
-	    var historyTypes = this.historyTypes;
-
+	    var histories = history['histories'];
 	    var historyRect = this.getHistoryRect();
 	    var histX = historyRect[0];
 	    var histY = historyRect[1];
 	    var histWidth = historyRect[2];
 	    var histHeight = historyRect[3];
-
-	    function getHistoryRange(scale, type)
-	    {
-	        var scaleDict = scales[scale];
-		var histories = scaleDict['histories'];
-		var historyDict = histories[type];
-		var range = historyDict['valueRange'];
-		return range;
-	    }
-
-	    function getHistory(scale, type, index)
-	    {
-	        var scaleDict = scales[scale];
-		var histories = scaleDict['histories'];
-		var historyDict = histories[type];
-		var valueScale = historyDict['valueScale'];
-		var values = historyDict['values'];
-		var val = values[index];
-		return val * valueScale;
-	    }
 
 	    // Draw background.
 
@@ -291,135 +273,10 @@
 	    dv.fillStyle = this.fillColorNormal;
 	    dv.fill();
 
-	    // Draw histories.
-
-	    // Scale the residential, commercial and industrial histories
-	    // together relative to the max of all three.  Up to 128 they
-	    // are not scaled. Starting at 128 they are scaled down so the
-	    // maximum is always at the top of the history.
-
-	    function calcScale(maxVal)
-	    {
-		if (maxVal < 128) {
-		    maxVal = 0;
-		}
-		if (maxVal > 0) {
-		    return 128.0 / maxVal;
-		} else {
-		    return 1.0;
-		}
-	    }
-
-	    var range;
-
-	    range = getHistoryRange(
-		historyScale,
-		0);
-	    //Debug.write("GETHISTORYRANGE", historyScale, 0, range);
-	    var resHistoryMin = range[0];
-	    var resHistoryMax = range[1];
-
-	    range = getHistoryRange(
-		historyScale,
-		1);
-	    var comHistoryMin = range[0];
-	    var comHistoryMax = range[1];
-
-	    range = getHistoryRange(
-		historyScale,
-		2);
-	    var indHistoryMin = range[0];
-	    var indHistoryMax = range[1];
-
-	    var allMax = 
-	        Math.max(
-		    resHistoryMax,
-		    Math.max(
-		        comHistoryMax,
-			indHistoryMax));
-
-	    var rciScale = calcScale(allMax);
-
-	    // Scale the money, crime and pollution histories
-	    // independently of each other.
-
-	    range = getHistoryRange(
-		historyScale,
-		3);
-	    var moneyHistoryMin = range[0];
-	    var moneyHistoryMax = range[1];
-
-	    range = getHistoryRange(
-		historyScale,
-		4);
-	    var crimeHistoryMin = range[0];
-	    var crimeHistoryMax = range[1];
-
-	    range = getHistoryRange(
-		historyScale,
-		5);
-	    var pollutionHistoryMin = range[0];
-	    var pollutionHistoryMax = range[1];
-
-	    var moneyScale = calcScale(moneyHistoryMax);
-	    var crimeScale = calcScale(crimeHistoryMax);
-	    var pollutionScale = calcScale(pollutionHistoryMax);
-
-	    var historyRange = 128.0
-	    var scaleValues = [
-		rciScale, rciScale, rciScale, // res, com, ind
-		moneyScale, crimeScale, pollutionScale, // money, crime, pollution
-	    ];
-
-	    var i;
-	    var n = historyTypes.length;
-	    for (i = 0; i < n; i++) {
-	        var historyType = historyTypes[i];
-
-		var scaleValue = scaleValues[historyType];
-
-		var first = true;
-		dv.beginPath();
-
-		var historyIndex;
-		for (historyIndex = this.historyCount - 1;
-		     historyIndex >= 0;
-		     historyIndex -= 1) {
-
-		    var rawVal = getHistory(
-			historyScale,
-			historyType,
-			historyIndex);
-
-		    //var val = rawVal * scaleValue;
-		    var val = rawVal;
-
-		    var x = (
-		        histX +
-			(historyIndex * (histWidth / (this.historyCount - 1))));
-
-		    var y = (
-		        histY +
-			histHeight -
-			(val * (histHeight / historyRange)));
-
-		    if (first) {
-		        dv.moveTo(x, y);
-			first = false;
-		    } else {
-			dv.lineTo(x, y);
-		    }
-		}
-
-		dv.lineWidth = 2;
-		dv.strokeStyle = this.historyColors[historyType];
-		dv.stroke();
-	    }
-
 	    // Draw years.
 
-	    var year = gApp.year;
-	    var month = gApp.month;
+	    var year = history['year'];
+	    var month = history['month'];
 
 	    dv.lineWidth = 1;
 
@@ -427,6 +284,8 @@
 
 	    var sx = histWidth / 120.0;
 	    var r;
+
+	    var historyScale = history['scale'];
 
 	    if (historyScale == 0) {
 		var dur = 120;
@@ -449,6 +308,7 @@
 
 	    var yearLabels = this.yearLabels;
 	    var labelIndex;
+	    var i;
 	    for (i = r[0], labelIndex = 0; 
 	         i >= -dur;
 		 i += r[1], labelIndex++) {
@@ -526,6 +386,106 @@
 	    dv.strokeStyle = this.strokeColor;
 	    dv.lineWidth = 2;
 	    dv.stroke();
+
+	    // Draw histories.
+
+	    // Scale the residential, commercial and industrial histories
+	    // together relative to the max of all three.  Up to 128 they
+	    // are not scaled. Starting at 128 they are scaled down so the
+	    // maximum is always at the top of the history.
+
+	    function calcScale(maxVal)
+	    {
+		if (maxVal < 128) {
+		    maxVal = 0;
+		}
+		if (maxVal > 0) {
+		    return 128.0 / maxVal;
+		} else {
+		    return 1.0;
+		}
+	    }
+
+	    var history;
+	    var range;
+	    var historyCount = this.historyCount;
+	    var historyColors = this.historyColors;
+	    var historyRange = 128;
+	    var rciMax = 0;
+
+	    var scaleValues = [
+		0, 0, 0, 0, 0, 0
+	    ];
+
+	    var historyType;
+	    for (historyType = 0; historyType < 6; historyType++) {
+	        var historyDict = histories[historyType];
+	        if (!historyDict) {
+		    continue;
+		}
+
+		if (historyType < 3) {
+		    // Scale the residential, commercial and
+		    // industrial histories together.
+		    rciMax = Math.max(rciMax, val);
+		} else {
+		    // Scale the money, crime and pollution histories
+		    // independently of each other.
+		    scaleValues[historyType] =
+		        calcScale(historyDict['valueRange'][1]);
+		}
+	    }
+
+	    // Poke in the residential, commercial and industrial
+	    // values scaled together.
+	    var rciScale = calcScale(rciMax);
+	    scaleValues[0] = rciScale;
+	    scaleValues[1] = rciScale;
+	    scaleValues[2] = rciScale;
+
+	    dv.lineWidth = 2;
+
+	    var historyType;
+	    for (historyType = 0; historyType < 6; historyType++) {
+	        var historyDict = histories[historyType];
+	        if (!historyDict) {
+		    continue;
+		}
+
+		dv.beginPath();
+
+		var scaleValue = scaleValues[historyType];
+		var valueScale = historyDict['valueScale'];
+		var values = historyDict['values'];
+		var first = true;
+		var historyIndex;
+		for (historyIndex = historyCount - 1;
+		     historyIndex >= 0;
+		     historyIndex -= 1) {
+
+		    var val = values[historyIndex] * valueScale;
+		    //var val = values[historyIndex] * scaleValue;
+
+		    var x = (
+		        histX +
+			(historyIndex * (histWidth / (historyCount - 1))));
+
+		    var y = (
+		        histY +
+			histHeight -
+			(val * (histHeight / historyRange)));
+
+		    if (first) {
+		        dv.moveTo(x, y);
+			first = false;
+		    } else {
+			dv.lineTo(x, y);
+		    }
+		}
+
+		dv.strokeStyle = historyColors[historyType];
+		dv.stroke();
+	    }
 
 	  ]]>
 	</method>
