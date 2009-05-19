@@ -80,6 +80,8 @@ import cairo
 from pyMicropolis.tileEngine import tileengine
 import micropolisengine
 import cherrypy
+import eliza
+
 
 ########################################################################
 # Globals
@@ -553,6 +555,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def __init__(self, *args, **kw):
         micropolisgenericengine.MicropolisGenericEngine.__init__(self, *args, **kw)
+        self.eliza = eliza.eliza()
 
 
     def initGamePython(self):
@@ -865,7 +868,15 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif message == 'sendChatText':
 
             chatText = messageDict['chatText']
-            print "CHAT", chatText # TODO
+            print "CHAT", chatText
+            chatResponse = self.eliza.respond(chatText)
+            print "RESPONSE", chatResponse
+            session.sendMessage({
+                'message': 'UIChatMessage',
+                'from': 'Eliza',
+                'text': chatResponse,
+                'collapse': False,
+            })
 
         elif message == 'tileview':
 

@@ -72,7 +72,7 @@
 	<method name="enterText" args="text"><![CDATA[
 	    gApp.sendChatText(text);
 	    text = gApp.escapeHTML(text);
-	    this.addMessage('<b>' + text + '</b>');
+	    this.addMessage('<b>Me> </b>' + text);
 	  ]]>
 	</method>
 
