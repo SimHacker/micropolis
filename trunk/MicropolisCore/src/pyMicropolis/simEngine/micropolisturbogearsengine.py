@@ -490,9 +490,10 @@ class Session(object):
         collapse = msg.get('collapse', False)
         #print "COLLAPSE", collapse
         if collapse:
+            id = msg.get('id', None)
             message = msg.get('message', '')
             variable = msg.get('variable', '')
-            key = (message, variable)
+            key = (message, variable, id)
             messagesSeen = self.messagesSeen
             if key in messagesSeen:
                 messagesSeen[key].update(msg)
@@ -861,6 +862,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 # responsible for sending us a move to the endpoint.
                 pass
 
+        elif message == 'sendChatText':
+
+            chatText = messageDict['chatText']
+            print "CHAT", chatText # TODO
+
         elif message == 'tileview':
 
             #print "MESSAGE TILEVIEW"
@@ -874,6 +880,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 viewY = messageDict['viewY']
                 viewWidth = messageDict['viewWidth']
                 viewHeight = messageDict['viewHeight']
+                code = messageDict['code']
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
@@ -889,8 +896,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 ((row + rows) > micropolisengine.WORLD_H)):
                 self.expectationFailed("Invalid parameters.")
 
-            code = 3
-            format = 1
+            #print "Calling getTileData", col, row, cols, rows, code
             tiles = self.tengine.getTileData(
                 None,
                 self.tileMap,
@@ -898,6 +904,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 cols, rows,
                 code,
                 session.tileViewCache)
+            #print "TILES", "code", code, "tiles", type(tiles), len(tiles), tiles
+            #t = tiles
+            #tiles = ByteArray()
+            #tiles.write(t)
+            #print "TILES NOW", type(tiles)
+            #print "TILES", tiles
 
             session.sendMessage({
                 'message': 'UIUpdate',
@@ -912,10 +924,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'viewWidth': viewWidth,
                 'viewHeight': viewHeight,
                 'tiles': tiles,
-                'format': format,
+                'code': code,
+                'collapse': True,
             })
 
         elif message == 'historyview':
+
+            #print "HISTORYVIEW", messageDict
 
             try:
                 id = messageDict['id']
@@ -923,10 +938,126 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 historyCount = messageDict['count']
                 historyOffset = messageDict['offset']
                 historyTypes = messageDict['types']
+                historyWidth = messageDict['width']
+                historyHeight = messageDict['height']
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes
+            #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+
+            # Scale the residential, commercial and industrial histories
+            # together relative to the max of all three.  Up to 128 they
+            # are not scaled. Starting at 128 they are scaled down so the
+            # maximum is always at the top of the history.
+
+            def calcScale(maxVal):
+                if maxVal < 128:
+                    maxVal = 0
+                if maxVal > 0:
+                    return 128.0 / float(maxVal)
+                else:
+                    return 1.0
+
+            cityTime = self.cityTime
+            startingYear = self.startingYear
+            year = int(cityTime / 48) + startingYear
+            month = int(cityTime % 48) >> 2
+
+            getHistoryRange = self.getHistoryRange
+            getHistory = self.getHistory
+
+            resHistoryMin, resHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_RES,
+                historyScale)
+            comHistoryMin, comHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_COM,
+                historyScale)
+            indHistoryMin, indHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_IND,
+                historyScale)
+            allMax = max(resHistoryMax,
+                         max(comHistoryMax,
+                             indHistoryMax))
+            rciScale = calcScale(allMax)
+
+            # Scale the money, crime and pollution histories
+            # independently of each other.
+
+            moneyHistoryMin, moneyHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_MONEY,
+                historyScale)
+            crimeHistoryMin, crimeHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_CRIME,
+                historyScale)
+            pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_POLLUTION,
+                historyScale)
+            moneyScale = calcScale(moneyHistoryMax)
+            crimeScale = calcScale(crimeHistoryMax)
+            pollutionScale = calcScale(pollutionHistoryMax)
+
+            historyRange = 128.0
+
+            valueScales = (
+                rciScale, rciScale, rciScale, # res, com, ind
+                moneyScale, crimeScale, pollutionScale, # money, crime, pollution
+            )
+
+            valueRanges = (
+                (resHistoryMin, resHistoryMax,),
+                (comHistoryMin, comHistoryMax,),
+                (indHistoryMin, indHistoryMax,),
+                (moneyHistoryMin, moneyHistoryMax,),
+                (crimeHistoryMin, crimeHistoryMax,),
+                (pollutionHistoryMin, pollutionHistoryMax,),
+            )
+
+            histories = []
+
+            for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
+
+                if historyType not in historyTypes:
+                    histories.append(None)
+                    continue
+
+                valueScale = valueScales[historyType]
+                valueRange = valueRanges[historyType]
+
+                values = [
+                        getHistory(
+                            historyType,
+                            historyScale,
+                            historyIndex)
+                        for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
+                ]
+
+                histories.append({
+                    'historyType': historyType,
+                    'valueScale': valueScale,
+                    'valueRange': valueRange,
+                    'values': values,
+                })
+
+            session.sendMessage({
+                'message': 'UIUpdate',
+                'variable': 'historyview',
+                'id': id,
+                'scale': historyScale,
+                'count': historyCount,
+                'offset': historyOffset,
+                'types': historyTypes,
+                'width': historyWidth,
+                'height': historyHeight,
+                'year': year,
+                'month': month,
+                'histories': histories,
+                'range': historyRange,
+                'collapse': True,
+            })
+
+        else:
+
+            print "UNKNOWN MESSAGE", message
 
 
     def setVirtualSpeed(self, virtualSpeed):
@@ -1476,7 +1607,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['month'] = month
                 message['collapse'] = True
 
-            elif variable == 'history':
+            elif variable == 'XXXhistory':
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they

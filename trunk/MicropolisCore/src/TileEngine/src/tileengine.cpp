@@ -811,7 +811,7 @@ PyObject *TileEngine::getTileData(
 	}
     }
 
-    const char *codeString =
+    const char *textCodeString =
 	"0123456789"
         "abcdefghijklmnopqrstuvwxyz"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ+-";
@@ -819,13 +819,14 @@ PyObject *TileEngine::getTileData(
     int r, c;
     int bufSize = 0;
     char *buf = NULL;
+    bool returnBuffer = false;
 
     switch (code) {
 
-	case 0: {
+	case TILE_CODE_RAW_TEXT: {
 	    bufSize = tileSize * rows * cols;
 	    buf = (char *)malloc(bufSize);
-	    unsigned short *dst = (unsigned short *)buf;
+	    unsigned char *dst = (unsigned char *)buf;
 
 	    for (r = 0; r < rows; r++) {
 		for (c = 0; c < cols; c++) {
@@ -836,62 +837,17 @@ PyObject *TileEngine::getTileData(
 			    tileFunction, 
 			    tileMapData, 
 			    tileMapCount);
-		    *dst++ = tile;
+		    *dst++ = (tile >> 8) & 0xff; // High byte.
+		    *dst++ = tile & 0xff; // Low byte.
 		}
 	    }
 	    break;
 	}
 
-	case 1: {
-	    bufSize = tileSize * rows * cols;
+	case TILE_CODE_COMPRESSED_TEXT: {
+	    bufSize = tileSize * rows * cols * 3; // to be safe
 	    buf = (char *)malloc(bufSize);
-	    unsigned short *dst = (unsigned short *)buf;
-
-	    for (r = 0; r < rows; r++) {
-		for (c = 0; c < cols; c++) {
-		    int tile = 
-			getValue(
-			    col + c, 
-			    row + r, 
-			    tileFunction, 
-			    tileMapData, 
-			    tileMapCount);
-		    tile =
-			((tile << 8) & 0xff00) |
-			((tile >> 8) & 0x00ff);
-		    *dst++ = tile;
-		}
-	    }
-	    break;
-	}
-
-	case 2: {
-	    bufSize = tileSize * rows * cols;
-	    buf = (char *)malloc(bufSize);
-	    unsigned short *dst = (unsigned short *)buf;
-
-	    for (r = 0; r < rows; r++) {
-		for (c = 0; c < cols; c++) {
-		    int tile = 
-			getValue(
-			    col + c, 
-			    row + r, 
-			    tileFunction, 
-			    tileMapData, 
-			    tileMapCount);
-		    int low = tile & 63;
-		    int high = (tile >> 6) & 63;
-		    tile = codeString[low] | (codeString[high] << 8);
-		    *dst++ = tile;
-		}
-	    }
-	    break;
-	}
-
-	case 3: {
-	    bufSize = tileSize * rows * cols * 2; // to be safe
-	    buf = (char *)malloc(bufSize);
-	    char *dst = buf;
+	    unsigned char *dst = (unsigned char *)buf;
 	    int tileIndex = 0;
 	    int tileIndexMax = rows * cols;
 	    int offset = 0;
@@ -901,6 +857,13 @@ PyObject *TileEngine::getTileData(
 		   (offset < bufSize)) {
 		int c = tileIndex % cols;
 		int r = tileIndex / cols;
+		int tileCacheOffset = 
+		    (col + c) + ((row + r) * width);
+//		printf("tileIndex %d tileCacheOffset %d tileViewCacheCount %d c %d r %d cols %d rows %d ",
+//		    tileIndex,
+//		    tileCacheOffset,
+//		    tileViewCacheCount,
+//		    c, r, cols, rows);
 		int tile = 
 		    getValue(
 			col + c, 
@@ -908,8 +871,7 @@ PyObject *TileEngine::getTileData(
 			tileFunction,
 			tileMapData, 
 			tileMapCount);
-		int tileCacheOffset = 
-		    (col + c) + ((row + r) * width);
+//		printf("tile %d\n", tile);
 		int curTile =
 		    (tileViewCacheData == NULL)
 			? -1
@@ -918,59 +880,207 @@ PyObject *TileEngine::getTileData(
 		if (tile == curTile) {
 		    skip++;
 		} else {
+//		    printf("tile %d skip %d offset %d r %d c %d index %d\n", tile, skip, offset, r, c, c + (r * width));
 		    if (skip) {
 			if (skip == 1) {
-			    *dst++ = '.';
+//			    printf("skip 1\n");
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_0;
 			    offset++;
 			} else if (skip == 2) {
-			    *dst++ = '.';
-			    *dst++ = '.';
+//			    printf("skip 2/1\n");
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_0;
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_0;
 			    offset += 2;
-			} else if (skip < (64 + 2)) {
-			    int val = skip - 2;
-			    *dst++ = '!';
-			    *dst++ = codeString[val];
+			} else if (skip < 64) {
+//			    printf("skip %d/64\n", skip);
+			    int val = skip;
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_1;
+			    *dst++ = textCodeString[val];
 			    offset += 2;
-			} else if (skip < (4096 + 2)) {
-			    int val = skip - 2;
-			    *dst++ = '@';
-			    *dst++ = codeString[val & 63];
-			    *dst++ = codeString[(val >> 6) & 63];
+			} else if (skip < 4096) {
+//			    printf("skip %d/4096\n", skip);
+			    int val = skip;
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_2;
+			    *dst++ = textCodeString[(val >> 6) & 63]; // High.
+			    *dst++ = textCodeString[val & 63]; // Low.
 			    offset += 3;
 			} else {
-			    int val = skip - 2;
-			    *dst++ = '#';
-			    *dst++ = codeString[val & 63];
-			    *dst++ = codeString[(val >> 6) & 63];
-			    *dst++ = codeString[(val >> 12) & 63];
+//			    printf("skip %d/999999\n", skip);
+			    int val = skip;
+			    *dst++ = TILE_CODE_COMPRESSED_TEXT_SKIP_3;
+			    *dst++ = textCodeString[(val >> 12) & 63]; // Highest.
+			    *dst++ = textCodeString[(val >> 6) & 63]; // High.
+			    *dst++ = textCodeString[val & 63]; // Low.
 			    offset += 4;
 			}
+
 			skip = 0;
+
 		    }
+
 		    if (tileViewCacheData != NULL) {
 			tileViewCacheData[tileCacheOffset] = tile;
 		    }
+
 		    int low = tile & 63;
 		    int high = (tile >> 6) & 63;
-		    *dst++ = codeString[low];
-		    *dst++ = codeString[high];
+		    *dst++ = textCodeString[low];
+		    *dst++ = textCodeString[high];
+
 		    offset += 2;
 		}
+
 		tileIndex++;
 	    }
+
 	    bufSize = offset;
+
 	    break;
 	}
+
+	case TILE_CODE_COMPRESSED_BINARY_16: {
+	    //returnBuffer = true; // @todo Fix pyamf code to convert buffer to ByteArray.
+	    bufSize = tileSize * rows * cols * 3; // to be safe
+	    buf = (char *)malloc(bufSize);
+	    unsigned char *dst = (unsigned char *)buf;
+	    int tileIndex = 0;
+	    int tileIndexMax = rows * cols;
+	    int offset = 0;
+	    int skip = 0;
+
+	    while ((tileIndex < tileIndexMax) &&
+		   (offset < bufSize)) {
+		int c = tileIndex % cols;
+		int r = tileIndex / cols;
+		int tileCacheOffset = 
+		    (col + c) + ((row + r) * width);
+//		printf("tileIndex %d tileCacheOffset %d tileViewCacheCount %d c %d r %d cols %d rows %d\n",
+//		    tileIndex,
+//		    tileCacheOffset,
+//		    tileViewCacheCount,
+//		    c, r, cols, rows);
+		int tile = 
+		    getValue(
+			col + c, 
+			row + r, 
+			tileFunction,
+			tileMapData, 
+			tileMapCount);
+//		printf("tile %d\n", tile);
+		int curTile =
+		    (tileViewCacheData == NULL)
+			? -1
+			: tileViewCacheData[tileCacheOffset];
+
+		if (tile == curTile) {
+		    skip++;
+		} else {
+//		    printf("tile %d skip %d offset %d r %d c %d index %d\n", tile, skip, offset, r, c, c + (r * width));
+		    while (skip > 0) {
+			if (skip == 1) {
+//			    printf("skip 1/1\n");
+			    // Skip of 1 is one single skip.
+			    //printf("Skip of 1 is one single skip.\n");
+			    *dst++ = TILE_CODE_COMPRESSED_BINARY_16_SKIP_0;
+			    offset++;
+			    skip = 0;
+			} else if (skip == 2) {
+//			    printf("skip 2/2\n");
+			    // Skip of 2 is two single skips.
+			    //printf("Skip of 2 is two single skips.\n");
+			    *dst++ = TILE_CODE_COMPRESSED_BINARY_16_SKIP_0;
+			    *dst++ = TILE_CODE_COMPRESSED_BINARY_16_SKIP_0;
+			    offset += 2;
+			    skip = 0;
+			} else if (skip < (3 + 256)) {
+//			    printf("skip %d/258 val %d\n", skip, skip - 3);
+			    // Skip of 3 is val of 0.
+			    // Skip of (3 + 255)=258 is val of 255.
+			    // Skip range 3..258 for val range 0..255.
+			    int val = skip - 3;
+			    //printf("Skip %d range 3..258 for val %d range 0..255.\n", skip, val);
+			    *dst++ = TILE_CODE_COMPRESSED_BINARY_16_SKIP_1;
+			    *dst++ = val;
+			    offset += 2;
+			    skip = 0;
+			} else {
+//			    printf("skip %d/65794 val %d\n", skip, skip - (3 + 256));
+			    // Skip of (3 + 256)=259 is val of 0.
+			    // Skip of (3 + 256 + 65535)=65794 is val of 65535.
+			    // Skip range 259..65794 for val range 0..65535.
+			    int val = skip - (3 + 256);
+
+			    // Skips greater than 65794 are broken up into repeated skips
+			    // by the while loop above.
+			    if (val > 65535) {
+			        val = 65535;
+			    }
+
+			    //printf("Skip %d range 259..65794 for val %d range 0..65535.\n", skip, val);
+
+			    int high = (val >> 8) & 0xff;
+			    int low = val & 0xff;
+
+			    *dst++ = TILE_CODE_COMPRESSED_BINARY_16_SKIP_2;
+			    *dst++ = high;
+			    *dst++ = low;
+
+			    offset += 3;
+			    skip -= val + (3 + 256);
+			}
+		    }
+
+		    if (tileViewCacheData != NULL) {
+			tileViewCacheData[tileCacheOffset] = tile;
+		    }
+
+		    int high = (tile >> 8) & 0xff;
+		    int low = tile & 0xff;
+
+		    assert(high <= TILE_CODE_COMPRESSED_BINARY_16_HIGH_MAX);
+
+		    *dst++ = high;
+		    *dst++ = low;
+		    offset += 2;
+		    //printf("tile high 0x%02X low 0x%02X\n", high, low);
+		}
+
+		tileIndex++;
+	    }
+
+	    bufSize = offset;
+
+	    break;
+	}
+
     }
 
-    PyObject *str =
-	PyString_FromStringAndSize(
-	    (const char *)buf,
-	    bufSize);
+    PyObject *result;
+
+    if (returnBuffer) {
+	result =
+	    PyBuffer_New(bufSize);
+        unsigned char *destBuf = NULL;
+        Py_ssize_t destSize = 0;
+	PyObject_AsWriteBuffer(
+	    result,
+	    (void **)&destBuf,
+	    &destSize);
+	assert(destSize == bufSize);
+	memcpy(
+	    destBuf,
+	    buf,
+	    destSize);
+    } else {
+	result =
+	    PyString_FromStringAndSize(
+		(const char *)buf,
+		bufSize);
+    }
 
     free(buf);
 
-    return str;
+    return result;
 }
 
 

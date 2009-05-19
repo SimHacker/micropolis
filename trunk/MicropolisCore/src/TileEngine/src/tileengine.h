@@ -138,6 +138,34 @@ enum TileFormat {
   TILE_FORMAT_COUNT,
 };
 
+
+/** Tile change encoding codes for different compression techniques. */
+enum TileCode {
+  TILE_CODE_RAW_TEXT = 0,
+  TILE_CODE_COMPRESSED_TEXT = 1,
+  TILE_CODE_COMPRESSED_BINARY_16 = 2,
+  TILE_CODE_COUNT,
+};
+
+
+/** Compressed Text Tokens. */
+enum TileCodeCompressedText {
+  TILE_CODE_COMPRESSED_TEXT_SKIP_0 = '.',
+  TILE_CODE_COMPRESSED_TEXT_SKIP_1 = '!',
+  TILE_CODE_COMPRESSED_TEXT_SKIP_2 = '@',
+  TILE_CODE_COMPRESSED_TEXT_SKIP_3 = '#'
+};
+
+
+/** Compressed Text Tokens. */
+enum TileCodeCompressedBinary16 {
+  TILE_CODE_COMPRESSED_BINARY_16_SKIP_0 = 0xff,
+  TILE_CODE_COMPRESSED_BINARY_16_SKIP_1 = 0xfe,
+  TILE_CODE_COMPRESSED_BINARY_16_SKIP_2 = 0xfd,
+  TILE_CODE_COMPRESSED_BINARY_16_HIGH_MAX = 0xfc,
+};
+
+
 ////////////////////////////////////////////////////////////////////////
 // Classes
 
