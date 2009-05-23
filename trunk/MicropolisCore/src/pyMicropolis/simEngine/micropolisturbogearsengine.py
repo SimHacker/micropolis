@@ -880,7 +880,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'tileview':
 
-            #print "MESSAGE TILEVIEW"
+            #print "MESSAGE TILEVIEW", messageDict
             try:
                 id = messageDict['id']
                 col = messageDict['col']
@@ -907,7 +907,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 ((row + rows) > micropolisengine.WORLD_H)):
                 self.expectationFailed("Invalid parameters.")
 
-            #print "Calling getTileData", col, row, cols, rows, code
+            #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
             tiles = self.tengine.getTileData(
                 None,
                 self.tileMap,

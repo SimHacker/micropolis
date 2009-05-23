@@ -30,7 +30,7 @@
 	<attribute name="idleDelegate" value="null"/>
 	<attribute name="idlePending" value="null"/>
         <attribute name="mapChanged" value="false"/>
-        <attribute name="tileView" value="null"/>
+        <attribute name="editTileView" value="null"/>
 	<attribute name="viewRectChanged" value="false"/>
 
 
@@ -146,16 +146,16 @@
 
 
         <method name="startDragging"><![CDATA[
-	    var tileView = this.tileView;
-	    if (!tileView) {
+	    var editTileView = this.editTileView;
+	    if (!editTileView) {
 	        return;
 	    }
 
 	    this.setAttribute("dragging", true);
 	    this.setAttribute("dragDownX", this.getMouse("x"));
 	    this.setAttribute("dragDownY", this.getMouse("y"));
-	    this.setAttribute("dragDownViewX", tileView.viewX);
-	    this.setAttribute("dragDownViewY", tileView.viewY);
+	    this.setAttribute("dragDownViewX", editTileView.viewX);
+	    this.setAttribute("dragDownViewY", editTileView.viewY);
 	  ]]>
         </method>
 
@@ -168,8 +168,8 @@
 
 
 	<method name="updateDrag"><![CDATA[
-	    var tileView = this.tileView;
-	    if (!tileView) {
+	    var editTileView = this.editTileView;
+	    if (!editTileView) {
 	        return;
 	    }
 
@@ -185,7 +185,7 @@
 	    var viewX = dragDownViewX + dx;
 	    var viewY = dragDownViewY + dy;
 	    //Debug.write("x,y", x, y, "dragDownX,Y", dragDownX, dragDownY, "dragDownViewX,Y", dragDownViewX, dragDownViewY, "tileSize",  tileSize, "dx,y", dx, dy, "viewX,Y", viewX, viewY);
-	    tileView.scrollView(viewX, viewY);
+	    editTileView.scrollView(viewX, viewY);
 	  ]]>
 	</method>
 	
@@ -235,16 +235,16 @@
 
 	<method name="drawViewRect"><![CDATA[
 	    var dv = this.dv;
-	    var tileView = this.tileView;
+	    var editTileView = this.editTileView;
 
 	    dv.clear();
 	    
-	    if (!tileView) {
+	    if (!editTileView) {
 	        return;
 	    }
 
 	    var tileSize = this.tileSize;
-	    var viewRect = tileView.getViewRect();
+	    var viewRect = editTileView.getViewRect();
 	    var x = viewRect[0] * tileSize;
 	    var y = viewRect[1] * tileSize;
 	    var width = viewRect[2] * tileSize;
@@ -264,7 +264,7 @@
 
 /*
 	    // For debugging the tile scroll extra look-ahead rectangle.
-	    viewRect = tileView.getTileRect();
+	    viewRect = editTileView.getTileRect();
 	    x = viewRect[0] * tileSize;
 	    y = viewRect[1] * tileSize;
 	    width = viewRect[2] * tileSize;

@@ -1,0 +1,26 @@
+<library>
+
+
+    <!-- Notice Tile View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="noticetileview" extends="tileview"
+    >
+
+
+	<handler name="onmousedown" args="arg"><![CDATA[
+	    //Debug.write("noticetileview onmousedown", this);
+	    gEditTileView.centerOnTile(
+	        this.centerTileX, 
+		this.centerTileY);
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

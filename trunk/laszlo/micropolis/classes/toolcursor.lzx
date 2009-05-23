@@ -250,7 +250,7 @@
 		}
 
 		case 'centertool': {
-		    parent.parent.centerOnTile(
+		    parent.centerOnTile(
 		        cursorX,
 			cursorY);
 		    break;
@@ -343,8 +343,8 @@
 	    var cursorY;
 
 	    if (tiles) {
-		var cursorX = parent.getMouse('x');
-		var cursorY = parent.getMouse('y');
+		var cursorX = immediateparent.getMouse('x');
+		var cursorY = immediateparent.getMouse('y');
 
 		cursorX =
 		    Math.floor(cursorX / tileSize);
@@ -370,8 +370,8 @@
 		y = (cursorY - hotSpot) * tileSize;
 
 	    } else {
-		var cursorX = parent.getMouse('x');
-		var cursorY = parent.getMouse('y');
+		var cursorX = immediateparent.getMouse('x');
+		var cursorY = immediateparent.getMouse('y');
 
 		if (constrained) {
 		    cursorX =

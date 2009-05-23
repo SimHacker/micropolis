@@ -9,8 +9,6 @@
 
     <include href="resources_tiles.lzx"/>
     <include href="resources_icons.lzx"/>
-    <include href="resources_pies.lzx"/>
-    <include href="resources_ui.lzx"/>
 
 
 </library>

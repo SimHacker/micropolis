@@ -73,14 +73,14 @@
 
 
         <handler name="onactive"><![CDATA[
-            //Debug.write("tileview onactive", this.active);
+            //Debug.write("history onactive", this.active);
             this.updateInterests();
           ]]>
         </handler>
 
 
         <handler name="onvisible"><![CDATA[
-            //Debug.write("tileview onvisible", this.visible);
+            //Debug.write("historyview onvisible", this.visible);
             this.updateInterests();
           ]]>
         </handler>

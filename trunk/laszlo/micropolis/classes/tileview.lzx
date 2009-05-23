@@ -34,19 +34,9 @@
 	<attribute name="doAnimateDelegate" value="null"/>
 	<attribute name="doingAnimate" value="false"/>
         <attribute name="drawing" value="false"/>
-        <attribute name="panning" value="false"/>
-	<attribute name="panCursorStartX" value="0"/>
-	<attribute name="panCursorStartY" value="0"/>
-	<attribute name="panContainerStartX" value="0"/>
-	<attribute name="panContainerStartY" value="0"/>
-	<attribute name="panAutoScrollX" value="0"/>
-	<attribute name="panAutoScrollY" value="0"/>
-	<attribute name="panAutoScrollEdge" value="32"/>
-	<attribute name="panAutoScrollSpeed" value="256"/>
-	<attribute name="panAutoScrollLastTime" value="0"/>
-	<attribute name="panDelegate" value="null"/>
-	<attribute name="viewExtraPan" value="8"/>
-	<attribute name="viewExtraAutoScroll" value="16"/>
+        <attribute name="centerTileX" value="0"/>
+        <attribute name="centerTileY" value="0"/>
+	<attribute name="defaultplacement" value="container"/>
 	<attribute name="viewExtraLeft" value="0"/>
 	<attribute name="viewExtraRight" value="0"/>
 	<attribute name="viewExtraTop" value="0"/>
@@ -121,189 +111,20 @@
         </handler>
 
 
-        <handler name="onpanning"><![CDATA[
-            if (this.panning) {
-	        this.panCursorStartX = this.getMouse("x");
-		this.panCursorStartY = this.getMouse("y");
-		this.panContainerStartX = this.container.x;
-		this.panContainerStartY = this.container.y;
-		this.panAutoScrollX = 0;
-		this.panAutoScrollY = 0;
-		this.panAutoScrollLastTime = (new Date()).time;
-
-		if (!this.doingPan) {
-		    this.doingPan = true;
-		    var del = this.panDelegate;
-		    if (!del) {
-			del = new lz.Delegate(this, 'handlePan');
-			this.panDelegate = del;
-		    }
-		    lz.IdleService.LzIdle.callOnIdle(del);
-		}
-
-		var viewExtraPan = this.viewExtraPan;
-	        this.viewExtraLeft = viewExtraPan;
-	        this.viewExtraRight = viewExtraPan;
-	        this.viewExtraTop = viewExtraPan;
-	        this.viewExtraBottom = viewExtraPan;
-	    } else {
-	        this.viewExtraLeft = 0;
-	        this.viewExtraRight = 0;
-	        this.viewExtraTop = 0;
-	        this.viewExtraBottom = 0;
-	    }
-          ]]>
-        </handler>
-
-
         <handler name="onpaused" reference="gApp"><![CDATA[
             this.updateInterests();
           ]]>
         </handler>
 
 
-	<handler name="onmousedown" args="arg"><![CDATA[
-	    var altDown = lz.KeysService.LzKeys.isKeyDown('alt');
-	    var controlDown = lz.KeysService.LzKeys.isKeyDown('control');
-	    var shiftDown = lz.KeysService.LzKeys.isKeyDown('shift');
-	    //Debug.write("KEYS", "alt", altDown, "control", controlDown, "shift", shiftDown, lz.KeysService.LzKeys.downKeysArray);
-
-	    this.resetTracking();
-
-	    if (shiftDown) {
-	        gTileViewPie.popupAtCursor(false);
-	    } else if (altDown) {
-	        this.setAttribute('panning', true);
-	    } else {
-	        this.setAttribute('drawing', true);
-	    }
-	  ]]>
-	</handler>
-
-
-	<handler name="onmouseup" args="arg"><![CDATA[
-	    this.resetTracking();
-	  ]]>
-	</handler>
-
-
-	<method name="startEdgeScroll"><![CDATA[
-	    this.setAttribute("panning", true);
-	  ]]>
-	</method>
-
-
-	<method name="stopEdgeScroll"><![CDATA[
-	    this.setAttribute("panning", false);
-	  ]]>
-	</method>
-
-
-	<method name="handlePan" args="arg"><![CDATA[
-	    this.doingPan = false;
-
-	    if (!this.panning) {
-	        return;
-	    }
-
-	    var cursorX = this.getMouse("x");
-	    var cursorY = this.getMouse("y");
-
-	    var panAutoScrollEdge = this.panAutoScrollEdge;
-	    var scrollLeft = cursorX < panAutoScrollEdge;
-	    var scrollRight = cursorX >= (this.width - panAutoScrollEdge);
-	    var scrollTop = cursorY < panAutoScrollEdge;
-	    var scrollBottom = cursorY >= (this.height - panAutoScrollEdge);
-            var panning = scrollLeft || scrollRight || scrollTop || scrollBottom;
-	    var viewExtraPan = this.viewExtraPan;
-	    var viewExtraAutoScroll = this.viewExtraAutoScroll;
-	    //Debug.write("pan", panning, "LRTB", scrollLeft, scrollRight, scrollTop, scrollBottom, "cur", cursorX, cursorY, "this", this.width, this.height, "edge", panAutoScrollEdge);
-
-
-	    if (panning) {
-		var now = (new Date()).time;
-	        var panAutoScrollLastTime = this.panAutoScrollLastTime;
-		this.panAutoScrollLastTime = now;
-		if (panAutoScrollLastTime) {
-		    var elapsed = (now - panAutoScrollLastTime) / 1000.0;
-		    this.panAutoScrollLastTime = now;
-		    var panDistance = elapsed * this.panAutoScrollSpeed;
-		    //Debug.write("elapsed", elapsed, "distance", panDistance);
-
-		    if (scrollLeft) {
-		       this.panAutoScrollX -= panDistance;
-		        this.viewExtraRight = viewExtraAutoScroll;
-		    } else {
-		        this.viewExtraRight = 0;
-		    }
-
-		    if (scrollRight) {
-		       this.panAutoScrollX += panDistance;
-		        this.viewExtraLeft = viewExtraAutoScroll;
-		    } else {
-		        this.viewExtraLeft = 0;
-		    }
-
-		    if (scrollTop) {
-		       this.panAutoScrollY -= panDistance;
-		        this.viewExtraBottom = viewExtraAutoScroll;
-		    } else {
-		        this.viewExtraBottom = 0;
-		    }
-
-		    if (scrollBottom) {
-		       this.panAutoScrollY += panDistance;
-		        this.viewExtraTop = viewExtraAutoScroll;
-		    } else {
-		        this.viewExtraTop = 0;
-		    }
-
-		}
-            } else {
-	        this.panAutoScrollLastTime = 0;
-		this.viewExtraLeft = viewExtraPan;
-		this.viewExtraRight = viewExtraPan;
-		this.viewExtraTop = viewExtraPan;
-		this.viewExtraBottom = viewExtraPan;
-	    }
-
-	    var w2 = this.width / 2;
-	    var h2 = this.height / 2;
-	    var sx = this.panContainerStartX + (cursorX - this.panCursorStartX);
-	    var sy = this.panContainerStartY + (cursorY - this.panCursorStartY);
-	    var x = 
-	        Math.max(
-		    w2 - this.container.width,
-		    Math.min(
-		        sx + this.panAutoScrollX,
-			w2));
-	   //this.panAutoScrollX = x - sx;
-	    var y = 
-	        Math.max(
-		    h2 - this.container.height,
-		    Math.min(
-			sy + this.panAutoScrollY,
-			h2));
-	   //this.panAutoScrollY = y - sy;
-
-	    if (x != this.container.x) {
-	        this.container.setAttribute("x", x);
-	    }
-	    if (y != this.container.y) {
-	        this.container.setAttribute("y", y);
-	    }
-
-	    lz.IdleService.LzIdle.callOnIdle(this.panDelegate);
-	  ]]>
-	</method>
-
-
-	<method name="resetTracking"><![CDATA[
-	    if (this.drawing) {
-	        this.setAttribute("drawing", false);
-	    }
-	    if (this.panning) {
-	        this.setAttribute("panning", false);
+	<method  name="determinePlacement" args="aSub, placement, args"><![CDATA[
+	    Debug.write("determinePlacement", this, aSub, placement, args);
+	    switch (placement) {
+	        case 'overlay':
+		    return this.overlay;
+		default:
+	        case 'container':
+		    return this.container;
 	    }
 	  ]]>
 	</method>
@@ -336,13 +157,18 @@
 	    var screenHeightHalf = Math.floor(this.height / 2);
 	    var worldWidth = viewTileSize * gApp.worldCols;
 	    var worldHeight = viewTileSize * gApp.worldRows;
+
 	    //Debug.write("==== scrollContainer", "tileViewSize", this.viewTileSize, "gApp cols rows", gApp, gApp.worldCols, gApp.worldRows);
 	    //Debug.write("==== scrollContainer x,y", x, y, "size", this.width, this.height, "screen", screenWidthHalf, screenHeightHalf, "world", worldWidth, worldHeight);
+
 	    x = Math.min(screenWidthHalf, Math.max(x, -worldWidth + screenWidthHalf));
 	    y = Math.min(screenHeightHalf, Math.max(y, -worldHeight + screenHeightHalf));
+
 	    //Debug.write("scrollContainer", x, y, "width,height", this.width, this.height, "/2", this.width/2, this.height/2, "less", x<(this.width/2), y<(this.height/2), "world", worldWidth, worldHeight, "+", -worldWidth + screenWidthHalf, -worldHeight + screenWidthHalf);
+
 	    x = Math.floor(x);
 	    y = Math.floor(y);
+
 	    if (x != this.container.x) {
 	        this.container.setAttribute("x", x);
 	    }
@@ -390,7 +216,6 @@
             var row = this.screenRow - viewExtraTop;
             var cols = this.screenCols + viewExtraLeft + viewExtraRight;
             var rows = this.screenRows + viewExtraTop + viewExtraBottom;
-
             var left = Math.max(0, col);
             var top = Math.max(0, row);
             var right = Math.min(col + cols, gApp.worldCols);
@@ -427,7 +252,7 @@
 
             this.updateViewRect();
 
-            return {
+            var message = {
 	        message: 'tileview',
 		id: this.uniqueID,
 		col: this.viewCol,
@@ -440,6 +265,8 @@
 		viewHeight: this.viewHeight,
 		code: this.code
 	    };
+
+	    return message;
           ]]>
         </method>
 
@@ -557,9 +384,14 @@
                 tileIndex++;
             }
 
-	    this.container.cur.doAnimate();
+	    this.animateCursor();
           ]]>
         </method>
+
+
+	<method name="animateCursor"><![CDATA[
+	  ]]>
+	</method>
 
 
         <method name="centerOnTile" args="tileX, tileY"><![CDATA[
@@ -569,7 +401,11 @@
             var tileCenterY = (tileY * viewTileSize) + (viewTileSize / 2);
             var cornerX = Math.floor(tileCenterX - (this.width / 2));
             var cornerY = Math.floor(tileCenterY - (this.height / 2));
+
             //Debug.write("center", tileCenterX, tileCenterY, "corner", cornerX, cornerY);
+
+	    this.setAttribute("centerTileX", tileX);
+	    this.setAttribute("centerTileY", tileY);
             this.container.setAttribute("x", -cornerX);
             this.container.setAttribute("y", -cornerY);
           ]]>
@@ -587,49 +423,13 @@
 		height="${parent.height}"
 	    />
 
-	    <toolcursor name="cur" id="gCur"
-	        drawing="${classroot.drawing}"
-		tileSize="${classroot.viewTileSize}"
-		visible="${!classroot.panning}"
-	    />
-
         </view>
 
-	<view name="scrollTop"
-	    x="0"
-	    y="0"
+	<view name="overlay"
 	    width="${parent.width}"
-	    height="${parent.panAutoScrollEdge}"
-	    onmousedown="parent.startEdgeScroll()"
-	    onmouseup="parent.stopEdgeScroll()"
-	/>
-
-	<view name="scrollBottom"
-	    x="0"
-	    y="${parent.height - parent.panAutoScrollEdge}"
-	    width="${parent.width}"
-	    height="${parent.panAutoScrollEdge}"
-	    onmousedown="parent.startEdgeScroll()"
-	    onmouseup="parent.stopEdgeScroll()"
-	/>
-
-	<view name="scrollLeft"
-	    x="0"
-	    y="0"
-	    width="${parent.panAutoScrollEdge}"
 	    height="${parent.height}"
-	    onmousedown="parent.startEdgeScroll()"
-	    onmouseup="parent.stopEdgeScroll()"
 	/>
 
-	<view name="scrollRight"
-	    x="${parent.width - parent.panAutoScrollEdge}"
-	    y="0"
-	    width="${parent.panAutoScrollEdge}"
-	    height="${parent.height}"
-	    onmousedown="parent.startEdgeScroll()"
-	    onmouseup="parent.stopEdgeScroll()"
-	/>
 
     </class>
 

@@ -60,7 +60,7 @@
 		/>
 		    
 		<navigationmapview name="navigationMapView" id="gNavigationMapView"
-		    tileView="${parent.parent.tileView}"
+		    editTileView="${parent.parent.editTileView}"
 		    active="${classroot.active}"
 		    overlay="${gApp.overlay}"
 		/>
@@ -77,7 +77,7 @@
 
 	    </view>
 
-	    <tileview name="tileView" id="gTileView"
+	    <edittileview name="editTileView" id="gEditTileView"
 		x="${parent.vsep1.x + parent.vsep1.width}"
 		y="0"
 		width="${Math.max(0, parent.width - this.x)}"

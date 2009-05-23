@@ -1,0 +1,271 @@
+<library>
+
+
+    <!-- Edit Tile View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="edittileview" extends="tileview"
+    >
+
+
+        <attribute name="panning" value="false"/>
+	<attribute name="panCursorStartX" value="0"/>
+	<attribute name="panCursorStartY" value="0"/>
+	<attribute name="panContainerStartX" value="0"/>
+	<attribute name="panContainerStartY" value="0"/>
+	<attribute name="panAutoScrollX" value="0"/>
+	<attribute name="panAutoScrollY" value="0"/>
+	<attribute name="panAutoScrollEdge" value="32"/>
+	<attribute name="panAutoScrollSpeed" value="256"/>
+	<attribute name="panAutoScrollLastTime" value="0"/>
+	<attribute name="panDelegate" value="null"/>
+	<attribute name="viewExtraPan" value="8"/>
+	<attribute name="viewExtraAutoScroll" value="16"/>
+
+
+        <handler name="onpanning"><![CDATA[
+            if (this.panning) {
+	        this.panCursorStartX = this.getMouse("x");
+		this.panCursorStartY = this.getMouse("y");
+		this.panContainerStartX = this.container.x;
+		this.panContainerStartY = this.container.y;
+		this.panAutoScrollX = 0;
+		this.panAutoScrollY = 0;
+		this.panAutoScrollLastTime = (new Date()).time;
+
+		if (!this.doingPan) {
+		    this.doingPan = true;
+		    var del = this.panDelegate;
+		    if (!del) {
+			del = new lz.Delegate(this, 'handlePan');
+			this.panDelegate = del;
+		    }
+		    lz.IdleService.LzIdle.callOnIdle(del);
+		}
+
+		var viewExtraPan = this.viewExtraPan;
+	        this.viewExtraLeft = viewExtraPan;
+	        this.viewExtraRight = viewExtraPan;
+	        this.viewExtraTop = viewExtraPan;
+	        this.viewExtraBottom = viewExtraPan;
+	    } else {
+	        this.viewExtraLeft = 0;
+	        this.viewExtraRight = 0;
+	        this.viewExtraTop = 0;
+	        this.viewExtraBottom = 0;
+	    }
+          ]]>
+        </handler>
+
+
+	<handler name="onmousedown" args="arg"><![CDATA[
+	    var altDown = lz.KeysService.LzKeys.isKeyDown('alt');
+	    var controlDown = lz.KeysService.LzKeys.isKeyDown('control');
+	    var shiftDown = lz.KeysService.LzKeys.isKeyDown('shift');
+	    //Debug.write("KEYS", "alt", altDown, "control", controlDown, "shift", shiftDown, lz.KeysService.LzKeys.downKeysArray);
+
+	    this.resetTracking();
+
+	    if (shiftDown) {
+	        gEditTileViewPie.popupAtCursor(false);
+	    } else if (altDown) {
+	        this.setAttribute('panning', true);
+	    } else {
+	        this.setAttribute('drawing', true);
+	    }
+	  ]]>
+	</handler>
+
+
+	<handler name="onmouseup" args="arg"><![CDATA[
+	    this.resetTracking();
+	  ]]>
+	</handler>
+
+
+	<method name="animateCursor"><![CDATA[
+	    this.container.cur.doAnimate();
+	  ]]>
+	</method>
+
+
+	<method name="resetTracking"><![CDATA[
+	    if (this.drawing) {
+	        this.setAttribute("drawing", false);
+	    }
+	    if (this.panning) {
+	        this.setAttribute("panning", false);
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="startEdgeScroll"><![CDATA[
+	    this.setAttribute("panning", true);
+	  ]]>
+	</method>
+
+
+	<method name="stopEdgeScroll"><![CDATA[
+	    this.setAttribute("panning", false);
+	  ]]>
+	</method>
+
+
+	<method name="handlePan" args="arg"><![CDATA[
+	    this.doingPan = false;
+
+	    if (!this.panning) {
+	        return;
+	    }
+
+	    var cursorX = this.getMouse("x");
+	    var cursorY = this.getMouse("y");
+
+	    var panAutoScrollEdge = this.panAutoScrollEdge;
+	    var scrollLeft = cursorX < panAutoScrollEdge;
+	    var scrollRight = cursorX >= (this.width - panAutoScrollEdge);
+	    var scrollTop = cursorY < panAutoScrollEdge;
+	    var scrollBottom = cursorY >= (this.height - panAutoScrollEdge);
+            var panning = scrollLeft || scrollRight || scrollTop || scrollBottom;
+	    var viewExtraPan = this.viewExtraPan;
+	    var viewExtraAutoScroll = this.viewExtraAutoScroll;
+	    //Debug.write("pan", panning, "LRTB", scrollLeft, scrollRight, scrollTop, scrollBottom, "cur", cursorX, cursorY, "this", this.width, this.height, "edge", panAutoScrollEdge);
+
+
+	    if (panning) {
+		var now = (new Date()).time;
+	        var panAutoScrollLastTime = this.panAutoScrollLastTime;
+		this.panAutoScrollLastTime = now;
+		if (panAutoScrollLastTime) {
+		    var elapsed = (now - panAutoScrollLastTime) / 1000.0;
+		    this.panAutoScrollLastTime = now;
+		    var panDistance = elapsed * this.panAutoScrollSpeed;
+		    //Debug.write("elapsed", elapsed, "distance", panDistance);
+
+		    if (scrollLeft) {
+		       this.panAutoScrollX -= panDistance;
+		        this.viewExtraRight = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraRight = 0;
+		    }
+
+		    if (scrollRight) {
+		       this.panAutoScrollX += panDistance;
+		        this.viewExtraLeft = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraLeft = 0;
+		    }
+
+		    if (scrollTop) {
+		       this.panAutoScrollY -= panDistance;
+		        this.viewExtraBottom = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraBottom = 0;
+		    }
+
+		    if (scrollBottom) {
+		       this.panAutoScrollY += panDistance;
+		        this.viewExtraTop = viewExtraAutoScroll;
+		    } else {
+		        this.viewExtraTop = 0;
+		    }
+
+		}
+            } else {
+	        this.panAutoScrollLastTime = 0;
+		this.viewExtraLeft = viewExtraPan;
+		this.viewExtraRight = viewExtraPan;
+		this.viewExtraTop = viewExtraPan;
+		this.viewExtraBottom = viewExtraPan;
+	    }
+
+	    var w2 = this.width / 2;
+	    var h2 = this.height / 2;
+	    var sx = this.panContainerStartX + (cursorX - this.panCursorStartX);
+	    var sy = this.panContainerStartY + (cursorY - this.panCursorStartY);
+	    var x = 
+	        Math.max(
+		    w2 - this.container.width,
+		    Math.min(
+		        sx + this.panAutoScrollX,
+			w2));
+	   //this.panAutoScrollX = x - sx;
+	    var y = 
+	        Math.max(
+		    h2 - this.container.height,
+		    Math.min(
+			sy + this.panAutoScrollY,
+			h2));
+	   //this.panAutoScrollY = y - sy;
+
+	    if (x != this.container.x) {
+	        this.container.setAttribute("x", x);
+	    }
+	    if (y != this.container.y) {
+	        this.container.setAttribute("y", y);
+	    }
+
+	    lz.IdleService.LzIdle.callOnIdle(this.panDelegate);
+	  ]]>
+	</method>
+
+
+	<toolcursor name="cur" id="gCur"
+	    drawing="${classroot.drawing}"
+	    tileSize="${classroot.viewTileSize}"
+	    visible="${!classroot.panning}"
+	    placement="container"
+	/>
+
+
+<!--
+	<view name="scrollTop"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.panAutoScrollEdge}"
+	    placement="'overlay'"
+	    onmousedown="classroot.startEdgeScroll()"
+	    onmouseup="classroot.stopEdgeScroll()"
+	/>
+
+	<view name="scrollBottom"
+	    x="0"
+	    y="${parent.height - classroot.panAutoScrollEdge}"
+	    width="${parent.width}"
+	    height="${classroot.panAutoScrollEdge}"
+	    placement="'overlay'"
+	    onmousedown="classroot.startEdgeScroll()"
+	    onmouseup="classroot.stopEdgeScroll()"
+	/>
+
+	<view name="scrollLeft"
+	    x="0"
+	    y="0"
+	    width="${classroot.panAutoScrollEdge}"
+	    height="${parent.height}"
+	    placement="'overlay'"
+	    onmousedown="classroot.startEdgeScroll()"
+	    onmouseup="classroot.stopEdgeScroll()"
+	/>
+
+	<view name="scrollRight"
+	    x="${parent.width - classroot.panAutoScrollEdge}"
+	    y="0"
+	    width="${classroot.panAutoScrollEdge}"
+	    height="${parent.height}"
+	    placement="'overlay'"
+	    onmousedown="classroot.startEdgeScroll()"
+	    onmouseup="classroot.stopEdgeScroll()"
+	/>
+-->
+
+
+    </class>
+
+
+</library>

@@ -40,7 +40,6 @@
         <attribute name="codeMap" value="null"/>
         <attribute name="newTilesMax" value="300"/>
         <attribute name="newTiles" value="0"/>
-        <attribute name="tileViews" value="null"/>
         <attribute name="quaking" value="0"/>
         <attribute name="tool" type="string" value="bulldozer"/>
         <attribute name="connected" value="false"/>
@@ -869,7 +868,7 @@
                     }
                     var methodName = "handle_" + messageName;
                     var method = this[methodName];
-                    Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
+                    //Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
                     if (!method) {
                         Debug.write("Undefined message:", messageName, message);
                         continue;
