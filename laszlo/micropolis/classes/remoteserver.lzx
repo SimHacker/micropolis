@@ -91,8 +91,9 @@
 
 	    // Only used for debugging.
 	    var description = evt['description'] ? evt.description : "";
-	    Debug.write("remoteserver", this, "_onStatus", code, description, evt);
+	    //Debug.write("remoteserver", this, "_onStatus", code, description, evt);
 
+/*
 	    var k;
 	    for (k in evt) {
 	        var val = "???";
@@ -103,6 +104,7 @@
 		};
 		Debug.write(k + ": " + val);
 	    }
+*/
 
 	    var status = "";
 	    var s = this.stage;
@@ -171,7 +173,7 @@
 	    this.setAttribute("status", status);
 	    this.setAttribute("stage", s);
 
-	    Debug.write(stage, status);
+	    //Debug.write(stage, status);
 
 	    if (this._connectionTimeoutOutstanding) {
 	    	lz.Timer.removeTimer(this._connectionTimeoutDelegate);
@@ -179,7 +181,7 @@
 	    }
 
 	    if (s == 2) { // Success!
-		Debug.write("remoteserver connected to", this._connecturl);
+		//Debug.write("remoteserver connected to", this._connecturl);
 	    } else if (failure) {
 		gApp.failSession();
 	    } else {
@@ -225,7 +227,7 @@
 
 
 	<method name="_onStartSessionComplete" args="sessionID"><![CDATA[
-	    Debug.write("remoteserver _onStartSessionComplete", this, "sessionID", sessionID);
+	    //Debug.write("remoteserver _onStartSessionComplete", this, "sessionID", sessionID);
 	    this._startSessionOutstanding = false;
 
 	    if (this._connectionTimeoutOutstanding) {
@@ -239,7 +241,7 @@
 
 
 	<method name="_onStartSessionFail" args="results"><![CDATA[
-	    Debug.write("remoteserver _onStartSessionFail", this, results);
+	    //Debug.write("remoteserver _onStartSessionFail", this, results);
 
 	    this._startSessionOutstanding = false;
 
@@ -254,7 +256,7 @@
 
 
 	<method name="_onConnectionTimeout" args="results"><![CDATA[
-	    Debug.write("remoteserver _onConnectionTimeout", this, results);
+	    //Debug.write("remoteserver _onConnectionTimeout", this, results);
 
 	    this._startSessionOutstanding = false;
 
@@ -310,7 +312,12 @@
 	    Debug.write(results['level']);
 	    Debug.write(results['code']);
 	    Debug.write(results['description']);
-	    Debug.write(results['details'].split("', '"));
+	    var lines = results['details'].split("', '");
+	    var n = lines.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        Debug.write(lines[i]);
+	    }
 
 	    this._pollOutstanding = false;
 
@@ -325,7 +332,7 @@
 
 
 	<method name="_onPollTimeout" args="results"><![CDATA[
-	    Debug.write("remoteserver _onPollTimeout", this, results);
+	    //Debug.write("remoteserver _onPollTimeout", this, results);
 
 	    this._pollOutstanding = false;
 

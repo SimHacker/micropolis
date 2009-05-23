@@ -1,13 +1,13 @@
 <library>
 
 
-    <!-- Tile View Pie -->
+    <!-- Edit Tile View Pie -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
-    <piemenu id="gTileViewPie">
+    <piemenu id="gEditTileViewPie">
         <html>Tools</html>
 
 	<item>
@@ -542,7 +542,7 @@
 		<item>
 		    <html>Overlays...</html>
 
-		    <piemenu id="gTileViewOverlaysPie"
+		    <piemenu id="gEditTileViewOverlaysPie"
 		        maxPieItems="100"
 			fixedRadius="100"
 		    >

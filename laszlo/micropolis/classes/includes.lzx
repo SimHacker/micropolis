@@ -15,7 +15,7 @@
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
     <include href="piemenu.lzx"/>
-    <include href="tileviewpie.lzx"/>
+    <include href="edittileviewpie.lzx"/>
     <include href="mycheckbox.lzx"/>
     <include href="myradio.lzx"/>
     <include href="resizebarh.lzx"/>
@@ -23,6 +23,8 @@
     <include href="tile.lzx"/>
     <include href="toolcursor.lzx"/>
     <include href="tileview.lzx"/>
+    <include href="edittileview.lzx"/>
+    <include href="noticetileview.lzx"/>
     <include href="demandgauge.lzx"/>
     <include href="datefundsview.lzx"/>
     <include href="statusview.lzx"/>

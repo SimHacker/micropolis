@@ -15,7 +15,6 @@
 
         <attribute name="active" value="true"/>
         <attribute name="gap" value="5"/>
-        <attribute name="tileView" value="null"/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[

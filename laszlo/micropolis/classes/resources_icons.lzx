@@ -11,6 +11,15 @@
 
     <resource name="logo_micropolis_rsrc" src="../resources/logo_micropolis.png"/>
 
+    <!-- Resize Bars -->
+
+    <resource name="ui_resizebar_h_rsrc" src="../resources/ui_resizebar_h.swf"/>
+    <resource name="ui_resizebar_v_rsrc" src="../resources/ui_resizebar_v.swf"/>
+
+    <!-- Pie Menus -->
+
+    <resource name="pie_background_rsrc" src="../resources/pie_background.swf"/>
+
     <!-- Icons -->
 
     <resource name="icon_pollution_rsrc" src="../resources/icon_pollution.png"/>

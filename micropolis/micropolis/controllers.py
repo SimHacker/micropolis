@@ -471,7 +471,7 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # micropolisGetMapPicture
+    # micropolisGetMapImage
     #
     # Get a picture of the session's map.
     #

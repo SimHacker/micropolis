@@ -107,7 +107,7 @@
 	    this.setAttribute("showMap", showMap);
 
 	    if (showMap && (currentX >= 0) && (currentY >= 0)) {
-	    	this.mapView.centerOnTile(currentX, currentY);
+	    	this.noticeTileView.centerOnTile(currentX, currentY);
 	    }
 
 	  ]]>
@@ -153,7 +153,7 @@
 
 	</view>
 
-	<tileview name="mapView" id="gNoticeMapView"
+	<noticetileview name="noticeTileView" id="gNoticeTileView"
 	    x="${parent.width - this.width}"
 	    y="0"
 	    width="${classroot.mapWidth}"
