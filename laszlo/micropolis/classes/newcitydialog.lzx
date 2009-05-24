@@ -1,0 +1,77 @@
+<library>
+
+
+    <!-- New City Dialog -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="newcitydialog" extends="modaldialog"
+        width="600" 
+	height="300"
+    >
+
+
+        <handler name="ongameMode" reference="gApp"><![CDATA[
+	    // Watch the application's gameMode, 
+	    // so we can close this dialog if the server disconnects.
+	    //Debug.write("ONGAMEMODE", this, this.visible, gApp.gameMode);
+	    if (this.visible &&
+	        gApp.gameMode != 'play') {
+		this.close();
+	    }
+	  ]]>
+	</handler>
+
+
+	<simplelayout
+	    axis="y"
+	    spacing="5"
+	/>
+
+
+	<text
+	    x="0"
+	    width="${immediateparent.width}"
+	    fontsize="32"
+	    fontstyle="bold"
+	    multiline="true"
+	    text="${gApp._('Are you really sure you want to start a new city?')}"
+	/>
+
+	<view
+	    x="0" 
+	    y="0"
+	    width="${immediateparent.width}"
+	    height="${immediateparent.height}"
+	    layout="axis:y; spacing:10"
+	>
+
+	    <button
+	        x="0"
+	        width="${parent.width}"
+	        onclick="parent.parent.close()"
+		fontsize="20"
+		fontstyle="bold"
+		text="${gApp._('No, keep playing with this city.')}"
+	    />
+
+	    <button 
+	        x="0"
+	        width="${parent.width}"
+	        onclick="parent.parent.close(); gApp.saveCity(); gApp.chooseCity()"
+		fontsize="20"
+		fontstyle="bold"
+		text="${gApp._('Yes, choose another city.')}"
+	    />
+
+	    <view/>
+
+	</view>
+
+
+    </class>
+
+
+</library>

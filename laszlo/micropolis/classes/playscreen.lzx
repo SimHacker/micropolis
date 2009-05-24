@@ -16,7 +16,7 @@
 	<attribute name="active" value="true"/>
         <attribute name="panelWidth" value="200"/>
         <attribute name="panelResizeBarY" value="200"/>
-        <attribute name="panelResizeBar2X" value="250"/>
+        <attribute name="panelResizeBarX" value="250"/>
         <attribute name="panelResizeBarSize" value="10"/>
         <attribute name="gap" value="5"/>
 
@@ -89,10 +89,10 @@
 	    />
 
 	    <resizebarv name="vsep1" id="gVSep1"
-		trackvar="'panelResizeBar2X'"
+		trackvar="'panelResizeBarX'"
 		maxx="${parent.width - this.width}"
-		defaultx="$once{classroot.panelResizeBar2X}"
-		x="$once{classroot.panelResizeBar2X}"
+		defaultx="$once{classroot.panelResizeBarX}"
+		x="$once{classroot.panelResizeBarX}"
 		y="0"
 		width="${classroot.panelResizeBarSize}"
 		height="${parent.height - this.y}"
@@ -122,8 +122,8 @@
 		    height="${parent.height + 2}"
 		>
 
-		    <tabpane id="gPlayTabNotice"
-			text="Notice"
+		    <tabpane id="gPlayTabNotices"
+			text="${gApp._('Notices')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -135,12 +135,12 @@
 			/>
 		    </tabpane>
 
-		    <tabpane id="gPlayTabMessages"
-			text="Messages"
+		    <tabpane id="gPlayTabJournal"
+			text="${gApp._('Journal')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
-			<messageview id="gMessageView"
+			<journalview id="gJournalView"
 			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
 			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
 			    visible="${this.width &amp;&amp; this.height}"
@@ -149,7 +149,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabEvaluation"
-			text="Evaluation"
+			text="${gApp._('Evaluation')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -162,7 +162,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabHistory"
-			text="History"
+			text="${gApp._('History')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -175,7 +175,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabBudget"
-			text="Budget"
+			text="${gApp._('Budget')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -188,7 +188,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabOverlays"
-			text="Overlays"
+			text="${gApp._('Overlays')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -201,7 +201,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabDisasters"
-			text="Disasters"
+			text="${gApp._('Disasters')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >
@@ -214,7 +214,7 @@
 		    </tabpane>
 
 		    <tabpane id="gPlayTabControl"
-			text="Control"
+			text="${gApp._('Control')}"
 			width="${parent.width}"
 			height="${parent.height}"
 		    >

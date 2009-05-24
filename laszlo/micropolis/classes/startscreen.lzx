@@ -9,7 +9,6 @@
 
     <class name="startscreen"
         clip="true"
-	initstage="late"
     >
 
 
@@ -48,7 +47,7 @@
 	    />
 
 	    <button name="playButton"
-		text="Play With This Map"
+		text="${gApp._('Play With This Map')}"
 		fontsize="18"
 		fontstyle="bold"
 		onclick="gApp.playWithThisCity()"
@@ -83,7 +82,7 @@
 	>
 
 	    <tabpane
-		text="Scenarios"
+		text="${gApp._('Scenarios')}"
 		width="${parent.width}"
 		height="${parent.height}"
 	    >
@@ -95,7 +94,7 @@
 	    </tabpane>
 
 	    <tabpane
-		text="Generator"
+		text="${gApp._('Generator')}"
 		width="${parent.width}"
 		height="${parent.height}"
 	    >
@@ -107,11 +106,23 @@
 	    </tabpane>
 
 	    <tabpane
-		text="Library"
+		text="${gApp._('Library')}"
 		width="${parent.width}"
 		height="${parent.height}"
 	    >
 		<libraryview id="gLibraryView"
+		    width="${parent.width - (immediateparent.x * 2)}"
+		    height="${parent.height - (immediateparent.y * 2) - 30}"
+		    active="${classroot.active &amp;&amp; parent.visible}"
+		/>
+	    </tabpane>
+
+	    <tabpane
+		text="${gApp._('Login')}"
+		width="${parent.width}"
+		height="${parent.height}"
+	    >
+		<loginview id="gLoginView"
 		    width="${parent.width - (immediateparent.x * 2)}"
 		    height="${parent.height - (immediateparent.y * 2) - 30}"
 		    active="${classroot.active &amp;&amp; parent.visible}"

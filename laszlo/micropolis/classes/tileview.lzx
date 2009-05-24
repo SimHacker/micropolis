@@ -118,7 +118,7 @@
 
 
 	<method  name="determinePlacement" args="aSub, placement, args"><![CDATA[
-	    Debug.write("determinePlacement", this, aSub, placement, args);
+	    //Debug.write("determinePlacement", this, aSub, placement, args);
 	    switch (placement) {
 	        case 'overlay':
 		    return this.overlay;

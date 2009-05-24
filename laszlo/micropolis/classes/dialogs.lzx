@@ -1,10 +1,15 @@
 <library>
 
 
-    <!-- Global Stuff -->
+    <!-- Dialogs -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
+
+
+    <newcitydialog id="gNewCityDialog"
+        initstage="late"
+    />
 
 
 </library>

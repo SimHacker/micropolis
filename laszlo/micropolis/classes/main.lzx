@@ -10,7 +10,15 @@
     <include href="includes.lzx"/>
 
 
-    <!-- Applicaton View -->
+    <strings id="gStrings"
+        initstage="early"
+    />
+
+
+    <remoteserver id="gRemoteServer"
+        initstage="early"
+    />
+
 
     <appview id="gApp"
 	name="app"

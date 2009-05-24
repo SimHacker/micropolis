@@ -39,7 +39,7 @@
 	    0, 1, 2, 3, 4, 5
 	]"/>
 
-	<attribute name="legendWidth" value="100"/>
+	<attribute name="legendWidth" value="115"/>
 	<attribute name="legendItemHeight" value="20"/>
 	<attribute name="bottomEdgeHeight" value="30"/>
 	<attribute name="gap" value="5"/>
@@ -561,8 +561,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="0"
-			label="Residential"
-			description="Show the residential population history."
+			text="${gApp._('Residential')}"
+			description="${gApp._('Show the residential population history.')}"
 			color="0x00ff00"
 			range="768"
 			history="${classroot}"
@@ -572,8 +572,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="1"
-			label="Commercial"
-			description="Show the commercial population history."
+			text="${gApp._('Commercial')}"
+			description="${gApp._('Show the commercial population history.')}"
 			color="0x0000a0"
 			range="768"
 			history="${classroot}"
@@ -583,8 +583,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="2"
-			label="Industrial"
-			description="Show the industrial population history."
+			text="${gApp._('Industrial')}"
+			description="${gApp._('Show the industrial population history.')}"
 			color="0xffff00"
 			range="768"
 			history="${classroot}"
@@ -594,8 +594,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="3"
-			label="Money"
-			description="Show the city funds history."
+			text="${gApp._('Money')}"
+			description="${gApp._('Show the city funds history.')}"
 			color="0x008000"
 			range="256"
 			history="${classroot}"
@@ -605,8 +605,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="4"
-			label="Crime"
-			description="Show the crime rate history."
+			text="${gApp._('Crime')}"
+			description="${gApp._('Show the crime rate history.')}"
 			color="0xff0000"
 			range="128"
 			history="${classroot}"
@@ -616,8 +616,8 @@
 			width="${parent.width}"
 			height="${classroot.legendItemHeight}"
 			type="5"
-			label="Pollution"
-			description="Show the pollution rate history."
+			text="${gApp._('Pollution')}"
+			description="${gApp._('Show the pollution rate history.')}"
 			color="0x507020"
 			range="128"
 			history="${classroot}"
@@ -645,12 +645,12 @@
 
 		    <myradiobutton
 		        value="0"
-		        text="10 Years"
+		        text="${gApp._('10 Years')}"
 		    />
 
 		    <myradiobutton
 		        value="1"
-		        text="120 Years"
+		        text="${gApp._('120 Years')}"
 		    />
 
 

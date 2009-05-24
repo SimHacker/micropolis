@@ -7,10 +7,11 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <include href="patches.lzx"/>
     <script src="rpc/library/json.js"/>
+
+    <include href="patches.lzx"/>
     <include href="resources.lzx"/>
-    <include href="datasets.lzx"/>
+    <include href="strings.lzx"/>
     <include href="remoteserver.lzx"/>
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
@@ -34,8 +35,8 @@
     <include href="generatorview.lzx"/>
     <include href="libraryview.lzx"/>
     <include href="budgetview.lzx"/>
+    <include href="optionscheckbox.lzx"/>
     <include href="controlpanel.lzx"/>
-    <include href="editorview.lzx"/>
     <include href="evaluationview.lzx"/>
     <include href="historycheckbox.lzx"/>
     <include href="historyview.lzx"/>
@@ -45,12 +46,15 @@
     <include href="noticeview.lzx"/>
     <include href="overlaysview.lzx"/>
     <include href="disastersview.lzx"/>
-    <include href="messageview.lzx"/>
+    <include href="journalview.lzx"/>
+    <include href="loginview.lzx"/>
     <include href="connectscreen.lzx"/>
     <include href="startscreen.lzx"/>
     <include href="playscreen.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
+    <include href="newcitydialog.lzx"/>
+    <include href="dialogs.lzx"/>
 
 
 </library>

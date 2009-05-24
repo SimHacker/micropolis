@@ -182,23 +182,23 @@
 
 	    //Debug.write("Drawing text.");
 
-	    function centerText(text, x, y) {
 /*
+	    function centerText(text, x, y) {
 		var a = 
 		    this.pinMarkupXY(
 			text, x, y, 0.5, 0.5);
 		dv.moveTo(a[0], a[1]);
 		dv.showText(text);
-*/
 	    }
 
 	    dv.strokeStyle = 0x000000; // XXX: set text color
 
 	    var cy = barY + (barHeight / 2) + 1;
 
-	    centerText('<b>R</b>', rColX + (colWidth / 2), cy);
-	    centerText('<b>C</b>', cColX + (colWidth / 2), cy);
-	    centerText('<b>I</b>', iColX + (colWidth / 2), cy);
+	    centerText('<b>' + gApp._('R') + '</b>', rColX + (colWidth / 2), cy);
+	    centerText('<b>' + gApp._('C') + '</b>', cColX + (colWidth / 2), cy);
+	    centerText('<b>' + gApp._('I') + '</b>', iColX + (colWidth / 2), cy);
+*/
 
 	    //Debug.write("Drawing DONE!");
 
@@ -223,7 +223,13 @@
 	  fontsize="14"
 	  fontstyle="bold"
 	  resize="true"
-	  text="R C I"
+	  text="${
+	      gApp._('R') +
+	      ' ' +
+	      gApp._('C') +
+	      ' ' +
+	      gApp._('I')
+	  }"
 	/>
 
     </class>

@@ -1,0 +1,28 @@
+<library>
+
+
+    <!-- Options Checkbox -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="optionscheckbox" extends="mycheckbox"
+        width="120"
+	height="18"
+    >
+
+
+        <attribute name="option" type="string" value="null"/>
+
+
+	<handler name="onchanged" args="arg"><![CDATA[
+	    Debug.write("OPTIONSCHECKBOX ONCHANGED", this, this.text, this.option, this.value);
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

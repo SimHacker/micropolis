@@ -7,346 +7,409 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="remoteserver" extends="node">
+    <switch>
 
 
-	<switch>
-	    <when property="$as3">
-		<passthrough>
-		    import flash.net.NetConnection;
-		    import flash.net.Responder;
-		    import flash.net.ObjectEncoding;
-		    import flash.events.ErrorEvent;
-		    import flash.events.StatusEvent;
-		    import flash.events.IOErrorEvent;
-		    import flash.events.NetStatusEvent;
-		    import flash.events.SecurityErrorEvent;
-		    import flash.events.AsyncErrorEvent;
-		</passthrough>
-	    </when>
-	</switch>
+        <when runtime="dhtml">
 
 
-	<attribute name="url" type="string" 
-	    value="http:/server/amfGateway"/>
-        <attribute name="connectionTimeout" type="number"
-	    value="5000"/>
-        <attribute name="pollTimeout" type="number"
-	    value="10000"/>
-	<attribute name="netConnection" value="null"/>
-	<attribute name="objectEncoding" value="ObjectEncoding.AMF3"/>
-	<attribute name="status" type="string" value=""/>
-	<attribute name="stage" value="0"/>
-        <attribute name="_startSessionResponder" value="null"/>
-        <attribute name="_pollResponder" value="null"/>
-        <attribute name="_connectionTimeoutDelegate" value="null"/>
-	<attribute name="_connectionTimeoutOutstanding" value="false"/>
-        <attribute name="_pollTimeoutDelegate" value="null"/>
-	<attribute name="_pollTimeoutOutstanding" value="false"/>
-	<attribute name="_startSessionOutstanding" value="false"/>
-	<attribute name="_pollOutstanding" value="false"/>
+	    <!-- Remote server for dhtml runtime. -->
 
 
-	<handler name="oninit"><![CDATA[
-	    //Debug.write("remoteserver ONINIT", this);
+	    <class name="remoteserver" extends="node">
 
-	    var netConnection = new NetConnection();
-	    this.netConnection = netConnection;
 
-	    netConnection.objectEncoding = this.objectEncoding;
+		<attribute name="url" type="string" value="http:/server/jsonGateway"/>
+		<attribute name="connectionTimeout" type="number" value="5000"/>
+		<attribute name="pollTimeout" type="number" value="10000"/>
+		<attribute name="status" type="string" value=""/>
 
-	    netConnection.addEventListener(
-	        NetStatusEvent.NET_STATUS, 
-		this._onStatus);
-	    netConnection.addEventListener(
-	        SecurityErrorEvent.SECURITY_ERROR, 
-		this._onSecurityError);
-	    netConnection.addEventListener(
-	        AsyncErrorEvent.ASYNC_ERROR, 
-		this._onSecurityError);
-	    netConnection.client = 
-	        this;
 
-	    this._startSessionResponder =
-	        new Responder(
-		    this._onStartSessionComplete, 
-		    this._onStartSessionFail);
+		<handler name="oninit"><![CDATA[
+		    Debug.write("remoteserver DHTML oninit", this);
+		    // TODO
+		  ]]>
+		</handler>
 
-	    this._pollResponder =
-	        new Responder(
-		    this._onPollComplete, 
-		    this._onPollFail);
 
-	    //Debug.write("NetConnection", netConnection);
-	  ]]>
-	</handler>
-        
+		<method name="sendStartSession"><![CDATA[
+		    Debug.write("remoteserver DHTML sendStartSession", this);
+		    // TODO
+		  ]]>
+		</method>
 
-	<method name="_onStatus" args="evt"><![CDATA[
-	    if ($as3) {
-	        evt = evt.info;
-	    }
 
-	    var code = evt.code;
+		<method name="sendPoll" args="pollDict"><![CDATA[
+		    Debug.write("remoteserver DHTML sendPoll", this, pollDict);
+		    // TODO
+		  ]]>
+		</method>
 
-	    // Only used for debugging.
-	    var description = evt['description'] ? evt.description : "";
-	    //Debug.write("remoteserver", this, "_onStatus", code, description, evt);
+
+	    </class>
+
+
+	</when>
+
+
+	<otherwise>
+
+
+	    <!-- Remote server for Flash runtime. -->
+
+
+	    <class name="remoteserver" extends="node">
+
+
+		<switch>
+		    <when property="$as3">
+			<passthrough>
+			    import flash.net.NetConnection;
+			    import flash.net.Responder;
+			    import flash.net.ObjectEncoding;
+			    import flash.events.ErrorEvent;
+			    import flash.events.StatusEvent;
+			    import flash.events.IOErrorEvent;
+			    import flash.events.NetStatusEvent;
+			    import flash.events.SecurityErrorEvent;
+			    import flash.events.AsyncErrorEvent;
+			</passthrough>
+		    </when>
+		</switch>
+
+
+		<attribute name="url" type="string" value="http:/server/amfGateway"/>
+		<attribute name="connectionTimeout" type="number" value="5000"/>
+		<attribute name="pollTimeout" type="number" value="10000"/>
+		<attribute name="netConnection" value="null"/>
+		<attribute name="objectEncoding" value="ObjectEncoding.AMF3"/>
+		<attribute name="status" type="string" value=""/>
+		<attribute name="stage" value="0"/>
+		<attribute name="_startSessionResponder" value="null"/>
+		<attribute name="_pollResponder" value="null"/>
+		<attribute name="_connectionTimeoutDelegate" value="null"/>
+		<attribute name="_connectionTimeoutOutstanding" value="false"/>
+		<attribute name="_pollTimeoutDelegate" value="null"/>
+		<attribute name="_pollTimeoutOutstanding" value="false"/>
+		<attribute name="_startSessionOutstanding" value="false"/>
+		<attribute name="_pollOutstanding" value="false"/>
+
+
+		<handler name="oninit"><![CDATA[
+		    //Debug.write("remoteserver Flash oninit", this);
+
+		    var netConnection = new NetConnection();
+		    this.netConnection = netConnection;
+
+		    netConnection.objectEncoding = this.objectEncoding;
+
+		    netConnection.addEventListener(
+			NetStatusEvent.NET_STATUS, 
+			this._onStatus);
+		    netConnection.addEventListener(
+			SecurityErrorEvent.SECURITY_ERROR, 
+			this._onSecurityError);
+		    netConnection.addEventListener(
+			AsyncErrorEvent.ASYNC_ERROR, 
+			this._onSecurityError);
+		    netConnection.client = 
+			this;
+
+		    this._startSessionResponder =
+			new Responder(
+			    this._onStartSessionComplete, 
+			    this._onStartSessionFail);
+
+		    this._pollResponder =
+			new Responder(
+			    this._onPollComplete, 
+			    this._onPollFail);
+
+		    //Debug.write("NetConnection", netConnection);
+		  ]]>
+		</handler>
+
+
+		<method name="_onStatus" args="evt"><![CDATA[
+		    if ($as3) {
+			evt = evt.info;
+		    }
+
+		    var code = evt.code;
+
+		    // Only used for debugging.
+		    var description = evt['description'] ? evt.description : "";
+		    //Debug.write("remoteserver", this, "_onStatus", code, description, evt);
 
 /*
-	    var k;
-	    for (k in evt) {
-	        var val = "???";
-		try {
-		    val = evt[k];
-		} catch (e) {
-		    val = e;
-		};
-		Debug.write(k + ": " + val);
-	    }
+		    var k;
+		    for (k in evt) {
+			var val = "???";
+			try {
+			    val = evt[k];
+			} catch (e) {
+			    val = e;
+			};
+			Debug.write(k + ": " + val);
+		    }
 */
 
-	    var status = "";
-	    var s = this.stage;
-	    var failure = true;
+		    var status = "";
+		    var s = this.stage;
+		    var failure = true;
 
-	    switch (code) {
+		    switch (code) {
 
-		case "NetConnection.Connect.AppShutdown": {
-		    // The application has been shut down 
-		    // (for example, if the application is out of memory 
-		    // resources and must be shut down to prevent the 
-		    // server from crashing) or the server has been shut down.
-		    status = "disconnected (error)";
-		    s = 0;
-		    break;
-		}
+			case "NetConnection.Connect.AppShutdown": {
+			    // The application has been shut down 
+			    // (for example, if the application is out of memory 
+			    // resources and must be shut down to prevent the 
+			    // server from crashing) or the server has been shut down.
+			    status = gApp._('Disconnected (error).');
+			    s = 0;
+			    break;
+			}
 
-		case "NetConnection.Connect.Closed": {
-		    // The connection was successfully closed.
-		    status = "disconnected";
-		    s = 0;
-		    failure = false;
-		    break;
-		}
+			case "NetConnection.Connect.Closed": {
+			    // The connection was successfully closed.
+			    status = gApp._('Disconnected.');
+			    s = 0;
+			    failure = false;
+			    break;
+			}
 
-		case "NetConnection.Connect.Failed": {
-		    // The connection attempt failed; 
-		    // for example, the server is not running.
-		    status = "connection failed";
-		    s = 0;
-		    break;
-		}
+			case "NetConnection.Connect.Failed": {
+			    // The connection attempt failed; 
+			    // for example, the server is not running.
+			    status = gApp._('Connection failed.');
+			    s = 0;
+			    break;
+			}
 
-		case "NetConnection.Connect.Rejected": {
-		    // The client does not have permission to connect 
-		    // to the application, or the application expected 
-		    // different parameters from those that were passed, 
-		    // or the application specifically rejected the client.
-		    status = "connection rejected";
-		    s = 0;
-		    break;
-		}
+			case "NetConnection.Connect.Rejected": {
+			    // The client does not have permission to connect 
+			    // to the application, or the application expected 
+			    // different parameters from those that were passed, 
+			    // or the application specifically rejected the client.
+			    status = gApp._('Connection rejected.');
+			    s = 0;
+			    break;
+			}
 
-		case "NetConnection.Connect.Success": {
-		    // The connection attempt succeeded.
-		    status = "connected";
-		    s = 2;
-		    failure = false;
-		    break;
-		}
+			case "NetConnection.Connect.Success": {
+			    // The connection attempt succeeded.
+			    status = gApp._('Connected.');
+			    s = 2;
+			    failure = false;
+			    break;
+			}
 
-		case "NetConnection.Call.Failed": {
-		    // The call failed.
-		    status = "call failed, " + description + ", to " + evt['details'];
-		    s = 0;
-		    break;
-		}
+			case "NetConnection.Call.Failed": {
+			    // The call failed.
+			    status = 
+			        gApp._('Message failed.') +
+			        ' ' +
+				gApp._('Description:') +
+				' ' +
+				description +
+				'. ' +
+				gApp._('To:') +
+				' ' +
+				evt['details'];
+			    s = 0;
+			    break;
+			}
 
-		default: {
-		    status = code;
-		    break;
-		}
+			default: {
+			    status = code;
+			    break;
+			}
 
-	    }
+		    }
 
-	    this.setAttribute("status", status);
-	    this.setAttribute("stage", s);
+		    this.setAttribute("status", status);
+		    this.setAttribute("stage", s);
 
-	    //Debug.write(stage, status);
+		    //Debug.write(stage, status);
 
-	    if (this._connectionTimeoutOutstanding) {
-	    	lz.Timer.removeTimer(this._connectionTimeoutDelegate);
-		this._connectionTimeoutOutstanding = false;
-	    }
+		    if (this._connectionTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._connectionTimeoutDelegate);
+			this._connectionTimeoutOutstanding = false;
+		    }
 
-	    if (s == 2) { // Success!
-		//Debug.write("remoteserver connected to", this._connecturl);
-	    } else if (failure) {
-		gApp.failSession();
-	    } else {
-		// Disconnection isn't a failure.
-		gApp.endSession();
-	    }
+		    if (s == 2) { // Success!
+			//Debug.write("remoteserver connected to", this._connecturl);
+		    } else if (failure) {
+			gApp.failSession();
+		    } else {
+			// Disconnection isn't a failure.
+			gApp.endSession();
+		    }
 
-	  ]]>
-	</method>
-
-
-	<method name="_onSecurityError" args="error"><![CDATA[
-	    var errstr = error + '';
-	    Debug.warn("remoteserver _onSecurityError", error);
-	    gApp.failSession();
-	  ]]>
-	</method>
-
-
-	<method name="sendStartSession"><![CDATA[
-	    var netConnection = this.netConnection;
-
-	    var result = netConnection.connect(this.url);
-	    //Debug.write("remoteserver", this, "connect result", result);
-
-	    netConnection.call(
-	        "micropolis.startSession",
-		this._startSessionResponder);
-
-	    this._startSessionOutstanding = true;
-
-	    var del = 
-	        this._connectionTimeoutDelegate;
-	    if (del == null) {
-	        del = new lz.Delegate(this, '_onConnectionTimeout');
-		this._connectionTimeoutDelegate = del;
-	    }
-
-	    lz.Timer.resetTimer(del, this.connectionTimeout);
-	    this._connectionTimeoutOutstanding = true;
-	  ]]>
-	</method>
+		  ]]>
+		</method>
 
 
-	<method name="_onStartSessionComplete" args="sessionID"><![CDATA[
-	    //Debug.write("remoteserver _onStartSessionComplete", this, "sessionID", sessionID);
-	    this._startSessionOutstanding = false;
-
-	    if (this._connectionTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._connectionTimeoutDelegate);
-		this._connectionTimeoutOutstanding = false;
-	    }
-
-	    gApp.startSession(sessionID);
-	  ]]>
-	</method>
+		<method name="_onSecurityError" args="error"><![CDATA[
+		    var errstr = error + '';
+		    Debug.warn("remoteserver _onSecurityError", error);
+		    gApp.failSession();
+		  ]]>
+		</method>
 
 
-	<method name="_onStartSessionFail" args="results"><![CDATA[
-	    //Debug.write("remoteserver _onStartSessionFail", this, results);
+		<method name="sendStartSession"><![CDATA[
+		    var netConnection = this.netConnection;
 
-	    this._startSessionOutstanding = false;
+		    var result = netConnection.connect(this.url);
+		    //Debug.write("remoteserver", this, "connect result", result);
 
-	    if (this._connectionTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._connectionTimeoutDelegate);
-		this._connectionTimeoutOutstanding = false;
-	    }
+		    netConnection.call(
+			"micropolis.startSession",
+			this._startSessionResponder);
 
-	    gApp.failSession();
-	  ]]>
-	</method>
+		    this._startSessionOutstanding = true;
 
+		    var del = 
+			this._connectionTimeoutDelegate;
+		    if (del == null) {
+			del = new lz.Delegate(this, '_onConnectionTimeout');
+			this._connectionTimeoutDelegate = del;
+		    }
 
-	<method name="_onConnectionTimeout" args="results"><![CDATA[
-	    //Debug.write("remoteserver _onConnectionTimeout", this, results);
-
-	    this._startSessionOutstanding = false;
-
-	    if (this._connectionTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._connectionTimeoutDelegate);
-		this._connectionTimeoutOutstanding = false;
-	    }
-
-	    gApp.failSession();
-	  ]]>
-	</method>
+		    lz.Timer.resetTimer(del, this.connectionTimeout);
+		    this._connectionTimeoutOutstanding = true;
+		  ]]>
+		</method>
 
 
-	<method name="sendPoll" args="pollDict"><![CDATA[
-	    var netConnection = this.netConnection;
+		<method name="_onStartSessionComplete" args="sessionID"><![CDATA[
+		    //Debug.write("remoteserver _onStartSessionComplete", this, "sessionID", sessionID);
+		    this._startSessionOutstanding = false;
 
-	    netConnection.call(
-	        "micropolis.poll",
-		this._pollResponder,
-		pollDict);
+		    if (this._connectionTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._connectionTimeoutDelegate);
+			this._connectionTimeoutOutstanding = false;
+		    }
 
-	    this._pollOutstanding = true;
-
-	    var del = 
-	        this._pollTimeoutDelegate;
-	    if (del == null) {
-	        del = new lz.Delegate(this, '_onPollTimeout');
-		this._pollTimeoutDelegate = del;
-	    }
-
-	    lz.Timer.resetTimer(del, this.pollTimeout);
-	    this._pollTimeoutOutstanding = true;
-	  ]]>
-	</method>
+		    gApp.startSession(sessionID);
+		  ]]>
+		</method>
 
 
-	<method name="_onPollComplete" args="result"><![CDATA[
-	    //Debug.write("remoteserver _onPollComplete", this, "result", result);
-	    this._pollOutstanding = false;
+		<method name="_onStartSessionFail" args="results"><![CDATA[
+		    //Debug.write("remoteserver _onStartSessionFail", this, results);
 
-	    if (this._pollTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._pollTimeoutDelegate);
-		this._pollTimeoutOutstanding = false;
-	    }
+		    this._startSessionOutstanding = false;
 
-	    gApp.handlePoll(result);
-	  ]]>
-	</method>
+		    if (this._connectionTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._connectionTimeoutDelegate);
+			this._connectionTimeoutOutstanding = false;
+		    }
 
-
-	<method name="_onPollFail" args="results"><![CDATA[
-	    Debug.write("remoteserver _onPollFail", this, results);
-	    Debug.write(results['level']);
-	    Debug.write(results['code']);
-	    Debug.write(results['description']);
-	    var lines = results['details'].split("', '");
-	    var n = lines.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	        Debug.write(lines[i]);
-	    }
-
-	    this._pollOutstanding = false;
-
-	    if (this._pollTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._pollTimeoutDelegate);
-		this._pollTimeoutOutstanding = false;
-	    }
-
-	    gApp.failSession();
-	  ]]>
-	</method>
+		    gApp.failSession();
+		  ]]>
+		</method>
 
 
-	<method name="_onPollTimeout" args="results"><![CDATA[
-	    //Debug.write("remoteserver _onPollTimeout", this, results);
+		<method name="_onConnectionTimeout" args="results"><![CDATA[
+		    //Debug.write("remoteserver _onConnectionTimeout", this, results);
 
-	    this._pollOutstanding = false;
+		    this._startSessionOutstanding = false;
 
-	    if (this._pollTimeoutOutstanding) {
-		lz.Timer.removeTimer(this._pollTimeoutDelegate);
-		this._pollTimeoutOutstanding = false;
-	    }
+		    if (this._connectionTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._connectionTimeoutDelegate);
+			this._connectionTimeoutOutstanding = false;
+		    }
 
-	    gApp.failSession();
-	  ]]>
-	</method>
+		    gApp.failSession();
+		  ]]>
+		</method>
 
 
-    </class>
+		<method name="sendPoll" args="pollDict"><![CDATA[
+		    var netConnection = this.netConnection;
+
+		    netConnection.call(
+			"micropolis.poll",
+			this._pollResponder,
+			pollDict);
+
+		    this._pollOutstanding = true;
+
+		    var del = 
+			this._pollTimeoutDelegate;
+		    if (del == null) {
+			del = new lz.Delegate(this, '_onPollTimeout');
+			this._pollTimeoutDelegate = del;
+		    }
+
+		    lz.Timer.resetTimer(del, this.pollTimeout);
+		    this._pollTimeoutOutstanding = true;
+		  ]]>
+		</method>
+
+
+		<method name="_onPollComplete" args="result"><![CDATA[
+		    //Debug.write("remoteserver _onPollComplete", this, "result", result);
+		    this._pollOutstanding = false;
+
+		    if (this._pollTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._pollTimeoutDelegate);
+			this._pollTimeoutOutstanding = false;
+		    }
+
+		    gApp.handlePoll(result);
+		  ]]>
+		</method>
+
+
+		<method name="_onPollFail" args="results"><![CDATA[
+		    Debug.write("remoteserver _onPollFail", this, results);
+		    Debug.write(results['level']);
+		    Debug.write(results['code']);
+		    Debug.write(results['description']);
+		    var lines = results['details'].split("', '");
+		    var n = lines.length;
+		    var i;
+		    for (i = 0; i < n; i++) {
+			Debug.write(lines[i]);
+		    }
+
+		    this._pollOutstanding = false;
+
+		    if (this._pollTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._pollTimeoutDelegate);
+			this._pollTimeoutOutstanding = false;
+		    }
+
+		    gApp.failSession();
+		  ]]>
+		</method>
+
+
+		<method name="_onPollTimeout" args="results"><![CDATA[
+		    //Debug.write("remoteserver _onPollTimeout", this, results);
+
+		    this._pollOutstanding = false;
+
+		    if (this._pollTimeoutOutstanding) {
+			lz.Timer.removeTimer(this._pollTimeoutDelegate);
+			this._pollTimeoutOutstanding = false;
+		    }
+
+		    gApp.failSession();
+		  ]]>
+		</method>
+
+
+	    </class>
+
+
+        </otherwise>
+
+
+    </switch>
 
 
 </library>

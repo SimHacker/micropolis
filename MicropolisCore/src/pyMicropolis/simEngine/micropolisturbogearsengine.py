@@ -439,6 +439,7 @@ class Session(object):
         self.lastPollTime = 0
         self.lastTouchTime = 0
         self.expireDelay = 60 * 10 # ten minutes
+        self.user = None
 
         self.touch()
 
@@ -868,7 +869,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         elif message == 'sendChatText':
 
             chatText = messageDict['chatText']
-            print "CHAT", chatText
+            language = messageDict['language']
+            print "CHAT", language, chatText
             chatResponse = self.eliza.respond(chatText)
             print "RESPONSE", chatResponse
             session.sendMessage({

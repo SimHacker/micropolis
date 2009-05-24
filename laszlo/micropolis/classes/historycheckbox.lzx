@@ -12,13 +12,13 @@
     >
 
 
-	<attribute name="label" type="string" value=""/>
 	<attribute name="description" type="string" value=""/>
 	<attribute name="type" type="number" value="0"/>
 	<attribute name="color" type="number" value="0"/>
 	<attribute name="range" type="number" value="0"/>
 	<attribute name="border" type="number" value="3"/>
 	<attribute name="history" value="null"/>
+	<attribute name="text" type="string" value=""/>
 
 
 	<mycheckbox name="cb"
@@ -26,8 +26,8 @@
 	    y="${parent.border}"
 	    width="${parent.width - (2 * parent.border)}"
 	    height="${parent.height - (2 * parent.border)}"
-	    text="${parent.label}"
 	    bgcolor="0xffffff"
+	    text="${parent.text}"
 	>
 
 	    <handler name="oninit" args="arg"><![CDATA[
