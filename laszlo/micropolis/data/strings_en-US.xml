@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<strings language="en-US">
+
+
+    <!-- appview -->
+
+    <string id="Micropolis: Choose a City"
+	>Micropolis: Choose a City</string>
+
+    <!-- 
+	To break lines, use "&lt;br/&gt;" instead entering a line break control character. 
+	The tab and button names in the text should be the same as the translated names.
+    -->
+    <string id="Welcome to Micropolis!"
+	>Welcome to Micrpolis!&lt;br/&gt;&lt;br/&gt;Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.&lt;br/&gt;&lt;br/&gt;Then press the 'Play with This City' button below, to start playing Micropolis!</string>
+
+    <!-- 
+	Change the lang parameter ("en-US") to the appropriate 5 character "language-COUNTRY" code, but leave the rest of the URL the same.
+    -->
+    <string id="/wiki/index.php/About"
+	>/wiki/index.php/About?lang=en-US</string>
+
+    <!-- 
+	Change the lang parameter ("en-US") to the appropriate 5 character "language-COUNTRY" code, but leave the rest of the URL the same.
+    -->
+    <string id="/wiki/index.php/Help"
+	>/wiki/index.php/Help?lang=en-US</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Jan"
+	>Jan</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Feb"
+	>Feb</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Mar"
+	>Mar</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Apr"
+	>Apr</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="May"
+	>May</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Jun"
+	>Jun</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Jul"
+	>Jul</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Aug"
+	>Aug</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Sep"
+	>Sep</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Oct"
+	>Oct</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Nov"
+	>Nov</string>
+
+    <!-- 
+	Three letter month abbreviation.
+    -->
+    <string id="Dec"
+	>Dec</string>
+
+
+    <!-- budgetview -->
+
+    <string id="Taxes Collected:"
+        >Taxes Collected:</string>
+
+    <string id="Cash Flow:"
+	>Cash Flow:</string>
+
+    <string id="Previous Funds:"
+	>Previous Funds:</string>
+
+    <string id="Current Funds:"
+	>Current Funds:</string>
+
+    <string id="Tax Rate:"
+	>Tax Rate:</string>
+
+    <string id="Road Request:"
+	>Road Request:</string>
+
+    <string id="Fire Request:"
+	>Fire Request:</string>
+
+    <string id="Police Request:"
+	>Police Request:</string>
+
+
+    <!-- connectscreen -->
+
+    <string id="Connecting to Micropolis Online server..."
+	>Connecting to Micropolis Online server...</string>
+
+    <string id="Connection to Micropolis Online server failed."
+	>Connection to Micropolis Online server failed.</string>
+
+    <string id="Status:"
+	>Status:</string>
+
+    <string id="Reconnect"
+        >Reconnect</string>
+
+
+    <!-- controlpanel -->
+
+    <string id="Are you really sure you want to start a new city?"
+	>Are you really sure you want to start a new city?</string>
+
+    <string id="No, keep playing with this city."
+	>No, keep playing with this city.</string>
+
+    <string id="Yes, choose another city."
+	>Yes, choose another city.</string>
+
+    <string id="Ultra Slow"
+	>Ultra Slow</string>
+
+    <string id="Super Slow"
+	>Super Slow</string>
+
+    <string id="Very Slow"
+	>Very Slow</string>
+
+    <string id="Slow"
+	>Slow</string>
+
+    <string id="Medium"
+	>Medium</string>
+
+    <string id="Fast"
+	>Fast</string>
+
+    <string id="Very Fast"
+	>Very Fast</string>
+
+    <string id="Super Fast"
+	>Super Fast</string>
+
+    <string id="Ultra Fast"
+	>Ultra Fast</string>
+
+    <string id="Astronomically Fast"
+	>Astronomically Fast</string>
+
+    <string id="Resume"
+	>Resume</string>
+
+    <string id="Pause"
+	>Pause</string>
+
+    <string id="Speed"
+	>Speed</string>
+
+    <string id="Paused..."
+	>Paused...</string>
+
+    <string id="Running!"
+	>Running!</string>
+
+    <string id="Save City"
+	>Save City</string>
+
+    <string id="New City"
+	>New City</string>
+
+    <string id="Help"
+	>Help</string>
+
+    <string id="About"
+	>About</string>
+
+    <string id="Disasters"
+	>Disasters</string>
+
+    <string id="Auto Budget"
+	>Auto Budget</string>
+
+    <string id="Auto Bulldoze"
+	>Auto Bulldoze</string>
+
+    <string id="Auto Goto"
+	>Auto Goto</string>
+
+    <string id="Sound"
+	>Sound</string>
+
+    <string id="Animation"
+	>Animation</string>
+
+    <string id="Messages"
+	>Messages</string>
+
+    <string id="Notices"
+	>Notices</string>
+
+
+    <!-- datefundsview -->
+
+    <string id="Date:"
+	>Date:</string>
+
+    <string id="Funds:"
+	>Funds:</string>
+
+
+    <!-- demandgauge -->
+
+    <!--
+	One letter abreviation for "Residential".
+    -->
+    <string id="R"
+	>R</string>
+
+    <!--
+	One letter abreviation for "Commercial".
+    -->
+    <string id="C"
+	>C</string>
+
+    <!--
+	One letter abreviation for "Industrial".
+    -->
+    <string id="I"
+	>I</string>
+
+
+    <!-- edittileviewpie -->
+
+    <string id="Tools"
+	>Tools</string>
+
+    <string id="Zone..."
+	>Zone...</string>
+
+    <string id="Zone"
+	>Zone</string>
+
+    <string id="Build..."
+	>Build...</string>
+
+    <string id="Build"
+	>Build</string>
+
+    <string id="More..."
+	>More...</string>
+
+    <string id="Tab..."
+	>Tab...</string>
+
+    <string id="Tab"
+	>Tab</string>
+
+    <string id="Journal"
+	>Journal</string>
+
+    <string id="Evaluation"
+	>Evaluation</string>
+
+    <string id="History"
+	>History</string>
+
+    <string id="Budget"
+	>Budget</string>
+
+    <string id="Overlays"
+	>Overlays</string>
+
+    <string id="Disasters"
+	>Disasters</string>
+
+    <string id="Control"
+	>Control</string>
+
+    <string id="Speed..."
+	>Speed...</string>
+
+    <string id="Speed"
+	>Speed</string>
+
+    <string id="Overlays..."
+	>Overlays...</string>
+
+    <string id="Overlays"
+	>Overlays</string>
+
+    <string id="Disasters..."
+	>Disasters...</string>
+
+    <string id="Disasters"
+	>Disasters</string>
+
+    <string id="Help"
+	>Help</string>
+
+    <string id="New City"
+	>New City</string>
+
+    <string id="Funds..."
+	>Funds...</string>
+
+    <string id="Funds"
+	>Funds</string>
+
+    <string id="Tax Rate"
+	>Tax Rate</string>
+
+    <string id="Police Funds"
+	>Police Funds</string>
+
+    <string id="Road Funds"
+	>Road Funds</string>
+
+    <string id="Fire Funds"
+	>Fire Funds</string>
+
+    <string id="About"
+	>About</string>
+
+
+    <!-- evaluationview -->
+
+    <string id="Crime"
+	>Crime</string>
+
+    <string id="Pollution"
+	>Pollution</string>
+
+    <string id="Housing"
+	>Housing</string>
+
+    <string id="Taxes"
+	>Taxes</string>
+
+    <string id="Traffic"
+	>Traffic</string>
+
+    <string id="Unemployment"
+	>Unemployment</string>
+
+    <string id="Fire"
+	>Fire</string>
+
+    <string id="Village"
+	>Village</string>
+
+    <string id="Town"
+	>Town</string>
+
+    <string id="City"
+	>City</string>
+
+    <string id="Capital"
+	>Capital</string>
+
+    <string id="Metropolis"
+	>Metropolis</string>
+
+    <string id="Megalopolis"
+	>Megalopolis</string>
+
+    <string id="Easy"
+	>Easy</string>
+
+    <string id="Medium"
+	>Medium</string>
+
+    <string id="Hard"
+	>Hard</string>
+
+    <string id="Approve:"
+	>Approve:</string>
+
+    <string id="Disapprove:"
+	>Disapprove:</string>
+
+    <string id="Population:"
+	>Population:</string>
+
+    <string id="Migration:"
+	>Migration:</string>
+
+    <string id="City Value:"
+	>City Value:</string>
+
+    <string id="Category:"
+	>Category:</string>
+
+    <string id="Game Level:"
+	>Game Level:</string>
+
+    <string id="Current Score:"
+	>Current Score:</string>
+
+    <string id="Annual Change:"
+	>Annual Change:</string>
+
+    <string id="Popularity:"
+	>Popularity:</string>
+
+    <string id="Problems:"
+	>Problems:</string>
+
+
+    <!-- generatorview -->
+
+    <string id="Generate Random Map"
+	>Generate Random Map</string>
+
+    <string id="Generated Map"
+	>Generated Map</string>
+
+    <string id="Generated a new random map."
+	>Generated a new random map.</string>
+
+
+    <!-- historyview -->
+
+    <string id="Residential"
+	>Residential</string>
+
+    <string id="Show the residential population history."
+	>Show the residential population history.</string>
+
+    <string id="Commercial"
+	>Commercial</string>
+
+    <string id="Show the commercial population history."
+	>Show the commercial population history.</string>
+
+    <string id="Industrial"
+	>Industrial</string>
+
+    <string id="Show the industrial population history."
+	>Show the industrial population history.</string>
+
+    <string id="Money"
+	>Money</string>
+
+    <string id="Show the city funds history."
+	>Show the city funds history.</string>
+
+    <string id="Crime"
+	>Crime</string>
+
+    <string id="Show the crime rate history."
+	>Show the crime rate history.</string>
+
+    <string id="Pollution"
+	>Pollution</string>
+
+    <string id="Show the pollution rate history."
+	>Show the pollution rate history.</string>
+
+    <string id="10 Years"
+	>10 Years</string>
+
+    <string id="120 Years"
+	>120 Years</string>
+
+    
+    <!-- libraryview -->
+
+    <string id="Loaded Map:"
+	>Loaded Map:</string>
+
+    <string id="Loaded a map from the library:"
+	>Loaded a map from the library:</string>
+
+
+    <!-- loginview -->
+
+
+    <!-- noticeview -->
+
+    <string id="Micropolis"
+	>Micropolis</string>
+
+    <string id="The simulation has begun!"
+	>The city simulation has begun!</string>
+
+    <!-- playscreen -->
+
+    <string id="Notice"
+	>Notice</string>
+
+    <string id="Journal"
+	>Journal</string>
+
+    <string id="Evaluation"
+	>Evaluation</string>
+
+    <string id="History"
+	>History</string>
+
+    <string id="Budget"
+	>Budget</string>
+
+    <string id="Overlays"
+	>Overlays</string>
+
+    <string id="Disasters"
+	>Disasters</string>
+
+    <string id="Control"
+	>Control</string>
+
+
+    <!-- remoteserver -->
+
+    <!--
+	Abnormal disconnection that is an error.
+    -->
+    <string id="Disconnected (error)."
+	>Disconnected (error).</string>
+
+    <!--
+	Normal disconnection that is not an error.
+    -->
+    <string id="Disconnected."
+	>Disconnected.</string>
+
+    <string id="Connection failed."
+	>Connection failed.</string>
+
+    <string id="Connection rejected."
+	>Connection rejected.</string>
+
+    <string id="Connected."
+	>Connected.</string>
+
+    <string id="Message failed."
+	>Message failed.</string>
+
+    <string id="Description:"
+	>Description:</string>
+
+    <string id="To:"
+	>To:</string>
+
+
+    <!-- scenariosview -->
+
+    <string id="Scenario:"
+	>Scenario:</string>
+
+
+    <!-- startscreen -->
+
+    <string id="Play With This Map"
+	>Play With This Map</string>
+
+    <string id="Scenarios"
+	>Scenarios</string>
+
+    <string id="Generator"
+        >Generator</string>
+
+    <string id="Library"
+        >Library</string>
+
+    <string id="Login"
+        >Login</string>
+
+
+    <!-- toolcursor -->
+
+    <string id="Residential"
+	>Residential</string>
+
+    <string id="Commercial"
+	>Commercial</string>
+
+    <string id="Industrial"
+	>Industrial</string>
+
+    <string id="Fire Station"
+	>Fire Station</string>
+
+    <string id="Query"
+	>Query</string>
+
+    <string id="Police Station"
+	>Police Station</string>
+
+    <string id="Wire"
+	>Wire</string>
+
+    <string id="Bulldozer"
+	>Bulldozer</string>
+
+    <string id="Railroad"
+	>Railroad</string>
+
+    <string id="Road"
+	>Road</string>
+
+    <string id="Center"
+	>Center</string>
+
+    <string id="Stadium"
+	>Stadium</string>
+
+    <string id="Park"
+	>Park</string>
+
+    <string id="Seaport"
+	>Seaport</string>
+
+    <string id="Coal Power"
+	>Coal Power</string>
+
+    <string id="Airport"
+	>Airport</string>
+
+    <string id="Nuclear Power"
+	>Nuclear Power</string>
+
+
+    <!-- toolpalette -->
+
+    <string id="Residential"
+        >Residential</string>
+
+    <string id="Commercial"
+        >Commercial</string>
+
+    <string id="Industrial"
+        >Industrial</string>
+
+    <string id="Fire Station"
+        >Fire Station</string>
+
+    <string id="Query"
+        >Query</string>
+
+    <string id="Police Station"
+        >Police Station</string>
+
+    <string id="Wire"
+        >Wire</string>
+
+    <string id="Bulldozer"
+        >Bulldozer</string>
+
+    <string id="Railroad"
+        >Railroad</string>
+
+    <string id="Center"
+        >Center</string>
+
+    <string id="Road"
+        >Road</string>
+
+    <string id="Stadium"
+        >Stadium</string>
+
+    <string id="Park"
+        >Park</string>
+
+    <string id="Seaport"
+        >Seaport</string>
+
+    <string id="Coal Power"
+        >Coal Power</string>
+
+    <string id="Airport"
+        >Airport</string>
+
+    <string id="Nuclear Power"
+        >Nuclear Power</string>
+
+
+</strings>

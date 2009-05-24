@@ -1,4 +1,5 @@
-<notices>
+<?xml version="1.0" encoding="UTF-8" ?>
+<notices language="en-US">
 
     <notice
         id="10"
@@ -6,7 +7,7 @@
         title="POLLUTION ALERT!"
 	picture="icon_pollution_rsrc"
 	showMap="true"
-    >Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br;/&gt;Either clean up your act or open a gas mask concession at city hall.</notice>
+    >Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br/&gt;Either clean up your act or open a gas mask concession at city hall.</notice>
 
     <notice
         id="11"
@@ -132,7 +133,7 @@
         color="0x7fff7f"
         title="MEGALOPOLIS"
 	showMap="false"
-    >Congratulation, you have reached the highest category of urban development, the megalopolis.&lt;br/&gt;If you manage to reach this level, send us email at micropolis@laptop.org or send us a copy of your city. We might do something interesting with it.</notice>
+    >Congratulation, you have reached the highest category of urban development, the megalopolis.</notice>
 
     <notice
         id="41"
@@ -175,7 +176,7 @@
         color="0x7f7fff"
         title="Restore a Saved City"
 	showMap="false"
-    >The city was saved.</notice>
+    >The city was restored.</notice>
 
     <notice
         id="47"

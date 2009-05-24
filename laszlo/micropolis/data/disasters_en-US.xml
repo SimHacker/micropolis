@@ -1,14 +1,5 @@
-<disasters>
-<!--
-    <disaster
-	name="Eco"
-        disaster="eco"
-    />
-    <disaster
-	name="Melt"
-        disaster="melt"
-    />
--->
+<?xml version="1.0" encoding="UTF-8" ?>
+<disasters language="en-US">
     <disaster
 	name="Monster"
         disaster="monster"

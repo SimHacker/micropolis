@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scenarios language="en-US">
+    <scenario
+	id="1"
+	name="Dullsville"
+	year="1900"
+	tagline="Boredom"
+        notice="50"
+    />
+    <scenario
+	id="2"
+	name="San Francsico"
+	year="1906"
+	tagline="Earthquake"
+        notice="51"
+    />
+    <scenario
+	id="3"
+	name="Hamburg"
+	year="1944"
+	tagline="Bombing"
+        notice="52"
+    />
+    <scenario
+	id="4"
+	name="Bern"
+	year="1965"
+	tagline="Traffic"
+        notice="53"
+    />
+    <scenario
+	id="5"
+	name="Tokyo"
+	year="1957"
+	tagline="Monster Attack"
+        notice="54"
+    />
+    <scenario
+	id="6"
+	name="Detroit"
+	year="1972"
+	tagline="Crime"
+        notice="55"
+    />
+    <scenario
+	id="7"
+	name="Boston"
+	year="2010"
+	tagline="Nuclear Meltdown"
+        notice="56"
+    />
+    <scenario
+	id="8"
+	name="Rio de Janeiro"
+	year="2047"
+	tagline="Coastal Flooding"
+        notice="57"
+    />
+</scenarios>
