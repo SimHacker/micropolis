@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<strings language="nl-NL">
+
+
+    <!-- appview -->
+
+    <string id="Micropolis: Choose a City"
+        >Micropolis: Kies een Stad</string>
+
+    <!-- 
+        To break lines, use "&lt;br/&gt;" instead entering a line break control character. 
+        The tab and button names in the text should be the same as the translated names.
+    -->
+    <string id="Welcome to Micropolis!"
+        >Welkom bij Micrpolis!&lt;br/&gt;&lt;br/&gt;Kies een stad met het selecteren van een scenario van de 'Scenario's' tab, of het genereren van een nieuwe willekeurige stad van de 'Generator' tab of het laden van een stad in de bibliotheek van de 'Library' tab.&lt;br/&gt;&lt;br/&gt;Druk vervolgens op de 'Speel met Deze Stad' knop hieronder om het afspelen te starten Micropolis!</string>
+
+    <!-- 
+        Change the lang parameter ("en-US") to the appropriate 5 character "language-COUNTRY" code, but leave the rest of the URL the same.
+    -->
+    <string id="/wiki/index.php/About"
+        >/wiki/index.php/About?lang=nl-NL</string>
+
+    <!-- 
+        Change the lang parameter ("en-US") to the appropriate 5 character "language-COUNTRY" code, but leave the rest of the URL the same.
+    -->
+    <string id="/wiki/index.php/Help"
+        >/wiki/index.php/Help?lang=nl-NL</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Jan"
+        >jan.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Feb"
+        >feb.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Mar"
+        >maart</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Apr"
+        >apr.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="May"
+        >mei</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Jun"
+        >juni</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Jul"
+        >juli</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Aug"
+        >aug.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Sep"
+        >sept.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Oct"
+        >oct.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Nov"
+        >nov.</string>
+
+    <!-- 
+        Short month abbreviation.
+    -->
+    <string id="Dec"
+        >dec.</string>
+
+
+    <!-- budgetview -->
+
+    <string id="Taxes Collected:"
+        >Belastingen verzameld:</string>
+
+    <string id="Cash Flow:"
+        >Kasstroom:</string>
+
+    <string id="Previous Funds:"
+        >Vorige fondsen:</string>
+
+    <string id="Current Funds:"
+        >Huidige fondsen:</string>
+
+    <string id="Tax Rate:"
+        >Belastingtarief:</string>
+
+    <string id="Road Request:"
+        >Road Aanvraag:</string>
+
+    <string id="Fire Request:"
+        >Vuur Aanvraag:</string>
+
+    <string id="Police Request:"
+        >Politie Aanvraag:</string>
+
+
+    <!-- connectscreen -->
+
+    <string id="Connecting to Micropolis Online server..."
+        >Aansluiten op Micropolis Online server ...</string>
+
+    <string id="Connection to Micropolis Online server failed."
+        >Aansluiting op Micropolis Online server mislukt.</string>
+
+    <string id="Status:"
+        >Status:</string>
+
+    <string id="Reconnect"
+        >Reconnect</string>
+
+
+    <!-- controlpanel -->
+
+    <string id="Are you really sure you want to start a new city?"
+        >Ben je echt zeker dat u wilt beginnen met een nieuwe stad?</string>
+
+    <string id="No, keep playing with this city."
+        >Nee, het spelen met deze stad.</string>
+
+    <string id="Yes, choose another city."
+        >Ja, kies een andere stad.</string>
+
+    <string id="Ultra Slow"
+        >Ultra Langzaam</string>
+
+    <string id="Super Slow"
+        >Bijzonder Langzaam</string>
+
+    <string id="Very Slow"
+        >Zeer Langzaam</string>
+
+    <string id="Slow"
+        >Langzaam</string>
+
+    <string id="Medium"
+        >Midden</string>
+
+    <string id="Fast"
+        >Snelle</string>
+
+    <string id="Very Fast"
+        >Zeer Snelle</string>
+
+    <string id="Super Fast"
+        >Bijzonder Snelle</string>
+
+    <string id="Ultra Fast"
+        >Ultra Snelle</string>
+
+    <string id="Astronomically Fast"
+        >Astronomisch Snelle</string>
+
+    <string id="Resume"
+        >Hervatten</string>
+
+    <string id="Pause"
+        >Pauze</string>
+
+    <string id="Speed"
+        >Snelheid</string>
+
+    <string id="Paused..."
+        >Onderbroken...</string>
+
+    <string id="Running!"
+        >Lopen!</string>
+
+    <string id="Save City"
+        >Sla Stad</string>
+
+    <string id="New City"
+        >Nieuwe Stad</string>
+
+    <string id="Help"
+        >Help</string>
+
+    <string id="About"
+        >Over</string>
+
+    <string id="Disasters"
+        >Rampen</string>
+
+    <string id="Auto Budget"
+        >Auto Begroting</string>
+
+    <string id="Auto Bulldoze"
+        >Auto Bulldozer</string>
+
+    <string id="Auto Goto"
+        >Auto Goto</string>
+
+    <string id="Sound"
+        >Geluid</string>
+
+    <string id="Animation"
+        >Animatie</string>
+
+    <string id="Journal"
+        >Tijdschrift</string>
+
+    <string id="Notices"
+        >Mededelingen</string>
+
+
+    <!-- datefundsview -->
+
+    <string id="Date:"
+        >Datum:</string>
+
+    <string id="Funds:"
+        >Middelen:</string>
+
+
+    <!-- demandgauge -->
+
+    <!--
+        One letter abreviation for "Residential".
+    -->
+    <string id="R"
+        >R</string>
+
+    <!--
+        One letter abreviation for "Commercial".
+    -->
+    <string id="C"
+        >C</string>
+
+    <!--
+        One letter abreviation for "Industrial".
+    -->
+    <string id="I"
+        >I</string>
+
+
+    <!-- edittileviewpie -->
+
+    <string id="Tools"
+        >Gereedschap</string>
+
+    <string id="Zone..."
+        >Zone...</string>
+
+    <string id="Zone"
+        >Zone</string>
+
+    <string id="Build..."
+        >Bouwen...</string>
+
+    <string id="Build"
+        >Bouwen</string>
+
+    <string id="More..."
+        >Meer...</string>
+
+    <string id="Tab..."
+        >Tab...</string>
+
+    <string id="Tab"
+        >Tab</string>
+
+    <string id="Evaluation"
+        >Evaluatie</string>
+
+    <string id="History"
+        >Geschiedenis</string>
+
+    <string id="Budget"
+        >Begroting</string>
+
+    <string id="Overlays"
+        >Bedekkingen</string>
+
+    <string id="Control"
+        >Controle</string>
+
+    <string id="Speed..."
+        >Snelheid...</string>
+
+    <string id="Overlays..."
+        >Bedekkingen...</string>
+
+    <string id="Bedekkingen"
+        >Bedekkingen</string>
+
+    <string id="Disasters..."
+        >Rampen...</string>
+
+    <string id="Funds..."
+        >Fondsen...</string>
+
+    <string id="Funds"
+        >Fondsen</string>
+
+    <string id="Tax Rate"
+        >Belastingtarief</string>
+
+    <string id="Police Funds"
+        >Politie Fondsen</string>
+
+    <string id="Road Funds"
+        >Road Fondsen</string>
+
+    <string id="Fire Funds"
+        >Vuur Fondsen</string>
+
+
+    <!-- evaluationview -->
+
+    <string id="Crime"
+        >Criminaliteit</string>
+
+    <string id="Pollution"
+        >Verontreiniging</string>
+
+    <string id="Housing"
+        >Wonen</string>
+
+    <string id="Taxes"
+        >Belastingen</string>
+
+    <string id="Traffic"
+        >Verkeer</string>
+
+    <string id="Unemployment"
+        >Werkloosheid</string>
+
+    <string id="Fire"
+        >Brand</string>
+
+    <string id="Village"
+        >Dorp</string>
+
+    <string id="Town"
+        >Stadje</string>
+
+    <string id="City"
+        >Stad</string>
+
+    <string id="Capital"
+        >Hoofdstad</string>
+
+    <string id="Metropolis"
+        >Metropolis</string>
+
+    <string id="Megalopolis"
+        >Megalopolis</string>
+
+    <string id="Easy"
+        >Gemakkelijk</string>
+
+    <string id="Hard"
+        >Moeilijk</string>
+
+    <string id="Approve:"
+        >Goedkeuren:</string>
+
+    <string id="Disapprove:"
+        >Afkeuren:</string>
+
+    <string id="Population:"
+        >Bevolking:</string>
+
+    <string id="Migration:"
+        >Migratie:</string>
+
+    <string id="City Value:"
+        >Stad Prijs:</string>
+
+    <string id="Category:"
+        >Categorie:</string>
+
+    <string id="Game Level:"
+        >Spel Niveau:</string>
+
+    <string id="Current Score:"
+        >Huidige Score:</string>
+
+    <string id="Annual Change:"
+        >Jaarlijkse verandering:</string>
+
+    <string id="Popularity:"
+        >Populariteit:</string>
+
+    <string id="Problems:"
+        >Problemen:</string>
+
+
+    <!-- generatorview -->
+
+    <string id="Generate Random Map"
+        >Genereer Random Kaart</string>
+
+    <string id="Generated Map"
+        >Gegenereerd Kaart</string>
+
+    <string id="Generated a new random map."
+        >Gegenereerd een nieuwe willekeurige kaart.</string>
+
+
+    <!-- historyview -->
+
+    <string id="Residential"
+        >Residentieel</string>
+
+    <string id="Show the residential population history."
+        >Toon de residentiële bevolking geschiedenis.</string>
+
+    <string id="Commercial"
+        >Commercieel</string>
+
+    <string id="Show the commercial population history."
+        >Toon de commerciële bevolking geschiedenis.</string>
+
+    <string id="Industrial"
+        >Industrieel</string>
+
+    <string id="Show the industrial population history."
+        >Toon de industriële geschiedenis bevolking.</string>
+
+    <string id="Money"
+        >Geld</string>
+
+    <string id="Show the city funds history."
+        >Toon de stad fondsen geschiedenis.</string>
+
+    <string id="Show the crime rate history."
+        >Toon de criminaliteit geschiedenis.</string>
+
+    <string id="Show the pollution rate history."
+        >Toon de verontreiniging tarief geschiedenis.</string>
+
+    <string id="10 Years"
+        >10 Jaar</string>
+
+    <string id="120 Years"
+        >120 Jaar</string>
+
+    
+    <!-- libraryview -->
+
+    <string id="Loaded Map:"
+        >Ladingen Kaart:</string>
+
+    <string id="Loaded a map from the library:"
+        >Ladingen een plattegrond van de bibliotheek:</string>
+
+
+    <!-- loginview -->
+
+
+    <!-- noticeview -->
+
+    <string id="Micropolis"
+	>Micropolis</string>
+
+    <string id="The city simulation has begun!"
+	>De stad simulatie is begonnen!</string>
+
+
+    <!-- playscreen -->
+
+
+    <!-- remoteserver -->
+
+    <!--
+        Abnormal disconnection that is an error.
+    -->
+    <string id="Disconnected (error)."
+        >Losgekoppeld (fout).</string>
+
+    <!--
+        Normal disconnection that is not an error.
+    -->
+    <string id="Disconnected."
+        >Losgekoppeld.</string>
+
+    <string id="Connection failed."
+        >Verbinding mislukt.</string>
+
+    <string id="Connection rejected."
+        >Verbinding afgewezen.</string>
+
+    <string id="Connected."
+        >Aangesloten.</string>
+
+    <string id="Message failed."
+        >Bericht mislukt.</string>
+
+    <string id="Description:"
+        >Beschrijving:</string>
+
+    <string id="To:"
+        >Naar:</string>
+
+
+    <!-- scenariosview -->
+
+    <string id="Scenario:"
+        >Scenario:</string>
+
+
+    <!-- startscreen -->
+
+    <string id="Play With This Map"
+        >Speel met Deze Stad</string>
+
+    <string id="Scenarios"
+        >Scenario's</string>
+
+    <string id="Generator"
+        >Generator</string>
+
+    <string id="Library"
+        >Bibliotheek</string>
+
+    <string id="Login"
+        >Login</string>
+
+
+    <!-- toolcursor -->
+
+
+    <!-- toolpalette -->
+
+    <string id="Fire Station"
+        >Vuur Station</string>
+
+    <string id="Query"
+        >Vraag</string>
+
+    <string id="Police Station"
+        >Politie Station</string>
+
+    <string id="Wire"
+        >Draad</string>
+
+    <string id="Bulldozer"
+        >Bulldozer</string>
+
+    <string id="Railroad"
+        >Spoorweg</string>
+
+    <string id="Road"
+        >Weg</string>
+
+    <string id="Center"
+        >Center</string>
+
+    <string id="Stadium"
+        >Stadion</string>
+
+    <string id="Park"
+        >Park</string>
+
+    <string id="Seaport"
+        >Zeehaven</string>
+
+    <string id="Coal Power"
+        >Steenkoolcentrales</string>
+
+    <string id="Airport"
+        >Luchthaven</string>
+
+    <string id="Nuclear Power"
+        >Kernenergie</string>
+
+
+</strings>

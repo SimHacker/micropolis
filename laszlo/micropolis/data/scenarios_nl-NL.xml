@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scenarios language="nl-NL">
+    <scenario
+	id="1"
+	name="Dullsville"
+	year="1900"
+	tagline="Boredome"
+        notice="50"
+    />
+    <scenario
+	id="2"
+	name="San Francsico"
+	year="1906"
+	tagline="Aardbeving"
+        notice="51"
+    />
+    <scenario
+	id="3"
+	name="Hamburg"
+	year="1944"
+	tagline="Bombardementen"
+        notice="52"
+    />
+    <scenario
+	id="4"
+	name="Bern"
+	year="1965"
+	tagline="Verkeer"
+        notice="53"
+    />
+    <scenario
+	id="5"
+	name="Tokio"
+	year="1957"
+	tagline="Rotbeest Attack"
+        notice="54"
+    />
+    <scenario
+	id="6"
+	name="Detroit"
+	year="1972"
+	tagline="Criminaliteit"
+        notice="55"
+    />
+    <scenario
+	id="7"
+	name="Boston"
+	year="2010"
+	tagline="Nucleaire Kernsmelting"
+        notice="56"
+    />
+    <scenario
+	id="8"
+	name="Rio de Janeiro"
+	year="2047"
+	tagline="Kustgebieden Inunderen"
+        notice="57"
+    />
+</scenarios>
