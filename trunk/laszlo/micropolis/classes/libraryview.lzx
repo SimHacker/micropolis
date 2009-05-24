@@ -45,8 +45,8 @@
 		        message: 'loadCity',
 			city: this.cityID
 		    });
-		    gApp.setAttribute("title", "Loaded Map: " + this.text);
-		    gApp.setAttribute("description", "Loaded a map from the library: " + this.text);
+		    gApp.setAttribute("title", gApp._('Loaded Map:') + ' ' + this.cityName);
+		    gApp.setAttribute("description", gApp._('Loaded a map from the library:') + ' ' + this.cityName);
 		  ]]>
 		</method>
 

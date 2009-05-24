@@ -46,6 +46,9 @@
         <attribute name="connecting" value="false"/>
         <attribute name="connectionFailed" value="false"/>
         <attribute name="sessionID" value="null"/>
+        <attribute name="userName" value="null"/>
+        <attribute name="password" value="null"/>
+        <attribute name="loggedIn" value="false"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
         <attribute name="paused" value="true"/>
@@ -76,8 +79,6 @@
 	<attribute name="objectIDs" value="$once{{}}"/>
         <attribute name="interests" value="$once{{}}"/>
         <attribute name="overlay" type="string" value="all"/>
-        <attribute name="aboutURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/About"/>
-        <attribute name="helpURL" type="string" value="http://www.MicropolisOnline.com/wiki/index.php/Help"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -141,17 +142,10 @@
                 case 'start': {
                     this.setAttribute(
                         "title",
-                        "Micropolis: Choose a City");
+                        gApp._('Micropolis: Choose a City'));
                     this.setAttribute(
                         "description",
-                        "Welcome to Micropolis!<br/><br/>\n" +
-                        "Choose a city by selecting a scenario from " +
-                        "the 'Scenarios' tab, or generating a new " +
-                        "random city from the 'Generator' tab, or " +
-                        "loading a city in the library from the " +
-                        "'Library' tab.<br/><br/>\n" +
-                        "Then press the 'Play with This City' button " +
-                        "below, to start playing Micropolis!");
+                        gApp._('Welcome to Micropolis!'));
                     break;
                 }
                 case 'play': {
@@ -1158,17 +1152,17 @@
         </method>
 
 
-        <method name="help"><![CDATA[
+        <method name="about"><![CDATA[
             lz.Browser.loadURL(
-                this.helpURL,
+                gApp._('/wiki/index.php/About'),
                 '_blank');
           ]]>
         </method>
 
 
-        <method name="about"><![CDATA[
+        <method name="help"><![CDATA[
             lz.Browser.loadURL(
-                this.aboutURL,
+                gApp._('/wiki/index.php/Help'),
                 '_blank');
           ]]>
         </method>
@@ -1177,7 +1171,8 @@
         <method name="sendChatText" args="chatText"><![CDATA[
             this.sendMessage({
 	        message: 'sendChatText',
-		chatText: chatText
+		chatText: chatText,
+		language: gStrings.language
 	    })
           ]]>
         </method>
@@ -1192,7 +1187,7 @@
 		'</b>' +
 		this.escapeHTML(text);
 	    Debug.write("CHATMESSAGE", message);
-	    gMessageView.addMessage(message);
+	    gJournalView.addMessage(message);
           ]]>
         </method>
 
@@ -1390,14 +1385,17 @@
 
 
         <method name="formatMonthYear" args="month, year"><![CDATA[
-            var monthName = this.monthNames[month];
+            var monthName = gApp._(this.monthNames[month]);
             var monthYear = monthName + " " + year;
             return monthYear;
           ]]>
         </method>
 
 
-        <remoteserver id="gRemoteServer"/>
+	<method name="_" args="id"><![CDATA[
+	    return gStrings.getString(id);
+	  ]]>
+	</method>
 
 
         <connectscreen id="gConnectScreen" name="connectScreen"

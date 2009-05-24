@@ -39,9 +39,9 @@
 	    'Hard'
 	]}"/>
 
-        <attribute name="narrowColumnWidth" value="100"/>
-        <attribute name="mediumColumnWidth" value="120"/>
-        <attribute name="wideColumnWidth" value="150"/>
+        <attribute name="narrowColumnWidth" value="125"/>
+        <attribute name="mediumColumnWidth" value="150"/>
+        <attribute name="wideColumnWidth" value="175"/>
         <attribute name="indent" value="5"/>
         <attribute name="textSize" value="10"/>
 
@@ -111,7 +111,7 @@
 		    assessedValue);
 	    }
 
-	    category = categoryNames[category];
+	    category = gApp._(categoryNames[category]);
 	    //Debug.write("category", category, this.v.categoryView.t, this.v.categoryView.t.text);
 	    if (this.v.categoryView.t.text != category) {
 		this.v.categoryView.t.setAttribute(
@@ -119,7 +119,7 @@
 		    category);
 	    }
 
-	    gameLevel = this.levelNames[gameLevel];
+	    gameLevel = gApp._(this.levelNames[gameLevel]);
 	    //Debug.write("gameLevel", gameLevel, this.v.gameLevelView.t, this.v.gameLevelView.t.text);
 	    if (this.v.gameLevelView.t.text != gameLevel) {
 		this.v.gameLevelView.t.setAttribute(
@@ -144,8 +144,15 @@
 	    }
 
 	    var goodJobText =
-	        "Approve: " + goodJob + "%<br/>" +
-		"Disapprove: " + (100 - goodJob) + "%";
+	        gApp._('Approve:') + 
+		' ' + 
+		goodJob + 
+		'%<br/>' +
+		gApp._('Disapprove:') + 
+		' ' + 
+		(100 - goodJob) + 
+		'%';
+
             //Debug.write("goodJob", goodJobText, this.v.goodJobView.t, this.v.goodJobView.t.text);
 	    if (this.v.goodJobView.t.text != goodJobText) {
 		this.v.goodJobView.t.setAttribute(
@@ -162,8 +169,10 @@
 		var problemNameIndex = pair[0];
 		var problemPercent = pair[1]; 
 		var s = 
-		    this.problemNames[problemNameIndex] + ": " + 
-		    problemPercent + "%";
+		    gApp._(this.problemNames[problemNameIndex]) +
+		    ": " + 
+		    problemPercent +
+		    "%";
 	        a.push(s);
 	    }
 	    worstProblemsText = a.join('<br/>');
@@ -206,7 +215,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Population:"
+		    text="${gApp._('Population:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -222,7 +231,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Migration:"
+		    text="${gApp._('Migration:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -238,7 +247,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="City Value:"
+		    text="${gApp._('City Value:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -254,7 +263,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Category:"
+		    text="${gApp._('Category:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -270,7 +279,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Game Level:"
+		    text="${gApp._('Game Level:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -286,7 +295,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Current Score:"
+		    text="${gApp._('Current Score:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -297,12 +306,12 @@
 	    </view>
 
 	    <view name="annualChange"
-	        width="${classroot.narrowColumnWidth}"
+	        width="${classroot.mediumColumnWidth}"
 	    >
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Annual Change:"
+		    text="${gApp._('Annual Change:')}"
 		    fontstyle="bold"
 		/>
 		<text name="t"
@@ -318,7 +327,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Popularity:"
+		    text="${gApp._('Popularity:')}"
 		    fontstyle="bold"
 		    multiline="true"
 		/>
@@ -336,7 +345,7 @@
 	        <simplelayout axis="y"/>
 		<text
 		    width="${parent.width}"
-		    text="Problems:"
+		    text="${gApp._('Problems:')}"
 		    fontstyle="bold"
 		    multiline="true"
 		/>

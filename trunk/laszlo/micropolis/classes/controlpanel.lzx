@@ -7,92 +7,6 @@
     <!-- Licensed under GPLv3 -->
 
 
-<!--
-
-  Control
-    About
-    Save City
-    Save City As...
-    New City
-    Quit
-  Options
-    Disasters
-    Auto Budget
-    Auto Bulldoze
-    Auto Goto
-    Sound
-    Animation
-    Messages
-    Notices
-  Speed
-
--->
-
-
-    <modaldialog name="newCityDialog" id="gNewCityDialog"
-        width="500" 
-	height="230"
-    >
-
-
-        <handler name="ongameMode" reference="gApp"><![CDATA[
-	    // Watch the application's gameMode, 
-	    // so we can close this dialog if the server disconnects.
-	    //Debug.write("ONGAMEMODE", this, this.visible, gApp.gameMode);
-	    if (this.visible &&
-	        gApp.gameMode != 'play') {
-		this.close();
-	    }
-	  ]]>
-	</handler>
-
-
-	<simplelayout
-	    axis="y"
-	    spacing="5"
-	/>
-
-
-	<text
-	    x="0"
-	    width="${immediateparent.width}"
-	    fontsize="32"
-	    fontstyle="bold"
-	    multiline="true"
-	>Are you really sure you want to start a new city?</text>
-
-	<view
-	    x="0" 
-	    y="0"
-	    width="${immediateparent.width}"
-	    height="${immediateparent.height}"
-	    layout="axis:y; spacing:10"
-	>
-
-	    <button
-	        x="0"
-	        width="${parent.width}"
-	        onclick="parent.parent.close()"
-		fontsize="20"
-		fontstyle="bold"
-	    >No, keep playing with this city.</button>
-
-	    <button 
-	        x="0"
-	        width="${parent.width}"
-	        onclick="parent.parent.close(); gApp.saveCity(); gApp.chooseCity()"
-		fontsize="20"
-		fontstyle="bold"
-	    >Yes, choose another city.</button>
-
-	    <view/>
-
-	</view>
-
-
-    </modaldialog>
-
-
     <class name="controlpanel"
         clip="true"
     >
@@ -102,8 +16,7 @@
 	<attribute name="gap" value="5"/>
 	<attribute name="sliderWidth" value="160"/>
 	<attribute name="sliderHeight" value="50"/>
-	<attribute name="pauseButtonWidth" value="80"/>
-	<attribute name="buttonWidth" value="80"/>
+	<attribute name="buttonWidth" value="90"/>
 	<attribute name="buttonHeight" value="40"/>
 	<attribute name="checkboxWidth" value="120"/>
 	<attribute name="checkboxHeight" value="18"/>
@@ -136,7 +49,7 @@
 
 	<method name="updateVirtualSpeed" args="virtualSpeed"><![CDATA[
 	    gApp.setAttribute("virtualSpeed", virtualSpeed);
-	    //Debug.write("UPDATEVIRTUALSPEED", virtualSpeed, this.virtualSpeedNames[virtualSpeed]);
+	    //Debug.write("UPDATEVIRTUALSPEED", virtualSpeed, gApp._(this.virtualSpeedNames[virtualSpeed]));
 	  ]]>
 	</method>
 
@@ -167,9 +80,9 @@
 
 
 	    <button name="pauseButton"
-	        width="${classroot.pauseButtonWidth}"
+	        width="${classroot.buttonWidth}"
 		height="${parent.speedView.height}"
-		text="${gApp.paused ? 'Resume' : 'Pause'}"
+		text="${gApp._(gApp.paused ? 'Resume' : 'Pause')}"
 		onclick="classroot.togglePaused()"
 	    />
 
@@ -184,9 +97,11 @@
 		    width="${parent.width}"
 		    multiline="true"
 		    text="${
-			'Speed: ' + 
-			(gApp.paused ? 'Paused...\n' : 'Running!\n') +
-			classroot.virtualSpeedNames[parent.speedSlider.value]
+			gApp._('Speed') +
+			': ' + 
+			gApp._(gApp.paused ? 'Paused...' : 'Running!') +
+			'\n' +
+			gApp._(classroot.virtualSpeedNames[parent.speedSlider.value])
 		    }"
 		/>
 
@@ -223,7 +138,7 @@
 	    <button name="saveCityButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
-		text="Save City"
+		text="${gApp._('Save City')}"
 		onclick="gApp.saveCity()"
 	    />
 -->
@@ -231,21 +146,21 @@
 	    <button name="newCityButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
-		text="New City"
+		text="${gApp._('New City')}"
 		onclick="gNewCityDialog.open()"
 	    />
 
 	    <button name="helpButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
-		text="Help"
+		text="${gApp._('Help')}"
 		onclick="gApp.help()"
 	    />
 
 	    <button name="aboutButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
-		text="About"
+		text="${gApp._('About')}"
 		onclick="gApp.about()"
 	    />
 
@@ -263,23 +178,45 @@
 	    />
 
 
-	    <mycheckbox
-		datapath="ds_options:/options/option"
-	        width="${classroot.checkboxWidth}"
-	        height="${classroot.checkboxHeight}"
-		text="${this.optionLabel}"
-		value="${this.optionName}"
-	    >
+	    <optionscheckbox
+		text="${gApp._('Disasters')}"
+		option="disasters"
+	    />
 
-	        <attribute name="optionName" type="string" value="$path{'@name'}"/>
-	        <attribute name="optionLabel" type="string" value="$path{'@label'}"/>
+	    <optionscheckbox
+		text="${gApp._('Auto Budget')}"
+		option="autobudget"
+	    />
 
-	        <handler name="onchanged" args="arg"><![CDATA[
-		    Debug.write("CHECKBOX ONCHANGED", this, this.value, this.optionName, this.optionLabel);
-		  ]]>
-		</handler>
+	    <optionscheckbox
+		text="${gApp._('Auto Bulldoze')}"
+		option="autobulldozeo"
+	    />
 
-	    </mycheckbox>
+	    <optionscheckbox
+		text="${gApp._('Auto Goto')}"
+		option="autogoto"
+	    />
+
+	    <optionscheckbox
+		text="${gApp._('Sound')}"
+		option="sound"
+	    />
+
+	    <optionscheckbox
+		text="${gApp._('Animation')}"
+		option="animation"
+	    />
+
+	    <optionscheckbox
+		text="${gApp._('Journal')}"
+		option="journal"
+	    />
+
+	    <optionscheckbox
+		text="${gApp._('Notices')}"
+		option="notices"
+	    />
 
 	</view>
 

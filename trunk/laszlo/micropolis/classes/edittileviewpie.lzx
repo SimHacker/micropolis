@@ -8,15 +8,15 @@
 
 
     <piemenu id="gEditTileViewPie">
-        <html>Tools</html>
+        <html text="${gApp._('Tools')}"/>
 
 	<item>
-	    <html>Zone...</html>
+	    <html text="${gApp._('Zone...')}"/>
 
 	    <piemenu
 	        fixedRadius="50"
 	    >
-	        <html>Zone</html>
+	        <html text="${gApp._('Zone')}"/>
 
 		<item
 		    headercolor="null"
@@ -24,7 +24,8 @@
 		    <simplelayout axis="y"/>
 		    <html
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Commercial</html>
+		        text="${gApp._('Commercial')}"
+		    />
 		    <view
 		        x="${(parent.width - this.width) / 2}"
 		        resource="tool_commercial_rsrc"
@@ -44,7 +45,8 @@
 		    <simplelayout axis="y"/>
 		    <html
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Industrial</html>
+		        text="${gApp._('Industrial')}"
+		    />
 		    <view
 		        x="0"
 		        resource="tool_industrial_rsrc"
@@ -71,7 +73,8 @@
 			width="60"
 		        multiline="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Police<br/>Station</html>
+		        text="${gApp._('Police Station')}"
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "policestation");
@@ -91,7 +94,8 @@
 		    />
 		    <html
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Query</html>
+		        text="${gApp._('Query')}"
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "query");
@@ -113,7 +117,8 @@
 			width="60"
 		        multiline="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Fire<br/>Station</html>
+		        text="${gApp._('Fire Station')}"
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "firestation");
@@ -128,7 +133,8 @@
 		    <simplelayout axis="y"/>
 		    <html
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Residential</html>
+		        text="${gApp._('Residential')}"
+		    />
 		    <view
 		        x="${parent.width - this.width}"
 		        resource="tool_residential_rsrc"
@@ -153,7 +159,8 @@
 	    <html
 	        x="0"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	    >Bulldozer</html>
+	        text="${gApp._('Bulldozer')}"
+	    />
 	    <view
 		x="0"
 		resource="tool_bulldozer_rsrc"
@@ -174,7 +181,8 @@
 	    <html
 	        x="0"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	    >Road</html>
+	        text="${gApp._('Road')}"
+	    />
 	    <view
 		x="0"
 		resource="tool_road_rsrc"
@@ -196,7 +204,8 @@
 	    <html
 	        x="${(parent.width - this.width) / 2}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	    >Center</html>
+	        text="${gApp._('Center')}"
+	    />
 	    <view
 		x="${(parent.width - this.width) / 2}"
 		resource="tool_center_rsrc"
@@ -210,12 +219,12 @@
 	</item>
 
 	<item>
-	    <html>Build...</html>
+	    <html text="${gApp._('Build...')}"/>
 
 	    <piemenu
 	        fixedRadius="50"
 	    >
-	        <html>Build</html>
+	        <html text="${gApp._('Build')}"/>
 
 		<item
 		    headercolor="null"
@@ -224,7 +233,8 @@
 		    <html
 		        x="${(parent.width - this.width) / 2}"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Park</html>
+	        	text="${gApp._('Park')}"
+		    />
 		    <view
 		        x="${(parent.width - this.width) / 2}"
 			resource="tool_park_rsrc"
@@ -245,7 +255,8 @@
 		    <html
 		        x="0"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Seaport</html>
+	        	text="${gApp._('Seaport')}"
+		    />
 		    <view
 			x="0"
 			resource="tool_seaport_rsrc"
@@ -269,10 +280,10 @@
 			frame="${(parent.hilited || (gApp.tool == 'nuclearpower')) ? 2 : 1}"
 		    />
 		    <html
-		        multiline="true"
-			width="60"
+			resize="true"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Nuclear<br/>Power</html>
+	        	text="${gApp._('Nuclear Power')}"
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "nuclearpower");
@@ -292,7 +303,8 @@
 		    />
 		    <html
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Airport</html>
+	        	text="${gApp._('Airport')}"
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "airport");
@@ -311,10 +323,11 @@
 			frame="${(parent.hilited || (gApp.tool == 'coalpower')) ? 2 : 1}"
 		    />
 		    <html
-			width="60"
-		        multiline="true"
+			resize="true"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Coal<br/>Power</html>
+	        	text="${gApp._('Coal Power')}"
+
+		    />
 
 		    <method name="selected"><![CDATA[
 			gApp.setAttribute("tool", "coalpower");
@@ -329,7 +342,8 @@
 		    <simplelayout axis="y"/>
 		    <html
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-		    >Stadium</html>
+			text="${gApp._('Stadium')}"
+		    />
 		    <view
 			x="${parent.width - this.width}"
 			resource="tool_stadium_rsrc"
@@ -348,37 +362,37 @@
 	</item>
 
 	<item>
-	    <html>More...</html>
+	    <html text="${gApp._('More...')}"/>
 
 	    <piemenu>
 
 		<item>
-		    <html>Tab...</html>
+		    <html text="${gApp._('Tab...')}"/>
 		    <piemenu>
-			<html>Tab</html>
+			<html text="${gApp._('Tab')}"/>
 
 			<item>
-			    <html>Notice</html>
+			    <html text="${gApp._('Notices')}"/>
 
 			    <method name="selected"><![CDATA[
-				gPlayTabNotice.setAttribute('selected', true);
+				gPlayTabNotices.setAttribute('selected', true);
+			      ]]>
+			    </method>
+
+			</item>
+
+			<item>
+			    <html text="${gApp._('Journal')}"/>
+
+			    <method name="selected"><![CDATA[
+				gPlayTabJournal.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
 			</item>
 
 			<item>	
-			    <html>Messages</html>
-
-			    <method name="selected"><![CDATA[
-				gPlayTabMessages.setAttribute('selected', true);
-			      ]]>
-			    </method>
-
-			</item>
-
-			<item>	
-			    <html>Evaluation</html>
+			    <html text="${gApp._('Evaluation')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabEvaluation.setAttribute('selected', true);
@@ -388,7 +402,7 @@
 			</item>
 
 			<item>	
-			    <html>History</html>
+			    <html text="${gApp._('History')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabHistory.setAttribute('selected', true);
@@ -398,7 +412,7 @@
 			</item>
 
 			<item>	
-			    <html>Budget</html>
+			    <html text="${gApp._('Budget')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabBudget.setAttribute('selected', true);
@@ -408,7 +422,7 @@
 			</item>
 
 			<item>	
-			    <html>Overlays</html>
+			    <html text="${gApp._('Overlays')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabOverlays.setAttribute('selected', true);
@@ -418,7 +432,7 @@
 			</item>
 
 			<item>	
-			    <html>Disasters</html>
+			    <html text="${gApp._('Disasters')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabDisasters.setAttribute('selected', true);
@@ -428,7 +442,7 @@
 			</item>
 
 			<item>	
-			    <html>Control</html>
+			    <html text="${gApp._('Control')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabControl.setAttribute('selected', true);
@@ -441,15 +455,15 @@
 		</item>
 
 		<item>
-		    <html>Speed...</html>
+		    <html text="${gApp._('Speed...')}"/>
 
 		    <piemenu
 		        initialAngle="0"
 		    >
-		        <html>Speed</html>
+		        <html text="${gApp._('Speed')}"/>
 
 			<item>
-			    <html>Resume</html>
+			    <html text="${gApp._('Resume')}"/>
 			</item>
 
 			<item
@@ -457,7 +471,7 @@
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html>Ultra Slow</html>
+			    <html text="${gApp._('Ultra Slow')}"/>
 			</item>
 
 			<item
@@ -465,7 +479,7 @@
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html>Super Slow</html>
+			    <html text="${gApp._('Super Slow')}"/>
 			</item>
 
 			<item
@@ -473,7 +487,7 @@
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html>Very Slow</html>
+			    <html text="${gApp._('Very Slow')}"/>
 			</item>
 
 			<item
@@ -481,11 +495,11 @@
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html>Slow</html>
+			    <html text="${gApp._('Slow')}"/>
 			</item>
 
 			<item>
-			    <html>Pause</html>
+			    <html text="${gApp._('Pause')}"/>
 			</item>
 
 			<item
@@ -493,7 +507,7 @@
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html>Medium</html>
+			    <html text="${gApp._('Medium')}"/>
 			</item>
 
 			<item
@@ -501,7 +515,7 @@
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html>Fast</html>
+			    <html text="${gApp._('Fast')}"/>
 			</item>
 
 			<item
@@ -509,7 +523,7 @@
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html>Very Fast</html>
+			    <html text="${gApp._('Very Fast')}"/>
 			</item>
 
 			<item
@@ -517,7 +531,7 @@
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html>Super Fast</html>
+			    <html text="${gApp._('Super Fast')}"/>
 			</item>
 
 			<item
@@ -525,7 +539,7 @@
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html>Ultra Fast</html>
+			    <html text="${gApp._('Ultra Fast')}"/>
 			</item>
 
 			<item
@@ -533,20 +547,20 @@
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html>Astronomically Fast</html>
+			    <html text="${gApp._('Astronomically Fast')}"/>
 			</item>
 
 		    </piemenu>
 		</item>
 
 		<item>
-		    <html>Overlays...</html>
+		    <html text="${gApp._('Overlays...')}"/>
 
 		    <piemenu id="gEditTileViewOverlaysPie"
 		        maxPieItems="100"
 			fixedRadius="100"
 		    >
-		        <html>Overlays</html>
+		        <html text="${gApp._('Overlays')}"/>
 
 			<item
 			    datapath="ds_overlays:/overlays/overlay"
@@ -589,10 +603,10 @@
 		</item>
 
 		<item>
-		    <html>Disasters...</html>
+		    <html text="${gApp._('Disasters...')}"/>
 
 		    <piemenu>
-		        <html>Disasters</html>
+		        <html text="${gApp._('Disasters')}"/>
 
 			<item
 			    datapath="ds_disasters:/disasters/disaster"
@@ -610,14 +624,14 @@
 			      ]]>
 			    </method>
 
-			    <html text="${this.disasterName}"/>
+			    <html text="${parent.disasterName}"/>
 
 			</item>
 		    </piemenu>
 		</item>
 
 		<item>
-		    <html>Help</html>
+		    <html text="${gApp._('Help')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gApp.help();
@@ -627,7 +641,7 @@
 		</item>
 
 		<item>
-		    <html>New City</html>
+		    <html text="${gApp._('New City')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gNewCityDialog.open();
@@ -637,32 +651,32 @@
 		</item>
 
 		<item>
-		    <html>Funds...</html>
+		    <html text="${gApp._('Funds...')}"/>
 
 		    <piemenu>
-		        <html>Funds</html>
+		        <html text="${gApp._('Funds')}"/>
 
 			<item>
-			    <html>Tax Rate</html>
+			    <html text="${gApp._('Tax Rate')}"/>
 			</item>
 
 			<item>
-			    <html>Police Funds</html>
+			    <html text="${gApp._('Police Funds')}"/>
 			</item>
 
 			<item>
-			    <html>Road Funds</html>
+			    <html text="${gApp._('Road Funds')}"/>
 			</item>
 
 			<item>
-			    <html>Fire Funds</html>
+			    <html text="${gApp._('Fire Funds')}"/>
 			</item>
 
 		    </piemenu>
 		</item>
 
 		<item>
-		    <html>About</html>
+		    <html text="${gApp._('About')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gApp.about();
@@ -681,7 +695,8 @@
 	    <html
 	        x="${parent.width - this.width}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	    >Railroad</html>
+		text="${gApp._('Railroad')}"
+	    />
 	    <view
 		x="${parent.width - this.width}"
 		resource="tool_railroad_rsrc"
@@ -702,7 +717,8 @@
 	    <html
 		x="${parent.width - this.width}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	    >Wire</html>
+		text="${gApp._('Wire')}"
+	    />
 	    <view
 		x="${parent.width - this.width}"
 		resource="tool_wire_rsrc"

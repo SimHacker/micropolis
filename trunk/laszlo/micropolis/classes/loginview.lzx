@@ -1,0 +1,28 @@
+<library>
+
+
+    <!-- Login View -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="loginview"
+        clip="true"
+    >
+
+
+	<attribute name="active" value="true"/>
+        <attribute name="gap" value="5"/>
+
+
+	<handler name="onactive" args="arg"><![CDATA[
+	    //Debug.write("onactive", this.active, this);
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

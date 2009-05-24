@@ -27,7 +27,7 @@
 
 
 	<button
-	    text="Generate Random Map"
+	    text="${gApp._('Generate Random Map')}"
 	    fontsize="18"
 	    fontstyle="bold"
 	    onclick="this.generateMap()"
@@ -39,8 +39,8 @@
 		gApp.sendMessage({
 		    message: 'generateCity'
 		});
-		gApp.setAttribute("title", "Generated Map");
-		gApp.setAttribute("description", "Generated a new random map.");
+		gApp.setAttribute("title", gApp._('Generated Map'));
+		gApp.setAttribute("description", gApp._('Generated a new random map.'));
 	      ]]>
 	    </method>
 

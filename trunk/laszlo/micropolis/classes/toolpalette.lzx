@@ -37,13 +37,12 @@
 	</handler>
 
 
-<!--
 	<toolicon name="residential"
 	    toolID="residential"
 	    x="${parent.leftEdge}"
 	    y="${parent.gap}"
 	    resource="tool_residential_rsrc"
-	    title="Residential"
+	    text="${gApp._('Residential')"
 	/>
 
 	<toolicon name="commercial"
@@ -52,7 +51,7 @@
 	    		  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.residential.y}"
 	    resource="tool_commercial_rsrc"
-	    title="Commercial"
+	    text="${gApp._('Commercial')}"
 	/>
 
 	<toolicon name="industrial"
@@ -61,7 +60,7 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.residential.y}"
 	    resource="tool_industrial_rsrc"
-	    title="Industrial"
+	    text="${gApp._('Industrial')}"
 	/>
 
 	<toolicon name="firestation"
@@ -69,7 +68,7 @@
 	    x="${parent.leftEdge}"
 	    y="${parent.residential.y + parent.residential.height + parent.gap}"
 	    resource="tool_firestation_rsrc"
-	    title="Fire Station"
+	    text="${gApp._('Fire Station')}"
 	/>
 
 	<toolicon name="query"
@@ -78,7 +77,7 @@
 	                  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.firestation.y}"
 	    resource="tool_query_rsrc"
-	    title="Query"
+	    text="${gApp._('Query')}"
 	/>
 
 	<toolicon name="policestation"
@@ -87,7 +86,7 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.firestation.y}"
 	    resource="tool_policestation_rsrc"
-	    title="Police Station"
+	    text="${gApp._('Police Station')}"
 	/>
 
 	<toolicon name="wire"
@@ -95,7 +94,7 @@
 	    x="${parent.leftEdge}"
 	    y="${parent.firestation.y + parent.firestation.height + parent.gap}"
 	    resource="tool_wire_rsrc"
-	    title="Wire"
+	    text="${gApp._('Wire')}"
 	/>
 
 	<toolicon name="bulldozer"
@@ -104,7 +103,7 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.wire.y}"
 	    resource="tool_bulldozer_rsrc"
-	    title="Bulldozer"
+	    text="${gApp._('Bulldozer')}"
 	/>
 
 	<toolicon name="railroad"
@@ -112,7 +111,7 @@
 	    x="${parent.leftEdge}"
 	    y="${parent.wire.y + parent.wire.height + parent.gap}"
 	    resource="tool_railroad_rsrc"
-	    title="Railroad"
+	    text="${gApp._('Railroad')}"
 	/>
 
 	<toolicon name="center"
@@ -121,7 +120,7 @@
 	                  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.railroad.y}"
 	    resource="tool_center_rsrc"
-	    title="Center"
+	    text="${gApp._('Center')}"
 	/>
 
 	<toolicon name="road"
@@ -130,7 +129,7 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.railroad.y}"
 	    resource="tool_road_rsrc"
-	    title="Road"
+	    text="${gApp._('Road')}"
 	/>
 
 	<toolicon name="stadium"
@@ -138,7 +137,7 @@
 	    x="${parent.leftEdge}"
 	    y="${parent.center.y + parent.center.height + parent.gap}"
 	    resource="tool_stadium_rsrc"
-	    title="Stadium"
+	    text="${gApp._('Stadium')}"
 	/>
 
 	<toolicon name="park"
@@ -147,7 +146,7 @@
 	                  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.stadium.y}"
 	    resource="tool_park_rsrc"
-	    title="Park"
+	    text="${gApp._('Park')}"
 	/>
 
 	<toolicon name="seaport"
@@ -156,7 +155,7 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.stadium.y}"
 	    resource="tool_seaport_rsrc"
-	    title="Seaport"
+	    text="${gApp._('Seaport')}"
 	/>
 
 	<toolicon name="coalpower"
@@ -164,7 +163,7 @@
 	    x="${parent.leftEdge}"
 	    y="${parent.stadium.y + parent.stadium.height + parent.gap}"
 	    resource="tool_coalpower_rsrc"
-	    title="Coal Power"
+	    text="${gApp._('Coal Power')}"
 	/>
 
 	<toolicon name="airport"
@@ -173,7 +172,7 @@
 	                  parent.middleEdge - (this.width / 2))}"
 	    y="${parent.coalpower.y}"
 	    resource="tool_airport_rsrc"
-	    title="Airport"
+	    text="${gApp._('Airport')}"
 	/>
 
 	<toolicon name="nuclearpower"
@@ -182,159 +181,8 @@
 	                  parent.rightEdge - this.width)}"
 	    y="${parent.coalpower.y}"
 	    resource="tool_nuclearpower_rsrc"
-	    title="Nuclear Power"
+	    text="${gApp._('Nuclear Power')}"
 	/>
--->
-
-
-	<toolicon name="residential"
-	    toolID="residential"
-	    x="${parent.leftEdge}"
-	    y="${parent.gap}"
-	    resource="tool_residential_rsrc"
-	    title="Residential"
-	/>
-
-	<toolicon name="commercial"
-	    toolID="commercial"
-	    x="${Math.max(parent.residential.x + parent.residential.width + parent.gap,
-	    		  parent.middleEdge - (this.width / 2))}"
-	    y="${parent.residential.y}"
-	    resource="tool_commercial_rsrc"
-	    title="Commercial"
-	/>
-
-	<toolicon name="industrial"
-	    toolID="industrial"
-	    x="${Math.max(parent.commercial.x + parent.commercial.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.residential.y}"
-	    resource="tool_industrial_rsrc"
-	    title="Industrial"
-	/>
-
-	<toolicon name="firestation"
-	    toolID="firestation"
-	    x="${parent.leftEdge}"
-	    y="${parent.residential.y + parent.residential.height + parent.gap}"
-	    resource="tool_firestation_rsrc"
-	    title="Fire Station"
-	/>
-
-	<toolicon name="query"
-	    toolID="query"
-	    x="${Math.max(parent.firestation.x + parent.firestation.width,
-	                  parent.middleEdge - (this.width / 2))}"
-	    y="${parent.firestation.y}"
-	    resource="tool_query_rsrc"
-	    title="Query"
-	/>
-
-	<toolicon name="policestation"
-	    toolID="policestation"
-	    x="${Math.max(parent.query.x + parent.query.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.firestation.y}"
-	    resource="tool_policestation_rsrc"
-	    title="Police Station"
-	/>
-
-	<toolicon name="wire"
-	    toolID="wire"
-	    x="${parent.leftEdge}"
-	    y="${parent.firestation.y + parent.firestation.height + parent.gap}"
-	    resource="tool_wire_rsrc"
-	    title="Wire"
-	/>
-
-	<toolicon name="bulldozer"
-	    toolID="bulldozer"
-	    x="${Math.max(parent.wire.x + parent.wire.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.wire.y}"
-	    resource="tool_bulldozer_rsrc"
-	    title="Bulldozer"
-	/>
-
-	<toolicon name="railroad"
-	    toolID="railroad"
-	    x="${parent.leftEdge}"
-	    y="${parent.wire.y + parent.wire.height + parent.gap}"
-	    resource="tool_railroad_rsrc"
-	    title="Railroad"
-	/>
-
-	<toolicon name="center"
-	    toolID="center"
-	    x="${Math.max(parent.railroad.x + parent.railroad.width + parent.gap,
-	                  parent.middleEdge - (this.width / 2))}"
-	    y="${parent.railroad.y}"
-	    resource="tool_center_rsrc"
-	    title="Center"
-	/>
-
-	<toolicon name="road"
-	    toolID="road"
-	    x="${Math.max(parent.center.x + parent.center.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.railroad.y}"
-	    resource="tool_road_rsrc"
-	    title="Road"
-	/>
-
-	<toolicon name="stadium"
-	    toolID="stadium"
-	    x="${parent.leftEdge}"
-	    y="${parent.center.y + parent.center.height + parent.gap}"
-	    resource="tool_stadium_rsrc"
-	    title="Stadium"
-	/>
-
-	<toolicon name="park"
-	    toolID="park"
-	    x="${Math.max(parent.stadium.x + parent.stadium.width + parent.gap,
-	                  parent.middleEdge - (this.width / 2))}"
-	    y="${parent.stadium.y}"
-	    resource="tool_park_rsrc"
-	    title="Park"
-	/>
-
-	<toolicon name="seaport"
-	    toolID="seaport"
-	    x="${Math.max(parent.park.x + parent.park.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.stadium.y}"
-	    resource="tool_seaport_rsrc"
-	    title="Seaport"
-	/>
-
-	<toolicon name="coalpower"
-	    toolID="coalpower"
-	    x="${parent.leftEdge}"
-	    y="${parent.stadium.y + parent.stadium.height + parent.gap}"
-	    resource="tool_coalpower_rsrc"
-	    title="Coal Power"
-	/>
-
-	<toolicon name="airport"
-	    toolID="airport"
-	    x="${Math.max(parent.coalpower.x + parent.coalpower.width + parent.gap,
-	                  parent.middleEdge - (this.width / 2))}"
-	    y="${parent.coalpower.y}"
-	    resource="tool_airport_rsrc"
-	    title="Airport"
-	/>
-
-	<toolicon name="nuclearpower"
-	    toolID="nuclearpower"
-	    x="${Math.max(parent.airport.x + parent.airport.width + parent.gap,
-	                  parent.rightEdge - this.width)}"
-	    y="${parent.coalpower.y}"
-	    resource="tool_nuclearpower_rsrc"
-	    title="Nuclear Power"
-	/>
-
-
 
 
     </class>

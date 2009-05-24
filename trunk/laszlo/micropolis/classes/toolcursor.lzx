@@ -20,7 +20,7 @@
         <attribute name="cursorXLast" value="0"/>
         <attribute name="cursorYLast" value="0"/>
         <attribute name="tileSize" value="32"/>
-        <attribute name="toolName" value="${this.toolInfo[gApp.tool]['name']}"/>
+        <attribute name="toolName" value="${gApp._(this.toolInfo[gApp.tool]['name'])}"/>
         <attribute name="tiles" value="${this.toolInfo[gApp.tool]['tiles']}"/>
         <attribute name="hotSpot" value="${this.toolInfo[gApp.tool]['hotSpot']}"/>
         <attribute name="constrained" value="${this.toolInfo[gApp.tool]['constrained']}"/>

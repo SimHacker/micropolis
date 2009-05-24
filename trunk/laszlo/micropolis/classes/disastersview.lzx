@@ -56,7 +56,7 @@
 		<button
 		    width="${parent.width}"
 		    height="${parent.height}"
-		    text="${this['disasterName'] || ''}"
+		    text="${this.disasterName || ''}"
 		>
 
 		    <attribute name="disasterName" value="$path{'@name'}"/>

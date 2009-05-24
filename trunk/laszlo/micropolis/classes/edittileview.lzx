@@ -228,7 +228,7 @@
 	    y="0"
 	    width="${parent.width}"
 	    height="${parent.panAutoScrollEdge}"
-	    placement="'overlay'"
+	    placement="overlay"
 	    onmousedown="classroot.startEdgeScroll()"
 	    onmouseup="classroot.stopEdgeScroll()"
 	/>
@@ -238,7 +238,7 @@
 	    y="${parent.height - classroot.panAutoScrollEdge}"
 	    width="${parent.width}"
 	    height="${classroot.panAutoScrollEdge}"
-	    placement="'overlay'"
+	    placement="overlay"
 	    onmousedown="classroot.startEdgeScroll()"
 	    onmouseup="classroot.stopEdgeScroll()"
 	/>
@@ -248,7 +248,7 @@
 	    y="0"
 	    width="${classroot.panAutoScrollEdge}"
 	    height="${parent.height}"
-	    placement="'overlay'"
+	    placement="overlay"
 	    onmousedown="classroot.startEdgeScroll()"
 	    onmouseup="classroot.stopEdgeScroll()"
 	/>
@@ -258,7 +258,7 @@
 	    y="0"
 	    width="${classroot.panAutoScrollEdge}"
 	    height="${parent.height}"
-	    placement="'overlay'"
+	    placement="overlay"
 	    onmousedown="classroot.startEdgeScroll()"
 	    onmouseup="classroot.stopEdgeScroll()"
 	/>

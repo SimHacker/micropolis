@@ -1,0 +1,96 @@
+<library>
+
+
+    <!-- Strings -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="strings" extends="node">
+
+
+	<attribute name="language" type="string" value="en-US"/>
+	<attribute name="stringsDict" value="null"/>
+
+
+	<handler name="oninit" args="args"><![CDATA[
+	    //Debug.write("gStrings oninit", this, canvas.ds_strings);
+	    this.loadStrings();
+	  ]]>
+	</handler>
+
+
+	<handler name="ondata" args="args" reference="canvas.ds_strings"><![CDATA[
+	    //Debug.write("ds_strings ondata", canvas.ds_strings);
+	    this.loadStrings();
+	  ]]>
+	</handler>
+
+
+	<method name="loadStrings"><![CDATA[
+	    //Debug.write("loadStrings", canvas.ds_strings);
+	    var stringsDict = {};
+	    if (canvas.ds_strings.childNodes) {
+		var childNodes = 
+		    canvas.ds_strings.childNodes[0].childNodes;
+		var n = childNodes.length;
+		var i;
+		for (i = 0; i < n; i++) {
+		    var stringNode = childNodes[i];
+		    if ((stringNode.nodeType == 1) &&
+			(stringNode.nodeName == 'string')) {
+			var id = stringNode.attributes['id'];
+			var value = stringNode.childNodes[0].data;
+			if (id in stringsDict) {
+			    Debug.write("Duplicate string in strings.xml:", id, value);
+			    if (value != stringsDict[id]) {
+			        Debug.write("Duplicate string with different value! id:", id, "values", stringsDict[id], value);
+			    }
+			} else {
+			    stringsDict[id] = value;
+			}
+		    }
+		}
+	    }
+	    this.stringsDict = stringsDict;
+	  ]]>
+	</method>
+
+
+	<method name="loadLanguage" args="language"><![CDATA[
+	    this.setAttribute("language", language);
+
+	    canvas.ds_cities.setSrc('/static/data/cities_' + language + '.xml');
+	    canvas.ds_disasters.setSrc('/static/data/disasters_' + language + '.xml');
+	    canvas.ds_notices.setSrc('/static/data/notices_' + language + '.xml');
+	    canvas.ds_overlays.setSrc('/static/data/overlays_' + language + '.xml');
+	    canvas.ds_scenarios.setSrc('/static/data/scenarios_' + language + '.xml');
+	    canvas.ds_strings.setSrc('/static/data/strings_' + language + '.xml');
+
+	  ]]>
+	</method>
+
+
+	<method name="getString" args="id"><![CDATA[
+	    var stringsDict = this.stringsDict;
+
+	    if (stringsDict == null) {
+	        this.loadStrings();
+		stringsDict = this.stringsDict;
+	    }
+
+	    if (id in stringsDict) {
+	        return this.stringsDict[id];
+	    } else {
+	        Debug.write("getString unknown id:", id);
+	        return id;
+	    }
+	  ]]>
+	</method>
+
+
+    </class>
+
+
+</library>

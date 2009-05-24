@@ -14,7 +14,7 @@
 
 	<attribute name="active" value="true"/>
 	<attribute name="gap" value="10"/>
-	<attribute name="sliderWidth" value="140"/>
+	<attribute name="sliderWidth" value="160"/>
 
 	<attribute name="taxRate" value="${this.slidersView.taxView.taxSlider.value}"/>
 	<attribute name="roadPercent" value="${this.slidersView.roadView.roadSlider.value}"/>
@@ -172,7 +172,8 @@
 	    <text name="taxesCollectedText"
 		width="${classroot.sliderWidth}"
 		text="${
-		    'Taxes Collected:\n' + 
+		    gApp._('Taxes Collected:') +
+		    '\n' + 
 		    gApp.formatFunds(classroot.taxesCollected)
 		}"
 		multiline="true"
@@ -181,7 +182,8 @@
 	    <text name="cashFlowText"
 		width="${classroot.sliderWidth}"
 		text="${
-		    'Cash flow:\n' +
+		    gApp._('Cash Flow:') +
+		    '\n' +
 		    gApp.formatFunds(classroot.cashFlow)
 		}"
 		multiline="true"
@@ -190,7 +192,8 @@
 	    <text name="previousFundsText"
 		width="${classroot.sliderWidth}"
 		text="${
-		    'Previous funds:\n' +
+		    gApp._('Previous Funds:') +
+		    '\n' +
 		    gApp.formatFunds(classroot.previousFunds)
 		}"
 		multiline="true"
@@ -199,7 +202,8 @@
 	    <text name="currentFundsText"
 		width="${classroot.sliderWidth}"
 		text="${
-		    'Current funds:\n' +
+		    gApp._('Current Funds:') +
+		    '\n' +
 		    gApp.formatFunds(classroot.currentFunds)
 		}"
 		multiline="true"
@@ -230,7 +234,8 @@
 		    multiline="true"
 		    text="${
 		        '\n' +
-			'Tax rate: ' + 
+			gApp._('Tax Rate:') +
+			' ' + 
 			parent.taxSlider.value + 
 			'%'
 		    }"
@@ -263,7 +268,8 @@
 		    width="${parent.width}"
 		    multiline="true"
 		    text="${
-		        'Road request: ' + 
+			gApp._('Road Request:') +
+		        ' ' + 
 			gApp.formatFunds(classroot.roadFund) + 
 			'\n' +
 			classroot.roadPercent + 
@@ -299,7 +305,8 @@
 		    width="${parent.width}"
 		    multiline="true"
 		    text="${
-		        'Fire request: ' + 
+			gApp._('Fire Request:') +
+		        ' ' + 
 			gApp.formatFunds(classroot.fireFund) + 
 			'\n' +
 			classroot.firePercent + 
@@ -335,7 +342,8 @@
 		    width="${parent.width}"
 		    multiline="true"
 		    text="${
-		        'Police request: ' + 
+		        gApp._('Police Request:') +
+		        ' ' + 
 			gApp.formatFunds(classroot.policeFund) + 
 			'\n' +
 			classroot.policePercent + 

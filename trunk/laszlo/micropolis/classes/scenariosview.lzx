@@ -39,7 +39,7 @@
 	    <attribute name="scenarioName" value="$path{'@name'}" type="string"/>
 	    <attribute name="scenarioYear" value="$path{'@year'}" type="string"/>
 	    <attribute name="scenarioTagLine" value="$path{'@tagline'}" type="string"/>
-	    <attribute name="scenarioDescription" value="$path{'description/text()'}" type="string"/>
+	    <attribute name="scenarioNotice" value="$path{'@notice'}" type="string"/>
 
 	    <handler name="ondata" args="arg"><![CDATA[
 		var label =
@@ -56,8 +56,12 @@
 		    message: 'loadScenario',
 		    scenario: this.scenarioID
 		});
-		gApp.setAttribute("title", "Scenario: " + this.scenarioName);
-		gApp.setAttribute("description", this.scenarioDescription);
+		gApp.setAttribute("title", gApp._('Scenario:') + ' ' + this.scenarioName);
+		var noticeDescription = 
+		    gNoticeView.getNoticeDescription(
+		        gNoticeView.findNotice(
+			    this.scenarioNotice));
+		gApp.setAttribute("description", noticeDescription);
 	      ]]>
 	    </method>
 

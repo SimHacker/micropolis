@@ -29,7 +29,7 @@
 
 
 	<text
-	    text="Date:"
+	    text="${gApp._('Date:')}"
 	/>
 
 	<text
@@ -38,7 +38,7 @@
 	/>
 
 	<text
-	    text="Funds:"
+	    text="${gApp._('Funds:')}"
 	    resize="true"
 	/>
 

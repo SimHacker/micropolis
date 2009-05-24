@@ -13,7 +13,7 @@
     >
 
         <attribute name="toolID" type="string" value=""/>
-        <attribute name="title" type="string" value=""/>
+        <attribute name="text" type="string" value=""/>
         <attribute name="pressed" value="false"/>
         <attribute name="inside" value="false"/>
         <attribute name="hilite" value="${((this.pressed &amp;&amp; this.inside) || (gApp.tool == this.toolID))}"/>

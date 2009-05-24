@@ -9,7 +9,6 @@
 
     <class name="connectscreen"
         clip="true"
-	initstage="late"
     >
 
 
@@ -32,14 +31,14 @@
 	    visible="${gApp.connecting}"
 	    fontsize="32"
 	    fontstyle="bold"
-	    text="Connecting to Micropolis Online server..."
+	    text="${gApp._('Connecting to Micropolis Online server...')}"
 	    multiline="true"
 	    width="${parent.width}"
 	/>
 
 	<text
 	    visible="${gApp.connectionFailed}"
-	    text="Connection to Micropolis Online server failed."
+	    text="${gApp._('Connection to Micropolis Online server failed.')}"
 	    fontsize="32"
 	    fontstyle="bold"
 	    multiline="true"
@@ -48,7 +47,7 @@
 
 	<text
 	    visible="${gApp.connectionFailed}"
-	    text="${'Status: ' + gRemoteServer.status}"
+	    text="${gApp._('Status:') + ' ' + gRemoteServer.status}"
 	    fontsize="28"
 	    multiline="true"
 	    width="${parent.width}"
@@ -58,7 +57,7 @@
 	    visible="${gApp.connectionFailed}"
 	    fontsize="32"
 	    fontstyle="bold"
-	    text="Reconnect"
+	    text="${gApp._('Reconnect')}"
 	    onclick="gApp.sendStartSession()"
 	/>
 

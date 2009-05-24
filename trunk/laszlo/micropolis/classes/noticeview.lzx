@@ -17,8 +17,8 @@
         <attribute name="currentX" value="-1"/>
         <attribute name="currentY" value="-1"/>
         <attribute name="currentSprite" value="0"/>
-        <attribute name="title" type="string" value="Micropolis"/>
-        <attribute name="description" type="string" value="Welcome to Micropolis!"/>
+        <attribute name="title" type="string" value=""/>
+        <attribute name="description" type="string" value=""/>
         <attribute name="picture" value="null"/>
         <attribute name="showPicture" value="false"/>
         <attribute name="showMap" value="false"/>
