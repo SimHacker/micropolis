@@ -1,4 +1,5 @@
-<overlays>
+<?xml version="1.0" encoding="UTF-8" ?>
+<overlays language="en-US">
     <overlay
 	name="all"
 	title="All Zones"
@@ -87,12 +88,4 @@ Coverage"
         linear="0"
         linearDirection=""
     />
-<!--
-    <overlay
-	name="dynamic"
-	title="Dynamic Filter"
-	titleBroken="Dynamic
-Filter"
-    />
--->
 </overlays>
