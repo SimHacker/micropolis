@@ -1,0 +1,11 @@
+<canvas
+    title="Micropolis"
+    width="100%"
+    height="100%"
+    proxied="false"
+>
+
+    <include href="../classes/datasets_en-US.lzx"/>
+    <include href="../classes/main.lzx"/>
+
+</canvas>
