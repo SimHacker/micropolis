@@ -117,6 +117,22 @@
         </handler>
 
 
+	<handler name="sprites" reference="gApp"><![CDATA[
+	    var sprites = gApp.sprites;
+	    Debug.write("TILEVIEW SPRITES", this, sprites);
+	    if (sprites == null) {
+	        return;
+	    }
+	    var n = sprites.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        var sprite = sprites[i]
+		Debug.write(sprite);
+	    }
+	  ]]>
+	</handler>
+
+
 	<method  name="determinePlacement" args="aSub, placement, args"><![CDATA[
 	    //Debug.write("determinePlacement", this, aSub, placement, args);
 	    switch (placement) {
@@ -247,12 +263,12 @@
 	</method>
 
 
-        <method name="poll"><![CDATA[
+        <method name="poll" args="messages"><![CDATA[
             //Debug.write("tileview poll", this, this.viewCols, this.viewRows);
 
             this.updateViewRect();
 
-            var message = {
+            messages.push({
 	        message: 'tileview',
 		id: this.uniqueID,
 		col: this.viewCol,
@@ -264,7 +280,11 @@
 		viewWidth: this.viewWidth,
 		viewHeight: this.viewHeight,
 		code: this.code
-	    };
+	    });
+
+            messages,push({
+	        message: 'spriteview'
+	    });
 
 	    return message;
           ]]>

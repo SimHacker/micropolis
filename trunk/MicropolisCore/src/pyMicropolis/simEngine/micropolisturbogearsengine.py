@@ -1026,6 +1026,39 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'collapse': True,
             })
 
+        elif message == 'spritesview':
+
+            try:
+                id = messageDict['id']
+            except Exception, e:
+                self.expectationFailed("Invalid parameters: " + str(e))
+
+            sprites = []
+            sprite = session.engine.spriteList
+            while True:
+                if not sprite:
+                    break
+                sprites.append({
+                    'type': sprite.spriteType,
+                    'frame': sprite.spriteFrame,
+                    'x': sprite.x,
+                    'y': sprite.y,
+                    'width': sprite.width,
+                    'height': sprite.height,
+                    'xOffset': sprite.xOffset,
+                    'yOffset': sprite.yOffset,
+                })
+                sprite = sprite.next
+
+            #print "MESSAGE SPRITESVIEW", messageDict
+            session.sendMessage({
+                'message': 'update',
+                'variable': 'sprites',
+                'sprites': sprites,
+                'id': id,
+                'collapse': True,
+            })
+
         elif message == 'historyview':
 
             #print "HISTORYVIEW", messageDict

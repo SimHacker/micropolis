@@ -133,10 +133,10 @@
         </method>
 
 
-        <method name="poll"><![CDATA[
+        <method name="poll" args="messages"><![CDATA[
             //Debug.write("historyview poll", this);
 
-	    return {
+	    messages.push({
 	        message: 'historyview',
 	        id: this.uniqueID,
 		scale: this.historyScale,
@@ -145,7 +145,7 @@
 		types: this.historyTypes,
 		width: this.width,
 		height: this.height
-            };
+            });
           ]]>
         </method>
 
