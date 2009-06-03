@@ -1,0 +1,49 @@
+<library>
+
+
+    <!-- nice tab pane -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="nicetabpane" extends="tabpane"
+    >
+
+
+        <attribute name="saveHeight" value="true"/>
+        <attribute name="savedHeight" value="-1"/>
+        <attribute name="bar" value="null"/>
+
+
+	<handler name="onvisible" args="arg"><![CDATA[
+	    if (!this.inited) {
+	        return;
+	    }
+	    if (this.visible) {
+	        var savedHeight = this.savedHeight;
+		//Debug.write("nicetabpane", this, "onvisible", this.visible, "restoring savedHeight", this.savedHeight);
+		if (savedHeight >= 0) {
+	            //this.bar.setAttribute("y", savedHeight);
+	            this.bar.animate("y", savedHeight, 500);
+		} else {
+	            this.bar.animate("y", this.initialHeight(), 500);
+		}
+	    } else {
+	        this.savedHeight = this.bar.y;
+		//Debug.write("nicetabpane", this, "onvisible", this.visible, "saving savedHeight", this.savedHeight);
+	    }
+	  ]]>
+	</handler>
+
+
+	<method name="initialHeight"><![CDATA[
+	    return this.content.height + (this.content.y * 2);
+	  ]]>
+	</method>
+
+
+    </class>
+
+
+</library>

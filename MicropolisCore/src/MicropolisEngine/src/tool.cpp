@@ -893,7 +893,7 @@ void Micropolis::doShowZoneStatus(
     char *s0, char *s1, char *s2, char *s3, char *s4,
     int x, int y)
 {
-    callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
+    callback("showZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
 }
 
 
@@ -929,7 +929,7 @@ void Micropolis::putRubble(int x, int y, int size, ToolEffects *effects)
  */
 void Micropolis::didTool(const char *name, short x, short y)
 {
-    callback("UIDidTool", "sdd", name, (int)x, (int)y);
+    callback("didTool", "sdd", name, (int)x, (int)y);
 }
 
 

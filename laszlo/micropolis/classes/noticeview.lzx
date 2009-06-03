@@ -74,14 +74,6 @@
 	</method>
 
 
-	<method name="getNoticeDescription" args="notice"><![CDATA[
-	    var textNode = notice.childNodes && notice.childNodes[0];
-	    var description = textNode ? textNode.data : '';
-	    return description;
-	  ]]>
-	</method>
-
-
 	<method name="updateNotice"><![CDATA[
 	    //Debug.write("updateNotice", this, this.currentNotice);
 	    var notice = this.findNotice(this.currentNotice);
@@ -91,8 +83,8 @@
 
 	    //Debug.write("==== NOTICE", notice);
 	    var attributes = notice.attributes;
-	    var title = attributes['title'];
-	    var description = this.getNoticeDescription(notice);
+	    var title = gApp._(attributes['title']);
+	    var description = gApp._(attributes['description']);
 	    var picture = attributes['picture'];
 	    var showPicture = (picture && (picture != "")) ? true : false;
 	    var showMap = attributes['showMap'] == "true";

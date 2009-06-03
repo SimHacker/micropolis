@@ -17,11 +17,12 @@ from turbogears import identity, redirect
 import cherrypy
 from cherrypy import request, response
 from micropolis import json
-import re, os, sys, zipfile, time, math, tempfile, array, random
+import re, os, sys, zipfile, time, math, tempfile, array, random, types
 import genshi
 from genshi import XML
 import xml.etree.ElementTree as ElementTree
 #import xml.etree.cElementTree as ElementTree
+import xml.dom.minidom
 from StringIO import StringIO
 import pyamf
 from pyamf import remoting, amf0, amf3
@@ -33,6 +34,14 @@ log = logging.getLogger("micropolis.controllers")
 import cairo, pango
 from pyMicropolis.simEngine import micropolisengine, micropolisturbogearsengine
 from pyMicropolis.tileEngine import tileengine
+
+
+########################################################################
+# Globals
+
+
+DefaultLanguage = 'en-US'
+DataDir = 'micropolis/htdocs/static/data'
 
 
 ########################################################################
@@ -276,13 +285,23 @@ class Root(controllers.RootController):
             session.touch()
             return session
 
-        session = micropolisturbogearsengine.Session(sessionID)
+        session = micropolisturbogearsengine.Session(self, sessionID)
         sessions[sessionID] = session
 
         session.createEngine()
         session.touch()
 
         return session
+
+
+    ########################################################################
+    # getSessions
+    #
+    # Return a list of sessions.
+    #
+    def getSessions(self):
+        self.expireSessions()
+        return self.sessions.values()
 
 
     ########################################################################
@@ -640,6 +659,156 @@ class Root(controllers.RootController):
         os.unlink(tempFileName)
 
         return data
+
+
+    ########################################################################
+    # getLanguages
+    #
+    def getLanguages(
+        self):
+        languages = []
+        for fileName in os.listdir(DataDir):
+            if (fileName.startswith('strings_') and
+                fileName.endswith('.xml')):
+                languages.append(fileName[8:-4])
+        return languages
+
+
+    ########################################################################
+    # readStrings
+    #
+    def readStrings(
+        self,
+        language):
+
+        stringsPath = os.path.join(
+            DataDir, 'strings_' + language + '.xml')
+
+        try:
+            doc = xml.dom.minidom.parse(stringsPath)
+        except Exception, e:
+            print "Error parsing xml file", stringsPath, e
+            return [], None, None, None
+
+        stringsEl = doc.firstChild
+        if (stringsEl.nodeType != 1) or (stringsEl.nodeName != u'strings'):
+            print "Strings file should contain top level <strings> element.", stringsPath
+            return [], None, None, None
+
+        strings = []
+        stringEls = {}
+        el = stringsEl.firstChild
+        while el:
+            if (el.nodeType == 1) and (el.nodeName == u'string'):
+                if not el.hasAttribute('id'):
+                    print "Expected id attribute on string element:", el.toxml().encode('utf-8')
+                else:
+                    id = el.getAttribute("id")
+                    if el.hasAttribute('comment'):
+                        comment = el.getAttribute('comment')
+                    else:
+                        comment = None
+                    text = u''
+                    subEl = el.firstChild
+                    while subEl:
+                        if subEl.nodeType == 3:
+                            text += subEl.data
+                        subEl = subEl.nextSibling
+                    if id in stringEls:
+                        print "Duplicate string id:", language, id, text, comment
+                    else:
+                        strings.append((id, text, comment))
+                        stringEls[id] = el
+
+            el = el.nextSibling
+
+        return strings, doc, stringEls, stringsPath
+
+
+    ########################################################################
+    # getTranslations
+    #
+    @expose(
+        template="micropolis.templates.getTranslations")
+    def getTranslations(
+        self,
+        language=DefaultLanguage,
+        command='',
+        **kw):
+
+        message = ''
+        languages = self.getLanguages()
+        #print "languages", languages
+        strings, doc, stringEls, stringsPath = self.readStrings(language)
+        #print "strings", strings
+
+        defaultStrings, defaultDoc, defaultStringEls, defaultStringsPath = self.readStrings(DefaultLanguage)
+
+        if command == 'update':
+            stringMap = {}
+            for t in strings:
+                stringMap[t[0]] = t
+            stringMapKeys = set(stringMap.keys())
+
+            defaultStringMap = {}
+            for t in defaultStrings:
+                defaultStringMap[t] = t
+            defaultStringMapKeys = set(defaultStringMap.keys())
+
+            newStrings = {}
+            for key in kw.keys():
+                if key[:7] == 'string_':
+                    num = int(key[7:])
+                    id = strings[num][0]
+                    newStrings[id] = kw[key]
+                    #print "XXXX", num, repr(id), repr(key), repr(kw[key])
+
+            for idDefault, textDefault, commentDefault in defaultStrings:
+                if idDefault in newStrings:
+                    textTranslated = newStrings[idDefault]
+                    #print "TT1", repr(idDefault), repr(textTranslated)
+                    if idDefault in stringMapKeys:
+                        stringMapKeys.remove(idDefault)
+                elif idDefault in stringMap:
+                    textTranslated = stringMap[idDefault][1]
+                    #print "TT2", repr(idDefault), repr(textTranslated)
+                    stringMapKeys.remove(idDefault)
+                else:
+                    textTranslated = u'@' + language + '@ ' + textDefault
+                    #print "TT3", repr(idDefault), repr(textTranslated)
+
+                el = defaultStringEls[idDefault]
+
+                while el.firstChild:
+                    el.removeChild(el.firstChild)
+
+                el.appendChild(defaultDoc.createTextNode(textTranslated))
+                
+            if stringMapKeys:
+                print "Extra strings left over in ", language, "translation"
+                for idString in stringMapKeys:
+                    print stringMap[idString]
+
+            try:
+                os.path.rename(stringsPath, stringsPath + '.bak')
+            except: pass
+
+            print "Writing new strings to", stringsPath
+            f = open(stringsPath, 'w')
+            f.write(defaultDoc.toxml())
+            f.close()
+
+            # Read the changes back in.
+            strings, doc, stringEls, stringsPath = self.readStrings(language)
+
+        return {
+            'message': message,
+            'defaultLanguage': DefaultLanguage,
+            'language': language,
+            'languages': languages,
+            'strings': strings,
+            'defaultStrings': defaultStrings,
+        }
 
 
     ########################################################################

@@ -498,7 +498,7 @@ void Micropolis::loadScenario(Scenario s)
 /** Report to the front-end that the scenario was loaded. */
 void Micropolis::didLoadScenario()
 {
-    callback("UIDidLoadScenario", "");
+    callback("didLoadScenario", "");
 }
 
 /**
@@ -542,7 +542,7 @@ bool Micropolis::loadCity(const char *filename)
 /** Report to the frontend that the game was successfully loaded. */
 void Micropolis::didLoadCity()
 {
-    callback("UIDidLoadCity", "");
+    callback("didLoadCity", "");
 }
 
 
@@ -552,7 +552,7 @@ void Micropolis::didLoadCity()
  */
 void Micropolis::didntLoadCity(const char *msg)
 {
-    callback("UIDidntLoadCity", "s", msg);
+    callback("didntLoadCity", "s", msg);
 }
 
 
@@ -584,14 +584,14 @@ void Micropolis::saveCity()
 /** Report to the frontend that the city is being saved. */
 void Micropolis::doSaveCityAs()
 {
-    callback("UISaveCityAs", "");
+    callback("saveCityAs", "");
 }
 
 
 /** Report to the frontend that the city was saved successfully. */
 void Micropolis::didSaveCity()
 {
-    callback("UIDidSaveCity", "");
+    callback("didSaveCity", "");
 }
 
 
@@ -601,7 +601,7 @@ void Micropolis::didSaveCity()
  */
 void Micropolis::didntSaveCity(const char *msg)
 {
-    callback("UIDidntSaveCity", "s", msg);
+    callback("didntSaveCity", "s", msg);
 }
 
 

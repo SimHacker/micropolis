@@ -468,7 +468,7 @@ void Micropolis::doVotes()
 /** Push new score to the user */
 void Micropolis::doScoreCard()
 {
-    callback("UIUpdate", "s", "evaluation");
+    callback("update", "s", "evaluation");
 
     // The user interface should pull these raw values out and format
     // them. The simulator core used to format them and push them out,

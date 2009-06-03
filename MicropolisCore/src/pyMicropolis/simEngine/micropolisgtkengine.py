@@ -127,22 +127,22 @@ class MicropolisGTKEngine(micropolisgenericengine.MicropolisGenericEngine):
         self.sendUpdate('map')
 
 
-    def handle_UIDidGenerateNewCity(self):
-        print "handle_UIDidGenerateNewCity(self)", (self,)
+    def handle_didGenerateNewCity(self):
+        print "handle_didGenerateNewCity(self)", (self,)
         self.sendUpdate('tick')
         self.sendUpdate('editor')
         self.sendUpdate('map')
 
 
-    def handle_UIDidLoadCity(self):
-        print "handle_UIDidLoadCity(self)", (self,)
+    def handle_didLoadCity(self):
+        print "handle_didLoadCity(self)", (self,)
         self.sendUpdate('tick')
         self.sendUpdate('editor')
         self.sendUpdate('map')
 
 
-    def handle_UIDidLoadScenario(self):
-        print "handle_UIDidLoadScenario(self)", (self,)
+    def handle_didLoadScenario(self):
+        print "handle_didLoadScenario(self)", (self,)
         self.sendUpdate('tick')
         self.sendUpdate('editor')
         self.sendUpdate('map')

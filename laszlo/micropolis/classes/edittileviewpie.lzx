@@ -11,7 +11,7 @@
         <html text="${gApp._('Tools')}"/>
 
 	<item>
-	    <html text="${gApp._('Zone...')}"/>
+	    <html text="${gApp._('(Zone)')}"/>
 
 	    <piemenu
 	        fixedRadius="50"
@@ -70,8 +70,7 @@
 			frame="${(parent.hilited || (gApp.tool == 'policestation')) ? 2 : 1}"
 		    />
 		    <html
-			width="60"
-		        multiline="true"
+		        resize="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Police Station')}"
 		    />
@@ -114,8 +113,7 @@
 			frame="${(parent.hilited || (gApp.tool == 'firestation')) ? 2 : 1}"
 		    />
 		    <html
-			width="60"
-		        multiline="true"
+		        resize="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Fire Station')}"
 		    />
@@ -219,7 +217,7 @@
 	</item>
 
 	<item>
-	    <html text="${gApp._('Build...')}"/>
+	    <html text="${gApp._('(Build)')}"/>
 
 	    <piemenu
 	        fixedRadius="50"
@@ -362,12 +360,12 @@
 	</item>
 
 	<item>
-	    <html text="${gApp._('More...')}"/>
+	    <html text="${gApp._('(More)')}"/>
 
 	    <piemenu>
 
 		<item>
-		    <html text="${gApp._('Tab...')}"/>
+		    <html text="${gApp._('(Tab)')}"/>
 		    <piemenu>
 			<html text="${gApp._('Tab')}"/>
 
@@ -455,7 +453,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('Speed...')}"/>
+		    <html text="${gApp._('(Speed)')}"/>
 
 		    <piemenu
 		        initialAngle="0"
@@ -554,7 +552,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('Overlays...')}"/>
+		    <html text="${gApp._('(Overlays)')}"/>
 
 		    <piemenu id="gEditTileViewOverlaysPie"
 		        maxPieItems="100"
@@ -567,6 +565,7 @@
 			>
 
 			    <attribute name="overlayName" value="$path{'@name'}"/>
+			    <attribute name="overlayTitle" value="$path{'@title'}"/>
 			    <attribute name="hilitedLast" value="false"/>
 
 			    <handler name="onhilited"><![CDATA[
@@ -594,7 +593,7 @@
 			    </method>
 
 			    <html
-			        text="$path{'@title'}"
+			        text="${gApp._(parent.overlayTitle)}"
 				fontsize="${parent.hilited ? 24 : 10}"
 			    />
 
@@ -603,7 +602,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('Disasters...')}"/>
+		    <html text="${gApp._('(Disasters)')}"/>
 
 		    <piemenu>
 		        <html text="${gApp._('Disasters')}"/>
@@ -613,18 +612,18 @@
 			>
 
 			    <attribute name="disasterName" value="$path{'@name'}"/>
-			    <attribute name="disaster" value="$path{'@disaster'}"/>
+			    <attribute name="disasterTitle" value="$path{'@title'}"/>
 
 			    <method name="selected"><![CDATA[
-			    	Debug.write("DISASTER", this.disaster);
+			    	Debug.write("DISASTERNAME", this.disasterName);
 				gApp.sendMessage({
 				    message: 'disaster',
-				    disaster: this.disaster
+				    disaster: this.disasterName
 				});
 			      ]]>
 			    </method>
 
-			    <html text="${parent.disasterName}"/>
+			    <html text="${parent.disasterTitle}"/>
 
 			</item>
 		    </piemenu>
@@ -651,7 +650,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('Funds...')}"/>
+		    <html text="${gApp._('(Funds)')}"/>
 
 		    <piemenu>
 		        <html text="${gApp._('Funds')}"/>

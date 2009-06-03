@@ -1,0 +1,722 @@
+<?xml version="1.0" ?><strings language="en-US">
+
+
+    <!--
+
+        This XML file defines all the strings in Micropolis,
+	for specific languages.
+
+	The "strings_en-US.xml" file is considered the master file.
+	It is used as a template for the other languages.
+	In order to add a string, first add it to the "en-US" file,
+	then use the web "/server/getTranslations" web interface to
+	update the other language strings from the "en-US" strings.
+	That will add any new strings in place, and mark them as 
+	needing to be translated, with at-signs like "@nl-NL".
+	Then you can use the web interface to translate the
+	strings into other languages.
+
+	The top level <strings> element should have a language attribute, 
+	which specifies the language of the translated strings. 
+
+	Each <string> sub-element has an id attribute, 
+	which is the name by which the string is refered in the code.
+	The ID can be the string itself in English, 
+	possibly abbreviated with a "*" at the end, 
+	or it may be a logical name called out by the code. 
+	Some string elements have an optional comment attribute,
+	which tells the translator how to deal with the string.
+	Each string element contains utf-8 unicode text, 
+	which is the translated string. 
+
+	Strings should not contain any markup as actual tags. Any
+	markup or entities to be displayed as html in the user
+	interface should be escaped.
+
+    -->
+
+
+    <!-- appview.lzx -->
+
+    <string id="Micropolis: Choose a City">Micropolis: Kies een Stad</string>
+
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Welkom bij Micrpolis!&lt;br/&gt;&lt;br/&gt;Kies een stad met het selecteren van een scenario van de 'Scenario's' tab, of het genereren van een nieuwe willekeurige stad van de 'Generator' tab of het laden van een stad in de bibliotheek van de 'Bibliotheek' tab.&lt;br/&gt;&lt;br/&gt;Druk vervolgens op de 'Speel met Deze Stad' knop hieronder om het afspelen te starten Micropolis!</string>
+
+    <string id="Please log in or create an account in order to save your city.">Inloggen of maak een account om te slaan stad.</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">/wiki/index.php/About?lang=nl-NL</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">/wiki/index.php/Help?lang=nl-NL</string>
+
+    <string comment="Three letter month abbreviation." id="Jan">jan.</string>
+
+    <string comment="Three letter month abbreviation." id="Feb">feb.</string>
+
+    <string comment="Three letter month abbreviation." id="Mar">maart</string>
+
+    <string comment="Three letter month abbreviation." id="Apr">apr.</string>
+
+    <string comment="Three letter month abbreviation." id="May">mei</string>
+
+    <string comment="Three letter month abbreviation." id="Jun">juni</string>
+
+    <string comment="Three letter month abbreviation." id="Jul">juli</string>
+
+    <string comment="Three letter month abbreviation." id="Aug">aug.</string>
+
+    <string comment="Three letter month abbreviation." id="Sep">sept.</string>
+
+    <string comment="Three letter month abbreviation." id="Oct">oct.</string>
+
+    <string comment="Three letter month abbreviation." id="Nov">nov.</string>
+
+    <string comment="Three letter month abbreviation." id="Dec">dec.</string>
+
+
+    <!-- budgetview.lzx -->
+
+    <string id="Taxes Collected:">Belastingen Verzameld:</string>
+
+    <string id="Cash Flow:">Kasstroom:</string>
+
+    <string id="Previous Funds:">Vorige Fondsen:</string>
+
+    <string id="Current Funds:">Huidige Fondsen:</string>
+
+    <string id="Tax Rate:">Belastingtarief:</string>
+
+    <string id="Road Request:">Weg Aanvraag:</string>
+
+    <string id="Fire Request:">Brandweerkazerne Aanvraag:</string>
+
+    <string id="Police Request:">Politiebureau Aanvraag:</string>
+
+
+    <!-- changepassword.lzx -->
+
+    <string id="To change your password,*">Om uw wachtwoord te wijzigen, voert u eerst uw oude wachtwoord en vervolgens voert u uw nieuwe wachtwoord twee keer.</string>
+
+    <string id="Change Password">Wachtwoord Wijzigen</string>
+
+
+    <!-- connectscreen.lzx -->
+
+    <string id="Connecting to Micropolis Online server.">Aansluiten op Micropolis Online server.</string>
+
+    <string id="Connection to Micropolis Online server failed.">Aansluiting op Micropolis Online server mislukt.</string>
+
+    <string id="Status:">Status:</string>
+
+    <string id="Reconnect">Reconnect</string>
+
+
+    <!-- controlpanel.lzx -->
+
+    <string id="Are you really sure you want to start a new city?">Ben je echt zeker dat u wilt beginnen met een nieuwe stad?</string>
+
+    <string id="No, keep playing with this city.">Nee, het spelen met deze stad.</string>
+
+    <string id="Yes, choose another city.">Ja, kies een andere stad.</string>
+
+    <string id="Ultra Slow">Ultra Langzaam</string>
+
+    <string id="Super Slow">Bijzonder Langzaam</string>
+
+    <string id="Very Slow">Zeer Langzaam</string>
+
+    <string id="Slow">Langzaam</string>
+
+    <string id="Medium">Midden</string>
+
+    <string id="Fast">Snelle</string>
+
+    <string id="Very Fast">Zeer Snelle</string>
+
+    <string id="Super Fast">Bijzonder Snelle</string>
+
+    <string id="Ultra Fast">Ultra Snelle</string>
+
+    <string id="Astronomically Fast">Astronomisch Snelle</string>
+
+    <string id="Resume">Hervatten</string>
+
+    <string id="Pause">Pauze</string>
+
+    <string id="Simulator">Simulator</string>
+
+    <string id="Paused.">Onderbroken.</string>
+
+    <string id="Running!">Stromend!</string>
+
+    <string id="Speed">Snelheid</string>
+
+    <string id="Save City">Sla Stad</string>
+
+    <string id="New City">Nieuwe Stad</string>
+
+    <string id="Help">Hulp</string>
+
+    <string id="About">Over</string>
+
+    <string id="Disasters">Rampen</string>
+
+    <string id="Auto Budget">Auto Begroting</string>
+
+    <string id="Auto Bulldoze">Auto Bulldozer</string>
+
+    <string id="Auto Goto">Auto Goto</string>
+
+    <string id="Sound">Geluid</string>
+
+    <string id="Animation">Animatie</string>
+
+    <string id="Journal">Tijdschrift</string>
+
+    <string id="Notices">Mededelingen</string>
+
+
+    <!-- datefundsview.lzx -->
+
+    <string id="Date:">Datum:</string>
+
+    <string id="Funds:">Middelen:</string>
+
+
+    <!-- demandgauge.lzx -->
+
+    <string comment="One letter abreviation for 'Residential'." id="R">R</string>
+
+    <string comment="One letter abreviation for 'Commercial'." id="C">C</string>
+
+    <string comment="One letter abreviation for 'Industrial'." id="I">I</string>
+
+
+    <!-- edittileviewpie.lzx -->
+
+    <string id="Tools">Gereedschap</string>
+
+    <string id="(Zone)">(Zone)</string>
+
+    <string id="Zone">Zone</string>
+
+    <string id="(Build)">(Bouwen)</string>
+
+    <string id="Build">Bouwen</string>
+
+    <string id="(More)">(Meer)</string>
+
+    <string id="(Tab)">(Tab)</string>
+
+    <string id="Tab">Tab</string>
+
+    <string id="Evaluation">Evaluatie</string>
+
+    <string id="History">Geschiedenis</string>
+
+    <string id="Budget">Begroting</string>
+
+    <string id="Overlays">Bedekkingen</string>
+
+    <string id="Control">Controle</string>
+
+    <string id="(Speed)">(Snelheid)</string>
+
+    <string id="(Overlays)">(Bedekkingen)</string>
+
+    <string id="(Disasters)">(Rampen)</string>
+
+    <string id="(Funds)">(Fondsen)</string>
+
+    <string id="Funds">Fondsen</string>
+
+    <string id="Tax Rate">Belastingtarief</string>
+
+    <string id="Police Funds">Politiebureau Fondsen</string>
+
+    <string id="Road Funds">Weg Fondsen</string>
+
+    <string id="Fire Funds">Brandweerkazerne Fondsen</string>
+
+
+    <!-- evaluationview.lzx -->
+
+    <string id="Crime">Criminaliteit</string>
+
+    <string id="Pollution">Verontreiniging</string>
+
+    <string id="Housing">Wonen</string>
+
+    <string id="Taxes">Belastingen</string>
+
+    <string id="Traffic">Verkeer</string>
+
+    <string id="Unemployment">Werkloosheid</string>
+
+    <string id="Fire">Brand</string>
+
+    <string id="Village">Dorp</string>
+
+    <string id="Town">Stadje</string>
+
+    <string id="City">Stad</string>
+
+    <string id="Capital">Hoofdstad</string>
+
+    <string id="Metropolis">Metropolis</string>
+
+    <string id="Megalopolis">Megalopolis</string>
+
+    <string id="Easy">Gemakkelijk</string>
+
+    <string id="Hard">Moeilijk</string>
+
+    <string id="Approve:">Goedkeuren:</string>
+
+    <string id="Disapprove:">Afkeuren:</string>
+
+    <string id="Population:">Bevolking:</string>
+
+    <string id="Migration:">Migratie:</string>
+
+    <string id="City Value:">Stad Prijs:</string>
+
+    <string id="Category:">Categorie:</string>
+
+    <string id="Game Level:">Spel Niveau:</string>
+
+    <string id="Current Score:">Huidige Gast:</string>
+
+    <string id="Annual Change:">Jaarlijkse Verandering:</string>
+
+    <string id="Popularity:">Populariteit:</string>
+
+    <string id="Problems:">Problemen:</string>
+
+
+    <!-- generatorview.lzx -->
+
+    <string id="Generate Random Map">Genereer Willekeurige Kaart</string>
+
+    <string id="Generated Map">Gegenereerd Kaart</string>
+
+    <string id="Generated a new random map.">Gegenereerd een nieuwe willekeurige kaart.</string>
+
+
+    <!-- historyview.lzx -->
+
+    <string id="Residential">Residentieel</string>
+
+    <string id="Show the residential population history.">Toon de residentiële bevolking geschiedenis.</string>
+
+    <string id="Commercial">Commercieel</string>
+
+    <string id="Show the commercial population history.">Toon de commerciële bevolking geschiedenis.</string>
+
+    <string id="Industrial">Industrieel</string>
+
+    <string id="Show the industrial population history.">Toon de industriële geschiedenis bevolking.</string>
+
+    <string id="Money">Geld</string>
+
+    <string id="Show the city funds history.">Toon de stad fondsen geschiedenis.</string>
+
+    <string id="Show the crime rate history.">Toon de criminaliteit geschiedenis.</string>
+
+    <string id="Show the pollution rate history.">Toon de verontreiniging tarief geschiedenis.</string>
+
+    <string id="10 Years">10 Jaar</string>
+
+    <string id="120 Years">120 Jaar</string>
+
+    
+    <!-- libraryview.lzx -->
+
+    <string id="Loaded Map:">Ladingen Kaart:</string>
+
+    <string id="Loaded a map from the library:">Ladingen een plattegrond van de bibliotheek:</string>
+
+
+    <!-- loginview.lzx -->
+
+    <string id="You are logged in as">U bent ingelogd als</string>
+
+    <string id="Please log in*">Log in of maak een nieuwe account, zodat u kunt uw steden en deelnemen aan de Micropolis Online gemeenschap.</string>
+
+    <!-- userview.lzx -->
+
+    <string id="You have successfully logged in,*">Je hebt aangemeld, en u kunt configureren voor uw account.</string>
+
+    <string id="Please log in or create a new account.">Log in of maak een nieuwe account.</string>
+
+    <string id="New and Registered Users:*">Nieuwe en geregistreerde gebruikers, geef uw gebruikersnaam en wachtwoord, en druk op de juiste knop.</string>
+
+    <string id="User Name:">Gebruikersnaam:</string>
+
+    <string id="Old Password:">Oud wachtwoord:</string>
+
+    <string id="Password:">Wachtwoord:</string>
+
+    <string id="Log In to Existing Account">Inloggen op Bestaande Account</string>
+
+    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">Nieuwe gebruikers: Herhaal uw wachtwoord, en vul je volledige naam en e-mailadres. Druk vervolgens op de 'Nieuwe Account Aanmaken' knop.</string>
+
+    <string id="Repeat Password:">Herhaal Wachtwoord:</string>
+
+    <string id="Full Name:">Volledige Naam:</string>
+
+    <string id="EMail Address:">EMail:</string>
+
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">Nieuwe Account Aanmaken</string>
+
+    <string id="You can change your password*">U kunt uw wachtwoord wijzigen door het invoeren van uw oude wachtwoord en vervolgens uw nieuwe wachtwoord twee keer in. U kunt uw volledige naam of e-mailadres door het bewerken van de velden in.</string>
+
+    <string id="New Password:">Nieuw Wachtwoord:</string>
+
+    <string id="Log Out">Uitloggen</string>
+
+    <string id="Cancel">Annuleren</string>
+
+    <string id="Log In">Inloggen</string>
+
+
+    <!-- noticeview.lzx -->
+
+    <string id="Micropolis">Micropolis</string>
+
+    <string id="The city simulation has begun!">De stad simulatie is begonnen!</string>
+
+
+    <!-- playscreen.lzx -->
+
+
+    <string id="User:">Gebruiker:</string>
+
+    <!-- remoteserver.lzx -->
+
+    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">Losgekoppeld (fout).</string>
+
+    <string comment="Normal disconnection that is not an error." id="Disconnected.">Losgekoppeld.</string>
+
+    <string id="Connection failed.">Verbinding mislukt.</string>
+
+    <string id="Connection rejected.">Verbinding afgewezen.</string>
+
+    <string id="Connected.">Aangesloten.</string>
+
+    <string id="Message failed.">Bericht mislukt.</string>
+
+    <string id="Description:">Beschrijving:</string>
+
+    <string id="To:">Naar:</string>
+
+
+    <!-- scenariosview.lzx -->
+
+    <string id="Scenario:">Scenario:</string>
+
+
+    <!-- startscreen.lzx -->
+
+    <string id="Play With This Map">Speel Met Deze Stad</string>
+
+    <string id="Scenarios">Scenario's</string>
+
+    <string id="Generator">Generator</string>
+
+    <string id="Library">Bibliotheek</string>
+
+    <string id="User">Gebruiker</string>
+
+
+    <!-- toolcursor.lzx -->
+
+
+    <!-- toolpalette.lzx -->
+
+    <string id="Fire Station">Brand Station</string>
+
+    <string id="Query">Vraag</string>
+
+    <string id="Police Station">Politie Station</string>
+
+    <string id="Wire">Draad</string>
+
+    <string id="Bulldozer">Bulldozer</string>
+
+    <string id="Railroad">Spoorweg</string>
+
+    <string id="Road">Weg</string>
+
+    <string id="Center">Center</string>
+
+    <string id="Stadium">Stadion</string>
+
+    <string id="Park">Park</string>
+
+    <string id="Seaport">Zeehaven</string>
+
+    <string id="Coal Power">Steenkoolcentrales</string>
+
+    <string id="Airport">Luchthaven</string>
+
+    <string id="Nuclear Power">Kernenergie</string>
+
+
+    <!-- disasters.xml -->
+
+    <string id="disaster_monster_title">Rotbeest</string>
+
+    <string id="disaster_fire_title">Brand</string>
+
+    <string id="disaster_flood_title">Overstroming</string>
+
+    <string id="disaster_meltdown_title">Kernsmelting</string>
+
+    <string id="disaster_tornado_title">﻿﻿Wervelstorm</string>
+
+    <string id="disaster_earthquake_title">Aardbeving</string>
+
+
+    <!-- notices.xml -->
+
+    <string id="notice_10_title">VERONTREINIGING ALERT!</string>
+
+    <string id="notice_10_description">Verontreiniging in uw stad heeft meer dan de maximaal toegestane bedragen vastgesteld door de Micropolis Verontreiniging Agentschap. U loopt het risico van ernstige ecologische consequences.&lt;br/&gt;Either clean-up van uw handelen of open een gasmasker concessie op het stadhuis.</string>
+
+    <string id="notice_11_title">CRIMINALITEIT ALERT!</string>
+
+    <string id="notice_11_description">Misdaad in uw stad is uit de hand. Angry mobs zijn plunderingen en vandalizing de centrale stad. De president zal sturen in de Nationale Garde snel als je kunt niet van het probleem.</string>
+
+    <string id="notice_12_title">TRAFFIC WAARSCHUWING!</string>
+
+    <string id="notice_12_description">Verkeer in deze stad is verschrikkelijk. De stad breidt zich uit patstelling. De pendelaars krijgen militante.&lt;br/&gt;Ofwel bouwen meer wegen en rails of een kogelvrije limousine.</string>
+
+    <string id="notice_20_title">BRAND GEMELD!</string>
+
+    <string id="notice_20_description">Een brand is gemeld!</string>
+
+    <string id="notice_21_title">ROTBEEST AANVEL!</string>
+
+    <string id="notice_21_description">Een groot reptiel rotbeest is gespot in het water. Het lijkt te worden aangetrokken tot de gebieden van hoge verontreiniging. Er is een spoor van vernieling, waar het gaat.&lt;br/&gt;Alles wat je kan doen is wachten tot hij vertrekt, dan is herstel van het puin.</string>
+
+    <string id="notice_22_title">WERVELSTORM ALARM!</string>
+
+    <string id="notice_22_description">Een wervelstorm is gemeld! Er is niets wat je kunt doen om het te stoppen, zodat je beter voor te bereiden op het opruimen na de ramp!</string>
+
+    <string id="notice_23_title">AARDBEVING!</string>
+
+    <string id="notice_23_description">Een grote aardbeving heeft plaatsgevonden! Zet de brand zo snel mogelijk, voordat ze verspreid, dan sluit het elektriciteitsnetwerk en de wederopbouw van de stad.</string>
+
+    <string id="notice_24_title">VLIEGTUIGCRASH!</string>
+
+    <string id="notice_24_description">Een vliegtuig is neergestort!</string>
+
+    <string id="notice_25_title">SCHIPBREUK!</string>
+
+    <string id="notice_25_description">Een schip heeft vernield!</string>
+
+    <string id="notice_26_title">TREIN WRAK!</string>
+
+    <string id="notice_26_description">Een trein heeft crashte!</string>
+
+    <string id="notice_27_title">HELIKOPTER WRAK!</string>
+
+    <string id="notice_27_description">Een helikopter is neergestort!</string>
+
+    <string id="notice_30_title">FIREBOMBING GEMELD!</string>
+
+    <string id="notice_30_description">Brand bommen dalen!</string>
+
+    <string id="notice_32_title">EXPLOSIE GEMELD!</string>
+
+    <string id="notice_32_description">Er is een explosie!!</string>
+
+    <string id="notice_35_title">STADJE</string>
+
+    <string id="notice_35_description">Gefeliciteerd, je dorp is uitgegroeid tot de status van stadje. U heeft nu 2.000 burgers. </string>
+
+    <string id="notice_36_title">STAD</string>
+
+    <string id="notice_36_description">Uw gemeente is uitgegroeid tot een full-size stad, met een huidige bevolking van 10.000. Houd goed werkt.</string>
+
+    <string id="notice_37_title">HOOFDSTAD</string>
+
+    <string id="notice_37_description">Uw stad heeft een hoofdstad. De huidige bevolking is hier 50.000. Uw politieke toekomst ziet er rooskleurig uit.</string>
+
+    <string id="notice_38_title">METROPOLIS</string>
+
+    <string id="notice_38_description">Uw hoofdstad heeft nu bereikt de status van de metropool. De huidige bevolking is 100.000. Met uw leidinggevende vaardigheden, moet je serieus overwegen loopt gouverneur.</string>
+
+    <string id="notice_39_title">MEGALOPOLIS</string>
+
+    <string id="notice_39_description">Proficiat, je hebt bereikt, de hoogste categorie van stedelijke ontwikkeling, de megalopolis.</string>
+
+    <string id="notice_41_title">ZWAAR VERKEER!</string>
+
+    <string id="notice_41_description">Sky Watch Een rapportage zwaar verkeer!</string>
+
+    <string id="notice_42_title">Inunderen gemeld!</string>
+
+    <string id="notice_42_description">Inunderen is gemeld langs de waterkant!</string>
+
+    <string id="notice_43_title">NUCLEAIRE KERNSMELTING!</string>
+
+    <string id="notice_43_description">Een nucleaire kernsmelting heeft voorgedaan op uw centrale. U wordt geadviseerd om te voorkomen dat het gebied tot het verval van radioactieve isotopen.&lt;br/&gt;Vele generaties zullen confronteren dit probleem voordat het weg gaat, dus niet je adem inhouden.</string>
+
+    <string id="notice_44_title">RELLEN!</string>
+
+    <string id="notice_44_description">De burgers zijn rellen in de straten!</string>
+
+    <string id="notice_45_title">Start een Nieuwe Stad</string>
+
+    <string id="notice_45_description">Bouw je eigen stad uit de grond, te beginnen met deze kaart van onbewoond land.</string>
+
+    <string id="notice_46_title">Herstellen van een Opgeslagen Stad</string>
+
+    <string id="notice_46_description">De stad werd hersteld.</string>
+
+    <string id="notice_47_title">Je bent een winnaar!</string>
+
+    <string id="notice_47_description">Uw mayorial vaardigheid en stadsplanning expertise hebben verdiend u de sleutel tot de stad. Plaatselijke bewoners zal erectie monument aan uw heerlijkheid en de naam van hun eerste kinderen geboren na jou. Waarom niet een looptijd van gouverneur?</string>
+
+    <string id="notice_48_title">Impeachment mededeling!</string>
+
+    <string id="notice_48_description">De gehele bevolking van deze stad is er eindelijk genoeg van je onbekwaam planning en incompetent management. Een boze menigte - geleid door je moeder - is gespot in de buurt van het stadhuis.&lt;br/&gt;U moet serieus overwegen om een langere vakantie - NOW. (Of lees de handleiding en probeer het opnieuw.)</string>
+
+    <string id="notice_49_title">Over Micropolis</string>
+
+    <string id="notice_49_description">Micropolis Copyright (C) 2007 door Electronic Arts.&lt;br/&gt;Gebaseerd op het originele SimCity concept, ontwerp en code door Will Wright en Fred Haslam.&lt;br/&gt;User Interface Ontworpen en gemaakt door Don Hopkins.&lt;br/&gt;Geport naar Linux, geoptimaliseerd en aangepast voor OLPC door Don Hopkins.&lt;br/&gt;Licentie onder de GNU General Public License, versie 3, met aanvullende voorwaarden.</string>
+
+    <string id="notice_50_title">DULLSVILLE, USA  1900</string>
+
+    <string id="notice_50_description">Dingen zijn niet veel veranderd hier in de laatste honderd jaar of zo en de bewoners beginnen te vervelen. Ze denken Dullsville zou de volgende grote stad met de juiste leider.&lt;br/&gt;Het is uw taak om het aantrekken van nieuwe groei en ontwikkeling, draaien Dullsville in een metropool in 30 jaar.</string>
+
+    <string id="notice_51_title">SAN FRANCISCO, CA.  1906</string>
+
+    <string id="notice_51_description">Schade van de aardbeving was klein vergeleken met die van de daaropvolgende brand, die dagen te controleren. 1500 mensen overleden.&lt;br/&gt;Beheersing van de brand moet uw eerste zorg. Dan is duidelijk het puin en beginnen met de wederopbouw. U heeft 5 jaar.</string>
+
+    <string id="notice_52_title">HAMBURG, DUITSLAND  1944</string>
+
+    <string id="notice_52_description">Allied brand-bombardementen op Duitse steden in de Tweede Wereldoorlog veroorzaakt enorme schade en verlies van leven. Mensen in de binnensteden waren het grootste risico lopen.&lt;br/&gt;U moet de firestorms tijdens de bombardementen en de wederopbouw van de stad na de oorlog. U heeft 5 jaar.</string>
+
+    <string id="notice_53_title">BERN, ZWITZERLAND  1965</string>
+
+    <string id="notice_53_description">De wegen zijn hier steeds meer congestie elke dag, en de bewoners zijn boos. Zij eisen dat u daar iets aan doen.&lt;br/&gt;Sommigen hebben gesuggereerd een massale doorvoer systeem als het antwoord, maar dit zou een ingrijpende rezoning in het centrum. Je hebt 10 jaar.</string>
+
+    <string id="notice_54_title">TOKIO, JAPAN  1957</string>
+
+    <string id="notice_54_description">Een groot reptiel rotbeest is gespot rubriek voor Tokio Bay. Het lijkt te worden aangetrokken tot de niveaus van zware industriële vervuiling daar.&lt;br/&gt;Probeer om de branden, dan is het herstel van het industriële centrum. U heeft 5 jaar.</string>
+
+    <string id="notice_55_title">DETROIT, MI.  1972</string>
+
+    <string id="notice_55_description">Per 1970, de concurrentie uit het buitenland en andere economische factoren geduwd zodra de &quot;auto-hoofdstad van de wereld&quot; in een recessie. Daling van grondprijzen en de werkloosheid steeg vervolgens de criminaliteit in de binnenstad tot chronische niveaus.&lt;br/&gt;Je hebt 10 jaar om de criminaliteit en het herstel van de industriële basis van de stad.</string>
+
+    <string id="notice_56_title">BOSTON, MA.  2010</string>
+
+    <string id="notice_56_description">Een belangrijke kernsmelting staat te gebeuren op een van de nieuwe binnenstad van nucleaire reactoren. Het gebied in de nabijheid van de reactor zal zijn ernstig verontreinigd door straling, waardoor je voor de herstructurering van de stad eromheen.&lt;br/&gt;Je hebt 5 jaar om de situatie onder controle.</string>
+
+    <string id="notice_57_title">RIO DE JANEIRO, BRAZILIË  2047</string>
+
+    <string id="notice_57_description">In het midden van de 21e eeuw, het broeikaseffect gerezen globale temperaturen 6 graden F. Polaire ijskappen gesmolten en getogen zeespiegel wereldwijd. Kustgebieden werden verwoest door overstromingen en erosie.&lt;br/&gt;Je hebt 10 jaar om deze moeras terug in een stad.</string>
+
+
+    <!-- overlays.xml -->
+
+    <string id="overlay_all_title">Alle Zones</string>
+
+    <string id="overlay_residential_title">Residentiële Zones</string>
+
+    <string id="overlay_commercial_title">Commerciële Zones</string>
+
+    <string id="overlay_industrial_title">Commerciële Zones</string>
+
+    <string id="overlay_powergrid_title">Vermogen Connectiviteit</string>
+
+    <string id="overlay_transportation_title">Transportnetwerk</string>
+
+    <string id="overlay_populationdensity_title">Bevolkingsdichtheid</string>
+
+    <string id="overlay_rateofgrowth_title">Groeipercentage</string>
+
+    <string id="overlay_trafficdensity_title">Verkeersdichtheid</string>
+
+    <string id="overlay_pollutiondensity_title">Verontreiniging Dichtheid</string>
+
+    <string id="overlay_crimerate_title">Criminaliteit</string>
+
+    <string id="overlay_landvalue_title">Terrein Waarde</string>
+
+    <string id="overlay_firecoverage_title">Brandweerkazerne Dekking</string>
+
+    <string id="overlay_policecoverage_title">Politebureau Dekking</string>
+
+
+    <!-- scenarios.xml -->
+
+    <string id="scenario_1_title">Dullsville</string>
+
+    <string id="scenario_1_tagline">Boredome</string>
+
+    <string id="scenario_2_title">San Francisco</string>
+
+    <string id="scenario_2_tagline">Aardbeving</string>
+
+    <string id="scenario_3_title">Hamburg</string>
+
+    <string id="scenario_3_tagline">Bombardementen</string>
+
+    <string id="scenario_4_title">Bern</string>
+
+    <string id="scenario_4_tagline">Verkeer</string>
+
+    <string id="scenario_5_title">Tokio</string>
+
+    <string id="scenario_5_tagline">Rotbeest Attack</string>
+
+    <string id="scenario_6_title">Detroit</string>
+
+    <string id="scenario_6_tagline">Criminaliteit</string>
+
+    <string id="scenario_7_title">Boston</string>
+
+    <string id="scenario_7_tagline">Nucleaire Kernsmelting</string>
+
+    <string id="scenario_8_title">Rio de Janeiro</string>
+
+    <string id="scenario_8_tagline">Kustgebieden Inunderen</string>
+
+
+    <!-- micropolisturbogearsengine.py -->
+
+    <string id="You are logged in.*">U bent ingelogd. Welkom terug te Micropolis Online!</string>
+
+    <string id="Incorrect user name or password.">Onjuiste gebruikersnaam of wachtwoord.</string>
+
+    <string id="You are already logged out,*">U heeft zich al aangemeld, en u kunt inloggen of een account aan te maken.</string>
+
+    <string id="You are logged out.*">U bent afgemeld. Kom terug!</string>
+
+    <string id="Please enter a user name.">Geef een gebruikersnaam.</string>
+
+    <string id="The user name contains invalid characters.*">De gebruikersnaam bevat ongeldige tekens. Gebruik alleen letters, cijfers, onderstrepingstekens of streepjes.</string>
+
+    <string id="Please enter a password.">Geef een wachtwoord.</string>
+
+    <string id="A user of that name already exists.*">Een gebruiker van die naam al bestaat.</string>
+
+    <string id="Please repeat the same password in the next field.">Herhaal hetzelfde wachtwoord in het volgende veld.</string>
+
+    <string id="An account with that email address already exists.">Een rekening met dat email adres reeds bestaat.</string>
+
+    <string id="A new account has been created*">Een nieuwe account is gemaakt voor u, en u bent ingelogd Welkom op Micropolis Online!</string>
+
+    <string id="Incorrect old password.">Onjuiste oude wachtwoord.</string>
+
+    <string id="The new passwords do not match.">De nieuwe wachtwoorden komen niet overeen.</string>
+
+    <string id="You must enter your new password twice.">U moet uw nieuwe wachtwoord twee keer.</string>
+
+    <string id="Your password has been changed.">Uw wachtwoord is gewijzigd.</string>
+
+
+</strings>

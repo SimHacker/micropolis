@@ -73,8 +73,14 @@
 
 
         <handler name="onactive"><![CDATA[
-            //Debug.write("history onactive", this.active);
+            //Debug.write("history onactive", this.active, "inited", this.inited);
+	    if (!this.inited) {
+	        return;
+	    }
             this.updateInterests();
+	    if (this.active) {
+	        this.redrawSoon();
+	    }
           ]]>
         </handler>
 
@@ -82,30 +88,37 @@
         <handler name="onvisible"><![CDATA[
             //Debug.write("historyview onvisible", this.visible);
             this.updateInterests();
+	    if (this.visible) {
+	        this.redrawSoon();
+	    }
           ]]>
         </handler>
 
 
 	<handler name="onwidth" args="width"><![CDATA[
-	    if (this.inited) {
-    	        this.redrawSoon();
+	    if (!this.inited) {
+	        return;
 	    }
+    	    this.redrawSoon();
 	  ]]>
 	</handler>
 
 
 	<handler name="onheight" args="height"><![CDATA[
 	    if (this.inited) {
-	        this.redrawSoon();
+	        return;
 	    }
+	    this.redrawSoon();
 	  ]]>
 	</handler>
 
 
 	<handler name="onhistory" args="history"><![CDATA[
-	    if (this.inited) {
-	        this.redrawSoon();
+	    //Debug.write("historyview onhistory", this, this.history, this.inited);
+	    if (!this.inited) {
+	        return;
 	    }
+	    this.redrawSoon();
 	  ]]>
 	</handler>
 
@@ -138,6 +151,7 @@
 
 
 	<method name="redrawSoon"><![CDATA[
+	    //Debug.write("historyview redrawSoon", this.redrawingSoon);
 	    if (this.redrawingSoon) {
 	        return;
 	    }

@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<cities language="nl-NL">
+<cities language="en-US">
     <city
-	id="about"
 	name="about"
+	title="About Micropolis"
     />
     <city
-	id="badnews"
 	name="badnews"
+	title="Bad News Town"
     />
     <city
-	id="bluebird"
 	name="bluebird"
+	title="Bluebird Meltdown"
     />
     <city
-	id="bruce"
 	name="bruce"
+	title="Bruceville"
     />
     <city
-	id="deadwood"
 	name="deadwood"
+	title="Deadwood"
     />
     <city
-	id="finnigan"
 	name="finnigan"
+	title="Finnigan's Isle"
     />
     <city
-	id="freds"
 	name="freds"
+	title="Fred's Town"
     />
     <city
-	id="haight"
 	name="haight"
+	title="Haight Ashbury, San Francisco"
     />
     <city
-	id="happisle"
 	name="happisle"
+	title="Happy Isle"
     />
     <city
-	id="joffburg"
 	name="joffburg"
+	title="Joffburg"
     />
     <city
-	id="kamakura"
 	name="kamakura"
+	title="Kamakura"
     />
     <city
-	id="kobe"
 	name="kobe"
+	title="Kobe"
     />
     <city
-	id="kowloon"
 	name="kowloon"
+	title="Kowloon"
     />
     <city
-	id="kyoto"
 	name="kyoto"
+	title="Kyoto"
     />
     <city
-	id="linecity"
 	name="linecity"
+	title="Liner City"
     />
     <city
-	id="med_isle"
 	name="med_isle"
+	title="Medville Isle"
     />
     <city
-	id="ndulls"
 	name="ndulls"
+	title="Not so Dullsville"
     />
     <city
-	id="neatmap"
 	name="neatmap"
+	title="Neat Map"
     />
     <city
-	id="radial"
 	name="radial"
+	title="Radial City"
     />
     <city
-	id="senri"
 	name="senri"
+	title="Senri"
     />
     <city
-	id="southpac"
 	name="southpac"
+	title="South Pacific"
     />
     <city
-	id="splats"
 	name="splats"
+	title="Splatsville"
     />
     <city
-	id="wetcity"
 	name="wetcity"
+	title="Wet City"
     />
     <city
-	id="yokohama"
 	name="yokohama"
+	title="Yokohama"
     />
 </cities>

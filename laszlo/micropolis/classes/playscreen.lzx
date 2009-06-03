@@ -122,7 +122,9 @@
 		    height="${parent.height + 2}"
 		>
 
-		    <tabpane id="gPlayTabNotices"
+		    <nicetabpane id="gPlayTabNotices"
+		        bar="${classroot.hsep1}"
+			savedHeight="200"
 			text="${gApp._('Notices')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -133,9 +135,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabJournal"
+		    <nicetabpane id="gPlayTabJournal"
+		        bar="${classroot.hsep1}"
+			savedHeight="200"
 			text="${gApp._('Journal')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -146,9 +150,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabEvaluation"
+		    <nicetabpane id="gPlayTabEvaluation"
+		        bar="${classroot.hsep1}"
+			savedHeight="180"
 			text="${gApp._('Evaluation')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -159,9 +165,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabHistory"
+		    <nicetabpane id="gPlayTabHistory"
+		        bar="${classroot.hsep1}"
+			savedHeight="200"
 			text="${gApp._('History')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -172,9 +180,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabBudget"
+		    <nicetabpane id="gPlayTabBudget"
+		        bar="${classroot.hsep1}"
+			savedHeight="160"
 			text="${gApp._('Budget')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -185,9 +195,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabOverlays"
+		    <nicetabpane id="gPlayTabOverlays"
+		        bar="${classroot.hsep1}"
+			savedHeight="180"
 			text="${gApp._('Overlays')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -198,9 +210,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabDisasters"
+		    <nicetabpane id="gPlayTabDisasters"
+		        bar="${classroot.hsep1}"
+			savedHeight="100"
 			text="${gApp._('Disasters')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -211,9 +225,11 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
 
-		    <tabpane id="gPlayTabControl"
+		    <nicetabpane id="gPlayTabControl"
+		        bar="${classroot.hsep1}"
+			savedHeight="180"
 			text="${gApp._('Control')}"
 			width="${parent.width}"
 			height="${parent.height}"
@@ -224,7 +240,29 @@
 			    visible="${this.width &amp;&amp; this.height}"
 			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 			/>
-		    </tabpane>
+		    </nicetabpane>
+
+		    <nicetabpane id="gPlayTabUser"
+		        bar="${classroot.hsep1}"
+			text="${gApp.loggedIn ? (gApp._('User:') + ' ' + gApp.userName) : gApp._('Log In')}"
+			width="${parent.width}"
+			height="${parent.height}"
+			saveHeight="false"
+		    >
+
+		        <method name="initialHeight"><![CDATA[
+			    return gPlayUserView.v.height + 45;
+			  ]]>
+			</method>
+
+			<userview id="gPlayUserView"
+			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
+			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
+			    visible="${this.width &amp;&amp; this.height}"
+			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+			/>
+
+		    </nicetabpane>
 
 		</tabs>
 

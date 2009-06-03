@@ -80,7 +80,7 @@ public:
 };
 
 
-/** Store a 'UIDidTool' message. */
+/** Store a 'didTool' message. */
 class FrontendMessageDidTool : public FrontendMessage {
 
 public:
@@ -97,7 +97,7 @@ public:
 };
 
 
-/** Store a 'UIMakeSound' message. */
+/** Store a 'makeSound' message. */
 class FrontendMessageMakeSound : public FrontendMessage {
 
 public:

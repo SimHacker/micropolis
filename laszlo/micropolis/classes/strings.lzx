@@ -60,14 +60,7 @@
 
 	<method name="loadLanguage" args="language"><![CDATA[
 	    this.setAttribute("language", language);
-
-	    canvas.ds_cities.setSrc('/static/data/cities_' + language + '.xml');
-	    canvas.ds_disasters.setSrc('/static/data/disasters_' + language + '.xml');
-	    canvas.ds_notices.setSrc('/static/data/notices_' + language + '.xml');
-	    canvas.ds_overlays.setSrc('/static/data/overlays_' + language + '.xml');
-	    canvas.ds_scenarios.setSrc('/static/data/scenarios_' + language + '.xml');
 	    canvas.ds_strings.setSrc('/static/data/strings_' + language + '.xml');
-
 	  ]]>
 	</method>
 
@@ -81,6 +74,7 @@
 	    }
 
 	    if (id in stringsDict) {
+	        //Debug.write("getString", id, this.stringsDict[id]);
 	        return this.stringsDict[id];
 	    } else {
 	        Debug.write("getString unknown id:", id);

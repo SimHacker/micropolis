@@ -883,9 +883,9 @@ void Micropolis::doShipSprite(SimSprite *sprite)
             int shipY = sprite->y >>4;
 
             if (scenario == SC_SAN_FRANCISCO && getRandom(10) < 5) {
-                makeSound("city", "FogHorn-Low", shipX, shipY);
+                makeSound("city", "FogHornLow", shipX, shipY);
             } else {
-                makeSound("city", "HonkHonk-Low", shipX, shipY);
+                makeSound("city", "HonkHonkLow", shipX, shipY);
             }
 
         }
@@ -1308,7 +1308,7 @@ void Micropolis::doExplosionSprite(SimSprite *sprite)
             // Convert sprite coordinates to tile coordinates.
             int explosionX = sprite->x >>4;
             int explosionY = sprite->y >>4;
-            makeSound("city", "Explosion-High", explosionX, explosionY); /* explosion */
+            makeSound("city", "ExplosionHigh", explosionX, explosionY); /* explosion */
             x = (sprite->x >>4) + 3;
             y = (sprite->y >>4);
             sendMessage(MESSAGE_EXPLOSION_REPORTED, x, y);
@@ -1684,7 +1684,7 @@ void Micropolis::explodeSprite(SimSprite *sprite)
     }
 
     // Convert sprite coordinates to tile coordinates.
-    makeSound("city", "Explosion-High", x, y); /* explosion */
+    makeSound("city", "ExplosionHigh", x, y); /* explosion */
 
     return;
 }

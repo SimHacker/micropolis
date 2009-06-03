@@ -445,7 +445,7 @@ void Micropolis::simTick()
 
 void Micropolis::simRobots()
 {
-    callback("UISimRobots", "");
+    callback("simRobots", "");
 }
 
 

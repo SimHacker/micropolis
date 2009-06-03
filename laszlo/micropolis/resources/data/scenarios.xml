@@ -3,57 +3,73 @@
     <scenario
 	id="1"
 	name="Dullsville"
+	title="scenario_1_title"
+	tagline="scenario_1_tagline"
+        icon="scenario_1_rsrc"
 	year="1900"
-	tagline="Boredom"
         notice="50"
     />
     <scenario
 	id="2"
 	name="San Francsico"
+	title="scenario_2_title"
+	tagline="scenario_2_tagline"
+        icon="scenario_2_rsrc"
 	year="1906"
-	tagline="Earthquake"
         notice="51"
     />
     <scenario
 	id="3"
 	name="Hamburg"
+	title="scenario_3_title"
+	tagline="scenario_3_tagline"
+        icon="scenario_3_rsrc"
 	year="1944"
-	tagline="Bombing"
         notice="52"
     />
     <scenario
 	id="4"
 	name="Bern"
+	title="scenario_4_title"
+	tagline="scenario_4_tagline"
+        icon="scenario_4_rsrc"
 	year="1965"
-	tagline="Traffic"
         notice="53"
     />
     <scenario
 	id="5"
 	name="Tokyo"
+	title="scenario_5_title"
+	tagline="scenario_5_tagline"
+        icon="scenario_5_rsrc"
 	year="1957"
-	tagline="Monster Attack"
         notice="54"
     />
     <scenario
 	id="6"
 	name="Detroit"
+	title="scenario_6_title"
+	tagline="scenario_6_tagline"
+        icon="scenario_6_rsrc"
 	year="1972"
-	tagline="Crime"
         notice="55"
     />
     <scenario
 	id="7"
 	name="Boston"
+	title="scenario_7_title"
+	tagline="scenario_7_tagline"
+        icon="scenario_7_rsrc"
 	year="2010"
-	tagline="Nuclear Meltdown"
         notice="56"
     />
     <scenario
 	id="8"
 	name="Rio de Janeiro"
+	title="scenario_8_title"
+	tagline="scenario_8_tagline"
+        icon="scenario_8_rsrc"
 	year="2047"
-	tagline="Coastal Flooding"
         notice="57"
     />
 </scenarios>
