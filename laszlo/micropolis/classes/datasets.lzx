@@ -1,0 +1,33 @@
+<library>
+
+
+    <!-- Datasets -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <!-- Built-in datasets. -->
+
+    <dataset name="ds_cities" id="ds_cities"
+        src="../resources/data/cities.xml"
+    />
+
+    <dataset name="ds_disasters" id="ds_disasters"
+        src="../resources/data/disasters.xml"
+    />
+
+    <dataset name="ds_notices" id="ds_notices"
+        src="../resources/data/notices.xml"
+    />
+
+    <dataset name="ds_overlays" id="ds_overlays"
+        src="../resources/data/overlays.xml"
+    />
+
+    <dataset name="ds_scenarios" id="ds_scenarios"
+        src="../resources/data/scenarios.xml"
+    />
+
+
+</library>
