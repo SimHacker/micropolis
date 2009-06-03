@@ -642,7 +642,7 @@ enum MapTileCharacters {
     RADAR6         = 838,
     RADAR7         = 839,
     FOUNTAIN       = 840,
-    // tile 841 -- 843 ?
+    // tile 841 -- 843: fountain animation.
     INDBASE2       = 844,
     TELEBASE       = 844,
     // tile 845 -- 850 ?

@@ -8,7 +8,8 @@
 
 
     <include href="resources_tiles.lzx"/>
-    <include href="resources_icons.lzx"/>
+    <include href="resources_images.lzx"/>
+    <include href="resources_sounds.lzx"/>
 
 
 </library>

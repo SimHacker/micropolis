@@ -202,21 +202,21 @@ void Micropolis::freePtr(void *data)
 /** @bug Function is never called. */
 void Micropolis::doPlayNewCity()
 {
-    callback("UIPlayNewCity", "");
+    callback("playNewCity", "");
 }
 
 
 /** @bug Function is never called. */
 void Micropolis::doReallyStartGame()
 {
-    callback("UIReallyStartGame", "");
+    callback("reallyStartGame", "");
 }
 
 
 /** @bug Function is never called. */
 void Micropolis::doStartLoad()
 {
-    callback("UIStartLoad", "");
+    callback("startLoad", "");
 }
 
 
@@ -228,14 +228,14 @@ void Micropolis::doStartLoad()
  */
 void Micropolis::doStartScenario(int scenario)
 {
-    callback( "UIStartScenario", "d", (int)scenario);
+    callback( "startScenario", "d", (int)scenario);
 }
 
 
 /** Tell the front-end that fire bombs are being dropped. */
 void Micropolis::dropFireBombs()
 {
-    callback("UIDropFireBombs", "");
+    callback("dropFireBombs", "");
 }
 
 
@@ -300,9 +300,9 @@ void Micropolis::callback(const char *name, const char *params, ...)
  */
 void Micropolis::doEarthquake(int strength)
 {
-    makeSound("city", "Explosion-Low"); // Make the sound all over.
+    makeSound("city", "ExplosionLow"); // Make the sound all over.
 
-    callback("UIStartEarthquake", "d", strength);
+    callback("startEarthquake", "d", strength);
 }
 
 
@@ -310,7 +310,7 @@ void Micropolis::doEarthquake(int strength)
 void Micropolis::invalidateMaps()
 {
     mapSerial++;
-    callback("UIUpdate", "s", "map"); // new
+    callback("update", "s", "map"); // new
 }
 
 
@@ -327,7 +327,9 @@ void Micropolis::invalidateMaps()
 void Micropolis::makeSound(const char *channel, const char *sound,
                            int x, int y)
 {
-    callback("UIMakeSound", "ssdd", channel, sound, x, y);
+    if (enableSound) {
+        callback("makeSound", "ssdd", channel, sound, x, y);
+    }
 }
 
 

@@ -5,7 +5,10 @@
     proxied="false"
 >
 
-    <include href="../classes/datasets_en-US.lzx"/>
+    <dataset name="ds_strings" id="ds_strings"
+        src="../resources/data/strings_en-US.xml"
+    />
+
     <include href="../classes/main.lzx"/>
 
 </canvas>

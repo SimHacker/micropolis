@@ -1564,114 +1564,114 @@ You have 10 years to turn this swamp back into a city again.""",
         return "<MicropolisEngine>"
 
 
-    def handle_UIAutoGoto(self, x, y):
-        print "handle_UIAutoGoto(self, x, y)", (self, x, y)
+    def handle_autoGoto(self, x, y):
+        print "handle_autoGoto(self, x, y)", (self, x, y)
 
 
-    def handle_UIDidGenerateNewCity(self):
-        print "handle_UIDidGenerateNewCity(self)", (self,)
+    def handle_didGenerateNewCity(self):
+        print "handle_didGenerateNewCity(self)", (self,)
 
 
-    def handle_UIDidLoadCity(self):
-        print "handle_UIDidLoadCity(self)", (self,)
+    def handle_didLoadCity(self):
+        print "handle_didLoadCity(self)", (self,)
 
 
-    def handle_UIDidLoadScenario(self):
-        print "handle_UIDidLoadScenario(self)", (self,)
+    def handle_didLoadScenario(self):
+        print "handle_didLoadScenario(self)", (self,)
 
 
-    def handle_UIDidSaveCity(self):
-        print "handle_UIDidSaveCity(self)", (self,)
+    def handle_didSaveCity(self):
+        print "handle_didSaveCity(self)", (self,)
 
 
-    def handle_UIDidTool(self, name, x, y):
-        print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
+    def handle_didTool(self, name, x, y):
+        print "handle_didTool(self, name, x, y)", (self, name, x, y)
 
 
-    def handle_UIDidntLoadCity(self, msg):
-        print "handle_UIDidntLoadCity(self, msg)", (self, msg)
+    def handle_didntLoadCity(self, msg):
+        print "handle_didntLoadCity(self, msg)", (self, msg)
 
 
-    def handle_UIDidntSaveCity(self, msg):
-        print "handle_UIDidntSaveCity(self, msg)", (self, msg)
+    def handle_didntSaveCity(self, msg):
+        print "handle_didntSaveCity(self, msg)", (self, msg)
 
 
-    def handle_UIDropFireBombs(self):
-        print "handle_DropFireBombs(self)", (self,)
+    def handle_dropFireBombs(self):
+        print "handle_dropFireBombs(self)", (self,)
         self.fireBomb()
 
 
-    def handle_UILoseGame(self):
-        print "handle_UILoseGame(self)", (self,)
+    def handle_loseGame(self):
+        print "handle_loseGame(self)", (self,)
 
 
-    def handle_UIMakeSound(self, channel, sound, x, y):
-        #print "handle_UIMakeSound(self, channel, sound, x, y)", (self, channel, sound, x, y)
+    def handle_makeSound(self, channel, sound, x, y):
+        #print "handle_makeSound(self, channel, sound, x, y)", (self, channel, sound, x, y)
         pass # print "SOUND", channel, sound, x, y
 
 
-    def handle_UINewGame(self):
-        print "handle_UINewGame(self)", (self,)
+    def handle_newGame(self):
+        print "handle_newGame(self)", (self,)
 
 
-    def handle_UIPlayNewCity(self):
-        print "handle_UIPlayNewCity(self)", (self,)
+    def handle_playNewCity(self):
+        print "handle_playNewCity(self)", (self,)
 
 
-    def handle_UIReallyStartGame(self):
-        print "handle_UIReallyStartGame(self)", (self,)
+    def handle_reallyStartGame(self):
+        print "handle_reallyStartGame(self)", (self,)
 
 
-    def handle_UISaveCityAs(self):
-        print "handle_UISaveCityAs(self)", (self,)
+    def handle_saveCityAs(self):
+        print "handle_saveCityAs(self)", (self,)
 
 
-    def handle_UIShowBudgetAndWait(self):
-        print "handle_UIShowBudgetAndWait(self)", (self,)
+    def handle_showBudgetAndWait(self):
+        print "handle_showBudgetAndWait(self)", (self,)
         # @todo Show budget window. Actually pause the engine here. Maybe start a timeout to un-pause it.
 
 
-    def handle_UIShowPicture(self, id):
-        #print "handle_UIShowPicture(self, id)", (self, id)
+    def handle_showPicture(self, id):
+        #print "handle_showPicture(self, id)", (self, id)
         print "SHOWPICTURE", id
 
 
-    def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
-        print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
+    def handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
+        print "handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
 
 
-    def handle_UIStartEarthquake(self, magnitude):
-        print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
+    def handle_startEarthquake(self, magnitude):
+        print "handle_startEarthquake(self, magnitude)", (self, magnitude,)
 
 
-    def handle_UIStartLoad(self):
-        print "handle_UIStartLoad(self)", (self,)
+    def handle_startLoad(self):
+        print "handle_startLoad(self)", (self,)
 
 
-    def handle_UIStartScenario(self, scenario):
-        print "handle_UIStartScenario(self, scenario)", (self, scenario)
+    def handle_startScenario(self, scenario):
+        print "handle_startScenario(self, scenario)", (self, scenario)
 
 
-    def handle_UIWinGame(self):
-        print "handle_UIWinGame(self)", (self,)
+    def handle_winGame(self):
+        print "handle_winGame(self)", (self,)
 
 
-    def handle_UIUpdate(self, name, *args):
-        #print "handle_UIUpdate(self, name, *args)", (self, name, args)
+    def handle_update(self, name, *args):
+        #print "handle_update(self, name, *args)", (self, name, args)
 
         self.sendUpdate(name, *args)
 
 
-    def handle_UISimRobots(self):
-        #print "handle_UISimRobots(self)", (self,)
+    def handle_simRobots(self):
+        #print "handle_simRobots(self)", (self,)
         self.simRobots()
 
 
-    def handle_UIInvalidateEditors(self):
+    def handle_invalidateEditors(self):
         pass
 
 
-    def handle_UIInvalidateMaps(self):
+    def handle_invalidateMaps(self):
         pass
 
 

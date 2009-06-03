@@ -52,7 +52,7 @@
 
 	<myradiogroup name="rg"
 	    width="${parent.width - 5}"
-	    height="${parent.height - 5}"
+	    height="${parent.height}"
 	    clip="true"
 	    value="$once{gApp.overlay}"
 	>
@@ -76,7 +76,7 @@
 		width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
 		datapath="ds_overlays:/overlays/overlay"
-		text="${this.overlayTitle}"
+		text="${gApp._(this.overlayTitle)}"
 		value="${this.overlayName}"
 	    >
 

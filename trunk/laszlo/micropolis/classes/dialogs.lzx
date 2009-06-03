@@ -11,5 +11,9 @@
         initstage="late"
     />
 
+    <changepassworddialog id="gChangePasswordDialog"
+        initstage="late"
+    />
+
 
 </library>

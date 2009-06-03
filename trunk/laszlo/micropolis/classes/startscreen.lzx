@@ -13,6 +13,7 @@
 
 
 	<attribute name="active" value="true"/>
+	<attribute name="gap" value="5"/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -21,12 +22,9 @@
 	</handler>
 
 
-	<simplelayout axis="x"
-	    spacing="5"
-	/>
-
-
 	<view name="v1"
+	    x="0"
+	    y="0"
 	    height="${parent.height}"
 	    width="${this.previewMapView.width + 10}"
 	>
@@ -77,11 +75,13 @@
 	</view>
 
 	<tabs id="gStartTabs"
+	    x="${parent.v1.x + parent.v1.width + parent.gap}"
+	    y="0"
 	    width="${parent.width - this.x}"
 	    height="${parent.height + 2}"
 	>
 
-	    <tabpane
+ 	    <tabpane
 		text="${gApp._('Scenarios')}"
 		width="${parent.width}"
 		height="${parent.height}"
@@ -118,14 +118,15 @@
 	    </tabpane>
 
 	    <tabpane
-		text="${gApp._('Login')}"
+		text="${gApp.loggedIn ? (gApp._('User:') + gApp.userName) : gApp._('Log In')}"
 		width="${parent.width}"
 		height="${parent.height}"
 	    >
-		<loginview id="gLoginView"
-		    width="${parent.width - (immediateparent.x * 2)}"
-		    height="${parent.height - (immediateparent.y * 2) - 30}"
-		    active="${classroot.active &amp;&amp; parent.visible}"
+		<userview id="gStartUserView"
+		    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
+		    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
+		    visible="${this.width &amp;&amp; this.height}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 		/>
 	    </tabpane>
 

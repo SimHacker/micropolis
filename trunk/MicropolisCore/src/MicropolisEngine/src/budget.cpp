@@ -322,7 +322,7 @@ void Micropolis::updateBudget()
     ///       them and pushing them out.
 
     if (mustDrawBudget) {
-        callback("UIUpdate", "s", "budget");
+        callback("update", "s", "budget");
         mustDrawBudget = 0;
     }
 }
@@ -330,14 +330,14 @@ void Micropolis::updateBudget()
 
 void Micropolis::showBudgetWindowAndStartWaiting()
 {
-    callback("UIShowBudgetAndWait", "");
+    callback("showBudgetAndWait", "");
 }
 
 
 void Micropolis::setCityTax(short tax)
 {
     cityTax = tax;
-    callback("UIUpdate", "s", "taxRate");
+    callback("update", "s", "taxRate");
 }
 
 

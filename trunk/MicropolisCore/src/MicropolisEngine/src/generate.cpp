@@ -108,7 +108,7 @@ void Micropolis::generateSomeCity(int seed)
 
     simUpdate();
 
-    callback("UIDidGenerateNewCity", "");
+    callback("didGenerateNewCity", "");
 }
 
 

@@ -121,7 +121,7 @@ void Micropolis::changeCensus()
 void Micropolis::graphDoer()
 {
     if (censusChanged) {
-        callback("UIUpdate", "s", "history");
+        callback("update", "s", "history");
         censusChanged = false;
     }
 }

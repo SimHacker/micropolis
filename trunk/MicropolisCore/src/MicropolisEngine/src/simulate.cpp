@@ -1568,7 +1568,7 @@ void Micropolis::doSpecialZone(const Position &pos, bool powerOn)
             // If powered, display a rotating radar
             if (powerOn) {
                 if ((map[pos.posX + 1][pos.posY - 1] & LOMASK) == RADAR) {
-                    map[pos.posX + 1][pos.posY - 1] = RADAR + ANIMBIT + CONDBIT + BURNBIT;
+                    map[pos.posX + 1][pos.posY - 1] = RADAR0 + ANIMBIT + CONDBIT + BURNBIT;
                 }
             } else {
                 map[pos.posX + 1][pos.posY - 1] = RADAR + CONDBIT + BURNBIT;

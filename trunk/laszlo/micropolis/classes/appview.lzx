@@ -46,13 +46,22 @@
         <attribute name="connecting" value="false"/>
         <attribute name="connectionFailed" value="false"/>
         <attribute name="sessionID" value="null"/>
-        <attribute name="userName" value="null"/>
-        <attribute name="password" value="null"/>
+        <attribute name="userName" type="string" value=""/>
+        <attribute name="fullName" type="string" value=""/>
+        <attribute name="emailAddress" type="string" value=""/>
+        <attribute name="passwordOld" type="string" value=""/>
+        <attribute name="password1" type="string" value=""/>
+        <attribute name="password2" type="string" value=""/>
         <attribute name="loggedIn" value="false"/>
+        <attribute name="loginFeedback" type="string" value=""/>
+        <attribute name="loggingIn" value="false"/>
+        <attribute name="loggingOut" value="false"/>
+        <attribute name="makingNewAccount" value="false"/>
+        <attribute name="user" value="null"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
         <attribute name="paused" value="true"/>
-        <attribute name="virtualSpeed" type="number" value="3"/>
+        <attribute name="virtualSpeed" type="number" value="2"/>
         <attribute name="funds" type="number" value="0"/>
         <attribute name="fundsLabel" type="string" value="$0"/>
         <attribute name="year" type="number" value="1900"/>
@@ -62,6 +71,7 @@
         <attribute name="options" value="null"/>
         <attribute name="gameLevel" value="0"/>
         <attribute name="message" value="null"/>
+        <attribute name="budget" value="null"/>
         <attribute name="evaluation" value="null"/>
         <attribute name="taxRate" type="number" value="7"/>
         <attribute name="roadPercent" type="number" value="100"/>
@@ -79,6 +89,7 @@
 	<attribute name="objectIDs" value="$once{{}}"/>
         <attribute name="interests" value="$once{{}}"/>
         <attribute name="overlay" type="string" value="all"/>
+	<attribute name="chatChannel" type="string" value="all"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -145,7 +156,7 @@
                         gApp._('Micropolis: Choose a City'));
                     this.setAttribute(
                         "description",
-                        gApp._('Welcome to Micropolis!'));
+                        gApp._('Welcome to Micropolis!*'));
                     break;
                 }
                 case 'play': {
@@ -236,6 +247,26 @@
         </handler>
 
 
+	<handler name="onfullName"><![CDATA[
+	    if (this.loggedIn) {
+		this.sendMessage({
+		    message: 'setUserFullName',
+		    fullName: this.fullName
+		});
+	    }
+	  ]]>
+	</handler>
+
+	<handler name="onemailAddress"><![CDATA[
+	    if (this.loggedIn) {
+		this.sendMessage({
+		    message: 'setUserEmailAddress',
+		    emailAddress: this.emailAddress
+		});
+	    }
+	  ]]>
+	</handler>
+
         <method name="handleKey" args="arg"><![CDATA[
             Debug.write("handleKey", arg);
           ]]>
@@ -315,7 +346,7 @@
                 }
 
                 case 'history': {
-		    //Debug.write("UIUpdate history obsolete!");
+		    //Debug.write("update history obsolete!");
                     break;
                 }
 
@@ -336,7 +367,7 @@
                     var virtualSpeed = parseInt(args['virtualSpeed']);
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-                    //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
+                    Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
                     if (this.virtualSpeed != virtualSpeed) {
                         this.setAttribute("virtualSpeed", virtualSpeed);
                     }
@@ -352,7 +383,7 @@
                 case 'delay': {
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-                    //Debug.write("DELAY", pollDelay, animateDelay);
+                    Debug.write("DELAY", pollDelay, animateDelay);
                     if (this.pollDelay != pollDelay) {
                         this.setAttribute("pollDelay", pollDelay);
                     }
@@ -382,36 +413,8 @@
                     break;
                 }
 
-                case 'taxRate': {
-                    var taxRate = parseInt(args['taxRate']);
-                    if (taxRate != this.taxRate) {
-                        this.setAttribute('taxRate', taxRate);
-                    }
-                    break;
-                }
-
                 case 'budget': {
-                    var names = [
-                        "taxRate",
-                        "roadPercent",
-                        "roadFund",
-                        "roadValue",
-                        "firePercent",
-                        "fireFund",
-                        "fireValue",
-                        "policePercent",
-                        "policeFund",
-                        "policeValue"
-                    ];
-                    var n = names.length;
-                    var i;
-                    for (i = 0; i < n; i++) {
-                        var name = names[i];
-                        var val = parseInt(args[name]);
-                        if (this[name] != val) {
-                            this.setAttribute(name, val);
-                        }
-                    }
+		    this.setAttribute("budget", args);
                     break;
                 }
 
@@ -453,7 +456,7 @@
 		    //Debug.write("UPDATE HISTORYVIEW", args);
                     var id = args['id'];
 		    var hv = this.objectIDs[id];
-		    //Debug.write("hv", hv);
+		    //Debug.write("hv", hv, "id", id, typeof(id));
 
 		    hv.setAttribute("history", args);
 
@@ -462,7 +465,7 @@
 
                 default:
                 {
-                    Debug.write("Received unknown UIUpdate message from server:", args['message'], args);
+                    Debug.write("Received unknown update message from server:", args['message'], args);
                     break;
                 }
             }
@@ -527,11 +530,15 @@
 
 
         <method name="endSession"><![CDATA[
+	    this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
             this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", null);
+	    this.setAttribute("loggingIn", false);
+	    this.setAttribute("loggingOut", false);
+	    this.setAttribute("makingNewAccount", false);
             this.pollStop();
             this.animateStop();
           ]]>
@@ -539,6 +546,7 @@
 
 
         <method name="failSession"><![CDATA[
+	    this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
@@ -889,7 +897,7 @@
 
 
         <method name="updateMap"><![CDATA[
-            this.handle_UIUpdate({
+            this.handle_update({
                 variable:'map'
             });
           ]]>
@@ -1134,6 +1142,77 @@
         </method>
 
 
+        <method name="login"><![CDATA[
+            Debug.write("login");
+
+	    this.setAttribute("loggingIn", true);
+	    this.sendMessage({
+	        message: 'login',
+		userName: this.userName,
+		password: this.password1
+	    });
+
+          ]]>
+        </method>
+
+
+        <method name="logout"><![CDATA[
+            Debug.write("logout");
+	    this.setAttribute("loggingOut", true);
+	    this.sendMessage({
+	        message: 'logout'
+	    });
+
+          ]]>
+        </method>
+
+
+        <method name="newAccount"><![CDATA[
+	    if (this.makingNewAccount) {
+	        Debug.write("appview newAccount: Already making new account.");
+	        return;
+	    }
+
+	    this.setAttribute("makingNewAccount", true);
+
+	    this.sendMessage({
+	        message: 'newAccount',
+		userName: this.userName,
+		password1: this.password1,
+		password2: this.password2,
+		fullName: this.fullName,
+		emailAddress: this.emailAddress
+	    });
+
+            Debug.write("newAccount");
+          ]]>
+        </method>
+
+
+	<method name="changePassword"><![CDATA[
+	    Debug.write("gApp.changePassword");
+	    if (this.loggedIn) {
+	        gChangePasswordDialog.open();
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="tryChangePassword" args="passwordOld, password1, password2"><![CDATA[
+	    Debug.write("gApp.tryChangePassword");
+	    if (this.loggedIn) {
+		this.sendMessage({
+		    message: 'changePassword',
+		    userName: this.userName,
+		    passwordOld: passwordOld,
+		    password1: password1,
+		    password2: password2
+		});
+	    }
+	  ]]>
+	</method>
+
+
         <method name="abandonCity"><![CDATA[
             //Debug.write("abandonCity");
             this.sendMessage({
@@ -1145,9 +1224,14 @@
 
         <method name="saveCity"><![CDATA[
             //Debug.write("saveCity");
-            this.sendMessage({
-                message: 'saveCity'
-            });
+	    if (this.loggedIn) {
+		this.sendMessage({
+		    message: 'saveCity'
+		});
+	    } else {
+	        this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
+	        gPlayTabUser.tab.setSelected(true);
+	    }
           ]]>
         </method>
 
@@ -1168,34 +1252,37 @@
         </method>
 
 
-        <method name="sendChatText" args="chatText"><![CDATA[
+        <method name="sendChatMessage" args="text, channel"><![CDATA[
             this.sendMessage({
-	        message: 'sendChatText',
-		chatText: chatText,
+	        message: 'sendChatMessage',
+		text: text,
+	        channel: channel,
 		language: gStrings.language
-	    })
+	    });
           ]]>
         </method>
 
 
-        <method name="handle_UIChatMessage" args="args"><![CDATA[
+        <method name="handle_chatMessage" args="args"><![CDATA[
+	    Debug.write("handle_chatMessage", args);
 	    var from = args['from'];
+	    var channel = args['channel'];
 	    var text = args['text'];
-	    var message = 
+	    var html = 
 		'<b>' +
 	        this.escapeHTML(from + '> ') +
 		'</b>' +
 		this.escapeHTML(text);
-	    Debug.write("CHATMESSAGE", message);
-	    gJournalView.addMessage(message);
+	    //Debug.write("CHATMESSAGE", html);
+	    gJournalView.addMessage(html);
           ]]>
         </method>
 
 
-        <method name="handle_UIUpdate" args="args"><![CDATA[
+        <method name="handle_update" args="args"><![CDATA[
             var variable = args['variable'];
             var interests = this.interests;
-            //Debug.write("==== UIUpdate", variable, args);
+            //Debug.write("==== update", variable, args);
 
             if (!(variable in interests)) {
                 //Debug.write("uninteresting variable update", variable);
@@ -1214,22 +1301,22 @@
         </method>
 
 
-        <method name="handle_UIDidGenerateNewCity" args="args"><![CDATA[
-            //Debug.write("UIDidGenerateNewCity");
+        <method name="handle_didGenerateNewCity" args="args"><![CDATA[
+            //Debug.write("didGenerateNewCity");
             this.resetCity();
           ]]>
         </method>
 
 
-        <method name="handle_UIDidLoadCity" args="args"><![CDATA[
-            //Debug.write("UIDidLoadCity");
+        <method name="handle_didLoadCity" args="args"><![CDATA[
+            //Debug.write("didLoadCity");
             this.resetCity();
           ]]>
         </method>
 
 
-        <method name="handle_UIDidLoadScenario" args="args"><![CDATA[
-            //Debug.write("UIDidLoadScenario");
+        <method name="handle_didLoadScenario" args="args"><![CDATA[
+            //Debug.write("didLoadScenario");
             this.resetCity();
             var scenario = args['scenario'];
             var number = 49 + scenario;
@@ -1238,40 +1325,107 @@
         </method>
 
 
-        <method name="handle_UIStartEarthquake" args="args"><![CDATA[
+        <method name="handle_startEarthquake" args="args"><![CDATA[
             this.setAttribute("quaking", parseInt(args['magnitude']));
           ]]>
         </method>
 
 
-        <method name="handle_UIStopEarthquake" args="args"><![CDATA[
+        <method name="handle_stopEarthquake" args="args"><![CDATA[
             this.setAttribute("quaking", 0);
           ]]>
         </method>
 
 
-        <method name="handle_UIShowBudgetAndWait" args="args"><![CDATA[
-            //Debug.write("Show budget and wait...");
+        <method name="handle_showBudgetAndWait" args="args"><![CDATA[
+            //Debug.write("Show budget and wait.");
           ]]>
         </method>
 
 
-        <method name="handle_UIMakeSound" args="args"><![CDATA[
+        <method name="handle_makeSound" args="args"><![CDATA[
             var channel = args['channel'];
             var sound = args['sound'];
-            //Debug.write("MAKE SOUND", "channel", channel, "sound", sound);
+	    var soundName = 'sound_' + sound + '_rsrc';
+            Debug.write("MAKE SOUND", "channel", channel, "sound", sound, soundName);
+	    lz.AudioService.LzAudio.playSound(soundName);
           ]]>
         </method>
 
 
-        <method name="handle_UINewGame" args="args"><![CDATA[
-            //Debug.write("UINewGame");
+        <method name="handle_newGame" args="args"><![CDATA[
+            //Debug.write("newGame");
           ]]>
         </method>
 
 
-        <method name="handle_UIDidTool" args="args"><![CDATA[
-            //Debug.write("UIDidTool", args);
+        <method name="handle_didTool" args="args"><![CDATA[
+            //Debug.write("didTool", args);
+          ]]>
+        </method>
+
+
+        <method name="handle_newAccountResponse" args="args"><![CDATA[
+	    //Debug.write("newAccoutResponse", args);
+	    var success = args['success'];
+	    var feedback = args['feedback'];
+	    if (success) {
+	        this.setAttribute("loggedIn", true);
+		this.setAttribute("passwordOld", "");
+		this.setAttribute("password1", "");
+		this.setAttribute("password2", "");
+	    }
+	    this.setAttribute("loginFeedback", gApp._(feedback));
+	    this.setAttribute("makingNewAccount", false);
+          ]]>
+        </method>
+
+
+        <method name="handle_loginResponse" args="args"><![CDATA[
+	    //Debug.write("loginResponse", args);
+	    var success = args['success'];
+	    var feedback = args['feedback'];
+	    if (success) {
+		var fullName = args['fullName'];
+		var emailAddress = args['emailAddress'];
+		this.setAttribute("fullName", fullName);
+		this.setAttribute("emailAddress", emailAddress);
+		this.setAttribute("passwordOld", "");
+		this.setAttribute("password1", "");
+		this.setAttribute("password2", "");
+	        this.setAttribute("loggedIn", true);
+	    }
+	    this.setAttribute("loginFeedback", gApp._(feedback));
+	    this.setAttribute("loggingIn", false);
+          ]]>
+        </method>
+
+
+        <method name="handle_logoutResponse" args="args"><![CDATA[
+	    //Debug.write("logoutResponse", args);
+	    var success = args['success'];
+	    var feedback = args['feedback'];
+	    if (success) {
+		this.setAttribute("userName", "");
+		this.setAttribute("passwordOld", "");
+		this.setAttribute("password1", "");
+		this.setAttribute("password2", "");
+		this.setAttribute("fullName", "");
+		this.setAttribute("emailAddress", "");
+		this.setAttribute("loggedIn", false);
+	    }
+	    this.setAttribute("loginFeedback", gApp._(feedback));
+	    this.setAttribute("loggingOut", false);
+          ]]>
+        </method>
+
+
+        <method name="handle_changePasswordResponse" args="args"><![CDATA[
+	    //Debug.write("changePasswordResponse", args);
+	    var success = args['success'];
+	    var feedback = args['feedback'];
+	    gChangePasswordDialog.close();
+	    this.setAttribute("loginFeedback", gApp._(feedback));
           ]]>
         </method>
 
@@ -1403,7 +1557,7 @@
             y="5"
             width="${parent.width - 10}"
             height="${parent.height - 10}"
-            visible="${classroot.gameMode == 'disconnected'}"
+            visible="${(classroot.gameMode == 'disconnected')}"
             active="${classroot.active &amp;&amp; this.visible}"
         />
 
@@ -1424,7 +1578,6 @@
             visible="${classroot.gameMode == 'play'}"
             active="${classroot.active &amp;&amp; this.visible}"
         />
-
 
     </class>
 

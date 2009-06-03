@@ -9,7 +9,6 @@
 
     <class name="newcitydialog" extends="modaldialog"
         width="600" 
-	height="300"
     >
 
 
@@ -20,6 +19,15 @@
 	    if (this.visible &&
 	        gApp.gameMode != 'play') {
 		this.close();
+	    }
+	  ]]>
+	</handler>
+
+
+	<handler name="onconnected" reference="gApp"><![CDATA[
+	    if (this.visible &&
+	        !gApp.connected) {
+	        this.close();
 	    }
 	  ]]>
 	</handler>
@@ -42,8 +50,7 @@
 
 	<view
 	    x="0" 
-	    y="0"
-	    width="${immediateparent.width}"
+ width="${immediateparent.width}"
 	    height="${immediateparent.height}"
 	    layout="axis:y; spacing:10"
 	>

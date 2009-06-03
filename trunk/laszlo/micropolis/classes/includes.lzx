@@ -11,6 +11,7 @@
 
     <include href="patches.lzx"/>
     <include href="resources.lzx"/>
+    <include href="datasets.lzx"/>
     <include href="strings.lzx"/>
     <include href="remoteserver.lzx"/>
     <include href="global.lzx"/>
@@ -29,6 +30,7 @@
     <include href="demandgauge.lzx"/>
     <include href="datefundsview.lzx"/>
     <include href="statusview.lzx"/>
+    <include href="nicetabpane.lzx"/>
     <include href="toolicon.lzx"/>
     <include href="toolpalette.lzx"/>
     <include href="scenariosview.lzx"/>
@@ -47,13 +49,14 @@
     <include href="overlaysview.lzx"/>
     <include href="disastersview.lzx"/>
     <include href="journalview.lzx"/>
-    <include href="loginview.lzx"/>
     <include href="connectscreen.lzx"/>
     <include href="startscreen.lzx"/>
     <include href="playscreen.lzx"/>
+    <include href="userview.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
     <include href="newcitydialog.lzx"/>
+    <include href="changepassworddialog.lzx"/>
     <include href="dialogs.lzx"/>
 
 

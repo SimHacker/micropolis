@@ -1,0 +1,23 @@
+<library>
+
+
+    <!-- Sound Resources -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <resource name="sound_ExplosionHigh_rsrc" src="../resources/sounds/ExplosionHigh.mp3"/>
+    <resource name="sound_ExplosionLow_rsrc" src="../resources/sounds/ExplosionLow.mp3"/>
+    <resource name="sound_FogHornLow_rsrc" src="../resources/sounds/FogHornLow.mp3"/>
+    <resource name="sound_HeavyTraffic_rsrc" src="../resources/sounds/HeavyTraffic.mp3"/>
+    <resource name="sound_HonkHonkHigh_rsrc" src="../resources/sounds/HonkHonkHigh.mp3"/>
+    <resource name="sound_HonkHonkLow_rsrc" src="../resources/sounds/HonkHonkLow.mp3"/>
+    <resource name="sound_HonkHonkMed_rsrc" src="../resources/sounds/HonkHonkMed.mp3"/>
+    <resource name="sound_Monster_rsrc" src="../resources/sounds/Monster.mp3"/>
+    <resource name="sound_Siren_rsrc" src="../resources/sounds/Siren.mp3"/>
+    <resource name="sound_Sorry_rsrc" src="../resources/sounds/Sorry.mp3"/>
+    <resource name="sound_UhUh_rsrc" src="../resources/sounds/UhUh.mp3"/>
+
+
+</library>

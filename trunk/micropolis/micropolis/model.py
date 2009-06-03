@@ -19,7 +19,7 @@ from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy.orm import relation
 # import some datatypes for table columns from SQLAlchemy
 # (see http://www.sqlalchemy.org/docs/04/types.html for more)
-from sqlalchemy import String, Unicode, Integer, DateTime
+from sqlalchemy import String, Unicode, Integer, DateTime, TEXT, BLOB
 from turbogears import identity
 
 
@@ -51,7 +51,8 @@ users_table = Table('tg_user', metadata,
     Column('email_address', Unicode(255), unique=True),
     Column('display_name', Unicode(255)),
     Column('password', Unicode(40)),
-    Column('created', DateTime, default=datetime.now)
+    Column('created', DateTime, default=datetime.now),
+    Column('activity', DateTime, default=datetime.now)
 )
 
 permissions_table = Table('permission', metadata,
@@ -61,17 +62,32 @@ permissions_table = Table('permission', metadata,
 )
 
 user_group_table = Table('user_group', metadata,
-    Column('user_id', Integer, ForeignKey('tg_user.user_id',
-        onupdate='CASCADE', ondelete='CASCADE'), primary_key=True),
-    Column('group_id', Integer, ForeignKey('tg_group.group_id',
-        onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
+    Column('user_id', Integer, 
+        ForeignKey('tg_user.user_id', onupdate='CASCADE', ondelete='CASCADE'),
+        primary_key=True),
+    Column('group_id', Integer, 
+        ForeignKey('tg_group.group_id', onupdate='CASCADE', ondelete='CASCADE'),
+        primary_key=True)
 )
 
 group_permission_table = Table('group_permission', metadata,
-    Column('group_id', Integer, ForeignKey('tg_group.group_id',
-        onupdate='CASCADE', ondelete='CASCADE'), primary_key=True),
-    Column('permission_id', Integer, ForeignKey('permission.permission_id',
-        onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
+    Column('group_id', Integer, 
+        ForeignKey('tg_group.group_id', onupdate='CASCADE', ondelete='CASCADE'), 
+        primary_key=True),
+    Column('permission_id', Integer, 
+        ForeignKey('permission.permission_id', onupdate='CASCADE', ondelete='CASCADE'),
+        primary_key=True)
+)
+
+city_table = Table('city', metadata,
+    Column('city_id', Integer, primary_key=True),
+    Column('title', Unicode(255), unique=True),
+    Column('description', Unicode(), unique=True),
+    Column('user_id', Integer, ForeignKey('tg_user.user_id')),
+    Column('save_file', BLOB, default=None),
+    Column('metadata', TEXT, default=None),
+    Column('created', DateTime, default=datetime.now),
+    Column('modified', DateTime, default=datetime.now)
 )
 
 
@@ -99,7 +115,26 @@ class Group(object):
     """
     An ultra-simple group definition.
     """
-    pass
+
+    @classmethod
+    def by_name(cls, group_name):
+        return cls.query.filter_by(group_name=group_name).first()
+
+
+class Permission(object):
+    """
+    A relationship that determines what each Group can do
+    """
+
+
+    @classmethod
+    def by_name(cls, name):
+        return cls.query.filter_by(permission_name=name).first()
+
+
+    @classmethod
+    def getAdminPermission(cls):
+        return cls.by_name(u'admin')
 
 
 class User(object):
@@ -114,6 +149,10 @@ class User(object):
         for g in self.groups:
             p |= set(g.permissions)
         return p
+
+    @property
+    def isAdmin(self):
+        return Permission.getAdminPermission() in self.permissions
 
     @classmethod
     def by_email_address(cls, email):
@@ -147,9 +186,21 @@ class User(object):
     password = property(_get_password, _set_password)
 
 
-class Permission(object):
+    def destroy(self):
+
+        for city in self.cities:
+            city.destroy()
+
+        groups = self.groups
+        for group in list(groups):
+            groups.remove(group)
+
+        session.delete(self)
+
+
+class City(object):
     """
-    A relationship that determines what each Group can do
+    A city saved in the database.
     """
     pass
 
@@ -163,6 +214,7 @@ mapper(Visit, visits_table)
 mapper(VisitIdentity, visit_identity_table,
         properties=dict(users=relation(User, backref='visit_identity')))
 
+# TODO: user.cities property
 mapper(User, users_table,
         properties=dict(_password=users_table.c.password))
 

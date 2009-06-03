@@ -14,7 +14,7 @@
 
 	<attribute name="active" value="true"/>
 	<attribute name="gap" value="5"/>
-	<attribute name="sliderWidth" value="160"/>
+	<attribute name="sliderWidth" value="200"/>
 	<attribute name="sliderHeight" value="50"/>
 	<attribute name="buttonWidth" value="90"/>
 	<attribute name="buttonHeight" value="40"/>
@@ -82,7 +82,7 @@
 	    <button name="pauseButton"
 	        width="${classroot.buttonWidth}"
 		height="${parent.speedView.height}"
-		text="${gApp._(gApp.paused ? 'Resume' : 'Pause')}"
+		text="${gApp.paused ? gApp._('Resume') : gApp._('Pause')}"
 		onclick="classroot.togglePaused()"
 	    />
 
@@ -97,11 +97,13 @@
 		    width="${parent.width}"
 		    multiline="true"
 		    text="${
+		        gApp._('Simulator') +
+			': ' +
+			(gApp.paused ? gApp._('Paused.') : gApp._('Running!')) +
+			'\n' +
 			gApp._('Speed') +
 			': ' + 
-			gApp._(gApp.paused ? 'Paused...' : 'Running!') +
-			'\n' +
-			gApp._(classroot.virtualSpeedNames[parent.speedSlider.value])
+			gApp._(classroot.virtualSpeedNames[parent.speedSlider.value || 0])
 		    }"
 		/>
 
@@ -114,7 +116,7 @@
 		    showrange="false"
 		    thumbheight="20"
 		    thumbwidth="20"
-		    value="5"
+		    value="${gApp.virtualSpeed}"
 		    onvalue="classroot.updateVirtualSpeed(this.value)"
 		/>
 
@@ -134,14 +136,12 @@
 	    />
 
 
-<!--
 	    <button name="saveCityButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
 		text="${gApp._('Save City')}"
 		onclick="gApp.saveCity()"
 	    />
--->
 
 	    <button name="newCityButton"
 	        width="${classroot.buttonWidth}"
@@ -183,20 +183,26 @@
 		option="disasters"
 	    />
 
+<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Budget')}"
 		option="autobudget"
 	    />
+-->
 
+<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Bulldoze')}"
 		option="autobulldozeo"
 	    />
+-->
 
+<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Goto')}"
 		option="autogoto"
 	    />
+-->
 
 	    <optionscheckbox
 		text="${gApp._('Sound')}"

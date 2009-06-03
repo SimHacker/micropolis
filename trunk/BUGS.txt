@@ -1,0 +1,36 @@
+========================================================================
+= Bugs in the Micropolis OpenLaszlo web client and server.
+========================================================================
+
+Clear the overlay when going back to the start game screen.
+  When entering start game mode, clear all the game specific settings, 
+  like the overlay, and the speed. 
+
+Reset the various parameters when starting a game. 
+    Center the map view.
+    Reset the speed.
+    Clear the map buffer.
+
+Loading a city and generating a city should show a notice, which you
+see when you start playing.
+
+Set the poll speed to slow in start game screen.
+
+Send poll immediately after any user initiated changes (but only one poll).
+
+Update tile view immediately while scrolling.
+
+Fix the timer on the map so it updates when necessary, but not too often.
+
+Use Flash video and Red5 plus Python lossless screen encoder to send map view.
+
+Implement user login, account creation, OpenID login, cities in
+database owned by users, saving cities, loading from personal cities,
+sharing cities, sharing cities, multi player chat, linking to cities
+in chat, watching other users play games, avatars for watching users
+on map, read-only pre-configured not-logged-in views (tiles, map,
+graph, evaluation, etc) embedable in web browser, wiki tag to support
+embedding city views.
+
+When disconnected, clear all state flags like makingnewaccount, etc.
+

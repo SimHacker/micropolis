@@ -44,79 +44,71 @@
 	</handler>
 
 
-	<method name="handleUpdate" args="args"><![CDATA[
-	    Debug.write("!!!!!!!! budgetview handleUpdate", this, args);
+	<handler name="onbudget" args="args" reference="gApp"><![CDATA[
+	    //Debug.write("!!!!!!!! budgetview onbudget", this, args);
 
-	    var variable = args['variable'];
-
-	    switch (variable) {
-
-	        case 'taxRate': {
-		    var taxRate = args['taxRate'];
-		    //Debug.write("taxrate TAXRATE", taxRate, args);
-		    if (this.taxRate != taxRate) {
-			this.slidersView.taxView.taxSlider.setAttribute("value", taxRate);
-		    }
-		    break;
-		}
-
-		case 'budget': {
-		    var slider;
-		    var taxRate = args['taxRate'];
-		    //Debug.write("taxrate TAXRATE", taxRate, args);
-		    if (taxRate != this.taxRate) {
-			this.slidersView.taxView.taxSlider.setAttribute("value", taxRate);
-		    }
-
-		    var roadPercent = args['roadPercent'];
-		    if (roadPercent != this.roadPercent) {
-			this.slidersView.roadView.roadSlider.setAttribute('value', roadPercent);
-		    }
-
-		    var roadFund = args['roadFund'];
-		    if (roadFund != this.roadFund) {
-			this.setAttribute('roadFund', roadFund);
-		    }
-
-		    var firePercent = args['firePercent'];
-		    if (firePercent != this.firePercent) {
-			this.slidersView.fireView.fireSlider.setAttribute('value', firePercent);
-		    }
-
-		    var fireFund = args['fireFund'];
-		    if (fireFund != this.fireFund) {
-			this.setAttribute('fireFund', fireFund);
-		    }
-
-		    var policePercent = args['policePercent'];
-		    if (policePercent != this.policePercent) {
-			this.slidersView.policeView.policeSlider.setAttribute('value', policePercent);
-		    }
-
-		    var policeFund = args['policeFund'];
-		    if (policeFund != this.policeFund) {
-			this.setAttribute('policeFund', policeFund);
-		    }
-
-		    var taxesCollected = args['collectedFunds'];
-		    if (taxesCollected != this.taxesCollected) {
-			this.setAttribute("taxesCollected", taxesCollected);
-		    }
-
-		    var cashFlow = args['cashFlow'];
-		    this.setAttribute("cashFlow", cashFlow);
-
-		    var previousFunds = args['previousFunds'];
-		    this.setAttribute("previousFunds", previousFunds);
-
-		    var currentFunds = args['currentFunds'];
-		    this.setAttribute("currentFunds", currentFunds);
-		    break;
-		}
-
+	    if (!this.inited) {
+	        return;
 	    }
+
+	    var budget = gApp.budget;
+	    if (!budget) {
+	        return;
+	    }
+
+	    var slider;
+	    var taxRate = budget['taxRate'];
+	    //Debug.write("taxrate TAXRATE", taxRate, budget);
+	    if (taxRate != this.taxRate) {
+		this.slidersView.taxView.taxSlider.setAttribute("value", taxRate);
+	    }
+
+	    var firePercent = budget['firePercent'];
+	    if (firePercent != this.firePercent) {
+		this.slidersView.fireView.fireSlider.setAttribute('value', firePercent);
+	    }
+
+	    var fireFund = budget['fireFund'];
+	    if (fireFund != this.fireFund) {
+		this.setAttribute('fireFund', fireFund);
+	    }
+
+	    var policePercent = budget['policePercent'];
+	    if (policePercent != this.policePercent) {
+		this.slidersView.policeView.policeSlider.setAttribute('value', policePercent);
+	    }
+
+	    var policeFund = budget['policeFund'];
+	    if (policeFund != this.policeFund) {
+		this.setAttribute('policeFund', policeFund);
+	    }
+
+	    var roadPercent = budget['roadPercent'];
+	    if (roadPercent != this.roadPercent) {
+		this.slidersView.roadView.roadSlider.setAttribute('value', roadPercent);
+	    }
+
+	    var roadFund = budget['roadFund'];
+	    if (roadFund != this.roadFund) {
+		this.setAttribute('roadFund', roadFund);
+	    }
+
+	    var cashFlow = budget['cashFlow'];
+	    this.setAttribute("cashFlow", cashFlow);
+
+	    var previousFunds = budget['previousFunds'];
+	    this.setAttribute("previousFunds", previousFunds);
+
+	    var currentFunds = budget['currentFunds'];
+	    this.setAttribute("currentFunds", currentFunds);
+
+	    var taxesCollected = budget['taxesCollected'];
+	    if (taxesCollected != this.taxesCollected) {
+		this.setAttribute("taxesCollected", taxesCollected);
+	    }
+
 	  ]]>
-	</method>
+	</handler>
 
 
 	<method name="updateTaxRate" args="taxRate"><![CDATA[

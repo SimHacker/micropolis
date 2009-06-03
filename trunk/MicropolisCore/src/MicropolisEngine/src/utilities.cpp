@@ -146,7 +146,7 @@ void Micropolis::pause()
     }
 
     // Call back even if the state did not change.
-    callback("UIUpdate", "s", "paused");
+    callback("update", "s", "paused");
 }
 
 /**
@@ -161,7 +161,7 @@ void Micropolis::resume()
     }
 
     // Call back even if the state did not change.
-    callback("UIUpdate", "s", "paused");
+    callback("update", "s", "paused");
 }
 
 
@@ -182,7 +182,7 @@ void Micropolis::setSpeed(short speed)
 
     simSpeed = speed;
 
-    callback("UIUpdate", "s", "speed");
+    callback("update", "s", "speed");
 }
 
 
@@ -190,7 +190,7 @@ void Micropolis::setPasses(int passes)
 {
     simPasses = passes;
     simPass = 0;
-    callback("UIUpdate", "s", "passes");
+    callback("update", "s", "passes");
 }
 
 /**
@@ -235,7 +235,7 @@ void Micropolis::setGameLevel(GameLevel level)
 /** Report to the front-end that a new game level has been set. */
 void Micropolis::updateGameLevel()
 {
-    callback("UIUpdate", "s", "gameLevel");
+    callback("update", "s", "gameLevel");
 }
 
 
@@ -265,7 +265,7 @@ void Micropolis::setCleanCityName(const std::string &name)
 {
     cityName = name;
 
-    callback("UIUpdate", "s", "cityName");
+    callback("update", "s", "cityName");
 }
 
 
@@ -297,7 +297,7 @@ int Micropolis::currentYear()
  */
 void Micropolis::doNewGame()
 {
-    callback("UINewGame", "");
+    callback("newGame", "");
 }
 
 

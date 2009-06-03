@@ -76,16 +76,21 @@ import array
 import time
 from datetime import datetime
 import traceback
+import re
 import cairo
 from pyMicropolis.tileEngine import tileengine
 import micropolisengine
+from turbogears import identity
 import cherrypy
 import eliza
+from micropolis import model
 
 
 ########################################################################
 # Globals
 
+
+UserNameExp = re.compile('^[a-zA-Z0-9_-]+$')
 
 MicropolisCorePath = 'micropolis/MicropolisCore/src'
 
@@ -103,29 +108,29 @@ SpeedConfigurations = [
     },
     { # 1: Super Slow
         'speed': 3, 
-        'pollDelay': 3000,
-        'animateDelay': 800,
+        'pollDelay': 1000,
+        'animateDelay': 500,
         'loopsPerSecond': round(LoopsPerYear / 30.0), # One year per 30 seconds, 2 years per minute.
 
         'maxLoopsPerPoll': 200,
     },
     { # 2: Very Slow
         'speed': 3, 
-        'pollDelay': 2000,
-        'animateDelay': 600,
+        'pollDelay': 500,
+        'animateDelay': 250,
         'loopsPerSecond': round(LoopsPerYear / 20.0), # One year per 20 seconds, 3 years per minute.
         'maxLoopsPerPoll': 400,
     },
     { # 3: Slow
         'speed': 3, 
-        'pollDelay': 1000,
-        'animateDelay': 400,
+        'pollDelay': 500,
+        'animateDelay': 250,
         'loopsPerSecond': round(LoopsPerYear / 15.0), # One year per 15 seconds, 4 years per minute.
         'maxLoopsPerPoll': 600,
     },
     { # 4: Medium
         'speed': 3, 
-        'pollDelay': 1000,
+        'pollDelay': 500,
         'animateDelay': 250,
         'loopsPerSecond': round(LoopsPerYear / 10.0), # One year per 10 seconds, 6 years per minute.
         'maxLoopsPerPoll': 800,
@@ -278,7 +283,7 @@ AniTiles = (
                              693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703,
     704, 705, 706, 707, 708,
     # AirPort
-                             709, 710, 832, 712, 713, 714, 715, 716, 717, 718, 719,
+                             709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719,
     720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735,
     736, 737, 738, 739, 740, 741, 742, 743, 744,
     # Coal power
@@ -429,7 +434,7 @@ def UniqueID(prefix="ID_"):
 class Session(object):
 
 
-    def __init__(self, sessionID):
+    def __init__(self, controller, sessionID):
         self.sessionID = sessionID
         self.engine = None
         self.views = []
@@ -439,6 +444,7 @@ class Session(object):
         self.lastPollTime = 0
         self.lastTouchTime = 0
         self.expireDelay = 60 * 10 # ten minutes
+        self.controller = controller
         self.user = None
 
         self.touch()
@@ -514,11 +520,10 @@ class Session(object):
         self.messages = []
         self.messagesSeen = {}
 
-        if False:
+        if False and messages:
             print "=" * 72
             for message in messages:
-                print message
-            print "=" * 72
+                print message['message'], message.get('variable', ''), message
         
         if False:
             print [
@@ -541,7 +546,11 @@ class Session(object):
     def createEngine(self):
         if self.engine:
             return
-        self.setEngine(CreateTurboGearsEngine())
+
+        engine = CreateTurboGearsEngine(
+            controller=self.controller)
+
+        self.setEngine(engine)
 
 
 ########################################################################
@@ -554,8 +563,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     sessions = [] # Back stop.
 
 
-    def __init__(self, *args, **kw):
+    def __init__(
+        self, 
+        controller=None, 
+        *args, 
+        **kw):
         micropolisgenericengine.MicropolisGenericEngine.__init__(self, *args, **kw)
+        self.controller = controller
         self.eliza = eliza.eliza()
 
 
@@ -594,7 +608,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.startVirtualSpeed = 4
+        self.startVirtualSpeed = 2
         self.virtualSpeed = self.startVirtualSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
@@ -649,6 +663,22 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             sessions.remove(session)
 
 
+    def sendAllControllerSessions(self, message, exceptSession=None):
+        print "sendAllControllerSessions", self.controller.getSessions()
+        for session in self.controller.getSessions():
+            if session != exceptSession:
+                try:
+                    session.sendMessage(message)                
+                except Exception, e:
+                    print "======== XXX sendSessions exception:", e
+                    traceback.print_exc(10)
+
+        # Clean up the collapse flag so none of the sessions send it
+        # to the client.
+        if 'collapse' in message:
+            del message['collapse']
+
+
     def sendSessions(self, message):
         try:
             for session in self.sessions:
@@ -665,7 +695,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def handleMessage(self, session, messageDict):
         message = messageDict.get('message', None)
-        #print "HANDLEMESSAGE", message
+        user = session.user
+        #print "HANDLEMESSAGE", message, messageDict
 
         if message == 'disaster':
 
@@ -772,8 +803,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             gameMode = messageDict.get('gameMode')
 
-            #print "setGameMode", gameMode
+            print "setGameMode", gameMode, self.startVirtualSpeed
             if gameMode == "start":
+                self.setVirtualSpeed(0)
                 self.pause()
             elif gameMode == "play":
                 self.setVirtualSpeed(self.startVirtualSpeed)
@@ -798,7 +830,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             virtualSpeed = int(messageDict.get('virtualSpeed'))
             speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
 
-            #print "setVirtualSpeed", virtualSpeed
+            print "setVirtualSpeed", virtualSpeed
             self.setVirtualSpeed(virtualSpeed)
 
         elif message == 'abandonCity':
@@ -866,19 +898,72 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 # responsible for sending us a move to the endpoint.
                 pass
 
-        elif message == 'sendChatText':
+        elif message == 'sendChatMessage':
 
-            chatText = messageDict['chatText']
+            text = messageDict['text']
+            channel = messageDict['channel']
             language = messageDict['language']
-            print "CHAT", language, chatText
-            chatResponse = self.eliza.respond(chatText)
-            print "RESPONSE", chatResponse
-            session.sendMessage({
-                'message': 'UIChatMessage',
-                'from': 'Eliza',
-                'text': chatResponse,
-                'collapse': False,
-            })
+
+            userName = 'anonymous'
+            user = session.user
+            if user:
+                userName = user.user_name
+
+            print "CHAT", userName, language, text
+
+            if text and text[0] == '!':
+
+                command = text[1:]
+                print "CHEAT COMMAND", command
+
+                if command == 'million':
+                    session.engine.spend(-1000000)
+
+            elif channel == 'eliza':
+
+                elizaResponse = self.eliza.respond(text)
+                print "RESPONSE", elizaResponse
+
+                session.sendMessage({
+                    'message': 'chatMessage',
+                    'from': 'Me',
+                    'channel': channel,
+                    'text': text,
+                    'collapse': False,
+                })
+
+                session.sendMessage({
+                    'message': 'chatMessage',
+                    'from': 'Eliza',
+                    'channel': channel,
+                    'text': elizaResponse,
+                    'collapse': False,
+                })
+
+            elif channel == 'all':
+
+                session.sendMessage({
+                    'message': 'chatMessage',
+                    'from': 'You',
+                    'channel': channel,
+                    'text': text,
+                    'collapse': False,
+                })
+
+                self.sendAllControllerSessions(
+                    {
+                        'message': 'chatMessage',
+                        'from': userName,
+                        'channel': channel,
+                        'text': text,
+                        'collapse': False,
+                    },
+                    exceptSession=session)
+
+
+            else:
+
+                print "Unknown chat channel:", channel
 
         elif message == 'tileview':
 
@@ -925,7 +1010,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             #print "TILES", tiles
 
             session.sendMessage({
-                'message': 'UIUpdate',
+                'message': 'update',
                 'variable': 'tileview',
                 'id': id,
                 'col': col,
@@ -1052,7 +1137,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 })
 
             session.sendMessage({
-                'message': 'UIUpdate',
+                'message': 'update',
                 'variable': 'historyview',
                 'id': id,
                 'scale': historyScale,
@@ -1068,13 +1153,152 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'collapse': True,
             })
 
+        elif message == 'login':
+
+            print "login", messageDict
+
+            success = True
+            feedback = ''
+
+            userName = messageDict['userName']
+            password = messageDict['password']
+            passwordEncrypted = identity.encrypt_password(password)
+            fullName = ''
+            emailAddress = ''
+
+            user = model.User.by_user_name(unicode(userName))
+            if user and user.password == passwordEncrypted:
+                success = True
+                feedback = 'You are logged in.*' # TRANSLATE
+                fullName = user.display_name
+                emailAddress = user.email_address
+                session.user = user
+            else:
+                success = False
+                feedback = 'Incorrect user name or password.' # TRANSLATE
+                session.user = None
+
+            session.sendMessage({
+                'message': 'loginResponse',
+                'success': success,
+                'feedback': feedback,
+                'fullName': fullName,
+                'emailAddress': emailAddress,
+            })
+
+        elif message == 'logout':
+
+            print "logout", messageDict
+
+            loggedIn = user != None
+            if not loggedIn:
+                success = False
+                feedback = 'You are already logged out,*' # TRANSLATE
+            else:
+                session.user = None
+                success = True
+                feedback = 'You are logged out.*' # TRANSLATE
+
+            session.sendMessage({
+                'message': 'logoutResponse',
+                'success': success,
+                'feedback': feedback,
+            })
+
+        elif message == 'newAccount':
+
+            print "newAccount", messageDict
+
+            success = False
+            feedback = ''
+
+            userName = messageDict['userName']
+            password1 = messageDict['password1']
+            password2 = messageDict['password2']
+            fullName = messageDict['fullName']
+            emailAddress = messageDict['emailAddress']
+
+            if userName == '':
+                feedback = 'Please enter a user name.' # TRANSLATE
+            elif not self.checkUserName(userName):
+                feedback = 'The user name contains invalid characters.*' # TRANSLATE
+            elif password1 == '':
+                feedback = 'Please enter a password.' # TRANSLATE
+            elif model.User.by_user_name(unicode(userName)):
+                feedback = 'A user of that name already exists.*' # TRANSLATE
+            elif password1 != password2:
+                feedback = 'Please repeat the same password in the next field.' # TRANSLATE
+            else:
+                user = model.User()
+                user.user_name = unicode(userName)
+                user.email_address = unicode(emailAddress)
+                user.display_name = unicode(fullName)
+                registeredGroup = model.Group.by_name(u'registered')
+                user.groups.append(registeredGroup)
+                user.password = unicode(password1)
+                user.created = datetime.now()
+                user.activity = datetime.now()
+                success = True
+                feedback = 'A new account has been created*' # TRANSLATE
+                session.user = user
+
+            session.sendMessage({
+                'message': 'newAccountResponse',
+                'success': success,
+                'feedback': feedback,
+            })
+
+        elif message == 'changePassword':
+
+            passwordOld = messageDict['passwordOld']
+            passwordOldEncrypted = identity.encrypt_password(passwordOld)
+            password1 = messageDict['password1']
+            password2 = messageDict['password2']
+            feedback = ''
+            success = False
+
+            if not user:
+                feedback = 'You are not logged in.'
+            elif passwordOldEncrypted != user.password:
+                feedback = 'Incorrect old password.'
+            elif (not password1) or (not password2):
+                feedback = 'You must enter your new password twice.'
+            elif password1 != password2:
+                feedback = 'The new passwords do not match.'
+            else:
+                user.password = unicode(password1)
+                feedback = 'Your password has been changed.'
+                success = True
+
+            session.sendMessage({
+                'message': 'changePasswordResponse',
+                'success': success,
+                'feedback': feedback,
+            })
+
+        elif message == 'setUserFullName':
+            if user:
+                fullName = messageDict['fullName']
+                user.display_name = unicode(fullName)
+
+        elif message == 'setUserEmailAddress':
+            if user:
+                emailAddress = messageDict['emailAddress']
+                user.email_address = emailAddress
+
         else:
 
             print "UNKNOWN MESSAGE", message
 
 
+    def checkUserName(self, userName):
+        match = UserNameExp.match(userName)
+        #print "CHECKUSERNAME", userName, match
+        return match
+
+
     def setVirtualSpeed(self, virtualSpeed):
-        #print "setVirtualSpeed", virtualSpeed
+        print "setVirtualSpeed", virtualSpeed
         self.virtualSpeed = virtualSpeed
         speedConfiguration = SpeedConfigurations[virtualSpeed]
         #print "==== setVirtualSpeed", virtualSpeed, speedConfiguration
@@ -1084,7 +1308,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         if self.simSpeed != simSpeed:
             #self.setSpeed(simSpeed)
             self.simSpeed = simSpeed
-        self.handle_UIUpdate('delay')
+        #self.handle_update('delay')
+        self.handle_update('virtualSpeed')
 
 
     def tickEngine(self):
@@ -1126,7 +1351,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if not self.simPaused:
                 self.updateMapView()
 
-        #self.handle_UIUpdate('tick')
+        #self.handle_update('tick')
 
         #print "TICKENGINE 2", "PAUSED", self.simPaused, "CITYTIME", self.cityTime
 
@@ -1383,103 +1608,103 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def updateAll(self):
         #print "UPDATEALL"
-        self.handle_UIUpdate('funds')
-        self.handle_UIUpdate('date')
-        self.handle_UIUpdate('history')
-        self.handle_UIUpdate('evaluation')
-        self.handle_UIUpdate('paused')
-        self.handle_UIUpdate('virtualSpeed')
-        self.handle_UIUpdate('demand')
-        self.handle_UIUpdate('options')
-        self.handle_UIUpdate('gamelevel')
-        self.handle_UIUpdate('cityname')
+        self.handle_update('funds')
+        self.handle_update('date')
+        self.handle_update('history')
+        self.handle_update('evaluation')
+        self.handle_update('paused')
+        self.handle_update('virtualSpeed')
+        self.handle_update('demand')
+        self.handle_update('options')
+        self.handle_update('gamelevel')
+        self.handle_update('cityname')
         self.updateMapView()
 
 
     def updateMapView(self):
         #print "UPDATEMAPVIEW"
-        self.handle_UIUpdate('map')
+        self.handle_update('map')
 
 
-    def handle_UIAutoGoto(self, x, y):
-        #print "handle_UIAutoGoto(self, x, y)", (self, x, y)
+    def handle_autoGoto(self, x, y):
+        #print "handle_autoGoto(self, x, y)", (self, x, y)
         self.sendSessions({
-            'message': "UIAutoGoto",
+            'message': 'autoGoto',
             'x': x,
             'y': y,
             'collapse': true,
         })
     
 
-    def handle_UIDidGenerateNewCity(self):
-        #print "handle_UIDidGenerateNewCity(self)", (self,)
+    def handle_didGenerateNewCity(self):
+        #print "handle_didGenerateNewCity(self)", (self,)
         self.sendSessions({
-            'message': "UIDidGenerateNewCity",
+            'message': 'didGenerateNewCity',
         })
         self.updateMapView()
 
     
-    def handle_UIDidLoadCity(self):
-        #print "handle_UIDidLoadCity(self)", (self,)
+    def handle_didLoadCity(self):
+        #print "handle_didLoadCity(self)", (self,)
         self.sendSessions({
-            'message': "UIDidLoadCity",
+            'message': 'didLoadCity',
         })
         self.updateMapView()
 
     
-    def handle_UIDidLoadScenario(self):
-        #print "handle_UIDidLoadScenario(self)", (self,)
+    def handle_didLoadScenario(self):
+        #print "handle_didLoadScenario(self)", (self,)
         self.sendSessions({
-            'message': "UIDidLoadScenario",
+            'message': 'didLoadScenario',
             'scenario': self.scenario,
         })
         self.updateMapView()
 
 
-    def handle_UIDidSaveCity(self):
-        #print "handle_UIDidSaveCity(self)", (self,)
+    def handle_didSaveCity(self):
+        #print "handle_didSaveCity(self)", (self,)
         self.sendSessions({
-            'message': "UIDidSaveCity",
+            'message': 'didSaveCity',
         })
 
     
-    def handle_UIDidTool(self, name, x, y):
-        #print "handle_UIDidTool(self, name, x, y)", (self, name, x, y)
+    def handle_didTool(self, name, x, y):
+        #print "handle_didTool(self, name, x, y)", (self, name, x, y)
         self.sendSessions({
-            'message': "UIDidTool",
+            'message': 'didTool',
             'name': name,
             'x': x,
             'y': y,
         })
 
     
-    def handle_UIDidntLoadCity(self, msg):
-        #print "handle_UIDidntLoadCity(self, msg)", (self, msg)
+    def handle_didntLoadCity(self, msg):
+        #print "handle_didntLoadCity(self, msg)", (self, msg)
         self.sendSessions({
-            'message': "UIDidntLoadCity",
+            'message': 'didntLoadCity',
             'msg': msg,
         })
 
     
-    def handle_UIDidntSaveCity(self, msg):
-        #print "handle_UIDidntSaveCity(self, msg)", (self, msg)
+    def handle_didntSaveCity(self, msg):
+        #print "handle_didntSaveCity(self, msg)", (self, msg)
         self.sendSessions({
-            'message': "UIDidntSaveCity",
+            'message': 'didntSaveCity',
             'msg': msg,
         })
 
     
-    def handle_UILoseGame(self):
-        #print "handle_UILoseGame(self)", (self,)
+    def handle_loseGame(self):
+        #print "handle_loseGame(self)", (self,)
         self.sendSessions({
-            'message': "UILoseGame",
+            'message': 'loseGame',
         })
 
     
-    def handle_UIMakeSound(self, channel, sound, x, y):
-        #print "handle_UIMakeSound(self, channel, sound)", (self, channel, sound, x, y)
+    def handle_makeSound(self, channel, sound, x, y):
+        #print "handle_makeSound(self, channel, sound)", (self, channel, sound, x, y)
         self.sendSessions({
-            'message': "UIMakeSound",
+            'message': 'makeSound',
             'channel': channel,
             'sound': sound,
             'x': x,
@@ -1487,54 +1712,54 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         })
 
 
-    def handle_UINewGame(self):
-        #print "handle_UINewGame(self)", (self,)
+    def handle_newGame(self):
+        #print "handle_newGame(self)", (self,)
         self.sendSessions({
-            'message': "UINewGame",
+            'message': 'newGame',
         })
         self.updateAll()
 
     
-    def handle_UIPlayNewCity(self):
-        #print "handle_UIPlayNewCity(self)", (self,)
+    def handle_playNewCity(self):
+        #print "handle_playNewCity(self)", (self,)
         self.sendSessions({
-            'message': "UIPlayNewCity",
+            'message': 'playNewCity',
         })
 
     
-    def handle_UIReallyStartGame(self):
-        #print "handle_UIReallyStartGame(self)", (self,)
+    def handle_reallyStartGame(self):
+        #print "handle_reallyStartGame(self)", (self,)
         self.sendSessions({
-            'message': "UIReallyStartGame",
+            'message': 'reallyStartGame',
         })
 
     
-    def handle_UISaveCityAs(self):
-        #print "handle_UISaveCityAs(self)", (self,)
+    def handle_saveCityAs(self):
+        #print "handle_saveCityAs(self)", (self,)
         self.sendSessions({
-            'message': "UISaveCityAs",
+            'message': 'saveCityAs',
         })
 
     
-    def handle_UIShowBudgetAndWait(self):
-        #print "handle_UIShowBudgetAndWait(self)", (self,)
+    def handle_showBudgetAndWait(self):
+        #print "handle_showBudgetAndWait(self)", (self,)
         self.sendSessions({
-            'message': "UIShowBudgetAndWait",
+            'message': 'showBudgetAndWait',
         })
 
     
-    def handle_UIShowPicture(self, id):
-        #print "handle_UIShowPicture(self, id)", (self, id)
+    def handle_showPicture(self, id):
+        #print "handle_showPicture(self, id)", (self, id)
         self.sendSessions({
-            'message': "UIShowPicture",
+            'message': 'showPicture',
             'id': id,
         })
 
     
-    def handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
-        #print "handle_UIShowZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
+    def handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
+        #print "handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
         self.sendSessions({
-            'message': "UIShowZoneStatus",
+            'message': 'showZoneStatus',
             'str': str,
             's0': s0,
             's1': s1,
@@ -1547,45 +1772,45 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         })
 
     
-    def handle_UIStartEarthquake(self, magnitude):
-        #print "handle_UIStartEarthquake(self, magnitude)", (self, magnitude,)
+    def handle_startEarthquake(self, magnitude):
+        #print "handle_startEarthquake(self, magnitude)", (self, magnitude,)
         self.sendSessions({
-            'message': "UIStartEarthquake",
+            'message': 'startEarthquake',
             'magnitude': magnitude,
         })
 
     
-    def handle_UIStartLoad(self):
-        #print "handle_UIStartLoad(self)", (self,)
+    def handle_startLoad(self):
+        #print "handle_startLoad(self)", (self,)
         self.sendSessions({
-            'message': "UIStartLoad",
+            'message': 'startLoad',
         })
 
     
-    def handle_UIStartScenario(self, scenario):
-        #print "handle_UIStartScenario(self, scenario)", (self, scenario)
+    def handle_startScenario(self, scenario):
+        #print "handle_startScenario(self, scenario)", (self, scenario)
         self.sendSessions({
-            'message': "UIStartScenario",
+            'message': 'startScenario',
             'scenario': scenario,
         })
 
     
-    def handle_UIStopEarthquake(self):
-        #print "handle_UIStopEarthquake(self)", (self,)
+    def handle_stopEarthquake(self):
+        #print "handle_stopEarthquake(self)", (self,)
         self.sendSessions({
-            'message': "UIStopEarthquake",
+            'message': 'stopEarthquake',
         })
 
 
-    def handle_UIWinGame(self):
-        #print "handle_UIWinGame(self)", (self,)
+    def handle_winGame(self):
+        #print "handle_winGame(self)", (self,)
         self.sendSessions({
-            'message': "UIWinGame",
+            'message': 'winGame',
         })
 
 
-    def handle_UIUpdate(self, variable, *args):
-        #print "==== handle_UIUpdate(self, variable, args)", self, "variable", variable, "args", args
+    def handle_update(self, variable, *args):
+        #print "==== handle_update(self, variable, args)", self, "variable", variable, "args", args
 
         # Enrich the messages with parameters that the client will
         # need.  The args parameter is the variable length array of
@@ -1597,7 +1822,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         try:
 
             message = {
-                'message': 'UIUpdate',
+                'message': 'update',
                 'variable': variable,
                 'args': args,
             }
@@ -1772,9 +1997,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif variable == 'delay':
 
-                #print "UIUPDATE DELAY", self.virtualSpeed
                 virtualSpeed = self.virtualSpeed
                 speedConfiguration = SpeedConfigurations[virtualSpeed]
+                print 'UPDATE DELAY', self.virtualSpeed, speedConfiguration
                 message['pollDelay'] = speedConfiguration['pollDelay']
                 message['animateDelay'] = speedConfiguration['animateDelay']
                 message['collapse'] = True
@@ -1803,12 +2028,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['cityName'] = self.cityName
                 message['collapse'] = True
 
-            elif variable == 'taxRate':
-
-                message['taxRate'] = self.cityTax
-                message['collapse'] = True
-
-            elif variable == 'budget':
+            elif (variable == 'budget') or (variable == 'taxRate'):
 
                 message['taxRate'] = self.cityTax
                 message['totalFunds'] = self.totalFunds
@@ -1835,7 +2055,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 message['previousFunds'] = message['totalFunds']
                 message['currentFunds'] = message['cashFlow'] + message['totalFunds']
-                message['collectedFunds'] = message['taxFund']
+                message['taxesCollected'] = message['taxFund']
 
                 message['collapse'] = True
 
@@ -1853,7 +2073,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif variable == 'virtualSpeed':
 
-                #print "VIRTUALSPEED", self, type(self), getattr(self, 'virtualSpeed', '???')
+                #print 'VIRTUALSPEED', self, type(self), getattr(self, 'virtualSpeed', '???')
                 virtualSpeed = self.virtualSpeed
                 speedConfiguration = SpeedConfigurations[virtualSpeed]
                 message['virtualSpeed'] = virtualSpeed
@@ -1869,7 +2089,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.sendSessions(message)
 
         except Exception, e:
-            print '======== XXX handle_UIUpdate ERROR:', e
+            print '======== XXX handle_update ERROR:', e
             traceback.print_exc(10)
 
 

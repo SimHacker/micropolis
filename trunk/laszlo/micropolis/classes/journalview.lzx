@@ -38,8 +38,8 @@
 	        return;
 	    }
 	    var attributes = notice.attributes;
-	    var title = attributes['title'];
-	    var description = gNoticeView.getNoticeDescription(notice);
+	    var title = gApp._(attributes['title']);
+	    var description = gApp._(attributes['description']);
 	    var html =
 	        '<b>' + title + '</b>' + '<br/>' + 
 		description;
@@ -69,10 +69,10 @@
 	</method>
 
 
-	<method name="enterText" args="text"><![CDATA[
-	    gApp.sendChatText(text);
-	    text = gApp.escapeHTML(text);
-	    this.addMessage('<b>Me> </b>' + text);
+	<method name="enterText" args="text, channel"><![CDATA[
+	    gApp.sendChatMessage(text, channel);
+	    //text = gApp.escapeHTML(text);
+	    //this.addMessage('<b>Me> </b>' + text);
 	  ]]>
 	</method>
 
@@ -106,7 +106,7 @@
 	    <handler name="onkeydown" args="key"><![CDATA[
 	        //Debug.write("textField onkeydown", key);
 		if (key == 13) {
-		   classroot.enterText(this.text);
+		   classroot.enterText(this.text, gApp.chatChannel);
 		   this.setAttribute("text", "");
 		}
 	      ]]>

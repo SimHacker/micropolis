@@ -379,7 +379,7 @@ void Micropolis::doScenarioScore(Scenario type)
  */
 void Micropolis::sendMessage(short mesgNum, short x, short y, bool picture, bool important)
 {
-    callback( "UIUpdate", "sdddbb", "message",
+    callback("update", "sdddbb", "message",
         (int)mesgNum,
         (int)x,
         (int)y,
@@ -402,11 +402,11 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
 
         case MESSAGE_TRAFFIC_JAMS:
             if (getRandom(5) == 1) {
-                makeSound("city", "HonkHonk-Med", x, y);
+                makeSound("city", "HonkHonkMed", x, y);
             } else if (getRandom(5) == 1) {
-                makeSound("city", "HonkHonk-Low", x, y);
+                makeSound("city", "HonkHonkLow", x, y);
             } else if (getRandom(5) == 1) {
-                makeSound("city", "HonkHonk-High", x, y);
+                makeSound("city", "HonkHonkHigh", x, y);
             }
             break;
 
@@ -426,13 +426,13 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
             break;
 
         case MESSAGE_FIREBOMBING:
-            makeSound("city", "Explosion-Low", x, y);
+            makeSound("city", "ExplosionLow", x, y);
             makeSound("city", "Siren", x, y);
             break;
 
         case MESSAGE_NUCLEAR_MELTDOWN:
-            makeSound("city", "Explosion-High", x, y);
-            makeSound("city", "Explosion-Low", x, y);
+            makeSound("city", "ExplosionHigh", x, y);
+            makeSound("city", "ExplosionLow", x, y);
             makeSound("city", "Siren", x, y);
             break;
 
@@ -452,21 +452,21 @@ void Micropolis::doMakeSound(int mesgNum, int x, int y)
  */
 void Micropolis::doAutoGoto(short x, short y, char *msg)
 {
-    callback("UIAutoGoto", "dd", (int)x, (int)y);
+    callback("autoGoto", "dd", (int)x, (int)y);
 }
 
 
 /** Tell the front-end that the player has lost the game */
 void Micropolis::doLoseGame()
 {
-    callback("UILoseGame", "");
+    callback("loseGame", "");
 }
 
 
 /** Tell the front-end that the player has won the game */
 void Micropolis::doWinGame()
 {
-    callback("UIWinGame", "");
+    callback("winGame", "");
 }
 
 

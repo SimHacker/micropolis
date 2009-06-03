@@ -35,35 +35,47 @@
 	    height="${this.icon.height + 10}"
 	>
 
+
 	    <attribute name="scenarioID" value="$path{'@id'}" type="string"/>
-	    <attribute name="scenarioName" value="$path{'@name'}" type="string"/>
+	    <attribute name="scenarioTitle" value="$path{'@title'}" type="string"/>
 	    <attribute name="scenarioYear" value="$path{'@year'}" type="string"/>
 	    <attribute name="scenarioTagLine" value="$path{'@tagline'}" type="string"/>
 	    <attribute name="scenarioNotice" value="$path{'@notice'}" type="string"/>
+	    <attribute name="scenarioIcon" value="$path{'@icon'}" type="string"/>
+
 
 	    <handler name="ondata" args="arg"><![CDATA[
 		var label =
-		    this.scenarioName + ', ' + this.scenarioYear + ': ' + 
-		    this.scenarioTagLine;
+		    gApp._(this.scenarioTitle) + 
+		    ', ' + 
+		    this.scenarioYear + 
+		    ': ' + 
+		    gApp._(this.scenarioTagLine);
 		//Debug.write("scenario button ondata", this, label);
 		this.setAttribute("text", label);
-		this.icon.setAttribute("resource", "scenario_" + this.scenarioID + "_rsrc");
+		this.icon.setAttribute("resource", this.scenarioIcon);
 	      ]]>
 	    </handler>
+
 
 	    <method name="selectScenario"><![CDATA[
 		gApp.sendMessage({
 		    message: 'loadScenario',
 		    scenario: this.scenarioID
 		});
-		gApp.setAttribute("title", gApp._('Scenario:') + ' ' + this.scenarioName);
-		var noticeDescription = 
-		    gNoticeView.getNoticeDescription(
-		        gNoticeView.findNotice(
-			    this.scenarioNotice));
+		var title =
+		    gApp._('Scenario:') + 
+		    ' ' + 
+		    gApp._(this.scenarioTitle);
+		gApp.setAttribute("title", title);
+		var notice =
+		    gNoticeView.findNotice(this.scenarioNotice)
+		var noticeDescription =
+		    gApp._(notice.attributes['description']);
 		gApp.setAttribute("description", noticeDescription);
 	      ]]>
 	    </method>
+
 
 	    <view name="icon"
 	        x="5"
@@ -72,6 +84,7 @@
 		width="${this.unstretchedwidth * 0.5}"
 		height="${this.unstretchedheight * 0.5}"
 	    />
+
 
 	</button>
 

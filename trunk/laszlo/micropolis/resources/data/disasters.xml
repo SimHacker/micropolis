@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<disasters language="en-US">
+    <disaster
+        name="monster"
+	title="disaster_monster_title"
+    />
+    <disaster
+        name="fire"
+	title="disaster_fire_title"
+    />
+    <disaster
+        name="flood"
+	title="disaster_flood_title"
+    />
+    <disaster
+        name="meltdown"
+	title="disaster_meltdown_title"
+    />
+    <disaster
+        name="tornado"
+	title="disaster_tornado_title"
+    />
+    <disaster
+        name="earthquake"
+	title="disaster_earthquake_title"
+    />
+</disasters>

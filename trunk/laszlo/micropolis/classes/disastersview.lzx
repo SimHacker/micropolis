@@ -37,7 +37,7 @@
 
 	<view name="v"
 	    width="${parent.width - 20}"
-	    height="${parent.height - 20}"
+	    height="${parent.height}"
 	    clip="true"
 	>
 
@@ -56,17 +56,17 @@
 		<button
 		    width="${parent.width}"
 		    height="${parent.height}"
-		    text="${this.disasterName || ''}"
+		    text="${gApp._(this.disasterTitle) || ''}"
 		>
 
 		    <attribute name="disasterName" value="$path{'@name'}"/>
-		    <attribute name="disaster" value="$path{'@disaster'}"/>
+		    <attribute name="disasterTitle" value="$path{'@title'}"/>
 
 		    <handler name="onclick"><![CDATA[
-			Debug.write("DISASTER", this.disaster);
+			Debug.write("DISASTERNAME", this.disasterName);
 			gApp.sendMessage({
 			    message: 'disaster',
-			    disaster: this.disaster
+			    disaster: this.disasterName
 			});
 		      ]]>
 		    </handler>
