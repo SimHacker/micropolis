@@ -90,6 +90,7 @@
         <attribute name="interests" value="$once{{}}"/>
         <attribute name="overlay" type="string" value="all"/>
 	<attribute name="chatChannel" type="string" value="all"/>
+	<attribute name="sprites" value="null"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -107,7 +108,8 @@
 		'options', 'gameLevel', 'cityName', 
 		'taxRate', 'budget',
                 'message', 'virtualSpeed', 
-		'tileview', 'historyview'
+		'tileview', 'historyview',
+		'spritesview'
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -459,6 +461,15 @@
 		    //Debug.write("hv", hv, "id", id, typeof(id));
 
 		    hv.setAttribute("history", args);
+
+                    break;
+                }
+
+                case 'spritesview':
+                {
+		    //Debug.write("UPDATE SPRITESVIEW", args);
+
+		    this.setAttribute("sprites", args['sprites']);
 
                     break;
                 }
@@ -826,10 +837,7 @@
             n = pollers.length;
             if (n > 0) {
                 for (i = 0; i < n; i++) {
-                    var message = pollers[i].poll();
-                    if (message != null) {
-                        messages.push(message);
-                    }
+                    var message = pollers[i].poll(messages);
                 }
             }
 
@@ -1230,7 +1238,7 @@
 		});
 	    } else {
 	        this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
-	        gPlayTabUser.tab.setSelected(true);
+	        gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
 	    }
           ]]>
         </method>
