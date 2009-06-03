@@ -27,7 +27,7 @@ from turbogears import identity
 # Identity schema.
 
 
-visits_table = Table('visit', metadata,
+visit_table = Table('visit', metadata,
     Column('visit_key', String(40), primary_key=True),
     Column('created', DateTime, nullable=False, default=datetime.now),
     Column('expiry', DateTime)
@@ -38,14 +38,14 @@ visit_identity_table = Table('visit_identity', metadata,
     Column('user_id', Integer, ForeignKey('tg_user.user_id'), index=True)
 )
 
-groups_table = Table('tg_group', metadata,
+group_table = Table('tg_group', metadata,
     Column('group_id', Integer, primary_key=True),
     Column('group_name', Unicode(16), unique=True),
     Column('display_name', Unicode(255)),
     Column('created', DateTime, default=datetime.now)
 )
 
-users_table = Table('tg_user', metadata,
+user_table = Table('tg_user', metadata,
     Column('user_id', Integer, primary_key=True),
     Column('user_name', Unicode(16), unique=True),
     Column('email_address', Unicode(255), unique=True),
@@ -55,7 +55,7 @@ users_table = Table('tg_user', metadata,
     Column('activity', DateTime, default=datetime.now)
 )
 
-permissions_table = Table('permission', metadata,
+permission_table = Table('permission', metadata,
     Column('permission_id', Integer, primary_key=True),
     Column('permission_name', Unicode(16), unique=True),
     Column('description', Unicode(255))
@@ -81,6 +81,7 @@ group_permission_table = Table('group_permission', metadata,
 
 city_table = Table('city', metadata,
     Column('city_id', Integer, primary_key=True),
+    Column('parent_id', Integer),
     Column('title', Unicode(255), unique=True),
     Column('description', Unicode(), unique=True),
     Column('user_id', Integer, ForeignKey('tg_user.user_id')),
@@ -209,22 +210,34 @@ class City(object):
 # Set up mappers between identity tables and classes.
 
 
-mapper(Visit, visits_table)
+mapper(Visit, visit_table)
 
 mapper(VisitIdentity, visit_identity_table,
-        properties=dict(users=relation(User, backref='visit_identity')))
+        properties={
+            'users': relation(User, backref='visit_identity'),
+        })
 
 # TODO: user.cities property
-mapper(User, users_table,
-        properties=dict(_password=users_table.c.password))
+mapper(User, user_table,
+        properties={
+            '_password': user_table.c.password,
+        })
 
-mapper(Group, groups_table,
-        properties=dict(users=relation(User,
-                secondary=user_group_table, backref='groups')))
+mapper(City, city_table,
+        properties={
+            # FIXME: How do I specifiy the parent/children relationship of a tree of cities?
+            #'children': relation(City, primaryjoin=(city_table.c.city_id == city_table.c.parent_id), backref='parent'),
+        })
 
-mapper(Permission, permissions_table,
-        properties=dict(groups=relation(Group,
-                secondary=group_permission_table, backref='permissions')))
+mapper(Group, group_table,
+        properties={
+            'users': relation(User, secondary=user_group_table, backref='groups'),
+        })
+
+mapper(Permission, permission_table,
+        properties={
+            'groups': relation(Group, secondary=group_permission_table, backref='permissions'),
+        })
 
 
 ########################################################################
