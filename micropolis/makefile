@@ -69,9 +69,9 @@ install: all
 
 clean:
 	rm -rf \
-	    *{.py[co],~} \
+	    *{.py[co],~,.bak} \
 	    micropolis/*{.py[co],~} \
 	    micropolis/templates/*{.py[co],~} \
-	    tests/*{.py[co],~}
+	    tests/*{.py[co],~,.bak}
 
 ########################################################################
