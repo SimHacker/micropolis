@@ -465,7 +465,7 @@
 
     <!-- disasters.xml -->
 
-    <string id="disaster_monster_title">Rotbeest</string>
+    <string id="disaster_monster_title">Monster</string>
 
     <string id="disaster_fire_title">Brand</string>
 
@@ -496,9 +496,9 @@
 
     <string id="notice_20_description">Een brand is gemeld!</string>
 
-    <string id="notice_21_title">ROTBEEST AANVEL!</string>
+    <string id="notice_21_title">MONSTER AANVEL!</string>
 
-    <string id="notice_21_description">Een groot reptiel rotbeest is gespot in het water. Het lijkt te worden aangetrokken tot de gebieden van hoge verontreiniging. Er is een spoor van vernieling, waar het gaat.&lt;br/&gt;Alles wat je kan doen is wachten tot hij vertrekt, dan is herstel van het puin.</string>
+    <string id="notice_21_description">Een groot reptiel monster is gespot in het water. Het lijkt te worden aangetrokken tot de gebieden van hoge verontreiniging. Er is een spoor van vernieling, waar het gaat.&lt;br/&gt;Alles wat je kan doen is wachten tot hij vertrekt, dan is herstel van het puin.</string>
 
     <string id="notice_22_title">WERVELSTORM ALARM!</string>
 
@@ -606,7 +606,7 @@
 
     <string id="notice_54_title">TOKIO, JAPAN  1957</string>
 
-    <string id="notice_54_description">Een groot reptiel rotbeest is gespot rubriek voor Tokio Bay. Het lijkt te worden aangetrokken tot de niveaus van zware industriële vervuiling daar.&lt;br/&gt;Probeer om de branden, dan is het herstel van het industriële centrum. U heeft 5 jaar.</string>
+    <string id="notice_54_description">Een groot reptiel monster is gespot rubriek voor Tokio Bay. Het lijkt te worden aangetrokken tot de niveaus van zware industriële vervuiling daar.&lt;br/&gt;Probeer om de branden, dan is het herstel van het industriële centrum. U heeft 5 jaar.</string>
 
     <string id="notice_55_title">DETROIT, MI.  1972</string>
 
@@ -672,7 +672,7 @@
 
     <string id="scenario_5_title">Tokio</string>
 
-    <string id="scenario_5_tagline">Rotbeest Attack</string>
+    <string id="scenario_5_tagline">Monster Aanvel</string>
 
     <string id="scenario_6_title">Detroit</string>
 
