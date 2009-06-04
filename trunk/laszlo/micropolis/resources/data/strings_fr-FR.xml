@@ -1,0 +1,723 @@
+<?xml version="1.0" ?>
+<strings language="en-US">
+
+
+    <!--
+
+        This XML file defines all the strings in Micropolis,
+	for specific languages.
+
+	The "strings_en-US.xml" file is considered the master file.
+	It is used as a template for the other languages.
+	In order to add a string, first add it to the "en-US" file,
+	then use the web "/server/getTranslations" web interface to
+	update the other language strings from the "en-US" strings.
+	That will add any new strings in place, and mark them as 
+	needing to be translated, with at-signs like "@nl-NL".
+	Then you can use the web interface to translate the
+	strings into other languages.
+
+	The top level <strings> element should have a language attribute, 
+	which specifies the language of the translated strings. 
+
+	Each <string> sub-element has an id attribute, 
+	which is the name by which the string is refered in the code.
+	The ID can be the string itself in English, 
+	possibly abbreviated with a "*" at the end, 
+	or it may be a logical name called out by the code. 
+	Some string elements have an optional comment attribute,
+	which tells the translator how to deal with the string.
+	Each string element contains utf-8 unicode text, 
+	which is the translated string. 
+
+	Strings should not contain any markup as actual tags. Any
+	markup or entities to be displayed as html in the user
+	interface should be escaped.
+
+    -->
+
+
+    <!-- appview.lzx -->
+
+    <string id="Micropolis: Choose a City">@fr-FR@ Micropolis: Choose a City</string>
+
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">@fr-FR@ Welcome to Micrpolis!&lt;br/&gt;&lt;br/&gt;Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.&lt;br/&gt;&lt;br/&gt;Then press the 'Play with This City' button below, to start playing Micropolis!</string>
+
+    <string id="Please log in or create an account in order to save your city.">@fr-FR@ Please log in or create an account in order to save your city.</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">/wiki/index.php/About?lang=fr-FR</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">/wiki/index.php/Help?lang=fr-FR</string>
+
+    <string comment="Three letter month abbreviation." id="Jan">@fr-FR@ Jan</string>
+
+    <string comment="Three letter month abbreviation." id="Feb">@fr-FR@ Feb</string>
+
+    <string comment="Three letter month abbreviation." id="Mar">@fr-FR@ Mar</string>
+
+    <string comment="Three letter month abbreviation." id="Apr">@fr-FR@ Apr</string>
+
+    <string comment="Three letter month abbreviation." id="May">@fr-FR@ May</string>
+
+    <string comment="Three letter month abbreviation." id="Jun">@fr-FR@ Jun</string>
+
+    <string comment="Three letter month abbreviation." id="Jul">@fr-FR@ Jul</string>
+
+    <string comment="Three letter month abbreviation." id="Aug">@fr-FR@ Aug</string>
+
+    <string comment="Three letter month abbreviation." id="Sep">@fr-FR@ Sep</string>
+
+    <string comment="Three letter month abbreviation." id="Oct">@fr-FR@ Oct</string>
+
+    <string comment="Three letter month abbreviation." id="Nov">@fr-FR@ Nov</string>
+
+    <string comment="Three letter month abbreviation." id="Dec">@fr-FR@ Dec</string>
+
+
+    <!-- budgetview.lzx -->
+
+    <string id="Taxes Collected:">@fr-FR@ Taxes Collected:</string>
+
+    <string id="Cash Flow:">@fr-FR@ Cash Flow:</string>
+
+    <string id="Previous Funds:">@fr-FR@ Previous Funds:</string>
+
+    <string id="Current Funds:">@fr-FR@ Current Funds:</string>
+
+    <string id="Tax Rate:">@fr-FR@ Tax Rate:</string>
+
+    <string id="Road Request:">@fr-FR@ Road Request:</string>
+
+    <string id="Fire Request:">@fr-FR@ Fire Request:</string>
+
+    <string id="Police Request:">@fr-FR@ Police Request:</string>
+
+
+    <!-- changepassword.lzx -->
+
+    <string id="To change your password,*">@fr-FR@ To change your password, first enter your old password, then enter your new password twice.</string>
+
+    <string id="Change Password">@fr-FR@ Change Password</string>
+
+
+    <!-- connectscreen.lzx -->
+
+    <string id="Connecting to Micropolis Online server.">@fr-FR@ Connecting to Micropolis Online server.</string>
+
+    <string id="Connection to Micropolis Online server failed.">@fr-FR@ Connection to Micropolis Online server failed.</string>
+
+    <string id="Status:">@fr-FR@ Status:</string>
+
+    <string id="Reconnect">@fr-FR@ Reconnect</string>
+
+
+    <!-- controlpanel.lzx -->
+
+    <string id="Are you really sure you want to start a new city?">@fr-FR@ Are you really sure you want to start a new city?</string>
+
+    <string id="No, keep playing with this city.">@fr-FR@ No, keep playing with this city.</string>
+
+    <string id="Yes, choose another city.">@fr-FR@ Yes, choose another city.</string>
+
+    <string id="Ultra Slow">@fr-FR@ Ultra Slow</string>
+
+    <string id="Super Slow">@fr-FR@ Super Slow</string>
+
+    <string id="Very Slow">@fr-FR@ Very Slow</string>
+
+    <string id="Slow">@fr-FR@ Slow</string>
+
+    <string id="Medium">@fr-FR@ Medium</string>
+
+    <string id="Fast">@fr-FR@ Fast</string>
+
+    <string id="Very Fast">@fr-FR@ Very Fast</string>
+
+    <string id="Super Fast">@fr-FR@ Super Fast</string>
+
+    <string id="Ultra Fast">@fr-FR@ Ultra Fast</string>
+
+    <string id="Astronomically Fast">@fr-FR@ Astronomically Fast</string>
+
+    <string id="Resume">@fr-FR@ Resume</string>
+
+    <string id="Pause">@fr-FR@ Pause</string>
+
+    <string id="Simulator">@fr-FR@ Simulator</string>
+
+    <string id="Paused.">@fr-FR@ Paused.</string>
+
+    <string id="Running!">@fr-FR@ Running!</string>
+
+    <string id="Speed">@fr-FR@ Speed</string>
+
+    <string id="Save City">@fr-FR@ Save City</string>
+
+    <string id="New City">@fr-FR@ New City</string>
+
+    <string id="Help">@fr-FR@ Help</string>
+
+    <string id="About">@fr-FR@ About</string>
+
+    <string id="Disasters">@fr-FR@ Disasters</string>
+
+    <string id="Auto Budget">@fr-FR@ Auto Budget</string>
+
+    <string id="Auto Bulldoze">@fr-FR@ Auto Bulldoze</string>
+
+    <string id="Auto Goto">@fr-FR@ Auto Goto</string>
+
+    <string id="Sound">@fr-FR@ Sound</string>
+
+    <string id="Animation">@fr-FR@ Animation</string>
+
+    <string id="Journal">@fr-FR@ Journal</string>
+
+    <string id="Notices">@fr-FR@ Notices</string>
+
+
+    <!-- datefundsview.lzx -->
+
+    <string id="Date:">@fr-FR@ Date:</string>
+
+    <string id="Funds:">@fr-FR@ Funds:</string>
+
+
+    <!-- demandgauge.lzx -->
+
+    <string comment="One letter abreviation for 'Residential'." id="R">@fr-FR@ R</string>
+
+    <string comment="One letter abreviation for 'Commercial'." id="C">@fr-FR@ C</string>
+
+    <string comment="One letter abreviation for 'Industrial'." id="I">@fr-FR@ I</string>
+
+
+    <!-- edittileviewpie.lzx -->
+
+    <string id="Tools">@fr-FR@ Tools</string>
+
+    <string id="(Zone)">@fr-FR@ (Zone)</string>
+
+    <string id="Zone">@fr-FR@ Zone</string>
+
+    <string id="(Build)">@fr-FR@ (Build)</string>
+
+    <string id="Build">@fr-FR@ Build</string>
+
+    <string id="(More)">@fr-FR@ (More)</string>
+
+    <string id="(Tab)">@fr-FR@ (Tab)</string>
+
+    <string id="Tab">@fr-FR@ Tab</string>
+
+    <string id="Evaluation">@fr-FR@ Evaluation</string>
+
+    <string id="History">@fr-FR@ History</string>
+
+    <string id="Budget">@fr-FR@ Budget</string>
+
+    <string id="Overlays">@fr-FR@ Overlays</string>
+
+    <string id="Control">@fr-FR@ Control</string>
+
+    <string id="(Speed)">@fr-FR@ (Speed)</string>
+
+    <string id="(Overlays)">@fr-FR@ (Overlays)</string>
+
+    <string id="(Disasters)">@fr-FR@ (Disasters)</string>
+
+    <string id="(Funds)">@fr-FR@ (Funds)</string>
+
+    <string id="Funds">@fr-FR@ Funds</string>
+
+    <string id="Tax Rate">@fr-FR@ Tax Rate</string>
+
+    <string id="Police Funds">@fr-FR@ Police Funds</string>
+
+    <string id="Road Funds">@fr-FR@ Road Funds</string>
+
+    <string id="Fire Funds">@fr-FR@ Fire Funds</string>
+
+
+    <!-- evaluationview.lzx -->
+
+    <string id="Crime">@fr-FR@ Crime</string>
+
+    <string id="Pollution">@fr-FR@ Pollution</string>
+
+    <string id="Housing">@fr-FR@ Housing</string>
+
+    <string id="Taxes">@fr-FR@ Taxes</string>
+
+    <string id="Traffic">@fr-FR@ Traffic</string>
+
+    <string id="Unemployment">@fr-FR@ Unemployment</string>
+
+    <string id="Fire">@fr-FR@ Fire</string>
+
+    <string id="Village">@fr-FR@ Village</string>
+
+    <string id="Town">@fr-FR@ Town</string>
+
+    <string id="City">@fr-FR@ City</string>
+
+    <string id="Capital">@fr-FR@ Capital</string>
+
+    <string id="Metropolis">@fr-FR@ Metropolis</string>
+
+    <string id="Megalopolis">@fr-FR@ Megalopolis</string>
+
+    <string id="Easy">@fr-FR@ Easy</string>
+
+    <string id="Hard">@fr-FR@ Hard</string>
+
+    <string id="Approve:">@fr-FR@ Approve:</string>
+
+    <string id="Disapprove:">@fr-FR@ Disapprove:</string>
+
+    <string id="Population:">@fr-FR@ Population:</string>
+
+    <string id="Migration:">@fr-FR@ Migration:</string>
+
+    <string id="City Value:">@fr-FR@ City Value:</string>
+
+    <string id="Category:">@fr-FR@ Category:</string>
+
+    <string id="Game Level:">@fr-FR@ Game Level:</string>
+
+    <string id="Current Score:">@fr-FR@ Current Score:</string>
+
+    <string id="Annual Change:">@fr-FR@ Annual Change:</string>
+
+    <string id="Popularity:">@fr-FR@ Popularity:</string>
+
+    <string id="Problems:">@fr-FR@ Problems:</string>
+
+
+    <!-- generatorview.lzx -->
+
+    <string id="Generate Random Map">@fr-FR@ Generate Random Map</string>
+
+    <string id="Generated Map">@fr-FR@ Generated Map</string>
+
+    <string id="Generated a new random map.">@fr-FR@ Generated a new random map.</string>
+
+
+    <!-- historyview.lzx -->
+
+    <string id="Residential">@fr-FR@ Residential</string>
+
+    <string id="Show the residential population history.">@fr-FR@ Show the residential population history.</string>
+
+    <string id="Commercial">@fr-FR@ Commercial</string>
+
+    <string id="Show the commercial population history.">@fr-FR@ Show the commercial population history.</string>
+
+    <string id="Industrial">@fr-FR@ Industrial</string>
+
+    <string id="Show the industrial population history.">@fr-FR@ Show the industrial population history.</string>
+
+    <string id="Money">@fr-FR@ Money</string>
+
+    <string id="Show the city funds history.">@fr-FR@ Show the city funds history.</string>
+
+    <string id="Show the crime rate history.">@fr-FR@ Show the crime rate history.</string>
+
+    <string id="Show the pollution rate history.">@fr-FR@ Show the pollution rate history.</string>
+
+    <string id="10 Years">@fr-FR@ 10 Years</string>
+
+    <string id="120 Years">@fr-FR@ 120 Years</string>
+
+    
+    <!-- libraryview.lzx -->
+
+    <string id="Loaded Map:">@fr-FR@ Loaded Map:</string>
+
+    <string id="Loaded a map from the library:">@fr-FR@ Loaded a map from the library:</string>
+
+
+    <!-- loginview.lzx -->
+
+    <string id="You are logged in as">@fr-FR@ You are logged in as</string>
+
+    <string id="Please log in*">@fr-FR@ Please log in or create a new account, so you can save your cities and participate in the Micropolis Online community.</string>
+
+    <!-- userview.lzx -->
+
+    <string id="You have successfully logged in,*">@fr-FR@ You have successfully logged in, and you can configure your account.</string>
+
+    <string id="Please log in or create a new account.">@fr-FR@ Please log in or create a new account.</string>
+
+    <string id="New and Registered Users:*">@fr-FR@ New and Registered Users, please enter your user name and password, and press the appropriate button.</string>
+
+    <string id="User Name:">@fr-FR@ User Name:</string>
+
+    <string id="Old Password:">@fr-FR@ Old Password:</string>
+
+    <string id="Password:">@fr-FR@ Password:</string>
+
+    <string id="Log In to Existing Account">@fr-FR@ Log In to Existing Account</string>
+
+    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">@fr-FR@ New Users: Please repeat your password, and enter your full name and email address. Then press the 'Create New Account' button.</string>
+
+    <string id="Repeat Password:">@fr-FR@ Repeat Password:</string>
+
+    <string id="Full Name:">@fr-FR@ Full Name:</string>
+
+    <string id="EMail Address:">@fr-FR@ EMail:</string>
+
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">@fr-FR@ Create New Account</string>
+
+    <string id="You can change your password*">@fr-FR@ You can change your password by entering your old password, then your new password twice below. You can change your full name or email address by editing the fields below.</string>
+
+    <string id="New Password:">@fr-FR@ New Password:</string>
+
+    <string id="Log Out">@fr-FR@ Log Out</string>
+
+    <string id="Cancel">@fr-FR@ Cancel</string>
+
+    <string id="Log In">@fr-FR@ Log In</string>
+
+
+    <!-- noticeview.lzx -->
+
+    <string id="Micropolis">@fr-FR@ Micropolis</string>
+
+    <string id="The city simulation has begun!">@fr-FR@ The city simulation has begun!</string>
+
+
+    <!-- playscreen.lzx -->
+
+
+    <string id="User:">@fr-FR@ User:</string>
+
+    <!-- remoteserver.lzx -->
+
+    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">@fr-FR@ Disconnected (error).</string>
+
+    <string comment="Normal disconnection that is not an error." id="Disconnected.">@fr-FR@ Disconnected.</string>
+
+    <string id="Connection failed.">@fr-FR@ Connection failed.</string>
+
+    <string id="Connection rejected.">@fr-FR@ Connection rejected.</string>
+
+    <string id="Connected.">@fr-FR@ Connected.</string>
+
+    <string id="Message failed.">@fr-FR@ Message failed.</string>
+
+    <string id="Description:">@fr-FR@ Description:</string>
+
+    <string id="To:">@fr-FR@ To:</string>
+
+
+    <!-- scenariosview.lzx -->
+
+    <string id="Scenario:">@fr-FR@ Scenario:</string>
+
+
+    <!-- startscreen.lzx -->
+
+    <string id="Play With This Map">@fr-FR@ Play With This Map</string>
+
+    <string id="Scenarios">@fr-FR@ Scenarios</string>
+
+    <string id="Generator">@fr-FR@ Generator</string>
+
+    <string id="Library">@fr-FR@ Library</string>
+
+    <string id="User">@fr-FR@ User</string>
+
+
+    <!-- toolcursor.lzx -->
+
+
+    <!-- toolpalette.lzx -->
+
+    <string id="Fire Station">@fr-FR@ Fire Station</string>
+
+    <string id="Query">@fr-FR@ Query</string>
+
+    <string id="Police Station">@fr-FR@ Police Station</string>
+
+    <string id="Wire">@fr-FR@ Wire</string>
+
+    <string id="Bulldozer">@fr-FR@ Bulldozer</string>
+
+    <string id="Railroad">@fr-FR@ Railroad</string>
+
+    <string id="Road">@fr-FR@ Road</string>
+
+    <string id="Center">@fr-FR@ Center</string>
+
+    <string id="Stadium">@fr-FR@ Stadium</string>
+
+    <string id="Park">@fr-FR@ Park</string>
+
+    <string id="Seaport">@fr-FR@ Seaport</string>
+
+    <string id="Coal Power">@fr-FR@ Coal Power</string>
+
+    <string id="Airport">@fr-FR@ Airport</string>
+
+    <string id="Nuclear Power">@fr-FR@ Nuclear Power</string>
+
+
+    <!-- disasters.xml -->
+
+    <string id="disaster_monster_title">@fr-FR@ Monster</string>
+
+    <string id="disaster_fire_title">@fr-FR@ Fire</string>
+
+    <string id="disaster_flood_title">@fr-FR@ Flood</string>
+
+    <string id="disaster_meltdown_title">@fr-FR@ Meltdown</string>
+
+    <string id="disaster_tornado_title">@fr-FR@ Tornado</string>
+
+    <string id="disaster_earthquake_title">@fr-FR@ Earthquake</string>
+
+
+    <!-- notices.xml -->
+
+    <string id="notice_10_title">@fr-FR@ POLLUTION ALERT!</string>
+
+    <string id="notice_10_description">@fr-FR@ Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br/&gt;Either clean up your act or open a gas mask concession at city hall.</string>
+
+    <string id="notice_11_title">@fr-FR@ CRIME ALERT!</string>
+
+    <string id="notice_11_description">@fr-FR@ Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.</string>
+
+    <string id="notice_12_title">@fr-FR@ TRAFFIC WARNING!</string>
+
+    <string id="notice_12_description">@fr-FR@ Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.</string>
+
+    <string id="notice_20_title">@fr-FR@ FIRE REPORTED!</string>
+
+    <string id="notice_20_description">@fr-FR@ A fire has been reported!</string>
+
+    <string id="notice_21_title">@fr-FR@ MONSTER ATTACK!</string>
+
+    <string id="notice_21_description">@fr-FR@ A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.&lt;br/&gt;All you can do is wait till he leaves, then rebuild from the rubble.</string>
+
+    <string id="notice_22_title">@fr-FR@ TORNADO ALERT!</string>
+
+    <string id="notice_22_description">@fr-FR@ A tornado has been reported! There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!</string>
+
+    <string id="notice_23_title">@fr-FR@ EARTHQUAKE!</string>
+
+    <string id="notice_23_description">@fr-FR@ A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.</string>
+
+    <string id="notice_24_title">@fr-FR@ PLANE CRASH!</string>
+
+    <string id="notice_24_description">@fr-FR@ A plane has crashed!</string>
+
+    <string id="notice_25_title">@fr-FR@ SHIPWRECK!</string>
+
+    <string id="notice_25_description">@fr-FR@ A ship has wrecked!</string>
+
+    <string id="notice_26_title">@fr-FR@ TRAIN CRASH!</string>
+
+    <string id="notice_26_description">@fr-FR@ A train has crashed!</string>
+
+    <string id="notice_27_title">@fr-FR@ HELICOPTER CRASH!</string>
+
+    <string id="notice_27_description">@fr-FR@ A helicopter has crashed!</string>
+
+    <string id="notice_30_title">@fr-FR@ FIREBOMBING REPORTED!</string>
+
+    <string id="notice_30_description">@fr-FR@ Firebombs are falling!!</string>
+
+    <string id="notice_32_title">@fr-FR@ EXPLOSION REPORTED!</string>
+
+    <string id="notice_32_description">@fr-FR@ There has been an explosion!!</string>
+
+    <string id="notice_35_title">@fr-FR@ TOWN</string>
+
+    <string id="notice_35_description">@fr-FR@ Congratulations, your village has grown to town status. You now have 2,000 citizens.</string>
+
+    <string id="notice_36_title">@fr-FR@ CITY</string>
+
+    <string id="notice_36_description">@fr-FR@ Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!</string>
+
+    <string id="notice_37_title">@fr-FR@ CAPITAL</string>
+
+    <string id="notice_37_description">@fr-FR@ Your city has become a capital. The current population here is 50,000. Your political future looks bright.</string>
+
+    <string id="notice_38_title">@fr-FR@ METROPOLIS</string>
+
+    <string id="notice_38_description">@fr-FR@ Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.</string>
+
+    <string id="notice_39_title">@fr-FR@ MEGALOPOLIS</string>
+
+    <string id="notice_39_description">@fr-FR@ Congratulation, you have reached the highest category of urban development, the megalopolis.</string>
+
+    <string id="notice_41_title">@fr-FR@ HEAVY TRAFFIC!</string>
+
+    <string id="notice_41_description">@fr-FR@ Sky Watch One reporting heavy traffic!</string>
+
+    <string id="notice_42_title">@fr-FR@ FLOODING REPORTED!</string>
+
+    <string id="notice_42_description">@fr-FR@ Flooding has been been reported along the water's edge!</string>
+
+    <string id="notice_43_title">@fr-FR@ NUCLEAR MELTDOWN!</string>
+
+    <string id="notice_43_description">@fr-FR@ A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.&lt;br/&gt;Many generations will confront this problem before it goes away, so don't hold your breath.</string>
+
+    <string id="notice_44_title">@fr-FR@ RIOTS!</string>
+
+    <string id="notice_44_description">@fr-FR@ The citizens are rioting in the streets!</string>
+
+    <string id="notice_45_title">@fr-FR@ Start a New City</string>
+
+    <string id="notice_45_description">@fr-FR@ Build your very own city from the ground up, starting with this map of uninhabited land.</string>
+
+    <string id="notice_46_title">@fr-FR@ Restore a Saved City</string>
+
+    <string id="notice_46_description">@fr-FR@ The city was restored.</string>
+
+    <string id="notice_47_title">@fr-FR@ YOU'RE A WINNER!</string>
+
+    <string id="notice_47_description">@fr-FR@ Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?</string>
+
+    <string id="notice_48_title">@fr-FR@ IMPEACHMENT NOTICE!</string>
+
+    <string id="notice_48_description">@fr-FR@ The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)</string>
+
+    <string id="notice_49_title">@fr-FR@ About Micropolis</string>
+
+    <string id="notice_49_description">@fr-FR@ Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</string>
+
+    <string id="notice_50_title">@fr-FR@ DULLSVILLE, USA  1900</string>
+
+    <string id="notice_50_description">@fr-FR@ Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.&lt;br/&gt;It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.</string>
+
+    <string id="notice_51_title">@fr-FR@ SAN FRANCISCO, CA.  1906</string>
+
+    <string id="notice_51_description">@fr-FR@ Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.&lt;br/&gt;Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.</string>
+
+    <string id="notice_52_title">@fr-FR@ HAMBURG, GERMANY  1944</string>
+
+    <string id="notice_52_description">@fr-FR@ Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.&lt;br/&gt;You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.</string>
+
+    <string id="notice_53_title">@fr-FR@ BERN, SWITZERLAND  1965</string>
+
+    <string id="notice_53_description">@fr-FR@ The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.&lt;br/&gt;Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.</string>
+
+    <string id="notice_54_title">@fr-FR@ TOKYO, JAPAN  1957</string>
+
+    <string id="notice_54_description">@fr-FR@ A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.&lt;br/&gt;Try to control the fires, then rebuild the industrial center. You have 5 years.</string>
+
+    <string id="notice_55_title">@fr-FR@ DETROIT, MI.  1972</string>
+
+    <string id="notice_55_description">@fr-FR@ By 1970, competition from overseas and other economic factors pushed the once &quot;automobile capital of the world&quot; into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.&lt;br/&gt;You have 10 years to reduce crime and rebuild the industrial base of the city.</string>
+
+    <string id="notice_56_title">@fr-FR@ BOSTON, MA.  2010</string>
+
+    <string id="notice_56_description">@fr-FR@ A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.&lt;br/&gt;You have 5 years to get the situation under control.</string>
+
+    <string id="notice_57_title">@fr-FR@ RIO DE JANEIRO, BRAZIL  2047</string>
+
+    <string id="notice_57_description">@fr-FR@ In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.</string>
+
+
+    <!-- overlays.xml -->
+
+    <string id="overlay_all_title">@fr-FR@ All Zones</string>
+
+    <string id="overlay_residential_title">@fr-FR@ Residential Zones</string>
+
+    <string id="overlay_commercial_title">@fr-FR@ Commercial Zones</string>
+
+    <string id="overlay_industrial_title">@fr-FR@ Industrial Zones</string>
+
+    <string id="overlay_powergrid_title">@fr-FR@ Power Connectivity</string>
+
+    <string id="overlay_transportation_title">@fr-FR@ Transportation Network</string>
+
+    <string id="overlay_populationdensity_title">@fr-FR@ Population Density</string>
+
+    <string id="overlay_rateofgrowth_title">@fr-FR@ Rate of Growth</string>
+
+    <string id="overlay_trafficdensity_title">@fr-FR@ Traffic Density</string>
+
+    <string id="overlay_pollutiondensity_title">@fr-FR@ Pollution Density</string>
+
+    <string id="overlay_crimerate_title">@fr-FR@ Crime Rate</string>
+
+    <string id="overlay_landvalue_title">@fr-FR@ Land Value</string>
+
+    <string id="overlay_firecoverage_title">@fr-FR@ Fire Station Coverage</string>
+
+    <string id="overlay_policecoverage_title">@fr-FR@ Police Station Coverage</string>
+
+
+    <!-- scenarios.xml -->
+
+    <string id="scenario_1_title">@fr-FR@ Dullsville</string>
+
+    <string id="scenario_1_tagline">@fr-FR@ Boredom</string>
+
+    <string id="scenario_2_title">@fr-FR@ San Francsico</string>
+
+    <string id="scenario_2_tagline">@fr-FR@ Earthquake</string>
+
+    <string id="scenario_3_title">@fr-FR@ Hamburg</string>
+
+    <string id="scenario_3_tagline">@fr-FR@ Bombing</string>
+
+    <string id="scenario_4_title">@fr-FR@ Bern</string>
+
+    <string id="scenario_4_tagline">@fr-FR@ Traffic</string>
+
+    <string id="scenario_5_title">@fr-FR@ Tokyo</string>
+
+    <string id="scenario_5_tagline">@fr-FR@ Monster Attack</string>
+
+    <string id="scenario_6_title">@fr-FR@ Detroit</string>
+
+    <string id="scenario_6_tagline">@fr-FR@ Crime</string>
+
+    <string id="scenario_7_title">@fr-FR@ Boston</string>
+
+    <string id="scenario_7_tagline">@fr-FR@ Nuclear Meltdown</string>
+
+    <string id="scenario_8_title">@fr-FR@ Rio de Janeiro</string>
+
+    <string id="scenario_8_tagline">@fr-FR@ Coastal Flooding</string>
+
+
+    <!-- micropolisturbogearsengine.py -->
+
+    <string id="You are logged in.*">@fr-FR@ You are logged in. Welcome back to Micropolis Online!</string>
+
+    <string id="Incorrect user name or password.">@fr-FR@ Incorrect user name or password.</string>
+
+    <string id="You are already logged out,*">@fr-FR@ You are already logged out, and you may log in or create an account.</string>
+
+    <string id="You are logged out.*">@fr-FR@ You are logged out. Come back soon!</string>
+
+    <string id="Please enter a user name.">@fr-FR@ Please enter a user name.</string>
+
+    <string id="The user name contains invalid characters.*">@fr-FR@ The user name contains invalid characters. Please use only letters, numbers, underscores or dashes.</string>
+
+    <string id="Please enter a password.">@fr-FR@ Please enter a password.</string>
+
+    <string id="A user of that name already exists.*">@fr-FR@ A user of that name already exists.</string>
+
+    <string id="Please repeat the same password in the next field.">@fr-FR@ Please repeat the same password in the next field.</string>
+
+    <string id="An account with that email address already exists.">@fr-FR@ An account with that email address already exists.</string>
+
+    <string id="A new account has been created*">@fr-FR@ A new account has been created for you, and you are logged in. Welcome to Micropolis Online!</string>
+
+    <string id="Incorrect old password.">@fr-FR@ Incorrect old password.</string>
+
+    <string id="The new passwords do not match.">@fr-FR@ The new passwords do not match.</string>
+
+    <string id="You must enter your new password twice.">@fr-FR@ You must enter your new password twice.</string>
+
+    <string id="Your password has been changed.">@fr-FR@ Your password has been changed.</string>
+
+
+</strings>
