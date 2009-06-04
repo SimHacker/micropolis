@@ -117,18 +117,80 @@
         </handler>
 
 
-	<handler name="sprites" reference="gApp"><![CDATA[
+	<handler name="onsprites" reference="gApp"><![CDATA[
 	    var sprites = gApp.sprites;
-	    Debug.write("TILEVIEW SPRITES", this, sprites);
-	    if (sprites == null) {
-	        return;
-	    }
+	    //Debug.write("TILEVIEW SPRITES", this, sprites);
+	    var spritesContainer = this.container.sprites;
 	    var n = sprites.length;
 	    var i;
 	    for (i = 0; i < n; i++) {
 	        var sprite = sprites[i]
-		Debug.write(sprite);
+		//Debug.write(sprite);
+		var spriteView;
+		var subViews = spritesContainer.subviews;
+		if (i >= subViews.length) {
+		    spriteView = new lz.sprite(spritesContainer);
+		} else {
+		    spriteView = subViews[i];
+		}
+
+		var x = (sprite['x'] + sprite['xOffset']) * 2; /// @todo scale properly
+		if (spriteView.x != x) {
+		    spriteView.setAttribute("x", x);
+		}
+		var y = (sprite['y'] + sprite['yOffset']) * 2; /// @todo scale properly
+		if (spriteView.y != y) {
+		    spriteView.setAttribute("y", y);
+		}
+		var width = sprite['width'] * 2;
+		if (spriteView.width != width) {
+		    spriteView.setAttribute("width", width);
+		}
+		var height = sprite['height'] * 2;
+		if (spriteView.height != height) {
+		    spriteView.setAttribute("height", height);
+		}	
+		if (spriteView.frame != sprite['frame']) {
+		    spriteView.setAttribute("frame", sprite['frame']);
+		}
+		if (!spriteView.visible) {
+		    spriteView.setAttribute("visible", true);
+		}
+
+		var spriteName = 
+		    "sprite_" + 
+		    sprite['type'] +
+		    "_rsrc";
+		if (spriteView.resource != spriteName) {
+		    spriteView.setAttribute("resource", spriteName);
+		}
+
+		var txt =
+		    "Sprite:\n" +
+		    "  spriteName: " + spriteName + "\n" +
+ 		    "  type: " + sprite['type'] + "\n" +
+		    "  frame: " + sprite['frame'] + "\n" +
+		    "  x: " + sprite['x'] + "\n" +
+		    "  y: " + sprite['y'] + "\n" +
+		    "  width: " + sprite['width'] + "\n" +
+		    "  height: " + sprite['height'] + "\n" +
+		    "  xOffset: " + sprite['xOffset'] + "\n" +
+		    "  yOffset: " + sprite['yOffset'] + "\n";
+		if (txt != spriteView.text) {
+		    spriteView.setAttribute("text", txt);
+		}
+
 	    }
+
+	    subViews = spritesContainer.subviews;
+	    while (i < subViews.length) {
+	        var spriteView = subViews[i];
+		if (spriteView.visible) {
+		    spriteView.setAttribute("visible", false);
+		}
+		i++;
+	    }
+
 	  ]]>
 	</handler>
 
@@ -282,11 +344,10 @@
 		code: this.code
 	    });
 
-            messages,push({
-	        message: 'spriteview'
+            messages.push({
+	        message: 'spritesview'
 	    });
 
-	    return message;
           ]]>
         </method>
 
@@ -439,6 +500,11 @@
         >
 
 	    <view name="tiles"
+	        width="${parent.width}"
+		height="${parent.height}"
+	    />
+
+	    <view name="sprites"
 	        width="${parent.width}"
 		height="${parent.height}"
 	    />

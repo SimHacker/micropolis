@@ -106,10 +106,9 @@
                 'funds', 'date', 'history', 'evaluation', 
 		'paused', 'passes', 'delay', 'demand', 
 		'options', 'gameLevel', 'cityName', 
-		'taxRate', 'budget',
+		'taxRate', 'budget', 'sprites',
                 'message', 'virtualSpeed', 
 		'tileview', 'historyview',
-		'spritesview'
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -249,7 +248,8 @@
         </handler>
 
 
-	<handler name="onfullName"><![CDATA[
+	<method name="setFullName" args="fullName"><![CDATA[
+	    this.setAttribute("fullName", fullName);
 	    if (this.loggedIn) {
 		this.sendMessage({
 		    message: 'setUserFullName',
@@ -257,9 +257,11 @@
 		});
 	    }
 	  ]]>
-	</handler>
+	</method>
 
-	<handler name="onemailAddress"><![CDATA[
+
+	<method name="setEmailAddress" args="emailAddress"><![CDATA[
+	    this.setAttribute("emailAddress", emailAddress);
 	    if (this.loggedIn) {
 		this.sendMessage({
 		    message: 'setUserEmailAddress',
@@ -267,7 +269,8 @@
 		});
 	    }
 	  ]]>
-	</handler>
+	</method>
+
 
         <method name="handleKey" args="arg"><![CDATA[
             Debug.write("handleKey", arg);
@@ -396,12 +399,12 @@
                 }
 
                 case 'demand': {
-                    this.setAttribute("demand", args);
+                    this.setAttribute("demand", args['demand']);
                     break;
                 }
 
                 case 'options': {
-                    this.setAttribute("options", args);
+                    this.setAttribute("options", args['options']);
                     break;
                 }
 
@@ -416,13 +419,20 @@
                 }
 
                 case 'budget': {
-		    this.setAttribute("budget", args);
+		    this.setAttribute("budget", args['budget']);
+                    break;
+                }
+
+                case 'sprites':
+                {
+		    //Debug.write("UPDATE SPRITES", args);
+		    this.setAttribute("sprites", args['sprites']);
                     break;
                 }
 
                 case 'message':
                 {
-                    this.setAttribute("message", args);
+                    this.setAttribute("message", args['msg']);
                     break;
                 }
 
@@ -461,15 +471,6 @@
 		    //Debug.write("hv", hv, "id", id, typeof(id));
 
 		    hv.setAttribute("history", args);
-
-                    break;
-                }
-
-                case 'spritesview':
-                {
-		    //Debug.write("UPDATE SPRITESVIEW", args);
-
-		    this.setAttribute("sprites", args['sprites']);
 
                     break;
                 }
@@ -1167,10 +1168,10 @@
         <method name="logout"><![CDATA[
             Debug.write("logout");
 	    this.setAttribute("loggingOut", true);
+	    this.setAttribute("loggedOut", true); // Give the benefit of the doubt.
 	    this.sendMessage({
 	        message: 'logout'
 	    });
-
           ]]>
         </method>
 
@@ -1379,29 +1380,29 @@
 	    var feedback = args['feedback'];
 	    if (success) {
 	        this.setAttribute("loggedIn", true);
+		this.setAttribute("fullName", "");
+		this.setAttribute("emailAddress", "");
 		this.setAttribute("passwordOld", "");
 		this.setAttribute("password1", "");
 		this.setAttribute("password2", "");
 	    }
-	    this.setAttribute("loginFeedback", gApp._(feedback));
+	    this.setAttribute("loginFeedback", gApp._(feedback)); /// @bug This gets stomped.
 	    this.setAttribute("makingNewAccount", false);
           ]]>
         </method>
 
 
         <method name="handle_loginResponse" args="args"><![CDATA[
-	    //Debug.write("loginResponse", args);
+	    Debug.write("loginResponse", args);
 	    var success = args['success'];
 	    var feedback = args['feedback'];
 	    if (success) {
-		var fullName = args['fullName'];
-		var emailAddress = args['emailAddress'];
-		this.setAttribute("fullName", fullName);
-		this.setAttribute("emailAddress", emailAddress);
+	        this.setAttribute("loggedIn", true);
+		this.setAttribute("fullName", args['fullName']);
+		this.setAttribute("emailAddress", args['emailAddress']);
 		this.setAttribute("passwordOld", "");
 		this.setAttribute("password1", "");
 		this.setAttribute("password2", "");
-	        this.setAttribute("loggedIn", true);
 	    }
 	    this.setAttribute("loginFeedback", gApp._(feedback));
 	    this.setAttribute("loggingIn", false);

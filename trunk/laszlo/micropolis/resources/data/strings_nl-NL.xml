@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><strings language="en-US">
+<?xml version="1.0" ?>
+<strings language="en-US">
 
 
     <!--
@@ -87,9 +88,9 @@
 
     <string id="Road Request:">Weg Aanvraag:</string>
 
-    <string id="Fire Request:">Brandweerkazerne Aanvraag:</string>
+    <string id="Fire Request:">Brand Aanvraag:</string>
 
-    <string id="Police Request:">Politiebureau Aanvraag:</string>
+    <string id="Police Request:">Politie Aanvraag:</string>
 
 
     <!-- changepassword.lzx -->
