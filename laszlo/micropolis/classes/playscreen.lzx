@@ -250,6 +250,12 @@
 			saveHeight="false"
 		    >
 
+			<handler name="onloggedIn" reference="gApp"><![CDATA[
+			    this.savedHeight = -1;
+			    this.animateToHeight();
+			  ]]>
+			</handler>
+
 		        <method name="initialHeight"><![CDATA[
 			    return gPlayUserView.v.height + 45;
 			  ]]>

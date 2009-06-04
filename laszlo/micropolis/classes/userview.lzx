@@ -340,7 +340,9 @@
 		    >
 
 			<handler name="onblur" args="arg"><![CDATA[
-			    gApp.setAttribute('fullName', this.text)
+			    if (gApp.fullName != this.text) {
+			        gApp.setFullName(this.text);
+			    }
 			  ]]>
 			</handler>
 
@@ -375,7 +377,9 @@
 		    >
 
 			<handler name="onblur" args="arg"><![CDATA[
-			    gApp.setAttribute('emailAddress', this.text)
+			    if (this.text != gApp.emailAddress) {
+			        gApp.setEmailAddress(this.text);
+			    }
 			  ]]>
 			</handler>
 

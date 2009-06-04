@@ -1,0 +1,28 @@
+<library>
+
+
+    <!-- Sprite -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="sprite"
+	stretches="both"
+    >
+
+	<attribute name="text" type="string" value=""/>
+
+<!--
+	<text
+	    multiline="true"
+	    width="${parent.width}"
+	    text="${parent.text}"
+	/>
+-->
+
+
+    </class>
+
+
+</library>

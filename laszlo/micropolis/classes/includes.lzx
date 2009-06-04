@@ -23,6 +23,7 @@
     <include href="resizebarh.lzx"/>
     <include href="resizebarv.lzx"/>
     <include href="tile.lzx"/>
+    <include href="sprite.lzx"/>
     <include href="toolcursor.lzx"/>
     <include href="tileview.lzx"/>
     <include href="edittileview.lzx"/>

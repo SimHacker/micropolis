@@ -98,78 +98,79 @@ MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
 LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES_PER_YEAR
 
+DefaultAnimateDelay = 250
+DefaultPollDelay = 50
+
 SpeedConfigurations = [
     { # 0: Ultra Slow
         'speed': 3,
-        'pollDelay': 5000,
-        'animateDelay': 1000,
-        'loopsPerSecond': round(LoopsPerYear / 60.0), # One year per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 120.0), # Half a year per minute.
         'maxLoopsPerPoll': 100,
     },
     { # 1: Super Slow
         'speed': 3, 
-        'pollDelay': 1000,
-        'animateDelay': 500,
-        'loopsPerSecond': round(LoopsPerYear / 30.0), # One year per 30 seconds, 2 years per minute.
-
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 60.0), # One year per minute.
         'maxLoopsPerPoll': 200,
     },
     { # 2: Very Slow
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 20.0), # One year per 20 seconds, 3 years per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 45.0), # One year per 45 seconds, 1 1/3 years per minute.
         'maxLoopsPerPoll': 400,
     },
     { # 3: Slow
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 15.0), # One year per 15 seconds, 4 years per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 30.0), # One year per 30 seconds, 2 years per minute.
         'maxLoopsPerPoll': 600,
     },
     { # 4: Medium
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 10.0), # One year per 10 seconds, 6 years per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 15.0), # One year per 15 seconds, 4 years per minute.
         'maxLoopsPerPoll': 800,
     },
     { # 5: Fast
         'speed': 3, 
         'pollDelay': 500,
         'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 5.0), # One year per 5 seconds, 12 years per minute.
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 10.0), # One year per 10 seconds, 6 years per minute.
         'maxLoopsPerPoll': 1000,
     },
     { # 6: Very Fast
         'speed': 3, 
         'pollDelay': 300,
         'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 3.0), # One year per 3 seconds, 20 years per minute.
+        'loopsPerSecond': round(LoopsPerYear / 5.0), # One year per 5 seconds, 12 years per minute.
         'maxLoopsPerPoll': 2000,
     },
     { # 7: Super Fast
         'speed': 3, 
-        'pollDelay': 250,
-        'animateDelay': 250,
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
         'loopsPerSecond': round(LoopsPerYear / 2.0), # One year per 2 seconds, 30 years per minute.
         'maxLoopsPerPoll': 5000,
     },
     { # 8: Ultra Fast
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
         'loopsPerSecond': round(LoopsPerYear / 1.0), # One year per 1 second, 60 years per minute.
         'maxLoopsPerPoll': 10000,
     },
     { # 9: Astronomically Fast
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
         'loopsPerSecond': round(4 * LoopsPerYear / 1.0), # Four years per second, 240 years per minute.
-        'loopsPerSecond': 1000,
-        'maxLoopsPerPoll': 40000,
+        'maxLoopsPerPoll': 100000,
     },
 ]
 
@@ -445,7 +446,7 @@ class Session(object):
         self.lastTouchTime = 0
         self.expireDelay = 60 * 10 # ten minutes
         self.controller = controller
-        self.user = None
+        self.userName = None
 
         self.touch()
 
@@ -477,6 +478,16 @@ class Session(object):
         return result
 
 
+    def getUser(self):
+        userName = self.userName
+        user = None
+        if userName != None:
+            try:
+                user = model.User.query.filter_by(user_name=userName).first()
+            except: pass
+        return user
+
+
     def touchAge(self):
         return Now() - self.lastTouchTime
 
@@ -494,14 +505,17 @@ class Session(object):
         self.setEngine(None)
 
 
+    def isMessageQueued(self, message, id=None, variable=None):
+        return (message, variable, id) in self.messagesSeen
+
     def sendMessage(self, msg):
         #print "SENDMESSAGE", msg
         collapse = msg.get('collapse', False)
         #print "COLLAPSE", collapse
         if collapse:
-            id = msg.get('id', None)
             message = msg.get('message', '')
             variable = msg.get('variable', '')
+            id = msg.get('id', None)
             key = (message, variable, id)
             messagesSeen = self.messagesSeen
             if key in messagesSeen:
@@ -664,7 +678,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def sendAllControllerSessions(self, message, exceptSession=None):
-        print "sendAllControllerSessions", self.controller.getSessions()
+        #print "sendAllControllerSessions", self.controller.getSessions()
         for session in self.controller.getSessions():
             if session != exceptSession:
                 try:
@@ -695,7 +709,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def handleMessage(self, session, messageDict):
         message = messageDict.get('message', None)
-        user = session.user
+        user = session.getUser()
+        
         #print "HANDLEMESSAGE", message, messageDict
 
         if message == 'disaster':
@@ -803,7 +818,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             gameMode = messageDict.get('gameMode')
 
-            print "setGameMode", gameMode, self.startVirtualSpeed
+            #print "setGameMode", gameMode, self.startVirtualSpeed
             if gameMode == "start":
                 self.setVirtualSpeed(0)
                 self.pause()
@@ -830,7 +845,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             virtualSpeed = int(messageDict.get('virtualSpeed'))
             speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
 
-            print "setVirtualSpeed", virtualSpeed
+            #print "setVirtualSpeed", virtualSpeed
             self.setVirtualSpeed(virtualSpeed)
 
         elif message == 'abandonCity':
@@ -839,7 +854,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'saveCity':
 
-            print "SAVE CITY"
+            self.saveMetaCityToDatabase()
 
         elif message == 'drawToolStart':
 
@@ -905,7 +920,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             language = messageDict['language']
 
             userName = 'anonymous'
-            user = session.user
+            user = session.getUser()
             if user:
                 userName = user.user_name
 
@@ -982,82 +997,83 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            #print "ID", id
-            #print "TILE", col, row, cols, rows
-            #print "VIEW", viewX, viewY, viewWidth, viewHeight
+            if not session.isMessageQueued('update', 'tileview', id):
 
-            if ((col < 0) or
-                (row < 0) or
-                (cols <= 0) or
-                (rows <= 0) or
-                ((col + cols) > micropolisengine.WORLD_W) or
-                ((row + rows) > micropolisengine.WORLD_H)):
-                self.expectationFailed("Invalid parameters.")
+                #print "ID", id
+                #print "TILE", col, row, cols, rows
+                #print "VIEW", viewX, viewY, viewWidth, viewHeight
 
-            #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
-            tiles = self.tengine.getTileData(
-                None,
-                self.tileMap,
-                col, row,
-                cols, rows,
-                code,
-                session.tileViewCache)
-            #print "TILES", "code", code, "tiles", type(tiles), len(tiles), tiles
-            #t = tiles
-            #tiles = ByteArray()
-            #tiles.write(t)
-            #print "TILES NOW", type(tiles)
-            #print "TILES", tiles
+                if ((col < 0) or
+                    (row < 0) or
+                    (cols <= 0) or
+                    (rows <= 0) or
+                    ((col + cols) > micropolisengine.WORLD_W) or
+                    ((row + rows) > micropolisengine.WORLD_H)):
+                    self.expectationFailed("Invalid parameters.")
 
-            session.sendMessage({
-                'message': 'update',
-                'variable': 'tileview',
-                'id': id,
-                'col': col,
-                'row': row,
-                'cols': cols,
-                'rows': rows,
-                'viewX': viewX,
-                'viewY': viewY,
-                'viewWidth': viewWidth,
-                'viewHeight': viewHeight,
-                'tiles': tiles,
-                'code': code,
-                'collapse': True,
-            })
+                #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
+                tiles = self.tengine.getTileData(
+                    None,
+                    self.tileMap,
+                    col, row,
+                    cols, rows,
+                    code,
+                    session.tileViewCache)
+                #print "TILES", "code", code, "tiles", type(tiles), len(tiles), tiles
+                #t = tiles
+                #tiles = ByteArray()
+                #tiles.write(t)
+                #print "TILES NOW", type(tiles)
+                #print "TILES", tiles
+
+                session.sendMessage({
+                    'message': 'update',
+                    'variable': 'tileview',
+                    'id': id,
+                    'col': col,
+                    'row': row,
+                    'cols': cols,
+                    'rows': rows,
+                    'viewX': viewX,
+                    'viewY': viewY,
+                    'viewWidth': viewWidth,
+                    'viewHeight': viewHeight,
+                    'tiles': tiles,
+                    'code': code,
+                    'collapse': True,
+                })
 
         elif message == 'spritesview':
 
-            try:
-                id = messageDict['id']
-            except Exception, e:
-                self.expectationFailed("Invalid parameters: " + str(e))
+            if not session.isMessageQueued('update', 'sprites'):
 
-            sprites = []
-            sprite = session.engine.spriteList
-            while True:
-                if not sprite:
-                    break
-                sprites.append({
-                    'type': sprite.spriteType,
-                    'frame': sprite.spriteFrame,
-                    'x': sprite.x,
-                    'y': sprite.y,
-                    'width': sprite.width,
-                    'height': sprite.height,
-                    'xOffset': sprite.xOffset,
-                    'yOffset': sprite.yOffset,
+                sprites = []
+                sprite = session.engine.spriteList
+                while True:
+                    #print "SPRITE", sprite
+                    if not sprite:
+                        break
+                    sprites.append({
+                        'type': sprite.type,
+                        'frame': sprite.frame,
+                        'x': sprite.x,
+                        'y': sprite.y,
+                        'width': sprite.width,
+                        'height': sprite.height,
+                        'xOffset': sprite.xOffset,
+                        'yOffset': sprite.yOffset,
+                        'xHot': sprite.xHot,
+                        'yHot': sprite.yHot,
+                    })
+                    sprite = sprite.next
+
+                #print "MESSAGE SPRITESVIEW", sprites
+                session.sendMessage({
+                    'message': 'update',
+                    'variable': 'sprites',
+                    'sprites': sprites,
+                    'collapse': True,
                 })
-                sprite = sprite.next
-
-            #print "MESSAGE SPRITESVIEW", messageDict
-            session.sendMessage({
-                'message': 'update',
-                'variable': 'sprites',
-                'sprites': sprites,
-                'id': id,
-                'collapse': True,
-            })
 
         elif message == 'historyview':
 
@@ -1074,117 +1090,119 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+            if not session.isMessageQueued('update', 'historyview', id):
 
-            # Scale the residential, commercial and industrial histories
-            # together relative to the max of all three.  Up to 128 they
-            # are not scaled. Starting at 128 they are scaled down so the
-            # maximum is always at the top of the history.
+                #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
 
-            def calcScale(maxVal):
-                if maxVal < 128:
-                    maxVal = 0
-                if maxVal > 0:
-                    return 128.0 / float(maxVal)
-                else:
-                    return 1.0
+                # Scale the residential, commercial and industrial histories
+                # together relative to the max of all three.  Up to 128 they
+                # are not scaled. Starting at 128 they are scaled down so the
+                # maximum is always at the top of the history.
 
-            cityTime = self.cityTime
-            startingYear = self.startingYear
-            year = int(cityTime / 48) + startingYear
-            month = int(cityTime % 48) >> 2
+                def calcScale(maxVal):
+                    if maxVal < 128:
+                        maxVal = 0
+                    if maxVal > 0:
+                        return 128.0 / float(maxVal)
+                    else:
+                        return 1.0
 
-            getHistoryRange = self.getHistoryRange
-            getHistory = self.getHistory
+                cityTime = self.cityTime
+                startingYear = self.startingYear
+                year = int(cityTime / 48) + startingYear
+                month = int(cityTime % 48) >> 2
 
-            resHistoryMin, resHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_RES,
-                historyScale)
-            comHistoryMin, comHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_COM,
-                historyScale)
-            indHistoryMin, indHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_IND,
-                historyScale)
-            allMax = max(resHistoryMax,
-                         max(comHistoryMax,
-                             indHistoryMax))
-            rciScale = calcScale(allMax)
+                getHistoryRange = self.getHistoryRange
+                getHistory = self.getHistory
 
-            # Scale the money, crime and pollution histories
-            # independently of each other.
+                resHistoryMin, resHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_RES,
+                    historyScale)
+                comHistoryMin, comHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_COM,
+                    historyScale)
+                indHistoryMin, indHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_IND,
+                    historyScale)
+                allMax = max(resHistoryMax,
+                             max(comHistoryMax,
+                                 indHistoryMax))
+                rciScale = calcScale(allMax)
 
-            moneyHistoryMin, moneyHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_MONEY,
-                historyScale)
-            crimeHistoryMin, crimeHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_CRIME,
-                historyScale)
-            pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
-                micropolisengine.HISTORY_TYPE_POLLUTION,
-                historyScale)
-            moneyScale = calcScale(moneyHistoryMax)
-            crimeScale = calcScale(crimeHistoryMax)
-            pollutionScale = calcScale(pollutionHistoryMax)
+                # Scale the money, crime and pollution histories
+                # independently of each other.
 
-            historyRange = 128.0
+                moneyHistoryMin, moneyHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_MONEY,
+                    historyScale)
+                crimeHistoryMin, crimeHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_CRIME,
+                    historyScale)
+                pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
+                    micropolisengine.HISTORY_TYPE_POLLUTION,
+                    historyScale)
+                moneyScale = calcScale(moneyHistoryMax)
+                crimeScale = calcScale(crimeHistoryMax)
+                pollutionScale = calcScale(pollutionHistoryMax)
 
-            valueScales = (
-                rciScale, rciScale, rciScale, # res, com, ind
-                moneyScale, crimeScale, pollutionScale, # money, crime, pollution
-            )
+                historyRange = 128.0
 
-            valueRanges = (
-                (resHistoryMin, resHistoryMax,),
-                (comHistoryMin, comHistoryMax,),
-                (indHistoryMin, indHistoryMax,),
-                (moneyHistoryMin, moneyHistoryMax,),
-                (crimeHistoryMin, crimeHistoryMax,),
-                (pollutionHistoryMin, pollutionHistoryMax,),
-            )
+                valueScales = (
+                    rciScale, rciScale, rciScale, # res, com, ind
+                    moneyScale, crimeScale, pollutionScale, # money, crime, pollution
+                )
 
-            histories = []
+                valueRanges = (
+                    (resHistoryMin, resHistoryMax,),
+                    (comHistoryMin, comHistoryMax,),
+                    (indHistoryMin, indHistoryMax,),
+                    (moneyHistoryMin, moneyHistoryMax,),
+                    (crimeHistoryMin, crimeHistoryMax,),
+                    (pollutionHistoryMin, pollutionHistoryMax,),
+                )
 
-            for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
+                histories = []
 
-                if historyType not in historyTypes:
-                    histories.append(None)
-                    continue
+                for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
 
-                valueScale = valueScales[historyType]
-                valueRange = valueRanges[historyType]
+                    if historyType not in historyTypes:
+                        histories.append(None)
+                        continue
 
-                values = [
-                        getHistory(
-                            historyType,
-                            historyScale,
-                            historyIndex)
-                        for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
-                ]
+                    valueScale = valueScales[historyType]
+                    valueRange = valueRanges[historyType]
 
-                histories.append({
-                    'historyType': historyType,
-                    'valueScale': valueScale,
-                    'valueRange': valueRange,
-                    'values': values,
+                    values = [
+                            getHistory(
+                                historyType,
+                                historyScale,
+                                historyIndex)
+                            for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
+                    ]
+
+                    histories.append({
+                        'historyType': historyType,
+                        'valueScale': valueScale,
+                        'valueRange': valueRange,
+                        'values': values,
+                    })
+
+                session.sendMessage({
+                    'message': 'update',
+                    'variable': 'historyview',
+                    'id': id,
+                    'scale': historyScale,
+                    'count': historyCount,
+                    'offset': historyOffset,
+                    'types': historyTypes,
+                    'width': historyWidth,
+                    'height': historyHeight,
+                    'year': year,
+                    'month': month,
+                    'histories': histories,
+                    'range': historyRange,
+                    'collapse': True,
                 })
-
-            session.sendMessage({
-                'message': 'update',
-                'variable': 'historyview',
-                'id': id,
-                'scale': historyScale,
-                'count': historyCount,
-                'offset': historyOffset,
-                'types': historyTypes,
-                'width': historyWidth,
-                'height': historyHeight,
-                'year': year,
-                'month': month,
-                'histories': histories,
-                'range': historyRange,
-                'collapse': True,
-            })
 
         elif message == 'login':
 
@@ -1200,16 +1218,17 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             emailAddress = ''
 
             user = model.User.by_user_name(unicode(userName))
+            #print "USER", user, userName
             if user and user.password == passwordEncrypted:
                 success = True
                 feedback = 'You are logged in.*' # TRANSLATE
                 fullName = user.display_name
                 emailAddress = user.email_address
-                session.user = user
+                session.userName = user.user_name
             else:
                 success = False
                 feedback = 'Incorrect user name or password.' # TRANSLATE
-                session.user = None
+                session.userName = None
 
             session.sendMessage({
                 'message': 'loginResponse',
@@ -1221,14 +1240,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'logout':
 
-            print "logout", messageDict
+            print "logout", messageDict, "USER", user, "name", session.userName
 
             loggedIn = user != None
             if not loggedIn:
                 success = False
                 feedback = 'You are already logged out,*' # TRANSLATE
             else:
-                session.user = None
+                session.userName = None
                 success = True
                 feedback = 'You are logged out.*' # TRANSLATE
 
@@ -1273,7 +1292,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 user.activity = datetime.now()
                 success = True
                 feedback = 'A new account has been created*' # TRANSLATE
-                session.user = user
+                session.userName = user.user_name
 
             session.sendMessage({
                 'message': 'newAccountResponse',
@@ -1310,11 +1329,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             })
 
         elif message == 'setUserFullName':
+            #print "SETUSERFULLNAME", messageDict, user
             if user:
                 fullName = messageDict['fullName']
                 user.display_name = unicode(fullName)
 
         elif message == 'setUserEmailAddress':
+            #print "SETUSEREMAILADDRESS", messageDict, user
             if user:
                 emailAddress = messageDict['emailAddress']
                 user.email_address = emailAddress
@@ -1324,6 +1345,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             print "UNKNOWN MESSAGE", message
 
 
+    def saveMetaCityToDatabase(self):
+        print "TODO: saveMetaCityToDatabase"
+
+
     def checkUserName(self, userName):
         match = UserNameExp.match(userName)
         #print "CHECKUSERNAME", userName, match
@@ -1331,7 +1356,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def setVirtualSpeed(self, virtualSpeed):
-        print "setVirtualSpeed", virtualSpeed
+        #print "setVirtualSpeed", virtualSpeed
         self.virtualSpeed = virtualSpeed
         speedConfiguration = SpeedConfigurations[virtualSpeed]
         #print "==== setVirtualSpeed", virtualSpeed, speedConfiguration
@@ -1363,7 +1388,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
             ticks = min(ticks, self.maxLoopsPerPoll)
 
-            #print "********", "TICKS", ticks, "ELAPSED", elapsed
+            print "********", "TICKS", ticks, "ELAPSED", elapsed, "LPS", self.loopsPerSecond
 
             if self.simPasses != ticks:
                 self.setPasses(ticks)
@@ -2040,15 +2065,19 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             elif variable == 'demand':
 
                 resDemand, comDemand, indDemand = self.getDemands()
-                message['resDemand'] = resDemand
-                message['comDemand'] = comDemand
-                message['indDemand'] = indDemand
+                message['demand'] = {
+                    'resDemand': resDemand,
+                    'comDemand': comDemand,
+                    'indDemand': indDemand,
+                }
                 message['collapse'] = True
                 #print '======== DEMAND', message
 
             elif variable == 'options':
 
-                pass # TODO: copy options to message
+                message['options'] = {
+                    'disasters': self.enableDisasters,
+                }
                 message['collapse'] = True
 
             elif variable == 'gameLevel':
@@ -2063,33 +2092,36 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif (variable == 'budget') or (variable == 'taxRate'):
 
-                message['taxRate'] = self.cityTax
-                message['totalFunds'] = self.totalFunds
-                message['taxFund'] = self.taxFund
+                budget = {}
 
-                message['firePercent'] = math.floor(self.firePercent * 100.0)
-                message['fireFund'] = self.fireFund
-                message['fireValue'] = self.fireValue
+                budget['taxRate'] = self.cityTax
+                budget['totalFunds'] = self.totalFunds
+                budget['taxFund'] = self.taxFund
 
-                message['policePercent'] = math.floor(self.policePercent * 100.0)
-                message['policeFund'] = self.policeFund
-                message['policeValue'] = self.policeValue
+                budget['firePercent'] = math.floor(self.firePercent * 100.0)
+                budget['fireFund'] = self.fireFund
+                budget['fireValue'] = self.fireValue
 
-                message['roadPercent'] = math.floor(self.roadPercent * 100.0)
-                message['roadFund'] = self.roadFund
-                message['roadValue'] = self.roadValue
+                budget['policePercent'] = math.floor(self.policePercent * 100.0)
+                budget['policeFund'] = self.policeFund
+                budget['policeValue'] = self.policeValue
 
-                message['cashFlow'] = (
-                    message['taxFund'] -
-                    message['fireValue'] -
-                    message['policeValue'] -
-                    message['roadValue']
+                budget['roadPercent'] = math.floor(self.roadPercent * 100.0)
+                budget['roadFund'] = self.roadFund
+                budget['roadValue'] = self.roadValue
+
+                budget['cashFlow'] = (
+                    budget['taxFund'] -
+                    budget['fireValue'] -
+                    budget['policeValue'] -
+                    budget['roadValue']
                 )
 
-                message['previousFunds'] = message['totalFunds']
-                message['currentFunds'] = message['cashFlow'] + message['totalFunds']
-                message['taxesCollected'] = message['taxFund']
+                budget['previousFunds'] = budget['totalFunds']
+                budget['currentFunds'] = budget['cashFlow'] + budget['totalFunds']
+                budget['taxesCollected'] = budget['taxFund']
 
+                message['budget'] = budget
                 message['collapse'] = True
 
                 #print 'BUDGET', message
@@ -2097,11 +2129,15 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             elif variable == 'message':
 
                 # Do no collapse messages.
-                message['number'] = args[0]
-                message['x'] = args[1]
-                message['y'] = args[2]
-                message['picture'] = args[3]
-                message['important'] = args[4]
+                msg = {
+                    'number': args[0],
+                    'x': args[1],
+                    'y': args[2],
+                    'picture': args[3],
+                    'important': args[4],
+                }
+
+                message['msg'] = msg
                 message['args'] = None
 
             elif variable == 'virtualSpeed':

@@ -367,7 +367,7 @@
 
     <string id="EMail Address:">EMail:</string>
 
-    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation."  id="Create New Account">Create New Account</string>
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">Create New Account</string>
 
     <string id="You can change your password*">You can change your password by entering your old password, then your new password twice below. You can change your full name or email address by editing the fields below.</string>
 

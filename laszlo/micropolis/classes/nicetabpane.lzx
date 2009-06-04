@@ -21,6 +21,16 @@
 	        return;
 	    }
 	    if (this.visible) {
+		this.animateToHeight();
+	    } else {
+	        this.savedHeight = this.bar.y;
+		//Debug.write("nicetabpane", this, "onvisible", this.visible, "saving savedHeight", this.savedHeight);
+	    }
+	  ]]>
+	</handler>
+
+
+	<method name="animateToHeight"><![CDATA[
 	        var savedHeight = this.savedHeight;
 		//Debug.write("nicetabpane", this, "onvisible", this.visible, "restoring savedHeight", this.savedHeight);
 		if (savedHeight >= 0) {
@@ -29,12 +39,8 @@
 		} else {
 	            this.bar.animate("y", this.initialHeight(), 500);
 		}
-	    } else {
-	        this.savedHeight = this.bar.y;
-		//Debug.write("nicetabpane", this, "onvisible", this.visible, "saving savedHeight", this.savedHeight);
-	    }
 	  ]]>
-	</handler>
+	</method>
 
 
 	<method name="initialHeight"><![CDATA[
