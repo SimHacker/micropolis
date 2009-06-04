@@ -41,7 +41,7 @@
 
     <string id="Micropolis: Choose a City">Micropolis: Kies een Stad</string>
 
-    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Welkom bij Micrpolis!&lt;br/&gt;&lt;br/&gt;Kies een stad met het selecteren van een scenario van de 'Scenario's' tab, of het genereren van een nieuwe willekeurige stad van de 'Generator' tab of het laden van een stad in de bibliotheek van de 'Bibliotheek' tab.&lt;br/&gt;&lt;br/&gt;Druk vervolgens op de 'Speel met Deze Stad' knop hieronder om het afspelen te starten Micropolis!</string>
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Welkom bij Micropolis!&lt;br/&gt;&lt;br/&gt;Kies een stad met het selecteren van een scenario van de 'Scenario's' tab, of het genereren van een nieuwe willekeurige stad van de 'Generator' tab of het laden van een stad in de bibliotheek van de 'Bibliotheek' tab.&lt;br/&gt;&lt;br/&gt;Druk vervolgens op de 'Speel met Deze Stad' knop hieronder om het afspelen te starten Micropolis!</string>
 
     <string id="Please log in or create an account in order to save your city.">Inloggen of maak een account om te slaan stad.</string>
 

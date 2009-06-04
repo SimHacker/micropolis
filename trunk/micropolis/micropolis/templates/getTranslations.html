@@ -73,9 +73,7 @@
 	    <p>
 		<a
 		    href="/server/getTranslations?language=${language}&amp;command=update"
-		>
-		    Update "${language}" strings from "${defaultLanguage}" strings:
-		</a>
+		>Update "${language}" strings from "${defaultLanguage}" strings.</a>
 
 		Reads all the ${defaultLanguage} strings, and adds any
 		new strings to the ${language} strings, with the
@@ -110,9 +108,8 @@
 		<a
 		    py:if="textToTranslate"
 		    href="${url}"
-		>
-		    Google translate all hilighted marked strings.
-		</a>
+		    target="translate"
+		>Google translate all hilighted marked strings.</a>
 
 	    </p>
 
@@ -120,6 +117,13 @@
 	    </p>
 
 	</py:if>
+
+	<p>
+	    <a
+		href="/lps/micropolis/micropolis/micropolis_${language}.lzx?lzt=swf&amp;lzr=swf10"
+		target="micropolis"
+	    >Run Micropolis in "${language}".</a>
+	</p>
 
 	<form
 	    method="POST"

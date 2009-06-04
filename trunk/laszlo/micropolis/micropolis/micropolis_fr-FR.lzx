@@ -1,0 +1,14 @@
+<canvas
+    title="Micropolis"
+    width="100%"
+    height="100%"
+    proxied="false"
+>
+
+    <dataset name="ds_strings" id="ds_strings"
+        src="../resources/data/strings_fr-FR.xml"
+    />
+
+    <include href="../classes/main.lzx"/>
+
+</canvas>
