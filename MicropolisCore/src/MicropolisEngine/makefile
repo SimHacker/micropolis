@@ -140,7 +140,7 @@ objs/micropolisengine_wrap.cpp: swig/micropolisengine.i swig/micropolisengine-sw
 # ----------------------------------------------------------------------
 
 clean:
-	rm -rf *~ *.ncb
+	rm -rf *~ *.ncb */~
 	rm -rf swig/*~ objs/* build
 	rm -rf python/*~ python/*.pyc python/*.pyd
 
