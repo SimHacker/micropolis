@@ -71,7 +71,7 @@ install: all
 
 clean:
 	cd MicropolisCore ; make clean
-	cd micropolis ; make clean
+	cd turbogears ; make clean
 	cd laszlo ; make clean
 	cd micropolis-activity ; make clean
 
