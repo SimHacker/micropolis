@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><strings language="en-US">
+<?xml version="1.0" ?>
+<strings language="en-US">
 
 
     <!--
@@ -38,394 +39,394 @@
 
     <!-- appview.lzx -->
 
-    <string id="Micropolis: Choose a City">@kr-KR@ Micropolis: Choose a City</string>
+    <string id="Micropolis: Choose a City">Micropolis: 도시 선택</string>
 
-    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">@kr-KR@ Welcome to Micrpolis!&lt;br/&gt;&lt;br/&gt;Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.&lt;br/&gt;&lt;br/&gt;Then press the 'Play with This City' button below, to start playing Micropolis!</string>
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Micrpolis에 오신 것을 환영합니다!&lt;br/&gt;&lt;br/&gt;'시나리오'탭, 또는 '생성기'탭, 또는 '도서관'탭에서 라이브러리에있는 도시에서 새 무작위 로딩시 생성 시나리오를 선택하여 도시를 선택하십시오.&lt;br/&gt;&lt;br/&gt;그리고 난 후, 다음이시 '버튼과 함께 연주를 시작 Micropolis'재생 기자!</string>
 
-    <string id="Please log in or create an account in order to save your city.">@kr-KR@ Please log in or create an account in order to save your city.</string>
+    <string id="Please log in or create an account in order to save your city.">제발 로그인하거나 계정을 저장하기 위해서는 당신의 도시를 만듭니다. </string>
 
-    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">@kr-KR@ /wiki/index.php/About?lang=en-US</string>
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">/wiki/index.php/About?lang=kr-KR</string>
 
-    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">@kr-KR@ /wiki/index.php/Help?lang=en-US</string>
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">/wiki/index.php/Help?lang=kr-KR</string>
 
-    <string comment="Three letter month abbreviation." id="Jan">@kr-KR@ Jan</string>
+    <string comment="Three letter month abbreviation." id="Jan">1월</string>
 
-    <string comment="Three letter month abbreviation." id="Feb">@kr-KR@ Feb</string>
+    <string comment="Three letter month abbreviation." id="Feb">2월</string>
 
-    <string comment="Three letter month abbreviation." id="Mar">@kr-KR@ Mar</string>
+    <string comment="Three letter month abbreviation." id="Mar">3월</string>
 
-    <string comment="Three letter month abbreviation." id="Apr">@kr-KR@ Apr</string>
+    <string comment="Three letter month abbreviation." id="Apr">4월</string>
 
-    <string comment="Three letter month abbreviation." id="May">@kr-KR@ May</string>
+    <string comment="Three letter month abbreviation." id="May">5월</string>
 
-    <string comment="Three letter month abbreviation." id="Jun">@kr-KR@ Jun</string>
+    <string comment="Three letter month abbreviation." id="Jun">6월</string>
 
-    <string comment="Three letter month abbreviation." id="Jul">@kr-KR@ Jul</string>
+    <string comment="Three letter month abbreviation." id="Jul">7월</string>
 
-    <string comment="Three letter month abbreviation." id="Aug">@kr-KR@ Aug</string>
+    <string comment="Three letter month abbreviation." id="Aug">8월</string>
 
-    <string comment="Three letter month abbreviation." id="Sep">@kr-KR@ Sep</string>
+    <string comment="Three letter month abbreviation." id="Sep">9월</string>
 
-    <string comment="Three letter month abbreviation." id="Oct">@kr-KR@ Oct</string>
+    <string comment="Three letter month abbreviation." id="Oct">10월</string>
 
-    <string comment="Three letter month abbreviation." id="Nov">@kr-KR@ Nov</string>
+    <string comment="Three letter month abbreviation." id="Nov">11월</string>
 
-    <string comment="Three letter month abbreviation." id="Dec">@kr-KR@ Dec</string>
+    <string comment="Three letter month abbreviation." id="Dec">12월</string>
 
 
     <!-- budgetview.lzx -->
 
-    <string id="Taxes Collected:">@kr-KR@ Taxes Collected:</string>
+    <string id="Taxes Collected:">부가세 수집된:</string>
 
-    <string id="Cash Flow:">@kr-KR@ Cash Flow:</string>
+    <string id="Cash Flow:">현금 흐름표:</string>
 
-    <string id="Previous Funds:">@kr-KR@ Previous Funds:</string>
+    <string id="Previous Funds:">이전 자금:</string>
 
-    <string id="Current Funds:">@kr-KR@ Current Funds:</string>
+    <string id="Current Funds:">현재 펀드</string>
 
-    <string id="Tax Rate:">@kr-KR@ Tax Rate:</string>
+    <string id="Tax Rate:">세금 속도</string>
 
-    <string id="Road Request:">@kr-KR@ Road Request:</string>
+    <string id="Road Request:">도로 요청:</string>
 
-    <string id="Fire Request:">@kr-KR@ Fire Request:</string>
+    <string id="Fire Request:">화재 요청:</string>
 
-    <string id="Police Request:">@kr-KR@ Police Request:</string>
+    <string id="Police Request:">경찰 요청:</string>
 
 
     <!-- changepassword.lzx -->
 
-    <string id="To change your password,*">@kr-KR@ To change your password, first enter your old password, then enter your new password twice.</string>
+    <string id="To change your password,*">먼저, 다음을 두 번 귀하의 새 비밀 번호를 입력하여 암호를 변경하려면 기존 비밀 번호를 입력합니다. </string>
 
-    <string id="Change Password">@kr-KR@ Change Password</string>
+    <string id="Change Password">비밀 번호 변경</string>
 
 
     <!-- connectscreen.lzx -->
 
-    <string id="Connecting to Micropolis Online server.">@kr-KR@ Connecting to Micropolis Online server.</string>
+    <string id="Connecting to Micropolis Online server.">Micropolis 온라인 서버에 연결합니다.</string>
 
-    <string id="Connection to Micropolis Online server failed.">@kr-KR@ Connection to Micropolis Online server failed.</string>
+    <string id="Connection to Micropolis Online server failed.">Micropolis 온라인 서버에 연결하지 못했습니다.</string>
 
-    <string id="Status:">@kr-KR@ Status:</string>
+    <string id="Status:">상태:</string>
 
-    <string id="Reconnect">@kr-KR@ Reconnect</string>
+    <string id="Reconnect">재연결</string>
 
 
     <!-- controlpanel.lzx -->
 
-    <string id="Are you really sure you want to start a new city?">@kr-KR@ Are you really sure you want to start a new city?</string>
+    <string id="Are you really sure you want to start a new city?">정말 당신은 새로운 도시를 시작하고 싶은거야?</string>
 
-    <string id="No, keep playing with this city.">@kr-KR@ No, keep playing with this city.</string>
+    <string id="No, keep playing with this city.">아니,이 도시와 함께 계속 연주.</string>
 
-    <string id="Yes, choose another city.">@kr-KR@ Yes, choose another city.</string>
+    <string id="Yes, choose another city.">네, 다른 도시를 선택하십시오.</string>
 
-    <string id="Ultra Slow">@kr-KR@ Ultra Slow</string>
+    <string id="Ultra Slow">울트라 슬로우</string>
 
-    <string id="Super Slow">@kr-KR@ Super Slow</string>
+    <string id="Super Slow">슈퍼 슬로우</string>
 
-    <string id="Very Slow">@kr-KR@ Very Slow</string>
+    <string id="Very Slow">아주 천천히</string>
 
-    <string id="Slow">@kr-KR@ Slow</string>
+    <string id="Slow">느리다</string>
 
-    <string id="Medium">@kr-KR@ Medium</string>
+    <string id="Medium">중간</string>
 
-    <string id="Fast">@kr-KR@ Fast</string>
+    <string id="Fast">빠른</string>
 
-    <string id="Very Fast">@kr-KR@ Very Fast</string>
+    <string id="Very Fast">매우 빠른</string>
 
-    <string id="Super Fast">@kr-KR@ Super Fast</string>
+    <string id="Super Fast">슈퍼 패스트</string>
 
-    <string id="Ultra Fast">@kr-KR@ Ultra Fast</string>
+    <string id="Ultra Fast">울트라 패스트</string>
 
-    <string id="Astronomically Fast">@kr-KR@ Astronomically Fast</string>
+    <string id="Astronomically Fast">가장 빠른</string>
 
-    <string id="Resume">@kr-KR@ Resume</string>
+    <string id="Resume">이력서</string>
 
-    <string id="Pause">@kr-KR@ Pause</string>
+    <string id="Pause">일시 중지</string>
 
-    <string id="Simulator">@kr-KR@ Simulator</string>
+    <string id="Simulator">시뮬레이터</string>
 
-    <string id="Paused.">@kr-KR@ Paused.</string>
+    <string id="Paused.">일시중지됨.</string>
 
-    <string id="Running!">@kr-KR@ Running!</string>
+    <string id="Running!">러닝!</string>
 
-    <string id="Speed">@kr-KR@ Speed</string>
+    <string id="Speed">속도</string>
 
-    <string id="Save City">@kr-KR@ Save City</string>
+    <string id="Save City">할인시</string>
 
-    <string id="New City">@kr-KR@ New City</string>
+    <string id="New City">뉴 시티</string>
 
-    <string id="Help">@kr-KR@ Help</string>
+    <string id="Help">도움</string>
 
-    <string id="About">@kr-KR@ About</string>
+    <string id="About">정보</string>
 
-    <string id="Disasters">@kr-KR@ Disasters</string>
+    <string id="Disasters">재해</string>
 
-    <string id="Auto Budget">@kr-KR@ Auto Budget</string>
+    <string id="Auto Budget">자동 예산</string>
 
-    <string id="Auto Bulldoze">@kr-KR@ Auto Bulldoze</string>
+    <string id="Auto Bulldoze">자동 고르다</string>
 
-    <string id="Auto Goto">@kr-KR@ Auto Goto</string>
+    <string id="Auto Goto">자동 고토</string>
 
-    <string id="Sound">@kr-KR@ Sound</string>
+    <string id="Sound">사운드</string>
 
-    <string id="Animation">@kr-KR@ Animation</string>
+    <string id="Animation">에니메이션</string>
 
-    <string id="Journal">@kr-KR@ Journal</string>
+    <string id="Journal">저널</string>
 
-    <string id="Notices">@kr-KR@ Notices</string>
+    <string id="Notices">고지</string>
 
 
     <!-- datefundsview.lzx -->
 
-    <string id="Date:">@kr-KR@ Date:</string>
+    <string id="Date:">날짜:</string>
 
-    <string id="Funds:">@kr-KR@ Funds:</string>
+    <string id="Funds:">자금:</string>
 
 
     <!-- demandgauge.lzx -->
 
-    <string comment="One letter abreviation for 'Residential'." id="R">@kr-KR@ R</string>
+    <string comment="One letter abreviation for 'Residential'." id="R">R</string>
 
-    <string comment="One letter abreviation for 'Commercial'." id="C">@kr-KR@ C</string>
+    <string comment="One letter abreviation for 'Commercial'." id="C">C</string>
 
-    <string comment="One letter abreviation for 'Industrial'." id="I">@kr-KR@ I</string>
+    <string comment="One letter abreviation for 'Industrial'." id="I">I</string>
 
 
     <!-- edittileviewpie.lzx -->
 
-    <string id="Tools">@kr-KR@ Tools</string>
+    <string id="Tools">도구</string>
 
-    <string id="(Zone)">@kr-KR@ (Zone)</string>
+    <string id="(Zone)">(영역)</string>
 
-    <string id="Zone">@kr-KR@ Zone</string>
+    <string id="Zone">지대</string>
 
-    <string id="(Build)">@kr-KR@ (Build)</string>
+    <string id="(Build)">(빌드)</string>
 
-    <string id="Build">@kr-KR@ Build</string>
+    <string id="Build">빌드</string>
 
-    <string id="(More)">@kr-KR@ (More)</string>
+    <string id="(More)">(기타)</string>
 
-    <string id="(Tab)">@kr-KR@ (Tab)</string>
+    <string id="(Tab)">(탭)</string>
 
-    <string id="Tab">@kr-KR@ Tab</string>
+    <string id="Tab">탭</string>
 
-    <string id="Evaluation">@kr-KR@ Evaluation</string>
+    <string id="Evaluation">평가</string>
 
-    <string id="History">@kr-KR@ History</string>
+    <string id="History">역사</string>
 
-    <string id="Budget">@kr-KR@ Budget</string>
+    <string id="Budget">예산</string>
 
-    <string id="Overlays">@kr-KR@ Overlays</string>
+    <string id="Overlays">오버레이</string>
 
-    <string id="Control">@kr-KR@ Control</string>
+    <string id="Control">제어</string>
 
-    <string id="(Speed)">@kr-KR@ (Speed)</string>
+    <string id="(Speed)">(속도)</string>
 
-    <string id="(Overlays)">@kr-KR@ (Overlays)</string>
+    <string id="(Overlays)">(오버레이)</string>
 
-    <string id="(Disasters)">@kr-KR@ (Disasters)</string>
+    <string id="(Disasters)">(재해)</string>
 
-    <string id="(Funds)">@kr-KR@ (Funds)</string>
+    <string id="(Funds)">(펀드)</string>
 
-    <string id="Funds">@kr-KR@ Funds</string>
+    <string id="Funds">펀드</string>
 
-    <string id="Tax Rate">@kr-KR@ Tax Rate</string>
+    <string id="Tax Rate">세율</string>
 
-    <string id="Police Funds">@kr-KR@ Police Funds</string>
+    <string id="Police Funds">경찰은 자금</string>
 
-    <string id="Road Funds">@kr-KR@ Road Funds</string>
+    <string id="Road Funds">도로 펀드</string>
 
-    <string id="Fire Funds">@kr-KR@ Fire Funds</string>
+    <string id="Fire Funds">화재 펀드</string>
 
 
     <!-- evaluationview.lzx -->
 
-    <string id="Crime">@kr-KR@ Crime</string>
+    <string id="Crime">범죄</string>
 
-    <string id="Pollution">@kr-KR@ Pollution</string>
+    <string id="Pollution">오염</string>
 
-    <string id="Housing">@kr-KR@ Housing</string>
+    <string id="Housing">주택</string>
 
-    <string id="Taxes">@kr-KR@ Taxes</string>
+    <string id="Taxes">부가세</string>
 
-    <string id="Traffic">@kr-KR@ Traffic</string>
+    <string id="Traffic">교통</string>
 
-    <string id="Unemployment">@kr-KR@ Unemployment</string>
+    <string id="Unemployment">실업</string>
 
-    <string id="Fire">@kr-KR@ Fire</string>
+    <string id="Fire">불</string>
 
-    <string id="Village">@kr-KR@ Village</string>
+    <string id="Village">빌리지</string>
 
-    <string id="Town">@kr-KR@ Town</string>
+    <string id="Town">마을</string>
 
-    <string id="City">@kr-KR@ City</string>
+    <string id="City">도시</string>
 
-    <string id="Capital">@kr-KR@ Capital</string>
+    <string id="Capital">자본금</string>
 
-    <string id="Metropolis">@kr-KR@ Metropolis</string>
+    <string id="Metropolis">메트로 폴리스</string>
 
-    <string id="Megalopolis">@kr-KR@ Megalopolis</string>
+    <string id="Megalopolis">초거대</string>
 
-    <string id="Easy">@kr-KR@ Easy</string>
+    <string id="Easy">쉬운</string>
 
-    <string id="Hard">@kr-KR@ Hard</string>
+    <string id="Hard">단단한</string>
 
-    <string id="Approve:">@kr-KR@ Approve:</string>
+    <string id="Approve:">승인:</string>
 
-    <string id="Disapprove:">@kr-KR@ Disapprove:</string>
+    <string id="Disapprove:">비승인:</string>
 
-    <string id="Population:">@kr-KR@ Population:</string>
+    <string id="Population:">인구:</string>
 
-    <string id="Migration:">@kr-KR@ Migration:</string>
+    <string id="Migration:">마이 그 레이션:</string>
 
-    <string id="City Value:">@kr-KR@ City Value:</string>
+    <string id="City Value:">시 값:</string>
 
-    <string id="Category:">@kr-KR@ Category:</string>
+    <string id="Category:">카테고리:</string>
 
-    <string id="Game Level:">@kr-KR@ Game Level:</string>
+    <string id="Game Level:">게임 수준:</string>
 
-    <string id="Current Score:">@kr-KR@ Current Score:</string>
+    <string id="Current Score:">현재 점수:</string>
 
-    <string id="Annual Change:">@kr-KR@ Annual Change:</string>
+    <string id="Annual Change:">연간 전일 대비:</string>
 
-    <string id="Popularity:">@kr-KR@ Popularity:</string>
+    <string id="Popularity:">인기도:</string>
 
-    <string id="Problems:">@kr-KR@ Problems:</string>
+    <string id="Problems:">문제:</string>
 
 
     <!-- generatorview.lzx -->
 
-    <string id="Generate Random Map">@kr-KR@ Generate Random Map</string>
+    <string id="Generate Random Map">랜덤 맵 생성</string>
 
-    <string id="Generated Map">@kr-KR@ Generated Map</string>
+    <string id="Generated Map">생성된지도</string>
 
-    <string id="Generated a new random map.">@kr-KR@ Generated a new random map.</string>
+    <string id="Generated a new random map.">새로운 랜덤 맵 생성.</string>
 
 
     <!-- historyview.lzx -->
 
-    <string id="Residential">@kr-KR@ Residential</string>
+    <string id="Residential">가정용</string>
 
-    <string id="Show the residential population history.">@kr-KR@ Show the residential population history.</string>
+    <string id="Show the residential population history.">쇼 주거 인구는 역사.</string>
 
-    <string id="Commercial">@kr-KR@ Commercial</string>
+    <string id="Commercial">상업</string>
 
-    <string id="Show the commercial population history.">@kr-KR@ Show the commercial population history.</string>
+    <string id="Show the commercial population history.">쇼 상업 인구의 역사.</string>
 
-    <string id="Industrial">@kr-KR@ Industrial</string>
+    <string id="Industrial">산업</string>
 
-    <string id="Show the industrial population history.">@kr-KR@ Show the industrial population history.</string>
+    <string id="Show the industrial population history.">역사를 보여주는 산업 인구.</string>
 
-    <string id="Money">@kr-KR@ Money</string>
+    <string id="Money">돈</string>
 
-    <string id="Show the city funds history.">@kr-KR@ Show the city funds history.</string>
+    <string id="Show the city funds history.">펀드 역사를 보여주는 도시.</string>
 
-    <string id="Show the crime rate history.">@kr-KR@ Show the crime rate history.</string>
+    <string id="Show the crime rate history.">역사를 보여주는 범죄 발생률.</string>
 
-    <string id="Show the pollution rate history.">@kr-KR@ Show the pollution rate history.</string>
+    <string id="Show the pollution rate history.">역사를 보여주는 환경 오염을 평가했다.</string>
 
-    <string id="10 Years">@kr-KR@ 10 Years</string>
+    <string id="10 Years">10 년</string>
 
-    <string id="120 Years">@kr-KR@ 120 Years</string>
+    <string id="120 Years">120 년</string>
 
     
     <!-- libraryview.lzx -->
 
-    <string id="Loaded Map:">@kr-KR@ Loaded Map:</string>
+    <string id="Loaded Map:">로드됨지도:</string>
 
-    <string id="Loaded a map from the library:">@kr-KR@ Loaded a map from the library:</string>
+    <string id="Loaded a map from the library:">도서관에서지도 로드됨:</string>
 
 
     <!-- loginview.lzx -->
 
-    <string id="You are logged in as">@kr-KR@ You are logged in as</string>
+    <string id="You are logged in as">당신에 기록하는</string>
 
-    <string id="Please log in*">@kr-KR@ Please log in or create a new account, so you can save your cities and participate in the Micropolis Online community.</string>
+    <string id="Please log in*">제발 로그인하거나 새 계정을 만들려면, 그래서 당신이 도시를 저장할 수 있으며, Micropolis 온라인 커뮤니티에 참여하고있습니다.</string>
 
     <!-- userview.lzx -->
 
-    <string id="You have successfully logged in,*">@kr-KR@ You have successfully logged in, and you can configure your account.</string>
+    <string id="You have successfully logged in,*">당신이 성공적으로 기록하고있어, 귀하의 계정을 구성할 수있습니다.</string>
 
-    <string id="Please log in or create a new account.">@kr-KR@ Please log in or create a new account.</string>
+    <string id="Please log in or create a new account.">제발 로그인하거나 새 계정을 만드십시오.</string>
 
-    <string id="New and Registered Users:*">@kr-KR@ New and Registered Users, please enter your user name and password, and press the appropriate button.</string>
+    <string id="New and Registered Users:*">신규 및 등록된 사용자, 제발, 여러분의 사용자 이름과 암호를 입력하고 해당 버튼을 누르세요.</string>
 
-    <string id="User Name:">@kr-KR@ User Name:</string>
+    <string id="User Name:">사용자 이름:</string>
 
-    <string id="Old Password:">@kr-KR@ Old Password:</string>
+    <string id="Old Password:">이전 비밀 번호:</string>
 
-    <string id="Password:">@kr-KR@ Password:</string>
+    <string id="Password:">비밀 번호:</string>
 
-    <string id="Log In to Existing Account">@kr-KR@ Log In to Existing Account</string>
+    <string id="Log In to Existing Account">에서 기존 계정으로 로그인</string>
 
-    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">@kr-KR@ New Users: Please repeat your password, and enter your full name and email address. Then press the 'Create New Account' button.</string>
+    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">새 사용자 : 제발, 여러분의 비밀 번호를 반복하고 귀하의 전체 이름과 이메일 주소를 입력하십시오. 그렇다면 '새 계정 만들기'버튼을 누릅니다.</string>
 
-    <string id="Repeat Password:">@kr-KR@ Repeat Password:</string>
+    <string id="Repeat Password:">비밀 번호 재입력:</string>
 
-    <string id="Full Name:">@kr-KR@ Full Name:</string>
+    <string id="Full Name:">전체 이름:</string>
 
-    <string id="EMail Address:">@kr-KR@ EMail:</string>
+    <string id="EMail Address:">이메일:</string>
 
-    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">@kr-KR@ Create New Account</string>
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">새 계정 만들기</string>
 
-    <string id="You can change your password*">@kr-KR@ You can change your password by entering your old password, then your new password twice below. You can change your full name or email address by editing the fields below.</string>
+    <string id="You can change your password*">자네가 예전에 비밀 번호를 입력하여, 그러면 귀하의 새 비밀 번호를 두 번 아래에 비밀 번호를 변경할 수있습니다. 당신을 편집하여 아래의 입력란에 전체 이름이나 이메일 주소를 변경할 수있습니다.</string>
 
-    <string id="New Password:">@kr-KR@ New Password:</string>
+    <string id="New Password:">새 비밀 번호:</string>
 
-    <string id="Log Out">@kr-KR@ Log Out</string>
+    <string id="Log Out">로그아웃</string>
 
-    <string id="Cancel">@kr-KR@ Cancel</string>
+    <string id="Cancel">취소</string>
 
-    <string id="Log In">@kr-KR@ Log In</string>
+    <string id="Log In">로그인</string>
 
 
     <!-- noticeview.lzx -->
 
-    <string id="Micropolis">@kr-KR@ Micropolis</string>
+    <string id="Micropolis">Micropolis</string>
 
-    <string id="The city simulation has begun!">@kr-KR@ The city simulation has begun!</string>
+    <string id="The city simulation has begun!">도시 시뮬레이션을 시작했다!</string>
 
 
     <!-- playscreen.lzx -->
 
 
-    <string id="User:">@kr-KR@ User:</string>
+    <string id="User:">사용자:</string>
 
     <!-- remoteserver.lzx -->
 
-    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">@kr-KR@ Disconnected (error).</string>
+    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">(오류) 끊김.</string>
 
-    <string comment="Normal disconnection that is not an error." id="Disconnected.">@kr-KR@ Disconnected.</string>
+    <string comment="Normal disconnection that is not an error." id="Disconnected.">끊김.</string>
 
-    <string id="Connection failed.">@kr-KR@ Connection failed.</string>
+    <string id="Connection failed.">연결에 실패했습니다.</string>
 
-    <string id="Connection rejected.">@kr-KR@ Connection rejected.</string>
+    <string id="Connection rejected.">연결을 거부했습니다.</string>
 
-    <string id="Connected.">@kr-KR@ Connected.</string>
+    <string id="Connected.">연결되어있습니다.</string>
 
-    <string id="Message failed.">@kr-KR@ Message failed.</string>
+    <string id="Message failed.">메시지가 실패했습니다.</string>
 
-    <string id="Description:">@kr-KR@ Description:</string>
+    <string id="Description:">설명</string>
 
-    <string id="To:">@kr-KR@ To:</string>
+    <string id="To:">받는 사람:</string>
 
 
     <!-- scenariosview.lzx -->
 
-    <string id="Scenario:">@kr-KR@ Scenario:</string>
+    <string id="Scenario:">시나리오:</string>
 
 
     <!-- startscreen.lzx -->
 
-    <string id="Play With This Map">@kr-KR@ Play With This Map</string>
+    <string id="Play With This Map">이지도와 함께 플레이</string>
 
-    <string id="Scenarios">@kr-KR@ Scenarios</string>
+    <string id="Scenarios">시나리오</string>
 
-    <string id="Generator">@kr-KR@ Generator</string>
+    <string id="Generator">생성기</string>
 
-    <string id="Library">@kr-KR@ Library</string>
+    <string id="Library">도서관</string>
 
-    <string id="User">@kr-KR@ User</string>
+    <string id="User">사용자</string>
 
 
     <!-- toolcursor.lzx -->
@@ -433,286 +434,290 @@
 
     <!-- toolpalette.lzx -->
 
-    <string id="Fire Station">@kr-KR@ Fire Station</string>
+    <string id="Fire Station">소방서</string>
 
-    <string id="Query">@kr-KR@ Query</string>
+    <string id="Query">검색어</string>
 
-    <string id="Police Station">@kr-KR@ Police Station</string>
+    <string id="Police Station">경찰서</string>
 
-    <string id="Wire">@kr-KR@ Wire</string>
+    <string id="Wire">철사</string>
 
-    <string id="Bulldozer">@kr-KR@ Bulldozer</string>
+    <string id="Bulldozer">불도저</string>
 
-    <string id="Railroad">@kr-KR@ Railroad</string>
+    <string id="Railroad">철도</string>
 
-    <string id="Road">@kr-KR@ Road</string>
+    <string id="Road">도로</string>
 
-    <string id="Center">@kr-KR@ Center</string>
+    <string id="Center">센터</string>
 
-    <string id="Stadium">@kr-KR@ Stadium</string>
+    <string id="Stadium">경기장</string>
 
-    <string id="Park">@kr-KR@ Park</string>
+    <string id="Park">공원</string>
 
-    <string id="Seaport">@kr-KR@ Seaport</string>
+    <string id="Seaport">항구</string>
 
-    <string id="Coal Power">@kr-KR@ Coal Power</string>
+    <string id="Coal Power">석탄 전력</string>
 
-    <string id="Airport">@kr-KR@ Airport</string>
+    <string id="Airport">공항</string>
 
-    <string id="Nuclear Power">@kr-KR@ Nuclear Power</string>
+    <string id="Nuclear Power">핵 전력</string>
 
 
     <!-- disasters.xml -->
 
-    <string id="disaster_monster_title">@kr-KR@ Monster</string>
+    <string id="disaster_monster_title">몬스터</string>
 
-    <string id="disaster_fire_title">@kr-KR@ Fire</string>
+    <string id="disaster_fire_title">불</string>
 
-    <string id="disaster_flood_title">@kr-KR@ Flood</string>
+    <string id="disaster_flood_title">홍수</string>
 
-    <string id="disaster_meltdown_title">@kr-KR@ Meltdown</string>
+    <string id="disaster_meltdown_title">붕괴</string>
 
-    <string id="disaster_tornado_title">@kr-KR@ Tornado</string>
+    <string id="disaster_tornado_title">토네이도</string>
 
-    <string id="disaster_earthquake_title">@kr-KR@ Earthquake</string>
+    <string id="disaster_earthquake_title">지진</string>
 
 
     <!-- notices.xml -->
 
-    <string id="notice_10_title">@kr-KR@ POLLUTION ALERT!</string>
+    <string id="notice_10_title">오염 비상!</string>
 
-    <string id="notice_10_description">@kr-KR@ Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br/&gt;Either clean up your act or open a gas mask concession at city hall.</string>
+    <string id="notice_10_description">오염 귀하의 도시에서 허용되는 최대 금액은 Micropolis 오염에 의해 설립된기구 넘어섰다. 당신이 무덤을 생태 실행 결과의 위험이있습니다. 신청&lt;br/&gt;도 당신의 행동을 청소하거나 시청에서 가스 마스크를 양보를 엽니다.</string>
 
-    <string id="notice_11_title">@kr-KR@ CRIME ALERT!</string>
+    <string id="notice_11_title">범죄 비상!</string>
 
-    <string id="notice_11_description">@kr-KR@ Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.</string>
+    <string id="notice_11_description">귀하의 도시에서 손을 범죄입니다. 성난 군중은 중앙 도시를 약탈하고 파손. 노 대통령은 국가의 경비는 곧이 문제를 통제할 수없는 경우를 보낼 것입니다.</string>
 
-    <string id="notice_12_title">@kr-KR@ TRAFFIC WARNING!</string>
+    <string id="notice_12_title">교통 경고!</string>
 
-    <string id="notice_12_description">@kr-KR@ Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.</string>
+    <string id="notice_12_description">교통이 도시에 끔찍하다. 이 도시는 철망을 확대하고있다. 이 통근 무장 해지고있다. 신청&lt;br/&gt;거나 또는 더 많은 도로와 레일 방탄 리무진을 얻을 빌드합니다. </string>
 
-    <string id="notice_20_title">@kr-KR@ FIRE REPORTED!</string>
+    <string id="notice_20_title">신고!</string>
 
-    <string id="notice_20_description">@kr-KR@ A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.&lt;br/&gt;All you can do is wait till he leaves, then rebuild from the rubble.</string>
+    <string id="notice_20_description">화재가보고되었습니다!</string>
 
-    <string id="notice_22_title">@kr-KR@ TORNADO ALERT!</string>
+    <string id="notice_21_title">몬스터 공격!</string>
 
-    <string id="notice_22_description">@kr-KR@ A tornado has been reported! There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!</string>
+    <string id="notice_21_description">대형 파충류 동물은 물 속에서 발견됐다. 그것은 오염 지역에 관심이 높은 것 같다. 어디로가는가 파괴의 흔적이다. 신청&lt;br/&gt;당신까지 그 나뭇잎 후 재건을 기다려 잔해에서 할 수있습니다.</string>
 
-    <string id="notice_23_title">@kr-KR@ EARTHQUAKE!</string>
+    <string id="notice_22_title">태풍 비상!</string>
 
-    <string id="notice_23_description">@kr-KR@ A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.</string>
+    <string id="notice_22_description">토네이도보고되었습니다! 당신이 그것을 막을 수 없어, 그러니 더 재난 뒤처리를 준비할 줄이야!</string>
 
-    <string id="notice_24_title">@kr-KR@ PLANE CRASH!</string>
+    <string id="notice_23_title">지진!</string>
 
-    <string id="notice_24_description">@kr-KR@ A plane has crashed!</string>
+    <string id="notice_23_description">큰 지진이 발생했습니다! 전에 그들은, 그때까지 전력망이 다시 확산과 도시 재건, 가능 한한 빨리 불을 꺼.</string>
 
-    <string id="notice_25_title">@kr-KR@ SHIPWRECK!</string>
+    <string id="notice_24_title">비행기 충돌!</string>
 
-    <string id="notice_25_description">@kr-KR@ A ship has wrecked!</string>
+    <string id="notice_24_description">비행기가 추락했습니다!</string>
 
-    <string id="notice_26_title">@kr-KR@ TRAIN CRASH!</string>
+    <string id="notice_25_title">난파선!</string>
 
-    <string id="notice_26_description">@kr-KR@ A train has crashed!</string>
+    <string id="notice_25_description">배는 난파했다!</string>
 
-    <string id="notice_27_title">@kr-KR@ HELICOPTER CRASH!</string>
+    <string id="notice_26_title">열차 충돌 사고가!</string>
 
-    <string id="notice_27_description">@kr-KR@ A helicopter has crashed!</string>
+    <string id="notice_26_description">기차가 추락했습니다!</string>
 
-    <string id="notice_30_title">@kr-KR@ FIREBOMBING REPORTED!</string>
+    <string id="notice_27_title">헬리콥터 추락!</string>
 
-    <string id="notice_30_description">@kr-KR@ Firebombs are falling!!</string>
+    <string id="notice_27_description">헬리콥터가 추락했습니다!</string>
 
-    <string id="notice_32_title">@kr-KR@ EXPLOSION REPORTED!</string>
+    <string id="notice_30_title">화재 폭발했다!</string>
 
-    <string id="notice_32_description">@kr-KR@ There has been an explosion!!</string>
+    <string id="notice_30_description">화재 폭탄이 떨어지고있다!!</string>
 
-    <string id="notice_35_title">@kr-KR@ TOWN</string>
+    <string id="notice_32_title">신고 폭발!</string>
 
-    <string id="notice_35_description">@kr-KR@ Congratulations, your village has grown to town status. You now have 2,000 citizens.</string>
+    <string id="notice_32_description">거기에 폭발되었습니다!!</string>
 
-    <string id="notice_36_title">@kr-KR@ CITY</string>
+    <string id="notice_35_title">타운</string>
 
-    <string id="notice_36_description">@kr-KR@ Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!</string>
+    <string id="notice_35_description">축하합니다, 귀하의 마을 마을 상태로 성장했다. 이제 2,000 시민있다.</string>
 
-    <string id="notice_37_title">@kr-KR@ CAPITAL</string>
+    <string id="notice_36_title">시</string>
 
-    <string id="notice_37_description">@kr-KR@ Your city has become a capital. The current population here is 50,000. Your political future looks bright.</string>
+    <string id="notice_36_description">귀하의 마을로 풀, 10,000의 현재의 인구 규모와 도시 성장했다. 좋은 일을 계속!</string>
 
-    <string id="notice_38_title">@kr-KR@ METROPOLIS</string>
+    <string id="notice_37_title">수도</string>
 
-    <string id="notice_38_description">@kr-KR@ Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.</string>
+    <string id="notice_37_description">당신의 도시가 될 수도있다. 현재의 인구는 현재 50,000입니다. 당신들의 정치적 미래는 밝아 보인다.</string>
 
-    <string id="notice_39_title">@kr-KR@ MEGALOPOLIS</string>
+    <string id="notice_38_title">메트로 폴리스</string>
 
-    <string id="notice_39_description">@kr-KR@ Congratulation, you have reached the highest category of urban development, the megalopolis.</string>
+    <string id="notice_38_description">귀하의 수도인 지금 메트로 폴리스의 상태를 달성했다. 현재 인구는 100,000입니다. 귀하의 관리 능력과 함께, 당신은 주지사 선거에 출마 심각하게 고려해야한다. </string>
 
-    <string id="notice_41_title">@kr-KR@ HEAVY TRAFFIC!</string>
+    <string id="notice_39_title">초거대</string>
 
-    <string id="notice_41_description">@kr-KR@ Sky Watch One reporting heavy traffic!</string>
+    <string id="notice_39_description">축하, 당신은 도시 개발의 가장 높은 카테고리에 도달했습니다, 초거대.</string>
 
-    <string id="notice_42_title">@kr-KR@ FLOODING REPORTED!</string>
+    <string id="notice_41_title">교통 체증!</string>
 
-    <string id="notice_42_description">@kr-KR@ Flooding has been been reported along the water's edge!</string>
+    <string id="notice_41_description">하늘을보고 하나는보고 무거운 트래픽!</string>
 
-    <string id="notice_43_title">@kr-KR@ NUCLEAR MELTDOWN!</string>
+    <string id="notice_42_title">홍수로 신고!</string>
 
-    <string id="notice_43_description">@kr-KR@ A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.&lt;br/&gt;Many generations will confront this problem before it goes away, so don't hold your breath.</string>
+    <string id="notice_42_description">홍수 물의 가장자리를 따라보고되고있다!</string>
 
-    <string id="notice_44_title">@kr-KR@ RIOTS!</string>
+    <string id="notice_43_title">원자력 붕괴!</string>
 
-    <string id="notice_44_description">@kr-KR@ The citizens are rioting in the streets!</string>
+    <string id="notice_43_description">핵 붕괴하여 발전소에서 발생했습니다. 당신은 방사성 동위 원소가 자연 붕괴까지 영역을 방지하는 것이 좋다. 신청&lt;br/&gt;많은 세대가이 문제에 직면하기 전에 사라질 것이므로, 숨들이마셔하지 않습니다.</string>
 
-    <string id="notice_45_title">@kr-KR@ Start a New City</string>
+    <string id="notice_44_title">폭동!</string>
 
-    <string id="notice_45_description">@kr-KR@ Build your very own city from the ground up, starting with this map of uninhabited land.</string>
+    <string id="notice_44_description">시민들은 거리에서 폭동이있다!</string>
 
-    <string id="notice_46_title">@kr-KR@ Restore a Saved City</string>
+    <string id="notice_45_title">시작 새시</string>
 
-    <string id="notice_46_description">@kr-KR@ The city was restored.</string>
+    <string id="notice_45_description">지상에서, 무인 토지 너만의이지도로 시작하는 도시를 빌드합니다.</string>
 
-    <string id="notice_47_title">@kr-KR@ YOU'RE A WINNER!</string>
+    <string id="notice_46_title">복원 저장된시</string>
 
-    <string id="notice_47_description">@kr-KR@ Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?</string>
+    <string id="notice_46_description">도시가 복원되었습니다.</string>
 
-    <string id="notice_48_title">@kr-KR@ IMPEACHMENT NOTICE!</string>
+    <string id="notice_47_title">당신이 우승자입니다!</string>
 
-    <string id="notice_48_description">@kr-KR@ The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)</string>
+    <string id="notice_47_description">귀하의 시장 도시 계획 기술과 전문 지식을 여러분은 도시의 열쇠를 얻었다. 지역 주민 여러분의 영광에 대한 기념비를 세우다되며 첫 - 태어난 아이들의 이름. 왜 안 총재 출마?</string>
 
-    <string id="notice_49_title">@kr-KR@ About Micropolis</string>
+    <string id="notice_48_title">탄핵주의 사항!</string>
 
-    <string id="notice_49_description">@kr-KR@ Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</string>
+    <string id="notice_48_description">이 도시의 전체 인구는 결국 당신의 무능을 계획하고 무능한 경영의 충분했다. 성난 폭도 - 네 어머니가 이끄는 - 시청 부근에서 발견되었습니다. 신청&lt;br/&gt;당신은 심각하게 고려해야한다 확장된 휴가 -하세요. (또는 사용 설명서를 읽고 다시 시도하십시오.)</string>
 
-    <string id="notice_50_title">@kr-KR@ DULLSVILLE, USA  1900</string>
+    <string id="notice_49_title">Micropolis 소개</string>
 
-    <string id="notice_50_description">@kr-KR@ Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.&lt;br/&gt;It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.</string>
+    <string id="notice_49_description">Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</string>
 
-    <string id="notice_51_title">@kr-KR@ SAN FRANCISCO, CA.  1906</string>
+    <string id="notice_50_title">지루한 빌리지, 미국 1900년</string>
 
-    <string id="notice_51_description">@kr-KR@ Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.&lt;br/&gt;Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.</string>
+    <string id="notice_50_description">근처에 일이 훨씬 지난 백년 남짓 및 변경되지 않은 주민들은 지루해하기 시작했다. 그들은 위대한 도시 지루한 빌리지 오른쪽의 지도자와 함께 다음이있을 수 있다고 생각합니다. 신청&lt;br/&gt;새로운 성장과 발전을 유치하여 일자리를, 메트로 폴리스로 30 년 이내 지루한 빌리지 돌고있다.</string>
 
-    <string id="notice_52_title">@kr-KR@ HAMBURG, GERMANY  1944</string>
+    <string id="notice_51_title">캘리 포니 아주 샌프란 시스코. 1906년</string>
 
-    <string id="notice_52_description">@kr-KR@ Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.&lt;br/&gt;You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.</string>
+    <string id="notice_51_description">지진의 피해를 제어하는 일 열린 뒤이어 화재, 미성년자의 비교했다. 천오백명 사망했다. 신청&lt;br/&gt;초기 우려해야 화재 제어. 그럼 시작 잔해와 재건 분명합니다. 당신은 5 년.</string>
 
-    <string id="notice_53_title">@kr-KR@ BERN, SWITZERLAND  1965</string>
+    <string id="notice_52_title">함부르크, 독일 1944년</string>
 
-    <string id="notice_53_description">@kr-KR@ The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.&lt;br/&gt;Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.</string>
+    <string id="notice_52_description">화재 - 차 세계 대전이 연합군의 폭격 독일의 도시의 엄청난 피해와 생명의 손실 발생. 도시에 사는 사람들은 내면의 가장 큰 위험했다. 신청 &lt;br/&gt; 당신은 폭격 중에 다음 화재 폭풍 제어해야 전쟁 후 도시를 재건했다. 당신은 5 년.</string>
 
-    <string id="notice_54_title">@kr-KR@ TOKYO, JAPAN  1957</string>
+    <string id="notice_53_title">스위스, 베른 1965년</string>
 
-    <string id="notice_54_description">@kr-KR@ A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.&lt;br/&gt;Try to control the fires, then rebuild the industrial center. You have 5 years.</string>
+    <string id="notice_53_description">이 도로는 여기에 더 많은 혼잡 매일, 그리고 주민들이 화가되고있다. 그들은 당신이 그것에 대해 뭔가를 할 요구한다. 신청&lt;br/&gt;일부는 대답으로 대중 교통 시스템을 제안하고 있지만 이는 도심 지역의 주요 재설계를 요구한다. 당신은 10 년.</string>
 
-    <string id="notice_55_title">@kr-KR@ DETROIT, MI.  1972</string>
+    <string id="notice_54_title">도쿄, 일본 1957년</string>
 
-    <string id="notice_55_description">@kr-KR@ By 1970, competition from overseas and other economic factors pushed the once &quot;automobile capital of the world&quot; into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.&lt;br/&gt;You have 10 years to reduce crime and rebuild the industrial base of the city.</string>
+    <string id="notice_54_description">대형 파충류 생물 도쿄 베이를 향하고 목격됐다. 그것은 산업 공해의 무거운 수준을 거기에 끌린 것 같다. 신청&lt;br/&gt;화염을 가다듬어봐 후 재건 산업 센터. 당신은 5 년.</string>
 
-    <string id="notice_56_title">@kr-KR@ BOSTON, MA.  2010</string>
+    <string id="notice_55_title">디트로이트 미시건. 1972년</string>
 
-    <string id="notice_56_description">@kr-KR@ A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.&lt;br/&gt;You have 5 years to get the situation under control.</string>
+    <string id="notice_55_description">1970 년에는 해외 및 기타 경제적 요인에서 경쟁은 한때는 &quot;세계의 자동차 자본&quot;경기 침체로했다. 토지 가치와 실업 증가 급락 후 범죄의 안쪽 - 도시 만성 수준. 신청&lt;br/&gt;당신이 범죄를 감소시키고, 도시의 산업 기반을 재건 10 년.</string>
 
-    <string id="notice_57_title">@kr-KR@ RIO DE JANEIRO, BRAZIL  2047</string>
+    <string id="notice_56_title">보스턴, 석사. 2010년</string>
 
-    <string id="notice_57_description">@kr-KR@ In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.</string>
+    <string id="notice_56_description">주요 붕괴에 대한 하나의 새로운 도심 핵 원자로에서 발생하는 것입니다. 원자로의 근방에있는이 지역은 매우 방사선에 의해, 당신은 그것을 주변의 도시 구조 조정을 강제로 오염된됩니다. 신청&lt;br/&gt;당신은 그 상황을 통제하는 5 년.</string>
+
+    <string id="notice_57_title">리우 데 자네이로, 브라질 2047년</string>
+
+    <string id="notice_57_description">중반 - 21 세기에, 온실 효과 6 도까지 F. 화로 빙하가 녹아 해수면이 세계는 지구의 온도를 키우고있다. 해안 지역에 홍수와 침식에 의해 멸망했다. 신청&lt;br/&gt;당신이 다시 도시로 다시 늪 차례로 10 년.</string>
 
 
     <!-- overlays.xml -->
 
-    <string id="overlay_all_title">@kr-KR@ All Zones</string>
+    <string id="overlay_all_title">모든 영역</string>
 
-    <string id="overlay_residential_title">@kr-KR@ Residential Zones</string>
+    <string id="overlay_residential_title">주거 영역</string>
 
-    <string id="overlay_commercial_title">@kr-KR@ Commercial Zones</string>
+    <string id="overlay_commercial_title">상업 영역</string>
 
-    <string id="overlay_industrial_title">@kr-KR@ Industrial Zones</string>
+    <string id="overlay_industrial_title">산업 영역</string>
 
-    <string id="overlay_powergrid_title">@kr-KR@ Power Connectivity</string>
+    <string id="overlay_powergrid_title">전원 연결</string>
 
-    <string id="overlay_transportation_title">@kr-KR@ Transportation Network</string>
+    <string id="overlay_transportation_title">교통 네트워크</string>
 
-    <string id="overlay_populationdensity_title">@kr-KR@ Population Density</string>
+    <string id="overlay_populationdensity_title">인구 밀도</string>
 
-    <string id="overlay_rateofgrowth_title">@kr-KR@ Rate of Growth</string>
+    <string id="overlay_rateofgrowth_title">성장의 속도</string>
 
-    <string id="overlay_trafficdensity_title">@kr-KR@ Traffic Density</string>
+    <string id="overlay_trafficdensity_title">교통 밀도</string>
 
-    <string id="overlay_pollutiondensity_title">@kr-KR@ Pollution Density</string>
+    <string id="overlay_pollutiondensity_title">오염 밀도</string>
 
-    <string id="overlay_crimerate_title">@kr-KR@ Crime Rate</string>
+    <string id="overlay_crimerate_title">범죄율</string>
 
-    <string id="overlay_landvalue_title">@kr-KR@ Land Value</string>
+    <string id="overlay_landvalue_title">땅 값</string>
 
-    <string id="overlay_firecoverage_title">@kr-KR@ Fire Station Coverage</string>
+    <string id="overlay_firecoverage_title">소방서 보도</string>
 
-    <string id="overlay_policecoverage_title">@kr-KR@ Police Station Coverage</string>
+    <string id="overlay_policecoverage_title">경찰서 보도</string>
 
 
     <!-- scenarios.xml -->
 
-    <string id="scenario_1_title">@kr-KR@ Dullsville</string>
+    <string id="scenario_1_title">지루한 빌리지</string>
 
-    <string id="scenario_1_tagline">@kr-KR@ Boredom</string>
+    <string id="scenario_1_tagline">권태</string>
 
-    <string id="scenario_2_title">@kr-KR@ San Francsico</string>
+    <string id="scenario_2_title">샌프란 시스코</string>
 
-    <string id="scenario_2_tagline">@kr-KR@ Earthquake</string>
+    <string id="scenario_2_tagline">지진</string>
 
-    <string id="scenario_3_title">@kr-KR@ Hamburg</string>
+    <string id="scenario_3_title">함부르크</string>
 
-    <string id="scenario_3_tagline">@kr-KR@ Bombing</string>
+    <string id="scenario_3_tagline">폭파</string>
 
-    <string id="scenario_4_title">@kr-KR@ Bern</string>
+    <string id="scenario_4_title">베른</string>
 
-    <string id="scenario_4_tagline">@kr-KR@ Traffic</string>
+    <string id="scenario_4_tagline">교통</string>
 
-    <string id="scenario_5_title">@kr-KR@ Tokyo</string>
+    <string id="scenario_5_title">도쿄</string>
 
-    <string id="scenario_5_tagline">@kr-KR@ Monster Attack</string>
+    <string id="scenario_5_tagline">몬스터 공격</string>
 
-    <string id="scenario_6_title">@kr-KR@ Detroit</string>
+    <string id="scenario_6_title">디트로이트</string>
 
-    <string id="scenario_6_tagline">@kr-KR@ Crime</string>
+    <string id="scenario_6_tagline">범죄</string>
 
-    <string id="scenario_7_title">@kr-KR@ Boston</string>
+    <string id="scenario_7_title">보스턴</string>
 
-    <string id="scenario_7_tagline">@kr-KR@ Nuclear Meltdown</string>
+    <string id="scenario_7_tagline">핵 슬럼프</string>
 
-    <string id="scenario_8_title">@kr-KR@ Rio de Janeiro</string>
+    <string id="scenario_8_title">리우 데 자네이로</string>
 
-    <string id="scenario_8_tagline">@kr-KR@ Coastal Flooding</string>
+    <string id="scenario_8_tagline">해안 홍수</string>
 
 
     <!-- micropolisturbogearsengine.py -->
 
-    <string id="You are logged in.*">@kr-KR@ You are logged in. Welcome back to Micropolis Online!</string>
+    <string id="You are logged in.*">당신이 기록됩니다 들여 Micropolis 온라인에 다시 오신 것을 환영합니다!</string>
 
-    <string id="Incorrect user name or password.">@kr-KR@ Incorrect user name or password.</string>
+    <string id="Incorrect user name or password.">잘못된 사용자 이름이나 암호를 입력합니다.</string>
 
-    <string id="You are already logged out,*">@kr-KR@ You are already logged out, and you may log in or create an account.</string>
+    <string id="You are already logged out,*">당신은 이미 로그아웃되는, 그리고 여기에 로그인할 수있습니다하거나 계정을 만들 수있습니다.</string>
 
-    <string id="You are logged out.*">@kr-KR@ You are logged out. Come back soon!</string>
+    <string id="You are logged out.*">당신은 밖으로 기록됩니다. 빨리 돌아 오너라!</string>
 
-    <string id="Please enter a user name.">@kr-KR@ Please enter a user name.</string>
+    <string id="Please enter a user name.">사용자 이름을 입력하시기 바랍니다.</string>
 
-    <string id="The user name contains invalid characters.*">@kr-KR@ The user name contains invalid characters. Please use only letters, numbers, underscores or dashes.</string>
+    <string id="The user name contains invalid characters.*">사용자 이름에 잘못된 문자가 포함되어있습니다. 제발 오직 문자, 숫자, 밑줄이나 대시를 사용합니다.</string>
 
-    <string id="Please enter a password.">@kr-KR@ Please enter a password.</string>
+    <string id="Please enter a password.">비밀 번호를 입력하시기 바랍니다.</string>
 
-    <string id="A user of that name already exists.*">@kr-KR@ A user of that name already exists.</string>
+    <string id="A user of that name already exists.*">그 이름의 사용자가 이미 존재합니다.</string>
 
-    <string id="Please repeat the same password in the next field.">@kr-KR@ Please repeat the same password in the next field.</string>
+    <string id="Please repeat the same password in the next field.">제발 다음 필드에 동일한 비밀 번호를 반복합니다.</string>
 
-    <string id="An account with that email address already exists.">@kr-KR@ An account with that email address already exists.</string>
+    <string id="An account with that email address already exists.">해당 이메일 주소로 계정이 이미 존재합니다.</string>
 
-    <string id="A new account has been created*">@kr-KR@ A new account has been created for you, and you are logged in. Welcome to Micropolis Online!</string>
+    <string id="A new account has been created*">새 계정을, 당신을 위해 생성되었습니다 들여 Micropolis 온라인에 기록에 오신 것을 환영합니다!</string>
 
-    <string id="Incorrect old password.">@kr-KR@ Incorrect old password.</string>
+    <string id="Incorrect old password.">이전 비밀 번호가 잘못되었습니다.</string>
 
-    <string id="The new passwords do not match.">@kr-KR@ The new passwords do not match.</string>
+    <string id="The new passwords do not match.">새로운 비밀 번호가 일치하지 않습니다.</string>
 
-    <string id="You must enter your new password twice.">@kr-KR@ You must enter your new password twice.</string>
+    <string id="You must enter your new password twice.">네가 두번이나 새 비밀 번호를 입력해야합니다.</string>
 
-    <string id="Your password has been changed.">@kr-KR@ Your password has been changed.</string>
+    <string id="Your password has been changed.">귀하의 비밀 번호가 변경되었습니다.</string>
 
 
 </strings>

@@ -300,6 +300,7 @@
 			frame="${(parent.hilited || (gApp.tool == 'airport')) ? 2 : 1}"
 		    />
 		    <html
+			x="${(parent.width - this.width) / 2}"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Airport')}"
 		    />
