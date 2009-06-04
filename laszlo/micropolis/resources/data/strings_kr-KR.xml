@@ -41,7 +41,7 @@
 
     <string id="Micropolis: Choose a City">Micropolis: 도시 선택</string>
 
-    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Micrpolis에 오신 것을 환영합니다!&lt;br/&gt;&lt;br/&gt;'시나리오'탭, 또는 '생성기'탭, 또는 '도서관'탭에서 라이브러리에있는 도시에서 새 무작위 로딩시 생성 시나리오를 선택하여 도시를 선택하십시오.&lt;br/&gt;&lt;br/&gt;그리고 난 후, 다음이시 '버튼과 함께 연주를 시작 Micropolis'재생 기자!</string>
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Micropolis에 오신 것을 환영합니다!&lt;br/&gt;&lt;br/&gt;'시나리오'탭, 또는 '생성기'탭, 또는 '도서관'탭에서 라이브러리에있는 도시에서 새 무작위 로딩시 생성 시나리오를 선택하여 도시를 선택하십시오.&lt;br/&gt;&lt;br/&gt;그리고 난 후, 다음이시 '버튼과 함께 연주를 시작 Micropolis'재생 기자!</string>
 
     <string id="Please log in or create an account in order to save your city.">제발 로그인하거나 계정을 저장하기 위해서는 당신의 도시를 만듭니다. </string>
 
