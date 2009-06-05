@@ -1,0 +1,86 @@
+========================================================================
+Installing Micropolis on AWS.
+========================================================================
+
+Launch the contributed Fedora 8 i386 base v1.08 image:
+ami-2a0f275e
+ec2-public-images-eu/fedora-8-i386-base-v1.08.manifest.xml
+
+ec2-79-125-49-22.eu-west-1.compute.amazonaws.com
+
+========================================================================
+
+yum -y update
+yum -y install screen
+yum -y install emacs
+yum -y install xauth
+
+[run ssh with -X]
+
+echo 'escape ^z^z' > ~/.screenrc
+screen
+emacs
+m-x shell
+
+yum -y install xterm
+yum -y install gcc-c++
+yum -y install libstdc++-devel
+yum -y install termcap
+yum -y install libtermcap
+yum -y install libtermcap-devel
+yum -y install svn
+yum -y install xterm
+yum -y install xorg-x11-fonts-75dpi
+yum -y install xorg-x11-fonts-100dpi
+yum -y install fontconfig
+yum -y install dejavu-fonts
+yum -y install python-devel
+yum -y install mysql
+yum -y install mysql-server
+yum -y install mysql-administrator
+yum -y install swig
+yum -y install cairo
+yum -y install cairo-devel
+yum -y install pycairo
+yum -y install pycairo-devel
+yum -y install pygtk2
+yum -y install pygtk2-devel
+yum -y install apache
+yum -y install httpd
+yum -y install httpd-devel
+yum -y install httpd-tools
+yum -y install httpd-manual
+yum -y install php
+yum -y install java
+yum -y install java-devel
+yum -y install vnc
+
+cd /usr/local/src
+wget http://peak.telecommunity.com/dist/ez_setup.py
+python ez_setup.py
+
+easy_install -f http://files.turbogears.org/ "TurboGears==1.1b1"
+easy_install sqlalchemy
+easy_install genshi
+
+useradd laszlo
+cd /home/laszlo
+wget http://download.openlaszlo.org/4.3.0/openlaszlo-4.3.0-unix.tar.gz
+tar xfvz openlaszlo-4.3.0-unix.tar.gz
+ln -s lps-4.3.0/Server/lps-4.3.0 lps
+cd lps
+ln -s /home/micropolis/trunk/laszlo/micropolis
+
+cp /home/micropolis/trunk/aws/tomcatd /etc/init.d
+
+Edit /home/laszlo/tomcat/conf/LPS/localhost/lps.xml, line 2:
+<Context docBase="../../lps-4.3.0" path="/lps-4.3.0" allowLinking="true">
+
+useradd micropolis
+cd /home/micropolis
+svn checkout https://micropolis.googlecode.com/svn/trunk/ micropolis --username simhacker
+[[[ google generated password from http://code.google.com/hosting/settings ]]]
+
+mv micropolis trunk
+cd trunk
+make
