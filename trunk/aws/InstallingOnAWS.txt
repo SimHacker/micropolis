@@ -54,6 +54,7 @@ yum -y install php
 yum -y install java
 yum -y install java-devel
 yum -y install vnc
+yum -y install MySQL-python
 
 cd /usr/local/src
 wget http://peak.telecommunity.com/dist/ez_setup.py
@@ -62,8 +63,23 @@ python ez_setup.py
 easy_install -f http://files.turbogears.org/ "TurboGears==1.1b1"
 easy_install sqlalchemy
 easy_install genshi
+easy_install pyamf
+
+wget 'http://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/VerifyItem-Start/jdk-1_5_0_19-linux-i586-rpm.bin?BundledLineItemUUID=Ui5IBe.lLZwAAAEhIbM_57G2&OrderID=GeZIBe.lh5QAAAEhCrM_57G2&ProductID=zaJIBe.pkVcAAAEh_r8P5zJQ&FileName=/jdk-1_5_0_19-linux-i586-rpm.bin'
+mv jdk-1_5_0_19-linux-i586-rpm.bin* jdk-1_5_0_19-linux-i586-rpm.bin
+chmod +x jdk-1_5_0_19-linux-i586-rpm.bin
+./jdk-1_5_0_19-linux-i586-rpm.bin
+[page]
+yes
+updatedb; locate javac |grep bin
+/usr/sbin/alternatives --install /usr/bin/java java /usr/java/jdk1.5.0_19/bin/java 100
+/usr/sbin/alternatives --install /usr/bin/jar jar /usr/java/jdk1.5.0_19/bin/jar 100
+/usr/sbin/alternatives --install /usr/bin/javac javac /usr/java/jdk1.5.0_19/bin/javac 100 
+/usr/sbin/alternatives --config java
+[type number of /usr/java/jdk1.5.0_19/bin/java]
 
 useradd laszlo
+chmod a+rx /home/laszlo
 cd /home/laszlo
 wget http://download.openlaszlo.org/4.3.0/openlaszlo-4.3.0-unix.tar.gz
 tar xfvz openlaszlo-4.3.0-unix.tar.gz
@@ -71,16 +87,30 @@ ln -s lps-4.3.0/Server/lps-4.3.0 lps
 cd lps
 ln -s /home/micropolis/trunk/laszlo/micropolis
 
-cp /home/micropolis/trunk/aws/tomcatd /etc/init.d
 
-Edit /home/laszlo/tomcat/conf/LPS/localhost/lps.xml, line 2:
-<Context docBase="../../lps-4.3.0" path="/lps-4.3.0" allowLinking="true">
+mkdir /home/micropolis/htdocs
+cp -f /home/micropolis/trunk/aws/index.html /home/micropolis/htdocs
+cp -f /home/micropolis/trunk/aws/lps.xml /home/laszlo/tomcat/conf/LPS/localhost
+cp -f /home/micropolis/trunk/aws/tomcatd /etc/init.d
+cp -f /home/micropolis/trunk/aws/httpd.conf /etc/httpd/conf
+cp -f /home/micropolis/trunk/aws/rewriterules.conf /etc/httpd/conf.d
 
 useradd micropolis
+chmod a+rx /home/micropolis
 cd /home/micropolis
 svn checkout https://micropolis.googlecode.com/svn/trunk/ micropolis --username simhacker
-[[[ google generated password from http://code.google.com/hosting/settings ]]]
+[Enter google generated password from http://code.google.com/hosting/settings ]
 
 mv micropolis trunk
 cd trunk
 make
+
+chkconfig --level 2345 httpd on
+chkconfig --level 2345 mysqld on
+chkconfig --level 2345 tomcatd on
+
+service httpd restart
+service mysqld restart
+service tomcatd restart
+
+cd /home/micropolis/trunk/turbogears
