@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# Startup script for Tomcat
+#
+# chkconfig: 345 84 16
+# description: Tomcat jakarta JSP server
+
+
+
+#TOMCAT_HOME=/usr/local/tomcat
+#TOMCAT_START=$TOMCAT_HOME/bin/startup.sh
+#TOMCAT_STOP=$TOMCAT_HOME/bin/shutdown.sh
+TOMCAT_HOME=/home/laszlo/tomcat
+TOMCAT_START=$TOMCAT_HOME/bin/startup.sh
+TOMCAT_STOP=$TOMCAT_HOME/bin/shutdown.sh
+
+
+#Necessary environment variables
+export JAVA_HOME="/usr/local/src/jdk1.5"
+#export CATALINA_HOME="/usr/local/tomcat"
+export CATALINA_HOME=$TOMCAT_HOME
+export LD_KERNEL_ASSUME="2.2.5"
+
+# Added by Don to support Laszlo server.
+export CATALINA_OPTS="-Xmx512m -server"
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+#Check for tomcat script
+if [ ! -f $TOMCAT_HOME/bin/catalina.sh ]
+then
+    echo "Tomcat not available..."
+    exit
+fi
+
+start() {
+    echo -n "Starting Tomcat: "
+    $TOMCAT_START
+    echo
+    touch /var/lock/subsys/tomcatd
+# We may need to sleep here so it will be up for apache
+#    sleep 5
+#Instead should check to see if apache is up by looking for http.pid
+}
+
+stop() {
+    echo -n $"Shutting down Tomcat: "
+    $TOMCAT_STOP
+    rm -f /var/lock/subsys/tomcatd.pid
+    echo
+}
+
+status() {
+    ps ax --width=1000 | grep "[o]rg.apache.catalina.startup.Bootstrap start" | awk '{printf $1 " "}' | wc | awk '{print $2}' > /tmp/tomcat_process_count.txt
+   read line < /tmp/tomcat_process_count.txt
+if [ $line -gt 0 ]; then
+    echo -n "tomcatd ( pid "
+    ps ax --width=1000 | grep "[o]rg.apache.catalina.startup.Bootstrap start" | awk '{printf $1 " "}'
+    echo -n ") is running..."
+else
+    echo -n "Tomcat is stopped"
+fi
+}
+
+case "$1" in
+    start)
+	start
+	;;
+     stop)
+	stop
+	;;
+     restart)
+	stop
+	sleep 3
+	start
+	;;
+     status)
+	status
+	;;
+     *)
+	echo "Usage: tomcatd {start|stop|restart|status}"
+     exit 1
+esac
+
+
