@@ -23,6 +23,19 @@
     <resource name="pie_background_rsrc" src="../resources/images/pie_background.swf"/>
 
 
+    <!-- Cursors -->
+
+    <resource name="cursor_pan_rsrc">
+        <frame src="../resources/images/cursor_pan_up.png"/>
+        <frame src="../resources/images/cursor_pan_down.png"/>
+    </resource>
+
+    <resource name="cursor_pie_rsrc">
+        <frame src="../resources/images/cursor_pie_up.png"/>
+        <frame src="../resources/images/cursor_pie_down.png"/>
+    </resource>
+
+
     <!-- Icons -->
 
     <resource name="icon_pollution_rsrc" src="../resources/images/icon_pollution.png"/>
@@ -172,7 +185,6 @@
     <resource name="sprite_3_rsrc">
         <frame src="../resources/images/sprite_3_0.png"/>
         <frame src="../resources/images/sprite_3_1.png"/>
-        <frame src="../resources/images/sprite_3_10.png"/>
         <frame src="../resources/images/sprite_3_2.png"/>
         <frame src="../resources/images/sprite_3_3.png"/>
         <frame src="../resources/images/sprite_3_4.png"/>
@@ -181,6 +193,7 @@
         <frame src="../resources/images/sprite_3_7.png"/>
         <frame src="../resources/images/sprite_3_8.png"/>
         <frame src="../resources/images/sprite_3_9.png"/>
+        <frame src="../resources/images/sprite_3_10.png"/>
     </resource>
 
     <resource name="sprite_4_rsrc">
@@ -197,12 +210,6 @@
     <resource name="sprite_5_rsrc">
         <frame src="../resources/images/sprite_5_0.png"/>
         <frame src="../resources/images/sprite_5_1.png"/>
-        <frame src="../resources/images/sprite_5_10.png"/>
-        <frame src="../resources/images/sprite_5_11.png"/>
-        <frame src="../resources/images/sprite_5_12.png"/>
-        <frame src="../resources/images/sprite_5_13.png"/>
-        <frame src="../resources/images/sprite_5_14.png"/>
-        <frame src="../resources/images/sprite_5_15.png"/>
         <frame src="../resources/images/sprite_5_2.png"/>
         <frame src="../resources/images/sprite_5_3.png"/>
         <frame src="../resources/images/sprite_5_4.png"/>
@@ -211,6 +218,12 @@
         <frame src="../resources/images/sprite_5_7.png"/>
         <frame src="../resources/images/sprite_5_8.png"/>
         <frame src="../resources/images/sprite_5_9.png"/>
+        <frame src="../resources/images/sprite_5_10.png"/>
+        <frame src="../resources/images/sprite_5_11.png"/>
+        <frame src="../resources/images/sprite_5_12.png"/>
+        <frame src="../resources/images/sprite_5_13.png"/>
+        <frame src="../resources/images/sprite_5_14.png"/>
+        <frame src="../resources/images/sprite_5_15.png"/>
     </resource>
 
     <resource name="sprite_6_rsrc">

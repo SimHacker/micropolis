@@ -34,3 +34,7 @@ embedding city views.
 
 When disconnected, clear all state flags like makingnewaccount, etc.
 
+When not playing game, should not poll server very fast.
+
+Reconnect to same session, flush caches. 
+

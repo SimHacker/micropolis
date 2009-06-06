@@ -91,6 +91,7 @@
         <attribute name="overlay" type="string" value="all"/>
 	<attribute name="chatChannel" type="string" value="all"/>
 	<attribute name="sprites" value="null"/>
+	<attribute name="soundsToPlay" value="$once{{}}"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -372,7 +373,7 @@
                     var virtualSpeed = parseInt(args['virtualSpeed']);
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-                    Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
+                    //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
                     if (this.virtualSpeed != virtualSpeed) {
                         this.setAttribute("virtualSpeed", virtualSpeed);
                     }
@@ -833,7 +834,6 @@
             this.polls++;
 
             var messages = [];
-
             var pollers = this.pollers;
             n = pollers.length;
             if (n > 0) {
@@ -861,6 +861,13 @@
                 ref: ref,
                 messages: messages
             });
+
+	    var soundName;
+	    for (soundName in this.soundsToPlay) {
+	        lz.AudioService.LzAudio.playSound(soundName);
+	    }
+	    this.soundsToPlay = {};
+
           ]]>
         </method>
 
@@ -1356,8 +1363,10 @@
             var channel = args['channel'];
             var sound = args['sound'];
 	    var soundName = 'sound_' + sound + '_rsrc';
-            Debug.write("MAKE SOUND", "channel", channel, "sound", sound, soundName);
-	    lz.AudioService.LzAudio.playSound(soundName);
+
+            //Debug.write("MAKE SOUND", "channel", channel, "sound", sound, soundName);
+
+	    this.soundsToPlay[soundName] = true;
           ]]>
         </method>
 

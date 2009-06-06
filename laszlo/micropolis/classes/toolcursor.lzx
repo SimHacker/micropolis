@@ -464,25 +464,25 @@
 	/>
 
 	<text name="toolNameText"
-	  x="${(parent.width - this.width) / 2}"
-	  y="${parent.height + parent.margin}"
-	  bgcolor="0xffffff"
-	  fgcolor="0x000000"
-	  fontsize="18"
-	  fontstyle="bold"
-	  resize="true"
-	  text="${classroot.toolName}"
+	    x="${(parent.width - this.width) / 2}"
+	    y="${parent.height + parent.margin}"
+	    bgcolor="0xffffff"
+	    fgcolor="0x000000"
+	    fontsize="18"
+	    fontstyle="bold"
+	    resize="true"
+	    text="${classroot.toolName}"
 	/>
 
 	<text name="toolCostText"
-	  x="${(parent.width - this.width) / 2}"
-	  y="${parent.toolNameText.y + parent.toolNameText.height}"
-	  bgcolor="0xffffff"
-	  fgcolor="0x000000"
-	  fontsize="18"
-	  fontstyle="bold"
-	  resize="true"
-	  text="${gApp.formatFunds(classroot.cost)}"
+	    x="${(parent.width - this.width) / 2}"
+	    y="${parent.toolNameText.y + parent.toolNameText.height}"
+	    bgcolor="0xffffff"
+	    fgcolor="0x000000"
+	    fontsize="18"
+	    fontstyle="bold"
+	    resize="true"
+	    text="${gApp.formatFunds(classroot.cost)}"
 	/>
 
     </class>

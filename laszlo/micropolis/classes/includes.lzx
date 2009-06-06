@@ -25,6 +25,8 @@
     <include href="tile.lzx"/>
     <include href="sprite.lzx"/>
     <include href="toolcursor.lzx"/>
+    <include href="pancursor.lzx"/>
+    <include href="piecursor.lzx"/>
     <include href="tileview.lzx"/>
     <include href="edittileview.lzx"/>
     <include href="noticetileview.lzx"/>

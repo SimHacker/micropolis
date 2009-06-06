@@ -97,6 +97,7 @@ MicropolisCorePath = 'micropolis/MicropolisCore/src'
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
 LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES_PER_YEAR
+print "LoopsPerYear", LoopsPerYear
 
 DefaultAnimateDelay = 250
 DefaultPollDelay = 50
@@ -106,71 +107,71 @@ SpeedConfigurations = [
         'speed': 3,
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 120.0), # Half a year per minute.
+        'loopsPerSecond': round(LoopsPerYear / 1000.0),
         'maxLoopsPerPoll': 100,
     },
     { # 1: Super Slow
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 60.0), # One year per minute.
+        'loopsPerSecond': round(LoopsPerYear / 500.0),
         'maxLoopsPerPoll': 200,
     },
     { # 2: Very Slow
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 45.0), # One year per 45 seconds, 1 1/3 years per minute.
+        'loopsPerSecond': round(LoopsPerYear / 250.0),
         'maxLoopsPerPoll': 400,
     },
     { # 3: Slow
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 30.0), # One year per 30 seconds, 2 years per minute.
+        'loopsPerSecond': round(LoopsPerYear / 100.0),
         'maxLoopsPerPoll': 600,
     },
     { # 4: Medium
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 15.0), # One year per 15 seconds, 4 years per minute.
+        'loopsPerSecond': round(LoopsPerYear / 50.0),
         'maxLoopsPerPoll': 800,
     },
     { # 5: Fast
         'speed': 3, 
-        'pollDelay': 500,
-        'animateDelay': 250,
-        'loopsPerSecond': round(0.5 * LoopsPerYear / 10.0), # One year per 10 seconds, 6 years per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(0.5 * LoopsPerYear / 15.0),
         'maxLoopsPerPoll': 1000,
     },
     { # 6: Very Fast
         'speed': 3, 
-        'pollDelay': 300,
-        'animateDelay': 250,
-        'loopsPerSecond': round(LoopsPerYear / 5.0), # One year per 5 seconds, 12 years per minute.
+        'pollDelay': DefaultPollDelay,
+        'animateDelay': DefaultAnimateDelay,
+        'loopsPerSecond': round(LoopsPerYear / 5.0),
         'maxLoopsPerPoll': 2000,
     },
     { # 7: Super Fast
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(LoopsPerYear / 2.0), # One year per 2 seconds, 30 years per minute.
-        'maxLoopsPerPoll': 5000,
+        'loopsPerSecond': round(LoopsPerYear / 1.0),
+        'maxLoopsPerPoll': LoopsPerYear * 2,
     },
     { # 8: Ultra Fast
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(LoopsPerYear / 1.0), # One year per 1 second, 60 years per minute.
-        'maxLoopsPerPoll': 10000,
+        'loopsPerSecond': round(LoopsPerYear / 0.25),
+        'maxLoopsPerPoll': LoopsPerYear * 5,
     },
     { # 9: Astronomically Fast
         'speed': 3, 
         'pollDelay': DefaultPollDelay,
         'animateDelay': DefaultAnimateDelay,
-        'loopsPerSecond': round(4 * LoopsPerYear / 1.0), # Four years per second, 240 years per minute.
-        'maxLoopsPerPoll': 100000,
+        'loopsPerSecond': round(LoopsPerYear / 0.05),
+        'maxLoopsPerPoll': LoopsPerYear * 10,
     },
 ]
 
@@ -1383,8 +1384,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             #print "NOW", now, "lastLoopTime", self.lastLoopTime
             elapsed = now - self.lastLoopTime
-            self.lastLoopTime = now
-            ticks = int(max(1, math.ceil(elapsed * self.loopsPerSecond)))
+            ticks = int(max(0, math.floor(elapsed * self.loopsPerSecond)))
+            if ticks:
+                self.lastLoopTime = now
+            else:
+                print "zzzz...."
+                return
+
             #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
             ticks = min(ticks, self.maxLoopsPerPoll)
 

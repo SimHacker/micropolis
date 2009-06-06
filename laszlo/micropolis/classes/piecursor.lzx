@@ -1,0 +1,61 @@
+<library>
+
+
+    <!-- Pie Cursor -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="piecursor">
+
+
+        <attribute name="gap" value="5"/>
+
+
+        <method name="doAnimate"><![CDATA[
+	    this.trackCursor();
+	  ]]>
+	</method>
+
+
+	<method name="trackCursor"><![CDATA[
+	    var x = immediateparent.getMouse('x');
+	    var y = immediateparent.getMouse('y');
+	    var moved = false;
+
+	    if (this.x != x) {
+	        this.setAttribute("x", x);
+		moved = true;
+	    }
+	    if (this.y != y) {
+	        this.setAttribute("y", y);
+		moved = true;
+	    }
+
+	    return moved;
+	  ]]>
+	</method>
+
+
+	<view name="cur"
+	    x="${-this.width / 2}"
+	    y="${-this.height / 2}"
+	    resource="cursor_pie_rsrc"
+	/>
+
+	<text name="label"
+	    bgcolor="0xffffff"
+	    fgcolor="0x000000"
+	    fontsize="18"
+	    fontstyle="bold"
+	    resize="true"
+	    x="${-this.width / 2}"
+	    y="${classroot.cur.y + classroot.cur.height + classroot.gap}"
+	    text="${gApp._('Pie Menu')}"
+	/>
+
+    </class>
+
+
+</library>
