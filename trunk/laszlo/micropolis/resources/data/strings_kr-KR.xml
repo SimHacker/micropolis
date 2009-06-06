@@ -196,17 +196,11 @@
 
     <string id="Tools">도구</string>
 
-    <string id="(Zone)">(영역)</string>
-
     <string id="Zone">지대</string>
-
-    <string id="(Build)">(빌드)</string>
 
     <string id="Build">빌드</string>
 
-    <string id="(More)">(기타)</string>
-
-    <string id="(Tab)">(탭)</string>
+    <string id="More">기타</string>
 
     <string id="Tab">탭</string>
 
@@ -219,14 +213,6 @@
     <string id="Overlays">오버레이</string>
 
     <string id="Control">제어</string>
-
-    <string id="(Speed)">(속도)</string>
-
-    <string id="(Overlays)">(오버레이)</string>
-
-    <string id="(Disasters)">(재해)</string>
-
-    <string id="(Funds)">(펀드)</string>
 
     <string id="Funds">펀드</string>
 

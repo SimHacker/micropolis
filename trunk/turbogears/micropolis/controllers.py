@@ -237,8 +237,6 @@ class Root(controllers.RootController):
 
         self.sessions = {}
 
-        self.engine = micropolisturbogearsengine.CreateTurboGearsEngine()
-
 
     ########################################################################
     # expectationFailed
@@ -508,6 +506,8 @@ class Root(controllers.RootController):
         overlay='',
         **kw):
 
+        #print "MAP IMAGE"
+
         tileSize = micropolisengine.EDITOR_TILE_SIZE
 
         worldW = micropolisengine.WORLD_W
@@ -580,73 +580,6 @@ class Root(controllers.RootController):
             ctx.paint_with_alpha(overlayAlpha)
 
             ctx.restore()
-
-        fd, tempFileName = tempfile.mkstemp()
-        os.close(fd)
-        
-        surface.write_to_png(tempFileName)
-        surface.finish()
-        f = open(tempFileName, 'rb')
-        data = f.read()
-        f.close()
-        os.unlink(tempFileName)
-
-        return data
-
-
-    ########################################################################
-    # micropolisGetTilesImage
-    #
-    # Get an image of some tiles.
-    #
-    # TODO: Don't use the global engine. Use an anonymous session's engine.
-    #
-    @expose(
-        content_type="image/png")
-    @validate(validators = {
-        'col': validators.Int(),
-        'row': validators.Int(),
-        'cols': validators.Int(),
-        'rows': validators.Int(),
-        'ticks': validators.Int(),
-    })
-    def micropolisGetTilesImage(
-        self,
-        col=0,
-        row=0,
-        cols=micropolisengine.WORLD_W,
-        rows=micropolisengine.WORLD_H,
-        ticks=1,
-        **kw):
-
-        if ((col < 0) or
-            (row < 0) or
-            (cols <= 0) or
-            (rows <= 0) or
-            ((col + cols) > micropolisengine.WORLD_W) or
-            ((row + rows) > micropolisengine.WORLD_H)):
-            self.expectationFailed("Invalid tile coordinates.");
-
-        engine = self.engine
-        engine.tickSim(ticks)
-
-        tileSize = 16
-        width = cols * tileSize
-        height = rows * tileSize
-
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-        ctx = cairo.Context(surface)
-
-        alpha = 1.0
-
-        engine.renderTiles(
-            ctx,
-            micropolisengine.EDITOR_TILE_SIZE,
-            col,
-            row,
-            cols,
-            rows,
-            alpha)
 
         fd, tempFileName = tempfile.mkstemp()
         os.close(fd)

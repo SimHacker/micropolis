@@ -11,7 +11,7 @@
         <html text="${gApp._('Tools')}"/>
 
 	<item>
-	    <html text="${gApp._('(Zone)')}"/>
+	    <html text="${'(' + gApp._('Zone') + ')'}"/>
 
 	    <piemenu
 	        fixedRadius="50"
@@ -217,7 +217,7 @@
 	</item>
 
 	<item>
-	    <html text="${gApp._('(Build)')}"/>
+	    <html text="${'(' + gApp._('Build') + ')'}"/>
 
 	    <piemenu
 	        fixedRadius="50"
@@ -361,12 +361,12 @@
 	</item>
 
 	<item>
-	    <html text="${gApp._('(More)')}"/>
+	    <html text="${'(' + gApp._('More') + ')'}"/>
 
 	    <piemenu>
 
 		<item>
-		    <html text="${gApp._('(Tab)')}"/>
+		    <html text="${'(' + gApp._('Tab') + ')'}"/>
 		    <piemenu>
 			<html text="${gApp._('Tab')}"/>
 
@@ -454,7 +454,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('(Speed)')}"/>
+		    <html text="${'(' + gApp._('Speed') + ')'}"/>
 
 		    <piemenu
 		        initialAngle="0"
@@ -553,7 +553,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('(Overlays)')}"/>
+		    <html text="${'(' + gApp._('Overlays') + ')'}"/>
 
 		    <piemenu id="gEditTileViewOverlaysPie"
 		        maxPieItems="100"
@@ -603,7 +603,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('(Disasters)')}"/>
+		    <html text="${'(' + gApp._('Disasters') + ')'}"/>
 
 		    <piemenu>
 		        <html text="${gApp._('Disasters')}"/>
@@ -651,7 +651,7 @@
 		</item>
 
 		<item>
-		    <html text="${gApp._('(Funds)')}"/>
+		    <html text="${'(' + gApp._('Funds') + ')'}"/>
 
 		    <piemenu>
 		        <html text="${gApp._('Funds')}"/>

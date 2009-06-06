@@ -196,17 +196,11 @@
 
     <string id="Tools">Gereedschap</string>
 
-    <string id="(Zone)">(Zone)</string>
-
     <string id="Zone">Zone</string>
-
-    <string id="(Build)">(Bouwen)</string>
 
     <string id="Build">Bouwen</string>
 
-    <string id="(More)">(Meer)</string>
-
-    <string id="(Tab)">(Tab)</string>
+    <string id="More">Meer</string>
 
     <string id="Tab">Tab</string>
 
@@ -219,14 +213,6 @@
     <string id="Overlays">Bedekkingen</string>
 
     <string id="Control">Controle</string>
-
-    <string id="(Speed)">(Snelheid)</string>
-
-    <string id="(Overlays)">(Bedekkingen)</string>
-
-    <string id="(Disasters)">(Rampen)</string>
-
-    <string id="(Funds)">(Fondsen)</string>
 
     <string id="Funds">Fondsen</string>
 

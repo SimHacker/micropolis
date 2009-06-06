@@ -196,17 +196,11 @@
 
     <string id="Tools">@fr-FR@ Tools</string>
 
-    <string id="(Zone)">@fr-FR@ (Zone)</string>
-
     <string id="Zone">@fr-FR@ Zone</string>
-
-    <string id="(Build)">@fr-FR@ (Build)</string>
 
     <string id="Build">@fr-FR@ Build</string>
 
-    <string id="(More)">@fr-FR@ (More)</string>
-
-    <string id="(Tab)">@fr-FR@ (Tab)</string>
+    <string id="More">@fr-FR@ More</string>
 
     <string id="Tab">@fr-FR@ Tab</string>
 
@@ -219,14 +213,6 @@
     <string id="Overlays">@fr-FR@ Overlays</string>
 
     <string id="Control">@fr-FR@ Control</string>
-
-    <string id="(Speed)">@fr-FR@ (Speed)</string>
-
-    <string id="(Overlays)">@fr-FR@ (Overlays)</string>
-
-    <string id="(Disasters)">@fr-FR@ (Disasters)</string>
-
-    <string id="(Funds)">@fr-FR@ (Funds)</string>
 
     <string id="Funds">@fr-FR@ Funds</string>
 

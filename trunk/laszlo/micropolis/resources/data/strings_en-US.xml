@@ -1,5 +1,4 @@
-<?xml version="1.0" ?>
-<strings language="en-US">
+<?xml version="1.0" ?><strings language="en-US">
 
 
     <!--
@@ -196,17 +195,11 @@
 
     <string id="Tools">Tools</string>
 
-    <string id="(Zone)">(Zone)</string>
-
     <string id="Zone">Zone</string>
-
-    <string id="(Build)">(Build)</string>
 
     <string id="Build">Build</string>
 
-    <string id="(More)">(More)</string>
-
-    <string id="(Tab)">(Tab)</string>
+    <string id="More">More</string>
 
     <string id="Tab">Tab</string>
 
@@ -219,14 +212,6 @@
     <string id="Overlays">Overlays</string>
 
     <string id="Control">Control</string>
-
-    <string id="(Speed)">(Speed)</string>
-
-    <string id="(Overlays)">(Overlays)</string>
-
-    <string id="(Disasters)">(Disasters)</string>
-
-    <string id="(Funds)">(Funds)</string>
 
     <string id="Funds">Funds</string>
 
@@ -385,6 +370,16 @@
     <string id="Micropolis">Micropolis</string>
 
     <string id="The city simulation has begun!">The city simulation has begun!</string>
+
+
+    <!-- pancursor.lzx -->
+
+    <string id="Pan Map" comment="Label for cursor that pans the map.">Pan Map</string>
+
+
+    <!-- piecursor.lzx -->
+
+    <string id="Pie Menu" comment="Label for cursor that pops up a pie menu.">Pie Menu</string>
 
 
     <!-- playscreen.lzx -->

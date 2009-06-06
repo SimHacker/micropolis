@@ -12,6 +12,7 @@
 
 
         <attribute name="panning" value="false"/>
+        <attribute name="pieing" value="false"/>
 	<attribute name="panCursorStartX" value="0"/>
 	<attribute name="panCursorStartY" value="0"/>
 	<attribute name="panContainerStartX" value="0"/>
@@ -24,6 +25,9 @@
 	<attribute name="panDelegate" value="null"/>
 	<attribute name="viewExtraPan" value="8"/>
 	<attribute name="viewExtraAutoScroll" value="16"/>
+	<attribute name="shiftDown" value="false"/>
+	<attribute name="altDown" value="false"/>
+	<attribute name="controlDown" value="false"/>
 
 
         <handler name="onpanning"><![CDATA[
@@ -62,14 +66,12 @@
 
 
 	<handler name="onmousedown" args="arg"><![CDATA[
-	    var altDown = lz.KeysService.LzKeys.isKeyDown('alt');
-	    var controlDown = lz.KeysService.LzKeys.isKeyDown('control');
-	    var shiftDown = lz.KeysService.LzKeys.isKeyDown('shift');
-	    //Debug.write("KEYS", "alt", altDown, "control", controlDown, "shift", shiftDown, lz.KeysService.LzKeys.downKeysArray);
+	    this.updateKeys();
 
 	    this.resetTracking();
 
 	    if (shiftDown) {
+	        // TODO: set this.pieing to true, and clear it after last pie menu pops down.
 	        gEditTileViewPie.popupAtCursor(false);
 	    } else if (altDown) {
 	        this.setAttribute('panning', true);
@@ -86,8 +88,19 @@
 	</handler>
 
 
+	<method name="updateKeys"><![CDATA[
+	    this.setAttribute("altDown", lz.KeysService.LzKeys.isKeyDown('alt'));
+	    this.setAttribute("controlDown", lz.KeysService.LzKeys.isKeyDown('control'));
+	    this.setAttribute("shiftDown", lz.KeysService.LzKeys.isKeyDown('shift'));
+	  ]]>
+	</method>
+
+
 	<method name="animateCursor"><![CDATA[
-	    this.container.cur.doAnimate();
+	    this.updateKeys();
+	    this.container.toolCur.doAnimate();
+	    this.container.panCur.doAnimate();
+	    this.container.pieCur.doAnimate();
 	  ]]>
 	</method>
 
@@ -214,13 +227,30 @@
 	</method>
 
 
-	<toolcursor name="cur" id="gCur"
+	<toolcursor name="toolCur" id="gToolCur"
 	    drawing="${classroot.drawing}"
 	    tileSize="${classroot.viewTileSize}"
-	    visible="${!classroot.panning}"
+	    visible="${!classroot.panning &amp;&amp;
+		       !classroot.pieing &amp;&amp;
+		       !classroot.shiftDown &amp;&amp;
+		       !classroot.altDown}"
 	    placement="container"
 	/>
 
+
+	<pancursor name="panCur" id="gPanCur"
+	    visible="${classroot.panning ||
+		       classroot.altDown}"
+	    frame="${classroot.panning ? 2 : 1}"
+	    placement="container"
+	/>	    
+
+	<piecursor name="pieCur" id="gPieCur"
+	    visible="${classroot.pieing ||
+		       classroot.shiftDown}"
+	    frame="${classroot.pieing ? 2 : 1}"
+	    placement="container"
+	/>	    
 
 <!--
 	<view name="scrollTop"
