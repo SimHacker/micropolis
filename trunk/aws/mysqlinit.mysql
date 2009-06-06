@@ -1,0 +1,4 @@
+CREATE DATABASE micropolis;
+
+CREATE USER 'micropolis'@'localhost' IDENTIFIED BY 'WillWrightCodeForFood';
+GRANT ALL PRIVILEGES ON *.* TO 'micropolis'@'localhost' WITH GRANT OPTION;
