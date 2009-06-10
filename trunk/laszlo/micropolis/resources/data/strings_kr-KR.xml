@@ -392,14 +392,14 @@
 
     <string id="Message failed.">메시지가 실패했습니다.</string>
 
-    <string id="Description:">설명</string>
+    <string id="Description">설명</string>
 
-    <string id="To:">받는 사람:</string>
+    <string id="To">받는 사람</string>
 
 
     <!-- scenariosview.lzx -->
 
-    <string id="Scenario:">시나리오:</string>
+    <string id="Scenario">시나리오:</string>
 
 
     <!-- startscreen.lzx -->

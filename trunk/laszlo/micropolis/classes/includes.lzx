@@ -58,7 +58,7 @@
     <include href="userview.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
-    <include href="newcitydialog.lzx"/>
+    <include href="questiondialog.lzx"/>
     <include href="changepassworddialog.lzx"/>
     <include href="dialogs.lzx"/>
 

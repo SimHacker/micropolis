@@ -38,3 +38,4 @@ When not playing game, should not poll server very fast.
 
 Reconnect to same session, flush caches. 
 
+Clean out junk history from cities in library.

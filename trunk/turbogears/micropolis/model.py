@@ -10,6 +10,7 @@
 
 
 from datetime import datetime
+import random
 import pkg_resources
 pkg_resources.require("SQLAlchemy>=0.4.0")
 from turbogears.database import metadata, mapper
@@ -19,7 +20,8 @@ from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy.orm import relation
 # import some datatypes for table columns from SQLAlchemy
 # (see http://www.sqlalchemy.org/docs/04/types.html for more)
-from sqlalchemy import String, Unicode, Integer, DateTime, TEXT, BLOB
+from sqlalchemy import String, Unicode, Integer, Boolean, DateTime, TEXT, BLOB
+from turbogears.database import metadata, mapper, session
 from turbogears import identity
 
 
@@ -85,8 +87,10 @@ city_table = Table('city', metadata,
     Column('title', Unicode(255), unique=True),
     Column('description', Unicode(), unique=True),
     Column('user_id', Integer, ForeignKey('tg_user.user_id')),
-    Column('save_file', BLOB, default=None),
-    Column('metadata', TEXT, default=None),
+    Column('save_file', BLOB, default=None, nullable=True),
+    Column('metadata', TEXT, default=None, nullable=True),
+    Column('icon', BLOB, default=None, nullable=True),
+    Column('shared', Boolean, default=False),
     Column('created', DateTime, default=datetime.now),
     Column('modified', DateTime, default=datetime.now)
 )
@@ -97,6 +101,8 @@ city_table = Table('city', metadata,
 
 
 class Visit(object):
+
+
     """
     A visit to your site
     """
@@ -116,6 +122,7 @@ class Group(object):
     """
     An ultra-simple group definition.
     """
+
 
     @classmethod
     def by_name(cls, group_name):
@@ -144,6 +151,7 @@ class User(object):
     Probably would want additional attributes.
     """
 
+
     @property
     def permissions(self):
         p = set()
@@ -155,6 +163,7 @@ class User(object):
     def isAdmin(self):
         return Permission.getAdminPermission() in self.permissions
 
+
     @classmethod
     def by_email_address(cls, email):
         """
@@ -162,6 +171,7 @@ class User(object):
         based on their email addresses since it is unique.
         """
         return cls.query.filter_by(email_address=email).first()
+
 
     @classmethod
     def by_user_name(cls, username):
@@ -171,12 +181,14 @@ class User(object):
         """
         return cls.query.filter_by(user_name=username).first()
 
+
     def _set_password(self, password):
         """
         encrypts password on the fly using the encryption
         algo defined in the configuration
         """
         self._password = identity.encrypt_password(password)
+
 
     def _get_password(self):
         """
@@ -185,6 +197,41 @@ class User(object):
         return self._password
 
     password = property(_get_password, _set_password)
+
+
+    def getSavedCities(self, session):
+        savedCities = []
+        #print "GETSAVEDCITIES USER", self, "CITIES", self.cities
+        for city in self.cities:
+            #print "CITY", city, city.title, city.description
+            iconURL = (
+                '/server/getCityIcon?session=' + 
+                session.sessionID +
+                '&cityID=' +
+                str(city.city_id) +
+                '&random=' +
+                str(random.random()))
+            #print iconURL
+            d = {
+                'title': city.title.encode('utf-8'),
+                'description': city.description.encode('utf-8'),
+                'id': city.city_id, # TODO: use cookie instead of db id
+                'shared': city.shared,
+                'createdDate': city.created,
+                'created': city.created.toordinal(),
+                'modifiedDate': city.modified,
+                'modified': city.modified.toordinal(),
+                'icon': iconURL,
+            }
+            print city, city.shared, d
+            savedCities.append(d)
+
+        savedCities.sort(
+            lambda c1, c2:
+                cmp(c1['modified'], c2['modified']))
+        #print savedCities
+
+        return savedCities
 
 
     def destroy(self):
@@ -203,7 +250,12 @@ class City(object):
     """
     A city saved in the database.
     """
-    pass
+
+
+    def destroy(self):
+
+        # TODO: clear parent pointers of sub-cities.
+        session.delete(self)
 
 
 ########################################################################
@@ -221,6 +273,7 @@ mapper(VisitIdentity, visit_identity_table,
 mapper(User, user_table,
         properties={
             '_password': user_table.c.password,
+            'cities': relation(City, backref='user'),
         })
 
 mapper(City, city_table,

@@ -360,20 +360,7 @@ class Root(controllers.RootController):
     def console(
         self):
 
-        return {
-            'commands': [
-                {
-                    'name': 'Micropolis View',
-                    'link': '/micropolisView',
-                    'description': 'View the Micropolis game.',
-                },
-                {
-                    'name': 'Get Tiles',
-                    'link': '/micropolisGetTles',
-                    'description': 'Get an image of all the Micropolis game tiles.',
-                },
-            ],
-        }
+        return {}
 
 
     ########################################################################
@@ -452,7 +439,7 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # micropolisGetTiles
+    # getTiles
     #
     # Get some tiles from the session's engine.
     #
@@ -465,7 +452,7 @@ class Root(controllers.RootController):
         'rows': validators.Int(),
         'code': validators.Int(),
     })
-    def micropolisGetTiles(
+    def getTiles(
         self,
         sessionID='',
         col=0,
@@ -488,7 +475,7 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # micropolisGetMapImage
+    # getMapImage
     #
     # Get a picture of the session's map.
     #
@@ -498,7 +485,7 @@ class Root(controllers.RootController):
         'width': validators.Int(),
         'height': validators.Int(),
     })
-    def micropolisGetMapImage(
+    def getMapImage(
         self,
         sessionID='',
         width=120,
@@ -506,84 +493,20 @@ class Root(controllers.RootController):
         overlay='',
         **kw):
 
-        #print "MAP IMAGE"
-
-        tileSize = micropolisengine.EDITOR_TILE_SIZE
-
-        worldW = micropolisengine.WORLD_W
-        worldH = micropolisengine.WORLD_H
-
-        tileWidth = int(width / worldW)
-        tileHeight = int(height / worldH)
-
-        #print width, height, tileSize, width % tileWidth, height % tileHeight, tileWidth != tileHeight
-
-        if (# Size must not be zero or negative.
-            (width < worldW) or
-            (height < worldH) or
-            # Size must not be bigger than 16x16 tile.
-            (width > worldW * tileSize) or
-            (height > worldH * tileSize) or
-            # Size must be multiple of tile size.
-            ((width % tileWidth) != 0) or
-            ((height % tileHeight) != 0) or
-            # Size must be 1:1 aspect ratio.
-            (tileWidth != tileHeight)):
-            self.expectationFailed("Invalid size.");
-
         session = self.getSession(sessionID)
         engine = session.engine
 
-        tileSize = tileWidth
+        surface = engine.getMapImage(
+            width,
+            height,
+            overlay)
 
-        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-        ctx = cairo.Context(surface)
+        #print "MAP IMAGE", surface
 
-        alpha = 1.0
+        if not surface:
+            self.expectationFailed("Bad parameters.");
 
-        engine.renderTiles(
-            ctx,
-            tileSize,
-            0,
-            0,
-            worldW,
-            worldH,
-            alpha)
-
-        overlayImage, overlayAlpha, overlayWidth, overlayHeight = \
-            engine.getDataImageAlphaSize(overlay)
-        #print "OVERLAY", overlay, "IMAGE", overlayImage, overlayAlpha, overlayWidth, overlayHeight
-        if overlayImage:
-            overlayWidth = 1.0 / overlayWidth
-            overlayHeight = 1.0 / overlayHeight
-
-            ctx.save()
-
-            ctx.scale(
-                worldW * tileSize,
-                worldH * tileSize)
-
-            ctx.rectangle(0, 0, 1, 1)
-            ctx.clip()
-
-            imageWidth = overlayImage.get_width()
-            imageHeight = overlayImage.get_height()
-
-            ctx.scale(
-                overlayWidth / imageWidth,
-                overlayHeight / imageHeight)
-
-            ctx.set_source_surface(
-                overlayImage,
-                0,
-                0)
-            ctx.paint_with_alpha(overlayAlpha)
-
-            ctx.restore()
-
-        fd, tempFileName = tempfile.mkstemp()
-        os.close(fd)
-        
+        tempFileName = tempfile.mktemp()
         surface.write_to_png(tempFileName)
         surface.finish()
         f = open(tempFileName, 'rb')
@@ -591,7 +514,46 @@ class Root(controllers.RootController):
         f.close()
         os.unlink(tempFileName)
 
+        #print "DATA", len(data), type(data)
         return data
+
+
+    ########################################################################
+    # getCityIcon
+    #
+    # Get a saved city's icon.
+    #
+    @expose(
+        content_type="image/png")
+    @validate(validators = {
+        'cityID': validators.Int(),
+    })
+    def getCityIcon(
+        self,
+        sessionID='',
+        cityID=0,
+        **kw):
+
+        user = None
+        if sessionID:
+            session = self.getSession(sessionID)
+            user = session.user
+
+        savedCity = cityID and model.City.query.filter_by(city_id=cityID).first()
+        if not savedCity:
+            self.expectationFailed("Bad parameters.");
+
+        if ((not savedCity.shared) and 
+            ((not user) or
+             (user.user_id != savedCity.user_id))):
+            self.expectationFailed("Not shared.");
+
+        data = savedCity.icon
+        if not data:
+            # TODO: Use a stand-in icon, or make one now.
+            self.expectationFailed("No icon.");
+
+        return str(data)
 
 
     ########################################################################
@@ -762,9 +724,9 @@ class Root(controllers.RootController):
         return response
 
 
-    def startSessionService(self, ignore):
+    def startSessionService(self, args):
         session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
-        #print "STARTSESSIONSERVICE", "sessionID", session
+        print "STARTSESSIONSERVICE", "sessionID", session, "ARGS", args
         return session.sessionID
 
 

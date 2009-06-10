@@ -176,8 +176,10 @@ def GetSubElementFloat(el, key, default=0.0):
 
 
 def SetSubElementText(el, key, value):
-    subEl = el.createElement(key)
-    text = el.createTextNode(value)
+    print "SetSubElementText", el, key, value
+    doc = el.ownerDocument
+    subEl = doc.createElement(key)
+    text = doc.createTextNode(value)
     subEl.appendChild(text)
     el.appendChild(subEl)
 
@@ -796,6 +798,88 @@ You have 10 years to turn this swamp back into a city again.""",
         if view in views:
             views.remove(view)
             print "REMOVEVIEW", view
+
+
+    def getMapImage(
+        self,
+        width=micropolisengine.WORLD_W,
+        height=micropolisengine.WORLD_H,
+        overlay='all'):
+
+        #print "getMapImage"
+
+        tileSize = micropolisengine.EDITOR_TILE_SIZE
+
+        worldW = micropolisengine.WORLD_W
+        worldH = micropolisengine.WORLD_H
+
+        tileWidth = int(width / worldW)
+        tileHeight = int(height / worldH)
+
+        #print width, height, tileSize, width % tileWidth, height % tileHeight, tileWidth != tileHeight
+
+        if (# Size must not be zero or negative.
+            (width < worldW) or
+            (height < worldH) or
+            # Size must not be bigger than 16x16 tile.
+            (width > worldW * tileSize) or
+            (height > worldH * tileSize) or
+            # Size must be multiple of tile size.
+            ((width % tileWidth) != 0) or
+            ((height % tileHeight) != 0) or
+            # Size must be 1:1 aspect ratio.
+            (tileWidth != tileHeight)):
+            print "getMapImage invalid size", width, height
+            return None
+
+        tileSize = tileWidth
+
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+        ctx = cairo.Context(surface)
+
+        alpha = 1.0
+
+        self.renderTiles(
+            ctx,
+            tileSize,
+            0,
+            0,
+            worldW,
+            worldH,
+            alpha)
+
+        overlayImage, overlayAlpha, overlayWidth, overlayHeight = \
+            self.getDataImageAlphaSize(overlay)
+        #print "OVERLAY", overlay, "IMAGE", overlayImage, overlayAlpha, overlayWidth, overlayHeight
+        if overlayImage:
+            overlayWidth = 1.0 / overlayWidth
+            overlayHeight = 1.0 / overlayHeight
+
+            ctx.save()
+
+            ctx.scale(
+                worldW * tileSize,
+                worldH * tileSize)
+
+            ctx.rectangle(0, 0, 1, 1)
+            ctx.clip()
+
+            imageWidth = overlayImage.get_width()
+            imageHeight = overlayImage.get_height()
+
+            ctx.scale(
+                overlayWidth / imageWidth,
+                overlayHeight / imageHeight)
+
+            ctx.set_source_surface(
+                overlayImage,
+                0,
+                0)
+            ctx.paint_with_alpha(overlayAlpha)
+
+            ctx.restore()
+
+        return surface
 
 
     def getDataImageAlphaSize(self, name):
@@ -1477,25 +1561,33 @@ You have 10 years to turn this swamp back into a city again.""",
         saveFileName = baseName + '.cty'
         self.saveFileName = saveFileName
 
+        saveFilePath = os.path.join(saveFileDir, saveFileName)
+
         success = self.saveCityAs(saveFilePath)
 
         if not success:
             raise('Error writing to city file')
 
-        doc = xml.dom.minidom.Document()
-        el = doc.createElement(u'metaCity')
-        
-        SetSubElementText(el, u'saveFileName', saveFileName)
-        SetSubElementText(el, u'title', self.title)
-        SetSubElementText(el, u'description', self.description)
-        SetSubElementText(el, u'readOnly', readOnly)
+        xmlText = self.getMetaData(saveFileName)
 
         metaFilePath = os.path.join(saveFileDir, metaFileName)
+
         f = open(metaFilePath, 'wb')
-        xmlText = doc.toxml()
         print xmlText
         f.write(xmlText)
         f.close()
+
+
+    def getMetaData(self):
+        doc = xml.dom.minidom.Document()
+        el = doc.createElement(u'metaCity')
+        doc.appendChild(el)
+
+        SetSubElementText(el, u'title', self.title)
+        SetSubElementText(el, u'description', self.description)
+        SetSubElementBool(el, u'readOnly', self.readOnly)
+
+        return doc.toxml()
 
 
     def loadMetaScenario(self, id):

@@ -1,5 +1,4 @@
-<?xml version="1.0" ?>
-<strings language="en-US">
+<?xml version="1.0" ?><strings language="en-US">
 
 
     <!--
@@ -318,9 +317,19 @@
     
     <!-- libraryview.lzx -->
 
-    <string id="Loaded Map:">Ladingen Kaart:</string>
+    <string id="Shared Cities">@nl-NL@ Shared Cities</string>
 
-    <string id="Loaded a map from the library:">Ladingen een plattegrond van de bibliotheek:</string>
+    <string id="My Cities">@nl-NL@ My Cities</string>
+
+    <string id="Log in to see your cities.">@nl-NL@ Log in to see your cities.</string>
+
+    <string id="You haven't saved any cities yet.">@nl-NL@ You haven't saved any cities yet.</string>
+
+    <string id="Are you really sure you want to delete your city?">@nl-NL@ Are you really sure you want to delete your city?</string>
+
+    <string id="No, don't delete it.">@nl-NL@ No, don't delete it.</string>
+
+    <string id="Yes, delete my city.">@nl-NL@ Yes, delete my city.</string>
 
 
     <!-- loginview.lzx -->
@@ -373,10 +382,18 @@
     <string id="The city simulation has begun!">De stad simulatie is begonnen!</string>
 
 
+    <!-- pancursor.lzx -->
+
+    <string comment="Label for cursor that pans the map." id="Pan Map">@nl-NL@ Pan Map</string>
+
+
+    <!-- piecursor.lzx -->
+
+    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">@nl-NL@ Pie Menu</string>
+
+
     <!-- playscreen.lzx -->
 
-
-    <string id="User:">Gebruiker:</string>
 
     <!-- remoteserver.lzx -->
 
@@ -392,14 +409,12 @@
 
     <string id="Message failed.">Bericht mislukt.</string>
 
-    <string id="Description:">Beschrijving:</string>
-
-    <string id="To:">Naar:</string>
+    <string id="To">Naar</string>
 
 
     <!-- scenariosview.lzx -->
 
-    <string id="Scenario:">Scenario:</string>
+    <string id="Scenario">Scenario</string>
 
 
     <!-- startscreen.lzx -->
@@ -413,6 +428,16 @@
     <string id="Library">Bibliotheek</string>
 
     <string id="User">Gebruiker</string>
+
+    <string id="Configure Your City">@nl-NL@ Configure Your City</string>
+
+    <string id="Title">@nl-NL@ Title</string>
+
+    <string id="Description">Beschrijving</string>
+
+    <string id="Share My City">@nl-NL@ Share My City</string>
+
+    <string id="Delete My City">@nl-NL@ Delete My City</string>
 
 
     <!-- toolcursor.lzx -->

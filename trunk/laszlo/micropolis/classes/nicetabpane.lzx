@@ -31,14 +31,17 @@
 
 
 	<method name="animateToHeight"><![CDATA[
-	        var savedHeight = this.savedHeight;
-		//Debug.write("nicetabpane", this, "onvisible", this.visible, "restoring savedHeight", this.savedHeight);
-		if (savedHeight >= 0) {
-	            //this.bar.setAttribute("y", savedHeight);
-	            this.bar.animate("y", savedHeight, 500);
-		} else {
-	            this.bar.animate("y", this.initialHeight(), 500);
-		}
+	    if (!this.bar) {
+	        return;
+	    }
+	    var savedHeight = this.savedHeight;
+	    //Debug.write("nicetabpane animateToHeight", this, "onvisible", this.visible, "restoring savedHeight", this.savedHeight);
+	    if (savedHeight >= 0) {
+		//this.bar.setAttribute("y", savedHeight);
+		this.bar.animate("y", savedHeight, 500);
+	    } else {
+		this.bar.animate("y", this.initialHeight(), 500);
+	    }
 	  ]]>
 	</method>
 

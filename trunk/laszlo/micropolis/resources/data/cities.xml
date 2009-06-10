@@ -1,99 +1,123 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <cities language="en-US">
     <city
-	name="about"
+	id="about"
 	title="About Micropolis"
+	description="The city 'About Micropolis'."
     />
     <city
-	name="badnews"
+	id="badnews"
 	title="Bad News Town"
+	description="The city 'Bad News Town'."
     />
     <city
-	name="bluebird"
+	id="bluebird"
 	title="Bluebird Meltdown"
+	description="The city 'Bluebird Meltdown'."
     />
     <city
-	name="bruce"
+	id="bruce"
 	title="Bruceville"
+	description="The city 'Bruceville'."
     />
     <city
-	name="deadwood"
+	id="deadwood"
 	title="Deadwood"
+	description="The city 'Deadwood'."
     />
     <city
-	name="finnigan"
+	id="finnigan"
 	title="Finnigan's Isle"
+	description="The city 'Finnigan's Isle'."
     />
     <city
-	name="freds"
+	id="freds"
 	title="Fred's Town"
+	description="The city 'Fred's Town'."
     />
     <city
-	name="haight"
+	id="haight"
 	title="Haight Ashbury, San Francisco"
+	description="The city 'Haight Ashbury, San Francisco'."
     />
     <city
-	name="happisle"
+	id="happisle"
 	title="Happy Isle"
+	description="The city 'Happy Isle'."
     />
     <city
-	name="joffburg"
+	id="joffburg"
 	title="Joffburg"
+	description="The city 'Joffburg'."
     />
     <city
-	name="kamakura"
+	id="kamakura"
 	title="Kamakura"
+	description="The city 'Kamakura'."
     />
     <city
-	name="kobe"
+	id="kobe"
 	title="Kobe"
+	description="The city 'Kobe'."
     />
     <city
-	name="kowloon"
+	id="kowloon"
 	title="Kowloon"
+	description="The city 'Kowloon'."
     />
     <city
-	name="kyoto"
+	id="kyoto"
 	title="Kyoto"
+	description="The city 'Kyoto'."
     />
     <city
-	name="linecity"
+	id="linecity"
 	title="Liner City"
+	description="The city 'Liner City'."
     />
     <city
-	name="med_isle"
+	id="med_isle"
 	title="Medville Isle"
+	description="The city 'Medville Isle'."
     />
     <city
-	name="ndulls"
+	id="ndulls"
 	title="Not so Dullsville"
+	description="The city 'Not so Dullsville'."
     />
     <city
-	name="neatmap"
+	id="neatmap"
 	title="Neat Map"
+	description="The city 'Neat Map'."
     />
     <city
-	name="radial"
+	id="radial"
 	title="Radial City"
+	description="The city 'Radial City'."
     />
     <city
-	name="senri"
+	id="senri"
 	title="Senri"
+	description="The city 'Senri'."
     />
     <city
-	name="southpac"
+	id="southpac"
 	title="South Pacific"
+	description="The city 'South Pacific'."
     />
     <city
-	name="splats"
+	id="splats"
 	title="Splatsville"
+	description="The city 'Splatsville'."
     />
     <city
-	name="wetcity"
+	id="wetcity"
 	title="Wet City"
+	description="The city 'Wet City'."
     />
     <city
-	name="yokohama"
+	id="yokohama"
 	title="Yokohama"
+	description="The city 'Yokohama'."
     />
 </cities>

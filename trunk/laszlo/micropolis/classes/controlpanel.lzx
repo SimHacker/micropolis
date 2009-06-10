@@ -147,7 +147,7 @@
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
 		text="${gApp._('New City')}"
-		onclick="gNewCityDialog.open()"
+		onclick="gApp.newCityDialog();"
 	    />
 
 	    <button name="helpButton"

@@ -41,14 +41,14 @@
 	    <previewmapview name="previewMapView" id="gPreviewMapView"
 		y="${parent.title.y + parent.title.height + 5}"
 		active="${classroot.active}"
-		onclick="gApp.playWithThisCity()"
+		onclick="gApp.playWithThisMap()"
 	    />
 
 	    <button name="playButton"
 		text="${gApp._('Play With This Map')}"
 		fontsize="18"
 		fontstyle="bold"
-		onclick="gApp.playWithThisCity()"
+		onclick="gApp.playWithThisMap()"
 		y="${parent.previewMapView.y + parent.previewMapView.height + 5}"
 		width="${parent.previewMapView.width}"
 		height="50"
@@ -63,12 +63,122 @@
 
 		<vscrollbar/>
 
-		<text name="description"
-		    fontsize="14"
-		    multiline="true"
-		    width="${parent.width - 15}"
-		    text="${gApp.description}"
-		/>
+		<view
+		    width="${parent.width}"
+		    visible="${gApp.citySource != 'mycity'}"
+		>
+
+		    <simplelayout
+		        spacing="5"
+		    />
+
+		    <text name="description"
+			fontsize="14"
+			multiline="true"
+			width="${parent.width - 15}"
+			text="${gApp.description}"
+		    />
+
+		</view>
+
+		<view
+		    width="${parent.width}"
+		    visible="${gApp.citySource == 'mycity'}"
+		>
+
+		    <simplelayout
+		        spacing="5"
+		    />
+
+		    <text
+		        fontsize="20"
+			fontstyle="bold"
+			resize="true"
+			text="${gApp._('Configure Your City') + ':'}"
+		    />
+
+		    <text
+		        fontsize="18"
+			fontstyle="bold"
+			resize="true"
+			text="${gApp._('Title') + ':'}"
+		    />
+
+		    <edittext name="titleEdit"
+			fontsize="14"
+			multiline="true"
+			width="${parent.width - 15}"
+			text="${gApp.title}"
+		    >
+
+		        <handler name="onblur" args="arg"><![CDATA[
+			    gApp.setMyCityTitle(this.text);
+			    Debug.write("TITLE", gApp.title);
+			  ]]>
+			</handler>
+
+		    </edittext>
+
+		    <text
+		        fontsize="18"
+			fontstyle="bold"
+			resize="true"
+			text="${gApp._('Description') + ':'}"
+		    />
+
+		    <edittext name="description"
+			fontsize="14"
+			multiline="true"
+			width="${parent.width - 15}"
+			height="100"
+			text="${gApp.description}"
+		    >
+
+		        <handler name="onblur" args="arg"><![CDATA[
+			    gApp.setMyCityDescription(this.text);
+			    // TODO: Save city description.
+			    Debug.write("DESCRIPTION", gApp.description);
+			  ]]>
+			</handler>
+
+		    </edittext>
+
+		    <checkbox
+			fontsize="14"
+			fontstyle="bold"
+			text="${gApp._('Share My City')}"
+			value="${gApp.shared}"
+		    >
+
+		        <handler name="onclick" args="arg"><![CDATA[
+			    Debug.write("checkbox onclick", this.value);
+			    gApp.setMyCityShared(this.value);
+			    Debug.write("SHARED", gApp.shared);
+			  ]]>
+			</handler>
+
+		    </checkbox>
+
+		    <text
+		        fontsize="14"
+			width="${parent.width}"
+			multiline="true"
+			text="${
+			    gApp._('Created') +
+			    ': ' +
+			    gApp.created +
+			    '&lt;br/&gt;' +
+			    gApp._('Modified') +
+			    ': ' +
+			    gApp.modified}"
+		    />
+
+		    <button
+			text="${gApp._('Delete My City')}"
+			onclick="gApp.deleteMyCityDialog();"
+		    />
+
+		</view>
 
 	   </view>
 
@@ -105,7 +215,7 @@
 		/>
 	    </tabpane>
 
-	    <tabpane
+	    <tabpane id="gStartTabLibrary"
 		text="${gApp._('Library')}"
 		width="${parent.width}"
 		height="${parent.height}"
@@ -118,16 +228,22 @@
 	    </tabpane>
 
 	    <tabpane
-		text="${gApp.loggedIn ? (gApp._('User:') + gApp.userName) : gApp._('Log In')}"
+		text="${gApp.loggedIn ? (gApp._('User') + ': ' + gApp.userName) : gApp._('Log In')}"
 		width="${parent.width}"
 		height="${parent.height}"
 	    >
+
+	        <simplelayout
+		    spacing="5"
+		/>
+
 		<userview id="gStartUserView"
 		    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
 		    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
 		    visible="${this.width &amp;&amp; this.height}"
 		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 		/>
+
 	    </tabpane>
 
 	</tabs>

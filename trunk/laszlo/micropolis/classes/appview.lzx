@@ -49,6 +49,11 @@
         <attribute name="userName" type="string" value=""/>
         <attribute name="fullName" type="string" value=""/>
         <attribute name="emailAddress" type="string" value=""/>
+        <attribute name="savedCities" value="$once{[]}"/>
+        <attribute name="savedCitiesSort" type="string" value="title"/>
+        <attribute name="savedCitiesDirection" value="1"/>
+        <attribute name="savedCity" value="null"/>
+        <attribute name="savedCityCount" value="0"/>
         <attribute name="passwordOld" type="string" value=""/>
         <attribute name="password1" type="string" value=""/>
         <attribute name="password2" type="string" value=""/>
@@ -60,6 +65,9 @@
         <attribute name="user" value="null"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
+	<attribute name="shared" value="false"/>
+	<attribute name="created" value="null"/>
+	<attribute name="modified" value="null"/>
         <attribute name="paused" value="true"/>
         <attribute name="virtualSpeed" type="number" value="2"/>
         <attribute name="funds" type="number" value="0"/>
@@ -87,11 +95,14 @@
         <attribute name="gap" value="5"/>
         <attribute name="nextUniqueID" value="1"/>
 	<attribute name="objectIDs" value="$once{{}}"/>
-        <attribute name="interests" value="$once{{}}"/>
+        <attribute name="interests" value="null"/>
         <attribute name="overlay" type="string" value="all"/>
 	<attribute name="chatChannel" type="string" value="all"/>
 	<attribute name="sprites" value="null"/>
+	<attribute name="robots" value="null"/>
 	<attribute name="soundsToPlay" value="$once{{}}"/>
+	<attribute name="citySource" type="string" value=""/>
+	<attribute name="cityID" type="string" value=""/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -104,11 +115,11 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-                'funds', 'date', 'history', 'evaluation', 
+                'funds', 'date', 'evaluation', 
 		'paused', 'passes', 'delay', 'demand', 
 		'options', 'gameLevel', 'cityName', 
 		'taxRate', 'budget', 'sprites',
-                'message', 'virtualSpeed', 
+                'message', 'virtualSpeed', 'savedCities',
 		'tileview', 'historyview',
             ]);
 
@@ -249,6 +260,55 @@
         </handler>
 
 
+	<handler name="onsavedCities" args="arg"><![CDATA[
+	    this.refreshSavedCities();
+	  ]]>
+	</handler>
+
+
+	<method name="refreshSavedCities"><![CDATA[
+	    var els = [];
+	    var savedCities = this.savedCities;
+
+
+	    var savedCitiesSort = this.savedCitiesSort;
+	    var savedCitiesDirection = this.savedCitiesDirection;
+	    savedCities.sort(
+		function(c1, c2) {
+		    var t1 = c1[savedCitiesSort];
+		    var t2 = c2[savedCitiesSort];
+		    if (t1 < t2) {
+			return -savedCitiesDirection;
+		    } else if (t1 > t2) {
+			return savedCitiesDirection;
+		    } else {
+			return 0;
+		    }
+		});
+
+	    var n = savedCities.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        var city = savedCities[i];
+		els.push(new lz.DataElement('city', {
+		    id: city['id'],
+		    title: city['title'],
+		    description: city['description'],
+		    shared: "" + city['shared'],
+                    createdDate: city['createdDate'],
+                    modifiedDate: city['modifiedDate'],
+                    created: "" + city['created'],
+                    modified: "" + city['modified'],
+ 		    icon: city['icon']
+		}));
+	    }
+	    //Debug.write("SAVEDCITIES", els, "cities", canvas.ds_myCities.data[0]);
+	    canvas.ds_myCities.data[0].setAttribute('childNodes', els);
+	    this.setAttribute("savedCityCount", n);
+	  ]]>
+	</method>
+
+
 	<method name="setFullName" args="fullName"><![CDATA[
 	    this.setAttribute("fullName", fullName);
 	    if (this.loggedIn) {
@@ -273,6 +333,134 @@
 	</method>
 
 
+	<method name="findSavedCity" args="cityID"><![CDATA[
+	    var savedCities = this.savedCities;
+	    var n = savedCities.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        var savedCity = savedCities[i];
+		if (savedCity['id'] == cityID) {
+		    return savedCity;
+		}
+	    }
+	  ]]>
+	</method>
+
+
+	<method name="setMyCityTitle" args="title"><![CDATA[
+	    if (this.loggedIn &&
+	        this.citySource == "mycity") {
+		var savedCity = this.findSavedCity(this.cityID);
+		if (title != this.title) {
+		    this.setAttribute("title", title);
+		}
+		var now = new Date();
+		this.setAttribute("modified", now);
+		savedCity['modified'] = now;
+		savedCity['title'] = title;
+		this.refreshSavedCities();
+		this.sendMessage({
+		    message: 'setMyCityTitle',
+		    id: this.cityID,
+		    title: title
+		})
+	    }
+	    this
+	  ]]>
+	</method>
+
+
+	<method name="setMyCityDescription" args="description"><![CDATA[
+	    if (this.loggedIn &&
+	        this.citySource == "mycity") {
+		var savedCity = this.findSavedCity(this.cityID);
+		if (!savedCity) {
+		    Debug.write("Can't find saved city id", cityID);
+		    return;
+		}
+		if (description != this.description) {
+		    this.setAttribute("description", description);
+		}
+		var now = new Date();
+		this.setAttribute("modified", now);
+		savedCity['modified'] = now;
+		savedCity['description'] = description;
+		this.refreshSavedCities();
+		this.sendMessage({
+		    message: 'setMyCityDescription',
+		    id: this.cityID,
+		    description: description
+		})
+	    }
+	    this
+	  ]]>
+	</method>
+
+
+	<method name="setMyCityShared" args="shared"><![CDATA[
+	    if (this.loggedIn &&
+	        this.citySource == "mycity") {
+		shared = !!shared;
+		var savedCity = this.findSavedCity(this.cityID);
+		if (!savedCity) {
+		    Debug.write("Can't find saved city id", cityID);
+		    return;
+		}
+		if (shared != this.shared) {
+		    this.setAttribute("shared", shared);
+		}
+		var now = new Date();
+		this.setAttribute("modified", now);
+		savedCity['modified'] = now;
+		savedCity['shared'] = shared;
+		this.refreshSavedCities();
+		this.sendMessage({
+		    message: 'setMyCityShared',
+		    id: this.cityID,
+		    shared: shared
+		})
+	    }
+	    this
+	  ]]>
+	</method>
+
+
+	<method name="deleteMyCity" args=""><![CDATA[
+	    Debug.write("DELETEMYCITY", this.cityID);
+	    if (this.loggedIn &&
+		this.citySource == "mycity") {
+		var cityID = this.cityID;
+		var savedCities = this.savedCities;
+		var savedCitiesNew = [];
+		var n = savedCities.length;
+		var i;
+		var iFound = -1;
+		for (i = 0; i < n; i++) {
+		    var savedCity = savedCities[i];
+		    if (savedCity['id'] != cityID) {
+		        savedCitiesNew.push(savedCity);
+			iFound = i;
+		    }
+		}
+
+		var generateCity = false;
+		n = savedCitiesNew.length;
+
+		// This refreshes the ds_myCities dataset.
+		this.setAttribute("savedCities", savedCitiesNew);
+
+		this.sendMessage({
+		    message: 'deleteMyCity',
+		    id: this.cityID
+		});
+
+		// This must happen after the delete.
+		gApp.generateCity();
+	    }
+	  ]]>
+	</method>
+
+
         <method name="handleKey" args="arg"><![CDATA[
             Debug.write("handleKey", arg);
           ]]>
@@ -281,6 +469,10 @@
 
         <method name="expressInterest" args="target, names"><![CDATA[
             var interests = this.interests;
+	    if (interests == null) {
+	        interests = {};
+		this.interests = interests;
+	    }
             var n = names.length;
             var i;
             for (i = 0; i < n; i++) {
@@ -301,6 +493,10 @@
 
         <method name="revokeInterest" args="target, names"><![CDATA[
             var interests = this.interests;
+	    if (interests == null) {
+	        return;
+	    }
+
             var name;
             var n = names.length;
             var i;
@@ -330,8 +526,12 @@
                 case 'funds': {
                     var funds = args['funds'];
                     var fundsLabel = this.formatFunds(funds);
-                    this.setAttribute("funds", funds);
-                    this.setAttribute("fundsLabel", fundsLabel);
+
+		    if (funds != this.funds) {
+                        this.setAttribute("funds", funds);
+                        this.setAttribute("fundsLabel", fundsLabel);
+		    }
+
                     break;
                 }
 
@@ -339,6 +539,7 @@
                     var year = args['year'];
                     var month = args['month'];
                     var dateLabel = this.formatMonthYear(month, year);
+
                     if (this.year != year) {
                         this.setAttribute("year", year);
                     }
@@ -348,11 +549,7 @@
                     if (this.dateLabel != dateLabel) {
                         this.setAttribute("dateLabel", dateLabel);
                     }
-                    break;
-                }
 
-                case 'history': {
-		    //Debug.write("update history obsolete!");
                     break;
                 }
 
@@ -363,9 +560,11 @@
 
                 case 'paused': {
                     var paused = args['paused'] == 'true';
+
                     if (this.paused != paused) {
                         this.setAttribute('paused', paused);
                     }
+
                     break;
                 }
 
@@ -373,7 +572,9 @@
                     var virtualSpeed = parseInt(args['virtualSpeed']);
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
+
                     //Debug.write("VIRTUALSPEED", virtualSpeed, pollDelay, animateDelay);
+
                     if (this.virtualSpeed != virtualSpeed) {
                         this.setAttribute("virtualSpeed", virtualSpeed);
                     }
@@ -383,19 +584,23 @@
                     if (this.animateDelay != animateDelay) {
                         this.setAttribute("animateDelay", animateDelay);
                     }
+
                     break;
                 }
 
                 case 'delay': {
                     var pollDelay = parseInt(args['pollDelay']);
                     var animateDelay = parseInt(args['animateDelay']);
-                    Debug.write("DELAY", pollDelay, animateDelay);
+
+                    //Debug.write("DELAY", pollDelay, animateDelay);
+
                     if (this.pollDelay != pollDelay) {
                         this.setAttribute("pollDelay", pollDelay);
                     }
                     if (this.animateDelay != animateDelay) {
                         this.setAttribute("animateDelay", animateDelay);
                     }
+
                     break;
                 }
 
@@ -410,12 +615,22 @@
                 }
 
                 case 'gameLevel': {
-                    this.setAttribute("gameLevel", args['gameLevel']);
+		    var gameLevel = args['gameLevel'];
+
+		    if (gameLevel != this.gameLevel) {
+			this.setAttribute("gameLevel", gameLevel);
+		    }
+
                     break;
                 }
 
                 case 'cityName': {
-                    this.setAttribute("cityName", args['cityName']);
+		    var cityName = args['cityName'];
+
+		    if (cityName != this.cityName) {
+			this.setAttribute("cityName", cityName);
+		    }
+
                     break;
                 }
 
@@ -431,22 +646,37 @@
                     break;
                 }
 
+                case 'robots':
+                {
+		    //Debug.write("UPDATE ROBOTS", args);
+		    this.setAttribute("robots", args['robots']);
+                    break;
+                }
+
                 case 'message':
                 {
+		    //Debug.write("UPDATE MESSAGE", args['msg']);
                     this.setAttribute("message", args['msg']);
+                    break;
+                }
+
+                case 'savedCities': {
+		    //Debug.write("UPDATE SAVEDCITIES", args['savedCities']);
+		    this.setAttribute("savedCities", args['savedCities']);
                     break;
                 }
 
                 case 'tileview':
                 {
-                    var id = args['id'];
+		    var view = args['view'];
+                    var id = view['id'];
 		    var tv = this.objectIDs[id];
-                    var col = args['col'];
-                    var row = args['row'];
-                    var cols = args['cols'];
-                    var rows = args['rows'];
-                    var code = args['code'];
-                    var tiles = args['tiles'];
+                    var col = view['col'];
+                    var row = view['row'];
+                    var cols = view['cols'];
+                    var rows = view['rows'];
+                    var code = view['code'];
+                    var tiles = view['tiles'];
 
                     //Debug.write("UPDATE TILEVIEW", tileviewID, col, row, cols, rows, code, typeof(tiles), tiles.length);
 
@@ -481,6 +711,7 @@
                     Debug.write("Received unknown update message from server:", args['message'], args);
                     break;
                 }
+
             }
 
           ]]>
@@ -538,6 +769,12 @@
             this.animateStart();
 
             this.updateMap();
+
+	    //Debug.write("SENDING SETLANGUAGE", gStrings.language);
+	    this.sendMessage({
+	        'message': 'setLanguage',
+		'language': gStrings.language
+	    })
           ]]>
         </method>
 
@@ -1224,6 +1461,9 @@
 		    password1: password1,
 		    password2: password2
 		});
+		return true;
+	    } else {
+	        return false;
 	    }
 	  ]]>
 	</method>
@@ -1238,13 +1478,26 @@
         </method>
 
 
-        <method name="saveCity"><![CDATA[
-            //Debug.write("saveCity");
+	<method name="trySaveCity"><![CDATA[
+            Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
 	    if (this.loggedIn) {
 		this.sendMessage({
-		    message: 'saveCity'
+		    message: 'saveCity',
+		    source: this.citySource,
+		    id: this.cityID,
+		    title: this.title,
+		    description: this.description
 		});
+		return true;
 	    } else {
+	        return false;
+	    }
+	  ]]>
+	</method>
+
+
+        <method name="saveCity"><![CDATA[
+	    if (!this.trySaveCity()) {
 	        this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
 	        gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
 	    }
@@ -1298,6 +1551,9 @@
         <method name="handle_update" args="args"><![CDATA[
             var variable = args['variable'];
             var interests = this.interests;
+	    if (interests == null) {
+	        return;
+	    }
             //Debug.write("==== update", variable, args);
 
             if (!(variable in interests)) {
@@ -1319,6 +1575,8 @@
 
         <method name="handle_didGenerateNewCity" args="args"><![CDATA[
             //Debug.write("didGenerateNewCity");
+	    this.cityID = args['seed'];
+	    Debug.write("SEED", this.cityID);
             this.resetCity();
           ]]>
         </method>
@@ -1327,6 +1585,12 @@
         <method name="handle_didLoadCity" args="args"><![CDATA[
             //Debug.write("didLoadCity");
             this.resetCity();
+          ]]>
+        </method>
+
+
+        <method name="handle_didSaveCity" args="args"><![CDATA[
+            Debug.write("didSaveCity");
           ]]>
         </method>
 
@@ -1391,6 +1655,7 @@
 	        this.setAttribute("loggedIn", true);
 		this.setAttribute("fullName", "");
 		this.setAttribute("emailAddress", "");
+		this.setAttribute("savedCities", []);
 		this.setAttribute("passwordOld", "");
 		this.setAttribute("password1", "");
 		this.setAttribute("password2", "");
@@ -1409,9 +1674,12 @@
 	        this.setAttribute("loggedIn", true);
 		this.setAttribute("fullName", args['fullName']);
 		this.setAttribute("emailAddress", args['emailAddress']);
+		this.setAttribute("savedCities", args['savedCities']);
 		this.setAttribute("passwordOld", "");
 		this.setAttribute("password1", "");
 		this.setAttribute("password2", "");
+	    } else {
+		this.setAttribute("savedCities", []);
 	    }
 	    this.setAttribute("loginFeedback", gApp._(feedback));
 	    this.setAttribute("loggingIn", false);
@@ -1430,6 +1698,7 @@
 		this.setAttribute("password2", "");
 		this.setAttribute("fullName", "");
 		this.setAttribute("emailAddress", "");
+		this.setAttribute("savedCities", []);
 		this.setAttribute("loggedIn", false);
 	    }
 	    this.setAttribute("loginFeedback", gApp._(feedback));
@@ -1448,7 +1717,115 @@
         </method>
 
 
-        <method name="playWithThisCity"><![CDATA[
+	<method name="loadScenario" args="scenarioID, title, notice"><![CDATA[
+
+	    this.sendMessage({
+		message: 'loadScenario',
+		id: scenarioID
+	    });
+
+	    var title =
+		gApp._('Scenario') + 
+		': ' + 
+		gApp._(title);
+
+	    var noticeEl =
+		gNoticeView.findNotice(notice);
+	    var description =
+		gApp._(noticeEl.attributes['description']);
+
+	    this.setAttribute("title", title);
+	    this.setAttribute("description", description);
+	    this.setAttribute("citySource", "scenario");
+	    this.setAttribute("cityID", scenarioID);
+
+	  ]]>
+	</method>
+
+
+	<method name="generateCity"><![CDATA[
+
+	    this.sendMessage({
+		message: 'generateCity',
+		seed: 0 // Server will generate a random seed.
+	    });
+
+	    this.setAttribute("title", gApp._('Generated Map'));
+	    this.setAttribute("description", gApp._('Generated a new random map.'));
+	    this.setAttribute("citySource", "generated");
+	    // The cityID (a random seed) will be set by handle_didGenerateNewCity callback.
+
+	  ]]>
+	</method>
+
+
+	<method name="loadSharedCity" args="id, title, description"><![CDATA[
+
+	    this.sendMessage({
+		message: 'loadSharedCity',
+		id: id
+	    });
+
+	    description =
+		description;
+
+	    this.setAttribute("title", title);
+	    this.setAttribute("description", description);
+	    this.setAttribute("citySource", "sharedcity");
+	    this.setAttribute("cityID", id);
+
+	  ]]>
+	</method>
+
+
+	<method name="loadMyCity" args="id, title, description, shared, created, modified"><![CDATA[
+	    Debug.write("loadMyCity", id, title, description);
+
+	    this.sendMessage({
+		message: 'loadMyCity',
+		id: id
+	    });
+
+	    this.setAttribute("title", title);
+	    this.setAttribute("description", description);
+	    this.setAttribute("shared", shared);
+	    this.setAttribute("created", created);
+	    this.setAttribute("modified", modified);
+	    this.setAttribute("citySource", "mycity");
+	    this.setAttribute("cityID", id);
+
+	  ]]>
+	</method>
+
+
+	<method name="newCityDialog"><![CDATA[
+	    gQuestionDialog.popup(
+		gApp._('Are you really sure you want to start a new city?'),
+		gApp._('No, keep playing with this city.'),
+		null,
+		gApp._('Yes, choose another city.'),
+		function() {
+		    gApp.saveCity(); 
+		    gApp.chooseCity()
+		});
+	  ]]>
+	</method>
+
+
+	<method name="deleteMyCityDialog"><![CDATA[
+	    gQuestionDialog.popup(
+		gApp._("Are you really sure you want to delete your city?"),
+		gApp._("No, don't delete it."),
+		null,
+		gApp._("Yes, delete my city."),
+		function() {
+		    gApp.deleteMyCity();
+		});
+	  ]]>
+	</method>
+
+
+        <method name="playWithThisMap"><![CDATA[
             this.setAttribute("gameMode", "play");
             this.sendMessage({
                 message: 'setGameMode',

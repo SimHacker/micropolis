@@ -82,7 +82,7 @@
  *       doc/AnimationSequences.txt and the doc/genAnimationTable.py
  *       program
  */
-static short aniTile[1024] = {
+static short animatedTiles[TILE_COUNT] = {
     0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
     16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31,
     32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
@@ -132,7 +132,7 @@ static short aniTile[1024] = {
     592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607,
     608, 609, 610, 611,
     /* Industrial */
-                        612, 613, 614, 615, 616, 617, 618, 619, 852, 621, 622, 623,
+                        612, 613, 614, 615, 616, 617, 618, 619, 620, 852, 622, 623,
     624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
     640, 884, 642, 643, 888, 645, 646, 647, 648, 892, 896, 651, 652, 653, 654, 655,
     656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671,
@@ -210,12 +210,22 @@ void Micropolis::animateTiles()
         if (tilevalue & ANIMBIT) {
             tileflags = tilevalue & ALLBITS;
             tilevalue &= LOMASK;
-            tilevalue = aniTile[tilevalue];
+            tilevalue = animatedTiles[tilevalue];
             tilevalue |= tileflags;
             (*tMapPtr) = tilevalue;
         }
         tMapPtr++;
     }
+}
+
+
+int Micropolis::getNextAnimatedTile(int index)
+{
+    if ((index < 0) || (index >= TILE_COUNT)) {
+        return -1;
+    }
+
+    return animatedTiles[index];
 }
 
 

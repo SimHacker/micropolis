@@ -70,10 +70,13 @@
 
 
 import micropolisgenericengine
+import os
+import sys
 import random
 import math
 import array
 import time
+import tempfile
 from datetime import datetime
 import traceback
 import re
@@ -97,7 +100,6 @@ MicropolisCorePath = 'micropolis/MicropolisCore/src'
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
 
 LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES_PER_YEAR
-print "LoopsPerYear", LoopsPerYear
 
 DefaultAnimateDelay = 250
 DefaultPollDelay = 50
@@ -225,115 +227,16 @@ ToolNameToIndex = {
     'forest': 19,
 }
 
-AniTiles = (
-    0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
-    16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,  30,  31, 
-    32,  33,  34,  35,  36,  37,  38,  39,  40,  41,  42,  43,  44,  45,  46,  47,
-    48,  49,  50,  51,  52,  53,  54,  55,
-    # Fire
-                                            57,  58,  59,  60,  61,  62,  63,  56,
-    # No Traffic
-    64,  65,  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
-    # Light Traffic
-    128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143,
-    80,  81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  91,  92,  93,  94,  95,
-    96,  97,  98,  99,  100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111,
-    112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127,
-    # Heavy Traffic
-    192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207,
-    144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159,
-    160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
-    176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191,
-    # Wires & Rails
-    208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223,
-    224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239,
-    # Residential
-    240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255,
-    256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271,
-    272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287,
-    288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303,
-    304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319,
-    320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335,
-    336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351,
-    352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367,
-    368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383,
-    384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399,
-    400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415,
-    416, 417, 418, 419, 420, 421, 422,
-    # Commercial
-                                       423, 424, 425, 426, 427, 428, 429, 430, 431,
-    432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447,
-    448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463,
-    464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479,
-    480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495,
-    496, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511,
-    512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527,
-    528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543,
-    544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559,
-    560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575,
-    576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591,
-    592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607,
-    608, 609, 610, 611,
-    # Industrial
-                        612, 613, 614, 615, 616, 617, 618, 619, 852, 621, 622, 623,
-    624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
-    640, 884, 642, 643, 888, 645, 646, 647, 648, 892, 896, 651, 652, 653, 654, 655,
-    656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671,
-    672, 673, 674, 675, 900, 904, 678, 679, 680, 681, 682, 683, 684, 685, 908, 687,
-    688, 912, 690, 691, 692,
-    # SeaPort
-                             693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703,
-    704, 705, 706, 707, 708,
-    # AirPort
-                             709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719,
-    720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735,
-    736, 737, 738, 739, 740, 741, 742, 743, 744,
-    # Coal power
-                                                 745, 746, 916, 920, 749, 750, 924,
-    928, 753, 754, 755, 756, 757, 758, 759, 760,
-    # Fire Dept
-                                                 761, 762, 763, 764, 765, 766, 767,
-    768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778,
-    # Stadium
-                                                           779, 780, 781, 782, 783,
-    784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794,
-    # Stadium Anims
-                                                           795, 796, 797, 798, 799,
-    800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810,
-    # Nuclear Power
-                                                           811, 812, 813, 814, 815,
-    816, 817, 818, 819, 952, 821, 822, 823, 824, 825, 826,
-    # Power out + Bridges
-                                                           827, 828, 829, 830, 831,
-    # Radar dish
-    833, 834, 835, 836, 837, 838, 839, 832,
-    # Fountain / Flag
-                                            841, 842, 843, 840, 845, 846, 847, 848,
-    849, 850, 851, 844, 853, 854, 855, 856, 857, 858, 859, 852,
-    # zone destruct & rubblize
-                                                                861, 862, 863, 864,
-    865, 866, 867, 867,
-    # totally unsure
-                        868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879,
-    880, 881, 882, 883,
-    # Smoke stacks
-                        885, 886, 887, 884, 889, 890, 891, 888, 893, 894, 895, 892,
-    897, 898, 899, 896, 901, 902, 903, 900, 905, 906, 907, 904, 909, 910, 911, 908,
-    913, 914, 915, 912, 917, 918, 919, 916, 921, 922, 923, 920, 925, 926, 927, 924,
-    929, 930, 931, 928,
-    # Stadium Playfield
-                        933, 934, 935, 936, 937, 938, 939, 932, 941, 942, 943, 944,
-    945, 946, 947, 940,
-    # Bridge up chars
-                        948, 949, 950, 951,
-    # Nuclear swirl
-                                            953, 954, 955, 952,
-)
 
-
-# Compute the animation groups (loops and sequences).
-# Then make a tile map that maps any tile in the group
-# to the tile in the group with the lowest number.
+# Compute the animation groups (loops and sequences).  Then make a
+# tile map that maps any tile in the animation group to the first tile
+# in the group (with the lowest number).
+#
+# We use this map with the tile engine, to treat all tiles in an
+# animation group as the same, since the client actually performs the
+# tile animation. So the server treats all tiles in the same animation
+# group the same, for purposes of compressing tile changes, and the
+# client animates between the tiles of the group.
 # 
 # Note: How should we handle the bulldozer explosion sequences? They
 # should be animated on the client, but they end up in a non-animated
@@ -343,15 +246,16 @@ AniTiles = (
 # happend on the client. So we need to map the last state of a
 # sequence to itself instead of to the first state. TODO: Take last
 # state of sequence out of the set of tiles mapped to first state.
+# Well it seems to work ok as it is.
 
 AniTileGroupMap = {}
-for tileIndex in range(0, len(AniTiles)):
+for tileIndex in range(0, micropolisengine.TILE_COUNT):
 
     #print "tileindex", tileIndex, (tileIndex in AniTileGroupMap)
     if tileIndex in AniTileGroupMap:
         continue
 
-    nextTileIndex = AniTiles[tileIndex]
+    nextTileIndex = micropolisengine.Micropolis.getNextAnimatedTile(tileIndex)
 
     if nextTileIndex == tileIndex:
         continue
@@ -382,7 +286,7 @@ for tileIndex in range(0, len(AniTiles)):
         curGroup.append(tileIndex)
         #print "accumulate", tileIndex, curGroup
         AniTileGroupMap[nextTileIndex] = curGroup
-        nextTileIndex = AniTiles[tileIndex]
+        nextTileIndex = micropolisengine.Micropolis.getNextAnimatedTile(tileIndex)
         #print "... tileIndex", tileIndex, "nextTileindex", nextTileIndex
 
 
@@ -399,7 +303,7 @@ AniTileGroups.sort()
 #print len(AniTileGroups), "AniTileGroups"
 
 AniTileMap = array.array('i')
-for i in range(0, len(AniTiles)):
+for i in range(0, micropolisengine.TILE_COUNT):
     AniTileMap.append(i)
 
 for group in AniTileGroups:
@@ -448,6 +352,7 @@ class Session(object):
         self.expireDelay = 60 * 10 # ten minutes
         self.controller = controller
         self.userName = None
+        self.language = None
 
         self.touch()
 
@@ -502,7 +407,7 @@ class Session(object):
 
 
     def expire(self):
-        print "Expiring session", self
+        #print "Expiring session", self
         self.setEngine(None)
 
 
@@ -586,6 +491,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         micropolisgenericengine.MicropolisGenericEngine.__init__(self, *args, **kw)
         self.controller = controller
         self.eliza = eliza.eliza()
+        self.generatedCitySeed = 0
 
 
     def initGamePython(self):
@@ -683,7 +589,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         for session in self.controller.getSessions():
             if session != exceptSession:
                 try:
-                    session.sendMessage(message)                
+                    session.sendMessage(message)
                 except Exception, e:
                     print "======== XXX sendSessions exception:", e
                     traceback.print_exc(10)
@@ -790,18 +696,18 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             self.updateFundEffects()
             #print "==== POLICEPERCENT", self.policePercent
 
-        elif message == 'loadCity':
+        elif message == 'loadSharedCity':
 
-            cityName = messageDict.get('city', None)
-            print "loadCity", cityName
-            if cityName in CityNames:
-                cityFileName = CityNames[cityName]
-                print "cityFileName", cityFileName
+            id = messageDict.get('id', None)
+            #print "loadSharedCity", id
+            if id in CityNames:
+                cityFileName = CityNames[id]
+                #print "cityFileName", cityFileName
                 self.loadMetaCity(cityFileName)
 
         elif message == 'loadScenario':
 
-            scenarioStr = messageDict.get('scenario', None)
+            scenarioStr = messageDict.get('id', 0)
             #print "loadScenario", scenarioStr
             scenario = 0
             try:
@@ -812,8 +718,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'generateCity':
 
-            print "generateCity"
-            self.generateNewCity()
+            self.generateCityWithSeed(messageDict.get('seed', 0))
 
         elif message == 'setGameMode':
 
@@ -851,11 +756,115 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'abandonCity':
 
-            print "ABANDON CITY"
+            pass # print "ABANDON CITY"
 
         elif message == 'saveCity':
 
-            self.saveMetaCityToDatabase()
+            if user:
+                id = messageDict['id']
+                title = messageDict['title']
+                description = messageDict['description']
+                source = messageDict['source']
+                if source != 'mycity':
+                    id = None # to force saving to a new city
+                self.saveMetaCityToDatabase(session, user, id, title, description)
+
+        elif message == 'setMyCityTitle':
+
+            print "SETMYCITYTITLE", messageDict, user
+            if user:
+                city = None
+                try:
+                    id = int(messageDict['id'])
+                    city = model.City.query.filter_by(city_id=id).first()
+                except Exception, e:
+                    print "City query error", e
+                if city:
+                    if city.user_id != user.user_id:
+                        print "User tried to set title of city they do not own", user, city
+                    else:
+                        title = messageDict['title']
+                        city.title = unicode(title)
+
+        elif message == 'setMyCityDescription':
+
+            print "SETMYCITYDESCRIPTION", messageDict, user
+            if user:
+                city = None
+                try:
+                    id = int(messageDict['id'])
+                    city = model.City.query.filter_by(city_id=id).first()
+                except Exception, e:
+                    print "City query error", e
+                if city:
+                    if city.user_id != user.user_id:
+                        print "User tried to set description of city they do not own", user, city
+                    else:
+                        description = messageDict['description']
+                        city.description = unicode(description)
+
+        elif message == 'setMyCityShared':
+
+            print "SETMYCITYSHARED", messageDict, user
+            if user:
+                city = None
+                try:
+                    id = int(messageDict['id'])
+                    city = model.City.query.filter_by(city_id=id).first()
+                except Exception, e:
+                    print "City query error", e
+                print "CITY", city
+                if city:
+                    if city.user_id != user.user_id:
+                        print "User tried to set shared flag of city they do not own", user, city
+                    else:
+                        shared = messageDict['shared']
+                        print "before shared", city.shared
+                        city.shared = shared
+                        print "Setting shared", city.shared, type(city.shared)
+
+        elif message == 'deleteMyCity':
+
+            print "DELETEMYCITY", messageDict, user
+            if user:
+                city = None
+                try:
+                    id = int(messageDict['id'])
+                    city = model.City.query.filter_by(city_id=id).first()
+                except Exception, e:
+                    print "City query error", e
+                if city:
+                    if city.user_id != user.user_id:
+                        print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
+                    else:
+                        print "DELETE CITY", city
+                        savedCities = user.getSavedCities(session)
+                        id = city.city_id
+                        print "DESTROY", city
+                        for cityData in savedCities:
+                            print cityData['id'], cityData['title'], cityData
+                        city.destroy()
+
+        elif message == 'loadMyCity':
+
+            if user:
+                city = None
+                try:
+                    id = int(messageDict['id'])
+                    city = model.City.query.filter_by(city_id=id).first()
+                except Exception, e:
+                    print "City query error", e
+                if city:
+                    if city.user_id != user.user_id:
+                        print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
+                    else:
+                        saveFile = city.save_file
+                        tempFileName = tempfile.mktemp()
+                        f = open(tempFileName, 'wb')
+                        f.write(saveFile)
+                        f.close()
+                        self.loadCity(tempFileName)
+                        os.remove(tempFileName)
 
         elif message == 'drawToolStart':
 
@@ -925,12 +934,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if user:
                 userName = user.user_name
 
-            print "CHAT", userName, language, text
+            #print "CHAT", userName, language, text
 
             if text and text[0] == '!':
 
                 command = text[1:]
-                print "CHEAT COMMAND", command
+                #print "CHEAT COMMAND", command
 
                 if command == 'million':
                     session.engine.spend(-1000000)
@@ -938,7 +947,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             elif channel == 'eliza':
 
                 elizaResponse = self.eliza.respond(text)
-                print "RESPONSE", elizaResponse
+                #print "RESPONSE", elizaResponse
 
                 session.sendMessage({
                     'message': 'chatMessage',
@@ -1030,17 +1039,19 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 session.sendMessage({
                     'message': 'update',
                     'variable': 'tileview',
-                    'id': id,
-                    'col': col,
-                    'row': row,
-                    'cols': cols,
-                    'rows': rows,
-                    'viewX': viewX,
-                    'viewY': viewY,
-                    'viewWidth': viewWidth,
-                    'viewHeight': viewHeight,
-                    'tiles': tiles,
-                    'code': code,
+                    'view': {
+                        'id': id,
+                        'col': col,
+                        'row': row,
+                        'cols': cols,
+                        'rows': rows,
+                        'viewX': viewX,
+                        'viewY': viewY,
+                        'viewWidth': viewWidth,
+                        'viewHeight': viewHeight,
+                        'tiles': tiles,
+                        'code': code,
+                    },
                     'collapse': True,
                 })
 
@@ -1207,7 +1218,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'login':
 
-            print "login", messageDict
+            #print "login", messageDict
 
             success = True
             feedback = ''
@@ -1217,6 +1228,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             passwordEncrypted = identity.encrypt_password(password)
             fullName = ''
             emailAddress = ''
+            savedCities = []
 
             user = model.User.by_user_name(unicode(userName))
             #print "USER", user, userName
@@ -1226,6 +1238,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 fullName = user.display_name
                 emailAddress = user.email_address
                 session.userName = user.user_name
+                savedCities = user.getSavedCities(session)
             else:
                 success = False
                 feedback = 'Incorrect user name or password.' # TRANSLATE
@@ -1237,11 +1250,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'feedback': feedback,
                 'fullName': fullName,
                 'emailAddress': emailAddress,
+                'savedCities': savedCities,
             })
 
         elif message == 'logout':
 
-            print "logout", messageDict, "USER", user, "name", session.userName
+            #print "logout", messageDict, "USER", user, "name", session.userName
 
             loggedIn = user != None
             if not loggedIn:
@@ -1260,7 +1274,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'newAccount':
 
-            print "newAccount", messageDict
+            #print "newAccount", messageDict
 
             success = False
             feedback = ''
@@ -1341,13 +1355,77 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 emailAddress = messageDict['emailAddress']
                 user.email_address = emailAddress
 
+        elif message == 'setLanguage':
+            #print "SETLANGUAGE", messageDict
+            session.language = messageDict['language']
+
         else:
 
             print "UNKNOWN MESSAGE", message
 
 
-    def saveMetaCityToDatabase(self):
-        print "TODO: saveMetaCityToDatabase"
+    def saveMetaCityToDatabase(self, session, user, cityID, title, description):
+        print "saveMetaCityToDatabase", session, user, cityID, title, description
+
+        if not title:
+            title = ''
+
+        tempFileName = tempfile.mktemp()
+        self.saveCityAs(tempFileName)
+        saveFile = open(tempFileName, 'rb').read()
+        os.remove(tempFileName)
+        #print "SAVEFILE", len(saveFile)
+
+        metadata = self.getMetaData()
+        #print "METADATA", metadata
+
+        savedCity = cityID and model.City.query.filter_by(city_id=cityID).first()
+
+        if savedCity and savedCity.user_id != user.user_id:
+            print "A user tried to save somebody else's city!", "user", user, "savedCity", savedCity, "savedCity.user_id", savedCity.user_id
+            savedCity = None
+
+        if not savedCity:
+            savedCity = model.City()
+            savedCity.user = user
+            #savedCity.user_id = user.user_id
+            savedCity.created = datetime.now()
+            print "Made a new city"
+
+        engine = session.engine
+        surface = engine.getMapImage(
+            width=micropolisengine.WORLD_W * 3,
+            height=micropolisengine.WORLD_H * 3)
+        
+        tempFileName = tempfile.mktemp()
+        surface.write_to_png(tempFileName)
+        surface.finish()
+        f = open(tempFileName, 'rb')
+        iconData = f.read()
+        f.close()
+        os.unlink(tempFileName)
+
+        savedCity.title = title
+        savedCity.description = description
+        savedCity.modified = datetime.now()
+        savedCity.save_file = saveFile
+        savedCity.metadata = metadata
+        savedCity.icon = iconData
+
+        self.sendSessions({
+            'message': 'update',
+            'variable': 'savedCities',
+            'savedCities': user.getSavedCities(session),
+        })
+
+
+    def generateCityWithSeed(self, seed):
+        if seed == 0:
+            seed = int(random.getrandbits(31))
+        self.generatedCitySeed = seed
+
+        #print "generateCity"
+        self.generateSomeCity(seed)
 
 
     def checkUserName(self, userName):
@@ -1388,7 +1466,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             if ticks:
                 self.lastLoopTime = now
             else:
-                print "zzzz...."
+                #print "zzzz...."
                 return
 
             #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
@@ -1674,14 +1752,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         #print "UPDATEALL"
         self.handle_update('funds')
         self.handle_update('date')
-        self.handle_update('history')
         self.handle_update('evaluation')
         self.handle_update('paused')
         self.handle_update('virtualSpeed')
         self.handle_update('demand')
         self.handle_update('options')
-        self.handle_update('gamelevel')
-        self.handle_update('cityname')
+        self.handle_update('gameLevel')
+        self.handle_update('cityName')
         self.updateMapView()
 
 
@@ -1701,9 +1778,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     
 
     def handle_didGenerateNewCity(self):
-        #print "handle_didGenerateNewCity(self)", (self,)
+        #print "handle_didGenerateNewCity(self)", (self,), self.generatedCitySeed
         self.sendSessions({
             'message': 'didGenerateNewCity',
+            'seed': self.generatedCitySeed
         })
         self.updateMapView()
 
@@ -1909,116 +1987,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 message['month'] = month
                 message['collapse'] = True
 
-            elif variable == 'XXXhistory':
-
-                # Scale the residential, commercial and industrial histories
-                # together relative to the max of all three.  Up to 128 they
-                # are not scaled. Starting at 128 they are scaled down so the
-                # maximum is always at the top of the history.
-
-                def calcScale(maxVal):
-                    if maxVal < 128:
-                        maxVal = 0
-                    if maxVal > 0:
-                        return 128.0 / float(maxVal)
-                    else:
-                        return 1.0
-
-                scales = []
-                history = {
-                    'scales': scales
-                }
-                message['history'] = history
-                message['collapse'] = True
-
-                cityTime = self.cityTime
-                startingYear = self.startingYear
-                year = int(cityTime / 48) + startingYear
-                month = int(cityTime % 48) >> 2
-                message['year'] = year
-                message['month'] = month
-
-                getHistoryRange = self.getHistoryRange
-                getHistory = self.getHistory
-
-                for historyScale in range(0, micropolisengine.HISTORY_SCALE_COUNT):
-
-                    resHistoryMin, resHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_RES,
-                        historyScale)
-                    comHistoryMin, comHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_COM,
-                        historyScale)
-                    indHistoryMin, indHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_IND,
-                        historyScale)
-                    allMax = max(resHistoryMax,
-                                 max(comHistoryMax,
-                                     indHistoryMax))
-                    rciScale = calcScale(allMax)
-
-                    # Scale the money, crime and pollution histories
-                    # independently of each other.
-
-                    moneyHistoryMin, moneyHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_MONEY,
-                        historyScale)
-                    crimeHistoryMin, crimeHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_CRIME,
-                        historyScale)
-                    pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
-                        micropolisengine.HISTORY_TYPE_POLLUTION,
-                        historyScale)
-                    moneyScale = calcScale(moneyHistoryMax)
-                    crimeScale = calcScale(crimeHistoryMax)
-                    pollutionScale = calcScale(pollutionHistoryMax)
-
-                    historyRange = 128.0
-
-                    valueScales = (
-                        rciScale, rciScale, rciScale, # res, com, ind
-                        moneyScale, crimeScale, pollutionScale, # money, crime, pollution
-                    )
-
-                    valueRanges = (
-                        (resHistoryMin, resHistoryMax,),
-                        (comHistoryMin, comHistoryMax,),
-                        (indHistoryMin, indHistoryMax,),
-                        (moneyHistoryMin, moneyHistoryMax,),
-                        (crimeHistoryMin, crimeHistoryMax,),
-                        (pollutionHistoryMin, pollutionHistoryMax,),
-                    )
-
-                    histories = []
-
-                    scales.append({
-                        'historyScale': historyScale,
-                        'range': 128,
-                        'histories': histories,
-                    })
-
-                    for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
-
-                        valueScale = valueScales[historyType]
-                        valueRange = valueRanges[historyType]
-
-                        values = [
-                                getHistory(
-                                    historyType,
-                                    historyScale,
-                                    historyIndex)
-                                for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
-                        ]
-
-                        histories.append({
-                            'historyType': historyType,
-                            'valueScale': valueScale,
-                            'valueRange': valueRange,
-                            'values': values,
-                        })
-
-                #print message
-
             elif variable == 'evaluation':
 
                 problems = []
@@ -2063,7 +2031,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 virtualSpeed = self.virtualSpeed
                 speedConfiguration = SpeedConfigurations[virtualSpeed]
-                print 'UPDATE DELAY', self.virtualSpeed, speedConfiguration
+                #print 'UPDATE DELAY', self.virtualSpeed, speedConfiguration
                 message['pollDelay'] = speedConfiguration['pollDelay']
                 message['animateDelay'] = speedConfiguration['animateDelay']
                 message['collapse'] = True
@@ -2127,6 +2095,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 budget['currentFunds'] = budget['cashFlow'] + budget['totalFunds']
                 budget['taxesCollected'] = budget['taxFund']
 
+                message['variable'] = 'budget'
                 message['budget'] = budget
                 message['collapse'] = True
 

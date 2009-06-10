@@ -7,6 +7,13 @@
     <!-- Licensed under GPLv3 -->
 
 
+    <!-- Dynamic datasets. -->
+
+    <dataset name="ds_myCities" id="ds_myCities">
+        <cities/>
+    </dataset>
+
+
     <!-- Built-in datasets. -->
 
     <dataset name="ds_cities" id="ds_cities"

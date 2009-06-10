@@ -317,10 +317,33 @@
     
     <!-- libraryview.lzx -->
 
-    <string id="Loaded Map:">Loaded Map:</string>
+    <string id="Shared Cities">Shared Cities</string>
 
-    <string id="Loaded a map from the library:">Loaded a map from the library:</string>
+    <string id="My Cities">My Cities</string>
 
+    <string id="Log in to see your cities.">Log in to see your cities.</string>
+
+    <string id="You haven't saved any cities yet.">You haven't saved any cities yet.</string>
+
+    <string id="Are you really sure you want to delete your city?">Are you really sure you want to delete your city?</string>
+
+    <string id="No, don't delete it.">No, don't delete it.</string>
+
+    <string id="Yes, delete my city.">Yes, delete my city.</string>
+
+    <string id="Foreward">Forward</string>
+
+    <string id="Backward">Backward</string>
+
+    <string id="by">by</string>
+
+    <string id="Created Date">Created Date</string>
+
+    <string id="Modified Date">Modified Date</string>
+
+    <string id="Created">Created</string>
+
+    <string id="Modified">Modified</string>
 
     <!-- loginview.lzx -->
 
@@ -354,7 +377,7 @@
 
     <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">Create New Account</string>
 
-    <string id="You can change your password*">You can change your password by entering your old password, then your new password twice below. You can change your full name or email address by editing the fields below.</string>
+    <string id="Please enter your*">Please enter your full name and email address below.</string>
 
     <string id="New Password:">New Password:</string>
 
@@ -385,8 +408,6 @@
     <!-- playscreen.lzx -->
 
 
-    <string id="User:">User:</string>
-
     <!-- remoteserver.lzx -->
 
     <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">Disconnected (error).</string>
@@ -401,14 +422,12 @@
 
     <string id="Message failed.">Message failed.</string>
 
-    <string id="Description:">Description:</string>
-
-    <string id="To:">To:</string>
+    <string id="To">To</string>
 
 
     <!-- scenariosview.lzx -->
 
-    <string id="Scenario:">Scenario:</string>
+    <string id="Scenario">Scenario</string>
 
 
     <!-- startscreen.lzx -->
@@ -422,6 +441,16 @@
     <string id="Library">Library</string>
 
     <string id="User">User</string>
+
+    <string id="Configure Your City">Configure Your City</string>
+
+    <string id="Title">Title</string>
+
+    <string id="Description">Description</string>
+
+    <string id="Share My City">Share My City</string>
+
+    <string id="Delete My City">Delete My City</string>
 
 
     <!-- toolcursor.lzx -->

@@ -30,7 +30,7 @@
 	    fontsize="16"
 	    fontstyle="bold"
 	    datapath="ds_scenarios:/scenarios/scenario"
-	    onclick="this.selectScenario()"
+	    onclick="gApp.loadScenario(this.scenarioID, this.scenarioTitle, this.scenarioNotice)"
 	    width="${parent.width}"
 	    height="${this.icon.height + 10}"
 	>
@@ -56,25 +56,6 @@
 		this.icon.setAttribute("resource", this.scenarioIcon);
 	      ]]>
 	    </handler>
-
-
-	    <method name="selectScenario"><![CDATA[
-		gApp.sendMessage({
-		    message: 'loadScenario',
-		    scenario: this.scenarioID
-		});
-		var title =
-		    gApp._('Scenario:') + 
-		    ' ' + 
-		    gApp._(this.scenarioTitle);
-		gApp.setAttribute("title", title);
-		var notice =
-		    gNoticeView.findNotice(this.scenarioNotice)
-		var noticeDescription =
-		    gApp._(notice.attributes['description']);
-		gApp.setAttribute("description", noticeDescription);
-	      ]]>
-	    </method>
 
 
 	    <view name="icon"
