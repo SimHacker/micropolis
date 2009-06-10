@@ -1466,6 +1466,8 @@ public:
 
     void animateTiles();
 
+    static int getNextAnimatedTile(int index);
+
 
     ////////////////////////////////////////////////////////////////////////
     // budget.cpp
@@ -1805,9 +1807,9 @@ public:
     void plopBRiver(const Position &pos);
     void plopSRiver(const Position &pos);
 
-private:
-
     void generateSomeCity(int seed);
+
+private:
 
     void generateMap(int seed);
 

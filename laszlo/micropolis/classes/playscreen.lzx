@@ -60,6 +60,7 @@
 		/>
 		    
 		<navigationmapview name="navigationMapView" id="gNavigationMapView"
+		    width="${parent.width}"
 		    editTileView="${parent.parent.editTileView}"
 		    active="${classroot.active}"
 		    overlay="${gApp.overlay}"
@@ -112,7 +113,7 @@
 	    <view name="tabsView"
 		x="0"
 		y="0"
-		width="${parent.width - this.x}"
+		width="${parent.width}"
 		height="${parent.height}"
 		clip="true"
 	    >
@@ -244,7 +245,7 @@
 
 		    <nicetabpane id="gPlayTabUser"
 		        bar="${classroot.hsep1}"
-			text="${gApp.loggedIn ? (gApp._('User:') + ' ' + gApp.userName) : gApp._('Log In')}"
+			text="${gApp.loggedIn ? (gApp._('User') + ': ' + gApp.userName) : gApp._('Log In')}"
 			width="${parent.width}"
 			height="${parent.height}"
 			saveHeight="false"
@@ -257,11 +258,15 @@
 			</handler>
 
 		        <method name="initialHeight"><![CDATA[
+			    // Work around a weird lazy instantiation problem.
+			    if (!gPlayUserView) {
+			        return 100;
+			    }
 			    return gPlayUserView.v.height + 45;
 			  ]]>
 			</method>
 
-			<userview id="gPlayUserView"
+			<userview id="gPlayUserView" name="u"
 			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
 			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
 			    visible="${this.width &amp;&amp; this.height}"

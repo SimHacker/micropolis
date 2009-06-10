@@ -8,7 +8,6 @@
 
 
     <class name="mapview"
-        bgcolor="0xffff00"
         width="${gApp.worldCols * this.tileSize}"
         height="${gApp.worldRows * this.tileSize}"
         clip="true"
@@ -192,7 +191,6 @@
 
         <method name="updateMapNow"><![CDATA[
             //Debug.write("updateMapNow", this, this.active);
-            this.setAttribute("bgcolor", Math.floor(Math.random() * 0xffffff));
 
             var sessionID = gApp.sessionID;
             var tileSize = this.tileSize;
@@ -201,7 +199,7 @@
             var overlay = gApp.overlay;
             var uniqueID = gApp.makeUniqueID();
             var src = 
-                "http:/server/micropolisGetMapImage?sessionID=" + 
+                "http:/server/getMapImage?sessionID=" + 
                 sessionID +
                 "&width=" +
                 width +

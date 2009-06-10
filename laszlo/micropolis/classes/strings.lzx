@@ -32,8 +32,14 @@
 	    //Debug.write("loadStrings", canvas.ds_strings);
 	    var stringsDict = {};
 	    if (canvas.ds_strings.childNodes) {
-		var childNodes = 
-		    canvas.ds_strings.childNodes[0].childNodes;
+		var stringsElement =
+		    canvas.ds_strings.childNodes[0];
+	        var language = 
+		    stringsElement.attributes['language'];
+		this.setAttribute("language", language);
+
+		var childNodes =
+		    stringsElement.childNodes;
 		var n = childNodes.length;
 		var i;
 		for (i = 0; i < n; i++) {

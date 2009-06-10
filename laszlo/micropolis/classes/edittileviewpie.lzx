@@ -644,7 +644,7 @@
 		    <html text="${gApp._('New City')}"/>
 
 		    <method name="selected"><![CDATA[
-		        gNewCityDialog.open();
+		        gApp.newCityDialog();
 		      ]]>
 		    </method>
 

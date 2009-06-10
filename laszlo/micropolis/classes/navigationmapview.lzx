@@ -8,7 +8,7 @@
 
 
     <class name="navigationmapview" extends="mapview"
-	tileSize="2"
+	tileSize="${Math.max(1, Math.floor(this.width / gApp.worldCols))}"
 	onmousedown="this.startDragging()"
 	onmouseup="this.stopDragging()"
     >

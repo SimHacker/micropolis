@@ -7,7 +7,7 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <newcitydialog id="gNewCityDialog"
+    <questiondialog id="gQuestionDialog"
         initstage="late"
     />
 

@@ -79,6 +79,7 @@
 	    width="${parent.width}"
 	>
 
+
 	    <simplelayout
 		axis="y"
 		spacing="${classroot.gap}"
@@ -288,7 +289,7 @@
 		>
 
 		    <text name="loggedInLabel"
-			text="${gApp._('You can change your password*')}"
+			text="${gApp._('Please enter your*')}"
 			multiline="true"
 			x="${classroot.loggedInLabelWidth + classroot.gap}"
 			width="${parent.width - this.x}"

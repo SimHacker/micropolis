@@ -13,6 +13,7 @@
 
 
 	<attribute name="active" value="true"/>
+	<attribute name="indent" value="20"/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -21,39 +22,183 @@
 	</handler>
 
 
-	<list
+	<view
 	    x="0"
 	    y="0"
-	    width="${parent.width}"
-	    height="${parent.height}"
-	    fontsize="18"
-	    fontstyle="bold"
+	    width="${immediateparent.width - 12}"
+	    layout="class:simplelayout; axis:y; spacing:5"
 	>
 
-	    <textlistitem
-		datapath="ds_cities:/cities/city"
-		onclick="this.loadCity()"
-		text="${this.cityTitle}"
-		height="28"
+	    <view
+		width="${immediateparent.width}"
+		layout="class:simplelayout; axis:x; spacing:5"
 	    >
 
-		<attribute name="cityName" value="$path{'@name'}"/>
-		<attribute name="cityTitle" value="$path{'@title'}"/>
+		<text
+		    fontsize="22"
+		    fontstyle="bold"
+		    text="${gApp._('My Cities') + ':'}"
+		    resize="true"
+		/>
 
-		<method name="loadCity"><![CDATA[
-		    gApp.sendMessage({
-		        message: 'loadCity',
-			city: this.cityName
-		    });
-		    gApp.setAttribute("title", gApp._('Loaded Map:') + ' ' + this.cityTitle);
-		    gApp.setAttribute("description", gApp._('Loaded a map from the library:') + ' ' + this.cityTitle);
-		  ]]>
-		</method>
+		<combobox name="myCitiesDirection"
+		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    y="5"
+		    width="130"
+		    editable="false"
+		>
 
-	    </textlistitem>
+		    <handler name="onvalue" args="arg"><![CDATA[
+		        var savedCitiesDirection = this.value;
+		        //Debug.write("savedCitiesDirection", savedCitiesDirection);
+			gApp.setAttribute("savedCitiesDirection", savedCitiesDirection);
+			gApp.refreshSavedCities();
+		      ]]>
+		    </handler>
 
-	</list>
+		    <textlistitem
+		        value="1"
+		        text="${gApp._('Foreward')}"
+			selected="${gApp.savedCitiesDirection == 1}"
+		    />
 
+		    <textlistitem
+		        value="-1"
+		        text="${gApp._('Backward')}"
+			selected="${gApp.savedCitiesDirection == -1}"
+		    />
+
+		</combobox>
+
+		<text
+		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    fontsize="22"
+		    fontstyle="bold"
+		    text="${gApp._('by')}"
+		    resize="true"
+		/>
+
+		<combobox name="myCitiesSort"
+		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    y="5"
+		    width="130"
+		    editable="false"
+		>
+
+		    <handler name="onvalue" args="arg"><![CDATA[
+		        //Debug.write("savedCitiesSort", this.value);
+			gApp.setAttribute("savedCitiesSort", this.value);
+			gApp.refreshSavedCities();
+		      ]]>
+		    </handler>
+
+		    <textlistitem
+		        value="'title'"
+		        text="${gApp._('Title')}"
+			selected="${gApp.savedCitiesSort == 'title'}"
+		    />
+
+		    <textlistitem
+		        value="'created'"
+		        text="${gApp._('Created Date')}"
+			selected="${gApp.savedCitiesSort == 'created'}"
+		    />
+
+		    <textlistitem
+		        value="'modified'"
+		        text="${gApp._('Modified Date')}"
+			selected="${gApp.savedCitiesSort == 'modified'}"
+		    />
+
+		</combobox>
+
+	    </view>
+
+	    <text
+		visible="${!gApp.loggedIn}"
+	        fontsize="18"
+		fontstyle="bold"
+	        text="${gApp._('Log in to see your cities.')}"
+		x="${classroot.indent}"
+		resize="true"
+	    />
+
+	    <text
+		visible="${gApp.loggedIn &amp;&amp; !gApp.savedCityCount}"
+	        fontsize="18"
+		fontstyle="bold"
+	        text="${gApp._('You haven\'t saved any cities yet.')}"
+		x="${classroot.indent}"
+		resize="true"
+	    />
+
+	    <list
+		visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		x="${classroot.indent}"
+		y="0"
+		width="${immediateparent.width - this.x - 12}"
+		fontsize="18"
+		fontstyle="bold"
+	    >
+
+		<textlistitem
+		    datapath="ds_myCities:/cities/city"
+		    onclick="gApp.loadMyCity(
+		        this.cityID, 
+			this.cityTitle, 
+			this.cityDescription, 
+			this.cityShared == 'true',
+			this.cityCreated,
+			this.cityModified)"
+		    text="${this.cityTitle}"
+		    height="28"
+		    selected="${(gApp.citySource == 'mycity') &amp;&amp; (gApp.cityID == this.cityID)}"
+		>
+
+		    <attribute name="cityID" type="string" value="$path{'@id'}"/>
+		    <attribute name="cityTitle" type="string" value="$path{'@title'}"/>
+		    <attribute name="cityDescription" type="string" value="$path{'@description'}"/>
+		    <attribute name="cityShared" type="string" value="$path{'@shared'}"/>
+		    <attribute name="cityCreated" type="string" value="$path{'@createdDate'}"/>
+		    <attribute name="cityModified" type="string" value="$path{'@modifiedDate'}"/>
+
+		</textlistitem>
+
+	    </list>
+
+	    <text
+	        fontsize="22"
+		fontstyle="bold"
+	        text="${gApp._('Shared Cities') + ':'}"
+		resize="true"
+	    />
+
+	    <list
+		x="${classroot.indent}"
+		y="0"
+		width="${immediateparent.width - this.x - 12}"
+		fontsize="18"
+		fontstyle="bold"
+	    >
+
+		<textlistitem
+		    datapath="ds_cities:/cities/city"
+		    onclick="gApp.loadSharedCity(this.cityID, this.cityTitle, this.cityDescription)"
+		    text="${this.cityTitle}"
+		    height="28"
+		>
+
+		    <attribute name="cityID" value="$path{'@id'}"/>
+		    <attribute name="cityTitle" value="$path{'@title'}"/>
+		    <attribute name="cityDescription" value="$path{'@description'}"/>
+
+		</textlistitem>
+
+	    </list>
+
+	</view>
+
+        <vscrollbar/>
 
     </class>
 

@@ -11,6 +11,7 @@
 
 
         <attribute name="gap" value="5"/>
+        <attribute name="frame" value="1"/>
 
 
         <method name="doAnimate"><![CDATA[
@@ -42,6 +43,7 @@
 	    x="${-this.width / 2}"
 	    y="${-this.height / 2}"
 	    resource="cursor_pie_rsrc"
+	    frame="${classroot.frame}"
 	/>
 
 	<text name="label"

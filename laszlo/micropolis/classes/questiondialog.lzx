@@ -1,15 +1,22 @@
 <library>
 
 
-    <!-- New City Dialog -->
+    <!-- Question Dialog -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="newcitydialog" extends="modaldialog"
+    <class name="questiondialog" extends="modaldialog"
         width="600" 
     >
+
+
+        <attribute name="question" type="string" value=""/>
+        <attribute name="answerNo" type="string" value=""/>
+	<attribute name="handleNo" value="null"/>
+	<attribute name="answerYes" type="string" value=""/>
+	<attribute name="handleYes" value="null"/>
 
 
         <handler name="ongameMode" reference="gApp"><![CDATA[
@@ -33,6 +40,17 @@
 	</handler>
 
 
+	<method name="popup" args="question, answerNo, handleNo, answerYes, handleYes"><![CDATA[
+	    this.setAttribute("question", question);
+	    this.setAttribute("answerNo", answerNo);
+	    this.setAttribute("handleNo", handleNo);
+	    this.setAttribute("answerYes", answerYes);
+	    this.setAttribute("handleYes", handleYes);
+	    this.open();
+	  ]]>
+	</method>
+
+
 	<simplelayout
 	    axis="y"
 	    spacing="5"
@@ -45,12 +63,12 @@
 	    fontsize="32"
 	    fontstyle="bold"
 	    multiline="true"
-	    text="${gApp._('Are you really sure you want to start a new city?')}"
+	    text="${classroot.question}"
 	/>
 
 	<view
 	    x="0" 
- width="${immediateparent.width}"
+	    width="${immediateparent.width}"
 	    height="${immediateparent.height}"
 	    layout="axis:y; spacing:10"
 	>
@@ -58,19 +76,19 @@
 	    <button
 	        x="0"
 	        width="${parent.width}"
-	        onclick="parent.parent.close()"
+	        onclick="parent.parent.close(); if (classroot.handleNo) {classroot.handleNo();}"
 		fontsize="20"
 		fontstyle="bold"
-		text="${gApp._('No, keep playing with this city.')}"
+		text="${classroot.answerNo}"
 	    />
 
 	    <button 
 	        x="0"
 	        width="${parent.width}"
-	        onclick="parent.parent.close(); gApp.saveCity(); gApp.chooseCity()"
+	        onclick="parent.parent.close(); if (classroot.handleYes) {classroot.handleYes();}"
 		fontsize="20"
 		fontstyle="bold"
-		text="${gApp._('Yes, choose another city.')}"
+		text="${classroot.answerYes}"
 	    />
 
 	    <view/>

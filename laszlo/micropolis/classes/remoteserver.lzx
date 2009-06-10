@@ -20,8 +20,8 @@
 
 
 		<attribute name="url" type="string" value="http:/server/jsonGateway"/>
-		<attribute name="connectionTimeout" type="number" value="5000"/>
-		<attribute name="pollTimeout" type="number" value="10000"/>
+		<attribute name="connectionTimeout" type="number" value="10000"/>
+		<attribute name="pollTimeout" type="number" value="30000"/>
 		<attribute name="status" type="string" value=""/>
 
 
@@ -209,12 +209,12 @@
 			    status = 
 			        gApp._('Message failed.') +
 			        ' ' +
-				gApp._('Description:') +
-				' ' +
+				gApp._('Description') +
+				': ' +
 				description +
 				'. ' +
-				gApp._('To:') +
-				' ' +
+				gApp._('To') +
+				': ' +
 				evt['details'];
 			    s = 0;
 			    break;
