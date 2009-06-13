@@ -1,0 +1,39 @@
+<library>
+
+
+    <!-- My Pie Menu -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="mypiemenu"
+        extends="piemenu"
+	backgroundExtraRadius="30"
+    >
+
+    </class>
+
+
+    <class name="myitem"
+        extends="item"
+    >
+
+    </class>
+
+
+    <class name="myhtml"
+        extends="html"
+    >
+
+    </class>
+
+
+    <class name="myicon"
+        extends="view"
+    >
+
+    </class>
+
+
+</library>

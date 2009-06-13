@@ -1,0 +1,55 @@
+Use the Python FLV screen video encoder.
+http://sourceforge.net/projects/libflv/
+
+Consider using this new Python AMF remoting library:
+
+http://code.google.com/p/amfast/
+http://drawlogic.com/2009/05/18/amfast-python-remoting-and-services-library-for-flash-flex-and-other-amf/
+
+I am one of the developers of PyAMF.
+
+The AmFast de/encoders are written in C, whilst Google AppEngine disables C extensions (for obvious reasons). Theoretically you could run AmFast on GAE but PyAMF would be required to do the heavy lifting (as it has a pure python option). It would be a thin wrapper at best.
+
+PyAMF 0.4 series concentrated on stability and integration (we have good support for BigTable, Django etc.), not speed (premature optimisation being a factor).
+
+The current development (which will become PyAMF 0.5) is focussing on speed. The current trunk is only around x2 slower than AmFast with the C extension enabled for encoding, whilst the pure python version is around x5 slower. This is a work in progress and we reckon we can get similar timings to AmFast without losing the flexibility/stability of the library.
+Posted by Nick Joyce May 19th, 2009 at 4:11 am
+
+
+Hi,
+
+I’m the main developer of AmFast. Thanks for the write up.
+
+The goal of AmFast is to create a flexible and customizable AMF and Flex messaging framework, where the encoder/decoder and transport layers are loosely coupled with the core messaging logic, so that it is easy to swap out individual components. For example, AmFast comes with a built-in C-extension for encoding/decoding AMF, but if you can’t compile the C extension, you only need a couple of extra lines of code to use the pure-Python version of PyAmf as the encoder/decoder instead.
+
+The PyAmf/AmFast combo is more than a simple wrapper. If you’re already using PyAmf, you can continue to use PyAmf for encoding/decoding, but use AmFast’s remoting/messaging core to implement the Flex messaging features that aren’t supported by PyAmf yet (Producer/Consumer messaging, RemoteObject authentication, sessions, exposing AMF packet and Flex message objects).
+
+I’m hoping that we can find some common ground to integrate features and code once the PyAmf project starts working on implementing Flex messaging.
+
+In regards to the GAE question, AmFast can use the pure-Python version of PyAmf as the encoder/decoder to avoid compiling the C extension. However, AmFast’s Flex messaging implementation needs to store session information about each Flex client. Currently AmFast stores that data in memory, so Flex messaging (Producer/Consumer, RemoteObject authentication) won’t work with GAE, because memory is cleared after every request. Simple RPC calls will probably work just fine with GAE, but I haven’t tried it yet.
+
+The next planned version of AmFast (0.4) will feature multiple back-end options for in-memory or persistent storage of connection session data (probably implemented with the Beaker package), and I hopefully will have time to cook-up a GAE example with Producer/Consumer messaging.
+Posted by limscoder June 7th, 2009 at 7:13 pm
+
+
+ AmFast uses the standard Python logging utilities to log all request
+and response messages.
+
+# To print log messages to STDOUT
+import logging
+import sys
+
+import amfast
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+amfast.logger.addHandler(handler)
+
+# Log all request and response message objects.
+amfast.log_debug = True
+
+# Log all raw-binary AMF request and response packets (as a formatted
+string).
+amfast.log_raw = True 
+
+

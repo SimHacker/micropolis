@@ -29,9 +29,10 @@
 
 
 	<method name="loadStrings"><![CDATA[
-	    //Debug.write("loadStrings", canvas.ds_strings);
+	    Debug.write("loadStrings", canvas.ds_strings);
 	    var stringsDict = {};
 	    if (canvas.ds_strings.childNodes) {
+//Debug.write("canvas.ds_strings.childNodes", canvas.ds_strings.childNodes);
 		var stringsElement =
 		    canvas.ds_strings.childNodes[0];
 	        var language = 
@@ -54,6 +55,7 @@
 			        Debug.write("Duplicate string with different value! id:", id, "values", stringsDict[id], value);
 			    }
 			} else {
+			    //Debug.write(id);
 			    stringsDict[id] = value;
 			}
 		    }

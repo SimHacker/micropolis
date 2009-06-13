@@ -7,26 +7,28 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <piemenu id="gEditTileViewPie">
-        <html text="${gApp._('Tools')}"/>
+    <mypiemenu id="gEditTileViewPie">
+        <myhtml text="${gApp._('Tools')}"/>
 
-	<item>
-	    <html text="${'(' + gApp._('Zone') + ')'}"/>
+	<myitem>
+	    <myhtml text="${'(' + gApp._('Zone') + ')'}"/>
 
-	    <piemenu
+	    <mypiemenu
 	        fixedRadius="50"
 	    >
-	        <html text="${gApp._('Zone')}"/>
+	        <myhtml text="${gApp._('Zone')}"/>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+
+		    <myhtml
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Commercial')}"
 		    />
-		    <view
+
+		    <myicon
 		        x="${(parent.width - this.width) / 2}"
 		        resource="tool_commercial_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'commercial')) ? 2 : 1}"
@@ -37,17 +39,19 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+
+		    <myhtml
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Industrial')}"
 		    />
-		    <view
+
+		    <myicon
 		        x="0"
 		        resource="tool_industrial_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'industrial')) ? 2 : 1}"
@@ -58,18 +62,20 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+
+		    <myicon
 		        x="0"
 		        resource="tool_policestation_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'policestation')) ? 2 : 1}"
 		    />
-		    <html
+
+		    <myhtml
 		        resize="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Police Station')}"
@@ -80,18 +86,20 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+
+		    <myicon
 		        x="${(parent.width - this.width) / 2}"
 		        resource="tool_query_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'query')) ? 2 : 1}"
 		    />
-		    <html
+
+		    <myhtml
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Query')}"
 		    />
@@ -101,18 +109,20 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+
+		    <myicon
 		        x="${parent.width - this.width}"
 		        resource="tool_firestation_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'firestation')) ? 2 : 1}"
 		    />
-		    <html
+
+		    <myhtml
 		        resize="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Fire Station')}"
@@ -123,17 +133,19 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+
+		    <myhtml
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Residential')}"
 		    />
-		    <view
+
+		    <myicon
 		        x="${parent.width - this.width}"
 		        resource="tool_residential_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'residential')) ? 2 : 1}"
@@ -144,22 +156,24 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-	    </piemenu>
+	    </mypiemenu>
 
-	</item>
+	</myitem>
 
-	<item
+	<myitem
 	    headercolor="null"
 	>
 	    <simplelayout axis="y"/>
-	    <html
+
+	    <myhtml
 	        x="0"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        text="${gApp._('Bulldozer')}"
 	    />
-	    <view
+
+	    <myicon
 		x="0"
 		resource="tool_bulldozer_rsrc"
 		frame="${(parent.hilited || (gApp.tool == 'bulldozer')) ? 2 : 1}"
@@ -170,41 +184,44 @@
 	      ]]>
 	    </method>
 
-	</item>
+	</myitem>
 
-	<item
+	<myitem
 	    headercolor="null"
 	>
 	    <simplelayout axis="y"/>
-	    <html
+
+	    <myhtml
 	        x="0"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        text="${gApp._('Road')}"
 	    />
-	    <view
+
+	    <myicon
 		x="0"
 		resource="tool_road_rsrc"
 		frame="${(parent.hilited || (gApp.tool == 'road')) ? 2 : 1}"
 	    />
-
 
 	    <method name="selected"><![CDATA[
 		gApp.setAttribute("tool", "road");
 	      ]]>
 	    </method>
 
-	</item>
+	</myitem>
 
-	<item
+	<myitem
 	    headercolor="null"
 	>
 	    <simplelayout axis="y"/>
-	    <html
+
+	    <myhtml
 	        x="${(parent.width - this.width) / 2}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        text="${gApp._('Center')}"
 	    />
-	    <view
+
+	    <myicon
 		x="${(parent.width - this.width) / 2}"
 		resource="tool_center_rsrc"
 		frame="${(parent.hilited || (gApp.tool == 'center')) ? 2 : 1}"
@@ -214,26 +231,29 @@
 	        gApp.setAttribute("tool", "center");
 	      ]]>
 	    </method>
-	</item>
 
-	<item>
-	    <html text="${'(' + gApp._('Build') + ')'}"/>
+	</myitem>
 
-	    <piemenu
+	<myitem>
+	    <myhtml text="${'(' + gApp._('Build') + ')'}"/>
+
+	    <mypiemenu
 	        fixedRadius="50"
 	    >
-	        <html text="${gApp._('Build')}"/>
+	        <myhtml text="${gApp._('Build')}"/>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+
+		    <myhtml
 		        x="${(parent.width - this.width) / 2}"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Park')}"
 		    />
-		    <view
+
+		    <myicon
 		        x="${(parent.width - this.width) / 2}"
 			resource="tool_park_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'park')) ? 2 : 1}"
@@ -244,18 +264,20 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+
+		    <myhtml
 		        x="0"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Seaport')}"
 		    />
-		    <view
+
+		    <myicon
 			x="0"
 			resource="tool_seaport_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'seaport')) ? 2 : 1}"
@@ -266,18 +288,20 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+
+		    <myicon
 			x="0"
 			resource="tool_nuclearpower_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'nuclearpower')) ? 2 : 1}"
 		    />
-		    <html
+
+		    <myhtml
 			resize="true"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Nuclear Power')}"
@@ -288,18 +312,18 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+		    <myicon
 			x="${(parent.width - this.width) / 2}"
 			resource="tool_airport_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'airport')) ? 2 : 1}"
 		    />
-		    <html
+		    <myhtml
 			x="${(parent.width - this.width) / 2}"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Airport')}"
@@ -310,18 +334,18 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <view
+		    <myicon
 			x="${parent.width - this.width}"
 			resource="tool_coalpower_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'coalpower')) ? 2 : 1}"
 		    />
-		    <html
+		    <myhtml
 			resize="true"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 	        	text="${gApp._('Coal Power')}"
@@ -333,17 +357,17 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item
+		<myitem
 		    headercolor="null"
 		>
 		    <simplelayout axis="y"/>
-		    <html
+		    <myhtml
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 			text="${gApp._('Stadium')}"
 		    />
-		    <view
+		    <myicon
 			x="${parent.width - this.width}"
 			resource="tool_stadium_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'stadium')) ? 2 : 1}"
@@ -354,214 +378,214 @@
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-	    </piemenu>
+	    </mypiemenu>
 
-	</item>
+	</myitem>
 
-	<item>
-	    <html text="${'(' + gApp._('More') + ')'}"/>
+	<myitem>
+	    <myhtml text="${'(' + gApp._('More') + ')'}"/>
 
-	    <piemenu>
+	    <mypiemenu>
 
-		<item>
-		    <html text="${'(' + gApp._('Tab') + ')'}"/>
-		    <piemenu>
-			<html text="${gApp._('Tab')}"/>
+		<myitem>
+		    <myhtml text="${'(' + gApp._('Tab') + ')'}"/>
+		    <mypiemenu>
+			<myhtml text="${gApp._('Tab')}"/>
 
-			<item>
-			    <html text="${gApp._('Notices')}"/>
+			<myitem>
+			    <myhtml text="${gApp._('Notices')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabNotices.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>
-			    <html text="${gApp._('Journal')}"/>
+			<myitem>
+			    <myhtml text="${gApp._('Journal')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabJournal.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('Evaluation')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('Evaluation')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabEvaluation.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('History')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('History')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabHistory.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('Budget')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('Budget')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabBudget.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('Overlays')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('Overlays')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabOverlays.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('Disasters')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('Disasters')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabDisasters.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-			<item>	
-			    <html text="${gApp._('Control')}"/>
+			<myitem>	
+			    <myhtml text="${gApp._('Control')}"/>
 
 			    <method name="selected"><![CDATA[
 				gPlayTabControl.setAttribute('selected', true);
 			      ]]>
 			    </method>
 
-			</item>
+			</myitem>
 
-		    </piemenu>
-		</item>
+		    </mypiemenu>
+		</myitem>
 
-		<item>
-		    <html text="${'(' + gApp._('Speed') + ')'}"/>
+		<myitem>
+		    <myhtml text="${'(' + gApp._('Speed') + ')'}"/>
 
-		    <piemenu
+		    <mypiemenu
 		        initialAngle="0"
 		    >
-		        <html text="${gApp._('Speed')}"/>
+		        <myhtml text="${gApp._('Speed')}"/>
 
-			<item>
-			    <html text="${gApp._('Resume')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Resume')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html text="${gApp._('Ultra Slow')}"/>
-			</item>
+			    <myhtml text="${gApp._('Ultra Slow')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html text="${gApp._('Super Slow')}"/>
-			</item>
+			    <myhtml text="${gApp._('Super Slow')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html text="${gApp._('Very Slow')}"/>
-			</item>
+			    <myhtml text="${gApp._('Very Slow')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html text="${gApp._('Slow')}"/>
-			</item>
+			    <myhtml text="${gApp._('Slow')}"/>
+			</myitem>
 
-			<item>
-			    <html text="${gApp._('Pause')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Pause')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="s"
 			    linearOrderReversed="1"
 			>
-			    <html text="${gApp._('Medium')}"/>
-			</item>
+			    <myhtml text="${gApp._('Medium')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html text="${gApp._('Fast')}"/>
-			</item>
+			    <myhtml text="${gApp._('Fast')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html text="${gApp._('Very Fast')}"/>
-			</item>
+			    <myhtml text="${gApp._('Very Fast')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html text="${gApp._('Super Fast')}"/>
-			</item>
+			    <myhtml text="${gApp._('Super Fast')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html text="${gApp._('Ultra Fast')}"/>
-			</item>
+			    <myhtml text="${gApp._('Ultra Fast')}"/>
+			</myitem>
 
-			<item
+			<myitem
 			    linear="1"
 			    linearDirection="n"
 			    linearOrderReversed="0"
 			>
-			    <html text="${gApp._('Astronomically Fast')}"/>
-			</item>
+			    <myhtml text="${gApp._('Astronomically Fast')}"/>
+			</myitem>
 
-		    </piemenu>
-		</item>
+		    </mypiemenu>
+		</myitem>
 
-		<item>
-		    <html text="${'(' + gApp._('Overlays') + ')'}"/>
+		<myitem>
+		    <myhtml text="${'(' + gApp._('Overlays') + ')'}"/>
 
-		    <piemenu id="gEditTileViewOverlaysPie"
+		    <mypiemenu id="gEditTileViewOverlaysPie"
 		        maxPieItems="100"
 			fixedRadius="100"
 		    >
-		        <html text="${gApp._('Overlays')}"/>
+		        <myhtml text="${gApp._('Overlays')}"/>
 
-			<item
+			<myitem
 			    datapath="ds_overlays:/overlays/overlay"
 			>
 
@@ -593,22 +617,22 @@
 			      ]]>
 			    </method>
 
-			    <html
+			    <myhtml
 			        text="${gApp._(parent.overlayTitle)}"
 				fontsize="${parent.hilited ? 24 : 10}"
 			    />
 
-			</item>
-		    </piemenu>
-		</item>
+			</myitem>
+		    </mypiemenu>
+		</myitem>
 
-		<item>
-		    <html text="${'(' + gApp._('Disasters') + ')'}"/>
+		<myitem>
+		    <myhtml text="${'(' + gApp._('Disasters') + ')'}"/>
 
-		    <piemenu>
-		        <html text="${gApp._('Disasters')}"/>
+		    <mypiemenu>
+		        <myhtml text="${gApp._('Disasters')}"/>
 
-			<item
+			<myitem
 			    datapath="ds_disasters:/disasters/disaster"
 			>
 
@@ -624,80 +648,80 @@
 			      ]]>
 			    </method>
 
-			    <html text="${parent.disasterTitle}"/>
+			    <myhtml text="${parent.disasterTitle}"/>
 
-			</item>
-		    </piemenu>
-		</item>
+			</myitem>
+		    </mypiemenu>
+		</myitem>
 
-		<item>
-		    <html text="${gApp._('Help')}"/>
+		<myitem>
+		    <myhtml text="${gApp._('Help')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gApp.help();
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item>
-		    <html text="${gApp._('New City')}"/>
+		<myitem>
+		    <myhtml text="${gApp._('New City')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gApp.newCityDialog();
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-		<item>
-		    <html text="${'(' + gApp._('Funds') + ')'}"/>
+		<myitem>
+		    <myhtml text="${'(' + gApp._('Funds') + ')'}"/>
 
-		    <piemenu>
-		        <html text="${gApp._('Funds')}"/>
+		    <mypiemenu>
+		        <myhtml text="${gApp._('Funds')}"/>
 
-			<item>
-			    <html text="${gApp._('Tax Rate')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Tax Rate')}"/>
+			</myitem>
 
-			<item>
-			    <html text="${gApp._('Police Funds')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Police Funds')}"/>
+			</myitem>
 
-			<item>
-			    <html text="${gApp._('Road Funds')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Road Funds')}"/>
+			</myitem>
 
-			<item>
-			    <html text="${gApp._('Fire Funds')}"/>
-			</item>
+			<myitem>
+			    <myhtml text="${gApp._('Fire Funds')}"/>
+			</myitem>
 
-		    </piemenu>
-		</item>
+		    </mypiemenu>
+		</myitem>
 
-		<item>
-		    <html text="${gApp._('About')}"/>
+		<myitem>
+		    <myhtml text="${gApp._('About')}"/>
 
 		    <method name="selected"><![CDATA[
 		        gApp.about();
 		      ]]>
 		    </method>
 
-		</item>
+		</myitem>
 
-	    </piemenu>
-	</item>
+	    </mypiemenu>
+	</myitem>
 
-	<item
+	<myitem
 	    headercolor="null"
 	>
 	    <simplelayout axis="y"/>
-	    <html
+	    <myhtml
 	        x="${parent.width - this.width}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		text="${gApp._('Railroad')}"
 	    />
-	    <view
+	    <myicon
 		x="${parent.width - this.width}"
 		resource="tool_railroad_rsrc"
 		frame="${(parent.hilited || (gApp.tool == 'railroad')) ? 2 : 1}"
@@ -708,18 +732,18 @@
 	      ]]>
 	    </method>
 
-	</item>
+	</myitem>
 
-	<item
+	<myitem
 	    headercolor="null"
 	>
 	    <simplelayout axis="y"/>
-	    <html
+	    <myhtml
 		x="${parent.width - this.width}"
 	        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		text="${gApp._('Wire')}"
 	    />
-	    <view
+	    <myicon
 		x="${parent.width - this.width}"
 		resource="tool_wire_rsrc"
 		frame="${(parent.hilited || (gApp.tool == 'wire')) ? 2 : 1}"
@@ -730,9 +754,9 @@
 	      ]]>
 	    </method>
 
-	</item>
+	</myitem>
 
-    </piemenu>
+    </mypiemenu>
 
 
 </library>
