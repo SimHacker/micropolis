@@ -45,15 +45,21 @@ yum -y install pycairo
 yum -y install pycairo-devel
 yum -y install pygtk2
 yum -y install pygtk2-devel
+yum -y install libXpm
+yum -y install libXpm-devel
 yum -y install apache
 yum -y install httpd
 yum -y install httpd-devel
 yum -y install httpd-tools
 yum -y install httpd-manual
+yum -y install byacc
+yum -y install libXext
+yum -y install libXext-devel
 yum -y install php
 yum -y install java
 yum -y install java-devel
 yum -y install vnc
+yum -y install doxygen
 yum -y install MySQL-python
 yum -y install mysql-administrator
 
