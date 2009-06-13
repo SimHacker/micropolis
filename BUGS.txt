@@ -39,3 +39,79 @@ When not playing game, should not poll server very fast.
 Reconnect to same session, flush caches. 
 
 Clean out junk history from cities in library.
+
+Optimize OpenLaszlo code:
+
+http://wiki.joa-ebert.com/index.php/Avoiding_Denormals
+
+In this example the framerate will jump from approximately 40fps to
+1fps. The reason are denormal numbers.  This solution is easy to
+implement in ActionScript and will result in real zero values. It has
+been tested successfully on
+
+x = x + 1e-18 - 1e-18;
+
+http://www.bigspaceship.com/blog/labs/as3-optimization-tip
+
+This might also be expanded to do a little house cleaning while the
+user isn't using the site. Once you have access to 'stage', add the
+listener. Then use the functions to stop and start the site. I've left
+out the project specific code and what you see here is bare
+bones. MOUSE_MOVE only happens when the user is actually on the stage
+so that is how we re-activate things. Thanks go out to Kirupa.
+
+stage.addEventListener(Event.MOUSE_LEAVE, _onLeaveStage, false, 0, true);
+
+// followed by:
+private function _onLeaveStage($evt:Event):void
+{
+// disable site code
+stage.addEventListener(MouseEvent.MOUSE_MOVE, _onReturnToStage, false, 0, true);
+};
+
+private function _onReturnToStage($evt:MouseEvent):void
+{
+stage.removeEventListener(MouseEvent.MOUSE_MOVE, _onReturnToStage);
+//re-enable site code
+};
+
+That means that the site will stop (or whatever) whenever the user
+moves their mouse over the browser chrome, even if the site is still
+visible right?
+
+@Nick, maybe Event.ACTIVATE and Event.DEACTIVATE would be more
+effective, not tested it yet tho ;)
+
+Thanks for sharing this. I used the MOUSE_LEAVE event to remove an
+ENTER_FRAME loop of Papervision render engine. CPU usage drops from
+50% to almost 0% when mouse leaves the flash area.
+
+i did a similar thing on a page we were doing, and if i remember
+correctly, i added a MouseEvent.ROLL_OVER listener to the stage to
+know when the user is back - its a bit more simple than the MOUSE_MOVE
+way.
+
+I think is better using the events ACTIVATE, dispatched when Flash
+Player or an AIR application gains operating system focus and becomes
+active, and DEACTIVATE, dispatched when Flash Player or an AIR
+application loses operating system focus and is becoming inactive.
+
+http://www.gskinner.com/blog/archives/2009/05/idle_cpu_usage.html
+
+// this should be called as soon as your application starts up and has an open window.
+// the first parameter is optional, and specifies the background fps to use (default is 1)
+FramerateThrottler.initialize(2);
+
+// set enabled to false to temporarily restore the framerate while in the background, or prevent it from reducing the framerate
+// when your application moves to the background:
+FramerateThrottler.enabled = false;
+
+// you can also specify whether to only use this feature when running on a Mac:
+FramerateThrottler.onlyThrottleOnMac = true;
+
+http://www.gskinner.com/blog/assets/FramerateThrottler.zip
+
+http://blogs.adobe.com/air/2009/05/performance_tips_for_adobe_air.html
+
+http://arno.org/arnotify/2009/05/writing-well-behaved-efficient-air-applications/
+

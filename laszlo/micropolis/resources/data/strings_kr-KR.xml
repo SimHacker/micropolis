@@ -1,5 +1,4 @@
-<?xml version="1.0" ?>
-<strings language="en-US">
+<?xml version="1.0" ?><strings language="kr-KR">
 
 
     <!--
@@ -41,7 +40,7 @@
 
     <string id="Micropolis: Choose a City">Micropolis: 도시 선택</string>
 
-    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Micropolis에 오신 것을 환영합니다!&lt;br/&gt;&lt;br/&gt;'시나리오'탭, 또는 '생성기'탭, 또는 '도서관'탭에서 라이브러리에있는 도시에서 새 무작위 로딩시 생성 시나리오를 선택하여 도시를 선택하십시오.&lt;br/&gt;&lt;br/&gt;그리고 난 후, 다음이시 '버튼과 함께 연주를 시작 Micropolis'재생 기자!</string>
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Micropolis에 오신 것을 환영합니다!&lt;br/&gt;&lt;br/&gt;'시나리오'탭, 또는 '생성기'탭, 또는 '도서관'탭에서 라이브러리에있는 도시에서 새 무작위 로딩시 생성 시나리오를 선택하여 도시를 선택하십시오.&lt;br/&gt;&lt;br/&gt;그리고 난 후, 다음이시 '버튼과 함께 연주를 시작 Micropolis 재생 기자!</string>
 
     <string id="Please log in or create an account in order to save your city.">제발 로그인하거나 계정을 저장하기 위해서는 당신의 도시를 만듭니다. </string>
 
@@ -318,10 +317,33 @@
     
     <!-- libraryview.lzx -->
 
-    <string id="Loaded Map:">로드됨지도:</string>
+    <string id="Shared Cities">공유 도시</string>
 
-    <string id="Loaded a map from the library:">도서관에서지도 로드됨:</string>
+    <string id="My Cities">나의 도시</string>
 
+    <string id="Log in to see your cities.">에 로그인하여 도시를 볼 수있습니다.</string>
+
+    <string id="You haven't saved any cities yet.">아직 어떤 도시를 저장하지 않으 셨습니다.</string>
+
+    <string id="Are you really sure you want to delete your city?">정말 당신이 당신의 도시를 삭제하고 싶은거야?</string>
+
+    <string id="No, don't delete it.">아니, 그것을 삭제하지 마십시오.</string>
+
+    <string id="Yes, delete my city.">그래, 내 도시를 삭제합니다.</string>
+
+    <string id="Foreward">앞으로</string>
+
+    <string id="Backward">이전</string>
+
+    <string id="by">에 의해</string>
+
+    <string id="Created Date">작성일</string>
+
+    <string id="Modified Date">수정된 날짜</string>
+
+    <string id="Created">만든날짜</string>
+
+    <string id="Modified">수정된</string>
 
     <!-- loginview.lzx -->
 
@@ -355,7 +377,7 @@
 
     <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">새 계정 만들기</string>
 
-    <string id="You can change your password*">자네가 예전에 비밀 번호를 입력하여, 그러면 귀하의 새 비밀 번호를 두 번 아래에 비밀 번호를 변경할 수있습니다. 당신을 편집하여 아래의 입력란에 전체 이름이나 이메일 주소를 변경할 수있습니다.</string>
+    <string id="Please enter your*">아래에 귀하의 전체 이름과 이메일 주소를 입력하시기 바랍니다.</string>
 
     <string id="New Password:">새 비밀 번호:</string>
 
@@ -373,10 +395,18 @@
     <string id="The city simulation has begun!">도시 시뮬레이션을 시작했다!</string>
 
 
+    <!-- pancursor.lzx -->
+
+    <string comment="Label for cursor that pans the map." id="Pan Map">팬지도</string>
+
+
+    <!-- piecursor.lzx -->
+
+    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">파이 메뉴</string>
+
+
     <!-- playscreen.lzx -->
 
-
-    <string id="User:">사용자:</string>
 
     <!-- remoteserver.lzx -->
 
@@ -391,8 +421,6 @@
     <string id="Connected.">연결되어있습니다.</string>
 
     <string id="Message failed.">메시지가 실패했습니다.</string>
-
-    <string id="Description">설명</string>
 
     <string id="To">받는 사람</string>
 
@@ -414,13 +442,23 @@
 
     <string id="User">사용자</string>
 
+    <string id="Configure Your City">구성시</string>
+
+    <string id="Title">제목</string>
+
+    <string id="Description">설명</string>
+
+    <string id="Share My City">공유 내시</string>
+
+    <string id="Delete My City">삭제 나의시</string>
+
 
     <!-- toolcursor.lzx -->
 
 
     <!-- toolpalette.lzx -->
 
-    <string id="Fire Station">소방서</string>
+    <string id="Fire Station"></string>
 
     <string id="Query">검색어</string>
 

@@ -17,6 +17,7 @@
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
     <include href="piemenu.lzx"/>
+    <include href="mypiemenu.lzx"/>
     <include href="edittileviewpie.lzx"/>
     <include href="mycheckbox.lzx"/>
     <include href="myradio.lzx"/>

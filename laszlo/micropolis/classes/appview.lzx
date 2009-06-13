@@ -65,9 +65,9 @@
         <attribute name="user" value="null"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
-	<attribute name="shared" value="false"/>
-	<attribute name="created" value="null"/>
-	<attribute name="modified" value="null"/>
+        <attribute name="shared" value="false"/>
+        <attribute name="created" value="null"/>
+        <attribute name="modified" value="null"/>
         <attribute name="paused" value="true"/>
         <attribute name="virtualSpeed" type="number" value="2"/>
         <attribute name="funds" type="number" value="0"/>
@@ -94,15 +94,15 @@
         <attribute name="gameMode" type="string" value="disconnected"/>
         <attribute name="gap" value="5"/>
         <attribute name="nextUniqueID" value="1"/>
-	<attribute name="objectIDs" value="$once{{}}"/>
+        <attribute name="objectIDs" value="$once{{}}"/>
         <attribute name="interests" value="null"/>
         <attribute name="overlay" type="string" value="all"/>
-	<attribute name="chatChannel" type="string" value="all"/>
-	<attribute name="sprites" value="null"/>
-	<attribute name="robots" value="null"/>
-	<attribute name="soundsToPlay" value="$once{{}}"/>
-	<attribute name="citySource" type="string" value=""/>
-	<attribute name="cityID" type="string" value=""/>
+        <attribute name="chatChannel" type="string" value="all"/>
+        <attribute name="sprites" value="null"/>
+        <attribute name="robots" value="null"/>
+        <attribute name="soundsToPlay" value="$once{{}}"/>
+        <attribute name="citySource" type="string" value=""/>
+        <attribute name="cityID" type="string" value=""/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -115,12 +115,12 @@
             this.codeMap = codeMap;
 
             this.expressInterest(this, [
-                'funds', 'date', 'evaluation', 
-		'paused', 'passes', 'delay', 'demand', 
-		'options', 'gameLevel', 'cityName', 
-		'taxRate', 'budget', 'sprites',
+                'funds', 'date', 'evaluation',
+                'paused', 'passes', 'delay', 'demand',
+                'options', 'gameLevel', 'cityName',
+                'taxRate', 'budget', 'sprites',
                 'message', 'virtualSpeed', 'savedCities',
-		'tileview', 'historyview',
+                'tileview', 'historyview',
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -152,7 +152,7 @@
 
             // Note: We must initialize interests above in the attribute once clause.
             // Because if we initialize it here, we are running after the children's
-            // oninit's have been run, so we would wipe out their interests. 
+            // oninit's have been run, so we would wipe out their interests.
 
           ]]>
         </handler>
@@ -260,205 +260,205 @@
         </handler>
 
 
-	<handler name="onsavedCities" args="arg"><![CDATA[
-	    this.refreshSavedCities();
-	  ]]>
-	</handler>
+        <handler name="onsavedCities" args="arg"><![CDATA[
+            this.refreshSavedCities();
+          ]]>
+        </handler>
 
 
-	<method name="refreshSavedCities"><![CDATA[
-	    var els = [];
-	    var savedCities = this.savedCities;
+        <method name="refreshSavedCities"><![CDATA[
+            var els = [];
+            var savedCities = this.savedCities;
 
 
-	    var savedCitiesSort = this.savedCitiesSort;
-	    var savedCitiesDirection = this.savedCitiesDirection;
-	    savedCities.sort(
-		function(c1, c2) {
-		    var t1 = c1[savedCitiesSort];
-		    var t2 = c2[savedCitiesSort];
-		    if (t1 < t2) {
-			return -savedCitiesDirection;
-		    } else if (t1 > t2) {
-			return savedCitiesDirection;
-		    } else {
-			return 0;
-		    }
-		});
+            var savedCitiesSort = this.savedCitiesSort;
+            var savedCitiesDirection = this.savedCitiesDirection;
+            savedCities.sort(
+                function(c1, c2) {
+                    var t1 = c1[savedCitiesSort];
+                    var t2 = c2[savedCitiesSort];
+                    if (t1 < t2) {
+                        return -savedCitiesDirection;
+                    } else if (t1 > t2) {
+                        return savedCitiesDirection;
+                    } else {
+                        return 0;
+                    }
+                });
 
-	    var n = savedCities.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	        var city = savedCities[i];
-		els.push(new lz.DataElement('city', {
-		    id: city['id'],
-		    title: city['title'],
-		    description: city['description'],
-		    shared: "" + city['shared'],
+            var n = savedCities.length;
+            var i;
+            for (i = 0; i < n; i++) {
+                var city = savedCities[i];
+                els.push(new lz.DataElement('city', {
+                    id: city['id'],
+                    title: city['title'],
+                    description: city['description'],
+                    shared: "" + city['shared'],
                     createdDate: city['createdDate'],
                     modifiedDate: city['modifiedDate'],
                     created: "" + city['created'],
                     modified: "" + city['modified'],
- 		    icon: city['icon']
-		}));
-	    }
-	    //Debug.write("SAVEDCITIES", els, "cities", canvas.ds_myCities.data[0]);
-	    canvas.ds_myCities.data[0].setAttribute('childNodes', els);
-	    this.setAttribute("savedCityCount", n);
-	  ]]>
-	</method>
+                    icon: city['icon']
+                }));
+            }
+            //Debug.write("SAVEDCITIES", els, "cities", canvas.ds_myCities.data[0]);
+            canvas.ds_myCities.data[0].setAttribute('childNodes', els);
+            this.setAttribute("savedCityCount", n);
+          ]]>
+        </method>
 
 
-	<method name="setFullName" args="fullName"><![CDATA[
-	    this.setAttribute("fullName", fullName);
-	    if (this.loggedIn) {
-		this.sendMessage({
-		    message: 'setUserFullName',
-		    fullName: this.fullName
-		});
-	    }
-	  ]]>
-	</method>
+        <method name="setFullName" args="fullName"><![CDATA[
+            this.setAttribute("fullName", fullName);
+            if (this.loggedIn) {
+                this.sendMessage({
+                    message: 'setUserFullName',
+                    fullName: this.fullName
+                });
+            }
+          ]]>
+        </method>
 
 
-	<method name="setEmailAddress" args="emailAddress"><![CDATA[
-	    this.setAttribute("emailAddress", emailAddress);
-	    if (this.loggedIn) {
-		this.sendMessage({
-		    message: 'setUserEmailAddress',
-		    emailAddress: this.emailAddress
-		});
-	    }
-	  ]]>
-	</method>
+        <method name="setEmailAddress" args="emailAddress"><![CDATA[
+            this.setAttribute("emailAddress", emailAddress);
+            if (this.loggedIn) {
+                this.sendMessage({
+                    message: 'setUserEmailAddress',
+                    emailAddress: this.emailAddress
+                });
+            }
+          ]]>
+        </method>
 
 
-	<method name="findSavedCity" args="cityID"><![CDATA[
-	    var savedCities = this.savedCities;
-	    var n = savedCities.length;
-	    var i;
-	    for (i = 0; i < n; i++) {
-	        var savedCity = savedCities[i];
-		if (savedCity['id'] == cityID) {
-		    return savedCity;
-		}
-	    }
-	  ]]>
-	</method>
+        <method name="findSavedCity" args="cityID"><![CDATA[
+            var savedCities = this.savedCities;
+            var n = savedCities.length;
+            var i;
+            for (i = 0; i < n; i++) {
+                var savedCity = savedCities[i];
+                if (savedCity['id'] == cityID) {
+                    return savedCity;
+                }
+            }
+          ]]>
+        </method>
 
 
-	<method name="setMyCityTitle" args="title"><![CDATA[
-	    if (this.loggedIn &&
-	        this.citySource == "mycity") {
-		var savedCity = this.findSavedCity(this.cityID);
-		if (title != this.title) {
-		    this.setAttribute("title", title);
-		}
-		var now = new Date();
-		this.setAttribute("modified", now);
-		savedCity['modified'] = now;
-		savedCity['title'] = title;
-		this.refreshSavedCities();
-		this.sendMessage({
-		    message: 'setMyCityTitle',
-		    id: this.cityID,
-		    title: title
-		})
-	    }
-	    this
-	  ]]>
-	</method>
+        <method name="setMyCityTitle" args="title"><![CDATA[
+            if (this.loggedIn &&
+                this.citySource == "mycity") {
+                var savedCity = this.findSavedCity(this.cityID);
+                if (title != this.title) {
+                    this.setAttribute("title", title);
+                }
+                var now = new Date();
+                this.setAttribute("modified", now);
+                savedCity['modified'] = now;
+                savedCity['title'] = title;
+                this.refreshSavedCities();
+                this.sendMessage({
+                    message: 'setMyCityTitle',
+                    id: this.cityID,
+                    title: title
+                })
+            }
+            this
+          ]]>
+        </method>
 
 
-	<method name="setMyCityDescription" args="description"><![CDATA[
-	    if (this.loggedIn &&
-	        this.citySource == "mycity") {
-		var savedCity = this.findSavedCity(this.cityID);
-		if (!savedCity) {
-		    Debug.write("Can't find saved city id", cityID);
-		    return;
-		}
-		if (description != this.description) {
-		    this.setAttribute("description", description);
-		}
-		var now = new Date();
-		this.setAttribute("modified", now);
-		savedCity['modified'] = now;
-		savedCity['description'] = description;
-		this.refreshSavedCities();
-		this.sendMessage({
-		    message: 'setMyCityDescription',
-		    id: this.cityID,
-		    description: description
-		})
-	    }
-	    this
-	  ]]>
-	</method>
+        <method name="setMyCityDescription" args="description"><![CDATA[
+            if (this.loggedIn &&
+                this.citySource == "mycity") {
+                var savedCity = this.findSavedCity(this.cityID);
+                if (!savedCity) {
+                    Debug.write("Can't find saved city id", cityID);
+                    return;
+                }
+                if (description != this.description) {
+                    this.setAttribute("description", description);
+                }
+                var now = new Date();
+                this.setAttribute("modified", now);
+                savedCity['modified'] = now;
+                savedCity['description'] = description;
+                this.refreshSavedCities();
+                this.sendMessage({
+                    message: 'setMyCityDescription',
+                    id: this.cityID,
+                    description: description
+                })
+            }
+            this
+          ]]>
+        </method>
 
 
-	<method name="setMyCityShared" args="shared"><![CDATA[
-	    if (this.loggedIn &&
-	        this.citySource == "mycity") {
-		shared = !!shared;
-		var savedCity = this.findSavedCity(this.cityID);
-		if (!savedCity) {
-		    Debug.write("Can't find saved city id", cityID);
-		    return;
-		}
-		if (shared != this.shared) {
-		    this.setAttribute("shared", shared);
-		}
-		var now = new Date();
-		this.setAttribute("modified", now);
-		savedCity['modified'] = now;
-		savedCity['shared'] = shared;
-		this.refreshSavedCities();
-		this.sendMessage({
-		    message: 'setMyCityShared',
-		    id: this.cityID,
-		    shared: shared
-		})
-	    }
-	    this
-	  ]]>
-	</method>
+        <method name="setMyCityShared" args="shared"><![CDATA[
+            if (this.loggedIn &&
+                this.citySource == "mycity") {
+                shared = !!shared;
+                var savedCity = this.findSavedCity(this.cityID);
+                if (!savedCity) {
+                    Debug.write("Can't find saved city id", cityID);
+                    return;
+                }
+                if (shared != this.shared) {
+                    this.setAttribute("shared", shared);
+                }
+                var now = new Date();
+                this.setAttribute("modified", now);
+                savedCity['modified'] = now;
+                savedCity['shared'] = shared;
+                this.refreshSavedCities();
+                this.sendMessage({
+                    message: 'setMyCityShared',
+                    id: this.cityID,
+                    shared: shared
+                })
+            }
+            this
+          ]]>
+        </method>
 
 
-	<method name="deleteMyCity" args=""><![CDATA[
-	    Debug.write("DELETEMYCITY", this.cityID);
-	    if (this.loggedIn &&
-		this.citySource == "mycity") {
-		var cityID = this.cityID;
-		var savedCities = this.savedCities;
-		var savedCitiesNew = [];
-		var n = savedCities.length;
-		var i;
-		var iFound = -1;
-		for (i = 0; i < n; i++) {
-		    var savedCity = savedCities[i];
-		    if (savedCity['id'] != cityID) {
-		        savedCitiesNew.push(savedCity);
-			iFound = i;
-		    }
-		}
+        <method name="deleteMyCity" args=""><![CDATA[
+            Debug.write("DELETEMYCITY", this.cityID);
+            if (this.loggedIn &&
+                this.citySource == "mycity") {
+                var cityID = this.cityID;
+                var savedCities = this.savedCities;
+                var savedCitiesNew = [];
+                var n = savedCities.length;
+                var i;
+                var iFound = -1;
+                for (i = 0; i < n; i++) {
+                    var savedCity = savedCities[i];
+                    if (savedCity['id'] != cityID) {
+                        savedCitiesNew.push(savedCity);
+                        iFound = i;
+                    }
+                }
 
-		var generateCity = false;
-		n = savedCitiesNew.length;
+                var generateCity = false;
+                n = savedCitiesNew.length;
 
-		// This refreshes the ds_myCities dataset.
-		this.setAttribute("savedCities", savedCitiesNew);
+                // This refreshes the ds_myCities dataset.
+                this.setAttribute("savedCities", savedCitiesNew);
 
-		this.sendMessage({
-		    message: 'deleteMyCity',
-		    id: this.cityID
-		});
+                this.sendMessage({
+                    message: 'deleteMyCity',
+                    id: this.cityID
+                });
 
-		// This must happen after the delete.
-		gApp.generateCity();
-	    }
-	  ]]>
-	</method>
+                // This must happen after the delete.
+                gApp.generateCity();
+            }
+          ]]>
+        </method>
 
 
         <method name="handleKey" args="arg"><![CDATA[
@@ -469,10 +469,10 @@
 
         <method name="expressInterest" args="target, names"><![CDATA[
             var interests = this.interests;
-	    if (interests == null) {
-	        interests = {};
-		this.interests = interests;
-	    }
+            if (interests == null) {
+                interests = {};
+                this.interests = interests;
+            }
             var n = names.length;
             var i;
             for (i = 0; i < n; i++) {
@@ -493,9 +493,9 @@
 
         <method name="revokeInterest" args="target, names"><![CDATA[
             var interests = this.interests;
-	    if (interests == null) {
-	        return;
-	    }
+            if (interests == null) {
+                return;
+            }
 
             var name;
             var n = names.length;
@@ -527,10 +527,10 @@
                     var funds = args['funds'];
                     var fundsLabel = this.formatFunds(funds);
 
-		    if (funds != this.funds) {
+                    if (funds != this.funds) {
                         this.setAttribute("funds", funds);
                         this.setAttribute("fundsLabel", fundsLabel);
-		    }
+                    }
 
                     break;
                 }
@@ -615,62 +615,62 @@
                 }
 
                 case 'gameLevel': {
-		    var gameLevel = args['gameLevel'];
+                    var gameLevel = args['gameLevel'];
 
-		    if (gameLevel != this.gameLevel) {
-			this.setAttribute("gameLevel", gameLevel);
-		    }
+                    if (gameLevel != this.gameLevel) {
+                        this.setAttribute("gameLevel", gameLevel);
+                    }
 
                     break;
                 }
 
                 case 'cityName': {
-		    var cityName = args['cityName'];
+                    var cityName = args['cityName'];
 
-		    if (cityName != this.cityName) {
-			this.setAttribute("cityName", cityName);
-		    }
+                    if (cityName != this.cityName) {
+                        this.setAttribute("cityName", cityName);
+                    }
 
                     break;
                 }
 
                 case 'budget': {
-		    this.setAttribute("budget", args['budget']);
+                    this.setAttribute("budget", args['budget']);
                     break;
                 }
 
                 case 'sprites':
                 {
-		    //Debug.write("UPDATE SPRITES", args);
-		    this.setAttribute("sprites", args['sprites']);
+                    //Debug.write("UPDATE SPRITES", args);
+                    this.setAttribute("sprites", args['sprites']);
                     break;
                 }
 
                 case 'robots':
                 {
-		    //Debug.write("UPDATE ROBOTS", args);
-		    this.setAttribute("robots", args['robots']);
+                    //Debug.write("UPDATE ROBOTS", args);
+                    this.setAttribute("robots", args['robots']);
                     break;
                 }
 
                 case 'message':
                 {
-		    //Debug.write("UPDATE MESSAGE", args['msg']);
+                    //Debug.write("UPDATE MESSAGE", args['msg']);
                     this.setAttribute("message", args['msg']);
                     break;
                 }
 
                 case 'savedCities': {
-		    //Debug.write("UPDATE SAVEDCITIES", args['savedCities']);
-		    this.setAttribute("savedCities", args['savedCities']);
+                    //Debug.write("UPDATE SAVEDCITIES", args['savedCities']);
+                    this.setAttribute("savedCities", args['savedCities']);
                     break;
                 }
 
                 case 'tileview':
                 {
-		    var view = args['view'];
+                    var view = args['view'];
                     var id = view['id'];
-		    var tv = this.objectIDs[id];
+                    var tv = this.objectIDs[id];
                     var col = view['col'];
                     var row = view['row'];
                     var cols = view['cols'];
@@ -696,12 +696,12 @@
 
                 case 'historyview':
                 {
-		    //Debug.write("UPDATE HISTORYVIEW", args);
+                    //Debug.write("UPDATE HISTORYVIEW", args);
                     var id = args['id'];
-		    var hv = this.objectIDs[id];
-		    //Debug.write("hv", hv, "id", id, typeof(id));
+                    var hv = this.objectIDs[id];
+                    //Debug.write("hv", hv, "id", id, typeof(id));
 
-		    hv.setAttribute("history", args);
+                    hv.setAttribute("history", args);
 
                     break;
                 }
@@ -716,7 +716,7 @@
 
           ]]>
         </method>
-        
+
 
         <method name="indexOf" args="a, obj"><![CDATA[
             var i;
@@ -732,10 +732,10 @@
 
 
         <method name="escapeHTML" args="str"><![CDATA[
-	    str = str.split('&').join('&amp;');
-	    str = str.split('<').join('&lt;');
-	    str = str.split('>').join('&gt;');
-	    return str;
+            str = str.split('&').join('&amp;');
+            str = str.split('<').join('&lt;');
+            str = str.split('>').join('&gt;');
+            return str;
           ]]>
         </method>
 
@@ -770,25 +770,25 @@
 
             this.updateMap();
 
-	    //Debug.write("SENDING SETLANGUAGE", gStrings.language);
-	    this.sendMessage({
-	        'message': 'setLanguage',
-		'language': gStrings.language
-	    })
+            //Debug.write("SENDING SETLANGUAGE", gStrings.language);
+            this.sendMessage({
+                'message': 'setLanguage',
+                'language': gStrings.language
+            })
           ]]>
         </method>
 
 
         <method name="endSession"><![CDATA[
-	    this.setAttribute("loggedIn", false);
+            this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
             this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", null);
-	    this.setAttribute("loggingIn", false);
-	    this.setAttribute("loggingOut", false);
-	    this.setAttribute("makingNewAccount", false);
+            this.setAttribute("loggingIn", false);
+            this.setAttribute("loggingOut", false);
+            this.setAttribute("makingNewAccount", false);
             this.pollStop();
             this.animateStop();
           ]]>
@@ -796,7 +796,7 @@
 
 
         <method name="failSession"><![CDATA[
-	    this.setAttribute("loggedIn", false);
+            this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
@@ -1099,11 +1099,11 @@
                 messages: messages
             });
 
-	    var soundName;
-	    for (soundName in this.soundsToPlay) {
-	        lz.AudioService.LzAudio.playSound(soundName);
-	    }
-	    this.soundsToPlay = {};
+            var soundName;
+            for (soundName in this.soundsToPlay) {
+                lz.AudioService.LzAudio.playSound(soundName);
+            }
+            this.soundsToPlay = {};
 
           ]]>
         </method>
@@ -1179,11 +1179,11 @@
                     for (r = row; r < lastRow; r++) {
                         var tileDictRow = tileDictRows[r];
                         for (c = col; c < lastCol; c++) {
-                            var high = 
+                            var high =
                                 tiles.substr(codeOffset, 1);
                             var low =
                                 tiles.substr(codeOffset + 1, 1);
-                            var tileIndex = 
+                            var tileIndex =
                                 (((codeMap[high] * 64) + codeMap[low]) & 1023);
 
                             var tileDict = tileDictRow[c];
@@ -1194,10 +1194,10 @@
                                 tileDictRow[c] = tileDict;
                             }
 
-                            tileDict['index'] = 
-			        tileIndex;
-                            tileDict['animated'] = 
-			        aniTiles[tileIndex] != tileIndex;
+                            tileDict['index'] =
+                                tileIndex;
+                            tileDict['animated'] =
+                                aniTiles[tileIndex] != tileIndex;
 
                             codeOffset += 2;
                         }
@@ -1224,7 +1224,7 @@
                         var low = tiles.substr(codeOffset + 1, 1);
                         codeOffset += 2;
                         return ((codeMap[high] * 64) +
-			        codeMap[low]);
+                                codeMap[low]);
                     }
 
                     function getTextNumber3()
@@ -1233,27 +1233,27 @@
                         var high = tiles.substr(codeOffset + 1, 1);
                         var higher = tiles.substr(codeOffset + 2, 1);
                         codeOffset += 3;
-                        return ((codeMap[higher] * 4096) + 
-			        (codeMap[high] * 64) + 
-				codeMap[low]);
+                        return ((codeMap[higher] * 4096) +
+                                (codeMap[high] * 64) +
+                                codeMap[low]);
                     }
 
                     var charHandlers = {
                         '.': function() {
-			    tileOffset += 1;
-			},
+                            tileOffset += 1;
+                        },
                         '!': function() {
-			    tileOffset += getTextNumber1();
-			},
+                            tileOffset += getTextNumber1();
+                        },
                         '@': function() {
-			    tileOffset += getTextNumber2();
-			},
+                            tileOffset += getTextNumber2();
+                        },
                         '#': function() {
-			    tileOffset += getTextNumber3();
-			}
+                            tileOffset += getTextNumber3();
+                        }
                     };
 
-                    while ((tileOffset >= 0) && 
+                    while ((tileOffset >= 0) &&
                            (tileOffset < tileOffsetMax) &&
                            (codeOffset < codeOffsetMax)) {
 
@@ -1269,7 +1269,7 @@
                         var c2 = tiles.substr(codeOffset, 1);
                         codeOffset++;
 
-                        var tileIndex = 
+                        var tileIndex =
                             (codeMap[high] * 64) + codeMap[low];
 
                         var c = tileOffset % cols;
@@ -1285,10 +1285,10 @@
                             tileDictRow[col + c] = tileDict;
                         }
 
-                        tileDict['index'] = 
-			    tileIndex;
-                        tileDict['animated'] = 
-			    aniTiles[tileIndex] != tileIndex;
+                        tileDict['index'] =
+                            tileIndex;
+                        tileDict['animated'] =
+                            aniTiles[tileIndex] != tileIndex;
 
                         tileOffset++;
 
@@ -1323,7 +1323,7 @@
                         0xfd: function() { tileOffset += getBinaryNumber2() + 259; }
                     };
 
-                    while ((tileOffset >= 0) && 
+                    while ((tileOffset >= 0) &&
                            (tileOffset < tileOffsetMax) &&
                            (codeOffset < codeOffsetMax)) {
 
@@ -1339,7 +1339,7 @@
                         var low = tiles.charCodeAt(codeOffset) & 0xff;
                         codeOffset++;
 
-                        var tileIndex = 
+                        var tileIndex =
                             (high * 256) + low;
 
                         var c = tileOffset % cols;
@@ -1355,10 +1355,10 @@
                             tileDictRow[col + c] = tileDict;
                         }
 
-                        tileDict['index'] = 
-			    tileIndex;
-                        tileDict['animated'] = 
-			    aniTiles[tileIndex] != tileIndex;
+                        tileDict['index'] =
+                            tileIndex;
+                        tileDict['animated'] =
+                            aniTiles[tileIndex] != tileIndex;
 
                         tileOffset++;
 
@@ -1402,12 +1402,12 @@
         <method name="login"><![CDATA[
             Debug.write("login");
 
-	    this.setAttribute("loggingIn", true);
-	    this.sendMessage({
-	        message: 'login',
-		userName: this.userName,
-		password: this.password1
-	    });
+            this.setAttribute("loggingIn", true);
+            this.sendMessage({
+                message: 'login',
+                userName: this.userName,
+                password: this.password1
+            });
 
           ]]>
         </method>
@@ -1415,62 +1415,62 @@
 
         <method name="logout"><![CDATA[
             Debug.write("logout");
-	    this.setAttribute("loggingOut", true);
-	    this.setAttribute("loggedOut", true); // Give the benefit of the doubt.
-	    this.sendMessage({
-	        message: 'logout'
-	    });
+            this.setAttribute("loggingOut", true);
+            this.setAttribute("loggedOut", true); // Give the benefit of the doubt.
+            this.sendMessage({
+                message: 'logout'
+            });
           ]]>
         </method>
 
 
         <method name="newAccount"><![CDATA[
-	    if (this.makingNewAccount) {
-	        Debug.write("appview newAccount: Already making new account.");
-	        return;
-	    }
+            if (this.makingNewAccount) {
+                Debug.write("appview newAccount: Already making new account.");
+                return;
+            }
 
-	    this.setAttribute("makingNewAccount", true);
+            this.setAttribute("makingNewAccount", true);
 
-	    this.sendMessage({
-	        message: 'newAccount',
-		userName: this.userName,
-		password1: this.password1,
-		password2: this.password2,
-		fullName: this.fullName,
-		emailAddress: this.emailAddress
-	    });
+            this.sendMessage({
+                message: 'newAccount',
+                userName: this.userName,
+                password1: this.password1,
+                password2: this.password2,
+                fullName: this.fullName,
+                emailAddress: this.emailAddress
+            });
 
             Debug.write("newAccount");
           ]]>
         </method>
 
 
-	<method name="changePassword"><![CDATA[
-	    Debug.write("gApp.changePassword");
-	    if (this.loggedIn) {
-	        gChangePasswordDialog.open();
-	    }
-	  ]]>
-	</method>
+        <method name="changePassword"><![CDATA[
+            //Debug.write("changePassword");
+            if (this.loggedIn) {
+                gChangePasswordDialog.open();
+            }
+          ]]>
+        </method>
 
 
-	<method name="tryChangePassword" args="passwordOld, password1, password2"><![CDATA[
-	    Debug.write("gApp.tryChangePassword");
-	    if (this.loggedIn) {
-		this.sendMessage({
-		    message: 'changePassword',
-		    userName: this.userName,
-		    passwordOld: passwordOld,
-		    password1: password1,
-		    password2: password2
-		});
-		return true;
-	    } else {
-	        return false;
-	    }
-	  ]]>
-	</method>
+        <method name="tryChangePassword" args="passwordOld, password1, password2"><![CDATA[
+            //Debug.write("tryChangePassword");
+            if (this.loggedIn) {
+                this.sendMessage({
+                    message: 'changePassword',
+                    userName: this.userName,
+                    passwordOld: passwordOld,
+                    password1: password1,
+                    password2: password2
+                });
+                return true;
+            } else {
+                return false;
+            }
+          ]]>
+        </method>
 
 
         <method name="abandonCity"><![CDATA[
@@ -1482,29 +1482,29 @@
         </method>
 
 
-	<method name="trySaveCity"><![CDATA[
+        <method name="trySaveCity"><![CDATA[
             Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-	    if (this.loggedIn) {
-		this.sendMessage({
-		    message: 'saveCity',
-		    source: this.citySource,
-		    id: this.cityID,
-		    title: this.title,
-		    description: this.description
-		});
-		return true;
-	    } else {
-	        return false;
-	    }
-	  ]]>
-	</method>
+            if (this.loggedIn) {
+                this.sendMessage({
+                    message: 'saveCity',
+                    source: this.citySource,
+                    id: this.cityID,
+                    title: this.title,
+                    description: this.description
+                });
+                return true;
+            } else {
+                return false;
+            }
+          ]]>
+        </method>
 
 
         <method name="saveCity"><![CDATA[
-	    if (!this.trySaveCity()) {
-	        this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
-	        gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
-	    }
+            if (!this.trySaveCity()) {
+                this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
+                gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
+            }
           ]]>
         </method>
 
@@ -1527,27 +1527,27 @@
 
         <method name="sendChatMessage" args="text, channel"><![CDATA[
             this.sendMessage({
-	        message: 'sendChatMessage',
-		text: text,
-	        channel: channel,
-		language: gStrings.language
-	    });
+                message: 'sendChatMessage',
+                text: text,
+                channel: channel,
+                language: gStrings.language
+            });
           ]]>
         </method>
 
 
         <method name="handle_chatMessage" args="args"><![CDATA[
-	    Debug.write("handle_chatMessage", args);
-	    var from = args['from'];
-	    var channel = args['channel'];
-	    var text = args['text'];
-	    var html = 
-		'<b>' +
-	        this.escapeHTML(from + '> ') +
-		'</b>' +
-		this.escapeHTML(text);
-	    //Debug.write("CHATMESSAGE", html);
-	    gJournalView.addMessage(html);
+            Debug.write("handle_chatMessage", args);
+            var from = args['from'];
+            var channel = args['channel'];
+            var text = args['text'];
+            var html =
+                '<b>' +
+                this.escapeHTML(from + '> ') +
+                '</b>' +
+                this.escapeHTML(text);
+            //Debug.write("CHATMESSAGE", html);
+            gJournalView.addMessage(html);
           ]]>
         </method>
 
@@ -1555,9 +1555,9 @@
         <method name="handle_update" args="args"><![CDATA[
             var variable = args['variable'];
             var interests = this.interests;
-	    if (interests == null) {
-	        return;
-	    }
+            if (interests == null) {
+                return;
+            }
             //Debug.write("==== update", variable, args);
 
             if (!(variable in interests)) {
@@ -1579,8 +1579,8 @@
 
         <method name="handle_didGenerateNewCity" args="args"><![CDATA[
             //Debug.write("didGenerateNewCity");
-	    this.cityID = args['seed'];
-	    Debug.write("SEED", this.cityID);
+            this.cityID = args['seed'];
+            Debug.write("SEED", this.cityID);
             this.resetCity();
           ]]>
         </method>
@@ -1630,11 +1630,11 @@
         <method name="handle_makeSound" args="args"><![CDATA[
             var channel = args['channel'];
             var sound = args['sound'];
-	    var soundName = 'sound_' + sound + '_rsrc';
+            var soundName = 'sound_' + sound + '_rsrc';
 
             //Debug.write("MAKE SOUND", "channel", channel, "sound", sound, soundName);
 
-	    this.soundsToPlay[soundName] = true;
+            this.soundsToPlay[soundName] = true;
           ]]>
         </method>
 
@@ -1652,181 +1652,181 @@
 
 
         <method name="handle_newAccountResponse" args="args"><![CDATA[
-	    //Debug.write("newAccoutResponse", args);
-	    var success = args['success'];
-	    var feedback = args['feedback'];
-	    if (success) {
-	        this.setAttribute("loggedIn", true);
-		this.setAttribute("fullName", "");
-		this.setAttribute("emailAddress", "");
-		this.setAttribute("savedCities", []);
-		this.setAttribute("passwordOld", "");
-		this.setAttribute("password1", "");
-		this.setAttribute("password2", "");
-	    }
-	    this.setAttribute("loginFeedback", gApp._(feedback)); /// @bug This gets stomped.
-	    this.setAttribute("makingNewAccount", false);
+            //Debug.write("newAccoutResponse", args);
+            var success = args['success'];
+            var feedback = args['feedback'];
+            if (success) {
+                this.setAttribute("loggedIn", true);
+                this.setAttribute("fullName", "");
+                this.setAttribute("emailAddress", "");
+                this.setAttribute("savedCities", []);
+                this.setAttribute("passwordOld", "");
+                this.setAttribute("password1", "");
+                this.setAttribute("password2", "");
+            }
+            this.setAttribute("loginFeedback", gApp._(feedback)); /// @bug This gets stomped.
+            this.setAttribute("makingNewAccount", false);
           ]]>
         </method>
 
 
         <method name="handle_loginResponse" args="args"><![CDATA[
-	    Debug.write("loginResponse", args);
-	    var success = args['success'];
-	    var feedback = args['feedback'];
-	    if (success) {
-	        this.setAttribute("loggedIn", true);
-		this.setAttribute("fullName", args['fullName']);
-		this.setAttribute("emailAddress", args['emailAddress']);
-		this.setAttribute("savedCities", args['savedCities']);
-		this.setAttribute("passwordOld", "");
-		this.setAttribute("password1", "");
-		this.setAttribute("password2", "");
-	    } else {
-		this.setAttribute("savedCities", []);
-	    }
-	    this.setAttribute("loginFeedback", gApp._(feedback));
-	    this.setAttribute("loggingIn", false);
+            Debug.write("loginResponse", args);
+            var success = args['success'];
+            var feedback = args['feedback'];
+            if (success) {
+                this.setAttribute("loggedIn", true);
+                this.setAttribute("fullName", args['fullName']);
+                this.setAttribute("emailAddress", args['emailAddress']);
+                this.setAttribute("savedCities", args['savedCities']);
+                this.setAttribute("passwordOld", "");
+                this.setAttribute("password1", "");
+                this.setAttribute("password2", "");
+            } else {
+                this.setAttribute("savedCities", []);
+            }
+            this.setAttribute("loginFeedback", gApp._(feedback));
+            this.setAttribute("loggingIn", false);
           ]]>
         </method>
 
 
         <method name="handle_logoutResponse" args="args"><![CDATA[
-	    //Debug.write("logoutResponse", args);
-	    var success = args['success'];
-	    var feedback = args['feedback'];
-	    if (success) {
-		this.setAttribute("userName", "");
-		this.setAttribute("passwordOld", "");
-		this.setAttribute("password1", "");
-		this.setAttribute("password2", "");
-		this.setAttribute("fullName", "");
-		this.setAttribute("emailAddress", "");
-		this.setAttribute("savedCities", []);
-		this.setAttribute("loggedIn", false);
-	    }
-	    this.setAttribute("loginFeedback", gApp._(feedback));
-	    this.setAttribute("loggingOut", false);
+            //Debug.write("logoutResponse", args);
+            var success = args['success'];
+            var feedback = args['feedback'];
+            if (success) {
+                this.setAttribute("userName", "");
+                this.setAttribute("passwordOld", "");
+                this.setAttribute("password1", "");
+                this.setAttribute("password2", "");
+                this.setAttribute("fullName", "");
+                this.setAttribute("emailAddress", "");
+                this.setAttribute("savedCities", []);
+                this.setAttribute("loggedIn", false);
+            }
+            this.setAttribute("loginFeedback", gApp._(feedback));
+            this.setAttribute("loggingOut", false);
           ]]>
         </method>
 
 
         <method name="handle_changePasswordResponse" args="args"><![CDATA[
-	    //Debug.write("changePasswordResponse", args);
-	    var success = args['success'];
-	    var feedback = args['feedback'];
-	    gChangePasswordDialog.close();
-	    this.setAttribute("loginFeedback", gApp._(feedback));
+            //Debug.write("changePasswordResponse", args);
+            var success = args['success'];
+            var feedback = args['feedback'];
+            gChangePasswordDialog.close();
+            this.setAttribute("loginFeedback", gApp._(feedback));
           ]]>
         </method>
 
 
-	<method name="loadScenario" args="scenarioID, title, notice"><![CDATA[
+        <method name="loadScenario" args="scenarioID, title, notice"><![CDATA[
 
-	    this.sendMessage({
-		message: 'loadScenario',
-		id: scenarioID
-	    });
+            this.sendMessage({
+                message: 'loadScenario',
+                id: scenarioID
+            });
 
-	    var title =
-		gApp._('Scenario') + 
-		': ' + 
-		gApp._(title);
+            var title =
+                gApp._('Scenario') +
+                ': ' +
+                gApp._(title);
 
-	    var noticeEl =
-		gNoticeView.findNotice(notice);
-	    var description =
-		gApp._(noticeEl.attributes['description']);
+            var noticeEl =
+                gNoticeView.findNotice(notice);
+            var description =
+                gApp._(noticeEl.attributes['description']);
 
-	    this.setAttribute("title", title);
-	    this.setAttribute("description", description);
-	    this.setAttribute("citySource", "scenario");
-	    this.setAttribute("cityID", scenarioID);
+            this.setAttribute("title", title);
+            this.setAttribute("description", description);
+            this.setAttribute("citySource", "scenario");
+            this.setAttribute("cityID", scenarioID);
 
-	  ]]>
-	</method>
-
-
-	<method name="generateCity"><![CDATA[
-
-	    this.sendMessage({
-		message: 'generateCity',
-		seed: 0 // Server will generate a random seed.
-	    });
-
-	    this.setAttribute("title", gApp._('Generated Map'));
-	    this.setAttribute("description", gApp._('Generated a new random map.'));
-	    this.setAttribute("citySource", "generated");
-	    // The cityID (a random seed) will be set by handle_didGenerateNewCity callback.
-
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
-	<method name="loadSharedCity" args="id, title, description"><![CDATA[
+        <method name="generateCity"><![CDATA[
 
-	    this.sendMessage({
-		message: 'loadSharedCity',
-		id: id
-	    });
+            this.sendMessage({
+                message: 'generateCity',
+                seed: 0 // Server will generate a random seed.
+            });
 
-	    description =
-		description;
+            this.setAttribute("title", gApp._('Generated Map'));
+            this.setAttribute("description", gApp._('Generated a new random map.'));
+            this.setAttribute("citySource", "generated");
+            // The cityID (a random seed) will be set by handle_didGenerateNewCity callback.
 
-	    this.setAttribute("title", title);
-	    this.setAttribute("description", description);
-	    this.setAttribute("citySource", "sharedcity");
-	    this.setAttribute("cityID", id);
-
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
-	<method name="loadMyCity" args="id, title, description, shared, created, modified"><![CDATA[
-	    Debug.write("loadMyCity", id, title, description);
+        <method name="loadSharedCity" args="id, title, description"><![CDATA[
 
-	    this.sendMessage({
-		message: 'loadMyCity',
-		id: id
-	    });
+            this.sendMessage({
+                message: 'loadSharedCity',
+                id: id
+            });
 
-	    this.setAttribute("title", title);
-	    this.setAttribute("description", description);
-	    this.setAttribute("shared", shared);
-	    this.setAttribute("created", created);
-	    this.setAttribute("modified", modified);
-	    this.setAttribute("citySource", "mycity");
-	    this.setAttribute("cityID", id);
+            description =
+                description;
 
-	  ]]>
-	</method>
+            this.setAttribute("title", title);
+            this.setAttribute("description", description);
+            this.setAttribute("citySource", "sharedcity");
+            this.setAttribute("cityID", id);
 
-
-	<method name="newCityDialog"><![CDATA[
-	    gQuestionDialog.popup(
-		gApp._('Are you really sure you want to start a new city?'),
-		gApp._('No, keep playing with this city.'),
-		null,
-		gApp._('Yes, choose another city.'),
-		function() {
-		    gApp.saveCity(); 
-		    gApp.chooseCity()
-		});
-	  ]]>
-	</method>
+          ]]>
+        </method>
 
 
-	<method name="deleteMyCityDialog"><![CDATA[
-	    gQuestionDialog.popup(
-		gApp._("Are you really sure you want to delete your city?"),
-		gApp._("No, don't delete it."),
-		null,
-		gApp._("Yes, delete my city."),
-		function() {
-		    gApp.deleteMyCity();
-		});
-	  ]]>
-	</method>
+        <method name="loadMyCity" args="id, title, description, shared, created, modified"><![CDATA[
+            Debug.write("loadMyCity", id, title, description);
+
+            this.sendMessage({
+                message: 'loadMyCity',
+                id: id
+            });
+
+            this.setAttribute("title", title);
+            this.setAttribute("description", description);
+            this.setAttribute("shared", shared);
+            this.setAttribute("created", created);
+            this.setAttribute("modified", modified);
+            this.setAttribute("citySource", "mycity");
+            this.setAttribute("cityID", id);
+
+          ]]>
+        </method>
+
+
+        <method name="newCityDialog"><![CDATA[
+            gQuestionDialog.popup(
+                gApp._('Are you really sure you want to start a new city?'),
+                gApp._('No, keep playing with this city.'),
+                null,
+                gApp._('Yes, choose another city.'),
+                function() {
+                    gApp.saveCity();
+                    gApp.chooseCity()
+                });
+          ]]>
+        </method>
+
+
+        <method name="deleteMyCityDialog"><![CDATA[
+            gQuestionDialog.popup(
+                gApp._("Are you really sure you want to delete your city?"),
+                gApp._("No, don't delete it."),
+                null,
+                gApp._("Yes, delete my city."),
+                function() {
+                    gApp.deleteMyCity();
+                });
+          ]]>
+        </method>
 
 
         <method name="playWithThisMap"><![CDATA[
@@ -1927,7 +1927,7 @@
                 }
             }
 
-            var nStr = 
+            var nStr =
                 (minus ? "-" : "") +
                 (dollar ? dollar : '') +
                 a.join(',');
@@ -1945,10 +1945,10 @@
         </method>
 
 
-	<method name="_" args="id"><![CDATA[
-	    return gStrings.getString(id);
-	  ]]>
-	</method>
+        <method name="_" args="id"><![CDATA[
+            return gStrings.getString(id);
+          ]]>
+        </method>
 
 
         <connectscreen id="gConnectScreen" name="connectScreen"

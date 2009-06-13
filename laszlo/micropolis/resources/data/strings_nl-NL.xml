@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><strings language="en-US">
+<?xml version="1.0" ?><strings language="nl-NL">
 
 
     <!--
@@ -317,20 +317,33 @@
     
     <!-- libraryview.lzx -->
 
-    <string id="Shared Cities">@nl-NL@ Shared Cities</string>
+    <string id="Shared Cities">Gedeelde Steden</string>
 
-    <string id="My Cities">@nl-NL@ My Cities</string>
+    <string id="My Cities">Mijn Steden</string>
 
-    <string id="Log in to see your cities.">@nl-NL@ Log in to see your cities.</string>
+    <string id="Log in to see your cities.">Log in om je steden.</string>
 
-    <string id="You haven't saved any cities yet.">@nl-NL@ You haven't saved any cities yet.</string>
+    <string id="You haven't saved any cities yet.">Je hebt niet opgeslagen elke steden nog niet.</string>
 
-    <string id="Are you really sure you want to delete your city?">@nl-NL@ Are you really sure you want to delete your city?</string>
+    <string id="Are you really sure you want to delete your city?">Ben je echt zeker dat u wilt verwijderen van uw stad?</string>
 
-    <string id="No, don't delete it.">@nl-NL@ No, don't delete it.</string>
+    <string id="No, don't delete it.">Nee, niet verwijderen.</string>
 
-    <string id="Yes, delete my city.">@nl-NL@ Yes, delete my city.</string>
+    <string id="Yes, delete my city.">Ja, mijn stad.</string>
 
+    <string id="Foreward">Vooruit</string>
+
+    <string id="Backward">Retrospectieve</string>
+
+    <string id="by">door</string>
+
+    <string id="Created Date">Gemaakt Datum</string>
+
+    <string id="Modified Date">Modified Datum</string>
+
+    <string id="Created">Gemaakt</string>
+
+    <string id="Modified">Modified</string>
 
     <!-- loginview.lzx -->
 
@@ -364,7 +377,7 @@
 
     <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">Nieuwe Account Aanmaken</string>
 
-    <string id="You can change your password*">U kunt uw wachtwoord wijzigen door het invoeren van uw oude wachtwoord en vervolgens uw nieuwe wachtwoord twee keer in. U kunt uw volledige naam of e-mailadres door het bewerken van de velden in.</string>
+    <string id="Please enter your*">Vul uw volledige naam en email adres hieronder.</string>
 
     <string id="New Password:">Nieuw Wachtwoord:</string>
 
@@ -384,12 +397,12 @@
 
     <!-- pancursor.lzx -->
 
-    <string comment="Label for cursor that pans the map." id="Pan Map">@nl-NL@ Pan Map</string>
+    <string comment="Label for cursor that pans the map." id="Pan Map">Pan Kaart</string>
 
 
     <!-- piecursor.lzx -->
 
-    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">@nl-NL@ Pie Menu</string>
+    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">Pie Menu</string>
 
 
     <!-- playscreen.lzx -->
@@ -429,15 +442,15 @@
 
     <string id="User">Gebruiker</string>
 
-    <string id="Configure Your City">@nl-NL@ Configure Your City</string>
+    <string id="Configure Your City">Configureer Uw Stad</string>
 
-    <string id="Title">@nl-NL@ Title</string>
+    <string id="Title">Titel</string>
 
     <string id="Description">Beschrijving</string>
 
-    <string id="Share My City">@nl-NL@ Share My City</string>
+    <string id="Share My City">Delen Mijn City</string>
 
-    <string id="Delete My City">@nl-NL@ Delete My City</string>
+    <string id="Delete My City">Verwijderen Mijn Stad</string>
 
 
     <!-- toolcursor.lzx -->

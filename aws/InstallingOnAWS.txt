@@ -78,6 +78,11 @@ easy_install sqlalchemy
 easy_install genshi
 easy_install pyamf
 
+svn checkout http://amfast.googlecode.com/svn/trunk/ amfast
+cd amfast
+python setup.py install
+cd ..
+
 wget 'http://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/VerifyItem-Start/jdk-1_5_0_19-linux-i586-rpm.bin?BundledLineItemUUID=Ui5IBe.lLZwAAAEhIbM_57G2&OrderID=GeZIBe.lh5QAAAEhCrM_57G2&ProductID=zaJIBe.pkVcAAAEh_r8P5zJQ&FileName=/jdk-1_5_0_19-linux-i586-rpm.bin'
 mv jdk-1_5_0_19-linux-i586-rpm.bin* jdk-1_5_0_19-linux-i586-rpm.bin
 chmod +x jdk-1_5_0_19-linux-i586-rpm.bin

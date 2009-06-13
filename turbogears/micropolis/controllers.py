@@ -640,6 +640,9 @@ class Root(controllers.RootController):
         defaultStrings, defaultDoc, defaultStringEls, defaultStringsPath = self.readStrings(DefaultLanguage)
 
         if command == 'update':
+
+            defaultDoc.firstChild.setAttribute("language", language)
+
             stringMap = {}
             for t in strings:
                 stringMap[t[0]] = t
