@@ -26,21 +26,21 @@
 
 
 		<handler name="oninit"><![CDATA[
-		    Debug.write("remoteserver DHTML oninit", this);
+		    //Debug.write("remoteserver DHTML oninit", this);
 		    // TODO
 		  ]]>
 		</handler>
 
 
 		<method name="sendStartSession"><![CDATA[
-		    Debug.write("remoteserver DHTML sendStartSession", this);
+		    //Debug.write("remoteserver DHTML sendStartSession", this);
 		    // TODO
 		  ]]>
 		</method>
 
 
 		<method name="sendPoll" args="pollDict"><![CDATA[
-		    Debug.write("remoteserver DHTML sendPoll", this, pollDict);
+		    //Debug.write("remoteserver DHTML sendPoll", this, pollDict);
 		    // TODO
 		  ]]>
 		</method>
@@ -322,6 +322,8 @@
 			this._connectionTimeoutOutstanding = false;
 		    }
 
+		    // TODO: make sure to close the connection.
+
 		    gApp.failSession();
 		  ]]>
 		</method>
@@ -330,6 +332,7 @@
 		<method name="sendPoll" args="pollDict"><![CDATA[
 		    var netConnection = this.netConnection;
 
+		    //Debug.write("remoteserver sendPoll: Calling micropolis.poll");
 		    netConnection.call(
 			"micropolis.poll",
 			this._pollResponder,
@@ -379,7 +382,7 @@
 		    this._pollOutstanding = false;
 
 		    if (this._pollTimeoutOutstanding) {
-			lz.Timer.removeTimer(this._pollTimeoutDelegate);
+			lz.Timer.remoteTimer(this._pollTimeoutDelegate);
 			this._pollTimeoutOutstanding = false;
 		    }
 
@@ -389,7 +392,7 @@
 
 
 		<method name="_onPollTimeout" args="results"><![CDATA[
-		    //Debug.write("remoteserver _onPollTimeout", this, results);
+		    Debug.write("remoteserver _onPollTimeout", this, results);
 
 		    this._pollOutstanding = false;
 

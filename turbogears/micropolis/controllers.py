@@ -18,6 +18,7 @@ import cherrypy
 from cherrypy import request, response
 from micropolis import json
 import re, os, sys, zipfile, time, math, tempfile, array, random, types
+import code, traceback, signal
 import genshi
 from genshi import XML
 import xml.etree.ElementTree as ElementTree
@@ -46,6 +47,30 @@ DataDir = 'micropolis/htdocs/static/data'
 
 ########################################################################
 # Utilities
+
+
+########################################################################
+# Getting stack trace from a running Python application
+# http://stackoverflow.com/questions/132058/getting-stack-trace-from-a-running-python-application
+def debug(sig, frame):
+    """Interrupt running process, and provide a python prompt for
+    interactive debugging."""
+    d={'_frame':frame}         # Allow access to frame object.
+    d.update(frame.f_globals)  # Unless shadowed by global
+    d.update(frame.f_locals)
+
+    i = code.InteractiveConsole(d)
+    message  = "Signal recieved : entering python shell.\nTraceback:\n"
+    message += ''.join(traceback.format_stack(frame))
+    i.interact(message)
+
+
+def listen():
+    signal.signal(signal.SIGUSR1, debug)  # Register handler
+    signal.signal(signal.SIGQUIT, debug)  # Register handler
+
+
+listen()
 
 
 ########################################################################

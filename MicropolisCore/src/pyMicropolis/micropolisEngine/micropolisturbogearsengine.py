@@ -421,7 +421,8 @@ class Session(object):
         return (message, variable, id) in self.messagesSeen
 
     def sendMessage(self, msg):
-        #print "SENDMESSAGE", msg
+        #print "SENDMESSAGE", msg['message'], msg.get('variable', '-'), msg
+
         collapse = msg.get('collapse', False)
         #print "COLLAPSE", collapse
         if collapse:
@@ -498,6 +499,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.controller = controller
         self.eliza = eliza.eliza()
         self.generatedCitySeed = 0
+        self.historySerial = 0
 
 
     def initGamePython(self):
@@ -1021,7 +1023,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            if not session.isMessageQueued('update', 'tiles', id):
+            if True: # not session.isMessageQueued('update', 'tiles', id):
 
                 #print "ID", id
                 #print "TILE", col, row, cols, rows
@@ -1116,9 +1118,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 'collapse': True,
             })
 
-        elif message == 'history':
+        elif message == 'historyview':
 
-            #print "HISTORY", messageDict
+            print "HISTORYVIEW", messageDict
 
             try:
                 id = messageDict['id']
@@ -1131,9 +1133,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            if not session.isMessageQueued('update', 'history', id):
+            if not session.isMessageQueued('update', 'historyview', id):
 
-                #print "HISTORY", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+                print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they
@@ -1228,9 +1230,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         'values': values,
                     })
 
-                session.sendMessage({
+                msg = {
                     'message': 'update',
-                    'variable': 'history',
+                    'variable': 'historyview',
                     'id': id,
                     'scale': historyScale,
                     'count': historyCount,
@@ -1243,7 +1245,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     'histories': histories,
                     'range': historyRange,
                     'collapse': True,
-                })
+                }
+                print "HISTORY MESSAGE", msg
+                session.sendMessage(msg)
 
         elif message == 'login':
 
@@ -2028,6 +2032,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 message['funds'] = self.totalFunds
                 message['collapse'] = True
+
+            elif variable == 'history':
+                
+                self.historySerial += 1
+                message['historySerial'] = self.historySerial
 
             elif variable == 'date':
 

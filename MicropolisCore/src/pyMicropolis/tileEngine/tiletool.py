@@ -69,11 +69,7 @@
 # Import stuff
 
 
-import gtk
-import gobject
-import cairo
 import math
-import array
 
 
 ########################################################################

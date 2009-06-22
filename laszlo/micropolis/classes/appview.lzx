@@ -103,6 +103,7 @@
         <attribute name="soundsToPlay" value="$once{{}}"/>
         <attribute name="citySource" type="string" value=""/>
         <attribute name="cityID" type="string" value=""/>
+        <attribute name="historySerial" value="0"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -120,7 +121,7 @@
                 'options', 'gameLevel', 'cityName',
                 'taxRate', 'budget', 'sprites', 'robots',
                 'message', 'virtualSpeed', 'savedCities',
-                'tiles', 'history',
+                'tiles', 'history', 'historyview'
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -694,15 +695,22 @@
                     break;
                 }
 
-                case 'history':
+                case 'historyview':
                 {
-                    //Debug.write("UPDATE HISTORY", args);
+                    //Debug.write("UPDATE HISTORYVIEW", args);
                     var id = args['id'];
                     var hv = this.objectIDs[id];
                     //Debug.write("hv", hv, "id", id, typeof(id));
 
                     hv.setAttribute("history", args);
 
+                    break;
+                }
+
+                case 'history':
+                {
+                    // TODO: tell any historyviews to update.
+                    this.setAttribute("historySerial", args['historySerial']);
                     break;
                 }
 
@@ -1111,33 +1119,33 @@
 
         <method name="handlePoll" args="messageDict"><![CDATA[
             //Debug.write("HANDLEPOLL", messageDict);
-	    if (!messageDict) {
-	        Debug.write("handlePoll null messageDict!");
-	    } else {
-		var messages = messageDict['messages'];
-		if (messages != null) {
-		    var i;
-		    var n = messages.length;
-		    for (i = 0; i < n; i++) {
-			var message = messages[i];
-			var messageName = message['message'];
-			if (!messageName) {
-			    continue;
-			}
-			var methodName = "handle_" + messageName;
-			var method = this[methodName];
-			//Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
-			if (!method) {
-			    Debug.write("Undefined message:", messageName, message);
-			    continue;
-			}
+            if (!messageDict) {
+                Debug.write("handlePoll null messageDict!");
+            } else {
+                var messages = messageDict['messages'];
+                if (messages != null) {
+                    var i;
+                    var n = messages.length;
+                    for (i = 0; i < n; i++) {
+                        var message = messages[i];
+                        var messageName = message['message'];
+                        if (!messageName) {
+                            continue;
+                        }
+                        var methodName = "handle_" + messageName;
+                        var method = this[methodName];
+                        //Debug.write("message", messageName, ('variable' in message ? message['variable'] : '---'), message, "method", methodName, method);
+                        if (!method) {
+                            Debug.write("Undefined message:", messageName, message);
+                            continue;
+                        }
 
-			//Debug.write("CALLING", method, message)
-			method.call(gApp, message);
-			//Debug.write("CALLED");
-		    }
-		}
-	    }
+                        //Debug.write("CALLING", method, message)
+                        method.call(gApp, message);
+                        //Debug.write("CALLED");
+                    }
+                }
+            }
 
             gApp.pollContinue(false);
 
@@ -1400,7 +1408,7 @@
 
 
         <method name="login"><![CDATA[
-            Debug.write("login");
+            //Debug.write("login");
 
             this.setAttribute("loggingIn", true);
             this.sendMessage({
@@ -1414,7 +1422,7 @@
 
 
         <method name="logout"><![CDATA[
-            Debug.write("logout");
+            //Debug.write("logout");
             this.setAttribute("loggingOut", true);
             this.setAttribute("loggedOut", true); // Give the benefit of the doubt.
             this.sendMessage({
@@ -1441,7 +1449,7 @@
                 emailAddress: this.emailAddress
             });
 
-            Debug.write("newAccount");
+            //Debug.write("newAccount");
           ]]>
         </method>
 
@@ -1483,7 +1491,7 @@
 
 
         <method name="trySaveCity"><![CDATA[
-            Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
+            //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
             if (this.loggedIn) {
                 this.sendMessage({
                     message: 'saveCity',
@@ -1537,7 +1545,7 @@
 
 
         <method name="handle_chatMessage" args="args"><![CDATA[
-            Debug.write("handle_chatMessage", args);
+            //Debug.write("handle_chatMessage", args);
             var from = args['from'];
             var channel = args['channel'];
             var text = args['text'];
@@ -1580,7 +1588,7 @@
         <method name="handle_didGenerateNewCity" args="args"><![CDATA[
             //Debug.write("didGenerateNewCity");
             this.cityID = args['seed'];
-            Debug.write("SEED", this.cityID);
+            //Debug.write("SEED", this.cityID);
             this.resetCity();
           ]]>
         </method>
@@ -1594,7 +1602,7 @@
 
 
         <method name="handle_didSaveCity" args="args"><![CDATA[
-            Debug.write("didSaveCity");
+            //Debug.write("didSaveCity");
           ]]>
         </method>
 
@@ -1671,7 +1679,7 @@
 
 
         <method name="handle_loginResponse" args="args"><![CDATA[
-            Debug.write("loginResponse", args);
+            //Debug.write("loginResponse", args);
             var success = args['success'];
             var feedback = args['feedback'];
             if (success) {
@@ -1783,7 +1791,7 @@
 
 
         <method name="loadMyCity" args="id, title, description, shared, created, modified"><![CDATA[
-            Debug.write("loadMyCity", id, title, description);
+            //Debug.write("loadMyCity", id, title, description);
 
             this.sendMessage({
                 message: 'loadMyCity',
@@ -1978,7 +1986,7 @@
             active="${classroot.active &amp;&amp; this.visible}"
         />
 
-	<tooltip id="gToolTip"/>
+        <tooltip id="gToolTip"/>
 
     </class>
 
