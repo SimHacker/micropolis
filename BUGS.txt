@@ -115,3 +115,31 @@ http://blogs.adobe.com/air/2009/05/performance_tips_for_adobe_air.html
 
 http://arno.org/arnotify/2009/05/writing-well-behaved-efficient-air-applications/
 
+Bug in cherrypy socket flushing on mac.
+http://www.cherrypy.org/ticket/598
+
+/opt/local/lib/python2.5/site-packages/CherryPy-2.3.0-py2.5.egg/cherrypy/_cpwsgiserver.py
+    def tick(self):
+        try:
+            s, addr = self.socket.accept()
+            if not self.ready:
+                return
+            #if hasattr(s, 'settimeout'):
+            #    s.settimeout(self.timeout)
+            s.settimeout(None)
+            request = self.RequestHandlerClass(s, addr, self)
+            self.requests.put(request)
+
+/opt/local/lib/python2.5/site-packages/CherryPy-2.3.0-py2.5.egg/cherrypy/_cpwsgiserver3.py
+    def tick(self):
+        """Accept a new connection and put it on the Queue."""
+        try:
+            s, addr = self.socket.accept()
+            if not self.ready:
+                return
+            #if hasattr(s, 'settimeout'):
+            #    s.settimeout(self.timeout)
+            s.settimeout(None)
+            conn = self.ConnectionClass(s, addr, self)
+            self.requests.put(conn)
+

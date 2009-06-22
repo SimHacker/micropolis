@@ -13,6 +13,8 @@
 
         <attribute name="panning" value="false"/>
         <attribute name="pieing" value="false"/>
+	<attribute name="pieTileCol" value="0"/>
+	<attribute name="pieTileRow" value="0"/>
 	<attribute name="panCursorStartX" value="0"/>
 	<attribute name="panCursorStartY" value="0"/>
 	<attribute name="panContainerStartX" value="0"/>
@@ -28,6 +30,7 @@
 	<attribute name="shiftDown" value="false"/>
 	<attribute name="altDown" value="false"/>
 	<attribute name="controlDown" value="false"/>
+	<attribute name="zoom" value="2"/>
 
 
         <handler name="onpanning"><![CDATA[
@@ -72,6 +75,8 @@
 
 	    if (shiftDown) {
 	        // TODO: set this.pieing to true, and clear it after last pie menu pops down.
+		this.setAttribute("pieTileCol", this.tileCol);
+		this.setAttribute("pieTileRow", this.tileRow);
 	        gEditTileViewPie.popupAtCursor(false);
 	    } else if (altDown) {
 	        this.setAttribute('panning', true);

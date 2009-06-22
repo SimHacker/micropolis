@@ -683,19 +683,19 @@ You have 10 years to turn this swamp back into a city again.""",
 
         self.dataColorMap = \
             cairo.ImageSurface.create_from_png(
-                'images/simEngine/dataColorMap.png')
+                'images/micropolisEngine/dataColorMap.png')
 
         self.rateColorMap = \
             cairo.ImageSurface.create_from_png(
-                'images/simEngine/rateColorMap.png')
+                'images/micropolisEngine/rateColorMap.png')
 
         self.powerGridColorMap = \
             cairo.ImageSurface.create_from_png(
-                'images/simEngine/powerGridColorMap.png')
+                'images/micropolisEngine/powerGridColorMap.png')
 
         self.terrainColorMap = \
             cairo.ImageSurface.create_from_png(
-                'images/simEngine/terrainColorMap.png')
+                'images/micropolisEngine/terrainColorMap.png')
 
         self.expressInterest(
             self,
@@ -1642,6 +1642,11 @@ You have 10 years to turn this swamp back into a city again.""",
         if robot in robots:
             robot.engine = None
             robots.remove(robot)
+
+
+    def clearRobots(self):
+        for robot in list(self.robots):
+            self.removeRobot(robot)
 
 
     def simRobots(self):

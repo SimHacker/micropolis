@@ -58,7 +58,7 @@
 
 		    <textlistitem
 		        value="1"
-		        text="${gApp._('Foreward')}"
+		        text="${gApp._('Forward')}"
 			selected="${gApp.savedCitiesDirection == 1}"
 		    />
 

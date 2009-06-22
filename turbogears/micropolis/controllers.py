@@ -32,7 +32,7 @@ import logging
 log = logging.getLogger("micropolis.controllers")
 
 import cairo, pango
-from pyMicropolis.simEngine import micropolisengine, micropolisturbogearsengine
+from pyMicropolis.micropolisEngine import micropolisengine, micropolisturbogearsengine
 from pyMicropolis.tileEngine import tileengine
 
 

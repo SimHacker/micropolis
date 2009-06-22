@@ -10,7 +10,11 @@
     <class name="toolicon"
         clip="true"
 	frame="${this.hilite ? 2 : 1}"
+	stretches="both"
+	width="48"
+	height="48"
     >
+
 
         <attribute name="toolID" type="string" value=""/>
         <attribute name="text" type="string" value=""/>
@@ -19,6 +23,18 @@
         <attribute name="hilite" value="${((this.pressed &amp;&amp; this.inside) || (gApp.tool == this.toolID))}"/>
 
 
+	<handler name="onmouseover" args="arg"><![CDATA[
+	    gToolTip.enterView(this, this.text);
+	  ]]>
+	</handler>
+
+	
+	<handler name="onmouseout" args="arg"><![CDATA[
+	    gToolTip.exitView(this);
+	  ]]>
+	</handler>
+
+	
 	<handler name="onmousedown"><![CDATA[
 	    Debug.write("onmousedown", this, this.toolID);
 	    this.setAttribute("pressed", true);

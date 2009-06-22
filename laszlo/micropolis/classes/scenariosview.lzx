@@ -27,7 +27,7 @@
 
 
 	<button
-	    fontsize="16"
+	    fontsize="12"
 	    fontstyle="bold"
 	    datapath="ds_scenarios:/scenarios/scenario"
 	    onclick="gApp.loadScenario(this.scenarioID, this.scenarioTitle, this.scenarioNotice)"

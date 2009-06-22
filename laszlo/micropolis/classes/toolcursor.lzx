@@ -111,6 +111,14 @@
 		handler: 'apptool',
 		cost: 10
 	    },
+	    pacbot: {
+                name: 'PacBot',
+	        tiles: 1,
+		hotSpot: 0,
+		constrained: false,
+		handler: 'apptool',
+		cost: 1000
+	    },
 	    center: {
                 name: 'Center',
 	        tiles: 1,

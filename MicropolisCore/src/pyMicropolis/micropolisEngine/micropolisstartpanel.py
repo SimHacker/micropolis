@@ -201,7 +201,7 @@ class MicropolisStartPanel(gtk.Frame):
 
             image = gtk.Image()
             image.set_from_file(
-                'images/simEngine/scenario' +
+                'images/micropolisEngine/scenario' +
                 str(scenario['id']) +
                 'Icon.png')
             vbox.pack_start(image, False, False, 0)

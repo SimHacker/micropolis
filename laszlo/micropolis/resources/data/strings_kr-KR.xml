@@ -331,7 +331,7 @@
 
     <string id="Yes, delete my city.">그래, 내 도시를 삭제합니다.</string>
 
-    <string id="Foreward">앞으로</string>
+    <string id="Forward">앞으로</string>
 
     <string id="Backward">이전</string>
 
@@ -473,6 +473,8 @@
     <string id="Road">도로</string>
 
     <string id="Center">센터</string>
+
+    <string id="PacBot">PacBot</string>
 
     <string id="Stadium">경기장</string>
 

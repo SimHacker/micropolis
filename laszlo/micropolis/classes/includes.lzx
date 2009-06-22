@@ -19,12 +19,14 @@
     <include href="piemenu.lzx"/>
     <include href="mypiemenu.lzx"/>
     <include href="edittileviewpie.lzx"/>
+    <include href="tooltip.lzx"/>
     <include href="mycheckbox.lzx"/>
     <include href="myradio.lzx"/>
     <include href="resizebarh.lzx"/>
     <include href="resizebarv.lzx"/>
     <include href="tile.lzx"/>
     <include href="sprite.lzx"/>
+    <include href="robot.lzx"/>
     <include href="toolcursor.lzx"/>
     <include href="pancursor.lzx"/>
     <include href="piecursor.lzx"/>

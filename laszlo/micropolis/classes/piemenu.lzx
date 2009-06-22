@@ -143,7 +143,7 @@
     <attribute name="backgroundExtraRadius" value="5"/>
     <attribute name="popupedness" value="1"/>
     <attribute name="backgroundColor" value="null"/>
-    <attribute name="backgroundOpacity" value="1"/>
+    <attribute name="backgroundOpacity" value="0.5"/>
     <attribute name="showBackground" value="true"/>
     <attribute name="backgroundResource" value="'pie_background_rsrc'"/>
     <attribute name="border" value="5"/>

@@ -332,7 +332,7 @@
 
     <string id="Yes, delete my city.">Yes, delete my city.</string>
 
-    <string id="Foreward">Forward</string>
+    <string id="Forward">Forward</string>
 
     <string id="Backward">Backward</string>
 
@@ -426,6 +426,12 @@
     <string id="To">To</string>
 
 
+    <!-- robot.lzx -->
+
+
+    <string id="Score">Score</string>
+
+
     <!-- scenariosview.lzx -->
 
     <string id="Scenario">Scenario</string>
@@ -474,6 +480,8 @@
     <string id="Road">Road</string>
 
     <string id="Center">Center</string>
+
+    <string id="PacBot">PacBot</string>
 
     <string id="Stadium">Stadium</string>
 

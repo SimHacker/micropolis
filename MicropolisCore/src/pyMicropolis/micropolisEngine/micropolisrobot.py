@@ -79,7 +79,25 @@ from pyMicropolis.tileEngine import tiletool
 ########################################################################
 
 
+UniqueNumberNext = 0
+
+def UniqueNumber():
+    global UniqueNumberNext
+    UniqueNumberNext += 1
+    return UniqueNumberNext
+
+
+########################################################################
+
+
 class MicropolisRobot:
+
+
+    robotType = 'Root'
+
+    viewKeys = [
+        'robotID', 'robotType', 'tick', 'x', 'y', 'direction',
+    ]
 
 
     def __init__(
@@ -91,13 +109,16 @@ class MicropolisRobot:
         **args):
 
         self.engine = engine
+        self.robotID = UniqueNumber()
         self.x = x
         self.y = y
-        self.direction = 0.0
+        self.direction = direction
+        self.tick = 0
 
 
     def simulate(self):
 
+        self.tick += 1
         engine = self.engine
 
 
@@ -128,11 +149,24 @@ class MicropolisRobot:
         ctx.stroke()
 
 
+    def getData(self):
+        data = {}
+        for key in self.viewKeys:
+            data[key] = getattr(self, key)
+        #print "ROBOT GETDATA", data
+        return data
+
 ########################################################################
 
 
-class MicropolisRobot_PacMan(MicropolisRobot):
+class MicropolisRobot_PacBot(MicropolisRobot):
 
+
+    robotType = 'PacBot'
+
+    viewKeys = MicropolisRobot.viewKeys + [
+        'mouthOpen', 'mouthSize', 'mouthPhase', 'radius', 'hilite', 'score',
+    ]
 
     directionDeltas = {
         'north': (0, -1,),
@@ -464,7 +498,7 @@ class MicropolisRobot_PacMan(MicropolisRobot):
             ctx.line_to(0, 0)
             ctx.close_path()
         else:
-            ctx.arc(0, 0, radius, 0, 2* math.pi)
+            ctx.arc(0, 0, radius, 0, 2 * math.pi)
             ctx.close_path()
 
         if hilite == 0:

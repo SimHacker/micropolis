@@ -41,6 +41,7 @@
 	<attribute name="viewExtraRight" value="0"/>
 	<attribute name="viewExtraTop" value="0"/>
 	<attribute name="viewExtraBottom" value="0"/>
+	<attribute name="robotMap" value="null"/>
 
 
         <handler name="oninit"><![CDATA[
@@ -48,6 +49,7 @@
 
             this.uniqueID = gApp.makeUniqueID();
 	    gApp.objectIDs[this.uniqueID] = this;
+	    this.robotMap = {};
 
             this.updateInterests();
           ]]>
@@ -134,19 +136,21 @@
 		    spriteView = subViews[i];
 		}
 
-		var x = (sprite['x'] + sprite['xOffset']) * 2; /// @todo scale properly
+		var zoom = this.zoom;
+
+		var x = (sprite['x'] + sprite['xOffset']) * zoom;
 		if (spriteView.x != x) {
 		    spriteView.setAttribute("x", x);
 		}
-		var y = (sprite['y'] + sprite['yOffset']) * 2; /// @todo scale properly
+		var y = (sprite['y'] + sprite['yOffset']) * zoom;
 		if (spriteView.y != y) {
 		    spriteView.setAttribute("y", y);
 		}
-		var width = sprite['width'] * 2;
+		var width = sprite['width']* zoom;
 		if (spriteView.width != width) {
 		    spriteView.setAttribute("width", width);
 		}
-		var height = sprite['height'] * 2;
+		var height = sprite['height'] * zoom;
 		if (spriteView.height != height) {
 		    spriteView.setAttribute("height", height);
 		}	
@@ -165,6 +169,7 @@
 		    spriteView.setAttribute("resource", spriteName);
 		}
 
+/*
 		var txt =
 		    "Sprite:\n" +
 		    "  spriteName: " + spriteName + "\n" +
@@ -179,6 +184,7 @@
 		if (txt != spriteView.text) {
 		    spriteView.setAttribute("text", txt);
 		}
+*/
 
 	    }
 
@@ -189,6 +195,55 @@
 		    spriteView.setAttribute("visible", false);
 		}
 		i++;
+	    }
+
+	  ]]>
+	</handler>
+
+
+	<handler name="onrobots" reference="gApp"><![CDATA[
+	    var robots = gApp.robots;
+	    var robotMap = this.robotMap;
+	    var robotsSeen = {};
+	    //Debug.write("TILEVIEW ROBOTS", this, robots);
+	    var robotsContainer = this.container.robots;
+	    var n = robots.length;
+	    var i;
+	    for (i = 0; i < n; i++) {
+	        var robotData = robots[i]
+		var robotType = robotData['robotType'];
+		var robotID = robotData['robotID'];
+		var robotView;
+
+		robotsSeen[robotID] = true;
+
+		if (robotID in robotMap) {
+		    robotView = robotMap[robotID];
+		} else {
+		    var cl = lz['robot_' + robotType];
+		    //Debug.write("Creating robot view", robotType, robotID, cl);
+		    if (cl == null) {
+		        Debug.write("Unknown robot type", robotType, robotData);
+			continue;
+		    }
+		    robotView = new cl(robotsContainer, {
+		        'robotID': robotID
+		    });
+		    robotMap[robotID] = robotView;
+		}
+
+		//Debug.write("robotView", robotView);
+
+		robotView.updateRobotData(robotData);
+	    }
+
+	    for (robotID in robotMap) {
+	        if (!(robotID in robotsSeen)) {
+		    var robotView = robotMap[robotID];
+		    Debug.write("Destroying robot view", robotView)
+		    delete robotMap[robotID];
+		    robotView.destroy();
+		}
 	    }
 
 	  ]]>
@@ -331,7 +386,7 @@
             this.updateViewRect();
 
             messages.push({
-	        message: 'tileview',
+	        message: 'tiles',
 		id: this.uniqueID,
 		col: this.viewCol,
 		row: this.viewRow,
@@ -345,9 +400,12 @@
 	    });
 
             messages.push({
-	        message: 'spritesview'
+	        message: 'sprites'
 	    });
 
+            messages.push({
+	        message: 'robots'
+	    });
           ]]>
         </method>
 
@@ -397,6 +455,8 @@
 
             var tileIndex = 0;
 	    var tiles = this.container.tiles;
+	    var zoom = this.zoom;
+	    var tileSize = this.zoom * 16;
 
             var col, row;
             for (row = viewRow; row < lastRow; row++) {
@@ -414,7 +474,10 @@
                             continue;
                         }
                         newTiles++;
-                        var v = new lz.tile(tiles);
+                        var v = new lz.tile(tiles, {
+			    width: tileSize,
+			    height: tileSize
+			});
                         //Debug.write("NOW subviewCount", tiles.subviews.length, "tileIndex", tileIndex);
                     }
 
@@ -505,6 +568,11 @@
 	    />
 
 	    <view name="sprites"
+	        width="${parent.width}"
+		height="${parent.height}"
+	    />
+
+	    <view name="robots"
 	        width="${parent.width}"
 		height="${parent.height}"
 	    />
