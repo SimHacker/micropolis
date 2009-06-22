@@ -55,6 +55,7 @@
 	<attribute name="redrawDelegate" value="null"/>
 	<attribute name="redrawDelay" value="100"/>
 	<attribute name="redrawingSoon" value="false"/>
+	<attribute name="historySerial" value="-1"/>
 
 
 	<handler name="oninit" args="arg"><![CDATA[
@@ -114,7 +115,7 @@
 
 
 	<handler name="onhistory" args="history"><![CDATA[
-	    //Debug.write("historyview onhistory", this, this.history, this.inited);
+	    Debug.write("historyview onhistory", this, this.history, this.inited);
 	    if (!this.inited) {
 	        return;
 	    }
@@ -133,19 +134,28 @@
         </method>
 
 
+        <method name="invalidateHistory"><![CDATA[
+	    this.setAttribute("historySerial", -1);
+	  ]]>
+	</method>
+
+
         <method name="poll" args="messages"><![CDATA[
             //Debug.write("historyview poll", this);
 
-	    messages.push({
-	        message: 'history',
-	        id: this.uniqueID,
-		scale: this.historyScale,
-		count: this.historyCount,
-		offset: this.historyOffset,
-		types: this.historyTypes,
-		width: this.width,
-		height: this.height
-            });
+	    if (this.historySerial != gApp.historySerial) {
+	        this.historySerial = gApp.historySerial;
+		messages.push({
+		    message: 'historyview',
+		    id: this.uniqueID,
+		    scale: this.historyScale,
+		    count: this.historyCount,
+		    offset: this.historyOffset,
+		    types: this.historyTypes,
+		    width: this.width,
+		    height: this.height
+		});
+	    }
           ]]>
         </method>
 
@@ -186,7 +196,8 @@
 	    }
 
 	    historyTypes.splice(index, 1);
-	    this.redrawSoon();
+	    //this.redrawSoon();
+	    this.invalidateHistory();
 	  ]]>
 	</method>
 
@@ -201,7 +212,8 @@
 	    }
 
 	    historyTypes.push(type);
-	    this.redrawSoon();
+	    //this.redrawSoon();
+	    this.invalidateHistory();
 	  ]]>
 	</method>
 
@@ -223,7 +235,8 @@
 
 	    if (historyScale != this.historyScale) {
 		this.setAttribute("historyScale", historyScale);
-		this.redrawSoon(); 
+		//this.redrawSoon(); 
+	        this.invalidateHistory();
 	    }
 	  ]]>
 	</method>

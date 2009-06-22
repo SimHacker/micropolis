@@ -47,16 +47,16 @@
 	    text="${gApp._('Bulldozer')}"
 	/>
 
-	<toolicon name="railroad"
-	    toolID="railroad"
-	    resource="tool_railroad_rsrc"
-	    text="${gApp._('Railroad')}"
-	/>
-
 	<toolicon name="road"
 	    toolID="road"
 	    resource="tool_road_rsrc"
 	    text="${gApp._('Road')}"
+	/>
+
+	<toolicon name="railroad"
+	    toolID="railroad"
+	    resource="tool_railroad_rsrc"
+	    text="${gApp._('Railroad')}"
 	/>
 
 	<toolicon name="wire"
