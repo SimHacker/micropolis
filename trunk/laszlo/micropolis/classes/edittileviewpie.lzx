@@ -14,7 +14,7 @@
 	    <myhtml text="${'(' + gApp._('Zone') + ')'}"/>
 
 	    <mypiemenu
-	        fixedRadius="50"
+	        fixedRadius="80"
 	    >
 	        <myhtml text="${gApp._('Zone')}"/>
 
@@ -23,13 +23,13 @@
 		>
 		    <simplelayout axis="y"/>
 
-		    <myhtml
+		    <myhtml name="html"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Commercial')}"
 		    />
 
-		    <myicon
-		        x="${(parent.width - this.width) / 2}"
+		    <myicon name="icon"
+		        x="${(parent.html.width - this.width) / 2}"
 		        resource="tool_commercial_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'commercial')) ? 2 : 1}"
 		    />
@@ -52,7 +52,6 @@
 		    />
 
 		    <myicon
-		        x="0"
 		        resource="tool_industrial_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'industrial')) ? 2 : 1}"
 		    />
@@ -69,8 +68,31 @@
 		>
 		    <simplelayout axis="y"/>
 
+		    <myhtml
+		        x="${(parent.width - this.width) / 2}"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	        	text="${gApp._('Park')}"
+		    />
+
 		    <myicon
-		        x="0"
+		        x="${(parent.width - this.width) / 2}"
+			resource="tool_park_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'park')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "park");
+		      ]]>
+		    </method>
+
+		</myitem>
+
+		<myitem
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+
+		    <myicon
 		        resource="tool_policestation_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'policestation')) ? 2 : 1}"
 		    />
@@ -93,13 +115,13 @@
 		>
 		    <simplelayout axis="y"/>
 
-		    <myicon
-		        x="${(parent.width - this.width) / 2}"
+		    <myicon name="icon"
+		        x="${(parent.html.width - this.width) / 2}"
 		        resource="tool_query_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'query')) ? 2 : 1}"
 		    />
 
-		    <myhtml
+		    <myhtml name="html"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Query')}"
 		    />
@@ -116,13 +138,13 @@
 		>
 		    <simplelayout axis="y"/>
 
-		    <myicon
-		        x="${parent.width - this.width}"
+		    <myicon name="icon"
 		        resource="tool_firestation_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'firestation')) ? 2 : 1}"
 		    />
 
 		    <myhtml
+		        x="${parent.icon.width - this.width}"
 		        resize="true"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Fire Station')}"
@@ -141,12 +163,36 @@
 		    <simplelayout axis="y"/>
 
 		    <myhtml
+		        x="${(parent.width - this.width) / 2}"
+		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
+	        	text="${gApp._('Park')}"
+		    />
+
+		    <myicon
+		        x="${(parent.width - this.width) / 2}"
+			resource="tool_park_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'park')) ? 2 : 1}"
+		    />
+
+		    <method name="selected"><![CDATA[
+			gApp.setAttribute("tool", "park");
+		      ]]>
+		    </method>
+
+		</myitem>
+
+		<myitem
+		    headercolor="null"
+		>
+		    <simplelayout axis="y"/>
+
+		    <myhtml
+		        x="${parent.icon.width - this.width}"
 			bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
 		        text="${gApp._('Residential')}"
 		    />
 
-		    <myicon
-		        x="${parent.width - this.width}"
+		    <myicon name="icon"
 		        resource="tool_residential_rsrc"
 			frame="${(parent.hilited || (gApp.tool == 'residential')) ? 2 : 1}"
 		    />
@@ -250,17 +296,17 @@
 		    <myhtml
 		        x="${(parent.width - this.width) / 2}"
 		        bgcolor="${parent.hilited ? parent.headerhilitecolor : parent.headerlolitecolor}"
-	        	text="${gApp._('Park')}"
+	        	text="${gApp._('PacBot')}"
 		    />
 
 		    <myicon
 		        x="${(parent.width - this.width) / 2}"
-			resource="tool_park_rsrc"
-			frame="${(parent.hilited || (gApp.tool == 'park')) ? 2 : 1}"
+			resource="tool_pacbot_rsrc"
+			frame="${(parent.hilited || (gApp.tool == 'PacBot')) ? 2 : 1}"
 		    />
 
 		    <method name="selected"><![CDATA[
-			gApp.setAttribute("tool", "park");
+			gApp.setAttribute("tool", "pacbot");
 		      ]]>
 		    </method>
 
@@ -317,7 +363,9 @@
 		<myitem
 		    headercolor="null"
 		>
+
 		    <simplelayout axis="y"/>
+
 		    <myicon
 			x="${(parent.width - this.width) / 2}"
 			resource="tool_airport_rsrc"
@@ -648,7 +696,7 @@
 			      ]]>
 			    </method>
 
-			    <myhtml text="${parent.disasterTitle}"/>
+			    <myhtml text="${gApp._(parent.disasterTitle)}"/>
 
 			</myitem>
 		    </mypiemenu>

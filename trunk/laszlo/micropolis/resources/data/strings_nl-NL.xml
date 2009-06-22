@@ -329,9 +329,9 @@
 
     <string id="No, don't delete it.">Nee, niet verwijderen.</string>
 
-    <string id="Yes, delete my city.">Ja, mijn stad.</string>
+    <string id="Yes, delete my city.">Ja, verwijderen van mijn stad.</string>
 
-    <string id="Foreward">Vooruit</string>
+    <string id="Forward">Vooruit</string>
 
     <string id="Backward">Retrospectieve</string>
 
@@ -473,6 +473,8 @@
     <string id="Road">Weg</string>
 
     <string id="Center">Center</string>
+
+    <string id="PacBot">PacBot</string>
 
     <string id="Stadium">Stadion</string>
 

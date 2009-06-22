@@ -143,7 +143,7 @@ for spriteData in Sprites:
     images = []
     spriteData['images'] = images
     for i in range(0, spriteData['frames']):
-        fileName = 'images/simEngine/obj%d-%d.png' % (
+        fileName = 'images/micropolisEngine/obj%d-%d.png' % (
             spriteData['id'],
             i,
         )

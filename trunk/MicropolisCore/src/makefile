@@ -117,7 +117,7 @@ build_cellEngine:
 # ----------------------------------------------------------------------
 # build/install micropolisEngine
 
-MICROPOLISENGINEDEST = pyMicropolis/simEngine
+MICROPOLISENGINEDEST = pyMicropolis/micropolisEngine
 
 build_micropolisEngine:
 	$(MAKE) -C MicropolisEngine build_python

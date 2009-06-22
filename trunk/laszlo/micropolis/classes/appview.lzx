@@ -118,9 +118,9 @@
                 'funds', 'date', 'evaluation',
                 'paused', 'passes', 'delay', 'demand',
                 'options', 'gameLevel', 'cityName',
-                'taxRate', 'budget', 'sprites',
+                'taxRate', 'budget', 'sprites', 'robots',
                 'message', 'virtualSpeed', 'savedCities',
-                'tileview', 'historyview',
+                'tiles', 'history',
             ]);
 
             var del = new lz.Delegate(this, 'handleKey');
@@ -666,7 +666,7 @@
                     break;
                 }
 
-                case 'tileview':
+                case 'tiles':
                 {
                     var view = args['view'];
                     var id = view['id'];
@@ -678,7 +678,7 @@
                     var code = view['code'];
                     var tiles = view['tiles'];
 
-                    //Debug.write("UPDATE TILEVIEW", tileviewID, col, row, cols, rows, code, typeof(tiles), tiles.length);
+                    //Debug.write("UPDATE TILES", id, col, row, cols, rows, code, typeof(tiles), tiles.length);
 
                     if ((rows > 0) &&
                         (cols > 0) &&
@@ -694,9 +694,9 @@
                     break;
                 }
 
-                case 'historyview':
+                case 'history':
                 {
-                    //Debug.write("UPDATE HISTORYVIEW", args);
+                    //Debug.write("UPDATE HISTORY", args);
                     var id = args['id'];
                     var hv = this.objectIDs[id];
                     //Debug.write("hv", hv, "id", id, typeof(id));
@@ -1977,6 +1977,8 @@
             visible="${classroot.gameMode == 'play'}"
             active="${classroot.active &amp;&amp; this.visible}"
         />
+
+	<tooltip id="gToolTip"/>
 
     </class>
 

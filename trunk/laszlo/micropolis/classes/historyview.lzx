@@ -137,7 +137,7 @@
             //Debug.write("historyview poll", this);
 
 	    messages.push({
-	        message: 'historyview',
+	        message: 'history',
 	        id: this.uniqueID,
 		scale: this.historyScale,
 		count: this.historyCount,

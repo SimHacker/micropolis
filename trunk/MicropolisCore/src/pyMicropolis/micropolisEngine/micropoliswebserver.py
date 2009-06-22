@@ -90,7 +90,7 @@ except ImportError:
 # Import our modules
 
 
-from pyMicropolis.simEngine import micropolisengine
+from pyMicropolis.micropolisEngine import micropolisengine
 
 from pyMicropolis.tileEngine import tileengine
 

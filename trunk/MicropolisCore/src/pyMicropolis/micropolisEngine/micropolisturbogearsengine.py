@@ -70,6 +70,7 @@
 
 
 import micropolisgenericengine
+import micropolisrobot
 import os
 import sys
 import random
@@ -77,6 +78,7 @@ import math
 import array
 import time
 import tempfile
+import socket
 from datetime import datetime
 import traceback
 import re
@@ -205,6 +207,7 @@ CityNames = {
 }
 
 ToolNameToIndex = {
+    'pacbot': -1,
     'residential': 0,
     'commercial': 1,
     'industrial': 2,
@@ -346,6 +349,7 @@ class Session(object):
         self.views = []
         self.messages = []
         self.messagesSeen = {}
+        self.sequence = 0
         self.createTime = time.time()
         self.lastPollTime = 0
         self.lastTouchTime = 0
@@ -373,6 +377,8 @@ class Session(object):
 
     def handlePoll(self, pollDict):
         self.lastPollTime = Now()
+
+        self.sequence += 1
 
         self.engine.handlePoll(
             pollDict,
@@ -533,6 +539,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.virtualSpeed = self.startVirtualSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
+
+        self.clearRobots()
 
         self.resetRealTime()
 
@@ -881,7 +889,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
 
                 toolIndex = ToolNameToIndex[tool]
-                self.toolDown(toolIndex, x, y)
+                if toolIndex < 0:
+                    self.toolDownScripted(toolIndex, x, y)
+                else:
+                    self.toolDown(toolIndex, x, y)
 
         elif message == 'drawToolMove':
 
@@ -902,7 +913,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             else:
 
                 toolIndex = ToolNameToIndex[tool]
-                self.toolDrag(toolIndex, x0, y0, x1, y1)
+                if toolIndex < 0:
+                    self.toolDragScripted(toolIndex, x0, y0, x1, y1)
+                else:
+                    self.toolDrag(toolIndex, x0, y0, x1, y1)
 
         elif message == 'drawToolStop':
 
@@ -990,9 +1004,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 print "Unknown chat channel:", channel
 
-        elif message == 'tileview':
+        elif message == 'tiles':
 
-            #print "MESSAGE TILEVIEW", messageDict
+            #print "MESSAGE TILES", messageDict
             try:
                 id = messageDict['id']
                 col = messageDict['col']
@@ -1007,7 +1021,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            if not session.isMessageQueued('update', 'tileview', id):
+            if not session.isMessageQueued('update', 'tiles', id):
 
                 #print "ID", id
                 #print "TILE", col, row, cols, rows
@@ -1038,7 +1052,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 session.sendMessage({
                     'message': 'update',
-                    'variable': 'tileview',
+                    'variable': 'tiles',
                     'view': {
                         'id': id,
                         'col': col,
@@ -1055,7 +1069,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     'collapse': True,
                 })
 
-        elif message == 'spritesview':
+        elif message == 'sprites':
 
             if not session.isMessageQueued('update', 'sprites'):
 
@@ -1079,7 +1093,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     })
                     sprite = sprite.next
 
-                #print "MESSAGE SPRITESVIEW", sprites
+                #print "MESSAGE SPRITES", sprites
                 session.sendMessage({
                     'message': 'update',
                     'variable': 'sprites',
@@ -1087,9 +1101,24 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     'collapse': True,
                 })
 
-        elif message == 'historyview':
+        elif message == 'robots':
 
-            #print "HISTORYVIEW", messageDict
+            robots = [
+                robot.getData()
+                for robot in self.robots
+            ]
+
+            #print "MESSAGE SPRITES", sprites
+            session.sendMessage({
+                'message': 'update',
+                'variable': 'robots',
+                'robots': robots,
+                'collapse': True,
+            })
+
+        elif message == 'history':
+
+            #print "HISTORY", messageDict
 
             try:
                 id = messageDict['id']
@@ -1102,9 +1131,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 self.expectationFailed("Invalid parameters: " + str(e))
 
-            if not session.isMessageQueued('update', 'historyview', id):
+            if not session.isMessageQueued('update', 'history', id):
 
-                #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+                #print "HISTORY", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they
@@ -1201,7 +1230,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
                 session.sendMessage({
                     'message': 'update',
-                    'variable': 'historyview',
+                    'variable': 'history',
                     'id': id,
                     'scale': historyScale,
                     'count': historyCount,
@@ -1364,6 +1393,30 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             print "UNKNOWN MESSAGE", message
 
 
+    def toolDownScripted(self, toolIndex, x, y):
+        print "toolDownScripted", toolIndex, x, y
+        if toolIndex == -1:
+            toolCost = 1000
+            if self.totalFunds < toolCost:
+                self.makeSound("interface", "Sorry", x, y);
+            else:
+                self.spend(toolCost)
+                self.makePacBot(x, y)
+
+
+    def toolDragScripted(self, toolIndex, x0, y0, x1, y1):
+        print "toolDragScripted", toolIndex, x0, y0, x1, y1
+
+
+    def makePacBot(self, x, y):
+        print "makePacBot", x, y
+        robot = micropolisrobot.MicropolisRobot_PacBot(
+            x=(x * 16) + 8,
+            y=(y * 16) + 8,
+            direction = random.randint(0, 3) * math.pi / 2)
+        self.addRobot(robot)
+
+
     def saveMetaCityToDatabase(self, session, user, cityID, title, description):
         print "saveMetaCityToDatabase", session, user, cityID, title, description
 
@@ -1472,7 +1525,9 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             #print "******** Loops per second", self.loopsPerSecond, "elapsed", elapsed, "ticks", ticks, "maxLoopsPerPoll", self.maxLoopsPerPoll
             ticks = min(ticks, self.maxLoopsPerPoll)
 
-            print "********", "TICKS", ticks, "ELAPSED", elapsed, "LPS", self.loopsPerSecond
+            #print "********", "TICKS", ticks, "ELAPSED", elapsed, "LPS", self.loopsPerSecond
+            print ticks,
+            sys.stdout.flush()
 
             if self.simPasses != ticks:
                 self.setPasses(ticks)

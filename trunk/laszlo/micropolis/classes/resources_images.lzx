@@ -120,6 +120,11 @@
         <frame src="../resources/images/tool_centerhi.png"/>
     </resource>
 
+    <resource name="tool_pacbot_rsrc">
+        <frame src="../resources/images/tool_pacbot.png"/>
+        <frame src="../resources/images/tool_pacbothi.png"/>
+    </resource>
+
     <resource name="tool_policestation_rsrc">
         <frame src="../resources/images/tool_policestation.png"/>
         <frame src="../resources/images/tool_policestationhi.png"/>
