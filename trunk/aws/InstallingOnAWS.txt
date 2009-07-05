@@ -1,67 +1,47 @@
-========================================================================
-Installing Micropolis on AWS.
-========================================================================
-
-Launch the contributed Fedora 8 i386 base v1.08 image:
-ami-2a0f275e
-ec2-public-images-eu/fedora-8-i386-base-v1.08.manifest.xml
-
-ec2-79-125-49-22.eu-west-1.compute.amazonaws.com
-
-========================================================================
+#!/bin/bash
+########################################################################
+# Installing Micropolis on AWS.
+########################################################################
+#
+# Launch the contributed Fedora 8 i386 base v1.08 image:
+# ami-2a0f275e
+# ec2-public-images-eu/fedora-8-i386-base-v1.08.manifest.xml
+#
+# https://console.aws.amazon.com/
+# https://console.aws.amazon.com/ec2/home
+# Switch to the appropriate region (US or EU) on the left.
+# Click on "# Running Instance" link on tbhe right.
+# Click "Launch Image".
+# Click the "Community AMIs" tab.
+# Select platform "Fedore".
+# Select image "ami-2a0f275e ec2-public-images-eu/fedora-8-i386-base-v1.08.manifest.xml".
+# Configure:
+#   Number of Images: 1.
+#   Instance Type: Small.
+#   Key Pair Name: micropolis.
+#   Security Groups: default, web server.
+# Click "Launch."
+# Click "View your instances on the Instances page".
+# Wait for it to start.
+# Select the new image.
+# Copy and save the AMI ID.
+# Click "Connect".
+# Copy the ssh command.
+# Add the "-X" option.
+# ssh -X -i ~/aws/micropolis.pem root@ec2-79-125-58-192.eu-west-1.compute.amazonaws.com
+# Type "yes".
+# Perform the following commands.
+#
+########################################################################
 
 yum -y update
-yum -y install screen
-yum -y install emacs
-yum -y install xauth
-
-[run ssh with -X]
+yum -y install screen emacs xauth xterm gcc-c++ libstdc++-devel termcap libtermcap libtermcap-devel svn xterm xorg-x11-fonts-75dpi xorg-x11-fonts-100dpi fontconfig dejavu-fonts python-devel mysql mysql-server mysql-administrator swig cairo cairo-devel pycairo pycairo-devel pygtk2 pygtk2-devel libXpm libXpm-devel httpd httpd-devel httpd-tools httpd-manual byacc libXext libXext-devel php java java-devel vnc doxygen MySQL-python mysql-administrator
 
 echo 'escape ^z^z' > ~/.screenrc
-screen
-emacs
-m-x shell
 
-yum -y install xterm
-yum -y install gcc-c++
-yum -y install libstdc++-devel
-yum -y install termcap
-yum -y install libtermcap
-yum -y install libtermcap-devel
-yum -y install svn
-yum -y install xterm
-yum -y install xorg-x11-fonts-75dpi
-yum -y install xorg-x11-fonts-100dpi
-yum -y install fontconfig
-yum -y install dejavu-fonts
-yum -y install python-devel
-yum -y install mysql
-yum -y install mysql-server
-yum -y install mysql-administrator
-yum -y install swig
-yum -y install cairo
-yum -y install cairo-devel
-yum -y install pycairo
-yum -y install pycairo-devel
-yum -y install pygtk2
-yum -y install pygtk2-devel
-yum -y install libXpm
-yum -y install libXpm-devel
-yum -y install apache
-yum -y install httpd
-yum -y install httpd-devel
-yum -y install httpd-tools
-yum -y install httpd-manual
-yum -y install byacc
-yum -y install libXext
-yum -y install libXext-devel
-yum -y install php
-yum -y install java
-yum -y install java-devel
-yum -y install vnc
-yum -y install doxygen
-yum -y install MySQL-python
-yum -y install mysql-administrator
+#screen
+#emacs
+#m-x shell
 
 cd /usr/local/src
 
@@ -83,18 +63,16 @@ cd amfast
 python setup.py install
 cd ..
 
-wget 'http://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/VerifyItem-Start/jdk-1_5_0_19-linux-i586-rpm.bin?BundledLineItemUUID=Ui5IBe.lLZwAAAEhIbM_57G2&OrderID=GeZIBe.lh5QAAAEhCrM_57G2&ProductID=zaJIBe.pkVcAAAEh_r8P5zJQ&FileName=/jdk-1_5_0_19-linux-i586-rpm.bin'
-mv jdk-1_5_0_19-linux-i586-rpm.bin* jdk-1_5_0_19-linux-i586-rpm.bin
+wget http://www.donhopkins.com/home/jdk-1_5_0_19-linux-i586-rpm.bin
 chmod +x jdk-1_5_0_19-linux-i586-rpm.bin
-./jdk-1_5_0_19-linux-i586-rpm.bin
-[page]
-yes
-updatedb; locate javac |grep bin
+echo yes | ./jdk-1_5_0_19-linux-i586-rpm.bin | cat
+
+# updatedb; locate javac | grep bin
 /usr/sbin/alternatives --install /usr/bin/java java /usr/java/jdk1.5.0_19/bin/java 100
 /usr/sbin/alternatives --install /usr/bin/jar jar /usr/java/jdk1.5.0_19/bin/jar 100
 /usr/sbin/alternatives --install /usr/bin/javac javac /usr/java/jdk1.5.0_19/bin/javac 100 
-/usr/sbin/alternatives --config java
-[type number of /usr/java/jdk1.5.0_19/bin/java]
+# type number of /usr/java/jdk1.5.0_19/bin/java
+echo 2 | /usr/sbin/alternatives --config java
 
 useradd laszlo
 chmod a+rx /home/laszlo
@@ -102,35 +80,35 @@ cd /home/laszlo
 wget http://download.openlaszlo.org/4.3.0/openlaszlo-4.3.0-unix.tar.gz
 tar xfvz openlaszlo-4.3.0-unix.tar.gz
 ln -s lps-4.3.0/Server/lps-4.3.0 lps
+ln -s lps-4.3.0/Server/tomcat-5.0.24 tomcat
 cd lps
 ln -s /home/micropolis/trunk/laszlo/micropolis
-
-
-mkdir /home/micropolis/htdocs
-cp -f /home/micropolis/trunk/aws/index.html /home/micropolis/htdocs
-cp -f /home/micropolis/trunk/aws/lps.xml /home/laszlo/tomcat/conf/LPS/localhost
-cp -f /home/micropolis/trunk/aws/tomcatd /etc/init.d
-cp -f /home/micropolis/trunk/aws/httpd.conf /etc/httpd/conf
-cp -f /home/micropolis/trunk/aws/rewriterules.conf /etc/httpd/conf.d
-
-#cp -f /home/micropolis/htdocs/index.html /home/micropolis/trunk/aws/
-#cp -f /home/laszlo/tomcat/conf/LPS/localhost/lps.xml /home/micropolis/trunk/aws/
-#cp -f /etc/init.d/tomcatd /home/micropolis/trunk/aws/
-#cp -f /etc/httpd/conf/httpd.conf /home/micropolis/trunk/aws/
-#cp -f /etc/httpd/conf.d/rewriterules.conf /home/micropolis/trunk/aws/
 
 useradd micropolis
 chmod a+rx /home/micropolis
 cd /home/micropolis
-svn checkout https://micropolis.googlecode.com/svn/trunk/ micropolis --username simhacker
-[Enter google generated password from http://code.google.com/hosting/settings ]
 
-mv micropolis trunk
+#echo TODO: Enter google generated password from http://code.google.com/hosting/settings
+#svn checkout https://micropolis.googlecode.com/svn/trunk/ trunk --username simhacker
+svn checkout http://micropolis.googlecode.com/svn/trunk/ trunk
+
+mkdir /home/micropolis/htdocs
+
+yes | cp -f /home/micropolis/trunk/aws/index.html /home/micropolis/htdocs
+yes | cp -f /home/micropolis/trunk/aws/lps.xml /home/laszlo/tomcat/conf/LPS/localhost
+yes | cp -f /home/micropolis/trunk/aws/tomcatd /etc/init.d
+yes | cp -f /home/micropolis/trunk/aws/httpd.conf /etc/httpd/conf
+yes | cp -f /home/micropolis/trunk/aws/rewriterules.conf /etc/httpd/conf.d
+
+# Put them back.
+#yes | cp -f /home/micropolis/htdocs/index.html /home/micropolis/trunk/aws/
+#yes | cp -f /home/laszlo/tomcat/conf/LPS/localhost/lps.xml /home/micropolis/trunk/aws/
+#yes | cp -f /etc/init.d/tomcatd /home/micropolis/trunk/aws/
+#yes | cp -f /etc/httpd/conf/httpd.conf /home/micropolis/trunk/aws/
+#yes | cp -f /etc/httpd/conf.d/rewriterules.conf /home/micropolis/trunk/aws/
+
 cd trunk
 make
-
-mysqladmin create database micropolis
-mysql micropolis < /home/micropolis/trunk/aws/micropolis.mysql
 
 chkconfig --level 2345 httpd on
 chkconfig --level 2345 mysqld on
@@ -140,4 +118,8 @@ service httpd restart
 service mysqld restart
 service tomcatd restart
 
+mysqladmin create micropolis
+mysql micropolis < /home/micropolis/trunk/aws/micropolis.mysql
+
 cd /home/micropolis/trunk/turbogears
+./start-micropolis.py
