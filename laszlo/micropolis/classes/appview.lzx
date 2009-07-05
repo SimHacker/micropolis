@@ -1589,6 +1589,7 @@
             //Debug.write("didGenerateNewCity");
             this.cityID = args['seed'];
             //Debug.write("SEED", this.cityID);
+            gNoticeView.setCurrentNotice(45, null, null); // Start a New City
             this.resetCity();
           ]]>
         </method>
@@ -1597,6 +1598,7 @@
         <method name="handle_didLoadCity" args="args"><![CDATA[
             //Debug.write("didLoadCity");
             this.resetCity();
+            gNoticeView.setCurrentNotice(46, null, null); // Restored a Saved City
           ]]>
         </method>
 
@@ -1766,6 +1768,7 @@
             this.setAttribute("description", gApp._('Generated a new random map.'));
             this.setAttribute("citySource", "generated");
             // The cityID (a random seed) will be set by handle_didGenerateNewCity callback.
+	    
 
           ]]>
         </method>

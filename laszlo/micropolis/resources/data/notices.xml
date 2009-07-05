@@ -3,7 +3,6 @@
 
     <notice
         id="10"
-        name="POLLUTION ALERT!"
         title="notice_10_title"
         description="notice_10_description"
         color="0xff4f4f"
@@ -13,7 +12,6 @@
 
     <notice
         id="11"
-        name="CRIME ALERT!"
         title="notice_11_title"
         description="notice_11_description"
         color="0xff4f4f"
@@ -23,7 +21,6 @@
 
     <notice
         id="12"
-        name="TRAFFIC WARNING!"
         title="notice_12_title"
         description="notice_12_description"
         color="0xff4f4f"
@@ -33,7 +30,6 @@
 
     <notice
         id="20"
-        name="FIRE REPORTED!"
         title="notice_20_title"
         description="notice_20_description"
         color="0xff4f4f"
@@ -42,7 +38,6 @@
 
     <notice
         id="21"
-        name="MONSTER ATTACK!"
         title="notice_21_title"
         description="notice_21_description"
         color="0xff4f4f"
@@ -52,7 +47,6 @@
 
     <notice
         id="22"
-        name="TORNADO ALERT!"
         title="notice_22_title"
         description="notice_22_description"
         color="0xff4f4f"
@@ -62,7 +56,6 @@
 
     <notice
         id="23"
-        name="EARTHQUAKE!"
         title="notice_23_title"
         description="notice_23_description"
         color="0xff4f4f"
@@ -71,7 +64,6 @@
 
     <notice
         id="24"
-        name="PLANE CRASH!"
         title="notice_24_title"
         description="notice_24_description"
         color="0xff4f4f"
@@ -80,7 +72,6 @@
 
     <notice
         id="25"
-        name="SHIPWRECK!"
         title="notice_25_title"
         description="notice_25_description"
         color="0xff4f4f"
@@ -90,7 +81,6 @@
     <notice
         id="26"
         color="0xff4f4f"
-        name="TRAIN CRASH!"
         title="notice_26_title"
         description="notice_26_description"
 	showMap="true"
@@ -98,7 +88,6 @@
 
     <notice
         id="27"
-        name="HELICOPTER CRASH!"
         title="notice_27_title"
         description="notice_27_description"
         color="0xff4f4f"
@@ -107,7 +96,6 @@
 
     <notice
         id="30"
-        name="FIREBOMBING REPORTED!"
         title="notice_30_title"
         description="notice_30_description"
         color="0xff4f4f"
@@ -116,7 +104,6 @@
 
     <notice
         id="32"
-        name="EXPLOSION REPORTED!"
         title="notice_32_title"
         description="notice_32_description"
         color="0xff4f4f"
@@ -125,7 +112,6 @@
 
     <notice
         id="35"
-        name="TOWN"
         title="notice_35_title"
         description="notice_35_description"
         color="0x7fff7f"
@@ -135,7 +121,6 @@
 
     <notice
         id="36"
-        name="CITY"
         title="notice_36_title"
         description="notice_36_description"
         color="0x7fff7f"
@@ -145,7 +130,6 @@
 
     <notice
         id="37"
-        name="CAPITAL"
         title="notice_37_title"
         description="notice_37_description"
         color="0x7fff7f"
@@ -155,7 +139,6 @@
 
     <notice
         id="38"
-        name="METROPOLIS"
         title="notice_38_title"
         description="notice_38_description"
         color="0x7fff7f"
@@ -164,7 +147,6 @@
 
     <notice
         id="39"
-        name="MEGALOPOLIS"
         title="notice_39_title"
         description="notice_39_description"
         color="0x7fff7f"
@@ -173,7 +155,6 @@
 
     <notice
         id="41"
-        name="HEAVY TRAFFIC!"
         title="notice_41_title"
         description="notice_41_description"
         color="0xff4f4f"
@@ -183,7 +164,6 @@
 
     <notice
         id="42"
-        name="FLOODING REPORTED!"
         title="notice_42_title"
         description="notice_42_description"
         color="0xff4f4f"
@@ -192,7 +172,6 @@
 
     <notice
         id="43"
-        name="NUCLEAR MELTDOWN!"
         title="notice_43_title"
         description="notice_43_description"
         color="0xff4f4f"
@@ -201,7 +180,6 @@
 
     <notice
         id="44"
-        name="RIOTS!"
         title="notice_44_title"
         description="notice_44_description"
         color="0xff4f4f"
@@ -210,7 +188,6 @@
 
     <notice
         id="45"
-        name="Start a New City"
         title="notice_45_title"
         description="notice_45_description"
         color="0x7f7fff"
@@ -219,7 +196,6 @@
 
     <notice
         id="46"
-        name="Restore a Saved City"
         title="notice_46_title"
         description="notice_46_description"
         color="0x7f7fff"
@@ -228,7 +204,6 @@
 
     <notice
         id="47"
-        name="YOU'RE A WINNER!"
         title="notice_47_title"
         description="notice_47_description"
         color="0x7fff7f"
@@ -238,7 +213,6 @@
 
     <notice
         id="48"
-        name="IMPEACHMENT NOTICE!"
         title="notice_48_title"
         description="notice_48_description"
         color="0xff4f4f"
@@ -248,7 +222,6 @@
 
     <notice
         id="49"
-        name="About Micropolis"
         title="notice_49_title"
         description="notice_49_description"
         color="0xffd700"
@@ -258,7 +231,6 @@
 
     <notice
         id="50"
-        name="DULLSVILLE, USA  1900"
         title="notice_50_title"
         description="notice_50_description"
         color="0x7f7fff"
@@ -267,7 +239,6 @@
 
     <notice
         id="51"
-        name="SAN FRANCISCO, CA.  1906"
         title="notice_51_title"
         description="notice_51_description"
         color="0x7f7fff"
@@ -276,7 +247,6 @@
 
     <notice
         id="52"
-        name="HAMBURG, GERMANY  1944"
         title="notice_52_title"
         description="notice_52_description"
         color="0x7f7fff"
@@ -285,7 +255,6 @@
 
     <notice
         id="53"
-        name="BERN, SWITZERLAND  1965"
         title="notice_53_title"
         description="notice_53_description"
         color="0x7f7fff"
@@ -294,7 +263,6 @@
 
     <notice
         id="54"
-        name="TOKYO, JAPAN  1957"
         title="notice_54_title"
         description="notice_54_description"
         color="0x7f7fff"
@@ -303,7 +271,6 @@
 
     <notice
         id="55"
-        name="DETROIT, MI.  1972"
         title="notice_55_title"
         description="notice_55_description"
         color="0x7f7fff"
@@ -312,7 +279,6 @@
 
     <notice
         id="56"
-        name="BOSTON, MA.  2010"
         title="notice_56_title"
         description="notice_56_description"
         color="0x7f7fff"
@@ -321,7 +287,6 @@
 
     <notice
         id="57"
-        name="RIO DE JANEIRO, BRAZIL  2047"
         title="notice_57_title"
         description="notice_57_description"
         color="0x7f7fff"
