@@ -346,7 +346,6 @@ class Session(object):
     def __init__(self, controller, sessionID):
         self.sessionID = sessionID
         self.engine = None
-        self.views = []
         self.messages = []
         self.messagesSeen = {}
         self.sequence = 0
@@ -1037,7 +1036,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     ((row + rows) > micropolisengine.WORLD_H)):
                     self.expectationFailed("Invalid parameters.")
 
-                #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
+                print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
                 tiles = self.tengine.getTileData(
                     None,
                     self.tileMap,
@@ -1045,7 +1044,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     cols, rows,
                     code,
                     session.tileViewCache)
-                #print "TILES", "code", code, "tiles", type(tiles), len(tiles), tiles
+                #print "TILES", "code", code, "tiles", type(tiles), len(tiles)#, tiles
                 #t = tiles
                 #tiles = ByteArray()
                 #tiles.write(t)
@@ -1068,7 +1067,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         'tiles': tiles,
                         'code': code,
                     },
-                    'collapse': True,
+                    #'collapse': True,
                 })
 
         elif message == 'sprites':
