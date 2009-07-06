@@ -73,6 +73,24 @@
 
 
 /**
+ * Script friendly wrapper around makeTraffic, that takes two integers
+ * instead of one Location.
+ * @param x        Start x position of the attempt
+ * @param y        Start y position of the attempt
+ * @param dest     Zone type to go to.
+ * @return \c 1 if connection found, \c 0 if not found,
+ *         \c -1 if no connection to road found.
+ */
+short Micropolis::makeTraffic(int x, int y, ZoneType dest)
+{
+    Position pos;
+    pos.posX = x;
+    pos.posY = y;
+    return makeTraffic(pos, dest);
+}
+
+
+/**
  * Find a connection over a road from \a startPos to a specified zone type.
  * @param startPos Start position of the attempt.
  * @param dest     Zone type to go to.
@@ -107,7 +125,8 @@ short Micropolis::makeTraffic(const Position &startPos, ZoneType dest)
 
 
 /**
- * Update the #trafficDensityMap from the positions at the #curMapStackXY stack.
+ * Update the #trafficDensityMap from the positions at the
+ * #curMapStackXY stack.
  */
 void Micropolis::addToTrafficDensityMap()
 {

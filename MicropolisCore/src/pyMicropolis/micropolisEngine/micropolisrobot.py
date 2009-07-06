@@ -106,6 +106,7 @@ class MicropolisRobot:
         x=0,
         y=0,
         direction=0.0,
+        autonymous=True,
         **args):
 
         self.engine = engine
@@ -113,6 +114,7 @@ class MicropolisRobot:
         self.x = x
         self.y = y
         self.direction = direction
+        self.autonymous = autonymous
         self.tick = 0
 
 
@@ -156,6 +158,103 @@ class MicropolisRobot:
         #print "ROBOT GETDATA", data
         return data
 
+
+    def getAny(self, a):
+        return a[random.randint(0, len(a) - 1)]
+
+
+    def isRoad(self, engine, tx, ty):
+        tile = engine.getTile(tx, ty)
+        tile = tile & micropolisengine.LOMASK
+        isRoadTile = ((tile >= micropolisengine.ROADBASE) and
+                      (tile < micropolisengine.POWERBASE))
+        # Remember the roads we've seen.
+        if isRoadTile:
+            self.roadMap[(tx, ty)] = True
+
+        return isRoadTile
+
+
+    def eatTraffic(self, engine, tileX, tileY):
+        # Zero out traffic density.
+        score = 0
+        trafficX = int(tileX / 2)
+        trafficY = int(tileY / 2)
+        trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
+        engine.setTrafficDensity(trafficX, trafficY, 0)
+        if trafficDensity:
+            score += trafficDensity
+            #print "ATE TRAFFIC", trafficDensity, "SCORE", self.score
+        return score
+
+
+    def neutralizeTrafficTiles(self, engine, tileX, tileY):
+        # Neutralize traffic tiles.
+        tile = engine.getTile(tileX, tileY)
+
+        tileBits = tile & ~micropolisengine.LOMASK
+        tileNumber = tile & micropolisengine.LOMASK
+
+        if ((tileNumber >= micropolisengine.HBRIDGE) and
+            (tileNumber <= micropolisengine.BRWXXX7)):
+
+            #print "neutralizing tile", tile
+            tileNumber = (tileNumber & 0x000F) + 64
+            #print "Setting tile", tileX, tileY, tileNumber
+            tile = tileNumber | tileBits
+
+            engine.setTile(tileX, tileY, tile)
+
+
+    def findRoads(self, engine, tileX, tileY):
+
+        roads = {
+            'north': self.isRoad(engine, tileX, tileY - 1),
+            'south': self.isRoad(engine, tileX, tileY + 1),
+            'east': self.isRoad(engine, tileX + 1, tileY),
+            'west': self.isRoad(engine, tileX - 1, tileY),
+        }
+        #print roads
+
+        # Make a list of avaliable directions that have roads on them.
+
+        dirs = [
+            d
+            for d, r in roads.items()
+            if r
+        ]
+
+        return dirs
+
+
+    def scanRoads(self, engine, d, tileX, tileY, dist=10):
+
+        # Scans ahead for dist in the given direction, looking for
+        # traffic. Returns the score, based on the sum of all traffic
+        # in the given direction for dist tiles, attenuated by
+        # distance.
+        score = 0
+        tx = tileX
+        ty = tileY
+        nextTileX, nextTileY = self.directionDeltas[d]
+
+        for step in range(0, dist):
+            tx += nextTileX
+            ty += nextTileY
+            if self.isRoad(engine, tx, ty):
+                trafficX = int(tx / 2)
+                trafficY = int(ty / 2)
+                trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
+                attenuation = float((dist - step) + 1) / float(dist)
+                score += trafficDensity * attenuation
+            else:
+                break
+
+        #print "scanRoads dir", d, "score", score
+
+        return score
+
+
 ########################################################################
 
 
@@ -166,6 +265,7 @@ class MicropolisRobot_PacBot(MicropolisRobot):
 
     viewKeys = MicropolisRobot.viewKeys + [
         'mouthOpen', 'mouthSize', 'mouthPhase', 'radius', 'hilite', 'score',
+        'possibleDirections',
     ]
 
     directionDeltas = {
@@ -210,25 +310,12 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         self.hilite = 0
         self.score = 0
         self.roadMap = {}
+        self.possibleDirections = []
 
 
     def simulate(self):
 
         engine = self.engine
-        getTile = engine.getTile
-
-        def isRoad(tx, ty):
-            tile = getTile(tx, ty)
-            tile = tile & micropolisengine.LOMASK
-            isRoadTile = ((tile >= micropolisengine.ROADBASE) and
-                          (tile < micropolisengine.POWERBASE))
-            if isRoadTile:
-                self.roadMap[(tx, ty)] = True
-            return isRoadTile
-
-
-        def getAny(a):
-            return a[random.randint(0, len(a) - 1)]
 
         self.mouthOpen = (
             ((engine.tickCount() + self.mouthPhase) % self.mouthOpenCycle) <
@@ -318,7 +405,7 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         tileX = int(x / 16)
         tileY = int(y / 16)
 
-        onRoad = isRoad(tileX, tileY)
+        onRoad = self.isRoad(engine, tileX, tileY)
 
         if not onRoad:
 
@@ -332,54 +419,47 @@ class MicropolisRobot_PacBot(MicropolisRobot):
             frustrated = True
             self.hilite = 3
 
+            prob = 0.25 # Probability of generating some traffic on
+                        # each adjacent road.
+
+            # Generate traffic to here on any adjacent roads.
+            dirs = self.findRoads(engine, tileX, tileY)
+            if dirs and random.random() < prob:
+                self.hilite = 4
+                for d in dirs:
+                    dirX, dirY = self.directionDeltas[d]
+                    tx = tileX + dirX
+                    ty = tileY + dirY
+                    if ((tx >= 0) and
+                        (tx < micropolisengine.WORLD_W) and
+                        (ty >= 0) and
+                        (ty < micropolisengine.WORLD_H)):
+
+                        # Choose a random zone type as a traffic
+                        # destination.
+                        zoneType = self.getAny((
+                            micropolisengine.ZT_COMMERCIAL,
+                            micropolisengine.ZT_INDUSTRIAL,
+                            micropolisengine.ZT_RESIDENTIAL,
+                        ))
+                        engine.makeTraffic(tx, ty, zoneType)
+
         else:
 
             # On a road.
 
             # Eat traffic.
 
-            # Zero out traffic density.
-            trafficX = int(tileX / 2)
-            trafficY = int(tileY / 2)
-            trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
-            engine.setTrafficDensity(trafficX, trafficY, 0)
-            if trafficDensity:
-                self.score += trafficDensity
-                #print "ATE TRAFFIC", trafficDensity, "SCORE", self.score
+            self.score += self.eatTraffic(engine, tileX, tileY)
 
-            # Neutralize traffic tiles.
-            tile = getTile(tileX, tileY)
-            tileBits = tile & ~micropolisengine.LOMASK
-            tileNumber = tile & micropolisengine.LOMASK
-            if ((tileNumber >= micropolisengine.HBRIDGE) and
-                (tileNumber <= micropolisengine.BRWXXX7)):
-                #print "neutralizing tile", tile
-                tileNumber = (tileNumber & 0x000F) + 64
-                #print "Setting tile", tileX, tileY, tileNumber
-                tile = tileNumber | tileBits
-                engine.setTile(tileX, tileY, tile)
+            self.neutralizeTrafficTiles(engine, tileX, tileY)
 
             if inCenter:
 
                 #print "CENTER"
 
                 # Look for adjacent roads.
-
-                roads = {
-                    'north': isRoad(tileX, tileY - 1),
-                    'south': isRoad(tileX, tileY + 1),
-                    'east': isRoad(tileX + 1, tileY),
-                    'west': isRoad(tileX - 1, tileY),
-                }
-                #print roads
-
-                # Make a list of avaliable directions.
-
-                dirs = [
-                    d
-                    for d, r in roads.items()
-                    if r
-                ]
+                dirs = self.findRoads(engine, tileX, tileY)
 
                 if len(dirs) == 0:
 
@@ -404,7 +484,7 @@ class MicropolisRobot_PacBot(MicropolisRobot):
                         if random.random() < randomTurnProb:
 
                             # Choose a direction randomly.
-                            curDir = getAny(dirs)
+                            curDir = self.getAny(dirs)
                             #print "RANDOM TURN", curDir, "============="
 
                         else:
@@ -421,41 +501,27 @@ class MicropolisRobot_PacBot(MicropolisRobot):
                             oppositeDir = self.oppositeDirections[curDir]
                             bestDir = None
                             bestScore = -1
-                            for dir in dirs:
+                            for d in dirs:
                                 # Base score is random to keep things interesting.
-                                score = random.random() * 50
+                                score = random.random() * 30
 
                                 # Extra score for current direction.
-                                if dir == curDir:
+                                if d == curDir:
                                     score += random.random() * 100
 
                                 # Less score for opposite direction.
-                                if dir == oppositeDir:
+                                if d == oppositeDir:
                                     score -= random.random() * 100
 
-                                # Scan ahead on each direction, looking for traffic.
-                                tx = tileX
-                                ty = tileY
-                                nextTileX, nextTileY = self.directionDeltas[dir]
-                                dist = 10
-                                for step in range(0, dist):
-                                    tx += nextTileX
-                                    ty += nextTileY
-                                    if isRoad(tx, ty):
-                                        trafficX = int(tx / 2)
-                                        trafficY = int(ty / 2)
-                                        trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
-                                        attenuation = float(step + 1) / float(dist)
-                                        score += trafficDensity * attenuation
-                                    else:
-                                        break
-                                #print dir, score,
+                                score += self.scanRoads(engine, d, tileX, tileY)
+
+                                #print d, score,
                                 if score > bestScore:
                                     bestScore = score
-                                    bestDir = dir
+                                    bestDir = d
 
-                            #print "BEST", bestDir, "========"
-                            curDir = bestDir or getAny(dirs)
+                            #print "BESTDIR", bestDir, "========"
+                            curDir = bestDir or self.getAny(dirs)
 
         dx, dy = self.directionDeltas[curDir]
         dx *= defaultSpeed

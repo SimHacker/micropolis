@@ -87,7 +87,7 @@
 
     <string id="Road Request:">Wegaanvraag:</string>
 
-    <string id="Fire Request:">Brand(weer)aanvraag:</string>
+    <string id="Fire Request:">Brandaanvraag:</string>
 
     <string id="Police Request:">Politie-aanvraag:</string>
 
@@ -478,7 +478,7 @@
 
     <string id="Road">Weg</string>
 
-    <string id="Center">Centreren/centrum?</string>
+    <string id="Center">Centreren</string>
 
     <string id="PacBot">PacBot</string>
 
