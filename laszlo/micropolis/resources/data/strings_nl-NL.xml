@@ -38,7 +38,7 @@
 
     <!-- appview.lzx -->
 
-    <string id="Micropolis: Choose a City">Micropolis: een stad kiezen</string>
+    <string id="Micropolis: Choose a City">Micropolis: kies een stad</string>
 
     <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Welkom bij Micropolis!&lt;br/&gt;&lt;br/&gt;Kies een stad door een scenario uit de tab Scenario's te selecteren, door een nieuwe, willekeurige stad met de tab Generator te selecteren, of door een stad in de bibliotheek uit de tab Bibliotheek te laden.&lt;br/&gt;&lt;br/&gt;Druk vervolgens op de knop Speel met deze stad om Micropolis te starten.</string>
 
@@ -87,7 +87,7 @@
 
     <string id="Road Request:">Wegaanvraag:</string>
 
-    <string id="Fire Request:">Brandaanvraag:</string>
+    <string id="Fire Request:">Brandweeraanvraag:</string>
 
     <string id="Police Request:">Politie-aanvraag:</string>
 
@@ -116,7 +116,7 @@
 
     <string id="No, keep playing with this city.">Nee, doorgaan met deze stad.</string>
 
-    <string id="Yes, choose another city.">Ja, een andere stad kiezen</string>
+    <string id="Yes, choose another city.">Ja, een andere stad kiezen.</string>
 
     <string id="Ultra Slow">Ultralangzaam</string>
 
@@ -146,7 +146,7 @@
 
     <string id="Paused.">Onderbroken.</string>
 
-    <string id="Running!">Programma actief!</string>
+    <string id="Running!">Actief</string>
 
     <string id="Speed">Snelheid</string>
 
@@ -256,9 +256,9 @@
 
     <string id="Hard">Moeilijk</string>
 
-    <string id="Approve:">Goedkeuren:</string>
+    <string id="Approve:">Goedkeuring:</string>
 
-    <string id="Disapprove:">Afkeuren:</string>
+    <string id="Disapprove:">Afkeuring:</string>
 
     <string id="Population:">Bevolking:</string>
 
@@ -353,7 +353,7 @@
 
     <!-- userview.lzx -->
 
-    <string id="You have successfully logged in,*">U bent aangemeld en u kunt uw account nu configureren.</string>
+    <string id="You have successfully logged in,*">U bent aangemeld en kunt uw account nu configureren.</string>
 
     <string id="Please log in or create a new account.">Log in of maak een nieuwe account.</string>
 
@@ -610,60 +610,60 @@
 
     <string id="notice_47_title">Je bent een winnaar!</string>
 
-    <string id="notice_47_description">Uw mayorial vaardigheid en stadsplanning expertise hebben verdiend u de sleutel tot de stad. Plaatselijke bewoners zal erectie monument aan uw heerlijkheid en de naam van hun eerste kinderen geboren na jou. Waarom niet een looptijd van gouverneur?</string>
+    <string id="notice_47_description">U hebt de SLEUTEL VAN DE STAD aan uw vaardigheden als burgemeester en stadsplanner te danken! Burgers zullen als eerbetoon een monument bouwen en hun eerstgeborenen vernoemen naar u. Waarom stelt u zich niet kandidaat voor het gouverneurschap?</string>
 
-    <string id="notice_48_title">Impeachment mededeling!</string>
+    <string id="notice_48_title">Impeachmentmededeling!</string>
 
-    <string id="notice_48_description">De gehele bevolking van deze stad is er eindelijk genoeg van je onbekwaam planning en incompetent management. Een boze menigte - geleid door je moeder - is gespot in de buurt van het stadhuis.&lt;br/&gt;U moet serieus overwegen om een langere vakantie - NOW. (Of lees de handleiding en probeer het opnieuw.)</string>
+    <string id="notice_48_description">De gehele bevolking van deze stad heeft eindelijk genoeg van je onbekwame planning en incompetente management. Een boze menigte - geleid door je moeder - is gespot in de buurt van het stadhuis.&lt;br/&gt;U moet serieus overwegen om NU langere tijd op vakantie te gaan. (Of lees de handleiding en probeer het opnieuw.)</string>
 
     <string id="notice_49_title">Over Micropolis</string>
 
-    <string id="notice_49_description">Micropolis Copyright (C) 2007 door Electronic Arts.&lt;br/&gt;Gebaseerd op het originele SimCity concept, ontwerp en code door Will Wright en Fred Haslam.&lt;br/&gt;User Interface Ontworpen en gemaakt door Don Hopkins.&lt;br/&gt;Geport naar Linux, geoptimaliseerd en aangepast voor OLPC door Don Hopkins.&lt;br/&gt;Licentie onder de GNU General Public License, versie 3, met aanvullende voorwaarden.</string>
+    <string id="notice_49_description">Micropolis Copyright (C) 2007 door Electronic Arts.&lt;br/&gt;Gebaseerd op het originele SimCity concept, ontwerp en code door Will Wright en Fred Haslam.&lt;br/&gt;Gebruikersinterface ontworpen en gemaakt door Don Hopkins.&lt;br/&gt;Geport naar Linux, geoptimaliseerd en aangepast voor OLPC door Don Hopkins.&lt;br/&gt;Licentie onder de GNU General Public License, versie 3, met aanvullende voorwaarden.</string>
 
     <string id="notice_50_title">DULLSVILLE, USA  1900</string>
 
-    <string id="notice_50_description">Dingen zijn niet veel veranderd hier in de laatste honderd jaar of zo en de bewoners beginnen te vervelen. Ze denken Dullsville zou de volgende grote stad met de juiste leider.&lt;br/&gt;Het is uw taak om het aantrekken van nieuwe groei en ontwikkeling, draaien Dullsville in een metropool in 30 jaar.</string>
+    <string id="notice_50_description">Dingen zijn hier de afgelopen eeuw niet veel veranderd en de bewoners beginnen zich te vervelen. Ze denken dat Dullsville zou kunnen uitgroeien tot de volgende grote stad met de juiste leider.&lt;br/&gt;Het is uw taak om nieuwe groei en ontwikkeling mogelijk te maken, waardoor Dullsville binnen dertig jaar in een metropool kan veranderen.</string>
 
     <string id="notice_51_title">SAN FRANCISCO, CA.  1906</string>
 
-    <string id="notice_51_description">Schade van de aardbeving was klein vergeleken met die van de daaropvolgende brand, die dagen te controleren. 1500 mensen overleden.&lt;br/&gt;Beheersing van de brand moet uw eerste zorg. Dan is duidelijk het puin en beginnen met de wederopbouw. U heeft 5 jaar.</string>
+    <string id="notice_51_description">De schade door de aardbeving viel mee vergeleken met die van de daaropvolgende branden, waarvoor dagen nodig waren om die onder controle te krijgen. 1500 mensen zijn overleden.&lt;br/&gt;Beheersing van de brand moet uw eerste zorg zijn. Ruim vervolgens het puin en begin met de wederopbouw. U heeft 5 jaar.</string>
 
     <string id="notice_52_title">HAMBURG, DUITSLAND  1944</string>
 
-    <string id="notice_52_description">Allied brand-bombardementen op Duitse steden in de Tweede Wereldoorlog veroorzaakt enorme schade en verlies van leven. Mensen in de binnensteden waren het grootste risico lopen.&lt;br/&gt;U moet de firestorms tijdens de bombardementen en de wederopbouw van de stad na de oorlog. U heeft 5 jaar.</string>
+    <string id="notice_52_description">De bombardementen van de geallieerden van de Duitste steden in de Tweede Wereldoorlog hebben veel burgerslachtoffers geeist en veel schade veroorzaakt. Mensen in de binnensteden liepen het meeste risico.&lt;br/&gt;U moet de brandhaarden die tijdens de bombardementen onstaan controleren en de stad na de oorlog opnieuw opbouwen. U heeft 5 jaar.</string>
 
     <string id="notice_53_title">BERN, ZWITZERLAND  1965</string>
 
-    <string id="notice_53_description">De wegen zijn hier steeds meer congestie elke dag, en de bewoners zijn boos. Zij eisen dat u daar iets aan doen.&lt;br/&gt;Sommigen hebben gesuggereerd een massale doorvoer systeem als het antwoord, maar dit zou een ingrijpende rezoning in het centrum. Je hebt 10 jaar.</string>
+    <string id="notice_53_description">De wegen lopen hier elke dag steeds meer vol en de bewoners zijn boos. Zij eisen dat u daar iets aan doet.&lt;br/&gt;Sommigen hebben gesuggereerd dat een massatransportsysteem het antwoord is, maar dit zou een ingrijpende herstructurering van de binnenstad met zich meebrengen. U hebt 10 jaar.</string>
 
     <string id="notice_54_title">TOKIO, JAPAN  1957</string>
 
-    <string id="notice_54_description">Een groot reptiel monster is gespot rubriek voor Tokio Bay. Het lijkt te worden aangetrokken tot de niveaus van zware industriële vervuiling daar.&lt;br/&gt;Probeer om de branden, dan is het herstel van het industriële centrum. U heeft 5 jaar.</string>
+    <string id="notice_54_description">Een groot reptielachtig monster is gespot en onderweg naar Tokio Bay. Het lijkt daartoe te worden aangetrokken door het hoge niveau industriële vervuiling.&lt;br/&gt;Probeer de branden onder controle te krijgen en herstel vervolgens het industriegebied. U heeft 5 jaar.</string>
 
     <string id="notice_55_title">DETROIT, MI.  1972</string>
 
-    <string id="notice_55_description">Per 1970, de concurrentie uit het buitenland en andere economische factoren geduwd zodra de &quot;auto-hoofdstad van de wereld&quot; in een recessie. Daling van grondprijzen en de werkloosheid steeg vervolgens de criminaliteit in de binnenstad tot chronische niveaus.&lt;br/&gt;Je hebt 10 jaar om de criminaliteit en het herstel van de industriële basis van de stad.</string>
+    <string id="notice_55_description">Concurrentie uit het buitenland en andere economische facturen hebben in 1970 de voormalige &quot;auto-hoofdstad van de wereld&quot; in een recessie doen belanden. Grondprijzen zakken dramatisch en door werkloosheid in de binnenstad neemt criminaliteit hand over hand toe.&lt;br/&gt;Je hebt 10 jaar om de criminaliteit terug te dringen en de industrie van de stad te herstructureren en opnieuw op te bouwen.</string>
 
     <string id="notice_56_title">BOSTON, MA.  2010</string>
 
-    <string id="notice_56_description">Een belangrijke kernsmelting staat te gebeuren op een van de nieuwe binnenstad van nucleaire reactoren. Het gebied in de nabijheid van de reactor zal zijn ernstig verontreinigd door straling, waardoor je voor de herstructurering van de stad eromheen.&lt;br/&gt;Je hebt 5 jaar om de situatie onder controle.</string>
+    <string id="notice_56_description">Er zal zich een meltdown voordoen in een van de kerncentrales in de binnenstad. Het gebied rondom de reactor zal ernstig aangetast worden door straling, waardoor de herstructurering van de stad daaromheen moet plaatsvinden.&lt;br/&gt;Je hebt 5 jaar om de situatie onder controle te krijgen.</string>
 
     <string id="notice_57_title">RIO DE JANEIRO, BRAZILIË  2047</string>
 
-    <string id="notice_57_description">In het midden van de 21e eeuw, het broeikaseffect gerezen globale temperaturen 6 graden F. Polaire ijskappen gesmolten en getogen zeespiegel wereldwijd. Kustgebieden werden verwoest door overstromingen en erosie.&lt;br/&gt;Je hebt 10 jaar om deze moeras terug in een stad.</string>
+    <string id="notice_57_description">In het midden van de 21e eeuw is wereldwijd de temperatuur met 6 graden gestegen door het broeikaseffect.  Polaire ijskappen gesmolten en gestegen zeespiegel wereldwijd. Kustgebieden werden verwoest door overstromingen en erosie.&lt;br/&gt;U hebt 10 jaar om dit moeras weer in een stad te veranderen.</string>
 
 
     <!-- overlays.xml -->
 
-    <string id="overlay_all_title">Alle Zones</string>
+    <string id="overlay_all_title">Alle zones</string>
 
-    <string id="overlay_residential_title">Residentiële Zones</string>
+    <string id="overlay_residential_title">Residentiële zones</string>
 
     <string id="overlay_commercial_title">Commerciële Zones</string>
 
-    <string id="overlay_industrial_title">Commerciële Zones</string>
+    <string id="overlay_industrial_title">Industriegebieden</string>
 
-    <string id="overlay_powergrid_title">Vermogen Connectiviteit</string>
+    <string id="overlay_powergrid_title">Stroomaansluiting</string>
 
     <string id="overlay_transportation_title">Transportnetwerk</string>
 
@@ -673,22 +673,22 @@
 
     <string id="overlay_trafficdensity_title">Verkeersdichtheid</string>
 
-    <string id="overlay_pollutiondensity_title">Verontreiniging Dichtheid</string>
+    <string id="overlay_pollutiondensity_title">Verontreinigingsdichtheid</string>
 
     <string id="overlay_crimerate_title">Criminaliteit</string>
 
-    <string id="overlay_landvalue_title">Terrein Waarde</string>
+    <string id="overlay_landvalue_title">Terreinwaarde</string>
 
-    <string id="overlay_firecoverage_title">Brandweerkazerne Dekking</string>
+    <string id="overlay_firecoverage_title">Dekking brandweerkazerne</string>
 
-    <string id="overlay_policecoverage_title">Politebureau Dekking</string>
+    <string id="overlay_policecoverage_title">Dekking politiebureau</string>
 
 
     <!-- scenarios.xml -->
 
     <string id="scenario_1_title">Dullsville</string>
 
-    <string id="scenario_1_tagline">Boredome</string>
+    <string id="scenario_1_tagline">Verveling</string>
 
     <string id="scenario_2_title">San Francisco</string>
 
@@ -704,7 +704,7 @@
 
     <string id="scenario_5_title">Tokio</string>
 
-    <string id="scenario_5_tagline">Monster Aanvel</string>
+    <string id="scenario_5_tagline">Monsteraanval</string>
 
     <string id="scenario_6_title">Detroit</string>
 
@@ -712,22 +712,22 @@
 
     <string id="scenario_7_title">Boston</string>
 
-    <string id="scenario_7_tagline">Nucleaire Kernsmelting</string>
+    <string id="scenario_7_tagline">Meltdown</string>
 
     <string id="scenario_8_title">Rio de Janeiro</string>
 
-    <string id="scenario_8_tagline">Kustgebieden Inunderen</string>
+    <string id="scenario_8_tagline">Kustoverstroming</string>
 
 
     <!-- micropolisturbogearsengine.py -->
 
-    <string id="You are logged in.*">U bent ingelogd. Welkom terug te Micropolis Online!</string>
+    <string id="You are logged in.*">U bent ingelogd. Welkom terug bij Micropolis Online!</string>
 
     <string id="Incorrect user name or password.">Onjuiste gebruikersnaam of wachtwoord.</string>
 
-    <string id="You are already logged out,*">U heeft zich al aangemeld, en u kunt inloggen of een account aan te maken.</string>
+    <string id="You are already logged out,*">U heeft zich al afgemeld, en u kunt inloggen of een account aanmaken.</string>
 
-    <string id="You are logged out.*">U bent afgemeld. Kom terug!</string>
+    <string id="You are logged out.*">U bent afgemeld. Kom snel terug!</string>
 
     <string id="Please enter a user name.">Geef een gebruikersnaam.</string>
 
@@ -735,15 +735,15 @@
 
     <string id="Please enter a password.">Geef een wachtwoord.</string>
 
-    <string id="A user of that name already exists.*">Een gebruiker van die naam al bestaat.</string>
+    <string id="A user of that name already exists.*">Er bestaat al een gebruiker met die naam.</string>
 
     <string id="Please repeat the same password in the next field.">Herhaal hetzelfde wachtwoord in het volgende veld.</string>
 
-    <string id="An account with that email address already exists.">Een rekening met dat email adres reeds bestaat.</string>
+    <string id="An account with that email address already exists.">Er bestaat al een account met dat e-mailadres.</string>
 
     <string id="A new account has been created*">Een nieuwe account is gemaakt en u bent ingelogd. Welkom op Micropolis Online!</string>
 
-    <string id="Incorrect old password.">Onjuiste oude wachtwoord.</string>
+    <string id="Incorrect old password.">Onjuist oud wachtwoord.</string>
 
     <string id="The new passwords do not match.">De nieuwe wachtwoorden komen niet overeen.</string>
 
