@@ -2735,6 +2735,10 @@ private:
     ////////////////////////////////////////////////////////////////////////
     // traffic.cpp
 
+public:
+
+    short makeTraffic(int x, int y, ZoneType dest);
+
 private:
 
     /* Position stack */

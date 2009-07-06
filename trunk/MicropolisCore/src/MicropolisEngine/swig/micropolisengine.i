@@ -76,6 +76,35 @@
 
 
 ////////////////////////////////////////////////////////////////////////
+// Typemaps
+//
+// Tell SWIG how to pass certain data types in and out.
+
+
+%typemap(in) const Position &pos {
+
+    // SWIG const Postion &pos in typemap from micropolisengine.i
+
+    if (!PyTuple_Check($input) ||
+        (PyObject_Size($input) != 2)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode2), "expected tuple of length two");
+    }
+
+    if (!PyArg_ParseTuple($input, "dd", &pos.posX, &pos.posY)) {
+        SWIG_exception_fail(SWIG_ArgError(ecode2), "expected tuple of length two containing ints");
+    }
+
+}
+
+%typemap(out) Position {
+    // $1 is the input Position.
+    // $result is the output Python tuple containing two integers.
+    // TODO: Make a tuple containing the position.
+    // $result = convertPositionToTuple($1);
+}
+
+
+////////////////////////////////////////////////////////////////////////
 // Templates
 //
 // Tell SWIG to write wrappers for the templates that we're 

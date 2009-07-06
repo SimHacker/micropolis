@@ -1036,7 +1036,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     ((row + rows) > micropolisengine.WORLD_H)):
                     self.expectationFailed("Invalid parameters.")
 
-                print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
+                #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
                 tiles = self.tengine.getTileData(
                     None,
                     self.tileMap,
@@ -1119,7 +1119,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         elif message == 'historyview':
 
-            print "HISTORYVIEW", messageDict
+            #print "HISTORYVIEW", messageDict
 
             try:
                 id = messageDict['id']
@@ -1134,7 +1134,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             if not session.isMessageQueued('update', 'historyview', id):
 
-                print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+                #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
 
                 # Scale the residential, commercial and industrial histories
                 # together relative to the max of all three.  Up to 128 they
@@ -1245,7 +1245,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     'range': historyRange,
                     'collapse': True,
                 }
-                print "HISTORY MESSAGE", msg
+                #print "HISTORY MESSAGE", msg
                 session.sendMessage(msg)
 
         elif message == 'login':
