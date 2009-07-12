@@ -100,8 +100,8 @@
 	<toolicon name="residential"
 	    toolID="residential"
 	    resource="tool_residential_rsrc"
-	    title="${gApp._('Residential')"
-	    description="${gApp._('Residential (tool description)')"
+	    title="${gApp._('Residential')}"
+	    description="${gApp._('Residential (tool description)')}"
 	/>
 
 	<toolicon name="commercial"
