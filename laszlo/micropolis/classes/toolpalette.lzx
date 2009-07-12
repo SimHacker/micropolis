@@ -44,109 +44,127 @@
 	<toolicon name="bulldozer"
 	    toolID="bulldozer"
 	    resource="tool_bulldozer_rsrc"
-	    text="${gApp._('Bulldozer')}"
+	    title="${gApp._('Bulldozer')}"
+	    description="${gApp._('Bulldozer (tool description)')}"
 	/>
 
 	<toolicon name="road"
 	    toolID="road"
 	    resource="tool_road_rsrc"
-	    text="${gApp._('Road')}"
+	    title="${gApp._('Road')}"
+	    description="${gApp._('Road (tool description)')}"
 	/>
 
 	<toolicon name="railroad"
 	    toolID="railroad"
 	    resource="tool_railroad_rsrc"
-	    text="${gApp._('Railroad')}"
+	    title="${gApp._('Railroad')}"
+	    description="${gApp._('Railroad (tool description)')}"
 	/>
 
 	<toolicon name="wire"
 	    toolID="wire"
 	    resource="tool_wire_rsrc"
-	    text="${gApp._('Wire')}"
+	    title="${gApp._('Wire')}"
+	    description="${gApp._('Wire (tool description)')}"
 	/>
 
 	<toolicon name="park"
 	    toolID="park"
 	    resource="tool_park_rsrc"
-	    text="${gApp._('Park')}"
+	    title="${gApp._('Park')}"
+	    description="${gApp._('Park (tool description)')}"
 	/>
 
 	<toolicon name="query"
 	    toolID="query"
 	    resource="tool_query_rsrc"
-	    text="${gApp._('Query')}"
+	    title="${gApp._('Query')}"
+	    description="${gApp._('Query (tool description)')}"
 	/>
 
 	<toolicon name="center"
 	    toolID="center"
 	    resource="tool_center_rsrc"
-	    text="${gApp._('Center')}"
+	    title="${gApp._('Center')}"
+	    description="${gApp._('Center (tool description)')}"
 	/>
 
 	<toolicon name="firestation"
 	    toolID="firestation"
 	    resource="tool_firestation_rsrc"
-	    text="${gApp._('Fire Station')}"
+	    title="${gApp._('Fire Station')}"
+	    description="${gApp._('Fire Station (tool description)')}"
 	/>
 
 	<toolicon name="residential"
 	    toolID="residential"
 	    resource="tool_residential_rsrc"
-	    text="${gApp._('Residential')"
+	    title="${gApp._('Residential')"
+	    description="${gApp._('Residential (tool description)')"
 	/>
 
 	<toolicon name="commercial"
 	    toolID="commercial"
 	    resource="tool_commercial_rsrc"
-	    text="${gApp._('Commercial')}"
+	    title="${gApp._('Commercial')}"
+	    description="${gApp._('Commercial (tool description)')}"
 	/>
 
 	<toolicon name="industrial"
 	    toolID="industrial"
 	    resource="tool_industrial_rsrc"
-	    text="${gApp._('Industrial')}"
+	    title="${gApp._('Industrial')}"
+	    description="${gApp._('Industrial (tool description)')}"
 	/>
 
 	<toolicon name="policestation"
 	    toolID="policestation"
 	    resource="tool_policestation_rsrc"
-	    text="${gApp._('Police Station')}"
+	    title="${gApp._('Police Station')}"
+	    description="${gApp._('Police Station (tool description)')}"
 	/>
 
 	<toolicon name="stadium"
 	    toolID="stadium"
 	    resource="tool_stadium_rsrc"
-	    text="${gApp._('Stadium')}"
+	    title="${gApp._('Stadium')}"
+	    description="${gApp._('Stadium (tool description)')}"
 	/>
 
 	<toolicon name="seaport"
 	    toolID="seaport"
 	    resource="tool_seaport_rsrc"
-	    text="${gApp._('Seaport')}"
+	    title="${gApp._('Seaport')}"
+	    description="${gApp._('Seaport (tool description)')}"
 	/>
 
 	<toolicon name="coalpower"
 	    toolID="coalpower"
 	    resource="tool_coalpower_rsrc"
-	    text="${gApp._('Coal Power')}"
+	    title="${gApp._('Coal Power')}"
+	    description="${gApp._('Coal Power (tool description)')}"
 	/>
 
 	<toolicon name="nuclearpower"
 	    toolID="nuclearpower"
 	    resource="tool_nuclearpower_rsrc"
-	    text="${gApp._('Nuclear Power')}"
+	    title="${gApp._('Nuclear Power')}"
+	    description="${gApp._('Nuclear Power (tool description)')}"
 	/>
 
 	<toolicon name="airport"
 	    toolID="airport"
 	    resource="tool_airport_rsrc"
-	    text="${gApp._('Airport')}"
+	    title="${gApp._('Airport')}"
+	    description="${gApp._('Airport (tool description)')}"
 	/>
 
 	<toolicon name="pacbot"
 	    toolID="pacbot"
 	    resource="tool_pacbot_rsrc"
-	    text="${gApp._('PacBot')}"
+	    title="${gApp._('PacBot')}"
+	    description="${gApp._('PacBot (tool description)')}"
 	/>
 
 

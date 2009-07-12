@@ -17,14 +17,19 @@
 
 
         <attribute name="toolID" type="string" value=""/>
-        <attribute name="text" type="string" value=""/>
+        <attribute name="title" type="string" value=""/>
+        <attribute name="description" type="string" value=""/>
         <attribute name="pressed" value="false"/>
         <attribute name="inside" value="false"/>
         <attribute name="hilite" value="${((this.pressed &amp;&amp; this.inside) || (gApp.tool == this.toolID))}"/>
 
 
 	<handler name="onmouseover" args="arg"><![CDATA[
-	    gToolTip.enterView(this, this.text);
+	    var tip = 
+	        this.title + 
+		':\n' + 
+		this.description;
+	    gToolTip.enterView(this, tip, 'right');
 	  ]]>
 	</handler>
 

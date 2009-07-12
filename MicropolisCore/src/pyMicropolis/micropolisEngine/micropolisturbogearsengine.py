@@ -1391,6 +1391,15 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             #print "SETLANGUAGE", messageDict
             session.language = messageDict['language']
 
+        elif message == 'sendRobot':
+
+            robotID = messageDict['robotID']
+            command = messageDict['command']
+            args = messageDict['args']
+            robot = self.getRobot(robotID)
+            if robot:
+                robot.sendCommand(command, args)
+
         else:
 
             print "UNKNOWN MESSAGE", message

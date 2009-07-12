@@ -465,35 +465,71 @@
 
     <!-- toolpalette.lzx -->
 
+    <string id="Residential (tool description)">Gives people a place to live. Generates citizens and traffic.</string>
+
+    <string id="Commercial (tool description)">Gives people a place to shop. Generates jobs and traffic.</string>
+
+    <string id="Industrial (tool description)">Gives people a place to work. Generates jobs and traffic.</string>
+
     <string id="Fire Station">Fire Station</string>
+
+    <string id="Fire Station (tool description)">Puts out fires nearby.</string>
 
     <string id="Query">Query</string>
 
+    <string id="Query (tool description)">Describes zones.</string>
+
     <string id="Police Station">Police Station</string>
+
+    <string id="Police Station (tool description)">Reduces crime nearby.</string>
 
     <string id="Wire">Wire</string>
 
+    <string id="Wire (tool description)">Connects zones with power.</string>
+
     <string id="Bulldozer">Bulldozer</string>
+
+    <string id="Bulldozer (tool description)">Destroys zones and features.</string>
 
     <string id="Railroad">Railroad</string>
 
+    <string id="Railroad (tool description)">Draws a railroad on land or a tunnel under water.</string>
+
     <string id="Road">Road</string>
+
+    <string id="Road (tool description)">Draws a road on land or a bridge over water.</string>
 
     <string id="Center">Center</string>
 
+    <string id="Center (tool description)">Scrolls location to center of screen.</string>
+
     <string id="PacBot">PacBot</string>
+
+    <string id="PacBot (tool description)">Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
 
     <string id="Stadium">Stadium</string>
 
+    <string id="Stadium (tool description)">Helps residential zones.</string>
+
     <string id="Park">Park</string>
+
+    <string id="Park (tool description)">Makes the city a nicer place to live.</string>
 
     <string id="Seaport">Seaport</string>
 
+    <string id="Seaport (tool description)">Helps industrial zones.</string>
+
     <string id="Coal Power">Coal Power</string>
+
+    <string id="Coal Power (tool description)">Generates power, but pollutes.</string>
 
     <string id="Airport">Airport</string>
 
+    <string id="Airport (tool description)">Helps commercial zones.</string>
+
     <string id="Nuclear Power">Nuclear Power</string>
+
+    <string id="Nuclear Power (tool description)">Generates power, but might melt down.</string>
 
 
     <!-- disasters.xml -->
@@ -752,5 +788,15 @@
 
     <string id="Your password has been changed.">Your password has been changed.</string>
 
+
+    <!-- Robots -->
+
+    <string id="Autonomous">Autonomous</string>
+
+    <string id="Reset">Reset</string>
+
+    <string id="Manual">Manual</string>
+
+    <string id="Delete">Delete</string>
 
 </strings>

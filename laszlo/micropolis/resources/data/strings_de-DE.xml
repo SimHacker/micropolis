@@ -425,6 +425,12 @@
     <string id="To">@de-DE@ To</string>
 
 
+    <!-- robot.lzx -->
+
+
+    <string id="Score">@de-DE@ Score</string>
+
+
     <!-- scenariosview.lzx -->
 
     <string id="Scenario">@de-DE@ Scenario</string>
@@ -458,33 +464,71 @@
 
     <!-- toolpalette.lzx -->
 
+    <string id="Residential (tool description)">@de-DE@ Gives people a place to live. Generates citizens and traffic.</string>
+
+    <string id="Commercial (tool description)">@de-DE@ Gives people a place to shop. Generates jobs and traffic.</string>
+
+    <string id="Industrial (tool description)">@de-DE@ Gives people a place to work. Generates jobs and traffic.</string>
+
     <string id="Fire Station">@de-DE@ Fire Station</string>
+
+    <string id="Fire Station (tool description)">@de-DE@ Puts out fires nearby.</string>
 
     <string id="Query">@de-DE@ Query</string>
 
+    <string id="Query (tool description)">@de-DE@ Describes zones.</string>
+
     <string id="Police Station">@de-DE@ Police Station</string>
+
+    <string id="Police Station (tool description)">@de-DE@ Reduces crime nearby.</string>
 
     <string id="Wire">@de-DE@ Wire</string>
 
+    <string id="Wire (tool description)">@de-DE@ Connects zones with power.</string>
+
     <string id="Bulldozer">@de-DE@ Bulldozer</string>
+
+    <string id="Bulldozer (tool description)">@de-DE@ Destroys zones and features.</string>
 
     <string id="Railroad">@de-DE@ Railroad</string>
 
+    <string id="Railroad (tool description)">@de-DE@ Draws a railroad on land or a tunnel under water.</string>
+
     <string id="Road">@de-DE@ Road</string>
+
+    <string id="Road (tool description)">@de-DE@ Draws a road on land or a bridge over water.</string>
 
     <string id="Center">@de-DE@ Center</string>
 
+    <string id="Center (tool description)">@de-DE@ Scrolls location to center of screen.</string>
+
+    <string id="PacBot">@de-DE@ PacBot</string>
+
+    <string id="PacBot (tool description)">@de-DE@ Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
+
     <string id="Stadium">@de-DE@ Stadium</string>
+
+    <string id="Stadium (tool description)">@de-DE@ Helps residential zones.</string>
 
     <string id="Park">@de-DE@ Park</string>
 
+    <string id="Park (tool description)">@de-DE@ Makes the city a nicer place to live.</string>
+
     <string id="Seaport">@de-DE@ Seaport</string>
+
+    <string id="Seaport (tool description)">@de-DE@ Helps industrial zones.</string>
 
     <string id="Coal Power">@de-DE@ Coal Power</string>
 
+    <string id="Coal Power (tool description)">@de-DE@ Generates power, but pollutes.</string>
+
     <string id="Airport">@de-DE@ Airport</string>
 
+    <string id="Airport (tool description)">@de-DE@ Helps commercial zones.</string>
+
     <string id="Nuclear Power">@de-DE@ Nuclear Power</string>
+
+    <string id="Nuclear Power (tool description)">@de-DE@ Generates power, but might melt down.</string>
 
 
     <!-- disasters.xml -->
@@ -743,5 +787,15 @@
 
     <string id="Your password has been changed.">@de-DE@ Your password has been changed.</string>
 
+
+    <!-- Robots -->
+
+    <string id="Autonomous">@de-DE@ Autonomous</string>
+
+    <string id="Reset">@de-DE@ Reset</string>
+
+    <string id="Manual">@de-DE@ Manual</string>
+
+    <string id="Delete">@de-DE@ Delete</string>
 
 </strings>
