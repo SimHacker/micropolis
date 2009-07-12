@@ -2737,7 +2737,7 @@ private:
 
 public:
 
-    short makeTraffic(int x, int y, ZoneType dest);
+    short makeTrafficAt(int x, int y, ZoneType dest);
 
 private:
 

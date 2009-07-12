@@ -104,6 +104,7 @@
         <attribute name="citySource" type="string" value=""/>
         <attribute name="cityID" type="string" value=""/>
         <attribute name="historySerial" value="0"/>
+	<attribute name="currentRobot" value="null"/>
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -1160,6 +1161,16 @@
           ]]>
         </method>
 
+
+	<method name="sendRobot" args="robotID, command, args"><![CDATA[
+	    this.sendMessage({
+	        message: 'sendRobot',
+		robotID: robotID,
+		command: command,
+		args: args
+	    });
+	  ]]>
+	</method>
 
         <method name="updateMap"><![CDATA[
             this.handle_update({

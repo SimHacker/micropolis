@@ -648,6 +648,7 @@ You have 10 years to turn this swamp back into a city again.""",
         self.policeCoverageImage = None
         self.dataTileEngine = tileengine.TileEngine()
         self.robots = []
+        self.robotDict = {}
         self.saveFileDir = None
         self.saveFileName = None
         self.metaFileName = None
@@ -1630,18 +1631,37 @@ You have 10 years to turn this swamp back into a city again.""",
 
     def addRobot(self, robot):
         #print "ADDROBOT", robot
-        robots = self.robots
+
         self.removeRobot(robot)
+
+        robots = self.robots
         robots.append(robot)
+
+        robotDict = self.robotDict
+        robotDict[robot.robotID] = robot
+
         robot.engine = self
+        print "*** SET ENGINE", self, robot
 
 
     def removeRobot(self, robot):
         #print "REMOVEROBOT", robot
+
         robots = self.robots
         if robot in robots:
             robot.engine = None
             robots.remove(robot)
+
+        robotDict = self.robotDict
+        robotID = robot.robotID
+        if robotID in robotDict:
+            del robotDict[robotID]
+
+        robot.engine = None
+
+
+    def getRobot(self, robotID):
+        return self.robotDict.get(robotID, None)
 
 
     def clearRobots(self):

@@ -21,7 +21,7 @@
 	<attribute name="messageY" value="null"/>
 	<attribute name="popupDelegate" value="null"/>
 	<attribute name="popupDelegateActive" value="false"/>
-	<attribute name="popupDelay" value="500"/>
+	<attribute name="popupDelay" value="100"/>
 	<attribute name="popupMaxWidth" value="300"/>
 	<attribute name="popupDirection" type="string" value="up"/>
 	<attribute name="popupWrapped" value="true"/>
@@ -54,7 +54,7 @@
 	</method>
 
 
-	<method name="handlePopupTimer"><![CDATA[
+	<method name="handlePopupTimer" args="arg"><![CDATA[
 	    this.showTip();
 	  ]]>
 	</method>
@@ -86,7 +86,7 @@
 		txt.setAttribute("resize", true);
 	    } // if
 
-	    //Debug.write("pop up around view", this, v, this.popupDirection, tip.width, tip.height);
+	    Debug.write("pop up around view", this, this.popupDirection, tip.width, tip.height);
 
 	    var cx = x + (width / 2);
 	    var cy = y + (height / 2);
@@ -154,6 +154,8 @@
 	        y = margin;
 	    } // if
 
+	    this.bringToFront();
+
 	    tip.setAttribute("x", canvas.getMouse("x"));
 	    tip.setAttribute("y", canvas.getMouse("y"));
 	    tip.setAttribute("scale", 0.01);
@@ -163,7 +165,7 @@
 	    tip.animate("x", x, delay);
 	    tip.animate("y", y, delay);
 	    tip.animate("scale", 1.0, delay);
-	    tip.animate("opacity", 1.0);
+	    tip.animate("opacity", 1.0, delay);
 	  ]]>
 	</method>
 
@@ -176,7 +178,6 @@
 
 	<method name="enterView" args="v, message, dir"><![CDATA[
 	    var x, y, width, height;
-
 	    if (v == null) {
 		x = canvas.getMouse("x");
 		y = canvas.getMouse("y");
@@ -188,19 +189,11 @@
 		width = v.width;
 		height = v.height;
 
-		//Debug.write("start", x, y, width, height, dir);
-		while (v != null) {
-		    var mc = v['__LZmovieClipRef'];
-		    var xs = mc ? (mc['_xscale'] / 100.0) : 1;
-		    var ys = mc ? (mc['_yscale'] / 100.0) : 1;
-		    x *= xs;
-		    y *= ys;
+		Debug.write("start", x, y, width, height, dir);
+		while ((v != null) && (v != canvas)) {
 		    x += v.x;
 		    y += v.y;
-		    width *= xs;
-		    height *= ys;
-		    //Debug.write("step", x, y, width, height, v);
-		    v = v['parent'];
+		    v = v.immediateparent;
 		} // while
 
 	    } // if

@@ -425,6 +425,12 @@
     <string id="To">받는 사람</string>
 
 
+    <!-- robot.lzx -->
+
+
+    <string id="Score">@kr-KR@ Score</string>
+
+
     <!-- scenariosview.lzx -->
 
     <string id="Scenario">시나리오:</string>
@@ -458,35 +464,71 @@
 
     <!-- toolpalette.lzx -->
 
+    <string id="Residential (tool description)">@kr-KR@ Gives people a place to live. Generates citizens and traffic.</string>
+
+    <string id="Commercial (tool description)">@kr-KR@ Gives people a place to shop. Generates jobs and traffic.</string>
+
+    <string id="Industrial (tool description)">@kr-KR@ Gives people a place to work. Generates jobs and traffic.</string>
+
     <string id="Fire Station"></string>
+
+    <string id="Fire Station (tool description)">@kr-KR@ Puts out fires nearby.</string>
 
     <string id="Query">검색어</string>
 
+    <string id="Query (tool description)">@kr-KR@ Describes zones.</string>
+
     <string id="Police Station">경찰서</string>
+
+    <string id="Police Station (tool description)">@kr-KR@ Reduces crime nearby.</string>
 
     <string id="Wire">철사</string>
 
+    <string id="Wire (tool description)">@kr-KR@ Connects zones with power.</string>
+
     <string id="Bulldozer">불도저</string>
+
+    <string id="Bulldozer (tool description)">@kr-KR@ Destroys zones and features.</string>
 
     <string id="Railroad">철도</string>
 
+    <string id="Railroad (tool description)">@kr-KR@ Draws a railroad on land or a tunnel under water.</string>
+
     <string id="Road">도로</string>
+
+    <string id="Road (tool description)">@kr-KR@ Draws a road on land or a bridge over water.</string>
 
     <string id="Center">센터</string>
 
+    <string id="Center (tool description)">@kr-KR@ Scrolls location to center of screen.</string>
+
     <string id="PacBot">PacBot</string>
+
+    <string id="PacBot (tool description)">@kr-KR@ Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
 
     <string id="Stadium">경기장</string>
 
+    <string id="Stadium (tool description)">@kr-KR@ Helps residential zones.</string>
+
     <string id="Park">공원</string>
+
+    <string id="Park (tool description)">@kr-KR@ Makes the city a nicer place to live.</string>
 
     <string id="Seaport">항구</string>
 
+    <string id="Seaport (tool description)">@kr-KR@ Helps industrial zones.</string>
+
     <string id="Coal Power">석탄 전력</string>
+
+    <string id="Coal Power (tool description)">@kr-KR@ Generates power, but pollutes.</string>
 
     <string id="Airport">공항</string>
 
+    <string id="Airport (tool description)">@kr-KR@ Helps commercial zones.</string>
+
     <string id="Nuclear Power">핵 전력</string>
+
+    <string id="Nuclear Power (tool description)">@kr-KR@ Generates power, but might melt down.</string>
 
 
     <!-- disasters.xml -->
@@ -745,5 +787,15 @@
 
     <string id="Your password has been changed.">귀하의 비밀 번호가 변경되었습니다.</string>
 
+
+    <!-- Robots -->
+
+    <string id="Autonomous">@kr-KR@ Autonomous</string>
+
+    <string id="Reset">@kr-KR@ Reset</string>
+
+    <string id="Manual">@kr-KR@ Manual</string>
+
+    <string id="Delete">@kr-KR@ Delete</string>
 
 </strings>

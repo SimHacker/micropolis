@@ -464,35 +464,71 @@
 
     <!-- toolpalette.lzx -->
 
+    <string id="Residential (tool description)">Geeft mensen een plek om te wonen. Genereert de burgers en het verkeer.</string>
+
+    <string id="Commercial (tool description)">Geeft mensen een plaats om te winkelen. Genereert werkgelegenheid en verkeer.</string>
+
+    <string id="Industrial (tool description)">Geeft mensen een plek om te werken. Genereert werkgelegenheid en verkeer.</string>
+
     <string id="Fire Station">Brandweerkazerne</string>
+
+    <string id="Fire Station (tool description)">Komt branden buurt.</string>
 
     <string id="Query">Vraag</string>
 
+    <string id="Query (tool description)">Beschreven gebieden.</string>
+
     <string id="Police Station">Politiebureau</string>
+
+    <string id="Police Station (tool description)">Vermindert criminaliteit buurt.</string>
 
     <string id="Wire">Kabel</string>
 
+    <string id="Wire (tool description)">Verbindt gebieden met elektriciteit.</string>
+
     <string id="Bulldozer">Bulldozer</string>
+
+    <string id="Bulldozer (tool description)">Vernietigt zones en functies.</string>
 
     <string id="Railroad">Spoorweg</string>
 
+    <string id="Railroad (tool description)">Vestigt een spoorlijn op het land of een tunnel onder water.</string>
+
     <string id="Road">Weg</string>
+
+    <string id="Road (tool description)">Vestigt een weg op het land of van een brug over het water.</string>
 
     <string id="Center">Centreren</string>
 
+    <string id="Center (tool description)">Bladert locatie te midden van het scherm.</string>
+
     <string id="PacBot">PacBot</string>
+
+    <string id="PacBot (tool description)">Volgt de weg richting zwaar verkeer, en eet auto's, het terugdringen van het verkeer.</string>
 
     <string id="Stadium">Stadion</string>
 
+    <string id="Stadium (tool description)">Helpt residentiële zones.</string>
+
     <string id="Park">Park</string>
+
+    <string id="Park (tool description)">Maakt de stad een mooiere plek om te wonen.</string>
 
     <string id="Seaport">Zeehaven</string>
 
+    <string id="Seaport (tool description)">Helpt industriële zones.</string>
+
     <string id="Coal Power">Steenkoolcentrales</string>
+
+    <string id="Coal Power (tool description)">Genereert elektriciteit, maar vervuilt.</string>
 
     <string id="Airport">Luchthaven</string>
 
+    <string id="Airport (tool description)">Helpt commerciële zones.</string>
+
     <string id="Nuclear Power">Kernenergie</string>
+
+    <string id="Nuclear Power (tool description)">Elektriciteit opwekt, maar kunnen versmelten.</string>
 
 
     <!-- disasters.xml -->
@@ -751,5 +787,15 @@
 
     <string id="Your password has been changed.">Uw wachtwoord is gewijzigd.</string>
 
+
+    <!-- Robots -->
+
+    <string id="Autonomous">Autonome</string>
+
+    <string id="Reset">Reset</string>
+
+    <string id="Manual">Handleiding</string>
+
+    <string id="Delete">Wissen</string>
 
 </strings>

@@ -121,7 +121,6 @@ class MicropolisRobot:
     def simulate(self):
 
         self.tick += 1
-        engine = self.engine
 
 
     def draw(self, ctx):
@@ -255,6 +254,19 @@ class MicropolisRobot:
         return score
 
 
+    def sendCommand(self, command, args):
+        if command == 'delete':
+            self.engine.removeRobot(self)
+        elif command == 'autonomous':
+            self.autonomous = True
+        elif command == 'manual':
+            self.autonomous = False
+        elif command == 'reset':
+            pass
+        else:
+            print "MicropolisRobot.sendCommand: unknown command:", command, args
+
+
 ########################################################################
 
 
@@ -316,6 +328,7 @@ class MicropolisRobot_PacBot(MicropolisRobot):
     def simulate(self):
 
         engine = self.engine
+        #print "SIMULATE", self, engine
 
         self.mouthOpen = (
             ((engine.tickCount() + self.mouthPhase) % self.mouthOpenCycle) <
@@ -442,7 +455,7 @@ class MicropolisRobot_PacBot(MicropolisRobot):
                             micropolisengine.ZT_INDUSTRIAL,
                             micropolisengine.ZT_RESIDENTIAL,
                         ))
-                        engine.makeTraffic(tx, ty, zoneType)
+                        engine.makeTrafficAt(tx, ty, zoneType)
 
         else:
 
@@ -546,6 +559,14 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         self.speed = speed
 
         #print "NOW", "x", x, "y", y, "direction", direction, "speed", speed
+
+
+    def sendCommand(self, command, args):
+
+        if command == 'reset':
+            self.score = 0
+        else:
+            MicropolisRobot.sendCommand(self, command, args)
 
 
     def drawRobot(self, ctx):

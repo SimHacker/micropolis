@@ -22,7 +22,7 @@
 
 
 	<handler name="onmouseover" args="arg"><![CDATA[
-	    gToolTip.enterView(this, this.text);
+	    gToolTip.enterView(this, this.text, 'updown');
 	  ]]>
 	</handler>
 
@@ -83,91 +83,6 @@
 	    x="${(parent.dv.width - this.width) / 2}"
 	    y="${-this.height - 5}"
 	/>
-
-    </class>
-
-
-    <class name="robot_PacBot" extends="robot">
-
-
-	<attribute name="text" type="string" value="${gApp._('Score') + ': ' + this.score}"/>
-        <attribute name="mouthOpen" value="true"/>
-        <attribute name="mouthPhase" value="0"/>
-        <attribute name="mouthSize" value="1"/>
-        <attribute name="radius" value="8"/>
-        <attribute name="hilite" value="true"/>
-
-
-	<method name="drawRobot"><![CDATA[
-	    //Debug.write("PacBot drawRobot");
-	    var dv = this.dv;
-	    var zoom = this.zoom;
-	    var x = 8 * zoom;
-	    var y = 8 * zoom;
-	    var radius = this.radius * zoom;
-	    var direction = this.direction;
-	    var mouthSize = this.mouthSize;
-	    var mouthOpen = this.mouthOpen;
-	    var hilite = this.hilite;
-
-	    //Debug.write("mouthOpen", mouthOpen, "xy", x, y, "r", radius, "d", direction, "m", mouthSize);
-
-	    dv.clear();
-	    dv.beginPath();
-
-	    if (mouthOpen) {
-		dv.moveTo(x, y);
-		dv.arc(
-		    x, 
-		    y, 
-		    radius,
-		    direction + (mouthSize / 2),
-		    direction + (2 * Math.PI) - (mouthSize / 2));
-                dv.lineTo(x, y)
-	    } else {
-	        dv.arc(x, y, radius, 0, 2 * Math.PI);
-	    }
-
-
-	    switch (hilite) {
-	        case 0:
-		    dv.fillStyle = 0xffff00;
-		    break;
-	        case 1:
-		    dv.fillStyle = 0xff0000;
-		    break;
-	        case 2:
-		    dv.fillStyle = 0x00ff00;
-		    break;
-	        case 3:
-		    dv.fillStyle = 0x0000ff;
-		    break;
-	        case 4:
-		    dv.fillStyle = 0x00ffff;
-		    break;
-	        case 5:
-		    dv.fillStyle = 0xff00ff;
-		    break;
-	        case 6:
-		    dv.fillStyle = 0x000000;
-		    break;
-	        case 7:
-		    dv.fillStyle = 0xffffff;
-		    break;
-	        case 999:
-		    dv.fillStyle = 0x808080;
-		    break;
-	    }
-
-
-	    dv.fill();
-	    dv.lineWidth = zoom;
-	    dv.strokeStyle = 0x000000;
-	    dv.stroke();
-
-	  ]]>
-	</method>
-
 
     </class>
 

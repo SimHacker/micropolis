@@ -567,12 +567,12 @@
 		height="${parent.height}"
 	    />
 
-	    <view name="sprites"
+	    <view name="robots"
 	        width="${parent.width}"
 		height="${parent.height}"
 	    />
 
-	    <view name="robots"
+	    <view name="sprites"
 	        width="${parent.width}"
 		height="${parent.height}"
 	    />

@@ -73,20 +73,25 @@
 
 
 /**
- * Script friendly wrapper around makeTraffic, that takes two integers
- * instead of one Location.
+ * Makes traffic starting from the road tile at \x, \y.
  * @param x        Start x position of the attempt
  * @param y        Start y position of the attempt
  * @param dest     Zone type to go to.
  * @return \c 1 if connection found, \c 0 if not found,
  *         \c -1 if no connection to road found.
  */
-short Micropolis::makeTraffic(int x, int y, ZoneType dest)
+short Micropolis::makeTrafficAt(int x, int y, ZoneType dest)
 {
     Position pos;
     pos.posX = x;
     pos.posY = y;
-    return makeTraffic(pos, dest);
+
+    if (tryDrive(pos, dest)) { /* attempt to drive somewhere */
+	addToTrafficDensityMap(); /* if sucessful, inc trafdensity */
+	return 1;             /* traffic passed */
+    }
+
+    return 0;                 /* traffic failed */
 }
 
 
