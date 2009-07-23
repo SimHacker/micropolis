@@ -79,7 +79,7 @@
  * @bug We use a random number generator to draw a seed for initializing the
  *      random number generator?
  */
-void Micropolis::generateNewCity()
+void Micropolis::generateMap()
 {
     generateSomeCity(getRandom16());
 }
@@ -108,7 +108,7 @@ void Micropolis::generateSomeCity(int seed)
 
     simUpdate();
 
-    callback("didGenerateNewCity", "");
+    callback("didGenerateMap", "");
 }
 
 

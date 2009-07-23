@@ -119,6 +119,32 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
         self.queue_draw()
 
 
+    # TODO: Internationalize
+    def getMonthName(self, monthIndex):
+        return [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ][monthIndex];
+
+
+    def getCityDate(self):
+        engine = self.engine
+        return (
+            self.getMonthName(engine.cityMonth) +
+            ' ' +
+            str(engine.cityYear))
+
+
     def drawContent(
         self,
         ctx,
@@ -266,7 +292,7 @@ class MicropolisGaugeView(micropolisview.MicropolisView):
 
         markup = (
             "<span><b>Date:</b>\n%s\n\n<b>Funds:</b>\n%s\n</span>" % (
-            engine.getCityDate(),
+            self.getCityDate(),
             '$' + engine.formatNumber(engine.totalFunds),
         ))
 

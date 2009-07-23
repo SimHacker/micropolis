@@ -41,7 +41,7 @@
 
 	
 	<handler name="onmousedown"><![CDATA[
-	    Debug.write("onmousedown", this, this.toolID);
+	    //Debug.write("onmousedown", this, this.toolID);
 	    this.setAttribute("pressed", true);
 
 	    gApp.addIdler(this);

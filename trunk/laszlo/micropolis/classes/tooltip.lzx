@@ -86,7 +86,7 @@
 		txt.setAttribute("resize", true);
 	    } // if
 
-	    Debug.write("pop up around view", this, this.popupDirection, tip.width, tip.height);
+	    //Debug.write("pop up around view", this, this.popupDirection, tip.width, tip.height);
 
 	    var cx = x + (width / 2);
 	    var cy = y + (height / 2);
@@ -142,6 +142,11 @@
 	    height = tip.height;
 	    var margin = 10;
 
+	    // FIXME: This is using the target width and height,
+	    // and does not keep the popup confined to the canvas.
+	    // We have to measure the full sized popup itself,
+	    // to keep it on the screen.
+
 	    if ((x + width) >= (canvas.width - margin)) {
 	        x = (canvas.width - margin) - width;
 	    } else if (x < margin) {
@@ -158,9 +163,9 @@
 
 	    tip.setAttribute("x", canvas.getMouse("x"));
 	    tip.setAttribute("y", canvas.getMouse("y"));
-	    tip.setAttribute("scale", 0.01);
+	    tip.setAttribute("scale", 0.1);
 	    tip.setAttribute("visible", true);
-	    tip.setAttribute("opacity", 0.1);
+	    tip.setAttribute("opacity", 0.5);
 
 	    tip.animate("x", x, delay);
 	    tip.animate("y", y, delay);
@@ -189,7 +194,7 @@
 		width = v.width;
 		height = v.height;
 
-		Debug.write("start", x, y, width, height, dir);
+		//Debug.write("start", x, y, width, height, dir);
 		while ((v != null) && (v != canvas)) {
 		    x += v.x;
 		    y += v.y;
@@ -252,7 +257,6 @@
 		bgcolor="$once{0x000000}"
 		opacity="0.5"/>
 
-
 	    <view
 		name="background"
 		x="1"
@@ -264,18 +268,15 @@
 		clip="true"
 	    >
 
-
-	      <text name="txt"
-		  x="1"
-		  y="1"
-		  resize="true"
-		  pixellock="true"
-		  fontsize="${classroot.popupFontSize}"
-		  text="${classroot.message}"/>
-
+		<text name="txt"
+		    x="1"
+		    y="1"
+		    resize="true"
+		    pixellock="true"
+		    fontsize="${classroot.popupFontSize}"
+		    text="${classroot.message}"/>
 
 	    </view>
-
 
 	</view>
 

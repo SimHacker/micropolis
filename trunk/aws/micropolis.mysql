@@ -22,6 +22,7 @@
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `city_id` int(11) NOT NULL auto_increment,
+  `cookie` varchar(255) default NULL,
   `title` varchar(255) default NULL,
   `description` text,
   `user_id` int(11) default NULL,
@@ -30,9 +31,11 @@ CREATE TABLE `city` (
   `created` datetime default NULL,
   `modified` datetime default NULL,
   `parent_id` int(11) default NULL,
-  `icon` blob,
+  `icon` blob default NULL,
+  `thumbnail` blob default NULL,
   `shared` tinyint(1) NOT NULL,
   PRIMARY KEY  (`city_id`),
+  KEY `cookie` (`cookie`),
   KEY `user_id` (`user_id`),
   KEY `parent_id` (`parent_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;

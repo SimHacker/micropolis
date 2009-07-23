@@ -218,6 +218,7 @@ void Micropolis::makeMeltdown()
     }
 }
 
+
 /** Let a fire bomb explode at a random location */
 void Micropolis::fireBomb()
 {
@@ -226,6 +227,7 @@ void Micropolis::fireBomb()
     makeExplosion(crashX, crashY);
     sendMessage(MESSAGE_FIREBOMBING, crashX, crashY, true, true);
 }
+
 
 /** Throw several bombs onto the city. */
 void Micropolis::makeFireBombs()
@@ -237,8 +239,9 @@ void Micropolis::makeFireBombs()
         count--;
     }
 
-    dropFireBombs();
+    // TODO: Schedule periodic fire bombs over time, every few ticks.
 }
+
 
 /** Change random tiles to fire or dirt as result of the earthquake */
 void Micropolis::makeEarthquake()

@@ -1792,7 +1792,7 @@ public:
     int terrainCreateIsland;
 
 
-    void generateNewCity() ;
+    void generateMap() ;
 
     void clearMap();
 
@@ -2544,8 +2544,6 @@ public:
     void doStartLoad();
 
     void doStartScenario(int scenario);
-
-    void dropFireBombs();
 
     void initGame();
 
