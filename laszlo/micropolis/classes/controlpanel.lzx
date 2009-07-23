@@ -21,6 +21,7 @@
 	<attribute name="checkboxWidth" value="120"/>
 	<attribute name="checkboxHeight" value="18"/>
 
+        <!-- These are ids looked up in the translated strings. -->
 	<attribute name="virtualSpeedNames" value="$once{[
             'Ultra Slow',
             'Super Slow',
@@ -140,7 +141,7 @@
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
 		text="${gApp._('Save City')}"
-		onclick="gApp.saveCity()"
+		onclick="gApp.checkPointCity()"
 	    />
 
 	    <button name="newCityButton"
@@ -166,6 +167,7 @@
 
 	</view>
 
+<!--
 	<view name="optionsView"
 	    width="${parent.width}"
 	>
@@ -183,26 +185,20 @@
 		option="disasters"
 	    />
 
-<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Budget')}"
 		option="autobudget"
 	    />
--->
 
-<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Bulldoze')}"
 		option="autobulldozeo"
 	    />
--->
 
-<!--
 	    <optionscheckbox
 		text="${gApp._('Auto Goto')}"
 		option="autogoto"
 	    />
--->
 
 	    <optionscheckbox
 		text="${gApp._('Sound')}"
@@ -225,7 +221,7 @@
 	    />
 
 	</view>
-
+-->
 
     </class>
 

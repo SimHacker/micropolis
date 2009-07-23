@@ -153,7 +153,7 @@
 		        <handler name="onclick" args="arg"><![CDATA[
 			    Debug.write("checkbox onclick", this.value);
 			    gApp.setMyCityShared(this.value);
-			    Debug.write("SHARED", gApp.shared);
+			    //Debug.write("SHARED", gApp.shared);
 			  ]]>
 			</handler>
 

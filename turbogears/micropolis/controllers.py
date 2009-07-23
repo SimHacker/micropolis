@@ -9,16 +9,16 @@
 # Imports
 
 
+import re, os, sys, zipfile, time, math, tempfile, array, random
+import types, urllib, code, traceback, signal
 import turbogears as tg
-from turbogears import controllers, expose, validate, validators, flash
-from micropolis import model
+from turbogears import controllers, scheduler, identity, redirect
+from turbogears import validate, validators, expose, flash
+from turbogears.controllers import url
+from micropolis import model, json
 from model import *
-from turbogears import identity, redirect
 import cherrypy
 from cherrypy import request, response
-from micropolis import json
-import re, os, sys, zipfile, time, math, tempfile, array, random, types
-import code, traceback, signal
 import genshi
 from genshi import XML
 import xml.etree.ElementTree as ElementTree
@@ -28,6 +28,7 @@ from StringIO import StringIO
 import pyamf
 from pyamf import remoting, amf0, amf3
 from pyamf.remoting import gateway
+from pyMicropolis.micropolisEngine.xmlutilities import *
 
 import logging
 log = logging.getLogger("micropolis.controllers")
@@ -43,6 +44,7 @@ from pyMicropolis.tileEngine import tileengine
 
 DefaultLanguage = 'en-US'
 DataDir = 'micropolis/htdocs/static/data'
+LocalServerRoot = 'http://127.0.0.1/server'
 
 
 ########################################################################
@@ -212,6 +214,10 @@ class TurboGearsGateway(gateway.BaseGateway):
 class Root(controllers.RootController):
 
 
+    # Seconds between heart beats.
+    heartBeatInterval = 1
+
+
     # FIXME: Doesn't seem to work. Should give us the raw post body. 
     #_cpFilterList = [StreamFilter()]
 
@@ -223,6 +229,9 @@ class Root(controllers.RootController):
     #
     def __init__(self, *args, **kw):
         super(Root, self).__init__(*args, **kw)
+
+        self.heatBeatCookie = MakeRandomCookie()
+        self.sessions = {}
 
         gateway = TurboGearsGateway(self)
         self.gateway = gateway
@@ -239,13 +248,11 @@ class Root(controllers.RootController):
             description='Poll the simulation.',
             expose_request=True)
 
-        gateway.addService(
-            self.echoService,
-            name='micropolis.echo',
-            description='Echo the parameter.',
-            expose_request=True)
-
-        self.initMicropolis()
+        scheduler.add_interval_task(
+            action=self.makeHeartBeat,
+            taskname='micropolis_heartBeat',
+            initialdelay=self.heartBeatInterval,
+            interval=self.heartBeatInterval)
 
 
     ########################################################################
@@ -253,14 +260,86 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # initMicropolis
+    # heartBeat
     #
-    # Initialize the global Micropolis engine.
-    # TODO: Don't use the global engine. Use an anonymous session's engine.
+    # Perform periodic tasks. Called every self.heartBeatInterval seconds.
     #
-    def initMicropolis(self):
+    def makeHeartBeat(self):
+        #print "HEARTBEAT"
+        cookie = MakeRandomCookie()
+        self.heartBeatCookie = cookie
+        hbUrl = url(
+            (LocalServerRoot, 'heartBeat',),
+            { 
+                'cookie': cookie,
+            })
+        data = urllib.urlopen(hbUrl).read()
+        print data,
+        sys.stdout.flush()
 
-        self.sessions = {}
+
+    ########################################################################
+    # getLanguages
+    #
+    def getLanguages(
+        self):
+        languages = []
+        for fileName in os.listdir(DataDir):
+            if (fileName.startswith('strings_') and
+                fileName.endswith('.xml')):
+                languages.append(fileName[8:-4])
+        return languages
+
+
+    ########################################################################
+    # readStrings
+    #
+    def readStrings(
+        self,
+        language):
+
+        stringsPath = os.path.join(
+            DataDir, 'strings_' + language + '.xml')
+
+        try:
+            doc = xml.dom.minidom.parse(stringsPath)
+        except Exception, e:
+            print "Error parsing xml file", stringsPath, e
+            return [], None, None, None
+
+        stringsEl = doc.firstChild
+        if (stringsEl.nodeType != 1) or (stringsEl.nodeName != u'strings'):
+            print "Strings file should contain top level <strings> element.", stringsPath
+            return [], None, None, None
+
+        strings = []
+        stringEls = {}
+        el = stringsEl.firstChild
+        while el:
+            if (el.nodeType == 1) and (el.nodeName == u'string'):
+                if not el.hasAttribute('id'):
+                    print "Expected id attribute on string element:", el.toxml().encode('utf-8')
+                else:
+                    id = el.getAttribute("id")
+                    if el.hasAttribute('comment'):
+                        comment = el.getAttribute('comment')
+                    else:
+                        comment = None
+                    text = u''
+                    subEl = el.firstChild
+                    while subEl:
+                        if subEl.nodeType == 3:
+                            text += subEl.data
+                        subEl = subEl.nextSibling
+                    if id in stringEls:
+                        print "Duplicate string id:", language, id, text, comment
+                    else:
+                        strings.append((id, text, comment))
+                        stringEls[id] = el
+
+            el = el.nextSibling
+
+        return strings, doc, stringEls, stringsPath
 
 
     ########################################################################
@@ -550,13 +629,10 @@ class Root(controllers.RootController):
     #
     @expose(
         content_type="image/png")
-    @validate(validators = {
-        'cityID': validators.Int(),
-    })
     def getCityIcon(
         self,
         sessionID='',
-        cityID=0,
+        cityCookie=0,
         **kw):
 
         user = None
@@ -564,7 +640,7 @@ class Root(controllers.RootController):
             session = self.getSession(sessionID)
             user = session.user
 
-        savedCity = cityID and model.City.query.filter_by(city_id=cityID).first()
+        savedCity = cityCookie and model.City.query.filter_by(cookie=cityCookie).first()
         if not savedCity:
             self.expectationFailed("Bad parameters.");
 
@@ -582,67 +658,31 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # getLanguages
+    # heartBeat
     #
-    def getLanguages(
-        self):
-        languages = []
-        for fileName in os.listdir(DataDir):
-            if (fileName.startswith('strings_') and
-                fileName.endswith('.xml')):
-                languages.append(fileName[8:-4])
-        return languages
-
-
-    ########################################################################
-    # readStrings
-    #
-    def readStrings(
+    @expose()
+    def heartBeat(
         self,
-        language):
+        cookie=''):
+        if cookie != self.heartBeatCookie:
+            print "Unexpected heart beat cookie -- got", cookie, "expected", self.heartBeatCookie
+            return 'skip'
 
-        stringsPath = os.path.join(
-            DataDir, 'strings_' + language + '.xml')
+        #print "CONTROLLER heartBeat"
+        self.expireSessions()
+        sessions = self.sessions.values()
+        #print len(sessions), "sessions"
+        engines = set()
+        for session in sessions:
+            #print "controller heartBeat SESSION", session
+            engine = session.engine
+            if engine:
+                engines.add(engine)
+        #print len(engines), "engines"
+        for engine in engines:
+            engine.heartBeat()
 
-        try:
-            doc = xml.dom.minidom.parse(stringsPath)
-        except Exception, e:
-            print "Error parsing xml file", stringsPath, e
-            return [], None, None, None
-
-        stringsEl = doc.firstChild
-        if (stringsEl.nodeType != 1) or (stringsEl.nodeName != u'strings'):
-            print "Strings file should contain top level <strings> element.", stringsPath
-            return [], None, None, None
-
-        strings = []
-        stringEls = {}
-        el = stringsEl.firstChild
-        while el:
-            if (el.nodeType == 1) and (el.nodeName == u'string'):
-                if not el.hasAttribute('id'):
-                    print "Expected id attribute on string element:", el.toxml().encode('utf-8')
-                else:
-                    id = el.getAttribute("id")
-                    if el.hasAttribute('comment'):
-                        comment = el.getAttribute('comment')
-                    else:
-                        comment = None
-                    text = u''
-                    subEl = el.firstChild
-                    while subEl:
-                        if subEl.nodeType == 3:
-                            text += subEl.data
-                        subEl = subEl.nextSibling
-                    if id in stringEls:
-                        print "Duplicate string id:", language, id, text, comment
-                    else:
-                        strings.append((id, text, comment))
-                        stringEls[id] = el
-
-            el = el.nextSibling
-
-        return strings, doc, stringEls, stringsPath
+        return '!'
 
 
     ########################################################################
@@ -754,7 +794,9 @@ class Root(controllers.RootController):
 
     def startSessionService(self, args):
         session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
-        print "STARTSESSIONSERVICE", "sessionID", session, "ARGS", args
+        #print "STARTSESSIONSERVICE", "sessionID", session, "ARGS", args
+        print "hello",
+        sys.stdout.flush()
         return session.sessionID
 
 
@@ -780,11 +822,6 @@ class Root(controllers.RootController):
             'sessionID': sessionID,
             'messages': messages,
         }
-
-
-    def echoService(self, ignore, param):
-        #print "ECHOSERVICE", "param", param
-        return param
 
 
 ########################################################################

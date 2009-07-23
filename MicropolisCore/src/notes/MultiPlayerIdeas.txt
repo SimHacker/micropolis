@@ -35,10 +35,10 @@ map
 graph
   2x3 palelet, 10/120 years
   double buffering
-  communicate data. ard wire in c?
+  communicate data. hard wire in c?
 
 evaluation
-  historical graphis?
+  historical graphs?
 
 surveyor
   other editors
@@ -49,6 +49,7 @@ dynamic zone finder
 get key dialog
 
 new city -- or "use map"?
+  "lobby"
   name, level
   scenario selection
   random terrain generator
@@ -302,3 +303,172 @@ Ownershop
     Own residential => collect rent, pay maintainence.
     Own industrial, commercial => collect income, pay expenses.
     All zone owners pay taxes.
+
+Multi player editig tools
+
+  Recast editing tools/cursors as sprites/robots.
+  Navigate tools around the map like a turtle/car/helicopter.
+  Also move tools with the mouse.
+
+    Alternative interfaces:
+
+      Tool cursor follows cursor all the time. (current "traditional"
+      implementation)
+
+        Relegates pie menu and panning to secondary status: shift/option keys. 
+
+      Move tool while shift or option key is down.
+
+        Makes it possible to put the pie menu or pan tool on the
+        primary unshifted mouse click/drag gesture.
+
+      Pick up and drag tool.
+
+  Properties the interface should support:
+
+    Direct manipulation.
+
+      http://en.wikipedia.org/wiki/Direct_manipulation
+
+      Continuous representation of objects of interest, and rapid,
+      reversible, incremental actions and feedback.
+
+      Real-world metaphores for objects and actions.
+
+      Allow a user to directly manipulate objects presented to them,
+      using actions that correspond at least loosely to the physical
+      world.
+
+      Pick up, drag and manipulate and edit first class objects like
+      tools, sprites, robots, avatars, etc.
+
+    First person.
+
+      Represent users with in-game avaters.
+
+      Relative polar coordinate system. (Logo turtle graphics.)
+
+        http://en.wikipedia.org/wiki/Turtle_graphics
+
+	Drive the helicopter around on the map.
+
+	  Keys to relatively rotate clockwise, counter-clockwise. 
+
+	  Keys to turn to absolute directions (N/S/E/W/NW/NE/SW/SE
+	  keypad).
+
+	  Keys to go forward and backward in the current direction.
+
+	  Keys to strafe left and right of the current direction.
+
+	  Also a remote control panel with graphical control for the mouse.
+
+	    iPhone app that lets you remotely control the helicopter
+	    (or whatever) form your iPhone.
+
+	      Doesn't even need to support editing the map. Just fly
+	      around and chat. (voice chat?)
+
+      Operate avatar with keyboard, game controller, control panel,
+      etc.
+
+    Natural language based.
+
+      http://en.wikipedia.org/wiki/Natural_language_user_interface
+
+      Text command interface in chat window.
+
+      Fully usable via keyboard input and speech recognition.
+
+      Conversational interface with intelligent, helpful "chat bots",
+      as well as on-line teachers and mentors. 
+
+      Educators and entertainers can write interesting, informative
+      personality simulation scripts for chat bots, that interactively
+      chat with students playing the game, answer frequently asked
+      questions, perform various utilities (like a banker or loan
+      shark you can borrow money from), and refer them to web links,
+      wiki pages, discussion groups, etc, for more information and
+      interaction with real people. Scripts can be triggered by
+      pattern matching on chat text from player, or monitoring game
+      events and conditions. Chat bots can remember things about
+      players, and continuously tell long stories and share
+      personalized knowledge over a long period of time.
+
+      Text based command interface inspired by ideas from Jeff and Aza
+      Raskin's work.
+
+        The Humane Interface
+
+	  http://en.wikipedia.org/wiki/The_Humane_Interface
+
+	  The book puts forward a large number of interface design
+	  suggestions, from fairly trivial ones to radical ones. The
+	  overriding theme is that current computer interfaces are
+	  often poor and set up users to fail, as a result of poor
+	  planning (or lack of planning) by programmers and a lack of
+	  understanding of how people actually use software.
+
+        Ubiquity
+
+	  http://en.wikipedia.org/wiki/Ubiquity_(Firefox)
+
+	  Ubiquity, an add-on for Mozilla Firefox, is a collection of
+	  quick and easy natural-language-derived commands that act as
+	  mashups of web services, thus allowing users to get
+	  information and relate it to current and other webpages. It
+	  also allows Web users to create new commands without
+	  requiring much technical background.
+
+  Multi-player tools that require more than one person to operate.
+
+    The X11 multi player version required players to vote on expensive
+    zones including stadiums, seaports, nuclear power plants, coal
+    power plants and airports.
+
+      When a player places an expensive zone, it is not immediately
+      drawn on the map.
+
+      Instead, a shadow is cast over the tiles
+      where it would be placed, and the zone is animated bouncing up
+      and down above the shadow.
+
+      This draws the user's attention, and makes it obvious that the
+      zone has not been "plugged in" yet.
+
+      A "voting dialog" opens up in a window, that says "Don has
+      proposed to build a nuclear power plant for $5000. Do you
+      support that proposal?", with an animated view of the bouncing
+      building, and a "YES" and "NO" button. Or a hand with a thumb,
+      that you can turn up or down (a two item pie menu).
+
+      Besides pressing the "YES" button, There is a shorthand way to
+      vote yes to a proposal: select the same tool, and draw the same
+      zone in the same place.
+
+      When enough people have voted for the proposal (unanimous), the
+      zone lowers down, plugs into place, and starts simulating.
+
+    Ideas for new design for multi player building tools:
+
+      It takes several people to agree to buy an airport, and where to
+      put it.
+
+      In-game voting dialog, around the proposed site of a building.
+
+      Like the bouncing buildings in the X11 multi player game, but
+      with a in-game voting interface on the map, instead of in a
+      separate dialog. (direct instead of indirect manipulation)
+
+      When you place an airport, it doesn't actually get built
+      immediately. It just places a "proposal" hovering over the map,
+      represented by a suitably ghosted image of the airport, floating
+      up and down, with adjacent text describing the proposal and
+      voting buttons. 
+
+      I think this is simpler and more "local" than the X11 voting
+      interface, since the text and voting controls are drawn over the
+      map next to the zone, instead of displayed them in a separate
+      window. Also, several proposals can be going on at the same time
+      at different (or the same!) places on the map, which the X11
+      version did not support.

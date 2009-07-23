@@ -232,17 +232,10 @@ void Micropolis::doStartScenario(int scenario)
 }
 
 
-/** Tell the front-end that fire bombs are being dropped. */
-void Micropolis::dropFireBombs()
-{
-    callback("dropFireBombs", "");
-}
-
-
 /**
  * Initialize the game.
+ * This is called from the scripting language.
  * @todo we seem to have several of these functions.
- * @bug Function is never called.
  */
 void Micropolis::initGame()
 {

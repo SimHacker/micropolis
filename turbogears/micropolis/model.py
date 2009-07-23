@@ -23,6 +23,7 @@ from sqlalchemy.orm import relation
 from sqlalchemy import String, Unicode, Integer, Boolean, DateTime, TEXT, BLOB
 from turbogears.database import metadata, mapper, session
 from turbogears import identity
+from pyMicropolis.micropolisEngine.xmlutilities import *
 
 
 ########################################################################
@@ -83,13 +84,15 @@ group_permission_table = Table('group_permission', metadata,
 
 city_table = Table('city', metadata,
     Column('city_id', Integer, primary_key=True),
-    Column('parent_id', Integer),
+    Column('cookie', String(255)), # Is a non-unique key
+    Column('parent_id', Integer), # Is a non-unique key
     Column('title', Unicode(255), unique=True),
     Column('description', Unicode(), unique=True),
-    Column('user_id', Integer, ForeignKey('tg_user.user_id')),
+    Column('user_id', Integer, ForeignKey('tg_user.user_id')), # Is a non-unique key
     Column('save_file', BLOB, default=None, nullable=True),
     Column('metadata', TEXT, default=None, nullable=True),
     Column('icon', BLOB, default=None, nullable=True),
+    Column('thumbnail', BLOB, default=None, nullable=True),
     Column('shared', Boolean, default=False),
     Column('created', DateTime, default=datetime.now),
     Column('modified', DateTime, default=datetime.now)
@@ -207,15 +210,15 @@ class User(object):
             iconURL = (
                 '/server/getCityIcon?session=' + 
                 session.sessionID +
-                '&cityID=' +
-                str(city.city_id) +
+                '&cityCookie=' +
+                str(city.cookie) +
                 '&random=' +
                 str(random.random()))
             #print iconURL
             d = {
                 'title': city.title.encode('utf-8'),
                 'description': city.description.encode('utf-8'),
-                'id': city.city_id, # TODO: use cookie instead of db id
+                'cookie': city.cookie,
                 'shared': city.shared,
                 'createdDate': city.created,
                 'created': city.created.toordinal(),
@@ -250,6 +253,14 @@ class City(object):
     """
     A city saved in the database.
     """
+
+
+    def makeCookie(self):
+        while True:
+            cookie = MakeRandomCookie()
+            if not City.query.filter_by(cookie=cookie).first():
+                self.cookie = cookie
+                return
 
 
     def destroy(self):

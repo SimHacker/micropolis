@@ -144,7 +144,7 @@
 		<textlistitem
 		    datapath="ds_myCities:/cities/city"
 		    onclick="gApp.loadMyCity(
-		        this.cityID, 
+		        this.cityCookie, 
 			this.cityTitle, 
 			this.cityDescription, 
 			this.cityShared == 'true',
@@ -152,10 +152,10 @@
 			this.cityModified)"
 		    text="${this.cityTitle}"
 		    height="28"
-		    selected="${(gApp.citySource == 'mycity') &amp;&amp; (gApp.cityID == this.cityID)}"
+		    selected="${(gApp.citySource == 'mycity') &amp;&amp; (gApp.cityID == this.cityCookie)}"
 		>
 
-		    <attribute name="cityID" type="string" value="$path{'@id'}"/>
+		    <attribute name="cityCookie" type="string" value="$path{'@cookie'}"/>
 		    <attribute name="cityTitle" type="string" value="$path{'@title'}"/>
 		    <attribute name="cityDescription" type="string" value="$path{'@description'}"/>
 		    <attribute name="cityShared" type="string" value="$path{'@shared'}"/>
