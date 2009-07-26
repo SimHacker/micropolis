@@ -1,8 +1,12 @@
-Plan for developing Micropolis for OLPC.
+Plan for developing Micropolis for OLPC and other platforms.
 
-First, get it running on the current OLPC platform.
+DONE:
 
-  DONE:
+    First, get the old TCL/Tk/X11 version cleaned up and running on
+    the current OLPC platform, and passed through EA's legal and
+    quality assurance process.
+
+DONE:
 
     Screen depth and size: fixed size of OLPC screen.
     Window management: one window. 
@@ -22,22 +26,31 @@ First, get it running on the current OLPC platform.
     Fix fonts. 
       Pick nice Sugar fonts to use, based on Sugar flag. 
 
-  TODO:
-    Update manual and documentation.
-
     Make Sugar activity wrapper in Python.
+
+TODO, in progress:
+
+    Update manual and documentation.
 
     Put new graphics and icons into interface and menus.
 
+DONE:
 
 Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
-  Implement custom Tk components in GTK.
+
+  Implement custom components in PyGTK.
     Map view.
     Editor view.
     Date view.
     Graph view.
     Pie menus.
     Cellular Automata Machine view.
+
+DONE:
+
+Implement web based interface with TurboGears/Cairo/OpenLaszlo/Flash/AMF.
+
+TODO for OLPC:
 
   Integrate with Sugar and OLPC hardware.
     Audio.
@@ -79,6 +92,9 @@ Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
         Voting. 
         Chat. 
         White board.
+
+TODO for Education:
+
     Educational.
       Bring old Micropolis courseware up to date, and integrate with the game. 
       Export simulation data to spreadsheet or xml. 
@@ -100,6 +116,8 @@ Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
         Programming by example. 
         KidSim, AgentSheets. 
         Robot Odyssey.
+
+TODO for Programming:
 
     Visual Programming
 
@@ -237,6 +255,7 @@ Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
         their own cellular automata rules and games (like KidSim /
         Cocoa / StageCraft Creator).
 
+========================================================================
 --
 Micropolis, Unix Version.  This game was released for the Unix platform
 in or about 1990 and has been modified for inclusion in the One Laptop

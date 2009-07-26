@@ -21,6 +21,15 @@
         <attribute name="cursorYLast" value="0"/>
         <attribute name="tileSize" value="32"/>
         <attribute name="toolName" value="${gApp._(this.toolInfo[gApp.tool]['name'])}"/>
+        <attribute name="toolDescription" type="string" value="${gApp._(this.toolInfo[gApp.tool]['description'])}"/>
+        <attribute name="description" type="string" value="${
+	    this.toolDescription + 
+	    '&lt;br/&gt;' + 
+	    gApp._('Cost') + 
+	    ': ' + 
+	    gApp.formatFunds(this.cost)
+        }"/>
+        <attribute name="toolDescriptionWidth" value="200"/>
         <attribute name="tiles" value="${this.toolInfo[gApp.tool]['tiles']}"/>
         <attribute name="hotSpot" value="${this.toolInfo[gApp.tool]['hotSpot']}"/>
         <attribute name="constrained" value="${this.toolInfo[gApp.tool]['constrained']}"/>
@@ -33,6 +42,7 @@
 	<attribute name="toolInfo" value="$once{{
 	    residential: {
 	        name: 'Residential',
+		description: 'Residential (tool description)',
 	        tiles: 3,
 		hotSpot: 1,
 		constrained: true,
@@ -41,6 +51,7 @@
 	    },
 	    commercial: {
 	        name: 'Commercial',
+		description: 'Commercial (tool description)',
 	        tiles: 3,
 		hotSpot: 1,
 		constrained: true,
@@ -49,6 +60,7 @@
 	    },
 	    industrial: {
                 name: 'Industrial',
+		description: 'Industrial (tool description)',
 	        tiles: 3,
 		hotSpot: 1,
 		constrained: true,
@@ -57,6 +69,7 @@
 	    },
 	    firestation: {
                 name: 'Fire Station',
+		description: 'Fire Station (tool description)',
 	        tiles: 3,
 		hotSpot: 1,
 		constrained: true,
@@ -65,6 +78,7 @@
 	    },
 	    query: {
                 name: 'Query',
+		description: 'Query (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -73,6 +87,7 @@
 	    },
 	    policestation: {
                 name: 'Police Station',
+		description: 'Police Station (tool description)',
 	        tiles: 3,
 		hotSpot: 1,
 		constrained: true,
@@ -81,6 +96,7 @@
 	    },
 	    wire: {
                 name: 'Wire',
+		description: 'Wire (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -89,6 +105,7 @@
 	    },
 	    bulldozer: {
                 name: 'Bulldozer',
+		description: 'Bulldozer (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -97,6 +114,7 @@
 	    },
 	    railroad: {
                 name: 'Railroad',
+		description: 'Railroad (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -105,6 +123,7 @@
 	    },
 	    road: {
                 name: 'Road',
+		description: 'Road (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -113,6 +132,7 @@
 	    },
 	    pacbot: {
                 name: 'PacBot',
+		description: 'PacBot (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: false,
@@ -121,6 +141,7 @@
 	    },
 	    center: {
                 name: 'Center',
+		description: 'Center (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: false,
@@ -129,6 +150,7 @@
 	    },
 	    stadium: {
                 name: 'Stadium',
+		description: 'Stadium (tool description)',
 	        tiles: 4,
 		hotSpot: 1,
 		constrained: true,
@@ -137,6 +159,7 @@
 	    },
 	    park: {
                 name: 'Park',
+		description: 'Park (tool description)',
 	        tiles: 1,
 		hotSpot: 0,
 		constrained: true,
@@ -145,6 +168,7 @@
 	    },
 	    seaport: {
                 name: 'Seaport',
+		description: 'Seaport (tool description)',
 	        tiles: 4,
 		hotSpot: 1,
 		constrained: true,
@@ -153,6 +177,7 @@
 	    },
 	    coalpower: {
                 name: 'Coal Power',
+		description: 'Coal Power (tool description)',
 	        tiles: 4,
 		hotSpot: 1,
 		constrained: true,
@@ -161,6 +186,7 @@
 	    },
 	    airport: {
                 name: 'Airport',
+		description: 'Airport (tool description)',
 	        tiles: 6,
 		hotSpot: 1,
 		constrained: true,
@@ -169,6 +195,7 @@
 	    },
 	    nuclearpower: {
                 name: 'Nuclear Power',
+		description: 'Nuclear Power (tool description)',
 	        tiles: 4,
 		hotSpot: 1,
 		constrained: true,
@@ -463,8 +490,8 @@
 	/>
 
 	<view
-	    x="${0}"
-	    y="${0}"
+	    x="0"
+	    y="0"
 	    width="${parent.width}"
 	    height="${parent.height}"
 	    bgcolor="0xffff00"
@@ -473,7 +500,7 @@
 
 	<text name="toolNameText"
 	    x="${(parent.width - this.width) / 2}"
-	    y="${parent.height + parent.margin}"
+	    y="${-this.height - parent.margin}"
 	    bgcolor="0xffffff"
 	    fgcolor="0x000000"
 	    fontsize="18"
@@ -482,15 +509,16 @@
 	    text="${classroot.toolName}"
 	/>
 
-	<text name="toolCostText"
+	<text name="tooDescriptionText"
 	    x="${(parent.width - this.width) / 2}"
-	    y="${parent.toolNameText.y + parent.toolNameText.height}"
+	    y="${parent.height + parent.margin}"
+	    width="${classroot.toolDescriptionWidth}"
+	    multiline="true"
 	    bgcolor="0xffffff"
 	    fgcolor="0x000000"
 	    fontsize="18"
 	    fontstyle="bold"
-	    resize="true"
-	    text="${gApp.formatFunds(classroot.cost)}"
+	    text="${classroot.description}"
 	/>
 
     </class>

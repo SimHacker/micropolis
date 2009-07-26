@@ -561,6 +561,10 @@ You have 10 years to turn this swamp back into a city again.""",
         self.sendUpdate('map')
 
 
+    def handle_simulateChurch(self, x, y, tile):
+        pass
+
+
 ########################################################################
 
 

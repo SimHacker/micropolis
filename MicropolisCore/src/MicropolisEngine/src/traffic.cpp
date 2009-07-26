@@ -96,6 +96,23 @@ short Micropolis::makeTrafficAt(int x, int y, ZoneType dest)
 
 
 /**
+ * Find a connection over a road from position \a x \a y to a specified zone type.
+ * @param x        Start x position of the attempt
+ * @param y        Start y position of the attempt
+ * @param dest     Zone type to go to.
+ * @return \c 1 if connection found, \c 0 if not found,
+ *         \c -1 if no connection to road found.
+ */
+short Micropolis::makeTraffic(int x, int y, ZoneType dest)
+{
+    Position startPos;
+    startPos.posX = x;
+    startPos.posY = y;
+    return makeTraffic(startPos, dest);
+}
+
+
+/**
  * Find a connection over a road from \a startPos to a specified zone type.
  * @param startPos Start position of the attempt.
  * @param dest     Zone type to go to.
@@ -423,6 +440,7 @@ MapTile Micropolis::getTileFromMap(const Position &pos,
  */
 bool Micropolis::driveDone(const Position &pos, ZoneType destZone)
 {
+    // FIXME: Use macros to determine the zone type: residential, commercial or industrial.
     /* commercial, industrial, residential destinations */
     static const MapTile targetLow[3] = {COMBASE, LHTHR, LHTHR};
     static const MapTile targetHigh[3] = {NUCLEAR, PORT, COMBASE};

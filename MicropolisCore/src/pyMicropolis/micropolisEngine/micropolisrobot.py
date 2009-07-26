@@ -163,15 +163,9 @@ class MicropolisRobot:
 
 
     def isRoad(self, engine, tx, ty):
-        tile = engine.getTile(tx, ty)
-        tile = tile & micropolisengine.LOMASK
-        isRoadTile = ((tile >= micropolisengine.ROADBASE) and
-                      (tile < micropolisengine.POWERBASE))
-        # Remember the roads we've seen.
-        if isRoadTile:
-            self.roadMap[(tx, ty)] = True
-
-        return isRoadTile
+        tile = engine.getTile(tx, ty) & micropolisengine.LOMASK
+        return ((tile >= micropolisengine.ROADBASE) and
+                (tile < micropolisengine.POWERBASE))
 
 
     def eatTraffic(self, engine, tileX, tileY):
@@ -321,7 +315,6 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         self.defaultSpeed = defaultSpeed
         self.hilite = 0
         self.score = 0
-        self.roadMap = {}
         self.possibleDirections = []
 
 

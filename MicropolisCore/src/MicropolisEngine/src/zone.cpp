@@ -91,7 +91,8 @@ void Micropolis::doZone(const Position &pos)
     MapTile tile = map[pos.posX][pos.posY] & LOMASK;
 
     // Do special zones.
-    if (tile > PORTBASE) {
+    if ((tile > PORTBASE) &&
+        (tile < CHURCH1BASE)) {
         doSpecialZone(pos, zonePowerFlag);
         return;
     }
@@ -103,7 +104,9 @@ void Micropolis::doZone(const Position &pos)
     }
 
     // Do hospitals and churches.
-    if (tile < COMBASE) {
+    if ((tile < COMBASE) ||
+        ((tile >= CHURCH1BASE) &&
+         (tile <= CHURCH7LAST))) {
         doHospitalChurch(pos);
         return;
     }
@@ -115,7 +118,12 @@ void Micropolis::doZone(const Position &pos)
     }
 
     // Do industrial zones.
-    doIndustrial(pos, zonePowerFlag);
+    if (tile < CHURCH1BASE) {
+        doIndustrial(pos, zonePowerFlag);
+        return;
+    }
+
+    printf("UNEXPOECTED ZONE: %d !!!\n", tile);
 }
 
 /**
@@ -140,18 +148,68 @@ void Micropolis::doHospitalChurch(const Position &pos)
             }
         }
 
-    } else if (tile == CHURCH) {
+    } else if ((tile == CHURCH0) ||
+	       (tile == CHURCH1) ||
+	       (tile == CHURCH2) ||
+	       (tile == CHURCH3) ||
+	       (tile == CHURCH4) ||
+	       (tile == CHURCH5) ||
+	       (tile == CHURCH6) ||
+	       (tile == CHURCH7)) {
 
         churchPop++;
 
+        //printf("CHURCH %d %d %d %d\n", churchPop, pos.posX, pos.posY, tile);
+
+        bool simulate = true;
+
         if (!(cityTime & 15)) {
-            repairZone(pos, CHURCH, 3);
+            repairZone(pos, tile, 3);
         }
 
         if (needChurch == -1) { // Too many churches!
             if (!getRandom(20)) {
                 zonePlop(pos, RESBASE); // Remove church.
+	        simulate = false;
             }
+        }
+
+        if (simulate) {
+	    //printf("SIM %d %d %d\n", pos.posX, pos.posY, tile);
+
+            int churchNumber = 0;
+	    
+	    switch (tile) {
+	        case CHURCH0:
+		    churchNumber = 0;
+		    break;
+	        case CHURCH1:
+		    churchNumber = 1;
+		    break;
+	        case CHURCH2:
+		    churchNumber = 2;
+		    break;
+	        case CHURCH3:
+		    churchNumber = 3;
+		    break;
+	        case CHURCH4:
+		    churchNumber = 4;
+		    break;
+	        case CHURCH5:
+		    churchNumber = 5;
+		    break;
+	        case CHURCH6:
+		    churchNumber = 6;
+		    break;
+	        case CHURCH7:
+		    churchNumber = 7;
+		    break;
+                default:
+		    assert(0); // Unexpected church tile
+		    break;
+	    }
+
+            callback("simulateChurch", "ddd", pos.posX, pos.posY, churchNumber);
         }
 
     }
@@ -226,7 +284,17 @@ void Micropolis::makeHospital(const Position &pos)
     }
 
     if (needChurch > 0) {
-        zonePlop(pos, CHURCH - 4);
+        int churchType = getRandom(7); // 0 to 7 inclusive
+        int tile;
+        if (churchType == 0) {
+            tile = CHURCH0;
+        } else {
+            tile = CHURCH1 + ((churchType - 1) * 9);
+        }
+
+       //printf("NEW CHURCH tile %d x %d y %d type %d\n", tile, pos.posX, pos.posY, churchType);
+
+        zonePlop(pos, tile - 4);
         needChurch = 0;
         return;
     }
@@ -279,7 +347,7 @@ void Micropolis::incRateOfGrowth(const Position &pos, int amount)
  * Put down a 3x3 zone around the center tile at \a pos..
  * @param base Tile number of the top-left tile. @see MapTileCharacters
  * @return Build was a success.
- * @todo This function allows partial on-map construction. Is that intentional?
+ * @bug This function allows partial on-map construction. Is that intentional? No!
  */
 bool Micropolis::zonePlop(const Position &pos, int base)
 {

@@ -462,6 +462,8 @@
 
     <!-- toolcursor.lzx -->
 
+    <string id="Cost">Cost</string>
+
 
     <!-- toolpalette.lzx -->
 
@@ -689,7 +691,6 @@
 
     <string id="notice_57_description">In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.</string>
 
-
     <!-- overlays.xml -->
 
     <string id="overlay_all_title">All Zones</string>
@@ -798,5 +799,6 @@
     <string id="Manual">Manual</string>
 
     <string id="Delete">Delete</string>
+
 
 </strings>

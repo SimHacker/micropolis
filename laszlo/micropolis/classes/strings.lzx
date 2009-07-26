@@ -10,6 +10,7 @@
     <class name="strings" extends="node">
 
 
+	<attribute name="stringsFileNamePrefix" type="string" value="/static/data/strings_"/>
 	<attribute name="language" type="string" value="en-US"/>
 	<attribute name="stringsDict" value="null"/>
 
@@ -68,7 +69,7 @@
 
 	<method name="loadLanguage" args="language"><![CDATA[
 	    this.setAttribute("language", language);
-	    canvas.ds_strings.setSrc('/static/data/strings_' + language + '.xml');
+	    canvas.ds_strings.setSrc(this.stringsFileNamePrefix + language + '.xml');
 	  ]]>
 	</method>
 

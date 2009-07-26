@@ -1008,11 +1008,36 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 	if text and text[0] == '!':
 
-	    command = text[1:]
-	    #print "CHEAT COMMAND", command
+            args = text[1:].split()
+            if not args:
+                return
+            command = args[0]
+            args = args[1:]
 
 	    if command == 'million':
-		session.engine.spend(-1000000)
+		self.spend(-1000000)
+            elif command == 'faith':
+                if len(args) == 0:
+                    session.sendMessage({
+                        'message': 'chatMessage',
+                        'from': 'Micropolis', # TODO: translate
+                        'channel': 'all',
+                        'text': 'Current faith is ' + str(self.faith) + '.', # TODO: translate
+                        'collapse': False,
+                    })
+                elif len(args) == 1:
+                    faith = 0
+                    try:
+                        faith = int(args[0])
+                    except: pass
+                    self.faith = faith
+                    session.sendMessage({
+                        'message': 'chatMessage',
+                        'from': 'Micropolis', # TODO: translate
+                        'channel': 'all',
+                        'text': 'Changed faith adjustment to ' + str(self.faith) + '.', # TODO: translate
+                        'collapse': False,
+                    })
 
 	elif channel == 'eliza':
 
@@ -1130,7 +1155,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 	if not session.isMessageQueued('update', 'sprites'):
 
 	    sprites = []
-	    sprite = session.engine.spriteList
+	    sprite = self.spriteList
 	    while True:
 		#print "SPRITE", sprite
 		if not sprite:
@@ -2297,6 +2322,34 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         except Exception, e:
             print '======== XXX handle_update ERROR:', e
             traceback.print_exc(10)
+
+
+    def handle_simulateChurch(self, x, y, churchNumber):
+        #print "handle_simulateChurch", x, y, churchNumber
+
+        if churchNumber == 0:
+            pass
+        elif churchNumber == 1:
+
+            # The Pacmania church generates lots of traffic, in order
+            # to appease the PacBots, which who are attracted to the
+            # traffic and eat it. 
+            self.makeTraffic(x, y, micropolisengine.ZT_RESIDENTIAL)
+            self.makeTraffic(x, y, micropolisengine.ZT_COMMERCIAL)
+            self.makeTraffic(x, y, micropolisengine.ZT_INDUSTRIAL)
+
+        elif churchNumber == 2:
+            pass
+        elif churchNumber == 3:
+            pass
+        elif churchNumber == 4:
+            pass
+        elif churchNumber == 5:
+            pass
+        elif churchNumber == 6:
+            pass
+        elif churchNumber == 7:
+            pass
 
 
 ########################################################################

@@ -1246,4 +1246,8 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         pass
 
 
+    def handle_simulateChurch(self, x, y, tile):
+        pass
+
+
 ########################################################################
