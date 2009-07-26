@@ -769,15 +769,17 @@ void Micropolis::take10Census()
         needHospital = 0;
     }
 
-    if (churchPop < resPopScaled) {
+    int faithfulPop = resPopScaled + faith;
+
+    if (churchPop < faithfulPop) {
         needChurch = 1;
     }
 
-    if (churchPop > resPopScaled) {
+    if (churchPop > faithfulPop) {
         needChurch = -1;
     }
 
-    if (churchPop == resPopScaled) {
+    if (churchPop == faithfulPop) {
         needChurch = 0;
     }
 }

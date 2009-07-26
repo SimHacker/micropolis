@@ -81,7 +81,10 @@
 // Tell SWIG how to pass certain data types in and out.
 
 
-%typemap(in) const Position &pos {
+// Why doesn't this work? Is not getting matched for some reason:
+//     short makeTraffic(const Position &startPos, ZoneType dest);
+
+%typemap(in) const Position & {
 
     // SWIG const Postion &pos in typemap from micropolisengine.i
 

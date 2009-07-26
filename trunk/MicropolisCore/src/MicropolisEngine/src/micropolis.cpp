@@ -155,6 +155,9 @@ void Micropolis::init()
     // short churchPop;
     churchPop = 0;
 
+    // short faith;
+    faith = 0;
+
     // short stadiumPop;
     stadiumPop = 0;
 

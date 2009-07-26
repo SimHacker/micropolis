@@ -1,5 +1,7 @@
 # Tile animation sequences
 #
+# FIXME: This needs to be regenerated since I tweaked the animation sequences.
+#
 # This file can be processed with genAnimationTable.py to generate the same
 # table as ../animate.cpp
 #

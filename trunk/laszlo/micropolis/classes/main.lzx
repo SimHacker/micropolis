@@ -12,6 +12,7 @@
 
     <strings id="gStrings"
         initstage="early"
+	stringsFileNamePrefix="/static/data/strings_"
     />
 
 

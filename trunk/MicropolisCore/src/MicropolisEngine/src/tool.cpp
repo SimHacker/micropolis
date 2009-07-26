@@ -544,7 +544,8 @@ short Micropolis::checkSize(short tileValue)
 {
     // check for the normal com, resl, ind 3x3 zones & the fireDept & PoliceDept
     if ((tileValue >= RESBASE - 1        && tileValue <= PORTBASE - 1) ||
-        (tileValue >= LASTPOWERPLANT + 1 && tileValue <= POLICESTATION + 4)) {
+        (tileValue >= LASTPOWERPLANT + 1 && tileValue <= POLICESTATION + 4) ||
+        (tileValue >= CHURCH1BASE && tileValue <= CHURCH7LAST)) {
         return 3;
     }
 

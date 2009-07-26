@@ -541,8 +541,13 @@ enum MapTileCharacters {
 
     RZB            = 265, // center tile first 3x3 tile residential
 
+    HOSPITALBASE   = 405, // Center of hospital (tiles 405--413)
     HOSPITAL       = 409, // Center of hospital (tiles 405--413)
+
+    CHURCHBASE     = 414, // Center of church (tiles 414--422)
+    CHURCH0BASE    = 414, // numbered alias
     CHURCH         = 418, // Center of church (tiles 414--422)
+    CHURCH0        = 418, // numbered alias
 
     // Commercial zone tiles
 
@@ -678,11 +683,38 @@ enum MapTileCharacters {
     VBRDG1         = 949,
     VBRDG2         = 950,
     VBRDG3         = 951,
-    // tile 952 -- 959 ?
 
-    TILE_COUNT     = 960,
+    NUKESWIRL1     = 952,
+    NUKESWIRL2     = 953,
+    NUKESWIRL3     = 954,
+    NUKESWIRL4     = 955,
 
-    TILE_INVALID   = 1023, ///< Invalid tile (not used in the world map).
+    // Tiles 956-959 unused (originally)
+//    TILE_COUNT     = 960,
+
+    // Extended zones: 956-1019
+
+    CHURCH1BASE    = 956,
+    CHURCH1        = 960,
+    CHURCH2BASE    = 965,
+    CHURCH2        = 969,
+    CHURCH3BASE    = 974,
+    CHURCH3        = 978,
+    CHURCH4BASE    = 983,
+    CHURCH4        = 987,
+    CHURCH5BASE    = 992,
+    CHURCH5        = 996,
+    CHURCH6BASE    = 1001,
+    CHURCH6        = 1005,
+    CHURCH7BASE    = 1010,
+    CHURCH7        = 1014,
+    CHURCH7LAST    = 1019,
+
+    // Tiles 1020-1023 unused
+
+    TILE_COUNT     = 1024,
+
+    TILE_INVALID   = -1, ///< Invalid tile (not used in the world map).
 };
 
 /**
@@ -1079,6 +1111,7 @@ public:
 
     short hospitalPop; ///< Number of hospitals.
     short churchPop; ///< Number of churches.
+    short faith; ///< Faith bias.
     short stadiumPop; ///< Number of stadiums.
 
     /**
@@ -2737,7 +2770,12 @@ public:
 
     short makeTrafficAt(int x, int y, ZoneType dest);
 
+    short makeTraffic(int x, int y, ZoneType dest);
+
+
 private:
+
+    short makeTraffic(const Position &startPos, ZoneType dest);
 
     /* Position stack */
 
@@ -2748,8 +2786,6 @@ private:
     short trafMaxX; ///< X coordinate of a position with heavy traffic
     short trafMaxY; ///< Y coordinate of a position with heavy traffic
 
-
-    short makeTraffic(const Position &startPos, ZoneType dest);
 
     void addToTrafficDensityMap();
 
