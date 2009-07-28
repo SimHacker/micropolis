@@ -190,7 +190,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
             ('paused',))
 
         self.initGame()
-        self.initGamePython()
 
         if self.running:
             self.startTimer()
@@ -199,7 +198,7 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
 
 
     def initGamePython(self):
-        pass
+        print "MicropoligGenericEngine initGamePython: This should be called at the end of the concrete subclass's __init__ method."
 
 
     def __del__(

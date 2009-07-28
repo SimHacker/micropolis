@@ -89,6 +89,7 @@ from turbogears import identity
 import cherrypy
 import eliza
 from micropolis import model
+import micropoliszone
 
 
 ########################################################################
@@ -105,6 +106,17 @@ LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES
 
 DefaultAnimateDelay = 250
 DefaultPollDelay = 50
+
+ChurchZoneClasses = [
+    micropoliszone.MicropolisZone_Church0,
+    micropoliszone.MicropolisZone_Church1,
+    micropoliszone.MicropolisZone_Church2,
+    micropoliszone.MicropolisZone_Church3,
+    micropoliszone.MicropolisZone_Church4,
+    micropoliszone.MicropolisZone_Church5,
+    micropoliszone.MicropolisZone_Church6,
+    micropoliszone.MicropolisZone_Church7,
+]
 
 SpeedConfigurations = [
     { # 0: Ultra Slow
@@ -505,6 +517,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.citySource = None
         self.cityID = None
         self.cityCookie = None
+        self.zoneMap = {}
+
+        # This must be called at the end of the concrete subclass's
+        # init, so it happens last.
+        self.pause()
+        self.initGamePython()
 
 
     def __repr__(self):
@@ -551,9 +569,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
 
-        self.clearRobots()
-
-        self.resetRealTime()
+        self.resetCity()
 
         self.loadInitialCity()
 
@@ -586,6 +602,35 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def resetRealTime(self):
         self.lastLoopTime = time.time()
+
+
+    def resetCity(self):
+        #print "resetCity", self
+        self.clearRobots()
+        self.clearZones()
+        self.resetRealTime()
+        self.updateFundEffects()
+
+
+    def clearZones(self):
+        for zone in list(self.zoneMap.values()):
+            self.removeZone(zone)
+
+
+    def addZone(self, zone):
+        zoneMap = self.zoneMap
+        key = (zone.x, zone.y, zone.churchNumber)
+        if key not in zoneMap:
+            #print "ADDZONE", key, zone
+            self.zoneMap[key] = zone
+
+
+    def removeZone(self, zone):
+        zoneMap = self.zoneMap
+        key = (zone.x, zone.y, zone.churchNumber)
+        if key in zoneMap:
+            #print "REMOVEZONE", zone
+            del zoneMap[key]
 
 
     def addSession(self, session):
@@ -1609,8 +1654,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 	    self.pause()
 	elif gameMode == "play":
 	    self.setVirtualSpeed(self.startVirtualSpeed)
-	    self.resetRealTime()
-	    self.updateFundEffects()
+	    self.resetCity()
 	    self.resume()
 
 
@@ -1668,6 +1712,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 print "SIMTICK EXCEPTION:", e
 
+            self.tickZones()
+
             self.animateTiles()
 
             #self.simUpdate()
@@ -1678,6 +1724,13 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         #self.handle_update('tick')
 
         #print "TICKENGINE 2", "PAUSED", self.simPaused, "CITYTIME", self.cityTime
+
+
+    def tickZones(self):
+
+        for zone in self.zoneMap.values():
+            zone.tick()
+
 
     ########################################################################
     # expectationFailed
@@ -1965,6 +2018,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             'message': 'didGenerateMap',
             'seed': self.generatedCitySeed
         })
+        self.resetCity()
         self.updateMapView()
 
     
@@ -1973,6 +2027,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': 'didLoadCity',
         })
+        self.resetCity()
         self.updateMapView()
 
     
@@ -1982,6 +2037,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             'message': 'didLoadScenario',
             'scenario': self.scenario,
         })
+        self.resetCity()
         self.updateMapView()
 
 
@@ -2024,7 +2080,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             'message': 'loseGame',
         })
 
-    
+
     def handle_makeSound(self, channel, sound, x, y):
         #print "handle_makeSound(self, channel, sound)", (self, channel, sound, x, y)
         self.sendSessions({
@@ -2325,31 +2381,21 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def handle_simulateChurch(self, x, y, churchNumber):
-        #print "handle_simulateChurch", x, y, churchNumber
+        #print "handle_simulateChurch", x, y, churchNumber, self.simPaused
 
-        if churchNumber == 0:
-            pass
-        elif churchNumber == 1:
+        if self.simPaused:
+            return
 
-            # The Pacmania church generates lots of traffic, in order
-            # to appease the PacBots, which who are attracted to the
-            # traffic and eat it. 
-            self.makeTraffic(x, y, micropolisengine.ZT_RESIDENTIAL)
-            self.makeTraffic(x, y, micropolisengine.ZT_COMMERCIAL)
-            self.makeTraffic(x, y, micropolisengine.ZT_INDUSTRIAL)
+        key = (x, y, churchNumber)
+        zone = self.zoneMap.get(key, None)
+        if not zone:
+            zone = ChurchZoneClasses[churchNumber](
+                engine=self,
+                x=x,
+                y=y)
+            self.addZone(zone)
 
-        elif churchNumber == 2:
-            pass
-        elif churchNumber == 3:
-            pass
-        elif churchNumber == 4:
-            pass
-        elif churchNumber == 5:
-            pass
-        elif churchNumber == 6:
-            pass
-        elif churchNumber == 7:
-            pass
+        zone.simulate()
 
 
 ########################################################################

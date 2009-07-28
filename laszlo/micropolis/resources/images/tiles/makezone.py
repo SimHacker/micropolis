@@ -65,7 +65,7 @@
 # Don Hopkins
 
 
-import os, sys
+import os, sys, math
 import cairo
 
 
@@ -74,6 +74,8 @@ import cairo
 
 
 TileSize = 16
+TileCount = 1024
+TilesFileName = 'micropolis_tiles.png'
 ZoneFileNameTemplate = 'zone_%s.png'
 TileFileNameTemplate = 'micropolis_tile_%04d.png'
 
@@ -109,10 +111,6 @@ ZoneTable = {
     },
     'church7': {
         'base': 1010,
-        'size': 3,
-    },
-    'church8': {
-        'base': 1019,
         'size': 3,
     },
 }
@@ -168,6 +166,8 @@ def main():
 
         MakeZone(zoneID, zoneImageFileName, tileDir)
 
+    MakeAllTiles(tileDir)
+
 
 def MakeZone(zoneID, zoneImageFileName, tileDir):
     print "MakeZone", zoneID, zoneImageFileName, tileDir
@@ -189,7 +189,7 @@ def MakeZone(zoneID, zoneImageFileName, tileDir):
                 tileDir,
                 TileFileNameTemplate % (tileNumber,))
 
-            print row, col, tileFileName
+            #print row, col, tileFileName
 
             ctx.set_source_surface(
                 zoneImage,
@@ -198,6 +198,37 @@ def MakeZone(zoneID, zoneImageFileName, tileDir):
             ctx.paint()
 
             tileImage.write_to_png(tileFileName)
+
+
+def MakeAllTiles(tileDir):
+
+    print "Make All Tiles"
+
+    cols = 16
+    rows = int(math.ceil(TileCount / float(cols)))
+
+    tileImages = []
+
+    allTilesImage = cairo.ImageSurface(cairo.FORMAT_ARGB32, TileSize * cols, TileSize * rows)
+    ctx = cairo.Context(allTilesImage)
+
+    for tileNumber in range(0, TileCount):
+        col = tileNumber % cols
+        row = int(tileNumber / cols)
+        tileFileName = os.path.join(
+            tileDir,
+            TileFileNameTemplate % (tileNumber,))
+        tileImage = cairo.ImageSurface.create_from_png(
+            tileFileName)
+        #print tileNumber, col, row, tileFileName
+        ctx.set_source_surface(
+            tileImage,
+            col * TileSize,
+            row * TileSize)
+        ctx.paint()
+
+
+    allTilesImage.write_to_png(TilesFileName)
 
 
 ########################################################################

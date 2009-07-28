@@ -708,7 +708,7 @@ enum MapTileCharacters {
     CHURCH6        = 1005,
     CHURCH7BASE    = 1010,
     CHURCH7        = 1014,
-    CHURCH7LAST    = 1019,
+    CHURCH7LAST    = 1018,
 
     // Tiles 1020-1023 unused
 

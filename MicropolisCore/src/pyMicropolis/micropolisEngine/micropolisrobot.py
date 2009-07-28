@@ -79,6 +79,8 @@ from pyMicropolis.tileEngine import tiletool
 ########################################################################
 
 
+# TODO: Centralize this in a utility module.
+
 UniqueNumberNext = 0
 
 def UniqueNumber():
