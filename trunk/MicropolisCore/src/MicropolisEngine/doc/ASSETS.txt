@@ -1,4 +1,4 @@
-Micropolis Assets:
+Micropolis Art Assets:
 
   This is a list of required and optional assets for Micropolis. 
 

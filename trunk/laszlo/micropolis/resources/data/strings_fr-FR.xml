@@ -394,6 +394,8 @@
 
     <string id="The city simulation has begun!">@fr-FR@ The city simulation has begun!</string>
 
+    <string id="Learn More">@fr-FR@ Learn More</string>
+
 
     <!-- pancursor.lzx -->
 
@@ -461,6 +463,8 @@
 
     <!-- toolcursor.lzx -->
 
+    <string id="Cost">@fr-FR@ Cost</string>
+
 
     <!-- toolpalette.lzx -->
 
@@ -502,7 +506,7 @@
 
     <string id="Center (tool description)">@fr-FR@ Scrolls location to center of screen.</string>
 
-    <string id="PacBot">@fr-FR@ PacBot</string>
+    <string comment="Do not translate the proper name PacBot." id="PacBot">@fr-FR@ PacBot</string>
 
     <string id="PacBot (tool description)">@fr-FR@ Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
 
@@ -552,142 +556,211 @@
 
     <string id="notice_10_description">@fr-FR@ Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br/&gt;Either clean up your act or open a gas mask concession at city hall.</string>
 
+    <string id="notice_10_url">@fr-FR@ </string>
+
     <string id="notice_11_title">@fr-FR@ CRIME ALERT!</string>
 
     <string id="notice_11_description">@fr-FR@ Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.</string>
+
+    <string id="notice_11_url">@fr-FR@ </string>
 
     <string id="notice_12_title">@fr-FR@ TRAFFIC WARNING!</string>
 
     <string id="notice_12_description">@fr-FR@ Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.</string>
 
+    <string id="notice_12_url">@fr-FR@ </string>
+
     <string id="notice_20_title">@fr-FR@ FIRE REPORTED!</string>
 
     <string id="notice_20_description">@fr-FR@ A fire has been reported!</string>
+
+    <string id="notice_20_url">@fr-FR@ </string>
 
     <string id="notice_21_title">@fr-FR@ MONSTER ATTACK!</string>
 
     <string id="notice_21_description">@fr-FR@ A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.&lt;br/&gt;All you can do is wait till he leaves, then rebuild from the rubble.</string>
 
+    <string id="notice_21_url">@fr-FR@ </string>
+
     <string id="notice_22_title">@fr-FR@ TORNADO ALERT!</string>
 
     <string id="notice_22_description">@fr-FR@ A tornado has been reported! There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!</string>
+
+    <string id="notice_22_url">@fr-FR@ </string>
 
     <string id="notice_23_title">@fr-FR@ EARTHQUAKE!</string>
 
     <string id="notice_23_description">@fr-FR@ A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.</string>
 
+    <string id="notice_23_url">@fr-FR@ </string>
+
     <string id="notice_24_title">@fr-FR@ PLANE CRASH!</string>
 
     <string id="notice_24_description">@fr-FR@ A plane has crashed!</string>
+
+    <string id="notice_24_url">@fr-FR@ </string>
 
     <string id="notice_25_title">@fr-FR@ SHIPWRECK!</string>
 
     <string id="notice_25_description">@fr-FR@ A ship has wrecked!</string>
 
+    <string id="notice_25_url">@fr-FR@ </string>
+
     <string id="notice_26_title">@fr-FR@ TRAIN CRASH!</string>
 
     <string id="notice_26_description">@fr-FR@ A train has crashed!</string>
+
+    <string id="notice_26_url">@fr-FR@ </string>
 
     <string id="notice_27_title">@fr-FR@ HELICOPTER CRASH!</string>
 
     <string id="notice_27_description">@fr-FR@ A helicopter has crashed!</string>
 
+    <string id="notice_27_url">@fr-FR@ </string>
+
     <string id="notice_30_title">@fr-FR@ FIREBOMBING REPORTED!</string>
 
     <string id="notice_30_description">@fr-FR@ Firebombs are falling!!</string>
+
+    <string id="notice_30_url">@fr-FR@ </string>
 
     <string id="notice_32_title">@fr-FR@ EXPLOSION REPORTED!</string>
 
     <string id="notice_32_description">@fr-FR@ There has been an explosion!!</string>
 
+    <string id="notice_32_url">@fr-FR@ </string>
+
     <string id="notice_35_title">@fr-FR@ TOWN</string>
 
     <string id="notice_35_description">@fr-FR@ Congratulations, your village has grown to town status. You now have 2,000 citizens.</string>
+
+    <string id="notice_35_url">@fr-FR@ </string>
 
     <string id="notice_36_title">@fr-FR@ CITY</string>
 
     <string id="notice_36_description">@fr-FR@ Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!</string>
 
+    <string id="notice_36_url">@fr-FR@ </string>
+
     <string id="notice_37_title">@fr-FR@ CAPITAL</string>
 
     <string id="notice_37_description">@fr-FR@ Your city has become a capital. The current population here is 50,000. Your political future looks bright.</string>
+
+    <string id="notice_37_url">@fr-FR@ </string>
 
     <string id="notice_38_title">@fr-FR@ METROPOLIS</string>
 
     <string id="notice_38_description">@fr-FR@ Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.</string>
 
+    <string id="notice_38_url">@fr-FR@ </string>
+
     <string id="notice_39_title">@fr-FR@ MEGALOPOLIS</string>
 
     <string id="notice_39_description">@fr-FR@ Congratulation, you have reached the highest category of urban development, the megalopolis.</string>
+
+    <string id="notice_39_url">@fr-FR@ </string>
 
     <string id="notice_41_title">@fr-FR@ HEAVY TRAFFIC!</string>
 
     <string id="notice_41_description">@fr-FR@ Sky Watch One reporting heavy traffic!</string>
 
+    <string id="notice_41_url">@fr-FR@ </string>
+
     <string id="notice_42_title">@fr-FR@ FLOODING REPORTED!</string>
 
     <string id="notice_42_description">@fr-FR@ Flooding has been been reported along the water's edge!</string>
+
+    <string id="notice_42_url">@fr-FR@ </string>
 
     <string id="notice_43_title">@fr-FR@ NUCLEAR MELTDOWN!</string>
 
     <string id="notice_43_description">@fr-FR@ A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.&lt;br/&gt;Many generations will confront this problem before it goes away, so don't hold your breath.</string>
 
+    <string id="notice_43_url">@fr-FR@ </string>
+
     <string id="notice_44_title">@fr-FR@ RIOTS!</string>
 
     <string id="notice_44_description">@fr-FR@ The citizens are rioting in the streets!</string>
+
+    <string id="notice_44_url">@fr-FR@ </string>
 
     <string id="notice_45_title">@fr-FR@ Start a New City</string>
 
     <string id="notice_45_description">@fr-FR@ Build your very own city from the ground up, starting with this map of uninhabited land.</string>
 
+    <string id="notice_45_url">@fr-FR@ </string>
+
     <string id="notice_46_title">@fr-FR@ Restore a Saved City</string>
 
     <string id="notice_46_description">@fr-FR@ The city was restored.</string>
+
+    <string id="notice_46_url">@fr-FR@ </string>
 
     <string id="notice_47_title">@fr-FR@ YOU'RE A WINNER!</string>
 
     <string id="notice_47_description">@fr-FR@ Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?</string>
 
+    <string id="notice_47_url">@fr-FR@ </string>
+
     <string id="notice_48_title">@fr-FR@ IMPEACHMENT NOTICE!</string>
 
     <string id="notice_48_description">@fr-FR@ The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)</string>
+
+    <string id="notice_48_url">@fr-FR@ </string>
 
     <string id="notice_49_title">@fr-FR@ About Micropolis</string>
 
     <string id="notice_49_description">@fr-FR@ Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</string>
 
+    <string id="notice_49_url">@fr-FR@ </string>
+
     <string id="notice_50_title">@fr-FR@ DULLSVILLE, USA  1900</string>
 
     <string id="notice_50_description">@fr-FR@ Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.&lt;br/&gt;It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.</string>
+
+    <string id="notice_50_url">@fr-FR@ </string>
 
     <string id="notice_51_title">@fr-FR@ SAN FRANCISCO, CA.  1906</string>
 
     <string id="notice_51_description">@fr-FR@ Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.&lt;br/&gt;Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.</string>
 
+    <string id="notice_51_url">@fr-FR@ </string>
+
     <string id="notice_52_title">@fr-FR@ HAMBURG, GERMANY  1944</string>
 
     <string id="notice_52_description">@fr-FR@ Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.&lt;br/&gt;You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.</string>
+
+    <string id="notice_52_url">@fr-FR@ </string>
 
     <string id="notice_53_title">@fr-FR@ BERN, SWITZERLAND  1965</string>
 
     <string id="notice_53_description">@fr-FR@ The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.&lt;br/&gt;Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.</string>
 
+    <string id="notice_53_url">@fr-FR@ </string>
+
     <string id="notice_54_title">@fr-FR@ TOKYO, JAPAN  1957</string>
 
     <string id="notice_54_description">@fr-FR@ A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.&lt;br/&gt;Try to control the fires, then rebuild the industrial center. You have 5 years.</string>
+
+    <string id="notice_54_url">@fr-FR@ </string>
 
     <string id="notice_55_title">@fr-FR@ DETROIT, MI.  1972</string>
 
     <string id="notice_55_description">@fr-FR@ By 1970, competition from overseas and other economic factors pushed the once &quot;automobile capital of the world&quot; into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.&lt;br/&gt;You have 10 years to reduce crime and rebuild the industrial base of the city.</string>
 
+    <string id="notice_55_url">@fr-FR@ </string>
+
     <string id="notice_56_title">@fr-FR@ BOSTON, MA.  2010</string>
 
     <string id="notice_56_description">@fr-FR@ A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.&lt;br/&gt;You have 5 years to get the situation under control.</string>
+
+    <string id="notice_56_url">@fr-FR@ </string>
 
     <string id="notice_57_title">@fr-FR@ RIO DE JANEIRO, BRAZIL  2047</string>
 
     <string id="notice_57_description">@fr-FR@ In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.</string>
 
+    <string id="notice_57_url">@fr-FR@ </string>
 
     <!-- overlays.xml -->
 
@@ -797,5 +870,233 @@
     <string id="Manual">@fr-FR@ Manual</string>
 
     <string id="Delete">@fr-FR@ Delete</string>
+
+    <string comment="Do not translate the proper name Xenu." id="Xenu">@fr-FR@ Xenu</string>
+
+
+    <!-- Zones -->
+
+    <string id="zone-christian-title">@fr-FR@ Christian Church</string>
+
+    <string id="zone-christian-description">@fr-FR@ This is a Christian church.</string>
+
+    <string id="zone-pacmania-title">@fr-FR@ Pacmania Church</string>
+
+    <string id="zone-pacmania-description">@fr-FR@ This is a Pacmania church.</string>
+
+    <string id="zone-pacmania-message-0-url">@fr-FR@ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-0-title">@fr-FR@ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-0-text">@fr-FR@ Pacmania is a religion dedicated to the PacBot.</string>
+
+    <string id="zone-pacmania-message-1-url">@fr-FR@ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-1-title">@fr-FR@ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-1-text">@fr-FR@ Pacmania is polytheistic: each Pacmania church can spawn up to four PacBots.</string>
+
+    <string id="zone-pacmania-message-2-url">@fr-FR@ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-2-title">@fr-FR@ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-2-text">@fr-FR@ The PacBot follows roads around, eating traffic.</string>
+
+    <string id="zone-pacmania-message-3-url">@fr-FR@ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-3-title">@fr-FR@ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-3-text">@fr-FR@ The PacBot is attracted to heavy traffic, which it loves to consume.</string>
+
+    <string id="zone-pacmania-message-4-url">@fr-FR@ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-4-title">@fr-FR@ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-4-text">@fr-FR@ Pacmania churches generate lots of traffic, to attract the PacBot.</string>
+
+    <string id="zone-scientology-title">@fr-FR@ Church of Scientology</string>
+
+    <string id="zone-scientology-description">@fr-FR@ This is a Church of Scientology.</string>
+
+    <string id="zone-scientology-message-0-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-0-title">@fr-FR@ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-0-text">@fr-FR@ Scientology is a body of beliefs and related practices created by L. Ron Hubbard (1911–1986), starting in 1952, as a successor to his earlier self-help system, Dianetics. Hubbard characterized Scientology as a religion, and in 1953 incorporated the Church of Scientology in New Jersey.</string>
+
+    <string id="zone-scientology-message-1-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-1-title">@fr-FR@ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-1-text">@fr-FR@ Scientology teaches that people are immortal spiritual beings who have forgotten their true nature. Its method of spiritual rehabilitation is a type of counseling known as auditing, in which practitioners aim to consciously re-experience painful or traumatic events in their past, in order to free themselves of their limiting effects. Study materials and auditing courses are made available to members in return for specified donations. Scientology is legally recognized as a tax-exempt religion in the United States and some other countries, and the Church of Scientology emphasizes this as proof that it is a bona fide religion. Other countries such as Germany and France continue to deny Scientology religious status.</string>
+
+    <string id="zone-scientology-message-2-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-2-title">@fr-FR@ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-2-text">@fr-FR@ A large number of organizations overseeing the application of Scientology have been established, the most notable of these being the Church of Scientology. Scientology sponsors a variety of social service programs. These include a set of moral guidelines expressed in a brochure called The Way to Happiness, the Narconon anti-drug program, the Criminon prison rehabilitation program, the Study Tech education methodology, a volunteer organization, and a business management method.</string>
+
+    <string id="zone-scientology-message-3-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-3-title">@fr-FR@ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-3-text">@fr-FR@ Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls (&quot;thetans&quot;) reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+
+    <string id="zone-scientology-message-4-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Beliefs_and_practices</string>
+
+    <string id="zone-scientology-message-4-title">@fr-FR@ Scientology beliefs and practices</string>
+
+    <string id="zone-scientology-message-4-text">@fr-FR@ Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls (&quot;thetans&quot;) reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+
+    <string id="zone-scientology-message-5-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-5-title">@fr-FR@ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-5-text">@fr-FR@ Scientology has an associated mythology that its adherents hold to reflect religious truth. In Scientology, this mythology revolves around the thetan, believed to be the individualized expression of the cosmic source, or life force, named after the Greek letter theta (θ). The thetan is thought to be the true identity of a person – an intrinsically good, omniscient, non-material core capable of unlimited creativity.</string>
+
+    <string id="zone-scientology-message-6-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-6-title">@fr-FR@ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-6-text">@fr-FR@ In the primordial past, according to Scientologist teachings, thetans brought the material universe into being largely for their own pleasure. The universe is thought to have no independent reality, but to derive its apparent reality from the fact that most thetans agree it exists. Scientologists believe that thetans fell from grace when they began to identify with their creation, rather than their original state of spiritual purity. Eventually, they lost their memory of their true nature, along with the associated spiritual and creative powers. As a result, thetans came to think of themselves as nothing but embodied beings.</string>
+
+    <string id="zone-scientology-message-7-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-7-title">@fr-FR@ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-7-text">@fr-FR@ Thetans are believed to be reborn time and time again in new bodies through a process called &quot;assumption&quot; which is analogous to reincarnation. Like Hinduism, Scientology posits a causal relationship between the experiences of earlier incarnations and one's present life, and with each rebirth, the effects of the MEST universe (MEST here stands for matter, energy, space, and time) on the thetan are believed to become stronger.</string>
+
+    <string id="zone-scientology-message-8-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-8-title">@fr-FR@ Scientology beliefs and practices: Emotions and the mind</string>
+
+    <string id="zone-scientology-message-8-text">@fr-FR@ Scientology presents two major divisions of the mind. The reactive mind is thought to absorb all pain and emotional trauma, while the analytical mind is a rational mechanism which is responsible for consciousness. The reactive mind stores mental images which are not readily available to the analytical (conscious) mind; these are referred to as engrams. Engrams are believed to be painful and debilitating; as they accumulate, people move further away from their true identity. To avoid this fate is the Scientologist's basic goal. Dianetic training is the tool through which the Scientologist progresses towards the Clear state, winning gradual freedom from the reactive mind's engrams, and acquiring certainty of his or her reality as a thetan.</string>
+
+    <string id="zone-scientology-message-9-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-9-title">@fr-FR@ Scientology beliefs and practices: Emotions and the mind</string>
+
+    <string id="zone-scientology-message-9-text">@fr-FR@ Scientology uses an emotional classification system called the tone scale. The tone scale is a tool used in counseling; Scientologists maintain that knowing a person's place on the scale makes it easier to predict their actions and to assist them in bettering their condition.</string>
+
+    <string id="zone-scientology-message-10-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-10-title">@fr-FR@ Scientology beliefs and practices: Survival and ethics</string>
+
+    <string id="zone-scientology-message-10-text">@fr-FR@ Scientology emphasizes the importance of survival, which it subdivides into eight classifications that are referred to as dynamics. An individual's desire to survive is considered to be the first dynamic, while the second dynamic relates to procreation and family. The remaining dynamics encompass wider fields of action, involving groups, mankind, all life, the physical universe, the spirit, and the Supreme Being. The optimum solution to any problem is held to be the one that brings the greatest benefit to the greatest number of dynamics.</string>
+
+    <string id="zone-scientology-message-11-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-11-title">@fr-FR@ Scientology beliefs and practices: Survival and ethics</string>
+
+    <string id="zone-scientology-message-11-text">@fr-FR@ Scientology teaches that spiritual progress requires and enables the attainment of high ethical standards. In Scientology, rationality is stressed over morality. Actions are considered ethical if they promote survival across all eight dynamics, thus benefiting the greatest number of people possible while harming the fewest.</string>
+
+    <string id="zone-scientology-message-12-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-12-title">@fr-FR@ Scientology beliefs and practices: ARC and KRC triangles</string>
+
+    <string id="zone-scientology-message-12-text">@fr-FR@ The ARC and KRC triangles are concept maps which show a relationship between three concepts to form another concept. These two triangles are present in the Scientology logo. The lower triangle, the ARC triangle, is a summary representation of the knowledge the Scientologist strives for. It encompasses Affinity (affection, love or liking), Reality (consensual reality) and Communication (the exchange of ideas). Scientologists believe that improving one of the three aspects of the triangle &quot;increases the level&quot; of the other two, but Communication is held to be the most important. The upper triangle is the KRC triangle, the letters KRC positing a similar relationship between Knowledge, Responsibility and Control.</string>
+
+    <string id="zone-scientology-message-13-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-13-title">@fr-FR@ Scientology beliefs and practices: ARC and KRC triangles</string>
+
+    <string id="zone-scientology-message-13-text">@fr-FR@ In Scientology, social problems are ascribed to breakdowns in ARC – in other words, a lack of agreement on reality, a failure to communicate effectively, or a failure to develop affinity. These can take the form of overts – harmful acts against another, either intentionally or by omission – which are usually followed by withholds – efforts to conceal the wrongdoing, which further increase the level of tension in the relationship.</string>
+
+    <string id="zone-scientology-message-14-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-14-title">@fr-FR@ Scientology beliefs and practices: Social and antisocial personalities</string>
+
+    <string id="zone-scientology-message-14-text">@fr-FR@ While Scientology believes that many social problems are the unintentional results of people's imperfections, it states that there are also truly malevolent individuals. Hubbard believed that approximately 80 percent of all people are what he called social personalities – people who welcome and contribute to the welfare of others. The remaining 20 percent of the population, Hubbard thought, were suppressive persons. According to Hubbard, only about 2.5 percent of this 20 percent are hopelessly antisocial personalities; these make up the small proportion of truly dangerous individuals in humanity: &quot;the Adolf Hitlers and the Genghis Khans, the unrepentant murderers and the drug lords.&quot; Scientologists believe that any contact with suppressive or antisocial individuals has an adverse effect on one's spiritual condition, necessitating disconnection.</string>
+
+    <string id="zone-scientology-message-15-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-15-title">@fr-FR@ Scientology beliefs and practices: Social and antisocial personalities</string>
+
+    <string id="zone-scientology-message-15-text">@fr-FR@ In Scientology, defectors who turn into critics of the movement are declared suppressive persons, and the Church of Scientology has a reputation for moving aggressively against such detractors. A Scientologist who is actively in communication with a suppressive person and as a result shows signs of antisocial behaviour is referred to as a Potential Trouble Source.</string>
+
+    <string id="zone-scientology-message-16-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Auditing</string>
+
+    <string id="zone-scientology-message-16-title">@fr-FR@ Scientology beliefs and practices: Auditing</string>
+
+    <string id="zone-scientology-message-16-text">@fr-FR@ Scientology asserts that people have hidden abilities which have not yet been fully realized. It is believed that increased spiritual awareness and physical benefits are accomplished through counseling sessions referred to as auditing. Through auditing, it is said that people can solve their problems and free themselves of engrams. This restores them to their natural condition as thetans and enables them to be at cause in their daily lives, responding rationally and creatively to life events rather than reacting to them under the direction of stored engrams. Accordingly, those who study Scientology materials and receive auditing sessions advance from a status of Preclear to Clear and Operating Thetan. Scientology's utopian aim is to &quot;clear the planet&quot;, a world in which everyone has cleared themselves of their engrams.</string>
+
+    <string id="zone-scientology-message-17-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Auditing</string>
+
+    <string id="zone-scientology-message-17-title">@fr-FR@ Scientology beliefs and practices: Auditing</string>
+
+    <string id="zone-scientology-message-17-text">@fr-FR@ Auditing is a one-on-one session with a Scientology counselor or auditor. It bears a superficial similarity to confession or pastoral counseling, but the auditor does not dispense forgiveness or advice the way a pastor or priest might do. Instead, the auditor's task is to help the person discover and understand engrams, and their limiting effects, for themselves. Most auditing requires an E-meter, a device that measures minute changes in electrical resistance through the body when a person holds electrodes (metal &quot;cans&quot;), and a small current is passed through them. Scientology asserts that watching for changes in the E-meter's display helps locate engrams. Once an area of concern has been identified, the auditor asks the individual specific questions about it, in order to help them eliminate the engram, and uses the E-meter to confirm that the engram's &quot;charge&quot; has been dissipated and the engram has in fact been cleared. As the individual progresses, the focus of auditing moves from simple engrams to engrams of increasing complexity. At the more advanced OT auditing levels, Scientologists perform solo auditing sessions, acting as their own auditors.</string>
+
+    <string id="zone-scientology-message-18-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-18-title">@fr-FR@ Scientology beliefs and practices: The Bridge to Total Freedom</string>
+
+    <string id="zone-scientology-message-18-text">@fr-FR@ Spiritual development within Scientology is accomplished by studying Scientology materials. Scientology materials (called Technology or Tech in Scientology jargon) are structured in sequential levels (or gradients), so that easier steps are taken first and greater complexities are handled at the appropriate time. This process is sometimes referred to as moving along the Bridge to Total Freedom, or simply the Bridge. It has two sides: training and processing. Training means education in the principles and practices of auditing. Processing is personal development through participation in auditing sessions.</string>
+
+    <string id="zone-scientology-message-19-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-19-title">@fr-FR@ Scientology beliefs and practices: The Bridge to Total Freedom</string>
+
+    <string id="zone-scientology-message-19-text">@fr-FR@ The Church of Scientology believes in the principle of reciprocity, involving give-and-take in every human transaction. Accordingly, members are required to make donations for study courses and auditing as they move up the Bridge, the amounts increasing as higher levels are reached. Participation in higher-level courses on the Bridge may cost several thousand dollars, and Scientologists usually move up the Bridge at a rate governed by their income.</string>
+
+    <string id="zone-scientology-message-20-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-20-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-20-text">@fr-FR@ The Church of Scientology holds that at the higher levels of initiation (OT levels) mystical teachings are imparted that may be harmful to unprepared readers. These teachings are kept secret from members who have not reached these levels. The Church states that the secrecy is warranted to keep its materials' use in context, and to protect its members from being exposed to materials they are not yet prepared for.</string>
+
+    <string id="zone-scientology-message-21-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-21-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-21-text">@fr-FR@ These are the OT levels, the levels above Clear, whose contents are guarded within Scientology. The OT level teachings include accounts of various cosmic catastrophes that befell the thetans. Hubbard described these early events collectively as space opera.</string>
+
+    <string id="zone-scientology-message-22-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-22-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-22-text">@fr-FR@ In the OT levels, Hubbard explains how to reverse the effects of past-life trauma patterns that supposedly extend millions of years into the past. Among these advanced teachings is the story of Xenu (sometimes Xemu), introduced as an alien ruler of the &quot;Galactic Confederacy.&quot; According to this story, 75 million years ago Xenu brought billions of people to Earth in spacecraft resembling Douglas DC-8 airliners, stacked them around volcanoes and detonated hydrogen bombs in the volcanoes. The thetans then clustered together, stuck to the bodies of the living, and continue to do this today. Scientologists at advanced levels place considerable emphasis on isolating body thetans and neutralizing their ill effects.</string>
+
+    <string id="zone-scientology-message-23-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-23-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-23-text">@fr-FR@ The material contained in the OT levels has been characterized as bad science fiction by critics, while others claim it bears structural similarities to gnostic thought and ancient Hindu myths of creation and cosmic struggle. J. Gordon Melton suggests that these elements of the OT levels may never have been intended as descriptions of historical events, and that, like other religious mythology, they may have their truth in the realities of the body and mind which they symbolize. He adds that on whatever level Scientologists might have received this mythology, they seem to have found it useful in their spiritual quest.</string>
+
+    <string id="zone-scientology-message-24-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-24-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-24-text">@fr-FR@ The high-ranking OT levels are made available to Scientologists only by invitation, after a review of the candidate's character and contribution to the aims of Scientology. Individuals who have read these materials may not disclose what they contain without jeopardizing their standing in the Church. Excerpts and descriptions of OT materials were published online by a former member in 1995 and then circulated in mainstream media. This occurred after the teachings were submitted as evidence in court cases involving Scientology, thus becoming a matter of public record. There are eight publicly-known OT levels, OT I to VIII. The highest level, OT VIII, is only disclosed at sea, on the Scientology cruise ship Freewinds. It was released in the late 1980s. It has been rumored that additional OT levels, said to be based on material written by Hubbard long ago, will be released at some appropriate point in the future.</string>
+
+    <string id="zone-scientology-message-25-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-25-title">@fr-FR@ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-25-text">@fr-FR@ There is a large Church of Spiritual Technology symbol carved into the ground at Scientology's Trementina Base that is visible from the air. Washington Post reporter Richard Leiby wrote, &quot;Former Scientologists familiar with Hubbard’s teachings on reincarnation say the symbol marks a 'return point' so loyal staff members know where they can find the founder’s works when they travel here in the future from other places in the universe.&quot;</string>
+
+    <string id="zone-scientology-message-26-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Ceremonies</string>
+
+    <string id="zone-scientology-message-26-title">@fr-FR@ Scientology beliefs and practices: Ceremonies</string>
+
+    <string id="zone-scientology-message-26-text">@fr-FR@ In Scientology, ceremonies for events such as weddings, child naming, and funerals are observed. Friday services are held to commemorate the completion of a person's religious services during the prior week. Ordained Scientology ministers may perform such rites. However, these services and the clergy who perform them play only a minor role in Scientologists' religious lives.</string>
+
+    <string id="zone-scientology-message-27-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-27-title">@fr-FR@ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-27-text">@fr-FR@ In Dianetics, Hubbard gives credit to Francis Bacon and Herbert Spencer. Hubbard recalled meeting Cmdr. Joseph Cheesman Thompson, a U.S. Navy officer who studied with Sigmund Freud, when he was 12 years old, and when Hubbard wrote to the American Psychological Association in 1949, he stated that he was conducting research based on the &quot;early work of Freud&quot;. Scientology's view of the mind has some similarities to the Freudian one.</string>
+
+    <string id="zone-scientology-message-28-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-28-title">@fr-FR@ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-28-text">@fr-FR@ In the 1940s, Hubbard was in contact with Jack Parsons, a rocket scientist and member of the Ordo Templi Orientis then led by Aleister Crowley, and there have been suggestions that this connection influenced some of the ideas and symbols of Scientology. Religious scholars like Gerald Willms and J. Gordon Melton have pointed out that the teachings of Crowley's &quot;satanism&quot; bear little if any resemblance to Scientology doctrine.</string>
+
+    <string id="zone-scientology-message-29-url">@fr-FR@ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-29-title">@fr-FR@ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-29-text">@fr-FR@ As noted, there are elements of Eastern religions evident in Scientology, in particular the concepts of karma, as present in Hinduism and in Jainism, and dharma. In addition to the links to Hindu texts, Hubbard tried to connect Scientology with Taoism and Buddhism. Scientology has been said to share features with Gnosticism as well.</string>
+
 
 </strings>

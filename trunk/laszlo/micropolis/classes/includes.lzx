@@ -28,6 +28,7 @@
     <include href="sprite.lzx"/>
     <include href="robot.lzx"/>
     <include href="robot_PacBot.lzx"/>
+    <include href="robot_Xenu.lzx"/>
     <include href="toolcursor.lzx"/>
     <include href="pancursor.lzx"/>
     <include href="piecursor.lzx"/>

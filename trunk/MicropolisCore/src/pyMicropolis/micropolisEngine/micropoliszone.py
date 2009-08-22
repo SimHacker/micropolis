@@ -72,6 +72,7 @@
 import random
 import math
 import micropolisengine
+import micropolisrobot
 import micropolistool
 from pyMicropolis.tileEngine import tiletool
 
@@ -112,10 +113,20 @@ def UniqueNumber():
 class MicropolisZone:
 
 
+    zoneType = 'root'
     width = 3
     height = 3
     hotX = 1
     hotY = 1
+    messageCount = 0
+    messageNumber = 0
+    messageProbability = 0
+    trafficProbabilityResidential = 0
+    trafficProbabilityCommercial = 0
+    trafficProbabilityIndustrial = 0
+    robotProbability = 0
+    maxRobots = 0
+    robotClass = None
 
 
     def __init__(
@@ -126,13 +137,21 @@ class MicropolisZone:
         churchNumber=0,
         **args):
 
+        #print "CREATE ZONE", x, y, churchNumber
+
         self.engine = engine
         self.x = x
         self.y = y
         self.churchNumber = churchNumber
         self.baseTile, self.hotTile = ChurchTiles[churchNumber]
-
+        #print "CHURCH NUMBER", churchNumber, "BASE", self.baseTile, "HOT", self.hotTile
+        self.robots = []
         self.zoneID = UniqueNumber()
+        self.score = 0
+
+
+    def addScore(self, delta):
+        self.score += delta
 
 
     # High frequency tick.
@@ -151,16 +170,128 @@ class MicropolisZone:
         # TODO: Destroy all tiles when reseting city.
 
 
-    # Occasional simulate.
-    def simulate(self):
+    def addRobot(self, robot):
+        #print "ZONE ADD ROBOT", robot, "ZONE", self
+        robots = self.robots
+        if robot not in robots:
+            robots.append(robot)
 
-        # print "ZONE SIMULATE", self, self.x, self.y
-        pass
+
+    def removeRobot(self, robot):
+        #print "ZONE REMOVE ROBOT", robot, "ZONE", self
+        robots = self.robots
+        if robot in robots:
+            robots.remove(robot)
+
 
     def destroy(self):
-        #print "ZONE DESTROY", self, self.x, self.y
+        #print "DESTROY ZONE", self, self.x, self.y, self.robots
         # TODO: destroy the zone.
+
+        for robot in list(self.robots):
+            robot.destroy()
+
         self.engine.removeZone(self)
+
+
+    def findRoads(self):
+
+        engine = self.engine
+        roads = []
+
+        x0 = self.x - self.hotX - 1
+        y0 = self.y - self.hotY - 1
+        x1 = x0 + self.width + 1
+        y1 = y0 + self.height + 1
+        for x in range(x0, x1 + 1):
+            if engine.isRoad(x, y0):
+                roads.append((x, y0))
+            if engine.isRoad(x, y1):
+                roads.append((x, y1))
+        for y in range(y0 + 1, y1):
+            if engine.isRoad(x0, y):
+                roads.append((x0, y))
+            if engine.isRoad(x1, y):
+                roads.append((x1, y))
+
+        return roads
+
+
+    def findRandomRoad(self):
+        roads = self.findRoads()
+        if not roads:
+            return None
+        return self.getAny(roads)
+
+
+    def generateTraffic(self):
+        engine = self.engine
+        x = self.x
+        y = self.y
+        if random.random() < self.trafficProbabilityResidential:
+            engine.makeTraffic(x, y, micropolisengine.ZT_RESIDENTIAL)
+        if random.random() < self.trafficProbabilityCommercial:
+            engine.makeTraffic(x, y, micropolisengine.ZT_COMMERCIAL)
+        if random.random() < self.trafficProbabilityIndustrial:
+            engine.makeTraffic(x, y, micropolisengine.ZT_INDUSTRIAL)
+
+
+    def generateRobots(self):
+        robots = self.robots
+        if ((len(robots) < self.maxRobots) and
+            (random.random() < self.robotProbability)):
+            pos = self.findRandomRoad()
+            if pos:
+                self.createRobot(pos[0], pos[1])
+
+
+    def createRobot(self, x, y):
+        print "CREATE ROBOT", x, y, self, self.robotClass
+        robot = self.robotClass(
+            x=(x * 16) + 8,
+            y=(y * 16) + 8,
+            direction = random.randint(0, 3) * math.pi / 2,
+            zone=self)
+        self.addRobot(robot)
+        self.engine.addRobot(robot)
+
+
+    def generateMessages(self):
+        if random.random() < self.messageProbability:
+            self.sendNextMessage()
+
+
+    def sendNextMessage(self):
+        messageNumber = self.messageNumber
+        self.messageNumber = (self.messageNumber + 1) % self.messageCount
+        messageNameBase = 'zone-' + self.zoneType + '-message-' + str(messageNumber)
+        #print messageNameBase
+        self.engine.sendSessions({
+            'message': 'update',
+            'variable': 'notice',
+            'notice': {
+                'title': messageNameBase + '-title',
+                'description': messageNameBase + '-text',
+                'url': messageNameBase + '-url',
+                'showPicture': False,
+                'picture': None,
+                'showMap': True,
+                'x': self.x,
+                'y': self.y,
+            },
+        })
+
+
+    # TODO: make this a utility.
+    def getAny(self, a):
+        return a[random.randint(0, len(a) - 1)]
+
+
+    def simulate(self):
+
+        self.generateTraffic()
+        self.generateRobots()
+        self.generateMessages()
 
 
 ########################################################################
@@ -168,34 +299,43 @@ class MicropolisZone:
 
 class MicropolisZone_Church0(MicropolisZone):
 
-    pass
+
+    zoneType = 'christian'
+
+
+########################################################################
+# Church of PacMania
+
+
+class MicropolisZone_ChurchOfPacMania(MicropolisZone):
+
+
+    zoneType = 'pacmania'
+    messageProbability = 0.1
+    messageCount = 5
+    trafficProbabilityResidential = 1.0
+    trafficProbabilityCommercial = 1.0
+    trafficProbabilityIndustrial = 1.0
+    robotProbability = 0.1
+    maxRobots = 4
+    robotClass = micropolisrobot.MicropolisRobot_PacBot
 
 
 ########################################################################
 
 
-class MicropolisZone_Church1(MicropolisZone):
-
-    def simulate(self):
-
-        engine = self.engine
-        x = self.x
-        y = self.y
-
-        # The Pacmania church generates lots of traffic, in order
-        # to appease the PacBots, which who are attracted to the
-        # traffic and eat it. 
-        engine.makeTraffic(x, y, micropolisengine.ZT_RESIDENTIAL)
-        engine.makeTraffic(x, y, micropolisengine.ZT_COMMERCIAL)
-        engine.makeTraffic(x, y, micropolisengine.ZT_INDUSTRIAL)
+class MicropolisZone_ChurchOfScientology(MicropolisZone):
 
 
-########################################################################
-
-
-class MicropolisZone_Church2(MicropolisZone):
-
-    pass
+    zoneType = 'scientology'
+    messageProbability = 0.1
+    messageCount = 30
+    trafficProbabilityResidential = 1.0
+    trafficProbabilityCommercial = 1.0
+    trafficProbabilityIndustrial = 1.0
+    robotProbability = 0.1
+    maxRobots = 1
+    robotClass = micropolisrobot.MicropolisRobot_Xenu
 
 
 ########################################################################
@@ -203,7 +343,8 @@ class MicropolisZone_Church2(MicropolisZone):
 
 class MicropolisZone_Church3(MicropolisZone):
 
-    pass
+
+    zoneType = 'church3'
 
 
 ########################################################################
@@ -211,7 +352,8 @@ class MicropolisZone_Church3(MicropolisZone):
 
 class MicropolisZone_Church4(MicropolisZone):
 
-    pass
+
+    zoneType = 'church4'
 
 
 ########################################################################
@@ -219,7 +361,8 @@ class MicropolisZone_Church4(MicropolisZone):
 
 class MicropolisZone_Church5(MicropolisZone):
 
-    pass
+
+    zoneType = 'church5'
 
 
 ########################################################################
@@ -227,7 +370,9 @@ class MicropolisZone_Church5(MicropolisZone):
 
 class MicropolisZone_Church6(MicropolisZone):
 
-    pass
+
+    zoneType = 'church6'
+
 
 
 ########################################################################
@@ -235,7 +380,23 @@ class MicropolisZone_Church6(MicropolisZone):
 
 class MicropolisZone_Church7(MicropolisZone):
 
-    pass
+
+    zoneType = 'church7'
+
+
+########################################################################
+
+
+ZoneClasses = [
+    MicropolisZone_Church0,
+    MicropolisZone_ChurchOfPacMania,
+    MicropolisZone_ChurchOfScientology,
+    MicropolisZone_Church3,
+    MicropolisZone_Church4,
+    MicropolisZone_Church5,
+    MicropolisZone_Church6,
+    MicropolisZone_Church7,
+]
 
 
 ########################################################################

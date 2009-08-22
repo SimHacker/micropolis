@@ -107,17 +107,6 @@ LoopsPerYear = micropolisengine.PASSES_PER_CITYTIME * micropolisengine.CITYTIMES
 DefaultAnimateDelay = 250
 DefaultPollDelay = 50
 
-ChurchZoneClasses = [
-    micropoliszone.MicropolisZone_Church0,
-    micropoliszone.MicropolisZone_Church1,
-    micropoliszone.MicropolisZone_Church2,
-    micropoliszone.MicropolisZone_Church3,
-    micropoliszone.MicropolisZone_Church4,
-    micropoliszone.MicropolisZone_Church5,
-    micropoliszone.MicropolisZone_Church6,
-    micropoliszone.MicropolisZone_Church7,
-]
-
 SpeedConfigurations = [
     { # 0: Ultra Slow
         'speed': 3,
@@ -517,7 +506,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.citySource = None
         self.cityID = None
         self.cityCookie = None
-        self.zoneMap = {}
 
         # This must be called at the end of the concrete subclass's
         # init, so it happens last.
@@ -600,39 +588,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         pass
 
 
-    def resetRealTime(self):
-        self.lastLoopTime = time.time()
-
-
-    def resetCity(self):
-        #print "resetCity", self
-        self.clearRobots()
-        self.clearZones()
-        self.resetRealTime()
-        self.updateFundEffects()
-
-
-    def clearZones(self):
-        for zone in list(self.zoneMap.values()):
-            self.removeZone(zone)
-
-
-    def addZone(self, zone):
-        zoneMap = self.zoneMap
-        key = (zone.x, zone.y, zone.churchNumber)
-        if key not in zoneMap:
-            #print "ADDZONE", key, zone
-            self.zoneMap[key] = zone
-
-
-    def removeZone(self, zone):
-        zoneMap = self.zoneMap
-        key = (zone.x, zone.y, zone.churchNumber)
-        if key in zoneMap:
-            #print "REMOVEZONE", zone
-            del zoneMap[key]
-
-
     def addSession(self, session):
         sessions = self.sessions
         if session not in sessions:
@@ -667,12 +622,40 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 session.sendMessage(message)
         except Exception, e:
             print "======== XXX sendSessions exception:", e
-            traceback.print_exc(10)
+            traceback.print_exc(100)
 
         # Clean up the collapse flag so none of the sessions send it
         # to the client.
         if 'collapse' in message:
             del message['collapse']
+
+
+    def updateNotice(
+        self, 
+        title,
+        description,
+        url,
+        showPicture,
+        picture,
+        showMap,
+        x,
+        y):
+
+        self.sendSessions({
+            'message': 'update',
+            'variable': 'notice',
+            'notice': {
+                'title': title,
+                'description': description,
+                'url': url,
+                'showPicture': showPicture,
+                'picture': picture,
+                'showMap': showMap,
+                'x': x,
+                'y': y,
+            },
+            'collapse': False,
+        })
 
 
     def handleMessage(self, session, messageDict):
@@ -1712,8 +1695,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             except Exception, e:
                 print "SIMTICK EXCEPTION:", e
 
-            self.tickZones()
-
             self.animateTiles()
 
             #self.simUpdate()
@@ -1724,12 +1705,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         #self.handle_update('tick')
 
         #print "TICKENGINE 2", "PAUSED", self.simPaused, "CITYTIME", self.cityTime
-
-
-    def tickZones(self):
-
-        for zone in self.zoneMap.values():
-            zone.tick()
 
 
     ########################################################################
@@ -2346,7 +2321,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
             elif variable == 'message':
 
-                # Do no collapse messages.
+                # Do not collapse messages.
                 msg = {
                     'number': args[0],
                     'x': args[1],
@@ -2378,24 +2353,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         except Exception, e:
             print '======== XXX handle_update ERROR:', e
             traceback.print_exc(10)
-
-
-    def handle_simulateChurch(self, x, y, churchNumber):
-        #print "handle_simulateChurch", x, y, churchNumber, self.simPaused
-
-        if self.simPaused:
-            return
-
-        key = (x, y, churchNumber)
-        zone = self.zoneMap.get(key, None)
-        if not zone:
-            zone = ChurchZoneClasses[churchNumber](
-                engine=self,
-                x=x,
-                y=y)
-            self.addZone(zone)
-
-        zone.simulate()
 
 
 ########################################################################

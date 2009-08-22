@@ -34,22 +34,30 @@
 	    var stringsDict = {};
 	    if (canvas.ds_strings.childNodes) {
 	        //Debug.write("canvas.ds_strings.childNodes", canvas.ds_strings.childNodes);
+		//Debug.write("loadStrings 1");
 		var stringsElement =
 		    canvas.ds_strings.childNodes[0];
 	        var language = 
 		    stringsElement.attributes['language'];
 		this.setAttribute("language", language);
 
+		//Debug.write("loadStrings 2");
 		var childNodes =
 		    stringsElement.childNodes;
 		var n = childNodes.length;
 		var i;
+		//Debug.write("loadStrings 3");
 		for (i = 0; i < n; i++) {
 		    var stringNode = childNodes[i];
 		    if ((stringNode.nodeType == 1) &&
 			(stringNode.nodeName == 'string')) {
 			var id = stringNode.attributes['id'];
-			var value = stringNode.childNodes[0].data;
+			var childNodes2 = stringNode.childNodes;
+			var value =
+			    (childNodes2 && (childNodes2.length > 0))
+			        ? childNodes2[0].data
+				: "";
+			//Debug.write("id", id, "value", value);
 			if (id in stringsDict) {
 			    Debug.write("Duplicate string in strings.xml:", id, value);
 			    if (value != stringsDict[id]) {
@@ -62,7 +70,10 @@
 		    }
 		}
 	    }
+            //Debug.write("loadStrings 4");
 	    this.stringsDict = stringsDict;
+	    //Debug.write("stringsDict", stringsDict);
+	    //Debug.write("loadStrings 5");
 	  ]]>
 	</method>
 

@@ -19,6 +19,7 @@
         <attribute name="currentSprite" value="0"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
+        <attribute name="url" type="string" value=""/>
         <attribute name="picture" value="null"/>
         <attribute name="showPicture" value="false"/>
         <attribute name="showMap" value="false"/>
@@ -42,16 +43,68 @@
         </handler>
 
 
-	<method name="setCurrentNotice" args="number, x, y"><![CDATA[
+	<handler name="onnotice" reference="gApp"><![CDATA[
+	    var notice = gApp.notice;
+	    this.configureNotice(
+	        notice['title'],
+		notice['description'],
+		notice['url'],
+		notice['showPicture'],
+		notice['picture'],
+		notice['showMap'],
+		notice['x'],
+		notice['y']);
+	  ]]>
+        </handler>
+
+
+	<method name="setCurrentNotice" args="noticeNumber, x, y"><![CDATA[
 	    if ((x === undefined) || (x === null) ||
 	        (y === undefined) || (y === null)) {
 	        x = -1;
 	        y = -1;
 	    }
-	    this.setAttribute("currentNotice", number);
+
+	    var notice = this.findNotice(noticeNumber);
+	    if (!notice) {
+	        return;
+	    }
+
+	    var attributes = notice.attributes;
+	    var title = attributes['title'];
+	    var description = attributes['description'];
+	    var url = attributes['url'];
+	    var picture = attributes['picture'];
+	    var showPicture = (picture && (picture != "")) ? true : false;
+	    var showMap = attributes['showMap'] == "true";
+	    var currentSprite = attributes['sprite'] ? parseInt(attributes['sprite']) : 0;
+
+	    this.configureNotice(
+	        title,
+		description,
+		url,
+		showPicture,
+		picture,
+		showMap,
+		x,
+		y);
+	  ]]>
+	</method>
+
+
+	<method name="configureNotice" args="title, description, url, showPicture, picture, showMap, x, y"><![CDATA[
+	    this.setAttribute("title", gApp._(title));
+	    this.setAttribute("description", gApp._(description));
+	    this.setAttribute("url", gApp._(url));
+	    this.setAttribute("showPicture", showPicture);
+	    this.setAttribute("picture", picture);
+	    this.setAttribute("showMap", showMap);
 	    this.setAttribute("currentX", x);
 	    this.setAttribute("currentY", y);
-	    this.updateNotice();
+
+	    if (showMap && (x >= 0) && (y >= 0)) {
+		this.noticeTileView.centerOnTile(x, y);
+	    }
 	  ]]>
 	</method>
 
@@ -74,57 +127,74 @@
 	</method>
 
 
-	<method name="updateNotice"><![CDATA[
-	    //Debug.write("updateNotice", this, this.currentNotice);
-	    var notice = this.findNotice(this.currentNotice);
-	    if (!notice) {
-	        return;
-	    }
-
-	    //Debug.write("==== NOTICE", notice);
-	    var attributes = notice.attributes;
-	    var title = gApp._(attributes['title']);
-	    var description = gApp._(attributes['description']);
-	    var picture = attributes['picture'];
-	    var showPicture = (picture && (picture != "")) ? true : false;
-	    var showMap = attributes['showMap'] == "true";
-	    var currentSprite = attributes['sprite'] ? parseInt(attributes['sprite']) : 0;
-	    var currentX = this.currentX;
-	    var currentY = this.currentY;
-
-	    this.setAttribute("title", title);
-	    this.setAttribute("description", description);
-	    this.setAttribute("showPicture", showPicture);
-	    this.setAttribute("picture", picture);
-	    this.setAttribute("showMap", showMap);
-
-	    if (showMap && (currentX >= 0) && (currentY >= 0)) {
-	    	this.noticeTileView.centerOnTile(currentX, currentY);
-	    }
-
-	  ]]>
-	</method>
-
-
-	<text name="titleText"
+	<view name="scrollingView"
 	    x="0"
 	    y="0"
 	    width="${classroot.textWidth}"
-	    fontsize="20"
-	    fontstyle="bold"
-	    multiline="true"
-	    text="${classroot.title}"
-	/>
-
-	<text name="descriptionText"
-	    x="0"
-	    y="${parent.titleText.y + parent.titleText.height + classroot.gap}"
-	    width="${classroot.textWidth}"
 	    height="${parent.height - this.y}"
-	    multiline="true"
-	    fontsize="14"
-	    text="${classroot.description}"
-	/>
+	    clip="true"
+	>
+
+	    <view
+	        width="${parent.width - parent.sb.width - classroot.gap}"
+	    >
+
+	        <simplelayout
+		    axis="y"
+		    spacing="${classroot.gap}"
+		/>
+
+		<text name="titleText"
+		    x="0"
+		    y="0"
+		    width="${parent.width}"
+		    fontsize="20"
+		    fontstyle="bold"
+		    multiline="true"
+		    text="${classroot.title}"
+		/>
+
+		<text name="descriptionText"
+		    x="0"
+		    y="${parent.titleText.y + parent.titleText.height + classroot.gap}"
+		    width="${parent.width}"
+		    multiline="true"
+		    fontsize="14"
+		    text="${classroot.description}"
+		/>
+
+		<view name="buttonsView"
+		    x="0"
+		    y="${parent.descriptionText.y + parent.descriptionText.height + classroot.gap}"
+		    width="${parent.width}"
+		>
+
+		    <wrappinglayout
+			axis="x"
+			spacing="${classroot.gap}"
+		    />
+
+		    <button
+			visible="${(classroot.url != null) &amp;&amp;
+				   (classroot.url != '')}"
+			text="${gApp._('Learn More')}"
+		    >
+
+			<handler name="onclick"><![CDATA[
+			    Debug.write("ONCLICK", this, classroot.url);
+			    lz.Browser.loadURL(classroot.url, '_blank');
+			  ]]>
+			</handler>
+
+		    </button>
+
+		</view>
+
+	    </view>
+
+	    <vscrollbar name="sb"/>
+
+	</view>
 
 	<view name="pictureView"
 	    x="${parent.width - (classroot.showMap ? (classroot.mapWidth + classroot.gap) : 0) - this.width}"

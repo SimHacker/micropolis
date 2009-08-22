@@ -102,7 +102,7 @@
 		       '|' +
 		       language[0:2] +
 		       '|' +
-		       urllib.quote_plus(textToTranslate)
+		       urllib.quote_plus(textToTranslate.encode('utf-8'))
 		   )
 		?>
 		<a

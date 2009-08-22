@@ -70,6 +70,7 @@
 
 
 import micropolisgenericengine
+import micropolisengine
 import gobject
 
 

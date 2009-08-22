@@ -823,7 +823,7 @@ PyObject *TileEngine::getTileData(
 
     switch (code) {
 
-	case TILE_CODE_RAW_TEXT: {
+	case TILE_CODE_RAW_BINARY_16: {
 	    bufSize = tileSize * rows * cols;
 	    buf = (char *)malloc(bufSize);
 	    unsigned char *dst = (unsigned char *)buf;

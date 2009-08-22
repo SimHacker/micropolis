@@ -4,6 +4,7 @@
     <notice
         id="10"
         title="notice_10_title"
+        url="notice_10_url"
         description="notice_10_description"
         color="0xff4f4f"
 	picture="icon_pollution_rsrc"
@@ -13,6 +14,7 @@
     <notice
         id="11"
         title="notice_11_title"
+        url="notice_11_url"
         description="notice_11_description"
         color="0xff4f4f"
 	picture="icon_crime_rsrc"
@@ -22,6 +24,7 @@
     <notice
         id="12"
         title="notice_12_title"
+        url="notice_12_url"
         description="notice_12_description"
         color="0xff4f4f"
 	picture="icon_traffic_rsrc"
@@ -31,6 +34,7 @@
     <notice
         id="20"
         title="notice_20_title"
+        url="notice_20_url"
         description="notice_20_description"
         color="0xff4f4f"
 	showMap="true"
@@ -39,6 +43,7 @@
     <notice
         id="21"
         title="notice_21_title"
+        url="notice_21_url"
         description="notice_21_description"
         color="0xff4f4f"
 	sprite="5"
@@ -48,6 +53,7 @@
     <notice
         id="22"
         title="notice_22_title"
+        url="notice_22_url"
         description="notice_22_description"
         color="0xff4f4f"
 	sprite="6"
@@ -57,6 +63,7 @@
     <notice
         id="23"
         title="notice_23_title"
+        url="notice_23_url"
         description="notice_23_description"
         color="0xff4f4f"
 	showMap="true"
@@ -65,6 +72,7 @@
     <notice
         id="24"
         title="notice_24_title"
+        url="notice_24_url"
         description="notice_24_description"
         color="0xff4f4f"
 	showMap="true"
@@ -73,6 +81,7 @@
     <notice
         id="25"
         title="notice_25_title"
+        url="notice_25_url"
         description="notice_25_description"
         color="0xff4f4f"
 	showMap="true"
@@ -82,6 +91,7 @@
         id="26"
         color="0xff4f4f"
         title="notice_26_title"
+        url="notice_26_url"
         description="notice_26_description"
 	showMap="true"
     />
@@ -89,6 +99,7 @@
     <notice
         id="27"
         title="notice_27_title"
+        url="notice_27_url"
         description="notice_27_description"
         color="0xff4f4f"
 	showMap="true"
@@ -97,6 +108,7 @@
     <notice
         id="30"
         title="notice_30_title"
+        url="notice_30_url"
         description="notice_30_description"
         color="0xff4f4f"
 	showMap="true"
@@ -105,6 +117,7 @@
     <notice
         id="32"
         title="notice_32_title"
+        url="notice_32_url"
         description="notice_32_description"
         color="0xff4f4f"
 	showMap="true"
@@ -113,6 +126,7 @@
     <notice
         id="35"
         title="notice_35_title"
+        url="notice_35_url"
         description="notice_35_description"
         color="0x7fff7f"
 	picture="icon_town_rsrc"
@@ -122,6 +136,7 @@
     <notice
         id="36"
         title="notice_36_title"
+        url="notice_36_url"
         description="notice_36_description"
         color="0x7fff7f"
 	picture="icon_city_rsrc"
@@ -131,6 +146,7 @@
     <notice
         id="37"
         title="notice_37_title"
+        url="notice_37_url"
         description="notice_37_description"
         color="0x7fff7f"
 	picture="icon_capital_rsrc"
@@ -140,6 +156,7 @@
     <notice
         id="38"
         title="notice_38_title"
+        url="notice_38_url"
         description="notice_38_description"
         color="0x7fff7f"
 	showMap="false"
@@ -148,6 +165,7 @@
     <notice
         id="39"
         title="notice_39_title"
+        url="notice_39_url"
         description="notice_39_description"
         color="0x7fff7f"
 	showMap="false"
@@ -156,6 +174,7 @@
     <notice
         id="41"
         title="notice_41_title"
+        url="notice_41_url"
         description="notice_41_description"
         color="0xff4f4f"
 	sprite="2"
@@ -165,6 +184,7 @@
     <notice
         id="42"
         title="notice_42_title"
+        url="notice_42_url"
         description="notice_42_description"
         color="0xff4f4f"
 	showMap="true"
@@ -173,6 +193,7 @@
     <notice
         id="43"
         title="notice_43_title"
+        url="notice_43_url"
         description="notice_43_description"
         color="0xff4f4f"
 	showMap="true"
@@ -181,6 +202,7 @@
     <notice
         id="44"
         title="notice_44_title"
+        url="notice_44_url"
         description="notice_44_description"
         color="0xff4f4f"
 	showMap="false"
@@ -189,6 +211,7 @@
     <notice
         id="45"
         title="notice_45_title"
+        url="notice_45_url"
         description="notice_45_description"
         color="0x7f7fff"
 	showMap="false"
@@ -197,6 +220,7 @@
     <notice
         id="46"
         title="notice_46_title"
+        url="notice_46_url"
         description="notice_46_description"
         color="0x7f7fff"
 	showMap="false"
@@ -205,6 +229,7 @@
     <notice
         id="47"
         title="notice_47_title"
+        url="notice_47_url"
         description="notice_47_description"
         color="0x7fff7f"
 	picture="icon_keytothecity_rsrc"
@@ -214,6 +239,7 @@
     <notice
         id="48"
         title="notice_48_title"
+        url="notice_48_url"
         description="notice_48_description"
         color="0xff4f4f"
 	picture="icon_impeached_rsrc"
@@ -223,6 +249,7 @@
     <notice
         id="49"
         title="notice_49_title"
+        url="notice_49_url"
         description="notice_49_description"
         color="0xffd700"
 	picture="icon_about_rsrc"
@@ -232,6 +259,7 @@
     <notice
         id="50"
         title="notice_50_title"
+        url="notice_50_url"
         description="notice_50_description"
         color="0x7f7fff"
 	showMap="false"
@@ -240,6 +268,7 @@
     <notice
         id="51"
         title="notice_51_title"
+        url="notice_51_url"
         description="notice_51_description"
         color="0x7f7fff"
 	showMap="false"
@@ -248,6 +277,7 @@
     <notice
         id="52"
         title="notice_52_title"
+        url="notice_52_url"
         description="notice_52_description"
         color="0x7f7fff"
 	showMap="false"
@@ -256,6 +286,7 @@
     <notice
         id="53"
         title="notice_53_title"
+        url="notice_53_url"
         description="notice_53_description"
         color="0x7f7fff"
 	showMap="false"
@@ -264,6 +295,7 @@
     <notice
         id="54"
         title="notice_54_title"
+        url="notice_54_url"
         description="notice_54_description"
         color="0x7f7fff"
 	showMap="false"
@@ -272,6 +304,7 @@
     <notice
         id="55"
         title="notice_55_title"
+        url="notice_55_url"
         description="notice_55_description"
         color="0x7f7fff"
 	showMap="false"
@@ -280,6 +313,7 @@
     <notice
         id="56"
         title="notice_56_title"
+        url="notice_56_url"
         description="notice_56_description"
         color="0x7f7fff"
 	showMap="false"
@@ -288,6 +322,7 @@
     <notice
         id="57"
         title="notice_57_title"
+        url="notice_57_url"
         description="notice_57_description"
         color="0x7f7fff"
 	showMap="false"

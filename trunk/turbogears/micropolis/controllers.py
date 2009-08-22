@@ -572,6 +572,7 @@ class Root(controllers.RootController):
             self.expectationFailed("Invalid sessionID parameter.");
         session = self.getSession(sessionID)
         engine = session.engine
+        code = tileengine.TILE_CODE_RAW_BINARY_16
 
         tiles = engine.getTileData(col, row, cols, rows, code)
 
