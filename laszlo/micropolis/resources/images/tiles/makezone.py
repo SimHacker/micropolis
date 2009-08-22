@@ -198,13 +198,14 @@ def MakeZone(zoneID, zoneImageFileName, tileDir):
             ctx.paint()
 
             tileImage.write_to_png(tileFileName)
+            print "Wrote tile", tileFileName
 
 
 def MakeAllTiles(tileDir):
 
     print "Make All Tiles"
 
-    cols = 16
+    cols = 32
     rows = int(math.ceil(TileCount / float(cols)))
 
     tileImages = []
@@ -229,6 +230,7 @@ def MakeAllTiles(tileDir):
 
 
     allTilesImage.write_to_png(TilesFileName)
+    print "Wrote tiles", TilesFileName
 
 
 ########################################################################

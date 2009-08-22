@@ -75,6 +75,7 @@
         <attribute name="options" value="null"/>
         <attribute name="gameLevel" value="0"/>
         <attribute name="message" value="null"/>
+        <attribute name="notice" value="null"/>
         <attribute name="budget" value="null"/>
         <attribute name="evaluation" value="null"/>
         <attribute name="taxRate" type="number" value="7"/>
@@ -119,8 +120,9 @@
                 'paused', 'passes', 'delay', 'demand',
                 'options', 'gameLevel', 'cityName',
                 'taxRate', 'budget', 'sprites', 'robots',
-                'message', 'virtualSpeed', 'savedCities',
-                'tiles', 'history', 'historyview'
+                'message', 'notice', 'virtualSpeed', 
+		'savedCities', 'tiles', 'history', 
+		'historyview'
             ]);
 
             // Set up global keyboard handlers.
@@ -674,6 +676,13 @@
         <method name="handleUpdate_message" args="args"><![CDATA[
             //Debug.write("UPDATE MESSAGE", args['msg']);
             this.setAttribute("message", args['msg']);
+          ]]>
+        </method>
+
+
+        <method name="handleUpdate_notice" args="args"><![CDATA[
+            //Debug.write("UPDATE NOTICE", args['msg']);
+            this.setAttribute("notice", args['notice']);
           ]]>
         </method>
 

@@ -78,10 +78,8 @@ import gobject
 import cairo
 from xmlutilities import *
 from pyMicropolis.tileEngine import tileengine
-from micropolisengine import WORLD_W, WORLD_H
-from micropolisengine import WORLD_W_2, WORLD_H_2
-from micropolisengine import WORLD_W_4, WORLD_H_4
-from micropolisengine import WORLD_W_8, WORLD_H_8
+from micropolisengine import *
+import micropoliszone
 import xml.dom.minidom
 from xml.dom.minidom import Node
 import pprint
@@ -152,6 +150,7 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         self.dataTileEngine = tileengine.TileEngine()
         self.robots = []
         self.robotDict = {}
+        self.zoneMap = {}
         self.saveFileDir = None
         self.saveFileName = None
         self.metaFileName = None
@@ -403,10 +402,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
 
-        from micropolisengine import \
-            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
-            COMBASE
-
         transparent = 0
         land = 1
         water = 2
@@ -451,10 +446,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
-
-        from micropolisengine import \
-            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
-            COMBASE, COMLAST, LVRAIL6
 
         transparent = 0
         land = 1
@@ -503,11 +494,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
 
-        from micropolisengine import \
-            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
-            RESBASE, INDBASE, PORTBASE, SMOKEBASE, TINYEXP, \
-            TINYEXPLAST, FOOTBALLGAME1
-
         transparent = 0
         land = 1
         water = 2
@@ -555,10 +541,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         tengine.tileFormat = tileengine.TILE_FORMAT_SHORT_UNSIGNED
         tengine.colBytes = micropolisengine.BYTES_PER_TILE * micropolisengine.WORLD_H
         tengine.rowBytes = micropolisengine.BYTES_PER_TILE
-
-        from micropolisengine import \
-            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, RIVER, \
-            RESBASE, BRWXXX7, LVPOWER10, UNUSED_TRASH6
 
         transparent = 0
         land = 1
@@ -798,9 +780,6 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         tengine.tileFormat = tileengine.TILE_FORMAT_BYTE_UNSIGNED
         tengine.colBytes = WORLD_H
         tengine.rowBytes = 1
-
-        from micropolisengine import \
-            ZONEBIT, PWRBIT, CONDBIT, ALLBITS, LOMASK, LASTFIRE
 
         transparent = 0
         unpowered = 1
@@ -1077,12 +1056,20 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         self.sendUpdate('gameMode')
 
 
+    def dumpRobots(self):
+        robots = self.robots
+        print "==== robots", len(robots)
+        for robot in robots:
+            print "robot", robot.x, robot.y, "zone", robot.zone.x, robot.zone.y, robot, robot.zone
+
+
     def addRobot(self, robot):
         #print "ADDROBOT", robot
 
-        self.removeRobot(robot)
-
         robots = self.robots
+        if robot in robots:
+            self.removeRobot(robot)
+
         robots.append(robot)
 
         robotDict = self.robotDict
@@ -1090,6 +1077,8 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
 
         robot.engine = self
         #print "*** SET ENGINE", self, robot
+
+        #self.dumpRobots()
 
 
     def removeRobot(self, robot):
@@ -1105,6 +1094,8 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
             del robotDict[robotID]
 
         robot.engine = None
+
+        #self.dumpRobots()
 
 
     def getRobot(self, robotID):
@@ -1122,6 +1113,51 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
             #print "SIMROBOT LOOP", robot
             robot.simulate()
             #print "SIMULATED ROBOT", robot
+
+
+    def simZones(self):
+
+        for zone in self.zoneMap.values():
+            zone.tick()
+
+
+    def isRoad(self, tx, ty):
+        tile = self.getTile(tx, ty) & LOMASK
+        return ((tile >= micropolisengine.ROADBASE) and
+                (tile < micropolisengine.POWERBASE))
+
+
+    def resetRealTime(self):
+        self.lastLoopTime = time.time()
+
+
+    def resetCity(self):
+        #print "resetCity", self
+        self.clearRobots()
+        self.clearZones()
+        self.resetRealTime()
+        self.updateFundEffects()
+
+
+    def clearZones(self):
+        for zone in list(self.zoneMap.values()):
+            self.removeZone(zone)
+
+
+    def addZone(self, zone):
+        zoneMap = self.zoneMap
+        key = (zone.x, zone.y, zone.churchNumber)
+        if key not in zoneMap:
+            #print "ADDZONE", key, zone
+            self.zoneMap[key] = zone
+
+
+    def removeZone(self, zone):
+        zoneMap = self.zoneMap
+        key = (zone.x, zone.y, zone.churchNumber)
+        if key in zoneMap:
+            #print "REMOVEZONE", zone
+            del zoneMap[key]
 
 
     def __repr__(self):
@@ -1234,6 +1270,7 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
 
     def handle_simRobots(self):
         #print "handle_simRobots(self)", (self,)
+        self.simZones() # TODO: Maybe put in a separete callback?
         self.simRobots()
 
 
@@ -1245,8 +1282,24 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         pass
 
 
-    def handle_simulateChurch(self, x, y, tile):
-        pass
+    def handle_simulateChurch(self, x, y, churchNumber):
+        #print "handle_simulateChurch", x, y, churchNumber, self.simPaused
+
+        if self.simPaused:
+            return
+
+        key = (x, y, churchNumber)
+        zone = self.zoneMap.get(key, None)
+        if not zone:
+            #print "key", key, "zone", zone, "x", x, "y", y
+            zone = micropoliszone.ZoneClasses[churchNumber](
+                engine=self,
+                x=x,
+                y=y,
+                churchNumber=churchNumber)
+            self.addZone(zone)
+
+        zone.simulate()
 
 
 ########################################################################

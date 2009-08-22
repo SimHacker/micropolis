@@ -101,6 +101,22 @@ class MicropolisRobot:
         'robotID', 'robotType', 'tick', 'x', 'y', 'direction',
     ]
 
+    directionDeltas = {
+        'north': (0, -1,),
+        'south': (0, 1,),
+        'west': (-1, 0,),
+        'east': (1, 0,),
+        'stop': (0, 0,),
+    }
+
+    oppositeDirections = {
+        'north': 'south',
+        'south': 'north',
+        'east': 'west',
+        'west': 'east',
+        'stop': None,
+    }
+
 
     def __init__(
         self,
@@ -109,6 +125,7 @@ class MicropolisRobot:
         y=0,
         direction=0.0,
         autonymous=True,
+        zone=None,
         **args):
 
         self.engine = engine
@@ -118,6 +135,7 @@ class MicropolisRobot:
         self.direction = direction
         self.autonymous = autonymous
         self.tick = 0
+        self.zone = zone
 
 
     def simulate(self):
@@ -160,14 +178,9 @@ class MicropolisRobot:
         return data
 
 
+    # TODO: make this a utility.
     def getAny(self, a):
         return a[random.randint(0, len(a) - 1)]
-
-
-    def isRoad(self, engine, tx, ty):
-        tile = engine.getTile(tx, ty) & micropolisengine.LOMASK
-        return ((tile >= micropolisengine.ROADBASE) and
-                (tile < micropolisengine.POWERBASE))
 
 
     def eatTraffic(self, engine, tileX, tileY):
@@ -204,10 +217,10 @@ class MicropolisRobot:
     def findRoads(self, engine, tileX, tileY):
 
         roads = {
-            'north': self.isRoad(engine, tileX, tileY - 1),
-            'south': self.isRoad(engine, tileX, tileY + 1),
-            'east': self.isRoad(engine, tileX + 1, tileY),
-            'west': self.isRoad(engine, tileX - 1, tileY),
+            'north': engine.isRoad(tileX, tileY - 1),
+            'south': engine.isRoad(tileX, tileY + 1),
+            'east': engine.isRoad(tileX + 1, tileY),
+            'west': engine.isRoad(tileX - 1, tileY),
         }
         #print roads
 
@@ -232,11 +245,12 @@ class MicropolisRobot:
         tx = tileX
         ty = tileY
         nextTileX, nextTileY = self.directionDeltas[d]
+        engine = self.engine
 
         for step in range(0, dist):
             tx += nextTileX
             ty += nextTileY
-            if self.isRoad(engine, tx, ty):
+            if engine.isRoad(tx, ty):
                 trafficX = int(tx / 2)
                 trafficY = int(ty / 2)
                 trafficDensity = engine.getTrafficDensity(trafficX, trafficY)
@@ -252,7 +266,7 @@ class MicropolisRobot:
 
     def sendCommand(self, command, args):
         if command == 'delete':
-            self.engine.removeRobot(self)
+            self.destroy()
         elif command == 'autonomous':
             self.autonomous = True
         elif command == 'manual':
@@ -261,6 +275,15 @@ class MicropolisRobot:
             pass
         else:
             print "MicropolisRobot.sendCommand: unknown command:", command, args
+
+
+    def destroy(self):
+        #print "DESTROY ROBOT", self
+
+        if self.zone:
+            self.zone.removeRobot(self)
+
+        self.engine.removeRobot(self)
 
 
 ########################################################################
@@ -275,22 +298,6 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         'mouthOpen', 'mouthSize', 'mouthPhase', 'radius', 'hilite', 'score',
         'possibleDirections',
     ]
-
-    directionDeltas = {
-        'north': (0, -1,),
-        'south': (0, 1,),
-        'west': (-1, 0,),
-        'east': (1, 0,),
-        'stop': (0, 0,),
-    }
-
-    oppositeDirections = {
-        'north': 'south',
-        'south': 'north',
-        'east': 'west',
-        'west': 'east',
-        'stop': None,
-    }
 
     def __init__(
         self,
@@ -413,7 +420,342 @@ class MicropolisRobot_PacBot(MicropolisRobot):
         tileX = int(x / 16)
         tileY = int(y / 16)
 
-        onRoad = self.isRoad(engine, tileX, tileY)
+        onRoad = engine.isRoad(tileX, tileY)
+
+        if not onRoad:
+
+            # Stuck off road.
+
+            dx = 0
+            dy = 0
+            curDir = 'stop'
+
+            #print "frustrated off road"
+            frustrated = True
+            self.hilite = 3
+
+            prob = 0.25 # Probability of generating some traffic on
+                        # each adjacent road.
+
+            # Generate traffic to here on any adjacent roads.
+            dirs = self.findRoads(engine, tileX, tileY)
+            if dirs and random.random() < prob:
+                self.hilite = 4
+                for d in dirs:
+                    dirX, dirY = self.directionDeltas[d]
+                    tx = tileX + dirX
+                    ty = tileY + dirY
+                    if ((tx >= 0) and
+                        (tx < micropolisengine.WORLD_W) and
+                        (ty >= 0) and
+                        (ty < micropolisengine.WORLD_H)):
+
+                        # Choose a random zone type as a traffic
+                        # destination.
+                        zoneType = self.getAny((
+                            micropolisengine.ZT_COMMERCIAL,
+                            micropolisengine.ZT_INDUSTRIAL,
+                            micropolisengine.ZT_RESIDENTIAL,
+                        ))
+                        engine.makeTrafficAt(tx, ty, zoneType)
+
+        else:
+
+            # On a road.
+
+            # Eat traffic.
+
+            self.addScore(self.eatTraffic(engine, tileX, tileY))
+
+            self.neutralizeTrafficTiles(engine, tileX, tileY)
+
+            if inCenter:
+
+                #print "CENTER"
+
+                # Look for adjacent roads.
+                dirs = self.findRoads(engine, tileX, tileY)
+
+                if len(dirs) == 0:
+
+                    # On a road island.
+                    dx = 0
+                    dy = 0
+                    #print "frustrated island"
+                    frustrated = True
+                    self.hilite = 4
+
+                else:
+
+                    randomTurnProb = 0.1
+
+                    if len(dirs) == 1:
+
+                        # Dead end! Only one way to go.
+                        curDir = dirs[0]
+
+                    else:
+
+                        if random.random() < randomTurnProb:
+
+                            # Choose a direction randomly.
+                            curDir = self.getAny(dirs)
+                            #print "RANDOM TURN", curDir, "============="
+
+                        else:
+
+                            if False:
+                                # Don't go back the direction we came from.
+                                otherDir = self.oppositeDirections[curDir]
+                                if otherDir and (otherDir in dirs):
+                                    dirs.remove(otherDir)
+
+                            # Choose between the remaining directions.
+                            # Select the direction with the highest score.
+
+                            oppositeDir = self.oppositeDirections[curDir]
+                            bestDir = None
+                            bestScore = -1
+                            for d in dirs:
+                                # Base score is random to keep things interesting.
+                                score = random.random() * 30
+
+                                # Extra score for current direction.
+                                if d == curDir:
+                                    score += random.random() * 100
+
+                                # Less score for opposite direction.
+                                if d == oppositeDir:
+                                    score -= random.random() * 100
+
+                                score += self.scanRoads(engine, d, tileX, tileY)
+
+                                #print d, score,
+                                if score > bestScore:
+                                    bestScore = score
+                                    bestDir = d
+
+                            #print "BESTDIR", bestDir, "========"
+                            curDir = bestDir or self.getAny(dirs)
+
+        dx, dy = self.directionDeltas[curDir]
+        dx *= defaultSpeed
+        dy *= defaultSpeed
+
+        if (dx == 0) and (dy == 0):
+            #print "stopped"
+            speed = defaultSpeed
+        else:
+            direction = math.atan2(-dy, dx)
+            speed = defaultSpeed
+            #print "direction", direction
+
+        # Calculate velocity and move position.
+
+        x += dx
+        y += dy
+
+        self.x = x
+        self.y = y
+        self.direction = direction
+        self.speed = speed
+
+        #print "NOW", "x", x, "y", y, "direction", direction, "speed", speed
+
+
+    def addScore(self, delta):
+        self.score += delta
+        zone = self.zone
+        if zone:
+            zone.addScore(delta)
+
+
+    def sendCommand(self, command, args):
+
+        if command == 'reset':
+            self.score = 0
+        else:
+            MicropolisRobot.sendCommand(self, command, args)
+
+
+    def drawRobot(self, ctx):
+
+        direction = self.direction
+        mouthOpen = self.mouthOpen
+        mouthSize = self.mouthSize
+        radius = self.radius
+        hilite = self.hilite
+
+        ctx.rotate(direction)
+
+        if mouthOpen:
+            ctx.move_to(0, 0)
+            ctx.arc(0, 0, radius, direction + (mouthSize / 2), direction + (2 * math.pi) - (mouthSize / 2))
+            ctx.line_to(0, 0)
+            ctx.close_path()
+        else:
+            ctx.arc(0, 0, radius, 0, 2 * math.pi)
+            ctx.close_path()
+
+        if hilite == 0:
+            ctx.set_source_rgba(1, 1, 0, 1)
+        elif hilite == 1:
+            ctx.set_source_rgba(1, 0, 0, 1)
+        elif hilite == 2:
+            ctx.set_source_rgba(0, 1, 0, 1)
+        elif hilite == 3:
+            ctx.set_source_rgba(0, 0, 1, 1)
+        elif hilite == 4:
+            ctx.set_source_rgba(0, 1, 1, 1)
+        elif hilite == 5:
+            ctx.set_source_rgba(1, 0, 1, 1)
+        elif hilite == 6:
+            ctx.set_source_rgba(0, 0, 0, 1)
+        elif hilite == 7:
+            ctx.set_source_rgba(1, 1, 1, 1)
+        else:
+            ctx.set_source_rgba(0.5, 0.5, 0.5, 1)
+        ctx.fill_preserve()
+        ctx.set_source_rgba(0, 0, 0, 1)
+        ctx.set_line_width(1)
+        ctx.stroke()
+
+
+########################################################################
+
+
+class MicropolisRobot_Xenu(MicropolisRobot):
+
+
+    robotType = 'Xenu'
+
+    viewKeys = MicropolisRobot.viewKeys + [
+        'mouthOpen', 'mouthSize', 'mouthPhase', 'radius', 'hilite', 'score',
+        'possibleDirections',
+    ]
+
+    def __init__(
+        self,
+        speed=4,
+        defaultSpeed=4,
+        direction=0,
+        mouthOpen=True,
+        mouthOpenCycle=30,
+        mouthOpenDuration=15,
+        mouthSize=math.pi / 2.0,
+        radius=10,
+        **args):
+
+        MicropolisRobot.__init__(self, **args)
+
+        self.speed = speed
+        self.direction = direction
+        self.mouthOpen = mouthOpen
+        self.mouthOpenCycle = mouthOpenCycle
+        self.mouthOpenDuration = mouthOpenDuration
+        self.mouthPhase = random.randint(0, mouthOpenCycle - 1)
+        self.mouthSize = mouthSize
+        self.radius = radius
+        self.defaultSpeed = defaultSpeed
+        self.hilite = 0
+        self.score = 0
+        self.possibleDirections = []
+
+
+    def simulate(self):
+
+        engine = self.engine
+        #print "SIMULATE", self, engine
+
+        self.mouthOpen = (
+            ((engine.tickCount() + self.mouthPhase) % self.mouthOpenCycle) <
+            self.mouthOpenDuration)
+
+        x = self.x
+        y = self.y
+        speed = self.speed
+        direction = self.direction
+        defaultSpeed = self.defaultSpeed
+
+        frustrated = False
+        self.hilite = 0
+
+        # Snap into grid lanes.
+
+        x = int(x / defaultSpeed) * defaultSpeed
+        y = int(y / defaultSpeed) * defaultSpeed
+
+        inLaneVertical = (x % 16) == 8
+        inLaneHorizontal = (y % 16) == 8
+        inCenter = inLaneVertical and inLaneHorizontal
+
+        if (not inLaneVertical) and (not inLaneHorizontal):
+            x = (int(x / 16) * 16) + 8
+            y = (int(y / 16) * 16) + 8
+            inLaneVertical = True
+            inLaneHorizontal = True
+            inCenter = True
+
+        dx = math.cos(direction) * speed
+        dy = -math.sin(direction) * speed
+
+        #print "direction", direction, "dx", dx, "dy", dy
+        if (dx == 0) and (dy == 0):
+            # Sitting still.
+            pass
+        if abs(dx) > abs(dy):
+            # Horizontal
+            dy = 0
+            if not inLaneHorizontal:
+                dx = 0
+                #print "frustrated horizontal"
+                frustrated = True
+                self.hilite = 1
+            else:
+                if dx < 0:
+                    dx = -defaultSpeed
+                    #print "force west"
+                else:
+                    dx = defaultSpeed
+                    #print "force east"
+        else:
+            # Vertical
+            dx = 0
+            if not inLaneVertical:
+                dy = 0
+                #print "frustrated vertical"
+                frustrated = True
+                self.hilite = 2
+            else:
+                if dy < 0:
+                    dy = -defaultSpeed
+                    #print "force north"
+                else:
+                    dy = defaultSpeed
+                    #print "force south"
+
+        if (dx == 0) and (dy == 0):
+            curDir = 'stop'
+        elif (dx != 0) and (dy != 0):
+            print "INVALID DIRECTION!", dx, dy
+            dx = 0
+            dy = 0
+            curDir = 'stop'
+        if dx < 0:
+            curDir = 'west'
+        elif dx > 0:
+            curDir = 'east'
+        elif dy < 0:
+            curDir = 'north'
+        elif dy > 0:
+            curDir = 'south'
+
+        # Calculate tile coordinates.
+
+        tileX = int(x / 16)
+        tileY = int(y / 16)
+
+        onRoad = engine.isRoad(tileX, tileY)
 
         if not onRoad:
 

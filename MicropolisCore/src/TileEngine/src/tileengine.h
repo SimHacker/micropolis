@@ -141,7 +141,7 @@ enum TileFormat {
 
 /** Tile change encoding codes for different compression techniques. */
 enum TileCode {
-  TILE_CODE_RAW_TEXT = 0,
+  TILE_CODE_RAW_BINARY_16 = 0,
   TILE_CODE_COMPRESSED_TEXT = 1,
   TILE_CODE_COMPRESSED_BINARY_16 = 2,
   TILE_CODE_COUNT,
