@@ -14,15 +14,25 @@
 			ShowOnlyRuleProperties="false"
 			>
 			<Properties>
-				<StringProperty
+				<EnumProperty
 					Name="ScriptingLanguage"
 					DisplayName="SWIG Scripting Language"
 					PropertyPageName="SWIG"
 					Category="SWIG"
-					Description="Specifies the name of the scripting language for SWIG to generate wrappers, passed to SWIG as a command line parameter after a dash."
-					Switch="-[value]"
-					DefaultValue="lua"
-				/>
+					Description="Specifies the name of the scripting language for SWIG to generate wrappers, passed to SWIG as a command line parameter after a dash.">
+					<Values>
+						<EnumValue
+							Value="0"
+							Switch="-python"
+							DisplayName="Python"
+						/>
+						<EnumValue
+							Value="1"
+							Switch="-csharp"
+							DisplayName="C#"
+						/>
+					</Values>
+				</EnumProperty>
 				<BooleanProperty
 					Name="CPlusPlus"
 					DisplayName="C++"

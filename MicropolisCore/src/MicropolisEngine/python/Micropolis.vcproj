@@ -35,7 +35,6 @@
 			/>
 			<Tool
 				Name="SWIG"
-				ScriptingLanguage="python"
 				SwigOutDir="..\python"
 				Arguments="-I..\src -I.."
 			/>
@@ -118,7 +117,6 @@
 			/>
 			<Tool
 				Name="SWIG"
-				ScriptingLanguage="python"
 				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
@@ -160,6 +158,88 @@
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolisengine.pyd"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="c:\Python25\libs"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				OutputFile="$(ProjectDir)\$(ConfigurationName)\$(ProjectName).bsc"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="CSharp Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="SWIG"
+				ScriptingLanguage="1"
+				SwigOutDir="..\csharp"
+				Arguments="-I..\src -I.."
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\src;.."
+				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="2"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -388,6 +468,14 @@
 							UsePrecompiledHeader="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>
@@ -398,18 +486,10 @@
 				Name="SWIG Files"
 				>
 				<File
-					RelativePath="..\swig\micropolisengine-swig-python.i"
+					RelativePath="..\csharp\micropolisengine-swig-csharp.i"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="SWIG"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="ReleaseSymbols|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool
@@ -418,22 +498,29 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\swig\micropolisengine.i"
+					RelativePath="..\swig\micropolisengine-swig-python.i"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
 							Name="SWIG"
-							AdditionalDependencies="micropolisengine-swig-python.i;..\micropolis.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="ReleaseSymbols|Win32"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="SWIG"
-							AdditionalDependencies="micropolisengine-swig-python.i;..\micropolis.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="SWIG"
 						/>
 					</FileConfiguration>
 				</File>
@@ -449,6 +536,26 @@
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath="..\csharp\micropolisengine-swig-csharp_wrap.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
 				<File
 					RelativePath=".\micropolisengine_wrap.cpp"
 					>
@@ -468,6 +575,15 @@
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -476,121 +592,505 @@
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\__init__.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\eliza.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\doc\genAnimationTable.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisbudgetpanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliscontrolpanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisdisasterspanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisdrawingarea.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\micropolisengine.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisevaluationpanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisevaluationview.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgaugeview.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgenericengine.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgtkengine.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolishistorypanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolishistoryview.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolismappanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolismessagespanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnotebook.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnoticepanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnoticeview.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolispiemenus.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisrobot.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisstartpanel.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolistool.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisturbogearsengine.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisview.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliswebserver.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliswindow.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliszone.py"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\xmlutilities.py"
+					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
+			<Filter
+				Name="CSharp Files"
+				>
+				<File
+					RelativePath="..\csharp\CityClass.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\CityVotingProblems.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\ConnectTileCommand.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\EditingTool.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\GameLevel.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\HistoryScale.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\HistoryType.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapByte1.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapByte2.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapByte4.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapShort8.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapTileBits.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapTileCharacters.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MapType.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\MessageNumber.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\Micropolis.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\micropolisengine.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\micropolisenginePINVOKE.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\Resource.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\Scenario.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SimSprite.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SpriteType.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\Stri202.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\StringTable.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_float.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_p_char.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_p_unsigned_short.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_Position.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_PyObject.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_short.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_unsigned_char.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\SWIGTYPE_p_void.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\ToolResult.cs"
+					>
+				</File>
+				<File
+					RelativePath="..\csharp\ZoneType.cs"
 					>
 				</File>
 			</Filter>

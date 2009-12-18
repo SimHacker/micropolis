@@ -35,7 +35,6 @@
 			/>
 			<Tool
 				Name="SWIG"
-				ScriptingLanguage="python"
 				SwigOutDir="..\python"
 				Arguments="-I..\src -I.."
 			/>
@@ -120,7 +119,6 @@
 			/>
 			<Tool
 				Name="SWIG"
-				ScriptingLanguage="python"
 				SwigOutDir="..\python"
 				Arguments="-I.."
 			/>
@@ -146,6 +144,90 @@
 				BrowseInformation="1"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="cairo.lib"
+				OutputFile="$(ProjectDir)\$(ConfigurationName)\_tileengine.pyd"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				OutputFile="$(ProjectDir)\$(ConfigurationName)\$(ProjectName).bsc"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="CSharp Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="SWIG"
+				SwigOutDir="..\python"
+				Arguments="-I..\src -I.."
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="StdAfx.h"
+				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -235,6 +317,14 @@
 							UsePrecompiledHeader="1"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\TileEngineMain.cpp"
@@ -307,6 +397,14 @@
 							Name="SWIG"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="SWIG"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\swig\tileengine-swig-python.i"
@@ -328,6 +426,14 @@
 							AdditionalDependencies="tileengine-swig-python.i;..\tileengine.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="SWIG"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\swig\tileengine.i"
@@ -342,6 +448,14 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="ReleaseSymbols|Win32"
+						>
+						<Tool
+							Name="SWIG"
+							AdditionalDependencies="tileengine-swig-python.i;pycairo.i;..\tileengine.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
 						>
 						<Tool
 							Name="SWIG"
@@ -366,6 +480,14 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="ReleaseSymbols|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
