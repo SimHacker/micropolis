@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="CellEngine"
 	ProjectGUID="{28C58030-8704-44A4-A165-0A95628AA6B9}"
 	RootNamespace="CellEngine"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -14,7 +15,7 @@
 	</Platforms>
 	<ToolFiles>
 		<ToolFile
-			RelativePath="..\..\Micropolis\python\SWIG.rules"
+			RelativePath="..\..\MicropolisEngine\python\SWIG.rules"
 		/>
 	</ToolFiles>
 	<Configurations>
@@ -36,7 +37,7 @@
 				Name="SWIG"
 				ScriptingLanguage="python"
 				SwigOutDir="..\python"
-				Arguments="-I.."
+				Arguments="-I..\src -I.."
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -49,13 +50,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..;C:\Python25\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="StdAfx.h"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -72,11 +72,13 @@
 				AdditionalDependencies="cairo.lib"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_cellengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python25\libs;C:\gtk\lib"
+				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -97,9 +99,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -138,7 +137,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..;C:\Python25\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -163,11 +162,13 @@
 				AdditionalDependencies="cairo.lib"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_cellengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python25\libs;C:\gtk\lib"
+				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -190,9 +191,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -209,7 +207,7 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath=".\stdafx.h"
+					RelativePath="..\src\stdafx.h"
 					>
 				</File>
 			</Filter>
@@ -251,15 +249,15 @@
 				Name="Header"
 				>
 				<File
-					RelativePath="..\cellengine.h"
+					RelativePath="..\src\cellengine.h"
 					>
 				</File>
 				<File
-					RelativePath="..\linuxcompat.h"
+					RelativePath="..\src\linuxcompat.h"
 					>
 				</File>
 				<File
-					RelativePath="..\perlinnoise.h"
+					RelativePath="..\src\perlinnoise.h"
 					>
 				</File>
 			</Filter>
@@ -267,29 +265,11 @@
 				Name="Source"
 				>
 				<File
-					RelativePath="..\cellengine.cpp"
+					RelativePath="..\src\cellengine.cpp"
 					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="ReleaseSymbols|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\ruletables.cpp"
+					RelativePath="..\src\ruletables.cpp"
 					>
 				</File>
 			</Filter>
@@ -301,11 +281,11 @@
 				Name="Python Files"
 				>
 				<File
-					RelativePath=".\cellconfigurations.py"
+					RelativePath="..\..\pyMicropolis\cellEngine\cellconfigurations.py"
 					>
 				</File>
 				<File
-					RelativePath=".\celldrawingarea.py"
+					RelativePath="..\..\pyMicropolis\cellEngine\celldrawingarea.py"
 					>
 				</File>
 				<File
@@ -313,19 +293,27 @@
 					>
 				</File>
 				<File
-					RelativePath=".\cellrulecompiler.py"
+					RelativePath="..\..\pyMicropolis\cellEngine\cellmodel.py"
 					>
 				</File>
 				<File
-					RelativePath=".\cellwindow.py"
+					RelativePath="..\..\pyMicropolis\cellEngine\cellpiemenus.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\cellEngine\cellrulecompiler.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\cellEngine\celltool.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\cellEngine\cellwindow.py"
 					>
 				</File>
 				<File
 					RelativePath=".\convert-tiles.py"
-					>
-				</File>
-				<File
-					RelativePath=".\setup.py"
 					>
 				</File>
 				<File
@@ -381,7 +369,7 @@
 				Name="Rule Files"
 				>
 				<File
-					RelativePath="..\..\MicropolisCore\python\SWIG.rules"
+					RelativePath="..\..\MicropolisEngine\python\SWIG.rules"
 					>
 				</File>
 			</Filter>

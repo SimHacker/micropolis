@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="MicropolisEngine"
+	Version="9.00"
+	Name="Micropolis"
 	ProjectGUID="{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}"
 	RootNamespace="MicropolisEngine"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -36,7 +37,7 @@
 				Name="SWIG"
 				ScriptingLanguage="python"
 				SwigOutDir="..\python"
-				Arguments="-I.."
+				Arguments="-I..\src -I.."
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -49,12 +50,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..;C:\Python25\include"
+				AdditionalIncludeDirectories="..\src;..;C:\Python26\include"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -70,11 +70,13 @@
 				Name="VCLinkerTool"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_micropolisengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python25\libs"
+				AdditionalLibraryDirectories="c:\Python26\libs"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -95,9 +97,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -165,6 +164,8 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -187,9 +188,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -204,7 +202,35 @@
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\micropolis.h"
+					RelativePath="..\src\data_types.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\generate.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\map_type.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\micropolis.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\position.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\stubs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\text.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\tool.h"
 					>
 				</File>
 			</Filter>
@@ -212,203 +238,111 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\allocate.cpp"
+					RelativePath="..\src\allocate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\animate.cpp"
+					RelativePath="..\src\animate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\budget.cpp"
+					RelativePath="..\src\budget.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\connect.cpp"
+					RelativePath="..\src\connect.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\disasters.cpp"
+					RelativePath="..\src\disasters.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\evaluate.cpp"
+					RelativePath="..\src\evaluate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\fileio.cpp"
+					RelativePath="..\src\fileio.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\generate.cpp"
+					RelativePath="..\src\generate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\graph.cpp"
+					RelativePath="..\src\graph.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\initialize.cpp"
+					RelativePath="..\src\initialize.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\main.cpp"
+					RelativePath="..\src\main.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\map.cpp"
+					RelativePath="..\src\map.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\message.cpp"
+					RelativePath="..\src\message.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\micropolis.cpp"
+					RelativePath="..\src\micropolis.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\power.cpp"
+					RelativePath="..\src\position.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\random.cpp"
+					RelativePath="..\src\power.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\resource.cpp"
+					RelativePath="..\src\random.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\scan.cpp"
+					RelativePath="..\src\resource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\simulate.cpp"
+					RelativePath="..\src\scan.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\sprite.cpp"
+					RelativePath="..\src\simulate.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\stubs.cpp"
+					RelativePath="..\src\sprite.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\tool.cpp"
+					RelativePath="..\src\stubs.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\traffic.cpp"
+					RelativePath="..\src\tool.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\update.cpp"
+					RelativePath="..\src\traffic.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\utilities.cpp"
+					RelativePath="..\src\update.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\zone.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Resource Files"
-				>
-				<File
-					RelativePath=".\res\hexa.112"
+					RelativePath="..\src\utilities.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\res\hexa.232"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.384"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.385"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.386"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.387"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.388"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.456"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.544"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.563"
-					>
-				</File>
-				<File
-					RelativePath=".\res\hexa.999"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.111"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.222"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.333"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.444"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.555"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.666"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.777"
-					>
-				</File>
-				<File
-					RelativePath=".\res\snro.888"
-					>
-				</File>
-				<File
-					RelativePath=".\res\stri.202"
-					>
-				</File>
-				<File
-					RelativePath=".\res\stri.219"
-					>
-				</File>
-				<File
-					RelativePath=".\res\stri.301"
-					>
-				</File>
-				<File
-					RelativePath=".\res\stri.356"
+					RelativePath="..\src\zone.cpp"
 					>
 				</File>
 			</Filter>
@@ -422,7 +356,7 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath=".\stdafx.h"
+					RelativePath="..\src\stdafx.h"
 					>
 				</File>
 			</Filter>
@@ -540,43 +474,123 @@
 				Name="Python Files"
 				>
 				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\__init__.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\eliza.py"
+					>
+				</File>
+				<File
+					RelativePath="..\doc\genAnimationTable.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisbudgetpanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliscontrolpanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisdisasterspanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisdrawingarea.py"
+					>
+				</File>
+				<File
 					RelativePath=".\micropolisengine.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropolisdrawingarea.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisevaluationpanel.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropolismodel.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisevaluationview.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropolispiemenus.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgaugeview.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropolistool.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgenericengine.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropolisutils.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisgtkengine.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropoliswebserver.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolishistorypanel.py"
 					>
 				</File>
 				<File
-					RelativePath=".\micropoliswindow.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolishistoryview.py"
 					>
 				</File>
 				<File
-					RelativePath=".\setup.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolismappanel.py"
 					>
 				</File>
 				<File
-					RelativePath=".\test.py"
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolismessagespanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnotebook.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnoticepanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisnoticeview.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolispiemenus.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisrobot.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisstartpanel.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolistool.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisturbogearsengine.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisview.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliswebserver.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliswindow.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\micropoliszone.py"
+					>
+				</File>
+				<File
+					RelativePath="..\..\pyMicropolis\micropolisEngine\xmlutilities.py"
 					>
 				</File>
 			</Filter>
@@ -585,11 +599,43 @@
 			Name="Doc"
 			>
 			<File
-				RelativePath="..\callbacks.txt"
+				RelativePath="..\doc\AnimationSequences.txt"
 				>
 			</File>
 			<File
-				RelativePath="..\README.txt"
+				RelativePath="..\doc\ASSETS.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\CALLBACKS.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\CODING-STYLE.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\PLAN.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\README-Mac.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\ROADMAP.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\SIMULATOR.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\TODO.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\doc\UserInterfacePlan.txt"
 				>
 			</File>
 		</Filter>

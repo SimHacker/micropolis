@@ -164,8 +164,6 @@ MapValue ToolEffects::getMapValue(const Position &pos) const
 
     iter = this->modifications.find(pos);
     if (iter == this->modifications.end()) {
-        assert(pos.testBounds());
-
         return this->sim->map[pos.posX][pos.posY];
     }
 
@@ -179,7 +177,6 @@ MapValue ToolEffects::getMapValue(const Position &pos) const
  */
 void ToolEffects::setMapValue(const Position &pos, MapValue mapVal)
 {
-    assert(pos.testBounds());
     this->modifications[pos] = mapVal;
 }
 
