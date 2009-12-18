@@ -833,6 +833,8 @@ enum GameLevel {
 ////////////////////////////////////////////////////////////////////////
 // Inline functions
 
+// min/max won't compile on Win32 platform as it's already part of stdlib
+#ifndef _WIN32
 
 /**
  * Compute minimal value.
@@ -857,6 +859,8 @@ static inline T max(const T a, const T b)
 {
     return (a > b) ? a : b;
 }
+
+#endif // _WIN32
 
 /**
  * Clamp value between lower and upper bound.
