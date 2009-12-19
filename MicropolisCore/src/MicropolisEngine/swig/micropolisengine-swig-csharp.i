@@ -97,6 +97,16 @@
 %ignore *::operator=;
 
 ////////////////////////////////////////////////////////////////////////
+//
+// Wrap any pointers
+%apply float *INOUT { float *result };
+
+
+////////////////////////////////////////////////////////////////////////
+// Need to figure out how to define typemaps for these
+// ToolEffects*
+
+////////////////////////////////////////////////////////////////////////
 // Templates
 //
 // Tell SWIG to write wrappers for the templates that we're 
@@ -108,30 +118,7 @@
 %template(MapByte4) Map<Byte, 4>;
 %template(MapShort8) Map<short, 8>;
 
-////////////////////////////////////////////////////////////////////////
-// The following macro calls allow your to pass arrays of primitive
-// types. Arrays of other things such as System.Drawing.Point are
-// also possible.
-
-%define %cs_marshal_array(TYPE, CSTYPE)
-        %typemap(ctype)  TYPE[] "void*"
-        %typemap(imtype,
-inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
-        %typemap(cstype) TYPE[] "CSTYPE[]"
-        %typemap(in)     TYPE[] %{ $1 = (TYPE*)$input; %}
-        %typemap(csin)   TYPE[] "$csinput"
-%enddef
-
-%cs_marshal_array(bool, bool)
-%cs_marshal_array(short, short)
-%cs_marshal_array(unsigned short, ushort)
-%cs_marshal_array(int, int)
-%cs_marshal_array(unsigned int, uint)
-%cs_marshal_array(long, int)
-%cs_marshal_array(unsigned long, uint)
-%cs_marshal_array(long long, long)
-%cs_marshal_array(unsigned long long, ulong)
-%cs_marshal_array(float, float)
-%cs_marshal_array(double, double) 
+%typemap(in) const char * { $1 = const string $input; }
+%typemap(in) char * { $1 = new string($input); }
 
 ////////////////////////////////////////////////////////////////////////
