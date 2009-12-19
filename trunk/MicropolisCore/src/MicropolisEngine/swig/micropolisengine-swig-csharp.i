@@ -66,9 +66,8 @@
 
 %module micropolisengine
 
-%include <std_string.i>
+%include <stl.i>
 %include <arrays_csharp.i>
-%include <std_common.i>
 %include <typemaps.i>
 
 %{
@@ -93,6 +92,9 @@
 //
 // Tell SWIG how to pass certain data types in and out.
 
+////////////////////////////////////////////////////////////////////////
+// Need a way to handle = operator for the Map class? (map_type.h)
+%ignore *::operator=;
 
 ////////////////////////////////////////////////////////////////////////
 // Templates
@@ -106,6 +108,11 @@
 %template(MapByte4) Map<Byte, 4>;
 %template(MapShort8) Map<short, 8>;
 
+////////////////////////////////////////////////////////////////////////
+// The following macro calls allow your to pass arrays of primitive
+// types. Arrays of other things such as System.Drawing.Point are
+// also possible.
+
 %define %cs_marshal_array(TYPE, CSTYPE)
         %typemap(ctype)  TYPE[] "void*"
         %typemap(imtype,
@@ -115,9 +122,6 @@ inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
         %typemap(csin)   TYPE[] "$csinput"
 %enddef
 
-// The following macro calls allow your to pass arrays of primitive
-// types. Arrays of other things such as System.Drawing.Point are
-// also possible.
 %cs_marshal_array(bool, bool)
 %cs_marshal_array(short, short)
 %cs_marshal_array(unsigned short, ushort)
