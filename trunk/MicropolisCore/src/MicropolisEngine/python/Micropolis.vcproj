@@ -191,7 +191,7 @@
 		</Configuration>
 		<Configuration
 			Name="CSharp Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)csMicropolis"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
@@ -269,6 +269,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir)"
 			/>
 		</Configuration>
 	</Configurations>
@@ -666,18 +667,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\micropolisengine.py"
-					>
-					<FileConfiguration
-						Name="CSharp Release|Win32"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath="..\..\pyMicropolis\micropolisEngine\micropolisevaluationpanel.py"
 					>
 					<FileConfiguration
@@ -941,10 +930,6 @@
 						/>
 					</FileConfiguration>
 				</File>
-			</Filter>
-			<Filter
-				Name="CSharp Files"
-				>
 			</Filter>
 		</Filter>
 		<Filter
