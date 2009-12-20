@@ -60,11 +60,6 @@
  * NOT APPLY TO YOU.
  */
 
-////////////////////////////////////////////////////////////////////////
-
-
-%module micropolisengine
-
 
 ////////////////////////////////////////////////////////////////////////
 // Type Maps
@@ -89,60 +84,6 @@ void *getPythonCallbackData(PyObject *data);
 // Headers inserted into micropolisengine_wrap.cpp, 
 // from micropolisengine-swig-python.i
 
-%include "data_types.h"
-%include "map_type.h"
-%include "micropolis.h"
-%include "generate.h"
-%include "text.h"
-
-
-////////////////////////////////////////////////////////////////////////
-// Typemaps
-//
-// Tell SWIG how to pass certain data types in and out.
-
-
-// Why doesn't this work? Is not getting matched for some reason:
-//     short makeTraffic(const Position &startPos, ZoneType dest);
-
-%typemap(in) const Position & {
-
-    // SWIG const Postion &pos in typemap from micropolisengine.i
-
-    if (!PyTuple_Check($input) ||
-        (PyObject_Size($input) != 2)) {
-        SWIG_exception_fail(SWIG_ArgError(ecode2), "expected tuple of length two");
-    }
-
-    if (!PyArg_ParseTuple($input, "dd", &pos.posX, &pos.posY)) {
-        SWIG_exception_fail(SWIG_ArgError(ecode2), "expected tuple of length two containing ints");
-    }
-
-}
-
-%typemap(out) Position {
-    // $1 is the input Position.
-    // $result is the output Python tuple containing two integers.
-    // TODO: Make a tuple containing the position.
-    // $result = convertPositionToTuple($1);
-}
-
-
-////////////////////////////////////////////////////////////////////////
-// Templates
-//
-// Tell SWIG to write wrappers for the templates that we're 
-// instantiating for the maps (and any other necessary templates), 
-// so we can access them from the scripting language.
-
-
-%template(MapByte1) Map<Byte, 1>;
-%template(MapByte2) Map<Byte, 2>;
-%template(MapByte4) Map<Byte, 4>;
-%template(MapShort8) Map<short, 8>;
-
-
-////////////////////////////////////////////////////////////////////////
 
 #include "micropolis.h"
 #include "generate.h"
