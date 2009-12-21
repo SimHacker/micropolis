@@ -269,7 +269,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir) /Y"
+				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir) /Y&#x0D;&#x0A;xcopy $(TargetPath) $(SolutionDir) /Y"
 			/>
 		</Configuration>
 	</Configurations>
@@ -529,6 +529,14 @@
 				<File
 					RelativePath="..\swig\micropolisengine.i"
 					>
+					<FileConfiguration
+						Name="CSharp Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="SWIG"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
