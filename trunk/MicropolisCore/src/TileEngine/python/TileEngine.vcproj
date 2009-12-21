@@ -49,7 +49,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\Python26\include\pycairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -222,7 +222,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\Python26\include\pycairo;C:\gtk\include\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
