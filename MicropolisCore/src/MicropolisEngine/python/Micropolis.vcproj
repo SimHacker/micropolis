@@ -269,7 +269,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir)"
+				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir) /Y"
 			/>
 		</Configuration>
 	</Configurations>
@@ -489,12 +489,21 @@
 				<File
 					RelativePath="..\swig\micropolisengine-swig-csharp.i"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="SWIG"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\swig\micropolisengine-swig-python.i"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="SWIG"
@@ -516,6 +525,10 @@
 							Name="SWIG"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\swig\micropolisengine.i"
+					>
 				</File>
 			</Filter>
 			<Filter
