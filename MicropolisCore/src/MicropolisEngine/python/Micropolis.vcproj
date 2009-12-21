@@ -269,7 +269,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir) /Y&#x0D;&#x0A;xcopy $(TargetPath) $(SolutionDir) /Y"
+				CommandLine="xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir)\MicropolisEngine /Y&#x0D;&#x0A;xcopy $(TargetPath) $(SolutionDir) /Y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
