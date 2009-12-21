@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E2A45FB2-4D2E-4159-9E00-B453AE7B460C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MicropolisClient</RootNamespace>
-    <AssemblyName>MicropolisClient</AssemblyName>
+    <AssemblyName>run-csfrontend</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,30 +48,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CityClass.cs" />
-    <Compile Include="CityVotingProblems.cs" />
-    <Compile Include="ConnectTileCommand.cs" />
-    <Compile Include="EditingTool.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameLevel.cs" />
-    <Compile Include="HistoryScale.cs" />
-    <Compile Include="HistoryType.cs" />
-    <Compile Include="MapByte1.cs" />
-    <Compile Include="MapByte2.cs" />
-    <Compile Include="MapByte4.cs" />
-    <Compile Include="MapShort8.cs" />
-    <Compile Include="MapTileBits.cs" />
-    <Compile Include="MapTileCharacters.cs" />
-    <Compile Include="MapType.cs" />
-    <Compile Include="MessageNumber.cs" />
-    <Compile Include="Micropolis.cs" />
-    <Compile Include="micropolisengine.cs" />
-    <Compile Include="micropolisenginePINVOKE.cs" />
+    <Compile Include="MicropolisEngine\CityClass.cs" />
+    <Compile Include="MicropolisEngine\CityVotingProblems.cs" />
+    <Compile Include="MicropolisEngine\ConnectTileCommand.cs" />
+    <Compile Include="MicropolisEngine\EditingTool.cs" />
+    <Compile Include="MicropolisEngine\GameLevel.cs" />
+    <Compile Include="MicropolisEngine\HistoryScale.cs" />
+    <Compile Include="MicropolisEngine\HistoryType.cs" />
+    <Compile Include="MicropolisEngine\MapByte1.cs" />
+    <Compile Include="MicropolisEngine\MapByte2.cs" />
+    <Compile Include="MicropolisEngine\MapByte4.cs" />
+    <Compile Include="MicropolisEngine\MapShort8.cs" />
+    <Compile Include="MicropolisEngine\MapTileBits.cs" />
+    <Compile Include="MicropolisEngine\MapTileCharacters.cs" />
+    <Compile Include="MicropolisEngine\MapType.cs" />
+    <Compile Include="MicropolisEngine\MessageNumber.cs" />
+    <Compile Include="MicropolisEngine\Micropolis.cs" />
+    <Compile Include="MicropolisEngine\micropolisengine.cs" />
+    <Compile Include="MicropolisEngine\micropolisenginePINVOKE.cs" />
+    <Compile Include="MicropolisEngine\Resource.cs" />
+    <Compile Include="MicropolisEngine\Scenario.cs" />
+    <Compile Include="MicropolisEngine\SimSprite.cs" />
+    <Compile Include="MicropolisEngine\SpriteType.cs" />
+    <Compile Include="MicropolisEngine\Stri202.cs" />
+    <Compile Include="MicropolisEngine\StringTable.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_float.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_Position.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_PyObject.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_p_char.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_p_unsigned_short.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_short.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_unsigned_char.cs" />
+    <Compile Include="MicropolisEngine\SWIGTYPE_p_void.cs" />
+    <Compile Include="MicropolisEngine\ToolResult.cs" />
+    <Compile Include="MicropolisEngine\ZoneType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -92,21 +109,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Resource.cs" />
-    <Compile Include="Scenario.cs" />
-    <Compile Include="SimSprite.cs" />
-    <Compile Include="SpriteType.cs" />
-    <Compile Include="Stri202.cs" />
-    <Compile Include="StringTable.cs" />
-    <Compile Include="SWIGTYPE_p_f_p_Micropolis_p_void_p_q_const__char_p_q_const__char_va_list__void.cs" />
-    <Compile Include="SWIGTYPE_p_Position.cs" />
-    <Compile Include="SWIGTYPE_p_p_char.cs" />
-    <Compile Include="SWIGTYPE_p_p_unsigned_short.cs" />
-    <Compile Include="SWIGTYPE_p_short.cs" />
-    <Compile Include="SWIGTYPE_p_unsigned_char.cs" />
-    <Compile Include="SWIGTYPE_p_void.cs" />
-    <Compile Include="ToolResult.cs" />
-    <Compile Include="ZoneType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Micropolis.dll">
