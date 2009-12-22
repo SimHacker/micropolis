@@ -101,6 +101,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy $(TargetPath) $(SolutionDir)pyMicropolis\tileEngine /Y&#x0D;&#x0A;xcopy $(InputDir)tileengine.py $(SolutionDir)pyMicropolis\tileEngine /Y"
 			/>
 		</Configuration>
 		<Configuration
