@@ -99,6 +99,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="xcopy $(TargetPath) $(SolutionDir)pyMicropolis\micropolisEngine /Y"
 			/>
 		</Configuration>
 		<Configuration
