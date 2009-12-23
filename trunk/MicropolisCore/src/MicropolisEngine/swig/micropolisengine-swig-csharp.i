@@ -94,10 +94,14 @@
 
 %typemap(in) const char * { $1 = const string $input; }
 %typemap(in) char * { $1 = new string($input); }
+%typemap(in) unsigned char * { $1 = new string($input); }
+
 
 ////////////////////////////////////////////////////////////////////////
 // Need to figure out how to define typemaps for these types
-// ToolEffects*
+// ToolEffects (connect.cpp)
+// Position (disasters.cpp)
+
 
 ////////////////////////////////////////////////////////////////////////
 // Templates
@@ -111,18 +115,24 @@
 %template(MapByte4) Map<Byte, 4>;
 %template(MapShort8) Map<short, 8>;
 
+
 ////////////////////////////////////////////////////////////////////////
 // Need a way to handle = operator for the Map class? (map_type.h)
+
 %ignore *::operator=;
+
 
 ////////////////////////////////////////////////////////////////////////
 // Wrap any pointers
+
 %apply float *INOUT { float *result };
+
 
 ////////////////////////////////////////////////////////////////////////
 // The following macro calls allow you to pass arrays of primitive
 // types. Arrays of other things such as System.Drawing.Point are
 // also possible.
+
 %define %cs_marshal_array(TYPE, CSTYPE)
         %typemap(ctype)  TYPE[] "void*"
         %typemap(imtype,
