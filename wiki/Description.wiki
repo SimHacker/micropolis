@@ -3,6 +3,8 @@
 
 = Micropolis Source Code Release =
 
+_(This page is several years old. A lot of progress rewriting the code has been made since the release described below.)_
+
 This is the binary and source code for Micropolis (A.K.A. "S*mC*ty": see the GPL License and additional terms, below), which is released under the GPL.
 
 For more information, see Don Hopkins' Blog: http://www.DonHopkins.com. 
