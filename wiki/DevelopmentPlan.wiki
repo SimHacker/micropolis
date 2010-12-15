@@ -1,5 +1,7 @@
 #summary Development Plan for Micropolis Core
 
+_(This page is several years old. A lot of progress rewriting the code has been made since the notes written below.)_
+
 = Notes on a development plan, in progress =
 
 I (Don Hopkins) have been cleaning up and translated the Micropolis (SimCity) source code to C++, and used SWIG to integrate it with Python. 
