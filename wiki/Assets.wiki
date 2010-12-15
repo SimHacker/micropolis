@@ -1,5 +1,7 @@
 #summary Micropolis Assets.
 
+_(This page is several years old. A lot of progress rewriting the code has been made since the list of assets below.)_
+
 = Micropolis Assets =
 
 This is a list of required and optional assets for Micropolis.
