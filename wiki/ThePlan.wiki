@@ -2,7 +2,7 @@
 
 = Plan for developing Micropolis for OLPC. =
 
-_(This page is several years old. A lot of progress rewriting the code has been made since the plan described below.)_
+_(This page is several years old. A lot of progress rewriting the code has been made since the plan described below, but there is still a lot of exciting work to do towards the higher level stuff.)_
 
 First, get it running on the current OLPC platform.
 
