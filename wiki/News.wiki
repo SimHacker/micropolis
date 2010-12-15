@@ -2,7 +2,7 @@
 
 = News =
 
-(This page is several years old. A lot of progress rewriting the code has been made since the news below.)
+_(This page is several years old. A lot of progress rewriting the code has been made since the news below.)_
 
 == Multiple Map Views (April 1 2007, Don Hopkins) ==
 
