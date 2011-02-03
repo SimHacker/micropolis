@@ -53,7 +53,7 @@ export PATH=$PATH:$EC2_HOME/bin
 wget http://peak.telecommunity.com/dist/ez_setup.py
 python ez_setup.py
 
-easy_install -f http://files.turbogears.org/ "TurboGears==1.1b1"
+easy_install -f http://files.turbogears.org/ "TurboGears==1.1"
 easy_install sqlalchemy
 easy_install genshi
 easy_install pyamf
