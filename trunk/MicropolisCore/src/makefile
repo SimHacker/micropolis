@@ -72,7 +72,8 @@ PYTHONBUILDDIR=$(shell python -c 'from distutils import sysconfig, util ; \
 all: build_tileEngine build_cellEngine build_micropolisEngine
 
 clean:
-	rm -rf *~ *.suo *.ncb *.pyc *.pyo build html doxygen_warnings
+	rm -rf *~ *.suo *.ncb *.pyc *.pyo build 
+	echo DISABLED rm -rf html doxygen_warnings
 	cd TileEngine ; make clean
 	cd CellEngine ; make clean
 	cd MicropolisEngine ; make clean
