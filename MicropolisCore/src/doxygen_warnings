@@ -22,9 +22,6 @@ Please use a more specific name by including a (larger) part of the path!
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:313: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_ChurchOfPacMania is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py:252: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliswebserver::MicropolisHTTPRequestHandler is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistorypanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolishistorypanel::MicropolisHistoryPanel is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:369: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::Resource is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:426: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::StringTable is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:546: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::Micropolis is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:553: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::NavigationMicropolisDrawingArea is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py:82: Warning: Compound src::pyMicropolis::tileEngine::tiletool::TileTool is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:303: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church0 is not documented.
@@ -40,20 +37,14 @@ Please use a more specific name by including a (larger) part of the path!
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:624: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieMenu is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisbudgetpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisbudgetpanel::MicropolisBudgetPanel is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismessagespanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolismessagespanel::MicropolisMessagesPanel is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tileengine.py:74: Warning: Compound src::pyMicropolis::tileEngine::tileengine::TileEngine is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2511: Warning: Compound src::pyMicropolis::piemenu::piemenu::DonutPieMenu is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py:492: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisturbogearsengine::MicropolisTurboGearsEngine is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/celltool.py:81: Warning: Compound src::pyMicropolis::cellEngine::celltool::CellTool is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisstartpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisstartpanel::MicropolisStartPanel is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:86: Warning: Compound src::pyMicropolis::cellEngine::cellengine::CellEngine is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:459: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::EditableMicropolisDrawingArea is not documented.
 /home/micropolis/trunk/MicropolisCore/src/CellEngine/src/perlinnoise.h:309: Warning: Compound QuatNoise is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2495: Warning: Compound src::pyMicropolis::piemenu::piemenu::PurePieMenu is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/celldrawingarea.py:95: Warning: Compound src::pyMicropolis::cellEngine::celldrawingarea::CellDrawingArea is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:453: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::SimSprite is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1326: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte1 is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1357: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte2 is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1387: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte4 is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py:82: Warning: Compound src::pyMicropolis::micropolisEngine::micropolistool::MicropolisTool is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgenericengine.py:103: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgenericengine::MicropolisGenericEngine is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgtkengine.py:84: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgtkengine::MicropolisGTKEngine is not documented.
@@ -61,8 +52,6 @@ Please use a more specific name by including a (larger) part of the path!
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:140: Warning: Compound src::pyMicropolis::piemenu::pie::PieItem is not documented.
 /home/micropolis/trunk/MicropolisCore/src/CellEngine/src/linuxcompat.h:13: Warning: Compound RECT is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py:295: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisrobot::MicropolisRobot_PacBot is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:1: Warning: Compound src::pyMicropolis::cellEngine::cellengine::_object is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::_object is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py:98: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisrobot::MicropolisRobot is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgaugeview.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgaugeview::MicropolisGaugeView is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliscontrolpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliscontrolpanel::MicropolisControlPanel is not documented.
@@ -72,9 +61,7 @@ Please use a more specific name by including a (larger) part of the path!
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:2305: Warning: Compound src::pyMicropolis::piemenu::pie::LinearMenu is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:140: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieItem is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py:399: Warning: Compound src::pyMicropolis::tileEngine::tiletool::PanTool is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:53: Warning: Compound src::pyMicropolis::cellEngine::cellengine::RECT is not documented.
 /home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5281: Warning: Compound StateInfo is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tileengine.py:1: Warning: Compound src::pyMicropolis::tileEngine::tileengine::_object is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationview.py:105: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisevaluationview::MicropolisEvaluationView is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:814: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::PreviewMicropolisDrawingArea is not documented.
 /home/micropolis/trunk/MicropolisCore/src/CellEngine/src/perlinnoise.h:11: Warning: Compound PerlinNoise is not documented.
@@ -87,7 +74,6 @@ Please use a more specific name by including a (larger) part of the path!
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py:207: Warning: Compound src::pyMicropolis::micropolisEngine::micropolistool::MicropolisEraserTool is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticepanel.py:87: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisnoticepanel::MicropolisNoticePanel is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellmodel.py:204: Warning: Compound src::pyMicropolis::cellEngine::cellmodel::CellModel is not documented.
-/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1417: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapShort8 is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisevaluationpanel::MicropolisEvaluationPanel is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiledrawingarea.py:94: Warning: Compound src::pyMicropolis::tileEngine::tiledrawingarea::TileDrawingArea is not documented.
 /home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisview.py:84: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisview::MicropolisView is not documented.
