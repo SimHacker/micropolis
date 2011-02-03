@@ -1,0 +1,432 @@
+Warning: ignoring unsupported tag `SYMBOL_CACHE_SIZE      =' at line 278, file Doxyfile
+Warning: ignoring unsupported tag `LAYOUT_FILE            =' at line 493, file Doxyfile
+Warning: ignoring unsupported tag `GENERATE_QHP           =' at line 874, file Doxyfile
+Warning: ignoring unsupported tag `QCH_FILE               =' at line 880, file Doxyfile
+Warning: ignoring unsupported tag `QHP_NAMESPACE          =' at line 886, file Doxyfile
+Warning: ignoring unsupported tag `QHP_VIRTUAL_FOLDER     =' at line 892, file Doxyfile
+Warning: ignoring unsupported tag `QHG_LOCATION           =' at line 899, file Doxyfile
+Warning: ignoring unsupported tag `DOT_FONTSIZE           =' at line 1327, file Doxyfile
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stdafx.h:63: Warning: the name `stdafx.h' supplied as the second argument in the \file statement matches the following input files:
+   /home/micropolis/trunk/MicropolisCore/src/CellEngine/src/stdafx.h
+   /home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stdafx.h
+   /home/micropolis/trunk/MicropolisCore/src/TileEngine/src/stdafx.h
+Please use a more specific name by including a (larger) part of the path!
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py:135: Warning: Compound src::pyMicropolis::micropolisEngine::micropolistool::MicropolisChalkTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py:630: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisrobot::MicropolisRobot_Xenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistoryview.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolishistoryview::MicropolisHistoryView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py:347: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisturbogearsengine::Session is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:468: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::NoticeMicropolisDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdisasterspanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdisasterspanel::MicropolisDisastersPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.h:134: Warning: Compound CellEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismappanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolismappanel::MicropolisMapPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:313: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_ChurchOfPacMania is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py:252: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliswebserver::MicropolisHTTPRequestHandler is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistorypanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolishistorypanel::MicropolisHistoryPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:369: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::Resource is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:426: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::StringTable is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:546: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:553: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::NavigationMicropolisDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py:82: Warning: Compound src::pyMicropolis::tileEngine::tiletool::TileTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:303: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church0 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:347: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church3 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:356: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church4 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:365: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church5 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:374: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church6 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:384: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_Church7 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/TileEngine/src/tileengine.h:173: Warning: Compound TileEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py:312: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliswebserver::MicropolisHTTPServer is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnotebook.py:91: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisnotebook::MicropolisNotebook is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tilewindow.py:104: Warning: Compound src::pyMicropolis::tileEngine::tilewindow::TileWindow is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:624: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisbudgetpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisbudgetpanel::MicropolisBudgetPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismessagespanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolismessagespanel::MicropolisMessagesPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tileengine.py:74: Warning: Compound src::pyMicropolis::tileEngine::tileengine::TileEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2511: Warning: Compound src::pyMicropolis::piemenu::piemenu::DonutPieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py:492: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisturbogearsengine::MicropolisTurboGearsEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/celltool.py:81: Warning: Compound src::pyMicropolis::cellEngine::celltool::CellTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisstartpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisstartpanel::MicropolisStartPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:86: Warning: Compound src::pyMicropolis::cellEngine::cellengine::CellEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:459: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::EditableMicropolisDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/perlinnoise.h:309: Warning: Compound QuatNoise is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2495: Warning: Compound src::pyMicropolis::piemenu::piemenu::PurePieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/celldrawingarea.py:95: Warning: Compound src::pyMicropolis::cellEngine::celldrawingarea::CellDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:453: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1326: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte1 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1357: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte2 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1387: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapByte4 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py:82: Warning: Compound src::pyMicropolis::micropolisEngine::micropolistool::MicropolisTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgenericengine.py:103: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgenericengine::MicropolisGenericEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgtkengine.py:84: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgtkengine::MicropolisGTKEngine is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:330: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone_ChurchOfScientology is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:140: Warning: Compound src::pyMicropolis::piemenu::pie::PieItem is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/linuxcompat.h:13: Warning: Compound RECT is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py:295: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisrobot::MicropolisRobot_PacBot is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:1: Warning: Compound src::pyMicropolis::cellEngine::cellengine::_object is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::_object is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py:98: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisrobot::MicropolisRobot is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgaugeview.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisgaugeview::MicropolisGaugeView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliscontrolpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliscontrolpanel::MicropolisControlPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/eliza.py:15: Warning: Compound src::pyMicropolis::micropolisEngine::eliza::eliza is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2411: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieMenuDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:621: Warning: Compound src::pyMicropolis::piemenu::pie::PieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:2305: Warning: Compound src::pyMicropolis::piemenu::pie::LinearMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:140: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieItem is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py:399: Warning: Compound src::pyMicropolis::tileEngine::tiletool::PanTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py:53: Warning: Compound src::pyMicropolis::cellEngine::cellengine::RECT is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5281: Warning: Compound StateInfo is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tileengine.py:1: Warning: Compound src::pyMicropolis::tileEngine::tileengine::_object is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationview.py:105: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisevaluationview::MicropolisEvaluationView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:814: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::PreviewMicropolisDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/perlinnoise.h:11: Warning: Compound PerlinNoise is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py:116: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliszone::MicropolisZone is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2422: Warning: Compound src::pyMicropolis::piemenu::piemenu::PieMenuTarget is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellwindow.py:92: Warning: Compound src::pyMicropolis::cellEngine::cellwindow::CellWindow is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py:170: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisdrawingarea::MicropolisDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py:2480: Warning: Compound src::pyMicropolis::piemenu::piemenu::LinearMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:2336: Warning: Compound src::pyMicropolis::piemenu::pie::DonutPieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py:207: Warning: Compound src::pyMicropolis::micropolisEngine::micropolistool::MicropolisEraserTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticepanel.py:87: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisnoticepanel::MicropolisNoticePanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/cellEngine/cellmodel.py:204: Warning: Compound src::pyMicropolis::cellEngine::cellmodel::CellModel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisengine.py:1417: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisengine::MapShort8 is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationpanel.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisevaluationpanel::MicropolisEvaluationPanel is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/tileEngine/tiledrawingarea.py:94: Warning: Compound src::pyMicropolis::tileEngine::tiledrawingarea::TileDrawingArea is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisview.py:84: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisview::MicropolisView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswindow.py:110: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliswindow::MicropolisPanedWindow is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/piemenu/pie.py:2320: Warning: Compound src::pyMicropolis::piemenu::pie::PurePieMenu is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticeview.py:86: Warning: Compound src::pyMicropolis::micropolisEngine::micropolisnoticeview::MicropolisNoticeView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py:114: Warning: Compound src::pyMicropolis::micropolisEngine::micropoliswebserver::MicropolisView is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.cpp:88: Warning: no uniquely matching class member found for
+  void FrontendMessage::sendMessage(Micropolis *sim)
+Possible candidates:
+  virtual void FrontendMessage::sendMessage(Micropolis *sim) const =0 at line 78 of file /home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:101: Warning: Member RANDOMS_COUNT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1592: Warning: Member MOORE_A (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1615: Warning: Member MOORE_AB (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1645: Warning: Member VON_NEUMANN (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1682: Warning: Member MARGOLIS_ODD (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1698: Warning: Member MARGOLIS_EVEN (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1731: Warning: Member MARGOLIS_ODD_PH (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1735: Warning: Member MARGOLIS_EVEN_PH (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1769: Warning: Member MARGOLIS_ODD_HV (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1774: Warning: Member MARGOLIS_EVEN_HV (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1804: Warning: Member LIFE (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1824: Warning: Member BRAIN (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1840: Warning: Member HEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1853: Warning: Member DHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1862: Warning: Member LHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1873: Warning: Member LDHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1885: Warning: Member ABDHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1899: Warning: Member ABCDHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1914: Warning: Member RANCH(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1918: Warning: Member XRANCH (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1930: Warning: Member ANNEAL (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1948: Warning: Member ANNEAL4 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1973: Warning: Member ANNEAL8 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1986: Warning: Member ANTILIFE (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:1991: Warning: Member ECO (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2012: Warning: Member TORBEN (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2027: Warning: Member TORBEN2 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2040: Warning: Member TORBEN3 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2058: Warning: Member TORBEN4 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2187: Warning: Member FDHEAT(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2790: Warning: Member FABCDHEAT(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2878: Warning: Member SUM8R(m, nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2881: Warning: Member SUM9R(m, nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:2984: Warning: Member RISCA(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3058: Warning: Member INSERT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3076: Warning: Member HEACO (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3092: Warning: Member MARBLE(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3172: Warning: Member SMARBLE(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3255: Warning: Member FARBLE(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3372: Warning: Member GARBLEBUG(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3461: Warning: Member GARBLE(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3540: Warning: Member TWOHEATS(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3673: Warning: Member PART_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3674: Warning: Member ABCD_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3675: Warning: Member PART(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3676: Warning: Member ABCD(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3677: Warning: Member PART_EMPTY (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3678: Warning: Member PART_PLASMA (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3679: Warning: Member PART_WALL (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3680: Warning: Member PART_MIRROR (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3681: Warning: Member PART_A (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3682: Warning: Member PART_B (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3683: Warning: Member PART_C (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3684: Warning: Member PART_D (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3685: Warning: Member ISPLASMA(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3686: Warning: Member ISWALL(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3687: Warning: Member ISMIRROR(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3688: Warning: Member ISA(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3689: Warning: Member ISB(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3690: Warning: Member ISC(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3691: Warning: Member ISD(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3692: Warning: Member ISABCD(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3694: Warning: Member ISEMPTY(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3698: Warning: Member PAYLOAD_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3699: Warning: Member PAYLOAD(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3710: Warning: Member DIR_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3711: Warning: Member DIR(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3712: Warning: Member DIR_N (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3713: Warning: Member DIR_E (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3714: Warning: Member DIR_S (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3715: Warning: Member DIR_W (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3717: Warning: Member NOTPART_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3718: Warning: Member NOTPART(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3982: Warning: Member OPCODE_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3983: Warning: Member OPCODE(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3985: Warning: Member OPCODE_NORTH (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3986: Warning: Member OPCODE_EAST (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3987: Warning: Member OPCODE_SOUTH (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3988: Warning: Member OPCODE_WEST (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3989: Warning: Member OPCODE_NORTHMIRROR (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3990: Warning: Member OPCODE_EASTMIRROR (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3991: Warning: Member OPCODE_SOUTHMIRROR (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3992: Warning: Member OPCODE_WESTMIRROR (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3993: Warning: Member OPCODE_SPACE (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3994: Warning: Member OPCODE_MAGIC (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3995: Warning: Member OPCODE_METAL (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3996: Warning: Member OPCODE_MICROPHONE (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3997: Warning: Member OPCODE_SPEAKER (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3998: Warning: Member OPCODE_INPUT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3999: Warning: Member OPCODE_OUTPUT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4000: Warning: Member OPCODE_RANDOM (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4002: Warning: Member FLOW_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4003: Warning: Member FLOW(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4004: Warning: Member FLOW_N (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4005: Warning: Member FLOW_E (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4006: Warning: Member FLOW_S (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4007: Warning: Member FLOW_W (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4009: Warning: Member IS_FLOWING(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4011: Warning: Member OPERAND_MASK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4012: Warning: Member OPERAND(x) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4123: Warning: Member SPINSONLY (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4162: Warning: Member SPINSBANK (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4212: Warning: Member SPINSHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4233: Warning: Member SPINGLASS (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4360: Warning: Member MARG (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4365: Warning: Member GLASSBONDS (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4464: Warning: Member GLASSHEAT (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4517: Warning: Member FADERS (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4575: Warning: Member HARBLE(nw, n, ne, w, c, e, sw, s, se) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4659: Warning: Member random1(i) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4660: Warning: Member random2(i) (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5156: Warning: Member VANNEAL (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5191: Warning: Member VANNEAL8 (define) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:110: Warning: Member PrimeRandoms() (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:139: Warning: Member FeedRandom(long food) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:149: Warning: Member Rand32() (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:172: Warning: Member Rand16() (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:178: Warning: Member Rand8() (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:3721: Warning: Member RandDir(Byte x) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4671: Warning: Member C_Noise(long u_init, long v_init, long du, long dv, long ddu, long ddv, unsigned char *screen_buffer, unsigned int count) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4881: Warning: Member MARG_RULE_DIFFUSION(unsigned char c, unsigned char cw, unsigned char ccw, unsigned char opp, unsigned char r, unsigned char p) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4906: Warning: Member MARG_RULE_GAS(unsigned char c, unsigned char cw, unsigned char ccw, unsigned char opp, unsigned char r, unsigned char p) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5333: Warning: Member sp(Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5346: Warning: Member op(Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5359: Warning: Member osp(Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5376: Warning: Member wop(Byte state, Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5394: Warning: Member wsp(Byte state, Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5412: Warning: Member wce(Byte state, Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5429: Warning: Member cascade(Byte right, Byte up, Byte left, Byte down) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5437: Warning: Member excite(Byte state) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5448: Warning: Member decay(Byte state) (function) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:95: Warning: Member ruleCount (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:103: Warning: Member randomsPrimed (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:104: Warning: Member randoms[RANDOMS_COUNT] (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:105: Warning: Member randomRead (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:106: Warning: Member randomWrite (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4288: Warning: Member GlassBondsTable[16] (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:4429: Warning: Member GlassHeatTable[16] (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5286: Warning: Member JVNSTATES (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5323: Warning: Member states[JVNSTATES] (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5326: Warning: Member jvnInitialized (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/cellengine.cpp:5327: Warning: Member codeToName[256] (variable) of file cellengine.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/CellEngine/src/perlinnoise.h:8: Warning: Member _PERLIN_NOISE_H_ (define) of file perlinnoise.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/connect.cpp:81: Warning: Member RoadTable[16] (variable) of file connect.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/connect.cpp:88: Warning: Member RailTable[16] (variable) of file connect.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/connect.cpp:95: Warning: Member WireTable[16] (variable) of file connect.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/data_types.h:68: Warning: Member Byte (typedef) of file data_types.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/data_types.h:70: Warning: Member Ptr (typedef) of file data_types.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/data_types.h:72: Warning: Member Quad (typedef) of file data_types.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/data_types.h:74: Warning: Member UQuad (typedef) of file data_types.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/main.cpp:340: Warning: Member CLIPPER_LOOP_BODY(CODE) (define) of file main.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/main.cpp:350: Warning: Member HEAT (define) of file main.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/main.cpp:357: Warning: Member ECOMASK (define) of file main.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/main.cpp:390: Warning: Member ECO (define) of file main.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:949: Warning: Member CallbackFunction)(Micropolis *micropolis, void *data, const char *name, const char *params, va_list arglist) (typedef) of file micropolis.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:321: Warning: Member SpriteType (enumeration) of file micropolis.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:263: Warning: Member RES_VALVE_RANGE (variable) of file micropolis.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:264: Warning: Member COM_VALVE_RANGE (variable) of file micropolis.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:265: Warning: Member IND_VALVE_RANGE (variable) of file micropolis.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:344: Warning: explicit link request to 'MapCharacters' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:196: Warning: explicit link request to 'cityTime' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:201: Warning: explicit link request to 'cityTime' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:191: Warning: explicit link request to 'cityTime' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/position.h:70: Warning: explicit link request to 'Direction' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/position.h:72: Warning: explicit link request to 'Direction' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/position.h:87: Warning: The following parameters of increment45(Direction2 dir, int count=1) are not documented:
+  parameter 'count'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/position.h:108: Warning: The following parameters of rotate45(Direction2 dir, int count=1) are not documented:
+  parameter 'count'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:76: Warning: Member TRA_GROOVE_X (define) of file sprite.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:77: Warning: Member TRA_GROOVE_Y (define) of file sprite.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:78: Warning: Member BUS_GROOVE_X (define) of file sprite.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:79: Warning: Member BUS_GROOVE_Y (define) of file sprite.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:1530: Warning: Member AHEAD (define) of file sprite.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:746: Warning: Member idArray[29] (variable) of file tool.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:220: Warning: Member ASCBIT (define) of file zone.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:221: Warning: Member REGBIT (define) of file zone.cpp is not documented.
+/home/micropolis/trunk/MicropolisCore/src/TileEngine/src/tileengine.h:113: Warning: Member TILEENGINE_VERSION (define) of file tileengine.h is not documented.
+/home/micropolis/trunk/MicropolisCore/src/TileEngine/src/tileengine.h:121: Warning: Member PycairoSurface_GET(obj) (define) of file tileengine.h is not documented.
+todo:350: Warning: Found unknown command `\0'
+todo:533: Warning: explicit link request to 'putBuilding' could not be resolved
+todo:565: Warning: explicit link request to 'SMOKEBASE' could not be resolved
+todo:716: Warning: explicit link request to 'Direction' could not be resolved
+todo:720: Warning: explicit link request to 'Direction' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.h:227: Warning: Member BuildingProperties(int xs, int ys, MapTile base, EditingTool tool, const char *tName, bool anim) (function) of class BuildingProperties is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:78: Warning: Member sendMessage(Micropolis *sim) const =0 (function) of class FrontendMessage is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:91: Warning: Member FrontendMessageDidTool(const char *tool, int x, int y) (function) of class FrontendMessageDidTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:95: Warning: Member sendMessage(Micropolis *sim) const  (function) of class FrontendMessageDidTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:88: Warning: Member tool (variable) of class FrontendMessageDidTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:89: Warning: Member x (variable) of class FrontendMessageDidTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:89: Warning: Member y (variable) of class FrontendMessageDidTool is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:109: Warning: Member FrontendMessageMakeSound(const char *channel, const char *sound, int x, int y) (function) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:113: Warning: Member sendMessage(Micropolis *sim) const  (function) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:105: Warning: Member channel (variable) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:106: Warning: Member sound (variable) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:107: Warning: Member x (variable) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/stubs.h:107: Warning: Member y (variable) of class FrontendMessageMakeSound is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1504: Warning: Member animateTiles() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1560: Warning: Member initFundingLevel() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1570: Warning: Member showBudgetWindowAndStartWaiting() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1572: Warning: Member setCityTax(short tax) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1988: Warning: Member simRobots() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2458: Warning: Member checkWet(int x) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2841: Warning: Member doUpdateHeads() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2843: Warning: Member updateMaps() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2845: Warning: Member updateGraphs() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2847: Warning: Member updateEvaluation() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2849: Warning: Member updateHeads() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2853: Warning: Member reallyUpdateFunds() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2855: Warning: Member doTimeStuff() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2859: Warning: Member showValves() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2861: Warning: Member drawValve() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2863: Warning: Member setDemand(float r, float c, float i) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2865: Warning: Member updateOptions() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2879: Warning: Member setSpeed(short speed) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2881: Warning: Member setPasses(int passes) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2889: Warning: Member setCityName(const std::string &name) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2893: Warning: Member setYear(int year) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1506: Warning: Member getNextAnimatedTile(int index) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1949: Warning: Member simLoops (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1967: Warning: Member simPausedSpeed (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2267: Warning: Member valveFlag (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2269: Warning: Member crimeRamp (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2271: Warning: Member pollutionRamp (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2277: Warning: Member cashFlow (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2279: Warning: Member externalMarket (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2290: Warning: Member newPower (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2292: Warning: Member cityTaxAverage (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2294: Warning: Member simCycle (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2296: Warning: Member phaseCycle (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2298: Warning: Member speedCycle (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2512: Warning: Member messageTimeLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2516: Warning: Member initSimLoad (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2520: Warning: Member simSpeed (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2522: Warning: Member simSpeedMeta (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2528: Warning: Member messageNumber (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2822: Warning: Member mustUpdateFunds (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2826: Warning: Member cityTimeLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2828: Warning: Member cityYearLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2830: Warning: Member cityMonthLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2832: Warning: Member totalFundsLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2834: Warning: Member resLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2836: Warning: Member comLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2838: Warning: Member indLast (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1042: Warning: Member destroy() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2027: Warning: Member simLoop(bool doSim) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2245: Warning: Member pollutionTerrainLandValueScan() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2253: Warning: Member smoothTerrain() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2255: Warning: Member doSmooth1() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2257: Warning: Member doSmooth2() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2330: Warning: Member simFrame() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2332: Warning: Member simulate() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2342: Warning: Member initSimMemory() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2346: Warning: Member setCommonInits() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2350: Warning: Member clearCensus() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2354: Warning: Member take120Census() (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2358: Warning: Member mapScan(int x1, int x2) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2706: Warning: Member bulldozerTool(short x, short y) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2724: Warning: Member waterTool(short x, short y, ToolEffects *effects) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2931: Warning: Member makeDollarDecimalStr(char *numStr, char *dollarStr) (function) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2002: Warning: Member heatSteps (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2009: Warning: Member heatRule (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2016: Warning: Member cellSrc (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2018: Warning: Member cellDst (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2171: Warning: Member nextRandom (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2306: Warning: Member resValve (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2307: Warning: Member comValve (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2308: Warning: Member indValve (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2413: Warning: Member globalSprites[SPRITE_COUNT] (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2415: Warning: Member absDist (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:2417: Warning: Member spriteCycle (variable) of class Micropolis is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/connect.cpp:204: Warning: explicit link request to 'RIVER' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/generate.cpp:493: Warning: argument 'pos' of command @param is not found in the argument list of Micropolis::doBRiver(const Position &riverPos, Direction2 riverDir, Direction2 terrainDir)
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/generate.cpp:493: Warning: The following parameters of Micropolis::doBRiver(const Position &riverPos, Direction2 riverDir, Direction2 terrainDir) are not documented:
+  parameter 'riverPos'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/generate.cpp:533: Warning: argument 'pos' of command @param is not found in the argument list of Micropolis::doSRiver(const Position &riverPos, Direction2 riverDir, Direction2 terrainDir)
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/generate.cpp:533: Warning: The following parameters of Micropolis::doSRiver(const Position &riverPos, Direction2 riverDir, Direction2 terrainDir) are not documented:
+  parameter 'riverPos'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/sprite.cpp:544: Warning: Found unknown command `\0'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:969: Warning: The following parameters of Micropolis::bulldozerTool(short x, short y, ToolEffects *effects) are not documented:
+  parameter 'effects'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:296: Warning: The following parameters of Micropolis::putDownWater(short mapH, short mapV, ToolEffects *effects) are not documented:
+  parameter 'effects'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:317: Warning: The following parameters of Micropolis::putDownLand(short mapH, short mapV, ToolEffects *effects) are not documented:
+  parameter 'effects'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:351: Warning: The following parameters of Micropolis::putDownForest(short mapH, short mapV, ToolEffects *effects) are not documented:
+  parameter 'effects'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:898: Warning: The following parameters of Micropolis::putRubble(int x, int y, int size, ToolEffects *effects) are not documented:
+  parameter 'effects'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/traffic.cpp:75: Warning: Found unknown command `\x'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/traffic.cpp:75: Warning: Found unknown command `\y'
+<unknown>:5: Warning: explicit link request to 'SMOKEBASE' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:346: Warning: The following parameters of Micropolis::zonePlop(const Position &pos, int base) are not documented:
+  parameter 'pos'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:529: Warning: argument 'zonePwrFlg' of command @param is not found in the argument list of Micropolis::doResidential(const Position &pos, bool zonePower)
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:529: Warning: The following parameters of Micropolis::doResidential(const Position &pos, bool zonePower) are not documented:
+  parameter 'zonePower'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:745: Warning: argument 'zonePwrFlg' of command @param is not found in the argument list of Micropolis::doCommercial(const Position &pos, bool zonePower)
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:745: Warning: The following parameters of Micropolis::doCommercial(const Position &pos, bool zonePower) are not documented:
+  parameter 'zonePower'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:878: Warning: The following parameters of Micropolis::evalCom(const Position &pos, int traf) are not documented:
+  parameter 'pos'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:897: Warning: argument 'zonePwrFlg' of command @param is not found in the argument list of Micropolis::doIndustrial(const Position &pos, bool zonePower)
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:897: Warning: The following parameters of Micropolis::doIndustrial(const Position &pos, bool zonePower) are not documented:
+  parameter 'zonePower'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:947: Warning: The following parameters of Micropolis::doIndIn(const Position &pos, int pop, int value) are not documented:
+  parameter 'pop'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/zone.cpp:961: Warning: The following parameters of Micropolis::doIndOut(const Position &pos, int pop, int value) are not documented:
+  parameter 'pop'
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1297: Warning: explicit link request to 'MAX_POLICE_EFFECT' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1302: Warning: explicit link request to 'MAX_FIRE_EFFECT' could not be resolved
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:995: Warning: Member width (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:996: Warning: Member height (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:997: Warning: Member xOffset (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:998: Warning: Member yOffset (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1001: Warning: Member origX (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1002: Warning: Member origY (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1005: Warning: Member count (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1006: Warning: Member soundCount (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1007: Warning: Member dir (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1008: Warning: Member newDir (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1009: Warning: Member step (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1010: Warning: Member flag (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1011: Warning: Member control (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1012: Warning: Member turn (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1013: Warning: Member accel (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/micropolis.h:1014: Warning: Member speed (variable) of class SimSprite is not documented.
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.cpp:107: Warning: argument 'sim' of command @param is not found in the argument list of ToolEffects::modifyWorld()
+/home/micropolis/trunk/MicropolisCore/src/MicropolisEngine/src/tool.h:199: Warning: argument 'pos' of command @param is not found in the argument list of ToolEffects::setMapValue(int x, int y, MapValue mapVal)
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/gtkFrontend/main.py:15: Warning: Member run (function) of namespace src::pyMicropolis::gtkFrontend::main is not documented.
+/home/micropolis/trunk/MicropolisCore/src/pyMicropolis/gtkFrontend/maincell.py:22: Warning: Member run (function) of namespace src::pyMicropolis::gtkFrontend::maincell is not documented.
