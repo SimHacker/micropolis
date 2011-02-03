@@ -111,7 +111,7 @@
 		<slider name="speedSlider"
 		    width="${parent.width}"
 		    minvalue="0"
-		    maxvalue="9"
+		    maxvalue="8"
 		    keystep="1"
 		    showvalue="false"
 		    showrange="false"

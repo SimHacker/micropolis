@@ -2070,7 +2070,7 @@
             active="${classroot.active &amp;&amp; this.visible}"
         />
 
-        <tooltip id="gToolTip"/>
+        <mytooltip id="gToolTip"/>
 
     </class>
 

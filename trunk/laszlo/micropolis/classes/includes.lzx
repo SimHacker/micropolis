@@ -19,7 +19,7 @@
     <include href="piemenu.lzx"/>
     <include href="mypiemenu.lzx"/>
     <include href="edittileviewpie.lzx"/>
-    <include href="tooltip.lzx"/>
+    <include href="mytooltip.lzx"/>
     <include href="mycheckbox.lzx"/>
     <include href="myradio.lzx"/>
     <include href="resizebarh.lzx"/>

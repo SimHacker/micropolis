@@ -44,7 +44,7 @@ from pyMicropolis.tileEngine import tileengine
 
 DefaultLanguage = 'en-US'
 DataDir = 'micropolis/htdocs/static/data'
-LocalServerRoot = 'http://127.0.0.1/server'
+LocalServerRoot = 'http://127.0.0.1:8082'
 
 
 ########################################################################
@@ -215,7 +215,7 @@ class Root(controllers.RootController):
 
 
     # Seconds between heart beats.
-    heartBeatInterval = 1
+    heartBeatInterval = 10
 
 
     # FIXME: Doesn't seem to work. Should give us the raw post body. 
@@ -274,7 +274,7 @@ class Root(controllers.RootController):
                 'cookie': cookie,
             })
         data = urllib.urlopen(hbUrl).read()
-        print data,
+        #print data,
         sys.stdout.flush()
 
 

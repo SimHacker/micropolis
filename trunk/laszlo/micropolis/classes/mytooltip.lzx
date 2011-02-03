@@ -7,7 +7,7 @@
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="tooltip"
+    <class name="mytooltip"
       pixellock="true"
     >
 
