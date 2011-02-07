@@ -79,8 +79,8 @@
 
 
 		<attribute name="url" type="string" value="http:/server/amfGateway"/>
-		<attribute name="connectionTimeout" type="number" value="5000"/>
-		<attribute name="pollTimeout" type="number" value="10000"/>
+		<attribute name="connectionTimeout" type="number" value="10000"/>
+		<attribute name="pollTimeout" type="number" value="20000"/>
 		<attribute name="netConnection" value="null"/>
 		<attribute name="objectEncoding" value="ObjectEncoding.AMF3"/>
 		<attribute name="status" type="string" value=""/>

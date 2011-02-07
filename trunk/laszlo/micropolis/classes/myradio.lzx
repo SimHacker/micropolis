@@ -148,9 +148,9 @@
             // if (this.style != null) {
             if ((this.style != null) && (_title != null)) {
                 if (_enabled) {
-                    _title.setAttribute('fgcolor', this.style.textcolor);
+                    _title.setAttribute('fgcolor', 0xffffff);
                 } else {
-                    _title.setAttribute('fgcolor', this.style.textdisabledcolor);
+                    _title.setAttribute('fgcolor', 0xa0a0a0);
                 }
                 setTint(this.rb, s.basecolor);
             }
@@ -171,7 +171,7 @@
         <!--- @keywords private -->
         <method name="setHilite" args="dohilite">
             _title.setAttribute('fgcolor',
-                dohilite ? style.texthilitecolor : style.textcolor);
+                dohilite ? 0xffff00 : 0xffffff);
         </method>
 
         <!-- FIXME: [hqm 2006-09] LPP-2244 This used to be y="$once{classroot.text_y}"
@@ -179,7 +179,9 @@
         so we need to use an 'always' constraint till we fix it
         -->
 
-        <text name="_title" resize="true"
+        <text name="_titleShadow" resize="true" fontstyle="bold" fontsize="11" fgcolor="0x000000"
+            x="17" y="${classroot.text_y + 1}" text="${parent.text}"/>
+        <text name="_title" resize="true" fontstyle="bold" fontsize="11" fgcolor="0xffffff"
             x="17" y="${classroot.text_y}" text="${parent.text}"/>
 
         <doc>

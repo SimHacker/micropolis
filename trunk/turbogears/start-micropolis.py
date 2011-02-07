@@ -13,11 +13,14 @@ from micropolis.commands import start, ConfigurationError
 #print "Redirecting stderr to /dev/null ..."
 #sys.stderr = open('/dev/null', 'w')
 
-sys.path.append(
-    os.path.normpath(
-        os.path.join(
-            os.getcwd(),
-            '../MicropolisCore/src')))
+import os, sys
+
+MicropolisDir = os.path.normpath(
+    os.path.join(
+        os.getcwd(),
+        '../MicropolisCore/src'))
+if MicropolisDir not in sys.path:
+    sys.path.append(MicropolisDir)
 
 if __name__ == "__main__":
     try:

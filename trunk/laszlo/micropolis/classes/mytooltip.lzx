@@ -22,11 +22,12 @@
 	<attribute name="popupDelegate" value="null"/>
 	<attribute name="popupDelegateActive" value="false"/>
 	<attribute name="popupDelay" value="100"/>
-	<attribute name="popupMaxWidth" value="300"/>
+	<attribute name="popupMaxWidth" value="400"/>
 	<attribute name="popupDirection" type="string" value="up"/>
 	<attribute name="popupWrapped" value="true"/>
 	<attribute name="popupFontSize" value="14"/>
 	<attribute name="popupFontStyle" type="string" value="bold"/>
+	<attribute name="clickable" value="false"/>
 
 
 	<method name="startPopupTimer"><![CDATA[
@@ -67,6 +68,8 @@
 	    var y = this.targetY;
 	    var width = this.targetWidth;
 	    var height = this.targetHeight;
+
+	    //Debug.write("showTip", "x", x, "y", y, "dir", this.popupDirection);
 
 	    var txt = this.tip.background.txt;
 	    txt.setAttribute("fontstyle", this.popupFontStyle);
@@ -114,6 +117,8 @@
 
 	    } // switch
 
+	    //Debug.write("before adjust x", x, "y", y, "tip.width", tip.width, "tip.height", tip.height, "width", width, "height", height);
+
 	    switch (dir) {
 
 		case 'up': {
@@ -138,6 +143,8 @@
 
 	    } // switch
 
+	    //Debug.write("after adjust x", x, "y", y);
+
 	    width = tip.width;
 	    height = tip.height;
 	    var margin = 10;
@@ -148,29 +155,37 @@
 	    // to keep it on the screen.
 
 	    if ((x + width) >= (canvas.width - margin)) {
+	        //Debug.write("BUMP RIGHT", "x", x, "=>", (canvas.width - margin) - width, "width", width, "canvas.width", canvas.width, "margin", margin, "y", y);
 	        x = (canvas.width - margin) - width;
 	    } else if (x < margin) {
+	        //Debug.write("BUMP LEFT", "x", x, "=>", margin, "canvas.width", canvas.width, "margin", margin, "y", y);
 	        x = margin;
 	    } // if
 
 	    if ((y + height) >= (canvas.height - margin)) {
+	        //Debug.write("BUMP TOP", "y", y, "=>", (canvas.height - margin) - height, "height", height, "canvas.height", canvas.height, "margin", margin, "x", x);
 	        y = (canvas.height - margin) - height;
 	    } else if (y < margin) {
+	        //Debug.write("BUMP BOTTOM", "y", y, "=>", margin, "canvas.height", canvas.height, "margin", margin, "x", x);
 	        y = margin;
 	    } // if
 
 	    this.bringToFront();
 
-	    tip.setAttribute("x", canvas.getMouse("x"));
-	    tip.setAttribute("y", canvas.getMouse("y"));
+	    //tip.setAttribute("x", canvas.getMouse("x"));
+	    //tip.setAttribute("y", canvas.getMouse("y"));
+	    tip.setAttribute("x", x);
+	    tip.setAttribute("y", y);
 	    tip.setAttribute("scale", 0.1);
 	    tip.setAttribute("visible", true);
 	    tip.setAttribute("opacity", 0.5);
 
-	    tip.animate("x", x, delay);
-	    tip.animate("y", y, delay);
+	    //tip.animate("x", x, delay);
+	    //tip.animate("y", y, delay);
 	    tip.animate("scale", 1.0, delay);
 	    tip.animate("opacity", 1.0, delay);
+
+	    //Debug.write("showTip end x", x, "y", y, "dir", dir);
 	  ]]>
 	</method>
 
@@ -188,19 +203,13 @@
 		y = canvas.getMouse("y");
 		width = 1;
 		height = 1;
+		//Debug.write("enterView v null x", x, "y", y);
 	    } else {
-		x = 0;
-		y = 0;
+	        x = v.getAttributeRelative("x", canvas);
+	        y = v.getAttributeRelative("y", canvas);
 		width = v.width;
 		height = v.height;
-
-		//Debug.write("start", x, y, width, height, dir);
-		while ((v != null) && (v != canvas)) {
-		    x += v.x;
-		    y += v.y;
-		    v = v.immediateparent;
-		} // while
-
+		//Debug.write("enterView v x", x, "y", y, "width", width, "height", height);
 	    } // if
 
 	    this.enterBox(x, y, width, height, message, dir);
@@ -261,8 +270,8 @@
 		name="background"
 		x="1"
 		y="1"
-		width="${(this.txt.width + 2) * parent.scale}"
-		height="${(this.txt.height + 2) * parent.scale}"
+		width="${(this.txt.width + 2) * ((parent.scale &lt; 0.9) ? 0 : 1)}"
+		height="${(this.txt.height + 2) * ((parent.scale &lt; 0.9) ? 0 : 1)}"
 		pixellock="true"
 		bgcolor="$once{0xffffff}"
 		clip="true"

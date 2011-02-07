@@ -450,8 +450,6 @@
             var lastCol = viewCol + viewCols;
             var lastRow = viewRow + viewRows;
             var animationTicks = gApp.animationTicks;
-            var maxNewTiles = 500;
-            var newTiles = 0;
 
             var tileIndex = 0;
 	    var tiles = this.container.tiles;
@@ -470,10 +468,10 @@
 
                     //Debug.write("subviewCount", tiles.subviews.length, "tileIndex", tileIndex);
                     if (tileIndex >= tiles.subviews.length) {
-                        if (newTiles >= maxNewTiles) {
+                        if (gApp.newTiles >= gApp.newTilesPerTick) {
                             continue;
                         }
-                        newTiles++;
+                        gApp.newTiles++;
                         var v = new lz.tile(tiles, {
 			    width: tileSize,
 			    height: tileSize

@@ -227,25 +227,6 @@
 		/>
 	    </tabpane>
 
-	    <tabpane
-		text="${gApp.loggedIn ? (gApp._('User') + ': ' + gApp.userName) : gApp._('Log In')}"
-		width="${parent.width}"
-		height="${parent.height}"
-	    >
-
-	        <simplelayout
-		    spacing="5"
-		/>
-
-		<userview id="gStartUserView"
-		    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-		    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-		    visible="${this.width &amp;&amp; this.height}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
-
-	    </tabpane>
-
 	</tabs>
 
 

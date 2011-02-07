@@ -217,11 +217,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Population:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -233,11 +236,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Migration:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -249,11 +255,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('City Value:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -265,11 +274,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Category:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -281,11 +293,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Game Level:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -297,11 +312,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Current Score:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -313,11 +331,14 @@
 		    width="${parent.width}"
 		    text="${gApp._('Annual Change:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		/>
 	    </view>
 
@@ -329,12 +350,15 @@
 		    width="${parent.width}"
 		    text="${gApp._('Popularity:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		/>
 	    </view>
@@ -347,12 +371,15 @@
 		    width="${parent.width}"
 		    text="${gApp._('Problems:')}"
 		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		/>
 		<text name="t"
 		    x="${classroot.indent}"
 		    width="${parent.width - this.x}"
 		    text=""
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		/>
 	    </view>

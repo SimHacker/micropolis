@@ -1,0 +1,30 @@
+<library>
+
+
+    <!-- tab button -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <class name="tabbutton" extends="button"
+	height="25"
+	opacity="${(parent.classroot.subControlPanelName != this.panelName) ? 0.3 : 1.0}"
+    >
+
+
+        <attribute name="panelName" type="string" value=""/>
+
+
+	<handler name="onclick"><![CDATA[
+	    parent.classroot.setAttribute(
+		"subControlPanelName",
+		(parent.classroot.subControlPanelName == this.panelName) ? "" : this.panelName);
+	  ]]>
+	</handler>
+
+
+    </class>
+
+
+</library>

@@ -498,24 +498,40 @@
 	    opacity="0.5"
 	/>
 
+	<view
+	    x="${parent.toolNameText.x}"
+	    y="${parent.toolNameText.y}"
+	    width="${parent.toolNameText.width}"
+	    height="${parent.toolNameText.height}"
+	    opacity="0.5"
+	    bgcolor="0x000000"
+	/>
+
 	<text name="toolNameText"
 	    x="${(parent.width - this.width) / 2}"
 	    y="${-this.height - parent.margin}"
-	    bgcolor="0xffffff"
-	    fgcolor="0x000000"
+	    fgcolor="0xffffff"
 	    fontsize="18"
 	    fontstyle="bold"
 	    resize="true"
 	    text="${classroot.toolName}"
 	/>
 
-	<text name="tooDescriptionText"
+	<view
+	    x="${parent.toolDescriptionText.x}"
+	    y="${parent.toolDescriptionText.y}"
+	    width="${parent.toolDescriptionText.width}"
+	    height="${parent.toolDescriptionText.height}"
+	    opacity="0.5"
+	    bgcolor="0x000000"
+	/>
+
+	<text name="toolDescriptionText"
 	    x="${(parent.width - this.width) / 2}"
 	    y="${parent.height + parent.margin}"
 	    width="${classroot.toolDescriptionWidth}"
 	    multiline="true"
-	    bgcolor="0xffffff"
-	    fgcolor="0x000000"
+	    fgcolor="0xffffff"
 	    fontsize="18"
 	    fontstyle="bold"
 	    text="${classroot.description}"

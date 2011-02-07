@@ -1,0 +1,147 @@
+Facebook Integration
+
+  Facebook User Identity
+  City Preview
+  Friend Participation
+
+User Interface
+
+  Choose City Dialog
+
+  Move City Map.
+  Move Play Button.
+  Move City Description.
+  Move Scenarios Tab
+  Move Generator Tab
+  Move Library Tab
+    Rearrange to fit better on page.
+
+  Log In Tab
+    Remove. No longer needed with Facebook user support.
+
+  Add Control Bar
+    Add a toolbar of commands and window toggles at the bottom of the editor.
+
+  Tool Palette
+    Integrate with toolbar at bottom of editor window.
+
+  Demand gauge.
+    Integrate with toolbar at bottom of editor window.
+
+  Date and Funds.
+    Integrate with toolbar at bottom of editor window.
+
+  Notice Tab
+  Journal Tab
+
+    Make into an overlay at the top edge of the editor.
+    Make into a window that slides on and off of the bottom of the editor.
+    Or combine the notice and journal into a "city wall", modeled on a Facebook page.
+
+      Some events can have a "share on my wall" button to publish them
+      to Facebook. 
+
+      Some events invite interaction, serve as learning opportunities,
+      goals or quests that invite you and your friends to participate
+      by following links, answering questions, voting on issues, even
+      if the haven't added the application.
+
+      An event can pose a problem, and let you write a question and
+      ask your friends for advice and support.
+
+      An event can write a snapshot of the city, and invite your
+      friends to play a copy of the city from that point in time. You
+      and your friends can compete to solve the problem posed by the
+      event. (i.e. nuclear meltdown, earthquake, policy change, moral
+      delima, etc)
+
+      Deeply integrated chat. Real time chat with friends playing the
+      game. Chat with NPC bots who play various roles: help and
+      tutorial about playing the game, knowledge about cities and
+      other topics, teachers and experts about various topics, bankers
+      to borrow money from, etc. Integrate with ALICE and Facebook
+      chat.
+
+  Evaluation Tab
+    Make into a window that slides on and off the side of the editor.
+
+  History Tab
+    Make into a window that slides on and off the side of the editor.
+
+  Budget Tab
+    Make into a window that slides on and off the side of the editor.
+
+  Overlays Tab
+    Make into a window that slides on and off the side of the map.
+
+  Disasters Tab
+    Make into a window that slides on and off the side fo the editor.
+
+  Control Tab
+    Make into a window that slides on and off the side fo the editor.
+
+  Log In Tab
+    Remove. No longer needed with Facebook user support.
+
+------------------------------------------------------------------------
+
+Design and implement a configuration system, to configure the
+application at run-time by downloading an xml file.
+
+------------------------------------------------------------------------
+
+classes/remoteconnection.lzx
+
+  Implement dhtml remote connection using json gateway.
+
+  Make these reconfigurable parameters:
+    url http:/server/amfGateway
+    connectionTimeout 10000
+    pollTimeout 20000
+
+------------------------------------------------------------------------
+
+classes/appview.lzx
+
+  Make these reconfigurable parameters:
+    pollDelay 250
+    pollDelaySoon 10
+    animateDelay 100
+    newTilesPerTick 300
+    chatChannel all
+    aboutURL /wiki/index.php/About (localized)
+    aboutTarget _blank
+    helpURL /wiki/index.php/Help (localized)
+    helpTarget _blank
+
+  Fix sounds to use different channels: city, gui, music, etc.
+  Enable user to mute various channels.
+
+  Remove user login, new account, user edit stuff.
+  Implement general purpose user data loading and saving.
+    Store json in database.
+
+------------------------------------------------------------------------
+
+classes/noticeview.lzx
+
+  Make notices more data driven, less hard wired to old notice numbers
+  and configurations. Factor out scenario descriptions to a separate 
+  type of extensible plug-in.
+
+------------------------------------------------------------------------
+
+classes/mytooltip.lzx
+
+  Should not pop up until you hover for a certain amount of time.
+  Should go away when you move the cursor a certain amount of distance, or click.
+  Fix the location it pops up for tool icons at the bottom edge of the map.
+
+------------------------------------------------------------------------
+
+Resources
+
+resources/images/tool_stadium.png
+  Icon is highlighted, but should be dark.
+
+------------------------------------------------------------------------

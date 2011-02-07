@@ -34,7 +34,7 @@
         <attribute name="tileDictRows" value="null"/>
         <attribute name="codeString" type="string" value="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-"/>
         <attribute name="codeMap" value="null"/>
-        <attribute name="newTilesMax" value="300"/>
+        <attribute name="newTilesPerTick" value="300"/>
         <attribute name="newTiles" value="0"/>
         <attribute name="quaking" value="0"/>
         <attribute name="tool" type="string" value="bulldozer"/>
@@ -42,23 +42,11 @@
         <attribute name="connecting" value="false"/>
         <attribute name="connectionFailed" value="false"/>
         <attribute name="sessionID" value="null"/>
-        <attribute name="userName" type="string" value=""/>
-        <attribute name="fullName" type="string" value=""/>
-        <attribute name="emailAddress" type="string" value=""/>
         <attribute name="savedCities" value="$once{[]}"/>
         <attribute name="savedCitiesSort" type="string" value="title"/>
         <attribute name="savedCitiesDirection" value="1"/>
         <attribute name="savedCity" value="null"/>
         <attribute name="savedCityCount" value="0"/>
-        <attribute name="passwordOld" type="string" value=""/>
-        <attribute name="password1" type="string" value=""/>
-        <attribute name="password2" type="string" value=""/>
-        <attribute name="loggedIn" value="false"/>
-        <attribute name="loginFeedback" type="string" value=""/>
-        <attribute name="loggingIn" value="false"/>
-        <attribute name="loggingOut" value="false"/>
-        <attribute name="makingNewAccount" value="false"/>
-        <attribute name="user" value="null"/>
         <attribute name="title" type="string" value=""/>
         <attribute name="description" type="string" value=""/>
         <attribute name="shared" value="false"/>
@@ -102,6 +90,15 @@
         <attribute name="cityID" type="string" value=""/>
         <attribute name="historySerial" value="0"/>
         <attribute name="currentRobot" value="null"/>
+
+	<!-- These URLs (but not targets) are actually symbols that get localized. Maybe rename them something more abstract. -->
+        <attribute name="aboutURL" type="string" value="/wiki/index.php/About"/>
+        <attribute name="helpURL" type="string" value="/wiki/index.php/Help"/>
+
+        <attribute name="aboutTarget" type="string" value="_blank"/>
+        <attribute name="helpTarget" type="string" value="_blank"/>
+
+	<!-- These are symbols that are localized by the code that displays them. -->
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -332,30 +329,6 @@
         </method>
 
 
-        <method name="setFullName" args="fullName"><![CDATA[
-            this.setAttribute("fullName", fullName);
-            if (this.loggedIn) {
-                this.sendMessage({
-                    message: 'setUserFullName',
-                    fullName: this.fullName
-                });
-            }
-          ]]>
-        </method>
-
-
-        <method name="setEmailAddress" args="emailAddress"><![CDATA[
-            this.setAttribute("emailAddress", emailAddress);
-            if (this.loggedIn) {
-                this.sendMessage({
-                    message: 'setUserEmailAddress',
-                    emailAddress: this.emailAddress
-                });
-            }
-          ]]>
-        </method>
-
-
         <method name="findSavedCity" args="cookie"><![CDATA[
             var savedCities = this.savedCities;
             var n = savedCities.length;
@@ -372,8 +345,7 @@
 
         <method name="setMyCityProperty" args="message, property, value"><![CDATA[
 	    Debug.write("setMyCityProperty", message, property, value);
-            if (this.loggedIn &&
-                this.citySource == "mycity") {
+            if (this.citySource == "mycity") {
                 var savedCity = this.findSavedCity(this.cityID);
                 if (!savedCity) {
                     Debug.write("Can't find saved city cookie", cityID);
@@ -422,8 +394,7 @@
 
         <method name="deleteMyCity" args=""><![CDATA[
             Debug.write("DELETEMYCITY", this.cityID);
-            if (this.loggedIn &&
-                this.citySource == "mycity") {
+            if (this.citySource == "mycity") {
                 var cookie = this.cityID;
                 var savedCities = this.savedCities;
                 var savedCitiesNew = [];
@@ -697,7 +668,7 @@
         <method name="handleUpdate_tiles" args="args"><![CDATA[
             var view = args['view'];
             var id = view['id'];
-            var tv = this.objectIDs[id];
+            //var tv = this.objectIDs[id];
             var col = view['col'];
             var row = view['row'];
             var cols = view['cols'];
@@ -787,9 +758,9 @@
             this.setAttribute("connecting", false);
             this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", sessionID);
+
             this.pollStart();
             this.animateStart();
-
             this.updateMap();
 
             //Debug.write("SENDING SETLANGUAGE", gStrings.language);
@@ -802,15 +773,12 @@
 
 
         <method name="endSession"><![CDATA[
-            this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
             this.setAttribute("connectionFailed", false);
             this.setAttribute("sessionID", null);
-            this.setAttribute("loggingIn", false);
-            this.setAttribute("loggingOut", false);
-            this.setAttribute("makingNewAccount", false);
+
             this.pollStop();
             this.animateStop();
           ]]>
@@ -818,12 +786,12 @@
 
 
         <method name="failSession"><![CDATA[
-            this.setAttribute("loggedIn", false);
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", false);
             this.setAttribute("connectionFailed", true);
             this.setAttribute("sessionID", null);
+
             this.pollStop();
             this.animateStop();
           ]]>
@@ -1122,8 +1090,13 @@
             });
 
             var soundName;
+	    var playedSounds = {};
             for (soundName in this.soundsToPlay) {
-                lz.AudioService.LzAudio.playSound(soundName);
+	        if (playedSounds[soundName]) {
+		    continue;
+		}
+		lz.AudioService.LzAudio.playSound(soundName);
+		playedSounds[soundName] = true;
             }
             this.soundsToPlay = {};
 
@@ -1304,17 +1277,17 @@
                         var tileIndex =
                             (codeMap[high] * 64) + codeMap[low];
 
-                        var c = tileOffset % cols;
-                        var r = Math.floor(tileOffset / cols);
+                        var c = col + (tileOffset % cols);
+                        var r = row + Math.floor(tileOffset / cols);
 
-                        var tileDictRow = tileDictRows[row + r];
-                        var tileDict = tileDictRow[col + c];
+                        var tileDictRow = tileDictRows[r];
+                        var tileDict = tileDictRow[c];
 
                         if (!tileDict) {
                             tileDict = {
                                 'animationTicks': -1
                             };
-                            tileDictRow[col + c] = tileDict;
+                            tileDictRow[c] = tileDict;
                         }
 
                         tileDict['index'] =
@@ -1374,17 +1347,17 @@
                         var tileIndex =
                             (high * 256) + low;
 
-                        var c = tileOffset % cols;
-                        var r = Math.floor(tileOffset / cols);
+                        var c = col + (tileOffset % cols);
+                        var r = row + Math.floor(tileOffset / cols);
 
-                        var tileDictRow = tileDictRows[row + r];
-                        var tileDict = tileDictRow[col + c];
+                        var tileDictRow = tileDictRows[r];
+                        var tileDict = tileDictRow[c];
 
                         if (!tileDict) {
                             tileDict = {
                                 'animationTicks': -1
                             };
-                            tileDictRow[col + c] = tileDict;
+                            tileDictRow[c] = tileDict;
                         }
 
                         tileDict['index'] =
@@ -1431,80 +1404,6 @@
         </method>
 
 
-        <method name="login"><![CDATA[
-            //Debug.write("login");
-
-            this.setAttribute("loggingIn", true);
-            this.sendMessage({
-                message: 'login',
-                userName: this.userName,
-                password: this.password1
-            });
-
-          ]]>
-        </method>
-
-
-        <method name="logout"><![CDATA[
-            //Debug.write("logout");
-            this.setAttribute("loggingOut", true);
-            this.setAttribute("loggedOut", true); // Give the benefit of the doubt.
-            this.sendMessage({
-                message: 'logout'
-            });
-          ]]>
-        </method>
-
-
-        <method name="newAccount"><![CDATA[
-            if (this.makingNewAccount) {
-                Debug.write("appview newAccount: Already making new account.");
-                return;
-            }
-
-            this.setAttribute("makingNewAccount", true);
-
-            this.sendMessage({
-                message: 'newAccount',
-                userName: this.userName,
-                password1: this.password1,
-                password2: this.password2,
-                fullName: this.fullName,
-                emailAddress: this.emailAddress
-            });
-
-            //Debug.write("newAccount");
-          ]]>
-        </method>
-
-
-        <method name="changePassword"><![CDATA[
-            //Debug.write("changePassword");
-            if (this.loggedIn) {
-                gChangePasswordDialog.open();
-            }
-          ]]>
-        </method>
-
-
-        <method name="tryChangePassword" args="passwordOld, password1, password2"><![CDATA[
-            //Debug.write("tryChangePassword");
-            if (this.loggedIn) {
-                this.sendMessage({
-                    message: 'changePassword',
-                    userName: this.userName,
-                    passwordOld: passwordOld,
-                    password1: password1,
-                    password2: password2
-                });
-                return true;
-            } else {
-                return false;
-            }
-          ]]>
-        </method>
-
-
         <method name="abandonCity"><![CDATA[
             //Debug.write("abandonCity");
             this.sendMessage({
@@ -1516,18 +1415,15 @@
 
         <method name="trySaveCity"><![CDATA[
             //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-            if (this.loggedIn) {
-                this.sendMessage({
-                    message: 'saveCity',
-                    source: this.citySource,
-                    cookie: this.cityID,
-                    title: this.title,
-                    description: this.description
-                });
-                return true;
-            } else {
-                return false;
-            }
+	    this.sendMessage({
+		message: 'saveCity',
+		source: this.citySource,
+		cookie: this.cityID,
+		title: this.title,
+		description: this.description
+	    });
+	    // Always succeeds now.
+	    return true;
           ]]>
         </method>
 
@@ -1535,8 +1431,7 @@
         <method name="saveCity"><![CDATA[
             Debug.write("saveCity");
             if (!this.trySaveCity()) {
-                this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
-                gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
+	        // Could not save city. (Never happens any more.)
             }
           ]]>
         </method>
@@ -1544,18 +1439,15 @@
 
         <method name="tryCheckPointCity"><![CDATA[
             //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-            if (this.loggedIn) {
-                this.sendMessage({
-                    message: 'checkPointCity',
-                    source: this.citySource,
-                    cookie: this.cityID,
-                    title: this.title,
-                    description: this.description
-                });
-                return true;
-            } else {
-                return false;
-            }
+	    this.sendMessage({
+		message: 'checkPointCity',
+		source: this.citySource,
+		cookie: this.cityID,
+		title: this.title,
+		description: this.description
+	    });
+	    // Always succeeds now.
+	    return true;
           ]]>
         </method>
 
@@ -1563,8 +1455,7 @@
         <method name="checkPointCity"><![CDATA[
             Debug.write("checkPointCity");
             if (!this.tryCheckPointCity()) {
-                this.setAttribute("loginFeedback", _("Please log in or create an account in order to save your city."));
-                gPlayTabUser.tab.parent.select(gPlayTabUser.tab);
+	        // Could not checkpoint city. (Never happens any more.)
             }
           ]]>
         </method>
@@ -1579,16 +1470,16 @@
 
         <method name="about"><![CDATA[
             lz.Browser.loadURL(
-                gApp._('/wiki/index.php/About'),
-                '_blank');
+                gApp._(this.aboutURL),
+                this.aboutTarget);
           ]]>
         </method>
 
 
         <method name="help"><![CDATA[
             lz.Browser.loadURL(
-                gApp._('/wiki/index.php/Help'),
-                '_blank');
+                gApp._(this.helpURL),
+                this.helpTarget);
           ]]>
         </method>
 
@@ -1615,7 +1506,7 @@
                 '</b>' +
                 this.escapeHTML(text);
             //Debug.write("CHATMESSAGE", html);
-            gJournalView.addMessage(html);
+            gWallView.addMessage(html);
           ]]>
         </method>
 
@@ -1721,76 +1612,6 @@
 
         <method name="handle_didTool" args="args"><![CDATA[
             //Debug.write("didTool", args);
-          ]]>
-        </method>
-
-
-        <method name="handle_newAccountResponse" args="args"><![CDATA[
-            //Debug.write("newAccoutResponse", args);
-            var success = args['success'];
-            var feedback = args['feedback'];
-            if (success) {
-                this.setAttribute("loggedIn", true);
-                this.setAttribute("fullName", "");
-                this.setAttribute("emailAddress", "");
-                this.setAttribute("savedCities", []);
-                this.setAttribute("passwordOld", "");
-                this.setAttribute("password1", "");
-                this.setAttribute("password2", "");
-            }
-            this.setAttribute("loginFeedback", gApp._(feedback)); /// @bug This gets stomped.
-            this.setAttribute("makingNewAccount", false);
-          ]]>
-        </method>
-
-
-        <method name="handle_loginResponse" args="args"><![CDATA[
-            //Debug.write("loginResponse", args);
-            var success = args['success'];
-            var feedback = args['feedback'];
-            if (success) {
-                this.setAttribute("loggedIn", true);
-                this.setAttribute("fullName", args['fullName']);
-                this.setAttribute("emailAddress", args['emailAddress']);
-                this.setAttribute("savedCities", args['savedCities']);
-                this.setAttribute("passwordOld", "");
-                this.setAttribute("password1", "");
-                this.setAttribute("password2", "");
-            } else {
-                this.setAttribute("savedCities", []);
-            }
-            this.setAttribute("loginFeedback", gApp._(feedback));
-            this.setAttribute("loggingIn", false);
-          ]]>
-        </method>
-
-
-        <method name="handle_logoutResponse" args="args"><![CDATA[
-            //Debug.write("logoutResponse", args);
-            var success = args['success'];
-            var feedback = args['feedback'];
-            if (success) {
-                this.setAttribute("userName", "");
-                this.setAttribute("passwordOld", "");
-                this.setAttribute("password1", "");
-                this.setAttribute("password2", "");
-                this.setAttribute("fullName", "");
-                this.setAttribute("emailAddress", "");
-                this.setAttribute("savedCities", []);
-                this.setAttribute("loggedIn", false);
-            }
-            this.setAttribute("loginFeedback", gApp._(feedback));
-            this.setAttribute("loggingOut", false);
-          ]]>
-        </method>
-
-
-        <method name="handle_changePasswordResponse" args="args"><![CDATA[
-            //Debug.write("changePasswordResponse", args);
-            var success = args['success'];
-            var feedback = args['feedback'];
-            gChangePasswordDialog.close();
-            this.setAttribute("loginFeedback", gApp._(feedback));
           ]]>
         </method>
 

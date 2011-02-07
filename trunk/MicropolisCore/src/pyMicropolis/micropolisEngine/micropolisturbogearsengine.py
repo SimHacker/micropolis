@@ -96,8 +96,6 @@ import micropoliszone
 # Globals
 
 
-UserNameExp = re.compile('^[a-zA-Z0-9_-]+$')
-
 MicropolisCorePath = 'micropolis/MicropolisCore/src'
 
 MicropolisTilesPath = 'micropolis/htdocs/static/images/micropolis_tiles.png'
@@ -421,6 +419,7 @@ class Session(object):
 
     def isMessageQueued(self, message, id=None, variable=None):
         return (message, variable, id) in self.messagesSeen
+
 
     def sendMessage(self, msg):
         #print "SENDMESSAGE", msg['message'], msg.get('variable', '-'), msg
@@ -792,7 +791,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 city = model.City.query.filter_by(cookie=cookie).first()
                 if ((not city) or
                     (city.user_id != user.user_id)):
-		    print "handleMessage_startGame: User tried to start city they do not own", user, city
+		    print "handleMessage_startGame: User tried to start city they do not own", user, city, cookie
                     return
                 print "USING EXISTING CITY cookie", city.cookie
                 city.title = title
@@ -1357,147 +1356,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 	    session.sendMessage(msg)
 
 
-    def handleMessage_login(self, session, messageDict, user):
-	#print "login", messageDict
-
-	success = True
-	feedback = ''
-
-	userName = messageDict['userName']
-	password = messageDict['password']
-	passwordEncrypted = identity.encrypt_password(password)
-	fullName = ''
-	emailAddress = ''
-	savedCities = []
-
-	user = model.User.by_user_name(unicode(userName))
-	#print "USER", user, userName
-	if user and user.password == passwordEncrypted:
-	    success = True
-	    feedback = 'You are logged in.*' # TRANSLATE
-	    fullName = user.display_name
-	    emailAddress = user.email_address
-	    session.userName = user.user_name
-	    savedCities = user.getSavedCities(session)
-	else:
-	    success = False
-	    feedback = 'Incorrect user name or password.' # TRANSLATE
-	    session.userName = None
-
-	session.sendMessage({
-	    'message': 'loginResponse',
-	    'success': success,
-	    'feedback': feedback,
-	    'fullName': fullName,
-	    'emailAddress': emailAddress,
-	    'savedCities': savedCities,
-	})
-
-
-    def handleMessage_logout(self, session, messageDict, user):
-	#print "logout", messageDict, "USER", user, "name", session.userName
-
-	loggedIn = user != None
-	if not loggedIn:
-	    success = False
-	    feedback = 'You are already logged out,*' # TRANSLATE
-	else:
-	    session.userName = None
-	    success = True
-	    feedback = 'You are logged out.*' # TRANSLATE
-
-	session.sendMessage({
-	    'message': 'logoutResponse',
-	    'success': success,
-	    'feedback': feedback,
-	})
-
-
-    def handleMessage_newAccount(self, session, messageDict, user):
-	#print "newAccount", messageDict
-
-	success = False
-	feedback = ''
-
-	userName = messageDict['userName']
-	password1 = messageDict['password1']
-	password2 = messageDict['password2']
-	fullName = messageDict['fullName']
-	emailAddress = messageDict['emailAddress']
-
-	if userName == '':
-	    feedback = 'Please enter a user name.' # TRANSLATE
-	elif not self.checkUserName(userName):
-	    feedback = 'The user name contains invalid characters.*' # TRANSLATE
-	elif password1 == '':
-	    feedback = 'Please enter a password.' # TRANSLATE
-	elif model.User.by_user_name(unicode(userName)):
-	    feedback = 'A user of that name already exists.*' # TRANSLATE
-	elif password1 != password2:
-	    feedback = 'Please repeat the same password in the next field.' # TRANSLATE
-	else:
-	    user = model.User()
-	    user.user_name = unicode(userName)
-	    user.email_address = unicode(emailAddress)
-	    user.display_name = unicode(fullName)
-	    registeredGroup = model.Group.by_name(u'registered')
-	    user.groups.append(registeredGroup)
-	    user.password = unicode(password1)
-	    user.created = datetime.now()
-	    user.activity = datetime.now()
-	    success = True
-	    feedback = 'A new account has been created*' # TRANSLATE
-	    session.userName = user.user_name
-
-	session.sendMessage({
-	    'message': 'newAccountResponse',
-	    'success': success,
-	    'feedback': feedback,
-	})
-
-
-    def handleMessage_changePassword(self, session, messageDict, user):
-	passwordOld = messageDict['passwordOld']
-	passwordOldEncrypted = identity.encrypt_password(passwordOld)
-	password1 = messageDict['password1']
-	password2 = messageDict['password2']
-	feedback = ''
-	success = False
-
-	if not user:
-	    feedback = 'You are not logged in.'
-	elif passwordOldEncrypted != user.password:
-	    feedback = 'Incorrect old password.'
-	elif (not password1) or (not password2):
-	    feedback = 'You must enter your new password twice.'
-	elif password1 != password2:
-	    feedback = 'The new passwords do not match.'
-	else:
-	    user.password = unicode(password1)
-	    feedback = 'Your password has been changed.'
-	    success = True
-
-	session.sendMessage({
-	    'message': 'changePasswordResponse',
-	    'success': success,
-	    'feedback': feedback,
-	})
-
-
-    def handleMessage_setUserFullName(self, session, messageDict, user):
-	#print "SETUSERFULLNAME", messageDict, user
-	if user:
-	    fullName = messageDict['fullName']
-	    user.display_name = unicode(fullName)
-
-
-    def handleMessage_setUserEmailAddress(self, session, messageDict, user):
-	#print "SETUSEREMAILADDRESS", messageDict, user
-	if user:
-	    emailAddress = messageDict['emailAddress']
-	    user.email_address = emailAddress
-
-
     def handleMessage_setLanguage(self, session, messageDict, user):
 	#print "SETLANGUAGE", messageDict
 	session.language = messageDict['language']
@@ -1622,12 +1480,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         #print "generateCity"
         self.generateSomeCity(seed)
-
-
-    def checkUserName(self, userName):
-        match = UserNameExp.match(userName)
-        #print "CHECKUSERNAME", userName, match
-        return match
 
 
     def setGameMode(self, gameMode, user):

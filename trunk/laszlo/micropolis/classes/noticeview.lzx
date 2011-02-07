@@ -9,6 +9,7 @@
 
     <class name="noticeview"
         clip="true"
+	height="${Math.max(this.textView.height, this.mapWidth + (2 * this.gap))}"
     >
 
 
@@ -25,10 +26,12 @@
         <attribute name="showMap" value="false"/>
 	<attribute name="gap" value="5" type="number"/>
 	<attribute name="mapWidth" value="150" type="number"/>
-	<attribute name="textWidth" value="${
-	    this.width - 
-	    (this.showMap ? (this.mapWidth + this.gap) : 0) -
+	<attribute name="textX" value="${
+	    (this.showMap ? (this.mapWidth + this.gap) : 0) +
 	    (this.showPicture ? (this.pictureView.width + this.gap) : 0)
+	 }"/>
+	<attribute name="textWidth" value="${
+	    this.width - this.textX
 	 }"/>
 
 
@@ -127,77 +130,82 @@
 	</method>
 
 
-	<view name="scrollingView"
-	    x="0"
+	<view name="textView"
+	    x="${classroot.textX}"
 	    y="0"
 	    width="${classroot.textWidth}"
-	    height="${parent.height - this.y}"
 	    clip="true"
+	    height="${this.bottomView.y}"
 	>
 
-	    <view
-	        width="${parent.width - parent.sb.width - classroot.gap}"
+	    <simplelayout
+		axis="y"
+		inset="5"
+		spacing="${classroot.gap}"
+	    />
+
+	    <text name="titleText"
+		x="5"
+		width="${parent.width - (classroot.gap * 2)}"
+		fontsize="20"
+		fontstyle="bold"
+		multiline="true"
+		fgcolor="0xffffff"
+		text="${classroot.title}"
+	    />
+
+	    <text name="descriptionText"
+		x="5"
+		width="${parent.width - (classroot.gap * 2)}"
+		multiline="true"
+		fontsize="14"
+		fontstyle="bold"
+		fgcolor="0xffffff"
+		text="${classroot.description}"
+	    />
+
+	    <view name="buttonsView"
+		x="5"
+		width="${parent.width - (classroot.gap * 2)}"
 	    >
 
-	        <simplelayout
-		    axis="y"
+		<wrappinglayout
+		    axis="x"
 		    spacing="${classroot.gap}"
 		/>
 
-		<text name="titleText"
-		    x="0"
-		    y="0"
-		    width="${parent.width}"
-		    fontsize="20"
-		    fontstyle="bold"
-		    multiline="true"
-		    text="${classroot.title}"
-		/>
-
-		<text name="descriptionText"
-		    x="0"
-		    y="${parent.titleText.y + parent.titleText.height + classroot.gap}"
-		    width="${parent.width}"
-		    multiline="true"
-		    fontsize="14"
-		    text="${classroot.description}"
-		/>
-
-		<view name="buttonsView"
-		    x="0"
-		    y="${parent.descriptionText.y + parent.descriptionText.height + classroot.gap}"
-		    width="${parent.width}"
+		<button
+		    visible="${(classroot.url != null) &amp;&amp;
+			       (classroot.url != '')}"
+		    text="${gApp._('Learn More')}"
 		>
 
-		    <wrappinglayout
-			axis="x"
-			spacing="${classroot.gap}"
-		    />
+		    <handler name="onclick"><![CDATA[
+			Debug.write("ONCLICK", this, classroot.url);
+			lz.Browser.loadURL(classroot.url, '_blank');
+		      ]]>
+		    </handler>
 
-		    <button
-			visible="${(classroot.url != null) &amp;&amp;
-				   (classroot.url != '')}"
-			text="${gApp._('Learn More')}"
-		    >
-
-			<handler name="onclick"><![CDATA[
-			    Debug.write("ONCLICK", this, classroot.url);
-			    lz.Browser.loadURL(classroot.url, '_blank');
-			  ]]>
-			</handler>
-
-		    </button>
-
-		</view>
+		</button>
 
 	    </view>
 
-	    <vscrollbar name="sb"/>
+	    <view name="bottomView"/>
 
 	</view>
 
+	<noticetileview name="noticeTileView" id="gNoticeTileView"
+	    x="0"
+	    y="0"
+	    width="${classroot.mapWidth}"
+	    height="${Math.max(parent.height - this.y, classroot.mapWidth)}"
+	    visible="${classroot.showMap}"
+	    bgcolor="0xBC6F56"
+	    active="${classroot.active}"
+	/>
+
 	<view name="pictureView"
-	    x="${parent.width - (classroot.showMap ? (classroot.mapWidth + classroot.gap) : 0) - this.width}"
+	    x="${classroot.showMap ? (parent.noticeTileView.x + parent.noticeTileView.width + classroot.gap) : 0}"
 	    y="0"
 	    bgcolor="0x0000ff"
 	    visible="${classroot.showPicture}"
@@ -206,7 +214,7 @@
 	    <handler name="onpicture" reference="classroot"><![CDATA[
 	        var picture = parent['picture'];
 		if (picture && (picture != "")) {
-		    this.setAttribute("source", picture);
+		    this.setAttribute("resource", picture);
 		} else {
 		    this.unload();
 		}
@@ -214,16 +222,6 @@
 	    </handler>
 
 	</view>
-
-	<noticetileview name="noticeTileView" id="gNoticeTileView"
-	    x="${parent.width - this.width}"
-	    y="0"
-	    width="${classroot.mapWidth}"
-	    height="${Math.max(parent.height - this.y, 0)}"
-	    visible="${classroot.showMap}"
-	    bgcolor="0xBC6F56"
-	    active="${classroot.active}"
-	/>
 
     </class>
 

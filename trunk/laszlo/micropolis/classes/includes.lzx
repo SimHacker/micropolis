@@ -37,8 +37,7 @@
     <include href="noticetileview.lzx"/>
     <include href="demandgauge.lzx"/>
     <include href="datefundsview.lzx"/>
-    <include href="statusview.lzx"/>
-    <include href="nicetabpane.lzx"/>
+    <include href="tabbutton.lzx"/>
     <include href="toolicon.lzx"/>
     <include href="toolpalette.lzx"/>
     <include href="scenariosview.lzx"/>
@@ -56,15 +55,13 @@
     <include href="noticeview.lzx"/>
     <include href="overlaysview.lzx"/>
     <include href="disastersview.lzx"/>
-    <include href="journalview.lzx"/>
+    <include href="wallview.lzx"/>
     <include href="connectscreen.lzx"/>
     <include href="startscreen.lzx"/>
     <include href="playscreen.lzx"/>
-    <include href="userview.lzx"/>
     <include href="anitiles.lzx"/>
     <include href="appview.lzx"/>
     <include href="questiondialog.lzx"/>
-    <include href="changepassworddialog.lzx"/>
     <include href="dialogs.lzx"/>
 
 

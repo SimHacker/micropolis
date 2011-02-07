@@ -11,8 +11,8 @@
         clip="true"
 	frame="${this.hilite ? 2 : 1}"
 	stretches="both"
-	width="48"
-	height="48"
+	width="32"
+	height="32"
     >
 
 
@@ -29,7 +29,7 @@
 	        this.title + 
 		':\n' + 
 		this.description;
-	    gToolTip.enterView(this, tip, 'right');
+	    gToolTip.enterView(this, tip, 'down');
 	  ]]>
 	</handler>
 

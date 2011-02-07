@@ -10,46 +10,108 @@
 
 
 import re, os, sys, zipfile, time, math, tempfile, array, random
-import types, urllib, code, traceback, signal
-import turbogears as tg
-from turbogears import controllers, scheduler, identity, redirect
-from turbogears import validate, validators, expose, flash
-from turbogears.controllers import url
-from micropolis import model, json
-from model import *
-import cherrypy
-from cherrypy import request, response
-import genshi
-from genshi import XML
-import xml.etree.ElementTree as ElementTree
-#import xml.etree.cElementTree as ElementTree
-import xml.dom.minidom
+import types, urllib, urllib2, code, traceback, signal
+import base64, hmac, hashlib, simplejson
 from StringIO import StringIO
 import pyamf
 from pyamf import remoting, amf0, amf3
 from pyamf.remoting import gateway
+import xml.dom.minidom
+import xml.etree.ElementTree as ElementTree
+import cairo, pango
+import genshi
+from genshi import XML
+
+import cherrypy
+from cherrypy import request, response
+
+import turbogears as tg
+from turbogears import controllers, scheduler, identity, redirect
+from turbogears import validate, validators, expose, flash, config
+from turbogears.controllers import url
+from micropolis import model
+from model import *
+
+#import xml.etree.cElementTree as ElementTree
 from pyMicropolis.micropolisEngine.xmlutilities import *
+
+from pyMicropolis.micropolisEngine import micropolisengine, micropolisturbogearsengine
+from pyMicropolis.tileEngine import tileengine
 
 import logging
 log = logging.getLogger("micropolis.controllers")
-
-import cairo, pango
-from pyMicropolis.micropolisEngine import micropolisengine, micropolisturbogearsengine
-from pyMicropolis.tileEngine import tileengine
 
 
 ########################################################################
 # Globals
 
 
-DefaultLanguage = 'en-US'
-DataDir = 'micropolis/htdocs/static/data'
-LocalServerRoot = 'http://127.0.0.1:8082'
+DefaultLanguage = config.get('micropolis.default_language', 'en-US')
+DataDir = config.get('micropolis.data_dir', 'micropolis/htdocs/static/data')
+LocalServerRoot = config.get('micropolis.local_server_root', 'http://127.0.0.1:8082')
+
+FacebookCanvasName = config.get('micropolis.facebook_canvas_name', 'XXX')
+FacebookAppID = config.get('micropolis.facebook_app_id', 'XXX')
+FacebookAppSecret = config.get('micropolis.facebook_app_secret', 'XXX')
+FacebookPermissions = config.get('micropolis.facebook_permissions', 'XXX')
 
 
 ########################################################################
 # Utilities
 
+
+def Base64URLDecode(data):
+    data = data.encode(u'ascii')
+    data += '=' * (4 - (len(data) % 4))
+    return base64.urlsafe_b64decode(data)
+
+
+def Base64URLEncode(data):
+    return base64.urlsafe_b64encode(data).rstrip('=')
+
+
+def FacebookAPI(path, params=None, method=u'GET', domain=u'graph', access_token=None):
+    if not params:
+        params = {}
+    params[u'method'] = method
+    if u'access_token' not in params and access_token:
+        params[u'access_token'] = access_token
+    data = FetchURL(
+        url=u'https://' + domain + u'.facebook.com' + path,
+        payload=urllib.urlencode(params),
+        method='POST',
+        headers={
+            u'Content-Type': u'application/x-www-form-urlencoded',
+        })
+    result = simplejson.loads(data)
+    if isinstance(result, dict) and u'error' in result:
+        raise Exception(result)
+    return result
+
+
+def FetchURL(
+    url=None,
+    payload=None,
+    method=None,
+    headers=None):
+
+    #print "FETCHURL", url, payload, method, headers
+
+    req = urllib2.Request(
+        url=url,
+        data=payload)
+
+    if headers:
+        for key in headers.keys():
+            req.add_header(key, headers[key])
+
+    f = urllib2.urlopen(req)
+
+    data = f.read()
+
+    #print "RESULT:", data
+    
+    return data
 
 ########################################################################
 # Getting stack trace from a running Python application
@@ -824,5 +886,120 @@ class Root(controllers.RootController):
             'messages': messages,
         }
 
+
+    ########################################################################
+    # facebookCanvas
+    #
+    # Facebook canvas interface.
+    #
+    @expose(
+        template="micropolis.templates.facebookCanvas")
+    def facebookCanvas(
+        self,
+        *args,
+        **kw):
+        print "\nFACEBOOKCANVAS", "METHOD", request.method, "ARGS", args, "KW", kw
+
+        signed_request = None
+        signed_request_data = None
+        user_id = None
+        access_token = None
+        me = None
+        user = None
+
+        #print "COOKIE", type(cherrypy.request.simple_cookie), cherrypy.request.simple_cookie
+
+        if ((request.method == 'POST') and
+            ('signed_request' in kw)):
+
+            signed_request = kw['signed_request']
+            # TODO: set cookie
+
+        elif 'u' in cherrypy.request.simple_cookie:
+
+            signed_request = cherrypy.request.simple_cookie['u'].value
+
+        if signed_request:
+
+            sig, payload = signed_request.split(u'.', 1)
+            sig = Base64URLDecode(sig)
+            data = simplejson.loads(Base64URLDecode(payload))
+
+            expected_sig = hmac.new(
+                FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest()
+
+            # Allow the signed_request to work for up to 1 day.
+            if sig == expected_sig and data[u'issued_at'] > (time.time() - 86400):
+                signed_request_data = data
+                user_id = data.get(u'user_id')
+                access_token = data.get(u'oauth_token')
+
+                if user_id:
+                    payload = Base64URLEncode(simplejson.dumps({
+                        u'user_id': user_id,
+                        u'issued_at': str(int(time.time())),
+                    }))
+                    sig = Base64URLEncode(hmac.new(
+                        FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest())
+                    cookie = sig + '.' + payload
+                    cherrypy.response.simple_cookie['u'] = cookie
+                    cherrypy.response.simple_cookie['u']['expires'] = 1440 * 60
+                    #print "EXPIRES", cherrypy.response.simple_cookie['u']
+
+                print "signed_request_data", signed_request_data
+                print "user_id", user_id
+                print "access_token", access_token
+                print "data", data
+
+        if access_token:
+            print "Getting me..."
+            me = FacebookAPI(
+                u'/me', {
+                    u'fields': u'picture,friends',
+                    u'access_token': access_token,
+                })
+            print "Got me:", me.get('name', '???'), me.get('picture', '???')
+
+        if me and user_id:
+            user = model.User.by_uid(user_id)
+            if not user:
+                print "Unknown user", user_id
+                user = model.User(
+                    uid=user_id,
+                    user_name=str(user_id),
+                    password=micropolisturbogearsengine.UniqueID(''),
+                    created=datetime.now())
+
+            user.access_token = access_token
+            user.first_name = me.get('first_name', '')
+            user.middle_name = me.get('middle_name', '')
+            user.last_name = me.get('last_name', '')
+            user.name = me.get('name', '')
+            user.picture = me.get('picture', '')
+            user.timezone = me.get('timezone', '')
+            user.locale = me.get('locale', '')
+            user.username = me.get('username', '')
+            user.email = me.get('email', '')
+            user.third_party_id = me.get('third_party_id', '')
+            user.email = me.get('email', '')
+            user.activity = datetime.now()
+
+        debugging = 0
+        locale = 'en-US'
+
+        return {
+            'signed_request': signed_request,
+            'signed_request_data': signed_request_data,
+            'access_token': access_token,
+            'user_id': user_id,
+            'user': user,
+            'me': me,
+            'locale': locale,
+            'debugging': debugging,
+            'app_id': FacebookAppID,
+            'canvas_name': FacebookCanvasName,
+            'facebook_permissions': FacebookPermissions,
+        }
+    
 
 ########################################################################

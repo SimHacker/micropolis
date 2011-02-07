@@ -19,7 +19,8 @@
              but the DHTML runtime fires an early text onheight  event, which has the wrong value,
              so we need to use an 'always' constraint till we fix it
         -->
-        <text name="_title" x="16" y="${classroot.text_y}" text="${parent.text}" resize="true"/>
+        <text name="_titleShadow" x="17" y="${classroot.text_y + 1}" text="${parent.text}" resize="true" fontstyle="bold" fontsize="11" fgcolor="0x000000"/>
+        <text name="_title" x="16" y="${classroot.text_y}" text="${parent.text}" resize="true" fontstyle="bold" fontsize="11" fgcolor="0xffffff"/>
 
         <!--- the y position of the text label. default: centered -->
 	<!-- FIXME: [dhopkins 2009-04] This was getting an undefined error, so I put in checking for 
@@ -60,9 +61,9 @@
             // if (this.style != null) {
             if ((this.style != null) && (_title != null)) {
                 if (_enabled) {
-                    _title.setAttribute('fgcolor',s.textcolor);
+                    _title.setAttribute('fgcolor', 0xffffff);
                 } else {
-                    _title.setAttribute('fgcolor',s.textdisabledcolor);
+                    _title.setAttribute('fgcolor', 0xa0a0a0);
                 }
                 setTint(this.cb, s.basecolor);
             }

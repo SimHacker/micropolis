@@ -115,7 +115,7 @@
 
 
 	<handler name="onhistory" args="history"><![CDATA[
-	    Debug.write("historyview onhistory", this, this.history, this.inited);
+	    //Debug.write("historyview onhistory", this, this.history, this.inited);
 	    if (!this.inited) {
 	        return;
 	    }
@@ -655,7 +655,6 @@
 		<radiogroup name="timeScale"
 		    width="${parent.width}"
 		    layout="class:simplelayout; axis:y; spacing:1"
-		    bgcolor="0xffffff"
 		>
 
 

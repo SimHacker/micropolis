@@ -18,10 +18,13 @@
 	onmousedown="this.startdrag()"
 	onmouseup="this.stopdrag()"
 	onclick="this.togglepos()"
+	bgcolor="${(this.dragging || this.pointing) ? 0x808080 : 0xffffff}"
+    >
+<!-- TODO: Why is this only one pixel tall?
 	resource="ui_resizebar_v_rsrc"
 	stretches="both"
 	frame="${(this.dragging || this.pointing) ? 2 : 1}"
-    >
+-->
 
 	<attribute name="minx" value="0"/>
 	<attribute name="maxx" value="1000000"/>

@@ -29,10 +29,12 @@
 	</handler>
 
 
+<!--
 	<handler name="onheight"><![CDATA[
 	    this.v.l.update();
 	  ]]>
 	</handler>
+-->
 
 
 	<view name="v"
@@ -43,8 +45,8 @@
 
 	    <wrappinglayout name="l"
 		axis="x"
-		xspacing="10"
-		yspacing="10"
+		xspacing="5"
+		yspacing="5"
 	    />
 
 	    <view

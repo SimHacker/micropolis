@@ -1558,7 +1558,7 @@
     extends="piemenu"
     linear="1"
     backgroundResource="null"
-    backgroundColor="0x808080"
+    backgroundColor="0x000000"
   />
 
 
