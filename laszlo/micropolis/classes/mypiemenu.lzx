@@ -10,6 +10,8 @@
     <class name="mypiemenu"
         extends="piemenu"
 	backgroundOpacity="0.5"
+	backgroundColor="0x000000"
+	backgroundResource="null"
 	backgroundExtraRadius="2000"
     >
 

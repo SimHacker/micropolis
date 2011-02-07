@@ -163,6 +163,8 @@
 
 	    <text name="taxesCollectedText"
 		width="${classroot.sliderWidth}"
+		fontstyle="bold"
+		fgcolor="0xffffff"
 		text="${
 		    gApp._('Taxes Collected:') +
 		    '\n' + 
@@ -173,6 +175,8 @@
 
 	    <text name="cashFlowText"
 		width="${classroot.sliderWidth}"
+		fontstyle="bold"
+		fgcolor="0xffffff"
 		text="${
 		    gApp._('Cash Flow:') +
 		    '\n' +
@@ -183,6 +187,8 @@
 
 	    <text name="previousFundsText"
 		width="${classroot.sliderWidth}"
+		fontstyle="bold"
+		fgcolor="0xffffff"
 		text="${
 		    gApp._('Previous Funds:') +
 		    '\n' +
@@ -193,6 +199,8 @@
 
 	    <text name="currentFundsText"
 		width="${classroot.sliderWidth}"
+		fontstyle="bold"
+		fgcolor="0xffffff"
 		text="${
 		    gApp._('Current Funds:') +
 		    '\n' +
@@ -223,6 +231,8 @@
 
 		<text name="taxLabel"
 		    width="${parent.width}"
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		    text="${
 		        '\n' +
@@ -258,6 +268,8 @@
 
 		<text name="roadLabel1"
 		    width="${parent.width}"
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		    text="${
 			gApp._('Road Request:') +
@@ -295,6 +307,8 @@
 
 		<text name="fireLabel1"
 		    width="${parent.width}"
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		    text="${
 			gApp._('Fire Request:') +
@@ -332,6 +346,8 @@
 
 		<text name="policeLabel1"
 		    width="${parent.width}"
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    multiline="true"
 		    text="${
 		        gApp._('Police Request:') +

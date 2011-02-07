@@ -9,6 +9,15 @@
 # Import modules.
 
 
+import os, sys
+
+MicropolisDir = os.path.normpath(
+    os.path.join(
+        os.getcwd(),
+        '../MicropolisCore/src'))
+if MicropolisDir not in sys.path:
+    sys.path.append(MicropolisDir)
+
 from datetime import datetime
 import random
 import pkg_resources
@@ -50,12 +59,25 @@ group_table = Table('tg_group', metadata,
 
 user_table = Table('tg_user', metadata,
     Column('user_id', Integer, primary_key=True),
-    Column('user_name', Unicode(16), unique=True),
-    Column('email_address', Unicode(255), unique=True),
-    Column('display_name', Unicode(255)),
-    Column('password', Unicode(40)),
+    Column('uid', Integer, primary_key=True, unique=True),
+    Column('user_name', Unicode(255)),
+    Column('password', Unicode(255)),
     Column('created', DateTime, default=datetime.now),
-    Column('activity', DateTime, default=datetime.now)
+    Column('activity', DateTime, default=datetime.now),
+    Column('access_token', Unicode(255)),
+    Column('first_name', Unicode(255)),
+    Column('middle_name', Unicode(255)),
+    Column('last_name', Unicode(255)),
+    Column('name', Unicode(255)),
+    Column('picture', Unicode(255)),
+    Column('timezone', Unicode(255)),
+    Column('locale', Unicode(255)),
+    Column('username', Unicode(255)),
+    Column('email', Unicode(255)),
+    Column('third_party_id', Unicode(255)),
+#    Column('current_city_id', Integer, 
+#        ForeignKey('city.city_id'),
+#        primary_key=True)
 )
 
 permission_table = Table('permission', metadata,
@@ -86,8 +108,8 @@ city_table = Table('city', metadata,
     Column('city_id', Integer, primary_key=True),
     Column('cookie', String(255)), # Is a non-unique key
     Column('parent_id', Integer), # Is a non-unique key
-    Column('title', Unicode(255), unique=True),
-    Column('description', Unicode(), unique=True),
+    Column('title', Unicode(255)),
+    Column('description', Unicode(1024)),
     Column('user_id', Integer, ForeignKey('tg_user.user_id')), # Is a non-unique key
     Column('save_file', BLOB, default=None, nullable=True),
     Column('metadata', TEXT, default=None, nullable=True),
@@ -168,21 +190,21 @@ class User(object):
 
 
     @classmethod
-    def by_email_address(cls, email):
-        """
-        A class method that can be used to search users
-        based on their email addresses since it is unique.
-        """
-        return cls.query.filter_by(email_address=email).first()
-
-
-    @classmethod
     def by_user_name(cls, username):
         """
         A class method that permits to search users
         based on their user_name attribute.
         """
         return cls.query.filter_by(user_name=username).first()
+
+
+    @classmethod
+    def by_uid(cls, uid):
+        """
+        A class method that permits to search users
+        based on their uid attribute.
+        """
+        return cls.query.filter_by(uid=uid).first()
 
 
     def _set_password(self, password):

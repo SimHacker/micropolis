@@ -35,10 +35,12 @@
 	</handler>
 
 
+<!--
 	<handler name="onheight"><![CDATA[
 	    this.rg.l.update();
 	  ]]>
 	</handler>
+-->
 
 
 	<method name="setOverlayStyle" args="overlay"><![CDATA[

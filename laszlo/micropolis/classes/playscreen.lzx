@@ -14,11 +14,11 @@
 
 
 	<attribute name="active" value="true"/>
-        <attribute name="panelWidth" value="200"/>
-        <attribute name="panelResizeBarY" value="200"/>
-        <attribute name="panelResizeBarX" value="250"/>
-        <attribute name="panelResizeBarSize" value="10"/>
+        <attribute name="wallResizeBarY" value="$once{parent.height - 100}"/>
+        <attribute name="wallResizeBarX" value="250"/>
+        <attribute name="wallResizeBarSize" value="10"/>
         <attribute name="gap" value="5"/>
+	<attribute name="subControlPanelName" type="string" value=""/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -27,260 +27,334 @@
 	</handler>
 
 
-	<resizebarh name="hsep1" id="gHSep1"
-	    trackvar="'panelResizeBarY'"
+	<resizebarh name="hsep" id="gHSep"
+	    trackvar="'wallResizeBarY'"
+	    miny="0"
 	    maxy="${parent.height - this.height}"
-	    defaulty="$once{classroot.panelResizeBarY}"
+	    defaulty="$once{classroot.wallResizeBarY}"
 	    x="0"
-	    y="$once{classroot.panelResizeBarY}"
+	    y="$once{classroot.wallResizeBarY}"
 	    width="${parent.width}"
-	    height="${classroot.panelResizeBarSize}"
+	    height="${classroot.wallResizeBarSize}"
 	    overhang="0"
 	/>
 
 	
-	<view name="bottom"
+	<view name="middle"
 	    x="0"
-	    y="${parent.hsep1.y + parent.hsep1.height}"
+	    y="0"
 	    width="${parent.width}"
-	    height="${parent.height - this.y}"
+	    height="${parent.hsep.y - this.y}"
 	    clip="true"
 	>
 
-	    <view name="left"
-		x="${classroot.gap}"
-		y="${classroot.gap}"
-		width="${parent.vsep1.x - (classroot.gap * 2)}"
-		height="${parent.parent.height - (classroot.gap * 2)}"
-	    >
-
-	        <simplelayout
-		    axis="y"
-		    spacing="5"
-		/>
-		    
-		<navigationmapview name="navigationMapView" id="gNavigationMapView"
-		    width="${parent.width}"
-		    editTileView="${parent.parent.editTileView}"
-		    active="${classroot.active}"
-		    overlay="${gApp.overlay}"
-		/>
-
-		<statusview name="statusView" id="gStatusView"
-		    active="${classroot.active}"
-		    width="${parent.width - this.x}"
-		/>
-
-		<toolpalette name="toolPalette" id="gToolPalette"
-		    active="${classroot.active}"
-		    width="${parent.width - this.x}"
-		/>
-
-	    </view>
-
 	    <edittileview name="editTileView" id="gEditTileView"
-		x="${parent.vsep1.x + parent.vsep1.width}"
+		x="0"
 		y="0"
 		width="${Math.max(0, parent.width - this.x)}"
 		height="${Math.max(0, parent.height - this.y)}"
 		bgcolor="0xBC6F56"
 		visible="${this.width &amp;&amp; this.height}"
 		active="${classroot.active &amp;&amp; this.visible}"
-		navigationMapView="${parent.left.navigationMapView}"
+		navigationMapView="${gNavigationMapView}"
+		cursorVisible="${gEditTileShadow.cursorOver}"
 	    />
 
-	    <resizebarv name="vsep1" id="gVSep1"
-		trackvar="'panelResizeBarX'"
-		maxx="${parent.width - this.width}"
-		defaultx="$once{classroot.panelResizeBarX}"
-		x="$once{classroot.panelResizeBarX}"
-		y="0"
-		width="${classroot.panelResizeBarSize}"
-		height="${parent.height - this.y}"
-		overhang="0"
-	    />
-
-	</view>
-
-	<view name="top"
-	    x="0"
-	    y="0"
-	    width="${parent.width}"
-	    height="${parent.hsep1.y}"
-	    clip="true"
-	>
-
-	    <view name="tabsView"
+	    <view name="editTileShadow" id="gEditTileShadow"
 		x="0"
 		y="0"
 		width="${parent.width}"
-		height="${parent.height}"
-		clip="true"
+		height="${parent.subControlPanel.visible ? parent.subControlPanel.y : parent.controlPanel.y}"
+		bgcolor="0x000000"
+		visible="${!this.cursorOver}"
+		opacity="0.25"
 	    >
 
-		<tabs id="gPlayTabs"
+	        <attribute name="cursorOver" value="false"/>
+
+
+		<handler name="onidle" reference="lz.Idle" args="arg"><![CDATA[
+		    var curX = this.getMouse("x");
+		    var curY = this.getMouse("y");
+		    var over =
+		        (curX >= 0) &&
+		        (curX < this.width) &&
+			(curY >= 0) &&
+			(curY < this.height);
+		    if (over != this.cursorOver) {
+		        this.setAttribute("cursorOver", over);
+		    }
+		  ]]>
+		</handler>
+
+	    </view>
+
+	    <view name="controlPanelShadow" id="gControlPanelShadow"
+		x="0"
+		y="${parent.height - this.height}"
+		width="${parent.width}"
+		height="${gControlPanel.height}"
+		bgcolor="0x000000"
+		opacity="0.7"
+		onclick="return true;"
+		onmouseover="gToolTip.exitView(null);"
+	    />
+
+	    <view name="controlPanel" id="gControlPanel"
+		x="0"
+		y="${parent.height - this.height}"
+		width="${parent.width}"
+	    >
+
+		<simplelayout
+		    axis="y"
+		    inset="5"
+		    spacing="5"
+		/>
+
+		<view name="tabBar" id="gTabBar"
 		    width="${parent.width}"
-		    height="${parent.height + 2}"
 		>
 
-		    <nicetabpane id="gPlayTabNotices"
-		        bar="${classroot.hsep1}"
-			savedHeight="200"
-			text="${gApp._('Notices')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<noticeview id="gNoticeView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
+		    <attribute name="tabWidth" value="25"/>
+		    <attribute name="tabHeight" value="200"/>
 
-		    <nicetabpane id="gPlayTabJournal"
-		        bar="${classroot.hsep1}"
-			savedHeight="200"
-			text="${gApp._('Journal')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<journalview id="gJournalView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
+		    <simplelayout
+			axis="x"
+			inset="5"
+			spacing="5"
+		    />
 
-		    <nicetabpane id="gPlayTabEvaluation"
-		        bar="${classroot.hsep1}"
-			savedHeight="180"
-			text="${gApp._('Evaluation')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<evaluationview id="gEvaluationView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
+		    <tabbutton
+			text="${gApp._('Notice')}"
+			panelName="notice"
+		    />
 
-		    <nicetabpane id="gPlayTabHistory"
-		        bar="${classroot.hsep1}"
-			savedHeight="200"
-			text="${gApp._('History')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<historyview id="gHistoryView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
-
-		    <nicetabpane id="gPlayTabBudget"
-		        bar="${classroot.hsep1}"
-			savedHeight="160"
-			text="${gApp._('Budget')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<budgetview id="gBudgetView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
-
-		    <nicetabpane id="gPlayTabOverlays"
-		        bar="${classroot.hsep1}"
-			savedHeight="180"
+		    <tabbutton
 			text="${gApp._('Overlays')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<overlaysview id="gOverlaysView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
+			panelName="overlays"
+		    />
 
-		    <nicetabpane id="gPlayTabDisasters"
-		        bar="${classroot.hsep1}"
-			savedHeight="100"
+		    <tabbutton
+			text="${gApp._('History')}"
+			panelName="history"
+		    />
+
+		    <tabbutton
+			text="${gApp._('Budget')}"
+			panelName="budget"
+		    />
+
+		    <tabbutton
+			text="${gApp._('Evaluation')}"
+			panelName="evaluation"
+		    />
+
+		    <tabbutton
 			text="${gApp._('Disasters')}"
-			width="${parent.width}"
-			height="${parent.height}"
+			panelName="disasters"
+		    />
+
+		    <tabbutton
+			text="${gApp._('Controls')}"
+			panelName="controls"
+		    />
+
+		</view>
+
+		<toolpalette name="toolPalette" id="gToolPalette"
+		    active="${classroot.active}"
+		    x="5"
+		    width="${parent.width - 10 - this.x}"
+		/>
+
+		<view name="controlArea" id="gControlArea"
+		    x="0"
+		    width="${parent.width}"
+		>
+
+		    <simplelayout
+			axis="x"
+			inset="5"
+			spacing="5"
+		    />
+
+		    <navigationmapview name="navigationMapView" id="gNavigationMapView"
+			tileSize="1"
+			editTileView="${gEditTileView}"
+			active="${classroot.active}"
+			overlay="${gApp.overlay}"
 		    >
-			<disastersview id="gDisastersView"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
 
-		    <nicetabpane id="gPlayTabControl"
-		        bar="${classroot.hsep1}"
-			savedHeight="180"
-			text="${gApp._('Control')}"
-			width="${parent.width}"
-			height="${parent.height}"
-		    >
-			<controlpanel id="gControlPanel"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
-		    </nicetabpane>
-
-		    <nicetabpane id="gPlayTabUser"
-		        bar="${classroot.hsep1}"
-			text="${gApp.loggedIn ? (gApp._('User') + ': ' + gApp.userName) : gApp._('Log In')}"
-			width="${parent.width}"
-			height="${parent.height}"
-			saveHeight="false"
-		    >
-
-			<handler name="onloggedIn" reference="gApp"><![CDATA[
-			    this.savedHeight = -1;
-			    this.animateToHeight();
-			  ]]>
-			</handler>
-
-		        <method name="initialHeight"><![CDATA[
-			    // Work around a weird lazy instantiation problem.
-			    if (!gPlayUserView) {
-			        return 100;
-			    }
-			    return gPlayUserView.v.height + 45;
+		        <method name="handleClick"><![CDATA[
+			    classroot.setAttribute(
+			        "subControlPanelName",
+			    	(classroot.subControlPanelName == "overlays") ? "" : "overlays");
 			  ]]>
 			</method>
 
-			<userview id="gPlayUserView" name="u"
-			    width="${Math.max(0, parent.width - (immediateparent.x * 2))}"
-			    height="${Math.max(0, parent.height - (immediateparent.y * 2) - 30)}"
-			    visible="${this.width &amp;&amp; this.height}"
-			    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-			/>
+			<handler name="onmouseover" args="arg"><![CDATA[
+			    var tip = 
+				gApp._("Map Overview") + ':\n' + 
+				gApp._("Drag to scroll the map.") + '\n' +
+				gApp._("Click to change the overlay.");
+			    gToolTip.enterView(this, tip, 'up');
+			  ]]>
+			</handler>
 
-		    </nicetabpane>
+		    </navigationmapview>
 
-		</tabs>
+
+		    <demandgauge name="demandGauge" id="gDemandGauge"
+			active="${classroot.active}"
+		    >
+
+			<handler name="onclick"><![CDATA[
+			    classroot.setAttribute(
+			        "subControlPanelName",
+			    	(classroot.subControlPanelName == "history") ? "" : "history");
+			  ]]>
+			</handler>
+
+			<handler name="onmouseover" args="arg"><![CDATA[
+			    var tip = 
+				gApp._("Demand Gauge") + ':\n' + 
+				gApp._("Click to see the history.");
+			    gToolTip.enterView(this, tip, 'up');
+			  ]]>
+			</handler>
+
+		    </demandgauge>
+
+		    <datefundsview name="dateFundsDisplay" id="gDateFundsDisplay"
+			width="150"
+			active="${classroot.active}"
+		    >
+
+			<handler name="onclick"><![CDATA[
+			    classroot.setAttribute(
+			        "subControlPanelName",
+			    	(classroot.subControlPanelName == "budget") ? "" : "budget");
+			  ]]>
+			</handler>
+
+			<handler name="onmouseover" args="arg"><![CDATA[
+			    var tip = 
+				gApp._("Date and Funds") + ':\n' + 
+				gApp._("Click to change the budget.");
+			    gToolTip.enterView(this, tip, 'up');
+			  ]]>
+			</handler>
+
+		    </datefundsview>
+
+		</view>
+
+		<view/>
+
+	    </view>
+
+	    <view name="subControlPanelShadow" id="gSubControlPanelShadow"
+		x="0"
+		y="${gControlPanel.y - this.height}"
+		width="${parent.width}"
+		height="${gSubControlPanel.height}"
+		bgcolor="0x000000"
+		opacity="0.7"
+		visible="${classroot.subControlPanelName != ''}"
+		onclick="return true;"
+		onmouseover="gToolTip.exitView(null);"
+	    />
+
+	    <view name="subControlPanel" id="gSubControlPanel"
+		x="0"
+		y="${gControlPanel.y - this.height}"
+		width="${parent.width}"
+		visible="${classroot.subControlPanelName != ''}"
+	    >
+
+		<noticeview id="gNoticeView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    visible="${classroot.subControlPanelName == 'notice'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<overlaysview id="gOverlaysView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="110"
+		    visible="${classroot.subControlPanelName == 'overlays'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<historyview id="gHistoryView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="160"
+		    visible="${classroot.subControlPanelName == 'history'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<budgetview id="gBudgetView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="100"
+		    visible="${classroot.subControlPanelName == 'budget'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<evaluationview id="gEvaluationView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="120"
+		    visible="${classroot.subControlPanelName == 'evaluation'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<disastersview id="gDisastersView"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="60"
+		    visible="${classroot.subControlPanelName == 'disasters'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
+
+		<controlpanel id="gPlayControlPanel"
+		    x="5"
+		    y="5"
+		    width="${parent.width - 10}"
+		    height="100"
+		    visible="${classroot.subControlPanelName == 'controls'}"
+		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+		/>
 
 	    </view>
 
 	</view>
 
+	<view name="bottom"
+	    x="0"
+	    y="${parent.hsep.y + parent.hsep.height}"
+	    width="${parent.width}"
+	    height="${parent.height - this.y}"
+	    clip="true"
+	>
+
+	    <wallview id="gWallView"
+		width="${parent.width}"
+		height="${parent.height}"
+		visible="${(this.width &gt; 0) &amp;&amp; (this.height &gt; 0)}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	</view>
 
     </class>
 

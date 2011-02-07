@@ -97,6 +97,8 @@
 		<text name="speedLabel"
 		    width="${parent.width}"
 		    multiline="true"
+		    fontstyle="bold"
+		    fgcolor="0xffffff"
 		    text="${
 		        gApp._('Simulator') +
 			': ' +
@@ -211,7 +213,7 @@
 	    />
 
 	    <optionscheckbox
-		text="${gApp._('Journal')}"
+		text="${gApp._('Wall')}"
 		option="journal"
 	    />
 

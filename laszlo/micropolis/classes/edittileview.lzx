@@ -31,6 +31,7 @@
 	<attribute name="altDown" value="false"/>
 	<attribute name="controlDown" value="false"/>
 	<attribute name="zoom" value="2"/>
+	<attribute name="cursorVisible" value="true"/>
 
 
         <handler name="onpanning"><![CDATA[
@@ -235,7 +236,8 @@
 	<toolcursor name="toolCur" id="gToolCur"
 	    drawing="${classroot.drawing}"
 	    tileSize="${classroot.viewTileSize}"
-	    visible="${!classroot.panning &amp;&amp;
+	    visible="${classroot.cursorVisible &amp;&amp;
+	    	       !classroot.panning &amp;&amp;
 		       !classroot.pieing &amp;&amp;
 		       !classroot.shiftDown &amp;&amp;
 		       !classroot.altDown}"
@@ -244,15 +246,17 @@
 
 
 	<pancursor name="panCur" id="gPanCur"
-	    visible="${classroot.panning ||
-		       classroot.altDown}"
+	    visible="${classroot.cursorVisible &amp;&amp;
+	    	       (classroot.panning ||
+		        classroot.altDown)}"
 	    frame="${classroot.panning ? 2 : 1}"
 	    placement="container"
 	/>	    
 
 	<piecursor name="pieCur" id="gPieCur"
-	    visible="${classroot.pieing ||
-		       classroot.shiftDown}"
+	    visible="${classroot.cursorVisible &amp;&amp;
+	    	       (classroot.pieing ||
+		        classroot.shiftDown)}"
 	    frame="${classroot.pieing ? 2 : 1}"
 	    placement="container"
 	/>	    

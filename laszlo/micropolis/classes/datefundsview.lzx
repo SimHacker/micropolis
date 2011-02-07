@@ -30,20 +30,32 @@
 
 	<text
 	    text="${gApp._('Date:')}"
+	    fgcolor="0xffffff"
+	    fontstyle="bold"
+	    fontsize="12"
 	/>
 
 	<text
 	    text="${gApp.dateLabel}"
+	    fgcolor="0xffffff"
+	    fontstyle="bold"
+	    fontsize="12"
 	    resize="true"
 	/>
 
 	<text
 	    text="${gApp._('Funds:')}"
+	    fgcolor="0xffffff"
+	    fontstyle="bold"
+	    fontsize="12"
 	    resize="true"
 	/>
 
 	<text
 	    text="${gApp.fundsLabel}"
+	    fgcolor="0xffffff"
+	    fontstyle="bold"
+	    fontsize="12"
 	    resize="true"
 	/>
 

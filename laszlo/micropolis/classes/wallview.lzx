@@ -1,13 +1,13 @@
 <library>
 
 
-    <!-- Journal View -->
+    <!-- Wall View -->
     <!-- Written for Micropolis -->
     <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
-    <class name="journalview"
+    <class name="wallview"
         clip="true"
     >
 

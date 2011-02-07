@@ -26,7 +26,6 @@
 	    y="${parent.border}"
 	    width="${parent.width - (2 * parent.border)}"
 	    height="${parent.height - (2 * parent.border)}"
-	    bgcolor="0xffffff"
 	    text="${parent.text}"
 	>
 

@@ -38,7 +38,7 @@
 
 
 	<wrappinglayout
-	  spacing="5"
+	    spacing="5"
 	/>
 
 	<toolicon name="bulldozer"

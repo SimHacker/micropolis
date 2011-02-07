@@ -42,7 +42,7 @@
 		/>
 
 		<combobox name="myCitiesDirection"
-		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    visible="${gApp.savedCityCount}"
 		    y="5"
 		    width="130"
 		    editable="false"
@@ -71,7 +71,7 @@
 		</combobox>
 
 		<text
-		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    visible="${gApp.savedCityCount}"
 		    fontsize="22"
 		    fontstyle="bold"
 		    text="${gApp._('by')}"
@@ -79,7 +79,7 @@
 		/>
 
 		<combobox name="myCitiesSort"
-		    visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		    visible="${gApp.savedCityCount}"
 		    y="5"
 		    width="130"
 		    editable="false"
@@ -115,16 +115,7 @@
 	    </view>
 
 	    <text
-		visible="${!gApp.loggedIn}"
-	        fontsize="18"
-		fontstyle="bold"
-	        text="${gApp._('Log in to see your cities.')}"
-		x="${classroot.indent}"
-		resize="true"
-	    />
-
-	    <text
-		visible="${gApp.loggedIn &amp;&amp; !gApp.savedCityCount}"
+		visible="${!gApp.savedCityCount}"
 	        fontsize="18"
 		fontstyle="bold"
 	        text="${gApp._('You haven\'t saved any cities yet.')}"
@@ -133,7 +124,7 @@
 	    />
 
 	    <list
-		visible="${gApp.loggedIn &amp;&amp; gApp.savedCityCount}"
+		visible="${gApp.savedCityCount}"
 		x="${classroot.indent}"
 		y="0"
 		width="${immediateparent.width - this.x - 12}"

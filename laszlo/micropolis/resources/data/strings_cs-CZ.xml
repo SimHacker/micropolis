@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<strings language="cs-CZ">
+
+
+    <!--
+
+        This XML file defines all the strings in Micropolis,
+	for specific languages.
+
+	The "strings_en-US.xml" file is considered the master file.
+	It is used as a template for the other languages.
+	In order to add a string, first add it to the "en-US" file,
+	then use the web "/server/getTranslations" web interface to
+	update the other language strings from the "en-US" strings.
+	That will add any new strings in place, and mark them as 
+	needing to be translated, with at-signs like "@nl-NL".
+	Then you can use the web interface to translate the
+	strings into other languages.
+
+	The top level <strings> element should have a language attribute, 
+	which specifies the language of the translated strings. 
+
+	Each <string> sub-element has an id attribute, 
+	which is the name by which the string is refered in the code.
+	The ID can be the string itself in English, 
+	possibly abbreviated with a "*" at the end, 
+	or it may be a logical name called out by the code. 
+	Some string elements have an optional comment attribute,
+	which tells the translator how to deal with the string.
+	Each string element contains utf-8 unicode text, 
+	which is the translated string. 
+
+	Strings should not contain any markup as actual tags. Any
+	markup or entities to be displayed as html in the user
+	interface should be escaped.
+
+    -->
+
+
+    <!-- appview.lzx -->
+
+    <string id="Micropolis: Choose a City">@cs-CZ Micropolis: Choose a City</string>
+
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">@cs-CZ Welcome to Micropolis!&lt;br/&gt;&lt;br/&gt;Choose a city by selecting a scenario from the 'Scenarios' tab, or generating a new random city from the 'Generator' tab, or loading a city in the library from the 'Library' tab.&lt;br/&gt;&lt;br/&gt;Then press the 'Play with This City' button below, to start playing Micropolis!</string>
+
+    <string id="Please log in or create an account in order to save your city.">@cs-CZ Please log in or create an account in order to save your city.</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">@cs-CZ /wiki/index.php/About?lang=en-US</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">@cs-CZ /wiki/index.php/Help?lang=en-US</string>
+
+    <string comment="Three letter month abbreviation." id="Jan">@cs-CZ Jan</string>
+
+    <string comment="Three letter month abbreviation." id="Feb">@cs-CZ Feb</string>
+
+    <string comment="Three letter month abbreviation." id="Mar">@cs-CZ Mar</string>
+
+    <string comment="Three letter month abbreviation." id="Apr">@cs-CZ Apr</string>
+
+    <string comment="Three letter month abbreviation." id="May">@cs-CZ May</string>
+
+    <string comment="Three letter month abbreviation." id="Jun">@cs-CZ Jun</string>
+
+    <string comment="Three letter month abbreviation." id="Jul">@cs-CZ Jul</string>
+
+    <string comment="Three letter month abbreviation." id="Aug">@cs-CZ Aug</string>
+
+    <string comment="Three letter month abbreviation." id="Sep">@cs-CZ Sep</string>
+
+    <string comment="Three letter month abbreviation." id="Oct">@cs-CZ Oct</string>
+
+    <string comment="Three letter month abbreviation." id="Nov">@cs-CZ Nov</string>
+
+    <string comment="Three letter month abbreviation." id="Dec">@cs-CZ Dec</string>
+
+
+    <!-- budgetview.lzx -->
+
+    <string id="Taxes Collected:">@cs-CZ Taxes Collected:</string>
+
+    <string id="Cash Flow:">@cs-CZ Cash Flow:</string>
+
+    <string id="Previous Funds:">@cs-CZ Previous Funds:</string>
+
+    <string id="Current Funds:">@cs-CZ Current Funds:</string>
+
+    <string id="Tax Rate:">@cs-CZ Tax Rate:</string>
+
+    <string id="Road Request:">@cs-CZ Road Request:</string>
+
+    <string id="Fire Request:">@cs-CZ Fire Request:</string>
+
+    <string id="Police Request:">@cs-CZ Police Request:</string>
+
+
+    <!-- changepassword.lzx -->
+
+    <string id="To change your password,*">@cs-CZ To change your password, first enter your old password, then enter your new password twice.</string>
+
+    <string id="Change Password">@cs-CZ Change Password</string>
+
+
+    <!-- connectscreen.lzx -->
+
+    <string id="Connecting to Micropolis Online server.">@cs-CZ Connecting to Micropolis Online server.</string>
+
+    <string id="Connection to Micropolis Online server failed.">@cs-CZ Connection to Micropolis Online server failed.</string>
+
+    <string id="Status:">@cs-CZ Status:</string>
+
+    <string id="Reconnect">@cs-CZ Reconnect</string>
+
+
+    <!-- controlpanel.lzx -->
+
+    <string id="Are you really sure you want to start a new city?">@cs-CZ Are you really sure you want to start a new city?</string>
+
+    <string id="No, keep playing with this city.">@cs-CZ No, keep playing with this city.</string>
+
+    <string id="Yes, choose another city.">@cs-CZ Yes, choose another city.</string>
+
+    <string id="Ultra Slow">@cs-CZ Ultra Slow</string>
+
+    <string id="Super Slow">@cs-CZ Super Slow</string>
+
+    <string id="Very Slow">@cs-CZ Very Slow</string>
+
+    <string id="Slow">@cs-CZ Slow</string>
+
+    <string id="Medium">@cs-CZ Medium</string>
+
+    <string id="Fast">@cs-CZ Fast</string>
+
+    <string id="Very Fast">@cs-CZ Very Fast</string>
+
+    <string id="Super Fast">@cs-CZ Super Fast</string>
+
+    <string id="Ultra Fast">@cs-CZ Ultra Fast</string>
+
+    <string id="Astronomically Fast">@cs-CZ Astronomically Fast</string>
+
+    <string id="Resume">@cs-CZ Resume</string>
+
+    <string id="Pause">@cs-CZ Pause</string>
+
+    <string id="Simulator">@cs-CZ Simulator</string>
+
+    <string id="Paused.">@cs-CZ Paused.</string>
+
+    <string id="Running!">@cs-CZ Running!</string>
+
+    <string id="Speed">@cs-CZ Speed</string>
+
+    <string id="Save City">@cs-CZ Save City</string>
+
+    <string id="New City">@cs-CZ New City</string>
+
+    <string id="Help">@cs-CZ Help</string>
+
+    <string id="About">@cs-CZ About</string>
+
+    <string id="Disasters">@cs-CZ Disasters</string>
+
+    <string id="Auto Budget">@cs-CZ Auto Budget</string>
+
+    <string id="Auto Bulldoze">@cs-CZ Auto Bulldoze</string>
+
+    <string id="Auto Goto">@cs-CZ Auto Goto</string>
+
+    <string id="Sound">@cs-CZ Sound</string>
+
+    <string id="Animation">@cs-CZ Animation</string>
+
+    <string id="Journal">@cs-CZ Journal</string>
+
+    <string id="Notices">@cs-CZ Notices</string>
+
+
+    <!-- datefundsview.lzx -->
+
+    <string id="Date:">@cs-CZ Date:</string>
+
+    <string id="Funds:">@cs-CZ Funds:</string>
+
+
+    <!-- demandgauge.lzx -->
+
+    <string comment="One letter abreviation for 'Residential'." id="R">@cs-CZ R</string>
+
+    <string comment="One letter abreviation for 'Commercial'." id="C">@cs-CZ C</string>
+
+    <string comment="One letter abreviation for 'Industrial'." id="I">@cs-CZ I</string>
+
+
+    <!-- edittileviewpie.lzx -->
+
+    <string id="Tools">@cs-CZ Tools</string>
+
+    <string id="Zone">@cs-CZ Zone</string>
+
+    <string id="Build">@cs-CZ Build</string>
+
+    <string id="More">@cs-CZ More</string>
+
+    <string id="Tab">@cs-CZ Tab</string>
+
+    <string id="Evaluation">@cs-CZ Evaluation</string>
+
+    <string id="History">@cs-CZ History</string>
+
+    <string id="Budget">@cs-CZ Budget</string>
+
+    <string id="Overlays">@cs-CZ Overlays</string>
+
+    <string id="Control">@cs-CZ Control</string>
+
+    <string id="Funds">@cs-CZ Funds</string>
+
+    <string id="Tax Rate">@cs-CZ Tax Rate</string>
+
+    <string id="Police Funds">@cs-CZ Police Funds</string>
+
+    <string id="Road Funds">@cs-CZ Road Funds</string>
+
+    <string id="Fire Funds">@cs-CZ Fire Funds</string>
+
+
+    <!-- evaluationview.lzx -->
+
+    <string id="Crime">@cs-CZ Crime</string>
+
+    <string id="Pollution">@cs-CZ Pollution</string>
+
+    <string id="Housing">@cs-CZ Housing</string>
+
+    <string id="Taxes">@cs-CZ Taxes</string>
+
+    <string id="Traffic">@cs-CZ Traffic</string>
+
+    <string id="Unemployment">@cs-CZ Unemployment</string>
+
+    <string id="Fire">@cs-CZ Fire</string>
+
+    <string id="Village">@cs-CZ Village</string>
+
+    <string id="Town">@cs-CZ Town</string>
+
+    <string id="City">@cs-CZ City</string>
+
+    <string id="Capital">@cs-CZ Capital</string>
+
+    <string id="Metropolis">@cs-CZ Metropolis</string>
+
+    <string id="Megalopolis">@cs-CZ Megalopolis</string>
+
+    <string id="Easy">@cs-CZ Easy</string>
+
+    <string id="Hard">@cs-CZ Hard</string>
+
+    <string id="Approve:">@cs-CZ Approve:</string>
+
+    <string id="Disapprove:">@cs-CZ Disapprove:</string>
+
+    <string id="Population:">@cs-CZ Population:</string>
+
+    <string id="Migration:">@cs-CZ Migration:</string>
+
+    <string id="City Value:">@cs-CZ City Value:</string>
+
+    <string id="Category:">@cs-CZ Category:</string>
+
+    <string id="Game Level:">@cs-CZ Game Level:</string>
+
+    <string id="Current Score:">@cs-CZ Current Score:</string>
+
+    <string id="Annual Change:">@cs-CZ Annual Change:</string>
+
+    <string id="Popularity:">@cs-CZ Popularity:</string>
+
+    <string id="Problems:">@cs-CZ Problems:</string>
+
+
+    <!-- generatorview.lzx -->
+
+    <string id="Generate Random Map">@cs-CZ Generate Random Map</string>
+
+    <string id="Generated Map">@cs-CZ Generated Map</string>
+
+    <string id="Generated a new random map.">@cs-CZ Generated a new random map.</string>
+
+
+    <!-- historyview.lzx -->
+
+    <string id="Residential">@cs-CZ Residential</string>
+
+    <string id="Show the residential population history.">@cs-CZ Show the residential population history.</string>
+
+    <string id="Commercial">@cs-CZ Commercial</string>
+
+    <string id="Show the commercial population history.">@cs-CZ Show the commercial population history.</string>
+
+    <string id="Industrial">@cs-CZ Industrial</string>
+
+    <string id="Show the industrial population history.">@cs-CZ Show the industrial population history.</string>
+
+    <string id="Money">@cs-CZ Money</string>
+
+    <string id="Show the city funds history.">@cs-CZ Show the city funds history.</string>
+
+    <string id="Show the crime rate history.">@cs-CZ Show the crime rate history.</string>
+
+    <string id="Show the pollution rate history.">@cs-CZ Show the pollution rate history.</string>
+
+    <string id="10 Years">@cs-CZ 10 Years</string>
+
+    <string id="120 Years">@cs-CZ 120 Years</string>
+
+    
+    <!-- libraryview.lzx -->
+
+    <string id="Shared Cities">@cs-CZ Shared Cities</string>
+
+    <string id="My Cities">@cs-CZ My Cities</string>
+
+    <string id="Log in to see your cities.">@cs-CZ Log in to see your cities.</string>
+
+    <string id="You haven't saved any cities yet.">@cs-CZ You haven't saved any cities yet.</string>
+
+    <string id="Are you really sure you want to delete your city?">@cs-CZ Are you really sure you want to delete your city?</string>
+
+    <string id="No, don't delete it.">@cs-CZ No, don't delete it.</string>
+
+    <string id="Yes, delete my city.">@cs-CZ Yes, delete my city.</string>
+
+    <string id="Forward">@cs-CZ Forward</string>
+
+    <string id="Backward">@cs-CZ Backward</string>
+
+    <string id="by">@cs-CZ by</string>
+
+    <string id="Created Date">@cs-CZ Created Date</string>
+
+    <string id="Modified Date">@cs-CZ Modified Date</string>
+
+    <string id="Created">@cs-CZ Created</string>
+
+    <string id="Modified">@cs-CZ Modified</string>
+
+    <!-- loginview.lzx -->
+
+    <string id="You are logged in as">@cs-CZ You are logged in as</string>
+
+    <string id="Please log in*">@cs-CZ Please log in or create a new account, so you can save your cities and participate in the Micropolis Online community.</string>
+
+    <!-- userview.lzx -->
+
+    <string id="You have successfully logged in,*">@cs-CZ You have successfully logged in, and you can configure your account.</string>
+
+    <string id="Please log in or create a new account.">@cs-CZ Please log in or create a new account.</string>
+
+    <string id="New and Registered Users:*">@cs-CZ New and Registered Users, please enter your user name and password, and press the appropriate button.</string>
+
+    <string id="User Name:">@cs-CZ User Name:</string>
+
+    <string id="Old Password:">@cs-CZ Old Password:</string>
+
+    <string id="Password:">@cs-CZ Password:</string>
+
+    <string id="Log In to Existing Account">@cs-CZ Log In to Existing Account</string>
+
+    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">@cs-CZ New Users: Please repeat your password, and enter your full name and email address. Then press the 'Create New Account' button.</string>
+
+    <string id="Repeat Password:">@cs-CZ Repeat Password:</string>
+
+    <string id="Full Name:">@cs-CZ Full Name:</string>
+
+    <string id="EMail Address:">@cs-CZ EMail:</string>
+
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">@cs-CZ Create New Account</string>
+
+    <string id="Please enter your*">@cs-CZ Please enter your full name and email address below.</string>
+
+    <string id="New Password:">@cs-CZ New Password:</string>
+
+    <string id="Log Out">@cs-CZ Log Out</string>
+
+    <string id="Cancel">@cs-CZ Cancel</string>
+
+    <string id="Log In">@cs-CZ Log In</string>
+
+
+    <!-- noticeview.lzx -->
+
+    <string id="Micropolis">@cs-CZ Micropolis</string>
+
+    <string id="The city simulation has begun!">@cs-CZ The city simulation has begun!</string>
+
+    <string id="Learn More">@cs-CZ Learn More</string>
+
+
+    <!-- pancursor.lzx -->
+
+    <string id="Pan Map" comment="Label for cursor that pans the map.">@cs-CZ Pan Map</string>
+
+
+    <!-- piecursor.lzx -->
+
+    <string id="Pie Menu" comment="Label for cursor that pops up a pie menu.">@cs-CZ Pie Menu</string>
+
+
+    <!-- playscreen.lzx -->
+
+
+    <!-- remoteserver.lzx -->
+
+    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">@cs-CZ Disconnected (error).</string>
+
+    <string comment="Normal disconnection that is not an error." id="Disconnected.">@cs-CZ Disconnected.</string>
+
+    <string id="Connection failed.">@cs-CZ Connection failed.</string>
+
+    <string id="Connection rejected.">@cs-CZ Connection rejected.</string>
+
+    <string id="Connected.">@cs-CZ Connected.</string>
+
+    <string id="Message failed.">@cs-CZ Message failed.</string>
+
+    <string id="To">@cs-CZ To</string>
+
+
+    <!-- robot.lzx -->
+
+
+    <string id="Score">@cs-CZ Score</string>
+
+
+    <!-- scenariosview.lzx -->
+
+    <string id="Scenario">@cs-CZ Scenario</string>
+
+
+    <!-- startscreen.lzx -->
+
+    <string id="Play With This Map">@cs-CZ Play With This Map</string>
+
+    <string id="Scenarios">@cs-CZ Scenarios</string>
+
+    <string id="Generator">@cs-CZ Generator</string>
+
+    <string id="Library">@cs-CZ Library</string>
+
+    <string id="User">@cs-CZ User</string>
+
+    <string id="Configure Your City">@cs-CZ Configure Your City</string>
+
+    <string id="Title">@cs-CZ Title</string>
+
+    <string id="Description">@cs-CZ Description</string>
+
+    <string id="Share My City">@cs-CZ Share My City</string>
+
+    <string id="Delete My City">@cs-CZ Delete My City</string>
+
+
+    <!-- toolcursor.lzx -->
+
+    <string id="Cost">@cs-CZ Cost</string>
+
+
+    <!-- toolpalette.lzx -->
+
+    <string id="Residential (tool description)">@cs-CZ Gives people a place to live. Generates citizens and traffic.</string>
+
+    <string id="Commercial (tool description)">@cs-CZ Gives people a place to shop. Generates jobs and traffic.</string>
+
+    <string id="Industrial (tool description)">@cs-CZ Gives people a place to work. Generates jobs and traffic.</string>
+
+    <string id="Fire Station">@cs-CZ Fire Station</string>
+
+    <string id="Fire Station (tool description)">@cs-CZ Puts out fires nearby.</string>
+
+    <string id="Query">@cs-CZ Query</string>
+
+    <string id="Query (tool description)">@cs-CZ Describes zones.</string>
+
+    <string id="Police Station">@cs-CZ Police Station</string>
+
+    <string id="Police Station (tool description)">@cs-CZ Reduces crime nearby.</string>
+
+    <string id="Wire">@cs-CZ Wire</string>
+
+    <string id="Wire (tool description)">@cs-CZ Connects zones with power.</string>
+
+    <string id="Bulldozer">@cs-CZ Bulldozer</string>
+
+    <string id="Bulldozer (tool description)">@cs-CZ Destroys zones and features.</string>
+
+    <string id="Railroad">@cs-CZ Railroad</string>
+
+    <string id="Railroad (tool description)">@cs-CZ Draws a railroad on land or a tunnel under water.</string>
+
+    <string id="Road">@cs-CZ Road</string>
+
+    <string id="Road (tool description)">@cs-CZ Draws a road on land or a bridge over water.</string>
+
+    <string id="Center">@cs-CZ Center</string>
+
+    <string id="Center (tool description)">@cs-CZ Scrolls location to center of screen.</string>
+
+    <string id="PacBot" comment="Do not translate the proper name PacBot.">@cs-CZ PacBot</string>
+
+    <string id="PacBot (tool description)">@cs-CZ Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
+
+    <string id="Stadium">@cs-CZ Stadium</string>
+
+    <string id="Stadium (tool description)">@cs-CZ Helps residential zones.</string>
+
+    <string id="Park">@cs-CZ Park</string>
+
+    <string id="Park (tool description)">@cs-CZ Makes the city a nicer place to live.</string>
+
+    <string id="Seaport">@cs-CZ Seaport</string>
+
+    <string id="Seaport (tool description)">@cs-CZ Helps industrial zones.</string>
+
+    <string id="Coal Power">@cs-CZ Coal Power</string>
+
+    <string id="Coal Power (tool description)">@cs-CZ Generates power, but pollutes.</string>
+
+    <string id="Airport">@cs-CZ Airport</string>
+
+    <string id="Airport (tool description)">@cs-CZ Helps commercial zones.</string>
+
+    <string id="Nuclear Power">@cs-CZ Nuclear Power</string>
+
+    <string id="Nuclear Power (tool description)">@cs-CZ Generates power, but might melt down.</string>
+
+
+    <!-- disasters.xml -->
+
+    <string id="disaster_monster_title">@cs-CZ Monster</string>
+
+    <string id="disaster_fire_title">@cs-CZ Fire</string>
+
+    <string id="disaster_flood_title">@cs-CZ Flood</string>
+
+    <string id="disaster_meltdown_title">@cs-CZ Meltdown</string>
+
+    <string id="disaster_tornado_title">@cs-CZ Tornado</string>
+
+    <string id="disaster_earthquake_title">@cs-CZ Earthquake</string>
+
+
+    <!-- notices.xml -->
+
+    <string id="notice_10_title">@cs-CZ POLLUTION ALERT!</string>
+
+    <string id="notice_10_description">@cs-CZ Pollution in your city has exceeded the maximum allowable amounts established by the Micropolis Pollution Agency. You are running the risk of grave ecological consequences.&lt;br/&gt;Either clean up your act or open a gas mask concession at city hall.</string>
+
+    <string id="notice_10_url">@cs-CZ </string>
+
+    <string id="notice_11_title">@cs-CZ CRIME ALERT!</string>
+
+    <string id="notice_11_description">@cs-CZ Crime in your city is out of hand. Angry mobs are looting and vandalizing the central city. The president will send in the national guard soon if you cannot control the problem.</string>
+
+    <string id="notice_11_url">@cs-CZ </string>
+
+    <string id="notice_12_title">@cs-CZ TRAFFIC WARNING!</string>
+
+    <string id="notice_12_description">@cs-CZ Traffic in this city is horrible. The city gridlock is expanding. The commuters are getting militant.&lt;br/&gt;Either build more roads and rails or get a bulletproof limo.</string>
+
+    <string id="notice_12_url">@cs-CZ </string>
+
+    <string id="notice_20_title">@cs-CZ FIRE REPORTED!</string>
+
+    <string id="notice_20_description">@cs-CZ A fire has been reported!</string>
+
+    <string id="notice_20_url">@cs-CZ </string>
+
+    <string id="notice_21_title">@cs-CZ MONSTER ATTACK!</string>
+
+    <string id="notice_21_description">@cs-CZ A large reptilian creature has been spotted in the water. It seems to be attracted to areas of high pollution. There is a trail of destruction wherever it goes.&lt;br/&gt;All you can do is wait till he leaves, then rebuild from the rubble.</string>
+
+    <string id="notice_21_url">@cs-CZ </string>
+
+    <string id="notice_22_title">@cs-CZ TORNADO ALERT!</string>
+
+    <string id="notice_22_description">@cs-CZ A tornado has been reported! There's nothing you can do to stop it, so you'd better prepare to clean up after the disaster!</string>
+
+    <string id="notice_22_url">@cs-CZ </string>
+
+    <string id="notice_23_title">@cs-CZ EARTHQUAKE!</string>
+
+    <string id="notice_23_description">@cs-CZ A major earthquake has occurred! Put out the fires as quickly as possible, before they spread, then reconnect the power grid and rebuild the city.</string>
+
+    <string id="notice_23_url">@cs-CZ </string>
+
+    <string id="notice_24_title">@cs-CZ PLANE CRASH!</string>
+
+    <string id="notice_24_description">@cs-CZ A plane has crashed!</string>
+
+    <string id="notice_24_url">@cs-CZ </string>
+
+    <string id="notice_25_title">@cs-CZ SHIPWRECK!</string>
+
+    <string id="notice_25_description">@cs-CZ A ship has wrecked!</string>
+
+    <string id="notice_25_url">@cs-CZ </string>
+
+    <string id="notice_26_title">@cs-CZ TRAIN CRASH!</string>
+
+    <string id="notice_26_description">@cs-CZ A train has crashed!</string>
+
+    <string id="notice_26_url">@cs-CZ </string>
+
+    <string id="notice_27_title">@cs-CZ HELICOPTER CRASH!</string>
+
+    <string id="notice_27_description">@cs-CZ A helicopter has crashed!</string>
+
+    <string id="notice_27_url">@cs-CZ </string>
+
+    <string id="notice_30_title">@cs-CZ FIREBOMBING REPORTED!</string>
+
+    <string id="notice_30_description">@cs-CZ Firebombs are falling!!</string>
+
+    <string id="notice_30_url">@cs-CZ </string>
+
+    <string id="notice_32_title">@cs-CZ EXPLOSION REPORTED!</string>
+
+    <string id="notice_32_description">@cs-CZ There has been an explosion!!</string>
+
+    <string id="notice_32_url">@cs-CZ </string>
+
+    <string id="notice_35_title">@cs-CZ TOWN</string>
+
+    <string id="notice_35_description">@cs-CZ Congratulations, your village has grown to town status. You now have 2,000 citizens.</string>
+
+    <string id="notice_35_url">@cs-CZ </string>
+
+    <string id="notice_36_title">@cs-CZ CITY</string>
+
+    <string id="notice_36_description">@cs-CZ Your town has grown into a full sized city, with a current population of 10,000. Keep up the good work!</string>
+
+    <string id="notice_36_url">@cs-CZ </string>
+
+    <string id="notice_37_title">@cs-CZ CAPITAL</string>
+
+    <string id="notice_37_description">@cs-CZ Your city has become a capital. The current population here is 50,000. Your political future looks bright.</string>
+
+    <string id="notice_37_url">@cs-CZ </string>
+
+    <string id="notice_38_title">@cs-CZ METROPOLIS</string>
+
+    <string id="notice_38_description">@cs-CZ Your capital city has now achieved the status of metropolis. The current population is 100,000. With your management skills, you should seriously consider running for governor.</string>
+
+    <string id="notice_38_url">@cs-CZ </string>
+
+    <string id="notice_39_title">@cs-CZ MEGALOPOLIS</string>
+
+    <string id="notice_39_description">@cs-CZ Congratulation, you have reached the highest category of urban development, the megalopolis.</string>
+
+    <string id="notice_39_url">@cs-CZ </string>
+
+    <string id="notice_41_title">@cs-CZ HEAVY TRAFFIC!</string>
+
+    <string id="notice_41_description">@cs-CZ Sky Watch One reporting heavy traffic!</string>
+
+    <string id="notice_41_url">@cs-CZ </string>
+
+    <string id="notice_42_title">@cs-CZ FLOODING REPORTED!</string>
+
+    <string id="notice_42_description">@cs-CZ Flooding has been been reported along the water's edge!</string>
+
+    <string id="notice_42_url">@cs-CZ </string>
+
+    <string id="notice_43_title">@cs-CZ NUCLEAR MELTDOWN!</string>
+
+    <string id="notice_43_description">@cs-CZ A nuclear meltdown has occured at your power plant. You are advised to avoid the area until the radioactive isotopes decay.&lt;br/&gt;Many generations will confront this problem before it goes away, so don't hold your breath.</string>
+
+    <string id="notice_43_url">@cs-CZ </string>
+
+    <string id="notice_44_title">@cs-CZ RIOTS!</string>
+
+    <string id="notice_44_description">@cs-CZ The citizens are rioting in the streets!</string>
+
+    <string id="notice_44_url">@cs-CZ </string>
+
+    <string id="notice_45_title">@cs-CZ Start a New City</string>
+
+    <string id="notice_45_description">@cs-CZ Build your very own city from the ground up, starting with this map of uninhabited land.</string>
+
+    <string id="notice_45_url">@cs-CZ </string>
+
+    <string id="notice_46_title">@cs-CZ Restore a Saved City</string>
+
+    <string id="notice_46_description">@cs-CZ The city was restored.</string>
+
+    <string id="notice_46_url">@cs-CZ </string>
+
+    <string id="notice_47_title">@cs-CZ YOU'RE A WINNER!</string>
+
+    <string id="notice_47_description">@cs-CZ Your mayorial skill and city planning expertise have earned you the KEY TO THE CITY. Local residents will erect monuments to your glory and name their first-born children after you. Why not run for governor?</string>
+
+    <string id="notice_47_url">@cs-CZ </string>
+
+    <string id="notice_48_title">@cs-CZ IMPEACHMENT NOTICE!</string>
+
+    <string id="notice_48_description">@cs-CZ The entire population of this city has finally had enough of your inept planning and incompetant management. An angry mob - led by your mother - has been spotted in the vicinity of city hall.&lt;br/&gt;You should seriously consider taking an extended vacation - NOW. (Or read the manual and try again.)</string>
+
+    <string id="notice_48_url">@cs-CZ </string>
+
+    <string id="notice_49_title">@cs-CZ About Micropolis</string>
+
+    <string id="notice_49_description">@cs-CZ Micropolis Copyright (C) 2007 by Electronic Arts.&lt;br/&gt;Based on the original SimCity concept, design and code by Will Wright and Fred Haslam.&lt;br/&gt;User Interface Designed and created by Don Hopkins.&lt;br/&gt;Ported to Linux, Optimized and Adapted for OLPC by Don Hopkins.&lt;br/&gt;Licensed under the GNU General Public License, version 3, with additional conditions.</string>
+
+    <string id="notice_49_url">@cs-CZ </string>
+
+    <string id="notice_50_title">@cs-CZ DULLSVILLE, USA  1900</string>
+
+    <string id="notice_50_description">@cs-CZ Things haven't changed much around here in the last hundred years or so and the residents are beginning to get bored. They think Dullsville could be the next great city with the right leader.&lt;br/&gt;It is your job to attract new growth and development, turning Dullsville into a Metropolis within 30 years.</string>
+
+    <string id="notice_50_url">@cs-CZ </string>
+
+    <string id="notice_51_title">@cs-CZ SAN FRANCISCO, CA.  1906</string>
+
+    <string id="notice_51_description">@cs-CZ Damage from the earthquake was minor compared to that of the ensuing fires, which took days to control. 1500 people died.&lt;br/&gt;Controlling the fires should be your initial concern. Then clear the rubble and start rebuilding. You have 5 years.</string>
+
+    <string id="notice_51_url">@cs-CZ </string>
+
+    <string id="notice_52_title">@cs-CZ HAMBURG, GERMANY  1944</string>
+
+    <string id="notice_52_description">@cs-CZ Allied fire-bombing of German cities in WWII caused tremendous damage and loss of life. People living in the inner cities were at greatest risk.&lt;br/&gt;You must control the firestorms during the bombing and then rebuild the city after the war. You have 5 years.</string>
+
+    <string id="notice_52_url">@cs-CZ </string>
+
+    <string id="notice_53_title">@cs-CZ BERN, SWITZERLAND  1965</string>
+
+    <string id="notice_53_description">@cs-CZ The roads here are becoming more congested every day, and the residents are upset. They demand that you do something about it.&lt;br/&gt;Some have suggested a mass transit system as the answer, but this would require major rezoning in the downtown area. You have 10 years.</string>
+
+    <string id="notice_53_url">@cs-CZ </string>
+
+    <string id="notice_54_title">@cs-CZ TOKYO, JAPAN  1957</string>
+
+    <string id="notice_54_description">@cs-CZ A large reptilian creature has been spotted heading for Tokyo bay. It seems to be attracted to the heavy levels of industrial pollution there.&lt;br/&gt;Try to control the fires, then rebuild the industrial center. You have 5 years.</string>
+
+    <string id="notice_54_url">@cs-CZ </string>
+
+    <string id="notice_55_title">@cs-CZ DETROIT, MI.  1972</string>
+
+    <string id="notice_55_description">@cs-CZ By 1970, competition from overseas and other economic factors pushed the once &quot;automobile capital of the world&quot; into recession. Plummeting land values and unemployment then increased crime in the inner-city to chronic levels.&lt;br/&gt;You have 10 years to reduce crime and rebuild the industrial base of the city.</string>
+
+    <string id="notice_55_url">@cs-CZ </string>
+
+    <string id="notice_56_title">@cs-CZ BOSTON, MA.  2010</string>
+
+    <string id="notice_56_description">@cs-CZ A major meltdown is about to occur at one of the new downtown nuclear reactors. The area in the vicinity of the reactor will be severly contaminated by radiation, forcing you to restructure the city around it.&lt;br/&gt;You have 5 years to get the situation under control.</string>
+
+    <string id="notice_56_url">@cs-CZ </string>
+
+    <string id="notice_57_title">@cs-CZ RIO DE JANEIRO, BRAZIL  2047</string>
+
+    <string id="notice_57_description">@cs-CZ In the mid-21st century, the greenhouse effect raised global temperatures 6 degrees F. Polar icecaps melted and raised sea levels worldwide. Coastal areas were devastated by flood and erosion.&lt;br/&gt;You have 10 years to turn this swamp back into a city again.</string>
+
+    <string id="notice_57_url">@cs-CZ </string>
+
+    <!-- overlays.xml -->
+
+    <string id="overlay_all_title">@cs-CZ All Zones</string>
+
+    <string id="overlay_residential_title">@cs-CZ Residential Zones</string>
+
+    <string id="overlay_commercial_title">@cs-CZ Commercial Zones</string>
+
+    <string id="overlay_industrial_title">@cs-CZ Industrial Zones</string>
+
+    <string id="overlay_powergrid_title">@cs-CZ Power Connectivity</string>
+
+    <string id="overlay_transportation_title">@cs-CZ Transportation Network</string>
+
+    <string id="overlay_populationdensity_title">@cs-CZ Population Density</string>
+
+    <string id="overlay_rateofgrowth_title">@cs-CZ Rate of Growth</string>
+
+    <string id="overlay_trafficdensity_title">@cs-CZ Traffic Density</string>
+
+    <string id="overlay_pollutiondensity_title">@cs-CZ Pollution Density</string>
+
+    <string id="overlay_crimerate_title">@cs-CZ Crime Rate</string>
+
+    <string id="overlay_landvalue_title">@cs-CZ Land Value</string>
+
+    <string id="overlay_firecoverage_title">@cs-CZ Fire Station Coverage</string>
+
+    <string id="overlay_policecoverage_title">@cs-CZ Police Station Coverage</string>
+
+
+    <!-- scenarios.xml -->
+
+    <string id="scenario_1_title">@cs-CZ Dullsville</string>
+
+    <string id="scenario_1_tagline">@cs-CZ Boredom</string>
+
+    <string id="scenario_2_title">@cs-CZ San Francsico</string>
+
+    <string id="scenario_2_tagline">@cs-CZ Earthquake</string>
+
+    <string id="scenario_3_title">@cs-CZ Hamburg</string>
+
+    <string id="scenario_3_tagline">@cs-CZ Bombing</string>
+
+    <string id="scenario_4_title">@cs-CZ Bern</string>
+
+    <string id="scenario_4_tagline">@cs-CZ Traffic</string>
+
+    <string id="scenario_5_title">@cs-CZ Tokyo</string>
+
+    <string id="scenario_5_tagline">@cs-CZ Monster Attack</string>
+
+    <string id="scenario_6_title">@cs-CZ Detroit</string>
+
+    <string id="scenario_6_tagline">@cs-CZ Crime</string>
+
+    <string id="scenario_7_title">@cs-CZ Boston</string>
+
+    <string id="scenario_7_tagline">@cs-CZ Nuclear Meltdown</string>
+
+    <string id="scenario_8_title">@cs-CZ Rio de Janeiro</string>
+
+    <string id="scenario_8_tagline">@cs-CZ Coastal Flooding</string>
+
+
+    <!-- micropolisturbogearsengine.py -->
+
+    <string id="You are logged in.*">@cs-CZ You are logged in. Welcome back to Micropolis Online!</string>
+
+    <string id="Incorrect user name or password.">@cs-CZ Incorrect user name or password.</string>
+
+    <string id="You are already logged out,*">@cs-CZ You are already logged out, and you may log in or create an account.</string>
+
+    <string id="You are logged out.*">@cs-CZ You are logged out. Come back soon!</string>
+
+    <string id="Please enter a user name.">@cs-CZ Please enter a user name.</string>
+
+    <string id="The user name contains invalid characters.*">@cs-CZ The user name contains invalid characters. Please use only letters, numbers, underscores or dashes.</string>
+
+    <string id="Please enter a password.">@cs-CZ Please enter a password.</string>
+
+    <string id="A user of that name already exists.*">@cs-CZ A user of that name already exists.</string>
+
+    <string id="Please repeat the same password in the next field.">@cs-CZ Please repeat the same password in the next field.</string>
+
+    <string id="An account with that email address already exists.">@cs-CZ An account with that email address already exists.</string>
+
+    <string id="A new account has been created*">@cs-CZ A new account has been created for you, and you are logged in. Welcome to Micropolis Online!</string>
+
+    <string id="Incorrect old password.">@cs-CZ Incorrect old password.</string>
+
+    <string id="The new passwords do not match.">@cs-CZ The new passwords do not match.</string>
+
+    <string id="You must enter your new password twice.">@cs-CZ You must enter your new password twice.</string>
+
+    <string id="Your password has been changed.">@cs-CZ Your password has been changed.</string>
+
+
+    <!-- Robots -->
+
+    <string id="Autonomous">@cs-CZ Autonomous</string>
+
+    <string id="Reset">@cs-CZ Reset</string>
+
+    <string id="Manual">@cs-CZ Manual</string>
+
+    <string id="Delete">@cs-CZ Delete</string>
+
+    <string id="Xenu" comment="Do not translate the proper name Xenu.">@cs-CZ Xenu</string>
+
+
+    <!-- Zones -->
+
+    <string id="zone-christian-title">@cs-CZ Christian Church</string>
+
+    <string id="zone-christian-description">@cs-CZ This is a Christian church.</string>
+
+    <string id="zone-pacmania-title">@cs-CZ Pacmania Church</string>
+
+    <string id="zone-pacmania-description">@cs-CZ This is a Pacmania church.</string>
+
+    <string id="zone-pacmania-message-0-url">@cs-CZ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-0-title">@cs-CZ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-0-text">@cs-CZ Pacmania is a religion dedicated to the PacBot.</string>
+
+    <string id="zone-pacmania-message-1-url">@cs-CZ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-1-title">@cs-CZ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-1-text">@cs-CZ Pacmania is polytheistic: each Pacmania church can spawn up to four PacBots.</string>
+
+    <string id="zone-pacmania-message-2-url">@cs-CZ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-2-title">@cs-CZ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-2-text">@cs-CZ The PacBot follows roads around, eating traffic.</string>
+
+    <string id="zone-pacmania-message-3-url">@cs-CZ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-3-title">@cs-CZ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-3-text">@cs-CZ The PacBot is attracted to heavy traffic, which it loves to consume.</string>
+
+    <string id="zone-pacmania-message-4-url">@cs-CZ http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-4-title">@cs-CZ The Church of Pacmania</string>
+
+    <string id="zone-pacmania-message-4-text">@cs-CZ Pacmania churches generate lots of traffic, to attract the PacBot.</string>
+
+    <string id="zone-scientology-title">@cs-CZ Church of Scientology</string>
+
+    <string id="zone-scientology-description">@cs-CZ This is a Church of Scientology.</string>
+
+    <string id="zone-scientology-message-0-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-0-title">@cs-CZ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-0-text">@cs-CZ Scientology is a body of beliefs and related practices created by L. Ron Hubbard (1911–1986), starting in 1952, as a successor to his earlier self-help system, Dianetics. Hubbard characterized Scientology as a religion, and in 1953 incorporated the Church of Scientology in New Jersey.</string>
+
+    <string id="zone-scientology-message-1-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-1-title">@cs-CZ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-1-text">@cs-CZ Scientology teaches that people are immortal spiritual beings who have forgotten their true nature. Its method of spiritual rehabilitation is a type of counseling known as auditing, in which practitioners aim to consciously re-experience painful or traumatic events in their past, in order to free themselves of their limiting effects. Study materials and auditing courses are made available to members in return for specified donations. Scientology is legally recognized as a tax-exempt religion in the United States and some other countries, and the Church of Scientology emphasizes this as proof that it is a bona fide religion. Other countries such as Germany and France continue to deny Scientology religious status.</string>
+
+    <string id="zone-scientology-message-2-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-2-title">@cs-CZ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-2-text">@cs-CZ A large number of organizations overseeing the application of Scientology have been established, the most notable of these being the Church of Scientology. Scientology sponsors a variety of social service programs. These include a set of moral guidelines expressed in a brochure called The Way to Happiness, the Narconon anti-drug program, the Criminon prison rehabilitation program, the Study Tech education methodology, a volunteer organization, and a business management method.</string>
+
+    <string id="zone-scientology-message-3-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-3-title">@cs-CZ The Church of Scientology</string>
+
+    <string id="zone-scientology-message-3-text">@cs-CZ Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls ("thetans") reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+
+    <string id="zone-scientology-message-4-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Beliefs_and_practices</string>
+
+    <string id="zone-scientology-message-4-title">@cs-CZ Scientology beliefs and practices</string>
+
+    <string id="zone-scientology-message-4-text">@cs-CZ Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls ("thetans") reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+
+    <string id="zone-scientology-message-5-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-5-title">@cs-CZ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-5-text">@cs-CZ Scientology has an associated mythology that its adherents hold to reflect religious truth. In Scientology, this mythology revolves around the thetan, believed to be the individualized expression of the cosmic source, or life force, named after the Greek letter theta (θ). The thetan is thought to be the true identity of a person – an intrinsically good, omniscient, non-material core capable of unlimited creativity.</string>
+
+    <string id="zone-scientology-message-6-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-6-title">@cs-CZ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-6-text">@cs-CZ In the primordial past, according to Scientologist teachings, thetans brought the material universe into being largely for their own pleasure. The universe is thought to have no independent reality, but to derive its apparent reality from the fact that most thetans agree it exists. Scientologists believe that thetans fell from grace when they began to identify with their creation, rather than their original state of spiritual purity. Eventually, they lost their memory of their true nature, along with the associated spiritual and creative powers. As a result, thetans came to think of themselves as nothing but embodied beings.</string>
+
+    <string id="zone-scientology-message-7-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-7-title">@cs-CZ Scientology beliefs and practices: Body and spirit</string>
+
+    <string id="zone-scientology-message-7-text">@cs-CZ Thetans are believed to be reborn time and time again in new bodies through a process called "assumption" which is analogous to reincarnation. Like Hinduism, Scientology posits a causal relationship between the experiences of earlier incarnations and one's present life, and with each rebirth, the effects of the MEST universe (MEST here stands for matter, energy, space, and time) on the thetan are believed to become stronger.</string>
+
+    <string id="zone-scientology-message-8-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-8-title">@cs-CZ Scientology beliefs and practices: Emotions and the mind</string>
+
+    <string id="zone-scientology-message-8-text">@cs-CZ Scientology presents two major divisions of the mind. The reactive mind is thought to absorb all pain and emotional trauma, while the analytical mind is a rational mechanism which is responsible for consciousness. The reactive mind stores mental images which are not readily available to the analytical (conscious) mind; these are referred to as engrams. Engrams are believed to be painful and debilitating; as they accumulate, people move further away from their true identity. To avoid this fate is the Scientologist's basic goal. Dianetic training is the tool through which the Scientologist progresses towards the Clear state, winning gradual freedom from the reactive mind's engrams, and acquiring certainty of his or her reality as a thetan.</string>
+
+    <string id="zone-scientology-message-9-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-9-title">@cs-CZ Scientology beliefs and practices: Emotions and the mind</string>
+
+    <string id="zone-scientology-message-9-text">@cs-CZ Scientology uses an emotional classification system called the tone scale. The tone scale is a tool used in counseling; Scientologists maintain that knowing a person's place on the scale makes it easier to predict their actions and to assist them in bettering their condition.</string>
+
+    <string id="zone-scientology-message-10-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-10-title">@cs-CZ Scientology beliefs and practices: Survival and ethics</string>
+
+    <string id="zone-scientology-message-10-text">@cs-CZ Scientology emphasizes the importance of survival, which it subdivides into eight classifications that are referred to as dynamics. An individual's desire to survive is considered to be the first dynamic, while the second dynamic relates to procreation and family. The remaining dynamics encompass wider fields of action, involving groups, mankind, all life, the physical universe, the spirit, and the Supreme Being. The optimum solution to any problem is held to be the one that brings the greatest benefit to the greatest number of dynamics.</string>
+
+    <string id="zone-scientology-message-11-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-11-title">@cs-CZ Scientology beliefs and practices: Survival and ethics</string>
+
+    <string id="zone-scientology-message-11-text">@cs-CZ Scientology teaches that spiritual progress requires and enables the attainment of high ethical standards. In Scientology, rationality is stressed over morality. Actions are considered ethical if they promote survival across all eight dynamics, thus benefiting the greatest number of people possible while harming the fewest.</string>
+
+    <string id="zone-scientology-message-12-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-12-title">@cs-CZ Scientology beliefs and practices: ARC and KRC triangles</string>
+
+    <string id="zone-scientology-message-12-text">@cs-CZ The ARC and KRC triangles are concept maps which show a relationship between three concepts to form another concept. These two triangles are present in the Scientology logo. The lower triangle, the ARC triangle, is a summary representation of the knowledge the Scientologist strives for. It encompasses Affinity (affection, love or liking), Reality (consensual reality) and Communication (the exchange of ideas). Scientologists believe that improving one of the three aspects of the triangle "increases the level" of the other two, but Communication is held to be the most important. The upper triangle is the KRC triangle, the letters KRC positing a similar relationship between Knowledge, Responsibility and Control.</string>
+
+    <string id="zone-scientology-message-13-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-13-title">@cs-CZ Scientology beliefs and practices: ARC and KRC triangles</string>
+
+    <string id="zone-scientology-message-13-text">@cs-CZ In Scientology, social problems are ascribed to breakdowns in ARC – in other words, a lack of agreement on reality, a failure to communicate effectively, or a failure to develop affinity. These can take the form of overts – harmful acts against another, either intentionally or by omission – which are usually followed by withholds – efforts to conceal the wrongdoing, which further increase the level of tension in the relationship.</string>
+
+    <string id="zone-scientology-message-14-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-14-title">@cs-CZ Scientology beliefs and practices: Social and antisocial personalities</string>
+
+    <string id="zone-scientology-message-14-text">@cs-CZ While Scientology believes that many social problems are the unintentional results of people's imperfections, it states that there are also truly malevolent individuals. Hubbard believed that approximately 80 percent of all people are what he called social personalities – people who welcome and contribute to the welfare of others. The remaining 20 percent of the population, Hubbard thought, were suppressive persons. According to Hubbard, only about 2.5 percent of this 20 percent are hopelessly antisocial personalities; these make up the small proportion of truly dangerous individuals in humanity: "the Adolf Hitlers and the Genghis Khans, the unrepentant murderers and the drug lords." Scientologists believe that any contact with suppressive or antisocial individuals has an adverse effect on one's spiritual condition, necessitating disconnection.</string>
+
+    <string id="zone-scientology-message-15-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-15-title">@cs-CZ Scientology beliefs and practices: Social and antisocial personalities</string>
+
+    <string id="zone-scientology-message-15-text">@cs-CZ In Scientology, defectors who turn into critics of the movement are declared suppressive persons, and the Church of Scientology has a reputation for moving aggressively against such detractors. A Scientologist who is actively in communication with a suppressive person and as a result shows signs of antisocial behaviour is referred to as a Potential Trouble Source.</string>
+
+    <string id="zone-scientology-message-16-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Auditing</string>
+
+    <string id="zone-scientology-message-16-title">@cs-CZ Scientology beliefs and practices: Auditing</string>
+
+    <string id="zone-scientology-message-16-text">@cs-CZ Scientology asserts that people have hidden abilities which have not yet been fully realized. It is believed that increased spiritual awareness and physical benefits are accomplished through counseling sessions referred to as auditing. Through auditing, it is said that people can solve their problems and free themselves of engrams. This restores them to their natural condition as thetans and enables them to be at cause in their daily lives, responding rationally and creatively to life events rather than reacting to them under the direction of stored engrams. Accordingly, those who study Scientology materials and receive auditing sessions advance from a status of Preclear to Clear and Operating Thetan. Scientology's utopian aim is to "clear the planet", a world in which everyone has cleared themselves of their engrams.</string>
+
+    <string id="zone-scientology-message-17-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Auditing</string>
+
+    <string id="zone-scientology-message-17-title">@cs-CZ Scientology beliefs and practices: Auditing</string>
+
+    <string id="zone-scientology-message-17-text">@cs-CZ Auditing is a one-on-one session with a Scientology counselor or auditor. It bears a superficial similarity to confession or pastoral counseling, but the auditor does not dispense forgiveness or advice the way a pastor or priest might do. Instead, the auditor's task is to help the person discover and understand engrams, and their limiting effects, for themselves. Most auditing requires an E-meter, a device that measures minute changes in electrical resistance through the body when a person holds electrodes (metal "cans"), and a small current is passed through them. Scientology asserts that watching for changes in the E-meter's display helps locate engrams. Once an area of concern has been identified, the auditor asks the individual specific questions about it, in order to help them eliminate the engram, and uses the E-meter to confirm that the engram's "charge" has been dissipated and the engram has in fact been cleared. As the individual progresses, the focus of auditing moves from simple engrams to engrams of increasing complexity. At the more advanced OT auditing levels, Scientologists perform solo auditing sessions, acting as their own auditors.</string>
+
+    <string id="zone-scientology-message-18-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-18-title">@cs-CZ Scientology beliefs and practices: The Bridge to Total Freedom</string>
+
+    <string id="zone-scientology-message-18-text">@cs-CZ Spiritual development within Scientology is accomplished by studying Scientology materials. Scientology materials (called Technology or Tech in Scientology jargon) are structured in sequential levels (or gradients), so that easier steps are taken first and greater complexities are handled at the appropriate time. This process is sometimes referred to as moving along the Bridge to Total Freedom, or simply the Bridge. It has two sides: training and processing. Training means education in the principles and practices of auditing. Processing is personal development through participation in auditing sessions.</string>
+
+    <string id="zone-scientology-message-19-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-19-title">@cs-CZ Scientology beliefs and practices: The Bridge to Total Freedom</string>
+
+    <string id="zone-scientology-message-19-text">@cs-CZ The Church of Scientology believes in the principle of reciprocity, involving give-and-take in every human transaction. Accordingly, members are required to make donations for study courses and auditing as they move up the Bridge, the amounts increasing as higher levels are reached. Participation in higher-level courses on the Bridge may cost several thousand dollars, and Scientologists usually move up the Bridge at a rate governed by their income.</string>
+
+    <string id="zone-scientology-message-20-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-20-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-20-text">@cs-CZ The Church of Scientology holds that at the higher levels of initiation (OT levels) mystical teachings are imparted that may be harmful to unprepared readers. These teachings are kept secret from members who have not reached these levels. The Church states that the secrecy is warranted to keep its materials' use in context, and to protect its members from being exposed to materials they are not yet prepared for.</string>
+
+    <string id="zone-scientology-message-21-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-21-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-21-text">@cs-CZ These are the OT levels, the levels above Clear, whose contents are guarded within Scientology. The OT level teachings include accounts of various cosmic catastrophes that befell the thetans. Hubbard described these early events collectively as space opera.</string>
+
+    <string id="zone-scientology-message-22-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-22-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-22-text">@cs-CZ In the OT levels, Hubbard explains how to reverse the effects of past-life trauma patterns that supposedly extend millions of years into the past. Among these advanced teachings is the story of Xenu (sometimes Xemu), introduced as an alien ruler of the "Galactic Confederacy." According to this story, 75 million years ago Xenu brought billions of people to Earth in spacecraft resembling Douglas DC-8 airliners, stacked them around volcanoes and detonated hydrogen bombs in the volcanoes. The thetans then clustered together, stuck to the bodies of the living, and continue to do this today. Scientologists at advanced levels place considerable emphasis on isolating body thetans and neutralizing their ill effects.</string>
+
+    <string id="zone-scientology-message-23-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-23-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-23-text">@cs-CZ The material contained in the OT levels has been characterized as bad science fiction by critics, while others claim it bears structural similarities to gnostic thought and ancient Hindu myths of creation and cosmic struggle. J. Gordon Melton suggests that these elements of the OT levels may never have been intended as descriptions of historical events, and that, like other religious mythology, they may have their truth in the realities of the body and mind which they symbolize. He adds that on whatever level Scientologists might have received this mythology, they seem to have found it useful in their spiritual quest.</string>
+
+    <string id="zone-scientology-message-24-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-24-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-24-text">@cs-CZ The high-ranking OT levels are made available to Scientologists only by invitation, after a review of the candidate's character and contribution to the aims of Scientology. Individuals who have read these materials may not disclose what they contain without jeopardizing their standing in the Church. Excerpts and descriptions of OT materials were published online by a former member in 1995 and then circulated in mainstream media. This occurred after the teachings were submitted as evidence in court cases involving Scientology, thus becoming a matter of public record. There are eight publicly-known OT levels, OT I to VIII. The highest level, OT VIII, is only disclosed at sea, on the Scientology cruise ship Freewinds. It was released in the late 1980s. It has been rumored that additional OT levels, said to be based on material written by Hubbard long ago, will be released at some appropriate point in the future.</string>
+
+    <string id="zone-scientology-message-25-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-25-title">@cs-CZ Scientology beliefs and practices: Space opera and confidential materials</string>
+
+    <string id="zone-scientology-message-25-text">@cs-CZ There is a large Church of Spiritual Technology symbol carved into the ground at Scientology's Trementina Base that is visible from the air. Washington Post reporter Richard Leiby wrote, "Former Scientologists familiar with Hubbard’s teachings on reincarnation say the symbol marks a 'return point' so loyal staff members know where they can find the founder’s works when they travel here in the future from other places in the universe."</string>
+
+    <string id="zone-scientology-message-26-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Ceremonies</string>
+
+    <string id="zone-scientology-message-26-title">@cs-CZ Scientology beliefs and practices: Ceremonies</string>
+
+    <string id="zone-scientology-message-26-text">@cs-CZ In Scientology, ceremonies for events such as weddings, child naming, and funerals are observed. Friday services are held to commemorate the completion of a person's religious services during the prior week. Ordained Scientology ministers may perform such rites. However, these services and the clergy who perform them play only a minor role in Scientologists' religious lives.</string>
+
+    <string id="zone-scientology-message-27-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-27-title">@cs-CZ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-27-text">@cs-CZ In Dianetics, Hubbard gives credit to Francis Bacon and Herbert Spencer. Hubbard recalled meeting Cmdr. Joseph Cheesman Thompson, a U.S. Navy officer who studied with Sigmund Freud, when he was 12 years old, and when Hubbard wrote to the American Psychological Association in 1949, he stated that he was conducting research based on the "early work of Freud". Scientology's view of the mind has some similarities to the Freudian one.</string>
+
+    <string id="zone-scientology-message-28-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-28-title">@cs-CZ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-28-text">@cs-CZ In the 1940s, Hubbard was in contact with Jack Parsons, a rocket scientist and member of the Ordo Templi Orientis then led by Aleister Crowley, and there have been suggestions that this connection influenced some of the ideas and symbols of Scientology. Religious scholars like Gerald Willms and J. Gordon Melton have pointed out that the teachings of Crowley's "satanism" bear little if any resemblance to Scientology doctrine.</string>
+
+    <string id="zone-scientology-message-29-url">@cs-CZ http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-29-title">@cs-CZ Scientology beliefs and practices: Influences</string>
+
+    <string id="zone-scientology-message-29-text">@cs-CZ As noted, there are elements of Eastern religions evident in Scientology, in particular the concepts of karma, as present in Hinduism and in Jainism, and dharma. In addition to the links to Hindu texts, Hubbard tried to connect Scientology with Taoism and Buddhism. Scientology has been said to share features with Gnosticism as well.</string>
+
+
+</strings>
