@@ -1,0 +1,1537 @@
+<html>
+  <head>
+    <title>Constructionist Educational Open Source SimCity, by Don Hopkins, at HAR 2009.</title>
+  </head>
+  <body>
+    <h1>HAR 2009: Lightning talks Friday 9/14</h1>
+    Illustrated transcript of the
+    <a
+      href="http://www.youtube.com/watch?v=_9oy0LjGXnM&feature=&p=3509FB083052CD90&index=0&playnext=1&t=7m20s"
+    >YouTube Video: HAR 2009: Lightning talks Friday 9/14</a>.
+
+    <br style="clear: both;"/>
+    <br/>
+
+    <a
+      href="images/Don_Hopkins_OLPC.jpg"
+    ><img
+        style="float: left; padding-right: 10px;"
+        src="images/Don_Hopkins_OLPC_Thumb.jpg"
+        width="300"
+        height="273"
+        border="0"
+    /></a>
+
+    <a
+      href="images/SimCity_Classic_Cover_Art.jpg"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/SimCity_Classic_Cover_Art_Thumb.jpg"
+        width="162"
+        height="200"
+    /></a>
+
+    <h2>
+      Constructionist Educational Open Source SimCity
+    </h2>
+
+    <h3>
+      By <a href="http://en.wikipedia.org/wiki/Don_Hopkins" target="_new">Don Hopkins</a><br/>
+      <a href="http://www.stupidfunclub.com" target="_new">Stupid Fun Club</a>, Amsterdam<br/>
+      Email: <a href="mailto:don@DonHopkins.com" target="_new">don@DonHopkins.com</a><br/>
+      Blog: <a href="http://www.DonHopkins.com" target="_new">http://www.DonHopkins.com</a><br/>
+      Demo: <a href="http://www.MicropolisOnline.com" target="_new">http://www.MicropolisOnline.com</a><br/>
+      Project: <a href="http://code.google.com/p/micropolis" target="_new">http://code.google.com/p/micropolis</a><br/>
+      Facebook: <a href="http://apps.facebook.com/micropolisonline" target="_new">http://apps.facebook.com/micropolisonline</a><br/>
+    </h3>
+
+    <br style="clear: both;"/>
+    <br/>
+
+    <a
+      href="images/SimCity_HyperLook.gif"
+    ><img
+        style="float: left; padding-right: 10px;"
+        src="images/SimCity_HyperLook_Thumb.jpg"
+        width="200"
+        height="156"
+    /></a>
+
+    <a
+      href="images/SimCity_X11.gif"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/SimCity_Indigo_Thumb.jpg"
+        width="200"
+        height="150"
+    /></a>
+
+    <p>
+      I'm Don Hopkins, and this is the 
+      <a href="http://en.wikipedia.org/wiki/Micropolis_(software)" target="_new">Micropolis</a>
+       Online project.
+    </p>
+
+    <p>
+      I'll give you a quick history, and then try to get through the slides
+      to the demo.
+    </p>
+
+    <p>
+      I started working on 
+      <a href="http://en.wikipedia.org/wiki/SimCity" target="_new">SimCity</a>
+      about 1992.
+    </p>
+
+    <p>
+      When I saw it at 
+      <a href="http://www.cs.umd.edu/hcil/" target="_new">college</a>
+      before that, I just fell in love with it, and really wanted to
+      figure out how it worked, and do stuff with the user
+      interface and everything.
+    </p>
+
+    <p>
+      So when I had the chance to port 
+      <a href="http://www.art.net/~hopkins/Don/hyperlook/SimCity.README" target="_new">SimCity to the Sun Workstation</a>,
+      I jumped at that, and made a version of it using the 
+      <a href="http://en.wikipedia.org/wiki/NeWS">NeWS</a>
+      window system,
+      James Gosling's
+      PostScript based window system.
+    </p>
+
+    <p>
+      And then I developed an 
+      <a href="http://www.art.net/~hopkins/Don/simcity/simcity-announcement.html" target="_new">X11 version of SimCity</a>,
+      which was multi player. We sold that as a
+      Unix product. Then the contract expired on that.
+    </p>
+
+    <p>
+      Later on I went on to 
+      <a href="http://en.wikipedia.org/wiki/Maxis" target="_new">Maxis</a>
+      to work on 
+      <a href="http://en.wikipedia.org/wiki/The_Sims" target="_new">The Sims</a>
+      with
+      <a href="http://en.wikipedia.org/wiki/Will_Wright_(game_designer)" target="_new">Will Wright</a>.
+    </p>
+
+    <a
+      href="images/Will_Wright.jpg"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/Will_Wright_Thumb.jpg"
+        width="200"
+        height="168"
+    /></a>
+
+    <p>
+      I dredged up this SimCity code, and we talked Electronic Arts into
+      making it open source under the
+      <a href="http://en.wikipedia.org/wiki/Gpl_v3#Version_3" target="_new">GPLv3</a>
+      a few years ago.
+    </p>
+
+    <p>
+      The argument -- not the argument: actually they were very pleasant
+      about it -- the thing that convinced them that it was a good idea was
+      the
+      <a href="http://en.wikipedia.org/wiki/Olpc" target="_new">One Laptop Per Child</a>
+      project.
+    </p>
+
+    <p>
+      Because the OLPC project is focused on 
+      "<a href="http://en.wikipedia.org/wiki/Constructionist_learning" target="_new">Constructionist Education</a>",
+      which is about children learning -- anyone learning, by building
+      things.
+    </p>
+
+    <p>
+      And SimCity is pretty much the 
+      <a href="http://www.donhopkins.com/drupal/node/129" target="_new">quintessential constructionist education game</a>.
+    </p>
+
+    <p>
+      But it need to be
+      <a href="http://www.donhopkins.com/drupal/node/145" target="_new">opened up</a>,
+      so that it can be even better.
+    </p>
+
+    <img
+      style="float: right; padding-left: 10px;"
+      src="images/Seymour_Papert.jpg"
+      width="170"
+      height=" 198"
+    />
+
+    <p>
+      This OLPC project is based on 
+      <a href="http://en.wikipedia.org/wiki/Seymour_Papert" target="_new">Seymour Papert's</a>
+      ideas about 
+      <a href="http://en.wikipedia.org/wiki/Logo_programming_language" target="_new">teaching children to program</a>,
+      even when they're very young, and 
+      <a href="http://en.wikipedia.org/wiki/Alan_Kay" target="_new">Alan Kay's</a>
+      ideas about the 
+      <a href="http://en.wikipedia.org/wiki/Dynabook" target="_new">Dynabook</a>
+      and
+      <a href="http://en.wikipedia.org/wiki/Object-oriented_programming" target="_new">object oriented programming</a>,
+      and
+      <a href="http://en.wikipedia.org/wiki/Mobile_learning" target="_new">how kids learn</a>.
+    </p>
+
+    <p>
+      And one of the important things about constructionism is kids helping
+      each other, communicating and teaching each other.
+    </p>
+
+    <p>
+      I took the old X11 version, and I had made it multi player for
+      X-Windows, but I simplified it and took that out for this. 
+      Now that
+      <a href="http://www.youtube.com/watch?v=EpKhh10K-j0" target="_new">runs on the OLPC</a>.
+    </p>
+
+    <p>
+      What we really needed to do was to make a new version that had a much
+      better user interface designed to take advantage of the things the
+      OLPC can do.
+    </p>
+
+    <p>
+      Fortunately, the OLPC project chose to use
+      <a href="http://wiki.laptop.org/go/Python" target="_new">Python</a>
+      as the official scripting language. Python is a
+      <a href="http://www.livewires.org.uk/python/home" target="_new">powerful, easy to learn language</a>,
+      that is
+      <a href="http://www.python.org/community/sigs/current/edu-sig/" target="_new">widely used in education</a>. 
+    </p>
+
+    <p>
+      But let me go on:
+    </p>
+
+    <h2>
+      Micropolis Project Goals
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Develop a fun web based educational game, based on the original
+          SimCity source code.
+          <ul>
+            <li>
+              Focused on constructionist education.
+            </li>
+            <li>
+              Built out of free open source software.
+            </li>
+            <li>
+              Runs on the server, plays in the browser.
+            </li>
+            <li>
+              Supports collaborative, democratic, multi-user play.
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </h3>
+
+    <a
+      href="images/Terrapin_Turtle.jpg"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/Terrapin_Turtle_Thumb.jpg"
+        width="200"
+        height="176"
+    /></a>
+
+    <p>
+      The goals: We want to make a fun game that's based on the original
+      souce code.
+    </p>
+
+    <p>
+      And "Constructionist Education" is a the overall theme, but it's very
+      hard to figure out how that actually manifests itself in a game.
+    </p>
+
+    <p>
+      We're using free open source software, distributing it over the
+      web, and running it on centralized servers.
+    </p>
+
+    <p>
+      We want to put in features to support collaboration, voting,
+      teach democracy, and also teach language skills and
+      interpersonal communication skills.
+    </p>
+
+    <h2>
+      Accomplishments So Far
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Ported and shipped the TC L/Tk/X11 version of Micropolis
+          on the One Laptop Per Child XO-I.
+        </li>
+        <li>
+          Developed a cross platform, desktop version of Micropolis, based
+          on GTK/Python.
+        </li>
+        <li>
+          Developed an open source ,internationalized, web based version
+          of Micropolis.
+        </li>
+        <li>
+          Client based on OpenLaszlo/Flash.
+        </li>
+        <li>
+          Server based on TurboGearsPython/C++.
+        </li>
+        <li>
+          Renovated, re-factored and documented the code.
+        </li>
+        <li>
+          Established a solid groundwork and open framework for developing
+          an educational, collaborative, multi-player game.
+        </li>
+      </ul>
+    </h3>
+
+    <a
+      href="images/SimCity_OLPC.jpg"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/SimCity_OLPC_Thumb.jpg"
+        width="194"
+        height="200"
+    /></a>
+
+    <p>
+      So far what I've done: First, we took the old
+      <a href="http://en.wikipedia.org/wiki/Tcl">TCL/Tk/X11</a>
+      version, cleaned it up, got it through EA's Quality Assurance,
+      and put it on the One Laptop Per Child.
+    </p>
+
+    <p>
+      Then we stripped down the code, translated it into C++, then
+      cleaned it up, refactored it, and took out all the user
+      interface. Then we started building a new user interface on top
+      of that.
+    </p>
+
+    <p>
+      I had some really great help from some talented people. 
+      <a href="http://en.wikipedia.org/wiki/John_Gilmore_(activist)" target="_new">John Gilmore</a>
+      supported me for many years during the development of SimCity,
+      and shepherded it through the complex legal process of
+      relicensing it under GPLv3.
+    </p>
+
+    <p>
+      <a href="http://yp.wtb.tue.nl/se/showemp_t3.php/873" target="_new">Albert Hofkamp</a>
+      is a software developer at the Eindhoven University of
+      Technology. He helped me clean up this code, and put Doxygen
+      documentation into it. Now the code is much sturdier and easier
+      to do something with.
+    </p>
+
+    <p>
+      <a href="http://portfoliovantom.blogspot.com/" target="_new">Tom Tjon A Loi</a>
+      is a an artist who's also helping on the project. I'll
+      show you some ideas that we've put togther about what direction it's
+      going to go in the future.
+    </p>
+
+    <p>
+      And also we're benefiting from 
+      <a href="http://www.kennisnet.nl" target="_new">Kennisnet</a>
+      and
+      <a href="http://www.ibm.com/nl/nl/" target="_new">IBM Netherlands</a>,
+      who are helping us make an educational version of this game.
+    </p>
+
+    <p>
+      The OLPC has been something for people to focus on, and get a
+      bunch of people on board to make this happen. But we want
+      Micropolis to run on as many different platforms as possible.
+    </p>
+
+    <p>
+      What's really wonderful is that I have had some really great
+      conversations about this and encouragement from Alan Kay, who has been
+      trying to do this stuff for years with kids.
+    </p>
+
+    <p>
+      <a href="http://www.donhopkins.com/drupal/node/134" target="_new">Alan Kay's criticism of SimCity</a>
+      is that you can't see inside of it and understand what it's
+      doing, and you have to accept it as a black box. So now I'm
+      trying to solve that problems.
+    </p>
+
+    <h2>
+      Open Source Software
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Micropolis is built with a carefully chosen, well proven, widely
+          supported set of open source ,cross platform tools and libraries.
+        </li>
+        <li>
+          Micropolis itself and its TileEngine module are open source
+          (GPL3). The client runs on the proprietary Adobe Flash
+          player. The client will also run in standard browsers with a
+          little more work, thanks to OpenLaszlo.
+        </li>
+        <li>
+          Linux. Apache. MySQL. Python. Cairo. Pango. GTK. GCC. SWIG. 
+          PyCairo. PyGTK. TurboGears. Genshi. SQLAlchemy. CherryPy. 
+          PyAMF. AMFast. Pie menus. OpenLaszlo. Red5. Java. Tomcat.
+          MediaWiki. PHP. Subversion. Doxygen.
+        </li>
+      </ul>
+    </h3>
+
+    <a
+      href="images/Tux.jpg"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/Tux_Thumb.jpg"
+        width="167"
+        height="200"
+    /></a>
+
+    <p>
+      We're using a whole bunch of
+      <a href="http://en.wikipedia.org/wiki/Free_open_source_software" target="_new">Free and open source software</a>,
+      building on top of it, and then making new software that's open
+      source.
+    </p>
+
+    <p>
+      One of the things that the OLPC project wants 
+      <a href="http://wiki.laptop.org/go/Game_development" target="_new">game developers</a>
+      to do is to make games out of modular components that can be
+      plugged together to make other games.
+    </p>
+
+    <p>
+      So I've been separating out the
+      <a href="http://code.google.com/p/micropolis/source/browse/#svn%2Ftrunk%2FMicropolisCore%2Fsrc%2FCellEngine%2Fsrc" target="_new">tile engine</a>
+      of SimCity, and the sprites, and the sound, and trying to make
+      those work for other things.
+    </p>
+
+    <h2>
+      Web Server and Client
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Server: Linux, Apache, MySQL, Python, TurboGears, SWIG, C++
+          <ul>
+            <li>
+              Portable, cross platform C++ and Python code.
+            </li>
+            <li>
+              Linux and Unix
+            </li>
+            <li>
+              Mac OS/X
+            </li>
+            <li>
+              Windows (not currently maintained but viable)
+            </li>
+            <li>
+              Deploys on standard Fedora Linux server, i.e. Amazon Elastic
+              Computing Server, etc.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Client: OpenLaszlo, XML, JavaScript, AMF
+          <ul>
+            <li>
+              Web based client runs in Adobe Flash player, widely supported on
+              most web browsers and operating systems.
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </h3>
+
+    <a
+      href="images/Micropolis_OpenLaszlo.png"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/Micropolis_OpenLaszlo_Thumb.png"
+        width="200"
+        height="170"
+    /></a>
+
+    <p>
+      The architecture of the web version is that there's a C++ game. And
+      I'm using
+      <a href="http://www.swig.org" target="_new">SWIG</a>,
+      a tool for making wrappers for libraries, and plugging
+      them into extension language. And it lets you get your library to a
+      whole bunch of different extension languages. So right now it's
+      Python, but it could be Lua or Java or whatever.
+    </p>
+
+    <p>
+      There's another layer, which is gluing the game into Python. And the
+      nice thing about SWIG, is that you can subclass your C++ classes in
+      Python, and then just script everything in a nice language. 
+    </p>
+
+    <p>
+      It's all open source stuff. 
+    </p>
+
+    <p>
+      The web server does HTTP and it does 
+      <a href="http://en.wikipedia.org/wiki/Action_Message_Format" target="_new">Adobe AMF</a>,
+      which is kind of like binary JSON for Flash.
+    </p>
+
+    <p>
+      Now I'm doing the client in another open source scripting language called 
+      <a href="http://www.openlaszlo.org" target="_new">OpenLaszlo</a>. 
+      It's like JavaScript and XML that gets compiled into Flash. 
+      But it will also compile into generic DHTML. 
+    </p>
+
+    <a
+      href="images/Micropolis_GTK.png"
+    ><img
+        style="float: right; padding-left: 10px;"
+        src="images/Micropolis_GTK_Thumb.png"
+        width="200"
+        height="156"
+    /></a>
+
+    <p>
+      Right now I'm concentrating on just getting the Flash interface
+      working, and once the paint's dry on that, I can then do the parts
+      that were Flash specific using the Canvas and DHTML and things.
+    </p>
+
+    <p>
+      The intention is to get it independent of Flash, but Flash is the
+      fastest way to get it working first.
+    </p>
+
+    <p>
+      The other thing I have is a Python scripted GTK based user
+      interface, for the desktop.
+    </p>
+
+    <h2>
+      Internationalization
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          All text comes from Unicode XML localization files, so the 
+          text can be translated to support different languages and 
+          countries.
+        </li>
+        <li>
+          Currently supports English and Dutch, but other languages are
+          easy to add, given translation resources.
+        </li>
+        <li>
+          Web based tools for conveniently reviewing and editing
+          translations.
+        </li>
+        <li>
+          This is a very important feature, since we're initially
+          delivering to the Dutch educational system, and we intend
+          to support many other languages in the future.
+        </li>
+      </ul>
+    </h3>
+
+    <p>
+      Another important thing is internationalizing it and taking all the
+      strings out. I would love to have volunteers to help translate it to
+      other languages. I made a little web based tool to do that. We're
+      doing this for the Dutch educational system, with Kennisnet's support.
+    </p>
+
+    <h2>
+      Multi Player Collaboration
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Deisgned, developed and shipped a multi-player X11 version of
+          SimCity in 1993 for DUX Software, demonstrated in Amsterdam 
+          at INTERCHI '93.
+        </li>
+        <li>
+          Micropolis has been systematically redesigned with multi-player
+          collaboration and constructionist education in mind.
+        </li>
+        <li>
+          Currently laying the groundwork for multi player and online
+          community support, while getting the single player game up and
+          running first.
+        </li>
+        <li>
+          User accounts. Saved cities. Shared cities. Chat. Robots and
+          Avatars. Basic MediaWiki integration. Client/server session,
+          messaging and simulation engine plumbing.
+        </li>
+      </ul>
+    </h3>
+
+    <a
+      href="images/SimCity_Sun.jpg"
+    ><img
+        style="padding-left: 10px;"
+        src="images/SimCity_Sun_Thumb.jpg"
+        width="200"
+        height="156"
+    /></a>
+
+    <a
+      href="images/SimCity_Indigo.jpg"
+    ><img
+        style="padding-left: 10px;"
+        src="images/SimCity_Indigo_Thumb.jpg"
+        width="200"
+        height="150"
+    /></a>
+
+    <a
+      href="images/SimCity_NCD.jpg"
+    ><img
+        style="padding-left: 10px;"
+        src="images/SimCity_NCD_Thumb.jpg"
+        width="200"
+        height="156"
+    /></a>
+
+    <p>
+      Previously I made a 
+      <a href="http://www.art.net/~hopkins/Don/simcity/simcitynet.html" target="_new">multi player version of this for X11</a>.
+      But X11 doesn't scale very well, and it was kind of an experiment. 
+    </p>
+
+    <p>
+      But it did test out some ideas of making it a collaborative,
+      cooperative game, instead of a competitive game.
+    </p>
+
+    <p>
+      I didn't want to mess up the game, but I wanted to layer another
+      social game on top of it.
+    </p>
+
+    <p>
+      We're all sharing the same money, we're trying to achieve the same
+      goals, so if somebody does something that pisses you off, you're going
+      to be mad at them, and won't play with them. That will play out at a
+      higher level than the game.
+    </p>
+
+    <p>
+      It's got voting for expensive things, like making a nuclear power
+      plant, or changing the taxes. And the non-expensive things are just a
+      free-for-all.
+    </p>
+
+    <p>
+      I want to re-visit the multi player game, but first get a really solid
+      base to build it on top of. So doing a web based game is the best way
+      to do that.
+    </p>
+
+    <h2>
+      Constructionist Education
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          The original SimCity game was an exemplary constructionist
+          educational game, which has been successfully used in many
+          classrooms, but it was a closed commercial product, not
+          specifically designed to support education.
+        </li>
+        <li>
+          Since Micropolis is open source SimCity, we can open up,
+          renovate, visualize, document and extend it in wonderful ways,
+          to specifically support constructionist education, social
+          netowrking and collaborative democratic play.
+        </li>
+        <li>
+          "One of the most wonderful possibilities about this venture is
+          that it will bring together very fluent designers from many 
+          worlds of compting (more worlds than usually combine to make a 
+          game) in the service of the children. We should really try to 
+          pull this off!" -Alan Kay
+        </li>
+      </ul>
+    </h3>
+
+    <img
+      style="float:right; padding-left: 10px;"
+      src="images/MediaWiki_Thumb.png"
+      width="200"
+      height="173"
+    />
+
+    <p>
+      I'm adding stuff, like integrating it with 
+      <a href="http://en.wikipedia.org/wiki/Mediawiki" target="_new">MediaWiki</a>. 
+    </p>
+
+    <p>
+      One of the important things about Constructionist Education is getting
+      people to help each other out, and chat.
+    </p>
+
+    <p>
+      I want to teach language skills with this. Not just how to be a good
+      mayor. That's not the goal. It's how to write about what you want to
+      do, and convince other people to vote for it.
+    </p>
+
+    <p>
+      I think it's going to be nice to embed this in things like 
+      <a href="http://apps.facebook.com/micropolisonline" target="_new">Facebook</a>
+      and
+      <a href="http://en.wikipedia.org/wiki/Mediawiki" target="_new">MediaWiki</a>,
+      because what you're doing is writing stories and
+      newspapers, and blogging.
+    </p>
+
+    <a
+      href="images/The_Sims_Box.jpg"
+    ><img
+        style="float:right; padding-left: 10px; clear: both;"
+        src="images/The_Sims_Box_Thumb.jpg"
+        width="183"
+        height="200"
+    /></a>
+
+    <p>
+      The Sims 1 (and later versions) had something called 
+      <a href="http://www.thesims3.com/exchange" target="_new">The Sims Exchange</a>,
+      where when you save your game file, it also writes out a bunch
+      of web files, that describe your house, your family, the story
+      you've told about them with pictures. And then it uploads that
+      to the web.
+    </p>
+
+    <p>
+      So really, playing the game is a web publishing tool. I want to apply
+      those ideas to SimCity, and that would be in the form of a
+      newspaper. So you could act as a journalist when something
+      happened. 
+    </p>
+
+    <p>
+      These events in the game are generating opportunities for you to click
+      on it, open it up, and write about what your interpretation of it
+      is. And then authmatically push it into a wiki page or a blog.
+    </p>
+
+    <p>
+      So the result of playing a game will be this rich save file that has
+      points of interest with stories attached to them. You could look at it
+      geographically as a map, to see all the points of interest. You could
+      look at it as a calandar, like a blog. And then all these things that
+      happened with the story can link to a save file, so you can then jump
+      back into the game at that point.
+    </p>
+
+    <a
+      href="images/Don_Hopkins_Handwaving.jpg"
+    ><img
+        style="float:right; padding-left: 10px; clear: both;"
+        src="images/Don_Hopkins_Handwaving_Thumb.jpg"
+        width="200"
+        height="121"
+    /></a>
+
+    <p>
+      I want to make sort of like TiVo for SimCity, is the eventual
+      goal. You have all these save file snapshots, and then you can fast
+      forward and reverse by replaying the edits that you did.
+    </p>
+
+    <p>
+      You can imagine that when you play game, at any point, if you decide
+      "let's raise taxes", you could make a checkpoint there. And then you
+      could revisit that decision, and then branch reality out to another
+      thing, if you didn't raise taxes.
+    </p>
+
+    <p>
+      I want players to be able to make a tree of possibilities, and then
+      share all these save files, and then comment on them, and write about
+      them.
+    </p>
+
+    <p>
+      That's where the educational stuff comes in. The teacher should be
+      able to write scenarios that plug into the game, that generate events,
+      and give people things to discuss.
+    </p>
+
+    <a
+      href="images/Alan_Kay.jpg"
+    ><img
+        style="float:right; padding-left: 10px;"
+        src="images/Alan_Kay_Thumb.jpg"
+        width="200"
+        height="255"
+    /></a>
+
+    <p>
+      Alan Kay said some really wonderful things about the project to
+      bring open source SimCity to the OLPC:
+    </p>
+
+    <p>
+      <blockquote>
+        "One of the most wonderful possibilities about this venture is that
+        it will bring together very fluent designers from many worlds of
+        compting (more worlds than usually combine to make a game) in the
+        service of the children. We should really try to pull this off!"
+        -<a href="http://www.donhopkins.com/drupal/node/145" target="_new">Alan Kay</a>
+      </blockquote>
+    </p>
+
+    <p>
+      I'm looking for volunteers. I never thought I'd be working directly or
+      indirectly with Alan Kay, so it just blew my mind that he was
+      interested in it. And he's very supportive.
+    </p>
+
+    <p>
+      Here's the long term goal: There's a game, and there's a robot or a
+      monster. You double click on a monster, and it should open up a window
+      that has a visual program that controls how it behaves.
+    </p>
+
+    <p>
+      This has already been done in the 80's on the Apple ][, and it was a
+      game called 
+      <a href="http://en.wikipedia.org/wiki/Robot_Odyssey" target="_new">Robot Odyssey</a>,
+      by
+      <a href="http://en.wikipedia.org/wiki/Warren_Robinett" target="_new">Warren Robinett</a>,
+      who made
+      <a href="http://en.wikipedia.org/wiki/Adventure_(Atari_2600)" target="_new">Atari Adventure</a>. 
+      And it was so before its time. It turns out that it is one of
+      <a href="http://www.donhopkins.com/drupal/node/139" target="_new">Alan Kay's favorite games</a>,
+      and that he's 
+      <a href="http://www.donhopkins.com/drupal/node/145" target="_new">waiting for the other shoe to drop</a>. 
+    </p>
+
+    <p>
+      Robot Odyssey taught
+      <a href="http://en.wikipedia.org/wiki/Visual_programming_language" target="_new">visual programming</a>
+      and logic to kids. You go inside a robot, and it's a room, with
+      plugs and sensors, and you have logic parts that you can bring
+      out, and make a circuit inside that robot.
+    </p>
+
+    <p>
+      What I'm trying to do -- oh I'd better get to the demo -- is do this
+      within SimCity. And with a visual programming language that's just a
+      layer on top of 
+      <a href="http://en.wikipedia.org/wiki/Python_(programming_language)" target="_new">Python</a>.
+      We already have Python. I like Python. It's well designed. I'm
+      not going to try to invent something different, I just want to
+      give you a visual way to get to anything.
+    </p>
+
+    <img
+      style="padding-right: 10px; padding-bottom: 10px;"
+      src="images/Robot_Odyssey_2.png"
+      width="320"
+      height="200"
+    />
+
+    <img
+      style="padding-right: 10px; padding-bottom: 10px;"
+      src="images/Robot_Odyssey_8.png"
+      width="280"
+      height="192"
+    />
+
+    <br/>
+
+    <img
+      style="padding-right: 10px; padding-bottom: 10px;"
+      src="images/Robot_Odyssey_3.png"
+      width="322"
+      height="194"
+    />
+
+    <img
+      style="padding-right: 10px; padding-bottom: 10px;"
+      src="images/Robot_Odyssey_5.jpg"
+      width="280"
+      height="192"
+    />
+
+    <br/>
+
+    <h2>
+      Educational Applications
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Encourage creative writing by blogging, twittering, chatting,
+          debating, writing and publishing newspaper articles about 
+          events and issues in the city.
+        </li>
+        <li>
+          Teach democratic processes. Writing proposals. Campaigning for
+          support. Discussing and debating issues. Voting on bills.
+        </li>
+        <li>
+          Publish wiki pages with interactive annotated maps, timelines of
+          events and creative writing about hte cities.
+        </li>
+        <li>
+          Open up the simulator to enable plug-in programmable zones,
+          tools, robots, avatars, events, policies, coursewar, etc.
+        </li>
+        <li>
+          Teach older kids to program Python and C++. Implement a visual
+          behavior programming language (like Robot Odyssey and
+          SimAntics). Teach younger kids to think logically and program
+          robots (like Logo turtles and Lego Robotics).
+        </li>
+      </ul>
+    </h3>
+
+    <img
+        style="float:right; padding-left: 10px;"
+        src="images/Schoolhouse_Rock.jpg"
+        width="191"
+        height="200"
+    />
+
+    <p>
+      How does Constructionist Education manifest itself in something 
+      like SimCity?
+    </p>
+
+    <p>
+      Creative writing, blogging, twittering and chatting: and all this
+      social stuff that people do.
+    </p>
+
+    <p>
+      Democracy. Writing proposals. Trying to get somebody to support your
+      proposal. Publishing things into wikis. 
+    </p>
+
+    <p>
+      Opening it up to enable plugin programming. The first step is to look
+      at the code to see how it works. And then tweak it and change it, and
+      then make your whole new thing.
+    </p>
+
+    <p>
+      The older kids I want to teach Python and C++ programmming.
+    </p>
+
+    <p>
+      And then younger kids will have this easier, higher level language to
+      do logic.
+    </p>
+
+    <p>
+      This is version three. I'm only at version one right now. 
+    </p>
+
+    <h2>
+      Next Steps
+    </h2>
+
+    <h3>
+      <ul>
+        <li>
+          Shared city library. Ratings. Tagging. Journals. Discussions. 
+          Linking. History browsing. Sharing. Voting. Profiles. Friends.
+        </li>
+        <li>
+          Text, voice and video chat. In-game chat with avatars on the
+          map. Integrated video player for help, tutorials and
+          lessons. Integrated html frame for synchronized web browsing.
+        </li>
+        <li>
+          MediaWiki integration, to support creative writing by students
+          and courseware development by teachers.
+        </li>
+        <li>
+          PayPal integrations. Donations, subscriptions and
+          microp-payments, for virtual money, cheats, high speed 
+          simulation, extra storage, fund raising, etc.
+        </li>
+      </ul>
+    </h3>
+
+    <img
+      src="images/Facebook_Thumb.png"
+      style="float:right; padding-left: 10px;"
+      width="200"
+      height="200"
+    />
+
+    <p>
+      I have the web server running. I want to put in sharing a city,
+      tagging, journals, discussions, you know, the whole social net
+      thing. It occurrs to me that maybe I should just let Facebook handle 
+      a lot of that stuff. I'll just make a
+      <a href="http://apps.facebook.com/micropolisonline" target="_new">Facebook</a>
+      application.
+    </p>
+
+    <p>
+      Slow the game down a lot, so on your Facebook page it will let your
+      friends vote on things. I'm getting ahead of myself. 
+    </p>
+
+    <p>
+      <a href="http://en.wikipedia.org/wiki/Mediawiki" target="_new">MediaWiki</a>
+      integration. Take well known things that solve a problem
+      well, and piggy back on top of them, instead of trying to invent your
+      own things.
+    </p>
+
+    <p>
+      PayPay, so we can pay for all the CPU time it takes.
+    </p>
+
+    <h2>
+      Social Networking
+    </h2>
+
+    <p>
+      Tom Tjon A Loi made these mock-ups of what SimCity could look like inside a
+      social network.
+    </p>
+
+    <h2>
+      Identity
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_011.png"
+    ><img
+        src="images/HAR2009_Slides_011_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      The important thing is that you have to have an identity. It knows
+      about you.
+    </p>
+
+    <h2>
+      Voting
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_012.png"
+    ><img
+        src="images/HAR2009_Slides_012_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      You've got friends, and this could be a Facebook app. If you add the
+      app, you can do all this stuff and play it yourself. But even if you
+      don't add the app, you can still what other people are doing.
+    </p>
+
+    <h2>
+      Citizen
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_013.png"
+    ><img
+        src="images/HAR2009_Slides_013_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      It's all about having people see what you're doing, and explaining it
+      to them.
+    </p>
+
+    <h2>
+      Journal
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_014.png"
+    ><img
+        src="images/HAR2009_Slides_014_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      You can have these links into the save files, and people saying
+      things. I want to make it so one game might last a week, and take
+      little steps.
+    </p>
+
+    <h2>
+      Community
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_015.png"
+    ><img
+        src="images/HAR2009_Slides_015_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      What I have already made to prove the concept of plugins, is plugin
+      zones. The first plugin zone I made was a plugin church, because
+      that's contraversial and will upset people. 
+    </p>
+
+    <p>
+      The idea is that I want to be able to script churches in Python. The
+      other plugin is a plugin character.
+    </p>
+
+    <h2>
+      Chat
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_016.png"
+    ><img
+        src="images/HAR2009_Slides_016_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      In a multiplayer game, there could be several people in the same game,
+      and you're on the map in a place, and you can chat embedded in the
+      game, with collaborative editing.
+    </p>
+
+    <p>
+      If you put something down, it would put an interface that says: "Hey,
+      somebody wants to make this. Do you vote for it? Yes or no." And then
+      have a chat associated with that.
+    </p>
+
+    <h2>
+      Squatters
+    </h2>
+
+    <a
+      href="images/HAR2009_Slides_017.png"
+    ><img
+        src="images/HAR2009_Slides_017_Thumb.png"
+        width="400"
+        height="300"
+    /></a>
+    <br/>
+
+    <p>
+      And then imagine
+      <a href="http://hubpages.com/hub/cityville-franchises">other people could come into you game</a>,
+      and find: "Hey this zone is not developed. We're going to put a coffeeshop here!"
+    </p>
+
+    <p>
+      I want it eventually to be open enough that other people can come in
+      and effect your game. And of course you always have a save file.
+    </p>
+
+    <h2>
+      Micropolis Demo
+    </h2>
+
+    <p>
+      There's a tool for doing translations. 
+    </p>
+
+    <img
+      src="images/Micropolis_Translations.jpg"
+      width="540"
+      height="405"
+    />
+    <br/>
+
+    <p>
+      It's all in 
+      <a href="http://code.google.com/p/micropolis" target="_new">Google Code</a><br/>.
+    </p>
+
+    <img
+        src="images/Micropolis_Google_Code.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Ah, that's the robot! I wanted to 
+      <a href="http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py" target="_new"show some code</a>.
+      This is how PacMan works. He follows the road.
+    </p>
+
+    <p>
+      So I wrote a plugin robot that you can put into the thing. 
+    </p>
+
+    <img
+        src="images/Micropolis_Robot_Code.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      I'd better get to the actual code that's running. 
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_01.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      These are the different scenarios, we could load, or generate
+      something randomly. Here, we'll do one of my favorite cities here. I
+      made this city.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_02.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      This is a neat kind of a
+      <a href="http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/TileEngine/src/tileengine.cpp" target="_new">lazy tile view</a>.
+      There are 120 by 100 tiles on the server, and we're telling the
+      server where we're looking at. And it's sending just the tiles
+      that we need to see.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_03.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Things that happen in the city get logged, and there's a chat. 
+    </p>
+
+    <p>
+      This will help you figure out what you need to do to improve you
+      city. 
+    </p>
+
+    <p>
+      This is a history. 
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_04.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Here's the nice one here: we can raise taxes a lot. It was so funny
+      because the taxes in the Netherlands are so much more than 20%. 
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_05.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      We can look at the population density map overlay.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_06.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Ok, now here's a meltdown. And when you get a meltdown, the notice
+      window says "Hey there's a meltdown!", and has a live view showing it,
+      that you can click on to go there.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_07.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Now this little window up here, when something interesting happens in
+      the game, will show you a live view, and tell you something. But we
+      can also have a link to Wikipedia or whatever.
+    </p>
+
+    <p>
+      I want to put in more educational stuff. Like the church says "Hey,
+      did you know that Scientologists believe this?" and "Click here for
+      more!". We can think of the churches as in-game advertising.
+    </p>
+
+    <p>
+      And then if you have too many churches, you use the bulldozer to get
+      rid of the.
+    </p>
+
+    <p>
+      There's a speed control. I can make it go super-duper fast. And
+      everybody just left. This is more like a twitch game.
+    </p>
+
+    <p>
+      Let me do the cheat. Ok, what is it? I just added this, so I'm not
+      quite sure. You go "!faith 1000". That makes them want a lot more
+      churches. Woah! Ok, so I'm getting churches. 
+    </p>
+
+    <p>
+      I've only done one church, besides the generic one. So they just have
+      little numbers. And I'm going to have a "Tax the Churches" option,
+      too. Those are weird generic churches. If I lower the taxes, then more
+      people will come in, and the churches will recruit them.
+    </p>
+
+    <p>
+      Oh, I ran out of money. Let me do the robots real quick. So this is
+      PacMan. You can put him down. Oh, I'm out of money! The fastest way is
+      to just refresh the screen, and start fresh. 
+    </p>
+
+    <p>
+      We'll go straight in, we'll get rid of this. Oh, pie menus, right!  If
+      you click... (Dutch "Taartmenu" cursor pops up!) I've got to have a
+      talk with my translator.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_08.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      You click, and you get a pie menu, which has items around the cursor
+      in different directions. So if you click and go right, you get a road.
+      And then you can do a little road. And if you click and go up and
+      right, you get a bulldozer.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_09.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      And then there are submenus for zoning parks, and stuff like
+      that. This gives you a nice quick gesture interface.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_10.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      The one I wanted was PacBot. So if you click him, that's running
+      Python code that is looking at the map, and is looks for the traffic,
+      and it goes up, up, up, up, up. See? 
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_11.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Wait, you haven't -- hang on, wait: you can have lots of them. And
+      then they compete. You get this wonderful emergent behavior of PacMan
+      looking for traffic, and then the other PacMan eats it. You really
+      need to zoom this up a little bit.
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_12.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      The great thing about this: this is another game layered on top. You
+      can make your PacMan maze, and then you can torture them. They'll go
+      crazy, it's like a lion in his cage here. Ah, caught one! Ah! He's
+      blue. Let's get him here. He's not going to be happy about
+      this. Where'd he go? Oh oh, there's a menu to get rid of him, so I
+      think I deleted him. Here, we'll put one there. He's just going nuts
+      there. 
+    </p>
+
+    <img
+        src="images/Micropolis_Demo_13.jpg"
+        width="540"
+        height="405"
+    />
+    <br/>
+
+    <p>
+      Wait, where were we? Real quick. Where's my iPhone? Did I leave the
+      phone down here? You can't see it so you'll have to believe me. 
+    </p>
+
+    <p>
+      The first multi-player interface I'm making is an iPhone app, so it
+      loads the city, and it lets you zoom and run over it. And I'm just
+      about to hook it up to the server, so you can come into the game as a
+      helicopter, and just tilt to run around, and then just chat. 
+    </p>
+
+    <p>
+      Eventually I want to do the whole game on the iPhone, Andriod and
+      whatever else. The first step is to just get presence and chatting in
+      there.
+    </p>
+
+    <p>
+      One interesting thing: This is 
+      <a href="http://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3" target="_new">GPLv3</a>.
+      So you can't put it on the iPhone on purpose, because of the 
+      anti-<a href="http://en.wikipedia.org/wiki/Tivoization" target="_new">TiVoization</a>
+      clause. But it's ok though to have it running on the server. And I think it's more
+      interesting to have it running on the server, and anyway there's
+      already a SimCity that runs on the iPhone.
+    </p>
+
+    <a
+      href="images/Don_Hopkins_Talk_1.jpg"
+    ><img
+      style="float: right; padding-left: 10px;"
+      src="images/Don_Hopkins_Talk_1_Thumb.jpg"
+      width="200"
+      height="180"
+    /></a>
+
+    <p>
+      Any questions? 
+    </p>
+
+    <p>
+      Q: What's the cheat code to get money? 
+    </p>
+
+    <p>
+      Mike: War!
+    </p>
+
+    <p>
+      Don: That's what churches are for.
+    </p>
+
+    <p>
+      I encourage you to script your own church and plug it in. I'm totally
+      going to have the
+      <a href="http://en.wikipedia.org/wiki/Flying_Spaghetti_Monster" target="_new">Flying Spaghetti Monster</a>,
+      and he's going to actually convert all the other churches to
+      Flying Spaghetti Monster churches, so it will be a moot point,
+      and there will be no war.
+    </p>
+
+    <p>
+      Announcer: Please thank Mr. Hopkins for his nice solution to the
+      traffic problem.
+    </p>
+
+    <h2>
+      Micropolis on Facebook
+    </h2>
+
+    <p>
+      You can now play
+      <a href="http://apps.facebook.com/micropolisonline" target="_new">Micropolis on Facebook</a>!
+    </p>
+
+    <a
+      href="images/Micropolis_Facebook.png"
+    ><img
+        src="images/Micropolis_Facebook_Medium.png"
+        width="640"
+        height="549"
+        border="0"
+    /></a>
+    <br/>
+
+  </body>
+
+</html>
