@@ -97,7 +97,7 @@
 	<method name="updateKeys"><![CDATA[
 	    this.setAttribute("altDown", lz.KeysService.LzKeys.isKeyDown('alt'));
 	    this.setAttribute("controlDown", lz.KeysService.LzKeys.isKeyDown('control'));
-	    this.setAttribute("shiftDown", lz.KeysService.LzKeys.isKeyDown('shift'));
+	    //this.setAttribute("shiftDown", lz.KeysService.LzKeys.isKeyDown('shift'));
 	  ]]>
 	</method>
 
