@@ -14,9 +14,6 @@
 
 
 	<attribute name="active" value="true"/>
-        <attribute name="wallResizeBarY" value="$once{parent.height - 100}"/>
-        <attribute name="wallResizeBarX" value="250"/>
-        <attribute name="wallResizeBarSize" value="10"/>
         <attribute name="gap" value="5"/>
 	<attribute name="subControlPanelName" type="string" value=""/>
 
@@ -27,330 +24,308 @@
 	</handler>
 
 
-	<resizebarh name="hsep" id="gHSep"
-	    trackvar="'wallResizeBarY'"
-	    miny="0"
-	    maxy="${parent.height - this.height}"
-	    defaulty="$once{classroot.wallResizeBarY}"
+	<edittileview name="editTileView" id="gEditTileView"
 	    x="0"
-	    y="$once{classroot.wallResizeBarY}"
-	    width="${parent.width}"
-	    height="${classroot.wallResizeBarSize}"
-	    overhang="0"
+	    y="0"
+	    width="${Math.max(0, parent.width - this.x)}"
+	    height="${Math.max(0, parent.height - this.y)}"
+	    bgcolor="0xBC6F56"
+	    visible="${this.width &amp;&amp; this.height}"
+	    active="${classroot.active &amp;&amp; this.visible}"
+	    navigationMapView="${gNavigationMapView}"
+	    cursorVisible="${gEditTileShadow.cursorOver}"
 	/>
 
-	
-	<view name="middle"
+	<view name="editTileShadow" id="gEditTileShadow"
 	    x="0"
 	    y="0"
 	    width="${parent.width}"
-	    height="${parent.hsep.y - this.y}"
-	    clip="true"
+	    height="${gSubControlPanel.visible ? gSubControlPanel.y : gControlPanel.y}"
+	    bgcolor="0x000000"
+	    visible="${!this.cursorOver}"
+	    opacity="0.25"
 	>
 
-	    <edittileview name="editTileView" id="gEditTileView"
-		x="0"
-		y="0"
-		width="${Math.max(0, parent.width - this.x)}"
-		height="${Math.max(0, parent.height - this.y)}"
-		bgcolor="0xBC6F56"
-		visible="${this.width &amp;&amp; this.height}"
-		active="${classroot.active &amp;&amp; this.visible}"
-		navigationMapView="${gNavigationMapView}"
-		cursorVisible="${gEditTileShadow.cursorOver}"
+	    <attribute name="cursorOver" value="false"/>
+
+
+	    <handler name="onidle" reference="lz.Idle" args="arg"><![CDATA[
+		var curX = this.getMouse("x");
+		var curY = this.getMouse("y");
+		var over =
+		    (curX >= 0) &&
+		    (curX < this.width) &&
+		    (curY >= 0) &&
+		    (curY < this.height);
+		if (over != this.cursorOver) {
+		    this.setAttribute("cursorOver", over);
+		}
+	      ]]>
+	    </handler>
+
+	</view>
+
+	<view name="controlPanelShadow" id="gControlPanelShadow"
+	    x="0"
+	    y="${parent.height - this.height}"
+	    width="${parent.width}"
+	    height="${gControlPanel.height}"
+	    bgcolor="0x000000"
+	    opacity="0.7"
+	    onclick="return true;"
+	    onmouseover="gToolTip.exitView(null);"
+	/>
+
+	<view name="controlPanel" id="gControlPanel"
+	    x="0"
+	    y="${parent.height - this.height}"
+	    width="${parent.width}"
+	>
+
+	    <simplelayout
+		axis="y"
+		inset="5"
+		spacing="5"
 	    />
 
-	    <view name="editTileShadow" id="gEditTileShadow"
-		x="0"
-		y="0"
-		width="${parent.width}"
-		height="${parent.subControlPanel.visible ? parent.subControlPanel.y : parent.controlPanel.y}"
-		bgcolor="0x000000"
-		visible="${!this.cursorOver}"
-		opacity="0.25"
-	    >
-
-	        <attribute name="cursorOver" value="false"/>
-
-
-		<handler name="onidle" reference="lz.Idle" args="arg"><![CDATA[
-		    var curX = this.getMouse("x");
-		    var curY = this.getMouse("y");
-		    var over =
-		        (curX >= 0) &&
-		        (curX < this.width) &&
-			(curY >= 0) &&
-			(curY < this.height);
-		    if (over != this.cursorOver) {
-		        this.setAttribute("cursorOver", over);
-		    }
-		  ]]>
-		</handler>
-
-	    </view>
-
-	    <view name="controlPanelShadow" id="gControlPanelShadow"
-		x="0"
-		y="${parent.height - this.height}"
-		width="${parent.width}"
-		height="${gControlPanel.height}"
-		bgcolor="0x000000"
-		opacity="0.7"
-		onclick="return true;"
-		onmouseover="gToolTip.exitView(null);"
-	    />
-
-	    <view name="controlPanel" id="gControlPanel"
-		x="0"
-		y="${parent.height - this.height}"
+	    <view name="tabBar" id="gTabBar"
 		width="${parent.width}"
 	    >
+
+		<attribute name="tabWidth" value="25"/>
+		<attribute name="tabHeight" value="200"/>
 
 		<simplelayout
-		    axis="y"
+		    axis="x"
 		    inset="5"
 		    spacing="5"
 		/>
 
-		<view name="tabBar" id="gTabBar"
-		    width="${parent.width}"
-		>
-
-		    <attribute name="tabWidth" value="25"/>
-		    <attribute name="tabHeight" value="200"/>
-
-		    <simplelayout
-			axis="x"
-			inset="5"
-			spacing="5"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Notice')}"
-			panelName="notice"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Overlays')}"
-			panelName="overlays"
-		    />
-
-		    <tabbutton
-			text="${gApp._('History')}"
-			panelName="history"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Budget')}"
-			panelName="budget"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Evaluation')}"
-			panelName="evaluation"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Disasters')}"
-			panelName="disasters"
-		    />
-
-		    <tabbutton
-			text="${gApp._('Controls')}"
-			panelName="controls"
-		    />
-
-		</view>
-
-		<toolpalette name="toolPalette" id="gToolPalette"
-		    active="${classroot.active}"
-		    x="5"
-		    width="${parent.width - 10 - this.x}"
+		<tabbutton
+		    text="${gApp._('Notice')}"
+		    panelName="notice"
 		/>
 
-		<view name="controlArea" id="gControlArea"
-		    x="0"
-		    width="${parent.width}"
-		>
+		<tabbutton
+		    text="${gApp._('Overlays')}"
+		    panelName="overlays"
+		/>
 
-		    <simplelayout
-			axis="x"
-			inset="5"
-			spacing="5"
-		    />
+		<tabbutton
+		    text="${gApp._('History')}"
+		    panelName="history"
+		/>
 
-		    <navigationmapview name="navigationMapView" id="gNavigationMapView"
-			tileSize="1"
-			editTileView="${gEditTileView}"
-			active="${classroot.active}"
-			overlay="${gApp.overlay}"
-		    >
+		<tabbutton
+		    text="${gApp._('Budget')}"
+		    panelName="budget"
+		/>
 
-		        <method name="handleClick"><![CDATA[
-			    classroot.setAttribute(
-			        "subControlPanelName",
-			    	(classroot.subControlPanelName == "overlays") ? "" : "overlays");
-			  ]]>
-			</method>
+		<tabbutton
+		    text="${gApp._('Evaluation')}"
+		    panelName="evaluation"
+		/>
 
-			<handler name="onmouseover" args="arg"><![CDATA[
-			    var tip = 
-				gApp._("Map Overview") + ':\n' + 
-				gApp._("Drag to scroll the map.") + '\n' +
-				gApp._("Click to change the overlay.");
-			    gToolTip.enterView(this, tip, 'up');
-			  ]]>
-			</handler>
+		<tabbutton
+		    text="${gApp._('Disasters')}"
+		    panelName="disasters"
+		/>
 
-		    </navigationmapview>
-
-
-		    <demandgauge name="demandGauge" id="gDemandGauge"
-			active="${classroot.active}"
-		    >
-
-			<handler name="onclick"><![CDATA[
-			    classroot.setAttribute(
-			        "subControlPanelName",
-			    	(classroot.subControlPanelName == "history") ? "" : "history");
-			  ]]>
-			</handler>
-
-			<handler name="onmouseover" args="arg"><![CDATA[
-			    var tip = 
-				gApp._("Demand Gauge") + ':\n' + 
-				gApp._("Click to see the history.");
-			    gToolTip.enterView(this, tip, 'up');
-			  ]]>
-			</handler>
-
-		    </demandgauge>
-
-		    <datefundsview name="dateFundsDisplay" id="gDateFundsDisplay"
-			width="150"
-			active="${classroot.active}"
-		    >
-
-			<handler name="onclick"><![CDATA[
-			    classroot.setAttribute(
-			        "subControlPanelName",
-			    	(classroot.subControlPanelName == "budget") ? "" : "budget");
-			  ]]>
-			</handler>
-
-			<handler name="onmouseover" args="arg"><![CDATA[
-			    var tip = 
-				gApp._("Date and Funds") + ':\n' + 
-				gApp._("Click to change the budget.");
-			    gToolTip.enterView(this, tip, 'up');
-			  ]]>
-			</handler>
-
-		    </datefundsview>
-
-		</view>
-
-		<view/>
+		<tabbutton
+		    text="${gApp._('Controls')}"
+		    panelName="controls"
+		/>
 
 	    </view>
 
-	    <view name="subControlPanelShadow" id="gSubControlPanelShadow"
-		x="0"
-		y="${gControlPanel.y - this.height}"
-		width="${parent.width}"
-		height="${gSubControlPanel.height}"
-		bgcolor="0x000000"
-		opacity="0.7"
-		visible="${classroot.subControlPanelName != ''}"
-		onclick="return true;"
-		onmouseover="gToolTip.exitView(null);"
+	    <toolpalette name="toolPalette" id="gToolPalette"
+		active="${classroot.active}"
+		x="5"
+		width="${parent.width - 10 - this.x}"
 	    />
 
-	    <view name="subControlPanel" id="gSubControlPanel"
+	    <view name="controlArea" id="gControlArea"
 		x="0"
-		y="${gControlPanel.y - this.height}"
 		width="${parent.width}"
-		visible="${classroot.subControlPanelName != ''}"
+		height="${gNavigationMapView.height}"
 	    >
 
-		<noticeview id="gNoticeView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    visible="${classroot.subControlPanelName == 'notice'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		<navigationmapview name="navigationMapView" id="gNavigationMapView"
+		    x="${classroot.gap}"
+		    y="0"
+		    tileSize="1"
+		    editTileView="${gEditTileView}"
+		    active="${classroot.active}"
+		    overlay="${gApp.overlay}"
+		>
 
-		<overlaysview id="gOverlaysView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="110"
-		    visible="${classroot.subControlPanelName == 'overlays'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		    <method name="handleClick"><![CDATA[
+			classroot.setAttribute(
+			    "subControlPanelName",
+			    (classroot.subControlPanelName == "overlays") ? "" : "overlays");
+		      ]]>
+		    </method>
 
-		<historyview id="gHistoryView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="160"
-		    visible="${classroot.subControlPanelName == 'history'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		    <handler name="onmouseover" args="arg"><![CDATA[
+			var tip = 
+			    gApp._("Map Overview") + ':\n' + 
+			    gApp._("Drag to scroll the map.") + '\n' +
+			    gApp._("Click to change the overlay.");
+			gToolTip.enterView(this, tip, 'up');
+		      ]]>
+		    </handler>
 
-		<budgetview id="gBudgetView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="100"
-		    visible="${classroot.subControlPanelName == 'budget'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		</navigationmapview>
 
-		<evaluationview id="gEvaluationView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="120"
-		    visible="${classroot.subControlPanelName == 'evaluation'}"
+		<wallview id="gWallView"
+		    x="${gNavigationMapView.x + gNavigationMapView.width + classroot.gap}"
+		    y="0"
+		    width="${gDemandGauge.x - classroot.gap - this.x}"
+		    height="${parent.height}"
 		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		>
 
-		<disastersview id="gDisastersView"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="60"
-		    visible="${classroot.subControlPanelName == 'disasters'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		    <method name="handleClick"><![CDATA[
+		        //Debug.write("gWallView handleClick", this);
+			classroot.setAttribute(
+			    "subControlPanelName",
+			    (classroot.subControlPanelName == "notice") ? "" : "notice");
+		      ]]>
+		    </method>
 
-		<controlpanel id="gPlayControlPanel"
-		    x="5"
-		    y="5"
-		    width="${parent.width - 10}"
-		    height="100"
-		    visible="${classroot.subControlPanelName == 'controls'}"
-		    active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
-		/>
+		</wallview>
+
+		<demandgauge name="demandGauge" id="gDemandGauge"
+		    x="${gDateFundsDisplay.x - classroot.gap - this.width}"
+		    y="${parent.height - this.height}"
+		    active="${classroot.active}"
+		>
+
+		    <handler name="onclick"><![CDATA[
+			classroot.setAttribute(
+			    "subControlPanelName",
+			    (classroot.subControlPanelName == "history") ? "" : "history");
+		      ]]>
+		    </handler>
+
+		    <handler name="onmouseover" args="arg"><![CDATA[
+			var tip = 
+			    gApp._("Demand Gauge") + ':\n' + 
+			    gApp._("Click to see the history.");
+			gToolTip.enterView(this, tip, 'up');
+		      ]]>
+		    </handler>
+
+		</demandgauge>
+
+		<datefundsview name="dateFundsDisplay" id="gDateFundsDisplay"
+		    x="${parent.width - this.width - classroot.gap}"
+		    y="${parent.height - this.height}"
+		    width="130"
+		    active="${classroot.active}"
+		>
+
+		    <handler name="onclick"><![CDATA[
+			classroot.setAttribute(
+			    "subControlPanelName",
+			    (classroot.subControlPanelName == "budget") ? "" : "budget");
+		      ]]>
+		    </handler>
+
+		    <handler name="onmouseover" args="arg"><![CDATA[
+			var tip = 
+			    gApp._("Date and Funds") + ':\n' + 
+			    gApp._("Click to change the budget.");
+			gToolTip.enterView(this, tip, 'up');
+		      ]]>
+		    </handler>
+
+		</datefundsview>
 
 	    </view>
+
+	    <view/>
 
 	</view>
 
-	<view name="bottom"
+	<view name="subControlPanelShadow" id="gSubControlPanelShadow"
 	    x="0"
-	    y="${parent.hsep.y + parent.hsep.height}"
+	    y="${gControlPanel.y - this.height}"
 	    width="${parent.width}"
-	    height="${parent.height - this.y}"
-	    clip="true"
+	    height="${gSubControlPanel.height}"
+	    bgcolor="0x000000"
+	    opacity="0.7"
+	    visible="${classroot.subControlPanelName != ''}"
+	    onclick="return true;"
+	    onmouseover="gToolTip.exitView(null);"
+	/>
+
+	<view name="subControlPanel" id="gSubControlPanel"
+	    x="0"
+	    y="${gControlPanel.y - this.height}"
+	    width="${parent.width}"
+	    visible="${classroot.subControlPanelName != ''}"
 	>
 
-	    <wallview id="gWallView"
-		width="${parent.width}"
-		height="${parent.height}"
-		visible="${(this.width &gt; 0) &amp;&amp; (this.height &gt; 0)}"
+	    <noticeview id="gNoticeView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		visible="${classroot.subControlPanelName == 'notice'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <overlaysview id="gOverlaysView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="110"
+		visible="${classroot.subControlPanelName == 'overlays'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <historyview id="gHistoryView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="160"
+		visible="${classroot.subControlPanelName == 'history'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <budgetview id="gBudgetView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="100"
+		visible="${classroot.subControlPanelName == 'budget'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <evaluationview id="gEvaluationView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="120"
+		visible="${classroot.subControlPanelName == 'evaluation'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <disastersview id="gDisastersView"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="60"
+		visible="${classroot.subControlPanelName == 'disasters'}"
+		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
+	    />
+
+	    <controlpanel id="gPlayControlPanel"
+		x="5"
+		y="5"
+		width="${parent.width - 10}"
+		height="100"
+		visible="${classroot.subControlPanelName == 'controls'}"
 		active="${classroot.active &amp;&amp; parent.visible &amp;&amp; this.visible}"
 	    />
 

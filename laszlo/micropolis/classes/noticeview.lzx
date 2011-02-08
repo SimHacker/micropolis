@@ -27,11 +27,12 @@
 	<attribute name="gap" value="5" type="number"/>
 	<attribute name="mapWidth" value="150" type="number"/>
 	<attribute name="textX" value="${
-	    (this.showMap ? (this.mapWidth + this.gap) : 0) +
-	    (this.showPicture ? (this.pictureView.width + this.gap) : 0)
+	    (this.showMap ? (this.mapWidth + this.gap) : 0)
 	 }"/>
 	<attribute name="textWidth" value="${
-	    this.width - this.textX
+	    parent.width - (2 * this.gap) -
+	    (this.showMap ? (this.mapWidth + this.gap) : 0) -
+	    (this.showPicture ? (this.pictureView.width + this.gap) : 0)
 	 }"/>
 
 
@@ -205,7 +206,7 @@
 	/>
 
 	<view name="pictureView"
-	    x="${classroot.showMap ? (parent.noticeTileView.x + parent.noticeTileView.width + classroot.gap) : 0}"
+	    x="${parent.width - this.width}"
 	    y="0"
 	    bgcolor="0x0000ff"
 	    visible="${classroot.showPicture}"

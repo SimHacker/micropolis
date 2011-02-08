@@ -16,6 +16,7 @@
         <attribute name="messages" value="$once{[]}"/>
 	<attribute name="maxMessages" value="100"/>
 	<attribute name="gap" value="5"/>
+	<attribute name="scrollbarWidth" value="20"/>
 
 
 	<handler name="onmessage" reference="gApp"><![CDATA[
@@ -62,9 +63,9 @@
 	    var textHeight = textView.height;
 	    var textBottom = textView.y + textHeight;
 	    var pastBottom = textBottom - viewHeight;
-	    if (pastBottom < viewHeight) {
+	    //if (pastBottom < viewHeight) {
 	        textView.setAttribute("y", -textHeight + viewHeight);
-	    }
+	    //}
 	  ]]>
 	</method>
 
@@ -77,20 +78,46 @@
 	</method>
 
 
+	<method name="handleClick"><![CDATA[
+	    //Debug.write("wallview handleClick", this);
+	  ]]>
+	</method>
+
+
 	<view name="v"
 	    width="${parent.width}"
 	    height="${parent.textField.y - parent.gap}"
 	    clip="true"
 	>
 
-	    <vscrollbar/>
+	    <vscrollbar
+	      opacity="0.5"
+	    />
 
 	    <text name="textView"
 		multiline="true"
 		selectable="true"
 		text=""
-		width="${parent.width - 20}"
+		width="${parent.width - classroot.scrollbarWidth}"
+		fgcolor="0xffffff"
+		fontstyle="bold"
+		fontsize="12"
 	    />
+
+	</view>
+
+	<view name="vOverlay"
+	    x="${parent.v.x}"
+	    y="${parent.v.y}"
+	    width="${parent.v.width - classroot.scrollbarWidth}"
+	    height="${parent.v.height}"
+	>
+
+	    <handler name="onclick"><![CDATA[
+		//Debug.write("vOverlay onclick", this);
+		classroot.handleClick();
+	      ]]>
+	    </handler>
 
 	</view>
 
@@ -98,8 +125,8 @@
 	    x="0"
 	    y="${parent.height - this.height}"
 	    width="${parent.width}"
-	    height="28"
-	    fontsize="14"
+	    height="24"
+	    fontsize="12"
 	    fontstyle="bold"
 	>
 

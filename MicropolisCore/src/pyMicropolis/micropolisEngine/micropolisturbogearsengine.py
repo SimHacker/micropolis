@@ -551,7 +551,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.startVirtualSpeed = 2
+        self.startVirtualSpeed = 4
         self.virtualSpeed = self.startVirtualSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this

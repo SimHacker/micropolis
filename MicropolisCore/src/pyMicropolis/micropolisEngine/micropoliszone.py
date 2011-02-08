@@ -341,6 +341,15 @@ class MicropolisZone_ChurchOfScientology(MicropolisZone):
 ########################################################################
 
 
+class MicropolisZone_Church2(MicropolisZone):
+
+
+    zoneType = 'church2'
+
+
+########################################################################
+
+
 class MicropolisZone_Church3(MicropolisZone):
 
 
@@ -390,7 +399,7 @@ class MicropolisZone_Church7(MicropolisZone):
 ZoneClasses = [
     MicropolisZone_Church0,
     MicropolisZone_ChurchOfPacMania,
-    MicropolisZone_ChurchOfScientology,
+    MicropolisZone_Church2,
     MicropolisZone_Church3,
     MicropolisZone_Church4,
     MicropolisZone_Church5,
