@@ -3,11 +3,12 @@
     <title>Constructionist Educational Open Source SimCity, by Don Hopkins, at HAR 2009.</title>
   </head>
   <body>
-    <h1>HAR 2009: Lightning talks Friday 9/14</h1>
+    <h1>HAR 2009 Lightning Talk Transcript: Constructionist Educational Open Source SimCity, by Don Hopkins.</h1>
     Illustrated transcript of the
     <a
       href="http://www.youtube.com/watch?v=_9oy0LjGXnM&feature=&p=3509FB083052CD90&index=0&playnext=1&t=7m20s"
-    >YouTube Video: HAR 2009: Lightning talks Friday 9/14</a>.
+      target="_new"
+    >YouTube video playlist: HAR 2009: Lightning talks Friday</a>.
 
     <br style="clear: both;"/>
     <br/>
@@ -95,7 +96,7 @@
       So when I had the chance to port 
       <a href="http://www.art.net/~hopkins/Don/hyperlook/SimCity.README" target="_new">SimCity to the Sun Workstation</a>,
       I jumped at that, and made a version of it using the 
-      <a href="http://en.wikipedia.org/wiki/NeWS">NeWS</a>
+      <a href="http://en.wikipedia.org/wiki/NeWS" target="_new">NeWS</a>
       window system,
       James Gosling's
       PostScript based window system.
@@ -154,7 +155,7 @@
     </p>
 
     <p>
-      But it need to be
+      But it needed to be
       <a href="http://www.donhopkins.com/drupal/node/145" target="_new">opened up</a>,
       so that it can be even better.
     </p>
@@ -182,21 +183,27 @@
     </p>
 
     <p>
-      And one of the important things about constructionism is kids helping
-      each other, communicating and teaching each other.
+      One of the important things about constructionism is kids helping
+      each other, communicating, and teaching each other.
     </p>
 
     <p>
-      I took the old X11 version, and I had made it multi player for
-      X-Windows, but I simplified it and took that out for this. 
-      Now that
-      <a href="http://www.youtube.com/watch?v=EpKhh10K-j0" target="_new">runs on the OLPC</a>.
+      I took the old X11 version, and
+      <a href="http://www.youtube.com/watch?v=EpKhh10K-j0" target="_new">adapted it for the OLPC</a>.
     </p>
 
     <p>
-      What we really needed to do was to make a new version that had a much
-      better user interface designed to take advantage of the things the
-      OLPC can do.
+      The X-Windows version originally supported multi player mode, 
+      but I disabled that feature to simplify the game, because it
+      didn't scale well, was complex to configure, and not well 
+      designed. OLPC games for kids need to be very easy to use.
+    </p>
+
+    <p>
+      What we really needed to do was to make a new version that had a
+      much better user interface designed to take advantage of the
+      things the OLPC can do, like supporting meaningful scalable easy
+      to use multi player interaction.
     </p>
 
     <p>
@@ -350,7 +357,7 @@
     </p>
 
     <p>
-      And also we're benefiting from 
+      We're also benefiting from 
       <a href="http://www.kennisnet.nl" target="_new">Kennisnet</a>
       and
       <a href="http://www.ibm.com/nl/nl/" target="_new">IBM Netherlands</a>,
@@ -373,7 +380,7 @@
       <a href="http://www.donhopkins.com/drupal/node/134" target="_new">Alan Kay's criticism of SimCity</a>
       is that you can't see inside of it and understand what it's
       doing, and you have to accept it as a black box. So now I'm
-      trying to solve that problems.
+      trying to solve that problem.
     </p>
 
     <h2>
@@ -384,13 +391,13 @@
       <ul>
         <li>
           Micropolis is built with a carefully chosen, well proven, widely
-          supported set of open source ,cross platform tools and libraries.
+          supported set of open source, cross platform tools and libraries.
         </li>
         <li>
           Micropolis itself and its TileEngine module are open source
           (GPL3). The client runs on the proprietary Adobe Flash
-          player. The client will also run in standard browsers with a
-          little more work, thanks to OpenLaszlo.
+          player. With a little more work, The client will also run in
+          standard browsers, thanks to OpenLaszlo.
         </li>
         <li>
           Linux. Apache. MySQL. Python. Cairo. Pango. GTK. GCC. SWIG. 
@@ -480,7 +487,15 @@
     /></a>
 
     <p>
-      The architecture of the web version is that there's a C++ game. And
+      The architecture of the web version is that there's a C++ core
+      MicropolisEngine, which is plugged into the Python programming
+      language as an extension module. Then Python is used to script
+      the higher level parts of the game, graphics and web server.
+      The user interface is implemented in the client, which is
+      written in OpenLaszlo and runs on Flash in the web browser.
+    </p>
+
+    <p>
       I'm using
       <a href="http://www.swig.org" target="_new">SWIG</a>,
       a tool for making wrappers for libraries, and plugging
@@ -490,9 +505,12 @@
     </p>
 
     <p>
-      There's another layer, which is gluing the game into Python. And the
-      nice thing about SWIG, is that you can subclass your C++ classes in
-      Python, and then just script everything in a nice language. 
+      The SWIG wrapper layer around the C++ game engine is glue that
+      binds the game's C++ classes into Python. So C++ can call
+      Python, and Python can call C++, and they can access and modify
+      each other's data structures. One nice thing about SWIG is that
+      you can subclass your C++ classes in Python, and then just
+      script everything in a nice language.
     </p>
 
     <p>
@@ -523,8 +541,9 @@
 
     <p>
       Right now I'm concentrating on just getting the Flash interface
-      working, and once the paint's dry on that, I can then do the parts
-      that were Flash specific using the Canvas and DHTML and things.
+      working, and once the paint's dry on that, I can then do the
+      parts that were Flash specific using the Canvas and DHTML and
+      nice open standards like that.
     </p>
 
     <p>
@@ -656,9 +675,9 @@
     </p>
 
     <p>
-      I want to re-visit the multi player game, but first get a really solid
-      base to build it on top of. So doing a web based game is the best way
-      to do that.
+      I want to re-visit the multi player game, but first get a really
+      solid base to build it on top of. Doing a web based game is the
+      best way to do that.
     </p>
 
     <h2>
