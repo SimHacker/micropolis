@@ -4,7 +4,7 @@
   </head>
   <body>
     <h1>HAR 2009 Lightning Talk Transcript: Constructionist Educational Open Source SimCity, by Don Hopkins.</h1>
-    Illustrated transcript of the
+    Illustrated and edited transcript of the
     <a
       href="http://www.youtube.com/watch?v=_9oy0LjGXnM&feature=&p=3509FB083052CD90&index=0&playnext=1&t=7m20s"
       target="_new"
@@ -143,7 +143,7 @@
     </p>
 
     <p>
-      Because the OLPC project is focused on 
+      The OLPC project is focused on 
       "<a href="http://en.wikipedia.org/wiki/Constructionist_learning" target="_new">Constructionist Education</a>",
       which is about children learning -- anyone learning, by building
       things.
@@ -184,16 +184,13 @@
 
     <p>
       One of the important things about constructionism is kids helping
-      each other, communicating, and teaching each other.
+      each other, communicating, and learning from each other.
     </p>
 
     <p>
-      I took the old X11 version, and
-      <a href="http://www.youtube.com/watch?v=EpKhh10K-j0" target="_new">adapted it for the OLPC</a>.
-    </p>
-
-    <p>
-      The X-Windows version originally supported multi player mode, 
+      I adapted the old X11/Unix version of SimCity to the 
+      <a href="http://www.youtube.com/watch?v=EpKhh10K-j0" target="_new">OLPC XO-I Children's Laptop</a>. 
+      The original X11 version supported multi player mode, 
       but I disabled that feature to simplify the game, because it
       didn't scale well, was complex to configure, and not well 
       designed. OLPC games for kids need to be very easy to use.
@@ -202,8 +199,9 @@
     <p>
       What we really needed to do was to make a new version that had a
       much better user interface designed to take advantage of the
-      things the OLPC can do, like supporting meaningful scalable easy
-      to use multi player interaction.
+      OLPC collaboration features and social networking platforms like
+      Facebook. It needs to have meaningful, scalable, easy to use
+      multi player interaction.
     </p>
 
     <p>
@@ -213,6 +211,7 @@
       <a href="http://www.livewires.org.uk/python/home" target="_new">powerful, easy to learn language</a>,
       that is
       <a href="http://www.python.org/community/sigs/current/edu-sig/" target="_new">widely used in education</a>. 
+      It's also very useful as a web programming language, for implementing a multi player game server.
     </p>
 
     <p>
@@ -261,13 +260,15 @@
     </p>
 
     <p>
-      And "Constructionist Education" is a the overall theme, but it's very
-      hard to figure out how that actually manifests itself in a game.
+      "Constructionist Education" is a the overall theme, but it's not
+      obvious how that actually manifests itself in a game, and it
+      takes a lot of experimentation, trial and error to figure out.
     </p>
 
     <p>
       We're using free open source software, distributing it over the
-      web, and running it on centralized servers.
+      web, and running it on centralized servers. So it's easy to make
+      updates to the game as the design evolves.
     </p>
 
     <p>
@@ -291,14 +292,16 @@
           on GTK/Python.
         </li>
         <li>
-          Developed an open source ,internationalized, web based version
+          Developed an open source, internationalized, web based version
           of Micropolis.
-        </li>
-        <li>
-          Client based on OpenLaszlo/Flash.
-        </li>
-        <li>
-          Server based on TurboGears/Python/C++.
+	  <ul>
+	    <li>
+	      Client based on OpenLaszlo/Flash.
+	    </li>
+	    <li>
+	      Server based on TurboGears/Python/C++.
+	    </li>
+	  </ul>
         </li>
         <li>
           Renovated, re-factored and documented the code.
@@ -320,7 +323,7 @@
     /></a>
 
     <p>
-      So far what I've done: First, we took the old
+      So far what's been done: First, we took the old
       <a href="http://en.wikipedia.org/wiki/Tcl">TCL/Tk/X11</a>
       version, cleaned it up, got it through EA's Quality Assurance,
       and put it on the One Laptop Per Child.
@@ -759,10 +762,10 @@
     </p>
 
     <p>
-      So really, playing the game is a web publishing tool. I want to apply
+      So really, the game is a web publishing tool. I want to apply
       those ideas to SimCity, and that would be in the form of a
       newspaper. So you could act as a journalist when something
-      happened. 
+      happened.
     </p>
 
     <p>
@@ -790,16 +793,18 @@
     /></a>
 
     <p>
-      I want to make sort of like TiVo for SimCity, is the eventual
-      goal. You have all these save file snapshots, and then you can fast
-      forward and reverse by replaying the edits that you did.
+      The eventual goal is to make it sort of like TiVo for
+      SimCity. You have all these save file snapshots, and then you
+      can fast forward and reverse by replaying the edits that you
+      did. 
     </p>
 
     <p>
-      You can imagine that when you play game, at any point, if you decide
-      "let's raise taxes", you could make a checkpoint there. And then you
-      could revisit that decision, and then branch reality out to another
-      thing, if you didn't raise taxes.
+      And you will have branching. You can imagine that when you play
+      game, at any point, if you decide "let's raise taxes", you could
+      make a checkpoint there. And then you could revisit that
+      decision, and then branch reality out to another thing, if you
+      didn't raise taxes.
     </p>
 
     <p>
@@ -879,7 +884,8 @@
       <a href="http://en.wikipedia.org/wiki/Python_(programming_language)" target="_new">Python</a>.
       We already have Python. I like Python. It's well designed. I'm
       not going to try to invent something different, I just want to
-      give you a visual way to get to anything.
+      give you a visual way to get to everything Python can do, which
+      is anything.
     </p>
 
     <img
@@ -975,16 +981,24 @@
     </p>
 
     <p>
-      The older kids I want to teach Python and C++ programming.
+      The teachers should be able to write courseware, scenarios,
+      teaching events and educational content that plugs into the game,
+      without any programming.
     </p>
 
     <p>
-      And then younger kids will have this easier, higher level language to
-      do logic.
+      The older kids and adults can use existing examples to learn
+      Python and C++ programming.
     </p>
 
     <p>
-      This is version three. I'm only at version one right now. 
+      And younger kids plus everyone else will have an easier, higher
+      level visual programming language in which to discover and
+      customize the system.
+    </p>
+
+    <p>
+      That is version three. I'm only at version one right now. 
     </p>
 
     <h2>
@@ -1022,17 +1036,17 @@
     />
 
     <p>
-      I have the web server running. I want to put in sharing a city,
-      tagging, journals, discussions, you know, the whole social net
-      thing. It occurs to me that maybe I should just let Facebook handle 
-      a lot of that stuff. I'll just make a
+      I have the web server and browser client running. I want to put
+      in sharing cities, tagging, journals, discussions -- you know,
+      the whole social net thing. It occurs to me that maybe I should
+      just let Facebook handle a lot of that stuff. I'll just make a
       <a href="http://apps.facebook.com/micropolisonline" target="_new">Facebook</a>
       application.
     </p>
 
     <p>
-      Slow the game down a lot, so on your Facebook page it will let your
-      friends vote on things. I'm getting ahead of myself. 
+      Slow the game down a lot, so your Facebook wall will let your
+      friends vote on things. I'm getting ahead of myself.
     </p>
 
     <p>
@@ -1051,8 +1065,8 @@
     </h2>
 
     <p>
-      Tom Tjon A Loi made these mock-ups of what SimCity could look like inside a
-      social network.
+      Tom Tjon A Loi made these mock-ups of what SimCity might look like inside a
+      social network like Facebook.
     </p>
 
     <h2>
@@ -1070,7 +1084,7 @@
 
     <p>
       The important thing is that you have to have an identity. It knows
-      about you.
+      about you. You're part of a community of real people.
     </p>
 
     <h2>
@@ -1087,9 +1101,10 @@
     <br/>
 
     <p>
-      You've got friends, and this could be a Facebook app. If you add the
-      app, you can do all this stuff and play it yourself. But even if you
-      don't add the app, you can still what other people are doing.
+      You've got friends, and this could be a Facebook app. If you add
+      the app, you can do all this stuff and play it yourself. But
+      even if you don't add the app, you can still see and interact
+      with what other people are doing.
     </p>
 
     <h2>
@@ -1106,8 +1121,9 @@
     <br/>
 
     <p>
-      It's all about having people see what you're doing, and explaining it
-      to them.
+      It's all about showing other people what you're doing,
+      explaining it to them, discussing the issues, and getting their
+      feedback.
     </p>
 
     <h2>
@@ -1126,7 +1142,7 @@
     <p>
       You can have these links into the save files, and people saying
       things. I want to make it so one game might last a week, and take
-      little steps.
+      many little steps.
     </p>
 
     <h2>
@@ -1149,8 +1165,11 @@
     </p>
 
     <p>
-      The idea is that I want to be able to script churches in Python. The
-      other plugin is a plugin character.
+      The idea is that I want to be able to script churches and other
+      zones in Python. And create new zones and content for them
+      without even programming. The other plugin is a plugin
+      character, or agent. Like the monster or helicopter, with
+      programmable behavior.
     </p>
 
     <h2>
@@ -1167,15 +1186,16 @@
     <br/>
 
     <p>
-      In a multiplayer game, there could be several people in the same game,
-      and you're on the map in a place, and you can chat embedded in the
-      game, with collaborative editing.
+      In a multiplayer game, there could be several people in the same
+      game, and you're all on the same map in one place, and you can
+      chat embedded in the game, with collaborative editing.
     </p>
 
     <p>
-      If you put something down, it would put an interface that says: "Hey,
-      somebody wants to make this. Do you vote for it? Yes or no." And then
-      have a chat associated with that.
+      If you put something down, it would open up an interface that
+      says: "Hey, Don wants to make this. Do you vote for it? Yes or
+      no." And then have a chat associated with that, where you can
+      discuss the issue.
     </p>
 
     <h2>
@@ -1194,7 +1214,8 @@
     <p>
       And then imagine
       <a href="http://hubpages.com/hub/cityville-franchises">other people could come into you game</a>,
-      and find: "Hey this zone is not developed. We're going to put a coffeeshop here!"
+      and they find: "Hey this zone is not developed. We're going to
+      put a coffeeshop here!"
     </p>
 
     <p>
@@ -1218,8 +1239,8 @@
     <br/>
 
     <p>
-      It's all in 
-      <a href="http://code.google.com/p/micropolis" target="_new">Google Code</a><br/>.
+      The source code, designs and documentation are all in
+      <a href="http://code.google.com/p/micropolis" target="_new">Google Code</a>.
     </p>
 
     <img
@@ -1231,12 +1252,12 @@
 
     <p>
       Ah, that's the robot! I wanted to 
-      <a href="http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py" target="_new"show some code</a>.
+      <a href="http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py" target="_new">show some code</a>.
       This is how PacMan works. He follows the road.
     </p>
 
     <p>
-      So I wrote a plugin robot that you can put into the thing. 
+      So I wrote a plugin robot that you can put into the city. 
     </p>
 
     <img
@@ -1355,7 +1376,7 @@
 
     <p>
       And then if you have too many churches, you use the bulldozer to get
-      rid of the.
+      rid of them.
     </p>
 
     <p>
@@ -1364,21 +1385,28 @@
     </p>
 
     <p>
-      Let me do the cheat. Ok, what is it? I just added this, so I'm not
-      quite sure. You go "!faith 1000". That makes them want a lot more
-      churches. Woah! Ok, so I'm getting churches. 
+      Let me do the cheat. Ok, what is it? I just added this, so I'm
+      not quite sure. You go "!faith 1000". That makes them want a lot
+      more churches. Woah! Ok, so I'm getting many churches. There
+      goes the tax base.
     </p>
 
     <p>
-      I've only done one church, besides the generic one. So they just have
-      little numbers. And I'm going to have a "Tax the Churches" option,
-      too. Those are weird generic churches. If I lower the taxes, then more
-      people will come in, and the churches will recruit them.
+      I've programmed a plug-in church with a plug-in agent: the
+      Church of Pacmania, and the PacBot. The church spawn PacBots on
+      the road next to it, which eat the traffic on the roads
+      (lowering the pollution and raising their score, of course). So
+      naturally the Church of Pacmania generate a lot of traffic, to
+      attract and feed the PacBots. I'm going to have a "Tax the
+      Churches" option, too. If I lower the taxes, then more people
+      will come in, and the churches will recruit them, and they'll
+      all drive to church. So then there will be a lot more traffic
+      for the PacBots to eat.
     </p>
 
     <p>
       Oh, I ran out of money. Let me do the robots real quick. So this is
-      PacMan. You can put him down. Oh, I'm out of money! The fastest way is
+      PacBot. You can put him down. Oh, I'm out of money! The fastest way is
       to just refresh the screen, and start fresh. 
     </p>
 
@@ -1436,8 +1464,8 @@
 
     <p>
       Wait, you haven't -- hang on, wait: you can have lots of them. And
-      then they compete. You get this wonderful emergent behavior of PacMan
-      looking for traffic, and then the other PacMan eats it. You really
+      then they compete. You get this wonderful emergent behavior of PacBot
+      looking for traffic, and then the other PacBot eats it. You really
       need to zoom this up a little bit.
     </p>
 
@@ -1450,7 +1478,7 @@
 
     <p>
       The great thing about this: this is another game layered on top. You
-      can make your PacMan maze, and then you can torture them. They'll go
+      can make your PacBot maze, and then you can torture them. They'll go
       crazy, it's like a lion in his cage here. Ah, caught one! Ah! He's
       blue. Let's get him here. He's not going to be happy about
       this. Where'd he go? Oh oh, there's a menu to get rid of him, so I
@@ -1484,13 +1512,20 @@
     </p>
 
     <p>
-      One interesting thing: This is 
+      One interesting thing: Micropolis is
       <a href="http://en.wikipedia.org/wiki/GNU_General_Public_License#Version_3" target="_new">GPLv3</a>.
-      So you can't put it on the iPhone on purpose, because of the 
+      So you can't put it on the iPhone, because of the
       anti-<a href="http://en.wikipedia.org/wiki/Tivoization" target="_new">TiVoization</a>
-      clause. But it's ok though to have it running on the server. And I think it's more
-      interesting to have it running on the server, and anyway there's
-      already a SimCity that runs on the iPhone.
+      clause, which prohibits using hardware restrictions to prevent users from running modified versions of the software on that hardware.
+    </p>
+
+    <p>
+      But it's possible to have the simulation running on the server
+      and a client displaying and interacting on the iPhone. I think
+      it's more interesting to have the simulation running on the
+      server, in order to enable social interactions; and anyway
+      there's already an authentic single player SimCity that runs on
+      the iPhone.
     </p>
 
     <a
