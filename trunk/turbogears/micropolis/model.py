@@ -75,6 +75,7 @@ user_table = Table('tg_user', metadata,
     Column('username', Unicode(255)),
     Column('email', Unicode(255)),
     Column('third_party_id', Unicode(255)),
+    Column('nick_name', Unicode(255)),
 #    Column('current_city_id', Integer, 
 #        ForeignKey('city.city_id'),
 #        primary_key=True)
