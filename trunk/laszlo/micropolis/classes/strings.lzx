@@ -15,13 +15,6 @@
 	<attribute name="stringsDict" value="null"/>
 
 
-	<handler name="oninit" args="args"><![CDATA[
-	    //Debug.write("gStrings oninit", this, canvas.ds_strings);
-	    this.loadStrings();
-	  ]]>
-	</handler>
-
-
 	<handler name="ondata" args="args" reference="canvas.ds_strings"><![CDATA[
 	    //Debug.write("ds_strings ondata", canvas.ds_strings);
 	    this.loadStrings();
@@ -80,6 +73,11 @@
 
 	<method name="loadLanguage" args="language"><![CDATA[
 	    this.setAttribute("language", language);
+	    if (canvas.ds_strings.childNodes &&
+	        canvas.ds_strings.childNodes[0].attributes['language'] == language) {
+		// The language is already loaded.
+		return;
+            }
 	    canvas.ds_strings.setSrc(this.stringsFileNamePrefix + language + '.xml');
 	  ]]>
 	</method>

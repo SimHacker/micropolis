@@ -120,7 +120,7 @@
 		fontstyle="bold"
 	        text="${gApp._('You haven\'t saved any cities yet.')}"
 		x="${classroot.indent}"
-		resize="true"
+		width="${parent.width - this.x - 20}"
 	    />
 
 	    <list

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  style="font-family: &quot;lucida grande&quot;, tahoma, verdana, arial, sans-serif; font-size: 18px; background-color: #ffffff;"
+>
+
+  <?python
+
+    from urllib import quote_plus
+
+    def quote_js(js):
+        return js.replace("'", "\'")
+
+    def quote_jsurl(jsurl):
+        return quote_js(quote_plus(jsurl))
+
+  ?>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title>Micropolis Page Administration</title>
+  </head>
+
+  <body>
+
+    <p>
+      This is the Micropolis Facebook Application Page Administration page.
+    </p>
+
+    <p>
+      You probably got here if you added the Micropolis application to your page,
+      clicked the page's "Edit Info" link, 
+      then clicked the "Apps" tab, 
+      then clicked the Micropolis application's "Go to App" link.
+    </p>
+
+    <p>
+      What you expect to be able to do here, I have no idea.
+    </p>
+
+    <p>
+      But for what it's worth:
+      The page id is "<a href="http://www.facebook.com/profile.php?id=${fb_page_id}">${fb_page_id}</a>".
+      The app id is "<a href="http://www.facebook.com/profile.php?id=${app_id}">${app_id}</a>".
+      The user id is "<a py:strip="not user_id" href="http://www.facebook.com/profile.php?id=${user_id}">${user_id or 'undefined'}</a>".
+      The user name is "${user_name}".
+    </p>
+  </body>
+
+</html>

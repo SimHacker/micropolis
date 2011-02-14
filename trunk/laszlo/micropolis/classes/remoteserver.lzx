@@ -258,15 +258,21 @@
 		</method>
 
 
-		<method name="sendStartSession"><![CDATA[
+		<method name="sendStartSession" args="access_token, user_id"><![CDATA[
 		    var netConnection = this.netConnection;
 
 		    var result = netConnection.connect(this.url);
 		    //Debug.write("remoteserver", this, "connect result", result);
 
+		    var args = {
+		        access_token: access_token,
+			user_id: user_id
+		    };
+
 		    netConnection.call(
 			"micropolis.startSession",
-			this._startSessionResponder);
+			this._startSessionResponder,
+			args);
 
 		    this._startSessionOutstanding = true;
 
@@ -382,7 +388,7 @@
 		    this._pollOutstanding = false;
 
 		    if (this._pollTimeoutOutstanding) {
-			lz.Timer.remoteTimer(this._pollTimeoutDelegate);
+			lz.Timer.removeTimer(this._pollTimeoutDelegate);
 			this._pollTimeoutOutstanding = false;
 		    }
 

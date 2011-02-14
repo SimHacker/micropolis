@@ -90,15 +90,27 @@
         <attribute name="cityID" type="string" value=""/>
         <attribute name="historySerial" value="0"/>
         <attribute name="currentRobot" value="null"/>
+        <attribute name="debugging" type="number" value="0"/>
+        <attribute name="facebook" type="number" value="0"/>
+        <attribute name="access_token" type="string" value=""/>
+        <attribute name="user_id" type="string" value=""/>
+        <attribute name="user_name" type="string" value=""/>
+        <attribute name="user_locale" type="string" value="en-US"/>
+        <attribute name="canvas_name" type="string" value=""/>
+        <attribute name="app_id" type="string" value=""/>
+        <attribute name="city_cookie" type="string" value=""/>
+        <attribute name="init_mode" type="string" value=""/>
+        <attribute name="in_tab" type="number" value="0"/>
+        <attribute name="fb_app_id" type="string" value=""/>
 
-	<!-- These URLs (but not targets) are actually symbols that get localized. Maybe rename them something more abstract. -->
+        <!-- These URLs (but not targets) are actually symbols that get localized. Maybe rename them something more abstract. -->
         <attribute name="aboutURL" type="string" value="/wiki/index.php/About"/>
         <attribute name="helpURL" type="string" value="/wiki/index.php/Help"/>
 
         <attribute name="aboutTarget" type="string" value="_blank"/>
         <attribute name="helpTarget" type="string" value="_blank"/>
 
-	<!-- These are symbols that are localized by the code that displays them. -->
+        <!-- These are symbols that are localized by the code that displays them. -->
         <attribute name="monthNames" value="$once{[
             'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -118,8 +130,8 @@
                 'options', 'gameLevel', 'cityName',
                 'taxRate', 'budget', 'sprites', 'robots',
                 'message', 'notice', 'virtualSpeed', 
-		'savedCities', 'tiles', 'history', 
-		'historyview'
+                'savedCities', 'tiles', 'history', 
+                'historyview'
             ]);
 
             // Set up global keyboard handlers.
@@ -149,6 +161,8 @@
                 var tileDictRow = new Array(this.worldCols);
                 tileDictRows.push(tileDictRow);
             }
+
+            this.configure();
 
             // Kick off the session.
             this.sendStartSession();
@@ -289,16 +303,16 @@
                     } else if (t1 > t2) {
                         return savedCitiesDirection;
                     } else {
-		        // Secondary sort on modification date.
-			var t1 = c1['modified'];
-			var t2 = c2['modified'];
-			if (t1 < t2) {
-			    return -1;
-			} else if (t1 > t2) {
-			    return 1;
-			} else {
-			    return 0;
-			}
+                        // Secondary sort on modification date.
+                        var t1 = c1['modified'];
+                        var t2 = c2['modified'];
+                        if (t1 < t2) {
+                            return -1;
+                        } else if (t1 > t2) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
                     }
                 });
 
@@ -344,7 +358,7 @@
 
 
         <method name="setMyCityProperty" args="message, property, value"><![CDATA[
-	    Debug.write("setMyCityProperty", message, property, value);
+            Debug.write("setMyCityProperty", message, property, value);
             if (this.citySource == "mycity") {
                 var savedCity = this.findSavedCity(this.cityID);
                 if (!savedCity) {
@@ -385,9 +399,9 @@
 
         <method name="setMyCityShared" args="shared"><![CDATA[
             this.setMyCityProperty('setMyCityShared', 'shared', shared);
-	    if (this.shared != shared) {
-	        this.setAttribute("shared", shared);
-	    }
+            if (this.shared != shared) {
+                this.setAttribute("shared", shared);
+            }
           ]]>
         </method>
 
@@ -741,18 +755,38 @@
         </method>
 
 
+        <method name="configure"><![CDATA[
+            this.setAttribute("debugging", parseInt(lz.Browser.getInitArg("debugging") || this.debugging));
+            this.setAttribute("facebook", parseInt(lz.Browser.getInitArg("facebook") || this.facebook));
+            this.setAttribute("access_token", lz.Browser.getInitArg("access_token") || this.access_token);
+            this.setAttribute("user_id", lz.Browser.getInitArg("user_id") || this.user_id);
+            this.setAttribute("user_name", lz.Browser.getInitArg("user_name") || this.user_name);
+            this.setAttribute("user_locale", lz.Browser.getInitArg("user_locale") || this.user_locale);
+            this.setAttribute("canvas_name", lz.Browser.getInitArg("canvas_name") || this.canvas_name);
+            this.setAttribute("app_id", lz.Browser.getInitArg("app_id") || this.app_id);
+            this.setAttribute("city_cookie", lz.Browser.getInitArg("city_cookie") || this.city_cookie);
+            this.setAttribute("init_mode", lz.Browser.getInitArg("init_mode") || this.init_mode);
+            this.setAttribute("in_tab", parseInt(lz.Browser.getInitArg("in_tab") || this.init_mode));
+            this.setAttribute("fb_app_id", lz.Browser.getInitArg("fb_app_id") || this.init_mode);
+
+            gStrings.loadLanguage(this.user_locale);
+          ]]>
+        </method>
+
+
         <method name="sendStartSession"><![CDATA[
             this.setAttribute("gameMode", "disconnected");
             this.setAttribute("connected", false);
             this.setAttribute("connecting", true);
             this.setAttribute("connectionFailed", false);
 
-            gRemoteServer.sendStartSession();
+            gRemoteServer.sendStartSession(this.access_token, this.user_id);
           ]]>
         </method>
 
 
         <method name="startSession" args="sessionID"><![CDATA[
+            //Debug.write("appview startSession sessionID", sessionID);
             this.setAttribute("gameMode", "start");
             this.setAttribute("connected", true);
             this.setAttribute("connecting", false);
@@ -1079,7 +1113,7 @@
                 }
             }
 
-            //Debug.write("POLL MESSAGES", messages);
+            //Debug.write("POLL SESSIONID", this.sessionID, "MESSAGES", messages);
 
             this.pollStop();
 
@@ -1090,13 +1124,13 @@
             });
 
             var soundName;
-	    var playedSounds = {};
+            var playedSounds = {};
             for (soundName in this.soundsToPlay) {
-	        if (playedSounds[soundName]) {
-		    continue;
-		}
-		lz.AudioService.LzAudio.playSound(soundName);
-		playedSounds[soundName] = true;
+                if (playedSounds[soundName]) {
+                    continue;
+                }
+                lz.AudioService.LzAudio.playSound(soundName);
+                playedSounds[soundName] = true;
             }
             this.soundsToPlay = {};
 
@@ -1415,15 +1449,15 @@
 
         <method name="trySaveCity"><![CDATA[
             //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-	    this.sendMessage({
-		message: 'saveCity',
-		source: this.citySource,
-		cookie: this.cityID,
-		title: this.title,
-		description: this.description
-	    });
-	    // Always succeeds now.
-	    return true;
+            this.sendMessage({
+                message: 'saveCity',
+                source: this.citySource,
+                cookie: this.cityID,
+                title: this.title,
+                description: this.description
+            });
+            // Always succeeds now.
+            return true;
           ]]>
         </method>
 
@@ -1431,7 +1465,7 @@
         <method name="saveCity"><![CDATA[
             Debug.write("saveCity");
             if (!this.trySaveCity()) {
-	        // Could not save city. (Never happens any more.)
+                // Could not save city. (Never happens any more.)
             }
           ]]>
         </method>
@@ -1439,15 +1473,15 @@
 
         <method name="tryCheckPointCity"><![CDATA[
             //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-	    this.sendMessage({
-		message: 'checkPointCity',
-		source: this.citySource,
-		cookie: this.cityID,
-		title: this.title,
-		description: this.description
-	    });
-	    // Always succeeds now.
-	    return true;
+            this.sendMessage({
+                message: 'checkPointCity',
+                source: this.citySource,
+                cookie: this.cityID,
+                title: this.title,
+                description: this.description
+            });
+            // Always succeeds now.
+            return true;
           ]]>
         </method>
 
@@ -1455,7 +1489,7 @@
         <method name="checkPointCity"><![CDATA[
             Debug.write("checkPointCity");
             if (!this.tryCheckPointCity()) {
-	        // Could not checkpoint city. (Never happens any more.)
+                // Could not checkpoint city. (Never happens any more.)
             }
           ]]>
         </method>
@@ -1617,7 +1651,7 @@
 
 
         <method name="loadScenario" args="scenarioID, title, notice"><![CDATA[
-	    Debug.write("loadScenario", scenarioID, title, notice);
+            Debug.write("loadScenario", scenarioID, title, notice);
 
             this.sendMessage({
                 message: 'loadScenario',
@@ -1731,11 +1765,11 @@
                 message: 'setGameMode',
                 gameMode: 'play'
             });
-	    this.startGame(
-	        this.citySource, 
-		this.cityID, 
-		this.title, 
-		this.description);
+            this.startGame(
+                this.citySource, 
+                this.cityID, 
+                this.title, 
+                this.description);
           ]]>
         </method>
 
@@ -1750,16 +1784,16 @@
         </method>
 
 
-	<method name="startGame" args="citySource, cityID, title, description"><![CDATA[
-	    this.sendMessage({
-	        message: 'startGame',
-		citySource: citySource,
-		cityID: cityID,
-		title: title,
-		description: description
-	    });
-	  ]]>
-	</method>
+        <method name="startGame" args="citySource, cityID, title, description"><![CDATA[
+            this.sendMessage({
+                message: 'startGame',
+                citySource: citySource,
+                cityID: cityID,
+                title: title,
+                description: description
+            });
+          ]]>
+        </method>
 
 
         <method name="testBounds" args="col, row"><![CDATA[

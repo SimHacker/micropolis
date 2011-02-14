@@ -3,7 +3,7 @@
 
     <!-- Scenarios View -->
     <!-- Written for Micropolis -->
-    <!-- By Don Hopkins -->
+v    <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
@@ -46,26 +46,68 @@
 
 	    <handler name="ondata" args="arg"><![CDATA[
 		var label =
-		    gApp._(this.scenarioTitle) + 
-		    ', ' + 
-		    this.scenarioYear + 
-		    ': ' + 
-		    gApp._(this.scenarioTagLine);
+		    gApp.in_tab
+		        ? ""
+			: (gApp._(this.scenarioTitle) + 
+		           ', ' + 
+		           this.scenarioYear);
 		//Debug.write("scenario button ondata", this, label);
 		this.setAttribute("text", label);
 		this.icon.setAttribute("resource", this.scenarioIcon);
 	      ]]>
 	    </handler>
 
+	    <handler name="onmouseover" args="arg"><![CDATA[
+		var tip = 
+		    gApp._(this.scenarioTitle) + 
+		    ', ' + 
+		    this.scenarioYear + 
+		    ':\n' + 
+		    gApp._(this.scenarioTagLine);
+		gToolTip.enterView(this, tip, 'left');
+	      ]]>
+	    </handler>
+
+
+	    <handler name="onmouseout" args="arg"><![CDATA[
+		gToolTip.exitView(this);
+	      ]]>
+	    </handler>
+
 
 	    <view name="icon"
-	        x="5"
-	        y="5"
+		x="5"
+		y="5"
 		stretches="both"
 		width="${this.unstretchedwidth * 0.5}"
 		height="${this.unstretchedheight * 0.5}"
 	    />
 
+
+	</button>
+
+
+	<button
+	    text="${gApp._('Generate')}"
+	    fontsize="18"
+	    fontstyle="bold"
+	    onclick="gApp.generateCity()"
+	    width="${parent.width}"
+	    height="${parent.subviews[0].height}"
+	>
+
+	    <handler name="onmouseover" args="arg"><![CDATA[
+		var tip = 
+		    gApp._("Random Map") + ':\n' + 
+		    gApp._("Click to randomly generate a new map.");
+		gToolTip.enterView(this, tip, 'left');
+	      ]]>
+	    </handler>
+
+	    <handler name="onmouseout" args="arg"><![CDATA[
+		gToolTip.exitView(this);
+	      ]]>
+	    </handler>
 
 	</button>
 

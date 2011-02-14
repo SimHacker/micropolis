@@ -203,9 +203,13 @@
 	
 
         <method name="updateMapNow"><![CDATA[
-            //Debug.write("updateMapNow", this, this.active);
+            //Debug.write("updateMapNow", "active", this.active, "sessionID", gApp.sessionID, "this", this);
 
             var sessionID = gApp.sessionID;
+	    if (sessionID == null) {
+	        return;
+	    }
+
             var tileSize = this.tileSize;
             var width = gApp.worldCols * tileSize;
             var height = gApp.worldRows * tileSize;

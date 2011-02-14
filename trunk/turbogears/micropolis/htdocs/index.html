@@ -1,9 +1,38 @@
-<html>
+<html
+    xmlns:og="http://ogp.me/ns#"
+    xmlns:fb="http://www.facebook.com/2008/fbml"
+>
   <head>
-    <title>Micropolis Online Server</title>
+    <title>Micropolis Online</title>
+    <meta property="og:title" content="Micropolis Online"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.MicropolisOnline.com"/>
+    <meta property="og:image" content="http://micropolisonline.com/static/documentation/images/Micropolis_Facebook_Medium.png"/>
+    <meta property="og:site_name" content="Micropolis Online"/>
+    <meta property="fb:admins" content="502061754"/>
+    <meta property="fb:app_id" content="185197118179045"/>
+    <meta property="og:description"
+          content="Micropolis is the open source version of SimCity Classic from Maxis, developed by Will Wright and Don Hopkins."/>
+    <script src="http://connect.facebook.net/en_US/all.js"> </script>
+    <script>
+
+      window.fbAsyncInit = function() {
+
+	FB.init({
+	  appId: "185197118179045",
+	  xfbml: true
+	});
+
+      }
+
+    </script>
   </head>
   <body>
-    <h1>Micropolis Online Server</h1>
+
+    <div id="fb-root"></div>
+
+    <h1>Micropolis Online</h1>
+
     <h3>
       Micropolis is the open source version of SimCity Classic from Maxis,
       developed by Will Wright and Don Hopkins.
@@ -14,6 +43,35 @@
       for more information.
       Here are some useful resources:
     </h3>
+
+    <fb:comments
+      numposts="10"
+      width="300"
+      publish_feed="true"
+      header="false"
+      style="float: right;"
+    ></fb:comments>
+
+    <fb:like-box
+      href="http://www.facebook.com/pages/Micropolis/101590819920468"
+      width="300"
+      height="300"
+      show_faces="true"
+      stream="true"
+      header="false"
+      style="float: right; clear: both; padding-top: 5px;"
+    ></fb:like-box>
+
+    <fb:activity
+      site="http://www.MicropolisOnline.com"
+      width="300"
+      height="300"
+      header="false"
+      recommendations="true"
+      style="float: right; clear: both; padding-top: 5px;"
+    ></fb:activity>
+
+
     <ul>
       <li>
 	<h2>
@@ -26,6 +84,7 @@
 	  <a href="http://apps.facebook.com/micropolisonline"
 	  >Micropolis Facebook Application</a>
 	</h2>
+
 	<a
 	  href="static/documentation/images/Micropolis_Facebook.png"
 	><img
@@ -34,6 +93,9 @@
 	    height="549"
 	    border="0"
 	/></a>
+
+	<br/>
+
       </li>
       <li>
 	<h2>

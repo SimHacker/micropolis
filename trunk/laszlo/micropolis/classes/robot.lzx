@@ -71,6 +71,7 @@
 	    fontstyle="bold"
 	    fgcolor="0x000000"
 	    text="${classroot.text}"
+	    visible="${classroot.text != ''}"
 	    x="${((parent.dv.width - this.width) / 2) + 1}"
 	    y="${-this.height - 5 + 1}"
 	/>
@@ -80,6 +81,7 @@
 	    fontstyle="bold"
 	    fgcolor="0xffffff"
 	    text="${classroot.text}"
+	    visible="${classroot.text != ''}"
 	    x="${(parent.dv.width - this.width) / 2}"
 	    y="${-this.height - 5}"
 	/>
