@@ -145,3 +145,19 @@ resources/images/tool_stadium.png
   Icon is highlighted, but should be dark.
 
 ------------------------------------------------------------------------
+
+Facebook Integration
+
+  Facebook Page Support
+
+    When someone puts Micropolis on their Facebook page, it
+    automatically creates them an account and a city. The page admins
+    have permission to edit the city. Non-admins can do read-only
+    stuff, leave comments, etc. The admins can configure what other
+    users are allowed to do on the Micropolis Page Admin page.
+
+  Notice window should have a "Share" button that publishes the notice
+  on your wall, along with links for your friends to interact with the
+  game.
+
+------------------------------------------------------------------------

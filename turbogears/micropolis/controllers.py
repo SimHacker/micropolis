@@ -46,6 +46,7 @@ log = logging.getLogger("micropolis.controllers")
 # Globals
 
 
+ServerURL = 'http://www.MicropolisOnline.com'
 DefaultLanguage = config.get('micropolis.default_language', 'en-US')
 DataDir = config.get('micropolis.data_dir', 'micropolis/htdocs/static/data')
 LocalServerRoot = config.get('micropolis.local_server_root', 'http://127.0.0.1:8082')
@@ -310,6 +311,8 @@ class Root(controllers.RootController):
             description='Poll the simulation.',
             expose_request=True)
 
+        print "GATWAY SERVICES", gateway.services
+
         scheduler.add_interval_task(
             action=self.makeHeartBeat,
             taskname='micropolis_heartBeat',
@@ -439,7 +442,9 @@ class Root(controllers.RootController):
     # Return a session, given a session id, or create a new session if it's not defined.
     # Touch the session to update its last used time.
     #
-    def getSession(self, sessionID):
+    def getSession(self, sessionID, args=None):
+
+        #print "GETSESSION", sessionID, args
 
         self.expireSessions()
 
@@ -449,7 +454,11 @@ class Root(controllers.RootController):
             session.touch()
             return session
 
-        session = micropolisturbogearsengine.Session(self, sessionID)
+        if args == None:
+            print "ERROR: controller getSession args is None!", sessionID
+            return None
+
+        session = micropolisturbogearsengine.Session(self, sessionID, args)
         sessions[sessionID] = session
 
         session.createEngine()
@@ -660,6 +669,8 @@ class Root(controllers.RootController):
         overlay='',
         **kw):
 
+        #print "GETMAPIMAGE", sessionID, width, height, overlay, kw
+
         session = self.getSession(sessionID)
         engine = session.engine
 
@@ -848,6 +859,11 @@ class Root(controllers.RootController):
         self,
         **kw):
 
+        #print "AMFGATEWAY", kw, request
+        #print "HEADERS", request.headers
+        #print "PARAMS", request.params
+        #print "GATEWAY", gateway
+
         response = self.gateway(request)
 
         #print "RESPONSE", response
@@ -855,21 +871,20 @@ class Root(controllers.RootController):
         return response
 
 
-    def startSessionService(self, args):
-        session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'))
-        #print "STARTSESSIONSERVICE", "sessionID", session, "ARGS", args
-        print "hello",
+    def startSessionService(self, ignore, args):
+        #print "STARTSESSIONSERVICE", self, "ignore", ignore, "args", args
+        session = self.getSession(micropolisturbogearsengine.UniqueID('SESSION_'), args)
         sys.stdout.flush()
         return session.sessionID
 
 
     def pollService(self, ignore, pollDict):
-        #print "POLLSERVICE", "pollDict", pollDict
+        #print "POLLSERVICE", "ignore", ignore, "pollDict", pollDict
         sessionID = str(pollDict['sessionID'])
         ref = pollDict['ref']
         messages = pollDict['messages']
 
-        #print "SESSIONID", sessionID
+        #print "pollService SESSIONID", sessionID
         if not sessionID:
             self.expectationFailed("Invalid sessionID parameter.");
         session = self.getSession(sessionID)
@@ -892,22 +907,34 @@ class Root(controllers.RootController):
     #
     # Facebook canvas interface.
     #
-    @expose(
-        template="micropolis.templates.facebookCanvas")
+    @expose()
+    @validate(validators = {
+        'debugging': validators.Int(),
+        'in_tab': validators.Int(),
+        'page_admin': validators.Int(),
+    })
     def facebookCanvas(
         self,
+        debugging=0,
+        in_tab=0,
+        page_admin=0,
+        fb_page_id='',
+        locale=DefaultLanguage,
         *args,
         **kw):
+
         print "\nFACEBOOKCANVAS", "METHOD", request.method, "ARGS", args, "KW", kw
+
+        if in_tab:
+            print "DISPLAYING IN TAB"
 
         signed_request = None
         signed_request_data = None
-        user_id = None
-        access_token = None
+        user_id = ''
+        access_token = ''
         me = None
         user = None
-
-        #print "COOKIE", type(cherrypy.request.simple_cookie), cherrypy.request.simple_cookie
+        page = None
 
         if ((request.method == 'POST') and
             ('signed_request' in kw)):
@@ -923,50 +950,66 @@ class Root(controllers.RootController):
 
             sig, payload = signed_request.split(u'.', 1)
             sig = Base64URLDecode(sig)
-            data = simplejson.loads(Base64URLDecode(payload))
+            signed_request_data = simplejson.loads(Base64URLDecode(payload))
 
             expected_sig = hmac.new(
                 FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest()
 
             # Allow the signed_request to work for up to 1 day.
-            if sig == expected_sig and data[u'issued_at'] > (time.time() - 86400):
-                signed_request_data = data
-                user_id = data.get(u'user_id')
-                access_token = data.get(u'oauth_token')
+            if ((sig == expected_sig) and
+                (signed_request_data[u'issued_at'] > (time.time() - 86400))):
+
+                user_id = signed_request_data.get(u'user_id', '')
+                access_token = signed_request_data.get(u'oauth_token', '')
 
                 if user_id:
+
                     payload = Base64URLEncode(simplejson.dumps({
                         u'user_id': user_id,
                         u'issued_at': str(int(time.time())),
                     }))
-                    sig = Base64URLEncode(hmac.new(
-                        FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest())
+
+                    sig = Base64URLEncode(
+                        hmac.new(
+                            FacebookAppSecret,
+                            msg=payload,
+                            digestmod=hashlib.sha256).digest())
+
                     cookie = sig + '.' + payload
                     cherrypy.response.simple_cookie['u'] = cookie
                     cherrypy.response.simple_cookie['u']['expires'] = 1440 * 60
-                    #print "EXPIRES", cherrypy.response.simple_cookie['u']
 
                 print "signed_request_data", signed_request_data
                 print "user_id", user_id
                 print "access_token", access_token
-                print "data", data
 
         if access_token:
             print "Getting me..."
-            me = FacebookAPI(
-                u'/me', {
+            try:
+                params = {
                     u'fields': u'picture,friends',
                     u'access_token': access_token,
-                })
-            print "Got me:", me.get('name', '???'), me.get('picture', '???')
+                }
+                me = FacebookAPI(
+                    u'/me',
+                    params)
+            except Exception, e:
+                print "ERROR CALLING FacebookAPI", "/me", params, e
+
+            if me:
+                print "Got me:", me.get('name', '???'), me.get('picture', '???')
+            else:
+                print "I don't know who me is."
 
         if me and user_id:
+
             user = model.User.by_uid(user_id)
+
             if not user:
-                print "Unknown user", user_id
+                print "Creating new user id", user_id
                 user = model.User(
                     uid=user_id,
-                    user_name=str(user_id),
+                    user_name=user_id,
                     password=micropolisturbogearsengine.UniqueID(''),
                     created=datetime.now())
 
@@ -977,29 +1020,73 @@ class Root(controllers.RootController):
             user.name = me.get('name', '')
             user.picture = me.get('picture', '')
             user.timezone = me.get('timezone', '')
-            user.locale = me.get('locale', '')
+            user.locale = me.get('locale', DefaultLanguage)
             user.username = me.get('username', '')
             user.email = me.get('email', '')
             user.third_party_id = me.get('third_party_id', '')
             user.email = me.get('email', '')
             user.activity = datetime.now()
 
-        debugging = 0
-        locale = 'en-US'
+        if fb_page_id:
+            params = {
+                u'access_token': access_token,
+            }
+            page = FacebookAPI(
+                u'/page',
+                params)
+            print "PAGE", page
+
+        lzr_param = 'swf10'
+        debugging_params_amp = '' if debugging else 'lzt=swf&'
+        user_name = (me and me.get('name')) or 'Mayor'
+
+        if page_admin:
+            tg_template = 'micropolis.templates.facebookPageAdmin'
+        else:
+            tg_template = 'micropolis.templates.facebookCanvas'
 
         return {
-            'signed_request': signed_request,
-            'signed_request_data': signed_request_data,
-            'access_token': access_token,
-            'user_id': user_id,
-            'user': user,
-            'me': me,
-            'locale': locale,
-            'debugging': debugging,
+            #'me': me,
+            #'user': user,
             'app_id': FacebookAppID,
             'canvas_name': FacebookCanvasName,
+            'fb_page_id': fb_page_id,
+            'page': page,
+            'in_tab': in_tab,
+            'page_admin': page_admin,
+            'tg_template': tg_template,
             'facebook_permissions': FacebookPermissions,
+            'access_token': access_token,
+            'user_id': user_id,
+            'user_name': user_name,
+            'user_locale': locale,
+            'lzr_param': lzr_param,
+            'debugging': debugging,
+            'debugging_params_amp': debugging_params_amp,
         }
     
+
+    ########################################################################
+    # facebookPageAdmin
+    #
+    # Facebook page admin interface.
+    #
+    @expose(
+        template="micropolis.templates.facebookPageAdmin")
+    @validate(validators = {
+        'debugging': validators.Int(),
+    })
+    def facebookPageAdmin(
+        self,
+        debugging=0,
+        fb_page_id='',
+        *args,
+        **kw):
+
+        print "\nFACEBOOKPAGEADMIN", "FB_PAGE_ID", fb_page_id, "METHOD", request.method, "ARGS", args, "KW", kw
+
+        return {
+        }
+
 
 ########################################################################

@@ -342,8 +342,9 @@ def UniqueID(prefix="ID_"):
 class Session(object):
 
 
-    def __init__(self, controller, sessionID):
+    def __init__(self, controller, sessionID, args):
         self.sessionID = sessionID
+        self.args = args
         self.engine = None
         self.messages = []
         self.messagesSeen = {}
@@ -374,7 +375,7 @@ class Session(object):
 
 
     def handlePoll(self, pollDict):
-        #print "handlePoll", pollDict
+        #print "Session handlePoll", pollDict
 
         self.lastPollTime = Now()
 
@@ -551,7 +552,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         self.tileSizeCache = {}
 
-        self.startVirtualSpeed = 4
+        self.startVirtualSpeed = 3
         self.virtualSpeed = self.startVirtualSpeed
         self.loopsPerSecond = 100
         self.maxLoopsPerPoll = 10000 # Tune this
@@ -663,112 +664,112 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
         #print "HANDLEMESSAGE", message, messageDict
 
-	methodName = 'handleMessage_' + message
-	method = getattr(self, methodName, None)
-	if not method:
+        methodName = 'handleMessage_' + message
+        method = getattr(self, methodName, None)
+        if not method:
             print "handleMessage: UNKNOWN MESSAGE", message
         else:
             method(session, messageDict, user)
 
 
     def handleMessage_disaster(self, session, messageDict, user):
-	disaster = messageDict.get('disaster', None)
-	#print "disaster", disaster
+        disaster = messageDict.get('disaster', None)
+        #print "disaster", disaster
 
-	if disaster == 'monster':
-	    self.makeMonster()
-	elif disaster == 'fire':
-	    self.setFire()
-	elif disaster == 'flood':
-	    self.makeFlood()
-	elif disaster == 'meltdown':
-	    self.makeMeltdown()
-	elif disaster == 'tornado':
-	    self.makeTornado()
-	elif disaster == 'earthquake':
-	    self.makeEarthquake()
-	elif disaster == 'eco':
-	    self.heatSteps = 1
-	    self.heatRule = 1
-	elif disaster == 'melt':
-	    self.heatSteps = 1
-	    self.heatRule = 0
-	else:
-	    print "Invalid disaster name:", disaster
+        if disaster == 'monster':
+            self.makeMonster()
+        elif disaster == 'fire':
+            self.setFire()
+        elif disaster == 'flood':
+            self.makeFlood()
+        elif disaster == 'meltdown':
+            self.makeMeltdown()
+        elif disaster == 'tornado':
+            self.makeTornado()
+        elif disaster == 'earthquake':
+            self.makeEarthquake()
+        elif disaster == 'eco':
+            self.heatSteps = 1
+            self.heatRule = 1
+        elif disaster == 'melt':
+            self.heatSteps = 1
+            self.heatRule = 0
+        else:
+            print "Invalid disaster name:", disaster
 
 
     def handleMessage_setTaxRate(self, session, messageDict, user):
-	taxRateStr = messageDict.get('taxRate', self.cityTax)
-	taxRate = self.cityTax
-	try:
-	    taxRate = int(taxRateStr)
-	except: pass
-	taxRate = max(0, min(taxRate, 20))
-	self.cityTax = taxRate
-	#print "==== TAXRATE", taxRate
+        taxRateStr = messageDict.get('taxRate', self.cityTax)
+        taxRate = self.cityTax
+        try:
+            taxRate = int(taxRateStr)
+        except: pass
+        taxRate = max(0, min(taxRate, 20))
+        self.cityTax = taxRate
+        #print "==== TAXRATE", taxRate
 
 
     def handleMessage_setRoadPercent(self, session, messageDict, user):
-	roadPercent = int(self.roadPercent * 100.0)
-	roadPercentStr = messageDict.get('roadPercent', roadPercent)
-	try:
-	    roadPercent = int(roadPercentStr)
-	except: pass
-	roadPercent = max(0, min(roadPercent, 100))
-	self.roadPercent = float(roadPercent) / 100.0
-	self.roadSpend = int(self.roadPercent * self.roadFund)
-	self.updateFundEffects()
-	#print "==== ROADPERCENT", self.roadPercent
+        roadPercent = int(self.roadPercent * 100.0)
+        roadPercentStr = messageDict.get('roadPercent', roadPercent)
+        try:
+            roadPercent = int(roadPercentStr)
+        except: pass
+        roadPercent = max(0, min(roadPercent, 100))
+        self.roadPercent = float(roadPercent) / 100.0
+        self.roadSpend = int(self.roadPercent * self.roadFund)
+        self.updateFundEffects()
+        #print "==== ROADPERCENT", self.roadPercent
 
 
     def handleMessage_setFirePercent(self, session, messageDict, user):
-	firePercent = int(self.firePercent * 100.0)
-	firePercentStr = messageDict.get('firePercent', firePercent)
-	try:
-	    firePercent = int(firePercentStr)
-	except: pass
-	firePercent = max(0, min(firePercent, 100))
-	self.firePercent = float(firePercent) / 100.0
-	self.fireSpend = int(self.firePercent * self.fireFund)
-	self.updateFundEffects()
-	#print "==== FIREPERCENT", self.firePercent
+        firePercent = int(self.firePercent * 100.0)
+        firePercentStr = messageDict.get('firePercent', firePercent)
+        try:
+            firePercent = int(firePercentStr)
+        except: pass
+        firePercent = max(0, min(firePercent, 100))
+        self.firePercent = float(firePercent) / 100.0
+        self.fireSpend = int(self.firePercent * self.fireFund)
+        self.updateFundEffects()
+        #print "==== FIREPERCENT", self.firePercent
 
 
     def handleMessage_setPolicePercent(self, session, messageDict, user):
-	policePercent = int(self.policePercent * 100.0)
-	policePercentStr = messageDict.get('policePercent', policePercent)
-	try:
-	    policePercent = int(policePercentStr)
-	except: pass
-	policePercent = max(0, min(policePercent, 100))
-	self.policePercent = float(policePercent) / 100.0
-	self.policeSpend = int(self.policePercent * self.policeFund)
-	self.updateFundEffects()
-	#print "==== POLICEPERCENT", self.policePercent
+        policePercent = int(self.policePercent * 100.0)
+        policePercentStr = messageDict.get('policePercent', policePercent)
+        try:
+            policePercent = int(policePercentStr)
+        except: pass
+        policePercent = max(0, min(policePercent, 100))
+        self.policePercent = float(policePercent) / 100.0
+        self.policeSpend = int(self.policePercent * self.policeFund)
+        self.updateFundEffects()
+        #print "==== POLICEPERCENT", self.policePercent
 
 
     def handleMessage_loadSharedCity(self, session, messageDict, user):
-	id = messageDict.get('id', None)
-	#print "loadSharedCity", id
-	if id in CityNames:
-	    cityFileName = CityNames[id]
-	    #print "cityFileName", cityFileName
-	    self.loadMetaCity(cityFileName)
+        id = messageDict.get('id', None)
+        #print "loadSharedCity", id
+        if id in CityNames:
+            cityFileName = CityNames[id]
+            #print "cityFileName", cityFileName
+            self.loadMetaCity(cityFileName)
 
 
     def handleMessage_loadScenario(self, session, messageDict, user):
-	scenarioStr = messageDict.get('id', 0)
-	#print "loadScenario", scenarioStr
-	scenario = 0
-	try:
-	    scenario = int(scenarioStr)
-	except: pass
-	if scenario:
-	    self.loadScenario(scenario)
+        scenarioStr = messageDict.get('id', 0)
+        #print "loadScenario", scenarioStr
+        scenario = 0
+        try:
+            scenario = int(scenarioStr)
+        except: pass
+        if scenario:
+            self.loadScenario(scenario)
 
 
     def handleMessage_generateCity(self, session, messageDict, user):
-	self.generateCityWithSeed(messageDict.get('seed', 0))
+        self.generateCityWithSeed(messageDict.get('seed', 0))
 
 
     def handleMessage_startGame(self, session, messageDict, user):
@@ -791,7 +792,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 city = model.City.query.filter_by(cookie=cookie).first()
                 if ((not city) or
                     (city.user_id != user.user_id)):
-		    print "handleMessage_startGame: User tried to start city they do not own", user, city, cookie
+                    print "handleMessage_startGame: User tried to start city they do not own", user, city, cookie
                     return
                 print "USING EXISTING CITY cookie", city.cookie
                 city.title = title
@@ -805,235 +806,235 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 return
 
     def handleMessage_setGameMode(self, session, messageDict, user):
-	gameMode = messageDict.get('gameMode')
+        gameMode = messageDict.get('gameMode')
         self.gameMode = gameMode
         self.setGameMode(gameMode, user)
             
 
     def handleMessage_setPaused(self, session, messageDict, user):
-	paused = messageDict.get('paused')
+        paused = messageDict.get('paused')
 
-	#print "setPaused", paused
-	if paused == True:
-	    self.pause()
-	elif paused == False:
-	    self.resume()
-	else:
-	    print "Bad paused value, should be true or false, not", paused
+        #print "setPaused", paused
+        if paused == True:
+            self.pause()
+        elif paused == False:
+            self.resume()
+        else:
+            print "Bad paused value, should be true or false, not", paused
 
 
     def handleMessage_setVirtualSpeed(self, session, messageDict, user):
-	virtualSpeed = int(messageDict.get('virtualSpeed'))
-	speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
+        virtualSpeed = int(messageDict.get('virtualSpeed'))
+        speed = max(0, min(virtualSpeed, len(SpeedConfigurations) - 1))
 
-	#print "setVirtualSpeed", virtualSpeed
-	self.setVirtualSpeed(virtualSpeed)
+        #print "setVirtualSpeed", virtualSpeed
+        self.setVirtualSpeed(virtualSpeed)
 
 
     def handleMessage_abandonCity(self, session, messageDict, user):
-	pass # print "ABANDON CITY"
+        pass # print "ABANDON CITY"
 
 
     def handleMessage_saveCity(self, session, messageDict, user):
         print "saveCity", session, messageDict, user
-	if not user:
-	    cookie = messageDict['cookie']
-	    title = messageDict['title']
-	    description = messageDict['description']
-	    source = messageDict['source']
-	    if source != 'mycity':
-		cookie = None # to force saving to a new city
-	    self.saveCityToDatabase(user, cookie, title, description)
+        if not user:
+            cookie = messageDict['cookie']
+            title = messageDict['title']
+            description = messageDict['description']
+            source = messageDict['source']
+            if source != 'mycity':
+                cookie = None # to force saving to a new city
+            self.saveCityToDatabase(user, cookie, title, description)
             self.updateSavedCities(session, user)
 
 
     def handleMessage_checkPointCity(self, session, messageDict, user):
         print "checkPointCity", session, messageDict, user
-	if user:
-	    # TODO: checkpoint city
-	    cookie = messageDict['cookie']
-	    title = messageDict['title']
-	    description = messageDict['description']
-	    source = messageDict['source']
-	    if source != 'mycity':
-		cookie = None # to force saving to a new city
-	    self.saveCityToDatabase(user, cookie, title, description)
+        if user:
+            # TODO: checkpoint city
+            cookie = messageDict['cookie']
+            title = messageDict['title']
+            description = messageDict['description']
+            source = messageDict['source']
+            if source != 'mycity':
+                cookie = None # to force saving to a new city
+            self.saveCityToDatabase(user, cookie, title, description)
             self.updateSavedCities(session, user)
 
 
     def handleMessage_setMyCityTitle(self, session, messageDict, user):
-	print "SETMYCITYTITLE", messageDict, user
-	if user:
-	    city = None
-	    try:
-		cookie = messageDict['cookie']
-		city = model.City.query.filter_by(cookie=cookie).first()
-	    except Exception, e:
-		print "City query error 1", e
-	    if city:
-		if city.user_id != user.user_id:
-		    print "User tried to set title of city they do not own", user, city
-		else:
-		    title = messageDict['title']
-		    city.title = unicode(title)
+        print "SETMYCITYTITLE", messageDict, user
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = model.City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 1", e
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to set title of city they do not own", user, city
+                else:
+                    title = messageDict['title']
+                    city.title = unicode(title)
 
 
     def handleMessage_setMyCityDescription(self, session, messageDict, user):
-	print "SETMYCITYDESCRIPTION", messageDict, user
-	if user:
-	    city = None
-	    try:
-		cookie = messageDict['cookie']
-		city = model.City.query.filter_by(cookie=cookie).first()
-	    except Exception, e:
-		print "City query error 2", e
-	    if city:
-		if city.user_id != user.user_id:
-		    print "User tried to set description of city they do not own", user, city
-		else:
-		    description = messageDict['description']
-		    city.description = unicode(description)
+        print "SETMYCITYDESCRIPTION", messageDict, user
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = model.City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 2", e
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to set description of city they do not own", user, city
+                else:
+                    description = messageDict['description']
+                    city.description = unicode(description)
 
 
     def handleMessage_setMyCityShared(self, session, messageDict, user):
-	print "SETMYCITYSHARED", messageDict, user
-	if user:
-	    city = None
-	    try:
-		cookie = messageDict['cookie']
-		city = model.City.query.filter_by(cookie=cookie).first()
-	    except Exception, e:
-		print "City query error 3", e
-	    print "CITY", city
-	    if city:
-		if city.user_id != user.user_id:
-		    print "User tried to set shared flag of city they do not own", user, city
-		else:
-		    shared = messageDict['shared']
-		    print "before shared", city.shared
-		    city.shared = shared
-		    print "Setting shared", city.shared, type(city.shared)
+        print "SETMYCITYSHARED", messageDict, user
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = model.City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 3", e
+            print "CITY", city
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to set shared flag of city they do not own", user, city
+                else:
+                    shared = messageDict['shared']
+                    print "before shared", city.shared
+                    city.shared = shared
+                    print "Setting shared", city.shared, type(city.shared)
 
 
     def handleMessage_deleteMyCity(self, session, messageDict, user):
-	print "DELETEMYCITY", messageDict, user
-	if user:
-	    city = None
-	    try:
-		cookie = messageDict['cookie']
-		city = model.City.query.filter_by(cookie=cookie).first()
-	    except Exception, e:
-		print "City query error 4", e
-	    if city:
-		if city.user_id != user.user_id:
-		    print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
-		else:
-		    print "DELETE CITY", city
-		    savedCities = user.getSavedCities(session)
-		    id = city.city_id
-		    print "DESTROY", city
-		    for cityData in savedCities:
-			print cityData['cookie'], cityData['title'], cityData
-		    city.destroy()
+        print "DELETEMYCITY", messageDict, user
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = model.City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 4", e
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
+                else:
+                    print "DELETE CITY", city
+                    savedCities = user.getSavedCities(session)
+                    id = city.city_id
+                    print "DESTROY", city
+                    for cityData in savedCities:
+                        print cityData['cookie'], cityData['title'], cityData
+                    city.destroy()
 
 
     def handleMessage_loadMyCity(self, session, messageDict, user):
-	if user:
-	    city = None
-	    try:
-		cookie = messageDict['cookie']
-		city = model.City.query.filter_by(cookie=cookie).first()
-	    except Exception, e:
-		print "City query error 5", e
-	    if city:
-		if city.user_id != user.user_id:
-		    print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
-		else:
-		    saveFile = city.save_file
-		    tempFileName = tempfile.mktemp()
-		    f = open(tempFileName, 'wb')
-		    f.write(saveFile)
-		    f.close()
-		    self.loadCity(tempFileName)
-		    os.remove(tempFileName)
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = model.City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 5", e
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to delete city they do not own", user, user.user_id, city, city.user_id
+                else:
+                    saveFile = city.save_file
+                    tempFileName = tempfile.mktemp()
+                    f = open(tempFileName, 'wb')
+                    f.write(saveFile)
+                    f.close()
+                    self.loadCity(tempFileName)
+                    os.remove(tempFileName)
 
 
     def handleMessage_drawToolStart(self, session, messageDict, user):
-	#print "DRAWTOOLSTART", messageDict
-	tool = messageDict.get('tool')
-	x = int(messageDict.get('x'))
-	y = int(messageDict.get('y'))
+        #print "DRAWTOOLSTART", messageDict
+        tool = messageDict.get('tool')
+        x = int(messageDict.get('x'))
+        y = int(messageDict.get('y'))
 
-	if ((tool not in ToolNameToIndex) or
-	    (not self.testBounds(x, y))):
+        if ((tool not in ToolNameToIndex) or
+            (not self.testBounds(x, y))):
 
-	    print "INVALID ARGUMENT TO DRAWTOOLSTART", tool, x, y
+            print "INVALID ARGUMENT TO DRAWTOOLSTART", tool, x, y
 
-	else:
+        else:
 
-	    toolIndex = ToolNameToIndex[tool]
-	    if toolIndex < 0:
-		self.toolDownScripted(toolIndex, x, y)
-	    else:
-		self.toolDown(toolIndex, x, y)
+            toolIndex = ToolNameToIndex[tool]
+            if toolIndex < 0:
+                self.toolDownScripted(toolIndex, x, y)
+            else:
+                self.toolDown(toolIndex, x, y)
 
 
     def handleMessage_drawToolMove(self, session, messageDict, user):
-	#print "DRAWTOOLMOVE", messageDict
-	tool = messageDict.get('tool')
-	x0 = int(messageDict.get('x0'))
-	y0 = int(messageDict.get('y0'))
-	x1 = int(messageDict.get('x1'))
-	y1 = int(messageDict.get('y1'))
+        #print "DRAWTOOLMOVE", messageDict
+        tool = messageDict.get('tool')
+        x0 = int(messageDict.get('x0'))
+        y0 = int(messageDict.get('y0'))
+        x1 = int(messageDict.get('x1'))
+        y1 = int(messageDict.get('y1'))
 
-	#print "DRAWTOOLMOVE", tool, x0, y0, x1, x1
-	if ((tool not in ToolNameToIndex) or
-	    (not self.testBounds(x0, y0)) or
-	    (not self.testBounds(x1, y1))):
+        #print "DRAWTOOLMOVE", tool, x0, y0, x1, x1
+        if ((tool not in ToolNameToIndex) or
+            (not self.testBounds(x0, y0)) or
+            (not self.testBounds(x1, y1))):
 
-	    print "INVALID ARGUMENT TO DRAWTOOLMOVE", tool, x0, y0, x1, y1
+            print "INVALID ARGUMENT TO DRAWTOOLMOVE", tool, x0, y0, x1, y1
 
-	else:
+        else:
 
-	    toolIndex = ToolNameToIndex[tool]
-	    if toolIndex < 0:
-		self.toolDragScripted(toolIndex, x0, y0, x1, y1)
-	    else:
-		self.toolDrag(toolIndex, x0, y0, x1, y1)
+            toolIndex = ToolNameToIndex[tool]
+            if toolIndex < 0:
+                self.toolDragScripted(toolIndex, x0, y0, x1, y1)
+            else:
+                self.toolDrag(toolIndex, x0, y0, x1, y1)
 
 
     def handleMessage_drawToolStop(self, session, messageDict, user):
-	#print "DRAWTOOLSTOP", messageDict
-	tool = messageDict.get('tool')
-	x = int(messageDict.get('x'))
-	y = int(messageDict.get('y'))
+        #print "DRAWTOOLSTOP", messageDict
+        tool = messageDict.get('tool')
+        x = int(messageDict.get('x'))
+        y = int(messageDict.get('y'))
 
-	#print "DRAWTOOLSTOP", tool, x, y
-	if ((tool not in ToolNameToIndex) or
-	    (not self.testBounds(x, y))):
+        #print "DRAWTOOLSTOP", tool, x, y
+        if ((tool not in ToolNameToIndex) or
+            (not self.testBounds(x, y))):
 
-	    print "INVALID ARGUMENT TO DRAWTOOLSTOP", tool, x, y
+            print "INVALID ARGUMENT TO DRAWTOOLSTOP", tool, x, y
 
-	else:
+        else:
 
-	    # Nothing to do, since the user interface is
-	    # responsible for sending us a move to the endpoint.
-	    pass
+            # Nothing to do, since the user interface is
+            # responsible for sending us a move to the endpoint.
+            pass
 
 
     def handleMessage_sendChatMessage(self, session, messageDict, user):
-	text = messageDict['text']
-	channel = messageDict['channel']
-	language = messageDict['language']
+        text = messageDict['text']
+        channel = messageDict['channel']
+        language = messageDict['language']
 
-	userName = 'anonymous'
-	user = session.getUser()
-	if user:
-	    userName = user.user_name
+        userName = 'anonymous'
+        user = session.getUser()
+        if user:
+            userName = user.user_name
 
-	#print "CHAT", userName, language, text
+        #print "CHAT", userName, language, text
 
-	if text and text[0] == '!':
+        if text and text[0] == '!':
 
             args = text[1:].split()
             if not args:
@@ -1041,8 +1042,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             command = args[0]
             args = args[1:]
 
-	    if command == 'million':
-		self.spend(-1000000)
+            if command == 'million':
+                self.spend(-1000000)
             elif command == 'faith':
                 if len(args) == 0:
                     session.sendMessage({
@@ -1066,51 +1067,51 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                         'collapse': False,
                     })
 
-	elif channel == 'eliza':
+        elif channel == 'eliza':
 
-	    elizaResponse = self.eliza.respond(text)
-	    #print "RESPONSE", elizaResponse
+            elizaResponse = self.eliza.respond(text)
+            #print "RESPONSE", elizaResponse
 
-	    session.sendMessage({
-		'message': 'chatMessage',
-		'from': 'Me',
-		'channel': channel,
-		'text': text,
-		'collapse': False,
-	    })
+            session.sendMessage({
+                'message': 'chatMessage',
+                'from': 'Me',
+                'channel': channel,
+                'text': text,
+                'collapse': False,
+            })
 
-	    session.sendMessage({
-		'message': 'chatMessage',
-		'from': 'Eliza',
-		'channel': channel,
-		'text': elizaResponse,
-		'collapse': False,
-	    })
+            session.sendMessage({
+                'message': 'chatMessage',
+                'from': 'Eliza',
+                'channel': channel,
+                'text': elizaResponse,
+                'collapse': False,
+            })
 
-	elif channel == 'all':
+        elif channel == 'all':
 
-	    session.sendMessage({
-		'message': 'chatMessage',
-		'from': 'You', # TODO: translate
-		'channel': channel,
-		'text': text,
-		'collapse': False,
-	    })
+            session.sendMessage({
+                'message': 'chatMessage',
+                'from': 'You', # TODO: translate
+                'channel': channel,
+                'text': text,
+                'collapse': False,
+            })
 
-	    self.sendAllControllerSessions(
-		{
-		    'message': 'chatMessage',
-		    'from': userName,
-		    'channel': channel,
-		    'text': text,
-		    'collapse': False,
-		},
-		exceptSession=session)
+            self.sendAllControllerSessions(
+                {
+                    'message': 'chatMessage',
+                    'from': userName,
+                    'channel': channel,
+                    'text': text,
+                    'collapse': False,
+                },
+                exceptSession=session)
 
 
-	else:
+        else:
 
-	    print "Unknown chat channel:", channel
+            print "Unknown chat channel:", channel
 
 
     def handleMessage_tiles(self, session, messageDict, user):
@@ -1127,7 +1128,10 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             viewHeight = messageDict['viewHeight']
             code = messageDict['code']
         except Exception, e:
+            #print "OWCH", e
             self.expectationFailed("Invalid parameters: " + str(e))
+
+        #print "FOO"
 
         if True: # not session.isMessageQueued('update', 'tiles', id):
 
@@ -1141,6 +1145,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 (rows <= 0) or
                 ((col + cols) > micropolisengine.WORLD_W) or
                 ((row + rows) > micropolisengine.WORLD_H)):
+                #print "BAR", col, row, cols, rows
                 self.expectationFailed("Invalid parameters.")
 
             #print "Calling getTileData", "col", col, "row", row, "cols", cols, "rows", rows, "code", code
@@ -1176,198 +1181,198 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                 },
                 #'collapse': True,
             })
-
+            #print "DONE"
 
     def handleMessage_sprites(self, session, messageDict, user):
-	if not session.isMessageQueued('update', 'sprites'):
+        if not session.isMessageQueued('update', 'sprites'):
 
-	    sprites = []
-	    sprite = self.spriteList
-	    while True:
-		#print "SPRITE", sprite
-		if not sprite:
-		    break
-		sprites.append({
-		    'type': sprite.type,
-		    'frame': sprite.frame,
-		    'x': sprite.x,
-		    'y': sprite.y,
-		    'width': sprite.width,
-		    'height': sprite.height,
-		    'xOffset': sprite.xOffset,
-		    'yOffset': sprite.yOffset,
-		    'xHot': sprite.xHot,
-		    'yHot': sprite.yHot,
-		})
-		sprite = sprite.next
+            sprites = []
+            sprite = self.spriteList
+            while True:
+                #print "SPRITE", sprite
+                if not sprite:
+                    break
+                sprites.append({
+                    'type': sprite.type,
+                    'frame': sprite.frame,
+                    'x': sprite.x,
+                    'y': sprite.y,
+                    'width': sprite.width,
+                    'height': sprite.height,
+                    'xOffset': sprite.xOffset,
+                    'yOffset': sprite.yOffset,
+                    'xHot': sprite.xHot,
+                    'yHot': sprite.yHot,
+                })
+                sprite = sprite.next
 
-	    #print "MESSAGE SPRITES", sprites
-	    session.sendMessage({
-		'message': 'update',
-		'variable': 'sprites',
-		'sprites': sprites,
-		'collapse': True,
-	    })
+            #print "MESSAGE SPRITES", sprites
+            session.sendMessage({
+                'message': 'update',
+                'variable': 'sprites',
+                'sprites': sprites,
+                'collapse': True,
+            })
 
 
     def handleMessage_robots(self, session, messageDict, user):
-	robots = [
-	    robot.getData()
-	    for robot in self.robots
-	]
+        robots = [
+            robot.getData()
+            for robot in self.robots
+        ]
 
-	#print "MESSAGE ROBOTS", robots
-	session.sendMessage({
-	    'message': 'update',
-	    'variable': 'robots',
-	    'robots': robots,
-	    'collapse': True,
-	})
+        #print "MESSAGE ROBOTS", robots
+        session.sendMessage({
+            'message': 'update',
+            'variable': 'robots',
+            'robots': robots,
+            'collapse': True,
+        })
 
 
     def handleMessage_historyview(self, session, messageDict, user):
-	#print "HISTORYVIEW", messageDict
+        #print "HISTORYVIEW", messageDict
 
-	try:
-	    id = messageDict['id']
-	    historyScale = messageDict['scale']
-	    historyCount = messageDict['count']
-	    historyOffset = messageDict['offset']
-	    historyTypes = messageDict['types']
-	    historyWidth = messageDict['width']
-	    historyHeight = messageDict['height']
-	except Exception, e:
-	    self.expectationFailed("Invalid parameters: " + str(e))
+        try:
+            id = messageDict['id']
+            historyScale = messageDict['scale']
+            historyCount = messageDict['count']
+            historyOffset = messageDict['offset']
+            historyTypes = messageDict['types']
+            historyWidth = messageDict['width']
+            historyHeight = messageDict['height']
+        except Exception, e:
+            self.expectationFailed("Invalid parameters: " + str(e))
 
-	if not session.isMessageQueued('update', 'historyview', id):
+        if not session.isMessageQueued('update', 'historyview', id):
 
-	    #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
+            #print "HISTORYVIEW", id, historyScale, historyCount, historyOffset, historyTypes, historyWidth, historyHeight
 
-	    # Scale the residential, commercial and industrial histories
-	    # together relative to the max of all three.  Up to 128 they
-	    # are not scaled. Starting at 128 they are scaled down so the
-	    # maximum is always at the top of the history.
+            # Scale the residential, commercial and industrial histories
+            # together relative to the max of all three.  Up to 128 they
+            # are not scaled. Starting at 128 they are scaled down so the
+            # maximum is always at the top of the history.
 
-	    def calcScale(maxVal):
-		if maxVal < 128:
-		    maxVal = 0
-		if maxVal > 0:
-		    return 128.0 / float(maxVal)
-		else:
-		    return 1.0
+            def calcScale(maxVal):
+                if maxVal < 128:
+                    maxVal = 0
+                if maxVal > 0:
+                    return 128.0 / float(maxVal)
+                else:
+                    return 1.0
 
-	    cityTime = self.cityTime
-	    startingYear = self.startingYear
-	    year = int(cityTime / 48) + startingYear
-	    month = int(cityTime % 48) >> 2
+            cityTime = self.cityTime
+            startingYear = self.startingYear
+            year = int(cityTime / 48) + startingYear
+            month = int(cityTime % 48) >> 2
 
-	    getHistoryRange = self.getHistoryRange
-	    getHistory = self.getHistory
+            getHistoryRange = self.getHistoryRange
+            getHistory = self.getHistory
 
-	    resHistoryMin, resHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_RES,
-		historyScale)
-	    comHistoryMin, comHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_COM,
-		historyScale)
-	    indHistoryMin, indHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_IND,
-		historyScale)
-	    allMax = max(resHistoryMax,
-			 max(comHistoryMax,
-			     indHistoryMax))
-	    rciScale = calcScale(allMax)
+            resHistoryMin, resHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_RES,
+                historyScale)
+            comHistoryMin, comHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_COM,
+                historyScale)
+            indHistoryMin, indHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_IND,
+                historyScale)
+            allMax = max(resHistoryMax,
+                         max(comHistoryMax,
+                             indHistoryMax))
+            rciScale = calcScale(allMax)
 
-	    # Scale the money, crime and pollution histories
-	    # independently of each other.
+            # Scale the money, crime and pollution histories
+            # independently of each other.
 
-	    moneyHistoryMin, moneyHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_MONEY,
-		historyScale)
-	    crimeHistoryMin, crimeHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_CRIME,
-		historyScale)
-	    pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
-		micropolisengine.HISTORY_TYPE_POLLUTION,
-		historyScale)
-	    moneyScale = calcScale(moneyHistoryMax)
-	    crimeScale = calcScale(crimeHistoryMax)
-	    pollutionScale = calcScale(pollutionHistoryMax)
+            moneyHistoryMin, moneyHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_MONEY,
+                historyScale)
+            crimeHistoryMin, crimeHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_CRIME,
+                historyScale)
+            pollutionHistoryMin, pollutionHistoryMax = getHistoryRange(
+                micropolisengine.HISTORY_TYPE_POLLUTION,
+                historyScale)
+            moneyScale = calcScale(moneyHistoryMax)
+            crimeScale = calcScale(crimeHistoryMax)
+            pollutionScale = calcScale(pollutionHistoryMax)
 
-	    historyRange = 128.0
+            historyRange = 128.0
 
-	    valueScales = (
-		rciScale, rciScale, rciScale, # res, com, ind
-		moneyScale, crimeScale, pollutionScale, # money, crime, pollution
-	    )
+            valueScales = (
+                rciScale, rciScale, rciScale, # res, com, ind
+                moneyScale, crimeScale, pollutionScale, # money, crime, pollution
+            )
 
-	    valueRanges = (
-		(resHistoryMin, resHistoryMax,),
-		(comHistoryMin, comHistoryMax,),
-		(indHistoryMin, indHistoryMax,),
-		(moneyHistoryMin, moneyHistoryMax,),
-		(crimeHistoryMin, crimeHistoryMax,),
-		(pollutionHistoryMin, pollutionHistoryMax,),
-	    )
+            valueRanges = (
+                (resHistoryMin, resHistoryMax,),
+                (comHistoryMin, comHistoryMax,),
+                (indHistoryMin, indHistoryMax,),
+                (moneyHistoryMin, moneyHistoryMax,),
+                (crimeHistoryMin, crimeHistoryMax,),
+                (pollutionHistoryMin, pollutionHistoryMax,),
+            )
 
-	    histories = []
+            histories = []
 
-	    for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
+            for historyType in range(0, micropolisengine.HISTORY_TYPE_COUNT):
 
-		if historyType not in historyTypes:
-		    histories.append(None)
-		    continue
+                if historyType not in historyTypes:
+                    histories.append(None)
+                    continue
 
-		valueScale = valueScales[historyType]
-		valueRange = valueRanges[historyType]
+                valueScale = valueScales[historyType]
+                valueRange = valueRanges[historyType]
 
-		values = [
-			getHistory(
-			    historyType,
-			    historyScale,
-			    historyIndex)
-			for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
-		]
+                values = [
+                        getHistory(
+                            historyType,
+                            historyScale,
+                            historyIndex)
+                        for historyIndex in range(micropolisengine.HISTORY_COUNT - 1, -1, -1)
+                ]
 
-		histories.append({
-		    'historyType': historyType,
-		    'valueScale': valueScale,
-		    'valueRange': valueRange,
-		    'values': values,
-		})
+                histories.append({
+                    'historyType': historyType,
+                    'valueScale': valueScale,
+                    'valueRange': valueRange,
+                    'values': values,
+                })
 
-	    msg = {
-		'message': 'update',
-		'variable': 'historyview',
-		'id': id,
-		'scale': historyScale,
-		'count': historyCount,
-		'offset': historyOffset,
-		'types': historyTypes,
-		'width': historyWidth,
-		'height': historyHeight,
-		'year': year,
-		'month': month,
-		'histories': histories,
-		'range': historyRange,
-		'collapse': True,
-	    }
-	    #print "HISTORY MESSAGE", msg
-	    session.sendMessage(msg)
+            msg = {
+                'message': 'update',
+                'variable': 'historyview',
+                'id': id,
+                'scale': historyScale,
+                'count': historyCount,
+                'offset': historyOffset,
+                'types': historyTypes,
+                'width': historyWidth,
+                'height': historyHeight,
+                'year': year,
+                'month': month,
+                'histories': histories,
+                'range': historyRange,
+                'collapse': True,
+            }
+            #print "HISTORY MESSAGE", msg
+            session.sendMessage(msg)
 
 
     def handleMessage_setLanguage(self, session, messageDict, user):
-	#print "SETLANGUAGE", messageDict
-	session.language = messageDict['language']
+        #print "SETLANGUAGE", messageDict
+        session.language = messageDict['language']
 
 
     def handleMessage_sendRobot(self, session, messageDict, user):
-	robotID = messageDict['robotID']
-	command = messageDict['command']
-	args = messageDict['args']
-	robot = self.getRobot(robotID)
-	if robot:
-	    robot.sendCommand(command, args)
+        robotID = messageDict['robotID']
+        command = messageDict['command']
+        args = messageDict['args']
+        robot = self.getRobot(robotID)
+        if robot:
+            robot.sendCommand(command, args)
 
 
     def toolDownScripted(self, toolIndex, x, y):
@@ -1445,7 +1450,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.sendSessions({
             'message': 'update',
             'variable': 'savedCities',
-            'savedCities': user.getSavedCities(session),
+            'savedCities': (user and user.getSavedCities(session)) or [],
         })
 
 
@@ -1483,14 +1488,14 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
 
     def setGameMode(self, gameMode, user):
-	print "setGameMode", gameMode, self.startVirtualSpeed
-	if gameMode == "start":
-	    self.setVirtualSpeed(0)
-	    self.pause()
-	elif gameMode == "play":
-	    self.setVirtualSpeed(self.startVirtualSpeed)
-	    self.resetCity()
-	    self.resume()
+        print "setGameMode", gameMode, self.startVirtualSpeed
+        if gameMode == "start":
+            self.setVirtualSpeed(0)
+            self.pause()
+        elif gameMode == "play":
+            self.setVirtualSpeed(self.startVirtualSpeed)
+            self.resetCity()
+            self.resume()
 
 
     def setVirtualSpeed(self, virtualSpeed):
@@ -1590,12 +1595,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def handlePoll(self, pollDict, session):
 
-        #print "handlePoll", "PAUSED", self.simPaused, "CITYTIME", self.cityTime, "DICT", pollDict
+        #print "MicropolisTurboGearsEngine handlePoll", "PAUSED", self.simPaused, "CITYTIME", self.cityTime, "DICT", pollDict
 
         messages = pollDict.get('messages', None)
         if messages:
             for messageDict in messages:
-                #print "MESSAGEDICT", messageDict
+                #print "MicropolisTurboGearsEngine handlePoll MESSAGEDICT", messageDict
                 self.handleMessage(session, messageDict)
 
         self.tickEngine()

@@ -94,8 +94,8 @@
 		    x, 
 		    y, 
 		    radius,
-		    direction + (mouthSize / 2),
-		    direction + (2 * Math.PI) - (mouthSize / 2));
+		    -direction + (mouthSize / 2),
+		    -direction + (2 * Math.PI) - (mouthSize / 2));
                 dv.lineTo(x, y)
 	    } else {
 	        dv.arc(x, y, radius, 0, 2 * Math.PI);

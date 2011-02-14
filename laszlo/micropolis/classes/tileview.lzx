@@ -385,19 +385,22 @@
 
             this.updateViewRect();
 
-            messages.push({
-	        message: 'tiles',
-		id: this.uniqueID,
-		col: this.viewCol,
-		row: this.viewRow,
-		cols: this.viewCols,
-		rows: this.viewRows,
-		viewX: this.viewX,
-		viewY: this.viewY,
-		viewWidth: this.viewWidth,
-		viewHeight: this.viewHeight,
-		code: this.code
-	    });
+	    if ((this.viewCols > 0) &&
+	        (this.viewRows > 0)) {
+		messages.push({
+		    message: 'tiles',
+		    id: this.uniqueID,
+		    col: this.viewCol,
+		    row: this.viewRow,
+		    cols: this.viewCols,
+		    rows: this.viewRows,
+		    viewX: this.viewX,
+		    viewY: this.viewY,
+		    viewWidth: this.viewWidth,
+		    viewHeight: this.viewHeight,
+		    code: this.code
+		});
+	    }
 
             messages.push({
 	        message: 'sprites'
