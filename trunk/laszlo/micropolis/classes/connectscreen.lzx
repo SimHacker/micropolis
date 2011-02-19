@@ -29,7 +29,7 @@
 
 	<text
 	    visible="${gApp.connecting}"
-	    fontsize="32"
+	    fontsize="18"
 	    fontstyle="bold"
 	    text="${gApp._('Connecting to Micropolis Online server.')}"
 	    multiline="true"

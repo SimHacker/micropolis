@@ -167,6 +167,13 @@
 		onclick="gApp.about()"
 	    />
 
+	    <button name="donateButton"
+	        width="${classroot.buttonWidth}"
+		height="${classroot.buttonHeight}"
+		text="${gApp._('Donate')}"
+		onclick="gApp.donate()"
+	    />
+
 	</view>
 
 <!--

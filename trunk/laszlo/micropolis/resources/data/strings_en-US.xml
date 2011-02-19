@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" ?>
 <strings language="en-US">
 
 
@@ -400,12 +400,12 @@
 
     <!-- pancursor.lzx -->
 
-    <string id="Pan Map" comment="Label for cursor that pans the map.">Pan Map</string>
+    <string comment="Label for cursor that pans the map." id="Pan Map">Pan Map</string>
 
 
     <!-- piecursor.lzx -->
 
-    <string id="Pie Menu" comment="Label for cursor that pops up a pie menu.">Pie Menu</string>
+    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">Pie Menu</string>
 
 
     <!-- playscreen.lzx -->
@@ -507,7 +507,7 @@
 
     <string id="Center (tool description)">Scrolls location to center of screen.</string>
 
-    <string id="PacBot" comment="Do not translate the proper name PacBot.">PacBot</string>
+    <string comment="Do not translate the proper name PacBot." id="PacBot">PacBot</string>
 
     <string id="PacBot (tool description)">Follows roads towards heavy traffic, and eats cars, reducing traffic.</string>
 
@@ -872,7 +872,7 @@
 
     <string id="Delete">Delete</string>
 
-    <string id="Xenu" comment="Do not translate the proper name Xenu.">Xenu</string>
+    <string comment="Do not translate the proper name Xenu." id="Xenu">Xenu</string>
 
 
     <!-- Zones -->
@@ -941,13 +941,13 @@
 
     <string id="zone-scientology-message-3-title">The Church of Scientology</string>
 
-    <string id="zone-scientology-message-3-text">Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls ("thetans") reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+    <string id="zone-scientology-message-3-text">Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls (&quot;thetans&quot;) reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
 
     <string id="zone-scientology-message-4-url">http://en.wikipedia.org/wiki/Scientology#Beliefs_and_practices</string>
 
     <string id="zone-scientology-message-4-title">Scientology beliefs and practices</string>
 
-    <string id="zone-scientology-message-4-text">Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls ("thetans") reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
+    <string id="zone-scientology-message-4-text">Scientology has been surrounded by controversies since its inception. It has often been described as a cult that financially defrauds and abuses its members, charging exorbitant fees for its spiritual services. The Church of Scientology has consistently used litigation against such critics, and its aggressiveness in pursuing its foes has been condemned as harassment. Further controversy has focused on Scientology's belief that souls (&quot;thetans&quot;) reincarnate and have lived on other planets before living on Earth. Former members say that some of Hubbard's writings on this remote extraterrestrial past, included in confidential Upper Levels, are not revealed to practitioners until they have paid thousands of dollars to the Church of Scientology. Another controversial belief held by Scientologists is that the practice of psychiatry is destructive and abusive and must be abolished.</string>
 
     <string id="zone-scientology-message-5-url">http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
 
@@ -965,7 +965,7 @@
 
     <string id="zone-scientology-message-7-title">Scientology beliefs and practices: Body and spirit</string>
 
-    <string id="zone-scientology-message-7-text">Thetans are believed to be reborn time and time again in new bodies through a process called "assumption" which is analogous to reincarnation. Like Hinduism, Scientology posits a causal relationship between the experiences of earlier incarnations and one's present life, and with each rebirth, the effects of the MEST universe (MEST here stands for matter, energy, space, and time) on the thetan are believed to become stronger.</string>
+    <string id="zone-scientology-message-7-text">Thetans are believed to be reborn time and time again in new bodies through a process called &quot;assumption&quot; which is analogous to reincarnation. Like Hinduism, Scientology posits a causal relationship between the experiences of earlier incarnations and one's present life, and with each rebirth, the effects of the MEST universe (MEST here stands for matter, energy, space, and time) on the thetan are believed to become stronger.</string>
 
     <string id="zone-scientology-message-8-url">http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
 
@@ -995,7 +995,7 @@
 
     <string id="zone-scientology-message-12-title">Scientology beliefs and practices: ARC and KRC triangles</string>
 
-    <string id="zone-scientology-message-12-text">The ARC and KRC triangles are concept maps which show a relationship between three concepts to form another concept. These two triangles are present in the Scientology logo. The lower triangle, the ARC triangle, is a summary representation of the knowledge the Scientologist strives for. It encompasses Affinity (affection, love or liking), Reality (consensual reality) and Communication (the exchange of ideas). Scientologists believe that improving one of the three aspects of the triangle "increases the level" of the other two, but Communication is held to be the most important. The upper triangle is the KRC triangle, the letters KRC positing a similar relationship between Knowledge, Responsibility and Control.</string>
+    <string id="zone-scientology-message-12-text">The ARC and KRC triangles are concept maps which show a relationship between three concepts to form another concept. These two triangles are present in the Scientology logo. The lower triangle, the ARC triangle, is a summary representation of the knowledge the Scientologist strives for. It encompasses Affinity (affection, love or liking), Reality (consensual reality) and Communication (the exchange of ideas). Scientologists believe that improving one of the three aspects of the triangle &quot;increases the level&quot; of the other two, but Communication is held to be the most important. The upper triangle is the KRC triangle, the letters KRC positing a similar relationship between Knowledge, Responsibility and Control.</string>
 
     <string id="zone-scientology-message-13-url">http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
 
@@ -1007,7 +1007,7 @@
 
     <string id="zone-scientology-message-14-title">Scientology beliefs and practices: Social and antisocial personalities</string>
 
-    <string id="zone-scientology-message-14-text">While Scientology believes that many social problems are the unintentional results of people's imperfections, it states that there are also truly malevolent individuals. Hubbard believed that approximately 80 percent of all people are what he called social personalities – people who welcome and contribute to the welfare of others. The remaining 20 percent of the population, Hubbard thought, were suppressive persons. According to Hubbard, only about 2.5 percent of this 20 percent are hopelessly antisocial personalities; these make up the small proportion of truly dangerous individuals in humanity: "the Adolf Hitlers and the Genghis Khans, the unrepentant murderers and the drug lords." Scientologists believe that any contact with suppressive or antisocial individuals has an adverse effect on one's spiritual condition, necessitating disconnection.</string>
+    <string id="zone-scientology-message-14-text">While Scientology believes that many social problems are the unintentional results of people's imperfections, it states that there are also truly malevolent individuals. Hubbard believed that approximately 80 percent of all people are what he called social personalities – people who welcome and contribute to the welfare of others. The remaining 20 percent of the population, Hubbard thought, were suppressive persons. According to Hubbard, only about 2.5 percent of this 20 percent are hopelessly antisocial personalities; these make up the small proportion of truly dangerous individuals in humanity: &quot;the Adolf Hitlers and the Genghis Khans, the unrepentant murderers and the drug lords.&quot; Scientologists believe that any contact with suppressive or antisocial individuals has an adverse effect on one's spiritual condition, necessitating disconnection.</string>
 
     <string id="zone-scientology-message-15-url">http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
 
@@ -1019,13 +1019,13 @@
 
     <string id="zone-scientology-message-16-title">Scientology beliefs and practices: Auditing</string>
 
-    <string id="zone-scientology-message-16-text">Scientology asserts that people have hidden abilities which have not yet been fully realized. It is believed that increased spiritual awareness and physical benefits are accomplished through counseling sessions referred to as auditing. Through auditing, it is said that people can solve their problems and free themselves of engrams. This restores them to their natural condition as thetans and enables them to be at cause in their daily lives, responding rationally and creatively to life events rather than reacting to them under the direction of stored engrams. Accordingly, those who study Scientology materials and receive auditing sessions advance from a status of Preclear to Clear and Operating Thetan. Scientology's utopian aim is to "clear the planet", a world in which everyone has cleared themselves of their engrams.</string>
+    <string id="zone-scientology-message-16-text">Scientology asserts that people have hidden abilities which have not yet been fully realized. It is believed that increased spiritual awareness and physical benefits are accomplished through counseling sessions referred to as auditing. Through auditing, it is said that people can solve their problems and free themselves of engrams. This restores them to their natural condition as thetans and enables them to be at cause in their daily lives, responding rationally and creatively to life events rather than reacting to them under the direction of stored engrams. Accordingly, those who study Scientology materials and receive auditing sessions advance from a status of Preclear to Clear and Operating Thetan. Scientology's utopian aim is to &quot;clear the planet&quot;, a world in which everyone has cleared themselves of their engrams.</string>
 
     <string id="zone-scientology-message-17-url">http://en.wikipedia.org/wiki/Scientology#Auditing</string>
 
     <string id="zone-scientology-message-17-title">Scientology beliefs and practices: Auditing</string>
 
-    <string id="zone-scientology-message-17-text">Auditing is a one-on-one session with a Scientology counselor or auditor. It bears a superficial similarity to confession or pastoral counseling, but the auditor does not dispense forgiveness or advice the way a pastor or priest might do. Instead, the auditor's task is to help the person discover and understand engrams, and their limiting effects, for themselves. Most auditing requires an E-meter, a device that measures minute changes in electrical resistance through the body when a person holds electrodes (metal "cans"), and a small current is passed through them. Scientology asserts that watching for changes in the E-meter's display helps locate engrams. Once an area of concern has been identified, the auditor asks the individual specific questions about it, in order to help them eliminate the engram, and uses the E-meter to confirm that the engram's "charge" has been dissipated and the engram has in fact been cleared. As the individual progresses, the focus of auditing moves from simple engrams to engrams of increasing complexity. At the more advanced OT auditing levels, Scientologists perform solo auditing sessions, acting as their own auditors.</string>
+    <string id="zone-scientology-message-17-text">Auditing is a one-on-one session with a Scientology counselor or auditor. It bears a superficial similarity to confession or pastoral counseling, but the auditor does not dispense forgiveness or advice the way a pastor or priest might do. Instead, the auditor's task is to help the person discover and understand engrams, and their limiting effects, for themselves. Most auditing requires an E-meter, a device that measures minute changes in electrical resistance through the body when a person holds electrodes (metal &quot;cans&quot;), and a small current is passed through them. Scientology asserts that watching for changes in the E-meter's display helps locate engrams. Once an area of concern has been identified, the auditor asks the individual specific questions about it, in order to help them eliminate the engram, and uses the E-meter to confirm that the engram's &quot;charge&quot; has been dissipated and the engram has in fact been cleared. As the individual progresses, the focus of auditing moves from simple engrams to engrams of increasing complexity. At the more advanced OT auditing levels, Scientologists perform solo auditing sessions, acting as their own auditors.</string>
 
     <string id="zone-scientology-message-18-url">http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
 
@@ -1055,7 +1055,7 @@
 
     <string id="zone-scientology-message-22-title">Scientology beliefs and practices: Space opera and confidential materials</string>
 
-    <string id="zone-scientology-message-22-text">In the OT levels, Hubbard explains how to reverse the effects of past-life trauma patterns that supposedly extend millions of years into the past. Among these advanced teachings is the story of Xenu (sometimes Xemu), introduced as an alien ruler of the "Galactic Confederacy." According to this story, 75 million years ago Xenu brought billions of people to Earth in spacecraft resembling Douglas DC-8 airliners, stacked them around volcanoes and detonated hydrogen bombs in the volcanoes. The thetans then clustered together, stuck to the bodies of the living, and continue to do this today. Scientologists at advanced levels place considerable emphasis on isolating body thetans and neutralizing their ill effects.</string>
+    <string id="zone-scientology-message-22-text">In the OT levels, Hubbard explains how to reverse the effects of past-life trauma patterns that supposedly extend millions of years into the past. Among these advanced teachings is the story of Xenu (sometimes Xemu), introduced as an alien ruler of the &quot;Galactic Confederacy.&quot; According to this story, 75 million years ago Xenu brought billions of people to Earth in spacecraft resembling Douglas DC-8 airliners, stacked them around volcanoes and detonated hydrogen bombs in the volcanoes. The thetans then clustered together, stuck to the bodies of the living, and continue to do this today. Scientologists at advanced levels place considerable emphasis on isolating body thetans and neutralizing their ill effects.</string>
 
     <string id="zone-scientology-message-23-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
 
@@ -1073,7 +1073,7 @@
 
     <string id="zone-scientology-message-25-title">Scientology beliefs and practices: Space opera and confidential materials</string>
 
-    <string id="zone-scientology-message-25-text">There is a large Church of Spiritual Technology symbol carved into the ground at Scientology's Trementina Base that is visible from the air. Washington Post reporter Richard Leiby wrote, "Former Scientologists familiar with Hubbard’s teachings on reincarnation say the symbol marks a 'return point' so loyal staff members know where they can find the founder’s works when they travel here in the future from other places in the universe."</string>
+    <string id="zone-scientology-message-25-text">There is a large Church of Spiritual Technology symbol carved into the ground at Scientology's Trementina Base that is visible from the air. Washington Post reporter Richard Leiby wrote, &quot;Former Scientologists familiar with Hubbard’s teachings on reincarnation say the symbol marks a 'return point' so loyal staff members know where they can find the founder’s works when they travel here in the future from other places in the universe.&quot;</string>
 
     <string id="zone-scientology-message-26-url">http://en.wikipedia.org/wiki/Scientology#Ceremonies</string>
 
@@ -1085,13 +1085,13 @@
 
     <string id="zone-scientology-message-27-title">Scientology beliefs and practices: Influences</string>
 
-    <string id="zone-scientology-message-27-text">In Dianetics, Hubbard gives credit to Francis Bacon and Herbert Spencer. Hubbard recalled meeting Cmdr. Joseph Cheesman Thompson, a U.S. Navy officer who studied with Sigmund Freud, when he was 12 years old, and when Hubbard wrote to the American Psychological Association in 1949, he stated that he was conducting research based on the "early work of Freud". Scientology's view of the mind has some similarities to the Freudian one.</string>
+    <string id="zone-scientology-message-27-text">In Dianetics, Hubbard gives credit to Francis Bacon and Herbert Spencer. Hubbard recalled meeting Cmdr. Joseph Cheesman Thompson, a U.S. Navy officer who studied with Sigmund Freud, when he was 12 years old, and when Hubbard wrote to the American Psychological Association in 1949, he stated that he was conducting research based on the &quot;early work of Freud&quot;. Scientology's view of the mind has some similarities to the Freudian one.</string>
 
     <string id="zone-scientology-message-28-url">http://en.wikipedia.org/wiki/Scientology#Influences</string>
 
     <string id="zone-scientology-message-28-title">Scientology beliefs and practices: Influences</string>
 
-    <string id="zone-scientology-message-28-text">In the 1940s, Hubbard was in contact with Jack Parsons, a rocket scientist and member of the Ordo Templi Orientis then led by Aleister Crowley, and there have been suggestions that this connection influenced some of the ideas and symbols of Scientology. Religious scholars like Gerald Willms and J. Gordon Melton have pointed out that the teachings of Crowley's "satanism" bear little if any resemblance to Scientology doctrine.</string>
+    <string id="zone-scientology-message-28-text">In the 1940s, Hubbard was in contact with Jack Parsons, a rocket scientist and member of the Ordo Templi Orientis then led by Aleister Crowley, and there have been suggestions that this connection influenced some of the ideas and symbols of Scientology. Religious scholars like Gerald Willms and J. Gordon Melton have pointed out that the teachings of Crowley's &quot;satanism&quot; bear little if any resemblance to Scientology doctrine.</string>
 
     <string id="zone-scientology-message-29-url">http://en.wikipedia.org/wiki/Scientology#Influences</string>
 

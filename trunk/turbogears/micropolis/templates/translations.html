@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  class="pageHtml"
+>
+
+  <?python
+
+    from urllib import quote_plus
+    def quote_plus(s): return s
+
+    def singleQuotedText(text):
+      return (
+        "'" +
+        text.replace('\\', '\\\\').replace("'", "\\'").replace('"', '\\"') +
+        "'")
+
+  ?>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title>Micropolis Translations</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+    <script type="text/javascript"><![CDATA[
+
+      function focusText(el)
+      {
+        el.style.height = '100px'; 
+      }
+
+      function blurText(el, currentValue, origID)
+      {
+        var origEl = document.getElementById(origID);
+        var origValue = origEl.value;
+        el.style.height = '30px';
+        var newValue = el.value;
+        if (newValue == origValue) {
+          el.style.backgroundColor = '#ffffff';
+        } else {
+          el.style.backgroundColor = '#00ff00';
+          //saveText('${language}', id, newValue);
+        }
+      }
+
+      function saveText(language, id, value)
+      {
+        //alert(language + "\n" + id + "\n" + value);
+      }
+
+      var gTranslateTextAreaID = null;
+      var gTranslateOrigID = null;
+
+      function translateTextArea(id, origID)
+      {
+        gTranslateTextAreaID = id;
+        gTranslateOrigID = origID;
+
+        var textArea = document.getElementById(id);
+        var fromText = textArea.innerHTML;
+
+        // Strip any leading language tag like "@nl-NL ".
+        fromText = fromText.replace(/^@[a-zA-Z-@]+ */, "");
+
+        var newScript = document.createElement('script');
+        newScript.type = 'text/javascript';
+        var sourceText = escape(fromText);
+        var url = '${googleTranslateAPIURL}?key=${googleAPIIdentityKey}&source=${defaultLanguage[0:2]}&target=${language[0:2]}&callback=translateTextAreaResponse&q=' + sourceText;
+        newScript.src = url;
+        document.getElementsByTagName('head')[0].appendChild(newScript);
+      }
+
+      function translateTextAreaResponse(response)
+      {
+        var textArea = document.getElementById(gTranslateTextAreaID);
+        var text = response.data.translations[0].translatedText;
+        textArea.innerHTML = text;
+        blurText(textArea, text, gTranslateOrigID);
+      }
+
+      function setTextArea(id, origID, newID)
+      {
+        var newEl = document.getElementById(newID);
+        var newValue = newEl.value;
+        var textArea = document.getElementById(id);
+        textArea.innerHTML = newValue;
+        blurText(textArea, newValue, origID);
+      }
+
+      function flagTextArea(id, origID)
+      {
+        var textArea = document.getElementById(id);
+        var text = textArea.innerHTML;
+
+        // Strip any leading language tag like "@nl-NL ".
+        text = text.replace(/^@[a-zA-Z-@]+ */, "");
+        text = "@${language}@ " + text;
+        textArea.innerHTML = text;
+        blurText(textArea, text, origID);
+      }
+
+      function unflagTextArea(id, origID)
+      {
+        var textArea = document.getElementById(id);
+        var text = textArea.innerHTML;
+
+        // Strip any leading language tag like "@nl-NL ".
+        text = text.replace(/^@[a-zA-Z-@]+ */, "");
+        textArea.innerHTML = text;
+        blurText(textArea, text, origID);
+      }
+
+    ]]></script>
+  </head>
+
+  <body>
+
+    <h1>Micropolis Translations</h1>
+
+    <h3>Languages:
+
+      <py:for each="languageName in languages">
+      <a
+        py:strip="languageName == language"
+        href="/server/translations?language=${languageName}"
+      >${languageName}</a>
+      </py:for>
+    </h3>
+
+    <h3
+       py:if="language == defaultLanguage"
+    >${len(strings)} total strings for default language "${language}":</h3>
+
+    <h3
+       py:if="language != defaultLanguage"
+    >${len(strings)} out of ${len(defaultStrings)} strings for language "${language}":</h3>
+
+    <py:if test="language != defaultLanguage">
+
+
+      <p>
+        <a
+          href="/server/translations?language=${language}&amp;command=update"
+        >Update "${language}" strings from "${defaultLanguage}" strings.</a>
+        Reads all the ${defaultLanguage} strings, and adds any
+        new strings to the ${language} strings, with the
+        prefix "@${language}@". Strings with an
+        "@${language}@" prefix need to be translated (and the
+        "@${language}@" prefix removed). They are highlighted
+        in yellow below.
+      </p>
+
+    </py:if>
+
+    <p>
+      <a
+      href="/lps/micropolis/micropolis/micropolis_${language}.lzx?lzt=swf&amp;lzr=swf10"
+      target="micropolis"
+      >Run Micropolis in "${language}".</a>
+    </p>
+
+    <form
+      method="POST"
+      action="/server/translations?command=update"
+    >
+
+      <input type="hidden" name="language" value="${language}"/>
+      <input type="submit" value="Submit"/> 
+      your changes. Strings you have changed are highlighted in green below.
+
+      <ol>
+
+        <li
+          py:for="i in range(0, len(strings))"
+        >
+
+          <?python
+            id, text, comment = strings[i]
+            idDefault, textDefault, commentDefault = defaultStrings[i]
+            if text and text[0] == '@':
+              style = 'background-color: #ffff00'
+            else:
+              style = ''
+          ?>
+
+          <b>${id}</b>
+          <br/>
+
+          <em py:if="comment">
+            ${comment}
+            <br/>
+          </em>
+
+          <ul>
+
+            <li
+              py:if="language != defaultLanguage"
+            >
+
+              <b>${defaultLanguage}:</b>
+              <br/>
+
+              ${textDefault}
+              <br/>
+
+            </li>
+
+            <li style="${style}">
+
+              <b>${language}:</b>
+	      <input
+		type="hidden"
+		id="orig_${i}"
+		name="orig_${i}"
+		value="${text}"
+	      />
+	      <input
+		type="hidden"
+		id="default_${i}"
+		name="default_${i}"
+		value="${textDefault}"
+	      />
+	      <a href="javascript:translateTextArea('string_${i}', 'orig_${i}')"
+	      >[Google Translate ${defaultLanguage} to ${language}]</a>
+	      <a href="javascript:setTextArea('string_${i}', 'orig_${i}', 'orig_${i}')"
+	      >[Revert]</a>
+	      <a href="javascript:setTextArea('string_${i}', 'orig_${i}', 'default_${i}')"
+	      >[Default]</a>
+	      <a href="javascript:flagTextArea('string_${i}', 'orig_${i}')"
+	      >[Flag]</a>
+	      <a href="javascript:unflagTextArea('string_${i}', 'orig_${i}')"
+	      >[Unflag]</a>
+              <br/>
+
+              <textarea
+		id="string_${i}"
+                name="string_${i}"
+                type="text" 
+                style="width: 100%; height: 30px"
+                onfocus="focusText(this)"
+                onblur="blurText(this, ${singleQuotedText(id)}, 'orig_${i}')"
+                >${text}</textarea>
+
+            </li>
+
+          </ul>
+
+        </li>
+
+      </ol>
+
+    </form>
+
+  </body>
+
+</html>

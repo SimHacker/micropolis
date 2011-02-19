@@ -976,7 +976,13 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         if not success:
             raise Exception('Error loading city file')
 
+        self.makeMutable()
+
         self.sendUpdate('load')
+
+
+    def makeMutable(self):
+        pass
 
 
     def saveMetaCity(self, metaFileName=None):
@@ -1044,10 +1050,13 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
 
         self.sendUpdate('message', id, -1, -1, True, True)
 
-    def generateNewMetaCity(self):
+    def generateNewMetaCity(self, seed=0):
+        if seed == 0:
+            seed = int(random.getrandbits(31))
+
         self.title = 'New City'
         self.description = 'A randomly generated city.'
-        self.generateMap()
+        self.generateMap(seed)
         self.sendUpdate('load')
 
 
@@ -1242,8 +1251,8 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
         print "SHOWPICTURE", id
 
 
-    def handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y):
-        print "handle_showZoneStatus(self, str, s0, s1, s2, s3, s4, x, y)", (self, str, s0, s1, s2, s3, s4, x, y)
+    def handle_showZoneStatus(self, tileCategory, s0, s1, s2, s3, s4, x, y):
+        print "handle_showZoneStatus(self, tileCategory, s0, s1, s2, s3, s4, x, y)", (self, tileCategory, s0, s1, s2, s3, s4, x, y)
 
 
     def handle_startEarthquake(self, magnitude):

@@ -118,6 +118,8 @@ void Micropolis::generateSomeCity(int seed)
  */
 void Micropolis::generateMap(int seed)
 {
+    generatedCitySeed = seed;
+
     seedRandom(seed);
 
     // Construct land.

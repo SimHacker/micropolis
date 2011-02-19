@@ -126,7 +126,7 @@
 
 			    <handler name="onblur" args="arg"><![CDATA[
 				gApp.setMyCityTitle(this.text);
-				Debug.write("TITLE", gApp.title);
+				//Debug.write("TITLE", gApp.title);
 			      ]]>
 			    </handler>
 
@@ -150,7 +150,7 @@
 			    <handler name="onblur" args="arg"><![CDATA[
 				gApp.setMyCityDescription(this.text);
 				// TODO: Save city description.
-				Debug.write("DESCRIPTION", gApp.description);
+				//Debug.write("DESCRIPTION", gApp.description);
 			      ]]>
 			    </handler>
 

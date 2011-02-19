@@ -53,6 +53,7 @@
 
     <!-- Scenarios -->
 
+    <resource name="generate_map_rsrc" src="../resources/images/generate_map.png"/>
     <resource name="scenario_1_rsrc" src="../resources/images/scenario_1.png"/>
     <resource name="scenario_2_rsrc" src="../resources/images/scenario_2.png"/>
     <resource name="scenario_3_rsrc" src="../resources/images/scenario_3.png"/>
@@ -61,7 +62,6 @@
     <resource name="scenario_6_rsrc" src="../resources/images/scenario_6.png"/>
     <resource name="scenario_7_rsrc" src="../resources/images/scenario_7.png"/>
     <resource name="scenario_8_rsrc" src="../resources/images/scenario_8.png"/>
-
 
     <!-- Tools -->
 

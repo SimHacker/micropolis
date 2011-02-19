@@ -777,7 +777,7 @@ static short idArray[29] = {
  * @param mapV  Y coordinate of the tile.
  * @return Index into stri.202 file.
  */
-int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
+int Micropolis::getDensity(short catNo, short mapH, short mapV)
 {
     int z;
 
@@ -829,8 +829,8 @@ int Micropolis::getDensityStr(short catNo, short mapH, short mapV)
  */
 void Micropolis::doZoneStatus(short mapH, short mapV)
 {
-    char localStr[256]; // Textual version of the category the tile belongs to
-    char statusStr[5][256];
+    int tileCategory;
+    int status[5];
 
     short tileNum = map[mapH][mapV] & LOMASK;
 
@@ -851,6 +851,12 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
     // i contains the category that the tile belongs to (in theory 0..27).
     // However, it is 0..26, since 956 is the first unused tile
 
+    // FIXME: This needs to be fixed to support plug-in churches.
+
+    // TODO: This should also return the bounding box and hot spot of
+    // the zone to the user interface, as well as other interesting
+    // information.
+
     // Code below looks buggy, 0 is a valid value (namely 'dirt'), and upper
     // limit is not correctly checked either ('stri.219' has only 27 lines).
 
@@ -859,39 +865,39 @@ void Micropolis::doZoneStatus(short mapH, short mapV)
       i = 28;  // This breaks the program (when you click 'dirt')
     }
 
-    // Obtain the string of the tile category.
+    // Obtain the string index of the tile category.
     // 'stri.219' has only 27 lines, so 0 <= i <= 26 is acceptable.
-    getIndString(localStr, 219, i + 1);
+    tileCategory = i + 1;
 
     for (i = 0; i < 5; i++) {
-        short id = clamp(getDensityStr(i, mapH, mapV) + 1, 1, 20);
-        getIndString(statusStr[i], 202, id);
+        int id = clamp(getDensity(i, mapH, mapV) + 1, 1, 20);
+        status[i] = id;
     }
 
     doShowZoneStatus(
-        localStr, 
-        statusStr[0], statusStr[1], statusStr[2],
-        statusStr[3], statusStr[4], 
+        tileCategory,
+        status[0], status[1], status[2],
+        status[3], status[4], 
         mapH, mapV);
 }
 
 
 /** Tell front-end to report on status of a tile.
- * @param str Category of the tile.
- * @param s0  Population density text.
- * @param s1  Land value text.
- * @param s2  Crime rate text.
- * @param s3  Pollution text.
- * @param s4  Grow rate text.
- * @param x   X coordinate of the tile.
- * @param y   Y coordinate of the tile.
+ * @param tileCategory  Category of the tile text index.
+ * @param s0            Population density text index.
+ * @param s1            Land value text index.
+ * @param s2            Crime rate text index.
+ * @param s3            Pollution text index.
+ * @param s4            Grow rate text index.
+ * @param x             X coordinate of the tile.
+ * @param y             Y coordinate of the tile.
  */
 void Micropolis::doShowZoneStatus(
-    char *str,
-    char *s0, char *s1, char *s2, char *s3, char *s4,
+    int tileCategory,
+    int s0, int s1, int s2, int s3, int s4,
     int x, int y)
 {
-    callback("showZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
+    callback("showZoneStatus", "dddddddd", tileCategory, s0, s1, s2, s3, s4, x, y);
 }
 
 
