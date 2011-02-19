@@ -36,6 +36,7 @@
         <attribute name="codeMap" value="null"/>
         <attribute name="newTilesPerTick" value="300"/>
         <attribute name="newTiles" value="0"/>
+        <attribute name="zoneStatus" value="null"/>
         <attribute name="quaking" value="0"/>
         <attribute name="tool" type="string" value="bulldozer"/>
         <attribute name="connected" value="false"/>
@@ -82,7 +83,7 @@
         <attribute name="objectIDs" value="$once{{}}"/>
         <attribute name="interests" value="null"/>
         <attribute name="overlay" type="string" value="all"/>
-        <attribute name="chatChannel" type="string" value="all"/>
+        <attribute name="chatChannel" type="string" value="eliza"/>
         <attribute name="sprites" value="null"/>
         <attribute name="robots" value="null"/>
         <attribute name="soundsToPlay" value="$once{{}}"/>
@@ -102,6 +103,7 @@
         <attribute name="init_mode" type="string" value=""/>
         <attribute name="in_tab" type="number" value="0"/>
         <attribute name="fb_app_id" type="string" value=""/>
+        <attribute name="donateScript" type="string" value="orderProduct('Donation', 'Make a donation to the Micropolis Project.', 100, '/static/images/MicropolisCityThumbnail.png', '/static/images/micropolis_icon.png')"/>
 
         <!-- These URLs (but not targets) are actually symbols that get localized. Maybe rename them something more abstract. -->
         <attribute name="aboutURL" type="string" value="/wiki/index.php/About"/>
@@ -1510,6 +1512,13 @@
         </method>
 
 
+        <method name="donate"><![CDATA[
+            lz.Browser.callJS(
+                this.donateScript);
+          ]]>
+        </method>
+
+
         <method name="help"><![CDATA[
             lz.Browser.loadURL(
                 gApp._(this.helpURL),
@@ -1604,6 +1613,12 @@
             var scenario = args['scenario'];
             var number = 49 + scenario;
             gNoticeView.setCurrentNotice(number, null, null);
+          ]]>
+        </method>
+
+
+        <method name="handle_showZoneStatus" args="args"><![CDATA[
+            this.setAttribute("zoneStatus", args);
           ]]>
         </method>
 

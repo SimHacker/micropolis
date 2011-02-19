@@ -13,6 +13,7 @@ v    <!-- By Don Hopkins -->
 
 
 	<attribute name="active" value="true"/>
+	<attribute name="buttonHeight" value="60">
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -27,12 +28,37 @@ v    <!-- By Don Hopkins -->
 
 
 	<button
+	    text="${gApp._('Generate Random Map')}"
+	    fontsize="12"
+	    fontstyle="bold"
+	    onclick="gApp.generateCity()"
+	    width="${parent.width}"
+	    height="${classroot.buttonHeight}"
+	>
+
+	    <handler name="onmouseover" args="arg"><![CDATA[
+		var tip = 
+		    gApp._("Random Map") + ':\n' + 
+		    gApp._("Click to randomly generate a new map.");
+		gToolTip.enterView(this, tip, 'left');
+	      ]]>
+	    </handler>
+
+	    <handler name="onmouseout" args="arg"><![CDATA[
+		gToolTip.exitView(this);
+	      ]]>
+	    </handler>
+
+	</button>
+
+
+	<button
 	    fontsize="12"
 	    fontstyle="bold"
 	    datapath="ds_scenarios:/scenarios/scenario"
 	    onclick="gApp.loadScenario(this.scenarioID, this.scenarioTitle, this.scenarioNotice)"
 	    width="${parent.width}"
-	    height="${this.icon.height + 10}"
+	    height="${classroot.buttonHeight}"
 	>
 
 
@@ -83,31 +109,6 @@ v    <!-- By Don Hopkins -->
 		height="${this.unstretchedheight * 0.5}"
 	    />
 
-
-	</button>
-
-
-	<button
-	    text="${gApp._('Generate')}"
-	    fontsize="18"
-	    fontstyle="bold"
-	    onclick="gApp.generateCity()"
-	    width="${parent.width}"
-	    height="${parent.subviews[0].height}"
-	>
-
-	    <handler name="onmouseover" args="arg"><![CDATA[
-		var tip = 
-		    gApp._("Random Map") + ':\n' + 
-		    gApp._("Click to randomly generate a new map.");
-		gToolTip.enterView(this, tip, 'left');
-	      ]]>
-	    </handler>
-
-	    <handler name="onmouseout" args="arg"><![CDATA[
-		gToolTip.exitView(this);
-	      ]]>
-	    </handler>
 
 	</button>
 

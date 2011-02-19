@@ -50,11 +50,89 @@ ServerURL = 'http://www.MicropolisOnline.com'
 DefaultLanguage = config.get('micropolis.default_language', 'en-US')
 DataDir = config.get('micropolis.data_dir', 'micropolis/htdocs/static/data')
 LocalServerRoot = config.get('micropolis.local_server_root', 'http://127.0.0.1:8082')
+GoogleTranslateAPIURL = 'https://www.googleapis.com/language/translate/v2'
 
 FacebookCanvasName = config.get('micropolis.facebook_canvas_name', 'XXX')
 FacebookAppID = config.get('micropolis.facebook_app_id', 'XXX')
+FacebookAppKey = config.get('micropolis.facebook_app_key', 'XXX')
 FacebookAppSecret = config.get('micropolis.facebook_app_secret', 'XXX')
 FacebookPermissions = config.get('micropolis.facebook_permissions', 'XXX')
+GoogleAPIIdentityKey = config.get('micropolis.google_api_identity_key', 'XXX')
+
+
+FacebookProducts = {
+
+    'simoleans_10000': {
+        'order_info': 'simoleans_10000',
+        'price': 1, # $0.10 (10,000 per dollar)
+        'title': 'Ten Thousand Simoleans',
+        'description': "You can build a lot of stuff with ten thousand Simolians! Credited to your current city. As cheap as could be!",
+        'image_url': '/static/images/product_simoleans_1000_icon.png',
+        'product_url': '/server/product/simoleans_1000',
+        'sequence': 1,
+    },
+    
+    'simoleans_1000000': {
+        'order_info': 'simoleans_1000000',
+        'price': 25, # $2.50 (400,000 per dollar)
+        'title': 'One Million Simoleans',
+        'description': "Did you ever want to be a millionaire? Well here's your chance! Credited to your current city. This is the deal of the century!",
+        'image_url': '/static/images/product_simoleans_1000000_icon.png',
+        'product_url': '/server/product/simoleans_1000000',
+        'sequence': 2,
+    },
+    
+    'save_slot': {
+        'order_info': 'save_slot',
+        'price': 50, # $5.00
+        'title': 'One Save File Slot',
+        'description': "This enables you to save more cities! You can save one city per save slot. Don't leave town without it!",
+        'image_url': '/static/images/product_save_slot_icon.png',
+        'product_url': '/server/product/save_slot',
+        'sequence': 3,
+    },
+    
+    'karma_1000': {
+        'order_info': 'karma_1000',
+        'price': 100, # $10.00
+        'title': '1000 Karma',
+        'description': "A kilo-karma will put a sparkle into your day. Credited to your wonderful personality. Just as strong and effective as homeopathic medicine!",
+        'image_url': '/static/images/product_karma_1000_icon.png',
+        'product_url': '/server/product/karma_1000',
+        'sequence': 4,
+    },
+    
+    'karma_2000': {
+        'order_info': 'karma_2000',
+        'price': 200, # $20.00
+        'title': '2000 Karma',
+        'description': "A ton of karma never killed anyone. Credited to your wonderful personality. Your pets will think you're god!",
+        'image_url': '/static/images/product_karma_2000_icon.png',
+        'product_url': '/server/product/karma_2000',
+        'sequence': 5,
+    },
+    
+    'karma_5000': {
+        'order_info': 'karma_5000',
+        'price': 500, # $50.00
+        'title': '5000 Karma',
+        'description': "Five thousand is the largest isogrammic number in the English language, and that's a huge heap of karma. Credited to your wonderful personality. Your horiscope will come true!",
+        'image_url': '/static/images/product_karma_5000_icon.png',
+        'product_url': '/server/product/karma_5000',
+        'sequence': 6,
+    },
+    
+    'karma_9001': {
+        'order_info': 'karma_9001',
+        'price': 900, # $90.00
+        'title': '9001 Karma',
+        'description': "It's over nine thousaaaaaaaaaand karma!!! Credited to your wonderful personality. Best deal, by far!",
+        'image_url': '/static/images/product_karma_9001_icon.png',
+        'product_url': '/server/product/karma_9001',
+        'sequence': 7,
+    },
+    
+}
 
 
 ########################################################################
@@ -71,7 +149,31 @@ def Base64URLEncode(data):
     return base64.urlsafe_b64encode(data).rstrip('=')
 
 
+def ParseSignedRequest(signed_request):
+    data = None
+    user_id = None
+    access_token = None
+
+    sig, payload = signed_request.split(u'.', 1)
+    sig = Base64URLDecode(sig)
+    data = simplejson.loads(Base64URLDecode(payload))
+
+    expected_sig = hmac.new(
+        FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest()
+
+    if sig != expected_sig:
+        print "ERROR: ParseSignedRequest sig", sig, "does not equal expected_sig", expected_sig
+        return None
+
+    if data['issued_at'] < (time.time() - 86400):
+        print "ERROR: ParseSignedRequest issued_at", data['issued_at'], "expired after", time.time()
+        return None
+
+    return data
+
+
 def FacebookAPI(path, params=None, method=u'GET', domain=u'graph', access_token=None):
+    print "FACEBOOKAPI", path, params
     if not params:
         params = {}
     params[u'method'] = method
@@ -524,18 +626,77 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # console
+    # adminConsole
     #
     # Administrative command console.
     #
     @expose(
-        template="micropolis.templates.console")
+        template="micropolis.templates.adminConsole")
     @identity.require(
         identity.in_group("admin"))
-    def console(
+    def adminConsole(
         self):
 
-        return {}
+        commands = [
+            {
+                'name': 'Users',
+                'link': '/server/adminUsers',
+                'description': 'List users.',
+            },
+            {
+                'name': 'Payments',
+                'link': '/server/adminPayments',
+                'description': 'List payments.',
+            },
+            {
+                'name': 'Cities',
+                'link': '/server/adminCities',
+                'description': 'List cities.',
+            },
+            {
+                'name': 'Translations',
+                'link': '/server/translations',
+                'description': 'Edit translations.',
+            },
+        ]
+
+        return {
+            'commands': commands,
+        }
+
+
+    ########################################################################
+    # product
+    #
+    # Product info.
+    #
+    @expose(
+        template="micropolis.templates.product")
+    def product(
+        self,
+        order_info=None):
+
+        if ((not order_info) or
+            (order_info not in FacebookProducts)):
+            products = FacebookProducts.values()
+            products.sort(lambda p1, p2: cmp(p1['sequence'], p2['sequence']))
+            print "MANY PRODUCTS", products
+        else:
+            products = [FacebookProducts[order_info]]
+            print "ONE PRODUCT", products
+
+        user_id = ''
+        if not turbogears.identity.current.anonymous:
+            user_id = str(turbogears.identity.current.user.uid)
+            print "Got user id", user_id
+
+        return {
+            'products': products,
+            'app_id': FacebookAppID,
+            'app_key': FacebookAppKey,
+            'canvas_name': FacebookCanvasName,
+            'user_id': user_id,
+        }
 
 
     ########################################################################
@@ -548,7 +709,7 @@ class Root(controllers.RootController):
         self,
         forward_url=None,
         **kw):
-
+        
         if forward_url:
             if isinstance(forward_url, list):
                 forward_url = forward_url.pop(0)
@@ -760,11 +921,13 @@ class Root(controllers.RootController):
 
 
     ########################################################################
-    # getTranslations
+    # translations
     #
     @expose(
-        template="micropolis.templates.getTranslations")
-    def getTranslations(
+        template="micropolis.templates.translations")
+    @identity.require(
+        identity.in_group("admin"))
+    def translations(
         self,
         language=DefaultLanguage,
         command='',
@@ -835,8 +998,11 @@ class Root(controllers.RootController):
             f.write(defaultDoc.toxml())
             f.close()
 
+            url = ServerURL + '/server/translations?language=' + language
+            raise cherrypy.HTTPRedirect(url)
+
             # Read the changes back in.
-            strings, doc, stringEls, stringsPath = self.readStrings(language)
+            #strings, doc, stringEls, stringsPath = self.readStrings(language)
 
         return {
             'message': message,
@@ -845,6 +1011,8 @@ class Root(controllers.RootController):
             'languages': languages,
             'strings': strings,
             'defaultStrings': defaultStrings,
+            'googleAPIIdentityKey': GoogleAPIIdentityKey,
+            'googleTranslateAPIURL': GoogleTranslateAPIURL,
         }
 
 
@@ -910,26 +1078,35 @@ class Root(controllers.RootController):
     @expose()
     @validate(validators = {
         'debugging': validators.Int(),
-        'in_tab': validators.Int(),
-        'page_admin': validators.Int(),
+        #'page_admin': validators.Int(),
     })
     def facebookCanvas(
         self,
-        debugging=0,
-        in_tab=0,
-        page_admin=0,
-        fb_page_id='',
-        locale=DefaultLanguage,
+        #debugging=0,
+        #in_tab=0,
+        #page_admin=0,
+        #fb_page_id='',
+        #locale=DefaultLanguage,
+        tg_errors=None,
         *args,
         **kw):
 
-        print "\nFACEBOOKCANVAS", "METHOD", request.method, "ARGS", args, "KW", kw
+        print "ERRORS", tg_errors
+
+        print "KW", kw
+        debugging = int(kw.get('debugging', 0) or 0)
+        in_tab = int(kw.get('in_tab_flag', 0) or 0)
+        page_admin = int(kw.get('page_admin', 0) or 0)
+        fb_page_id = kw.get('fb_page_id', None) or ''
+        locale = kw.get('locale', DefaultLanguage) or DefaultLanguage
+        
+        print "\nFACEBOOKCANVAS", "METHOD", request.method, "DEBUGGING", debugging, "IN_TAB", in_tab, "PAGE_ADMIN", page_admin, "FB_PAGE_ID", fb_page_id, "LOCALE", locale, "ARGS", args, "KW", kw
 
         if in_tab:
             print "DISPLAYING IN TAB"
 
         signed_request = None
-        signed_request_data = None
+        data = None
         user_id = ''
         access_token = ''
         me = None
@@ -940,51 +1117,43 @@ class Root(controllers.RootController):
             ('signed_request' in kw)):
 
             signed_request = kw['signed_request']
-            # TODO: set cookie
 
         elif 'u' in cherrypy.request.simple_cookie:
 
             signed_request = cherrypy.request.simple_cookie['u'].value
 
         if signed_request:
+            data = ParseSignedRequest(signed_request)
 
-            sig, payload = signed_request.split(u'.', 1)
-            sig = Base64URLDecode(sig)
-            signed_request_data = simplejson.loads(Base64URLDecode(payload))
+        # Allow the signed_request to work for up to 1 day.
+        if data:
 
-            expected_sig = hmac.new(
-                FacebookAppSecret, msg=payload, digestmod=hashlib.sha256).digest()
+            user_id = data.get(u'user_id', '')
+            access_token = data.get(u'oauth_token', '')
 
-            # Allow the signed_request to work for up to 1 day.
-            if ((sig == expected_sig) and
-                (signed_request_data[u'issued_at'] > (time.time() - 86400))):
+            if user_id:
 
-                user_id = signed_request_data.get(u'user_id', '')
-                access_token = signed_request_data.get(u'oauth_token', '')
+                payload = Base64URLEncode(simplejson.dumps({
+                    u'user_id': user_id,
+                    u'issued_at': str(int(time.time())),
+                }))
 
-                if user_id:
+                sig = Base64URLEncode(
+                    hmac.new(
+                        FacebookAppSecret,
+                        msg=payload,
+                        digestmod=hashlib.sha256).digest())
 
-                    payload = Base64URLEncode(simplejson.dumps({
-                        u'user_id': user_id,
-                        u'issued_at': str(int(time.time())),
-                    }))
+                cookie = sig + '.' + payload
+                cherrypy.response.simple_cookie['u'] = cookie
+                cherrypy.response.simple_cookie['u']['expires'] = 1440 * 60
 
-                    sig = Base64URLEncode(
-                        hmac.new(
-                            FacebookAppSecret,
-                            msg=payload,
-                            digestmod=hashlib.sha256).digest())
-
-                    cookie = sig + '.' + payload
-                    cherrypy.response.simple_cookie['u'] = cookie
-                    cherrypy.response.simple_cookie['u']['expires'] = 1440 * 60
-
-                print "signed_request_data", signed_request_data
-                print "user_id", user_id
-                print "access_token", access_token
+            print "data", data
+            print "user_id", user_id
+            print "access_token", access_token
 
         if access_token:
-            print "Getting me..."
+            print "Getting me...", "access_token", access_token
             try:
                 params = {
                     u'fields': u'picture,friends',
@@ -1027,12 +1196,15 @@ class Root(controllers.RootController):
             user.email = me.get('email', '')
             user.activity = datetime.now()
 
+            # Log them in.
+            user.login()
+
         if fb_page_id:
             params = {
                 u'access_token': access_token,
             }
             page = FacebookAPI(
-                u'/page',
+                u'/page/' + str(fb_page_id),
                 params)
             print "PAGE", page
 
@@ -1049,6 +1221,7 @@ class Root(controllers.RootController):
             #'me': me,
             #'user': user,
             'app_id': FacebookAppID,
+            'app_key': FacebookAppKey,
             'canvas_name': FacebookCanvasName,
             'fb_page_id': fb_page_id,
             'page': page,
@@ -1087,6 +1260,134 @@ class Root(controllers.RootController):
 
         return {
         }
+
+
+    ########################################################################
+    # facebookCredits
+    #
+    # Facebook credits interface.
+    #
+    @expose(
+        content_type="application/json")
+    @validate(validators = {
+        'test_mode': validators.Int(),
+    })
+    def facebookCredits(
+        self,
+        test_mode=0,
+        order_id='',
+        order_info='',
+        signed_request='',
+        receiver='',
+        buyer='',
+        method='',
+        *args,
+        **kw):
+
+        print "\nFACEBOOKCREDITS", 'test_mode', test_mode, 'order_id', order_id, 'order_info', order_info, 'signed_request', signed_request, 'receiver', receiver, 'buyer', buyer, 'method', method, 'args', args, 'kw', kw
+
+        if order_info:
+            print "ORDER_INFO", type(order_info), repr(order_info)
+            order_info = simplejson.loads(order_info)
+
+        data = None
+        if signed_request:
+            data = ParseSignedRequest(signed_request)
+
+        if method == 'payments_get_items':
+
+            print "METHOD: payments_get_items", "order_info", order_info
+
+            credits = data.get('credits')
+            if not credits:
+                print "FACEBOOKCREDITS payments_get_items signed request missing credits"
+                return "{}"
+            #print "CREDITS", credits
+            
+            user = data.get('user')
+            print "USER", user
+
+            buyer = credits.get('buyer')
+            order_id = credits.get('order_id')
+            test_mode = credits.get('test_mode')
+            #order_info = credits.get('order_info')
+            receiver = credits.get('receiver')
+
+            print "CREDITS:", 'buyer', buyer, 'order_id', order_id, 'test_mode', test_mode, 'order_info', order_info, 'receiver', receiver, 'user', user
+
+            if order_info not in FacebookProducts:
+                print "Unknown order_info:", order_info
+                return "{}"
+
+            product = FacebookProducts[order_info]
+            price = product['price']
+            title = product['title']
+            description = product['description']
+
+            # Look up order_info in database.
+
+            image_url = ServerURL + product['image_url']
+            product_url = ServerURL + product['product_url']
+
+            response = {
+                'content': [
+                    {
+                        'title': title,
+                        'description': description,
+                        'price': price,
+                        'image_url': image_url,
+                        'product_url': product_url,
+                        'data': order_info,
+                    },
+                ],
+                'method': 'payments_get_items',
+            }
+
+            print "RESPONSE", response
+
+            return simplejson.dumps(response)
+
+        elif method == 'payments_status_update':
+            
+            print "METHOD: payments_status_update"
+
+            print "DATA", data
+
+            credits = data.get('credits')
+            if not credits:
+                print "FACEBOOKCREDITS payments_status_update signed request missing credits"
+                return "{}"
+            print "CREDITS", credits
+            
+            user = data.get('user')
+            print "USER", user
+
+            status = credits.get('status')
+            order_id = credits.get('order_id')
+            order_details = credits.get('order_details')
+            test_mode = credits.get('test_mode')
+
+            print "status", status, "order_id", order_id, "test_mode", test_mode, "order_details", order_details
+
+            status = 'settled'
+
+            response = {
+                'content': {
+                    'order_id': order_id,
+                    'status': status,
+                },
+                'method': 'payments_status_update',
+            }
+
+            print "RESPONSE", response
+
+            return simplejson.dumps(response)
+
+        else:
+
+            print "FACEBOOKCREDITS unexpected method", method
+
+        return {}
 
 
 ########################################################################

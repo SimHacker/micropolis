@@ -4,7 +4,7 @@
   xmlns:py="http://genshi.edgewall.org/"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:fb="fb"
-  style="font-family: &quot;lucida grande&quot;, tahoma, verdana, arial, sans-serif; font-size: 18px; background-color: #ffffff;"
+  class="pageHtml"
 >
 
   <?python
@@ -22,9 +22,10 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Micropolis Page Administration</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
   </head>
 
-  <body>
+  <body class="pageBody">
 
     <p>
       This is the Micropolis Facebook Application Page Administration page.
@@ -48,6 +49,7 @@
       The user id is "<a py:strip="not user_id" href="http://www.facebook.com/profile.php?id=${user_id}">${user_id or 'undefined'}</a>".
       The user name is "${user_name}".
     </p>
+
   </body>
 
 </html>

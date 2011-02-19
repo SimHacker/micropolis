@@ -22,6 +22,7 @@ from datetime import datetime
 import random
 import pkg_resources
 pkg_resources.require("SQLAlchemy>=0.4.0")
+import turbogears
 from turbogears.database import metadata, mapper
 # import some basic SQLAlchemy classes for declaring the data model
 # (see http://www.sqlalchemy.org/docs/04/ormtutorial.html)
@@ -31,7 +32,8 @@ from sqlalchemy.orm import relation
 # (see http://www.sqlalchemy.org/docs/04/types.html for more)
 from sqlalchemy import String, Unicode, Integer, Boolean, DateTime, TEXT, BLOB
 from turbogears.database import metadata, mapper, session
-from turbogears import identity
+from turbogears import identity, visit
+
 from pyMicropolis.micropolisEngine.xmlutilities import *
 
 
@@ -59,8 +61,8 @@ group_table = Table('tg_group', metadata,
 
 user_table = Table('tg_user', metadata,
     Column('user_id', Integer, primary_key=True),
-    Column('uid', Integer, primary_key=True, unique=True),
-    Column('user_name', Unicode(255)),
+    Column('uid', Integer, unique=True),
+    Column('user_name', Unicode(255), unique=True),
     Column('password', Unicode(255)),
     Column('created', DateTime, default=datetime.now),
     Column('activity', DateTime, default=datetime.now),
@@ -76,9 +78,11 @@ user_table = Table('tg_user', metadata,
     Column('email', Unicode(255)),
     Column('third_party_id', Unicode(255)),
     Column('nick_name', Unicode(255)),
-#    Column('current_city_id', Integer, 
-#        ForeignKey('city.city_id'),
-#        primary_key=True)
+    Column('credits', Integer, default=0),
+    Column('donation', Integer, default=0),
+    Column('karma', Integer, default=0),
+    Column('city_slots', Integer, default=1),
+    Column('current_city_cookie', Unicode(255)),
 )
 
 permission_table = Table('permission', metadata,
@@ -107,10 +111,10 @@ group_permission_table = Table('group_permission', metadata,
 
 city_table = Table('city', metadata,
     Column('city_id', Integer, primary_key=True),
-    Column('cookie', String(255)), # Is a non-unique key
-    Column('parent_id', Integer), # Is a non-unique key
-    Column('title', Unicode(255)),
-    Column('description', Unicode(1024)),
+    Column('cookie', String(255), default=""), # Is a non-unique key
+    Column('parent_id', Integer),
+    Column('title', Unicode(255), default=""),
+    Column('description', Unicode(1024), default=""),
     Column('user_id', Integer, ForeignKey('tg_user.user_id')), # Is a non-unique key
     Column('save_file', BLOB, default=None, nullable=True),
     Column('metadata', TEXT, default=None, nullable=True),
@@ -118,7 +122,10 @@ city_table = Table('city', metadata,
     Column('thumbnail', BLOB, default=None, nullable=True),
     Column('shared', Boolean, default=False),
     Column('created', DateTime, default=datetime.now),
-    Column('modified', DateTime, default=datetime.now)
+    Column('modified', DateTime, default=datetime.now),
+    Column('mutable', Boolean, default=False),
+    Column('protection', Integer, default=0),
+    Column('scenario', String(255), default=""),
 )
 
 
@@ -258,6 +265,23 @@ class User(object):
         #print savedCities
 
         return savedCities
+
+
+    def login(self):
+        visit_key = visit.current().key
+        print "User login visit_key", visit_key
+        link = VisitIdentity.query.filter_by(visit_key=visit_key).first()
+        print "link", link
+
+        if not link:
+            link = VisitIdentity(visit_key=visit_key, user_id=self.user_id)
+            print "NEW VisitIdentity"
+        else:
+            link.user_id = self.user_id
+
+        user_identity = identity.current_provider.load_identity(visit_key)
+        print "user_identity", user_identity
+        identity.set_current_identity(user_identity)
 
 
     def destroy(self):

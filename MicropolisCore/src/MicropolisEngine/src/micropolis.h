@@ -1829,7 +1829,13 @@ public:
     int terrainCreateIsland;
 
 
-    void generateMap() ;
+    /**
+     * The seed of the most recently generated city.
+     */
+    int generatedCitySeed;
+
+
+    void generateMap();
 
     void clearMap();
 
@@ -2740,9 +2746,9 @@ private:
     void doZoneStatus(short mapH, short mapV);
 
     void doShowZoneStatus(
-        char *str,
-        char *s0, char *s1, char *s2, char *s3, char *s4,
-        int x, int y);
+	int tileCategory,
+	int s0, int s1, int s2, int s3, int s4,
+	int x, int y);
 
     void putBuilding(int leftX, int topY, int sizeX, int sizeY,
                      MapTile baseTile, bool aniFlag,
@@ -2755,7 +2761,7 @@ private:
                                   const BuildingProperties *bprops,
                                   ToolEffects *effects);
 
-    int getDensityStr(short catNo, short mapH, short mapV);
+    int getDensity(short catNo, short mapH, short mapV);
 
     bool tally(short tileValue);
 

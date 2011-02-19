@@ -4,7 +4,7 @@
   xmlns:py="http://genshi.edgewall.org/"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:fb="fb"
-  style="margin: 0; border: 0; padding: 0; font-family: &quot;lucida grande&quot;, tahoma, verdana, arial, sans-serif; font-size: 18px; background-color: #ffffff; height: 100%;"
+  class="canvasHtml"
 >
 
   <?python
@@ -22,187 +22,132 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Micropolis</title>
-    <script src="/lps/lps/includes/embed-compressed.js" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+    <script type="text/javascript"><![CDATA[
+      var app_url =
+	  '/lps/micropolis/micropolis/micropolis_${quote_jsurl(user_locale)}.lzx?' +
+	  'lzr=${quote_jsurl(lzr_param)}&' +
+	  'access_token=${quote_jsurl(access_token)}&' +
+	  'user_id=${quote_jsurl(user_id)}&' +
+	  'user_name=${quote_jsurl(user_name)}&' +
+	  'user_locale=${quote_jsurl(user_locale)}&' +
+	  'canvas_name=${quote_jsurl(canvas_name)}&' +
+	  'app_id=${quote_jsurl(app_id)}' +
+	  'in_tab=${str(in_tab)}' +
+	  'fb_page_id=${quote_jsurl(fb_page_id)}' +
+	  'facebook=1&' +
+	  'debug=${'true' if debugging else 'false'}&' +
+	  'debugging=${str(debugging)}&' +
+	  '${quote_js(debugging_params_amp)}';
+    ]]></script>
   </head>
 
-  <body
-    style="margin: 0; border: 0; padding: 0; height: 100%;"
-  >
+  <body class="canvasBody">
 
-    <table
-      border="0"
-      cellspacing="0"
-      cellpadding="0"
-      style="width: 100%; height: 100%; border: 0;"
-    >
+    <table class="canvasTable">
+
       <tr>
-	<td width="100%" align="left" valign="top">
+	<td class="canvasTableTop">
 
 	  <div id="fb-root"></div>
 
 	  <fb:like
 	    show-faces="false"
 	  />
-	  <br style="clear:both"/>
+	  <br class="clearBreak"/>
+
+	  Please
+	  <a
+	    href="javascript:hello()"
+	  >tell your friends</a>,
+	  and buy
+	  <a
+	    href="javascript:orderProduct('simoleans_10000')"
+	  >ten thousand</a>
+	  or
+	  <a
+	    href="javascript:orderProduct('simoleans_1000000')"
+	  >one million</a> Simoleans,
+	  more
+	  <a
+	    href="javascript:orderProduct('save_slot')"
+	  >save slots</a>,
+	  <a
+	    href="javascript:orderProduct('karma_1000')"
+	  >1000</a>,
+	  <a
+	    href="javascript:orderProduct('karma_2000')"
+	  >2000</a>,
+	  <a
+	    href="javascript:orderProduct('karma_5000')"
+	  >5000</a> 
+	  or	
+	  <a
+	    href="javascript:orderProduct('karma_9001')"
+	  >9001</a> 
+	  Karma, to support this
+	  <a
+	    href="http//www.MicropolisOnline.com"
+	    target="_new"
+	  >open source project</a>.
+	  <br/>
 
 	  <py:if
 	    test="not user_id"
 	  >
 	    Please
 	    <a
-	      href="javascript:"
-	      onclick="addApp()"
+	      href="javascript:addApp('${quote_js(facebook_permissions)}')"
 	    >add Micropolis</a>
 	    to save your city and play with your friends.
 	  </py:if>
 
-	  <script src="http://connect.facebook.net/en_US/all.js"></script>
-
-	  <script><![CDATA[
-
-            function addApp()
-            {
-              FB.login(
-                function(response) {
-                  if (response.session) {
-                    if (response.perms) {
-                      // User is logged in and granted some permissions.
-                      // The response.perms is a comma separated list of granted permissions.
-                      //alert("FB.login response: User is logged in, granted permissions: " + response.perms);
-                    } else {
-                      // User is logged in, but did not grant any permissions.
-                      //alert("FB.login response: User is logged in, but without any permissions.");
-                    }
-                  } else {
-                    // User is not logged in.
-                    //alert("FB.login response: User is not logged in.");
-                  }
-                }, {
-                  perms: "${facebook_permissions}"
-                });
-            }
-
-	    function goHome()
-            {
-	      top.location = 'http://apps.facebook.com/${canvas_name}/';
-	    }
-
-	    window.fbAsyncInit = function() {
-
-	      FB.init({
-		appId: "${app_id}",
-		xfbml: true,
-		channelUrl:
-		  window.location.protocol + '//' + window.location.host + '/static/html/channel.html'
-	      });
-
-	      FB.Event.subscribe('auth.sessionChange', 
-		function(response) {
-
-                  if (response.session) {
-                    if (response.perms) {
-                      // User is logged in and granted some permissions.
-                      // The response.perms is a comma separated list of granted permissions.
-                      //alert("sessionChange: User is logged in, granted permissions: " + response.perms);
-                    } else {
-                      // User is logged in, but did not grant any permissions.
-                      //alert("sessionChange: User is logged in, but without any permissions.");
-                    }
-                  } else {
-                    // User is not logged in.
-                    //alert("sessionChange: User is not logged in.");
-                  }
-
-		  if ((("${user_id}" != "") && !response.session) ||
-		      ("${user_id}" != ("" + response.session.uid))) {
-		    goHome();
-		  }
-		});
-
-	      //FB.Canvas.setAutoResize();
-
-	      // ensure we're always running on apps.facebook.com
-	      if (window == top) {
-		goHome();
-	      }
-
-	    };
-
-	  ]]></script>
-
 	</td>
       </tr>
-      <tr height="100%"
-	py:if="True or (user_id and me)"
-      >
-	<td height="100%" width="100%" align="left" valign="top">
+
+      <tr class="fullHeight">
+	<td class="canvasTableBottom">
 
           <iframe id="lzframe"
 	    py:if="debugging"
-	    width="100%"
-	    height="100%"
-            style="border: 0;"
+	    class="canvasDebugIframe"
             frameborder="0"
             marginwidth="0"
             marginheight="0"
 	    scrolling="no"
 	  />
 
-	  <script type="text/javascript" defer=""><![CDATA[
-
-            var url =
-                '/lps/micropolis/micropolis/micropolis_${quote_jsurl(user_locale)}.lzx?' +
-                'lzr=${quote_jsurl(lzr_param)}&' +
-                'access_token=${quote_jsurl(access_token)}&' +
-                'user_id=${quote_jsurl(user_id)}&' +
-                'user_name=${quote_jsurl(user_name)}&' +
-                'user_locale=${quote_jsurl(user_locale)}&' +
-                'canvas_name=${quote_jsurl(canvas_name)}&' +
-                'app_id=${quote_jsurl(app_id)}' +
-                'in_tab={$quote_jsurl(in_tab)}' +
-                'fb_page_id={$quote_jsurl(fb_page_id)}' +
-                'facebook=1&' +
-                'debug=${'true' if debugging else 'false'}&' +
-                'debugging=${str(debugging)}&' +
-                '${quote_js(debugging_params_amp)}';
-
-            ]]><py:if test="debugging"><![CDATA[
-
-	      document.getElementById("lzframe").src = url;
-
-	    ]]></py:if>
-
-            <py:if test="not debugging"><![CDATA[
-
-	      //lz.embed.resizeWindow('100%', '100%');
-
-	      lz.embed.swf({
-		url: url,
-		allowfullscreen: 'true',
-		wmode: 'opaque',
-		bgcolor: '#ffffff',
-		width: '100%',
-		height: '100%',
-		id: 'lzapp',
-		accessible: 'false',
-		cancelmousewheel: false
-	      });
-
-	      lz.embed.lzapp.onloadstatus = function loadstatus(p) {
-		// called with a percentage (0-100) indicating load progress
-	      }
-
-	      lz.embed.lzapp.onload = function loaded() {
-		// called when this application is done loading
-	      }
-
-	    ]]></py:if>
-
-	  </script>
+	  <div id="lzdiv"
+            py:if="not debugging"
+	  />
 
 	</td>
       </tr>
     </table>
+
+    <script src="/static/javascript/embed-compressed.js" type="text/javascript"> </script>
+    <script src="/static/javascript/micropolisFacebook.js" type="text/javascript"> </script>
+<!--!
+    <script src="/static/javascript/all_pretty.js" type="text/javascript"> </script>
+-->
+    <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"> </script>
+    <script type="text/javascript">
+      micropolisFacebookInit(
+        '${quote_js(canvas_name)}',
+        '${quote_js(app_key)}',
+        '${quote_js(app_id)}',
+        '${quote_js(user_id)}');
+
+      <py:if test="debugging"><![CDATA[
+      document.getElementById("lzframe").src = app_url;
+      ]]></py:if>
+
+      <py:if test="not debugging"><![CDATA[
+      //lz.embed.resizeWindow('100%', '100%');
+      embedApp(app_url);
+      ]]></py:if>
+
+    </script>
 
   </body>
 
