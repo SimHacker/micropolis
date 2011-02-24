@@ -1,0 +1,121 @@
+<library>
+
+
+    <!-- Screen Capture -->
+    <!-- Written for Micropolis -->
+    <!-- By Don Hopkins -->
+    <!-- Licensed under GPLv3 -->
+
+
+    <switch>
+
+
+        <when runtime="dhtml">
+
+
+	    <!-- Screen capture for dhtml runtime. Is it possible? -->
+
+
+	    <class name="screencapture">
+
+
+		<method name="captureAll"><![CDATA[
+		    Debug.write("screencapture captureAll not implemented yet.");
+		    return null;
+		  ]]>
+		</method>
+
+
+		<method name="captureRect" args="x, y, width, height"><![CDATA[
+		    Debug.write("screencapture captureRect not implemented yet.");
+		    return null;
+		  ]]>
+		</method>
+
+
+		<method name="capture"><![CDATA[
+		    Debug.write("screencapture capture not implemented yet.");
+		    return null;
+		  ]]>
+		</method>
+
+
+	    </class>
+
+
+	</when>
+
+
+	<otherwise>
+
+
+	    <!-- Screen capture for Flash runtime. -->
+
+
+	    <class name="screencapture">
+
+
+		<switch>
+		    <when property="$as3">
+			<passthrough>
+			    import flash.display.BitmapData;
+			    import flash.utils.ByteArray;
+			    import flash.geom.Rectangle;
+			</passthrough>
+		    </when>
+		</switch>
+
+
+		<method name="captureAll"><![CDATA[
+		    this.captureRect(
+		        0,
+			0,
+			parent.width,
+			parent.height);
+		  ]]>
+		</method>
+
+
+		<method name="captureRect" args="x, y, width, height"><![CDATA[
+		    this.setAttribute("x", x);
+		    this.setAttribute("y", y);
+		    this.setAttribute("width", width);
+		    this.setAttribute("height", height);
+		    this.capture();
+		  ]]>
+		</method>
+
+
+		<method name="capture"><![CDATA[
+		    Debug.write("capturing byte array");
+
+		    var bitmap:BitmapData =
+			new BitmapData(
+			    this.width,
+			    this.height, 
+			    false);
+		    var stage = null; // FIXME: Where do I get this?
+		    //bitmap.draw(stage);
+		    var bytes:ByteArray = 
+			bitmap.getPixels(
+			    new Rectangle(
+				this.x,
+				this.y,
+				this.width,
+				this.height));
+
+		    Debug.write("captured byte array", bytes);
+		  ]]>
+		</method>
+
+
+	    </class>
+
+
+        </otherwise>
+
+
+    </switch>
+
+
+</library>

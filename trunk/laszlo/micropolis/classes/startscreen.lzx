@@ -104,21 +104,21 @@
 			/>
 
 			<text
-			    fontsize="20"
+			    fontsize="18"
 			    fontstyle="bold"
 			    resize="true"
 			    text="${gApp._('Configure Your City') + ':'}"
 			/>
 
 			<text
-			    fontsize="18"
+			    fontsize="16"
 			    fontstyle="bold"
 			    resize="true"
 			    text="${gApp._('Title') + ':'}"
 			/>
 
 			<edittext name="titleEdit"
-			    fontsize="14"
+			    fontsize="12"
 			    multiline="true"
 			    width="${parent.width - 15}"
 			    text="${gApp.title}"
@@ -133,14 +133,14 @@
 			</edittext>
 
 			<text
-			    fontsize="18"
+			    fontsize="16"
 			    fontstyle="bold"
 			    resize="true"
 			    text="${gApp._('Description') + ':'}"
 			/>
 
 			<edittext name="description"
-			    fontsize="14"
+			    fontsize="12"
 			    multiline="true"
 			    width="${parent.width - 15}"
 			    height="${parent.height - this.y}"
@@ -157,7 +157,7 @@
 			</edittext>
 
 			<checkbox
-			    fontsize="14"
+			    fontsize="12"
 			    fontstyle="bold"
 			    text="${gApp._('Share My City')}"
 			    value="${gApp.shared}"
@@ -173,7 +173,7 @@
 			</checkbox>
 
 			<text
-			    fontsize="14"
+			    fontsize="12"
 			    width="${parent.width}"
 			    multiline="true"
 			    text="${
@@ -181,9 +181,9 @@
 				': ' +
 				gApp.created +
 				'&lt;br/&gt;' +
-				gApp._('Modified') +
+				gApp._('Updated') +
 				': ' +
-				gApp.modified}"
+				gApp.updated}"
 			/>
 
 			<button

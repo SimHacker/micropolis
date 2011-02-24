@@ -9,13 +9,13 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-    <title>Micropolis Web Server Admin Console</title>
+    <title>Micropolis Console</title>
     <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
   </head>
 
   <body class="pageBody">
 
-    <h1>Micropolis Web Server Admin Console</h1>
+    <h1>Micropolis Console</h1>
 
     <h2>Commands:</h2>
 
@@ -27,9 +27,7 @@
 
 	<a
 	  href="${command['link']}"
-	><b>${command['name']}</b></a>
-	<br/>
-
+	><b>${command['name']}:</b></a>
 	${command['description']}
 
       </li>

@@ -105,9 +105,9 @@
 		    />
 
 		    <textlistitem
-		        value="'modified'"
-		        text="${gApp._('Modified Date')}"
-			selected="${gApp.savedCitiesSort == 'modified'}"
+		        value="'updated'"
+		        text="${gApp._('Updated Date')}"
+			selected="${gApp.savedCitiesSort == 'updated'}"
 		    />
 
 		</combobox>
@@ -141,7 +141,7 @@
 			this.cityDescription, 
 			this.cityShared == 'true',
 			this.cityCreated,
-			this.cityModified)"
+			this.cityUpdated)"
 		    text="${this.cityTitle}"
 		    height="28"
 		    selected="${(gApp.citySource == 'mycity') &amp;&amp; (gApp.cityID == this.cityCookie)}"
@@ -152,7 +152,7 @@
 		    <attribute name="cityDescription" type="string" value="$path{'@description'}"/>
 		    <attribute name="cityShared" type="string" value="$path{'@shared'}"/>
 		    <attribute name="cityCreated" type="string" value="$path{'@createdDate'}"/>
-		    <attribute name="cityModified" type="string" value="$path{'@modifiedDate'}"/>
+		    <attribute name="cityUpdated" type="string" value="$path{'@updatedDate'}"/>
 
 		</textlistitem>
 

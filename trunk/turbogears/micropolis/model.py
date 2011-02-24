@@ -54,18 +54,18 @@ visit_identity_table = Table('visit_identity', metadata,
 
 group_table = Table('tg_group', metadata,
     Column('group_id', Integer, primary_key=True),
-    Column('group_name', Unicode(16), unique=True),
+    Column('group_name', Unicode(255), unique=True),
     Column('display_name', Unicode(255)),
-    Column('created', DateTime, default=datetime.now)
+    Column('created', DateTime, nullable=False, default=datetime.now)
 )
 
 user_table = Table('tg_user', metadata,
     Column('user_id', Integer, primary_key=True),
-    Column('uid', Integer, unique=True),
+    Column('facebook_user_id', Unicode(255), unique=True),
     Column('user_name', Unicode(255), unique=True),
     Column('password', Unicode(255)),
-    Column('created', DateTime, default=datetime.now),
-    Column('activity', DateTime, default=datetime.now),
+    Column('created', DateTime, nullable=False, default=datetime.now),
+    Column('activity', DateTime, nullable=False, default=datetime.now),
     Column('access_token', Unicode(255)),
     Column('first_name', Unicode(255)),
     Column('middle_name', Unicode(255)),
@@ -74,21 +74,20 @@ user_table = Table('tg_user', metadata,
     Column('picture', Unicode(255)),
     Column('timezone', Unicode(255)),
     Column('locale', Unicode(255)),
-    Column('username', Unicode(255)),
+    Column('facebook_user_name', Unicode(255)),
     Column('email', Unicode(255)),
     Column('third_party_id', Unicode(255)),
     Column('nick_name', Unicode(255)),
-    Column('credits', Integer, default=0),
-    Column('donation', Integer, default=0),
     Column('karma', Integer, default=0),
-    Column('city_slots', Integer, default=1),
-    Column('current_city_cookie', Unicode(255)),
+    Column('save_slots', Integer, default=0),
+    Column('credits_paid', Integer, default=0),
+    Column('current_city_id', Integer, nullable=True),
 )
 
 permission_table = Table('permission', metadata,
     Column('permission_id', Integer, primary_key=True),
-    Column('permission_name', Unicode(16), unique=True),
-    Column('description', Unicode(255))
+    Column('permission_name', Unicode(255), unique=True),
+    Column('description', Unicode(255), default='')
 )
 
 user_group_table = Table('user_group', metadata,
@@ -111,21 +110,71 @@ group_permission_table = Table('group_permission', metadata,
 
 city_table = Table('city', metadata,
     Column('city_id', Integer, primary_key=True),
-    Column('cookie', String(255), default=""), # Is a non-unique key
+    Column('cookie', Unicode(255), default=""), # Is a non-unique key
     Column('parent_id', Integer),
-    Column('title', Unicode(255), default=""),
-    Column('description', Unicode(1024), default=""),
+    Column('title', Unicode(), default=""),
+    Column('description', Unicode(), default=""),
     Column('user_id', Integer, ForeignKey('tg_user.user_id')), # Is a non-unique key
     Column('save_file', BLOB, default=None, nullable=True),
     Column('metadata', TEXT, default=None, nullable=True),
     Column('icon', BLOB, default=None, nullable=True),
     Column('thumbnail', BLOB, default=None, nullable=True),
     Column('shared', Boolean, default=False),
-    Column('created', DateTime, default=datetime.now),
-    Column('modified', DateTime, default=datetime.now),
+    Column('created', DateTime, nullable=False, default=datetime.now),
+    Column('updated', DateTime, nullable=False, default=datetime.now),
     Column('mutable', Boolean, default=False),
-    Column('protection', Integer, default=0),
-    Column('scenario', String(255), default=""),
+    Column('protection', Boolean, default=0),
+    Column('micropoleans_credit', Integer, default=0),
+    Column('scenario', Unicode(), default=""),
+)
+
+product_table = Table('product', metadata,
+    Column('product_id', Integer, primary_key=True),
+    Column('item_id', Unicode(255), default=""),
+    Column('order_info', Unicode(), default=""),
+    Column('price', Integer, default=0),
+    Column('title', Unicode(), default=""),
+    Column('description', Unicode(), default=""),
+    Column('image_url', Unicode(), default=""),
+    Column('product_url', Unicode(), default=""),
+    Column('data', Unicode(), default=""),
+    Column('sequence', Integer, default=0),
+)
+
+order_table = Table('order', metadata,
+    Column('order_id', Integer, primary_key=True),
+    Column('facebook_order_id', Unicode(255), default=""),
+    Column('item_id', Unicode(255), default=""),
+    Column('order_details', Unicode(), default=""),
+    Column('test_mode', Boolean, default=False),
+    Column('order_info', Unicode(), default=""),
+    Column('price', Integer, default=0),
+    Column('title', Unicode(), default=""),
+    Column('description', Unicode(), default=""),
+    Column('image_url', Unicode(), default=""),
+    Column('product_url', Unicode(), default=""),
+    Column('from_user_name', Unicode(), default=""),
+    Column('from_user_id', Unicode(255), default=""),
+    Column('to_user_name', Unicode(), default=""),
+    Column('to_user_id', Unicode(255), default=""),
+    Column('user_id', Integer, ForeignKey('tg_user.user_id')),
+    Column('product_id', Integer, ForeignKey('product.product_id')),
+    Column('amount', Integer, default=0),
+    Column('status', Unicode(255), default=""),
+    Column('confirmed_settled', Boolean, default=False),
+    Column('application_name', Unicode(), default=""),
+    Column('application_id', Unicode(255), default=""),
+    Column('country', Unicode(255), default=""),
+    #Column('created_time', Unicode(255), default=""),
+    #Column('updated_time', Unicode(255), default=""),
+    Column('created', DateTime, nullable=False, default=datetime.now),
+    Column('updated', DateTime, nullable=False, default=datetime.now),
+    Column('refund_code', Unicode(255), default=""),
+    Column('refund_reason', Unicode(), default=""),
+    Column('refund_message', Unicode(), default=""),
+    Column('refund_funding_source', Boolean, default=False),
+    Column('refund_params', Unicode(), default=""),
+    Column('comments', Unicode(), default=""),
 )
 
 
@@ -207,12 +256,12 @@ class User(object):
 
 
     @classmethod
-    def by_uid(cls, uid):
+    def by_facebook_user_id(cls, facebook_user_id):
         """
         A class method that permits to search users
-        based on their uid attribute.
+        based on their facebook_user_id attribute.
         """
-        return cls.query.filter_by(uid=uid).first()
+        return cls.query.filter_by(facebook_user_id=facebook_user_id).first()
 
 
     def _set_password(self, password):
@@ -236,6 +285,12 @@ class User(object):
         savedCities = []
         #print "GETSAVEDCITIES USER", self, "CITIES", self.cities
         for city in self.cities:
+
+            # Filter out the current city, which is the sandbox, and
+            # should not show up in the saved cities list.
+            if city.city_id == self.current_city_id:
+                continue
+            
             #print "CITY", city, city.title, city.description
             iconURL = (
                 '/server/getCityIcon?session=' + 
@@ -252,8 +307,8 @@ class User(object):
                 'shared': city.shared,
                 'createdDate': city.created,
                 'created': city.created.toordinal(),
-                'modifiedDate': city.modified,
-                'modified': city.modified.toordinal(),
+                'updatedDate': city.updated,
+                'updated': city.updated.toordinal(),
                 'icon': iconURL,
             }
             print city, city.shared, d
@@ -261,27 +316,111 @@ class User(object):
 
         savedCities.sort(
             lambda c1, c2:
-                cmp(c1['modified'], c2['modified']))
+                cmp(c1['updated'], c2['updated']))
         #print savedCities
 
         return savedCities
 
 
+    def getCurrentCity(self):
+        current_city_id = self.current_city_id
+        if not current_city_id:
+            return None
+        city = City.query.filter_by(city_id=current_city_id).first()
+        return city
+
+
     def login(self):
         visit_key = visit.current().key
-        print "User login visit_key", visit_key
+        #print "User login visit_key", visit_key
         link = VisitIdentity.query.filter_by(visit_key=visit_key).first()
-        print "link", link
+        #print "link", link
 
         if not link:
             link = VisitIdentity(visit_key=visit_key, user_id=self.user_id)
-            print "NEW VisitIdentity"
+            #print "NEW VisitIdentity"
         else:
             link.user_id = self.user_id
 
         user_identity = identity.current_provider.load_identity(visit_key)
-        print "user_identity", user_identity
+        #print "user_identity", user_identity
         identity.set_current_identity(user_identity)
+
+
+    def purchaseProduct(self, product, product_data, order, dry_run):
+
+        product_type = product_data.get('type')
+        if not product_type:
+            print "User purchaseProduct ERROR: missing type from product_data", product_data
+            return 'canceled'
+
+        if product_type == 'micropoleans':
+
+            city = self.getCurrentCity()
+            if not city:
+                print "User purchaseProduct micropoleans ERROR: user missing current city", self
+                return 'canceled'
+                
+            micropoleans = product_data.get('micropoleans')
+            if not micropoleans:
+                print "User purchaseProduct micropoleans ERROR: missing micropoleans from product_data", product_data, order
+                return 'canceled'
+
+            if dry_run:
+                print "User purchaseProduct micropoleans SUCCESS: DRY_RUN: Will add", micropoleans, "credit, now", city.micropoleans_credit, "city", city, "user", self
+            else:                
+                city.micropoleans_credit += micropoleans
+                self.credits_paid += order.price
+                print "User purchaseProduct micropoleans SUCCESS: Added", micropoleans, "credit, now", city.micropoleans_credit, "city", city, "user", self
+
+        elif product_type == 'save_slot':
+
+            self.save_slots += 1
+            self.credits_paid += order.price
+
+            if dry_run:
+                print "User purchaseProduct save_slot SUCCESS: DRY_RUN: Will add 1 save slot, now", self.save_slots, "user", self
+            else:
+                print "User purchaseProduct save_slot SUCCESS: Added 1 save slot, now", self.save_slots, "user", self
+
+        elif product_type == 'protection':
+
+            city = self.getCurrentCity()
+            if not city:
+                print "User purchaseProduct protection ERROR: user missing current city", self
+                return 'canceled'
+                
+            if city.protection:
+                print "User purchaseProduct protection ERROR: city already is protected", city, "user", self
+                return 'canceled'
+
+            if dry_run:
+                print "User purchaseProduct protection SUCCESS: DRY_RUN: Will set protection for city", city, "user", self
+            else:
+                city.protection = True
+                self.credits_paid += order.price
+                print "User purchaseProduct protection SUCCESS: Set protection for city", city, "user", self
+
+        elif product_type == 'karma':
+
+            karma = product_data.get('karma')
+            if not karma:
+                print "User purchaseProduct karma ERROR: missing karma from product_data", product_data, order
+                return 'canceled'
+
+            if dry_run:
+                print "User purchaseProduct karma SUCCESS: DRY_RUN: Will add", karma, "to user karma, now", self.karma, "user", self
+            else:
+                self.karma += karma
+                self.credits_paid += order.price
+                print "User purchaseProduct karma SUCCESS: Added", karma, "to user karma, now", self.karma, "user", self
+
+        else:
+
+            print "User purchaseProduct ERROR: unknown product_type", product_type, product_data, product, order
+            return 'canceled'
+
+        return 'settled'
 
 
     def destroy(self):
@@ -304,7 +443,7 @@ class City(object):
 
     def makeCookie(self):
         while True:
-            cookie = MakeRandomCookie()
+            cookie = MakeRandomCookie().decode('utf8')
             if not City.query.filter_by(cookie=cookie).first():
                 self.cookie = cookie
                 return
@@ -313,6 +452,29 @@ class City(object):
     def destroy(self):
 
         # TODO: clear parent pointers of sub-cities.
+        session.delete(self)
+
+
+class Product(object):
+    """
+    A product available for sale.
+    """
+
+
+    def destroy(self):
+
+        # TODO: clear orders pointing to product.
+        session.delete(self)
+
+
+class Order(object):
+    """
+    A Facebook order.
+    """
+
+
+    def destroy(self):
+
         session.delete(self)
 
 
@@ -331,13 +493,26 @@ mapper(VisitIdentity, visit_identity_table,
 mapper(User, user_table,
         properties={
             '_password': user_table.c.password,
-            'cities': relation(City, backref='user'),
+            'cities': relation(City),
+            'orders': relation(Order),
         })
 
 mapper(City, city_table,
         properties={
             # FIXME: How do I specifiy the parent/children relationship of a tree of cities?
-            #'children': relation(City, primaryjoin=(city_table.c.city_id == city_table.c.parent_id), backref='parent'),
+            #'children': relation(City, primaryjoin=(city_table.c.city_id == city_table.c.parent_id), backref='parent_id'),
+           'user': relation(User)
+        })
+
+mapper(Product, product_table,
+        properties={
+            #'orders': relation(Order, backref='product_id'),
+        })
+
+mapper(Order, order_table,
+        properties={
+           'user': relation(User),
+           'product': relation(Product),
         })
 
 mapper(Group, group_table,

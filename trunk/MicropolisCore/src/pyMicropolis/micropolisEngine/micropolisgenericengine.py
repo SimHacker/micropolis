@@ -1042,9 +1042,11 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
             print "loadMetaScenario: Invalid scenario id:", id
             return
 
-        scenario = self.scenarios[id]
-        self.title = scenario['title']
-        self.description = scenario['description']
+        if False: # TODO
+            scenario = self.scenarios[id]
+            self.title = scenario['title']
+            self.description = scenario['description']
+
         self.loadScenario(id)
         self.sendUpdate('load')
 
@@ -1056,7 +1058,7 @@ class MicropolisGenericEngine(micropolisengine.Micropolis):
 
         self.title = 'New City'
         self.description = 'A randomly generated city.'
-        self.generateMap(seed)
+        self.generateSomeCity(seed)
         self.sendUpdate('load')
 
 

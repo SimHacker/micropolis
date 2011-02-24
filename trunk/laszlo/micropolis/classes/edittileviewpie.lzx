@@ -629,10 +629,10 @@
 		</myitem>
 
 		<myitem>
-		    <myhtml text="${gApp._('New City')}"/>
+		    <myhtml text="${gApp._('Choose City')}"/>
 
 		    <method name="selected"><![CDATA[
-		        gApp.newCityDialog();
+		        gApp.newCity();
 		      ]]>
 		    </method>
 

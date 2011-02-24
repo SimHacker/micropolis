@@ -14,6 +14,7 @@
     <include href="datasets.lzx"/>
     <include href="strings.lzx"/>
     <include href="remoteserver.lzx"/>
+    <include href="screencapture.lzx"/>
     <include href="global.lzx"/>
     <include href="utilities.lzx"/>
     <include href="piemenu.lzx"/>

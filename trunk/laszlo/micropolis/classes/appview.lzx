@@ -52,7 +52,7 @@
         <attribute name="description" type="string" value=""/>
         <attribute name="shared" value="false"/>
         <attribute name="created" value="null"/>
-        <attribute name="modified" value="null"/>
+        <attribute name="updated" value="null"/>
         <attribute name="paused" value="true"/>
         <attribute name="virtualSpeed" type="number" value="2"/>
         <attribute name="funds" type="number" value="0"/>
@@ -305,9 +305,9 @@
                     } else if (t1 > t2) {
                         return savedCitiesDirection;
                     } else {
-                        // Secondary sort on modification date.
-                        var t1 = c1['modified'];
-                        var t2 = c2['modified'];
+                        // Secondary sort on updated date.
+                        var t1 = c1['updated'];
+                        var t2 = c2['updated'];
                         if (t1 < t2) {
                             return -1;
                         } else if (t1 > t2) {
@@ -328,9 +328,9 @@
                     description: city['description'],
                     shared: "" + city['shared'],
                     createdDate: city['createdDate'],
-                    modifiedDate: city['modifiedDate'],
+                    updatedDate: city['updatedDate'],
                     created: "" + city['created'],
-                    modified: "" + city['modified'],
+                    updated: "" + city['updated'],
                     icon: city['icon']
                 }));
             }
@@ -371,8 +371,8 @@
                     this.setAttribute(property, value);
                 }
                 var now = new Date();
-                this.setAttribute("modified", now);
-                savedCity['modified'] = now;
+                this.setAttribute("updated", now);
+                savedCity['updated'] = now;
                 savedCity[property] = value;
                 this.refreshSavedCities();
                 var msg = {
@@ -1141,7 +1141,7 @@
 
 
         <method name="handlePoll" args="messageDict"><![CDATA[
-            //Debug.write("HANDLEPOLL", messageDict);
+            Debug.write("HANDLEPOLL", messageDict);
             if (!messageDict) {
                 Debug.write("handlePoll null messageDict!");
             } else {
@@ -1449,7 +1449,7 @@
         </method>
 
 
-        <method name="trySaveCity"><![CDATA[
+        <method name="saveCity"><![CDATA[
             //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
             this.sendMessage({
                 message: 'saveCity',
@@ -1458,47 +1458,12 @@
                 title: this.title,
                 description: this.description
             });
-            // Always succeeds now.
-            return true;
-          ]]>
-        </method>
-
-
-        <method name="saveCity"><![CDATA[
-            Debug.write("saveCity");
-            if (!this.trySaveCity()) {
-                // Could not save city. (Never happens any more.)
-            }
-          ]]>
-        </method>
-
-
-        <method name="tryCheckPointCity"><![CDATA[
-            //Debug.write("trySaveCity", this.citySource, this.cityID, this.title, this.description);
-            this.sendMessage({
-                message: 'checkPointCity',
-                source: this.citySource,
-                cookie: this.cityID,
-                title: this.title,
-                description: this.description
-            });
-            // Always succeeds now.
-            return true;
-          ]]>
-        </method>
-
-
-        <method name="checkPointCity"><![CDATA[
-            Debug.write("checkPointCity");
-            if (!this.tryCheckPointCity()) {
-                // Could not checkpoint city. (Never happens any more.)
-            }
           ]]>
         </method>
 
 
         <method name="newCity"><![CDATA[
-            gApp.trySaveCity();
+            gApp.saveCity();
             gApp.chooseCity()
           ]]>
         </method>
@@ -1564,7 +1529,8 @@
             if (interests == null) {
                 return;
             }
-            //Debug.write("==== update", variable, args);
+
+            Debug.write("==== update", variable, args);
 
             if (!(variable in interests)) {
                 //Debug.write("uninteresting variable update", variable);
@@ -1584,8 +1550,9 @@
 
 
         <method name="handle_didGenerateMap" args="args"><![CDATA[
-            //Debug.write("didGenerateMap");
-            this.cityID = args['seed'];
+            Debug.write("didGenerateMap", args);
+            this.setAttribute('citySource', 'generated');
+            this.setAttribute('cityID', args['seed']);
             //Debug.write("SEED", this.cityID);
             gNoticeView.setCurrentNotice(45, null, null); // Start a New City
             this.resetCity();
@@ -1596,6 +1563,8 @@
         <method name="handle_didLoadCity" args="args"><![CDATA[
             //Debug.write("didLoadCity");
             this.resetCity();
+	    this.setAttribute('citySource', 'mycity');
+	    this.setAttribute('cityID', args['cityID']);
             gNoticeView.setCurrentNotice(46, null, null); // Restored a Saved City
           ]]>
         </method>
@@ -1691,7 +1660,15 @@
         </method>
 
 
+	<method name="handle_generateCity"><![CDATA[
+	    Debug.write("handle_generateCity");
+	    this.generateCity();
+	  ]]>
+	</method>
+
+
         <method name="generateCity"><![CDATA[
+	    Debug.write("generateCity");
 
             this.sendMessage({
                 message: 'generateCity',
@@ -1726,7 +1703,7 @@
         </method>
 
 
-        <method name="loadMyCity" args="cookie, title, description, shared, created, modified"><![CDATA[
+        <method name="loadMyCity" args="cookie, title, description, shared, created, updated"><![CDATA[
             //Debug.write("loadMyCity", cookie, title, description);
 
             this.sendMessage({
@@ -1738,7 +1715,7 @@
             this.setAttribute("description", description);
             this.setAttribute("shared", shared);
             this.setAttribute("created", created);
-            this.setAttribute("modified", modified);
+            this.setAttribute("updated", updated);
             this.setAttribute("citySource", "mycity");
             this.setAttribute("cityID", cookie);
 
@@ -1746,6 +1723,7 @@
         </method>
 
 
+<!--
         <method name="newCityDialog"><![CDATA[
             var me = this;
             gQuestionDialog.popup(
@@ -1759,8 +1737,10 @@
                 });
           ]]>
         </method>
+-->
 
 
+<!--
         <method name="deleteMyCityDialog"><![CDATA[
             gQuestionDialog.popup(
                 gApp._("Are you really sure you want to delete your city?"),
@@ -1772,6 +1752,7 @@
                 });
           ]]>
         </method>
+-->
 
 
         <method name="playWithThisMap"><![CDATA[
@@ -1941,6 +1922,14 @@
         />
 
         <mytooltip id="gToolTip"/>
+
+	<screencapture id="gScreenCapture"
+	    name="cap"
+	    x="0"
+	    y="0"
+	    width="${parent.width}"
+	    height="${parent.height}"
+	/>
 
     </class>
 
