@@ -87,9 +87,10 @@ from pyMicropolis.tileEngine import tileengine
 import micropolisengine
 import turbogears
 from turbogears import identity
+import turbogears.database
 import cherrypy
 import eliza
-from micropolis import model
+from micropolis.model import *
 import micropoliszone
 
 
@@ -397,7 +398,7 @@ class Session(object):
         user = None
         if userName != None:
             try:
-                user = model.User.query.filter_by(user_name=userName).first()
+                user = User.query.filter_by(user_name=userName).first()
             except: pass
         return user
 
@@ -465,7 +466,7 @@ class Session(object):
 
 
     def setEngine(self, engine):
-        #print "setEngine", self, engine
+        print "setEngine", self, "to", engine, "was", self.engine
         if self.engine:
             self.engine.removeSession(self)
         self.engine = engine
@@ -481,6 +482,7 @@ class Session(object):
 
         engine = CreateTurboGearsEngine(
             controller=self.controller)
+        self.setEngine(engine)
 
         print "Session createEngine created engine", engine
 
@@ -490,33 +492,45 @@ class Session(object):
         else:
             user = turbogears.identity.current.user
 
-        print "Session creatEngine user", user
+        print "Session creatEngine got user", user
         
         if user:
 
             # FIXME: Look this up manually for now since something's weird about telling SQLAlchemy it's a foreign key.
-            print "USER CURRENT CITY COOKIE", user.current_city_cookie
-            if user.current_city_cookie:
-                print "Session createEngine user.current_city_cookie defined"
-                city = model.City.query.filter_by(cookie=user.current_city_cookie).first()
+            print "USER CURRENT CITY ID", user.current_city_id
+
+            if user.current_city_id:
+                print "Session createEngine user.current_city_id defined"
+                city = City.query.filter_by(city_id=user.current_city_id).first()
                 print "Session createEngine user existing city", city
-                engine.loadCityFromDatabase(city)
-            else:
-                print "Session createEngine user.current_city_cookie not defined"
-                engine.generateNewMetaCity()
+                if city:
+                    engine.loadCityFromDatabase(city)
+                else:
+                    print "Session createEngine user.current_city_id not found!", user.current_city_id
+                    user.current_city_id = None
+
+            if not user.current_city_id:
+                print "Session createEngine user.current_city_id not defined, so saving new city to database"
+                #engine.generateNewMetaCity()
+                self.citySource = 'generated'
                 city = engine.saveCityToDatabase(
                     user,
-                    None,
-                    self.title, # TODO: i18n
-                    selfdescription) # TODO: i18n
-                print "Session createEngine user new city", city
-                user.current_city_cookie = city.cookie
-                print "SET USER CURRENT CITY COOKIE", city.cookie
-                print "Made a new city for a new user.", city, user
+                    None, # Make a new city.
+                    engine.title,
+                    engine.description)
+                city.mutable = True
+                print "Session createEngine user new mutable city", city
 
+                user.current_city_id = city.city_id
+                print "Session createEngine SET USER CURRENT CITY ID", city.city_id
+                print "Session createEngine made a new city for a new user.", city, user
 
-        self.setEngine(engine)
-
+                # Tell front end to generate a new city, so it knows what's up.
+                self.sendMessage({
+                    'message': 'generateCity',
+                    'collapse': False,
+                })
+                
 
 ########################################################################
 # MicropolisTurboGearsEngine Class
@@ -541,7 +555,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         self.gameMode = None
         self.citySource = None
         self.cityID = None
-        self.cityCookie = None
 
         # This must be called at the end of the concrete subclass's
         # init, so it happens last.
@@ -789,6 +802,8 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             cityFileName = CityNames[id]
             #print "cityFileName", cityFileName
             self.loadMetaCity(cityFileName)
+            self.saveUserCity()
+            self.pause()
 
 
     def handleMessage_loadScenario(self, session, messageDict, user):
@@ -801,13 +816,40 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         if scenario:
             #self.loadScenario(scenario)
             self.loadMetaScenario(scenario)
+            self.saveUserCity()
+            self.pause()
 
 
     def handleMessage_generateCity(self, session, messageDict, user):
+        print "MicropolisTurboGearsEngine handleMessage_generateCity", messageDict, user
         self.generateNewMetaCity(messageDict.get('seed', 0))
+        self.saveUserCity()
+        self.pause()
+
+
+    def handleMessage_loadMyCity(self, session, messageDict, user):
+        print "MicropolisTurboGearsEngine handleMessage_generateCity", messageDict, user
+        if user:
+            city = None
+            try:
+                cookie = messageDict['cookie']
+                city = City.query.filter_by(cookie=cookie).first()
+            except Exception, e:
+                print "City query error 5", e
+            if city:
+                if city.user_id != user.user_id:
+                    print "User tried to load their own city they do not own", user, user.user_id, city, city.user_id
+                else:
+                    # FIXME: this does not work right yet. need to load save files into sandbox city,
+                    # not switch to changing save files.
+                    #user.current_city_id = city.city_id
+                    self.loadCityFromDatabase(city)
+                    self.saveUserCity()
+                    pause()
 
 
     def handleMessage_startGame(self, session, messageDict, user):
+        print "handleMessage_startGame", messageDict
         citySource = messageDict['citySource']
         cityID = messageDict['cityID']
         title = messageDict['title']
@@ -815,30 +857,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         print "STARTGAME", citySource, cityID, title, description, user
         self.citySource = citySource
         self.cityID = cityID
-        self.cityCookie = None
         self.title = title
         self.description = description
         self.readOnly = False # TODO figure out what this means
         self.setGameMode('play', user) # TODO redundant?
+        self.resume()
 
         if user:
-            if citySource == 'mycity':
-                cookie = cityID
-                city = model.City.query.filter_by(cookie=cookie).first()
-                if ((not city) or
-                    (city.user_id != user.user_id)):
-                    print "handleMessage_startGame: User tried to start city they do not own", user, city, cookie
-                    return
-                print "USING EXISTING CITY cookie", city.cookie
-                city.title = title
-                city.description = description
-            elif citySource in ('scenario', 'generated', 'sharedcity',):
-                city = self.saveCityToDatabase(user, None, title, description)
-                self.updateSavedCities(session, user)
-                print "MADE NEW CITY cookie", city.cookie
-            else:
-                print "handleMessage_startGame: Unexpected city source", citySource
-                return
+            print "MicropolisTurboGearsEngine handleMessage_startGame user", user
+            self.updateSavedCities(session, user)
+
 
     def handleMessage_setGameMode(self, session, messageDict, user):
         gameMode = messageDict.get('gameMode')
@@ -874,29 +902,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         print "saveCity", session, messageDict, user
         if user:
             cookie = messageDict['cookie']
-            title = messageDict['title']
-            description = messageDict['description']
-            source = messageDict['source']
-            if source != 'mycity':
-                cookie = None # to force saving to a new city
-            city = self.getCityByCookie(cookie)
-            self.saveCityToDatabase(user, city, title, description)
-            self.updateSavedCities(session, user)
-
-
-    def handleMessage_checkPointCity(self, session, messageDict, user):
-        print "checkPointCity", session, messageDict, user
-        if user:
-            # TODO: checkpoint city
-            cookie = messageDict['cookie']
-            title = messageDict['title']
-            description = messageDict['description']
-            source = messageDict['source']
-            if source != 'mycity':
-                cookie = None # to force saving to a new city
-            city = self.getCityByCookie(cookie)
-            self.saveCityToDatabase(user, city, title, description)
-            self.updateSavedCities(session, user)
+            title = messageDict['title'].decode('utf8')
+            description = messageDict['description'].decode('utf8')
+            city = user.getCurrentCity()
+            if city:
+                self.saveCityToDatabase(user, city, title, description)
+                self.updateSavedCities(session, user)
 
 
     def handleMessage_setMyCityTitle(self, session, messageDict, user):
@@ -905,7 +916,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             city = None
             try:
                 cookie = messageDict['cookie']
-                city = model.City.query.filter_by(cookie=cookie).first()
+                city = City.query.filter_by(cookie=cookie).first()
             except Exception, e:
                 print "City query error 1", e
             if city:
@@ -922,7 +933,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             city = None
             try:
                 cookie = messageDict['cookie']
-                city = model.City.query.filter_by(cookie=cookie).first()
+                city = City.query.filter_by(cookie=cookie).first()
             except Exception, e:
                 print "City query error 2", e
             if city:
@@ -939,7 +950,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             city = None
             try:
                 cookie = messageDict['cookie']
-                city = model.City.query.filter_by(cookie=cookie).first()
+                city = City.query.filter_by(cookie=cookie).first()
             except Exception, e:
                 print "City query error 3", e
             print "CITY", city
@@ -959,7 +970,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             city = None
             try:
                 cookie = messageDict['cookie']
-                city = model.City.query.filter_by(cookie=cookie).first()
+                city = City.query.filter_by(cookie=cookie).first()
             except Exception, e:
                 print "City query error 4", e
             if city:
@@ -972,22 +983,6 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
                     for cityData in savedCities:
                         print cityData['cookie'], cityData['title'], cityData
                     city.destroy()
-
-
-    def handleMessage_loadMyCity(self, session, messageDict, user):
-        if user:
-            city = None
-            try:
-                cookie = messageDict['cookie']
-                city = model.City.query.filter_by(cookie=cookie).first()
-            except Exception, e:
-                print "City query error 5", e
-            if city:
-                if city.user_id != user.user_id:
-                    print "User tried to load their own city they do not own", user, user.user_id, city, city.user_id
-                else:
-                    user.current_city_cooke = city.cookie
-                    self.loadCityFromDatabase(city)
 
 
     def handleMessage_drawToolStart(self, session, messageDict, user):
@@ -1406,6 +1401,22 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             robot.sendCommand(command, args)
 
 
+    def saveUserCity(self):
+        user = turbogears.identity.current.user
+        print "MicropolisTurboGearsEngine saveUserCity user", user.current_city_id, user
+
+        if user:
+
+            if user.current_city_id:
+                city = City.query.filter_by(city_id=user.current_city_id).first()
+
+            self.saveCityToDatabase(
+                user,
+                city,
+                self.title, # TODO: i18n
+                self.description) # TODO: i18n
+
+
     def toolDownScripted(self, toolIndex, x, y):
         #print "toolDownScripted", toolIndex, x, y
         if toolIndex == -1:
@@ -1439,11 +1450,12 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def getCityByCookie(self, cookie):
         if not cookie:
             return None
-        city = model.City.query.filter_by(cookie=cookie).first()
+        city = City.query.filter_by(cookie=cookie).first()
         return city
 
 
     def loadCityFromDatabase(self, city):
+        print "MicropolisTurboGearsEngine loadCityFromDatabase", city
         saveFile = city.save_file
         tempFileName = tempfile.mktemp()
         f = open(tempFileName, 'wb')
@@ -1453,36 +1465,45 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
         os.remove(tempFileName)
 
 
-    def saveCityToDatabase(self, user, city, title, description):
-        print "!!!! saveCityToDatabase", user, city, title, description
+    def saveCityToDatabase(self, user, city, title=None, description=None):
+        print "MicropolisTurboGearsEngine saveCityToDatabase", user, city, title, description
 
         now = datetime.now()
 
-        if city and city.user_id != user.user_id:
+        if (city and
+            (city.user_id != user.user_id)):
             print "A user tried to save somebody else's city!", "user", user, "city", city, "city.user_id", city.user_id
             city = None
 
         if not city:
-            city = model.City()
-            city.user = user
-            city.user_id = user.user_id
-            city.created = now
+            print "MicropolisTurboGearsEngine saveCityToDatabase creating city."
+            city = City(
+                user_id=user.user_id,
+                created=now,
+                updated=now)
             city.makeCookie()
 
-            print "Made a new city"
+            # It might be a good idea to flush the city to the
+            # database so it gets an id, now.
+            print "MicropolisTurboGearsEngine saveCityToDatabase Flushing database to create city."
+            turbogears.database.session.flush()
+
+            print "MicropolisTurboGearsEngine saveCityToDatabase created new city", city.city_id, city
 
         saveFile = self.getSaveFileData()
         metadata = self.getMetaData()
         iconData = self.getMapImageData(1)
         thumbnailData = self.getMapImageData(3)
 
+        print "TITLE", type(title), title, "DESCRIPTION", type(description), description
         if title:
             city.title = title
         if description:
             city.description = description
 
-        city.modified = now
+        city.updated = now
         city.save_file = saveFile
+        print "METADATA", type(metadata), metadata
         city.metadata = metadata
         city.icon = iconData
         city.thumbnail = thumbnailData
@@ -1887,7 +1908,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     
 
     def handle_didGenerateMap(self):
-        #print "handle_didGenerateMap(self)", (self,), self.generatedCitySeed
+        print "MicropolisTurboGearsEngine handle_didGenerateMap(self)", (self,), self.generatedCitySeed
+
+        #user = turbogears.identity.current.user
+        #if user:
+        #    city = self.saveCityToDatabase(
+        #        user,
+        #        None,
+        #        self.title, # TODO: i18n
+        #        self.description) # TODO: i18n
+
         self.sendSessions({
             'message': 'didGenerateMap',
             'seed': self.generatedCitySeed
@@ -1897,10 +1927,11 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     
     def handle_didLoadCity(self):
-        #print "handle_didLoadCity(self)", (self,)
-        self.sendSessions({
-            'message': 'didLoadCity',
-        })
+        print "handle_didLoadCity(self)", (self,)
+        #self.sendSessions({
+        #    'message': 'didLoadCity',
+        #    'cityID': self.cityID,
+        #})
         self.resetCity()
         self.updateMapView()
 

@@ -139,18 +139,11 @@
 	    />
 
 
-	    <button name="saveCityButton"
-	        width="${classroot.buttonWidth}"
-		height="${classroot.buttonHeight}"
-		text="${gApp._('Save City')}"
-		onclick="gApp.checkPointCity()"
-	    />
-
 	    <button name="newCityButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
-		text="${gApp._('New City')}"
-		onclick="gApp.newCityDialog();"
+		text="${gApp._('Choose City')}"
+		onclick="gApp.newCity();"
 	    />
 
 	    <button name="helpButton"
@@ -167,12 +160,14 @@
 		onclick="gApp.about()"
 	    />
 
+<!--
 	    <button name="donateButton"
 	        width="${classroot.buttonWidth}"
 		height="${classroot.buttonHeight}"
 		text="${gApp._('Donate')}"
 		onclick="gApp.donate()"
 	    />
+-->
 
 	</view>
 

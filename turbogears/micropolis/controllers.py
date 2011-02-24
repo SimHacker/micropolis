@@ -52,87 +52,13 @@ DataDir = config.get('micropolis.data_dir', 'micropolis/htdocs/static/data')
 LocalServerRoot = config.get('micropolis.local_server_root', 'http://127.0.0.1:8082')
 GoogleTranslateAPIURL = 'https://www.googleapis.com/language/translate/v2'
 
+GraphAPIURL = 'https://graph.facebook.com'
 FacebookCanvasName = config.get('micropolis.facebook_canvas_name', 'XXX')
 FacebookAppID = config.get('micropolis.facebook_app_id', 'XXX')
 FacebookAppKey = config.get('micropolis.facebook_app_key', 'XXX')
 FacebookAppSecret = config.get('micropolis.facebook_app_secret', 'XXX')
 FacebookPermissions = config.get('micropolis.facebook_permissions', 'XXX')
 GoogleAPIIdentityKey = config.get('micropolis.google_api_identity_key', 'XXX')
-
-
-FacebookProducts = {
-
-    'simoleans_10000': {
-        'order_info': 'simoleans_10000',
-        'price': 1, # $0.10 (10,000 per dollar)
-        'title': 'Ten Thousand Simoleans',
-        'description': "You can build a lot of stuff with ten thousand Simolians! Credited to your current city. As cheap as could be!",
-        'image_url': '/static/images/product_simoleans_1000_icon.png',
-        'product_url': '/server/product/simoleans_1000',
-        'sequence': 1,
-    },
-    
-    'simoleans_1000000': {
-        'order_info': 'simoleans_1000000',
-        'price': 25, # $2.50 (400,000 per dollar)
-        'title': 'One Million Simoleans',
-        'description': "Did you ever want to be a millionaire? Well here's your chance! Credited to your current city. This is the deal of the century!",
-        'image_url': '/static/images/product_simoleans_1000000_icon.png',
-        'product_url': '/server/product/simoleans_1000000',
-        'sequence': 2,
-    },
-    
-    'save_slot': {
-        'order_info': 'save_slot',
-        'price': 50, # $5.00
-        'title': 'One Save File Slot',
-        'description': "This enables you to save more cities! You can save one city per save slot. Don't leave town without it!",
-        'image_url': '/static/images/product_save_slot_icon.png',
-        'product_url': '/server/product/save_slot',
-        'sequence': 3,
-    },
-    
-    'karma_1000': {
-        'order_info': 'karma_1000',
-        'price': 100, # $10.00
-        'title': '1000 Karma',
-        'description': "A kilo-karma will put a sparkle into your day. Credited to your wonderful personality. Just as strong and effective as homeopathic medicine!",
-        'image_url': '/static/images/product_karma_1000_icon.png',
-        'product_url': '/server/product/karma_1000',
-        'sequence': 4,
-    },
-    
-    'karma_2000': {
-        'order_info': 'karma_2000',
-        'price': 200, # $20.00
-        'title': '2000 Karma',
-        'description': "A ton of karma never killed anyone. Credited to your wonderful personality. Your pets will think you're god!",
-        'image_url': '/static/images/product_karma_2000_icon.png',
-        'product_url': '/server/product/karma_2000',
-        'sequence': 5,
-    },
-    
-    'karma_5000': {
-        'order_info': 'karma_5000',
-        'price': 500, # $50.00
-        'title': '5000 Karma',
-        'description': "Five thousand is the largest isogrammic number in the English language, and that's a huge heap of karma. Credited to your wonderful personality. Your horiscope will come true!",
-        'image_url': '/static/images/product_karma_5000_icon.png',
-        'product_url': '/server/product/karma_5000',
-        'sequence': 6,
-    },
-    
-    'karma_9001': {
-        'order_info': 'karma_9001',
-        'price': 900, # $90.00
-        'title': '9001 Karma',
-        'description': "It's over nine thousaaaaaaaaaand karma!!! Credited to your wonderful personality. Best deal, by far!",
-        'image_url': '/static/images/product_karma_9001_icon.png',
-        'product_url': '/server/product/karma_9001',
-        'sequence': 7,
-    },
-    
-}
 
 
 ########################################################################
@@ -173,7 +99,7 @@ def ParseSignedRequest(signed_request):
 
 
 def FacebookAPI(path, params=None, method=u'GET', domain=u'graph', access_token=None):
-    print "FACEBOOKAPI", path, params
+    #print "FACEBOOKAPI", path, params
     if not params:
         params = {}
     params[u'method'] = method
@@ -215,6 +141,82 @@ def FetchURL(
     #print "RESULT:", data
     
     return data
+
+
+def GetFacebookAccessToken():
+    url = tg.url(
+        GraphAPIURL + '/oauth/access_token',
+        client_id=FacebookAppID,
+        client_secret=FacebookAppSecret,
+        grant_type='client_credentials')
+    #print "URL", url
+
+    token = FetchURL(url)
+    #print "TOKEN", token
+    prefix = 'access_token='
+    if token.startswith(prefix):
+        token = token[len(prefix):]
+
+    return token
+
+
+def GetFacebookUser(userID, fields=u'picture,education'):
+    access_token = GetFacebookAccessToken()
+    me = None
+
+    try:
+        params = {
+            u'fields': fields,
+            u'access_token': access_token,
+        }
+        me = FacebookAPI(
+            u'/' + str(userID),
+            params)
+    except Exception, e:
+        print "ERROR CALLING FacebookAPI", "/me", params, e
+
+    return me
+
+
+def GetFacebookPayments(startTime=0, endTime=0, status='settled'):
+    #print "GetPayments", startTime, endTime, status
+    access_token = GetFacebookAccessToken()
+
+    day = 24 * 60 * 60
+    since = startTime
+    results = []
+    while since < endTime:
+        #print "since", since, "endTime", endTime
+        
+        duration = min(day, endTime - since)
+        #print "duration", duration
+        
+        until = since + duration
+        #print "since", since, time.asctime(time.gmtime(since))
+        #print "until", until, time.asctime(time.gmtime(until))
+        #print "duration", until - since
+
+        url = tg.url(
+            GraphAPIURL + '/' + FacebookAppID + '/payments',
+            status=status,
+            since=since,
+            until=until,
+            access_token=access_token)
+        print "URL", url
+
+        result = FetchURL(url)
+        #print "RESULT", result
+        dict = simplejson.loads(result)
+        #print "DICT", dict
+        payments = dict['data']
+        #print "PAYMENTS", payments
+
+        results += payments
+        since += duration
+
+    print "TOTAL PAYMENT COUNT", len(results)
+    return results
+
 
 ########################################################################
 # Getting stack trace from a running Python application
@@ -380,7 +382,8 @@ class Root(controllers.RootController):
 
 
     # Seconds between heart beats.
-    heartBeatInterval = 10
+    #heartBeatInterval = 10
+    heartBeatInterval = 60
 
 
     # FIXME: Doesn't seem to work. Should give us the raw post body. 
@@ -640,18 +643,28 @@ class Root(controllers.RootController):
         commands = [
             {
                 'name': 'Users',
-                'link': '/server/adminUsers',
+                'link': '/server/adminUser',
                 'description': 'List users.',
             },
             {
-                'name': 'Payments',
-                'link': '/server/adminPayments',
-                'description': 'List payments.',
+                'name': 'Cities',
+                'link': '/server/adminCity',
+                'description': 'List cities.',
             },
             {
-                'name': 'Cities',
-                'link': '/server/adminCities',
-                'description': 'List cities.',
+                'name': 'Products',
+                'link': '/server/adminProduct',
+                'description': 'List products.',
+            },
+            {
+                'name': 'Orders',
+                'link': '/server/adminOrder',
+                'description': 'List orders.',
+            },
+            {
+                'name': 'Facebook Payments',
+                'link': '/server/adminFacebookPayment',
+                'description': 'List facebook payments.',
             },
             {
                 'name': 'Translations',
@@ -666,6 +679,222 @@ class Root(controllers.RootController):
 
 
     ########################################################################
+    # adminUser
+    #
+    # Administrative command console, user page.
+    #
+    @expose(
+        template="micropolis.templates.adminUser")
+    @identity.require(
+        identity.in_group("admin"))
+    def adminUser(
+        self,
+        user_id=''):
+
+        if user_id:
+            user = User.query.filter_by(user_id=user_id).first()
+            if user:
+                users = [user]
+            else:
+                users = []
+        else:
+            users = User.query().all()
+
+        return {
+            'user_id': user_id,
+            'users': users,
+        }
+
+
+    ########################################################################
+    # adminCity
+    #
+    # Administrative command console, city page.
+    #
+    @expose(
+        template="micropolis.templates.adminCity")
+    @identity.require(
+        identity.in_group("admin"))
+    def adminCity(
+        self,
+        city_id='',
+        user_id=''):
+
+        if city_id:
+            city = City.query.filter_by(city_id=city_id).first()
+            if city:
+                cities = [city]
+            else:
+                cities = []
+        elif user_id:
+            cities = City.query.filter_by(user_id=user_id).all()
+        else:
+            cities = City.query().all()
+
+        return {
+            'city_id': city_id,
+            'user_id': user_id,
+            'cities': cities,
+        }
+
+
+    ########################################################################
+    # adminProduct
+    #
+    # Administrative command console, product page.
+    #
+    @expose(
+        template="micropolis.templates.adminProduct")
+    @identity.require(
+        identity.in_group("admin"))
+    def adminProduct(
+        self,
+        product_id=''):
+
+        if product_id:
+            produce = City.query.filter_by(city_id=city_id).first()
+            if product:
+                products = [product]
+            else:
+                products = []
+        else:
+            products = Product.query().order_by(Product.sequence).all()
+
+        return {
+            'product_id': product_id,
+            'products': products,
+        }
+
+
+    ########################################################################
+    # adminOrder
+    #
+    # Administrative command console, order page.
+    #
+    @expose(
+        template="micropolis.templates.adminOrder")
+    @identity.require(
+        identity.in_group("admin"))
+    def adminOrder(
+        self,
+        order_id='',
+        user_id=''):
+
+        if order_id:
+            order = Order.query.filter_by(order_id=order_id).first()
+            if order:
+                orders = [order]
+            else:
+                orders = []
+        elif user_id:
+            orders = Order.query.filter_by(user_id=user_id).all()
+        else:
+            orders = Order.query().all()
+
+        return {
+            'order_id': order_id,
+            'user_id': user_id,
+            'orders': orders,
+        }
+
+
+    ########################################################################
+    # adminFacebookPayment
+    #
+    # Administrative command console, payment page.
+    #
+    @expose(
+        template="micropolis.templates.adminFacebookPayment")
+    @identity.require(
+        identity.in_group("admin"))
+    @validate(validators = {
+        'startTime': validators.Int(),
+        'endTime': validators.Int(),
+        'daysAgo': validators.Int(),
+    })
+    def adminFacebookPayment(
+        self,
+        payment_id='',
+        startTime=0,
+        endTime=0,
+        daysAgo=14):
+
+        now = int(time.time())
+        day = 24 * 60 * 60
+
+        if daysAgo:
+            startTime = now - (daysAgo * day)
+            endTime = now
+
+        payments = GetFacebookPayments(startTime, endTime)
+        print "PAYMENTS", payments
+
+        return {
+            'payment_id': payment_id,
+            'startTime': startTime,
+            'endTime': endTime,
+            'daysAgo': daysAgo,
+            'payments': payments,
+        }
+
+
+    ########################################################################
+    # cityIcon
+    #
+    # Return city icon image stored in database.
+    #
+    @expose(
+        content_type="image/png")
+    def cityIcon(
+        self,
+        cookie='',
+        city_id=''):
+
+        city = None
+        if cookie:
+            city = City.query.filter_by(cookie=cookie).first()
+        elif city_id:
+            city = City.query.filter_by(city_id=city_id).first()
+
+        if not city:
+            return ""
+
+        icon = city.icon
+        if not icon:
+            return ""
+        
+        return str(icon)
+
+
+    ########################################################################
+    # cityThumbnail
+    #
+    # Return city thumbname image stored in database.
+    #
+    @expose(
+        content_type="image/png")
+    def cityThumbnail(
+        self,
+        cookie='',
+        city_id=''):
+
+        city = None
+        if cookie:
+            city = City.query.filter_by(cookie=cookie).first()
+        elif city_id:
+            city = City.query.filter_by(city_id=city_id).first()
+
+        if not city:
+            return ""
+
+        thumbnail = city.thumbnail
+        if not thumbnail:
+            return ""
+        
+        return str(thumbnail)
+
+
+    ########################################################################
     # product
     #
     # Product info.
@@ -674,23 +903,27 @@ class Root(controllers.RootController):
         template="micropolis.templates.product")
     def product(
         self,
-        order_info=None):
+        item_id=None):
 
-        if ((not order_info) or
-            (order_info not in FacebookProducts)):
-            products = FacebookProducts.values()
-            products.sort(lambda p1, p2: cmp(p1['sequence'], p2['sequence']))
-            print "MANY PRODUCTS", products
-        else:
-            products = [FacebookProducts[order_info]]
+        produce = None
+        if item_id:
+            product = Product.query.filter_by(item_id=item_id).first()
+
+        if product:
+            products = [product]
             print "ONE PRODUCT", products
+        else:
+            products = list(Product.query.filter_by(active=True).order_by(Product.sequence).all())
+            item_id = None
+            print "MANY PRODUCTS", products
 
         user_id = ''
         if not turbogears.identity.current.anonymous:
-            user_id = str(turbogears.identity.current.user.uid)
+            user_id = str(turbogears.identity.current.user.facebook_user_id)
             print "Got user id", user_id
 
         return {
+            'item_id': item_id,
             'products': products,
             'app_id': FacebookAppID,
             'app_key': FacebookAppKey,
@@ -875,7 +1108,7 @@ class Root(controllers.RootController):
             session = self.getSession(sessionID)
             user = session.user
 
-        savedCity = cityCookie and model.City.query.filter_by(cookie=cityCookie).first()
+        savedCity = cityCookie and City.query.filter_by(cookie=cityCookie).first()
         if not savedCity:
             self.expectationFailed("Bad parameters.");
 
@@ -1091,19 +1324,19 @@ class Root(controllers.RootController):
         *args,
         **kw):
 
-        print "ERRORS", tg_errors
+        #print "ERRORS", tg_errors
+        #print "KW", kw
 
-        print "KW", kw
         debugging = int(kw.get('debugging', 0) or 0)
         in_tab = int(kw.get('in_tab_flag', 0) or 0)
         page_admin = int(kw.get('page_admin', 0) or 0)
         fb_page_id = kw.get('fb_page_id', None) or ''
         locale = kw.get('locale', DefaultLanguage) or DefaultLanguage
         
-        print "\nFACEBOOKCANVAS", "METHOD", request.method, "DEBUGGING", debugging, "IN_TAB", in_tab, "PAGE_ADMIN", page_admin, "FB_PAGE_ID", fb_page_id, "LOCALE", locale, "ARGS", args, "KW", kw
+        #print "\n\nFACEBOOKCANVAS", "method", request.method, "debugging", debugging, "in_tab", in_tab, "page_admin", page_admin, "fb_page_id", fb_page_id, "locale", locale, "args", args, "kw", kw
 
         if in_tab:
-            print "DISPLAYING IN TAB"
+            pass#print "FACEBOOKCANVAS Displaying in tab! How cool is that?"
 
         signed_request = None
         data = None
@@ -1148,12 +1381,12 @@ class Root(controllers.RootController):
                 cherrypy.response.simple_cookie['u'] = cookie
                 cherrypy.response.simple_cookie['u']['expires'] = 1440 * 60
 
-            print "data", data
-            print "user_id", user_id
-            print "access_token", access_token
+            #print "data", data
+            #print "user_id", user_id
+            #print "access_token", access_token
 
         if access_token:
-            print "Getting me...", "access_token", access_token
+            #print "Getting me...", "access_token", access_token
             try:
                 params = {
                     u'fields': u'picture,friends',
@@ -1166,18 +1399,18 @@ class Root(controllers.RootController):
                 print "ERROR CALLING FacebookAPI", "/me", params, e
 
             if me:
-                print "Got me:", me.get('name', '???'), me.get('picture', '???')
+                pass#print "Got me:", me.get('name', '???'), me.get('picture', '???')
             else:
-                print "I don't know who me is."
+                print "FACEBOOKCANVAS ERROR: Got access_token but I can't find out who me is! data", data
 
         if me and user_id:
 
-            user = model.User.by_uid(user_id)
+            user = User.by_facebook_user_id(user_id)
 
             if not user:
-                print "Creating new user id", user_id
-                user = model.User(
-                    uid=user_id,
+                print "FACEBOOKCANVAS Creating new user_id", user_id, "me", me
+                user = User(
+                    facebook_user_id=user_id,
                     user_name=user_id,
                     password=micropolisturbogearsengine.UniqueID(''),
                     created=datetime.now())
@@ -1190,7 +1423,7 @@ class Root(controllers.RootController):
             user.picture = me.get('picture', '')
             user.timezone = me.get('timezone', '')
             user.locale = me.get('locale', DefaultLanguage)
-            user.username = me.get('username', '')
+            user.facebook_user_name = me.get('username', '')
             user.email = me.get('email', '')
             user.third_party_id = me.get('third_party_id', '')
             user.email = me.get('email', '')
@@ -1206,7 +1439,7 @@ class Root(controllers.RootController):
             page = FacebookAPI(
                 u'/page/' + str(fb_page_id),
                 params)
-            print "PAGE", page
+            #print "FACEBOOKCANVAS Page", page
 
         lzr_param = 'swf10'
         debugging_params_amp = '' if debugging else 'lzt=swf&'
@@ -1284,50 +1517,85 @@ class Root(controllers.RootController):
         *args,
         **kw):
 
-        print "\nFACEBOOKCREDITS", 'test_mode', test_mode, 'order_id', order_id, 'order_info', order_info, 'signed_request', signed_request, 'receiver', receiver, 'buyer', buyer, 'method', method, 'args', args, 'kw', kw
-
-        if order_info:
-            print "ORDER_INFO", type(order_info), repr(order_info)
-            order_info = simplejson.loads(order_info)
+        #print "\n\nFACEBOOKCREDITS", 'test_mode', test_mode, 'order_id', order_id, 'order_info', order_info, 'signed_request', signed_request, 'receiver', receiver, 'buyer', buyer, 'method', method, 'args', args, 'kw', kw
 
         data = None
         if signed_request:
             data = ParseSignedRequest(signed_request)
+        #print "DATA", data
+
+        #print "METHOD", method
 
         if method == 'payments_get_items':
 
-            print "METHOD: payments_get_items", "order_info", order_info
-
             credits = data.get('credits')
             if not credits:
-                print "FACEBOOKCREDITS payments_get_items signed request missing credits"
+                print "FACEBOOKCREDITS ERROR: payments_get_items signed request missing credits"
                 return "{}"
             #print "CREDITS", credits
             
             user = data.get('user')
-            print "USER", user
+            #print "USER", user
 
             buyer = credits.get('buyer')
-            order_id = credits.get('order_id')
+            order_id = str(credits.get('order_id'))
             test_mode = credits.get('test_mode')
-            #order_info = credits.get('order_info')
+            order_info = credits.get('order_info', '""')
+            item_id = simplejson.loads(order_info)
             receiver = credits.get('receiver')
+            #print "FACEBOOKCREDITS buyer', buyer, 'order_id', order_id, 'test_mode', test_mode, 'item_id', item_id, 'receiver', receiver, 'order_info', order_info, 'user', user
 
-            print "CREDITS:", 'buyer', buyer, 'order_id', order_id, 'test_mode', test_mode, 'order_info', order_info, 'receiver', receiver, 'user', user
-
-            if order_info not in FacebookProducts:
-                print "Unknown order_info:", order_info
+            product = Product.query.filter_by(item_id=item_id).first()
+            if not product:
+                print "Unknown Product item_id:", item_id
                 return "{}"
+            #print "PRODUCT", product
 
-            product = FacebookProducts[order_info]
-            price = product['price']
-            title = product['title']
-            description = product['description']
+            price = product.price
+            title = product.title
+            description = product.description
+            image_url = product.image_url
+            product_url = product.product_url
 
-            # Look up order_info in database.
+            me = GetFacebookUser(buyer)
+            if me:
+                print "ME", me
 
-            image_url = ServerURL + product['image_url']
-            product_url = ServerURL + product['product_url']
+            order = Order.query.filter_by(facebook_order_id=order_id).first()
+            if order:
+                print "FOUND EXISTING ORDER", order_id, order
+            else:
+                print "MAKING NEW ORDER"
+                order = Order(
+                    facebook_order_id=order_id.decode('utf8'),
+                    item_id=item_id.decode('utf8'),
+                    order_details=u'',
+                    order_info=order_info.decode('utf8'),
+                    price=price,
+                    title=title.decode('utf8'),
+                    description=description.decode('utf8'),
+                    image_url=image_url.decode('utf8'),
+                    product_url=product_url.decode('utf8'),
+                    from_user_name=u'',
+                    from_user_id=u'',
+                    to_user_name=u'',
+                    to_user_id=u'',
+                    user_id=None,
+                    product_id=product.product_id,
+                    amount=product.price,
+                    status=u'new',
+                    confirmed_settled=False,
+                    application_name=u'',
+                    application_id=u'',
+                    country=u'',
+                    created=datetime.now(),
+                    updated=datetime.now(),
+                    refund_code=u'',
+                    refund_message=u'',
+                    refund_funding_source=False,
+                    refund_params=u'',
+                    comments=u'')
+                print "CREATED ORDER", order_id, order
 
             response = {
                 'content': [
@@ -1335,46 +1603,182 @@ class Root(controllers.RootController):
                         'title': title,
                         'description': description,
                         'price': price,
-                        'image_url': image_url,
-                        'product_url': product_url,
-                        'data': order_info,
+                        'image_url': ServerURL + image_url,
+                        'product_url': ServerURL + product_url,
+                        'data': item_id,
                     },
                 ],
                 'method': 'payments_get_items',
             }
-
-            print "RESPONSE", response
+            #print "RESPONSE", response
 
             return simplejson.dumps(response)
 
         elif method == 'payments_status_update':
             
-            print "METHOD: payments_status_update"
+            # data = {
+            #   u'user_id': u'502061754',
+            #   u'algorithm': u'HMAC-SHA256',
+            #   u'oauth_token': u'185197118179045|2.zSGjJDEh1p1a870_Cf_uIw__.3600.1298505600-502061754|ags7Ut1-GUpVHWSDxlc2fzsJ0g4',
+            #   u'issued_at': 1298499531
+            #   u'expires': 1298505600,
+            #   u'user': {
+            #     u'locale': u'en_US',
+            #     u'country': u'nl',
+            #     u'age': {u'min': 21}
+            #   },
+            #   u'credits': {
+            #     u'status': u'placed',
+            #     u'test_mode': 1
+            #     u'order_id': 131169043619058,
+            #     u'order_details': u'{ # NOTE: This is a string of JSON that needs to be parsed!
+            #       "order_id":131169043619058,
+            #       "buyer":502061754,
+            #       "app":185197118179045,
+            #       "receiver":502061754,
+            #       "amount":1,
+            #       "update_time":1298499531,
+            #       "time_placed":1298499525,
+            #       "data":"",
+            #       "status":"placed",
+            #       "items": [
+            #         {
+            #           "item_id":"0",
+            #           "title":"One Thousand Micropoleans",
+            #           "description":"That\'s a grand idea! You can build a lot of stuff with one thousand Micropolians! Credited to your current city. As cheap as could be!",
+            #           "image_url":"http:\\/\\/www.MicropolisOnline.com\\/static\\/images\\/product_micropoleans_1000_icon.png",
+            #           "product_url":"http:\\/\\/www.MicropolisOnline.com\\/server\\/product\\/micropoleans_1000",
+            #           "price":1,
+            #           "data":"micropoleans_1000"
+            #         }
+            #       ]
+            #     }'
+            #   }
+            # }
 
-            print "DATA", data
-
-            credits = data.get('credits')
-            if not credits:
-                print "FACEBOOKCREDITS payments_status_update signed request missing credits"
+            # Get the user_id from the data.
+            user_id = data.get('user_id')
+            if not user_id:
+                print "FACEBOOKCREDITS ERROR: MISSING user_id from data", data
                 return "{}"
-            print "CREDITS", credits
-            
-            user = data.get('user')
-            print "USER", user
+            #print "USER_ID", user_id
 
+            # Get the user from the database.
+            user = User.query.filter_by(facebook_user_id=user_id).first()
+            if not user:
+                print "FACEBOOKCREDITS ERROR: MISSING user buyer", buyer, "order_details", order_details
+                return "{}"
+            #print "USER", user
+
+            # Get the credits from the data.
+            credits = data['credits']
+            if not credits:
+                print "FACEBOOKCREDITS ERROR: MISSING credits from data", data
+                return "{}"
+            #print "CREDITS", credits
+
+            # Get the status from the credits.
             status = credits.get('status')
-            order_id = credits.get('order_id')
-            order_details = credits.get('order_details')
+            if not status:
+                print "FACEBOOKCREDITS ERROR: MISSING status from credits", credits
+                return "{}"
+            #print "STATUS", status
+
+            # Get the test_mode from the credits.
             test_mode = credits.get('test_mode')
+            #print "TEST_MODE", test_mode
 
-            print "status", status, "order_id", order_id, "test_mode", test_mode, "order_details", order_details
+            # Get the order_id from the credits.
+            order_id = credits.get('order_id')
+            if not order_id:
+                print "FACEBOOKCREDITS ERROR: MISSING order_id from credits", credits
+                return "{}"
+            #print "ORDER_ID", order_id
 
-            status = 'settled'
+            # Get the order form the database.
+            order = Order.query.filter_by(facebook_order_id=order_id).first()
+            if not order:
+                print "FACEBOOKCREDITS ERROR: MISSING order", order_id
+                return "{}"
+            #print "ORDER", order_id, order
+
+            # Get the order_details from the credits.
+            order_details_json = credits.get('order_details')
+            if not order_details_json:
+                print "FACEBOOKCREDITS ERROR: MISSING order_details from credits", credits
+                return "{}"
+            order_details = simplejson.loads(order_details_json)
+            #print "ORDER_DETAILS", order_details
+
+            # Get the item from the order_details.
+            items = order_details.get('items')
+            if (not items):
+                print "FACEBOOKCREDITS ERROR: MISSING items from order_details", order_details
+                return "{}"
+            if len(items) != 1:
+                print "FACEBOOKCREDITS ERROR: WRONG number of items from order_details", items
+                return "{}"
+            item = items[0]
+            #print "ITEM", item
+
+            # Get the product item id from the item.
+            product_item_id = item.get('data')
+            if not product_item_id:
+                print "FACEBOOKCREDITS ERROR: MISSING product_item_id data from item", item
+                return "{}"
+            #print "PRODUCT_ITEM_ID", product_item_id
+
+            # Get the product from the database.
+            product = Product.query.filter_by(item_id=product_item_id).first()
+            if not product:
+                print "FACEBOOKCREDITS ERROR: MISSING Product product_item_id", product_item_id
+                return "{}"
+            #print "PRODUCT", product
+
+            # Get the product_data from the product.
+            if not product.data:
+                print "FACEBOOKCREDITS ERROR: EMPTY product.data from product", product
+                return "{}"
+            product_data = simplejson.loads(product.data)
+            if not product_data:
+                print "FACEBOOKCREDITS ERROR: NULL product_data", product.data
+                return "{}"
+            #print "PRODUCT_DATA", product_data
+
+            if status == 'placed':
+
+                # The order was placed, so take action on it, and change to settled.
+                
+                new_status = user.purchaseProduct(product, product_data, order, True)
+
+                #print "NEW_STATUS FROM user.purchaseProduct", new_status
+
+                order.status = new_status.decode('utf8')
+                order.order_details = order_details_json.decode('utf8')
+                order.test_mode = test_mode
+                order.updated = datetime.now()
+
+                print "FACEBOOKCREDITS SUCCESS status placed", order
+
+            elif status == 'settled':
+
+                # The confirmation came back that the order was settled, so remember that it's a done deal.
+
+                order.updated = datetime.now()
+                order.confirmed_settled = True
+                new_status = status
+
+                print "FACEBOOKCREDITS SUCCESS status settled", order
+
+            else:
+
+                print "FACEBOOKCREDITS ERROR: WRONG status", status, "credits", credits
+                return "{}"
 
             response = {
                 'content': {
                     'order_id': order_id,
-                    'status': status,
+                    'status': new_status,
                 },
                 'method': 'payments_status_update',
             }
@@ -1385,7 +1789,7 @@ class Root(controllers.RootController):
 
         else:
 
-            print "FACEBOOKCREDITS unexpected method", method
+            print "FACEBOOKCREDITS ERROR: unexpected method", method
 
         return {}
 

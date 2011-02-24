@@ -3,7 +3,7 @@
 
     <!-- Scenarios View -->
     <!-- Written for Micropolis -->
-v    <!-- By Don Hopkins -->
+    <!-- By Don Hopkins -->
     <!-- Licensed under GPLv3 -->
 
 
@@ -13,7 +13,7 @@ v    <!-- By Don Hopkins -->
 
 
 	<attribute name="active" value="true"/>
-	<attribute name="buttonHeight" value="60">
+	<attribute name="buttonHeight" value="60"/>
 
 
 	<handler name="onactive" args="arg"><![CDATA[
@@ -36,11 +36,12 @@ v    <!-- By Don Hopkins -->
 	    height="${classroot.buttonHeight}"
 	>
 
+
 	    <handler name="onmouseover" args="arg"><![CDATA[
 		var tip = 
 		    gApp._("Random Map") + ':\n' + 
 		    gApp._("Click to randomly generate a new map.");
-		gToolTip.enterView(this, tip, 'left');
+		gToolTip.enterView(this, tip, 'up');
 	      ]]>
 	    </handler>
 
@@ -48,6 +49,17 @@ v    <!-- By Don Hopkins -->
 		gToolTip.exitView(this);
 	      ]]>
 	    </handler>
+
+
+	    <view name="icon"
+		x="5"
+		y="5"
+		stretches="both"
+		width="${this.unstretchedwidth * 0.5}"
+		height="${this.unstretchedheight * 0.5}"
+		resource="generate_map_rsrc"
+	    />
+
 
 	</button>
 
@@ -90,7 +102,7 @@ v    <!-- By Don Hopkins -->
 		    this.scenarioYear + 
 		    ':\n' + 
 		    gApp._(this.scenarioTagLine);
-		gToolTip.enterView(this, tip, 'left');
+		gToolTip.enterView(this, tip, 'up');
 	      ]]>
 	    </handler>
 
