@@ -55,6 +55,13 @@
 	    <class name="screencapture">
 
 
+	        <attribute name="polling" value="false"/>
+	        <attribute name="screenCaptures" value="{}"/>
+
+		<!-- Determined by experimentation to be smooth and take about 10 seconds. -->
+	        <attribute name="chunkSize" value="1024 * 64"/> 
+
+
 		<switch>
 		    <when property="$as3">
 			<passthrough>
@@ -87,24 +94,189 @@
 
 
 		<method name="capture"><![CDATA[
-		    Debug.write("capturing byte array");
+		    //Debug.write("capturing byte array");
 
+		    var width = this.width;
+		    var height = this.height;
 		    var bitmap:BitmapData =
 			new BitmapData(
-			    this.width,
-			    this.height, 
+			    width,
+			    height, 
 			    false);
-		    var stage = null; // FIXME: Where do I get this?
-		    //bitmap.draw(stage);
-		    var bytes:ByteArray = 
-			bitmap.getPixels(
-			    new Rectangle(
-				this.x,
-				this.y,
-				this.width,
-				this.height));
+		    //Debug.write("bitmap", bitmap);
 
-		    Debug.write("captured byte array", bytes);
+		    var stage = 
+		        canvas.sprite.stage;
+		    //Debug.write("stage", stage);
+
+		    bitmap.draw(stage);
+		    //Debug.write("drew stage on bitmapdata");
+
+		    var id = 
+		        'capture_' + gApp.makeUniqueID();
+		    this.screenCaptures[id] = {
+		        id: id,
+			bitmap: bitmap,
+			row: 0,
+			width: width,
+			height: height
+		    };
+
+		    this.startPolling();
+
+		  ]]>
+		</method>
+
+
+		<method name="cancel" args="id"><![CDATA[
+		    if (id != null) {
+
+		        delete this.screenCaptures[id];
+
+			gApp.sendMessage({
+			    message: 'cancelScreenCapture',
+			    id: id
+			});
+
+			if (this.screenCaptures.length == 0) {
+			    this.stopPolling();
+			}
+
+		    } else {
+
+		        var ids = [];
+		        var id;
+		        for (id in this.screenCaptures) {
+			    ids.push(id);
+			}
+
+			var n = ids.length;
+			var i;
+			for (i = 0; i < n; i++) {
+			    this.cancel(ids[i]);
+			}
+
+		    }
+		  ]]>
+		</method>
+
+
+		<method name="startPolling"><![CDATA[
+		    if (this.polling) {
+		        return;
+		    }
+		    gApp.addPoller(this);
+		    this.polling = true;
+		  ]]>
+		</method>
+
+
+		<method name="stopPolling"><![CDATA[
+		    if (!this.polling) {
+		        return;
+		    }
+		    gApp.removePoller(this);
+		    this.polling = false;
+		  ]]>
+		</method>
+
+
+		<method name="poll" args="messages"><![CDATA[
+		    //Debug.write("screencapture poll", this, this.screenCaptures);
+
+		    var finishedCaptures = [];
+		    var id;
+		    for (id in this.screenCaptures) {
+		        //Debug.write("id", id);
+		        var capture = this.screenCaptures[id];
+			//Debug.write("capture", capture);
+			var bitmap = capture['bitmap'];
+			var width = capture['width'];
+			var height = capture['height'];
+			var row = capture['row'];
+			var rowsLeft = height - row;
+
+			if (rowsLeft <= 0) {
+			    Debug.write("screencapture poll got zero rows left, weird!");
+			    finishedCaptures.push(id);
+			    continue;
+			}
+
+			var rowBytes = width * 4;
+			var rows = Math.max(1, Math.floor(this.chunkSize / rowBytes));
+
+			//Debug.write("row", row, "rowBytes", rowBytes, "rows", rows, "size", rowBytes * rows);
+
+			var chunk:ByteArray = 
+			    bitmap.getPixels(
+				new Rectangle(
+				    0,
+				    row,
+				    width,
+				    rows));
+
+			// Swizzle the bytes from Flash's RGBA order to Cairo's RGBA order.
+			var n = chunk.length;
+			var i;
+			for (i = 0; i < n; i += 4) {
+			    var r = chunk[i + 0];
+			    var g = chunk[i + 1];
+			    var b = chunk[i + 2];
+			    var a = chunk[i + 3];
+			    chunk[i + 0] = a;
+			    chunk[i + 1] = b;
+			    chunk[i + 2] = g;
+			    chunk[i + 3] = r;
+			}
+
+			//Debug.write("BEFORE COMPRESS", chunk.length);
+			chunk.compress();
+			//Debug.write("AFTER COMPRESS", chunk.length);
+
+			var message = {
+			    message: 'screenCapture',
+			    id: id,
+			    chunk: chunk,
+			    row: row,
+			    width: width,
+			    height: height,
+			    access_token: gApp.access_token
+			};
+			messages.push(message);
+
+			// Crashes if we try to print a buffer!
+			//Debug.write("MESSAGE", message['message'], message['id'], message['row'], message['width'], message['height']);
+
+			capture['row'] += rows;
+			if (capture['row'] >= height) {
+			    finishedCaptures.push(id);
+			    //Debug.write("FINISHED", id);
+			}
+
+		    }
+
+		    var n = finishedCaptures.length;
+		    var i;
+		    for (i = 0; i < n; i++) {
+		        var id = finishedCaptures[i];
+			var capture = this.screenCaptures[id];
+			delete this.screenCaptures[id];
+			//Debug.write("FINSHED CAPTURE", capture);
+		    }
+
+		    //Debug.write("this.screenCaptures", this.screenCaptures, "this.screenCaptures.length", this.screenCaptures.length);
+
+		    // For some reason this.screenCaptures.length always returns null! ReferenceError: Error #1065
+		    var somethingToDo = false;
+		    for (id in this.screenCaptures) {
+		        somethingToDo = true;
+			break;
+		    }
+
+		    if (!somethingToDo) {
+		        this.stopPolling();
+		    }
+
 		  ]]>
 		</method>
 

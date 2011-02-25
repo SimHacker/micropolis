@@ -1141,7 +1141,7 @@
 
 
         <method name="handlePoll" args="messageDict"><![CDATA[
-            Debug.write("HANDLEPOLL", messageDict);
+            //Debug.write("HANDLEPOLL", messageDict);
             if (!messageDict) {
                 Debug.write("handlePoll null messageDict!");
             } else {
@@ -1530,7 +1530,7 @@
                 return;
             }
 
-            Debug.write("==== update", variable, args);
+            //Debug.write("==== update", variable, args);
 
             if (!(variable in interests)) {
                 //Debug.write("uninteresting variable update", variable);
@@ -1663,6 +1663,13 @@
 	<method name="handle_generateCity"><![CDATA[
 	    Debug.write("handle_generateCity");
 	    this.generateCity();
+	  ]]>
+	</method>
+
+
+	<method name="handle_cancelScreenCapture" args="args"><![CDATA[
+	    Debug.write("handle_cancelScreenCapture", args);
+	    gScreenCapture.cancel(args['id']);
 	  ]]>
 	</method>
 

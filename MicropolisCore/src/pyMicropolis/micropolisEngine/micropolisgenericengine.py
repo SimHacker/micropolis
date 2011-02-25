@@ -83,7 +83,7 @@ import micropoliszone
 import xml.dom.minidom
 from xml.dom.minidom import Node
 import pprint
-from StringIO import StringIO
+from cStringIO import StringIO
 
 
 ########################################################################
