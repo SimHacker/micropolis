@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title
+      py:if="city_id"
+    >Micropolis Console: City id ${city_id}: ${cities[0].title if cities else '[missing]'}</title>
+    <title
+      py:if="user_id"
+    >Micropolis Console: ${len(cities)} Cities for User id ${user_id}</title>
+    <title
+      py:if="(not city_id) and (not user_id)"
+    >Micropolis Console: ${len(cities)} Cities</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body class="pageBody">
+
+    <h1
+      py:if="city_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      City id ${city_id}: ${cities[0].title if cities else '[missing]'}
+    </h1>
+
+    <h1
+      py:if="user_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      ${len(cities)} Cities for
+      <a
+	href="/server/adminUser?user_id=${user_id}"
+      >User id ${user_id}</a>
+    </h1>
+
+    <h1
+      py:if="(not city_id) and (not user_id)"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      ${len(cities)} Cities
+    </h1>
+
+    <table class="adminTable">
+
+      <tr>
+        <th class="adminHeader"><nobr>picture</nobr></th>
+        <th class="adminHeader"><nobr>city id</nobr></th>
+        <th class="adminHeader"><nobr>user</nobr></th>
+        <th class="adminHeader"><nobr>title</nobr></th>
+        <th class="adminHeader"><nobr>description</nobr></th>
+        <th class="adminHeader"><nobr>parent city</nobr></th>
+        <th class="adminHeader"><nobr>shared</nobr></th>
+        <th class="adminHeader"><nobr>mutable</nobr></th>
+        <th class="adminHeader"><nobr>protection</nobr></th>
+        <th class="adminHeader"><nobr>scenario</nobr></th>
+        <th class="adminHeader"><nobr>created</nobr></th>
+        <th class="adminHeader"><nobr>updated</nobr></th>
+        <th class="adminHeader"><nobr>cookie</nobr></th>
+      </tr>
+
+      <tr py:for="city in cities">
+
+        <td class="adminData" style="text-align: center; align: middle;">
+          <img
+            style="border: 0px;"
+            src="/server/cityIcon?city_id=${city.city_id}"
+          />
+        </td>
+        <td class="adminData">
+          <nobr>${city.city_id}</nobr>
+        </td>
+        <td class="adminData">
+	  <a
+	    href="/server/adminUser?user_id=${city.user_id}"
+	  ><nobr>${city.user.name if city.user else '???'}</nobr></a>
+        </td>
+        <td class="adminData">
+          <nobr>${city.title}</nobr>
+        </td>
+        <td class="adminData" width="300px" style="width: 500px;">
+          ${city.description}
+        </td>
+        <td class="adminData">
+	  <?python
+	     parentCity = None
+	     if city.parent_id:
+	         parentCity = City.filter_by(city_id=city.parent_id)
+	  ?>
+	  <a
+	    py:if="parentCity"
+	    href="/server/adminCity?city_id=${parentCity.city_id}"
+	  ><nobr>${parentCity.title}</nobr></a>
+        </td>
+        <td class="adminData">
+          <nobr>${city.shared}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.mutable}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.protection}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.scenario}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.created}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.updated}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${city.cookie}</nobr>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

@@ -13,6 +13,7 @@ import re, os, sys, zipfile, time, math, tempfile, array, random
 import types, urllib, urllib2, code, traceback, signal
 import base64, hmac, hashlib, simplejson
 from StringIO import StringIO
+import mimetypes
 import pyamf
 from pyamf import remoting, amf0, amf3
 from pyamf.remoting import gateway
@@ -49,6 +50,7 @@ log = logging.getLogger("micropolis.controllers")
 ServerURL = 'http://www.MicropolisOnline.com'
 DefaultLanguage = config.get('micropolis.default_language', 'en-US')
 DataDir = config.get('micropolis.data_dir', 'micropolis/htdocs/static/data')
+WebTempDir = config.get('micropolis.web_temp_dir', 'micropolis/htdocs/static/temp')
 LocalServerRoot = config.get('micropolis.local_server_root', 'http://127.0.0.1:8082')
 GoogleTranslateAPIURL = 'https://www.googleapis.com/language/translate/v2'
 
@@ -98,20 +100,84 @@ def ParseSignedRequest(signed_request):
     return data
 
 
-def FacebookAPI(path, params=None, method=u'GET', domain=u'graph', access_token=None):
+def GetContentType(fileName):
+    return mimetypes.guess_type(fileName)[0] or 'application/octet-stream'
+
+
+def EncodeMultipartFormdata(fields, files):
+    """
+    fields is a sequence of (name, value) elements for regular form fields.
+    files is a sequence of (name, filename, value) elements for data to be uploaded as files
+    Return (content_type, body) ready for httplib.HTTP instance
+    """
+    print "EncodeMultipartFormdata BEGIN"
+    boundary = '----------ThIs_Is_tHe_bouNdaRY_$'
+    crlf = '\r\n'
+    lines = []
+    print "FIELDS"
+    for (key, value) in fields:
+        print "FIELD", key, value
+        lines.append('--' + boundary)
+        lines.append('Content-Disposition: form-data; name="%s"' % key)
+        lines.append('')
+        lines.append(value)
+    print "FILES"
+    for (key, filename, value) in files:
+        print "FILE", key, filename, len(value)
+        lines.append('--' + boundary)
+        lines.append('Content-Disposition: form-data; name="%s"; filename="%s"' % (key, filename))
+        lines.append('Content-Type: %s' % GetContentType(filename))
+        lines.append('')
+        lines.append(value)
+    lines.append('--' + boundary + '--')
+    lines.append('')
+    print "JOINING"
+    body = crlf.join(lines)
+    print "BODY", len(body)
+    #print body
+    contentType = 'multipart/form-data; boundary=%s' % boundary
+    return contentType, body
+
+
+def FacebookAPI(path, params=None, method=u'GET', domain=u'graph', access_token=None, fileNames=None):
     #print "FACEBOOKAPI", path, params
     if not params:
         params = {}
-    params[u'method'] = method
+    #params[u'method'] = method
     if u'access_token' not in params and access_token:
         params[u'access_token'] = access_token
+
+    if fileNames:
+
+        method = 'POST'
+        fields = []
+        files = []
+        for key in params.keys():
+            if key in fileNames:
+                files.append((key.encode('utf8'), fileNames[key].encode('utf8'), params[key]))
+                #print files[-1]
+            else:
+                fields.append((key.encode('utf8'), params[key].encode('utf8')))
+                #print fields[-1]
+
+        contentType, body = EncodeMultipartFormdata(fields, files)
+
+    else:
+
+        contentType = u'application/x-www-form-urlencoded'
+        body = urllib.urlencode(params)
+
+    print "contentType", contentType, "body", len(body)
+    
+    print "CALLING FETCHURL", url, len(body)
     data = FetchURL(
         url=u'https://' + domain + u'.facebook.com' + path,
-        payload=urllib.urlencode(params),
+        payload=body,
         method='POST',
         headers={
-            u'Content-Type': u'application/x-www-form-urlencoded',
+            u'Content-Type': contentType,
         })
+    print "CALLED FETCHURL", len(data)
     result = simplejson.loads(data)
     if isinstance(result, dict) and u'error' in result:
         raise Exception(result)
@@ -124,19 +190,24 @@ def FetchURL(
     method=None,
     headers=None):
 
-    #print "FETCHURL", url, payload, method, headers
+    print "FETCHURL", url, method, headers
 
     req = urllib2.Request(
         url=url,
         data=payload)
+    print "REQ", req
 
     if headers:
         for key in headers.keys():
             req.add_header(key, headers[key])
 
+    print "opening", req
     f = urllib2.urlopen(req)
+    print "opened", f
 
     data = f.read()
+
+    print "data", len(data)
 
     #print "RESULT:", data
     
@@ -162,18 +233,20 @@ def GetFacebookAccessToken():
 
 def GetFacebookUser(userID, fields=u'picture,education'):
     access_token = GetFacebookAccessToken()
-    me = None
 
+    url = u'/' + str(userID)
+    params = {
+        u'fields': fields,
+        u'access_token': access_token,
+    }
+
+    me = None
     try:
-        params = {
-            u'fields': fields,
-            u'access_token': access_token,
-        }
         me = FacebookAPI(
-            u'/' + str(userID),
+            url,
             params)
     except Exception, e:
-        print "ERROR CALLING FacebookAPI", "/me", params, e
+        print "ERROR CALLING FacebookAPI", url, params, e
 
     return me
 
@@ -561,7 +634,7 @@ class Root(controllers.RootController):
 
         if args == None:
             print "ERROR: controller getSession args is None!", sessionID
-            return None
+            #return None
 
         session = micropolisturbogearsengine.Session(self, sessionID, args)
         sessions[sessionID] = session

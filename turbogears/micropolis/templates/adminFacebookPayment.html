@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <py:def function="linkUser(data)">
+    <?python
+      userName = data['name']
+      userID = data['id']
+      from micropolis.model import User
+      user = User.query.filter_by(facebook_user_id=userID).first()
+    ?>
+    <a
+      py:strip="not user"
+      href="/server/adminUser?user_id=${user.user_id}"
+    >${userName}</a>
+  </py:def>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title>Micropolis Console: Facebook Payments</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body class="pageBody">
+
+    <h1>
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      Facebook Payments
+    </h1>
+
+    <table class="adminTable">
+
+      <tr>
+        <th class="adminHeader"><nobr>id</nobr></th>
+        <th class="adminHeader"><nobr>created / updated</nobr></th>
+        <th class="adminHeader"><nobr>status</nobr></th>
+        <th class="adminHeader"><nobr>amount</nobr></th>
+        <th class="adminHeader"><nobr>from / to</nobr></th>
+        <th class="adminHeader"><nobr>application</nobr></th>
+      </tr>
+
+      <tr py:for="payment in payments">
+        <td class="adminData">
+          <nobr>${payment['id']}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${payment['created_time']}</nobr><br/>
+          <nobr>${payment['updated_time']}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${payment['status']}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${payment['amount']}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${linkUser(payment['from'])}</nobr><br/>
+          <nobr>${linkUser(payment['to'])}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${payment['application']['name']}</nobr>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

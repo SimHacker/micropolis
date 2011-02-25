@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <?python
+     from micropolis.controllers import ServerURL
+  ?>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title
+      py:if="product_id"
+    >Micropolis Console: Product id ${products[0].product_id}: ${product[0].title}</title>
+    <title
+      py:if="not product_id"
+    >Micropolis Console: ${len(products)} Products</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body class="pageBody">
+
+    <h1
+      py:if="product_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      Product id ${produts[0].product_id}: ${product[0].name}
+    </h1>
+
+    <h1
+      py:if="not product_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      ${len(products)} Products
+    </h1>
+
+    <table class="adminTable">
+
+      <tr>
+        <th class="adminHeader"><nobr>image</nobr></th>
+        <th class="adminHeader"><nobr>product id</nobr></th>
+        <th class="adminHeader"><nobr>item id</nobr></th>
+        <th class="adminHeader"><nobr>order_info</nobr></th>
+        <th class="adminHeader"><nobr>price</nobr></th>
+        <th class="adminHeader"><nobr>title</nobr></th>
+        <th class="adminHeader"><nobr>description</nobr></th>
+        <th class="adminHeader"><nobr>image_url</nobr></th>
+        <th class="adminHeader"><nobr>product_url</nobr></th>
+        <th class="adminHeader"><nobr>data</nobr></th>
+        <th class="adminHeader"><nobr>sequence</nobr></th>
+      </tr>
+
+      <tr py:for="product in products">
+
+        <td class="adminData" style="text-align: center; align: middle;">
+	  <a
+	    href="${ServerURL}${product.product_url}"
+          ><img
+            style="border: 0px;"
+            src="${ServerURL}${product.image_url}"
+          /></a>
+        </td>
+        <td class="adminData">
+          <nobr>${product.product_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.item_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.order_info}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.price}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.title}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.description}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.image_url}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.product_url}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.data}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${product.sequence}</nobr>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>
