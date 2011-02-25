@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title
+      py:if="user_id"
+    >Micropolis Console: User id ${users[0].user_id}: ${users[0].name}</title>
+    <title
+      py:if="not user_id"
+    >Micropolis Console: ${len(users)} Users</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body class="pageBody">
+
+    <h1
+      py:if="user_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      User id ${users[0].user_id}: ${users[0].name}
+    </h1>
+
+    <h1
+      py:if="not user_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      ${len(users)} Users
+    </h1>
+
+    <table class="adminTable">
+
+      <tr>
+        <th class="adminHeader"><nobr>picture</nobr></th>
+        <th class="adminHeader"><nobr>user id</nobr></th>
+        <th class="adminHeader"><nobr>facebook user id / user name</nobr></th>
+        <th class="adminHeader"><nobr>name</nobr></th>
+        <th class="adminHeader"><nobr>cities / slots</nobr></th>
+        <th class="adminHeader"><nobr>current city</nobr></th>
+        <th class="adminHeader"><nobr>timezone</nobr></th>
+        <th class="adminHeader"><nobr>locale</nobr></th>
+        <th class="adminHeader"><nobr>facebook user name</nobr></th>
+        <th class="adminHeader"><nobr>email</nobr></th>
+        <th class="adminHeader"><nobr>third party id</nobr></th>
+        <th class="adminHeader"><nobr>nick name</nobr></th>
+        <th class="adminHeader"><nobr>credits</nobr></th>
+        <th class="adminHeader"><nobr>donation</nobr></th>
+        <th class="adminHeader"><nobr>karma</nobr></th>
+        <th class="adminHeader"><nobr>groups</nobr></th>
+        <th class="adminHeader"><nobr>created</nobr></th>
+        <th class="adminHeader"><nobr>activity</nobr></th>
+      </tr>
+
+      <tr py:for="user in users">
+
+        <td class="adminData" style="text-align: center; align: middle;">
+          <img
+            style="border: 0px;"
+            src="${user.picture}"
+          />
+        </td>
+        <td class="adminData">
+          <nobr>${user.user_id}</nobr>
+        </td>
+        <td class="adminData">
+	  <a
+	    href="http://www.facebook.com/profile.php?id=${user.facebook_user_id}"
+	  ><nobr>${user.facebook_user_id}</nobr></a>
+	  <br/>
+	  <nobr>${user.user_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>
+	    <a
+	      href="/server/adminCity?user_id=${user.user_id}"
+	    >${len(user.cities)} / ${user.city_slots}</a>
+	  </nobr>
+        </td>
+        <td class="adminData">
+	  <?python
+	     city = user.getCurrentCity()
+	  ?>
+          <nobr>
+	    <a
+	      py:if="city"
+	      href="/server/adminCity?city_id=${city.city_id}"
+	    >${city.title}</a>
+	  </nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.timezone}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.locale}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.facebook_user_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.email}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.third_party_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.nick_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.credits}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.donation}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.karma}</nobr>
+        </td>
+        <td class="adminData">
+	  <py:for each="group in user.groups">
+	    ${group.display_name}<br/>
+	  </py:for>
+        </td>
+        <td class="adminData">
+          <nobr>${user.created}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${user.activity}</nobr>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

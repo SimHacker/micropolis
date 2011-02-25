@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title
+      py:if="order_id"
+    >Micropolis Console: Order id ${orders[0].order_id}: ${order[0].name}</title>
+    <title
+      py:if="not order_id"
+    >Micropolis Console: ${len(orders)} Orders</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body class="pageBody">
+
+    <h1
+      py:if="order_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      Order id ${orders[0].order_id}: ${orders[0].title}
+    </h1>
+
+    <h1
+      py:if="not order_id"
+    >
+      <a
+	href="/server/adminConsole"
+      >Micropolis Console:</a>
+      ${len(orders)} Orders
+    </h1>
+
+    <table class="adminTable">
+
+      <tr>
+        <th class="adminHeader"><nobr>order id</nobr></th>
+        <th class="adminHeader"><nobr>facebook order id</nobr></th>
+        <th class="adminHeader"><nobr>item id</nobr></th>
+        <th class="adminHeader"><nobr>order details</nobr></th>
+        <th class="adminHeader"><nobr>order info</nobr></th>
+        <th class="adminHeader"><nobr>price</nobr></th>
+        <th class="adminHeader"><nobr>title</nobr></th>
+        <th class="adminHeader"><nobr>description</nobr></th>
+        <th class="adminHeader"><nobr>image url</nobr></th>
+        <th class="adminHeader"><nobr>product url</nobr></th>
+        <th class="adminHeader"><nobr>from user name</nobr></th>
+        <th class="adminHeader"><nobr>from user id</nobr></th>
+        <th class="adminHeader"><nobr>to user name</nobr></th>
+        <th class="adminHeader"><nobr>to user id</nobr></th>
+        <th class="adminHeader"><nobr>user id</nobr></th>
+        <th class="adminHeader"><nobr>product id</nobr></th>
+        <th class="adminHeader"><nobr>amount</nobr></th>
+        <th class="adminHeader"><nobr>status</nobr></th>
+        <th class="adminHeader"><nobr>application name</nobr></th>
+        <th class="adminHeader"><nobr>application id</nobr></th>
+        <th class="adminHeader"><nobr>country</nobr></th>
+        <th class="adminHeader"><nobr>created</nobr></th>
+        <th class="adminHeader"><nobr>updated</nobr></th>
+        <th class="adminHeader"><nobr>refund code</nobr></th>
+        <th class="adminHeader"><nobr>refund reason</nobr></th>
+        <th class="adminHeader"><nobr>refund message</nobr></th>
+        <th class="adminHeader"><nobr>refund funding source</nobr></th>
+        <th class="adminHeader"><nobr>refund params</nobr></th>
+        <th class="adminHeader"><nobr>comments</nobr></th>
+      </tr>
+
+      <tr py:for="order in orders">
+        <td class="adminData">
+          <nobr>${order.order_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.facebook_order_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.item_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.order_details}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.order_info}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.price}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.title}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.description}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.image_url}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.product_url}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.from_user_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.from_user_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.to_user_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.to_user_id}</nobr>
+        </td>
+        <td class="adminData">
+	  <a
+	    href="/server/adminUser?user_id=${order.user_id}"
+	  ><nobr>${order.user.name if order.user else '???'}</nobr></a>
+        </td>
+        <td class="adminData">
+	  <a
+	    href="/server/adminProduct?product_id=${order.product_id}"
+	  ><nobr>${order.product.title if order.product else '???'}</nobr></a>
+        </td>
+        <td class="adminData">
+          <nobr>${order.amount}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.status}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.application_name}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.application_id}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.country}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.created}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.updated}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.refund_code}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.refund_reason}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.refund_message}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.refund_funding_source}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.refund_params}</nobr>
+        </td>
+        <td class="adminData">
+          <nobr>${order.comments}</nobr>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+
+</html>

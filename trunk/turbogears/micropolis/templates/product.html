@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:fb="fb"
+  class="pageHtml"
+>
+
+  <?python
+
+    from urllib import quote_plus
+
+    def quote_js(js):
+        return js.replace("'", "\'")
+
+    def quote_jsurl(jsurl):
+        return quote_js(quote_plus(jsurl))
+
+  ?>
+
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
+    <title
+      py:if="item_id"
+    >Micropolis Product: ${products[0]['title']}</title>
+    <title
+      py:if="not item_id"
+    >Micropolis Products</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/micropolisFacebook.css"/> 
+  </head>
+
+  <body>
+
+    <h2
+      py:if="item_id"
+    >Micropolis Product: ${products[0]['title']}</h2>
+    <h2
+      py:if="not item_id"
+    >${len(products)} Micropolis Products</h2>
+
+    <div id="fb-root"></div>
+
+    <fb:like
+      show-faces="false"
+    />
+    <br class="clearBreak"/>
+
+    <h1
+      py:if="len(products) != 1"
+    >Micropolis Products</h1>
+
+    <py:for each="product in products">
+
+      <hr/>
+
+      <img
+        style="float: right; border: 0;"
+	src="${product.image_url}"
+      />
+
+      <h3>${product.title}</h3>
+
+      <p
+	py:content="product.description"
+      />
+
+      <p>
+	<a
+	  href="javascript:orderProduct('${product.item_id}')"
+	>
+	  <b>
+	    Buy for
+	    ${product.price}
+	    Facebook
+	    ${'Credit' if (product.price == 1) else 'Credits'}.
+	  </b>
+	</a>
+      </p>
+
+      <br
+	style="clear: both;"
+      />
+
+    </py:for>
+
+    <hr/>
+
+    <script src="/static/javascript/micropolisFacebook.js" type="text/javascript"> </script>
+    <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"> </script>
+    <script type="text/javascript">
+      FB.init({
+	  appId: '${quote_js(app_id)}',
+	  xfbml: true,
+	  status: true,
+	  //logging: true,
+	  cookie: true,
+      });
+    </script>
+
+  </body>
+
+</html>
