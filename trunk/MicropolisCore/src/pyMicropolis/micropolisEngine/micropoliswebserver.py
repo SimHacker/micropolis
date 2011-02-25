@@ -80,10 +80,7 @@ import urlparse
 import cgi
 import shutil
 import mimetypes
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from cStringIO import StringIO
 
 
 ########################################################################

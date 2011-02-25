@@ -76,6 +76,7 @@ import sys
 import random
 import math
 import array
+import zlib
 import time
 import tempfile
 import socket
@@ -83,6 +84,7 @@ from datetime import datetime
 import traceback
 import re
 import cairo
+from cStringIO import StringIO
 from pyMicropolis.tileEngine import tileengine
 import micropolisengine
 import turbogears
@@ -337,6 +339,12 @@ def UniqueID(prefix="ID_"):
     return id
 
 
+def GetCurrentUser():
+    if turbogears.identity.current.anonymous:
+        return None
+    return turbogears.identity.current.user
+
+
 ########################################################################
 # Session class.
 
@@ -358,6 +366,7 @@ class Session(object):
         self.controller = controller
         self.userName = None
         self.language = None
+        self.screenCaptures = {}
 
         self.touch()
 
@@ -486,11 +495,7 @@ class Session(object):
 
         print "Session createEngine created engine", engine
 
-        #user = self.getUser()
-        if turbogears.identity.current.anonymous:
-            user = None
-        else:
-            user = turbogears.identity.current.user
+        user = GetCurrentUser()
 
         print "Session creatEngine got user", user
         
@@ -531,6 +536,120 @@ class Session(object):
                     'collapse': False,
                 })
                 
+
+    def screenCapture(self, messageDict, user):
+        id = messageDict['id']
+        chunk = messageDict['chunk']
+        width = messageDict['width']
+        height = messageDict['height']
+        row = messageDict['row']
+        access_token = messageDict['access_token']
+        expectedSize = width * height * 4
+
+        #print "Session screenCapture", "id", id, "width", width, "height", height, "chunk", type(chunk), len(chunk), "expectedSize", expectedSize
+
+        if id not in self.screenCaptures:
+
+            if row != 0:
+                print "Session screenCapture ERROR: unexpected row not zero", row, "id", id
+                self.sendMessage({
+                    'message': 'cancelScreenCapture',
+                    'id': id,
+                })
+                return
+
+            capture = {
+                'width': width,
+                'height': height,
+                'chunks': [],
+                'startTime': time.time(),
+            }
+
+            self.screenCaptures[id] = capture
+
+        else:
+
+            capture = self.screenCaptures[id]
+
+            if ((width != capture['width']) or
+                (height != capture['height'])):
+                print "Session screenCapture ERROR: unexpected width, height", width, height, "should be", self.screenCaptureWidth, self.screenCaptureHeight
+                del self.screenCaptures[id]
+                return
+
+        chunk = chunk.getvalue()
+
+        chunks = capture['chunks']
+        chunks.append(chunk)
+
+        gotSize = 0
+        for c in chunks:
+            gotSize += len(c)
+
+        elapsed = time.time() - capture['startTime']
+        print "Session screenCapture id", id, "chunk", len(chunk), "got", gotSize, "expected", expectedSize, "progress", round((float(gotSize) / float(expectedSize)) if expectedSize else 0, 2), "elapsed", round(elapsed, 2), "rate", round((float(expectedSize) / float(elapsed)) if elapsed else 0, 2), "bytes per second"
+
+        if gotSize > expectedSize:
+            print "Session screenCapture ERROR: got too much data. gotSize", gotSize, "expectedSize", expectedSize
+            del self.screenCaptures[id]
+            return
+
+        if gotSize == expectedSize:
+            print "Session screenCapture FINISHED", id
+
+            del self.screenCaptures[id]
+
+            data = array.array(
+                'c',
+                ''.join(chunks))
+            #print "DATA", len(data)
+
+            surface = cairo.ImageSurface.create_for_data(
+                data,
+                cairo.FORMAT_ARGB32,
+                width,
+                height,
+                4 * width)
+            #print "SURFACE", surface
+
+            from micropolis.controllers import WebTempDir, GetFacebookAccessToken, FacebookAPI
+
+            fileName = UniqueID('MicropolisScreenShot_') + '.png'
+            filePath = os.path.join(WebTempDir, fileName)
+            f = open(filePath, 'wb')
+
+            surface.write_to_png(f)
+            f.close()
+            print 'http://www.MicropolisOnline.com/static/temp/' + fileName
+
+            user = GetCurrentUser()
+            fileData = open(filePath, 'rb').read()
+
+            url = u'/me/photos'
+            params = {
+                'access_token': access_token,
+                'source': fileData,
+                'message': 'Micropolis Screen Capture',
+            }
+            result = FacebookAPI(
+                url,
+                params,
+                method='POST',
+                fileNames={
+                    'source': 'MicropolisScreenCapture.png',
+                });
+            print "RESULT", result
+
+
+    def cancelScreenCapture(self, messageDict, user):
+        id = messageDict['id']
+
+        #print "Session cancelScreenCapture", "id", id
+
+        if id in self.screenCaptures:
+            del self.screenCaptures[id]
+            #print "Session cancelScreenCapture canceled id", id
+
 
 ########################################################################
 # MicropolisTurboGearsEngine Class
@@ -707,7 +826,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def handleMessage(self, session, messageDict):
         message = messageDict.get('message', None)
 
-        user = turbogears.identity.current.user
+        user = GetCurrentUser()
 
         #print "HANDLEMESSAGE", message, messageDict
 
@@ -877,7 +996,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def handleMessage_setPaused(self, session, messageDict, user):
         paused = messageDict.get('paused')
 
-        #print "setPaused", paused
+        print "setPaused", paused
         if paused == True:
             self.pause()
         elif paused == False:
@@ -1401,8 +1520,16 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
             robot.sendCommand(command, args)
 
 
+    def handleMessage_screenCapture(self, session, messageDict, user):
+        session.screenCapture(messageDict, user)
+
+
+    def handleMessage_cancelScreenCapture(self, session, messageDict, user):
+        session.cancelScreenCapture(messageDict, user)
+
+
     def saveUserCity(self):
-        user = turbogears.identity.current.user
+        user = GetCurrentUser()
         print "MicropolisTurboGearsEngine saveUserCity user", user.current_city_id, user
 
         if user:
@@ -1910,7 +2037,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
     def handle_didGenerateMap(self):
         print "MicropolisTurboGearsEngine handle_didGenerateMap(self)", (self,), self.generatedCitySeed
 
-        #user = turbogears.identity.current.user
+        #user = GetCurrentUser()
         #if user:
         #    city = self.saveCityToDatabase(
         #        user,
