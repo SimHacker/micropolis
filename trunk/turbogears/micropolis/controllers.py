@@ -1546,6 +1546,47 @@ class Root(controllers.RootController):
     
 
     ########################################################################
+    # facebookDeauthorize
+    #
+    # Facebook page admin interface.
+    #
+    @expose()
+    def facebookDeauthorize(
+        self,
+        signed_request='',
+        *args,
+        **kw):
+
+        print "\nFACEBOOKDEAUTHROIZE", request.method, "ARGS", args, "KW", kw
+
+        if not signed_request:
+            print "FACEBOOKDEAUTHROIZE ERROR: missing signed_request"
+            return ""
+        
+        data = ParseSignedRequest(signed_request)
+        if not data:
+            print "FACEBOOKDEAUTHROIZE ERROR: invalid signed_request", signed_request
+            return ""
+
+        print data
+
+        user_id = data.get(u'user_id', '')
+        if not user_id:
+            print "FACEBOOKDEAUTHROIZE ERROR: missing user_id in signed request data", data
+            return ""
+
+        user = User.query.filter_by(facebook_user_id=user_id).first()
+        if not user:
+            print "FACEBOOKDEAUTHROIZE ERROR: unknown user_id", user_id
+            return ""
+
+        # TODO: Remember that the user is de-authorized.
+        print "FACEBOOKDEAUTHROIZE deauthorized user_id", user_id, "user", user
+
+        return ""
+
+
+    ########################################################################
     # facebookPageAdmin
     #
     # Facebook page admin interface.

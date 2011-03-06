@@ -56,11 +56,22 @@
 	  />
 	  <br class="clearBreak"/>
 
+	  <py:if
+	    test="not user_id"
+	  >
+	    Please
+	    <a
+	      href="javascript:addApp('${quote_js(facebook_permissions)}')"
+	    >add Micropolis</a>
+	    to save your city and play with your friends.
+	  </py:if>
+
 	  Please
 	  <a
 	    href="javascript:hello()"
 	  >tell your friends</a>,
 	  and buy
+<!--!
 	  <a
 	    href="javascript:orderProduct('micropoleans_1000')"
 	  >one thousand</a>
@@ -75,6 +86,7 @@
 	  <a
 	    href="javascript:orderProduct('protection')"
 	  >city protection</a>,
+-->
 	  <a
 	    href="javascript:orderProduct('karma_1000')"
 	  >1000</a>,
@@ -94,16 +106,6 @@
 	    target="_new"
 	  >open source project</a>.
 	  <br/>
-
-	  <py:if
-	    test="not user_id"
-	  >
-	    Please
-	    <a
-	      href="javascript:addApp('${quote_js(facebook_permissions)}')"
-	    >add Micropolis</a>
-	    to save your city and play with your friends.
-	  </py:if>
 
 	</td>
       </tr>

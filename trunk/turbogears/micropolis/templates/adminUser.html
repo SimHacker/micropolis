@@ -53,8 +53,7 @@
         <th class="adminHeader"><nobr>email</nobr></th>
         <th class="adminHeader"><nobr>third party id</nobr></th>
         <th class="adminHeader"><nobr>nick name</nobr></th>
-        <th class="adminHeader"><nobr>credits</nobr></th>
-        <th class="adminHeader"><nobr>donation</nobr></th>
+        <th class="adminHeader"><nobr>credits paid</nobr></th>
         <th class="adminHeader"><nobr>karma</nobr></th>
         <th class="adminHeader"><nobr>groups</nobr></th>
         <th class="adminHeader"><nobr>created</nobr></th>
@@ -86,7 +85,7 @@
           <nobr>
 	    <a
 	      href="/server/adminCity?user_id=${user.user_id}"
-	    >${len(user.cities)} / ${user.city_slots}</a>
+	    >${len(user.cities)} / ${user.save_slots}</a>
 	  </nobr>
         </td>
         <td class="adminData">
@@ -119,10 +118,7 @@
           <nobr>${user.nick_name}</nobr>
         </td>
         <td class="adminData">
-          <nobr>${user.credits}</nobr>
-        </td>
-        <td class="adminData">
-          <nobr>${user.donation}</nobr>
+          <nobr>${user.credits_paid}</nobr>
         </td>
         <td class="adminData">
           <nobr>${user.karma}</nobr>

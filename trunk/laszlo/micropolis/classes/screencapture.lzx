@@ -215,7 +215,7 @@
 				    width,
 				    rows));
 
-			// Swizzle the bytes from Flash's RGBA order to Cairo's RGBA order.
+			// Swizzle the bytes from Flash's RGBA order to Cairo's ABGR order.
 			var n = chunk.length;
 			var i;
 			for (i = 0; i < n; i += 4) {
