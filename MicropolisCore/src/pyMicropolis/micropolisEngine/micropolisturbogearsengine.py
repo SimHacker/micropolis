@@ -497,7 +497,7 @@ class Session(object):
 
         user = GetCurrentUser()
 
-        print "Session creatEngine got user", user
+        print "Session createEngine got user", user
         
         if user:
 
@@ -1530,7 +1530,7 @@ class MicropolisTurboGearsEngine(micropolisgenericengine.MicropolisGenericEngine
 
     def saveUserCity(self):
         user = GetCurrentUser()
-        print "MicropolisTurboGearsEngine saveUserCity user", user.current_city_id, user
+        #print "MicropolisTurboGearsEngine saveUserCity user", user
 
         if user:
 
