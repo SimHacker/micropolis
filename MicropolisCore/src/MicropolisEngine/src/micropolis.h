@@ -76,11 +76,11 @@
 #include <errno.h>
 #include <math.h>
 #include <cstdarg>
+#include <sys/stat.h>
 
 #ifdef _WIN32
 
 #include <winsock2.h>
-#include <sys/stat.h>
 #include <time.h>
 
 #ifndef S_ISDIR
@@ -88,10 +88,6 @@
 #endif
 
 #else
-
-#ifdef __APPLE__
-#include <sys/stat.h>
-#endif
 
 #include <unistd.h>
 #include <sys/time.h>
