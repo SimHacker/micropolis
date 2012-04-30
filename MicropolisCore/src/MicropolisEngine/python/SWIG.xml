@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:transformCallback="Microsoft.Cpp.Dev10.ConvertPropertyCallback">
+  <Rule
+    Name="SWIG"
+    PageTemplate="tool"
+    DisplayName="SWIG"
+    Order="200">
+    <Rule.DataSource>
+      <DataSource
+        Persistence="ProjectFile"
+        ItemType="SWIG" />
+    </Rule.DataSource>
+    <Rule.Categories>
+      <Category
+        Name="General">
+        <Category.DisplayName>
+          <sys:String>General</sys:String>
+        </Category.DisplayName>
+      </Category>
+      <Category
+        Name="Command Line"
+        Subtype="CommandLine">
+        <Category.DisplayName>
+          <sys:String>Command Line</sys:String>
+        </Category.DisplayName>
+      </Category>
+    </Rule.Categories>
+    <StringListProperty
+      Name="Inputs"
+      Category="Command Line"
+      IsRequired="true"
+      Switch=" ">
+      <StringListProperty.DataSource>
+        <DataSource
+          Persistence="ProjectFile"
+          ItemType="SWIG"
+          SourceType="Item" />
+      </StringListProperty.DataSource>
+    </StringListProperty>
+    <BoolProperty
+      Name="CPlusPlus"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="C++"
+      Description="Specifies whether or not to use C++."
+      Switch="-c++" />
+    <BoolProperty
+      Name="DryRun"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="Dry Run"
+      Description="If true, then SWIG is not actually run, but the command that would have been run is echoed to the build output."
+      Switch="@echo ==== DRY RUN: " />
+    <StringProperty
+      Name="SwigOutDir"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="SWIG Output Directory"
+      Description="Specifies the output directory for the files SWIG generates."
+      Switch="[value]" />
+    <StringProperty
+      Name="Arguments"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="Arguments"
+      Description="Specifies the additional command line arguments passed to SWIG."
+      Switch="[value]" />
+    <StringProperty
+      Name="SwigExe"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="SWIG Executable"
+      Description="Specifies the name of the SWIG executable, typically &quot;C:\swig\swig.exe&quot;."
+      Switch="[value]" />
+    <StringProperty
+      Name="OutputSuffix"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="Output Suffix"
+      Description="Specifies the output file name suffix to be used after input file name base, typically &quot;_wrap.cpp&quot;."
+      Switch="[value]" />
+    <EnumProperty
+      Name="ScriptingLanguage"
+      Category="SWIG"
+      Subcategory="SWIG"
+      HelpContext="0"
+      DisplayName="SWIG Scripting Language"
+      Description="Specifies the name of the scripting language for SWIG to generate wrappers, passed to SWIG as a command line parameter after a dash.">
+      <EnumValue
+        Name="0"
+        DisplayName="Python"
+        Switch="-python" />
+      <EnumValue
+        Name="1"
+        DisplayName="C#"
+        Switch="-csharp" />
+    </EnumProperty>
+    <StringProperty
+      Name="CommandLineTemplate"
+      DisplayName="Command Line"
+      Visible="False"
+      IncludeInCommandLine="False" />
+    <DynamicEnumProperty
+      Name="SWIGBeforeTargets"
+      Category="General"
+      EnumProvider="Targets"
+      IncludeInCommandLine="False">
+      <DynamicEnumProperty.DisplayName>
+        <sys:String>Execute Before</sys:String>
+      </DynamicEnumProperty.DisplayName>
+      <DynamicEnumProperty.Description>
+        <sys:String>Specifies the targets for the build customization to run before.</sys:String>
+      </DynamicEnumProperty.Description>
+      <DynamicEnumProperty.ProviderSettings>
+        <NameValuePair
+          Name="Exclude"
+          Value="^SWIGBeforeTargets|^Compute" />
+      </DynamicEnumProperty.ProviderSettings>
+      <DynamicEnumProperty.DataSource>
+        <DataSource
+          Persistence="ProjectFile"
+          HasConfigurationCondition="true" />
+      </DynamicEnumProperty.DataSource>
+    </DynamicEnumProperty>
+    <DynamicEnumProperty
+      Name="SWIGAfterTargets"
+      Category="General"
+      EnumProvider="Targets"
+      IncludeInCommandLine="False">
+      <DynamicEnumProperty.DisplayName>
+        <sys:String>Execute After</sys:String>
+      </DynamicEnumProperty.DisplayName>
+      <DynamicEnumProperty.Description>
+        <sys:String>Specifies the targets for the build customization to run after.</sys:String>
+      </DynamicEnumProperty.Description>
+      <DynamicEnumProperty.ProviderSettings>
+        <NameValuePair
+          Name="Exclude"
+          Value="^SWIGAfterTargets|^Compute" />
+      </DynamicEnumProperty.ProviderSettings>
+      <DynamicEnumProperty.DataSource>
+        <DataSource
+          Persistence="ProjectFile"
+          ItemType=""
+          HasConfigurationCondition="true" />
+      </DynamicEnumProperty.DataSource>
+    </DynamicEnumProperty>
+    <StringListProperty
+      Name="Outputs"
+      DisplayName="Outputs"
+      Visible="False"
+      IncludeInCommandLine="False" />
+    <StringProperty
+      Name="ExecutionDescription"
+      DisplayName="Execution Description"
+      Visible="False"
+      IncludeInCommandLine="False" />
+    <StringListProperty
+      Name="AdditionalDependencies"
+      DisplayName="Additional Dependencies"
+      IncludeInCommandLine="False"
+      Visible="true" />
+    <StringProperty
+      Subtype="AdditionalOptions"
+      Name="AdditionalOptions"
+      Category="Command Line">
+      <StringProperty.DisplayName>
+        <sys:String>Additional Options</sys:String>
+      </StringProperty.DisplayName>
+      <StringProperty.Description>
+        <sys:String>Additional Options</sys:String>
+      </StringProperty.Description>
+    </StringProperty>
+  </Rule>
+  <ItemType
+    Name="SWIG"
+    DisplayName="SWIG" />
+  <FileExtension
+    Name="*.i"
+    ContentType="SWIG" />
+  <ContentType
+    Name="SWIG"
+    DisplayName="SWIG"
+    ItemType="SWIG" />
+</ProjectSchemaDefinitions>

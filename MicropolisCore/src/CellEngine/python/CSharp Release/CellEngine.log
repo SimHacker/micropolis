@@ -1,0 +1,63 @@
+﻿     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(47,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(63,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(47,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(63,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(47,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+     0>C:\Program Files (x86)\MSBuild\4.0\Microsoft.Common.Targets\ImportAfter\Microsoft.VisualStudio.SharePoint.SandboxedCompilation.targets(63,5): warning MSB4057: The target "CoreCompile" does not exist in the project.
+Build started 4/30/2012 9:30:20 AM.
+     1>Project "C:\projects\micropolis\MicropolisCore\src\CellEngine\python\CellEngine.vcxproj" on node 4 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "CSharp Release\CellEngine.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "CSharp Release\CellEngine.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       _SWIG:
+         Executing SWIG Build Rule...
+       _SWIG:
+         Executing SWIG Build Rule...
+         cmd.exe /C "C:\Users\bsimser\AppData\Local\Temp\d61018cc9148462894e78061d1568dbc.cmd"
+         @echo SwigExe: "c:\swig\swig.exe"
+         @echo ScriptingLanguage: "-python"
+         @echo CPlusPlus: "-c++"
+         @echo SwigOutDir: "..\python"
+         @echo InputName: "cellengine"
+         @echo OutputSuffix: "_wrap.cpp"
+         @echo Arguments: "-I..\src -I.."
+         @echo Inputs: " ..\swig\cellengine.i"
+         @echo Output: "..\python\cellengine_wrap.cpp"
+         @echo DryRun: ""
+         @echo on
+          c:\swig\swig.exe -python -c++ -outdir ..\python -o ..\python\cellengine_wrap.cpp -I..\src -I..  ..\swig\cellengine.i
+         @echo off
+         
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I.. /IC:\Python\include /IC:\gtk\include\cairo /IC:\pycairo\cairo /Zi /nologo /W3 /WX- /O2 /Oy- /GL /D SWIG_NO_CRT_SECURE_NO_DEPRECATE /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"CSharp Release\CellEngine.pch" /Fo"CSharp Release\\" /Fd"CSharp Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I.. /IC:\Python\include /IC:\gtk\include\cairo /IC:\pycairo\cairo /Zi /nologo /W3 /WX- /O2 /Oy- /GL /D SWIG_NO_CRT_SECURE_NO_DEPRECATE /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"CSharp Release\CellEngine.pch" /Fo"CSharp Release\\" /Fd"CSharp Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CellEngineMain.cpp ..\src\cellengine.cpp ..\src\ruletables.cpp
+         CellEngineMain.cpp
+         cellengine.cpp
+         ruletables.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /I.. /IC:\Python\include /IC:\gtk\include\cairo /IC:\pycairo\cairo /Zi /nologo /W3 /WX- /O2 /Oy- /GL /D SWIG_NO_CRT_SECURE_NO_DEPRECATE /D _CRT_SECURE_NO_WARNINGS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"CSharp Release\\" /Fd"CSharp Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt cellengine_wrap.cpp
+         cellengine_wrap.cpp
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.dll) does not match the Linker's OutputFile property value (C:\projects\micropolis\MicropolisCore\src\CellEngine\python\CSharp Release\_cellengine.pyd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(991,5): warning MSB8012: TargetExt(.dll) does not match the Linker's OutputFile property value (.pyd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(CellEngine) does not match the Linker's OutputFile property value (_cellengine). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\projects\micropolis\MicropolisCore\src\CellEngine\python\\CSharp Release\_cellengine.pyd" /INCREMENTAL:NO /NOLOGO /LIBPATH:c:\Python\libs /LIBPATH:C:\gtk\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"CSharp Release\CellEngine.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.lib" /MACHINE:X86 /DLL "CSharp Release\CellEngineMain.obj"
+         "CSharp Release\stdafx.obj"
+         "CSharp Release\cellengine.obj"
+         "CSharp Release\ruletables.obj"
+         "CSharp Release\cellengine_wrap.obj"
+            Creating library C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.lib and object C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.exp
+         Generating code
+         Finished generating code
+         CellEngine.vcxproj -> C:\projects\micropolis\MicropolisCore\src\CSharp Release\CellEngine.dll
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\projects\micropolis\MicropolisCore\src\CellEngine\python\\CSharp Release\_cellengine.pyd;#2" /manifest "CSharp Release\CellEngine.dll.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "CSharp Release\CellEngine.unsuccessfulbuild".
+         Touching "CSharp Release\CellEngine.lastbuildstate".
+     1>Done Building Project "C:\projects\micropolis\MicropolisCore\src\CellEngine\python\CellEngine.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:09.02

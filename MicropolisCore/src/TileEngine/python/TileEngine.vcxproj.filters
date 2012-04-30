@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{17a4761c-7f32-4416-a5fd-de8fbce96877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="DLL\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="TileEngine">
+      <UniqueIdentifier>{959e3a3a-c819-4455-8bde-6b1f56e30787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TileEngine\Header">
+      <UniqueIdentifier>{9e3e4222-098a-4c5b-97dc-969775cd689a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TileEngine\Source">
+      <UniqueIdentifier>{8beae266-9fac-47ee-85f8-89efda0d2023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG">
+      <UniqueIdentifier>{e6127bcb-8d11-4933-a202-8c32b8b4ea17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Python Files">
+      <UniqueIdentifier>{c38907c0-6b9b-484d-ae6c-0678c16b3f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\SWIG Files">
+      <UniqueIdentifier>{7f6e0d4d-7acf-4b3c-b71b-d0b501b550d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Source Files">
+      <UniqueIdentifier>{cc45e30d-5adb-40b7-bea0-69f77af9719a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Rule Files">
+      <UniqueIdentifier>{92a23c71-e865-4318-8b69-b825ab67b9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doc">
+      <UniqueIdentifier>{0c9cbc4e-f644-4721-bef3-3d9481f106bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\stdafx.h">
+      <Filter>DLL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tileengine.h">
+      <Filter>TileEngine\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TileEngineMain.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tileengine.cpp">
+      <Filter>TileEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tileengine_wrap.cpp">
+      <Filter>SWIG\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\pyMicropolis\tileEngine\tiledrawingarea.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="tileengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\tileEngine\tiletool.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\tileEngine\tilewindow.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\MicropolisEngine\python\SWIG.rules">
+      <Filter>SWIG\Rule Files</Filter>
+    </None>
+    <None Include="..\README.txt">
+      <Filter>Doc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SWIG Include="..\swig\pycairo.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+    <SWIG Include="..\swig\tileengine-swig-python.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+    <SWIG Include="..\swig\tileengine.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+  </ItemGroup>
+</Project>

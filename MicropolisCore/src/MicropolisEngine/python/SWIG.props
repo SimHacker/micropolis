@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup
+    Condition="'$(SWIGBeforeTargets)' == '' and '$(SWIGAfterTargets)' == '' and '$(ConfigurationType)' != 'Makefile'">
+    <SWIGBeforeTargets>Midl</SWIGBeforeTargets>
+    <SWIGAfterTargets>CustomBuild</SWIGAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SWIGDependsOn
+      Condition="'$(ConfigurationType)' != 'Makefile'">_SelectedFiles;$(SWIGDependsOn)</SWIGDependsOn>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <SWIG>
+      <CPlusPlus>true</CPlusPlus>
+      <DryRun>False</DryRun>
+      <SwigOutDir>.</SwigOutDir>
+      <SwigExe>c:\swig\swig.exe</SwigExe>
+      <OutputSuffix>_wrap.cpp</OutputSuffix>
+      <ScriptingLanguage>0</ScriptingLanguage>
+      <CommandLineTemplate>@echo SwigExe: "[SwigExe]"
+@echo ScriptingLanguage: "[ScriptingLanguage]"
+@echo CPlusPlus: "[CPlusPlus]"
+@echo SwigOutDir: "[SwigOutDir]"
+@echo InputName: "%(Filename)"
+@echo OutputSuffix: "[OutputSuffix]"
+@echo Arguments: "[Arguments]"
+@echo Inputs: "[Inputs]"
+@echo Output: "[SwigOutDir]\%(Filename)[OutputSuffix]"
+@echo DryRun: "[DryRun]"
+@echo on
+[DryRun] [SwigExe] [ScriptingLanguage] [CPlusPlus] -outdir [SwigOutDir] -o [SwigOutDir]\%(Filename)[OutputSuffix] [Arguments] [Inputs]
+@echo off
+</CommandLineTemplate>
+      <Outputs>[SwigOutDir]\%(Filename)[OutputSuffix]</Outputs>
+      <ExecutionDescription>Executing SWIG Build Rule...</ExecutionDescription>
+      <ShowOnlyRuleProperties>false</ShowOnlyRuleProperties>
+    </SWIG>
+  </ItemDefinitionGroup>
+</Project>
