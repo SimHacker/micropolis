@@ -42,3 +42,77 @@ and finally pygtk:
     sudo make install
 
 that's the end of our saga. You can now enjoy UMIT on your Mac OS :) 
+
+Building on Windows:
+
+Install: GTK+, python, pycairo, Visual Studio
+
+GTK+:
+http://www.gtk.org/
+Download the all-in-one-bundle from here:
+http://www.gtk.org/download/win32.php
+and install to c:\gtk
+
+Cairo is a 2D graphics library used by the TileEngine and comes along with GTK. With GTK+
+you can also run the gtk frontend that's included in the source (you can find it in 
+MicropolisCore/src/run-gtkfrontend, it's a python script).
+
+Python:
+http://www.python.org/
+Download the latest 2.x version from the download page (http://www.python.org/download/) and
+install the MSI to c:\python.
+
+Pycairo:
+http://cairographics.org/pycairo/
+Pycairo is a set of Python bindings for cairo. You need the pycairo.h header files from the
+source distribution to build the TileEngine project. Download py2cairo-1.10.0 (if you're using python 2.x)
+and unzip to c:\pycairo.
+
+Visual Studio:
+You can download Visual Studio Express edition from here:
+http://www.microsoft.com/visualstudio/en-us/products/2010-editions/express
+You'll need the Visual C++ 2010 Express edition to build the core project.
+
+Download the latest source from the Google project here:
+http://code.google.com/p/micropolis/
+via subversion to a folder of your choice. 
+
+Paths:
+The following files have hard coded paths to tools that you may or may not need to modify
+based on your installs. This is why I suggest putting things in generic paths (without version numbers)
+
+MicropolisCore/src/CellEngine/python/CellEngine.vcproj (various places)
+	AdditionalIncludeDirectories="..\src;..;C:\Python\include;C:\gtk\include\cairo;"
+	AdditionalLibraryDirectories="c:\Python\libs;C:\gtk\lib"
+
+MicropolisCore/src/MicropolisEngine/python/Micropolis.vcproj (various places)
+	AdditionalIncludeDirectories="..\src;..;C:\Python\include"
+	AdditionalLibraryDirectories="c:\Python\libs"
+
+MicropolisCore/src/MicropolisEngine/python/SWIG.rules
+<StringProperty
+	Name="SwigExe"
+	DisplayName="SWIG Executable"
+	PropertyPageName="SWIG"
+	Category="SWIG"
+	Description="Specifies the name of the SWIG executable, typically &quot;C:\swig\swig.exe&quot;."
+	Switch="[value]"
+	DefaultValue="c:\swig\swig.exe"
+/>
+
+MicropolisCore/src/TileEngine/python/TileEngine.vcproj (various places)
+	AdditionalIncludeDirectories="..\src;..;C:\Python\include;C:\gtk\include\cairo;C:\pycairo\src"
+	AdditionalLibraryDirectories="c:\Python\libs;C:\gtk\lib"
+
+Open up MicropolisCore.sln in MicropolisCore/src and rebuild the solution. If all the paths are setup and the
+files are in place it should build completely.
+
+You should now have 3 DLLs built along with the output from SWIG which will be python files and in the csMicropolis 
+folder a series of C# files (which are managed wrappers around the C++ micropolisengine.dll)
+
+The Python files can be used with any Python front-end you want to build. There's a pre-build frontend 
+that uses GTK+ to run the game with most of the features of the X11 version.
+
+You can read a series of blog posts by Bil Simser on building and modifying the code here:
+http://weblogs.asp.net/bsimser/archive/2008/01/14/building-a-city-the-series.aspx
+

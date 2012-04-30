@@ -49,7 +49,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..\src;..;C:\Python\include;C:\gtk\include\cairo;C:\pycairo\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -70,7 +70,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_cellengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
+				AdditionalLibraryDirectories="c:\Python\libs;C:\gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -135,7 +135,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..;C:\Python\include;C:\gtk\include\cairo;C:\pycairo\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -160,7 +160,7 @@
 				AdditionalDependencies="cairo.lib"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_cellengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
+				AdditionalLibraryDirectories="c:\Python\libs;C:\gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -222,7 +222,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;..;C:\Python26\include;C:\gtk\include\cairo;C:\pycairo\cairo"
+				AdditionalIncludeDirectories="..\src;..;C:\Python\include;C:\gtk\include\cairo;C:\pycairo\cairo"
 				PreprocessorDefinitions="SWIG_NO_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -243,7 +243,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(ProjectDir)\$(ConfigurationName)\_cellengine.pyd"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="c:\Python26\libs;C:\gtk\lib"
+				AdditionalLibraryDirectories="c:\Python\libs;C:\gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"

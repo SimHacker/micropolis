@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PropertyPageSchema
+      Include="$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml" />
+    <AvailableItemName
+      Include="SWIG">
+      <Targets>_SWIG</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+  <UsingTask
+    TaskName="SWIG"
+    TaskFactory="XamlTaskFactory"
+    AssemblyName="Microsoft.Build.Tasks.v4.0">
+    <Task>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).xml</Task>
+  </UsingTask>
+  <Target
+    Name="_SWIG"
+    BeforeTargets="$(SWIGBeforeTargets)"
+    AfterTargets="$(SWIGAfterTargets)"
+    Condition="'@(SWIG)' != ''"
+    DependsOnTargets="$(SWIGDependsOn);ComputeSWIGOutput"
+    Outputs="%(SWIG.Outputs)"
+    Inputs="%(SWIG.Identity);%(SWIG.AdditionalDependencies);$(MSBuildProjectFile)">
+    <ItemGroup
+      Condition="'@(SelectedFiles)' != ''">
+      <SWIG
+        Remove="@(SWIG)"
+        Condition="'%(Identity)' != '@(SelectedFiles)'" />
+    </ItemGroup>
+    <ItemGroup>
+      <SWIG_tlog
+        Include="%(SWIG.Outputs)"
+        Condition="'%(SWIG.Outputs)' != '' and '%(SWIG.ExcludedFromBuild)' != 'true'">
+        <Source>@(SWIG, '|')</Source>
+      </SWIG_tlog>
+    </ItemGroup>
+    <Message
+      Importance="High"
+      Text="%(SWIG.ExecutionDescription)" />
+    <WriteLinesToFile
+      Condition="'@(SWIG_tlog)' != '' and '%(SWIG_tlog.ExcludedFromBuild)' != 'true'"
+      File="$(IntDir)$(ProjectName).write.1.tlog"
+      Lines="^%(SWIG_tlog.Source);@(SWIG_tlog-&gt;'%(Fullpath)')" />
+    <SWIG
+      Condition="'@(SWIG)' != '' and '%(SWIG.ExcludedFromBuild)' != 'true'"
+      CommandLineTemplate="%(SWIG.CommandLineTemplate)"
+      CPlusPlus="%(SWIG.CPlusPlus)"
+      DryRun="%(SWIG.DryRun)"
+      SwigOutDir="%(SWIG.SwigOutDir)"
+      Arguments="%(SWIG.Arguments)"
+      SwigExe="%(SWIG.SwigExe)"
+      OutputSuffix="%(SWIG.OutputSuffix)"
+      ScriptingLanguage="%(SWIG.ScriptingLanguage)"
+      AdditionalOptions="%(SWIG.AdditionalOptions)"
+      Inputs="%(SWIG.Identity)" />
+  </Target>
+  <PropertyGroup>
+    <ComputeLinkInputsTargets>
+            $(ComputeLinkInputsTargets);
+            ComputeSWIGOutput;
+          </ComputeLinkInputsTargets>
+    <ComputeLibInputsTargets>
+            $(ComputeLibInputsTargets);
+            ComputeSWIGOutput;
+          </ComputeLibInputsTargets>
+  </PropertyGroup>
+  <Target
+    Name="ComputeSWIGOutput"
+    Condition="'@(SWIG)' != ''">
+    <ItemGroup>
+      <SWIGDirsToMake
+        Condition="'@(SWIG)' != '' and '%(SWIG.ExcludedFromBuild)' != 'true'"
+        Include="%(SWIG.Outputs)" />
+      <Link
+        Include="%(SWIGDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <Lib
+        Include="%(SWIGDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+      <ImpLib
+        Include="%(SWIGDirsToMake.Identity)"
+        Condition="'%(Extension)'=='.obj' or '%(Extension)'=='.res' or '%(Extension)'=='.rsc' or '%(Extension)'=='.lib'" />
+    </ItemGroup>
+    <MakeDir
+      Directories="@(SWIGDirsToMake-&gt;'%(RootDir)%(Directory)')" />
+  </Target>
+</Project>

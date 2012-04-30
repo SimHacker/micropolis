@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="MicropolisEngine">
+      <UniqueIdentifier>{c12f2193-b09a-4fc7-a72a-e1fd1374939e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MicropolisEngine\Header Files">
+      <UniqueIdentifier>{ee0bf4ba-9617-4007-a908-47bcebe8eb64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MicropolisEngine\Source Files">
+      <UniqueIdentifier>{11997277-470c-45ae-b756-20b309da9dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{97505686-9e2d-4228-a56e-5d4d4217add4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="DLL\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SWIG">
+      <UniqueIdentifier>{fcb8f7cb-887f-4e7d-9d11-b17a49d85579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\SWIG Files">
+      <UniqueIdentifier>{7cf7a9a4-9567-43e6-bdf7-cc4df64b176b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Rule Files">
+      <UniqueIdentifier>{0e1199ff-d7f6-48a9-8a94-108895780abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Source Files">
+      <UniqueIdentifier>{0f8bff69-6d22-41e8-8a5c-7499df45552d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Python Files">
+      <UniqueIdentifier>{fbec9113-e36b-4c14-847e-0edeedf84c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doc">
+      <UniqueIdentifier>{b66f32dc-abfc-435d-83e6-998efbb684e7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\data_types.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\generate.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map_type.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\micropolis.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\position.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\stubs.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\text.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tool.h">
+      <Filter>MicropolisEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\stdafx.h">
+      <Filter>DLL\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\allocate.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\animate.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\budget.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\connect.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\disasters.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\evaluate.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\fileio.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\generate.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\graph.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\initialize.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\message.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\micropolis.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\position.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\power.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\random.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\resource.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scan.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\simulate.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sprite.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\stubs.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\tool.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\traffic.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\update.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utilities.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zone.cpp">
+      <Filter>MicropolisEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MicropolisMain.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\csharp\micropolisengine-swig-csharp_wrap.cpp">
+      <Filter>SWIG\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="micropolisengine_wrap.cpp">
+      <Filter>SWIG\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <SWIG Include="..\swig\micropolisengine-swig-csharp.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+    <SWIG Include="..\swig\micropolisengine-swig-python.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+    <SWIG Include="..\swig\micropolisengine.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SWIG.rules">
+      <Filter>SWIG\Rule Files</Filter>
+    </None>
+    <None Include="..\doc\AnimationSequences.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\ASSETS.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\CALLBACKS.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\CODING-STYLE.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\PLAN.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\README-Mac.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\ROADMAP.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\SIMULATOR.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\TODO.txt">
+      <Filter>Doc</Filter>
+    </None>
+    <None Include="..\doc\UserInterfacePlan.txt">
+      <Filter>Doc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\__init__.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\eliza.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\doc\genAnimationTable.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisbudgetpanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropoliscontrolpanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisdisasterspanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisdrawingarea.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisevaluationpanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisevaluationview.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisgaugeview.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisgenericengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisgtkengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolishistorypanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolishistoryview.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolismappanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolismessagespanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisnotebook.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisnoticepanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisnoticeview.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolispiemenus.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisrobot.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisstartpanel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolistool.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisturbogearsengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropolisview.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropoliswebserver.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropoliswindow.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\micropoliszone.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\xmlutilities.py">
+      <Filter>SWIG\Python Files</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

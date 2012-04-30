@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{20a4f43e-4557-4f24-b96d-e2f2e32970d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="DLL\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="CellEngine">
+      <UniqueIdentifier>{ee8c70f4-6156-4488-9f00-eccb8862006f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CellEngine\Header">
+      <UniqueIdentifier>{b8e9c897-9a70-4b57-985e-98db2eaeddf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CellEngine\Source">
+      <UniqueIdentifier>{97958ca6-13ec-4e5a-a3cf-daa5a790fadf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG">
+      <UniqueIdentifier>{7308c056-bcd9-433a-b718-9c72dc5d94d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Python Files">
+      <UniqueIdentifier>{48030126-55ed-4381-8412-cb2a7d07abdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\SWIG Files">
+      <UniqueIdentifier>{e8289268-739b-496a-83cf-88e0e8402254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Rule Files">
+      <UniqueIdentifier>{4ce1a381-067d-4edf-a977-cbda13193055}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SWIG\Source Files">
+      <UniqueIdentifier>{e685a42e-3496-44df-86d1-b597af98e94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doc">
+      <UniqueIdentifier>{ff40aeb0-fc89-4560-a0fa-dc3ef26d3988}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\stdafx.h">
+      <Filter>DLL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cellengine.h">
+      <Filter>CellEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\linuxcompat.h">
+      <Filter>CellEngine\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\perlinnoise.h">
+      <Filter>CellEngine\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CellEngineMain.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cellengine.cpp">
+      <Filter>CellEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ruletables.cpp">
+      <Filter>CellEngine\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="cellengine_wrap.cpp">
+      <Filter>SWIG\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\pyMicropolis\cellEngine\cellconfigurations.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\celldrawingarea.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="cellengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\cellmodel.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\cellpiemenus.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\cellrulecompiler.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\celltool.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\pyMicropolis\cellEngine\cellwindow.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="convert-tiles.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="test.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
+    <None Include="..\..\MicropolisEngine\python\SWIG.rules">
+      <Filter>SWIG\Rule Files</Filter>
+    </None>
+    <None Include="..\README.txt">
+      <Filter>Doc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SWIG Include="..\swig\cellengine-swig-python.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+    <SWIG Include="..\swig\cellengine.i">
+      <Filter>SWIG\SWIG Files</Filter>
+    </SWIG>
+  </ItemGroup>
+</Project>
