@@ -99,7 +99,9 @@
       <OutputFile>$(ProjectDir)\$(Configuration)\$(ProjectName).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy $(TargetPath) $(SolutionDir)pyMicropolis\micropolisEngine /Y</Command>
+      <Command>copy /Y "$(ProjectDir)$(Configuration)\_micropolisengine.pyd" "$(SolutionDir)pyMicropolis\micropolisEngine"
+copy /Y "$(ProjectDir)micropolisengine.py" "$(SolutionDir)pyMicropolis\micropolisEngine"</Command>
+      <Message>Copy python files to game directory</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">
@@ -245,6 +247,7 @@ xcopy $(TargetDir)micropolisengine.dll $(SolutionDir) /Y
     </SWIG>
   </ItemGroup>
   <ItemGroup>
+    <None Include="micropolisengine.py" />
     <None Include="SWIG.rules" />
     <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\__init__.py">
       <FileType>Document</FileType>

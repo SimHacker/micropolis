@@ -101,8 +101,9 @@
       <OutputFile>$(ProjectDir)\$(Configuration)\$(ProjectName).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy $(TargetPath) $(SolutionDir)pyMicropolis\tileEngine /Y
-xcopy $(ProjectDir)tileengine.py $(SolutionDir)pyMicropolis\tileEngine /Y</Command>
+      <Command>copy /Y "$(ProjectDir)$(Configuration)\_tileengine.pyd" "$(SolutionDir)pyMicropolis\tileEngine"
+copy /Y "$(ProjectDir)tileengine.py" "$(SolutionDir)pyMicropolis\tileEngine"</Command>
+      <Message>Copy python files to game directory</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">
