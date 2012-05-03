@@ -45,7 +45,6 @@ Global
 		{8A416F7D-1E36-470A-AE53-FCDF9AEB3D41}.ReleaseSymbols|Win32.Build.0 = ReleaseSymbols|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.CSharp Release|Any CPU.ActiveCfg = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.CSharp Release|Mixed Platforms.ActiveCfg = CSharp Release|Win32
-		{28C58030-8704-44A4-A165-0A95628AA6B3}.CSharp Release|Mixed Platforms.Build.0 = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.CSharp Release|Win32.ActiveCfg = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.CSharp Release|Win32.Build.0 = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.Debug|Any CPU.ActiveCfg = Release|Win32
@@ -65,7 +64,6 @@ Global
 		{28C58030-8704-44A4-A165-0A95628AA6B3}.ReleaseSymbols|Win32.Build.0 = ReleaseSymbols|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B9}.CSharp Release|Any CPU.ActiveCfg = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B9}.CSharp Release|Mixed Platforms.ActiveCfg = CSharp Release|Win32
-		{28C58030-8704-44A4-A165-0A95628AA6B9}.CSharp Release|Mixed Platforms.Build.0 = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B9}.CSharp Release|Win32.ActiveCfg = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B9}.CSharp Release|Win32.Build.0 = CSharp Release|Win32
 		{28C58030-8704-44A4-A165-0A95628AA6B9}.Debug|Any CPU.ActiveCfg = Release|Win32

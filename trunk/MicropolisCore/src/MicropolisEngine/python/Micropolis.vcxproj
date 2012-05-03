@@ -57,8 +57,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">$(SolutionDir)csMicropolis\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">$(SolutionDir)MicropolisEngine\csharp\$(Configuration)\</OutDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'" />
@@ -69,6 +68,7 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='CSharp Release|Win32'">$(SolutionDir)MicropolisEngine\csharp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <SWIG>
@@ -153,7 +153,6 @@ copy /Y "$(ProjectDir)micropolisengine.py" "$(SolutionDir)pyMicropolis\micropoli
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)micropolisengine.dll</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -163,14 +162,15 @@ copy /Y "$(ProjectDir)micropolisengine.py" "$(SolutionDir)pyMicropolis\micropoli
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(SolutionDir)MicropolisEngine\csharp\$(Configuration)\micropolisengine.dll</OutputFile>
     </Link>
     <Bscmake>
       <OutputFile>$(ProjectDir)\$(Configuration)\$(ProjectName).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy $(SolutionDir)MicropolisEngine\csharp\*.cs $(TargetDir)\MicropolisEngine /Y
-xcopy $(TargetDir)micropolisengine.dll $(SolutionDir) /Y
-</Command>
+      <Command>copy /Y "$(OutDir)micropolisengine.dll" "$(SolutionDir)csMicropolis"
+copy /Y "$(SolutionDir)MicropolisEngine\csharp\*.cs" "$(SolutionDir)csMicropolis\MicropolisEngine"</Command>
+      <Message>Copy C# files to game directory</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
