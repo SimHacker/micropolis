@@ -87,7 +87,7 @@
 %include <stl.i>
 %include <arrays_csharp.i>
 %include <typemaps.i>
-%include <pointer.i>
+
 
 ////////////////////////////////////////////////////////////////////////
 // Typemaps
