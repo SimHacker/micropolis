@@ -16,3 +16,7 @@ http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.18/gtk+-bundle_2.18.5-20091
 Unzip it to c:\gtk as the projects are configured to look in the c:\gtk\lib directories for their
 files. If you unzip to a different directory you'll have to modify the project properties
 accordingly.
+
+Building with Visual Studio 2010
+================================
+As of April 30, 2012 the Micropolis solution has been upgraded to use Visual Studio 2010.
