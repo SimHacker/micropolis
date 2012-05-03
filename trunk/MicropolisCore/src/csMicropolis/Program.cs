@@ -23,7 +23,7 @@ namespace MicropolisClient
                 engine.setPasses(200);
                 // setTile = engine.setTile;
 
-                // add robot
+                // add robots?
 
                 var x = 0;
                 var y = 0;

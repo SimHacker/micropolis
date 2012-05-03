@@ -71,13 +71,28 @@
 %include <typemaps.i>
 
 %{
+
 ////////////////////////////////////////////////////////////////////////
 // Headers inserted into micropolisengine_wrap.cpp,
 // from micropolisengine-swig-csharp.i
+
+
 #include "micropolis.h"
 #include "generate.h"
 #include "text.h"
+
+
+////////////////////////////////////////////////////////////////////////
+
+
 %}
+
+
+////////////////////////////////////////////////////////////////////////
+// Handle the = operator for the Map class (map_type.h)
+
+
+%rename(Equals) Map::operator=;
 
 
 %include "data_types.h"
@@ -88,27 +103,12 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-// Typemaps
-//
-// Tell SWIG how to pass certain data types in and out.
-
-%typemap(in) const char * { $1 = const string $input; }
-%typemap(in) char * { $1 = new string($input); }
-%typemap(in) unsigned char * { $1 = new string($input); }
-
-
-////////////////////////////////////////////////////////////////////////
-// Need to figure out how to define typemaps for these types
-// ToolEffects (connect.cpp)
-// Position (disasters.cpp)
-
-
-////////////////////////////////////////////////////////////////////////
 // Templates
 //
 // Tell SWIG to write wrappers for the templates that we're 
 // instantiating for the maps (and any other necessary templates), 
 // so we can access them from the scripting language.
+
 
 %template(MapByte1) Map<Byte, 1>;
 %template(MapByte2) Map<Byte, 2>;
@@ -117,15 +117,20 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-// Need a way to handle = operator for the Map class? (map_type.h)
+// Typemaps
+//
+// Tell SWIG how to pass certain data types in and out.
 
-%ignore *::operator=;
+//%typemap(in) const char * { $1 = const string $input; }
+//%typemap(in) char * { $1 = new string($input); }
+//%typemap(in) unsigned char * { $1 = new string($input); }
 
 
 ////////////////////////////////////////////////////////////////////////
 // Wrap any pointers
 
-%apply float *INOUT { float *result };
+
+//%apply float *INOUT { float *result };
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -133,6 +138,8 @@
 // types. Arrays of other things such as System.Drawing.Point are
 // also possible.
 
+
+/*
 %define %cs_marshal_array(TYPE, CSTYPE)
         %typemap(ctype)  TYPE[] "void*"
         %typemap(imtype,
@@ -153,3 +160,4 @@ inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
 %cs_marshal_array(unsigned long long, ulong)
 %cs_marshal_array(float, float)
 %cs_marshal_array(double, double) 
+*/
