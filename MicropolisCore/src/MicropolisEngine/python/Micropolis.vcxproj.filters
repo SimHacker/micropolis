@@ -209,6 +209,9 @@
     <None Include="..\doc\UserInterfacePlan.txt">
       <Filter>Doc</Filter>
     </None>
+    <None Include="micropolisengine.py">
+      <Filter>SWIG\Python Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="..\..\pyMicropolis\micropolisEngine\__init__.py">

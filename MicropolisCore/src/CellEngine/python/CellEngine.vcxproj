@@ -100,7 +100,9 @@
       <OutputFile>$(ProjectDir)\$(Configuration)\$(ProjectName).bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>xcopy $(TargetPath) $(SolutionDir)pyMicropolis\cellEngine /Y</Command>
+      <Command>copy /Y "$(ProjectDir)$(Configuration)\_cellengine.pyd" "$(SolutionDir)pyMicropolis\cellEngine"
+copy /Y "$(ProjectDir)cellengine.py" "$(SolutionDir)pyMicropolis\cellEngine"</Command>
+      <Message>Copy python files to game directory</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseSymbols|Win32'">
