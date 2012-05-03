@@ -66,14 +66,10 @@
 
 %module micropolisengine
 
-%include <stl.i>
-%include <arrays_csharp.i>
-%include <typemaps.i>
-
 %{
 
 ////////////////////////////////////////////////////////////////////////
-// Headers inserted into micropolisengine_wrap.cpp,
+// Headers inserted into micropolisengine-swig-csharp_wrap.cpp,
 // from micropolisengine-swig-csharp.i
 
 
@@ -86,6 +82,87 @@
 
 
 %}
+
+
+%include <stl.i>
+%include <arrays_csharp.i>
+%include <typemaps.i>
+%include <pointer.i>
+
+////////////////////////////////////////////////////////////////////////
+// Typemaps
+//
+// Tell SWIG how to pass certain data types in and out.
+
+
+%typemap(in) const char * { $1 = const string $input; }
+%typemap(in) char * { $1 = new string($input); }
+%typemap(in) unsigned char * { $1 = new string($input); }
+
+
+////////////////////////////////////////////////////////////////////////
+// Arrays
+
+
+%apply short INOUT[] { short problemVotes[PROBNUM] }
+%apply short INOUT[] { short problemOrder[CVP_PROBLEM_COMPLAINTS] }
+
+
+////////////////////////////////////////////////////////////////////////
+// Wrap any pointers
+
+
+%apply short INPUT[] { short* resHist }
+%apply short INOUT[] { short* comHist }
+%apply short INOUT[] { short* indHist }
+%apply short INOUT[] { short* moneyHist }
+%apply short INOUT[] { short* pollutionHist }
+%apply short INOUT[] { short* crimeHist }
+%apply short INOUT[] { short* miscHist }
+%apply unsigned char INOUT[] { unsigned char* s }
+%apply short INPUT[] { short* hist }
+
+
+// TODO
+// void Micropolis::makeSingleLake(const Position &pos)
+// callback
+// callbackData
+// userData
+// Byte* Ptr (used in NewPtr function to allocate memory)
+// return type on get for *Hist variables
+
+
+//%apply unsigned short INOUT[] { unsigned short *map }
+//%apply void OUTPUT[] { void *callbackData }
+
+
+////////////////////////////////////////////////////////////////////////
+// The following macro calls allow you to pass arrays of primitive
+// types. Arrays of other things such as System.Drawing.Point are
+// also possible.
+
+/*
+%define %cs_marshal_array(TYPE, CSTYPE)
+        %typemap(ctype)  TYPE[] "void*"
+        %typemap(imtype,
+inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
+        %typemap(cstype) TYPE[] "CSTYPE[]"
+        %typemap(in)     TYPE[] %{ $1 = (TYPE*)$input; %}
+        %typemap(csin)   TYPE[] "$csinput"
+%enddef
+
+%cs_marshal_array(bool, bool)
+%cs_marshal_array(short, short)
+%cs_marshal_array(unsigned short, ushort)
+%cs_marshal_array(int, int)
+%cs_marshal_array(unsigned int, uint)
+%cs_marshal_array(long, int)
+%cs_marshal_array(unsigned long, uint)
+%cs_marshal_array(long long, long)
+%cs_marshal_array(unsigned long long, ulong)
+%cs_marshal_array(float, float)
+%cs_marshal_array(double, double) 
+*/
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -114,50 +191,3 @@
 %template(MapByte2) Map<Byte, 2>;
 %template(MapByte4) Map<Byte, 4>;
 %template(MapShort8) Map<short, 8>;
-
-
-////////////////////////////////////////////////////////////////////////
-// Typemaps
-//
-// Tell SWIG how to pass certain data types in and out.
-
-//%typemap(in) const char * { $1 = const string $input; }
-//%typemap(in) char * { $1 = new string($input); }
-//%typemap(in) unsigned char * { $1 = new string($input); }
-
-
-////////////////////////////////////////////////////////////////////////
-// Wrap any pointers
-
-
-//%apply float *INOUT { float *result };
-
-
-////////////////////////////////////////////////////////////////////////
-// The following macro calls allow you to pass arrays of primitive
-// types. Arrays of other things such as System.Drawing.Point are
-// also possible.
-
-
-/*
-%define %cs_marshal_array(TYPE, CSTYPE)
-        %typemap(ctype)  TYPE[] "void*"
-        %typemap(imtype,
-inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
-        %typemap(cstype) TYPE[] "CSTYPE[]"
-        %typemap(in)     TYPE[] %{ $1 = (TYPE*)$input; %}
-        %typemap(csin)   TYPE[] "$csinput"
-%enddef
-
-%cs_marshal_array(bool, bool)
-%cs_marshal_array(short, short)
-%cs_marshal_array(unsigned short, ushort)
-%cs_marshal_array(int, int)
-%cs_marshal_array(unsigned int, uint)
-%cs_marshal_array(long, int)
-%cs_marshal_array(unsigned long, uint)
-%cs_marshal_array(long long, long)
-%cs_marshal_array(unsigned long long, ulong)
-%cs_marshal_array(float, float)
-%cs_marshal_array(double, double) 
-*/
