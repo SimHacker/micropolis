@@ -24,3 +24,7 @@ http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
 Make sure you download a version of PyCairo that matches the version of Python you're using. The
 Python version will be part of the PyCairo filename:
 pycairo-[cairo version].[platform]-py[python version].exe
+
+Building with Visual Studio 2010
+================================
+As of April 30, 2012 the Micropolis solution has been upgraded to use Visual Studio 2010.

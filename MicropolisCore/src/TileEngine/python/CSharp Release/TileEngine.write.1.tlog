@@ -1,7 +1,0 @@
-^..\swig\tileengine.i
-C:\projects\micropolis\MicropolisCore\src\TileEngine\python\[SwigOutDir]\tileengine[OutputSuffix]
-^C:\projects\micropolis\MicropolisCore\src\TileEngine\python\TileEngine.vcxproj
-C:\projects\micropolis\MicropolisCore\src\CSharp Release\TileEngine.lib
-C:\projects\micropolis\MicropolisCore\src\CSharp Release\TileEngine.lib
-C:\projects\micropolis\MicropolisCore\src\CSharp Release\TileEngine.exp
-C:\projects\micropolis\MicropolisCore\src\CSharp Release\TileEngine.exp
