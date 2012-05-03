@@ -124,52 +124,19 @@
 
 
 // TODO
-// void Micropolis::makeSingleLake(const Position &pos)
-// callback
+// void Micropolis::makeSingleLake(const Position &pos) (and other makeXXX functions)
+// callback (use director)
 // callbackData
 // userData
 // Byte* Ptr (used in NewPtr function to allocate memory)
-// return type on get for *Hist variables
-
-
-//%apply unsigned short INOUT[] { unsigned short *map }
-//%apply void OUTPUT[] { void *callbackData }
-
-
-////////////////////////////////////////////////////////////////////////
-// The following macro calls allow you to pass arrays of primitive
-// types. Arrays of other things such as System.Drawing.Point are
-// also possible.
-
-/*
-%define %cs_marshal_array(TYPE, CSTYPE)
-        %typemap(ctype)  TYPE[] "void*"
-        %typemap(imtype,
-inattributes="[MarshalAs(UnmanagedType.LPArray)]") TYPE[] "CSTYPE[]"
-        %typemap(cstype) TYPE[] "CSTYPE[]"
-        %typemap(in)     TYPE[] %{ $1 = (TYPE*)$input; %}
-        %typemap(csin)   TYPE[] "$csinput"
-%enddef
-
-%cs_marshal_array(bool, bool)
-%cs_marshal_array(short, short)
-%cs_marshal_array(unsigned short, ushort)
-%cs_marshal_array(int, int)
-%cs_marshal_array(unsigned int, uint)
-%cs_marshal_array(long, int)
-%cs_marshal_array(unsigned long, uint)
-%cs_marshal_array(long long, long)
-%cs_marshal_array(unsigned long long, ulong)
-%cs_marshal_array(float, float)
-%cs_marshal_array(double, double) 
-*/
+// return type on get for resHist, comHist, etc. variables (they're all SWIGTYPE_p_short right now)
+// useful tips: http://www.altdevblogaday.com/2011/05/27/swig-and-a-miss/
 
 
 ////////////////////////////////////////////////////////////////////////
 // Handle the = operator for the Map class (map_type.h)
 
-
-%rename(Equals) Map::operator=;
+%ignore Map::operator=;
 
 
 %include "data_types.h"
