@@ -85,7 +85,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <OutputFile>$(ProjectDir)\$(Configuration)\_cellengine.pyd</OutputFile>
+      <OutputFile>$(ProjectDir)$(Configuration)\_cellengine.pyd</OutputFile>
       <AdditionalLibraryDirectories>c:\Python\libs;C:\gtk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -95,6 +95,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>python27.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <OutputFile>$(ProjectDir)\$(Configuration)\$(ProjectName).bsc</OutputFile>
