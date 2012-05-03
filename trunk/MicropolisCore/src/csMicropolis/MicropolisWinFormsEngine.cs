@@ -1,4 +1,4 @@
-// micropolishistorypanel.cs
+// micropoliswinformsengine.cs
 //
 // Micropolis, Unix Version.  This game was released for the Unix platform
 // in or about 1990 and has been modified for inclusion in the One Laptop
@@ -61,14 +61,12 @@
 
 
 ////////////////////////////////////////////////////////////////////////
-// Micropolis History Panel
+// Micropolis WinForms Engine
 // Bil Simser
-
-using System.Windows.Forms;
 
 namespace MicropolisClient
 {
-    internal class MicropolisHistoryPanel : UserControl
+    public class MicropolisWinFormsEngine : MicropolisGenericEngine
     {
     }
 }

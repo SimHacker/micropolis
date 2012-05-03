@@ -70,26 +70,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EditableMicropolisDrawingArea.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="MicropolisBudgetPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MicropolisControlPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MicropolisCSEngine.cs" />
+    <Compile Include="MicropolisWinFormsEngine.cs" />
     <Compile Include="MicropolisDisastersPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MicropolisDrawingArea.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MicropolisEngine\CityClass.cs" />
@@ -131,7 +119,9 @@
     <Compile Include="MicropolisEvaluationView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MicropolisGaugeView.cs" />
+    <Compile Include="MicropolisGaugeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="MicropolisGenericEngine.cs" />
     <Compile Include="MicropolisHistoryPanel.cs">
       <SubType>UserControl</SubType>
@@ -154,31 +144,24 @@
     <Compile Include="MicropolisNoticeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MicropolisPanedWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MicropolisRobot.cs" />
     <Compile Include="MicropolisStartPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MicropolisView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="MicropolisPannedWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MicropolisPannedWindow.Designer.cs">
+      <DependentUpon>MicropolisPannedWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MicropolisZone.cs" />
-    <Compile Include="NavigationMicropolisDrawingArea.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="NoticeMicropolisDrawingArea.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PreviewMicropolisDrawingArea.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Program.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MicropolisDisastersPanel.resx">
+      <DependentUpon>MicropolisDisastersPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,4 +1,8 @@
-﻿using System;
+﻿//
+// Program.cs Main file for running Micropolis with the Winforms frontend
+//
+
+using System;
 using System.Windows.Forms;
 
 namespace MicropolisClient
@@ -13,15 +17,27 @@ namespace MicropolisClient
         {
             try
             {
-                var engine = new MicropolisCSEngine {cityTax = 10};
+                var engine = new MicropolisWinFormsEngine();
 
+                engine.cityTax = 10;
                 engine.setPasses(200);
+                // setTile = engine.setTile;
+
+                // add robot
+
+                var x = 0;
+                var y = 0;
+
+                var w = 800;
+                var h = 600;
             
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-
-                var win1 = new MicropolisPanedWindow(engine) {Top = 0, Left = 0, Width = 800, Height = 600};
-
+                var win1 = new MicropolisPannedWindow(engine);
+                win1.Width = w;
+                win1.Height = h;
+                win1.Top = y;
+                win1.Left = x;
                 Application.Run(win1);
             }
             catch (Exception e)
