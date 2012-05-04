@@ -66,6 +66,12 @@
 
 %module micropolisengine
 
+
+%include <stl.i>
+%include <arrays_csharp.i>
+%include <typemaps.i>
+
+
 %{
 
 ////////////////////////////////////////////////////////////////////////
@@ -84,9 +90,11 @@
 %}
 
 
-%include <stl.i>
-%include <arrays_csharp.i>
-%include <typemaps.i>
+%include "data_types.h"
+%include "map_type.h"
+%include "micropolis.h"
+%include "generate.h"
+%include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -137,13 +145,6 @@
 // Handle the = operator for the Map class (map_type.h)
 
 %ignore Map::operator=;
-
-
-%include "data_types.h"
-%include "map_type.h"
-%include "micropolis.h"
-%include "generate.h"
-%include "text.h"
 
 
 ////////////////////////////////////////////////////////////////////////
