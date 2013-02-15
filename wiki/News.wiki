@@ -2,7 +2,32 @@
 
 = News =
 
-_(This page is several years old. A lot of progress rewriting the code has been made since the news below.)_
+This page presents a history of the Micropolis open source release.
+
+== New Update (April 2011) ==
+
+We have come a long way in the years since releasing the original TCL/Tk/X11 version of !SimCity for the OLPC:
+  * Cleaned up and simplified the original !SimCity Classic C code.
+  * Rewrote all the old C code into portable C++ code with modern best practices for reusability.
+  * Refactored code into independent modules for comprehensibility, modularity and maintainability.
+  * Renamed variables, functions and classes for readability, consistency and obviousness.
+  * Extensively commented and documented code and headers for learnability.
+  * Created a reusable, language and user interface independent [http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/MicropolisEngine/src MicropolisCore] module.
+  * Created a reusable [http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/TileEngine/src TileEngine] module, supporting Cairo and Flash AMF. 
+  * Wrote Doxygen source code comments with detailed explanations of how the simulator works, to create [http://micropolisonline.com/doc/index.html cross referenced code and API documentation].
+  * Integrated !MicropolisCore with [http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine Python] and [http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/csMicropolis C#] (via SWIG), so the user interface and game logic can be [http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py?r=477 scripted and extended in Python]. 
+  * Developed a [http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgenericengine.py?r=477 desktop user interface] with the Python/GTK/Cairo/Pango/X11 stack.
+  * Developed a [http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py?r=477 web based user interface] with the Python/[http://code.google.com/p/micropolis/source/browse/trunk/?r=477#trunk/turbogears/micropolis TurboGears]/AMF/Flash/[http://code.google.com/p/micropolis/source/browse/#svn/trunk/laszlo/micropolis/classes OpenLaszlo] stack. 
+  * Published a [http://micropolisonline.com/lps/micropolis/micropolis/micropolis_en-US.lzx?lzt=swf&lzr=swf10 playable web based Micropolis Online] server based game, in English and  [http://micropolisonline.com/lps/micropolis/micropolis/micropolis_nl-NL.lzx?lzt=swf&lzr=swf10 Dutch].  
+  * Presented a [http://www.youtube.com/watch?v=_9oy0LjGXnM&feature=&p=3509FB083052CD90&index=0&playnext=1 Lightning Talk and Demo of Micropolis] at HAR 2009. 
+  * [http://code.google.com/p/micropolis/source/browse/trunk/micropolis-activity/src/notes/MultiPlayerIdeas.txt?r=477 Lots] [http://code.google.com/p/micropolis/source/browse/trunk/micropolis-activity/src/notes/Beyond-Intelligent-Machines?r=477 and] [http://code.google.com/p/micropolis/source/browse/trunk/micropolis-activity/src/notes/InterCHI-Interactive-Experience-Proposal?r=477 lots] [http://code.google.com/p/micropolis/source/browse/trunk/?r=477#trunk/micropolis-activity/manual of] [http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/CellEngine/src other] [http://code.google.com/p/micropolis/source/browse/trunk/micropolis-activity/src/notes/MultiPlayerIdeas.txt?r=477 wild] [http://code.google.com/p/micropolis/source/browse/trunk/micropolis-activity/src/notes/OLPC-notes.txt?r=477 and] [http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/pyMicropolis/piemenu/piemenu.py?r=477 crazy] [http://code.google.com/p/micropolis/source/browse/trunk/laszlo/micropolis/classes/piemenu.lzx?r=477 stuff] you can find browsing around the [http://code.google.com/p/micropolis/source/browse/trunk/?r=477 source code].
+  * Don Hopkins (the primary developer of the Micropolis branch of !SimCity) joined the [http://www.StupidFunClub.com Stupid Fun Club], an entertainment think tank started up by Will Wright (the creator of !SimCity). Will's strong support, advice and mentoring made the Micropolis project possible, and the open source project will continue to benefit from his involvement and ideas. 
+
+
+== Web-Based Version of Micropolis (February 2010, Don Hopkins) ==
+
+Latest update: I have started developing a web based version of Micropolis, using !TurboGears, for the "Micropolis Eduverse" project. The open source code is now checked in, in the "micropolis" directory!
+
 
 == Multiple Map Views (April 1 2007, Don Hopkins) ==
 
