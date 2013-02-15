@@ -21,6 +21,19 @@ Copyright (C) 2002 by Electronic Arts.
 
 ========================================================================
 
+How to Run This Program
+-----------------------
+
+First of all, you must have Java (version 7 or better) installed on your
+computer. You can get Java at http://java.com/download.
+
+Next, simply double-click the enclosed micropolisj.jar file to run the
+program.
+
+
+How to Build This Program from Source
+-------------------------------------
+
 See the INSTALL file for instructions on building the program from this
 source code release.
 
