@@ -1,25 +1,59 @@
 #summary Description of Micropolis source code release.
 #labels Featured
 
-= Micropolis Source Code Release =
+= Micropolis Source Code Description =
 
-_(This page is several years old. A lot of progress rewriting the code has been made since the release described below.)_
+This page describes the several source code releases for Micropolis
+which you can find by browsing the Source code of this project
+(click the Source tab above).
 
-This is the binary and source code for Micropolis (A.K.A. "S*mC*ty": see the GPL License and additional terms, below), which is released under the GPL.
+== micropolis-java ==
 
-For more information, see Don Hopkins' Blog: http://www.DonHopkins.com. 
-Please email questions and comments to dhopkins@DonHopkins.com .
+This is the new (as of February 2013) Java rewrite of Micropolis.
+Functionality-wise it is almost equivalent to the TCL/Tk edition,
+but the source code is probably more cleanly organized, and all
+strings are translatable. Being in Java, it can easily be made to
+run on any modern desktop operating system.
 
-  * [http://micropolis.googlecode.com/files/micropolis.xo micropolis.xo]
-    Download this to TCL/Tk Micropolis install on the OLPC XO-1.
-  * [http://micropolis.googlecode.com/files/micropolis-activity.tgz micropolis-activity.tgz]
-    Download this to install TCL/Tk Micropolis on x86 Linux systems.
-  * [http://code.google.com/p/micropolis/source/checkout micropolis-activity-source.tgz]
-    Download this to build TCL/Tk Micropolis from source.
-  * [http://code.google.com/p/micropolis/source/checkout MicropolisCore.tgz]
-    Download this to build the Python modules micropolis, cellengine and tileengine.
+The `micropolisj.engine` package contains the guts of the city
+simulation. It has no dependencies on the front-end or any particular
+graphical system.
+
+The `micropolisj.gui` package provides the user interface for the
+game. It renders the city, controls the speed of the simulation, and responds to event messages from the engine.
+
+The Java release was contributed by Jason Long. Email him at jason@long.name with any questions or comments about the Java release, or if you want to contribute translated strings.
+
+
+== !MicropolisCore ==
+
+This is the C++/Python rewrite of Micropolis. The code is organized as several modules: micropolis, cellengine, and tileengine.
     * The micropolis module is the new version of Micropolis, cleaned up and recast as a C++ class.
     * The cellengine module is a cellular automata machine engine.
     * The tileengine module is a Cairo based tile renderer, used to display micropolis tiles and cellengine cells. It plugs into micropolis and cellengine, but is independent of them and useful for other applications.
-    * These modules require Python 2.5 and the Python modules pygtk, pycairo and PIL to be installed. Probably some other modules I can't think of off the top of my head, too.
-    * This code will compile on Windows or Linux. It is intended to be used with the OLPC's Sugar user interface environemnt (depending on Cairo and Pango for graphics and text formatting), but layered so the core code is useful in other contexts such as different scripting languages, web servers, desktop applications, embedded devices, etc.
+
+These modules require Python 2.5 and the Python modules pygtk, pycairo and PIL to be installed. This code will compile on Windows or Linux. It is intended to be used with the OLPC's Sugar user interface environment (depending on Cairo and Pango for graphics and text formatting), but layered so the core code is useful in other contexts such as different scripting languages, web servers, desktop applications, embedded devices, etc.
+
+== micropolis-activity ==
+
+This is the original TCL/Tk edition of Micropolis for Linux systems.
+The back-end is entirely in C, and the front-end user interface
+is a mixture of C and Tcl.
+
+== turbogears ==
+
+This is the server-side piece of the web-based edition of Micropolis, known as Micropolis Online. It uses the !TurboGears web application framework for Python.
+
+== laszlo ==
+
+This is the client-side piece of the web-based edition of Micropolis. It uses !OpenLaszlo and Adobe Flash.
+
+== wikimedia ==
+
+This is an !OpenLaszlo plugin for !MediaWiki, allowing the client-side piece of Micropolis Online to be embedded in a wiki page.
+
+== aws ==
+
+This repository contains some utility scripts and configuration files
+helpful for launching a Micropolis Online server on Amazon's EC2
+cloud.
