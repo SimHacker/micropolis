@@ -4,12 +4,13 @@
 
 This page presents a history of the Micropolis open source release.
 
-== Java Rewrite (February 15, 2013, Jason Long) ==
+== Java Rewrite (February 15, 2013) ==
 
 There is now a version of Micropolis written in the Java programming language, contributed by Jason Long. This makes Micropolis more easily accessible to users on Windows and Mac platforms. First make sure you have a recent version of Java on your computer, then download Micropolis (Java edition) from this site.
 
 Or, if you're interested in the source, check out the `trunk/micropolis-java` repository under the Source tab of this site.
 
+For assistance with this version of Micropolis, contact Jason Long at jason@long.name.
 
 == New Update (April 2011) ==
 
