@@ -1244,7 +1244,7 @@ public class MainWindow extends JFrame
 		{
 			priorityMenuItems.get(spd).setSelected(getEngine().simSpeed == spd);
 		}
-		for (int i = Micropolis.MIN_LEVEL; i <= Micropolis.MAX_LEVEL; i++)
+		for (int i = GameLevel.MIN_LEVEL; i <= GameLevel.MAX_LEVEL; i++)
 		{
 			difficultyMenuItems.get(i).setSelected(getEngine().gameLevel == i);
 		}
