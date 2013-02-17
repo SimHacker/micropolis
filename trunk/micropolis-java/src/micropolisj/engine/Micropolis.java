@@ -1155,7 +1155,7 @@ public class Micropolis
 
 		pollutionAverage = pcount != 0 ? (ptotal / pcount) : 0;
 
-		smoothTerrain(qtem);
+		terrainMem = smoothTerrain(qtem);
 
 		fireMapOverlayDataChanged(MapState.POLLUTE_OVERLAY);   //PLMAP
 		fireMapOverlayDataChanged(MapState.LANDVALUE_OVERLAY); //LVMAP
@@ -1347,11 +1347,12 @@ public class Micropolis
 		fireDemandChanged();
 	}
 
-	void smoothTerrain(int [][] qtem)
+	int [][] smoothTerrain(int [][] qtem)
 	{
 		final int QWX = qtem[0].length;
 		final int QWY = qtem.length;
 
+		int [][] mem = new int[QWY][QWX];
 		for (int y = 0; y < QWY; y++)
 		{
 			for (int x = 0; x < QWX; x++)
@@ -1365,9 +1366,10 @@ public class Micropolis
 					z += qtem[y-1][x];
 				if (y+1 < QWY)
 					z += qtem[y+1][x];
-				terrainMem[y][x] = z / 4 + qtem[y][x] / 2;
+				mem[y][x] = z / 4 + qtem[y][x] / 2;
 			}
 		}
+		return mem;
 	}
 
 	// calculate manhatten distance (in 2-units) from center of city
