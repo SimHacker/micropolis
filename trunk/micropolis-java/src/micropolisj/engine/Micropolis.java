@@ -32,7 +32,6 @@ public class Micropolis
 
 	// quarter-size arrays
 	int [][] terrainMem;
-	int [][] qtem;
 
 	// eighth-size arrays
 	public int [][] rateOGMem; //rate of growth?
@@ -186,7 +185,6 @@ public class Micropolis
 		int qY = (height+3)/4;
 
 		terrainMem = new int[qY][qX];
-		qtem = new int[qY][qX];
 
 		int smX = (width+7)/8;
 		int smY = (height+7)/8;
@@ -1050,8 +1048,9 @@ public class Micropolis
 	//power, terrain, land value
 	void ptlScan()
 	{
-		for (int [] aa : qtem)
-			Arrays.fill(aa, 0);
+		final int qX = (getWidth()+3)/4;
+		final int qY = (getHeight()+3)/4;
+		int [][] qtem = new int[qY][qX];
 
 		int landValueTotal = 0;
 		int landValueCount = 0;
