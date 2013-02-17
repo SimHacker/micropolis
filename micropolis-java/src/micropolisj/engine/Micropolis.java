@@ -100,8 +100,6 @@ public class Micropolis
 	public Speed simSpeed = Speed.NORMAL;
 	public boolean noDisasters = false;
 
-	public static final int MIN_LEVEL = 0;
-	public static final int MAX_LEVEL = 2;
 	public int gameLevel;
 
 	boolean autoGo;
