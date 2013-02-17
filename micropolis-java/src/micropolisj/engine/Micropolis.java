@@ -29,7 +29,6 @@ public class Micropolis
 	public int [][] crimeMem;    //updated each cycle by crimeScan(); affects land value
 	public int [][] popDensity;
 	public int [][] trfDensity;
-	int [][] tem;
 
 	// quarter-size arrays
 	int [][] terrainMem;
@@ -182,7 +181,6 @@ public class Micropolis
 		crimeMem = new int[hY][hX];
 		popDensity = new int[hY][hX];
 		trfDensity = new int[hY][hX];
-		tem = new int[hY][hX];
 
 		int qX = (width+3)/4;
 		int qY = (height+3)/4;
@@ -1060,6 +1058,7 @@ public class Micropolis
 
 		final int HWLDX = (getWidth()+1)/2;
 		final int HWLDY = (getHeight()+1)/2;
+		int [][] tem = new int[HWLDY][HWLDX];
 		for (int x = 0; x < HWLDX; x++)
 		{
 			for (int y = 0; y < HWLDY; y++)
