@@ -185,6 +185,7 @@ public class NewCityDialog extends JDialog
 		MainWindow win = (MainWindow) getOwner();
 		win.setEngine(newEngine);
 		win.currentFile = file;
+		win.makeClean();
 		dispose();
 	}
 
