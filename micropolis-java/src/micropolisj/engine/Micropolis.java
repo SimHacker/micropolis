@@ -13,6 +13,11 @@ import java.util.*;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * The main simulation engine for Micropolis.
+ * The front-end should call step() and animate() periodically
+ * to move the simulation forward in time.
+ */
 public class Micropolis
 {
 	static final Random DEFAULT_PRNG = new Random();
@@ -24,17 +29,59 @@ public class Micropolis
 	boolean [][] powerMap;
 
 	// half-size arrays
+
+	/**
+	 * For each 2x2 section of the city, the land value of the city (0-250).
+	 * 0 is lowest land value; 250 is maximum land value.
+	 * Updated each cycle by ptlScan().
+	 */
 	public int [][] landValueMem;
+
+	/**
+	 * For each 2x2 section of the city, the pollution level of the city (0-255).
+	 * 0 is no pollution; 255 is maximum pollution.
+	 * Updated each cycle by ptlScan(); affects land value.
+	 */
 	public int [][] pollutionMem;
-	public int [][] crimeMem;    //updated each cycle by crimeScan(); affects land value
+
+	/**
+	 * For each 2x2 section of the city, the crime level of the city (0-250).
+	 * 0 is no crime; 250 is maximum crime.
+	 * Updated each cycle by crimeScan(); affects land value.
+	 */
+	public int [][] crimeMem;
+
+	/**
+	 * For each 2x2 section of the city, the population density (0-?).
+	 * Used for map overlays and as a factor for crime rates.
+	 */
 	public int [][] popDensity;
+
+	/**
+	 * For each 2x2 section of the city, the traffic density (0-255).
+	 * If less than 64, no cars are animated.
+	 * If between 64 and 192, then the "light traffic" animation is used.
+	 * If 192 or higher, then the "heavy traffic" animation is used.
+	 */
 	public int [][] trfDensity;
 
 	// quarter-size arrays
+
+	/**
+	 * For each 4x4 section of the city, an integer representing the natural
+	 * land features in the vicinity of this part of the city.
+	 */
 	int [][] terrainMem;
 
 	// eighth-size arrays
+
+	/**
+	 * For each 8x8 section of the city, the rate of growth.
+	 * Capped to a number between -200 and 200.
+	 * Used for reporting purposes only; the number has no affect.
+	 */
 	public int [][] rateOGMem; //rate of growth?
+
 	int [][] fireStMap;      //firestations- cleared and rebuilt each sim cycle
 	public int [][] fireRate;       //firestations reach- used for overlay graphs
 	int [][] policeMap;      //police stations- cleared and rebuilt each sim cycle
