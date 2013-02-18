@@ -940,7 +940,7 @@ class MapScanner
 		if (trafficGood == -1)
 		{
 			int value = getCRValue(xpos, ypos);
-			doResidentialOut(xpos, ypos, tpop, value);
+			doResidentialOut(tpop, value);
 			return;
 		}
 
@@ -961,14 +961,14 @@ class MapScanner
 				}
 
 				int value = getCRValue(xpos, ypos);
-				doResidentialIn(xpos, ypos, tpop, value);
+				doResidentialIn(tpop, value);
 				return;
 			}
 
 			if (zscore < 350 && zscore + 26380 < (PRNG.nextInt(0x10000)-0x8000))
 			{
 				int value = getCRValue(xpos, ypos);
-				doResidentialOut(xpos, ypos, tpop, value);
+				doResidentialOut(tpop, value);
 			}
 		}
 	}
@@ -1072,7 +1072,7 @@ class MapScanner
 		}
 	}
 
-	private void doResidentialIn(int xpos, int ypos, int pop, int value)
+	private void doResidentialIn(int pop, int value)
 	{
 		assert value >= 0 && value <= 3;
 
@@ -1152,7 +1152,7 @@ class MapScanner
 		}
 	}
 
-	private void doResidentialOut(int xpos, int ypos, int pop, int value)
+	private void doResidentialOut(int pop, int value)
 	{
 		assert value >= 0 && value < 4;
 
