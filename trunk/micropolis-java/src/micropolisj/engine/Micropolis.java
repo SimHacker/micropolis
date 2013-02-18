@@ -1060,7 +1060,7 @@ public class Micropolis
 			if (tile < ROADBASE)
 			{
 				if (tile > FIREBASE)
-					return 90;
+					return 90;  //active fire
 
 				if (tile >= RADTILE)
 					return 255; //radioactivity
