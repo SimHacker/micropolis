@@ -10,6 +10,10 @@ Simulator speeds-
   should be done every cycle, even at the high speeds.
  *Do not have sprite's movement speed be dependent on speed.
 
+Finances-
+ *Fix bug where it is possible to get negative money :(...
+   It happens when expenses exceed income and there is no funds.
+
 Budget dialog-
  *Press escape to close
 
