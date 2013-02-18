@@ -57,6 +57,9 @@ public abstract class Sprite
 	 */
 	protected abstract void moveImpl();
 
+	/**
+	 * Perform this agent's movement and animation.
+	 */
 	public final void move()
 	{
 		lastX = x;
@@ -65,6 +68,9 @@ public abstract class Sprite
 		city.fireSpriteMoved(this);
 	}
 
+	/**
+	 * Tells whether this sprite is visible.
+	 */
 	public final boolean isVisible()
 	{
 		return this.frame != 0;
@@ -110,6 +116,9 @@ public abstract class Sprite
 		return Math.abs(x0-x1) + Math.abs(y0-y1);
 	}
 
+	/**
+	 * Replaces this sprite with an exploding sprite.
+	 */
 	final void explodeSprite()
 	{
 		this.frame = 0;
@@ -141,6 +150,10 @@ public abstract class Sprite
 		city.makeSound(xpos, ypos, Sound.EXPLOSION_HIGH);
 	}
 
+	/**
+	 * Checks whether another sprite is in collision ranges.
+	 * @return true iff the sprite is in collision range
+	 */
 	final boolean checkSpriteCollision(Sprite otherSprite)
 	{
 		if (!isVisible()) return false;
@@ -149,6 +162,10 @@ public abstract class Sprite
 		return (getDis(this.x, this.y, otherSprite.x, otherSprite.y) < 30);
 	}
 
+	/**
+	 * Destroys whatever is at the specified location,
+	 * replacing it with fire, rubble, or water as appropriate.
+	 */
 	final void destroyTile(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
@@ -181,6 +198,12 @@ public abstract class Sprite
 		}
 	}
 
+	/**
+	 * Helper function for rotating a sprite.
+	 * @param p the sprite's current attitude (1-8)
+	 * @param d the desired attitude (1-8)
+	 * @return the new attitude
+	 */
 	static final int turnTo(int p, int d)
 	{
 		if (p == d)
