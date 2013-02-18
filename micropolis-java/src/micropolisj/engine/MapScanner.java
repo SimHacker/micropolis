@@ -477,6 +477,7 @@ class MapScanner
 
 	/**
 	 * Place a 3x3 zone on to the map.
+	 * @param base The first/north-western tile value for this zone.
 	 */
 	boolean zonePlop(int xpos, int ypos, int base)
 	{
@@ -800,9 +801,10 @@ class MapScanner
 	}
 
 	/*
+	 * Add smoke to an industrial zone.
 	 * @param powerOn indicates whether the building has power
 	 */
-	void setSmoke(int xpos, int ypos, boolean powerOn)
+	void setSmoke(boolean powerOn)
 	{
 		int cchr9 = city.map[ypos][xpos] & LOMASK;
 
@@ -859,7 +861,7 @@ class MapScanner
 	void doIndustrial(boolean powerOn)
 	{
 		city.indZoneCount++;
-		setSmoke(xpos, ypos, powerOn);
+		setSmoke(powerOn);
 
 		int tpop = city.industrialZonePop(cchr9);
 		city.indPop += tpop;
