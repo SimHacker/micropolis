@@ -476,11 +476,18 @@ class MapScanner
 	}
 
 	/**
-	 * Place a 3x3 zone on to the map.
+	 * Place a 3x3 zone on to the map, centered on the current location.
+	 * Note: nothing is done if part of this zone is off the edge
+	 * of the map or is being flooded or radioactive.
+	 *
 	 * @param base The first/north-western tile value for this zone.
+	 * @return true iff the zone was actually placed.
 	 */
-	boolean zonePlop(int xpos, int ypos, int base)
+	boolean zonePlop(int base)
 	{
+		//FIXME- does this function have a caller that actually
+		//pays attention to the return value?
+
 		if (!city.testBounds(xpos-1, ypos-1))
 			return false;
 		if (!city.testBounds(xpos+1, ypos+1))
@@ -491,8 +498,10 @@ class MapScanner
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				char c = (char)(city.map[y][x] & LOMASK);
-				if (c >= FLOOD && c < ROADBASE)
+				if (c >= FLOOD && c < ROADBASE) {
+					// radioactive, on fire, or flooded
 					return false;
+				}
 			}
 		}
 
@@ -660,13 +669,13 @@ class MapScanner
 	{
 		if (city.needHospital > 0)
 		{
-			zonePlop(xpos, ypos, HOSPITAL - 4);
+			zonePlop(HOSPITAL - 4);
 			city.needHospital = 0;
 		}
 
 		if (city.needChurch > 0)
 		{
-			zonePlop(xpos, ypos, CHURCH - 4);
+			zonePlop(CHURCH - 4);
 			city.needChurch = 0;
 		}
 	}
@@ -690,7 +699,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(xpos, ypos, RESBASE);
+					zonePlop(RESBASE);
 				}
 			}
 		}
@@ -706,7 +715,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(xpos, ypos, RESBASE);
+					zonePlop(RESBASE);
 				}
 			}
 		}
@@ -1128,19 +1137,19 @@ class MapScanner
 	void comPlop(int density, int value)
 	{
 		int base = (value * 5 + density) * 9 + CZB - 4;
-		zonePlop(xpos, ypos, base);
+		zonePlop(base);
 	}
 
 	void indPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + (IZB - 4);
-		zonePlop(xpos, ypos, base);
+		zonePlop(base);
 	}
 
 	void residentialPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + RZB - 4;
-		zonePlop(xpos, ypos, base);
+		zonePlop(base);
 	}
 
 	private void doCommercialOut(int pop, int value)
@@ -1152,7 +1161,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlop(xpos, ypos, COMBASE);
+			zonePlop(COMBASE);
 			incrementROG(xpos, ypos, -8);
 		}
 	}
@@ -1166,7 +1175,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlop(xpos, ypos, INDCLR-4);
+			zonePlop(INDCLR-4);
 			incrementROG(xpos, ypos, -8);
 		}
 	}
