@@ -789,7 +789,7 @@ class MapScanner
 
 		if (trafficGood == -1)
 		{
-			int value = getCRValue(xpos, ypos);
+			int value = getCRValue();
 			doCommercialOut(tpop, value);
 			return;
 		}
@@ -806,14 +806,14 @@ class MapScanner
 				zscore > -350 &&
 				zscore - 26380 > (PRNG.nextInt(0x10000)-0x8000))
 			{
-				int value = getCRValue(xpos, ypos);
+				int value = getCRValue();
 				doCommercialIn(tpop, value);
 				return;
 			}
 
 			if (zscore < 350 && zscore + 26380 < (PRNG.nextInt(0x10000)-0x8000))
 			{
-				int value = getCRValue(xpos, ypos);
+				int value = getCRValue();
 				doCommercialOut(tpop, value);
 			}
 		}
@@ -958,7 +958,7 @@ class MapScanner
 
 		if (trafficGood == -1)
 		{
-			int value = getCRValue(xpos, ypos);
+			int value = getCRValue();
 			doResidentialOut(tpop, value);
 			return;
 		}
@@ -979,14 +979,14 @@ class MapScanner
 					return;
 				}
 
-				int value = getCRValue(xpos, ypos);
+				int value = getCRValue();
 				doResidentialIn(tpop, value);
 				return;
 			}
 
 			if (zscore < 350 && zscore + 26380 < (PRNG.nextInt(0x10000)-0x8000))
 			{
-				int value = getCRValue(xpos, ypos);
+				int value = getCRValue();
 				doResidentialOut(tpop, value);
 			}
 		}
@@ -1298,12 +1298,16 @@ class MapScanner
 		return value - 3000;
 	}
 
-	// applies to commercial and residential zones?
-	// returns integer from 0 to 3
-	int getCRValue(int x, int y)
+	/**
+	 * Gets the land-value class (0-3) for the current
+	 * residential or commercial zone location.
+	 * @return integer from 0 to 3, 0 is the lowest-valued
+	 * zone, and 3 is the highest-valued zone.
+	 */
+	int getCRValue()
 	{
-		int lval = city.landValueMem[y/2][x/2];
-		lval -= city.pollutionMem[y/2][x/2];
+		int lval = city.landValueMem[ypos/2][xpos/2];
+		lval -= city.pollutionMem[ypos/2][xpos/2];
 
 		if (lval < 30)
 			return 0;
