@@ -12,6 +12,9 @@ import java.util.*;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Contains the code for generating a random map terrain.
+ */
 public class MapGenerator
 {
 	Micropolis engine;
@@ -46,6 +49,9 @@ public class MapGenerator
 		return map.length;
 	}
 
+	/**
+	 * Generate a random map terrain.
+	 */
 	public void generateNewCity()
 	{
 		long r = Micropolis.DEFAULT_PRNG.nextLong();

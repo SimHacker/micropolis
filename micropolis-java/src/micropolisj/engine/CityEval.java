@@ -10,6 +10,9 @@ package micropolisj.engine;
 
 import java.util.*;
 
+/**
+ * Contains the code for performing a city evaluation.
+ */
 public class CityEval
 {
 	private final Micropolis engine;
@@ -56,6 +59,9 @@ public class CityEval
 	/** Score for various problems. */
 	public EnumMap<CityProblem,Integer> problemTable = new EnumMap<>(CityProblem.class);
 
+	/**
+	 * Perform an evaluation.
+	 */
 	void cityEvaluation()
 	{
 		if (engine.totalPop != 0) {
