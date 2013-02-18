@@ -771,7 +771,7 @@ class MapScanner
 		if (trafficGood == -1)
 		{
 			int value = getCRValue(xpos, ypos);
-			doCommercialOut(xpos, ypos, tpop, value);
+			doCommercialOut(tpop, value);
 			return;
 		}
 
@@ -788,14 +788,14 @@ class MapScanner
 				zscore - 26380 > (PRNG.nextInt(0x10000)-0x8000))
 			{
 				int value = getCRValue(xpos, ypos);
-				doCommercialIn(xpos, ypos, tpop, value);
+				doCommercialIn(tpop, value);
 				return;
 			}
 
 			if (zscore < 350 && zscore + 26380 < (PRNG.nextInt(0x10000)-0x8000))
 			{
 				int value = getCRValue(xpos, ypos);
-				doCommercialOut(xpos, ypos, tpop, value);
+				doCommercialOut(tpop, value);
 			}
 		}
 	}
@@ -878,7 +878,7 @@ class MapScanner
 
 		if (trafficGood == -1)
 		{
-			doIndustrialOut(xpos, ypos, tpop, PRNG.nextInt(2));
+			doIndustrialOut(tpop, PRNG.nextInt(2));
 			return;
 		}
 
@@ -894,14 +894,14 @@ class MapScanner
 				zscore - 26380 > (PRNG.nextInt(0x10000)-0x8000))
 			{
 				int value = PRNG.nextInt(2);
-				doIndustrialIn(xpos, ypos, tpop, value);
+				doIndustrialIn(tpop, value);
 				return;
 			}
 
 			if (zscore < 350 && zscore + 26380 < (PRNG.nextInt(0x10000)-0x8000))
 			{
 				int value = PRNG.nextInt(2);
-				doIndustrialOut(xpos, ypos, tpop, value);
+				doIndustrialOut(tpop, value);
 			}
 		}
 	}
@@ -1050,7 +1050,7 @@ class MapScanner
 		}
 	}
 
-	private void doCommercialIn(int xpos, int ypos, int pop, int value)
+	private void doCommercialIn(int pop, int value)
 	{
 		int z = city.landValueMem[ypos/2][xpos/2] / 32;
 		if (pop > z)
@@ -1063,7 +1063,7 @@ class MapScanner
 		}
 	}
 
-	private void doIndustrialIn(int xpos, int ypos, int pop, int value)
+	private void doIndustrialIn(int pop, int value)
 	{
 		if (pop < 4)
 		{
@@ -1124,7 +1124,7 @@ class MapScanner
 		zonePlop(xpos, ypos, base);
 	}
 
-	private void doCommercialOut(int xpos, int ypos, int pop, int value)
+	private void doCommercialOut(int pop, int value)
 	{
 		if (pop > 1)
 		{
@@ -1138,7 +1138,7 @@ class MapScanner
 		}
 	}
 
-	private void doIndustrialOut(int xpos, int ypos, int pop, int value)
+	private void doIndustrialOut(int pop, int value)
 	{
 		if (pop > 1)
 		{
