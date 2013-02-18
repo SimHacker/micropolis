@@ -10,7 +10,10 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
-public class Animate
+/**
+ * Contains data used for tile animation.
+ */
+class Animate
 {
 	static final char [] aniTile = {
     0,   1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,  15,
@@ -118,6 +121,9 @@ public class Animate
     /*  */
 	};
 
+	/**
+	 * Contains data used for industrial zone animations.
+	 */
 	static class Smoke
 	{
 		// There are eight full Industry-zone images in the tiles bank.
