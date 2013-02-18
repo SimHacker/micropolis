@@ -14,6 +14,11 @@ import static micropolisj.engine.TileConstants.*;
 import static micropolisj.engine.Micropolis.ZoneType;
 import static micropolisj.engine.Animate.Smoke;
 
+/**
+ * Process individual tiles of the map for each cycle.
+ * In each sim cycle each tile will get activated, and this
+ * class contains the activation code.
+ */
 class MapScanner
 {
 	final Micropolis city;
@@ -29,6 +34,9 @@ class MapScanner
 		this.PRNG = city.PRNG;
 	}
 
+	/**
+	 * Activate the tile identified by xpos and ypos properties.
+	 */
 	public void scanTile()
 	{
 		cchr9 = (char) (cchr & LOMASK);
@@ -90,6 +98,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is a radioactive tile.
+	 */
 	void doRadioactiveTile()
 	{
 		if (PRNG.nextInt(4096) == 0)
@@ -100,6 +111,10 @@ class MapScanner
 	}
 
 	static int [] TRAFFIC_DENSITY_TAB = { ROADBASE, LTRFBASE, HTRFBASE };
+
+	/**
+	 * Called when the current tile is a road tile.
+	 */
 	void doRoad()
 	{
 		city.roadTotal++;
@@ -158,6 +173,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is an active fire.
+	 */
 	void doFire()
 	{
 		final int [] DX = { 0, 1, 0, -1 };
@@ -195,6 +213,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is a flooding tile.
+	 */
 	void doFlood()
 	{
 		final int [] DX = { 0, 1, 0, -1 };
@@ -229,6 +250,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is railroad.
+	 */
 	void doRail()
 	{
 		city.railTotal++;
@@ -249,6 +273,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is a road bridge over water.
+	 */
 	boolean doBridge()
 	{
 		final int HDx[] = { -2,  2, -2, -1,  0,  1,  2 };
@@ -330,6 +357,9 @@ class MapScanner
 		return false;
 	}
 
+	/**
+	 * Helper function for doBridge- it toggles the draw-bridge.
+	 */
 	private void applyBridgeChange(int [] Dx, int [] Dy, char [] fromTab, char [] toTab)
 	{
 		for (int z = 0; z < 7; z++) {
@@ -345,6 +375,10 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Calculate how far away the boat currently is from the
+	 * current tile.
+	 */
 	int getBoatDis()
 	{
 		int dist = 99999;
@@ -361,6 +395,9 @@ class MapScanner
 		return dist;
 	}
 
+	/**
+	 * Called when the current tile is the key tile of an airport.
+	 */
 	void doAirport()
 	{
 		if (PRNG.nextInt(6) == 0) {
@@ -372,6 +409,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is the key tile of any zone.
+	 */
 	void doZone()
 	{
 		// set power bit in map, from powermap
@@ -435,6 +475,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Place a 3x3 zone on to the map.
+	 */
 	boolean zonePlop(int xpos, int ypos, int base)
 	{
 		if (!city.testBounds(xpos-1, ypos-1))
@@ -465,6 +508,10 @@ class MapScanner
 		return true;
 	}
 
+	/**
+	 * Called when the current tile is the key tile of a "special" zone.
+	 * @param powerOn indicates whether the building has power
+	 */
 	void doSpecialZone(boolean powerOn)
 	{
 		switch (cchr9)
@@ -605,6 +652,9 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Place hospital or church if needed.
+	 */
 	void makeHospital()
 	{
 		if (city.needHospital > 0)
@@ -620,6 +670,11 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is the key tile of a
+	 * hospital or church.
+	 * @param powerOn indicates whether the building has power
+	 */
 	void doHospitalChurch(boolean powerOn)
 	{
 		if (cchr9 == HOSPITAL)
@@ -690,6 +745,11 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is the key tile of a commercial
+	 * zone.
+	 * @param powerOn indicates whether the building has power
+	 */
 	void doCommercial(boolean powerOn)
 	{
 		city.comZoneCount++;
@@ -739,6 +799,9 @@ class MapScanner
 		}
 	}
 
+	/*
+	 * @param powerOn indicates whether the building has power
+	 */
 	void setSmoke(int xpos, int ypos, boolean powerOn)
 	{
 		int cchr9 = city.map[ypos][xpos] & LOMASK;
@@ -788,6 +851,11 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is the key tile of an
+	 * industrial zone.
+	 * @param powerOn indicates whether the building has power
+	 */
 	void doIndustrial(boolean powerOn)
 	{
 		city.indZoneCount++;
@@ -836,6 +904,11 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Called when the current tile is the key tile of a
+	 * residential zone.
+	 * @param powerOn indicates whether the building has power
+	 */
 	void doResidential(boolean powerOn)
 	{
 		city.resZoneCount++;
@@ -1214,6 +1287,7 @@ class MapScanner
 		}
 	}
 
+	//TODO- rename to adjustROG
 	void incrementROG(int xpos, int ypos, int amount)
 	{
 		city.rateOGMem[ypos/8][xpos/8] += 4*amount;
