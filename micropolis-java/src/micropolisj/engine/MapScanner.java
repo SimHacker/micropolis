@@ -983,6 +983,12 @@ class MapScanner
 		}
 	}
 
+	/**
+	 * Consider the value of building a single-lot house at certain
+	 * coordinates.
+	 * @return integer; positive number indicates good place for
+	 * house to go; zero or a negative number indicates a bad place.
+	 */
 	int evalLot(int x, int y)
 	{
 		// test for clear lot
@@ -1013,7 +1019,10 @@ class MapScanner
 		return score;
 	}
 
-	private void buildHouse(int xpos, int ypos, int value)
+	/**
+	 * Build a single-lot house on the current residential zone.
+	 */
+	private void buildHouse(int value)
 	{
 		assert value >= 0 && value <= 3;
 
@@ -1095,7 +1104,7 @@ class MapScanner
 		{
 			if (pop < 8)
 			{
-				buildHouse(xpos, ypos, value);
+				buildHouse(value);
 				incrementROG(xpos, ypos, 1);
 				return;
 			}
