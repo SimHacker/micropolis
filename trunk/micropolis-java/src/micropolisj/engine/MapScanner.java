@@ -1091,7 +1091,7 @@ class MapScanner
 		if (pop < 5)
 		{
 			comPlop(pop, value);
-			incrementROG(xpos, ypos, 8);
+			adjustROG(8);
 		}
 	}
 
@@ -1100,7 +1100,7 @@ class MapScanner
 		if (pop < 4)
 		{
 			indPlop(pop, value);
-			incrementROG(xpos, ypos, 8);
+			adjustROG(8);
 		}
 	}
 
@@ -1118,14 +1118,14 @@ class MapScanner
 			if (pop < 8)
 			{
 				buildHouse(value);
-				incrementROG(xpos, ypos, 1);
+				adjustROG(1);
 				return;
 			}
 
 			if (city.getPopulationDensity(xpos, ypos) > 64)
 			{
 				residentialPlop(0, value);
-				incrementROG(xpos, ypos, 8);
+				adjustROG(8);
 				return;
 			}
 			return;
@@ -1134,7 +1134,7 @@ class MapScanner
 		if (pop < 40)
 		{
 			residentialPlop(pop / 8 - 1, value);
-			incrementROG(xpos, ypos, 8);
+			adjustROG(8);
 		}
 	}
 
@@ -1161,12 +1161,12 @@ class MapScanner
 		if (pop > 1)
 		{
 			comPlop(pop-2, value);
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 		}
 		else if (pop == 1)
 		{
 			zonePlop(COMBASE);
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 		}
 	}
 
@@ -1175,12 +1175,12 @@ class MapScanner
 		if (pop > 1)
 		{
 			indPlop(pop-2, value);
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 		}
 		else if (pop == 1)
 		{
 			zonePlop(INDCLR-4);
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 		}
 	}
 
@@ -1197,7 +1197,7 @@ class MapScanner
 		{
 			// downgrade to a lower-density full-size residential zone
 			residentialPlop((pop-24) / 8, value);
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 			return;
 		}
 
@@ -1222,14 +1222,14 @@ class MapScanner
 				}
 			}
 
-			incrementROG(xpos, ypos, -8);
+			adjustROG(-8);
 			return;
 		}
 
 		if (pop < 16)
 		{
 			// remove one little house
-			incrementROG(xpos, ypos, -1);
+			adjustROG(-1);
 			int z = 0;
 
 			for (int x = xpos-1; x <= xpos+1; x++)
@@ -1343,8 +1343,15 @@ class MapScanner
 		}
 	}
 
-	//TODO- rename to adjustROG
-	void incrementROG(int xpos, int ypos, int amount)
+	/**
+	 * Record a zone's population change to the rate-of-growth
+	 * map.
+	 * An adjustment of +/- 1 corresponds to one little house.
+	 * An adjustment of +/- 8 corresponds to a full-size zone.
+	 *
+	 * @param amount the positive or negative adjustment to record.
+	 */
+	void adjustROG(int amount)
 	{
 		city.rateOGMem[ypos/8][xpos/8] += 4*amount;
 	}
