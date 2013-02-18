@@ -715,22 +715,24 @@ class MapScanner
 	/**
 	 * Regenerate the tiles that make up the zone, repairing from
 	 * fire, etc.
-	 * Only tiles that aren't rubble will be regenerated.
+	 * Only tiles that are not rubble, radioactive, flooded, or
+	 * on fire will be regenerated.
 	 * @param zoneCenter the tile value for the "center" tile of the zone
 	 * @param zoneSize integer (3-6) indicating the width/height of
 	 * the zone.
 	 */
 	void repairZone(char zoneCenter, int zoneSize)
 	{
-		int cnt=0;
+		// from the given center tile, figure out what the
+		// northwest tile should be
+		int zoneBase = zoneCenter - 1 - zoneSize;
+
 		for (int y = 0; y < zoneSize; y++)
 		{
-			for (int x = 0; x < zoneSize; x++)
+			for (int x = 0; x < zoneSize; x++, zoneBase++)
 			{
 				int xx = xpos - 1 + x;
 				int yy = ypos - 1 + y;
-
-				cnt++;
 
 				if (city.testBounds(xx, yy))
 				{
@@ -746,7 +748,7 @@ class MapScanner
 					{  //not rubble, radiactive, on fire or flooded
 
 						city.setTile(xx,yy,(char)
-						(zoneCenter-2-zoneSize+cnt+CONDBIT+BURNBIT)
+						(zoneBase+CONDBIT+BURNBIT)
 						);
 					}
 				}
