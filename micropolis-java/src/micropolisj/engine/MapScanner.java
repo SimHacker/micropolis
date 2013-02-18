@@ -520,7 +520,7 @@ class MapScanner
 		case POWERPLANT:
 			city.coalCount++;
 			if ((city.cityTime % 8) == 0) {
-				repairZone(xpos, ypos, POWERPLANT, 4);
+				repairZone(POWERPLANT, 4);
 			}
 
 			city.powerPlants.add(new CityLocation(xpos,ypos));
@@ -535,7 +535,7 @@ class MapScanner
 
 			city.nuclearCount++;
 			if ((city.cityTime % 8) == 0) {
-				repairZone(xpos, ypos, NUCLEAR, 4);
+				repairZone(NUCLEAR, 4);
 			}
 
 			city.powerPlants.add(new CityLocation(xpos, ypos));
@@ -545,7 +545,7 @@ class MapScanner
 		{
 			city.fireStationCount++;
 			if ((city.cityTime % 8) == 0) {
-				repairZone(xpos, ypos, FIRESTATION, 3);
+				repairZone(FIRESTATION, 3);
 			}
 
 			int z;
@@ -569,7 +569,7 @@ class MapScanner
 		{
 			city.policeCount++;
 			if ((city.cityTime % 8) == 0) {
-				repairZone(xpos, ypos, POLICESTATION, 3);
+				repairZone(POLICESTATION, 3);
 			}
 
 			int z;
@@ -592,7 +592,7 @@ class MapScanner
 		case STADIUM:
 			city.stadiumCount++;
 			if ((city.cityTime % 16) == 0) {
-				repairZone(xpos, ypos, STADIUM, 4);
+				repairZone(STADIUM, 4);
 			}
 
 			if (powerOn)
@@ -615,7 +615,7 @@ class MapScanner
 		case AIRPORT:
 			city.airportCount++;
 			if ((city.cityTime % 8) == 0) {
-				repairZone(xpos, ypos, AIRPORT, 6);
+				repairZone(AIRPORT, 6);
 			}
 
 			if (powerOn)
@@ -639,7 +639,7 @@ class MapScanner
 		case PORT:
 			city.seaportCount++;
 			if ((city.cityTime % 16) == 0) {
-				repairZone(xpos, ypos, PORT, 4);
+				repairZone(PORT, 4);
 			}
 
 			if (powerOn && !city.hasSprite(SpriteKind.SHI)) {
@@ -684,7 +684,7 @@ class MapScanner
 
 			if (city.cityTime % 16 == 0)
 			{
-				repairZone(xpos, ypos, HOSPITAL, 3);
+				repairZone(HOSPITAL, 3);
 			}
 			if (city.needHospital == -1)  //too many hospitals
 			{
@@ -700,7 +700,7 @@ class MapScanner
 
 			if (city.cityTime % 16 == 0)
 			{
-				repairZone(xpos, ypos, CHURCH, 3);
+				repairZone(CHURCH, 3);
 			}
 			if (city.needChurch == -1) //too many churches
 			{
@@ -712,7 +712,15 @@ class MapScanner
 		}
 	}
 
-	void repairZone(int xpos, int ypos, char zoneCenter, int zoneSize)
+	/**
+	 * Regenerate the tiles that make up the zone, repairing from
+	 * fire, etc.
+	 * Only tiles that aren't rubble will be regenerated.
+	 * @param zoneCenter the tile value for the "center" tile of the zone
+	 * @param zoneSize integer (3-6) indicating the width/height of
+	 * the zone.
+	 */
+	void repairZone(char zoneCenter, int zoneSize)
 	{
 		int cnt=0;
 		for (int y = 0; y < zoneSize; y++)
