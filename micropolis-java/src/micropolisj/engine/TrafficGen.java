@@ -64,6 +64,10 @@ class TrafficGen
 				int z = engine.trfDensity[mapY/2][mapX/2];
 				z += 50;
 
+				//FIXME- why is this only capped to 240
+				// by random chance. why is there no cap
+				// the rest of the time?
+
 				if (z > 240 && engine.PRNG.nextInt(6) == 0)
 				{
 					z = 240;
