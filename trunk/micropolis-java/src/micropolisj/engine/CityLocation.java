@@ -8,11 +8,24 @@
 
 package micropolisj.engine;
 
+/**
+ * Coordinates of a location (x,y) in the city.
+ */
 public class CityLocation
 {
+	/** The X coordinate of this location.
+	 * Increasing X coordinates correspond to East,
+	 * and decreasing X coordinates correspond to West. */
 	public int x;
+
+	/** The Y coordinate of this location.
+	 * Increasing Y coordinates correspond to South,
+	 * and decreasing Y coordinates correspond to North. */
 	public int y;
 
+	/**
+	 * Constructs and initializes city coordinates.
+	 */
 	public CityLocation(int x, int y)
 	{
 		this.x = x;
