@@ -819,7 +819,7 @@ class MapScanner
 		}
 	}
 
-	/*
+	/**
 	 * Animate tiles in an industrial zone.
 	 * Note: pollution is not accumulated here; it is instead
 	 * accumulated in ptlScan(), by adding up each tile's
