@@ -1077,7 +1077,7 @@ class MapScanner
 
 		if (pop < 5)
 		{
-			comPlop(xpos, ypos, pop, value);
+			comPlop(pop, value);
 			incrementROG(xpos, ypos, 8);
 		}
 	}
@@ -1086,7 +1086,7 @@ class MapScanner
 	{
 		if (pop < 4)
 		{
-			indPlop(xpos, ypos, pop, value);
+			indPlop(pop, value);
 			incrementROG(xpos, ypos, 8);
 		}
 	}
@@ -1111,7 +1111,7 @@ class MapScanner
 
 			if (city.getPopulationDensity(xpos, ypos) > 64)
 			{
-				residentialPlop(xpos, ypos, 0, value);
+				residentialPlop(0, value);
 				incrementROG(xpos, ypos, 8);
 				return;
 			}
@@ -1120,24 +1120,24 @@ class MapScanner
 
 		if (pop < 40)
 		{
-			residentialPlop(xpos, ypos, pop / 8 - 1, value);
+			residentialPlop(pop / 8 - 1, value);
 			incrementROG(xpos, ypos, 8);
 		}
 	}
 
-	void comPlop(int xpos, int ypos, int density, int value)
+	void comPlop(int density, int value)
 	{
 		int base = (value * 5 + density) * 9 + CZB - 4;
 		zonePlop(xpos, ypos, base);
 	}
 
-	void indPlop(int xpos, int ypos, int density, int value)
+	void indPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + (IZB - 4);
 		zonePlop(xpos, ypos, base);
 	}
 
-	void residentialPlop(int xpos, int ypos, int density, int value)
+	void residentialPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + RZB - 4;
 		zonePlop(xpos, ypos, base);
@@ -1147,7 +1147,7 @@ class MapScanner
 	{
 		if (pop > 1)
 		{
-			comPlop(xpos, ypos, pop-2, value);
+			comPlop(pop-2, value);
 			incrementROG(xpos, ypos, -8);
 		}
 		else if (pop == 1)
@@ -1161,7 +1161,7 @@ class MapScanner
 	{
 		if (pop > 1)
 		{
-			indPlop(xpos, ypos, pop-2, value);
+			indPlop(pop-2, value);
 			incrementROG(xpos, ypos, -8);
 		}
 		else if (pop == 1)
@@ -1183,7 +1183,7 @@ class MapScanner
 		if (pop > 16)
 		{
 			// downgrade to a lower-density full-size residential zone
-			residentialPlop(xpos, ypos, (pop-24) / 8, value);
+			residentialPlop((pop-24) / 8, value);
 			incrementROG(xpos, ypos, -8);
 			return;
 		}
