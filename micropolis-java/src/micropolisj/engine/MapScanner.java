@@ -796,7 +796,7 @@ class MapScanner
 
 		if (PRNG.nextInt(8) == 0)
 		{
-			int locValve = evalCommercial(xpos, ypos, trafficGood);
+			int locValve = evalCommercial(trafficGood);
 			int zscore = city.comValve + locValve;
 
 			if (!powerOn)
@@ -903,7 +903,7 @@ class MapScanner
 
 		if (PRNG.nextInt(8) == 0)
 		{
-			int locValve = evalIndustrial(xpos, ypos, trafficGood);
+			int locValve = evalIndustrial(trafficGood);
 			int zscore = city.indValve + locValve;
 
 			if (!powerOn)
@@ -965,7 +965,7 @@ class MapScanner
 
 		if (cchr9 == FREEZ || PRNG.nextInt(8) == 0)
 		{
-			int locValve = evalResidential(xpos, ypos, trafficGood);
+			int locValve = evalResidential(trafficGood);
 			int zscore = city.resValve + locValve;
 
 			if (!powerOn)
@@ -1247,17 +1247,25 @@ class MapScanner
 		}
 	}
 
-	// returns integer between -3000 and 3000
-	int evalCommercial(int x, int y, int traf)
+	/**
+	 * Evaluates the zone value of the current commercial zone location.
+	 * @return an integer between -3000 and 3000
+	 * Same meaning as evalResidential.
+	 */
+	int evalCommercial(int traf)
 	{
 		if (traf < 0)
 			return -3000;
 
-		return city.comRate[y/8][x/8];
+		return city.comRate[ypos/8][xpos/8];
 	}
 
-	// returns integer between -3000 and 3000
-	int evalIndustrial(int x, int y, int traf)
+	/**
+	 * Evaluates the zone value of the current industrial zone location.
+	 * @return an integer between -3000 and 3000.
+	 * Same meaning as evalResidential.
+	 */
+	int evalIndustrial(int traf)
 	{
 		if (traf < 0)
 			return -1000;
@@ -1265,14 +1273,19 @@ class MapScanner
 			return 0;
 	}
 
-	// returns integer between -3000 and 3000
-	int evalResidential(int x, int y, int traf)
+	/**
+	 * Evaluates the zone value of the current residential zone location.
+	 * @return an integer between -3000 and 3000. The higher the
+	 * number, the more likely the zone is to GROW; the lower the
+	 * number, the more likely the zone is to SHRINK.
+	 */
+	int evalResidential(int traf)
 	{
 		if (traf < 0)
 			return -3000;
 
-		int value = city.landValueMem[y/2][x/2];
-		value -= city.pollutionMem[y/2][x/2];
+		int value = city.landValueMem[ypos/2][xpos/2];
+		value -= city.pollutionMem[ypos/2][xpos/2];
 
 		if (value < 0)
 			value = 0;    //cap at 0
