@@ -533,7 +533,7 @@ class MapScanner
 			}
 
 			city.powerPlants.add(new CityLocation(xpos,ypos));
-			coalSmoke(xpos, ypos);
+			coalSmoke();
 			return;
 
 		case NUCLEAR:
@@ -820,7 +820,11 @@ class MapScanner
 	}
 
 	/*
-	 * Add smoke to an industrial zone.
+	 * Animate tiles in an industrial zone.
+	 * Note: pollution is not accumulated here; it is instead
+	 * accumulated in ptlScan(), by adding up each tile's
+	 * pollution value.
+	 *
 	 * @param powerOn indicates whether the building has power
 	 */
 	void setSmoke(boolean powerOn)
@@ -1321,14 +1325,19 @@ class MapScanner
 		return 3;
 	}
 
-	void coalSmoke(int mx, int my)
+	/**
+	 * Process the coal powerplant animation.
+	 * Note: pollution is not accumulated here; see ptlScan()
+	 * instead.
+	 */
+	void coalSmoke()
 	{
 		final int [] SmTb = { COALSMOKE1, COALSMOKE2, COALSMOKE3, COALSMOKE4 };
 		final int [] dx = { 1, 2, 1, 2 };
 		final int [] dy = { -1, -1, 0, 0 };
 
 		for (int z = 0; z < 4; z++) {
-			city.setTile(mx + dx[z], my + dy[z],
+			city.setTile(xpos + dx[z], ypos + dy[z],
 			(char) (SmTb[z] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT)
 			);
 		}
