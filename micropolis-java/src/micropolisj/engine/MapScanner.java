@@ -607,7 +607,7 @@ class MapScanner
 			if (powerOn)
 			{
 				if (((city.cityTime + xpos + ypos) % 32) == 0) {
-					drawStadium(xpos, ypos, FULLSTADIUM);
+					drawStadium(FULLSTADIUM);
 					city.setTile(xpos+1,ypos, (char)(FOOTBALLGAME1 | ANIMBIT));
 					city.setTile(xpos+1,ypos+1,(char)(FOOTBALLGAME2 | ANIMBIT));
 				}
@@ -617,7 +617,7 @@ class MapScanner
 		case FULLSTADIUM:
 			city.stadiumCount++;
 			if (((city.cityTime + xpos + ypos) % 8) == 0) {
-				drawStadium(xpos, ypos, STADIUM);
+				drawStadium(STADIUM);
 			}
 			return;
 
@@ -1356,14 +1356,20 @@ class MapScanner
 		city.rateOGMem[ypos/8][xpos/8] += 4*amount;
 	}
 
-	void drawStadium(int mapx, int mapy, int z)
+	/**
+	 * Place tiles for a stadium (full or empty).
+	 * @param zoneCenter either STADIUM or FULLSTADIUM
+	 */
+	void drawStadium(int zoneCenter)
 	{
-		z -= 5;
+		int zoneBase = zoneCenter - 1 - 4;
 
-		for (int y = mapy-1; y < mapy+3; y++) {
-			for (int x = mapx-1; x < mapx+3; x++) {
-				city.setTile(x, y, (char) (z | BNCNBIT | (x == mapx && y == mapy ? (ZONEBIT|PWRBIT) : 0)));
-				z++;
+		for (int y = 0; y < 4; y++)
+		{
+			for (int x = 0; x < 4; x++, zoneBase++)
+			{
+				city.setTile(xpos - 1 + x, ypos - 1 + y,
+					(char) (zoneBase | BNCNBIT | (x == 1 && y == 1 ? (ZONEBIT|PWRBIT) : 0)));
 			}
 		}
 	}
