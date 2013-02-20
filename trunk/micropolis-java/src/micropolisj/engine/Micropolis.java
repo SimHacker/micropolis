@@ -2366,14 +2366,24 @@ public class Micropolis
 		rateOGMem[ypos/8][xpos/8] -= 20;
 
 		int sz = TileConstants.getZoneSizeFor(zoneTile);
-		for (int x = 0; x < sz; x++) {
-			for (int y = 0; y < sz; y++) {
+		int zoneBase = (zoneTile&LOMASK)-1-sz;
+
+		for (int y = 0; y < sz; y++) {
+			for (int x = 0; x < sz; x++, zoneBase++) {
 				int xtem = xpos - 1 + x;
 				int ytem = ypos - 1 + y;
 				if (!testBounds(xtem, ytem))
 					continue;
 
 				int t = getTile(xtem, ytem);
+				if ((zoneTile & LOMASK) == POWERPLANT &&
+					(t & LOMASK) >= COALSMOKE1 &&
+					(t & LOMASK) < COALSMOKE4+4) {
+					// animated coal smoke
+					setTile(xtem, ytem, (char)(zoneBase | CONDBIT | BULLBIT));
+					continue;
+				}
+
 				if ((t & LOMASK) >= ROADBASE) {
 					setTile(xtem, ytem, (char)(t | BULLBIT));
 				}
