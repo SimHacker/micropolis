@@ -2361,7 +2361,7 @@ public class Micropolis
 	 * since otherwise the user would no longer have a way of destroying
 	 * the zone.
 	 */
-	void fireZone(int xpos, int ypos, int zoneTile)
+	void killZone(int xpos, int ypos, int zoneTile)
 	{
 		rateOGMem[ypos/8][xpos/8] -= 20;
 

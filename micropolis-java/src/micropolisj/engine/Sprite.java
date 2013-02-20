@@ -183,7 +183,7 @@ public abstract class Sprite
 				return; //cannot destroy it
 			}
 			if ((z & ZONEBIT) != 0) {
-				city.fireZone(xpos, ypos, z);
+				city.killZone(xpos, ypos, z);
 				if (t > RZB) {
 					city.makeExplosion(xpos, ypos);
 				}
