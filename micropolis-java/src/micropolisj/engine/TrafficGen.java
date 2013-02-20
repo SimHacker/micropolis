@@ -11,9 +11,12 @@ package micropolisj.engine;
 import java.util.*;
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Contains the code for generating city traffic.
+ */
 class TrafficGen
 {
-	Micropolis engine;
+	final Micropolis city;
 	int mapX;
 	int mapY;
 	Micropolis.ZoneType sourceZone;
@@ -23,9 +26,9 @@ class TrafficGen
 
 	static final int MAX_TRAFFIC_DISTANCE = 30;
 
-	public TrafficGen(Micropolis engine)
+	public TrafficGen(Micropolis city)
 	{
-		this.engine = engine;
+		this.city = city;
 	}
 
 	int makeTraffic()
@@ -55,33 +58,33 @@ class TrafficGen
 			CityLocation pos = positions.pop();
 			mapX = pos.x;
 			mapY = pos.y;
-			assert engine.testBounds(mapX, mapY);
+			assert city.testBounds(mapX, mapY);
 
-			int tile = engine.getTile(mapX, mapY) & LOMASK;
+			int tile = city.getTile(mapX, mapY) & LOMASK;
 			if (tile >= ROADBASE && tile < POWERBASE)
 			{
 				// check for rail
-				int z = engine.trfDensity[mapY/2][mapX/2];
+				int z = city.trfDensity[mapY/2][mapX/2];
 				z += 50;
 
 				//FIXME- why is this only capped to 240
 				// by random chance. why is there no cap
 				// the rest of the time?
 
-				if (z > 240 && engine.PRNG.nextInt(6) == 0)
+				if (z > 240 && city.PRNG.nextInt(6) == 0)
 				{
 					z = 240;
-					engine.trafficMaxLocationX = mapX;
-					engine.trafficMaxLocationY = mapY;
+					city.trafficMaxLocationX = mapX;
+					city.trafficMaxLocationY = mapY;
 
-					HelicopterSprite copter = (HelicopterSprite) engine.getSprite(SpriteKind.COP);
+					HelicopterSprite copter = (HelicopterSprite) city.getSprite(SpriteKind.COP);
 					if (copter != null) {
 						copter.destX = mapX;
 						copter.destY = mapY;
 					}
 				}
 
-				engine.trfDensity[mapY/2][mapX/2] = z;
+				city.trfDensity[mapY/2][mapX/2] = z;
 			}
 		}
 	}
@@ -95,7 +98,7 @@ class TrafficGen
 			int tx = mapX + PerimX[z];
 			int ty = mapY + PerimY[z];
 
-			if (engine.testBounds(tx, ty)
+			if (city.testBounds(tx, ty)
 				&& roadTest(tx, ty))
 			{
 				mapX = tx;
@@ -108,7 +111,7 @@ class TrafficGen
 
 	boolean roadTest(int tx, int ty)
 	{
-		char c = engine.getTile(tx, ty);
+		char c = city.getTile(tx, ty);
 		c &= LOMASK;
 
 		if (c < ROADBASE)
@@ -161,7 +164,7 @@ class TrafficGen
 	boolean tryGo(int z)
 	{
 		// random starting direction
-		int rdir = engine.PRNG.nextInt(4);
+		int rdir = city.PRNG.nextInt(4);
 
 		for (int d = rdir; d < rdir + 4; d++)
 		{
@@ -211,25 +214,25 @@ class TrafficGen
 
 		if (mapY > 0)
 		{
-			int tile = engine.getTile(mapX, mapY-1) & LOMASK;
+			int tile = city.getTile(mapX, mapY-1) & LOMASK;
 			if (tile >= low && tile <= high)
 				return true;
 		}
-		if (mapX + 1 < engine.getWidth())
+		if (mapX + 1 < city.getWidth())
 		{
-			int tile = engine.getTile(mapX + 1, mapY) & LOMASK;
+			int tile = city.getTile(mapX + 1, mapY) & LOMASK;
 			if (tile >= low && tile <= high)
 				return true;
 		}
-		if (mapY + 1 < engine.getHeight())
+		if (mapY + 1 < city.getHeight())
 		{
-			int tile = engine.getTile(mapX, mapY + 1) & LOMASK;
+			int tile = city.getTile(mapX, mapY + 1) & LOMASK;
 			if (tile >= low && tile <= high)
 				return true;
 		}
 		if (mapX > 0)
 		{
-			int tile = engine.getTile(mapX - 1, mapY) & LOMASK;
+			int tile = city.getTile(mapX - 1, mapY) & LOMASK;
 			if (tile >= low && tile <= high)
 				return true;
 		}
