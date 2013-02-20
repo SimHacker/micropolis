@@ -19,7 +19,7 @@ class TrafficGen
 	Micropolis.ZoneType sourceZone;
 
 	int lastdir;
-	Stack<Position> positions = new Stack<>();
+	Stack<CityLocation> positions = new Stack<>();
 
 	static final int MAX_TRAFFIC_DISTANCE = 30;
 
@@ -52,7 +52,7 @@ class TrafficGen
 	{
 		while (!positions.isEmpty())
 		{
-			Position pos = positions.pop();
+			CityLocation pos = positions.pop();
 			mapX = pos.x;
 			mapY = pos.y;
 			assert engine.testBounds(mapX, mapY);
@@ -178,7 +178,7 @@ class TrafficGen
 				if (z % 2 == 1)
 				{
 					// save pos every other move
-					positions.push(new Position(mapX, mapY));
+					positions.push(new CityLocation(mapX, mapY));
 				}
 
 				return true;
@@ -186,17 +186,6 @@ class TrafficGen
 		}
 
 		return false;
-	}
-
-	static class Position
-	{
-		int x;
-		int y;
-		Position(int x, int y)
-		{
-			this.x = x;
-			this.y = y;
-		}
 	}
 
 	boolean driveDone()
