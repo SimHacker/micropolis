@@ -1337,9 +1337,12 @@ class MapScanner
 		final int [] dy = { -1, -1, 0, 0 };
 
 		for (int z = 0; z < 4; z++) {
-			city.setTile(xpos + dx[z], ypos + dy[z],
-			(char) (SmTb[z] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT)
-			);
+			int tile = city.getTile(xpos+dx[z], ypos+dy[z]) & LOMASK;
+			if (tile >= COALBASE && tile < COALBASE + 4*4) {
+				city.setTile(xpos + dx[z], ypos + dy[z],
+				(char) (SmTb[z] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT)
+				);
+			}
 		}
 	}
 
