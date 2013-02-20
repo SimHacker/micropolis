@@ -1753,6 +1753,9 @@ public class Micropolis
 		policeFundEscrow = 0;
 	}
 
+	/**
+	 * Calculate the current budget numbers.
+	 */
 	public BudgetNumbers generateBudget()
 	{
 		BudgetNumbers b = new BudgetNumbers();
