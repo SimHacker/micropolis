@@ -193,7 +193,7 @@ class MapScanner
 				int c = city.map[ytem][xtem];
 				if ((c & BURNBIT) != 0) {
 					if ((c & ZONEBIT) != 0) {
-						city.fireZone(xtem, ytem, c);
+						city.killZone(xtem, ytem, c);
 						if ((c & LOMASK) > IZB) { //explode
 							city.makeExplosion(xtem, ytem);
 						}
@@ -235,7 +235,7 @@ class MapScanner
 							(t >= WOODS5 && t < FLOOD))
 						{
 							if ((c & ZONEBIT) != 0) {
-								city.fireZone(xx, yy, c);
+								city.killZone(xx, yy, c);
 							}
 							city.setTile(xx, yy, (char)(FLOOD + PRNG.nextInt(3)));
 						}
