@@ -72,7 +72,7 @@ class MapScanner
 				setZonePower();
 			}
 
-			if (cchr9 >= ROADBASE && cchr9 < POWERBASE)
+			if (isRoad(cchr))
 			{
 				doRoad();
 				return;
@@ -84,7 +84,7 @@ class MapScanner
 				return;
 			}
 
-			if (cchr9 >= RAILBASE && cchr9 < RESBASE)
+			if (isRail(cchr))
 			{
 				doRail();
 				return;
