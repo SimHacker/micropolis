@@ -275,6 +275,14 @@ class MapScanner
 
 	/**
 	 * Called when the current tile is a road bridge over water.
+	 * Handles the draw bridge. For the draw bridge to appear,
+	 * there must be a boat on the water, the boat must be
+	 * within a certain distance of the bridge, it must be where
+	 * the map generator placed 'channel' tiles (these are tiles
+	 * that look just like regular river tiles but have a different
+	 * numeric value), and you must be a little lucky.
+	 *
+	 * @return true if the draw bridge is open; false otherwise
 	 */
 	boolean doBridge()
 	{
