@@ -843,7 +843,7 @@ class MapScanner
 			return;
 
 		int z = ((cchr9 - IZB) / 8) % 8;
-		if (Smoke.AniThis[z] != 0)
+		if (Smoke.AniThis[z])
 		{
 			int xx = xpos + Smoke.DX1[z];
 			int yy = ypos + Smoke.DY1[z];
