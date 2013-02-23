@@ -135,7 +135,7 @@ public class TileConstants
 	public static final char NUCLEAR = 816;
 	public static final char LASTZONE = 826;
 	public static final char LIGHTNINGBOLT = 827;
-	public static final char HBRDG0 = 828;
+	public static final char HBRDG0 = 828;   //draw bridge tiles (horz)
 	public static final char HBRDG1 = 829;
 	public static final char HBRDG2 = 830;
 	public static final char HBRDG3 = 831;
@@ -152,7 +152,7 @@ public class TileConstants
 	public static final char COALSMOKE4 = 928;
 	public static final char FOOTBALLGAME1 = 932;
 	public static final char FOOTBALLGAME2 = 940;
-	public static final char VBRDG0 = 948;
+	public static final char VBRDG0 = 948;   //draw bridge tiles (vert)
 	public static final char VBRDG1 = 949;
 	public static final char VBRDG2 = 950;
 	public static final char VBRDG3 = 951;
