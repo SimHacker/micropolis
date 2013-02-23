@@ -130,7 +130,7 @@ class Animate
 		// This array indicates which of those eight zones have an animation.
 		static boolean [] AniThis = {true, false, true, true, false, false, true, true };
 
-		// Up to two tiles can be animated. Arrays DX1,DXY indicate the relative
+		// Up to two tiles can be animated. Arrays DX1,DY1 indicate the relative
 		// position of the first animated tile.
 		static int [] DX1     = {   -1,    0,    1,    0,    0,    0,    0,    1 };
 		static int [] DY1     = {   -1,    0,   -1,   -1,    0,    0,   -1,   -1 };
