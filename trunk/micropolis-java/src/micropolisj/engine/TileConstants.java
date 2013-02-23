@@ -324,4 +324,16 @@ public class TileConstants
 	{
 		return (tile == DIRT || ((tile & BULLBIT) != 0 && (tile & BURNBIT) != 0));
 	}
+
+	public static boolean isRoad(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= ROADBASE && tmp < POWERBASE);
+	}
+
+	public static boolean isRail(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= RAILBASE && tmp < RESBASE);
+	}
 }
