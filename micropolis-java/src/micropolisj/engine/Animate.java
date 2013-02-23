@@ -128,7 +128,7 @@ class Animate
 	{
 		// There are eight full Industry-zone images in the tiles bank.
 		// This array indicates which of those eight zones have an animation.
-		static int [] AniThis = {    1,    0,    1,    1,    0,    0,    1,    1 };
+		static boolean [] AniThis = {true, false, true, true, false, false, true, true };
 
 		// Up to two tiles can be animated. Arrays DX1,DXY indicate the relative
 		// position of the first animated tile.
