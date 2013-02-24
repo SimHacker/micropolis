@@ -1,3 +1,0 @@
-[console_scripts]
-start-micropolis = micropolis.commands:start
-
