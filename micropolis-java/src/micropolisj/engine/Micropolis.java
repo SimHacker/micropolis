@@ -1732,6 +1732,12 @@ public class Micropolis
 		policeFundEscrow = 0;
 	}
 
+	/** Annual maintenance cost of each police station. */
+	static final int POLICE_STATION_MAINTENANCE = 100;
+
+	/** Annual maintenance cost of each fire station. */
+	static final int FIRE_STATION_MAINTENANCE = 100;
+
 	/**
 	 * Calculate the current budget numbers.
 	 */
@@ -1748,8 +1754,8 @@ public class Micropolis
 		assert b.taxIncome >= 0;
 
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
-		b.fireRequest = 100 * lastFireStationCount;
-		b.policeRequest = 100 * lastPoliceCount;
+		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
+		b.policeRequest = POLICE_STATION_MAINTENANCE * lastPoliceCount;
 
 		b.roadFunded = (int)Math.round(b.roadRequest * b.roadPercent);
 		b.fireFunded = (int)Math.round(b.fireRequest * b.firePercent);
