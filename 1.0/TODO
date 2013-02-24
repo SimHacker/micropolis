@@ -1,0 +1,32 @@
+Autodoze-
+ *Do not autodoze for roads,rails, or wire if not enough money to actually
+  build it
+
+Budget dialog-
+ *Press escape to close
+
+Coal powerplant-
+ *When third tile of second row is on fire, something appears to revert it to
+  the animated smoke stack.
+
+On Game Load-
+ *All zones are unpowered for the first several ticks. I'd imagine there
+  are similar problems with the landValueMap, pollutionMap, tfDensity,
+  policeCoverage etc. I think what should happen is that the various methods
+  that update these maps should be called at load time.
+ *Evaluation data is not available.
+ *cityTime may not match history.cityTime
+
+Mouse pointer-
+ *Would be nice if tool dragging would help keep lines straight
+
+Disasters-
+ *When running FAST or SUPER_FAST, automatically pause or slow down the
+  simulation when a disaster occurs.
+
+City size notifications-
+ *Pause and pop up a message the first time the city reaches 2000, 10000,
+  50000, etc. people.
+
+Code janitor-
+ *Rename fireZone() to killZone()... (I think that name might be better description.)

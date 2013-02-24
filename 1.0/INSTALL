@@ -1,0 +1,28 @@
+Prerequisites
+=============
+
+To build MicropolisJ you will need
+ * Java Development Kit (version 7), get it from http://oracle.com/technetwork/java
+ * Apache Ant, get it from http://ant.apache.org
+
+
+Building the Package
+====================
+
+  1. `cd' to the directory containing the package's source code.
+
+  2. Type `ant' to compile the package.
+
+
+Installing MicropolisJ
+======================
+
+Everything you need to run the program is contained within the micropolisj.jar
+file, so just copy that file to wherever you like.
+
+
+Running MicropolisJ
+===================
+
+Type `java -jar micropolisj.jar` to run the program.
+
