@@ -192,10 +192,23 @@ public class BudgetDialog extends JDialog
 		buttonPane.add(resetBtn);
 
 		loadBudgetNumbers(true);
-		setAutoRequestFocus(false);
+		setAutoRequestFocus_compat(false);
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(owner);
+	}
+
+	private void setAutoRequestFocus_compat(boolean v)
+	{
+		try
+		{
+			if (super.getClass().getMethod("setAutoRequestFocus", boolean.class) != null) {
+				super.setAutoRequestFocus(v);
+			}
+		}
+		catch (NoSuchMethodException e) {
+			// ok to ignore
+		}
 	}
 
 	private JComponent makeTaxPane()
