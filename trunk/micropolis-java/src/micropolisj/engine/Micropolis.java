@@ -431,7 +431,7 @@ public class Micropolis
 		}
 	}
 
-	final boolean testBounds(int xpos, int ypos)
+	final public boolean testBounds(int xpos, int ypos)
 	{
 		return xpos >= 0 && xpos < getWidth() &&
 			ypos >= 0 && ypos < getHeight();
