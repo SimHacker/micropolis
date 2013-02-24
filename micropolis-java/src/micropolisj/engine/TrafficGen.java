@@ -22,7 +22,7 @@ class TrafficGen
 	Micropolis.ZoneType sourceZone;
 
 	int lastdir;
-	Stack<CityLocation> positions = new Stack<>();
+	Stack<CityLocation> positions = new Stack<CityLocation>();
 
 	static final int MAX_TRAFFIC_DISTANCE = 30;
 

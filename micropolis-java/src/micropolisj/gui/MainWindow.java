@@ -44,7 +44,7 @@ public class MainWindow extends JFrame
 	JLabel currentToolLbl;
 	JLabel currentToolCostLbl;
 	Map<MicropolisTool,JToggleButton> toolBtns;
-	EnumMap<MapState,JMenuItem> mapStateMenuItems = new EnumMap<>(MapState.class);
+	EnumMap<MapState,JMenuItem> mapStateMenuItems = new EnumMap<MapState,JMenuItem>(MapState.class);
 	MicropolisTool currentTool;
 	File currentFile;
 	boolean doSounds = true;

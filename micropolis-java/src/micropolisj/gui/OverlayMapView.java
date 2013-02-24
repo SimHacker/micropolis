@@ -23,7 +23,7 @@ public class OverlayMapView extends JComponent
 	implements Scrollable, MapListener
 {
 	Micropolis engine;
-	ArrayList<ConnectedView> views = new ArrayList<>();
+	ArrayList<ConnectedView> views = new ArrayList<ConnectedView>();
 	MapState mapState = MapState.ALL;
 
 	public OverlayMapView(Micropolis _engine)
