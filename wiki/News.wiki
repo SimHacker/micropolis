@@ -4,6 +4,14 @@
 
 This page presents a history of the Micropolis open source release.
 
+== Java Micropolis, version 1.1 (February 24, 2013) ==
+
+Released a minor update to the Java Micropolis project. This version
+is recompiled so that it will run on version 6 of the JRE (making it
+easier for Mac users, since they can now use the Apple-provided run-time). It also fixes a couple bugs, the most critical being that the city randomly stops running when there are roads or tracks along the edge of the map.
+
+If you are using version 1.0, simply download the new version and extract it on top of the old version. Saved cities will load just fine in the new version.
+
 == Java Rewrite (February 15, 2013) ==
 
 There is now a version of Micropolis written in the Java programming language, contributed by Jason Long. This makes Micropolis more easily accessible to users on Windows and Mac platforms. First make sure you have a recent version of Java on your computer, then download Micropolis (Java edition) from this site.
