@@ -29,14 +29,17 @@ public class BudgetDialog extends JDialog
 	double origFirePct;
 	double origPolicePct;
 
+	JLabel roadFundRequest = new JLabel();
 	JLabel roadFundAlloc = new JLabel();
-	JSpinner roadFundEntry;
+	JSlider roadFundEntry;
 
+	JLabel policeFundRequest = new JLabel();
 	JLabel policeFundAlloc = new JLabel();
-	JSpinner policeFundEntry;
+	JSlider policeFundEntry;
 
+	JLabel fireFundRequest = new JLabel();
 	JLabel fireFundAlloc = new JLabel();
-	JSpinner fireFundEntry;
+	JSlider fireFundEntry;
 
 	JLabel taxRevenueLbl = new JLabel();
 
@@ -72,9 +75,23 @@ public class BudgetDialog extends JDialog
 		}
 
 		taxRevenueLbl.setText(formatFunds(b.taxIncome));
+
+		roadFundRequest.setText(formatFunds(b.roadRequest));
 		roadFundAlloc.setText(formatFunds(b.roadFunded));
+
+		policeFundRequest.setText(formatFunds(b.policeRequest));
 		policeFundAlloc.setText(formatFunds(b.policeFunded));
+
+		fireFundRequest.setText(formatFunds(b.fireRequest));
 		fireFundAlloc.setText(formatFunds(b.fireFunded));
+	}
+
+	static void adjustSliderSize(JSlider slider)
+	{
+		Dimension sz = slider.getPreferredSize();
+		slider.setPreferredSize(
+			new Dimension(80, sz.height)
+			);
 	}
 
 	public BudgetDialog(Window owner, Micropolis engine)
@@ -90,9 +107,14 @@ public class BudgetDialog extends JDialog
 
 		// give text fields of the fund-level spinners a minimum size
 		taxRateEntry = new JSpinner(new SpinnerNumberModel(7,0,20,1));
-		roadFundEntry = new JSpinner(new SpinnerNumberModel(100,0,100,1));
-		fireFundEntry = new JSpinner(new SpinnerNumberModel(1,0,100,1));
-		policeFundEntry = new JSpinner(new SpinnerNumberModel(10,0,100,1));
+
+		// widgets to set funding levels
+		roadFundEntry = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+		adjustSliderSize(roadFundEntry);
+		fireFundEntry = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+		adjustSliderSize(fireFundEntry);
+		policeFundEntry = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+		adjustSliderSize(policeFundEntry);
 
 		ChangeListener change = new ChangeListener() {
 		public void stateChanged(ChangeEvent ev) {
@@ -129,25 +151,33 @@ public class BudgetDialog extends JDialog
 		c2.gridx = 2;
 		c2.weightx = 0.5;
 		c2.anchor = GridBagConstraints.EAST;
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.gridx = 3;
+		c3.weightx = 0.5;
+		c3.anchor = GridBagConstraints.EAST;
 
-		c1.gridy = c2.gridy = 0;
+		c1.gridy = c2.gridy = c3.gridy = 0;
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c2);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);
 
-		c0.gridy = c1.gridy = c2.gridy = 1;
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 1;
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
 		fundingRatesPane.add(roadFundEntry, c1);
-		fundingRatesPane.add(roadFundAlloc, c2);
+		fundingRatesPane.add(roadFundRequest, c2);
+		fundingRatesPane.add(roadFundAlloc, c3);
 
-		c0.gridy = c1.gridy = c2.gridy = 2;
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 2;
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
 		fundingRatesPane.add(policeFundEntry, c1);
-		fundingRatesPane.add(policeFundAlloc, c2);
+		fundingRatesPane.add(policeFundRequest, c2);
+		fundingRatesPane.add(policeFundAlloc, c3);
 
-		c0.gridy = c1.gridy = c2.gridy = 3;
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 3;
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
 		fundingRatesPane.add(fireFundEntry, c1);
-		fundingRatesPane.add(fireFundAlloc, c2);
+		fundingRatesPane.add(fireFundRequest, c2);
+		fundingRatesPane.add(fireFundAlloc, c3);
 
 		JSeparator sep1 = new JSeparator(SwingConstants.HORIZONTAL);
 		mainBox.add(sep1);
