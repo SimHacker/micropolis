@@ -1230,42 +1230,8 @@ public class Micropolis
 	}
 	public History history = new History();
 
-	static class MiscHistory
-	{
-		int resPop;
-		int comPop;
-		int indPop;
-		int resValve;
-		int comValve;
-		int indValve;
-		int crimeRamp;
-		int polluteRamp;
-		int landValueAverage;
-		int crimeAverage;
-		int pollutionAverage;
-		int gameLevel;
-		int cityClass;
-		int cityScore;
-	}
-
 	void setValves()
 	{
-		MiscHistory hist = new MiscHistory();
-		hist.resPop = resPop;
-		hist.comPop = comPop;
-		hist.indPop = indPop;
-		hist.resValve = resValve;
-		hist.comValve = comValve;
-		hist.indValve = indValve;
-		hist.crimeRamp = crimeRamp;
-		hist.polluteRamp = polluteRamp;
-		hist.landValueAverage = landValueAverage;
-		hist.crimeAverage = crimeAverage;
-		hist.pollutionAverage = pollutionAverage;
-		hist.gameLevel = gameLevel;
-		hist.cityClass = evaluation.cityClass;
-		hist.cityScore = evaluation.cityScore;
-
 		double normResPop = (double)resPop / 8.0;
 		totalPop = (int) (normResPop + comPop + indPop);
 
