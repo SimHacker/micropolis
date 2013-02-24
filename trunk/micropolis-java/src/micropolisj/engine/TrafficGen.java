@@ -98,8 +98,7 @@ class TrafficGen
 			int tx = mapX + PerimX[z];
 			int ty = mapY + PerimY[z];
 
-			if (city.testBounds(tx, ty)
-				&& roadTest(tx, ty))
+			if (roadTest(tx, ty))
 			{
 				mapX = tx;
 				mapY = ty;
@@ -111,6 +110,10 @@ class TrafficGen
 
 	boolean roadTest(int tx, int ty)
 	{
+		if (!city.testBounds(tx, ty)) {
+			return false;
+		}
+
 		char c = city.getTile(tx, ty);
 		c &= LOMASK;
 
