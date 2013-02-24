@@ -898,6 +898,9 @@ public class MainWindow extends JFrame
 
 	void doQueryTool(int xpos, int ypos)
 	{
+		if (!engine.testBounds(xpos, ypos))
+			return;
+
 		ZoneStatus z = engine.queryZoneStatus(xpos, ypos);
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
 	}
