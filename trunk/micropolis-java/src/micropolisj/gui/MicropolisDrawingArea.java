@@ -25,7 +25,7 @@ public class MicropolisDrawingArea extends JComponent
 {
 	Micropolis m;
 	boolean blinkUnpoweredZones = true;
-	HashSet<Point> unpoweredZones = new HashSet<>();
+	HashSet<Point> unpoweredZones = new HashSet<Point>();
 	boolean blink;
 	Timer blinkTimer;
 	ToolPreview toolPreview;
@@ -107,7 +107,7 @@ public class MicropolisDrawingArea extends JComponent
 		spriteImages = new EnumMap<SpriteKind, Map<Integer,Image> >(SpriteKind.class);
 		for (SpriteKind kind : SpriteKind.values())
 		{
-			HashMap<Integer,Image> imgs = new HashMap<>();
+			HashMap<Integer,Image> imgs = new HashMap<Integer,Image>();
 			for (int i = 0; i < kind.numFrames; i++) {
 				Image img = loadSpriteImage(kind, i);
 				if (img != null) {

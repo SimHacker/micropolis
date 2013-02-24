@@ -190,7 +190,7 @@ public class Micropolis
 
 	public CityEval evaluation;
 
-	ArrayList<Sprite> sprites = new ArrayList<>();
+	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
 	static final int VALVERATE = 2;
 	public static final int CENSUSRATE = 4;
@@ -333,9 +333,9 @@ public class Micropolis
 		}
 	}
 
-	ArrayList<Listener> listeners = new ArrayList<>();
-	ArrayList<MapListener> mapListeners = new ArrayList<>();
-	ArrayList<EarthquakeListener> earthquakeListeners = new ArrayList<>();
+	ArrayList<Listener> listeners = new ArrayList<Listener>();
+	ArrayList<MapListener> mapListeners = new ArrayList<MapListener>();
+	ArrayList<EarthquakeListener> earthquakeListeners = new ArrayList<EarthquakeListener>();
 
 	public void addListener(Listener l)
 	{
@@ -1729,7 +1729,7 @@ public class Micropolis
 		public int taxIncome;
 		public int operatingExpenses;
 	}
-	public ArrayList<FinancialHistory> financialHistory = new ArrayList<>();
+	public ArrayList<FinancialHistory> financialHistory = new ArrayList<FinancialHistory>();
 
 	void collectTax()
 	{
@@ -2253,7 +2253,7 @@ public class Micropolis
 	 */
 	public boolean makeMeltdown()
 	{
-		ArrayList<CityLocation> candidates = new ArrayList<>();
+		ArrayList<CityLocation> candidates = new ArrayList<CityLocation>();
 		for (int y = 0; y < map.length; y++) {
 			for (int x = 0; x < map[y].length; x++) {
 				if ((map[y][x] & LOMASK) == NUCLEAR) {
