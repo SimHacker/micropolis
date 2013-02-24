@@ -129,6 +129,13 @@ public class Micropolis
 	int totalPop;
 	int lastCityPop;
 
+	// used in generateBudget()
+	int lastRoadTotal;
+	int lastRailTotal;
+	int lastTotalPop;
+	int lastFireStationCount;
+	int lastPoliceCount;
+
 	int trafficMaxLocationX;
 	int trafficMaxLocationY;
 	int pollutionMaxLocationX;
@@ -1669,6 +1676,12 @@ public class Micropolis
 
 	void collectTaxPartial()
 	{
+		lastRoadTotal = roadTotal;
+		lastRailTotal = railTotal;
+		lastTotalPop = totalPop;
+		lastFireStationCount = fireStationCount;
+		lastPoliceCount = policeCount;
+
 		BudgetNumbers b = generateBudget();
 
 		taxFund += b.taxIncome;
@@ -1731,12 +1744,12 @@ public class Micropolis
 		b.policePercent = Math.max(0.0, policePercent);
 
 		b.previousBalance = totalFunds;
-		b.taxIncome = (int)Math.round(totalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
+		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
 
-		b.roadRequest = (int)Math.round((roadTotal + railTotal * 2) * RLevels[gameLevel]);
-		b.fireRequest = 100 * fireStationCount;
-		b.policeRequest = 100 * policeCount;
+		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
+		b.fireRequest = 100 * lastFireStationCount;
+		b.policeRequest = 100 * lastPoliceCount;
 
 		b.roadFunded = (int)Math.round(b.roadRequest * b.roadPercent);
 		b.fireFunded = (int)Math.round(b.fireRequest * b.firePercent);
