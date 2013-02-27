@@ -333,6 +333,22 @@ public enum MicropolisTool
 
 	/**
 	 * Checks whether the tile can be auto-bulldozed for
+	 * placement of road, rail, or wire.
+	 */
+	static boolean canAutoBulldozeRRW(int tileValue)
+	{
+		//FIXME- explain why LASTTINYEXP is the upper bound here,
+		// when the Z-version of this function uses LASTTINYEXP+2
+
+		// can we autobulldoze this tile?
+		return (
+		(tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
+		(tileValue >= TINYEXP && tileValue <= LASTTINYEXP)
+		);
+	}
+
+	/**
+	 * Checks whether the tile can be auto-bulldozed for
 	 * placement of a zone.
 	 */
 	static boolean canAutoBulldozeZ(char tileValue)
@@ -529,7 +545,6 @@ public enum MicropolisTool
 		if (!engine.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		autoDoze(engine, xpos, ypos);
 		ToolResult result = layWire(engine, xpos, ypos);
 		fixZone(engine, xpos, ypos);
 		return result;
@@ -876,8 +891,13 @@ public enum MicropolisTool
 
 		default:
 			if (tile != DIRT) {
-				//cannot do wire here
-				return ToolResult.NONE;
+				if (engine.autoBulldoze && canAutoBulldozeRRW(tile)) {
+					cost += 1; //autodoze cost
+				}
+				else {
+					//cannot do wire here
+					return ToolResult.NONE;
+				}
 			}
 
 			//wire on dirt
