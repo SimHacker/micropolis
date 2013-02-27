@@ -142,7 +142,7 @@ public enum MicropolisTool
 				{
 					if (engine.autoBulldoze)
 					{
-						if (canAutoBulldoze(tileValue))
+						if (canAutoBulldozeZ(tileValue))
 							cost++;
 						else
 							canBuild = false;
@@ -204,7 +204,7 @@ public enum MicropolisTool
 				{
 					if (engine.autoBulldoze)
 					{
-						if (canAutoBulldoze(tileValue))
+						if (canAutoBulldozeZ(tileValue))
 							cost++;
 						else
 							canBuild = false;
@@ -267,7 +267,7 @@ public enum MicropolisTool
 				{
 					if (engine.autoBulldoze)
 					{
-						if (canAutoBulldoze(tileValue))
+						if (canAutoBulldozeZ(tileValue))
 							cost++;
 						else
 							canBuild = false;
@@ -331,8 +331,15 @@ public enum MicropolisTool
 		}
 	}
 
-	static boolean canAutoBulldoze(char tileValue)
+	/**
+	 * Checks whether the tile can be auto-bulldozed for
+	 * placement of a zone.
+	 */
+	static boolean canAutoBulldozeZ(char tileValue)
 	{
+		//FIXME- explain why LASTTINYEXP+2 is the upper bound?
+		//FIXME- what is significance of POWERBASE+2 and POWERBASE+12 ?
+
 		// can we autobulldoze this tile?
 		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
 			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
