@@ -135,74 +135,17 @@ public class BudgetDialog extends JDialog
 		JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
 		mainBox.add(sep);
 
-		JPanel fundingRatesPane = new JPanel(new GridBagLayout());
-		fundingRatesPane.setBorder(BorderFactory.createEmptyBorder(8,0,8,0));
-		mainBox.add(fundingRatesPane);
-
-		GridBagConstraints c0 = new GridBagConstraints();
-		c0.gridx = 0;
-		c0.weightx = 0.25;
-		c0.anchor = GridBagConstraints.WEST;
-		GridBagConstraints c1 = new GridBagConstraints();
-		c1.gridx = 1;
-		c1.weightx = 0.25;
-		c1.anchor = GridBagConstraints.EAST;
-		GridBagConstraints c2 = new GridBagConstraints();
-		c2.gridx = 2;
-		c2.weightx = 0.5;
-		c2.anchor = GridBagConstraints.EAST;
-		GridBagConstraints c3 = new GridBagConstraints();
-		c3.gridx = 3;
-		c3.weightx = 0.5;
-		c3.anchor = GridBagConstraints.EAST;
-
-		c1.gridy = c2.gridy = c3.gridy = 0;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);
-
-		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 1;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
-		fundingRatesPane.add(roadFundEntry, c1);
-		fundingRatesPane.add(roadFundRequest, c2);
-		fundingRatesPane.add(roadFundAlloc, c3);
-
-		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 2;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
-		fundingRatesPane.add(policeFundEntry, c1);
-		fundingRatesPane.add(policeFundRequest, c2);
-		fundingRatesPane.add(policeFundAlloc, c3);
-
-		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 3;
-		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
-		fundingRatesPane.add(fireFundEntry, c1);
-		fundingRatesPane.add(fireFundRequest, c2);
-		fundingRatesPane.add(fireFundAlloc, c3);
+		mainBox.add(makeFundingRatesPane());
 
 		JSeparator sep1 = new JSeparator(SwingConstants.HORIZONTAL);
 		mainBox.add(sep1);
 
-		JPanel balancePane = new JPanel(new GridBagLayout());
-		balancePane.setBorder(BorderFactory.createEmptyBorder(8,24,8,24));
-		mainBox.add(balancePane);
-
-		makeBalancePane(balancePane);
+		mainBox.add(makeBalancePane());
 
 		JSeparator sep2 = new JSeparator(SwingConstants.HORIZONTAL);
 		mainBox.add(sep2);
 
-		JPanel optionsPane = new JPanel(new GridBagLayout());
-		optionsPane.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
-		mainBox.add(optionsPane);
-
-		c0.anchor = c1.anchor = GridBagConstraints.WEST;
-		c0.gridy = c1.gridy = 0;
-		c0.weightx = c1.weightx = 0.5;
-		optionsPane.add(autoBudgetBtn, c0);
-		optionsPane.add(pauseBtn, c1);
-
-		autoBudgetBtn.setSelected(engine.autoBudget);
-		pauseBtn.setSelected(engine.simSpeed == Speed.PAUSED);
+		mainBox.add(makeOptionsPane());
 
 		JPanel buttonPane = new JPanel();
 		add(buttonPane, BorderLayout.SOUTH);
@@ -245,6 +188,76 @@ public class BudgetDialog extends JDialog
 		catch (NoSuchMethodException e) {
 			// ok to ignore
 		}
+	}
+
+	private JComponent makeFundingRatesPane()
+	{
+		JPanel fundingRatesPane = new JPanel(new GridBagLayout());
+		fundingRatesPane.setBorder(BorderFactory.createEmptyBorder(8,0,8,0));
+
+		GridBagConstraints c0 = new GridBagConstraints();
+		c0.gridx = 0;
+		c0.weightx = 0.25;
+		c0.anchor = GridBagConstraints.WEST;
+		GridBagConstraints c1 = new GridBagConstraints();
+		c1.gridx = 1;
+		c1.weightx = 0.25;
+		c1.anchor = GridBagConstraints.EAST;
+		GridBagConstraints c2 = new GridBagConstraints();
+		c2.gridx = 2;
+		c2.weightx = 0.5;
+		c2.anchor = GridBagConstraints.EAST;
+		GridBagConstraints c3 = new GridBagConstraints();
+		c3.gridx = 3;
+		c3.weightx = 0.5;
+		c3.anchor = GridBagConstraints.EAST;
+
+		c1.gridy = c2.gridy = c3.gridy = 0;
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.allocation_hdr")), c3);
+
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 1;
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.road_fund")), c0);
+		fundingRatesPane.add(roadFundEntry, c1);
+		fundingRatesPane.add(roadFundRequest, c2);
+		fundingRatesPane.add(roadFundAlloc, c3);
+
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 2;
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.police_fund")), c0);
+		fundingRatesPane.add(policeFundEntry, c1);
+		fundingRatesPane.add(policeFundRequest, c2);
+		fundingRatesPane.add(policeFundAlloc, c3);
+
+		c0.gridy = c1.gridy = c2.gridy = c3.gridy = 3;
+		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.fire_fund")), c0);
+		fundingRatesPane.add(fireFundEntry, c1);
+		fundingRatesPane.add(fireFundRequest, c2);
+		fundingRatesPane.add(fireFundAlloc, c3);
+
+		return fundingRatesPane;
+	}
+
+	private JComponent makeOptionsPane()
+	{
+		JPanel optionsPane = new JPanel(new GridBagLayout());
+		optionsPane.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
+
+		GridBagConstraints c0 = new GridBagConstraints();
+		GridBagConstraints c1 = new GridBagConstraints();
+
+		c0.gridx = 0;
+		c1.gridx = 1;
+		c0.anchor = c1.anchor = GridBagConstraints.WEST;
+		c0.gridy = c1.gridy = 0;
+		c0.weightx = c1.weightx = 0.5;
+		optionsPane.add(autoBudgetBtn, c0);
+		optionsPane.add(pauseBtn, c1);
+
+		autoBudgetBtn.setSelected(engine.autoBudget);
+		pauseBtn.setSelected(engine.simSpeed == Speed.PAUSED);
+
+		return optionsPane;
 	}
 
 	private JComponent makeTaxPane()
@@ -302,8 +315,11 @@ public class BudgetDialog extends JDialog
 		loadBudgetNumbers(true);
 	}
 
-	private JComponent makeBalancePane(JPanel balancePane)
+	private JComponent makeBalancePane()
 	{
+		JPanel balancePane = new JPanel(new GridBagLayout());
+		balancePane.setBorder(BorderFactory.createEmptyBorder(8,24,8,24));
+
 		GridBagConstraints c0 = new GridBagConstraints();
 		GridBagConstraints c1 = new GridBagConstraints();
 
