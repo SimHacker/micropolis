@@ -575,10 +575,6 @@ public enum MicropolisTool
 		char tile = (char) (engine.getTile(xpos, ypos) & LOMASK);
 		switch (tile)
 		{
-		case DIRT:  //rail on dirt
-			engine.setTile(xpos, ypos, (char) (LHRAIL | BULLBIT | BURNBIT));
-			break;
-
 		case RIVER:		// rail on water
 		case REDGE:
 		case CHANNEL:
@@ -655,7 +651,14 @@ public enum MicropolisTool
 			break;
 
 		default:
-			return ToolResult.NONE;
+			//TODO- check if auto-bulldoze is enabled
+			if (tile != DIRT) {
+				return ToolResult.NONE;
+			}
+
+		  	//rail on dirt
+			engine.setTile(xpos, ypos, (char) (LHRAIL | BULLBIT | BURNBIT));
+			break;
 		}
 
 		engine.spend(cost);
@@ -674,10 +677,6 @@ public enum MicropolisTool
 		char tile = (char) (engine.getTile(xpos, ypos) & LOMASK);
 		switch (tile)
 		{
-		case DIRT:
-			engine.setTile(xpos, ypos, (char) (TileConstants.ROADS | BULLBIT | BURNBIT));
-			break;
-
 		case RIVER:		// road on water
 		case REDGE:
 		case CHANNEL:	// check how to build bridges, if possible.
@@ -754,7 +753,13 @@ public enum MicropolisTool
 			break;
 
 		default:
-			return ToolResult.NONE;
+			// TODO- auto-bulldoze here
+			if (tile != DIRT)
+				return ToolResult.NONE;
+
+			// road on dirt
+			engine.setTile(xpos, ypos, (char) (TileConstants.ROADS | BULLBIT | BURNBIT));
+			break;
 		}
 	
 		engine.spend(cost);
@@ -775,10 +780,6 @@ public enum MicropolisTool
 
 		switch (tile)
 		{
-		case DIRT:  //wire on dirt
-			engine.setTile(xpos, ypos, (char) (LHPOWER | CONDBIT | BULLBIT | BURNBIT));
-			break;
-
 		case RIVER:		// wire on water
 		case REDGE:
 		case CHANNEL:
@@ -866,8 +867,15 @@ public enum MicropolisTool
 			engine.setTile(xpos, ypos, (char) (RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT));
 			break;
 
-		default: //cannot do wire here
-			return ToolResult.NONE;
+		default:
+			if (tile != DIRT) {
+				//cannot do wire here
+				return ToolResult.NONE;
+			}
+
+			//wire on dirt
+			engine.setTile(xpos, ypos, (char) (LHPOWER | CONDBIT | BULLBIT | BURNBIT));
+			break;
 		}
 
 		engine.spend(cost);
