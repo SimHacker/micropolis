@@ -1,7 +1,3 @@
-Autodoze-
- *Do not autodoze for roads,rails, or wire if not enough money to actually
-  build it
-
 Micropolis::map[] array-
  *Consider changing type from 'char' to 'short'
 
