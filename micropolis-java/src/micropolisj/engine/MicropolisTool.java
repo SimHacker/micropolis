@@ -483,7 +483,6 @@ public enum MicropolisTool
 		if (!engine.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		autoDoze(engine, xpos, ypos);
 		ToolResult result = layRail(engine, xpos, ypos);
 		fixZone(engine, xpos, ypos);
 		return result;
@@ -494,7 +493,6 @@ public enum MicropolisTool
 		if (!engine.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		autoDoze(engine, xpos, ypos);
 		ToolResult result = layRoad(engine, xpos, ypos);
 		fixZone(engine, xpos, ypos);
 		return result;
@@ -673,9 +671,14 @@ public enum MicropolisTool
 			break;
 
 		default:
-			//TODO- check if auto-bulldoze is enabled
 			if (tile != DIRT) {
-				return ToolResult.NONE;
+				if (engine.autoBulldoze && canAutoBulldozeRRW(tile)) {
+					cost += 1; //autodoze cost
+				}
+				else {
+					// cannot do rail here
+					return ToolResult.NONE;
+				}
 			}
 
 		  	//rail on dirt
@@ -775,9 +778,15 @@ public enum MicropolisTool
 			break;
 
 		default:
-			// TODO- auto-bulldoze here
-			if (tile != DIRT)
-				return ToolResult.NONE;
+			if (tile != DIRT) {
+				if (engine.autoBulldoze && canAutoBulldozeRRW(tile)) {
+					cost += 1; //autodoze cost
+				}
+				else {
+					// cannot do road here
+					return ToolResult.NONE;
+				}
+			}
 
 			// road on dirt
 			engine.setTile(xpos, ypos, (char) (TileConstants.ROADS | BULLBIT | BURNBIT));
