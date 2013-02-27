@@ -458,26 +458,6 @@ public enum MicropolisTool
 		}
 	}
 
-	void autoDoze(Micropolis engine, int xpos, int ypos)
-	{
-		if (engine.autoBulldoze && engine.totalFunds > 0)
-		{
-			char tile = engine.getTile(xpos, ypos);
-			char ntile = neutralizeRoad(tile);
-
-			if ((tile & BULLBIT) != 0 &&
-				((ntile >= TINYEXP &&
-				ntile <= LASTTINYEXP) ||
-				(ntile < HBRIDGE && ntile != DIRT)
-				)
-				)
-			{
-				engine.spend(1);
-				engine.setTile(xpos, ypos, DIRT);
-			}
-		}
-	}
-
 	ToolResult applyRailTool(Micropolis engine, int xpos, int ypos)
 	{
 		if (!engine.testBounds(xpos, ypos))
