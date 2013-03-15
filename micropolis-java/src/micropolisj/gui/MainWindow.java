@@ -1356,6 +1356,9 @@ public class MainWindow extends JFrame
 	{
 		String version = getClass().getPackage().getImplementationVersion();
 		String versionStr = MessageFormat.format(strings.getString("main.version_string"), version);
+		versionStr = versionStr.replace("%java.version%", System.getProperty("java.version"));
+		versionStr = versionStr.replace("%java.vendor%", System.getProperty("java.vendor"));
+
 		JLabel appNameLbl = new JLabel(versionStr);
 		JLabel appDetailsLbl = new JLabel(strings.getString("main.about_text"));
 		JComponent [] inputs = new JComponent[] {  appNameLbl, appDetailsLbl };
