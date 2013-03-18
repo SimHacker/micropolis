@@ -8,14 +8,24 @@
 
 package micropolisj;
 
+import javax.swing.*;
+
 import micropolisj.gui.MainWindow;
 
 public class Main
 {
-	public static void main(String [] args)
+	static void createAndShowGUI()
 	{
 		MainWindow win = new MainWindow();
 		win.setVisible(true);
 		win.doNewCity(true);
+	}
+
+	public static void main(String [] args)
+	{
+		SwingUtilities.invokeLater(new Runnable() {
+		public void run() {
+			createAndShowGUI();
+		}});
 	}
 }
