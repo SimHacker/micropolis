@@ -681,6 +681,7 @@ class MapScanner
 			city.needHospital = 0;
 		}
 
+//FIXME- should be 'else if'
 		if (city.needChurch > 0)
 		{
 			zonePlop(CHURCH - 4);
