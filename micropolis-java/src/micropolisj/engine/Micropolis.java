@@ -178,10 +178,6 @@ public class Micropolis
 	int policeEffect = 1000;
 	int fireEffect = 1000;
 
-	int taxFund;
-	int roadFundEscrow;
-	int fireFundEscrow;
-	int policeFundEscrow;
 	int cashFlow; //net change in totalFunds in previous year
 
 	boolean newPower;
@@ -1686,10 +1682,10 @@ public class Micropolis
 
 		BudgetNumbers b = generateBudget();
 
-		taxFund += b.taxIncome;
-		roadFundEscrow -= b.roadFunded;
-		fireFundEscrow -= b.fireFunded;
-		policeFundEscrow -= b.policeFunded;
+		budget.taxFund += b.taxIncome;
+		budget.roadFundEscrow -= b.roadFunded;
+		budget.fireFundEscrow -= b.fireFunded;
+		budget.policeFundEscrow -= b.policeFunded;
 
 		taxEffect = b.taxRate;
 		roadEffect = b.roadRequest != 0 ?
@@ -1714,8 +1710,8 @@ public class Micropolis
 
 	void collectTax()
 	{
-		int revenue = taxFund / TAXFREQ;
-		int expenses = -(roadFundEscrow + fireFundEscrow + policeFundEscrow) / TAXFREQ;
+		int revenue = budget.taxFund / TAXFREQ;
+		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow) / TAXFREQ;
 
 		FinancialHistory hist = new FinancialHistory();
 		hist.cityTime = cityTime;
@@ -1728,10 +1724,10 @@ public class Micropolis
 		hist.totalFunds = budget.totalFunds;
 		financialHistory.add(0,hist);
 
-		taxFund = 0;
-		roadFundEscrow = 0;
-		fireFundEscrow = 0;
-		policeFundEscrow = 0;
+		budget.taxFund = 0;
+		budget.roadFundEscrow = 0;
+		budget.fireFundEscrow = 0;
+		budget.policeFundEscrow = 0;
 	}
 
 	/** Annual maintenance cost of each police station. */
