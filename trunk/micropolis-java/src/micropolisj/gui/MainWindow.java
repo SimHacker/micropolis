@@ -1211,7 +1211,7 @@ public class MainWindow extends JFrame
 
 	private void reloadFunds()
 	{
-		fundsLbl.setText(formatFunds(getEngine().totalFunds));
+		fundsLbl.setText(formatFunds(getEngine().budget.totalFunds));
 	}
 
 	//implements Micropolis.Listener

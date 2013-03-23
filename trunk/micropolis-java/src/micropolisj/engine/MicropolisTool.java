@@ -158,7 +158,7 @@ public enum MicropolisTool
 
 		cost += getToolCost();
 
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		// take care of the money situation here
@@ -220,7 +220,7 @@ public enum MicropolisTool
 
 		cost += getToolCost();
 
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		// take care of the money situation here
@@ -283,7 +283,7 @@ public enum MicropolisTool
 
 		cost += getToolCost();
 
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		// take care of the money situation here
@@ -394,7 +394,7 @@ public enum MicropolisTool
 		if ((currTile & ZONEBIT) != 0)
 		{
 			// zone center bit is set
-			if (engine.totalFunds >= 1)
+			if (engine.budget.totalFunds >= 1)
 			{
 				engine.spend(1);
 				switch (checkSize(tmp))
@@ -435,7 +435,7 @@ public enum MicropolisTool
 			tmp == REDGE ||
 			tmp == CHANNEL)
 		{
-			if (engine.totalFunds >= 6)
+			if (engine.budget.totalFunds >= 6)
 			{
 				ToolResult result = layDoze(engine, xpos, ypos);
 				if (tmp != (engine.getTile(xpos, ypos) & LOMASK))
@@ -501,7 +501,7 @@ public enum MicropolisTool
 			}
 		}
 
-		if (engine.totalFunds < cost) {
+		if (engine.budget.totalFunds < cost) {
 			return ToolResult.INSUFFICIENT_FUNDS;
 		}
 
@@ -538,7 +538,7 @@ public enum MicropolisTool
 
 	private ToolResult layDoze(Micropolis engine, int xpos, int ypos)
 	{
-		if (engine.totalFunds <= 0)
+		if (engine.budget.totalFunds <= 0)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		char tile = engine.getTile(xpos, ypos);
@@ -569,7 +569,7 @@ public enum MicropolisTool
 		final int TUNNEL_COST = 100;
 
 		int cost = RAIL_COST;
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		char tile = (char) (engine.getTile(xpos, ypos) & LOMASK);
@@ -580,7 +580,7 @@ public enum MicropolisTool
 		case CHANNEL:
 
 			cost = TUNNEL_COST;
-			if (engine.totalFunds < cost)
+			if (engine.budget.totalFunds < cost)
 				return ToolResult.INSUFFICIENT_FUNDS;
 
 			if (xpos + 1 < engine.getWidth())
@@ -676,7 +676,7 @@ public enum MicropolisTool
 		final int BRIDGE_COST = 50;
 
 		int cost = ROAD_COST;
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		char tile = (char) (engine.getTile(xpos, ypos) & LOMASK);
@@ -687,7 +687,7 @@ public enum MicropolisTool
 		case CHANNEL:	// check how to build bridges, if possible.
 
 			cost = BRIDGE_COST;
-			if (engine.totalFunds < cost)
+			if (engine.budget.totalFunds < cost)
 				return ToolResult.INSUFFICIENT_FUNDS;
 
 			if (xpos + 1 < engine.getWidth())
@@ -783,7 +783,7 @@ public enum MicropolisTool
 		final int UNDERWATER_WIRE_COST = 25;
 
 		int cost = WIRE_COST;
-		if (engine.totalFunds < cost)
+		if (engine.budget.totalFunds < cost)
 			return ToolResult.INSUFFICIENT_FUNDS;
 
 		char tile = (char) (engine.getTile(xpos, ypos) & LOMASK);
@@ -796,7 +796,7 @@ public enum MicropolisTool
 		case CHANNEL:
 
 			cost = UNDERWATER_WIRE_COST;
-			if (engine.totalFunds < cost)
+			if (engine.budget.totalFunds < cost)
 				return ToolResult.INSUFFICIENT_FUNDS;
 
 			if (xpos + 1 < engine.getWidth())
