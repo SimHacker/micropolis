@@ -192,6 +192,7 @@ public class NewCityDialog extends JDialog
 	private void onPlayClicked()
 	{
 		engine.setGameLevel(getSelectedGameLevel());
+		engine.setFunds(GameLevel.getStartingFunds(engine.gameLevel));
 		startPlaying(engine, null);
 	}
 

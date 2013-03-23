@@ -2613,4 +2613,9 @@ public class Micropolis
 			spend(delta);
 		}
 	}
+
+	public void setFunds(int totalFunds)
+	{
+		budget.totalFunds = totalFunds;
+	}
 }

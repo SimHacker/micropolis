@@ -60,8 +60,6 @@ public class MapGenerator
 
 	public void generateSomeCity(long r)
 	{
-		//FIXME- initial funds should be set by caller
-		engine.budget.totalFunds = GameLevel.getStartingFunds(engine.gameLevel);
 		generateMap(r);
 		engine.fireWholeMapChanged();
 	}
