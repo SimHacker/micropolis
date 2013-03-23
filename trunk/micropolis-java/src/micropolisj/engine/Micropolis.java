@@ -211,16 +211,18 @@ public class Micropolis
 
 	public Micropolis()
 	{
-		PRNG = DEFAULT_PRNG;
-		evaluation = new CityEval(this);
-		init();
+		this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
-	protected void init()
+	public Micropolis(int width, int height)
 	{
-		int width = DEFAULT_WIDTH;
-		int height = DEFAULT_HEIGHT;
+		PRNG = DEFAULT_PRNG;
+		evaluation = new CityEval(this);
+		init(width, height);
+	}
 
+	protected void init(int width, int height)
+	{
 		map = new char[height][width];
 		powerMap = new boolean[height][width];
 
