@@ -2602,16 +2602,8 @@ public class Micropolis
 	{
 		assert GameLevel.isValid(newLevel);
 
-		int origFunds = GameLevel.getStartingFunds(gameLevel);
-		int newFunds = GameLevel.getStartingFunds(newLevel);
-		int delta = origFunds - newFunds;
-
 		gameLevel = newLevel;
 		fireOptionsChanged();
-
-		if (budget.totalFunds > delta) {
-			spend(delta);
-		}
 	}
 
 	public void setFunds(int totalFunds)
