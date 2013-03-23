@@ -48,6 +48,11 @@ public class OverlayMapView extends JComponent
 		setEngine(_engine);
 	}
 
+	public Micropolis getEngine()
+	{
+		return engine;
+	}
+
 	public void setEngine(Micropolis newEngine)
 	{
 		assert newEngine != null;
