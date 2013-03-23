@@ -94,7 +94,7 @@ public class Micropolis
 	static final int DEFAULT_WIDTH = 120;
 	static final int DEFAULT_HEIGHT = 100;
 
-	public int totalFunds;
+	public final CityBudget budget = new CityBudget(this);
 	public boolean autoBulldoze = true;
 	public boolean autoBudget = false;
 	public Speed simSpeed = Speed.NORMAL;
@@ -205,7 +205,7 @@ public class Micropolis
 
 	public void spend(int amount)
 	{
-		totalFunds -= amount;
+		budget.totalFunds -= amount;
 		fireFundsChanged();
 	}
 
@@ -1725,7 +1725,7 @@ public class Micropolis
 		cashFlow = revenue - expenses;
 		spend(-cashFlow);
 
-		hist.totalFunds = totalFunds;
+		hist.totalFunds = budget.totalFunds;
 		financialHistory.add(0,hist);
 
 		taxFund = 0;
@@ -1751,7 +1751,7 @@ public class Micropolis
 		b.firePercent = Math.max(0.0, firePercent);
 		b.policePercent = Math.max(0.0, policePercent);
 
-		b.previousBalance = totalFunds;
+		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
 
@@ -1763,7 +1763,7 @@ public class Micropolis
 		b.fireFunded = (int)Math.round(b.fireRequest * b.firePercent);
 		b.policeFunded = (int)Math.round(b.policeRequest * b.policePercent);
 
-		int yumDuckets = totalFunds + b.taxIncome;
+		int yumDuckets = budget.totalFunds + b.taxIncome;
 		assert yumDuckets >= 0;
 
 		if (yumDuckets >= b.roadFunded)
@@ -1919,7 +1919,7 @@ public class Micropolis
 			dis.readShort();
 		}
 
-		totalFunds = dis.readInt();   //[50-51] total funds
+		budget.totalFunds = dis.readInt();   //[50-51] total funds
 		autoBulldoze = dis.readShort() != 0;    //52
 		autoBudget = dis.readShort() != 0;
 		autoGo = dis.readShort() != 0;          //54
@@ -1986,7 +1986,7 @@ public class Micropolis
 			out.writeShort(0);
 		}
 		//50
-		out.writeInt(totalFunds);
+		out.writeInt(budget.totalFunds);
 		out.writeShort(autoBulldoze ? 1 : 0);
 		out.writeShort(autoBudget ? 1 : 0);
 		//54
@@ -2613,7 +2613,7 @@ public class Micropolis
 		gameLevel = newLevel;
 		fireOptionsChanged();
 
-		if (totalFunds > delta) {
+		if (budget.totalFunds > delta) {
 			spend(delta);
 		}
 	}
