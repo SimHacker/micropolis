@@ -2029,7 +2029,17 @@ public class Micropolis
 	public void load(File filename)
 		throws IOException
 	{
-		load(new FileInputStream(filename));
+		FileInputStream fis = new FileInputStream(filename);
+		if (fis.getChannel().size() > 27120) {
+			// some editions of the classic Simcity game
+			// start the file off with a 128-byte header,
+			// but otherwise use the same format as us,
+			// so read in that 128-byte header and continue
+			// as before.
+			byte [] bbHeader = new byte[128];
+			fis.read(bbHeader);
+		}
+		load(fis);
 	}
 
 	void checkPowerMap()
