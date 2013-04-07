@@ -1924,7 +1924,7 @@ public class Micropolis
 		cityTax = dis.readShort();              //56
 		taxEffect = cityTax;
 		int simSpeedAsInt = dis.readShort();
-		if (simSpeedAsInt >= 0 || simSpeedAsInt <= 4)
+		if (simSpeedAsInt >= 0 && simSpeedAsInt <= 4)
 			simSpeed = Speed.values()[simSpeedAsInt];
 		else
 			simSpeed = Speed.NORMAL;
