@@ -325,7 +325,11 @@ public class OverlayMapView extends JComponent
 				default:
 				}
 
+				// tile == -1 means it's already been drawn
+				// in the checkPower function
+
 				if (tile != -1) {
+				if (tile >= 0 && tile <= LAST_TILE) {
 				for (int yy = 0; yy < TILE_HEIGHT; yy++)
 				{
 					for (int xx = 0; xx < TILE_WIDTH; xx++)
@@ -333,6 +337,7 @@ public class OverlayMapView extends JComponent
 						img.setRGB(x*TILE_WIDTH+xx,y*TILE_HEIGHT+yy,
 							tileArrayImage.getRGB(xx,tile*TILE_OFFSET_Y+yy));
 					}
+				}
 				}
 				}
 			}
