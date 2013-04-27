@@ -4,6 +4,16 @@
 
 This page presents a history of the Micropolis open source release.
 
+== Java Micropolis, version 1.2 (April 27, 2013) ==
+
+Another minor update to the Java Micropolis project. This version
+fixes just a few minor bugs that were discovered, but
+introduces no new features or major changes in functionality.
+
+If you are using version 1.0 or version 1.1, simply download the
+new version and extract it on top of the old version. Saved cities
+will load just fine.
+
 == Java Micropolis, version 1.1 (February 24, 2013) ==
 
 Released a minor update to the Java Micropolis project. This version
