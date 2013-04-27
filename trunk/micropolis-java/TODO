@@ -7,11 +7,10 @@ Simulator speeds-
  *Do not have sprite's movement speed be dependent on speed.
 
 Finances-
- *Fix bug where it is possible to get negative money :(...
-   It happens when expenses exceed income and there is no funds.
-
-Budget dialog-
- *Press escape to close
+ *Pay operating costs either every week or at the beginning of the year,
+  instead of at the end of the year. This will fix an issue where it is
+  possible to get negative money... just make your expenses exceed your
+  income and run completely out of money.
 
 On Game Load-
  *All zones are unpowered for the first several ticks. I'd imagine there
@@ -31,3 +30,7 @@ Disasters-
 City size notifications-
  *Pause and pop up a message the first time the city reaches 2000, 10000,
   50000, etc. people.
+
+Graphics-
+ *Let graphics be pluggable; use a mechanism similar to how the UI strings
+  are pluggable according to locale.
