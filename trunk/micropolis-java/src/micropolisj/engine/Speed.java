@@ -14,10 +14,10 @@ package micropolisj.engine;
 public enum Speed
 {
 	PAUSED    ( 999,999,  0),
-	SLOW      ( 500,  5,  1),   //one step every 2500 ms
+	SLOW      ( 250,  5,  1),   //one step every 1250 ms
 	NORMAL    ( 125,  2,  1),   //one step every 250 ms
-	FAST      (  50,  1,  2),   //one step every 25 ms
-	SUPER_FAST(  25,  1, 10);   //one step every 2.5 ms
+	FAST      (  50,  1,  1),   //one step every 50 ms
+	SUPER_FAST(  50,  1,  5);   //one step every 10 ms
 
 	/** The animation speed, expressed as an interval in milliseconds. */
 	public final int animationDelay;
