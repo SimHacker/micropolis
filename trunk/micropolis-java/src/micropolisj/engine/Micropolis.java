@@ -15,7 +15,7 @@ import static micropolisj.engine.TileConstants.*;
 
 /**
  * The main simulation engine for Micropolis.
- * The front-end should call step() and animate() periodically
+ * The front-end should call animate() periodically
  * to move the simulation forward in time.
  */
 public class Micropolis
@@ -189,7 +189,7 @@ public class Micropolis
 	public int cityTime;  //counts "weeks" (actually, 1/48'ths years)
 	int scycle; //same as cityTime, except mod 1024
 	int fcycle; //counts simulation steps (mod 1024)
-	public int acycle; //animation cycle (mod 960)
+	int acycle; //animation cycle (mod 960)
 
 	public CityEval evaluation;
 
@@ -448,7 +448,7 @@ public class Micropolis
 	}
 
 	/**
-	 * Checks whether the next call to step() will collect taxes and
+	 * Checks whether the next call to animate() will collect taxes and
 	 * process the budget.
 	 */
 	public boolean isBudgetTime()
@@ -456,11 +456,12 @@ public class Micropolis
 		return (
 			cityTime != 0 &&
 			(cityTime % TAXFREQ) == 0 &&
-			((fcycle + 1) % 16) == 10
+			((fcycle + 1) % 16) == 10 &&
+			((acycle + 1) % 2) == 0
 			);
 	}
 
-	public void step()
+	void step()
 	{
 		fcycle = (fcycle + 1) % 1024;
 		simulate(fcycle % 16);
@@ -2115,6 +2116,10 @@ public class Micropolis
 
 	public void animate()
 	{
+		this.acycle = (this.acycle+1) % 960;
+		if (this.acycle % 2 == 0) {
+			step();
+		}
 		moveObjects();
 		animateTiles();
 	}

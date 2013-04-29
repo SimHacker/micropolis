@@ -10,28 +10,28 @@ package micropolisj.engine;
 
 /**
  * Lists the simulation speeds available.
+ * Contains properties identifying how often the animation timer fires,
+ * and how many animation steps are fired at each interval.
+ * Note: for every 2 animation steps, one simulation step is triggered.
  */
 public enum Speed
 {
-	PAUSED    ( 999,999,  0),
-	SLOW      ( 250,  5,  1),   //one step every 1250 ms
-	NORMAL    ( 125,  2,  1),   //one step every 250 ms
-	FAST      (  50,  1,  1),   //one step every 50 ms
-	SUPER_FAST(  50,  1,  5);   //one step every 10 ms
+	PAUSED    ( 999,  0),
+	SLOW      ( 625,  1),   //one sim step every 1250 ms
+	NORMAL    ( 125,  1),   //one sim step every 250 ms
+	FAST      (  25,  1),   //one sim step every 50 ms
+	SUPER_FAST(  25,  5);   //one sim step every 10 ms
 
 	/** The animation speed, expressed as an interval in milliseconds. */
 	public final int animationDelay;
-	/** For slower speeds, how many animation occur for every simulation step.
-	 * Faster speeds should set this to one. */
-	public final int aniFramesPerStep;
+
 	/** For faster speeds, how many simulation steps should occur for every
 	 * update to the screen. */
 	public final int simStepsPerUpdate;
 
-	private Speed(int delay, int aniFrames, int simSteps)
+	private Speed(int delay, int simSteps)
 	{
 		this.animationDelay = delay;
-		this.aniFramesPerStep = aniFrames;
 		this.simStepsPerUpdate = simSteps;
 	}
 }

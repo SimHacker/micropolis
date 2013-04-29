@@ -1,11 +1,6 @@
 Micropolis::map[] array-
  *Consider changing type from 'char' to 'short'
 
-Simulator speeds-
- *Do not change behavior of sim based on speed, i.e. crime scans
-  should be done every cycle, even at the high speeds.
- *Do not have sprite's movement speed be dependent on speed.
-
 Finances-
  *Pay operating costs either every week or at the beginning of the year,
   instead of at the end of the year. This will fix an issue where it is
