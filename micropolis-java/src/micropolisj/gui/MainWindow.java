@@ -1069,7 +1069,6 @@ public class MainWindow extends JFrame
 	private void startTimer()
 	{
 		final Micropolis engine = getEngine();
-		final int updateCycle = engine.simSpeed.aniFramesPerStep;
 		final int count = engine.simSpeed.simStepsPerUpdate;
 
 		assert !isTimerActive();
@@ -1096,23 +1095,18 @@ public class MainWindow extends JFrame
 		ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt)
 		{
-			engine.acycle = (engine.acycle+1) % 960;
-			if (engine.acycle % updateCycle == 0)
+			for (int i = 0; i < count; i++)
 			{
-				for (int i = 0; i < count; i++)
+				engine.animate();
+				if (!engine.autoBudget && engine.isBudgetTime())
 				{
-					if (!engine.autoBudget && engine.isBudgetTime())
-					{
-						stopTimer(); //redundant
-						showBudgetWindow(true);
-						return;
-					}
-					engine.step();
-					dirty2 = true;
+					stopTimer(); //redundant
+					showBudgetWindow(true);
+					return;
 				}
 			}
-			engine.animate();
 			updateDateLabel();
+			dirty2 = true;
 		}};
 
 		assert simTimer == null;
@@ -1308,11 +1302,6 @@ public class MainWindow extends JFrame
 		BudgetDialog dlg = new BudgetDialog(this, getEngine());
 		dlg.setModal(true);
 		dlg.setVisible(true);
-
-		if (isEndOfYear) {
-			getEngine().step();
-		}
-
 		startTimer();
 	}
 
