@@ -498,17 +498,6 @@ public class Micropolis
 		}
 	}
 
-	// period of powerScan()
-	static final int [] spdPwr = { 1, 1, 1, 2, 5 };
-	// period of ptlScan()
-	static final int [] spdPtl = { 1, 1, 1, 2, 5 };
-	// period of crimeScan()
-	static final int [] spdCri = { 1, 1, 1, 2, 5 };
-	// period of popDenScan()
-	static final int [] spdPop = { 1, 1, 1, 2, 5 };
-	// period of fireAnalysis()
-	static final int [] spdFir = { 1, 1, 1, 2, 5 };
-
 	void simulate(int mod16)
 	{
 		final int band = getWidth() / 8;
@@ -590,35 +579,25 @@ public class Micropolis
 			break;
 
 		case 11:
-			if (scycle % spdPwr[simSpeed.ordinal()] == 0) {
-				powerScan();
-				fireMapOverlayDataChanged(MapState.POWER_OVERLAY);
-				newPower = true;
-			}
+			powerScan();
+			fireMapOverlayDataChanged(MapState.POWER_OVERLAY);
+			newPower = true;
 			break;
 
 		case 12:
-			if (scycle % spdPtl[simSpeed.ordinal()] == 0) {
-				ptlScan();
-			}
+			ptlScan();
 			break;
 
 		case 13:
-			if (scycle % spdCri[simSpeed.ordinal()] == 0) {
-				crimeScan();
-			}
+			crimeScan();
 			break;
 
 		case 14:
-			if (scycle % spdPop[simSpeed.ordinal()] == 0) {
-				popDenScan();
-			}
+			popDenScan();
 			break;
 
 		case 15:
-			if (scycle % spdFir[simSpeed.ordinal()] == 0) {
-				fireAnalysis();
-			}
+			fireAnalysis();
 			doDisasters();
 			break;
 
