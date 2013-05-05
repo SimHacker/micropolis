@@ -344,6 +344,11 @@ public class TileConstants
 		return (tile & LOMASK) > 4 && (tile & LOMASK) < 21;
 	}
 
+	public static boolean isDozeable(int tile)
+	{
+		return (tile & BULLBIT) != 0;
+	}
+
 	static boolean isFloodable(int tile)
 	{
 		return (tile == DIRT || ((tile & BULLBIT) != 0 && (tile & BURNBIT) != 0));
@@ -359,5 +364,10 @@ public class TileConstants
 	{
 		int tmp = tile & LOMASK;
 		return (tmp >= RAILBASE && tmp < RESBASE);
+	}
+
+	public static boolean isZoneCenter(int tile)
+	{
+		return (tile & ZONEBIT) != 0;
 	}
 }
