@@ -56,7 +56,7 @@ public class ExplosionSprite extends Sprite
 		int t = z & LOMASK;
 		if ((z & BURNBIT) == 0 && t != DIRT)
 			return;
-		if ((z & ZONEBIT) != 0)
+		if (isZoneCenter(z))
 			return;
 		city.setTile(xpos, ypos, (char)(FIRE + city.PRNG.nextInt(4) + ANIMBIT));
 	}

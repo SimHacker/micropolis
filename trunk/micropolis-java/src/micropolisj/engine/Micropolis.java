@@ -672,7 +672,7 @@ public class Micropolis
 			for (int y = 0; y < height; y++)
 			{
 				char tile = map[y][x];
-				if ((tile & ZONEBIT) != 0)
+				if (isZoneCenter(tile))
 				{
 					tile &= LOMASK;
 					int den = computePopDen(x, y, (char)tile) * 8;
@@ -1838,8 +1838,9 @@ public class Micropolis
 				continue;
 
 			int t = map[y][x];
-			if ((t & ZONEBIT) != 0)
+			if (isZoneCenter(t)) {
 				continue;
+			}
 			if ((t & BURNBIT) != 0 || t == DIRT) {
 				setTile(x, y, RADTILE);
 			}
@@ -2212,7 +2213,7 @@ public class Micropolis
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
 			int tile = map[y][x];
-			if ((tile & ZONEBIT) == 0 && (tile & BURNBIT) != 0)
+			if (!isZoneCenter(tile) && (tile & BURNBIT) != 0)
 			{
 				tile &= LOMASK;
 				if (tile > 21 && tile < LASTZONE) {
