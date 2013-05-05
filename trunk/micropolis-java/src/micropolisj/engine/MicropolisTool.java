@@ -337,9 +337,6 @@ public enum MicropolisTool
 	 */
 	static boolean canAutoBulldozeRRW(int tileValue)
 	{
-		//FIXME- explain why LASTTINYEXP is the upper bound here,
-		// when the Z-version of this function uses LASTTINYEXP+2
-
 		// can we autobulldoze this tile?
 		return (
 		(tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
@@ -353,13 +350,12 @@ public enum MicropolisTool
 	 */
 	static boolean canAutoBulldozeZ(char tileValue)
 	{
-		//FIXME- explain why LASTTINYEXP+2 is the upper bound?
 		//FIXME- what is significance of POWERBASE+2 and POWERBASE+12 ?
 
 		// can we autobulldoze this tile?
 		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
 			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
-			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP + 2))
+			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP))
 		{
 			return true;
 		}
