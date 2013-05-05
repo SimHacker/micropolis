@@ -78,7 +78,7 @@ class MapScanner
 				return;
 			}
 
-			if ((cchr & ZONEBIT) != 0)
+			if (isZoneCenter(cchr))
 			{
 				doZone();
 				return;
@@ -192,7 +192,7 @@ class MapScanner
 
 				int c = city.map[ytem][xtem];
 				if ((c & BURNBIT) != 0) {
-					if ((c & ZONEBIT) != 0) {
+					if (isZoneCenter(c)) {
 						city.killZone(xtem, ytem, c);
 						if ((c & LOMASK) > IZB) { //explode
 							city.makeExplosion(xtem, ytem);
@@ -234,7 +234,7 @@ class MapScanner
 						if (((c & BURNBIT) != 0) || c == DIRT ||
 							(t >= WOODS5 && t < FLOOD))
 						{
-							if ((c & ZONEBIT) != 0) {
+							if (isZoneCenter(c)) {
 								city.killZone(xx, yy, c);
 							}
 							city.setTile(xx, yy, (char)(FLOOD + PRNG.nextInt(3)));
@@ -755,8 +755,9 @@ class MapScanner
 				if (city.testBounds(xx, yy))
 				{
 					int thCh = city.map[yy][xx];
-					if ((thCh & ZONEBIT) != 0)
+					if (isZoneCenter(thCh)) {
 						continue;
+					}
 
 					if ((thCh & ANIMBIT) != 0)
 						continue;

@@ -182,7 +182,7 @@ public abstract class Sprite
 			if ((z & BURNBIT) == 0) {
 				return; //cannot destroy it
 			}
-			if ((z & ZONEBIT) != 0) {
+			if (isZoneCenter(z)) {
 				city.killZone(xpos, ypos, z);
 				if (t > RZB) {
 					city.makeExplosion(xpos, ypos);
