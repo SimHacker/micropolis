@@ -10,6 +10,30 @@ package micropolisj.engine;
 
 import java.util.Arrays;
 
+/**
+ * Contains symbolic names of certain tile values,
+ * and helper functions to test tile attributes.
+ * Attributes of tiles that are interesting:
+ * <ul>
+ * <li>ZONE - the special tile for a zone
+ * <li>ANIM - the tile animates
+ * <li>BULL - is bulldozable
+ * <li>BURN - is combustible
+ * <li>COND - can conduct power
+ * <li>Road - traffic
+ * <li>Rail - railroad
+ * <li>Floodable - subject to floods
+ * <li>Wet
+ * <li>Rubble
+ * <li>Tree
+ * <li>OverWater
+ * <li>Arsonable
+ * <li>Vulnerable - vulnerable to earthquakes
+ * <li>Bridge
+ * <li>AutoDozeRRW - automatically bulldoze when placing Road/Rail/Wire
+ * <li>AutoDozeZ - automatically bulldoze when placing Zone
+ * </ul>
+ */
 public class TileConstants
 {
 	//
@@ -57,7 +81,7 @@ public class TileConstants
 	public static final char HTRFBASE = 144;
 	public static final char LASTROAD = 206;
 	public static final char POWERBASE = 208;
-	public static final char HPOWER = 208;
+	public static final char HPOWER = 208;    //underwater power-line
 	public static final char VPOWER = 209;
 	public static final char LHPOWER = 210;
 	public static final char LVPOWER = 211;
