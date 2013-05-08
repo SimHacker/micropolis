@@ -233,6 +233,40 @@ public class TileConstants
 		FOOTBALLGAME1, VBRDG0, URANIUM_FUEL, LAST_TILE
 		};
 
+	/**
+	 * Checks whether the tile can be auto-bulldozed for
+	 * placement of road, rail, or wire.
+	 */
+	public static boolean canAutoBulldozeRRW(int tileValue)
+	{
+		// can we autobulldoze this tile?
+		return (
+		(tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
+		(tileValue >= TINYEXP && tileValue <= LASTTINYEXP)
+		);
+	}
+
+	/**
+	 * Checks whether the tile can be auto-bulldozed for
+	 * placement of a zone.
+	 */
+	public static boolean canAutoBulldozeZ(char tileValue)
+	{
+		//FIXME- what is significance of POWERBASE+2 and POWERBASE+12 ?
+
+		// can we autobulldoze this tile?
+		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
+			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
+			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	//used by queryZoneStatus
 	public static int getBuildingId(int tile)
 	{
