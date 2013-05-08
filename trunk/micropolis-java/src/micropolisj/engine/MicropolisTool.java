@@ -331,40 +331,6 @@ public enum MicropolisTool
 		}
 	}
 
-	/**
-	 * Checks whether the tile can be auto-bulldozed for
-	 * placement of road, rail, or wire.
-	 */
-	static boolean canAutoBulldozeRRW(int tileValue)
-	{
-		// can we autobulldoze this tile?
-		return (
-		(tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
-		(tileValue >= TINYEXP && tileValue <= LASTTINYEXP)
-		);
-	}
-
-	/**
-	 * Checks whether the tile can be auto-bulldozed for
-	 * placement of a zone.
-	 */
-	static boolean canAutoBulldozeZ(char tileValue)
-	{
-		//FIXME- what is significance of POWERBASE+2 and POWERBASE+12 ?
-
-		// can we autobulldoze this tile?
-		if ((tileValue >= FIRSTRIVEDGE && tileValue <= LASTRUBBLE) ||
-			(tileValue >= POWERBASE + 2 && tileValue <= POWERBASE + 12) ||
-			(tileValue >= TINYEXP && tileValue <= LASTTINYEXP))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 	void fixBorder(Micropolis engine, int left, int top, int right, int bottom)
 	{
 		for (int x = left; x <= right; x++)
