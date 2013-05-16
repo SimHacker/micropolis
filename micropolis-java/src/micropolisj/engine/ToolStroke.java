@@ -397,16 +397,20 @@ public class ToolStroke
 
 	void fixBorder(int left, int top, int right, int bottom)
 	{
+		ToolEffect eff = new ToolEffect(city, left, top);
+
 		for (int x = left; x <= right; x++)
 		{
-			fixZone(x, top);
-			fixZone(x, bottom);
+			fixZone(new TranslatedToolEffect(eff, x-left, 0));
+			fixZone(new TranslatedToolEffect(eff, x-left, bottom-top));
 		}
 		for (int y = top + 1; y <= bottom - 1; y++)
 		{
-			fixZone(left, y);
-			fixZone(right, y);
+			fixZone(new TranslatedToolEffect(eff, 0, y-top));
+			fixZone(new TranslatedToolEffect(eff, right-left, y-top));
 		}
+
+		eff.apply();
 	}
 
 	ToolResult applyParkTool(int xpos, int ypos)
@@ -459,7 +463,12 @@ public class ToolStroke
 	protected void fixZone(int xpos, int ypos)
 	{
 		ToolEffect eff = new ToolEffect(city, xpos, ypos);
+		fixZone(eff);
+		eff.apply();
+	}
 
+	protected void fixZone(ToolEffectIfc eff)
+	{
 		fixSingle(eff);
 
 		// "fix" the cells to the north, west, east, and south
@@ -467,8 +476,6 @@ public class ToolStroke
 		fixSingle(new TranslatedToolEffect(eff, -1, 0));
 		fixSingle(new TranslatedToolEffect(eff, 1, 0));
 		fixSingle(new TranslatedToolEffect(eff, 0, 1));
-
-		eff.apply();
 	}
 
 	private void fixSingle(ToolEffectIfc eff)
