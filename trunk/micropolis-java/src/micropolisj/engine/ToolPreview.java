@@ -1,5 +1,6 @@
 package micropolisj.engine;
 
+import java.awt.Rectangle;
 import java.util.*;
 import static micropolisj.engine.TileConstants.*;
 
@@ -28,8 +29,7 @@ public class ToolPreview implements ToolEffectIfc
 
 	ToolPreview()
 	{
-		this.tiles = new short[1][1];
-		this.tiles[0][0] = CLEAR;
+		this.tiles = new short[0][0];
 		this.sounds = new ArrayList<SoundInfo>();
 		this.toolResult = ToolResult.NONE;
 	}
@@ -45,9 +45,19 @@ public class ToolPreview implements ToolEffectIfc
 		}
 	}
 
+	public Rectangle getBounds()
+	{
+		return new Rectangle(
+			-offsetX,
+			-offsetY,
+			getWidth(),
+			getHeight()
+			);
+	}
+
 	int getWidth()
 	{
-		return tiles[0].length;
+		return tiles.length != 0 ? tiles[0].length : 0;
 	}
 
 	int getHeight()
@@ -58,13 +68,22 @@ public class ToolPreview implements ToolEffectIfc
 	boolean inRange(int dx, int dy)
 	{
 		return offsetY+dy >= 0 &&
-			offsetY+dy < tiles.length &&
+			offsetY+dy < getHeight() &&
 			offsetX+dx >= 0 &&
-			offsetX+dx < tiles[0].length;
+			offsetX+dx < getWidth();
 	}
 
 	void expandTo(int dx, int dy)
 	{
+		if (tiles == null || tiles.length == 0) {
+			tiles = new short[1][1];
+			tiles[0][0] = CLEAR;
+			offsetX = -dx;
+			offsetY = -dy;
+			return;
+		}
+
+		// expand each existing row as needed
 		for (int i = 0; i < tiles.length; i++) {
 			short[] A = tiles[i];
 			if (offsetX+dx >= A.length) {
@@ -89,9 +108,10 @@ public class ToolPreview implements ToolEffectIfc
 			offsetX += addl;
 		}
 
+		int width = tiles[0].length;
 		if (offsetY+dy >= tiles.length) {
 			int newLen = offsetY+dy+1;
-			short[][] newTiles = new short[newLen][tiles[0].length];
+			short[][] newTiles = new short[newLen][width];
 			System.arraycopy(tiles, 0, newTiles, 0, tiles.length);
 			for (int i = tiles.length; i < newLen; i++) {
 				Arrays.fill(newTiles[i], CLEAR);
@@ -101,7 +121,7 @@ public class ToolPreview implements ToolEffectIfc
 		else if (offsetY+dy < 0) {
 			int addl = -(offsetY+dy);
 			int newLen = tiles.length + addl;
-			short[][] newTiles = new short[newLen][tiles[0].length];
+			short[][] newTiles = new short[newLen][width];
 			System.arraycopy(tiles, 0, newTiles, addl, tiles.length);
 			for (int i = 0; i < addl; i++) {
 				Arrays.fill(newTiles[i], CLEAR);

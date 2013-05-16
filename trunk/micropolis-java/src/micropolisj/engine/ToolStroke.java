@@ -30,18 +30,29 @@ public class ToolStroke
 		this.ydest = ypos;
 	}
 
-	public ToolResult apply()
+	public final ToolPreview getPreview()
+	{
+		ToolEffect eff = new ToolEffect(city);
+		applyArea(eff);
+		return eff.preview;
+	}
+
+	public final ToolResult apply()
+	{
+		ToolEffect eff = new ToolEffect(city);
+		applyArea(eff);
+		return eff.apply();
+	}
+
+	protected void applyArea(ToolEffectIfc eff)
 	{
 		Rectangle r = getBounds();
-		ToolEffect eff = new ToolEffect(city, r.x, r.y);
 
 		for (int i = 0; i < r.height; i += tool.getHeight()) {
 			for (int j = 0; j < r.width; j += tool.getWidth()) {
-				apply1(new TranslatedToolEffect(eff, j, i));
+				apply1(new TranslatedToolEffect(eff, r.x+j, r.y+i));
 			}
 		}
-
-		return eff.apply();
 	}
 
 	boolean apply1(ToolEffectIfc eff)

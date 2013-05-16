@@ -9,6 +9,11 @@ class ToolEffect implements ToolEffectIfc
 	final int originX;
 	final int originY;
 
+	ToolEffect(Micropolis city)
+	{
+		this(city, 0, 0);
+	}
+
 	ToolEffect(Micropolis city, int xpos, int ypos)
 	{
 		this.city = city;

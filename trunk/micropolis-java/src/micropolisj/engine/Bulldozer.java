@@ -11,10 +11,9 @@ class Bulldozer extends ToolStroke
 	}
 
 	@Override
-	public ToolResult apply()
+	protected void applyArea(ToolEffectIfc eff)
 	{
 		Rectangle b = getBounds();
-		ToolEffect eff = new ToolEffect(city, b.x, b.y);
 
 		// scan selection area for rubble, forest, etc...
 		for (int y = 0; y < b.height; y++) {
@@ -23,7 +22,7 @@ class Bulldozer extends ToolStroke
 				int tile = eff.getTile(x, y);
 				if (isDozeable(tile) && !isZoneCenter(tile)) {
 
-					dozeField(new TranslatedToolEffect(eff, x, y));
+					dozeField(new TranslatedToolEffect(eff, b.x+x, b.y+y));
 				}
 
 			}
@@ -34,12 +33,10 @@ class Bulldozer extends ToolStroke
 			for (int x = 0; x < b.width; x++) {
 
 				if (isZoneCenter(eff.getTile(x,y))) {
-					dozeZone(new TranslatedToolEffect(eff, x, y));
+					dozeZone(new TranslatedToolEffect(eff, b.x+x, b.y+y));
 				}
 			}
 		}
-
-		return eff.apply();
 	}
 
 	void dozeZone(ToolEffectIfc eff)

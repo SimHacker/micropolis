@@ -934,6 +934,7 @@ public class MainWindow extends JFrame
 		}
 		else {
 			this.toolStroke = currentTool.beginStroke(engine, x, y);
+			previewTool();
 		}
 
 		this.lastX = x;
@@ -943,6 +944,8 @@ public class MainWindow extends JFrame
 	private void onToolUp(MouseEvent ev)
 	{
 		if (toolStroke != null) {
+			drawingArea.setToolPreview(null);
+
 			CityLocation loc = toolStroke.getLocation();
 			ToolResult tr = toolStroke.apply();
 			showToolResult(loc, tr);
@@ -950,6 +953,20 @@ public class MainWindow extends JFrame
 		}
 
 		onToolHover(ev);
+	}
+
+	void previewTool()
+	{
+		assert this.toolStroke != null;
+		assert this.currentTool != null;
+
+		drawingArea.setToolCursor(
+			toolStroke.getBounds(),
+			currentTool
+			);
+		drawingArea.setToolPreview(
+			toolStroke.getPreview()
+			);
 	}
 
 	private void onToolDrag(MouseEvent ev)
@@ -966,10 +983,7 @@ public class MainWindow extends JFrame
 
 		if (toolStroke != null) {
 			toolStroke.dragTo(x, y);
-			drawingArea.setToolCursor(
-				toolStroke.getBounds(),
-				currentTool
-				);
+			previewTool();
 		}
 		else if (currentTool == MicropolisTool.QUERY) {
 			doQueryTool(x, y);

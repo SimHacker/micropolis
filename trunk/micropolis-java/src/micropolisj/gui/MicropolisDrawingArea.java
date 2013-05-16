@@ -163,16 +163,23 @@ public class MicropolisDrawingArea extends JComponent
 			for (int x = minX; x < maxX; x++)
 			{
 				int cell = m.getTile(x,y);
-				int tile = (cell & LOMASK) % tileImages.length;
 				if (blinkUnpoweredZones &&
 					(cell & ZONEBIT) != 0 &&
 					(cell & PWRBIT) == 0)
 				{
 					unpoweredZones.add(new Point(x,y));
 					if (blink)
-						tile = LIGHTNINGBOLT;
+						cell = LIGHTNINGBOLT;
 				}
 
+				if (toolPreview != null) {
+					int c = toolPreview.getTile(x, y);
+					if (c != CLEAR) {
+						cell = c;
+					}
+				}
+
+				int tile = (cell & LOMASK) % tileImages.length;
 				gr.drawImage(tileImages[tile],
 					x*TILE_WIDTH + (shakeStep != 0 ? getShakeModifier(y) : 0),
 					y*TILE_HEIGHT,
@@ -263,6 +270,33 @@ public class MicropolisDrawingArea extends JComponent
 				toolCursor.rect.width*TILE_WIDTH + 8,
 				toolCursor.rect.height*TILE_HEIGHT + 8
 				));
+		}
+	}
+
+	public void setToolPreview(ToolPreview newPreview)
+	{
+		if (toolPreview != null) {
+			Rectangle b = toolPreview.getBounds();
+			Rectangle r = new Rectangle(
+				b.x*TILE_WIDTH,
+				b.y*TILE_HEIGHT,
+				b.width*TILE_WIDTH,
+				b.height*TILE_HEIGHT
+				);
+			repaint(r);
+		}
+
+		toolPreview = newPreview;
+		if (toolPreview != null) {
+
+			Rectangle b = toolPreview.getBounds();
+			Rectangle r = new Rectangle(
+				b.x*TILE_WIDTH,
+				b.y*TILE_HEIGHT,
+				b.width*TILE_WIDTH,
+				b.height*TILE_HEIGHT
+				);
+			repaint(r);
 		}
 	}
 
