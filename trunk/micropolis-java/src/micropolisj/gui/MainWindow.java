@@ -929,7 +929,14 @@ public class MainWindow extends JFrame
 		int x = ev.getX() / MicropolisDrawingArea.TILE_WIDTH;
 		int y = ev.getY() / MicropolisDrawingArea.TILE_HEIGHT;
 
-		this.toolStroke = currentTool.beginStroke(engine, x, y);
+		if (currentTool == MicropolisTool.QUERY) {
+			doQueryTool(x, y);
+			this.toolStroke = null;
+		}
+		else {
+			this.toolStroke = currentTool.beginStroke(engine, x, y);
+		}
+
 		this.lastX = x;
 		this.lastY = y;
 	}
@@ -937,7 +944,9 @@ public class MainWindow extends JFrame
 	private void onToolUp(MouseEvent ev)
 	{
 		if (toolStroke != null) {
-			toolStroke.apply();
+			CityLocation loc = toolStroke.getLocation();
+			ToolResult tr = toolStroke.apply();
+			showToolResult(loc, tr);
 			toolStroke = null;
 		}
 	}
@@ -960,6 +969,9 @@ public class MainWindow extends JFrame
 				toolStroke.getBounds(),
 				parseColor(strings.getString("tool."+currentTool.name()+".border"))
 				);
+		}
+		else if (currentTool == MicropolisTool.QUERY) {
+			doQueryTool(x, y);
 		}
 
 		lastX = x;
@@ -995,34 +1007,25 @@ public class MainWindow extends JFrame
 		drawingArea.setToolPreview(null);
 	}
 
-	private void applyCurrentTool(int x, int y, boolean drag)
+	private void showToolResult(CityLocation loc, ToolResult result)
 	{
-		if (currentTool == MicropolisTool.QUERY) {
-			doQueryTool(x, y);
-			return;
-		}
-
-		ToolResult result = currentTool.apply(engine, x, y);
-
 		switch (result) {
 		case SUCCESS:
-			citySound(currentTool == MicropolisTool.BULLDOZER ? Sound.BULLDOZE : Sound.BUILD, new CityLocation(x, y));
+			citySound(currentTool == MicropolisTool.BULLDOZER ? Sound.BULLDOZE : Sound.BUILD, loc);
 			dirty1 = true;
 			break;
 
 		case NONE: break;
 		case UH_OH:
-			if (!drag) {
-				messagesPane.appendCityMessage(MicropolisMessage.BULLDOZE_FIRST);
-				citySound(Sound.UHUH, new CityLocation(x, y));
-			}
+			messagesPane.appendCityMessage(MicropolisMessage.BULLDOZE_FIRST);
+			citySound(Sound.UHUH, loc);
 			break;
+
 		case INSUFFICIENT_FUNDS:
-			if (!drag) {
-				messagesPane.appendCityMessage(MicropolisMessage.INSUFFICIENT_FUNDS);
-				citySound(Sound.SORRY, new CityLocation(x, y));
-			}
+			messagesPane.appendCityMessage(MicropolisMessage.INSUFFICIENT_FUNDS);
+			citySound(Sound.SORRY, loc);
 			break;
+
 		default:
 			assert false;
 		}

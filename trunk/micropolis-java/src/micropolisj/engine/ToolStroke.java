@@ -32,90 +32,59 @@ public class ToolStroke
 
 	public ToolResult apply()
 	{
-		ToolResult tr = ToolResult.NONE;
-
 		Rectangle r = getBounds();
 		ToolEffect eff = new ToolEffect(city, r.x, r.y);
 
 		for (int i = 0; i < r.height; i += tool.getHeight()) {
 			for (int j = 0; j < r.width; j += tool.getWidth()) {
-				ToolResult tmp = apply1(
-					new TranslatedToolEffect(eff, j, i)
-					);
-				if (tmp == ToolResult.SUCCESS) {
-					tr = tmp;
-				}
-				else if (tr == ToolResult.NONE) {
-					tr = tmp;
-				}
+				apply1(new TranslatedToolEffect(eff, j, i));
 			}
 		}
 
-		ToolResult tmp = eff.apply();
-		if (tmp != ToolResult.NONE) {
-			return tmp;
-		}
-		else {
-			return tr;
-		}
+		return eff.apply();
 	}
 
-	ToolResult apply1(ToolEffectIfc eff)
+	boolean apply1(ToolEffectIfc eff)
 	{
-		ToolResult tr = ToolResult.SUCCESS;
-
 		switch (tool)
 		{
 		case PARK:
-			tr = applyParkTool(eff);
-			break;
+			return applyParkTool(eff);
 
 		case RESIDENTIAL:
-			tr = applyZone(eff, 3, 3, RESBASE);
-			break;
+			return applyZone(eff, 3, 3, RESBASE);
 
 		case COMMERCIAL:
-			tr = applyZone(eff, 3, 3, COMBASE);
-			break;
+			return applyZone(eff, 3, 3, COMBASE);
 
 		case INDUSTRIAL:
-			tr = applyZone(eff, 3, 3, INDBASE);
-			break;
+			return applyZone(eff, 3, 3, INDBASE);
 
 		case FIRE:
-			tr = applyZone(eff, 3, 3, FIRESTBASE);
-			break;
+			return applyZone(eff, 3, 3, FIRESTBASE);
 
 		case POLICE:
-			tr = applyZone(eff, 3, 3, POLICESTBASE);
-			break;
+			return applyZone(eff, 3, 3, POLICESTBASE);
 
 		case POWERPLANT:
-			tr = applyZone(eff, 4, 4, COALBASE);
-			break;
+			return applyZone(eff, 4, 4, COALBASE);
 
 		case STADIUM:
-			tr = applyZone(eff, 4, 4, STADIUMBASE);
-			break;
+			return applyZone(eff, 4, 4, STADIUMBASE);
 
 		case SEAPORT:
-			tr = applyZone(eff, 4, 4, PORTBASE);
-			break;
+			return applyZone(eff, 4, 4, PORTBASE);
 
 		case NUCLEAR:
-			tr = applyZone(eff, 4, 4, NUCLEARBASE);
-			break;
+			return applyZone(eff, 4, 4, NUCLEARBASE);
 
 		case AIRPORT:
-			tr = applyZone(eff, 6, 6, AIRPORTBASE);
-			break;
+			return applyZone(eff, 6, 6, AIRPORTBASE);
 
 		default:
 			// not expected
 			throw new Error("unexpected tool: "+tool);
 		}
-
-		return tr;
 	}
 
 	public void dragTo(int xdest, int ydest)
@@ -155,7 +124,12 @@ public class ToolStroke
 		return r;
 	}
 
-	ToolResult applyZone(ToolEffectIfc eff, int width, int height, char tileBase)
+	public CityLocation getLocation()
+	{
+		return new CityLocation(xpos, ypos);
+	}
+
+	boolean applyZone(ToolEffectIfc eff, int width, int height, char tileBase)
 	{
 		int cost = tool.getToolCost();
 		boolean canBuild = true;
@@ -176,7 +150,8 @@ public class ToolStroke
 			}
 		}
 		if (!canBuild) {
-			return ToolResult.UH_OH;
+			eff.toolResult(ToolResult.UH_OH);
+			return false;
 		}
 
 		eff.spend(cost);
@@ -198,7 +173,7 @@ public class ToolStroke
 		}
 
 		fixBorder(eff, width, height);
-		return ToolResult.SUCCESS;
+		return true;
 	}
 
 	//compatible function
@@ -223,14 +198,15 @@ public class ToolStroke
 		}
 	}
 
-	ToolResult applyParkTool(ToolEffectIfc eff)
+	boolean applyParkTool(ToolEffectIfc eff)
 	{
 		int cost = tool.getToolCost();
 
 		if (eff.getTile(0, 0) != DIRT) {
 			// some sort of bulldozing is necessary
 			if (!city.autoBulldoze) {
-				return ToolResult.UH_OH;
+				eff.toolResult(ToolResult.UH_OH);
+				return false;
 			}
 
 			//FIXME- use a canAutoBulldoze-style function here
@@ -240,7 +216,8 @@ public class ToolStroke
 			}
 			else {
 				// cannot be auto-bulldozed
-				return ToolResult.UH_OH;
+				eff.toolResult(ToolResult.UH_OH);
+				return false;
 			}
 		}
 
@@ -255,7 +232,7 @@ public class ToolStroke
 		eff.spend(cost);
 		eff.setTile(0, 0, tile);
 
-		return ToolResult.SUCCESS;
+		return true;
 	}
 
 	// checks whether the tile value represents road with traffic
