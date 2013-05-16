@@ -403,6 +403,6 @@ public class TileConstants
 
 	public static boolean isZoneCenter(int tile)
 	{
-		return (tile & ZONEBIT) != 0;
+		return tile >= 0 && (tile & ZONEBIT) != 0;
 	}
 }
