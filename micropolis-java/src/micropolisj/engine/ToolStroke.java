@@ -32,6 +32,11 @@ public class ToolStroke
 
 	public ToolResult apply()
 	{
+		ToolResult checkResult = check();
+		if (checkResult != ToolResult.SUCCESS) {
+			return checkResult;
+		}
+
 		Rectangle r = getBounds();
 		for (int i = r.y; i < r.y + r.height; i += tool.getHeight()) {
 			for (int j = r.x; j < r.x + r.width;
@@ -43,6 +48,54 @@ public class ToolStroke
 		}
 		// TODO- actually check the result of application
 		return ToolResult.SUCCESS;
+	}
+
+	ToolResult checkZoneTool()
+	{
+		Rectangle b = getBounds();
+		int cost = 0;
+		int numPlaced = 0;
+
+		for (int i = b.y; i < b.y + b.height; i += tool.getHeight()) {
+			for (int j = b.x; j < b.x + b.width; j += tool.getWidth()) {
+				int x = j + (tool.getWidth() >= 3 ? 1 : 0);
+				int y = i + (tool.getHeight() >= 3 ? 1 : 0);
+				int c = costToPlaceZone(x, y);
+
+				if (c != Integer.MAX_VALUE) {
+					numPlaced++;
+					cost += c;
+				}
+			}
+		}
+
+		return numPlaced == 0 ? ToolResult.NONE :
+			cost <= city.budget.totalFunds ? ToolResult.SUCCESS :
+			ToolResult.INSUFFICIENT_FUNDS;
+	}
+
+	/**
+	 * @return SUCCESS if the operation will succeed, and at least
+	 * one tile will be changed;
+	 * INSUFFICIENT_FUNDS in case there's not enough money,
+	 * and NONE is it is a null op.
+	 */
+	ToolResult check()
+	{
+		switch (tool)
+		{
+		case BULLDOZER:
+			return checkBulldozer();
+	//	case RAIL:
+	//	case ROADS:
+	//	case WIRE:
+	//		return checkRailRoadWireTool();
+	//	case PARK:
+	//		return checkParkTool();
+		default:
+			return checkZoneTool();
+		}
+			
 	}
 
 	public ToolResult apply1(int xpos, int ypos)
@@ -167,6 +220,38 @@ public class ToolStroke
 		}
 
 		return r;
+	}
+
+	int costToPlaceZone(int xpos, int ypos)
+	{
+		final int width = tool.getWidth();
+		final int height = tool.getHeight();
+
+		int cost = tool.getToolCost();
+		boolean canBuild = true;
+		for (int rowNum = 0; rowNum < height; rowNum++) {
+			for (int colNum = 0; colNum < width; colNum++) {
+				int x = xpos - 1 + colNum;
+				int y = ypos - 1 + rowNum;
+
+				char tileValue = (char) (city.getTile(x,y) & LOMASK);
+				if (tileValue != DIRT)
+				{
+					if (city.autoBulldoze)
+					{
+						if (canAutoBulldozeZ(tileValue))
+							cost++;
+						else
+							canBuild = false;
+					}
+					else
+						canBuild = false;
+				}
+			}
+		}
+
+		return canBuild ? cost :
+			Integer.MAX_VALUE;
 	}
 
 	ToolResult apply3x3buildingTool(int xpos, int ypos, char tileBase)
@@ -368,6 +453,36 @@ public class ToolStroke
 			fixZone(left, y);
 			fixZone(right, y);
 		}
+	}
+
+	ToolResult checkBulldozer()
+	{
+		Rectangle b = getBounds();
+		if (b.width == 1 && b.height == 1 &&
+			isZoneCenter(city.getTile(b.x, b.y)))
+		{
+			int cost = 1;
+			return city.budget.totalFunds >= cost ?
+				ToolResult.SUCCESS :
+				ToolResult.INSUFFICIENT_FUNDS;
+		}
+
+		int countDozed = 0;
+		for (int y = b.y; y < b.y+b.height; y++) {
+			for (int x = b.x; x < b.x+b.width; x++) {
+
+				char tile = city.getTile(x, y);
+				if (isDozeable(tile)) {
+					countDozed++;
+				}
+
+			}
+		}
+
+		int cost = 1 * countDozed;
+		return city.budget.totalFunds < cost ? ToolResult.INSUFFICIENT_FUNDS :
+			countDozed != 0 ? ToolResult.SUCCESS :
+			ToolResult.NONE;
 	}
 
 	ToolResult applyBulldozer(int xpos, int ypos)
