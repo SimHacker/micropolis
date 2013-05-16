@@ -16,6 +16,8 @@ public class ToolStroke
 	final MicropolisTool tool;
 	int xpos;
 	int ypos;
+	int xdest;
+	int ydest;
 
 	ToolStroke(Micropolis city, MicropolisTool tool, int xpos, int ypos)
 	{
@@ -23,6 +25,8 @@ public class ToolStroke
 		this.tool = tool;
 		this.xpos = xpos;
 		this.ypos = ypos;
+		this.xdest = xpos;
+		this.ydest = ypos;
 	}
 
 	public ToolResult apply()
@@ -78,6 +82,43 @@ public class ToolStroke
 			// not expected
 			return ToolResult.UH_OH;
 		}
+	}
+
+	public void dragTo(int xdest, int ydest)
+	{
+		this.xdest = xdest;
+		this.ydest = ydest;
+	}
+
+	public java.awt.Rectangle getPreview()
+	{
+		int dx = getPreviewDx();
+		int dy = getPreviewDy();
+
+		int x = Math.min(xpos, xpos + dx);
+		int y = Math.min(ypos, ypos + dy);
+
+		if (tool.getWidth() >= 3) {
+			x--;
+		}
+		if (tool.getHeight() >= 3) {
+			y--;
+		}
+
+		return new java.awt.Rectangle(x, y,
+			Math.abs(dx), Math.abs(dy));
+	}
+
+	int getPreviewDx()
+	{
+		int sgn = xdest > xpos ? 1 : -1;
+		return (sgn + (xdest - xpos) / tool.getWidth()) * tool.getWidth();
+	}
+
+	int getPreviewDy()
+	{
+		int sgn = ydest > ypos ? 1 : -1;
+		return (sgn + (ydest - ypos) / tool.getHeight()) * tool.getWidth();
 	}
 
 	ToolResult apply3x3buildingTool(int xpos, int ypos, char tileBase)
