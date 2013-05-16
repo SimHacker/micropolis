@@ -30,49 +30,49 @@ public class ToolStroke
 		switch (tool)
 		{
 		case BULLDOZER:
-			return applyBulldozer(city, xpos, ypos);
+			return applyBulldozer(xpos, ypos);
 
 		case RAIL:
-			return applyRailTool(city, xpos, ypos);
+			return applyRailTool(xpos, ypos);
 
 		case ROADS:
-			return applyRoadTool(city, xpos, ypos);
+			return applyRoadTool(xpos, ypos);
 
 		case WIRE:
-			return applyWireTool(city, xpos, ypos);
+			return applyWireTool(xpos, ypos);
 
 		case PARK:
-			return applyParkTool(city, xpos, ypos);
+			return applyParkTool(xpos, ypos);
 
 		case RESIDENTIAL:
-			return apply3x3buildingTool(city, xpos, ypos, RESBASE);
+			return apply3x3buildingTool(xpos, ypos, RESBASE);
 
 		case COMMERCIAL:
-			return apply3x3buildingTool(city, xpos, ypos, COMBASE);
+			return apply3x3buildingTool(xpos, ypos, COMBASE);
 
 		case INDUSTRIAL:
-			return apply3x3buildingTool(city, xpos, ypos, INDBASE);
+			return apply3x3buildingTool(xpos, ypos, INDBASE);
 
 		case FIRE:
-			return apply3x3buildingTool(engine, xpos, ypos, FIRESTBASE);
+			return apply3x3buildingTool(xpos, ypos, FIRESTBASE);
 
 		case POLICE:
-			return apply3x3buildingTool(engine, xpos, ypos, POLICESTBASE);
+			return apply3x3buildingTool(xpos, ypos, POLICESTBASE);
 
 		case POWERPLANT:
-			return apply4x4buildingTool(city, xpos, ypos, COALBASE);
+			return apply4x4buildingTool(xpos, ypos, COALBASE);
 
 		case STADIUM:
-			return apply4x4buildingTool(city, xpos, ypos, STADIUMBASE);
+			return apply4x4buildingTool(xpos, ypos, STADIUMBASE);
 
 		case SEAPORT:
-			return apply4x4buildingTool(city, xpos, ypos, PORTBASE);
+			return apply4x4buildingTool(xpos, ypos, PORTBASE);
 
 		case NUCLEAR:
-			return apply4x4buildingTool(city, xpos, ypos, NUCLEARBASE);
+			return apply4x4buildingTool(xpos, ypos, NUCLEARBASE);
 
 		case AIRPORT:
-			return apply6x6buildingTool(city, xpos, ypos, AIRPORTBASE);
+			return apply6x6buildingTool(xpos, ypos, AIRPORTBASE);
 
 		default:
 			// not expected
@@ -80,7 +80,7 @@ public class ToolStroke
 		}
 	}
 
-	ToolResult apply3x3buildingTool(Micropolis city, int xpos, int ypos, char tileBase)
+	ToolResult apply3x3buildingTool(int xpos, int ypos, char tileBase)
 	{
 		int mapH = xpos - 1;
 		int mapV = ypos - 1;
@@ -138,11 +138,11 @@ public class ToolStroke
 			}
 		}
 
-		fixBorder(city, mapH, mapV, mapH + 2, mapV + 2);
+		fixBorder(mapH, mapV, mapH + 2, mapV + 2);
 		return ToolResult.SUCCESS;
 	}
 
-	ToolResult apply4x4buildingTool(Micropolis city, int xpos, int ypos, char tileBase)
+	ToolResult apply4x4buildingTool(int xpos, int ypos, char tileBase)
 	{
 		int mapH = xpos - 1;
 		int mapV = ypos - 1;
@@ -201,11 +201,11 @@ public class ToolStroke
 			}
 		}
 
-		fixBorder(city, mapH, mapV, mapH + 3, mapV + 3);
+		fixBorder(mapH, mapV, mapH + 3, mapV + 3);
 		return ToolResult.SUCCESS;
 	}
 
-	ToolResult apply6x6buildingTool(Micropolis city, int xpos, int ypos, char tileBase)
+	ToolResult apply6x6buildingTool(int xpos, int ypos, char tileBase)
 	{
 		int mapH = xpos - 1;
 		int mapV = ypos - 1;
@@ -263,25 +263,25 @@ public class ToolStroke
 			}
 		}
 
-		fixBorder(city, mapH, mapV, mapH + 5, mapV + 5);
+		fixBorder(mapH, mapV, mapH + 5, mapV + 5);
 		return ToolResult.SUCCESS;
 	}
 
-	void fixBorder(Micropolis city, int left, int top, int right, int bottom)
+	void fixBorder(int left, int top, int right, int bottom)
 	{
 		for (int x = left; x <= right; x++)
 		{
-			fixZone(city, x, top);
-			fixZone(city, x, bottom);
+			fixZone(x, top);
+			fixZone(x, bottom);
 		}
 		for (int y = top + 1; y <= bottom - 1; y++)
 		{
-			fixZone(city, left, y);
-			fixZone(city, right, y);
+			fixZone(left, y);
+			fixZone(right, y);
 		}
 	}
 
-	ToolResult applyBulldozer(Micropolis city, int xpos, int ypos)
+	ToolResult applyBulldozer(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
@@ -299,15 +299,15 @@ public class ToolStroke
 				{
 				case 3:
 					city.makeSound(xpos, ypos, Sound.EXPLOSION_HIGH);
-					putRubble(city, xpos, ypos, 3, 3);
+					putRubble(xpos, ypos, 3, 3);
 					break;
 				case 4:
 					city.makeSound(xpos, ypos, Sound.EXPLOSION_LOW);
-					putRubble(city, xpos, ypos, 4, 4);
+					putRubble(xpos, ypos, 4, 4);
 					break;
 				case 6:
 					city.makeSound(xpos, ypos, Sound.EXPLOSION_BOTH);
-					putRubble(city, xpos, ypos, 6, 6);
+					putRubble(xpos, ypos, 6, 6);
 					break;
 				default:
 					assert false;
@@ -335,12 +335,12 @@ public class ToolStroke
 		{
 			if (city.budget.totalFunds >= 6)
 			{
-				ToolResult result = layDoze(city, xpos, ypos);
+				ToolResult result = layDoze(xpos, ypos);
 				if (tmp != (city.getTile(xpos, ypos) & LOMASK))
 				{
 					// tile changed
 					city.spend(5);
-					fixZone(city, xpos, ypos);
+					fixZone(xpos, ypos);
 				}
 				return result;
 			}
@@ -350,33 +350,33 @@ public class ToolStroke
 		}
 		else
 		{
-			ToolResult result = layDoze(city, xpos, ypos);
-			fixZone(city, xpos, ypos);
+			ToolResult result = layDoze(xpos, ypos);
+			fixZone(xpos, ypos);
 			return result;
 		}
 	}
 
-	ToolResult applyRailTool(Micropolis city, int xpos, int ypos)
+	ToolResult applyRailTool(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		ToolResult result = layRail(city, xpos, ypos);
-		fixZone(city, xpos, ypos);
+		ToolResult result = layRail(xpos, ypos);
+		fixZone(xpos, ypos);
 		return result;
 	}
 
-	ToolResult applyRoadTool(Micropolis city, int xpos, int ypos)
+	ToolResult applyRoadTool(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		ToolResult result = layRoad(city, xpos, ypos);
-		fixZone(city, xpos, ypos);
+		ToolResult result = layRoad(xpos, ypos);
+		fixZone(xpos, ypos);
 		return result;
 	}
 
-	ToolResult applyParkTool(Micropolis city, int xpos, int ypos)
+	ToolResult applyParkTool(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
@@ -416,13 +416,13 @@ public class ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	ToolResult applyWireTool(Micropolis city, int xpos, int ypos)
+	ToolResult applyWireTool(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
 			return ToolResult.UH_OH;
 
-		ToolResult result = layWire(city, xpos, ypos);
-		fixZone(city, xpos, ypos);
+		ToolResult result = layWire(xpos, ypos);
+		fixZone(xpos, ypos);
 		return result;
 	}
 
@@ -434,7 +434,7 @@ public class ToolStroke
 		return tile;
 	}
 
-	private ToolResult layDoze(Micropolis city, int xpos, int ypos)
+	private ToolResult layDoze(int xpos, int ypos)
 	{
 		if (city.budget.totalFunds <= 0)
 			return ToolResult.INSUFFICIENT_FUNDS;
@@ -461,7 +461,7 @@ public class ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	private ToolResult layRail(Micropolis city, int xpos, int ypos)
+	private ToolResult layRail(int xpos, int ypos)
 	{
 		final int RAIL_COST = 20;
 		final int TUNNEL_COST = 100;
@@ -568,7 +568,7 @@ public class ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	private ToolResult layRoad(Micropolis city, int xpos, int ypos)
+	private ToolResult layRoad(int xpos, int ypos)
 	{
 		final int ROAD_COST = 10;
 		final int BRIDGE_COST = 50;
@@ -675,7 +675,7 @@ public class ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	private ToolResult layWire(Micropolis city, int xpos, int ypos)
+	private ToolResult layWire(int xpos, int ypos)
 	{
 		final int WIRE_COST = 5;
 		final int UNDERWATER_WIRE_COST = 25;
@@ -796,20 +796,20 @@ public class ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	private void fixZone(Micropolis city, int xpos, int ypos)
+	private void fixZone(int xpos, int ypos)
 	{
-		fixSingle(city, xpos, ypos);
+		fixSingle(xpos, ypos);
 		if (ypos > 0)
-			fixSingle(city, xpos, ypos - 1);
+			fixSingle(xpos, ypos - 1);
 		if (xpos > 0)
-			fixSingle(city, xpos - 1, ypos);
+			fixSingle(xpos - 1, ypos);
 		if (xpos + 1 < city.getWidth())
-			fixSingle(city, xpos + 1, ypos);
+			fixSingle(xpos + 1, ypos);
 		if (ypos + 1 < city.getHeight())
-			fixSingle(city, xpos, ypos + 1);
+			fixSingle(xpos, ypos + 1);
 	}
 
-	private void fixSingle(Micropolis city, int xpos, int ypos)
+	private void fixSingle(int xpos, int ypos)
 	{
 		char tile = (char) (city.getTile(xpos, ypos) & LOMASK);
 		tile = neutralizeRoad(tile);
@@ -1007,7 +1007,7 @@ public class ToolStroke
 		} //end if on a rail tile
 	}
 
-	void putRubble(Micropolis city, int xpos, int ypos, int w, int h)
+	void putRubble(int xpos, int ypos, int w, int h)
 	{
 		for (int xx = xpos - 1; xx <= xpos + w-2; xx++) {
 			for (int yy = ypos - 1; yy <= ypos + h-2; yy++) {
