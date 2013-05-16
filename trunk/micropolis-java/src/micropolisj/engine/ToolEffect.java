@@ -69,8 +69,13 @@ class ToolEffect implements ToolEffectIfc
 				}
 			}
 		}
-		return anyFound && preview.cost != 0 ?
-			ToolResult.SUCCESS :
-			ToolResult.NONE;
+
+		if (anyFound && preview.cost != 0) {
+			city.spend(preview.cost);
+			return ToolResult.SUCCESS;
+		}
+		else {
+			return ToolResult.NONE;
+		}
 	}
 }

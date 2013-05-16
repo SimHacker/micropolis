@@ -104,34 +104,34 @@ public class ToolStroke
 			return applyParkTool(xpos, ypos);
 
 		case RESIDENTIAL:
-			return apply3x3buildingTool(xpos, ypos, RESBASE);
+			return applyZone(xpos-1, ypos-1, 3, 3, RESBASE);
 
 		case COMMERCIAL:
-			return apply3x3buildingTool(xpos, ypos, COMBASE);
+			return applyZone(xpos-1, ypos-1, 3, 3, COMBASE);
 
 		case INDUSTRIAL:
-			return apply3x3buildingTool(xpos, ypos, INDBASE);
+			return applyZone(xpos-1, ypos-1, 3, 3, INDBASE);
 
 		case FIRE:
-			return apply3x3buildingTool(xpos, ypos, FIRESTBASE);
+			return applyZone(xpos-1, ypos-1, 3, 3, FIRESTBASE);
 
 		case POLICE:
-			return apply3x3buildingTool(xpos, ypos, POLICESTBASE);
+			return applyZone(xpos-1, ypos-1, 3, 3, POLICESTBASE);
 
 		case POWERPLANT:
-			return apply4x4buildingTool(xpos, ypos, COALBASE);
+			return applyZone(xpos-1, ypos-1, 4, 4, COALBASE);
 
 		case STADIUM:
-			return apply4x4buildingTool(xpos, ypos, STADIUMBASE);
+			return applyZone(xpos-1, ypos-1, 4, 4, STADIUMBASE);
 
 		case SEAPORT:
-			return apply4x4buildingTool(xpos, ypos, PORTBASE);
+			return applyZone(xpos-1, ypos-1, 4, 4, PORTBASE);
 
 		case NUCLEAR:
-			return apply4x4buildingTool(xpos, ypos, NUCLEARBASE);
+			return applyZone(xpos-1, ypos-1, 4, 4, NUCLEARBASE);
 
 		case AIRPORT:
-			return apply6x6buildingTool(xpos, ypos, AIRPORTBASE);
+			return applyZone(xpos-1, ypos-1, 6, 6, AIRPORTBASE);
 
 		default:
 			// not expected
@@ -208,209 +208,75 @@ public class ToolStroke
 			Integer.MAX_VALUE;
 	}
 
-	ToolResult apply3x3buildingTool(int xpos, int ypos, char tileBase)
+	ToolResult applyZone(int xpos, int ypos, int width, int height, char tileBase)
 	{
-		int mapH = xpos - 1;
-		int mapV = ypos - 1;
+		ToolEffect eff = new ToolEffect(city, xpos, ypos);
 
-		if (!(mapH >= 0 && mapH + 2 < city.getWidth()))
-			return ToolResult.UH_OH;
-		if (!(mapV >= 0 && mapV + 2 < city.getHeight()))
-			return ToolResult.UH_OH;
-
-		int cost = 0;
+		int cost = tool.getToolCost();
 		boolean canBuild = true;
-		for (int rowNum = 0; rowNum <= 2; rowNum++)
-		{
-			for (int columnNum = 0; columnNum <= 2; columnNum++)
+		for (int rowNum = 0; rowNum < height; rowNum++) {
+			for (int columnNum = 0; columnNum < width; columnNum++)
 			{
-				int x = mapH + columnNum;
-				int y = mapV + rowNum;
-				char tileValue = (char) (city.getTile(x,y) & LOMASK);
+				int tileValue = eff.getTile(columnNum, rowNum);
+				tileValue = tileValue & LOMASK;
 
-				if (tileValue != DIRT)
-				{
-					if (city.autoBulldoze)
-					{
-						if (canAutoBulldozeZ(tileValue))
-							cost++;
-						else
-							canBuild = false;
+				if (tileValue != DIRT) {
+					if (city.autoBulldoze && canAutoBulldozeZ((char)tileValue)) {
+						cost++;
 					}
-					else
+					else {
 						canBuild = false;
+					}
 				}
 			}
 		}
-
-		if (!canBuild)
+		if (!canBuild) {
 			return ToolResult.UH_OH;
+		}
 
-		cost += tool.getToolCost();
+		eff.spend(cost);
 
-		if (city.budget.totalFunds < cost)
-			return ToolResult.INSUFFICIENT_FUNDS;
+		int centerRowNum = height >= 3 ? 1 : 0;
+		int centerColNum = width >= 3 ? 1 : 0;
 
-		// take care of the money situation here
-		city.spend(cost);
-
-		for (int rowNum = 0; rowNum <= 2; rowNum++)
+		for (int rowNum = 0; rowNum < height; rowNum++)
 		{
-			for (int columnNum = 0; columnNum <= 2; columnNum++)
+			for (int columnNum = 0; columnNum < width; columnNum++)
 			{
-				city.setTile(mapH + columnNum, mapV + rowNum, (char) (
+				eff.setTile(columnNum, rowNum, (char) (
 					tileBase + BNCNBIT +
-					(columnNum == 1 && rowNum == 1 ? ZONEBIT : 0)
+					(columnNum == centerColNum && rowNum == centerRowNum ? ZONEBIT : 0) +
+					(width==4 && columnNum==1 && rowNum==2 ? ANIMBIT : 0)
 					));
 				tileBase++;
 			}
 		}
 
-		fixBorder(mapH, mapV, mapH + 2, mapV + 2);
-		return ToolResult.SUCCESS;
+		fixBorder(eff, width, height);
+
+		return eff.apply();
 	}
 
-	ToolResult apply4x4buildingTool(int xpos, int ypos, char tileBase)
-	{
-		int mapH = xpos - 1;
-		int mapV = ypos - 1;
-
-		if (!(mapH >= 0 && mapH + 3 < city.getWidth()))
-			return ToolResult.UH_OH;
-		if (!(mapV >= 0 && mapV + 3 < city.getHeight()))
-			return ToolResult.UH_OH;
-
-		int cost = 0;
-		boolean canBuild = true;
-		for (int rowNum = 0; rowNum <= 3; rowNum++)
-		{
-			for (int columnNum = 0; columnNum <= 3; columnNum++)
-			{
-				int x = mapH + columnNum;
-				int y = mapV + rowNum;
-				char tileValue = (char) (city.getTile(x,y) & LOMASK);
-
-				if (tileValue != DIRT)
-				{
-					if (city.autoBulldoze)
-					{
-						if (canAutoBulldozeZ(tileValue))
-							cost++;
-						else
-							canBuild = false;
-					}
-					else
-						canBuild = false;
-				}
-			}
-		}
-
-		if (!canBuild)
-			return ToolResult.UH_OH;
-
-		cost += tool.getToolCost();
-
-		if (city.budget.totalFunds < cost)
-			return ToolResult.INSUFFICIENT_FUNDS;
-
-		// take care of the money situation here
-		city.spend(cost);
-
-		for (int rowNum = 0; rowNum <= 3; rowNum++)
-		{
-			for (int columnNum = 0; columnNum <= 3; columnNum++)
-			{
-				city.setTile(mapH + columnNum, mapV + rowNum, (char) (
-					tileBase + BNCNBIT +
-					(columnNum == 1 && rowNum == 1 ? ZONEBIT : 0) +
-					(columnNum == 1 && rowNum == 2 ? ANIMBIT : 0)
-					));
-				tileBase++;
-			}
-		}
-
-		fixBorder(mapH, mapV, mapH + 3, mapV + 3);
-		return ToolResult.SUCCESS;
-	}
-
-	ToolResult apply6x6buildingTool(int xpos, int ypos, char tileBase)
-	{
-		int mapH = xpos - 1;
-		int mapV = ypos - 1;
-
-		if (!(mapH >= 0 && mapH + 5 < city.getWidth()))
-			return ToolResult.UH_OH;
-		if (!(mapV >= 0 && mapV + 5 < city.getHeight()))
-			return ToolResult.UH_OH;
-
-		int cost = 0;
-		boolean canBuild = true;
-		for (int rowNum = 0; rowNum <= 5; rowNum++)
-		{
-			for (int columnNum = 0; columnNum <= 5; columnNum++)
-			{
-				int x = mapH + columnNum;
-				int y = mapV + rowNum;
-				char tileValue = (char) (city.getTile(x,y) & LOMASK);
-
-				if (tileValue != DIRT)
-				{
-					if (city.autoBulldoze)
-					{
-						if (canAutoBulldozeZ(tileValue))
-							cost++;
-						else
-							canBuild = false;
-					}
-					else
-						canBuild = false;
-				}
-			}
-		}
-
-		if (!canBuild)
-			return ToolResult.UH_OH;
-
-		cost += tool.getToolCost();
-
-		if (city.budget.totalFunds < cost)
-			return ToolResult.INSUFFICIENT_FUNDS;
-
-		// take care of the money situation here
-		city.spend(cost);
-
-		for (int rowNum = 0; rowNum <= 5; rowNum++)
-		{
-			for (int columnNum = 0; columnNum <= 5; columnNum++)
-			{
-				city.setTile(mapH + columnNum, mapV + rowNum, (char) (
-					tileBase + BNCNBIT +
-					(columnNum == 1 && rowNum == 1 ? ZONEBIT : 0)
-					));
-				tileBase++;
-			}
-		}
-
-		fixBorder(mapH, mapV, mapH + 5, mapV + 5);
-		return ToolResult.SUCCESS;
-	}
-
+	//compatible function
 	void fixBorder(int left, int top, int right, int bottom)
 	{
 		ToolEffect eff = new ToolEffect(city, left, top);
-
-		for (int x = left; x <= right; x++)
-		{
-			fixZone(new TranslatedToolEffect(eff, x-left, 0));
-			fixZone(new TranslatedToolEffect(eff, x-left, bottom-top));
-		}
-		for (int y = top + 1; y <= bottom - 1; y++)
-		{
-			fixZone(new TranslatedToolEffect(eff, 0, y-top));
-			fixZone(new TranslatedToolEffect(eff, right-left, y-top));
-		}
-
+		fixBorder(eff, right+1-left, bottom+1-top);
 		eff.apply();
+	}
+
+	void fixBorder(ToolEffectIfc eff, int width, int height)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			fixZone(new TranslatedToolEffect(eff, x, 0));
+			fixZone(new TranslatedToolEffect(eff, x, height-1));
+		}
+		for (int y = 1; y < height - 1; y++)
+		{
+			fixZone(new TranslatedToolEffect(eff, 0, y));
+			fixZone(new TranslatedToolEffect(eff, width-1, y));
+		}
 	}
 
 	ToolResult applyParkTool(int xpos, int ypos)
