@@ -905,9 +905,8 @@ public class MainWindow extends JFrame
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
 	}
 
-	// where the tool was first pressed
-	int origX;
-	int origY;
+	// used when a tool is being pressed
+	ToolStroke toolStroke;
 
 	// where the tool was last applied during the current drag
 	int lastX;
@@ -929,22 +928,22 @@ public class MainWindow extends JFrame
 
 		int x = ev.getX() / MicropolisDrawingArea.TILE_WIDTH;
 		int y = ev.getY() / MicropolisDrawingArea.TILE_HEIGHT;
-		lastX = x;
-		lastY = y;
-		origX = x;
-		origY = y;
 
-		applyCurrentTool(x, y, false);
+		this.toolStroke = currentTool.beginStroke(engine, x, y);
+		this.lastX = x;
+		this.lastY = y;
 	}
 
 	private void onToolUp(MouseEvent ev)
 	{
+		if (toolStroke != null) {
+			toolStroke.apply();
+			toolStroke = null;
+		}
 	}
 
 	private void onToolDrag(MouseEvent ev)
 	{
-		onToolHover(ev);
-
 		if (currentTool == null)
 			return;
 		if ((ev.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) == 0)
@@ -955,21 +954,16 @@ public class MainWindow extends JFrame
 		if (x == lastX && y == lastY)
 			return;
 
-		while (lastX != x || lastY != y)
-		{
-			if (Math.abs(lastX-x) >= Math.abs(lastY-y))
-			{
-				lastX += lastX < x ? 1 : -1;
-			}
-			else
-			{
-				lastY += lastY < y ? 1 : -1;
-			}
-			applyCurrentTool(lastX, lastY, true);	
+		if (toolStroke != null) {
+			toolStroke.dragTo(x, y);
+			drawingArea.setToolPreview(
+				toolStroke.getPreview(),
+				parseColor(strings.getString("tool."+currentTool.name()+".border"))
+				);
 		}
 
-		assert lastX == x;
-		assert lastY == y;
+		lastX = x;
+		lastY = y;
 	}
 
 	private void onToolHover(MouseEvent ev)
