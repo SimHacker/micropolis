@@ -19,6 +19,7 @@ import javax.swing.Timer;
 
 import micropolisj.engine.*;
 import static micropolisj.engine.TileConstants.*;
+import static micropolisj.gui.ColorParser.parseColor;
 
 public class MicropolisDrawingArea extends JComponent
 	implements Scrollable, MapListener
@@ -28,10 +29,12 @@ public class MicropolisDrawingArea extends JComponent
 	HashSet<Point> unpoweredZones = new HashSet<Point>();
 	boolean blink;
 	Timer blinkTimer;
+	ToolCursor toolCursor;
 	ToolPreview toolPreview;
 	int shakeStep;
 
 	static final Dimension PREFERRED_VIEWPORT_SIZE = new Dimension(640,640);
+	static final ResourceBundle strings = MainWindow.strings;
 
 	public MicropolisDrawingArea(Micropolis engine)
 	{
@@ -185,12 +188,12 @@ public class MicropolisDrawingArea extends JComponent
 			}
 		}
 
-		if (toolPreview != null)
+		if (toolCursor != null)
 		{
-			int x0 = toolPreview.rect.x * TILE_WIDTH;
-			int x1 = (toolPreview.rect.x + toolPreview.rect.width) * TILE_WIDTH;
-			int y0 = toolPreview.rect.y * TILE_HEIGHT;
-			int y1 = (toolPreview.rect.y + toolPreview.rect.height) * TILE_HEIGHT;
+			int x0 = toolCursor.rect.x * TILE_WIDTH;
+			int x1 = (toolCursor.rect.x + toolCursor.rect.width) * TILE_WIDTH;
+			int y0 = toolCursor.rect.y * TILE_HEIGHT;
+			int y1 = (toolCursor.rect.y + toolCursor.rect.height) * TILE_HEIGHT;
 
 			gr.setColor(Color.BLACK);
 			gr.drawLine(x0-1,y0-1,x0-1,y1-1);
@@ -204,56 +207,61 @@ public class MicropolisDrawingArea extends JComponent
 			gr.drawLine(x1,  y0-1,x1,  y1  );
 			gr.drawLine(x0-1,y1,  x1,  y1  );
 
-			gr.setColor(toolPreview.borderColor);
+			gr.setColor(toolCursor.borderColor);
 			gr.drawRect(x0-3,y0-3,x1-x0+5,y1-y0+5);
 			gr.drawRect(x0-2,y0-2,x1-x0+3,y1-y0+3);
 
-			if (toolPreview.fillColor != null) {
-				gr.setColor(toolPreview.fillColor);
+			if (toolCursor.fillColor != null) {
+				gr.setColor(toolCursor.fillColor);
 				gr.fillRect(x0,y0,x1-x0,y1-y0);
 			}
 		}
 	}
 
-	static class ToolPreview
+	static class ToolCursor
 	{
 		Rectangle rect;
 		Color borderColor;
 		Color fillColor;
 	}
 
-	public void setToolPreview(Rectangle newRect, Color toolColor)
+	public void setToolCursor(Rectangle newRect, MicropolisTool tool)
 	{
-		ToolPreview tp = new ToolPreview();
+		ToolCursor tp = new ToolCursor();
 		tp.rect = newRect;
-		tp.borderColor = toolColor;
-		setToolPreview(tp);
+		tp.borderColor = parseColor(
+			strings.getString("tool."+tool.name()+".border")
+			);
+		tp.fillColor = parseColor(
+			strings.getString("tool."+tool.name()+".bgcolor")
+			);
+		setToolCursor(tp);
 	}
 
-	public void setToolPreview(ToolPreview newPreview)
+	public void setToolCursor(ToolCursor newCursor)
 	{
-		if (toolPreview == newPreview)
+		if (toolCursor == newCursor)
 			return;
-		if (toolPreview != null && toolPreview.equals(newPreview))
+		if (toolCursor != null && toolCursor.equals(newCursor))
 			return;
 
-		if (toolPreview != null)
+		if (toolCursor != null)
 		{
 			repaint(new Rectangle(
-				toolPreview.rect.x*TILE_WIDTH - 4,
-				toolPreview.rect.y*TILE_HEIGHT - 4,
-				toolPreview.rect.width*TILE_WIDTH + 8,
-				toolPreview.rect.height*TILE_HEIGHT + 8
+				toolCursor.rect.x*TILE_WIDTH - 4,
+				toolCursor.rect.y*TILE_HEIGHT - 4,
+				toolCursor.rect.width*TILE_WIDTH + 8,
+				toolCursor.rect.height*TILE_HEIGHT + 8
 				));
 		}
-		toolPreview = newPreview;
-		if (toolPreview != null)
+		toolCursor = newCursor;
+		if (toolCursor != null)
 		{
 			repaint(new Rectangle(
-				toolPreview.rect.x*TILE_WIDTH - 4,
-				toolPreview.rect.y*TILE_HEIGHT - 4,
-				toolPreview.rect.width*TILE_WIDTH + 8,
-				toolPreview.rect.height*TILE_HEIGHT + 8
+				toolCursor.rect.x*TILE_WIDTH - 4,
+				toolCursor.rect.y*TILE_HEIGHT - 4,
+				toolCursor.rect.width*TILE_WIDTH + 8,
+				toolCursor.rect.height*TILE_HEIGHT + 8
 				));
 		}
 	}

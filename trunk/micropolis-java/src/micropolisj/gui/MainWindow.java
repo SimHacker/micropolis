@@ -23,7 +23,6 @@ import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import micropolisj.engine.*;
-import static micropolisj.gui.ColorParser.parseColor;
 
 public class MainWindow extends JFrame
 	implements Micropolis.Listener, EarthquakeListener
@@ -949,6 +948,8 @@ public class MainWindow extends JFrame
 			showToolResult(loc, tr);
 			toolStroke = null;
 		}
+
+		onToolHover(ev);
 	}
 
 	private void onToolDrag(MouseEvent ev)
@@ -965,9 +966,9 @@ public class MainWindow extends JFrame
 
 		if (toolStroke != null) {
 			toolStroke.dragTo(x, y);
-			drawingArea.setToolPreview(
+			drawingArea.setToolCursor(
 				toolStroke.getBounds(),
-				parseColor(strings.getString("tool."+currentTool.name()+".border"))
+				currentTool
 				);
 		}
 		else if (currentTool == MicropolisTool.QUERY) {
@@ -982,7 +983,7 @@ public class MainWindow extends JFrame
 	{
 		if (currentTool == null || currentTool == MicropolisTool.QUERY)
 		{
-			drawingArea.setToolPreview(null);
+			drawingArea.setToolCursor(null);
 			return;
 		}
 
@@ -996,15 +997,12 @@ public class MainWindow extends JFrame
 		if (h >= 3)
 			y--;
 
-		drawingArea.setToolPreview(new Rectangle(x,y,w,h),
-			parseColor(strings.getString("tool."+currentTool.name()+".border"))
-			);
-		drawingArea.toolPreview.fillColor = parseColor(strings.getString("tool."+currentTool.name()+".bgcolor"));
+		drawingArea.setToolCursor(new Rectangle(x,y,w,h), currentTool);
 	}
 
 	private void onToolExited(MouseEvent ev)
 	{
-		drawingArea.setToolPreview(null);
+		drawingArea.setToolCursor(null);
 	}
 
 	private void showToolResult(CityLocation loc, ToolResult result)
