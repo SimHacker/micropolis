@@ -39,6 +39,7 @@ public class TileConstants
 	//
 	// terrain mapping
 	//
+	public static final short CLEAR = -1;
 	public static final char DIRT = 0;
 	public static final char RIVER = 2;
 	public static final char REDGE = 3;
