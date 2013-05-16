@@ -50,6 +50,7 @@ public class MainWindow extends JFrame
 	boolean dirty1 = false;  //indicates if a tool was successfully applied since last save
 	boolean dirty2 = false;  //indicates if simulator took a step since last save
 	long lastSavedTime = 0;  //real-time clock of when file was last saved
+	boolean autoBudgetPending;
 
 	static ImageIcon appIcon;
 	static {
@@ -953,6 +954,11 @@ public class MainWindow extends JFrame
 		}
 
 		onToolHover(ev);
+
+		if (autoBudgetPending) {
+			autoBudgetPending = false;
+			showBudgetWindow(true);
+		}
 	}
 
 	void previewTool()
@@ -1110,7 +1116,7 @@ public class MainWindow extends JFrame
 				if (!engine.autoBudget && engine.isBudgetTime())
 				{
 					stopTimer(); //redundant
-					showBudgetWindow(true);
+					showAutoBudget();
 					return;
 				}
 			}
@@ -1303,6 +1309,16 @@ public class MainWindow extends JFrame
 	void onViewGraphClicked()
 	{
 		graphsPane.setVisible(true);
+	}
+
+	private void showAutoBudget()
+	{
+		if (toolStroke == null) {
+			showBudgetWindow(true);
+		}
+		else {
+			autoBudgetPending = true;
+		}
 	}
 
 	private void showBudgetWindow(boolean isEndOfYear)
