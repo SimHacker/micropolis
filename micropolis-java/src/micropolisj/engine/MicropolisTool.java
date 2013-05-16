@@ -68,6 +68,11 @@ public enum MicropolisTool
 		if (this == BULLDOZER) {
 			return new Bulldozer(engine, xpos, ypos);
 		}
+		else if (this == WIRE ||
+			this == ROADS ||
+			this == RAIL) {
+			return new RoadLikeTool(engine, this, xpos, ypos);
+		}
 		else {
 			return new ToolStroke(engine, this, xpos, ypos);
 		}
