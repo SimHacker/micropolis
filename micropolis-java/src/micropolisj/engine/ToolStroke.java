@@ -8,6 +8,7 @@
 
 package micropolisj.engine;
 
+import java.awt.Rectangle;
 import static micropolisj.engine.TileConstants.*;
 
 public class ToolStroke
@@ -30,6 +31,21 @@ public class ToolStroke
 	}
 
 	public ToolResult apply()
+	{
+		Rectangle r = getPreview();
+		for (int i = r.y; i < r.y + r.height; i += tool.getHeight()) {
+			for (int j = r.x; j < r.x + r.width;
+					j += tool.getWidth()) {
+				apply1(j + (tool.getWidth() >= 3 ? 1 : 0),
+					i + (tool.getHeight() >= 3 ? 1 : 0)
+				);
+			}
+		}
+		// TODO- actually check the result of application
+		return ToolResult.SUCCESS;
+	}
+
+	public ToolResult apply1(int xpos, int ypos)
 	{
 		switch (tool)
 		{
@@ -90,23 +106,67 @@ public class ToolStroke
 		this.ydest = ydest;
 	}
 
-	public java.awt.Rectangle getPreview()
+	public Rectangle getPreview_line()
 	{
-		int dx = getPreviewDx();
-		int dy = getPreviewDy();
+		assert tool.getWidth() == 1;
+		assert tool.getHeight() == 1;
 
-		int x = Math.min(xpos, xpos + dx);
-		int y = Math.min(ypos, ypos + dy);
+		if (Math.abs(xdest-xpos) >= Math.abs(ydest-ypos)) {
+			// horizontal line
+			Rectangle r = new Rectangle();
+			r.x = Math.min(xpos, xdest);
+			r.width = Math.abs(xdest-xpos) + 1;
+			r.y = ypos;
+			r.height = 1;
+			return r;
+		}
+		else {
+			// vertical line
+			Rectangle r = new Rectangle();
+			r.x = xpos;
+			r.width = 1;
+			r.y = Math.min(ypos, ydest);
+			r.height = Math.abs(ydest-ypos) + 1;
+			return r;
+		}
+	}
 
+	public Rectangle getPreview()
+	{
+		if (tool == MicropolisTool.RAIL ||
+			tool == MicropolisTool.ROADS ||
+			tool == MicropolisTool.WIRE)
+		{
+			return getPreview_line();
+		}
+
+		Rectangle r = new Rectangle();
+
+		r.x = xpos;
 		if (tool.getWidth() >= 3) {
-			x--;
+			r.x--;
 		}
-		if (tool.getHeight() >= 3) {
-			y--;
+		if (xdest >= xpos) {
+			r.width = ((xdest-xpos) / tool.getWidth() + 1) * tool.getWidth();
+		}
+		else {
+			r.width = ((xpos-xdest) / tool.getWidth() + 1) * tool.getHeight();
+			r.x += tool.getWidth() - r.width;
 		}
 
-		return new java.awt.Rectangle(x, y,
-			Math.abs(dx), Math.abs(dy));
+		r.y = ypos;
+		if (tool.getHeight() >= 3) {
+			r.y--;
+		}
+		if (ydest >= ypos) {
+			r.height = ((ydest-ypos) / tool.getHeight() + 1) * tool.getHeight();
+		}
+		else {
+			r.height = ((ypos-ydest) / tool.getHeight() + 1) * tool.getHeight();
+			r.y += tool.getHeight() - r.height;
+		}
+
+		return r;
 	}
 
 	int getPreviewDx()
