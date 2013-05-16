@@ -31,6 +31,7 @@ public class ToolPreview implements ToolEffectIfc
 		this.tiles = new short[1][1];
 		this.tiles[0][0] = CLEAR;
 		this.sounds = new ArrayList<SoundInfo>();
+		this.toolResult = ToolResult.NONE;
 	}
 
 	//implements ToolEffectIfc
@@ -42,6 +43,16 @@ public class ToolPreview implements ToolEffectIfc
 		else {
 			return CLEAR;
 		}
+	}
+
+	int getWidth()
+	{
+		return tiles[0].length;
+	}
+
+	int getHeight()
+	{
+		return tiles.length;
 	}
 
 	boolean inRange(int dx, int dy)

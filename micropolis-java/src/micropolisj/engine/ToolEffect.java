@@ -60,9 +60,9 @@ class ToolEffect implements ToolEffectIfc
 	ToolResult apply()
 	{
 		if (originX - preview.offsetX < 0 ||
-			originX - preview.offsetX >= city.getWidth() ||
+			originX - preview.offsetX + preview.getWidth() >= city.getWidth() ||
 			originY - preview.offsetY < 0 ||
-			originY - preview.offsetY >= city.getHeight())
+			originY - preview.offsetY + preview.getHeight() >= city.getHeight())
 		{
 			return ToolResult.UH_OH;
 		}
@@ -87,7 +87,7 @@ class ToolEffect implements ToolEffectIfc
 			return ToolResult.SUCCESS;
 		}
 		else {
-			return ToolResult.NONE;
+			return preview.toolResult;
 		}
 	}
 }
