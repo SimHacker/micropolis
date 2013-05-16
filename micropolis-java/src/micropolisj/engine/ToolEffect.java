@@ -87,6 +87,11 @@ class ToolEffect implements ToolEffectIfc
 			}
 		}
 
+		for (ToolPreview.SoundInfo si : preview.sounds)
+		{
+			city.makeSound(si.x, si.y, si.sound);
+		}
+
 		if (anyFound && preview.cost != 0) {
 			city.spend(preview.cost);
 			return ToolResult.SUCCESS;
