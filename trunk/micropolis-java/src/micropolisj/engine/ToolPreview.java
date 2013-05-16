@@ -74,7 +74,7 @@ public class ToolPreview implements ToolEffectIfc
 			int addl = -(offsetY+dy);
 			int newLen = tiles.length + addl;
 			short[][] newTiles = new short[newLen][tiles[0].length];
-			System.arraycopy(tiles, addl, newTiles, 0, tiles.length);
+			System.arraycopy(tiles, 0, newTiles, addl, tiles.length);
 			for (int i = 0; i < addl; i++) {
 				Arrays.fill(newTiles[i], CLEAR);
 			}
