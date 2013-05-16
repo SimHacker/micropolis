@@ -5,17 +5,13 @@ import static micropolisj.engine.TileConstants.*;
 
 public class ToolPreview implements ToolEffectIfc
 {
-	public int originX;
-	public int originY;
 	public int offsetX;
 	public int offsetY;
 	public short [][] tiles;
 	public int cost;
 
-	ToolPreview(int x, int y)
+	ToolPreview()
 	{
-		this.originX = x;
-		this.originY = y;
 		this.tiles = new short[1][1];
 		this.tiles[0][0] = CLEAR;
 	}
