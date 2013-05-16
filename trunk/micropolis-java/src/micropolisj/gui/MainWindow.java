@@ -957,7 +957,7 @@ public class MainWindow extends JFrame
 		if (toolStroke != null) {
 			toolStroke.dragTo(x, y);
 			drawingArea.setToolPreview(
-				toolStroke.getPreview(),
+				toolStroke.getBounds(),
 				parseColor(strings.getString("tool."+currentTool.name()+".border"))
 				);
 		}
