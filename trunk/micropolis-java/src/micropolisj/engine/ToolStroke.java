@@ -19,6 +19,7 @@ public class ToolStroke
 	int ypos;
 	int xdest;
 	int ydest;
+	boolean inPreview;
 
 	ToolStroke(Micropolis city, MicropolisTool tool, int xpos, int ypos)
 	{
@@ -33,7 +34,13 @@ public class ToolStroke
 	public final ToolPreview getPreview()
 	{
 		ToolEffect eff = new ToolEffect(city);
-		applyArea(eff);
+		inPreview = true;
+		try {
+			applyArea(eff);
+		}
+		finally {
+			inPreview = false;
+		}
 		return eff.preview;
 	}
 
@@ -232,7 +239,7 @@ public class ToolStroke
 			}
 		}
 
-		int z = city.PRNG.nextInt(5);
+		int z = inPreview ? 0 : city.PRNG.nextInt(5);
 		int tile;
 		if (z < 4) {
 			tile = (WOODS2 + z) | BURNBIT | BULLBIT;
