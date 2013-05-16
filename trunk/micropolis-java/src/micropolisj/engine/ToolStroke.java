@@ -411,18 +411,18 @@ public class ToolStroke
 
 	ToolResult applyParkTool(int xpos, int ypos)
 	{
-		if (!city.testBounds(xpos, ypos))
-			return ToolResult.UH_OH;
+		ToolEffect eff = new ToolEffect(city, xpos, ypos);
 
 		int cost = tool.getToolCost();
 
-		if (city.getTile(xpos, ypos) != DIRT) {
+		if (eff.getTile(0, 0) != DIRT) {
 			// some sort of bulldozing is necessary
 			if (!city.autoBulldoze) {
 				return ToolResult.UH_OH;
 			}
 
-			if (isRubble(city.getTile(xpos, ypos))) {
+			//FIXME- use a canAutoBulldoze-style function here
+			if (isRubble(eff.getTile(0, 0))) {
 				// this tile can be auto-bulldozed
 				cost++;
 			}
@@ -430,10 +430,6 @@ public class ToolStroke
 				// cannot be auto-bulldozed
 				return ToolResult.UH_OH;
 			}
-		}
-
-		if (city.budget.totalFunds < cost) {
-			return ToolResult.INSUFFICIENT_FUNDS;
 		}
 
 		int z = city.PRNG.nextInt(5);
@@ -444,9 +440,10 @@ public class ToolStroke
 			tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
 		}
 
-		city.spend(cost);
-		city.setTile(xpos, ypos, (char) tile);
-		return ToolResult.SUCCESS;
+		eff.spend(cost);
+		eff.setTile(0, 0, tile);
+
+		return eff.apply();
 	}
 
 	static char neutralizeRoad(char tile)

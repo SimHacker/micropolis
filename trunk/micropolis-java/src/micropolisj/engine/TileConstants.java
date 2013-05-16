@@ -323,7 +323,7 @@ public class TileConstants
 		}
 	}
 
-	public static boolean isRubble(char cell)
+	public static boolean isRubble(int cell)
 	{
 		return (((cell & LOMASK) >= RUBBLE) &&
 			((cell & LOMASK) <= LASTRUBBLE));
