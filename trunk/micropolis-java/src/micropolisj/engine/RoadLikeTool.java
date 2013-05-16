@@ -13,42 +13,44 @@ class RoadLikeTool extends ToolStroke
 	@Override
 	public ToolResult apply()
 	{
-		ToolResult checkResult = check();
-		if (checkResult != ToolResult.SUCCESS) {
-			return checkResult;
-		}
+		Rectangle b = getBounds();
+		ToolEffect eff = new ToolEffect(city, b.x, b.y);
 
 		for (;;) {
-			if (!applyForward()) {
-				return checkResult;
+			if (!applyForward(eff)) {
+				break;
 			}
-			if (!applyBackward()) {
-				return checkResult;
+			if (!applyBackward(eff)) {
+				break;
 			}
 		}
+
+		return eff.apply();
 	}
 
-	boolean applyBackward()
+	boolean applyBackward(ToolEffectIfc eff)
 	{
 		boolean anyChange = false;
 
 		Rectangle b = getBounds();
 		for (int i = b.height - 1; i >= 0; i--) {
 			for (int j = b.width - 1; j >= 0; j--) {
-				anyChange = anyChange || applySingle(b.x + j, b.y + i);
+				TranslatedToolEffect tte = new TranslatedToolEffect(eff, j, i);
+				anyChange = anyChange || applySingle(tte);
 			}
 		}
 		return anyChange;
 	}
 
-	boolean applyForward()
+	boolean applyForward(ToolEffectIfc eff)
 	{
 		boolean anyChange = false;
 
 		Rectangle b = getBounds();
 		for (int i = 0; i < b.height; i++) {
 			for (int j = 0; j < b.width; j++) {
-				anyChange = anyChange || applySingle(b.x + j, b.y + i);
+				TranslatedToolEffect tte = new TranslatedToolEffect(eff, j, i);
+				anyChange = anyChange || applySingle(tte);
 			}
 		}
 		return anyChange;
@@ -83,55 +85,58 @@ class RoadLikeTool extends ToolStroke
 		}
 	}
 
-	boolean applySingle(int xpos, int ypos)
+	boolean applySingle(ToolEffectIfc eff)
 	{
 		switch (tool)
 		{
 		case RAIL:
-			return applyRailTool(xpos, ypos);
+			return applyRailTool(eff);
 
 		case ROADS:
-			return applyRoadTool(xpos, ypos);
+			return applyRoadTool(eff);
 
 		case WIRE:
-			return applyWireTool(xpos, ypos);
+			return applyWireTool(eff);
 
 		default:
 			throw new Error("Unexpected tool: " + tool);
 		}
 	}
 
-	boolean applyRailTool(int xpos, int ypos)
+	boolean applyRailTool(ToolEffectIfc eff)
 	{
-		assert city.testBounds(xpos, ypos);
-
-		ToolEffect eff = new ToolEffect(city, xpos, ypos);
-		layRail(eff);
-		fixZone(eff);
-		return eff.apply() == ToolResult.SUCCESS;
+		if (layRail(eff)) {
+			fixZone(eff);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	boolean applyRoadTool(int xpos, int ypos)
+	boolean applyRoadTool(ToolEffectIfc eff)
 	{
-		assert city.testBounds(xpos, ypos);
-
-		ToolEffect eff = new ToolEffect(city, xpos, ypos);
-		layRoad(eff);
-		fixZone(eff);
-		return eff.apply() == ToolResult.SUCCESS;
+		if (layRoad(eff)) {
+			fixZone(eff);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	boolean applyWireTool(int xpos, int ypos)
+	boolean applyWireTool(ToolEffectIfc eff)
 	{
-		assert city.testBounds(xpos, ypos);
-
-		ToolEffect eff = new ToolEffect(city, xpos, ypos);
-		layWire(eff);
-		fixZone(eff);
-		return eff.apply() == ToolResult.SUCCESS;
+		if (layWire(eff)) {
+			fixZone(eff);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	private void layRail(ToolEffectIfc eff)
+	private boolean layRail(ToolEffectIfc eff)
 	{
 		final int RAIL_COST = 20;
 		final int TUNNEL_COST = 100;
@@ -196,7 +201,7 @@ class RoadLikeTool extends ToolStroke
 			}
 
 			// cannot do road here
-			return;
+			return false;
 
 		case LHPOWER: // rail on power
 			eff.setTile(0, 0, (char) (RAILVPOWERH | CONDBIT | BURNBIT | BULLBIT));
@@ -221,7 +226,7 @@ class RoadLikeTool extends ToolStroke
 				}
 				else {
 					// cannot do rail here
-					return;
+					return false;
 				}
 			}
 
@@ -231,10 +236,10 @@ class RoadLikeTool extends ToolStroke
 		}
 
 		eff.spend(cost);
-		return;
+		return true;
 	}
 
-	private void layRoad(ToolEffectIfc eff)
+	private boolean layRoad(ToolEffectIfc eff)
 	{
 		final int ROAD_COST = 10;
 		final int BRIDGE_COST = 50;
@@ -299,7 +304,7 @@ class RoadLikeTool extends ToolStroke
 			}
 
 			// cannot do road here
-			return;
+			return false;
 
 		case LHPOWER: //road on power
 			eff.setTile(0, 0, (char) (VROADPOWER | CONDBIT | BURNBIT | BULLBIT));
@@ -324,7 +329,7 @@ class RoadLikeTool extends ToolStroke
 				}
 				else {
 					// cannot do road here
-					return;
+					return false;
 				}
 			}
 
@@ -335,10 +340,10 @@ class RoadLikeTool extends ToolStroke
 		}
 	
 		eff.spend(cost);
-		return;
+		return true;
 	}
 
-	private void layWire(ToolEffectIfc eff)
+	private boolean layWire(ToolEffectIfc eff)
 	{
 		final int WIRE_COST = 5;
 		final int UNDERWATER_WIRE_COST = 25;
@@ -417,7 +422,7 @@ class RoadLikeTool extends ToolStroke
 			}
 
 			// cannot do wire here
-			return;
+			return false;
 
 		case TileConstants.ROADS: // wire on E/W road
 			eff.setTile(0, 0, (char) (HROADPOWER | CONDBIT | BURNBIT | BULLBIT));
@@ -442,7 +447,7 @@ class RoadLikeTool extends ToolStroke
 				}
 				else {
 					//cannot do wire here
-					return;
+					return false;
 				}
 			}
 
@@ -452,6 +457,6 @@ class RoadLikeTool extends ToolStroke
 		}
 
 		eff.spend(cost);
-		return;
+		return true;
 	}
 }
