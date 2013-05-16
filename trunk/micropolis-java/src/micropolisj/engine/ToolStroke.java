@@ -446,12 +446,14 @@ public class ToolStroke
 		return eff.apply();
 	}
 
-	static char neutralizeRoad(char tile)
+	// checks whether the tile value represents road with traffic
+	// and if so converts it to the equivalent road without traffic.
+	static char neutralizeRoad(int tile)
 	{
 		tile &= LOMASK;
 		if (tile >= 64 && tile <= 207)
 			tile = (char)( (tile & 0xf) + 64 );
-		return tile;
+		return (char)tile;
 	}
 
 	protected void fixZone(int xpos, int ypos)
@@ -469,7 +471,9 @@ public class ToolStroke
 
 	private void fixSingle(int xpos, int ypos)
 	{
-		char tile = (char) (city.getTile(xpos, ypos) & LOMASK);
+		ToolEffect eff = new ToolEffect(city, xpos, ypos);
+
+		int tile = (eff.getTile(0, 0) & LOMASK);
 		tile = neutralizeRoad(tile);
 
 		if (tile >= TileConstants.ROADS && tile <= INTERSECTION)
@@ -477,9 +481,9 @@ public class ToolStroke
 			// cleanup road
 			int adjTile = 0;
 
-			if (ypos > 0)
+			// check road to north
 			{
-				tile = city.getTile(xpos, ypos - 1);
+				tile = eff.getTile(0, -1);
 				tile = neutralizeRoad(tile);
 				if (((tile == HRAILROAD) ||
 					(tile >= ROADBASE && tile <= VROADPOWER)
@@ -492,9 +496,9 @@ public class ToolStroke
 				}
 			}
 
-			if (xpos + 1 < city.getWidth())
+			// check road to east
 			{
-				tile = city.getTile(xpos + 1, ypos);
+				tile = eff.getTile(1, 0);
 				tile = neutralizeRoad(tile);
 				if (((tile == VRAILROAD) ||
 					(tile >= ROADBASE && tile <= VROADPOWER)	
@@ -507,9 +511,9 @@ public class ToolStroke
 				}
 			}
 
-			if (ypos + 1 < city.getHeight())
+			// check road to south
 			{
-				tile = city.getTile(xpos, ypos + 1);
+				tile = eff.getTile(0, 1);
 				tile = neutralizeRoad(tile);
 				if (((tile == HRAILROAD) ||
 					(tile >= ROADBASE && tile <= VROADPOWER)
@@ -523,9 +527,9 @@ public class ToolStroke
 				
 			}
 
-			if (xpos > 0)
+			// check road to west
 			{
-				tile = city.getTile(xpos - 1, ypos);
+				tile = eff.getTile(-1, 0);
 				tile = neutralizeRoad(tile);
 				if (((tile == VRAILROAD) ||
 					(tile >= ROADBASE && tile <= VROADPOWER)
@@ -538,18 +542,17 @@ public class ToolStroke
 				}
 			}
 
-			city.setTile(xpos, ypos, (char)(RoadTable[adjTile] | BULLBIT | BURNBIT));
-			return;
+			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT | BURNBIT));
 		} //endif on a road tile
 
-		if (tile >= LHRAIL && tile <= LVRAIL10)
+		else if (tile >= LHRAIL && tile <= LVRAIL10)
 		{
 			// cleanup Rail
 			int adjTile = 0;
 
-			if (ypos > 0)
+			// check rail to north
 			{
-				tile = city.getTile(xpos, ypos - 1);
+				tile = eff.getTile(0, -1);
 				tile = neutralizeRoad(tile);
 				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
 					tile != RAILHPOWERV &&
@@ -560,9 +563,9 @@ public class ToolStroke
 				}
 			}
 
-			if (xpos + 1 < city.getWidth())
+			// check rail to east
 			{
-				tile = city.getTile(xpos + 1, ypos);
+				tile = eff.getTile(1, 0);
 				tile = neutralizeRoad(tile);
 				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
 					tile != RAILVPOWERH &&
@@ -573,9 +576,9 @@ public class ToolStroke
 				}
 			}
 
-			if (ypos + 1 < city.getHeight())
+			// check rail to south
 			{
-				tile = city.getTile(xpos, ypos + 1);
+				tile = eff.getTile(0, 1);
 				tile = neutralizeRoad(tile);
 				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
 					tile != RAILHPOWERV &&
@@ -586,9 +589,9 @@ public class ToolStroke
 				}
 			}
 
-			if (xpos > 0)
+			// check rail to west
 			{
-				tile = city.getTile(xpos - 1, ypos);
+				tile = eff.getTile(-1, 0);
 				tile = neutralizeRoad(tile);
 				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
 					tile != RAILVPOWERH &&
@@ -599,18 +602,17 @@ public class ToolStroke
 				}
 			}
 
-			city.setTile(xpos, ypos, (char)(RailTable[adjTile] | BULLBIT | BURNBIT));
-			return;
+			eff.setTile(0, 0, (RailTable[adjTile] | BULLBIT | BURNBIT));
 		} //end if on a rail tile
 
-		if (tile >= LHPOWER && tile <= LVPOWER10)
+		else if (tile >= LHPOWER && tile <= LVPOWER10)
 		{
 			// Cleanup Wire
 			int adjTile = 0;
 
-			if (ypos > 0)
+			// check wire to north
 			{
-				tile = city.getTile(xpos, ypos - 1);
+				tile = eff.getTile(0, -1);
 				char ntile = neutralizeRoad(tile);
 				if ((tile & CONDBIT) != 0 &&
 					ntile != VPOWER &&
@@ -621,9 +623,9 @@ public class ToolStroke
 				}
 			}
 
-			if (xpos + 1 < city.getWidth())
+			// check wire to east
 			{
-				tile = city.getTile(xpos + 1, ypos);
+				tile = eff.getTile(1, 0);
 				char ntile = neutralizeRoad(tile);
 				if ((tile & CONDBIT) != 0 &&
 					ntile != HPOWER &&
@@ -634,9 +636,9 @@ public class ToolStroke
 				}
 			}
 
-			if (ypos + 1 < city.getHeight())
+			// check wire to south
 			{
-				tile = city.getTile(xpos, ypos + 1);
+				tile = eff.getTile(0, 1);
 				char ntile = neutralizeRoad(tile);
 				if ((tile & CONDBIT) != 0 &&
 					ntile != VPOWER &&
@@ -647,9 +649,9 @@ public class ToolStroke
 				}
 			}
 
-			if (xpos > 0)
+			// check wire to west
 			{
-				tile = city.getTile(xpos - 1, ypos);
+				tile = eff.getTile(-1, 0);
 				char ntile = neutralizeRoad(tile);
 				if ((tile & CONDBIT) != 0 &&
 					ntile != HPOWER &&
@@ -660,9 +662,11 @@ public class ToolStroke
 				}
 			}
 
-			city.setTile(xpos, ypos, (char)(WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT));
-			return;
+			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT));
 		} //end if on a rail tile
+
+		eff.apply();
+		return;
 	}
 
 	void putRubble(int xpos, int ypos, int w, int h)
