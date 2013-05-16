@@ -11,11 +11,8 @@ class RoadLikeTool extends ToolStroke
 	}
 
 	@Override
-	public ToolResult apply()
+	protected void applyArea(ToolEffectIfc eff)
 	{
-		Rectangle b = getBounds();
-		ToolEffect eff = new ToolEffect(city, b.x, b.y);
-
 		for (;;) {
 			if (!applyForward(eff)) {
 				break;
@@ -24,8 +21,6 @@ class RoadLikeTool extends ToolStroke
 				break;
 			}
 		}
-
-		return eff.apply();
 	}
 
 	boolean applyBackward(ToolEffectIfc eff)
@@ -35,7 +30,7 @@ class RoadLikeTool extends ToolStroke
 		Rectangle b = getBounds();
 		for (int i = b.height - 1; i >= 0; i--) {
 			for (int j = b.width - 1; j >= 0; j--) {
-				TranslatedToolEffect tte = new TranslatedToolEffect(eff, j, i);
+				TranslatedToolEffect tte = new TranslatedToolEffect(eff, b.x+j, b.y+i);
 				anyChange = anyChange || applySingle(tte);
 			}
 		}
@@ -49,7 +44,7 @@ class RoadLikeTool extends ToolStroke
 		Rectangle b = getBounds();
 		for (int i = 0; i < b.height; i++) {
 			for (int j = 0; j < b.width; j++) {
-				TranslatedToolEffect tte = new TranslatedToolEffect(eff, j, i);
+				TranslatedToolEffect tte = new TranslatedToolEffect(eff, b.x+j, b.y+i);
 				anyChange = anyChange || applySingle(tte);
 			}
 		}
