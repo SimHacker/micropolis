@@ -65,7 +65,12 @@ public enum MicropolisTool
 
 	public ToolStroke beginStroke(Micropolis engine, int xpos, int ypos)
 	{
-		return new ToolStroke(engine, this, xpos, ypos);
+		if (this == BULLDOZER) {
+			return new Bulldozer(engine, xpos, ypos);
+		}
+		else {
+			return new ToolStroke(engine, this, xpos, ypos);
+		}
 	}
 
 	public ToolResult apply(Micropolis engine, int xpos, int ypos)

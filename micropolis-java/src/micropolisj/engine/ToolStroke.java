@@ -84,8 +84,6 @@ public class ToolStroke
 	{
 		switch (tool)
 		{
-		case BULLDOZER:
-			return checkBulldozer();
 	//	case RAIL:
 	//	case ROADS:
 	//	case WIRE:
@@ -102,9 +100,6 @@ public class ToolStroke
 	{
 		switch (tool)
 		{
-		case BULLDOZER:
-			return applyBulldozer(xpos, ypos);
-
 		case RAIL:
 			return applyRailTool(xpos, ypos);
 
@@ -455,111 +450,6 @@ public class ToolStroke
 		}
 	}
 
-	ToolResult checkBulldozer()
-	{
-		Rectangle b = getBounds();
-		if (b.width == 1 && b.height == 1 &&
-			isZoneCenter(city.getTile(b.x, b.y)))
-		{
-			int cost = 1;
-			return city.budget.totalFunds >= cost ?
-				ToolResult.SUCCESS :
-				ToolResult.INSUFFICIENT_FUNDS;
-		}
-
-		int countDozed = 0;
-		for (int y = b.y; y < b.y+b.height; y++) {
-			for (int x = b.x; x < b.x+b.width; x++) {
-
-				char tile = city.getTile(x, y);
-				if (isDozeable(tile)) {
-					countDozed++;
-				}
-
-			}
-		}
-
-		int cost = 1 * countDozed;
-		return city.budget.totalFunds < cost ? ToolResult.INSUFFICIENT_FUNDS :
-			countDozed != 0 ? ToolResult.SUCCESS :
-			ToolResult.NONE;
-	}
-
-	ToolResult applyBulldozer(int xpos, int ypos)
-	{
-		if (!city.testBounds(xpos, ypos))
-			return ToolResult.UH_OH;
-
-		char currTile = city.getTile(xpos, ypos);
-		char tmp = (char)(currTile & LOMASK);
-
-		if ((currTile & ZONEBIT) != 0)
-		{
-			// zone center bit is set
-			if (city.budget.totalFunds >= 1)
-			{
-				city.spend(1);
-				switch (checkSize(tmp))
-				{
-				case 3:
-					city.makeSound(xpos, ypos, Sound.EXPLOSION_HIGH);
-					putRubble(xpos, ypos, 3, 3);
-					break;
-				case 4:
-					city.makeSound(xpos, ypos, Sound.EXPLOSION_LOW);
-					putRubble(xpos, ypos, 4, 4);
-					break;
-				case 6:
-					city.makeSound(xpos, ypos, Sound.EXPLOSION_BOTH);
-					putRubble(xpos, ypos, 6, 6);
-					break;
-				default:
-					assert false;
-					break;
-				}
-				return ToolResult.SUCCESS;
-			}
-			else
-			{
-				return ToolResult.INSUFFICIENT_FUNDS;
-			}
-		}
-		else if (false && isBigZone(tmp))
-		{
-			// The GPL Micropolis will uses a bunch of code to find
-			// the center of this zone, and then converts it to rubble
-			// the same as clicking the center of the zone.
-			// I prefer to make the user click the critical spot of
-			// the zone to destroy it.
-			return ToolResult.UH_OH;
-		}
-		else if (tmp == RIVER ||
-			tmp == REDGE ||
-			tmp == CHANNEL)
-		{
-			if (city.budget.totalFunds >= 6)
-			{
-				ToolResult result = layDoze(xpos, ypos);
-				if (tmp != (city.getTile(xpos, ypos) & LOMASK))
-				{
-					// tile changed
-					city.spend(5);
-					fixZone(xpos, ypos);
-				}
-				return result;
-			}
-			else {
-				return ToolResult.INSUFFICIENT_FUNDS;
-			}
-		}
-		else
-		{
-			ToolResult result = layDoze(xpos, ypos);
-			fixZone(xpos, ypos);
-			return result;
-		}
-	}
-
 	ToolResult applyRailTool(int xpos, int ypos)
 	{
 		if (!city.testBounds(xpos, ypos))
@@ -636,33 +526,6 @@ public class ToolStroke
 		if (tile >= 64 && tile <= 207)
 			tile = (char)( (tile & 0xf) + 64 );
 		return tile;
-	}
-
-	private ToolResult layDoze(int xpos, int ypos)
-	{
-		if (city.budget.totalFunds <= 0)
-			return ToolResult.INSUFFICIENT_FUNDS;
-
-		char tile = city.getTile(xpos, ypos);
-
-		// check dozeable bit
-		if ((tile & BULLBIT) == 0)
-			return ToolResult.NONE;
-
-		tile = neutralizeRoad(tile);
-		if (isOverWater(tile))
-		{
-			// dozing over water, replace with water.
-			city.setTile(xpos, ypos, RIVER);
-		}
-		else
-		{
-			// dozing on land, replace with land. Simple, eh?
-			city.setTile(xpos, ypos, DIRT);
-		}
-
-		city.spend(1);
-		return ToolResult.SUCCESS;
 	}
 
 	private ToolResult layRail(int xpos, int ypos)
