@@ -458,21 +458,21 @@ public class ToolStroke
 
 	protected void fixZone(int xpos, int ypos)
 	{
-		fixSingle(xpos, ypos);
-		if (ypos > 0)
-			fixSingle(xpos, ypos - 1);
-		if (xpos > 0)
-			fixSingle(xpos - 1, ypos);
-		if (xpos + 1 < city.getWidth())
-			fixSingle(xpos + 1, ypos);
-		if (ypos + 1 < city.getHeight())
-			fixSingle(xpos, ypos + 1);
-	}
-
-	private void fixSingle(int xpos, int ypos)
-	{
 		ToolEffect eff = new ToolEffect(city, xpos, ypos);
 
+		fixSingle(eff);
+
+		// "fix" the cells to the north, west, east, and south
+		fixSingle(new TranslatedToolEffect(eff, 0, -1));
+		fixSingle(new TranslatedToolEffect(eff, -1, 0));
+		fixSingle(new TranslatedToolEffect(eff, 1, 0));
+		fixSingle(new TranslatedToolEffect(eff, 0, 1));
+
+		eff.apply();
+	}
+
+	private void fixSingle(ToolEffectIfc eff)
+	{
 		int tile = (eff.getTile(0, 0) & LOMASK);
 		tile = neutralizeRoad(tile);
 
@@ -665,7 +665,6 @@ public class ToolStroke
 			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT));
 		} //end if on a rail tile
 
-		eff.apply();
 		return;
 	}
 
