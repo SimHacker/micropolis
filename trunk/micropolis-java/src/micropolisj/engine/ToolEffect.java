@@ -34,6 +34,12 @@ class ToolEffect implements ToolEffectIfc
 	}
 
 	//implements ToolEffectIfc
+	public void makeSound(int dx, int dy, Sound sound)
+	{
+		preview.makeSound(dx, dy, sound);
+	}
+
+	//implements ToolEffectIfc
 	public void setTile(int dx, int dy, int tileValue)
 	{
 		preview.setTile(dx, dy, tileValue);
@@ -43,6 +49,12 @@ class ToolEffect implements ToolEffectIfc
 	public void spend(int amount)
 	{
 		preview.spend(amount);
+	}
+
+	//implements ToolEffectIfc
+	public void toolResult(ToolResult tr)
+	{
+		preview.toolResult(tr);
 	}
 
 	ToolResult apply()

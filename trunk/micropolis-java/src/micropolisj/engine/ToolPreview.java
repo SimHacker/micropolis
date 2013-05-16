@@ -1,6 +1,6 @@
 package micropolisj.engine;
 
-import java.util.Arrays;
+import java.util.*;
 import static micropolisj.engine.TileConstants.*;
 
 public class ToolPreview implements ToolEffectIfc
@@ -9,11 +9,28 @@ public class ToolPreview implements ToolEffectIfc
 	public int offsetY;
 	public short [][] tiles;
 	public int cost;
+	public ToolResult toolResult;
+	public List<SoundInfo> sounds;
+
+	public static class SoundInfo
+	{
+		public int dx;
+		public int dy;
+		public Sound sound;
+
+		SoundInfo(int dx, int dy, Sound sound)
+		{
+			this.dx = dx;
+			this.dy = dy;
+			this.sound = sound;
+		}
+	}
 
 	ToolPreview()
 	{
 		this.tiles = new short[1][1];
 		this.tiles[0][0] = CLEAR;
+		this.sounds = new ArrayList<SoundInfo>();
 	}
 
 	//implements ToolEffectIfc
@@ -85,6 +102,12 @@ public class ToolPreview implements ToolEffectIfc
 	}
 
 	//implements ToolEffectIfc
+	public void makeSound(int dx, int dy, Sound sound)
+	{
+		sounds.add(new SoundInfo(dx, dy, sound));
+	}
+
+	//implements ToolEffectIfc
 	public void setTile(int dx, int dy, int tileValue)
 	{
 		expandTo(dx, dy);
@@ -95,5 +118,11 @@ public class ToolPreview implements ToolEffectIfc
 	public void spend(int amount)
 	{
 		cost += amount;
+	}
+
+	//implements ToolEffectIfc
+	public void toolResult(ToolResult tr)
+	{
+		this.toolResult = tr;
 	}
 }

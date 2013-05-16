@@ -32,73 +32,36 @@ public class ToolStroke
 
 	public ToolResult apply()
 	{
-		ToolResult checkResult = check();
-		if (checkResult != ToolResult.SUCCESS) {
-			return checkResult;
-		}
+		ToolResult tr = ToolResult.NONE;
 
 		Rectangle r = getBounds();
-		for (int i = r.y; i < r.y + r.height; i += tool.getHeight()) {
-			for (int j = r.x; j < r.x + r.width;
-					j += tool.getWidth()) {
-				apply1(j + (tool.getWidth() >= 3 ? 1 : 0),
-					i + (tool.getHeight() >= 3 ? 1 : 0)
-				);
-			}
-		}
-		// TODO- actually check the result of application
-		return ToolResult.SUCCESS;
-	}
+		ToolEffect eff = new ToolEffect(city, r.x, r.y);
 
-	ToolResult checkZoneTool()
-	{
-		Rectangle b = getBounds();
-		int cost = 0;
-		int numPlaced = 0;
-
-		for (int i = b.y; i < b.y + b.height; i += tool.getHeight()) {
-			for (int j = b.x; j < b.x + b.width; j += tool.getWidth()) {
-				int x = j + (tool.getWidth() >= 3 ? 1 : 0);
-				int y = i + (tool.getHeight() >= 3 ? 1 : 0);
-				int c = costToPlaceZone(x, y);
-
-				if (c != Integer.MAX_VALUE) {
-					numPlaced++;
-					cost += c;
+		for (int i = 0; i < r.height; i += tool.getHeight()) {
+			for (int j = 0; j < r.width; j += tool.getWidth()) {
+				ToolResult tmp = apply1(
+					new TranslatedToolEffect(eff, j, i)
+					);
+				if (tmp == ToolResult.SUCCESS) {
+					tr = tmp;
+				}
+				else if (tr == ToolResult.NONE) {
+					tr = tmp;
 				}
 			}
 		}
 
-		return numPlaced == 0 ? ToolResult.NONE :
-			cost <= city.budget.totalFunds ? ToolResult.SUCCESS :
-			ToolResult.INSUFFICIENT_FUNDS;
-	}
-
-	/**
-	 * @return SUCCESS if the operation will succeed, and at least
-	 * one tile will be changed;
-	 * INSUFFICIENT_FUNDS in case there's not enough money,
-	 * and NONE is it is a null op.
-	 */
-	ToolResult check()
-	{
-		switch (tool)
-		{
-	//	case RAIL:
-	//	case ROADS:
-	//	case WIRE:
-	//		return checkRailRoadWireTool();
-	//	case PARK:
-	//		return checkParkTool();
-		default:
-			return checkZoneTool();
+		ToolResult tmp = eff.apply();
+		if (tmp != ToolResult.NONE) {
+			return tmp;
 		}
-			
+		else {
+			return tr;
+		}
 	}
 
-	ToolResult apply1(int xpos, int ypos)
+	ToolResult apply1(ToolEffectIfc eff)
 	{
-		ToolEffect eff = new ToolEffect(city, xpos, ypos);
 		ToolResult tr = ToolResult.SUCCESS;
 
 		switch (tool)
@@ -108,43 +71,43 @@ public class ToolStroke
 			break;
 
 		case RESIDENTIAL:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 3, 3, RESBASE);
+			tr = applyZone(eff, 3, 3, RESBASE);
 			break;
 
 		case COMMERCIAL:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 3, 3, COMBASE);
+			tr = applyZone(eff, 3, 3, COMBASE);
 			break;
 
 		case INDUSTRIAL:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 3, 3, INDBASE);
+			tr = applyZone(eff, 3, 3, INDBASE);
 			break;
 
 		case FIRE:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 3, 3, FIRESTBASE);
+			tr = applyZone(eff, 3, 3, FIRESTBASE);
 			break;
 
 		case POLICE:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 3, 3, POLICESTBASE);
+			tr = applyZone(eff, 3, 3, POLICESTBASE);
 			break;
 
 		case POWERPLANT:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 4, 4, COALBASE);
+			tr = applyZone(eff, 4, 4, COALBASE);
 			break;
 
 		case STADIUM:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 4, 4, STADIUMBASE);
+			tr = applyZone(eff, 4, 4, STADIUMBASE);
 			break;
 
 		case SEAPORT:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 4, 4, PORTBASE);
+			tr = applyZone(eff, 4, 4, PORTBASE);
 			break;
 
 		case NUCLEAR:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 4, 4, NUCLEARBASE);
+			tr = applyZone(eff, 4, 4, NUCLEARBASE);
 			break;
 
 		case AIRPORT:
-			tr = applyZone(new TranslatedToolEffect(eff, -1, -1), 6, 6, AIRPORTBASE);
+			tr = applyZone(eff, 6, 6, AIRPORTBASE);
 			break;
 
 		default:
@@ -152,11 +115,7 @@ public class ToolStroke
 			throw new Error("unexpected tool: "+tool);
 		}
 
-		if (tr != ToolResult.SUCCESS) {
-			return tr;
-		}
-
-		return eff.apply();
+		return tr;
 	}
 
 	public void dragTo(int xdest, int ydest)
@@ -194,38 +153,6 @@ public class ToolStroke
 		}
 
 		return r;
-	}
-
-	int costToPlaceZone(int xpos, int ypos)
-	{
-		final int width = tool.getWidth();
-		final int height = tool.getHeight();
-
-		int cost = tool.getToolCost();
-		boolean canBuild = true;
-		for (int rowNum = 0; rowNum < height; rowNum++) {
-			for (int colNum = 0; colNum < width; colNum++) {
-				int x = xpos - 1 + colNum;
-				int y = ypos - 1 + rowNum;
-
-				char tileValue = (char) (city.getTile(x,y) & LOMASK);
-				if (tileValue != DIRT)
-				{
-					if (city.autoBulldoze)
-					{
-						if (canAutoBulldozeZ(tileValue))
-							cost++;
-						else
-							canBuild = false;
-					}
-					else
-						canBuild = false;
-				}
-			}
-		}
-
-		return canBuild ? cost :
-			Integer.MAX_VALUE;
 	}
 
 	ToolResult applyZone(ToolEffectIfc eff, int width, int height, char tileBase)
@@ -556,22 +483,6 @@ public class ToolStroke
 		return;
 	}
 
-	void putRubble(int xpos, int ypos, int w, int h)
-	{
-		for (int xx = xpos - 1; xx <= xpos + w-2; xx++) {
-			for (int yy = ypos - 1; yy <= ypos + h-2; yy++) {
-				if (city.testBounds(xx, yy)) {
-					int tile = city.getTile(xx,yy) & LOMASK;
-					if (tile != RADTILE && tile != DIRT) {
-						int nTile = (TINYEXP + city.PRNG.nextInt(3))
-							| ANIMBIT | BULLBIT;
-						city.setTile(xx, yy, (char)nTile);
-					}
-				}
-			}
-		}
-	}
-
 	boolean isBigZone(int tile)
 	{
 		if (tile >= RESBASE && tile <= LASTZONE)
@@ -582,28 +493,5 @@ public class ToolStroke
 			return true;
 		else
 			return false;
-	}
-
-	int checkSize(int tile)
-	{
-		if ((tile >= (RESBASE-1) && tile <= (PORTBASE-1)) ||
-			(tile >= (LASTPOWERPLANT+1) && tile <= (POLICESTATION+4)))
-		{
-			return 3;
-		}
-		else if ((tile >= PORTBASE && tile <= LASTPORT) ||
-			(tile >= COALBASE && tile <= LASTPOWERPLANT) ||
-			(tile >= STADIUMBASE && tile <= LASTZONE))
-		{
-			return 4;
-		}
-		else if (tile == TileConstants.AIRPORT)
-		{
-			return 6;
-		}
-		else
-		{
-			return 0;
-		}
 	}
 }

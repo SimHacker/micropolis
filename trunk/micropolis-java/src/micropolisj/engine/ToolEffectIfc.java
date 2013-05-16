@@ -7,6 +7,8 @@ public interface ToolEffectIfc
 	 */
 	int getTile(int dx, int dy);
 
+	void makeSound(int dx, int dy, Sound sound);
+
 	/**
 	 * Sets the tile value at a relative location.
 	 */
@@ -16,4 +18,6 @@ public interface ToolEffectIfc
 	 * Deduct an amount from the controller's cash funds.
 	 */
 	void spend(int amount);
+
+	void toolResult(ToolResult tr);
 }

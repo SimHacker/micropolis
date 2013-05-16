@@ -13,118 +13,125 @@ class Bulldozer extends ToolStroke
 	@Override
 	public ToolResult apply()
 	{
-		ToolResult checkResult = check();
-		if (checkResult != ToolResult.SUCCESS) {
-			return checkResult;
-		}
-
 		Rectangle b = getBounds();
-		if (b.width == 1 && b.height == 1 &&
-			isZoneCenter(city.getTile(b.x, b.y)))
-		{
-			return dozeZone(b.x, b.y);
-		}
+		ToolEffect eff = new ToolEffect(city, b.x, b.y);
 
-		int countDozed = 0;
-		for (int y = b.y; y < b.y+b.height; y++) {
-			for (int x = b.x; x < b.x+b.width; x++) {
+		// scan selection area for rubble, forest, etc...
+		for (int y = 0; y < b.height; y++) {
+			for (int x = 0; x < b.width; x++) {
 
-				char tile = city.getTile(x, y);
-				if (isDozeable(tile)) {
-					countDozed++;
+				int tile = eff.getTile(x, y);
+				if (isDozeable(tile) && !isZoneCenter(tile)) {
 
-					dozeField(x, y);
-				}
-
-			}
-		}
-		return ToolResult.SUCCESS;
-	}
-
-	@Override
-	public ToolResult check()
-	{
-		Rectangle b = getBounds();
-		if (b.width == 1 && b.height == 1 &&
-			isZoneCenter(city.getTile(b.x, b.y)))
-		{
-			int cost = 1;
-			return city.budget.totalFunds >= cost ?
-				ToolResult.SUCCESS :
-				ToolResult.INSUFFICIENT_FUNDS;
-		}
-
-		int countDozed = 0;
-		for (int y = b.y; y < b.y+b.height; y++) {
-			for (int x = b.x; x < b.x+b.width; x++) {
-
-				char tile = city.getTile(x, y);
-				if (isDozeable(tile)) {
-					countDozed++;
+					dozeField(new TranslatedToolEffect(eff, x, y));
 				}
 
 			}
 		}
 
-		int cost = 1 * countDozed;
-		return city.budget.totalFunds < cost ? ToolResult.INSUFFICIENT_FUNDS :
-			countDozed != 0 ? ToolResult.SUCCESS :
-			ToolResult.NONE;
+		// scan selection area for zones...
+		for (int y = 0; y < b.height; y++) {
+			for (int x = 0; x < b.width; x++) {
+
+				if (isZoneCenter(eff.getTile(x,y))) {
+					dozeZone(new TranslatedToolEffect(eff, x, y));
+				}
+			}
+		}
+
+		return eff.apply();
 	}
 
-	ToolResult dozeZone(int xpos, int ypos)
+	void dozeZone(ToolEffectIfc eff)
 	{
-		assert city.testBounds(xpos, ypos);
-
-		char currTile = city.getTile(xpos, ypos);
-		char tmp = (char)(currTile & LOMASK);
+		int currTile = eff.getTile(0, 0);
 
 		// zone center bit is set
 		assert isZoneCenter(currTile);
 
-		city.spend(1);
-		switch (checkSize(tmp))
+		eff.spend(1);
+		switch (checkSize(currTile))
 		{
 		case 3:
-			city.makeSound(xpos, ypos, Sound.EXPLOSION_HIGH);
-			putRubble(xpos, ypos, 3, 3);
+			eff.makeSound(0, 0, Sound.EXPLOSION_HIGH);
+			putRubble(new TranslatedToolEffect(eff, -1, -1), 3, 3);
 			break;
 		case 4:
-			city.makeSound(xpos, ypos, Sound.EXPLOSION_LOW);
-			putRubble(xpos, ypos, 4, 4);
+			eff.makeSound(0, 0, Sound.EXPLOSION_LOW);
+			putRubble(new TranslatedToolEffect(eff, -1, -1), 4, 4);
 			break;
 		case 6:
-			city.makeSound(xpos, ypos, Sound.EXPLOSION_BOTH);
-			putRubble(xpos, ypos, 6, 6);
+			eff.makeSound(0, 0, Sound.EXPLOSION_BOTH);
+			putRubble(new TranslatedToolEffect(eff, -1, -1), 6, 6);
 			break;
 		default:
 			assert false;
 			break;
 		}
-		return ToolResult.SUCCESS;
+		return;
 	}
 
-	ToolResult dozeField(int xpos, int ypos)
+	void dozeField(ToolEffectIfc eff)
 	{
-		char tile = city.getTile(xpos, ypos);
+		int tile = eff.getTile(0, 0);
 
 		// check dozeable bit
 		assert isDozeable(tile);
 
 		tile = neutralizeRoad(tile);
-		if (isOverWater(tile))
+		if (isOverWater((char)tile))
 		{
 			// dozing over water, replace with water.
-			city.setTile(xpos, ypos, RIVER);
+			eff.setTile(0, 0, RIVER);
 		}
 		else
 		{
 			// dozing on land, replace with land. Simple, eh?
-			city.setTile(xpos, ypos, DIRT);
+			eff.setTile(0, 0, DIRT);
 		}
 
-		city.spend(1);
-		return ToolResult.SUCCESS;
+		eff.spend(1);
+		return;
 	}
 
+	void putRubble(ToolEffectIfc eff, int w, int h)
+	{
+		for (int yy = 0; yy < h; yy++) {
+			for (int xx = 0; xx < w; xx++) {
+				int tile = eff.getTile(xx,yy);
+				if (tile == CLEAR)
+					continue;
+				tile = tile & LOMASK;
+				if (tile != RADTILE && tile != DIRT) {
+					int nTile = (TINYEXP + city.PRNG.nextInt(3))
+						| ANIMBIT | BULLBIT;
+					eff.setTile(xx, yy, nTile);
+				}
+			}
+		}
+	}
+
+	int checkSize(int tile)
+	{
+		tile = tile & LOMASK;
+		if ((tile >= (RESBASE-1) && tile <= (PORTBASE-1)) ||
+			(tile >= (LASTPOWERPLANT+1) && tile <= (POLICESTATION+4)))
+		{
+			return 3;
+		}
+		else if ((tile >= PORTBASE && tile <= LASTPORT) ||
+			(tile >= COALBASE && tile <= LASTPOWERPLANT) ||
+			(tile >= STADIUMBASE && tile <= LASTZONE))
+		{
+			return 4;
+		}
+		else if (tile == TileConstants.AIRPORT)
+		{
+			return 6;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 }
