@@ -32,7 +32,7 @@ public class ToolStroke
 
 	public ToolResult apply()
 	{
-		Rectangle r = getPreview();
+		Rectangle r = getBounds();
 		for (int i = r.y; i < r.y + r.height; i += tool.getHeight()) {
 			for (int j = r.x; j < r.x + r.width;
 					j += tool.getWidth()) {
@@ -106,7 +106,7 @@ public class ToolStroke
 		this.ydest = ydest;
 	}
 
-	public Rectangle getPreview_line()
+	public Rectangle getBounds_line()
 	{
 		assert tool.getWidth() == 1;
 		assert tool.getHeight() == 1;
@@ -131,13 +131,13 @@ public class ToolStroke
 		}
 	}
 
-	public Rectangle getPreview()
+	public Rectangle getBounds()
 	{
 		if (tool == MicropolisTool.RAIL ||
 			tool == MicropolisTool.ROADS ||
 			tool == MicropolisTool.WIRE)
 		{
-			return getPreview_line();
+			return getBounds_line();
 		}
 
 		Rectangle r = new Rectangle();
@@ -167,18 +167,6 @@ public class ToolStroke
 		}
 
 		return r;
-	}
-
-	int getPreviewDx()
-	{
-		int sgn = xdest > xpos ? 1 : -1;
-		return (sgn + (xdest - xpos) / tool.getWidth()) * tool.getWidth();
-	}
-
-	int getPreviewDy()
-	{
-		int sgn = ydest > ypos ? 1 : -1;
-		return (sgn + (ydest - ypos) / tool.getHeight()) * tool.getWidth();
 	}
 
 	ToolResult apply3x3buildingTool(int xpos, int ypos, char tileBase)
