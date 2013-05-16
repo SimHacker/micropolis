@@ -114,9 +114,10 @@ class RoadLikeTool extends ToolStroke
 	{
 		assert city.testBounds(xpos, ypos);
 
-		ToolResult result = layRoad(xpos, ypos);
-		fixZone(xpos, ypos);
-		return result == ToolResult.SUCCESS;
+		ToolEffect eff = new ToolEffect(city, xpos, ypos);
+		layRoad(eff);
+		fixZone(eff);
+		return eff.apply() == ToolResult.SUCCESS;
 	}
 
 	boolean applyWireTool(int xpos, int ypos)
@@ -235,16 +236,14 @@ class RoadLikeTool extends ToolStroke
 		return ToolResult.SUCCESS;
 	}
 
-	private ToolResult layRoad(int xpos, int ypos)
+	private void layRoad(ToolEffectIfc eff)
 	{
 		final int ROAD_COST = 10;
 		final int BRIDGE_COST = 50;
 
 		int cost = ROAD_COST;
-		if (city.budget.totalFunds < cost)
-			return ToolResult.INSUFFICIENT_FUNDS;
 
-		char tile = (char) (city.getTile(xpos, ypos) & LOMASK);
+		char tile = (char) (eff.getTile(0, 0) & LOMASK);
 		switch (tile)
 		{
 		case RIVER:		// road on water
@@ -252,74 +251,72 @@ class RoadLikeTool extends ToolStroke
 		case CHANNEL:	// check how to build bridges, if possible.
 
 			cost = BRIDGE_COST;
-			if (city.budget.totalFunds < cost)
-				return ToolResult.INSUFFICIENT_FUNDS;
 
-			if (xpos + 1 < city.getWidth())
+			// check east
 			{
-				char eTile = neutralizeRoad(city.getTile(xpos + 1, ypos));
+				char eTile = neutralizeRoad(eff.getTile(1, 0));
 				if (eTile == VRAILROAD ||
 					eTile == HBRIDGE ||
 					(eTile >= TileConstants.ROADS && eTile <= HROADPOWER))
 				{
-					city.setTile(xpos, ypos, (char) (HBRIDGE | BULLBIT));
+					eff.setTile(0, 0, (char) (HBRIDGE | BULLBIT));
 					break;
 				}
 			}
 
-			if (xpos > 0)
+			// check west
 			{
-				char wTile = neutralizeRoad(city.getTile(xpos - 1, ypos));
+				char wTile = neutralizeRoad(eff.getTile(-1, 0));
 				if (wTile == VRAILROAD ||
 					wTile == HBRIDGE ||
 					(wTile >= TileConstants.ROADS && wTile <= INTERSECTION))
 				{
-					city.setTile(xpos, ypos, (char) (HBRIDGE | BULLBIT));
+					eff.setTile(0, 0, (char) (HBRIDGE | BULLBIT));
 					break;
 				}
 			}
 
-			if (ypos + 1 < city.getHeight())
+			// check south
 			{
-				char sTile = neutralizeRoad(city.getTile(xpos, ypos + 1));
+				char sTile = neutralizeRoad(eff.getTile(0, 1));
 				if (sTile == HRAILROAD ||
 					sTile == VROADPOWER ||
 					(sTile >= VBRIDGE && sTile <= INTERSECTION))
 				{
-					city.setTile(xpos, ypos, (char) (VBRIDGE | BULLBIT));
+					eff.setTile(0, 0, (char) (VBRIDGE | BULLBIT));
 					break;
 				}
 			}
 
-			if (ypos > 0)
+			// check north
 			{
-				char nTile = neutralizeRoad(city.getTile(xpos, ypos - 1));
+				char nTile = neutralizeRoad(eff.getTile(0, -1));
 				if (nTile == HRAILROAD ||
 					nTile == VROADPOWER ||
 					(nTile >= VBRIDGE && nTile <= INTERSECTION))
 				{
-					city.setTile(xpos, ypos, (char) (VBRIDGE | BULLBIT));
+					eff.setTile(0, 0, (char) (VBRIDGE | BULLBIT));
 					break;
 				}
 			}
 
 			// cannot do road here
-			return ToolResult.NONE;
+			return;
 
 		case LHPOWER: //road on power
-			city.setTile(xpos, ypos, (char) (VROADPOWER | CONDBIT | BURNBIT | BULLBIT));
+			eff.setTile(0, 0, (char) (VROADPOWER | CONDBIT | BURNBIT | BULLBIT));
 			break;
 
 		case LVPOWER: //road on power #2
-			city.setTile(xpos, ypos, (char) (HROADPOWER | CONDBIT | BURNBIT | BULLBIT));
+			eff.setTile(0, 0, (char) (HROADPOWER | CONDBIT | BURNBIT | BULLBIT));
 			break;
 
 		case LHRAIL: //road on rail
-			city.setTile(xpos, ypos, (char) (HRAILROAD | BURNBIT | BULLBIT));
+			eff.setTile(0, 0, (char) (HRAILROAD | BURNBIT | BULLBIT));
 			break;
 
 		case LVRAIL: //road on rail #2
-			city.setTile(xpos, ypos, (char) (VRAILROAD | BURNBIT | BULLBIT));
+			eff.setTile(0, 0, (char) (VRAILROAD | BURNBIT | BULLBIT));
 			break;
 
 		default:
@@ -329,17 +326,18 @@ class RoadLikeTool extends ToolStroke
 				}
 				else {
 					// cannot do road here
-					return ToolResult.NONE;
+					return;
 				}
 			}
 
-			// road on dirt
-			city.setTile(xpos, ypos, (char) (TileConstants.ROADS | BULLBIT | BURNBIT));
+			// road on dirt;
+			// just build a plain road, fixZone will fix it.
+			eff.setTile(0, 0, (char) (TileConstants.ROADS | BULLBIT | BURNBIT));
 			break;
 		}
 	
-		city.spend(cost);
-		return ToolResult.SUCCESS;
+		eff.spend(cost);
+		return;
 	}
 
 	private ToolResult layWire(int xpos, int ypos)
