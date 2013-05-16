@@ -15,14 +15,14 @@ public class ToolPreview implements ToolEffectIfc
 
 	public static class SoundInfo
 	{
-		public int dx;
-		public int dy;
+		public int x;
+		public int y;
 		public Sound sound;
 
-		SoundInfo(int dx, int dy, Sound sound)
+		SoundInfo(int x, int y, Sound sound)
 		{
-			this.dx = dx;
-			this.dy = dy;
+			this.x = x;
+			this.y = y;
 			this.sound = sound;
 		}
 	}
