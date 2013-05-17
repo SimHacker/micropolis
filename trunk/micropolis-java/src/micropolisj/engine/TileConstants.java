@@ -381,7 +381,7 @@ public class TileConstants
 
 	public static boolean isDozeable(int tile)
 	{
-		return (tile & BULLBIT) != 0;
+		return tile >= 0 && (tile & BULLBIT) != 0;
 	}
 
 	static boolean isFloodable(int tile)
