@@ -1123,10 +1123,56 @@ public class MainWindow extends JFrame
 			updateDateLabel();
 			dirty2 = true;
 		}};
+		taskPerformer = wrapActionListener(taskPerformer);
 
 		assert simTimer == null;
 		simTimer = new Timer(engine.simSpeed.animationDelay, taskPerformer);
 		simTimer.start();
+	}
+
+	ActionListener wrapActionListener(final ActionListener l)
+	{
+		return new ActionListener() {
+		public void actionPerformed(ActionEvent evt) {
+			try {
+				l.actionPerformed(evt);
+			} catch (Throwable e) {
+				showErrorMessage(e);
+			}
+		}};
+	}
+
+	private void showErrorMessage(Throwable e)
+	{
+		StringWriter w = new StringWriter();
+		e.printStackTrace(new PrintWriter(w));
+
+		JTextPane stackTracePane = new JTextPane();
+		stackTracePane.setEditable(false);
+		stackTracePane.setText(w.toString());
+
+		final JScrollPane detailsPane = new JScrollPane(stackTracePane);
+		detailsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		detailsPane.setPreferredSize(new Dimension(480,240));
+		detailsPane.setMinimumSize(new Dimension(0,0));
+
+		int rv = JOptionPane.showOptionDialog(this, e,
+			strings.getString("main.error_unexpected"),
+			JOptionPane.DEFAULT_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			null,
+			new String[] {
+				strings.getString("main.error_show_stacktrace"),
+				strings.getString("main.error_close")
+				},
+			1
+			);
+		if (rv == 0)
+		{
+			JOptionPane.showMessageDialog(this, detailsPane,
+				strings.getString("main.error_unexpected"),
+				JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	class EarthquakeStepper
