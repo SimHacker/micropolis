@@ -359,48 +359,53 @@ public class MainWindow extends JFrame
 
 		JMenuItem menuItem;
 		menuItem = new JMenuItem(strings.getString("menu.game.new"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onNewCityClicked();
 			}
-			});
+			}));
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.load"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onLoadGameClicked();
 			}
-			});
+			}));
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.save"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onSaveCityClicked();
 			}
-			});
+			}));
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.save_as"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onSaveCityAsClicked();
 			}
-			});
+			}));
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.exit"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				closeWindow();
 			}
-			});
+			}));
 		gameMenu.add(menuItem);
 
 		JMenu optionsMenu = new JMenu(strings.getString("menu.options"));
@@ -414,106 +419,117 @@ public class MainWindow extends JFrame
 		{
 			final int level = i;
 			menuItem = new JRadioButtonMenuItem(strings.getString("menu.difficulty."+level));
-			menuItem.addActionListener(new ActionListener() {
+			menuItem.addActionListener(wrapActionListener(
+				new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onDifficultyClicked(level);
 				}
-			});
+			}));
 			levelMenu.add(menuItem);
 			difficultyMenuItems.put(level, menuItem);
 		}
 
 		autoBudgetMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_budget"));
-		autoBudgetMenuItem.addActionListener(new ActionListener() {
+		autoBudgetMenuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onAutoBudgetClicked();
 			}
-			});
+			}));
 		optionsMenu.add(autoBudgetMenuItem);
 
 		autoBulldozeMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_bulldoze"));
-		autoBulldozeMenuItem.addActionListener(new ActionListener() {
+		autoBulldozeMenuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onAutoBulldozeClicked();
 			}
-			});
+			}));
 		optionsMenu.add(autoBulldozeMenuItem);
 
 		disastersMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.disasters"));
-		disastersMenuItem.addActionListener(new ActionListener() {
+		disastersMenuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onDisastersClicked();
 			}
-			});
+			}));
 		optionsMenu.add(disastersMenuItem);
 
 		soundsMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.sound"));
-		soundsMenuItem.addActionListener(new ActionListener() {
+		soundsMenuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onSoundClicked();
 			}
-			});
+			}));
 		optionsMenu.add(soundsMenuItem);
 
 		JMenu disastersMenu = new JMenu(strings.getString("menu.disasters"));
 		menuBar.add(disastersMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.MONSTER"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.MONSTER);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.FIRE"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.FIRE);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.FLOOD"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.FLOOD);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.MELTDOWN"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.MELTDOWN);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.TORNADO"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.TORNADO);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.EARTHQUAKE"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onInvokeDisasterClicked(Disaster.EARTHQUAKE);
 			}
-			});
+			}));
 		disastersMenu.add(menuItem);
 
 		JMenu priorityMenu = new JMenu(strings.getString("menu.speed"));
@@ -521,52 +537,57 @@ public class MainWindow extends JFrame
 
 		priorityMenuItems = new EnumMap<Speed,JMenuItem>(Speed.class);
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.SUPER_FAST"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onPriorityClicked(Speed.SUPER_FAST);
 			}
-			});
+			}));
 		priorityMenu.add(menuItem);
 		priorityMenuItems.put(Speed.SUPER_FAST, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.FAST"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onPriorityClicked(Speed.FAST);
 			}
-			});
+			}));
 		priorityMenu.add(menuItem);
 		priorityMenuItems.put(Speed.FAST, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.NORMAL"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onPriorityClicked(Speed.NORMAL);
 			}
-			});
+			}));
 		priorityMenu.add(menuItem);
 		priorityMenuItems.put(Speed.NORMAL, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.SLOW"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onPriorityClicked(Speed.SLOW);
 			}
-			});
+			}));
 		priorityMenu.add(menuItem);
 		priorityMenuItems.put(Speed.SLOW, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.PAUSED"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onPriorityClicked(Speed.PAUSED);
 			}
-			});
+			}));
 		priorityMenu.add(menuItem);
 		priorityMenuItems.put(Speed.PAUSED, menuItem);
 
@@ -574,42 +595,46 @@ public class MainWindow extends JFrame
 		menuBar.add(windowsMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.budget"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onViewBudgetClicked();
 			}
-			});
+			}));
 		windowsMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.evaluation"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onViewEvaluationClicked();
 			}
-			});
+			}));
 		windowsMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.graph"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onViewGraphClicked();
 			}
-			});
+			}));
 		windowsMenu.add(menuItem);
 
 		JMenu helpMenu = new JMenu(strings.getString("menu.help"));
 		menuBar.add(helpMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.help.about"));
-		menuItem.addActionListener(new ActionListener() {
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
 			{
 				onAboutClicked();
 			}
-			});
+			}));
 		helpMenu.add(menuItem);
 
 		setJMenuBar(menuBar);
