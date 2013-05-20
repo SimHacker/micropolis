@@ -184,23 +184,43 @@ public class MainWindow extends JFrame
 		MouseAdapter mouse = new MouseAdapter() {
 			public void mousePressed(MouseEvent ev)
 			{
-				onToolDown(ev);
+				try {
+					onToolDown(ev);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
 			}
 			public void mouseReleased(MouseEvent ev)
 			{
-				onToolUp(ev);
+				try {
+					onToolUp(ev);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
 			}
 			public void mouseDragged(MouseEvent ev)
 			{
-				onToolDrag(ev);
+				try {
+					onToolDrag(ev);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
 			}
 			public void mouseMoved(MouseEvent ev)
 			{
-				onToolHover(ev);
+				try {
+					onToolHover(ev);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
 			}
 			public void mouseExited(MouseEvent ev)
 			{
-				onToolExited(ev);
+				try {
+					onToolExited(ev);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
 			}
 			};
 		drawingArea.addMouseListener(mouse);
