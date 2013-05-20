@@ -1208,7 +1208,8 @@ public class MainWindow extends JFrame
 			null,
 			new String[] {
 				strings.getString("main.error_show_stacktrace"),
-				strings.getString("main.error_close")
+				strings.getString("main.error_close"),
+				strings.getString("main.error_shutdown")
 				},
 			1
 			);
@@ -1217,6 +1218,18 @@ public class MainWindow extends JFrame
 			JOptionPane.showMessageDialog(this, detailsPane,
 				strings.getString("main.error_unexpected"),
 				JOptionPane.ERROR_MESSAGE);
+		}
+		if (rv == 2)
+		{
+			rv = JOptionPane.showConfirmDialog(
+				this,
+				strings.getString("error.shutdown_query"),
+				strings.getString("main.error_unexpected"),
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE);
+			if (rv == JOptionPane.OK_OPTION) {
+				System.exit(1);
+			}
 		}
 	}
 
