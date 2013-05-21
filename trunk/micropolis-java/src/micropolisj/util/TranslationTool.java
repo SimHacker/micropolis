@@ -11,6 +11,9 @@ public class TranslationTool extends JFrame
 {
 	JTable stringsTable;
 	StringsModel stringsModel;
+	String lastLanguage;
+	String lastCountry;
+	String lastVariant;
 
 	public TranslationTool()
 		throws IOException
@@ -44,9 +47,43 @@ public class TranslationTool extends JFrame
 			}});
 		buttonPane.add(btn);
 
+		btn = new JButton("Test");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onTestClicked();
+			}});
+		buttonPane.add(btn);
+
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+	}
+
+	private void onTestClicked()
+	{
+		try
+		{
+			String javaPath = "java";
+			String classPath = "." + System.getProperty("path.separator") + "micropolisj.jar";
+
+			ProcessBuilder processBuilder =
+			new ProcessBuilder(javaPath,
+				"-Duser.language="+lastLanguage,
+				"-Duser.country="+lastCountry,
+				"-Duser.variant="+lastVariant,
+				"-cp",
+				classPath,
+				"micropolisj.Main"
+				);
+			processBuilder.start();
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(this,
+				e.getMessage(),
+				"Error",
+				JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void onSaveClicked()
@@ -91,22 +128,22 @@ public class TranslationTool extends JFrame
 
 		try
 		{
-			String language = langEntry.getText();
-			String country = countryEntry.getText();
-			String variant = variantEntry.getText();
+			lastLanguage = langEntry.getText();
+			lastCountry = countryEntry.getText();
+			lastVariant = variantEntry.getText();
 
-			if (language.length() == 0) {
+			if (lastLanguage.length() == 0) {
 				throw new Exception("Language is required");
 			}
 
-			String code = language;
-			if (country.length() != 0) {
-				code += "_" + country;
-				if (variant.length() != 0) {
-					code += "_" + variant;
+			String code = lastLanguage;
+			if (lastCountry.length() != 0) {
+				code += "_" + lastCountry;
+				if (lastVariant.length() != 0) {
+					code += "_" + lastVariant;
 				}
 			}
-			else if (variant.length() != 0) {
+			else if (lastVariant.length() != 0) {
 				throw new Exception("Cannot specify variant without a country code.");
 			}
 
@@ -231,7 +268,13 @@ public class TranslationTool extends JFrame
 		@Override
 		public boolean isCellEditable(int row, int col)
 		{
-			return col != 0;
+			if (col == 0) {
+				return false;
+			}
+			else {
+				MyLocaleInfo l = locales.get(col-1);
+				return l.code != null;
+			}
 		}
 
 		@Override
@@ -250,7 +293,7 @@ public class TranslationTool extends JFrame
 
 		File getPFile(String file, String localeCode)
 		{
-			return new File("strings/"
+			return new File("micropolisj/"
 				+file
 				+(localeCode != null ? "_"+localeCode : "")
 				+".properties");
@@ -263,6 +306,9 @@ public class TranslationTool extends JFrame
 			for (String file : FILES)
 			{
 				Properties p = new Properties();
+				if (localeCode == null) {
+					p.load(getClass().getResourceAsStream("/micropolisj/"+file+".properties"));
+				}
 				File f = getPFile(file, localeCode);
 				if (f.exists()) {
 					p.load(new FileInputStream(f));
@@ -272,6 +318,15 @@ public class TranslationTool extends JFrame
 
 			locales.add(li);
 			fireTableStructureChanged();
+		}
+
+		void makeDirectories(File f)
+			throws IOException
+		{
+			File d = f.getParentFile();
+			if (d != null) {
+				d.mkdirs();
+			}
 		}
 
 		void save()
@@ -285,8 +340,10 @@ public class TranslationTool extends JFrame
 				{
 					Properties p = l.propsMap.get(file);
 					File f = getPFile(file, l.code);
+					makeDirectories(f);
 					p.store(new FileOutputStream(f), l.code);
 				}
+				l.dirty = false;
 			}
 		}
 	}
