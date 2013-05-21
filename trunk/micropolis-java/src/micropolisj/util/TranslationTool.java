@@ -96,6 +96,19 @@ public class TranslationTool extends JFrame
 
 	private void onTestClicked()
 	{
+		String code = pickLocale(
+				"Which locale do you want to test?",
+				"Test Locale"
+				);
+		if (code == null) {
+			return;
+		}
+
+		String [] localeParts = code.split("_");
+		lastLanguage = localeParts.length >= 1 ? localeParts[0] : "";
+		lastCountry = localeParts.length >= 2 ? localeParts[1] : "";
+		lastVariant = localeParts.length >= 3 ? localeParts[2] : "";
+
 		try
 		{
 			String javaPath = "java";
@@ -195,9 +208,47 @@ public class TranslationTool extends JFrame
 		}
 	}
 
+	String pickLocale(String message, String dlgTitle)
+	{
+		String[] locales = stringsModel.getAllLocaleCodes();
+		if (locales.length == 1) {
+			return locales[0];
+		}
+		else if (locales.length == 0) {
+			return null;
+		}
+
+		JComboBox<String> localeCb = new JComboBox<String>();
+		for (int i = 0; i < locales.length; i++) {
+			localeCb.addItem(locales[i] != null ? locales[i] : "C");
+		}
+		localeCb.setSelectedIndex(locales.length-1);
+
+		JComponent [] inputs = new JComponent[] {
+			new JLabel(message),
+			localeCb
+			};
+		int rv = JOptionPane.showOptionDialog(this,
+			inputs,
+			dlgTitle,
+			JOptionPane.OK_CANCEL_OPTION,
+			JOptionPane.PLAIN_MESSAGE,
+			null, null, null);
+		if (rv != JOptionPane.OK_OPTION)
+			return null;
+
+		return (String) localeCb.getSelectedItem();
+	}
+
 	private void onRemoveLocaleClicked()
 	{
-		//TODO
+		String code = pickLocale(
+				"Which locale do you want to remove?",
+				"Remove Locale"
+				);
+		if (code != null) {
+			stringsModel.removeLocale(code.equals("C") ? null : code);
+		}
 	}
 
 	private void onSubmitClicked()

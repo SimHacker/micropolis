@@ -171,6 +171,30 @@ class StringsModel extends AbstractTableModel
 		fireTableStructureChanged();
 	}
 
+	String [] getAllLocaleCodes()
+	{
+		String [] rv = new String[locales.size()];
+		for (int i = 0; i < rv.length; i++) {
+			rv[i] = locales.get(i).code;
+		}
+		return rv;
+	}
+
+	void removeLocale(String localeCode)
+	{
+		boolean found = false;
+		for (int i = locales.size()-1; i >= 0; i--) {
+			String loc = locales.get(i).code;
+			if (loc == localeCode || (loc != null && loc.equals(localeCode))) {
+				locales.remove(i);
+				found = true;
+			}
+		}
+		if (found) {
+			fireTableStructureChanged();
+		}
+	}
+
 	void makeDirectories(File f)
 		throws IOException
 	{
