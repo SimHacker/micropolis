@@ -11,9 +11,10 @@ public class TranslationTool extends JFrame
 {
 	JTable stringsTable;
 	StringsModel stringsModel;
-	String lastLanguage;
-	String lastCountry;
-	String lastVariant;
+
+	JButton removeBtn;
+	JButton testBtn;
+	JButton submitBtn;
 
 	public TranslationTool()
 	{
@@ -46,12 +47,12 @@ public class TranslationTool extends JFrame
 			}});
 		buttonPane.add(btn);
 
-		btn = new JButton("Remove Locale");
-		btn.addActionListener(new ActionListener() {
+		removeBtn = new JButton("Remove Locale");
+		removeBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onRemoveLocaleClicked();
 			}});
-		buttonPane.add(btn);
+		buttonPane.add(removeBtn);
 
 		btn = new JButton("Save");
 		btn.addActionListener(new ActionListener() {
@@ -60,19 +61,21 @@ public class TranslationTool extends JFrame
 			}});
 		buttonPane.add(btn);
 
-		btn = new JButton("Test");
-		btn.addActionListener(new ActionListener() {
+		testBtn = new JButton("Test");
+		testBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onTestClicked();
 			}});
-		buttonPane.add(btn);
+		buttonPane.add(testBtn);
 
-		btn = new JButton("Submit");
-		btn.addActionListener(new ActionListener() {
+		submitBtn = new JButton("Submit");
+		submitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onSubmitClicked();
 			}});
-		buttonPane.add(btn);
+		buttonPane.add(submitBtn);
+
+		updateButtonsEnabled();
 
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -105,9 +108,9 @@ public class TranslationTool extends JFrame
 		}
 
 		String [] localeParts = code.split("_");
-		lastLanguage = localeParts.length >= 1 ? localeParts[0] : "";
-		lastCountry = localeParts.length >= 2 ? localeParts[1] : "";
-		lastVariant = localeParts.length >= 3 ? localeParts[2] : "";
+		String selLanguage = localeParts.length >= 1 ? localeParts[0] : "";
+		String selCountry = localeParts.length >= 2 ? localeParts[1] : "";
+		String selVariant = localeParts.length >= 3 ? localeParts[2] : "";
 
 		try
 		{
@@ -118,9 +121,9 @@ public class TranslationTool extends JFrame
 
 			ProcessBuilder processBuilder =
 			new ProcessBuilder(javaPath,
-				"-Duser.language="+lastLanguage,
-				"-Duser.country="+lastCountry,
-				"-Duser.variant="+lastVariant,
+				"-Duser.language="+selLanguage,
+				"-Duser.country="+selCountry,
+				"-Duser.variant="+selVariant,
 				"-cp",
 				classPath,
 				"micropolisj.Main"
@@ -178,9 +181,9 @@ public class TranslationTool extends JFrame
 
 		try
 		{
-			lastLanguage = langEntry.getText();
-			lastCountry = countryEntry.getText();
-			lastVariant = variantEntry.getText();
+			String lastLanguage = langEntry.getText();
+			String lastCountry = countryEntry.getText();
+			String lastVariant = variantEntry.getText();
 
 			if (lastLanguage.length() == 0) {
 				throw new Exception("Language is required");
@@ -198,6 +201,7 @@ public class TranslationTool extends JFrame
 			}
 
 			stringsModel.addLocale(code);
+			updateButtonsEnabled();
 		}
 		catch (Exception e)
 		{
@@ -208,21 +212,32 @@ public class TranslationTool extends JFrame
 		}
 	}
 
+	private void updateButtonsEnabled()
+	{
+		int count = stringsModel.getAllLocaleCodes().length;
+		removeBtn.setEnabled(count > 1);
+		testBtn.setEnabled(count > 1);
+		submitBtn.setEnabled(count > 1);
+	}
+
 	String pickLocale(String message, String dlgTitle)
 	{
 		String[] locales = stringsModel.getAllLocaleCodes();
-		if (locales.length == 1) {
-			return locales[0];
+		JComboBox<String> localeCb = new JComboBox<String>();
+		for (int i = 0; i < locales.length; i++) {
+			if (locales[i] != null) {
+				localeCb.addItem(locales[i]);
+			}
 		}
-		else if (locales.length == 0) {
+
+		if (localeCb.getItemCount() == 1) {
+			return (String) localeCb.getItemAt(0);
+		}
+		else if (localeCb.getItemCount() == 0) {
 			return null;
 		}
 
-		JComboBox<String> localeCb = new JComboBox<String>();
-		for (int i = 0; i < locales.length; i++) {
-			localeCb.addItem(locales[i] != null ? locales[i] : "C");
-		}
-		localeCb.setSelectedIndex(locales.length-1);
+		localeCb.setSelectedIndex(localeCb.getItemCount()-1);
 
 		JComponent [] inputs = new JComponent[] {
 			new JLabel(message),
@@ -248,6 +263,7 @@ public class TranslationTool extends JFrame
 				);
 		if (code != null) {
 			stringsModel.removeLocale(code.equals("C") ? null : code);
+			updateButtonsEnabled();
 		}
 	}
 

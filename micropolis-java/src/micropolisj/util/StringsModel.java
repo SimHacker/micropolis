@@ -182,10 +182,12 @@ class StringsModel extends AbstractTableModel
 
 	void removeLocale(String localeCode)
 	{
+		assert localeCode != null;
+
 		boolean found = false;
 		for (int i = locales.size()-1; i >= 0; i--) {
 			String loc = locales.get(i).code;
-			if (loc == localeCode || (loc != null && loc.equals(localeCode))) {
+			if (localeCode.equals(loc)) {
 				locales.remove(i);
 				found = true;
 			}
