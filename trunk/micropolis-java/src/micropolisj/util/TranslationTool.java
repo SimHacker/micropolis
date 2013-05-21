@@ -118,9 +118,13 @@ public class TranslationTool extends JFrame
 		String selCountry = localeParts.length >= 2 ? localeParts[1] : "";
 		String selVariant = localeParts.length >= 3 ? localeParts[2] : "";
 
+		File javaExe = new File(System.getProperty("java.home"));
+		javaExe = new File(javaExe, "bin");
+		javaExe = new File(javaExe, "java");
+
 		try
 		{
-			String javaPath = "java";
+			String javaPath = javaExe.toString();
 			String classPath = stringsModel.workingDirectory.toString()
 				+ System.getProperty("path.separator")
 				+ getMicropolisJarFile().toString();
