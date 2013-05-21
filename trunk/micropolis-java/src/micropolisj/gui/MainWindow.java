@@ -23,6 +23,7 @@ import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import micropolisj.engine.*;
+import micropolisj.util.TranslationTool;
 
 public class MainWindow extends JFrame
 	implements Micropolis.Listener, EarthquakeListener
