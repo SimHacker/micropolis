@@ -54,13 +54,6 @@ public class TranslationTool extends JFrame
 			}});
 		buttonPane.add(removeBtn);
 
-		btn = new JButton("Save");
-		btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				onSaveClicked();
-			}});
-		buttonPane.add(btn);
-
 		testBtn = new JButton("Test");
 		testBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -78,8 +71,19 @@ public class TranslationTool extends JFrame
 		updateButtonsEnabled();
 
 		pack();
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
+
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				closeWindow();
+			}});
+	}
+
+	private void closeWindow()
+	{
+		maybeSave();
+		dispose();
 	}
 
 	private File getMicropolisJarFile()
@@ -99,6 +103,8 @@ public class TranslationTool extends JFrame
 
 	private void onTestClicked()
 	{
+		maybeSave();
+
 		String code = pickLocale(
 				"Which locale do you want to test?",
 				"Test Locale"
@@ -139,7 +145,7 @@ public class TranslationTool extends JFrame
 		}
 	}
 
-	private void onSaveClicked()
+	private void maybeSave()
 	{
 		try
 		{
@@ -156,6 +162,8 @@ public class TranslationTool extends JFrame
 
 	private void onAddLocaleClicked()
 	{
+		maybeSave();
+
 		Locale L = Locale.getDefault();
 
 		JTextField langEntry = new JTextField(L.getLanguage());
@@ -257,18 +265,26 @@ public class TranslationTool extends JFrame
 
 	private void onRemoveLocaleClicked()
 	{
+		maybeSave();
 		String code = pickLocale(
 				"Which locale do you want to remove?",
 				"Remove Locale"
 				);
 		if (code != null) {
-			stringsModel.removeLocale(code.equals("C") ? null : code);
+			stringsModel.removeLocale(code);
 			updateButtonsEnabled();
 		}
 	}
 
 	private void onSubmitClicked()
 	{
+		maybeSave();
+		String code = pickLocale(
+				"Which locale do you want to submit?",
+				"Submit Locale"
+				);
+		if (code == null) return;
+
 		//TODO
 	}
 
