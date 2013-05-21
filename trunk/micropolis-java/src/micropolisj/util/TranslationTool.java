@@ -285,7 +285,23 @@ public class TranslationTool extends JFrame
 				);
 		if (code == null) return;
 
-		//TODO
+		String msg = "";
+		msg = msg + "Your translated strings have been saved to\n";
+		msg = msg + new File(stringsModel.workingDirectory, "micropolisj").toString() + "\n";
+		msg = msg + "as:\n";
+		for (int i = 0; i < stringsModel.FILES.length; i++) {
+			msg = msg + " * "
+				+ stringsModel.FILES[i]+"_"+code+".properties"
+				+ "\n";
+		}
+		msg = msg + "\n";
+		msg = msg + "Submit these files to the Micropolis website\n";
+		msg = msg + "https://code.google.com/p/micropolis\n";
+		msg = msg + "(Open a new \"Issue\" and attach the files to the issue.)";
+
+		JOptionPane.showMessageDialog(this,
+			msg, "Submit Locale",
+			JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public static void main(String [] args)
