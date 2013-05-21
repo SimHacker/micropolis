@@ -40,10 +40,17 @@ public class TranslationTool extends JFrame
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		JButton btn;
-		btn = new JButton("Add Locale");
+		btn = new JButton("Add Locale...");
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onAddLocaleClicked();
+			}});
+		buttonPane.add(btn);
+
+		btn = new JButton("Remove Locale");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onRemoveLocaleClicked();
 			}});
 		buttonPane.add(btn);
 
@@ -58,6 +65,13 @@ public class TranslationTool extends JFrame
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onTestClicked();
+			}});
+		buttonPane.add(btn);
+
+		btn = new JButton("Submit");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onSubmitClicked();
 			}});
 		buttonPane.add(btn);
 
@@ -163,6 +177,16 @@ public class TranslationTool extends JFrame
 				"Error",
 				JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private void onRemoveLocaleClicked()
+	{
+		//TODO
+	}
+
+	private void onSubmitClicked()
+	{
+		//TODO
 	}
 
 	public static void main(String [] args)
