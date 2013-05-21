@@ -79,6 +79,21 @@ public class TranslationTool extends JFrame
 		setLocationRelativeTo(null);
 	}
 
+	private File getMicropolisJarFile()
+	{
+		try{
+
+		Class mclass = micropolisj.engine.Micropolis.class;
+		return new File(
+			mclass.getProtectionDomain()
+				.getCodeSource().getLocation().toURI().getPath()
+			);
+
+		} catch (java.net.URISyntaxException e) {
+			throw new Error("unexpected: "+e, e);
+		}
+	}
+
 	private void onTestClicked()
 	{
 		try
@@ -86,7 +101,7 @@ public class TranslationTool extends JFrame
 			String javaPath = "java";
 			String classPath = stringsModel.workingDirectory.toString()
 				+ System.getProperty("path.separator")
-				+ "micropolisj.jar";
+				+ getMicropolisJarFile().toString();
 
 			ProcessBuilder processBuilder =
 			new ProcessBuilder(javaPath,
@@ -253,7 +268,7 @@ class StringsModel extends AbstractTableModel
 		throws IOException
 	{
 		Properties p = new Properties();
-		p.load(new FileInputStream("strings/"+file+".properties"));
+		p.load(StringsModel.class.getResourceAsStream("/micropolisj/"+file+".properties"));
 		String [] propNames = p.keySet().toArray(new String[0]);
 		Arrays.sort(propNames);
 
