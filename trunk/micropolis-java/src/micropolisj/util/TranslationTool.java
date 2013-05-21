@@ -30,8 +30,7 @@ public class TranslationTool extends JFrame
 			System.exit(1);
 		}
 
-		stringsTable = new JTable(stringsModel);
-		stringsTable.setDefaultEditor(String.class, new DefaultCellEditor(new JTextField()));
+		stringsTable = new TranslatedStringsTable(stringsModel);
 		JScrollPane scrollPane = new JScrollPane(stringsTable);
 		stringsTable.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
