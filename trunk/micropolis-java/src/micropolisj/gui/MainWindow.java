@@ -647,6 +647,14 @@ public class MainWindow extends JFrame
 		JMenu helpMenu = new JMenu(strings.getString("menu.help"));
 		menuBar.add(helpMenu);
 
+		menuItem = new JMenuItem(strings.getString("menu.help.launch-translation-tool"));
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt)
+			{
+				onLaunchTranslationToolClicked();
+			}});
+		helpMenu.add(menuItem);
+
 		menuItem = new JMenuItem(strings.getString("menu.help.about"));
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
@@ -1467,6 +1475,15 @@ public class MainWindow extends JFrame
 		}
 		else {
 			mapLegendLbl.setIcon(null);
+		}
+	}
+
+	private void onLaunchTranslationToolClicked()
+	{
+		if (maybeSaveCity()) {
+			dispose();
+			TranslationTool tt = new TranslationTool();
+			tt.setVisible(true);
 		}
 	}
 
