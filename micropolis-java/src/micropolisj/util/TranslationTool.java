@@ -16,12 +16,19 @@ public class TranslationTool extends JFrame
 	String lastVariant;
 
 	public TranslationTool()
-		throws IOException
 	{
 		setTitle("MicropolisJ Translation Tool");
 
+		try {
 		stringsModel = new StringsModel();
 		stringsModel.addLocale(null);
+
+		}
+		catch (IOException e) {
+			JOptionPane.showMessageDialog(this,
+				e, "Error", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
 
 		stringsTable = new JTable(stringsModel);
 		stringsTable.setDefaultEditor(String.class, new DefaultCellEditor(new JTextField()));
@@ -167,12 +174,12 @@ public class TranslationTool extends JFrame
 	static class StringsModel extends AbstractTableModel
 	{
 		StringInfo [] strings;
-		ArrayList<MyLocaleInfo> locales = new ArrayList<>();
+		ArrayList<MyLocaleInfo> locales = new ArrayList<MyLocaleInfo>();
 
 		static class MyLocaleInfo
 		{
 			String code;
-			HashMap<String,Properties> propsMap = new HashMap<>();
+			HashMap<String,Properties> propsMap = new HashMap<String,Properties>();
 			boolean dirty;
 
 			MyLocaleInfo(String code) {
@@ -201,7 +208,7 @@ public class TranslationTool extends JFrame
 
 		StringsModel() throws IOException
 		{
-			ArrayList<StringInfo> ss = new ArrayList<>();
+			ArrayList<StringInfo> ss = new ArrayList<StringInfo>();
 			for (String f : FILES) {
 				loadStrings(f, ss);
 			}
