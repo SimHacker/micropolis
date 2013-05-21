@@ -84,7 +84,9 @@ public class TranslationTool extends JFrame
 		try
 		{
 			String javaPath = "java";
-			String classPath = "." + System.getProperty("path.separator") + "micropolisj.jar";
+			String classPath = stringsModel.workingDirectory.toString()
+				+ System.getProperty("path.separator")
+				+ "micropolisj.jar";
 
 			ProcessBuilder processBuilder =
 			new ProcessBuilder(javaPath,
@@ -194,187 +196,199 @@ public class TranslationTool extends JFrame
 		new TranslationTool().setVisible(true);
 	}
 
-	static class StringsModel extends AbstractTableModel
+}
+
+class StringsModel extends AbstractTableModel
+{
+	StringInfo [] strings;
+	ArrayList<MyLocaleInfo> locales = new ArrayList<MyLocaleInfo>();
+
+	static class MyLocaleInfo
 	{
-		StringInfo [] strings;
-		ArrayList<MyLocaleInfo> locales = new ArrayList<MyLocaleInfo>();
+		String code;
+		HashMap<String,Properties> propsMap = new HashMap<String,Properties>();
+		boolean dirty;
 
-		static class MyLocaleInfo
+		MyLocaleInfo(String code) {
+			this.code = code;
+		}
+	}
+
+	static class StringInfo
+	{
+		String file;
+		String id;
+
+		StringInfo(String file, String id)
 		{
-			String code;
-			HashMap<String,Properties> propsMap = new HashMap<String,Properties>();
-			boolean dirty;
+			this.file = file;
+			this.id = id;
+		}
+	}
 
-			MyLocaleInfo(String code) {
-				this.code = code;
-			}
+	static final String [] FILES = {
+		"CityMessages",
+		"CityStrings",
+		"GuiStrings",
+		"StatusMessages"
+		};
+
+	File workingDirectory;
+
+	StringsModel() throws IOException
+	{
+		workingDirectory = new File(
+			new File(System.getProperty("user.home")),
+			"micropolis-translations"
+			);
+
+		ArrayList<StringInfo> ss = new ArrayList<StringInfo>();
+		for (String f : FILES) {
+			loadStrings(f, ss);
+		}
+		strings = ss.toArray(new StringInfo[0]);
+	}
+
+	static void loadStrings(String file, ArrayList<StringInfo> ss)
+		throws IOException
+	{
+		Properties p = new Properties();
+		p.load(new FileInputStream("strings/"+file+".properties"));
+		String [] propNames = p.keySet().toArray(new String[0]);
+		Arrays.sort(propNames);
+
+		for (String propName : propNames)
+		{
+			StringInfo si = new StringInfo(file, propName);
+			ss.add(si);
+		}
+	}
+
+	public Object getValueAt(int row, int col)
+	{
+		StringInfo si = strings[row];
+		if (col == 0) {
+			return si.id;
 		}
 
-		static class StringInfo
-		{
-			String file;
-			String id;
+		MyLocaleInfo l = locales.get(col-1);
+		Properties p = l.propsMap.get(si.file);
+		return p.getProperty(si.id);
+	}
 
-			StringInfo(String file, String id)
-			{
-				this.file = file;
-				this.id = id;
-			}
+	@Override
+	public int getRowCount()
+	{
+		return strings.length;
+	}
+
+	@Override
+	public int getColumnCount()
+	{
+		return 1 + locales.size();
+	}
+
+	@Override
+	public Class getColumnClass(int col)
+	{
+		return String.class;
+	}
+
+	@Override
+	public String getColumnName(int col)
+	{
+		if (col == 0) {
+			return "String";
+		}
+		else {
+			MyLocaleInfo l = locales.get(col-1);
+			return l.code != null ? l.code : "C";
+		}
+	}
+
+	@Override
+	public boolean isCellEditable(int row, int col)
+	{
+		if (col == 0) {
+			return false;
+		}
+		else {
+			MyLocaleInfo l = locales.get(col-1);
+			return l.code != null;
+		}
+	}
+
+	@Override
+	public void setValueAt(Object aValue, int row, int col)
+	{
+		StringInfo si = strings[row];
+		if (col == 0) {
+			return;
 		}
 
-		static final String [] FILES = {
-			"CityMessages",
-			"CityStrings",
-			"GuiStrings",
-			"StatusMessages"
-			};
+		MyLocaleInfo l = locales.get(col-1);
+		Properties p = l.propsMap.get(si.file);
+		p.setProperty(si.id, (String)aValue);
+		l.dirty = true;
+	}
 
-		StringsModel() throws IOException
-		{
-			ArrayList<StringInfo> ss = new ArrayList<StringInfo>();
-			for (String f : FILES) {
-				loadStrings(f, ss);
-			}
-			strings = ss.toArray(new StringInfo[0]);
-		}
+	/**
+	 * Gets the file in the user's working directory.
+	 */
+	File getPFile(String file, String localeCode)
+	{
+		File d = new File(workingDirectory, "micropolisj");
+		return new File(d,
+			file
+			+(localeCode != null ? "_"+localeCode : "")
+			+".properties");
+	}
 
-		static void loadStrings(String file, ArrayList<StringInfo> ss)
-			throws IOException
+	void addLocale(String localeCode)
+		throws IOException
+	{
+		MyLocaleInfo li = new MyLocaleInfo(localeCode);
+		for (String file : FILES)
 		{
 			Properties p = new Properties();
-			p.load(new FileInputStream("strings/"+file+".properties"));
-			String [] propNames = p.keySet().toArray(new String[0]);
-			Arrays.sort(propNames);
-
-			for (String propName : propNames)
-			{
-				StringInfo si = new StringInfo(file, propName);
-				ss.add(si);
+			if (localeCode == null) {
+				p.load(getClass().getResourceAsStream("/micropolisj/"+file+".properties"));
 			}
-		}
-
-		public Object getValueAt(int row, int col)
-		{
-			StringInfo si = strings[row];
-			if (col == 0) {
-				return si.id;
+			File f = getPFile(file, localeCode);
+			if (f.exists()) {
+				p.load(new FileInputStream(f));
 			}
-
-			MyLocaleInfo l = locales.get(col-1);
-			Properties p = l.propsMap.get(si.file);
-			return p.getProperty(si.id);
+			li.propsMap.put(file, p);
 		}
 
-		@Override
-		public int getRowCount()
-		{
-			return strings.length;
+		locales.add(li);
+		fireTableStructureChanged();
+	}
+
+	void makeDirectories(File f)
+		throws IOException
+	{
+		File d = f.getParentFile();
+		if (d != null) {
+			d.mkdirs();
 		}
+	}
 
-		@Override
-		public int getColumnCount()
+	void save()
+		throws IOException
+	{
+		for (MyLocaleInfo l : locales)
 		{
-			return 1 + locales.size();
-		}
+			if (!l.dirty) continue;
 
-		@Override
-		public Class getColumnClass(int col)
-		{
-			return String.class;
-		}
-
-		@Override
-		public String getColumnName(int col)
-		{
-			if (col == 0) {
-				return "String";
-			}
-			else {
-				MyLocaleInfo l = locales.get(col-1);
-				return l.code != null ? l.code : "C";
-			}
-		}
-
-		@Override
-		public boolean isCellEditable(int row, int col)
-		{
-			if (col == 0) {
-				return false;
-			}
-			else {
-				MyLocaleInfo l = locales.get(col-1);
-				return l.code != null;
-			}
-		}
-
-		@Override
-		public void setValueAt(Object aValue, int row, int col)
-		{
-			StringInfo si = strings[row];
-			if (col == 0) {
-				return;
-			}
-
-			MyLocaleInfo l = locales.get(col-1);
-			Properties p = l.propsMap.get(si.file);
-			p.setProperty(si.id, (String)aValue);
-			l.dirty = true;
-		}
-
-		File getPFile(String file, String localeCode)
-		{
-			return new File("micropolisj/"
-				+file
-				+(localeCode != null ? "_"+localeCode : "")
-				+".properties");
-		}
-
-		void addLocale(String localeCode)
-			throws IOException
-		{
-			MyLocaleInfo li = new MyLocaleInfo(localeCode);
 			for (String file : FILES)
 			{
-				Properties p = new Properties();
-				if (localeCode == null) {
-					p.load(getClass().getResourceAsStream("/micropolisj/"+file+".properties"));
-				}
-				File f = getPFile(file, localeCode);
-				if (f.exists()) {
-					p.load(new FileInputStream(f));
-				}
-				li.propsMap.put(file, p);
+				Properties p = l.propsMap.get(file);
+				File f = getPFile(file, l.code);
+				makeDirectories(f);
+				p.store(new FileOutputStream(f), l.code);
 			}
-
-			locales.add(li);
-			fireTableStructureChanged();
-		}
-
-		void makeDirectories(File f)
-			throws IOException
-		{
-			File d = f.getParentFile();
-			if (d != null) {
-				d.mkdirs();
-			}
-		}
-
-		void save()
-			throws IOException
-		{
-			for (MyLocaleInfo l : locales)
-			{
-				if (!l.dirty) continue;
-
-				for (String file : FILES)
-				{
-					Properties p = l.propsMap.get(file);
-					File f = getPFile(file, l.code);
-					makeDirectories(f);
-					p.store(new FileOutputStream(f), l.code);
-				}
-				l.dirty = false;
-			}
+			l.dirty = false;
 		}
 	}
 }
