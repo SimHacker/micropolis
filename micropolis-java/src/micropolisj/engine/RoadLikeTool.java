@@ -139,6 +139,8 @@ class RoadLikeTool extends ToolStroke
 		int cost = RAIL_COST;
 
 		char tile = (char) (eff.getTile(0, 0) & LOMASK);
+		tile = neutralizeRoad(tile);
+
 		switch (tile)
 		{
 		case RIVER:		// rail on water
