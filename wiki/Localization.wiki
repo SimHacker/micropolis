@@ -1,3 +1,5 @@
+#summary Guide for contributing translated text for the game
+
 = Introduction =
 
 This page describes how to translate the text used in the
@@ -8,15 +10,14 @@ played in any language.
 = Details =
 
 Micropolis (Java edition) reads translated messages from
-[http://en.wikipedia.org/wiki/Java_resource_bundle Java resource bundles].
+[http://en.wikipedia.org/wiki/Java_resource_bundle Java resource bundles]. You can edit the resource files directly, if you know
+how to do that, but starting with version 1.3 there is a built-in
+tool to help you.
 
 To begin working on translations:
- # Create a subdirectory named `micropolisj` in the directory containing  `micropolisj.jar`.
- # Go [https://code.google.com/p/micropolis/source/browse/#svn%2Ftrunk%2Fmicropolis-java%2Fstrings here] and download the properties files for the language whose translation you want to customize. If your language is not listed, download the core files (those without a language code). Save the files you downloaded to the `micropolisj` directory you created.
- # If your language was not listed, then rename the core files so that they have your language code in their name. For example, if the language is French (with code `fr`), then rename the core files to `CityMessages_fr.properties`, `CityStrings_fr.properties`, etc.
-
-Working on translations:
- # Edit the various properties files using a plain text editor. Files should be saved using the Latin1 encoding.
- # To test the translation, open a command-prompt and launch Micropolis as follows:
-     `java -cp ".:micropolisj.jar" micropolisj.Main`
- (if on Windows, use a semicolon (;) instead of a colon (:) for the -cp argument)
+ # Start Micropolis (Java edition), and select "Translation Tool" from the "Help" menu.
+ # Click Add Locale, and enter the 2-letter language and/or country codes for the language you want to work on. The language code should be two *lowercase* letters, and the country code should be two *uppercase* letters.
+ # You should now see a column for your language. Click on each cell and enter translated text.
+ # Some of the strings are paths to graphics files, or are color codes. You probably should NOT translate these strings, so just leave the corresponding cells blank.
+ # To try running Micropolis with the translated strings, click the *Test* button. This will launch a copy of Micropolis using the translated strings you entered.
+ # When you are finished working on the language, click *Submit*. This will tell you what files you should upload so that the next version of Micropolis can include your strings.
