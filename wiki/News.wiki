@@ -4,6 +4,13 @@
 
 This page presents a history of the Micropolis open source release.
 
+== Java Micropolis, version 1.2 (May 22, 2013) ==
+
+An update to the Java Micropolis project. This version redesigns the tool functionality, making it easier to place roads and buildings in straight lines. (However, now it's harder to free-draw things; let us know what you think!)
+
+This update also includes a new utility for translating the text that
+appears in the game. See [Localization] for information on how to use it.
+
 == Java Micropolis, version 1.2 (April 27, 2013) ==
 
 Another minor update to the Java Micropolis project. This version
