@@ -341,6 +341,12 @@ public class TileConstants
 			((cell & LOMASK) <= LASTRUBBLE));
 	}
 
+	public static boolean isTinyExplosion(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= SOMETINYEXP && tmp <= LASTTINYEXP);
+	}
+
 	public static boolean isTree(char cell)
 	{
 		return (((cell & LOMASK) >= WOODS_LOW) &&

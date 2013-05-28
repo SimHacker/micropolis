@@ -87,7 +87,7 @@ class MapScanner
 				return;
 			}
 
-			if (cchr9 >= SOMETINYEXP && cchr9 <= LASTTINYEXP)
+			if (isTinyExplosion(cchr))
 			{
 				// clear AniRubble
 				city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
