@@ -445,4 +445,48 @@ public class TileConstants
 		}
 		return (char)tile;
 	}
+
+	/**
+	 * Determine the population level of a Residential zone
+	 * tile. Note: the input tile MUST be a full-size res zone,
+	 * it cannot be an empty zone.
+	 * @return int multiple of 8 between 16 and 40.
+	 */
+	public static int residentialZonePop(int tile)
+	{
+		tile &= LOMASK;
+		int czDen = ((tile - RZB) / 9) % 4;
+		return czDen * 8 + 16;
+	}
+
+	/**
+	 * Determine the population level of a Commercial zone
+	 * tile.
+	 * The input tile MAY be an empty zone.
+	 * @return int between 0 and 5.
+	 */
+	public static int commercialZonePop(int tile)
+	{
+		tile &= LOMASK;
+		if (tile == COMCLR)
+			return 0;
+
+		int czDen = ((tile - CZB) / 9) % 5 + 1;
+		return czDen;
+	}
+
+	/**
+	 * Determine the population level of an Industrial zone tile.
+	 * The input tile MAY be an empty zone.
+	 * @return int between 0 and 4.
+	 */
+	public static int industrialZonePop(int tile)
+	{
+		tile &= LOMASK;
+		if (tile == INDCLR)
+			return 0;
+
+		int czDen = ((tile - IZB) / 9) % 4 + 1;
+		return czDen;
+	}
 }
