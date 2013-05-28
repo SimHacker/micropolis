@@ -99,8 +99,8 @@ public class TileConstants
 	public static final char RAILVPOWERH = 222;
 	public static final char LASTPOWER = 222;
 	public static final char RAILBASE = 224;
-	public static final char HRAIL = 224;
-	public static final char VRAIL = 225;
+	public static final char HRAIL = 224;     //underwater rail (horz)
+	public static final char VRAIL = 225;     //underwater rail (vert)
 	public static final char LHRAIL = 226;
 	public static final char LVRAIL = 227;
 	public static final char LVRAIL2 = 228;
