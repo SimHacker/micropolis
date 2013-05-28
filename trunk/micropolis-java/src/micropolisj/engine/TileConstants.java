@@ -297,6 +297,18 @@ public class TileConstants
 			&& ((tile & BURNBIT) == 0));
 	}
 
+	public static boolean isFire(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= FIREBASE && tmp < ROADBASE);
+	}
+
+	public static boolean isRadioactive(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= RADTILE && tmp < FIREBASE);
+	}
+
 	public static boolean isOverWater(char cell)
 	{
 		switch (cell & LOMASK)
@@ -382,6 +394,12 @@ public class TileConstants
 	public static boolean isDozeable(int tile)
 	{
 		return tile >= 0 && (tile & BULLBIT) != 0;
+	}
+
+	public static boolean isFlood(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= FLOOD && tmp < RADTILE);
 	}
 
 	static boolean isFloodable(int tile)

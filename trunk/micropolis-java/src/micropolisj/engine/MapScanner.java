@@ -39,34 +39,31 @@ class MapScanner
 	 */
 	public void scanTile()
 	{
+		if (isFire(cchr))
+		{
+			city.firePop++;
+			if (PRNG.nextInt(4) == 0)
+			{
+				// one in four times
+				doFire();
+			}
+			return;
+		}
+		else if (isFlood(cchr))
+		{
+			doFlood();
+			return;
+		}
+		else if (isRadioactive(cchr))
+		{
+			doRadioactiveTile();
+			return;
+		}
+
 		cchr9 = (char) (cchr & LOMASK);
 
 		if (cchr9 >= FLOOD)
 		{
-			if (cchr9 < ROADBASE)
-			{
-				if (cchr9 >= FIREBASE)
-				{
-					city.firePop++;
-					if (PRNG.nextInt(4) == 0)
-					{
-						// one in four times
-						doFire();
-					}
-					return;
-				}
-
-				if (cchr9 < RADTILE)
-				{
-					doFlood();
-				}
-				else
-				{
-					doRadioactiveTile();
-				}
-				return;
-			}
-
 			if (city.newPower && ((cchr & CONDBIT) != 0))
 			{
 				setZonePower();
