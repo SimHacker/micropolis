@@ -428,30 +428,31 @@ class MapScanner
 			city.unpoweredZoneCount++;
 		}
 
-		if (cchr9 > PORTBASE)
+		if (isSpecialZone(cchr))
 		{
 			doSpecialZone(zonePwrFlag);
 			return;
 		}
 
-		if (cchr9 < HOSPITAL)
+		if (isResidentialZone(cchr))
 		{
 			doResidential(zonePwrFlag);
 			return;
 		}
 
-		if (cchr9 < COMBASE)
+		if (isHospitalOrChurch(cchr))
 		{
 			doHospitalChurch(zonePwrFlag);
 			return;
 		}
 
-		if (cchr9 < INDBASE)
+		if (isCommercialZone(cchr))
 		{
 			doCommercial(zonePwrFlag);
 			return;
 		}
 
+		assert isIndustrialZone(cchr);
 		doIndustrial(zonePwrFlag);
 		return;
 	}

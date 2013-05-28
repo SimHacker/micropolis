@@ -428,6 +428,39 @@ public class TileConstants
 		return (tmp >= RAILBASE && tmp < RESBASE);
 	}
 
+	public static boolean isCommercialZone(int tile)
+	{
+		assert isZoneCenter(tile);
+		return (tile & LOMASK) >= COMBASE &&
+			(tile & LOMASK) < INDBASE;
+	}
+
+	public static boolean isHospitalOrChurch(int tile)
+	{
+		assert isZoneCenter(tile);
+		return (tile & LOMASK) >= HOSPITAL &&
+			(tile & LOMASK) < COMBASE;
+	}
+
+	public static boolean isIndustrialZone(int tile)
+	{
+		assert isZoneCenter(tile);
+		return (tile & LOMASK) >= INDBASE &&
+			(tile & LOMASK) < PORTBASE;
+	}
+
+	public static boolean isResidentialZone(int tile)
+	{
+		assert isZoneCenter(tile);
+		return (tile & LOMASK) < HOSPITAL;
+	}
+
+	public static boolean isSpecialZone(int tile)
+	{
+		assert isZoneCenter(tile);
+		return (tile & LOMASK) >= PORTBASE;
+	}
+
 	public static boolean isZoneCenter(int tile)
 	{
 		return tile >= 0 && (tile & ZONEBIT) != 0;
