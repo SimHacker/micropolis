@@ -253,16 +253,6 @@ public class ToolStroke
 		return true;
 	}
 
-	// checks whether the tile value represents road with traffic
-	// and if so converts it to the equivalent road without traffic.
-	static char neutralizeRoad(int tile)
-	{
-		tile &= LOMASK;
-		if (tile >= 64 && tile <= 207)
-			tile = (char)( (tile & 0xf) + 64 );
-		return (char)tile;
-	}
-
 	protected void fixZone(int xpos, int ypos)
 	{
 		ToolEffect eff = new ToolEffect(city, xpos, ypos);
