@@ -429,4 +429,17 @@ public class TileConstants
 	{
 		return tile >= 0 && (tile & ZONEBIT) != 0;
 	}
+
+	/**
+	 * Converts a road tile value with traffic to the equivalent
+	 * road tile without traffic.
+	 */
+	public static char neutralizeRoad(int tile)
+	{
+		tile &= LOMASK;
+		if (tile >= ROADBASE && tile <= LASTROAD) {
+			tile = ((tile - ROADBASE) & 0xf) + ROADBASE;
+		}
+		return (char)tile;
+	}
 }
