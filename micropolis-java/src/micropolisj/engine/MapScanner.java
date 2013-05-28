@@ -62,36 +62,33 @@ class MapScanner
 
 		cchr9 = (char) (cchr & LOMASK);
 
-		if (cchr9 >= FLOOD)
+		if (city.newPower && ((cchr & CONDBIT) != 0))
 		{
-			if (city.newPower && ((cchr & CONDBIT) != 0))
-			{
-				setZonePower();
-			}
+			setZonePower();
+		}
 
-			if (isRoad(cchr))
-			{
-				doRoad();
-				return;
-			}
+		if (isRoad(cchr))
+		{
+			doRoad();
+			return;
+		}
 
-			if (isZoneCenter(cchr))
-			{
-				doZone();
-				return;
-			}
+		if (isZoneCenter(cchr))
+		{
+			doZone();
+			return;
+		}
 
-			if (isRail(cchr))
-			{
-				doRail();
-				return;
-			}
+		if (isRail(cchr))
+		{
+			doRail();
+			return;
+		}
 
-			if (isTinyExplosion(cchr))
-			{
-				// clear AniRubble
-				city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
-			}
+		if (isTinyExplosion(cchr))
+		{
+			// clear AniRubble
+			city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
 		}
 	}
 
