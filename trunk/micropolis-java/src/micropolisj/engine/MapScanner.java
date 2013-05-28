@@ -122,7 +122,7 @@ class MapScanner
 				{
 					if (city.roadEffect < PRNG.nextInt(32))
 					{
-						if ((cchr & 15) < 2 || (cchr & 15) == 15)
+						if (isOverWater(cchr))
 							city.setTile(xpos, ypos, RIVER);
 						else
 							city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
@@ -256,7 +256,7 @@ class MapScanner
 			if (PRNG.nextInt(512) == 0) {
 				if ((cchr & CONDBIT) == 0) {
 					if (city.roadEffect < PRNG.nextInt(32)) {
-						if (cchr9 < RAILBASE+2) {
+						if (isOverWater(cchr)) {
 							city.setTile(xpos,ypos,RIVER);
 						} else {
 							city.setTile(xpos,ypos,(char)(RUBBLE + PRNG.nextInt(4)+BULLBIT));
