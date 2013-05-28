@@ -75,8 +75,7 @@ class Bulldozer extends ToolStroke
 		// check dozeable bit
 		assert isDozeable(tile);
 
-		tile = neutralizeRoad(tile);
-		if (isOverWater((char)tile))
+		if (isOverWater(tile))
 		{
 			// dozing over water, replace with water.
 			eff.setTile(0, 0, RIVER);

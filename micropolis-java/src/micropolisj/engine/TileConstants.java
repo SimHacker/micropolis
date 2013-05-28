@@ -76,9 +76,9 @@ public class TileConstants
 	public static final char INTERSECTION = 76;
 	public static final char HROADPOWER = 77;
 	public static final char VROADPOWER = 78;
-	public static final char BRWH = 79;
+	public static final char BRWH = 79;       //horz bridge, open
 	public static final char LTRFBASE = 80;
-	public static final char BRWV = 95;
+	public static final char BRWV = 95;       //vert bridge, open
 	public static final char HTRFBASE = 144;
 	public static final char LASTROAD = 206;
 	public static final char POWERBASE = 208;
@@ -309,9 +309,12 @@ public class TileConstants
 		return (tmp >= RADTILE && tmp < FIREBASE);
 	}
 
-	public static boolean isOverWater(char cell)
+	public static boolean isOverWater(int tile)
 	{
-		switch (cell & LOMASK)
+		// Note: BRWV will be converted to BRWH by the following
+		// function.
+		int tmp = neutralizeRoad(tile & LOMASK);
+		switch (tmp)
 		{
 		case HBRIDGE:
 		case VBRIDGE:
