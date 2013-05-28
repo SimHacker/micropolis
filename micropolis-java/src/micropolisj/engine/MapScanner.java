@@ -778,7 +778,7 @@ class MapScanner
 	{
 		city.comZoneCount++;
 
-		int tpop = city.commercialZonePop(cchr9);
+		int tpop = commercialZonePop(cchr);
 		city.comPop += tpop;
 
 		int trafficGood;
@@ -890,7 +890,7 @@ class MapScanner
 		city.indZoneCount++;
 		setSmoke(powerOn);
 
-		int tpop = city.industrialZonePop(cchr9);
+		int tpop = industrialZonePop(cchr);
 		city.indPop += tpop;
 
 		int trafficGood;
@@ -949,7 +949,7 @@ class MapScanner
 		}
 		else
 		{
-			tpop = city.residentialZonePop(cchr9);
+			tpop = residentialZonePop(cchr);
 		}
 
 		city.resPop += tpop;

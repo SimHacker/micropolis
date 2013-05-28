@@ -1508,32 +1508,6 @@ public class Micropolis
 		return count;
 	}
 
-	// counts the population in a certain type of residential zone
-	// a.k.a. RZPop
-	int residentialZonePop(char tile)
-	{
-		int czDen = ((tile - RZB) / 9) % 4;
-		return czDen * 8 + 16;
-	}
-
-	int commercialZonePop(int tile)
-	{
-		if (tile == COMCLR)
-			return 0;
-
-		int czDen = ((tile - CZB) / 9) % 5 + 1;
-		return czDen;
-	}
-
-	int industrialZonePop(int tile)
-	{
-		if (tile == INDCLR)
-			return 0;
-
-		int czDen = ((tile - IZB) / 9) % 4 + 1;
-		return czDen;
-	}
-
 	// called every several cycles; this takes the census data collected in this
 	// cycle and records it to the history
 	//
