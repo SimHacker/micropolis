@@ -833,7 +833,7 @@ class MapScanner
 	 */
 	void setSmoke(boolean powerOn)
 	{
-		int cchr9 = city.map[ypos][xpos] & LOMASK;
+		int cchr9 = cchr & LOMASK;
 
 		if (cchr9 < IZB)
 			return;
@@ -1116,7 +1116,7 @@ class MapScanner
 		if (z > 128)
 			return;
 
-		char cchr9 = (char)(city.map[ypos][xpos] & LOMASK);
+		int cchr9 = cchr & LOMASK;
 		if (cchr9 == FREEZ)
 		{
 			if (pop < 8)
