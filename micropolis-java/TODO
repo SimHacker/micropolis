@@ -15,9 +15,6 @@ On Game Load-
  *Evaluation data is not available.
  *cityTime may not match history.cityTime
 
-Mouse pointer-
- *Would be nice if tool dragging would help keep lines straight
-
 Disasters-
  *When running FAST or SUPER_FAST, automatically pause or slow down the
   simulation when a disaster occurs.
