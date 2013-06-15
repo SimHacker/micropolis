@@ -157,8 +157,13 @@ class StringsModel extends AbstractTableModel
 		for (String file : FILES)
 		{
 			Properties p = new Properties();
-			if (localeCode == null) {
-				p.load(getClass().getResourceAsStream("/micropolisj/"+file+".properties"));
+			{
+				// load strings from our jar file
+				String s = "/micropolisj/"+file+(localeCode != null ? "_"+localeCode : "") + ".properties";
+				InputStream in = getClass().getResourceAsStream(s);
+				if (in != null) {
+					p.load(in);
+				}
 			}
 			File f = getPFile(file, localeCode);
 			if (f.exists()) {
