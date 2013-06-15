@@ -46,10 +46,10 @@ public class NewCityDialog extends JDialog
 
 		mapPane = new OverlayMapView(engine);
 		mapPane.setBorder(BorderFactory.createLoweredBevelBorder());
-		p1.add(mapPane, BorderLayout.CENTER);
+		p1.add(mapPane, BorderLayout.WEST);
 
 		JPanel p2 = new JPanel(new BorderLayout());
-		p1.add(p2, BorderLayout.EAST);
+		p1.add(p2, BorderLayout.CENTER);
 
 		Box levelBox = new Box(BoxLayout.Y_AXIS);
 		levelBox.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
