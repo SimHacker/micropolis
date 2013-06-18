@@ -33,8 +33,14 @@
 		excludes="**/*.xcf **/Thumbs.db"
 		/>
 </copy>
+<native2ascii encoding="UTF-8" ext=".properties"
+	src="strings"
+	includes="**/*.utf8"
+	dest="${builddir}/micropolisj"
+	/>
+
 <copy todir="${builddir}/micropolisj">
-	<fileset dir="strings" />
+	<fileset dir="strings" excludes="**/*.utf8" />
 </copy>
 </target>
 
