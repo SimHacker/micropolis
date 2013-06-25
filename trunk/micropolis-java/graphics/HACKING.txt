@@ -1,0 +1,16 @@
+To build a new tiles.png file, do the following:
+
+1. Open a command-prompt, and cd to the graphics subdirectory.
+
+2. Compile the helper program by typing the following command:
+
+    javac MakeTiles.java
+
+3. Build the new tiles.png file by typing this command:
+
+    java MakeTiles tiles.dat tiles.png
+
+   (This will create tiles.png in the current directory.
+    Copying it into the ../resources/ directory and rebuilding
+    Micropolis using Ant is left as an exercise for the reader.)
+
