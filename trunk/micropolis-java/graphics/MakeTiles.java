@@ -48,13 +48,17 @@ public class MakeTiles
 					loadImage(ref.fileName));
 			}
 
+			Image sourceImg = loadedImages.get(ref.fileName);
+			int srcWidth = sourceImg.getWidth(null);
+			int srcHeight = sourceImg.getHeight(null);
+
 			gr.drawImage(
-				loadedImages.get(ref.fileName),
+				sourceImg,
 				0, TILE_SIZE*i,
 				TILE_SIZE, TILE_SIZE*(i+1),
 				ref.offsetX, ref.offsetY,
-				ref.offsetX + (ref.width != 0 ? ref.width : TILE_SIZE),
-				ref.offsetY + (ref.height != 0 ? ref.height : TILE_SIZE),
+				ref.offsetX + (ref.width != 0 ? ref.width : srcWidth),
+				ref.offsetY + (ref.height != 0 ? ref.height : srcHeight),
 				null);
 		}
 
@@ -77,6 +81,7 @@ public class MakeTiles
 		String [] parts = s.split("@", 2);
 		rv.fileName = parts[0];
 
+		if (parts.length >= 2) {
 		String offsetInfo = parts[1];
 		parts = offsetInfo.split(",");
 		if (parts.length >= 1) {
@@ -91,6 +96,8 @@ public class MakeTiles
 		if (parts.length >= 4) {
 			rv.height = Integer.parseInt(parts[3]);
 		}
+		}//endif something given after '@' in image specifier
+
 		return rv;
 	}
 
