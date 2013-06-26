@@ -20,17 +20,14 @@ Generating the composite image
 
 To build a new tiles.png file, do the following:
 
-1. Open a command-prompt, and cd to the graphics subdirectory.
+1. Open a command-prompt, and cd to the micropolis-java directory.
 
-2. Compile the helper program by typing the following command:
+2. Build Micropolis by typing the following command:
 
-    javac MakeTiles.java
+    ant
 
-3. Build the new tiles.png file by typing this command:
+3. The generated tiles.png file can be found in the build/ subdirectory.
 
-    java MakeTiles tiles.dat tiles.png
+4. Now you can run Micropolis with the new graphics. Type:
 
-   (This will create tiles.png in the current directory.
-    Copying it into the ../resources/ directory and rebuilding
-    Micropolis using Ant is left as an exercise for the reader.)
-
+    java -jar micropolisj.jar
