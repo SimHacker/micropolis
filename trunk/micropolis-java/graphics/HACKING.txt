@@ -1,3 +1,23 @@
+===============
+The Recipe File
+===============
+
+The `tiles.dat' file is the recipe file for generating the tiles.
+It is a plain-text file, where each line begins with a tile id,
+followed by an image specification.
+
+The image specification consists of one or more image layers separated
+by the pipe character (|). The layers are drawn in the order specified.
+
+A layer is a file name (excluding the .png extension), optionally followed
+by @X,Y,W,H, where X,Y specify the upper-left corner of the rectangle to
+draw, and W,H specify the width and height of the rectangle to draw.
+
+
+==============================
+Generating the composite image
+==============================
+
 To build a new tiles.png file, do the following:
 
 1. Open a command-prompt, and cd to the graphics subdirectory.
