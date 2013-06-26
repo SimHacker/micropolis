@@ -27,7 +27,7 @@ public class MakeTiles
 			if (l.startsWith("#")) {
 				continue;
 			}
-			String[] parts = l.split("\\s+");
+			String[] parts = l.split("\\s+", 2);
 			String tileName = parts[0];
 			String tileImage = parts[1];
 			tileData.put(tileName, tileImage);
@@ -89,7 +89,7 @@ public class MakeTiles
 	{
 		ImageSpec result = null;
 
-		for (String layerStr : chain.split("\\|")) {
+		for (String layerStr : chain.split("\\s*\\|")) {
 
 		ImageSpec rv = new ImageSpec();
 		rv.background = result;
