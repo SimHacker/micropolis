@@ -44,6 +44,14 @@
 </copy>
 </target>
 
+<target name="compose-tiles" depends="init-builddir,compile">
+<java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
+	fork="true" dir="graphics">
+	<arg file="graphics/tiles.dat" />
+	<arg file="${builddir}/tiles.png" />
+</java>
+</target>
+
 <target name="compile" depends="init-builddir">
 <javac srcdir="${srcdir}"
        destdir="${builddir}"
@@ -57,7 +65,7 @@
 </javac>
 </target>
 
-<target name="build" depends="copy-resources,compile">
+<target name="build" depends="copy-resources,compile,compose-tiles">
 <pathconvert property="runtime-classpath" pathsep=" " refid="build-classpath">
 <map from="${basedir}" to="." />
 </pathconvert>
