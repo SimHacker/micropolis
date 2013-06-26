@@ -1,3 +1,5 @@
+package micropolisj.build_tool;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;

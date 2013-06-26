@@ -62,7 +62,7 @@
 <map from="${basedir}" to="." />
 </pathconvert>
 
-<jar destfile="${distfile}" basedir="${builddir}">
+<jar destfile="${distfile}" basedir="${builddir}" excludes="/micropolisj/build_tool/**">
 	<manifest>
 		<attribute name="Main-Class" value="micropolisj.Main" />
 		<attribute name="Class-Path" value="${runtime-classpath}" />
