@@ -78,133 +78,133 @@
 77    roads@0,32,16,16  |roadwire@0,0,16,16
 78    roads@0,48,16,16  |roadwire@0,16,16,16
 79    roads@0,240,16,16
-80    roads@0,0,16,16  |traffic@16,0,16,16
-81    roads@0,16,16,16 |traffic@16,16,16,16
-82    roads@0,32,16,16 |traffic@16,0,16,16
-83    roads@0,48,16,16 |traffic@16,16,16,16
-84    roads@0,64,16,16 |traffic@16,64,16,16
-85    roads@0,80,16,16 |traffic@16,80,16,16
-86    roads@0,96,16,16 |traffic@16,96,16,16
-87    roads@0,112,16,16|traffic@16,112,16,16
-88    roads@0,128,16,16|traffic@16,0,16,16
-89    roads@0,144,16,16|traffic@16,16,16,16
-90    roads@0,160,16,16|traffic@16,0,16,16
-91    roads@0,176,16,16|traffic@16,16,16,16
-92    roads@0,192,16,16|traffic@16,192,16,16
-93    roads@0,32,16,16 |traffic@16,0,16,16  |roadwire@0,0,16,16
-94    roads@0,48,16,16 |traffic@16,16,16,16 |roadwire@0,16,16,16
+80    roads@0,0,16,16  |traffic@0,0,16,16
+81    roads@0,16,16,16 |traffic@0,16,16,16
+82    roads@0,32,16,16 |traffic@0,0,16,16
+83    roads@0,48,16,16 |traffic@0,16,16,16
+84    roads@0,64,16,16 |traffic@0,64,16,16
+85    roads@0,80,16,16 |traffic@0,80,16,16
+86    roads@0,96,16,16 |traffic@0,96,16,16
+87    roads@0,112,16,16|traffic@0,112,16,16
+88    roads@0,128,16,16|traffic@0,0,16,16
+89    roads@0,144,16,16|traffic@0,16,16,16
+90    roads@0,160,16,16|traffic@0,0,16,16
+91    roads@0,176,16,16|traffic@0,16,16,16
+92    roads@0,192,16,16|traffic@0,192,16,16
+93    roads@0,32,16,16 |traffic@0,0,16,16  |roadwire@0,0,16,16
+94    roads@0,48,16,16 |traffic@0,16,16,16 |roadwire@0,16,16,16
 95    roads@0,240,16,16
-96    roads@0,0,16,16  |traffic@32,0,16,16
-97    roads@0,16,16,16 |traffic@32,16,16,16
-98    roads@0,32,16,16 |traffic@32,0,16,16
-99    roads@0,48,16,16 |traffic@32,16,16,16
-100   roads@0,64,16,16 |traffic@32,64,16,16
-101   roads@0,80,16,16 |traffic@32,80,16,16
-102   roads@0,96,16,16 |traffic@32,96,16,16
-103   roads@0,112,16,16|traffic@32,112,16,16
-104   roads@0,128,16,16|traffic@32,0,16,16
-105   roads@0,144,16,16|traffic@32,16,16,16
-106   roads@0,160,16,16|traffic@32,0,16,16
-107   roads@0,176,16,16|traffic@32,16,16,16
-108   roads@0,192,16,16|traffic@32,192,16,16
-109   roads@0,32,16,16 |traffic@32,0,16,16  |roadwire@0,0,16,16
-110   roads@0,48,16,16 |traffic@32,16,16,16 |roadwire@0,16,16,16
+96    roads@0,0,16,16  |traffic@16,0,16,16
+97    roads@0,16,16,16 |traffic@16,16,16,16
+98    roads@0,32,16,16 |traffic@16,0,16,16
+99    roads@0,48,16,16 |traffic@16,16,16,16
+100   roads@0,64,16,16 |traffic@16,64,16,16
+101   roads@0,80,16,16 |traffic@16,80,16,16
+102   roads@0,96,16,16 |traffic@16,96,16,16
+103   roads@0,112,16,16|traffic@16,112,16,16
+104   roads@0,128,16,16|traffic@16,0,16,16
+105   roads@0,144,16,16|traffic@16,16,16,16
+106   roads@0,160,16,16|traffic@16,0,16,16
+107   roads@0,176,16,16|traffic@16,16,16,16
+108   roads@0,192,16,16|traffic@16,192,16,16
+109   roads@0,32,16,16 |traffic@16,0,16,16  |roadwire@0,0,16,16
+110   roads@0,48,16,16 |traffic@16,16,16,16 |roadwire@0,16,16,16
 111   roads@0,240,16,16
-112   roads@0,0,16,16  |traffic@48,0,16,16
-113   roads@0,16,16,16 |traffic@48,16,16,16
-114   roads@0,32,16,16 |traffic@48,0,16,16
-115   roads@0,48,16,16 |traffic@48,16,16,16
-116   roads@0,64,16,16 |traffic@48,64,16,16
-117   roads@0,80,16,16 |traffic@48,80,16,16
-118   roads@0,96,16,16 |traffic@48,96,16,16
-119   roads@0,112,16,16|traffic@48,112,16,16
-120   roads@0,128,16,16|traffic@48,0,16,16
-121   roads@0,144,16,16|traffic@48,16,16,16
-122   roads@0,160,16,16|traffic@48,0,16,16
-123   roads@0,176,16,16|traffic@48,16,16,16
-124   roads@0,192,16,16|traffic@48,192,16,16
-125   roads@0,32,16,16 |traffic@48,0,16,16  |roadwire@0,0,16,16
-126   roads@0,48,16,16 |traffic@48,16,16,16 |roadwire@0,16,16,16
+112   roads@0,0,16,16  |traffic@32,0,16,16
+113   roads@0,16,16,16 |traffic@32,16,16,16
+114   roads@0,32,16,16 |traffic@32,0,16,16
+115   roads@0,48,16,16 |traffic@32,16,16,16
+116   roads@0,64,16,16 |traffic@32,64,16,16
+117   roads@0,80,16,16 |traffic@32,80,16,16
+118   roads@0,96,16,16 |traffic@32,96,16,16
+119   roads@0,112,16,16|traffic@32,112,16,16
+120   roads@0,128,16,16|traffic@32,0,16,16
+121   roads@0,144,16,16|traffic@32,16,16,16
+122   roads@0,160,16,16|traffic@32,0,16,16
+123   roads@0,176,16,16|traffic@32,16,16,16
+124   roads@0,192,16,16|traffic@32,192,16,16
+125   roads@0,32,16,16 |traffic@32,0,16,16  |roadwire@0,0,16,16
+126   roads@0,48,16,16 |traffic@32,16,16,16 |roadwire@0,16,16,16
 127   roads@0,240,16,16
-128   roads@0,0,16,16  |traffic@64,0,16,16
-129   roads@0,16,16,16 |traffic@64,16,16,16
-130   roads@0,32,16,16 |traffic@64,0,16,16
-131   roads@0,48,16,16 |traffic@64,16,16,16
-132   roads@0,64,16,16 |traffic@64,64,16,16
-133   roads@0,80,16,16 |traffic@64,80,16,16
-134   roads@0,96,16,16 |traffic@64,96,16,16
-135   roads@0,112,16,16|traffic@64,112,16,16
-136   roads@0,128,16,16|traffic@64,0,16,16
-137   roads@0,144,16,16|traffic@64,16,16,16
-138   roads@0,160,16,16|traffic@64,0,16,16
-139   roads@0,176,16,16|traffic@64,16,16,16
-140   roads@0,192,16,16|traffic@64,192,16,16
-141   roads@0,32,16,16 |traffic@64,0,16,16  |roadwire@0,0,16,16
-142   roads@0,48,16,16 |traffic@64,16,16,16 |roadwire@0,16,16,16
+128   roads@0,0,16,16  |traffic@48,0,16,16
+129   roads@0,16,16,16 |traffic@48,16,16,16
+130   roads@0,32,16,16 |traffic@48,0,16,16
+131   roads@0,48,16,16 |traffic@48,16,16,16
+132   roads@0,64,16,16 |traffic@48,64,16,16
+133   roads@0,80,16,16 |traffic@48,80,16,16
+134   roads@0,96,16,16 |traffic@48,96,16,16
+135   roads@0,112,16,16|traffic@48,112,16,16
+136   roads@0,128,16,16|traffic@48,0,16,16
+137   roads@0,144,16,16|traffic@48,16,16,16
+138   roads@0,160,16,16|traffic@48,0,16,16
+139   roads@0,176,16,16|traffic@48,16,16,16
+140   roads@0,192,16,16|traffic@48,192,16,16
+141   roads@0,32,16,16 |traffic@48,0,16,16  |roadwire@0,0,16,16
+142   roads@0,48,16,16 |traffic@48,16,16,16 |roadwire@0,16,16,16
 143   roads@0,240,16,16
-144   roads@0,0,16,16  |traffic@80,0,16,16
-145   roads@0,16,16,16 |traffic@80,16,16,16
-146   roads@0,32,16,16 |traffic@80,0,16,16
-147   roads@0,48,16,16 |traffic@80,16,16,16
-148   roads@0,64,16,16 |traffic@80,64,16,16
-149   roads@0,80,16,16 |traffic@80,80,16,16
-150   roads@0,96,16,16 |traffic@80,96,16,16
-151   roads@0,112,16,16|traffic@80,112,16,16
-152   roads@0,128,16,16|traffic@80,0,16,16
-153   roads@0,144,16,16|traffic@80,16,16,16
-154   roads@0,160,16,16|traffic@80,0,16,16
-155   roads@0,176,16,16|traffic@80,16,16,16
-156   roads@0,192,16,16|traffic@80,192,16,16
-157   roads@0,32,16,16 |traffic@80,0,16,16  |roadwire@0,0,16,16
-158   roads@0,48,16,16 |traffic@80,16,16,16 |roadwire@0,16,16,16
+144   roads@0,0,16,16  |traffic@64,0,16,16
+145   roads@0,16,16,16 |traffic@64,16,16,16
+146   roads@0,32,16,16 |traffic@64,0,16,16
+147   roads@0,48,16,16 |traffic@64,16,16,16
+148   roads@0,64,16,16 |traffic@64,64,16,16
+149   roads@0,80,16,16 |traffic@64,80,16,16
+150   roads@0,96,16,16 |traffic@64,96,16,16
+151   roads@0,112,16,16|traffic@64,112,16,16
+152   roads@0,128,16,16|traffic@64,0,16,16
+153   roads@0,144,16,16|traffic@64,16,16,16
+154   roads@0,160,16,16|traffic@64,0,16,16
+155   roads@0,176,16,16|traffic@64,16,16,16
+156   roads@0,192,16,16|traffic@64,192,16,16
+157   roads@0,32,16,16 |traffic@64,0,16,16  |roadwire@0,0,16,16
+158   roads@0,48,16,16 |traffic@64,16,16,16 |roadwire@0,16,16,16
 159   roads@0,240,16,16
-160   roads@0,0,16,16  |traffic@96,0,16,16
-161   roads@0,16,16,16 |traffic@96,16,16,16
-162   roads@0,32,16,16 |traffic@96,0,16,16
-163   roads@0,48,16,16 |traffic@96,16,16,16
-164   roads@0,64,16,16 |traffic@96,64,16,16
-165   roads@0,80,16,16 |traffic@96,80,16,16
-166   roads@0,96,16,16 |traffic@96,96,16,16
-167   roads@0,112,16,16|traffic@96,112,16,16
-168   roads@0,128,16,16|traffic@96,0,16,16
-169   roads@0,144,16,16|traffic@96,16,16,16
-170   roads@0,160,16,16|traffic@96,0,16,16
-171   roads@0,176,16,16|traffic@96,16,16,16
-172   roads@0,192,16,16|traffic@96,192,16,16
-173   roads@0,32,16,16 |traffic@96,0,16,16  |roadwire@0,0,16,16
-174   roads@0,48,16,16 |traffic@96,16,16,16 |roadwire@0,16,16,16
+160   roads@0,0,16,16  |traffic@80,0,16,16
+161   roads@0,16,16,16 |traffic@80,16,16,16
+162   roads@0,32,16,16 |traffic@80,0,16,16
+163   roads@0,48,16,16 |traffic@80,16,16,16
+164   roads@0,64,16,16 |traffic@80,64,16,16
+165   roads@0,80,16,16 |traffic@80,80,16,16
+166   roads@0,96,16,16 |traffic@80,96,16,16
+167   roads@0,112,16,16|traffic@80,112,16,16
+168   roads@0,128,16,16|traffic@80,0,16,16
+169   roads@0,144,16,16|traffic@80,16,16,16
+170   roads@0,160,16,16|traffic@80,0,16,16
+171   roads@0,176,16,16|traffic@80,16,16,16
+172   roads@0,192,16,16|traffic@80,192,16,16
+173   roads@0,32,16,16 |traffic@80,0,16,16  |roadwire@0,0,16,16
+174   roads@0,48,16,16 |traffic@80,16,16,16 |roadwire@0,16,16,16
 175   roads@0,240,16,16
-176   roads@0,0,16,16  |traffic@112,0,16,16
-177   roads@0,16,16,16 |traffic@112,16,16,16
-178   roads@0,32,16,16 |traffic@112,0,16,16
-179   roads@0,48,16,16 |traffic@112,16,16,16
-180   roads@0,64,16,16 |traffic@112,64,16,16
-181   roads@0,80,16,16 |traffic@112,80,16,16
-182   roads@0,96,16,16 |traffic@112,96,16,16
-183   roads@0,112,16,16|traffic@112,112,16,16
-184   roads@0,128,16,16|traffic@112,0,16,16
-185   roads@0,144,16,16|traffic@112,16,16,16
-186   roads@0,160,16,16|traffic@112,0,16,16
-187   roads@0,176,16,16|traffic@112,16,16,16
-188   roads@0,192,16,16|traffic@112,192,16,16
-189   roads@0,32,16,16 |traffic@112,0,16,16  |roadwire@0,0,16,16
-190   roads@0,48,16,16 |traffic@112,16,16,16 |roadwire@0,16,16,16
+176   roads@0,0,16,16  |traffic@96,0,16,16
+177   roads@0,16,16,16 |traffic@96,16,16,16
+178   roads@0,32,16,16 |traffic@96,0,16,16
+179   roads@0,48,16,16 |traffic@96,16,16,16
+180   roads@0,64,16,16 |traffic@96,64,16,16
+181   roads@0,80,16,16 |traffic@96,80,16,16
+182   roads@0,96,16,16 |traffic@96,96,16,16
+183   roads@0,112,16,16|traffic@96,112,16,16
+184   roads@0,128,16,16|traffic@96,0,16,16
+185   roads@0,144,16,16|traffic@96,16,16,16
+186   roads@0,160,16,16|traffic@96,0,16,16
+187   roads@0,176,16,16|traffic@96,16,16,16
+188   roads@0,192,16,16|traffic@96,192,16,16
+189   roads@0,32,16,16 |traffic@96,0,16,16  |roadwire@0,0,16,16
+190   roads@0,48,16,16 |traffic@96,16,16,16 |roadwire@0,16,16,16
 191   roads@0,240,16,16
-192   roads@0,0,16,16  |traffic@128,0,16,16
-193   roads@0,16,16,16 |traffic@128,16,16,16
-194   roads@0,32,16,16 |traffic@128,0,16,16
-195   roads@0,48,16,16 |traffic@128,16,16,16
-196   roads@0,64,16,16 |traffic@128,64,16,16
-197   roads@0,80,16,16 |traffic@128,80,16,16
-198   roads@0,96,16,16 |traffic@128,96,16,16
-199   roads@0,112,16,16|traffic@128,112,16,16
-200   roads@0,128,16,16|traffic@128,0,16,16
-201   roads@0,144,16,16|traffic@128,16,16,16
-202   roads@0,160,16,16|traffic@128,0,16,16
-203   roads@0,176,16,16|traffic@128,16,16,16
-204   roads@0,192,16,16|traffic@128,192,16,16
-205   roads@0,32,16,16 |traffic@128,0,16,16  |roadwire@0,0,16,16
-206   roads@0,48,16,16 |traffic@128,16,16,16 |roadwire@0,16,16,16
+192   roads@0,0,16,16  |traffic@112,0,16,16
+193   roads@0,16,16,16 |traffic@112,16,16,16
+194   roads@0,32,16,16 |traffic@112,0,16,16
+195   roads@0,48,16,16 |traffic@112,16,16,16
+196   roads@0,64,16,16 |traffic@112,64,16,16
+197   roads@0,80,16,16 |traffic@112,80,16,16
+198   roads@0,96,16,16 |traffic@112,96,16,16
+199   roads@0,112,16,16|traffic@112,112,16,16
+200   roads@0,128,16,16|traffic@112,0,16,16
+201   roads@0,144,16,16|traffic@112,16,16,16
+202   roads@0,160,16,16|traffic@112,0,16,16
+203   roads@0,176,16,16|traffic@112,16,16,16
+204   roads@0,192,16,16|traffic@112,192,16,16
+205   roads@0,32,16,16 |traffic@112,0,16,16  |roadwire@0,0,16,16
+206   roads@0,48,16,16 |traffic@112,16,16,16 |roadwire@0,16,16,16
 207   roads@0,240,16,16
 208   wires@0,0,16,16
 209   wires@0,16,16,16
