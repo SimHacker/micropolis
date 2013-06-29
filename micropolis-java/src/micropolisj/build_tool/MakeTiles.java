@@ -3,6 +3,7 @@ package micropolisj.build_tool;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import javax.imageio.*;
 import javax.swing.ImageIcon;
@@ -12,6 +13,7 @@ public class MakeTiles
 	static HashMap<String,String> tileData = new HashMap<String,String>();
 	static HashMap<String,Image> loadedImages = new HashMap<String,Image>();
 
+	static final Charset UTF8 = Charset.forName("UTF-8");
 	static final int NTILES = 960;
 	static final int TILE_SIZE = 16;
 
@@ -21,27 +23,19 @@ public class MakeTiles
 		File recipeFile = new File(args[0]);
 		File outputFile = new File(args[1]);
 
-		BufferedReader in = new BufferedReader(
-			new FileReader(recipeFile));
-		String l;
-		while ( (l=in.readLine()) != null )
-		{
-			if (l.startsWith("#")) {
-				continue;
-			}
-			String[] parts = l.split("\\s+", 2);
-			String tileName = parts[0];
-			String tileImage = parts[1];
-			tileData.put(tileName, tileImage);
-		}
-		in.close();
+		Properties recipe = new Properties();
+		recipe.load(
+			new InputStreamReader(
+				new FileInputStream(recipeFile),
+				UTF8
+			));
 
 		// actually assemble the image
 		BufferedImage buf = new BufferedImage(TILE_SIZE,TILE_SIZE*NTILES,BufferedImage.TYPE_INT_RGB);
 		Graphics2D gr = buf.createGraphics();
 
 		for (int i = 0; i < NTILES; i++) {
-			String tileImage = tileData.get(Integer.toString(i));
+			String tileImage = recipe.getProperty(Integer.toString(i));
 			assert tileImage != null;
 
 			ImageSpec ref = parseImageSpec(tileImage);
