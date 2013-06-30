@@ -1,0 +1,140 @@
+!! This file is part of MicropolisJ.
+!! Copyright (C) 2013 Jason Long
+!! Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+!!
+!! MicropolisJ is free software; you can redistribute it and/or modify
+!! it under the terms of the GNU GPLv3, with additional terms.
+!! See the README file, included in this distribution, for details.
+
+!! French - France Translation by Benoît Gross June 2013
+
+NEED_RES             = Il faut plus de zones résidentielles.
+NEED_COM             = Il faut plus de zones commerciales.
+NEED_IND             = Il faut plus de zones industrielles.
+NEED_ROADS           = La ville a besoin de routes.
+NEED_RAILS           = Le réseau ferroviaire est inadapté.
+NEED_POWER           = Construisez une centrale électrique.
+NEED_STADIUM         = Les habitants demandent un stade.
+NEED_SEAPORT         = L'industrie a besoin d'un port maritime.
+NEED_AIRPORT         = Le commerce a besoin d'un aéroport.
+HIGH_POLLUTION       = Pollution très élevée.
+HIGH_CRIME           = Criminalité très élevée.
+HIGH_TRAFFIC         = Des difficultés de circulation sont fréquemment reportées.
+NEED_FIRESTATION     = Les citoyens demandent une caserne de pompiers.
+NEED_POLICE          = Les citoyens demandent un poste de police.
+BLACKOUTS            = Pannes de courant reportées. Vérifier la carte énergétique.
+HIGH_TAXES           = Les citoyens sont furieux. L'impôt est beaucoup trop élevé.
+ROADS_NEED_FUNDING   = Les routes s'abîment, à cause du manque d'investissements.
+FIRE_NEED_FUNDING    = Les casernes de pompiers ont besoin de financements.
+POLICE_NEED_FUNDING  = Les postes de police ont besoin de financements.
+FIRE_REPORT          = Incendie reporté !
+MONSTER_REPORT       = Un monstre a été aperçu !!
+TORNADO_REPORT       = Une tornade a été reportée !!
+EARTHQUAKE_REPORT    = Un violent tremblement de terre a été reporté !!
+PLANECRASH_REPORT    = Un avion s'est écrasé !
+SHIPWRECK_REPORT     = Naufrage reporté !
+TRAIN_CRASH_REPORT   = Un train a déraillé !
+COPTER_CRASH_REPORT  = Un hélicoptère s'est écrasé !
+HIGH_UNEMPLOYMENT    = Le taux de chômage est élevé.
+OUT_OF_FUNDS_REPORT  = VOTRE VILLE A FAIT FAILLITE!
+FIREBOMBING_REPORT   = Bombardement reporté !
+NEED_PARKS           = La ville a besoin de parcs.
+EXPLOSION_REPORT     = Explosion détectée !
+INSUFFICIENT_FUNDS   = Pas assez de fonds pour construire cela.
+BULLDOZE_FIRST       = La zone doit être nettoyée avant de construire.
+POP_2K_REACHED       = La population a atteint les 2 000 habitants.
+POP_10K_REACHED      = La population a atteint les 10 000 habitants.
+POP_50K_REACHED      = La population a atteint les 50 000 habitants.
+POP_100K_REACHED     = La population a atteint les 100 000 habitants.
+POP_500K_REACHED     = La population a atteint les 500 000 habitants.
+BROWNOUTS_REPORT     = Chutes de tension, construisez une autre centrale électrique.
+HEAVY_TRAFFIC_REPORT = Trafic dense reporté.
+FLOOD_REPORT         = Inondation reportée !!
+MELTDOWN_REPORT      = Une catastrophe nucléaire s'est déclarée !!!
+RIOTING_REPORT       = Il y a des émeutes dans les rues !!
+
+NO_NUCLEAR_PLANTS    = Aucune catastrophe nucléaire possible. Construisez d'abord une central nucléaire.
+
+HIGH_POLLUTION.title       = ALERTE À LA POLLUTION!
+HIGH_POLLUTION.color = #ff4f4f
+HIGH_POLLUTION.detail = La pollution dans votre ville a dépassé le seuil maximal tolérable établi par l'Agence Micropolienne de l'Environnement.  Vous risquez de graves conséquences sur le plan écologique.<br><br>Faites le ménage ou ouvrez une concession de masques à gaz à l'hôtel de ville.
+
+HIGH_CRIME.title           = ALERTE SUR LA CRIMINALITÉ!
+HIGH_CRIME.color = #ff4f4f
+HIGH_CRIME.detail = La criminalité est hors de contrôle dans votre ville.  Des vandales pillent et vandalisent le centre-ville.  Le président de la république va bientôt envoyer l'armée si vous n'agissez pas rapidement.
+
+HIGH_TRAFFIC.title         = ALERTE SUR LA CIRCULATION!
+HIGH_TRAFFIC.color = #ff4f4f
+HIGH_TRAFFIC.detail = La circulation dans la ville est catastrophique.  Les embouteillages se répandent dans la ville.  Les habitants des banlieues commencent à manifester.<br><br>Construisez plus de routes ou de voies ferrées, ou bien prenez un gilet pare-balle.
+
+FIRE_REPORT.title          = INCENDIE REPORTÉ!
+FIRE_REPORT.color = #ff4f4f
+FIRE_REPORT.detail = Un incendie a été reporté!
+
+MONSTER_REPORT.title       = ATTAQUE DE MONSTRE!
+MONSTER_REPORT.color = #ff4f4f
+MONSTER_REPORT.detail = Un gigantesque monstre reptilien a été aperçu des les eaux environnantes.  Il semble attiré par les zones très polluées.  Il ne laisse que destruction et désolation derrière lui.<br>Tout ce que vous pouvez faire c'est attendre et reconstruire sur les gravas.
+
+TORNADO_REPORT.title       = ALERTE À LA TORNADE!
+TORNADO_REPORT.color = #ff4f4f
+TORNADO_REPORT.detail = Une tornade a été reportée!  Vous ne pouvez rien faire pour la stopper, du coup préparez vous au nettoyage après la tempête!
+
+EARTHQUAKE_REPORT.title    = TREMBLEMENT DE TERRE!
+EARTHQUAKE_REPORT.color = #ff4f4f
+EARTHQUAKE_REPORT.detail = Un effroyable tremblement de terre a eu lieu!  Éteignez les incendies le plus vite possible avant qu'ils ne se répandent, puis réparez les lignes électrique et reconstruisez la ville.
+
+PLANECRASH_REPORT.title    = CRASH D'UN AVION!
+PLANECRASH_REPORT.color = #ff4f4f
+PLANECRASH_REPORT.detail = Un avion s'est écrasé!
+
+SHIPWRECK_REPORT.title     = NAUFRAGE!
+SHIPWRECK_REPORT.color = #ff4f4f
+SHIPWRECK_REPORT.detail = Un navire s'est échoué!
+
+TRAIN_CRASH_REPORT.title   = ACCIDENT DE TRAIN!
+TRAIN_CRASH_REPORT.color = #ff4f4f
+TRAIN_CRASH_REPORT.detail = Un train a déraillé!
+
+COPTER_CRASH_REPORT.title  = CRASH D'HÉLICOPTÈRE!
+COPTER_CRASH_REPORT.color = #ff4f4f
+COPTER_CRASH_REPORT.detail = Un hélicoptère s'est écrasé!
+
+FIREBOMBING_REPORT.title   = BOMBARDEMENT REPORTÉ!
+FIREBOMBING_REPORT.color = #ff4f4f
+FIREBOMBING_REPORT.detail = Des bombes incendiaires tombent sur la ville!!
+
+POP_2K_REACHED.title       = COMMUNE
+POP_2K_REACHED.color = #7fff7f
+POP_2K_REACHED.detail = Félicitations, votre village a atteint le statut de commune.  Vous avez 2 000 citoyens.
+
+POP_10K_REACHED.title      = VILLE
+POP_10K_REACHED.color = #7fff7f
+POP_10K_REACHED.detail = Votre commune a évoluée en véritable ville avec une population actuelle de 10 000 habitants.  Continuez!
+
+POP_50K_REACHED.title      = CAPITALE
+POP_50K_REACHED.color = #7fff7f
+POP_50K_REACHED.detail = Votre ville est devenue une capitale.  La population actuelle est de 50 000 habitants.  Votre carrière politique semble assurée.
+
+POP_100K_REACHED.title     = MÉTROPOLE
+POP_100K_REACHED.color     = #7fff7f
+POP_100K_REACHED.detail = Votre capitale a désormais le statut de métropole.  La population actuelle est de 100 000 habitants.  Avec votre compétences en matière de gestion, vous pouvez sérieusement prétendre à devenir député.
+
+POP_500K_REACHED.title     = MÉGALOPOLE
+POP_500K_REACHED.color     = #7fff7f
+POP_500K_REACHED.detail = Félicitations, vous avez atteint le stade urbain le plus élevé, la mégapole.
+
+HEAVY_TRAFFIC_REPORT.title = EMBOUTEILLAGES!
+HEAVY_TRAFFIC_REPORT.color = #ff4f4f
+HEAVY_TRAFFIC_REPORT.detail = Hélicoptère Un<br>Rapporte trafic élevé!
+
+FLOOD_REPORT.title         = INONDATION REPORTÉ!
+FLOOD_REPORT.color         = #ff4f4f
+FLOOD_REPORT.detail        = Une inondation a été reportée le long des berges!
+
+MELTDOWN_REPORT.title      = CATASTROPHE NUCLÉAIRE!
+MELTDOWN_REPORT.color      = #ff4f4f
+MELTDOWN_REPORT.detail = Une catastrophe nucléaire a eu lieu dans votre centrale atomique. Il vous est conseillé de ne pas approcher la zone contaminée avant la disparition de la radioactivité.<br><br>Beaucoup de génération feront face à ce problème, donc un conseil, ne retenez pas votre souffle.
+
+RIOTING_REPORT.title       = MANIFESTATIONS!
+RIOTING_REPORT.color       = #ff4f4f
+RIOTING_REPORT.detail = Les citoyens manifestent dans les rues, montant sur les voitures, brulant les maisons, et explosant les bâtiments publics et les bureaux!<br><br>Les médias s'emparent du sujet et les mouvements extrémistes gagnent du terrain.
