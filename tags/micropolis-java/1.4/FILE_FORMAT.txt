@@ -1,0 +1,10 @@
+Save files have the following format:
+
+Offset 0x0000 : History of residential levels (240 16-bit integers)
+       0x01E0 : History of commericial levels
+       0x03C0 : History of industrial levels
+       0x05A0 : History of crime levels
+       0x0780 : History of pollution levels
+       0x0960 : History of cash flow
+       0x0B40 : Miscellaneous values
+       0x0C30 : Map data (by columns, west to east)

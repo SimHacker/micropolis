@@ -1,0 +1,319 @@
+!! This file is part of MicropolisJ.
+!! Copyright (C) 2013 Jason Long
+!! Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+!!
+!! MicropolisJ is free software; you can redistribute it and/or modify
+!! it under the terms of the GNU GPLv3, with additional terms.
+!! See the README file, included in this distribution, for details.
+
+!
+! Main window
+!
+
+
+!! French - France Translation by Benoît Gross June 2013
+
+PRODUCT = MicropolisJ
+main.save_query = Voulez-vous sauvegarder la ville?
+main.date_label = Date:
+main.funds_label = Fonds:
+main.population_label = Population:
+main.error_caption = Erreur
+main.error_unexpected = Une erreur inattendue est survenue
+main.error_show_stacktrace = Voir les détails
+main.error_close = Abandonner
+main.error_shutdown = Quitter
+error.shutdown_query = Voulez-vous vraiment quitter? Votre ville ne sera pas sauvegardée.
+main.tools_caption = Outils
+main.about_caption = À propos de MicropolisJ
+main.version_string = Version {0} (Java %java.version%, %java.vendor%)
+main.caption_unnamed_city = MicropolisJ
+main.caption_named_city = {0} - MicropolisJ
+main.about_text = <html>\
+	<p>Copyright 2013 Jason Long<br>\
+	<p>Traduction Française: Benoît Gross<br>\
+	Portions Copyright 1989-2007 Electronic Arts Inc.</p>\
+	<p>Ceci est un logiciel libre; vous pouvez le redistribuer/modifier <br>\
+	sous les termes de la licence GNU GPLv3; voir le fichier README pour plus de détails.</p>\
+	<p>Il n'y a aucune garantie, dans la mesure permise par la loi.</p>\
+	<p>Pour le code source, visitez http://code.google.com/p/micropolis/.</p>\
+	</html>
+cty_file = Fichier CTY
+funds = ${0,number,integer}
+citytime = {0,date,MMM yyyy}
+
+!
+! Welcome screen
+!
+welcome.caption = Bienvenue à MicropolisJ
+welcome.previous_map = Carte précédente
+welcome.next_map = Carte suivante
+welcome.play_this_map = Jouer avec cette carte
+welcome.load_city = Charger une ville
+welcome.cancel = Annuler
+welcome.quit = Quitter
+
+!
+! Menus
+!
+menu.zones = Zones
+menu.zones.ALL = Toutes
+menu.zones.RESIDENTIAL = Résidentielle
+menu.zones.COMMERCIAL = Commerciale
+menu.zones.INDUSTRIAL = Industrielle
+menu.zones.TRANSPORT = Transports
+menu.overlays = Calques
+menu.overlays.POPDEN_OVERLAY = Densité de population
+menu.overlays.GROWTHRATE_OVERLAY = Taux de croissance
+menu.overlays.LANDVALUE_OVERLAY = Valeur du terrain
+menu.overlays.CRIME_OVERLAY = Taux de criminalité
+menu.overlays.POLLUTE_OVERLAY = Pollution
+menu.overlays.TRAFFIC_OVERLAY = Densité du trafic
+menu.overlays.POWER_OVERLAY = Carte énergétique
+menu.overlays.FIRE_OVERLAY = Couverture incendie
+menu.overlays.POLICE_OVERLAY = Couverture policière
+
+menu.game = Jeu
+menu.game.new = Nouvelle ville...
+menu.game.load = Charger une ville...
+menu.game.save = Sauvegarder la ville
+menu.game.save_as = Sauvegarder la ville sous...
+menu.game.exit = Quitter
+
+menu.options = Options
+menu.options.auto_budget = Budget automatique
+menu.options.auto_bulldoze = Bulldozer automatique
+menu.options.disasters = Désastres
+menu.options.sound = Son
+
+menu.difficulty = Difficulté
+menu.difficulty.0 = Facile
+menu.difficulty.1 = Moyenne
+menu.difficulty.2 = Difficile
+
+menu.disasters = Désastres
+menu.disasters.MONSTER = Monstre
+menu.disasters.FIRE = Incendie
+menu.disasters.FLOOD = Inondation
+menu.disasters.MELTDOWN = Catastrophe nucléaire
+menu.disasters.TORNADO = Tornade
+menu.disasters.EARTHQUAKE = Tremblement de terre
+
+menu.speed = Vitesse
+menu.speed.SUPER_FAST = Super rapide
+menu.speed.FAST = Rapide
+menu.speed.NORMAL = Normale
+menu.speed.SLOW = Lente
+menu.speed.PAUSED = Pause
+
+menu.windows = Fenêtres
+menu.windows.budget = Budget
+menu.windows.evaluation = Évaluation
+menu.windows.graph = Graphiques
+
+menu.help = Aide
+menu.help.launch-translation-tool = Lancer l'outil de traduction
+menu.help.about = À propos
+
+!
+! Tools
+!
+tool.BULLDOZER.name            = BULLDOZER
+tool.BULLDOZER.icon            = /icdozr.png
+tool.BULLDOZER.selected_icon   = /icdozrhi.png
+tool.BULLDOZER.tip             = Bulldozer
+tool.WIRE.name                 = LIGNE
+tool.WIRE.icon                 = /icwire.png
+tool.WIRE.selected_icon        = /icwirehi.png
+tool.WIRE.tip                  = Construire des lignes électriques
+tool.PARK.name                 = PARC
+tool.PARK.icon                 = /icpark.png
+tool.PARK.selected_icon        = /icparkhi.png
+tool.PARK.tip                  = Construire des parcs
+tool.ROADS.name                = ROUTE
+tool.ROADS.icon                = /icroad.png
+tool.ROADS.selected_icon       = /icroadhi.png
+tool.ROADS.tip                 = Construire des routes
+tool.RAIL.name                 = RAIL
+tool.RAIL.icon                 = /icrail.png
+tool.RAIL.selected_icon        = /icrailhi.png
+tool.RAIL.tip                  = Construire des voies
+tool.RESIDENTIAL.name          = RÉSIDENCE
+tool.RESIDENTIAL.icon          = /icres.png
+tool.RESIDENTIAL.selected_icon = /icreshi.png
+tool.RESIDENTIAL.tip           = Zone Résidentielle
+tool.COMMERCIAL.name           = COMMERCE
+tool.COMMERCIAL.icon           = /iccom.png
+tool.COMMERCIAL.selected_icon  = /iccomhi.png
+tool.COMMERCIAL.tip            = Zone Commerciale
+tool.INDUSTRIAL.name           = INDUSTRIE
+tool.INDUSTRIAL.icon           = /icind.png
+tool.INDUSTRIAL.selected_icon  = /icindhi.png
+tool.INDUSTRIAL.tip            = Zone Industrielle
+tool.FIRE.name                 = CASERNE
+tool.FIRE.icon                 = /icfire.png
+tool.FIRE.selected_icon        = /icfirehi.png
+tool.FIRE.tip                  = Construire une caserne de pompiers
+tool.POLICE.name               = POSTE
+tool.POLICE.icon               = /icpol.png
+tool.POLICE.selected_icon      = /icpolhi.png
+tool.POLICE.tip                = Construire un poste de police
+tool.POWERPLANT.name           = CENTRALE AU CHARBON
+tool.POWERPLANT.icon           = /iccoal.png
+tool.POWERPLANT.selected_icon  = /iccoalhi.png
+tool.POWERPLANT.tip            = Construire une centrale électrique au charbon
+tool.NUCLEAR.name              = CENTRALE NUCLÉAIRE
+tool.NUCLEAR.icon              = /icnuc.png
+tool.NUCLEAR.selected_icon     = /icnuchi.png
+tool.NUCLEAR.tip               = Construire une centrale nucléaire
+tool.STADIUM.name              = STADE
+tool.STADIUM.icon              = /icstad.png
+tool.STADIUM.selected_icon     = /icstadhi.png
+tool.STADIUM.tip               = Construire un stade
+tool.SEAPORT.name              = PORT MARITIME
+tool.SEAPORT.icon              = /icseap.png
+tool.SEAPORT.selected_icon     = /icseaphi.png
+tool.SEAPORT.tip               = Construire un port maritime
+tool.AIRPORT.name              = AÉROPORT
+tool.AIRPORT.icon              = /icairp.png
+tool.AIRPORT.selected_icon     = /icairphi.png
+tool.AIRPORT.tip               = Construire aéroport
+tool.QUERY.name                = INFORMATION
+tool.QUERY.icon                = /icqry.png
+tool.QUERY.selected_icon       = /icqryhi.png
+tool.QUERY.tip                 = Afficher les informations sur la zone
+
+tool.BULLDOZER.border          = #bf7900
+tool.WIRE.border               = #ffff00
+tool.ROADS.border              = #5d5d5d
+tool.RAIL.border               = #5d5d5d
+tool.RESIDENTIAL.border        = #00ff00
+tool.COMMERCIAL.border         = #0000ff
+tool.INDUSTRIAL.border         = #ffff00
+tool.FIRE.border               = #ff0000
+tool.POLICE.border             = #0000ff
+tool.STADIUM.border            = #00ff00
+tool.PARK.border               = #bf7900
+tool.SEAPORT.border            = #0000ff
+tool.POWERPLANT.border         = #ffff00
+tool.NUCLEAR.border            = #ffff00
+tool.AIRPORT.border            = #bf7900
+
+tool.BULLDOZER.bgcolor         = rgba(0,0,0,0)
+tool.WIRE.bgcolor              = rgba(0,0,0,0.375)
+tool.ROADS.bgcolor             = rgba(255,255,255,0.375)
+tool.RAIL.bgcolor              = rgba(127,127,0,0.375)
+tool.RESIDENTIAL.bgcolor       = rgba(0,255,0,0.375)
+tool.COMMERCIAL.bgcolor        = rgba(0,0,255,0.375)
+tool.INDUSTRIAL.bgcolor        = rgba(255,255,0,0.375)
+tool.FIRE.bgcolor              = rgba(0,255,0,0.375)
+tool.POLICE.bgcolor            = rgba(0,255,0,0.375)
+tool.POWERPLANT.bgcolor        = rgba(93,93,93,0.375)
+tool.NUCLEAR.bgcolor           = rgba(93,93,93,0.375)
+tool.STADIUM.bgcolor           = rgba(93,93,93,0.375)
+tool.SEAPORT.bgcolor           = rgba(93,93,93,0.375)
+tool.AIRPORT.bgcolor           = rgba(93,93,93,0.375)
+tool.PARK.bgcolor              = rgba(0,255,0,0.375)
+
+!
+! The Graphs pane (accessible through Window -> Graphs)
+!
+dismiss_graph = Fermer
+ten_years = 10 ANS
+onetwenty_years = 120 ANS
+
+graph_button.RESPOP = grres.png
+graph_button.COMPOP = grcom.png
+graph_button.INDPOP = grind.png
+graph_button.MONEY = grmony.png
+graph_button.CRIME = grcrim.png
+graph_button.POLLUTION = grpoll.png
+
+graph_button.RESPOP.selected = grreshi.png
+graph_button.COMPOP.selected = grcomhi.png
+graph_button.INDPOP.selected = grindhi.png
+graph_button.MONEY.selected = grmonyhi.png
+graph_button.CRIME.selected = grcrimhi.png
+graph_button.POLLUTION.selected = grpollhi.png
+
+graph_color.RESPOP    = #00e600
+graph_color.COMPOP    = #0000e6
+graph_color.INDPOP    = #ffff00
+graph_color.MONEY     = #007f00
+graph_color.CRIME     = #7f0000
+graph_color.POLLUTION = #997f4c
+
+graph_label.RESPOP    = Résidences
+graph_label.COMPOP    = Commerces
+graph_label.INDPOP    = Industrie
+graph_label.MONEY     = Revenus
+graph_label.CRIME     = Criminalité
+graph_label.POLLUTION = Pollution
+
+!
+! The Evaluation Pane (accessible through Windows -> Evaluation)
+!
+dismiss-evaluation = Fermer
+public-opinion = Opinion publique
+public-opinion-1 = Le maire fait-il un bon travail?
+public-opinion-2 = Quels sont les pires problèmes?
+public-opinion-yes = OUI
+public-opinion-no = NON
+statistics-head = Statistiques
+city-score-head = Score global de la ville (0 - 1000)
+stats-population = Population:
+stats-net-migration = Migration nette:
+stats-last-year = (année dernière)
+stats-assessed-value = Évaluation:
+stats-category = Catégorie:
+stats-game-level = Difficulté:
+city-score-current = Score actuel:
+city-score-change = Variation annuelle:
+
+!
+! The mini-map, overlay legends
+!
+legend_image.POPDEN_OVERLAY = /legendmm.png
+legend_image.GROWTHRATE_OVERLAY = /legendpm.png
+legend_image.LANDVALUE_OVERLAY = /legendmm.png
+legend_image.CRIME_OVERLAY = /legendmm.png
+legend_image.POLLUTE_OVERLAY = /legendmm.png
+legend_image.TRAFFIC_OVERLAY = /legendmm.png
+legend_image.FIRE_OVERLAY = /legendmm.png
+legend_image.POLICE_OVERLAY = /legendmm.png
+
+!
+! Budget Dialog box, accessable through Windows -> Budget
+!
+budgetdlg.title = Budget
+budgetdlg.funding_level_hdr = Niveau de financement
+budgetdlg.requested_hdr = demandé
+budgetdlg.allocation_hdr = Payé
+budgetdlg.road_fund = Transport
+budgetdlg.police_fund = Police
+budgetdlg.fire_fund = Lutte incendie
+budgetdlg.continue = Continuer avec ce budget
+budgetdlg.reset = Revenir à l'ancien budget
+budgetdlg.tax_rate_hdr = Impôts
+budgetdlg.annual_receipts_hdr = Revenus annuels
+budgetdlg.tax_revenue = Revenus des impôts
+budgetdlg.period_ending = Fin d'exercice
+budgetdlg.cash_begin = Argent, début de l'année
+budgetdlg.taxes_collected = Impôts perçus
+budgetdlg.capital_expenses = Immobilisations
+budgetdlg.operating_expenses = Charges d'exploitation
+budgetdlg.cash_end = Argent, à la fin de l'année
+budgetdlg.auto_budget = Budget automatique
+budgetdlg.pause_game = Jeu en pause
+
+!
+! Notification pane
+!
+notification.dismiss = Fermer
+notification.query_hdr = Informations sur la zone
+notification.zone_lbl = Zone:
+notification.density_lbl = Densité:
+notification.value_lbl = Valeur:
+notification.crime_lbl = Criminalité:
+notification.pollution_lbl = Pollution:
+notification.growth_lbl = Croissance:
