@@ -9,17 +9,17 @@
 !! French - France Translation by Benoît Gross June 2013
 
 NEED_RES             = Il faut plus de zones résidentielles.
-NEED_COM             = Il faut plus de zones ommerciales.
+NEED_COM             = Il faut plus de zones commerciales.
 NEED_IND             = Il faut plus de zones industrielles.
 NEED_ROADS           = La ville a besoin de routes.
-NEED_RAILS           = Le réseau ferrovière est inadapté.
+NEED_RAILS           = Le réseau ferroviaire est inadapté.
 NEED_POWER           = Construisez une centrale électrique.
 NEED_STADIUM         = Les habitants demandent un stade.
-NEED_SEAPORT         = L'industire a besoin d'un port maritime.
+NEED_SEAPORT         = L'industrie a besoin d'un port maritime.
 NEED_AIRPORT         = Le commerce a besoin d'un aéroport.
 HIGH_POLLUTION       = Pollution très élevée.
 HIGH_CRIME           = Criminalité très élevée.
-HIGH_TRAFFIC         = Des difficultés de circulation sont fréquement reportées.
+HIGH_TRAFFIC         = Des difficultés de circulation sont fréquemment reportées.
 NEED_FIRESTATION     = Les citoyens demandent une caserne de pompiers.
 NEED_POLICE          = Les citoyens demandent un poste de police.
 BLACKOUTS            = Pannes de courant reportées. Vérifier la carte énergétique.
@@ -28,13 +28,13 @@ ROADS_NEED_FUNDING   = Les routes s'abîment, à cause du manque d'investissemen
 FIRE_NEED_FUNDING    = Les casernes de pompiers ont besoin de financements.
 POLICE_NEED_FUNDING  = Les postes de police ont besoin de financements.
 FIRE_REPORT          = Incendie reporté !
-MONSTER_REPORT       = Un mostre a été aperçu !!
+MONSTER_REPORT       = Un monstre a été aperçu !!
 TORNADO_REPORT       = Une tornade a été reportée !!
-EARTHQUAKE_REPORT    = Un violent trembelement de terre a été reporté !!
+EARTHQUAKE_REPORT    = Un violent tremblement de terre a été reporté !!
 PLANECRASH_REPORT    = Un avion s'est écrasé !
 SHIPWRECK_REPORT     = Naufrage reporté !
 TRAIN_CRASH_REPORT   = Un train a déraillé !
-COPTER_CRASH_REPORT  = Un hélicopter s'est écrasé !
+COPTER_CRASH_REPORT  = Un hélicoptère s'est écrasé !
 HIGH_UNEMPLOYMENT    = Le taux de chômage est élevé.
 OUT_OF_FUNDS_REPORT  = VOTRE VILLE A FAIT FAILLITE!
 FIREBOMBING_REPORT   = Bombardement reporté !
@@ -57,7 +57,7 @@ NO_NUCLEAR_PLANTS    = Aucune catastrophe nucléaire possible. Construisez d'abo
 
 HIGH_POLLUTION.title       = ALERTE À LA POLLUTION!
 HIGH_POLLUTION.color = #ff4f4f
-HIGH_POLLUTION.detail = La pollution dans votre ville a dépassé le seuil maximal tolérable établi par l'Agence Micropolienne de l'Environnement.  Vous risquez de graves conséquences sur le plan écologique.<br><br>Faites le ménage ou ouvre une concession de masques à gaz à l'hôtel de ville.
+HIGH_POLLUTION.detail = La pollution dans votre ville a dépassé le seuil maximal tolérable établi par l'Agence Micropolienne de l'Environnement.  Vous risquez de graves conséquences sur le plan écologique.<br><br>Faites le ménage ou ouvrez une concession de masques à gaz à l'hôtel de ville.
 
 HIGH_CRIME.title           = ALERTE SUR LA CRIMINALITÉ!
 HIGH_CRIME.color = #ff4f4f
@@ -65,7 +65,7 @@ HIGH_CRIME.detail = La criminalité est hors de contrôle dans votre ville.  Des
 
 HIGH_TRAFFIC.title         = ALERTE SUR LA CIRCULATION!
 HIGH_TRAFFIC.color = #ff4f4f
-HIGH_TRAFFIC.detail = La circulation dans la ville est catastrophique.  Les embouteillages se répandent dans la ville.  Les habitants des banlieues commencent à manifester.<br><br>Construisez plus de routes ou de voies ferrées, ou bien prennez un gillet pare-balle.
+HIGH_TRAFFIC.detail = La circulation dans la ville est catastrophique.  Les embouteillages se répandent dans la ville.  Les habitants des banlieues commencent à manifester.<br><br>Construisez plus de routes ou de voies ferrées, ou bien prenez un gilet pare-balle.
 
 FIRE_REPORT.title          = INCENDIE REPORTÉ!
 FIRE_REPORT.color = #ff4f4f
@@ -95,9 +95,9 @@ TRAIN_CRASH_REPORT.title   = ACCIDENT DE TRAIN!
 TRAIN_CRASH_REPORT.color = #ff4f4f
 TRAIN_CRASH_REPORT.detail = Un train a déraillé!
 
-COPTER_CRASH_REPORT.title  = CRASH D'HÉLICOPTER!
+COPTER_CRASH_REPORT.title  = CRASH D'HÉLICOPTÈRE!
 COPTER_CRASH_REPORT.color = #ff4f4f
-COPTER_CRASH_REPORT.detail = Un hélicopter s'est écrasé!
+COPTER_CRASH_REPORT.detail = Un hélicoptère s'est écrasé!
 
 FIREBOMBING_REPORT.title   = BOMBARDEMENT REPORTÉ!
 FIREBOMBING_REPORT.color = #ff4f4f
@@ -105,7 +105,7 @@ FIREBOMBING_REPORT.detail = Des bombes incendiaires tombent sur la ville!!
 
 POP_2K_REACHED.title       = COMMUNE
 POP_2K_REACHED.color = #7fff7f
-POP_2K_REACHED.detail = Félicitations, votre village a atteint le status de commune.  Vous avez 2 000 citoyens.
+POP_2K_REACHED.detail = Félicitations, votre village a atteint le statut de commune.  Vous avez 2 000 citoyens.
 
 POP_10K_REACHED.title      = VILLE
 POP_10K_REACHED.color = #7fff7f
@@ -125,7 +125,7 @@ POP_500K_REACHED.detail = Félicitations, vous avez atteint le stade urbain le p
 
 HEAVY_TRAFFIC_REPORT.title = EMBOUTEILLAGES!
 HEAVY_TRAFFIC_REPORT.color = #ff4f4f
-HEAVY_TRAFFIC_REPORT.detail = Hélicopter Un<br>Rapporte trafic élevé!
+HEAVY_TRAFFIC_REPORT.detail = Hélicoptère Un<br>Rapporte trafic élevé!
 
 FLOOD_REPORT.title         = INONDATION REPORTÉ!
 FLOOD_REPORT.color         = #ff4f4f
@@ -137,4 +137,4 @@ MELTDOWN_REPORT.detail = Une catastrophe nucléaire a eu lieu dans votre central
 
 RIOTING_REPORT.title       = MANIFESTATIONS!
 RIOTING_REPORT.color       = #ff4f4f
-RIOTING_REPORT.detail = Les citoyens manifestent dans les rues, montant sur les voitures, brulant les maisons, et explosant les batîments publics et les bureaux!<br><br>Les médias s'emparent du sujet et les mouvements extrêmistes gagnent du terrain.
+RIOTING_REPORT.detail = Les citoyens manifestent dans les rues, montant sur les voitures, brulant les maisons, et explosant les bâtiments publics et les bureaux!<br><br>Les médias s'emparent du sujet et les mouvements extrémistes gagnent du terrain.
