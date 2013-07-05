@@ -9,7 +9,7 @@
 -->
 <project name="micropolisj" default="all">
 
-<property name="package-version" value="1.4" />
+<property name="package-version" value="1.5" />
 
 <property name="srcdir" location="src" />
 <property name="builddir" location="build" />
