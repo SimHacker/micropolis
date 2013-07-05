@@ -305,9 +305,12 @@ public class MainWindow extends JFrame
 	{
 		if (needsSaved())
 		{
-			try {
-			stopTimer();
+			boolean timerEnabled = isTimerActive();
+			if (timerEnabled) {
+				stopTimer();
+			}
 
+			try {
 			int rv = JOptionPane.showConfirmDialog(
 				this,
 				strings.getString("main.save_query"),
@@ -325,7 +328,7 @@ public class MainWindow extends JFrame
 			}
 			}
 			finally {
-				startTimer();
+				if (timerEnabled) { startTimer(); }
 			}
 		}
 		return true;
@@ -750,7 +753,10 @@ public class MainWindow extends JFrame
 	static final String EXTENSION = "cty";
 	private boolean onSaveCityAsClicked()
 	{
-		stopTimer();
+		boolean timerEnabled = isTimerActive();
+		if (timerEnabled) {
+			stopTimer();
+		}
 		try
 		{
 			JFileChooser fc = new JFileChooser();
@@ -775,7 +781,7 @@ public class MainWindow extends JFrame
 		}
 		finally
 		{
-			startTimer();
+			if (timerEnabled) { startTimer(); }
 		}
 		return false;
 	}
@@ -787,16 +793,20 @@ public class MainWindow extends JFrame
 			return;
 		}
 
+		boolean timerEnabled = isTimerActive();
+		if (timerEnabled) {
+			stopTimer();
+		}
+
 		try
 		{
 			JFileChooser fc = new JFileChooser();
 			FileNameExtensionFilter filter1 = new FileNameExtensionFilter(strings.getString("cty_file"), EXTENSION);
 			fc.setFileFilter(filter1);
 
-			stopTimer();
-			int rv = fc.showOpenDialog(this);
-			startTimer();
+			assert !isTimerActive();
 
+			int rv = fc.showOpenDialog(this);
 			if (rv == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 				Micropolis newEngine = new Micropolis();
@@ -811,6 +821,11 @@ public class MainWindow extends JFrame
 			e.printStackTrace(System.err);
 			JOptionPane.showMessageDialog(this, e, strings.getString("main.error_caption"),
 				JOptionPane.ERROR_MESSAGE);
+		}
+		finally {
+			if (timerEnabled) {
+				startTimer();
+			}
 		}
 	}
 
@@ -945,9 +960,16 @@ public class MainWindow extends JFrame
 
 	public void doNewCity(boolean firstTime)
 	{
-		stopTimer();
+		boolean timerEnabled = isTimerActive();
+		if (timerEnabled) {
+			stopTimer();
+		}
+
 		new NewCityDialog(this, !firstTime).setVisible(true);
-		startTimer();
+
+		if (timerEnabled) {
+			startTimer();
+		}
 	}
 
 	void doQueryTool(int xpos, int ypos)
@@ -1169,7 +1191,6 @@ public class MainWindow extends JFrame
 				engine.animate();
 				if (!engine.autoBudget && engine.isBudgetTime())
 				{
-					stopTimer(); //redundant
 					showAutoBudget();
 					return;
 				}
@@ -1256,7 +1277,10 @@ public class MainWindow extends JFrame
 	//implements EarthquakeListener
 	public void earthquakeStarted()
 	{
-		stopTimer();
+		if (isTimerActive()) {
+			stopTimer();
+		}
+
 		currentEarthquake = new EarthquakeStepper();
 		currentEarthquake.oneStep();
 		startTimer();
@@ -1270,6 +1294,8 @@ public class MainWindow extends JFrame
 
 	private void stopTimer()
 	{
+		assert isTimerActive();
+
 		if (simTimer != null) {
 			simTimer.stop();
 			simTimer = null;
@@ -1287,7 +1313,9 @@ public class MainWindow extends JFrame
 
 	private void onWindowClosed(WindowEvent ev)
 	{
-		stopTimer();
+		if (isTimerActive()) {
+			stopTimer();
+		}
 	}
 
 	private void onDifficultyClicked(int newDifficulty)
@@ -1297,7 +1325,10 @@ public class MainWindow extends JFrame
 
 	private void onPriorityClicked(Speed newSpeed)
 	{
-		stopTimer();
+		if (isTimerActive()) {
+			stopTimer();
+		}
+
 		getEngine().setSpeed(newSpeed);
 		startTimer();
 	}
@@ -1436,11 +1467,18 @@ public class MainWindow extends JFrame
 
 	private void showBudgetWindow(boolean isEndOfYear)
 	{
-		stopTimer();
+		boolean timerEnabled = isTimerActive();
+		if (timerEnabled) {
+			stopTimer();
+		}
+
 		BudgetDialog dlg = new BudgetDialog(this, getEngine());
 		dlg.setModal(true);
 		dlg.setVisible(true);
-		startTimer();
+
+		if (timerEnabled) {
+			startTimer();
+		}
 	}
 
 	private JMenuItem makeMapStateMenuItem(String caption, final MapState state)
