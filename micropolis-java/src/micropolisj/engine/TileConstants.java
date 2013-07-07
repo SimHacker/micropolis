@@ -293,8 +293,7 @@ public class TileConstants
 	//used by Sprite::destroyTile
 	public static boolean isBridge(int tile)
 	{
-		return (((tile & LOMASK) >= ROADBASE && (tile & LOMASK) <= LASTROAD)
-			&& !isCombustible(tile));
+		return isRoad(tile) && !isCombustible(tile);
 	}
 
 	public static boolean isCombustible(int tile)

@@ -175,7 +175,7 @@ public abstract class Sprite
 		int t = z & LOMASK;
 
 		if (t >= TREEBASE) {
-			if (TileConstants.isBridge(z)) {
+			if (isBridge(z)) {
 				city.setTile(xpos, ypos, RIVER);
 				return;
 			}
@@ -188,7 +188,7 @@ public abstract class Sprite
 					city.makeExplosion(xpos, ypos);
 				}
 			}
-			if (TileConstants.checkWet(t)) {
+			if (checkWet(t)) {
 				city.setTile(xpos, ypos, RIVER);
 			}
 			else {
