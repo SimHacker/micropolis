@@ -294,7 +294,12 @@ public class TileConstants
 	public static boolean isBridge(int tile)
 	{
 		return (((tile & LOMASK) >= ROADBASE && (tile & LOMASK) <= LASTROAD)
-			&& ((tile & BURNBIT) == 0));
+			&& !isCombustible(tile));
+	}
+
+	public static boolean isCombustible(int tile)
+	{
+		return (tile & BURNBIT) != 0;
 	}
 
 	public static boolean isFire(int tile)
@@ -413,7 +418,7 @@ public class TileConstants
 
 	static boolean isFloodable(int tile)
 	{
-		return (tile == DIRT || ((tile & BULLBIT) != 0 && (tile & BURNBIT) != 0));
+		return (tile == DIRT || ((tile & BULLBIT) != 0 && isCombustible(tile)));
 	}
 
 	public static boolean isRoad(int tile)

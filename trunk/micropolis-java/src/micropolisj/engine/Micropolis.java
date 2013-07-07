@@ -1815,7 +1815,7 @@ public class Micropolis
 			if (isZoneCenter(t)) {
 				continue;
 			}
-			if ((t & BURNBIT) != 0 || t == DIRT) {
+			if (isCombustible(t) || t == DIRT) {
 				setTile(x, y, RADTILE);
 			}
 		}
@@ -2187,7 +2187,7 @@ public class Micropolis
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
 			int tile = map[y][x];
-			if (!isZoneCenter(tile) && (tile & BURNBIT) != 0)
+			if (!isZoneCenter(tile) && isCombustible(tile))
 			{
 				tile &= LOMASK;
 				if (tile > 21 && tile < LASTZONE) {

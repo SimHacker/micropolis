@@ -132,7 +132,7 @@ class MapScanner
 			}
 		}
 
-		if ((cchr & BURNBIT) == 0) //bridge
+		if (!isCombustible(cchr)) //bridge
 		{
 			city.roadTotal += 4;
 			if (doBridge())
@@ -185,7 +185,7 @@ class MapScanner
 					continue;
 
 				int c = city.map[ytem][xtem];
-				if ((c & BURNBIT) != 0) {
+				if (isCombustible(c)) {
 					if (isZoneCenter(c)) {
 						city.killZone(xtem, ytem, c);
 						if ((c & LOMASK) > IZB) { //explode
@@ -225,7 +225,7 @@ class MapScanner
 					if (city.testBounds(xx, yy)) {
 						int c = city.getTile(xx, yy);
 						int t = c & LOMASK;
-						if (((c & BURNBIT) != 0) || c == DIRT ||
+						if (isCombustible(c) || c == DIRT ||
 							(t >= WOODS5 && t < FLOOD))
 						{
 							if (isZoneCenter(c)) {
