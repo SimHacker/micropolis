@@ -179,7 +179,7 @@ public abstract class Sprite
 				city.setTile(xpos, ypos, RIVER);
 				return;
 			}
-			if ((z & BURNBIT) == 0) {
+			if (!isCombustible(z)) {
 				return; //cannot destroy it
 			}
 			if (isZoneCenter(z)) {

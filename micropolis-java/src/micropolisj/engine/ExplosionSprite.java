@@ -54,7 +54,7 @@ public class ExplosionSprite extends Sprite
 
 		int z = city.getTile(xpos, ypos);
 		int t = z & LOMASK;
-		if ((z & BURNBIT) == 0 && t != DIRT)
+		if (!isCombustible(z) && t != DIRT)
 			return;
 		if (isZoneCenter(z))
 			return;
