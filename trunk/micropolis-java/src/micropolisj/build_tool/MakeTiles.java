@@ -86,9 +86,8 @@ public class MakeTiles
 	{
 		ImageSpec result = null;
 
-		for (String layerStr : spec.getValues("image")) {
+		for (String layerStr : spec.getImages()) {
 
-System.err.println("parsing "+layerStr);
 		ImageSpec rv = new ImageSpec();
 		rv.background = result;
 		result = rv;

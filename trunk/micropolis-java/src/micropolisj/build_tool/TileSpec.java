@@ -4,11 +4,13 @@ import java.util.*;
 
 public class TileSpec
 {
-	Map<String, List<String> > multiValues;
+	Map<String,String> attributes;
+	List<String> images;
 
 	protected TileSpec()
 	{
-		this.multiValues = new HashMap<String, List<String> >();
+		this.attributes = new HashMap<String,String>();
+		this.images = new ArrayList<String>();
 	}
 
 	public static TileSpec parse(String inStr)
@@ -18,51 +20,41 @@ public class TileSpec
 		return ts;
 	}
 
-	public String getValue(String key)
+	public String getAttribute(String key)
 	{
-		List<String> v = multiValues.get(key);
-		if (v != null && v.size() >= 1) {
-			return v.get(0);
-		}
-		else {
-			return null;
-		}
+		return attributes.get(key);
 	}
 
-	public String [] getValues(String key)
+	public String [] getImages()
 	{
-		List<String> v = multiValues.get(key);
-		if (v != null) {
-			return v.toArray(new String[0]);
-		}
-		else {
-			return new String[0];
-		}
+		return images.toArray(new String[0]);
 	}
 
 	protected void load(String inStr)
 	{
 		Scanner in = new Scanner(inStr);
-		String k;
-		while ( (k=in.nextKey()) != null ) {
-			String v = in.nextValue();
-			if (v == null) {
-				if (k.startsWith("no")) {
-					k = k.substring(2);
-					v = "0";
+
+		while (in.hasMore()) {
+
+			if (in.peekChar() == '(') {
+				in.eatChar('(');
+				String k = in.readAttributeKey();
+				String v = "1";
+				if (in.peekChar() == '=') {
+					in.eatChar('=');
+					v = in.readAttributeValue();
 				}
-				else {
-					v = "1";
-				}
+				in.eatChar(')');
+				attributes.put(k, v);
 			}
 
-			if (multiValues.containsKey(k)) {
-				multiValues.get(k).add(v);
+			else if (in.peekChar() == '|' || in.peekChar() == ',') {
+				in.eatChar(in.peekChar());
 			}
+
 			else {
-				ArrayList<String> a = new ArrayList<String>();
-				a.add(v);
-				multiValues.put(k, a);
+				String v = in.readImageSpec();
+				images.add(v);
 			}
 		}
 	}
@@ -71,99 +63,94 @@ public class TileSpec
 	{
 		String str;
 		int off = 0;
-		int st = ST_VALUE;
-
-		static int ST_KEY = 0;
-		static int ST_VALUE = 1;
-		static int ST_COMPAT = 2;
-		static int ST_EOF = 3;
 
 		Scanner(String str)
 		{
 			this.str = str;
-			if (str.indexOf('(') == -1) {
-				st = ST_COMPAT;
-			}
 		}
 
 		private void skipWhitespace()
 		{
-			while (off < str.length() && (Character.isWhitespace(str.charAt(off)) || str.charAt(off) == ',')) {
+			while (off < str.length() && Character.isWhitespace(str.charAt(off))) {
 				off++;
 			}
 		}
 
-		public String nextKey()
+		public int peekChar()
 		{
-			if (st == ST_EOF || off >= str.length()) {
-				return null;
-			}
-
-			if (st == ST_COMPAT) {
-				st = ST_VALUE;
-				return "image";
-			}
-
-			assert st == ST_KEY;
-
-			if (str.charAt(off) == '|') {
-				st = ST_VALUE;
-				off++;
-				skipWhitespace();
-				return "image";
+			skipWhitespace();
+			if (off < str.length()) {
+				return str.charAt(off);
 			}
 			else {
-				int start = off;
-				while (off < str.length() && (str.charAt(off) == '-' || Character.isLetterOrDigit(str.charAt(off)))) {
-					off++;
-				}
-				st = ST_VALUE;
-				return str.substring(start, off);
+				return -1;
 			}
 		}
 
-		public String nextValue()
+		public void eatChar(int ch)
 		{
-			assert st == ST_VALUE;
+			skipWhitespace();
+			assert str.charAt(off) == ch;
+			off++;
+		}
 
-			if (off == str.length()) {
-				st = ST_EOF;
-				return null;
-			}
+		public String readAttributeKey()
+		{
+			skipWhitespace();
 
-			int c = str.charAt(off);
-			if (Character.isWhitespace(c) || c == ',') {
-				skipWhitespace();
-				st = ST_KEY;
-				return null;
-			}
-
-			int endQuote = 0;
-			if (c == '(') {
+			int start = off;
+			while (off < str.length() && (str.charAt(off) == '-' || Character.isLetterOrDigit(str.charAt(off)))) {
 				off++;
-				endQuote = ')';
+			}
+
+			if (off != start) {
+				return str.substring(start, off);
+			}
+			else {
+				return null;
+			}
+		}
+
+		public String readAttributeValue()
+		{
+			return readString();
+		}
+
+		public String readImageSpec()
+		{
+			return readString();
+		}
+
+		protected String readString()
+		{
+			skipWhitespace();
+
+			int endQuote = 0; //any whitespace or certain punctuation
+			if (peekChar() == '"') {
+				off++;
+				endQuote = '"';
 			}
 
 			int start = off;
 			while (off < str.length()) {
-				c = str.charAt(off);
+				int c = str.charAt(off);
 				if (c == endQuote) {
 					int end = off;
 					off++;
-					skipWhitespace();
-					st = ST_KEY;
 					return str.substring(start,end);
 				}
-				else if (endQuote == 0 && (Character.isWhitespace(c) || c == '|')) {
+				else if (endQuote == 0 && (Character.isWhitespace(c) || c == ')' || c == '|')) {
 					int end = off;
-					skipWhitespace();
-					st = ST_KEY;
 					return str.substring(start, end);
 				}
 				off++;
 			}
-			st = ST_EOF;
 			return str.substring(start);
+		}
+
+		public boolean hasMore()
+		{
+			return peekChar() != -1;
 		}
 	}
 }
