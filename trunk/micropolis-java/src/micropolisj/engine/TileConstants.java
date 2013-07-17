@@ -212,7 +212,7 @@ public class TileConstants
 	public static final char CONDBIT = 16384; // bit 14 ... can conduct power
 	public static final char BURNBIT = 8192;  // bit 13 ... is combustible
 	public static final char BULLBIT = 4096;  // bit 12 ... is bulldozable
-	public static final char ANIMBIT = 2048;  // bit 11 ... animates
+	// bit 11 ... unused
 	public static final char ZONEBIT = 1024;  // bit 10 ... is the special tile for a zone
 
 	public static final char ALLBITS = 64512;   // mask for upper 6 bits
@@ -278,6 +278,12 @@ public class TileConstants
 		} else {
 			return -i - 2;
 		}
+	}
+
+	public static boolean isAnimated(int tile)
+	{
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec.animNext != null;
 	}
 
 	//used by setFire()

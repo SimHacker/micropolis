@@ -183,8 +183,7 @@ public class ToolStroke
 			{
 				eff.setTile(columnNum, rowNum, (char) (
 					tileBase + BNCNBIT +
-					(columnNum == centerColNum && rowNum == centerRowNum ? ZONEBIT : 0) +
-					(width==4 && columnNum==1 && rowNum==2 ? ANIMBIT : 0)
+					(columnNum == centerColNum && rowNum == centerRowNum ? ZONEBIT : 0)
 					));
 				tileBase++;
 			}
@@ -244,7 +243,7 @@ public class ToolStroke
 		if (z < 4) {
 			tile = (WOODS2 + z) | BURNBIT | BULLBIT;
 		} else {
-			tile = FOUNTAIN | BURNBIT | BULLBIT | ANIMBIT;
+			tile = FOUNTAIN | BURNBIT | BULLBIT;
 		}
 
 		eff.spend(cost);
