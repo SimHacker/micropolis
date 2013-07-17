@@ -16,11 +16,19 @@ public class MakeTiles
 
 	static final Charset UTF8 = Charset.forName("UTF-8");
 	static final int NTILES = 960;
-	static final int TILE_SIZE = 16;
+	static int TILE_SIZE = 16;
 
 	public static void main(String [] args)
 		throws Exception
 	{
+		if (args.length != 2) {
+			throw new Exception("Wrong number of arguments");
+		}
+
+		if (System.getProperty("tile_size") != null) {
+			TILE_SIZE = Integer.parseInt(System.getProperty("tile_size"));
+		}
+
 		File recipeFile = new File(args[0]);
 		File outputFile = new File(args[1]);
 
