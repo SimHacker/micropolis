@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 public class MakeTiles
 {
 	static HashMap<String,String> tileData = new HashMap<String,String>();
-	static HashMap<String,Image> loadedImages = new HashMap<String,Image>();
+	static HashMap<String,SourceImage> loadedImages = new HashMap<String,SourceImage>();
 
 	static final Charset UTF8 = Charset.forName("UTF-8");
 	static final int NTILES = 960;
@@ -48,14 +48,14 @@ public class MakeTiles
 			assert rawSpec != null;
 
 			TileSpec tileSpec = TileSpec.parse(i, rawSpec);
-			ImageSpec ref = parseImageSpec(tileSpec);
+			FrameSpec ref = parseFrameSpec(tileSpec);
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
 
 		ImageIO.write(buf, "png", outputFile);
 	}
 
-	static void drawTo(ImageSpec ref, Graphics2D gr, int destX, int destY)
+	static void drawTo(FrameSpec ref, Graphics2D gr, int destX, int destY)
 		throws IOException
 	{
 		if (ref.background != null) {
@@ -67,23 +67,33 @@ public class MakeTiles
 				loadImage(ref.fileName));
 		}
 
-		Image sourceImg = loadedImages.get(ref.fileName);
-		int srcWidth = sourceImg.getWidth(null);
-		int srcHeight = sourceImg.getHeight(null);
+		SourceImage sourceImg = loadedImages.get(ref.fileName);
 
 		gr.drawImage(
-			sourceImg,
+			sourceImg.image,
 			destX, destY,
 			destX+TILE_SIZE, destY+TILE_SIZE,
-			ref.offsetX, ref.offsetY,
-			ref.offsetX + (ref.width != 0 ? ref.width : srcWidth),
-			ref.offsetY + (ref.height != 0 ? ref.height : srcHeight),
+			ref.offsetX * sourceImg.basisSize / 16,
+			ref.offsetY * sourceImg.basisSize / 16,
+			(ref.offsetX + (ref.width != 0 ? ref.width : 16)) * sourceImg.basisSize / 16,
+			(ref.offsetY + (ref.height != 0 ? ref.height : 16)) * sourceImg.basisSize / 16,
 			null);
 	}
 
-	static class ImageSpec
+	static class SourceImage
 	{
-		ImageSpec background;
+		Image image;
+		int basisSize;
+
+		SourceImage(Image image, int basisSize) {
+			this.image = image;
+			this.basisSize = basisSize;
+		}
+	}
+
+	static class FrameSpec
+	{
+		FrameSpec background;
 		String fileName;
 		int offsetX;
 		int offsetY;
@@ -91,13 +101,13 @@ public class MakeTiles
 		int height;
 	}
 
-	static ImageSpec parseImageSpec(TileSpec spec)
+	static FrameSpec parseFrameSpec(TileSpec spec)
 	{
-		ImageSpec result = null;
+		FrameSpec result = null;
 
 		for (String layerStr : spec.getImages()) {
 
-		ImageSpec rv = new ImageSpec();
+		FrameSpec rv = new FrameSpec();
 		rv.background = result;
 		result = rv;
 
@@ -126,10 +136,25 @@ public class MakeTiles
 		return result;
 	}
 
-	static Image loadImage(String fileName)
+	static SourceImage loadImage(String fileName)
 		throws IOException
 	{
-		ImageIcon ii = new ImageIcon(fileName+".png");
-		return ii.getImage();
+		File f = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
+		if (f.exists()) {
+			ImageIcon ii = new ImageIcon(f.toString());
+			return new SourceImage(
+				ii.getImage(),
+				TILE_SIZE);
+		}
+
+		f = new File(fileName+".png");
+		if (f.exists()) {
+			ImageIcon ii = new ImageIcon(f.toString());
+			return new SourceImage(
+				ii.getImage(),
+				16);
+		}
+
+		throw new IOException("File not found: "+fileName+".png");
 	}
 }
