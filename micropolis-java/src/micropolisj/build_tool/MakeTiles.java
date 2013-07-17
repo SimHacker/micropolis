@@ -35,10 +35,11 @@ public class MakeTiles
 		Graphics2D gr = buf.createGraphics();
 
 		for (int i = 0; i < NTILES; i++) {
-			String tileImage = recipe.getProperty(Integer.toString(i));
-			assert tileImage != null;
+			String rawSpec = recipe.getProperty(Integer.toString(i));
+			assert rawSpec != null;
 
-			ImageSpec ref = parseImageSpec(tileImage);
+			TileSpec tileSpec = TileSpec.parse(rawSpec);
+			ImageSpec ref = parseImageSpec(tileSpec);
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
 
@@ -81,12 +82,13 @@ public class MakeTiles
 		int height;
 	}
 
-	static ImageSpec parseImageSpec(String chain)
+	static ImageSpec parseImageSpec(TileSpec spec)
 	{
 		ImageSpec result = null;
 
-		for (String layerStr : chain.split("\\s*\\|")) {
+		for (String layerStr : spec.getValues("image")) {
 
+System.err.println("parsing "+layerStr);
 		ImageSpec rv = new ImageSpec();
 		rv.background = result;
 		result = rv;
