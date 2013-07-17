@@ -626,7 +626,7 @@
 617   ind_zones@32,16
 618   ind_zones@0,32
 619   ind_zones@16,32
-620   ind_zones@32,32                                            (becomes=852)
+620   ind_zones@32,32
 621   ind_zones@0,48
 622   ind_zones@16,48
 623   ind_zones@32,48
