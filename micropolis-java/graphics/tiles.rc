@@ -647,16 +647,16 @@
 638   ind_zones@32,128
 639   ind_zones@0,144
 640   ind_zones@16,144
-641   ind_zones@32,144                                           (becomes=884)
+641   ind_zones@32,144
 642   ind_zones@0,160
 643   ind_zones@16,160
-644   ind_zones@32,160                                           (becomes=888)
+644   ind_zones@32,160
 645   ind_zones@0,176
 646   ind_zones@16,176
 647   ind_zones@32,176
 648   ind_zones@0,192
-649   ind_zones@16,192                                           (becomes=892)
-650   ind_zones@32,192                                           (becomes=896)
+649   ind_zones@16,192
+650   ind_zones@32,192
 651   ind_zones@0,208
 652   ind_zones@16,208
 653   ind_zones@32,208
@@ -682,8 +682,8 @@
 673   ind_zones@16,320
 674   ind_zones@32,320
 675   ind_zones@0,336
-676   ind_zones@16,336                                           (becomes=900)
-677   ind_zones@32,336                                           (becomes=904)
+676   ind_zones@16,336
+677   ind_zones@32,336
 678   ind_zones@0,352
 679   ind_zones@16,352
 680   ind_zones@32,352
@@ -692,10 +692,10 @@
 683   ind_zones@32,368
 684   ind_zones@0,384
 685   ind_zones@16,384
-686   ind_zones@32,384                                           (becomes=908)
+686   ind_zones@32,384
 687   ind_zones@0,400
 688   ind_zones@16,400
-689   ind_zones@32,400                                           (becomes=912)
+689   ind_zones@32,400
 690   ind_zones@0,416
 691   ind_zones@16,416
 692   ind_zones@32,416
@@ -719,7 +719,7 @@
 # BEGIN AIRPORT #
 709   airport@0,0
 710   airport@16,0
-711   airport@32,0                                               (becomes=832)
+711   airport@32,0
 712   airport@48,0
 713   airport@64,0
 714   airport@80,0
@@ -978,6 +978,7 @@
 953   misc_animation@0,2016                                      (becomes=954)
 954   misc_animation@0,2032                                      (becomes=955)
 955   misc_animation@0,2048                                      (becomes=952)
+# unused #
 956   misc_animation@0,2064
 957   misc_animation@0,2080
 958   misc_animation@0,2096

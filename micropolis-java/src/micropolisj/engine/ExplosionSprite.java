@@ -58,6 +58,6 @@ public class ExplosionSprite extends Sprite
 			return;
 		if (isZoneCenter(z))
 			return;
-		city.setTile(xpos, ypos, (char)(FIRE + city.PRNG.nextInt(4) + ANIMBIT));
+		city.setTile(xpos, ypos, (char)(FIRE + city.PRNG.nextInt(4)));
 	}
 }

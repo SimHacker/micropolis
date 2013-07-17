@@ -158,10 +158,7 @@ class MapScanner
 		if (tden != newLevel)
 		{
 			int z = (((cchr & LOMASK) - ROADBASE) & 15) + TRAFFIC_DENSITY_TAB[newLevel];
-			z += cchr & (ALLBITS - ANIMBIT);
-
-			if (newLevel != 0)
-				z |= ANIMBIT;
+			z += cchr & ALLBITS;
 
 			city.setTile(xpos, ypos, (char) z);
 		}
@@ -192,7 +189,7 @@ class MapScanner
 							city.makeExplosion(xtem, ytem);
 						}
 					}
-					city.setTile(xtem, ytem, (char)(FIRE + PRNG.nextInt(4) + ANIMBIT));
+					city.setTile(xtem, ytem, (char)(FIRE + PRNG.nextInt(4)));
 				}
 			}
 		}
@@ -611,8 +608,8 @@ class MapScanner
 			{
 				if (((city.cityTime + xpos + ypos) % 32) == 0) {
 					drawStadium(FULLSTADIUM);
-					city.setTile(xpos+1,ypos, (char)(FOOTBALLGAME1 | ANIMBIT));
-					city.setTile(xpos+1,ypos+1,(char)(FOOTBALLGAME2 | ANIMBIT));
+					city.setTile(xpos+1,ypos, (char)(FOOTBALLGAME1));
+					city.setTile(xpos+1,ypos+1,(char)(FOOTBALLGAME2));
 				}
 			}
 			return;
@@ -634,7 +631,7 @@ class MapScanner
 			{
 				if ((city.map[ypos-1][xpos+1] & LOMASK) == RADAR) {
 					city.setTile(xpos+1,ypos-1, (char)
-					(RADAR + ANIMBIT + CONDBIT + BURNBIT)
+					(RADAR_ANIM + CONDBIT + BURNBIT)
 					);
 				}
 			}
@@ -754,7 +751,7 @@ class MapScanner
 						continue;
 					}
 
-					if ((thCh & ANIMBIT) != 0)
+					if (isAnimated(thCh))
 						continue;
 
 					thCh &= LOMASK;
@@ -1345,7 +1342,7 @@ class MapScanner
 			int tile = city.getTile(xpos+dx[z], ypos+dy[z]) & LOMASK;
 			if (tile >= COALBASE && tile < COALBASE + 4*4) {
 				city.setTile(xpos + dx[z], ypos + dy[z],
-				(char) (SmTb[z] | ANIMBIT | CONDBIT | PWRBIT | BURNBIT)
+				(char) (SmTb[z] | CONDBIT | PWRBIT | BURNBIT)
 				);
 			}
 		}
