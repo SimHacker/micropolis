@@ -1,5 +1,6 @@
 package micropolisj.build_tool;
 
+import micropolisj.engine.TileSpec;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
