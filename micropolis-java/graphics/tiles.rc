@@ -1,984 +1,984 @@
-0     terrain@0,0,16,16
-1     terrain@0,16,16,16
-2     terrain@0,32,16,16
-3     terrain@0,48,16,16
-4     terrain@0,64,16,16
-5     terrain@0,80,16,16
-6     terrain@0,96,16,16
-7     terrain@0,112,16,16
-8     terrain@0,128,16,16
-9     terrain@0,144,16,16
-10    terrain@0,160,16,16
-11    terrain@0,176,16,16
-12    terrain@0,192,16,16
-13    terrain@0,208,16,16
-14    terrain@0,224,16,16
-15    terrain@0,240,16,16
-16    terrain@0,256,16,16
-17    terrain@0,272,16,16
-18    terrain@0,288,16,16
-19    terrain@0,304,16,16
-20    terrain@0,320,16,16
-21    terrain@0,336,16,16
-22    terrain@0,352,16,16
-23    terrain@0,368,16,16
-24    terrain@0,384,16,16
-25    terrain@0,400,16,16
-26    terrain@0,416,16,16
-27    terrain@0,432,16,16
-28    terrain@0,448,16,16
-29    terrain@0,464,16,16
-30    terrain@0,480,16,16
-31    terrain@0,496,16,16
-32    terrain@0,512,16,16
-33    terrain@0,528,16,16
-34    terrain@0,544,16,16
-35    terrain@0,560,16,16
-36    terrain@0,576,16,16
-37    terrain@0,592,16,16
-38    terrain@0,608,16,16
-39    terrain@0,624,16,16
-40    terrain@0,640,16,16
-41    terrain@0,656,16,16
-42    terrain@0,672,16,16
-43    terrain@0,688,16,16
-44    terrain@0,704,16,16
-45    terrain@0,720,16,16
-46    terrain@0,736,16,16
-47    terrain@0,752,16,16
-48    terrain@0,768,16,16
-49    terrain@0,784,16,16
-50    terrain@0,800,16,16
-51    terrain@0,816,16,16
-52    terrain@0,832,16,16
-53    terrain@0,848,16,16
-54    terrain@0,864,16,16
-55    terrain@0,880,16,16
+0     terrain@0,0
+1     terrain@0,16
+2     terrain@0,32
+3     terrain@0,48
+4     terrain@0,64
+5     terrain@0,80
+6     terrain@0,96
+7     terrain@0,112
+8     terrain@0,128
+9     terrain@0,144
+10    terrain@0,160
+11    terrain@0,176
+12    terrain@0,192
+13    terrain@0,208
+14    terrain@0,224
+15    terrain@0,240
+16    terrain@0,256
+17    terrain@0,272
+18    terrain@0,288
+19    terrain@0,304
+20    terrain@0,320
+21    terrain@0,336
+22    terrain@0,352
+23    terrain@0,368
+24    terrain@0,384
+25    terrain@0,400
+26    terrain@0,416
+27    terrain@0,432
+28    terrain@0,448
+29    terrain@0,464
+30    terrain@0,480
+31    terrain@0,496
+32    terrain@0,512
+33    terrain@0,528
+34    terrain@0,544
+35    terrain@0,560
+36    terrain@0,576
+37    terrain@0,592
+38    terrain@0,608
+39    terrain@0,624
+40    terrain@0,640
+41    terrain@0,656
+42    terrain@0,672
+43    terrain@0,688
+44    terrain@0,704
+45    terrain@0,720
+46    terrain@0,736
+47    terrain@0,752
+48    terrain@0,768
+49    terrain@0,784
+50    terrain@0,800
+51    terrain@0,816
+52    terrain@0,832
+53    terrain@0,848
+54    terrain@0,864
+55    terrain@0,880
 # BEGIN FIRE ANIMATION #
-56    terrain@0,896,16,16                                              (becomes=57)
-57    terrain@0,912,16,16                                              (becomes=58)
-58    terrain@0,928,16,16                                              (becomes=59)
-59    terrain@0,944,16,16                                              (becomes=60)
-60    terrain@0,960,16,16                                              (becomes=61)
-61    terrain@0,976,16,16                                              (becomes=62)
-62    terrain@0,992,16,16                                              (becomes=63)
-63    terrain@0,1008,16,16                                             (becomes=56)
+56    terrain@0,896                                              (becomes=57)
+57    terrain@0,912                                              (becomes=58)
+58    terrain@0,928                                              (becomes=59)
+59    terrain@0,944                                              (becomes=60)
+60    terrain@0,960                                              (becomes=61)
+61    terrain@0,976                                              (becomes=62)
+62    terrain@0,992                                              (becomes=63)
+63    terrain@0,1008                                             (becomes=56)
 # BEGIN ROADS WITH NO TRAFFIC #
-64    roads@0,0,16,16
-65    roads@0,16,16,16
-66    roads@0,32,16,16
-67    roads@0,48,16,16
-68    roads@0,64,16,16
-69    roads@0,80,16,16
-70    roads@0,96,16,16
-71    roads@0,112,16,16
-72    roads@0,128,16,16
-73    roads@0,144,16,16
-74    roads@0,160,16,16
-75    roads@0,176,16,16
-76    roads@0,192,16,16
-77    roads@0,32,16,16  |roadwire@0,0,16,16
-78    roads@0,48,16,16  |roadwire@0,16,16,16
-79    roads@0,240,16,16
+64    roads@0,0
+65    roads@0,16
+66    roads@0,32
+67    roads@0,48
+68    roads@0,64
+69    roads@0,80
+70    roads@0,96
+71    roads@0,112
+72    roads@0,128
+73    roads@0,144
+74    roads@0,160
+75    roads@0,176
+76    roads@0,192
+77    roads@0,32  |roadwire@0,0
+78    roads@0,48  |roadwire@0,16
+79    roads@0,240
 # BEGIN ROADS WITH LIGHT TRAFFIC #
-80    roads@0,0,16,16  |traffic@0,0,16,16                              (becomes=128)
-81    roads@0,16,16,16 |traffic@0,16,16,16                             (becomes=129)
-82    roads@0,32,16,16 |traffic@0,0,16,16                              (becomes=130)
-83    roads@0,48,16,16 |traffic@0,16,16,16                             (becomes=131)
-84    roads@0,64,16,16 |traffic@0,64,16,16                             (becomes=132)
-85    roads@0,80,16,16 |traffic@0,80,16,16                             (becomes=133)
-86    roads@0,96,16,16 |traffic@0,96,16,16                             (becomes=134)
-87    roads@0,112,16,16|traffic@0,112,16,16                            (becomes=135)
-88    roads@0,128,16,16|traffic@0,0,16,16                              (becomes=136)
-89    roads@0,144,16,16|traffic@0,16,16,16                             (becomes=137)
-90    roads@0,160,16,16|traffic@0,0,16,16                              (becomes=138)
-91    roads@0,176,16,16|traffic@0,16,16,16                             (becomes=139)
-92    roads@0,192,16,16|traffic@0,192,16,16                            (becomes=140)
-93    roads@0,32,16,16 |traffic@0,0,16,16  |roadwire@0,0,16,16         (becomes=141)
-94    roads@0,48,16,16 |traffic@0,16,16,16 |roadwire@0,16,16,16        (becomes=142)
-95    roads@0,240,16,16                                                (becomes=143)
-96    roads@0,0,16,16  |traffic@16,0,16,16                             (becomes=80)
-97    roads@0,16,16,16 |traffic@16,16,16,16                            (becomes=81)
-98    roads@0,32,16,16 |traffic@16,0,16,16                             (becomes=82)
-99    roads@0,48,16,16 |traffic@16,16,16,16                            (becomes=83)
-100   roads@0,64,16,16 |traffic@16,64,16,16                            (becomes=84)
-101   roads@0,80,16,16 |traffic@16,80,16,16                            (becomes=85)
-102   roads@0,96,16,16 |traffic@16,96,16,16                            (becomes=86)
-103   roads@0,112,16,16|traffic@16,112,16,16                           (becomes=87)
-104   roads@0,128,16,16|traffic@16,0,16,16                             (becomes=88)
-105   roads@0,144,16,16|traffic@16,16,16,16                            (becomes=89)
-106   roads@0,160,16,16|traffic@16,0,16,16                             (becomes=90)
-107   roads@0,176,16,16|traffic@16,16,16,16                            (becomes=91)
-108   roads@0,192,16,16|traffic@16,192,16,16                           (becomes=92)
-109   roads@0,32,16,16 |traffic@16,0,16,16  |roadwire@0,0,16,16        (becomes=93)
-110   roads@0,48,16,16 |traffic@16,16,16,16 |roadwire@0,16,16,16       (becomes=94)
-111   roads@0,240,16,16                                                (becomes=95)
-112   roads@0,0,16,16  |traffic@32,0,16,16                             (becomes=96)
-113   roads@0,16,16,16 |traffic@32,16,16,16                            (becomes=97)
-114   roads@0,32,16,16 |traffic@32,0,16,16                             (becomes=98)
-115   roads@0,48,16,16 |traffic@32,16,16,16                            (becomes=99)
-116   roads@0,64,16,16 |traffic@32,64,16,16                            (becomes=100)
-117   roads@0,80,16,16 |traffic@32,80,16,16                            (becomes=101)
-118   roads@0,96,16,16 |traffic@32,96,16,16                            (becomes=102)
-119   roads@0,112,16,16|traffic@32,112,16,16                           (becomes=103)
-120   roads@0,128,16,16|traffic@32,0,16,16                             (becomes=104)
-121   roads@0,144,16,16|traffic@32,16,16,16                            (becomes=105)
-122   roads@0,160,16,16|traffic@32,0,16,16                             (becomes=106)
-123   roads@0,176,16,16|traffic@32,16,16,16                            (becomes=107)
-124   roads@0,192,16,16|traffic@32,192,16,16                           (becomes=108)
-125   roads@0,32,16,16 |traffic@32,0,16,16  |roadwire@0,0,16,16        (becomes=109)
-126   roads@0,48,16,16 |traffic@32,16,16,16 |roadwire@0,16,16,16       (becomes=110)
-127   roads@0,240,16,16                                                (becomes=111)
-128   roads@0,0,16,16  |traffic@48,0,16,16                             (becomes=112)
-129   roads@0,16,16,16 |traffic@48,16,16,16                            (becomes=113)
-130   roads@0,32,16,16 |traffic@48,0,16,16                             (becomes=114)
-131   roads@0,48,16,16 |traffic@48,16,16,16                            (becomes=115)
-132   roads@0,64,16,16 |traffic@48,64,16,16                            (becomes=116)
-133   roads@0,80,16,16 |traffic@48,80,16,16                            (becomes=117)
-134   roads@0,96,16,16 |traffic@48,96,16,16                            (becomes=118)
-135   roads@0,112,16,16|traffic@48,112,16,16                           (becomes=119)
-136   roads@0,128,16,16|traffic@48,0,16,16                             (becomes=120)
-137   roads@0,144,16,16|traffic@48,16,16,16                            (becomes=121)
-138   roads@0,160,16,16|traffic@48,0,16,16                             (becomes=122)
-139   roads@0,176,16,16|traffic@48,16,16,16                            (becomes=123)
-140   roads@0,192,16,16|traffic@48,192,16,16                           (becomes=124)
-141   roads@0,32,16,16 |traffic@48,0,16,16  |roadwire@0,0,16,16        (becomes=125)
-142   roads@0,48,16,16 |traffic@48,16,16,16 |roadwire@0,16,16,16       (becomes=126)
-143   roads@0,240,16,16                                                (becomes=127)
+80    roads@0,0  |traffic@0,0                              (becomes=128)
+81    roads@0,16 |traffic@0,16                             (becomes=129)
+82    roads@0,32 |traffic@0,0                              (becomes=130)
+83    roads@0,48 |traffic@0,16                             (becomes=131)
+84    roads@0,64 |traffic@0,64                             (becomes=132)
+85    roads@0,80 |traffic@0,80                             (becomes=133)
+86    roads@0,96 |traffic@0,96                             (becomes=134)
+87    roads@0,112|traffic@0,112                            (becomes=135)
+88    roads@0,128|traffic@0,0                              (becomes=136)
+89    roads@0,144|traffic@0,16                             (becomes=137)
+90    roads@0,160|traffic@0,0                              (becomes=138)
+91    roads@0,176|traffic@0,16                             (becomes=139)
+92    roads@0,192|traffic@0,192                            (becomes=140)
+93    roads@0,32 |traffic@0,0  |roadwire@0,0         (becomes=141)
+94    roads@0,48 |traffic@0,16 |roadwire@0,16        (becomes=142)
+95    roads@0,240                                                (becomes=143)
+96    roads@0,0  |traffic@16,0                             (becomes=80)
+97    roads@0,16 |traffic@16,16                            (becomes=81)
+98    roads@0,32 |traffic@16,0                             (becomes=82)
+99    roads@0,48 |traffic@16,16                            (becomes=83)
+100   roads@0,64 |traffic@16,64                            (becomes=84)
+101   roads@0,80 |traffic@16,80                            (becomes=85)
+102   roads@0,96 |traffic@16,96                            (becomes=86)
+103   roads@0,112|traffic@16,112                           (becomes=87)
+104   roads@0,128|traffic@16,0                             (becomes=88)
+105   roads@0,144|traffic@16,16                            (becomes=89)
+106   roads@0,160|traffic@16,0                             (becomes=90)
+107   roads@0,176|traffic@16,16                            (becomes=91)
+108   roads@0,192|traffic@16,192                           (becomes=92)
+109   roads@0,32 |traffic@16,0  |roadwire@0,0        (becomes=93)
+110   roads@0,48 |traffic@16,16 |roadwire@0,16       (becomes=94)
+111   roads@0,240                                                (becomes=95)
+112   roads@0,0  |traffic@32,0                             (becomes=96)
+113   roads@0,16 |traffic@32,16                            (becomes=97)
+114   roads@0,32 |traffic@32,0                             (becomes=98)
+115   roads@0,48 |traffic@32,16                            (becomes=99)
+116   roads@0,64 |traffic@32,64                            (becomes=100)
+117   roads@0,80 |traffic@32,80                            (becomes=101)
+118   roads@0,96 |traffic@32,96                            (becomes=102)
+119   roads@0,112|traffic@32,112                           (becomes=103)
+120   roads@0,128|traffic@32,0                             (becomes=104)
+121   roads@0,144|traffic@32,16                            (becomes=105)
+122   roads@0,160|traffic@32,0                             (becomes=106)
+123   roads@0,176|traffic@32,16                            (becomes=107)
+124   roads@0,192|traffic@32,192                           (becomes=108)
+125   roads@0,32 |traffic@32,0  |roadwire@0,0        (becomes=109)
+126   roads@0,48 |traffic@32,16 |roadwire@0,16       (becomes=110)
+127   roads@0,240                                                (becomes=111)
+128   roads@0,0  |traffic@48,0                             (becomes=112)
+129   roads@0,16 |traffic@48,16                            (becomes=113)
+130   roads@0,32 |traffic@48,0                             (becomes=114)
+131   roads@0,48 |traffic@48,16                            (becomes=115)
+132   roads@0,64 |traffic@48,64                            (becomes=116)
+133   roads@0,80 |traffic@48,80                            (becomes=117)
+134   roads@0,96 |traffic@48,96                            (becomes=118)
+135   roads@0,112|traffic@48,112                           (becomes=119)
+136   roads@0,128|traffic@48,0                             (becomes=120)
+137   roads@0,144|traffic@48,16                            (becomes=121)
+138   roads@0,160|traffic@48,0                             (becomes=122)
+139   roads@0,176|traffic@48,16                            (becomes=123)
+140   roads@0,192|traffic@48,192                           (becomes=124)
+141   roads@0,32 |traffic@48,0  |roadwire@0,0        (becomes=125)
+142   roads@0,48 |traffic@48,16 |roadwire@0,16       (becomes=126)
+143   roads@0,240                                                (becomes=127)
 # BEGIN ROADS WITH HEAVY TRAFFIC #
-144   roads@0,0,16,16  |traffic@64,0,16,16                             (becomes=192)
-145   roads@0,16,16,16 |traffic@64,16,16,16                            (becomes=193)
-146   roads@0,32,16,16 |traffic@64,0,16,16                             (becomes=194)
-147   roads@0,48,16,16 |traffic@64,16,16,16                            (becomes=195)
-148   roads@0,64,16,16 |traffic@64,64,16,16                            (becomes=196)
-149   roads@0,80,16,16 |traffic@64,80,16,16                            (becomes=197)
-150   roads@0,96,16,16 |traffic@64,96,16,16                            (becomes=198)
-151   roads@0,112,16,16|traffic@64,112,16,16                           (becomes=199)
-152   roads@0,128,16,16|traffic@64,0,16,16                             (becomes=200)
-153   roads@0,144,16,16|traffic@64,16,16,16                            (becomes=201)
-154   roads@0,160,16,16|traffic@64,0,16,16                             (becomes=202)
-155   roads@0,176,16,16|traffic@64,16,16,16                            (becomes=203)
-156   roads@0,192,16,16|traffic@64,192,16,16                           (becomes=204)
-157   roads@0,32,16,16 |traffic@64,0,16,16  |roadwire@0,0,16,16        (becomes=205)
-158   roads@0,48,16,16 |traffic@64,16,16,16 |roadwire@0,16,16,16       (becomes=206)
-159   roads@0,240,16,16                                                (becomes=207)
-160   roads@0,0,16,16  |traffic@80,0,16,16                             (becomes=144)
-161   roads@0,16,16,16 |traffic@80,16,16,16                            (becomes=145)
-162   roads@0,32,16,16 |traffic@80,0,16,16                             (becomes=146)
-163   roads@0,48,16,16 |traffic@80,16,16,16                            (becomes=147)
-164   roads@0,64,16,16 |traffic@80,64,16,16                            (becomes=148)
-165   roads@0,80,16,16 |traffic@80,80,16,16                            (becomes=149)
-166   roads@0,96,16,16 |traffic@80,96,16,16                            (becomes=150)
-167   roads@0,112,16,16|traffic@80,112,16,16                           (becomes=151)
-168   roads@0,128,16,16|traffic@80,0,16,16                             (becomes=152)
-169   roads@0,144,16,16|traffic@80,16,16,16                            (becomes=153)
-170   roads@0,160,16,16|traffic@80,0,16,16                             (becomes=154)
-171   roads@0,176,16,16|traffic@80,16,16,16                            (becomes=155)
-172   roads@0,192,16,16|traffic@80,192,16,16                           (becomes=156)
-173   roads@0,32,16,16 |traffic@80,0,16,16  |roadwire@0,0,16,16        (becomes=157)
-174   roads@0,48,16,16 |traffic@80,16,16,16 |roadwire@0,16,16,16       (becomes=158)
-175   roads@0,240,16,16                                                (becomes=159)
-176   roads@0,0,16,16  |traffic@96,0,16,16                             (becomes=160)
-177   roads@0,16,16,16 |traffic@96,16,16,16                            (becomes=161)
-178   roads@0,32,16,16 |traffic@96,0,16,16                             (becomes=162)
-179   roads@0,48,16,16 |traffic@96,16,16,16                            (becomes=163)
-180   roads@0,64,16,16 |traffic@96,64,16,16                            (becomes=164)
-181   roads@0,80,16,16 |traffic@96,80,16,16                            (becomes=165)
-182   roads@0,96,16,16 |traffic@96,96,16,16                            (becomes=166)
-183   roads@0,112,16,16|traffic@96,112,16,16                           (becomes=167)
-184   roads@0,128,16,16|traffic@96,0,16,16                             (becomes=168)
-185   roads@0,144,16,16|traffic@96,16,16,16                            (becomes=169)
-186   roads@0,160,16,16|traffic@96,0,16,16                             (becomes=170)
-187   roads@0,176,16,16|traffic@96,16,16,16                            (becomes=171)
-188   roads@0,192,16,16|traffic@96,192,16,16                           (becomes=172)
-189   roads@0,32,16,16 |traffic@96,0,16,16  |roadwire@0,0,16,16        (becomes=173)
-190   roads@0,48,16,16 |traffic@96,16,16,16 |roadwire@0,16,16,16       (becomes=174)
-191   roads@0,240,16,16                                                (becomes=175)
-192   roads@0,0,16,16  |traffic@112,0,16,16                            (becomes=176)
-193   roads@0,16,16,16 |traffic@112,16,16,16                           (becomes=177)
-194   roads@0,32,16,16 |traffic@112,0,16,16                            (becomes=178)
-195   roads@0,48,16,16 |traffic@112,16,16,16                           (becomes=179)
-196   roads@0,64,16,16 |traffic@112,64,16,16                           (becomes=180)
-197   roads@0,80,16,16 |traffic@112,80,16,16                           (becomes=181)
-198   roads@0,96,16,16 |traffic@112,96,16,16                           (becomes=182)
-199   roads@0,112,16,16|traffic@112,112,16,16                          (becomes=183)
-200   roads@0,128,16,16|traffic@112,0,16,16                            (becomes=184)
-201   roads@0,144,16,16|traffic@112,16,16,16                           (becomes=185)
-202   roads@0,160,16,16|traffic@112,0,16,16                            (becomes=186)
-203   roads@0,176,16,16|traffic@112,16,16,16                           (becomes=187)
-204   roads@0,192,16,16|traffic@112,192,16,16                          (becomes=188)
-205   roads@0,32,16,16 |traffic@112,0,16,16  |roadwire@0,0,16,16       (becomes=189)
-206   roads@0,48,16,16 |traffic@112,16,16,16 |roadwire@0,16,16,16      (becomes=190)
-207   roads@0,240,16,16                                                (becomes=191)
+144   roads@0,0  |traffic@64,0                             (becomes=192)
+145   roads@0,16 |traffic@64,16                            (becomes=193)
+146   roads@0,32 |traffic@64,0                             (becomes=194)
+147   roads@0,48 |traffic@64,16                            (becomes=195)
+148   roads@0,64 |traffic@64,64                            (becomes=196)
+149   roads@0,80 |traffic@64,80                            (becomes=197)
+150   roads@0,96 |traffic@64,96                            (becomes=198)
+151   roads@0,112|traffic@64,112                           (becomes=199)
+152   roads@0,128|traffic@64,0                             (becomes=200)
+153   roads@0,144|traffic@64,16                            (becomes=201)
+154   roads@0,160|traffic@64,0                             (becomes=202)
+155   roads@0,176|traffic@64,16                            (becomes=203)
+156   roads@0,192|traffic@64,192                           (becomes=204)
+157   roads@0,32 |traffic@64,0  |roadwire@0,0        (becomes=205)
+158   roads@0,48 |traffic@64,16 |roadwire@0,16       (becomes=206)
+159   roads@0,240                                                (becomes=207)
+160   roads@0,0  |traffic@80,0                             (becomes=144)
+161   roads@0,16 |traffic@80,16                            (becomes=145)
+162   roads@0,32 |traffic@80,0                             (becomes=146)
+163   roads@0,48 |traffic@80,16                            (becomes=147)
+164   roads@0,64 |traffic@80,64                            (becomes=148)
+165   roads@0,80 |traffic@80,80                            (becomes=149)
+166   roads@0,96 |traffic@80,96                            (becomes=150)
+167   roads@0,112|traffic@80,112                           (becomes=151)
+168   roads@0,128|traffic@80,0                             (becomes=152)
+169   roads@0,144|traffic@80,16                            (becomes=153)
+170   roads@0,160|traffic@80,0                             (becomes=154)
+171   roads@0,176|traffic@80,16                            (becomes=155)
+172   roads@0,192|traffic@80,192                           (becomes=156)
+173   roads@0,32 |traffic@80,0  |roadwire@0,0        (becomes=157)
+174   roads@0,48 |traffic@80,16 |roadwire@0,16       (becomes=158)
+175   roads@0,240                                                (becomes=159)
+176   roads@0,0  |traffic@96,0                             (becomes=160)
+177   roads@0,16 |traffic@96,16                            (becomes=161)
+178   roads@0,32 |traffic@96,0                             (becomes=162)
+179   roads@0,48 |traffic@96,16                            (becomes=163)
+180   roads@0,64 |traffic@96,64                            (becomes=164)
+181   roads@0,80 |traffic@96,80                            (becomes=165)
+182   roads@0,96 |traffic@96,96                            (becomes=166)
+183   roads@0,112|traffic@96,112                           (becomes=167)
+184   roads@0,128|traffic@96,0                             (becomes=168)
+185   roads@0,144|traffic@96,16                            (becomes=169)
+186   roads@0,160|traffic@96,0                             (becomes=170)
+187   roads@0,176|traffic@96,16                            (becomes=171)
+188   roads@0,192|traffic@96,192                           (becomes=172)
+189   roads@0,32 |traffic@96,0  |roadwire@0,0        (becomes=173)
+190   roads@0,48 |traffic@96,16 |roadwire@0,16       (becomes=174)
+191   roads@0,240                                                (becomes=175)
+192   roads@0,0  |traffic@112,0                            (becomes=176)
+193   roads@0,16 |traffic@112,16                           (becomes=177)
+194   roads@0,32 |traffic@112,0                            (becomes=178)
+195   roads@0,48 |traffic@112,16                           (becomes=179)
+196   roads@0,64 |traffic@112,64                           (becomes=180)
+197   roads@0,80 |traffic@112,80                           (becomes=181)
+198   roads@0,96 |traffic@112,96                           (becomes=182)
+199   roads@0,112|traffic@112,112                          (becomes=183)
+200   roads@0,128|traffic@112,0                            (becomes=184)
+201   roads@0,144|traffic@112,16                           (becomes=185)
+202   roads@0,160|traffic@112,0                            (becomes=186)
+203   roads@0,176|traffic@112,16                           (becomes=187)
+204   roads@0,192|traffic@112,192                          (becomes=188)
+205   roads@0,32 |traffic@112,0  |roadwire@0,0       (becomes=189)
+206   roads@0,48 |traffic@112,16 |roadwire@0,16      (becomes=190)
+207   roads@0,240                                                (becomes=191)
 # BEGIN WIRES AND RAILS #
-208   wires@0,0,16,16
-209   wires@0,16,16,16
-210   wires@0,32,16,16
-211   wires@0,48,16,16
-212   wires@0,64,16,16
-213   wires@0,80,16,16
-214   wires@0,96,16,16
-215   wires@0,112,16,16
-216   wires@0,128,16,16
-217   wires@0,144,16,16
-218   wires@0,160,16,16
-219   wires@0,176,16,16
-220   wires@0,192,16,16
-221   wires@0,208,16,16
-222   wires@0,224,16,16
-223   wires@0,240,16,16
-224   rails@0,0,16,16
-225   rails@0,16,16,16
-226   rails@0,32,16,16
-227   rails@0,48,16,16
-228   rails@0,64,16,16
-229   rails@0,80,16,16
-230   rails@0,96,16,16
-231   rails@0,112,16,16
-232   rails@0,128,16,16
-233   rails@0,144,16,16
-234   rails@0,160,16,16
-235   rails@0,176,16,16
-236   rails@0,192,16,16
-237   rails@0,208,16,16
-238   rails@0,224,16,16
-239   rails@0,240,16,16
+208   wires@0,0
+209   wires@0,16
+210   wires@0,32
+211   wires@0,48
+212   wires@0,64
+213   wires@0,80
+214   wires@0,96
+215   wires@0,112
+216   wires@0,128
+217   wires@0,144
+218   wires@0,160
+219   wires@0,176
+220   wires@0,192
+221   wires@0,208
+222   wires@0,224
+223   wires@0,240
+224   rails@0,0
+225   rails@0,16
+226   rails@0,32
+227   rails@0,48
+228   rails@0,64
+229   rails@0,80
+230   rails@0,96
+231   rails@0,112
+232   rails@0,128
+233   rails@0,144
+234   rails@0,160
+235   rails@0,176
+236   rails@0,192
+237   rails@0,208
+238   rails@0,224
+239   rails@0,240
 # BEGIN RESIDENTIAL #
-240   res_zones@0,0,16,16
-241   res_zones@16,0,16,16
-242   res_zones@32,0,16,16
-243   res_zones@0,16,16,16
-244   res_zones@16,16,16,16
-245   res_zones@32,16,16,16
-246   res_zones@0,32,16,16
-247   res_zones@16,32,16,16
-248   res_zones@32,32,16,16
-249   res_houses@0,0,16,16
-250   res_houses@0,16,16,16
-251   res_houses@0,32,16,16
-252   res_houses@0,48,16,16
-253   res_houses@0,64,16,16
-254   res_houses@0,80,16,16
-255   res_houses@0,96,16,16
-256   res_houses@0,112,16,16
-257   res_houses@0,128,16,16
-258   res_houses@0,144,16,16
-259   res_houses@0,160,16,16
-260   res_houses@0,176,16,16
-261   res_zones@0,48,16,16
-262   res_zones@16,48,16,16
-263   res_zones@32,48,16,16
-264   res_zones@0,64,16,16
-265   res_zones@16,64,16,16
-266   res_zones@32,64,16,16
-267   res_zones@0,80,16,16
-268   res_zones@16,80,16,16
-269   res_zones@32,80,16,16
-270   res_zones@0,96,16,16
-271   res_zones@16,96,16,16
-272   res_zones@32,96,16,16
-273   res_zones@0,112,16,16
-274   res_zones@16,112,16,16
-275   res_zones@32,112,16,16
-276   res_zones@0,128,16,16
-277   res_zones@16,128,16,16
-278   res_zones@32,128,16,16
-279   res_zones@0,144,16,16
-280   res_zones@16,144,16,16
-281   res_zones@32,144,16,16
-282   res_zones@0,160,16,16
-283   res_zones@16,160,16,16
-284   res_zones@32,160,16,16
-285   res_zones@0,176,16,16
-286   res_zones@16,176,16,16
-287   res_zones@32,176,16,16
-288   res_zones@0,192,16,16
-289   res_zones@16,192,16,16
-290   res_zones@32,192,16,16
-291   res_zones@0,208,16,16
-292   res_zones@16,208,16,16
-293   res_zones@32,208,16,16
-294   res_zones@0,224,16,16
-295   res_zones@16,224,16,16
-296   res_zones@32,224,16,16
-297   res_zones@0,240,16,16
-298   res_zones@16,240,16,16
-299   res_zones@32,240,16,16
-300   res_zones@0,256,16,16
-301   res_zones@16,256,16,16
-302   res_zones@32,256,16,16
-303   res_zones@0,272,16,16
-304   res_zones@16,272,16,16
-305   res_zones@32,272,16,16
-306   res_zones@0,288,16,16
-307   res_zones@16,288,16,16
-308   res_zones@32,288,16,16
-309   res_zones@0,304,16,16
-310   res_zones@16,304,16,16
-311   res_zones@32,304,16,16
-312   res_zones@0,320,16,16
-313   res_zones@16,320,16,16
-314   res_zones@32,320,16,16
-315   res_zones@0,336,16,16
-316   res_zones@16,336,16,16
-317   res_zones@32,336,16,16
-318   res_zones@0,352,16,16
-319   res_zones@16,352,16,16
-320   res_zones@32,352,16,16
-321   res_zones@0,368,16,16
-322   res_zones@16,368,16,16
-323   res_zones@32,368,16,16
-324   res_zones@0,384,16,16
-325   res_zones@16,384,16,16
-326   res_zones@32,384,16,16
-327   res_zones@0,400,16,16
-328   res_zones@16,400,16,16
-329   res_zones@32,400,16,16
-330   res_zones@0,416,16,16
-331   res_zones@16,416,16,16
-332   res_zones@32,416,16,16
-333   res_zones@0,432,16,16
-334   res_zones@16,432,16,16
-335   res_zones@32,432,16,16
-336   res_zones@0,448,16,16
-337   res_zones@16,448,16,16
-338   res_zones@32,448,16,16
-339   res_zones@0,464,16,16
-340   res_zones@16,464,16,16
-341   res_zones@32,464,16,16
-342   res_zones@0,480,16,16
-343   res_zones@16,480,16,16
-344   res_zones@32,480,16,16
-345   res_zones@0,496,16,16
-346   res_zones@16,496,16,16
-347   res_zones@32,496,16,16
-348   res_zones@0,512,16,16
-349   res_zones@16,512,16,16
-350   res_zones@32,512,16,16
-351   res_zones@0,528,16,16
-352   res_zones@16,528,16,16
-353   res_zones@32,528,16,16
-354   res_zones@0,544,16,16
-355   res_zones@16,544,16,16
-356   res_zones@32,544,16,16
-357   res_zones@0,560,16,16
-358   res_zones@16,560,16,16
-359   res_zones@32,560,16,16
-360   res_zones@0,576,16,16
-361   res_zones@16,576,16,16
-362   res_zones@32,576,16,16
-363   res_zones@0,592,16,16
-364   res_zones@16,592,16,16
-365   res_zones@32,592,16,16
-366   res_zones@0,608,16,16
-367   res_zones@16,608,16,16
-368   res_zones@32,608,16,16
-369   res_zones@0,624,16,16
-370   res_zones@16,624,16,16
-371   res_zones@32,624,16,16
-372   res_zones@0,640,16,16
-373   res_zones@16,640,16,16
-374   res_zones@32,640,16,16
-375   res_zones@0,656,16,16
-376   res_zones@16,656,16,16
-377   res_zones@32,656,16,16
-378   res_zones@0,672,16,16
-379   res_zones@16,672,16,16
-380   res_zones@32,672,16,16
-381   res_zones@0,688,16,16
-382   res_zones@16,688,16,16
-383   res_zones@32,688,16,16
-384   res_zones@0,704,16,16
-385   res_zones@16,704,16,16
-386   res_zones@32,704,16,16
-387   res_zones@0,720,16,16
-388   res_zones@16,720,16,16
-389   res_zones@32,720,16,16
-390   res_zones@0,736,16,16
-391   res_zones@16,736,16,16
-392   res_zones@32,736,16,16
-393   res_zones@0,752,16,16
-394   res_zones@16,752,16,16
-395   res_zones@32,752,16,16
-396   res_zones@0,768,16,16
-397   res_zones@16,768,16,16
-398   res_zones@32,768,16,16
-399   res_zones@0,784,16,16
-400   res_zones@16,784,16,16
-401   res_zones@32,784,16,16
-402   res_zones@0,800,16,16
-403   res_zones@16,800,16,16
-404   res_zones@32,800,16,16
-405   res_zones@0,816,16,16
-406   res_zones@16,816,16,16
-407   res_zones@32,816,16,16
-408   res_zones@0,832,16,16
-409   res_zones@16,832,16,16
-410   res_zones@32,832,16,16
-411   res_zones@0,848,16,16
-412   res_zones@16,848,16,16
-413   res_zones@32,848,16,16
-414   res_zones@0,864,16,16
-415   res_zones@16,864,16,16
-416   res_zones@32,864,16,16
-417   res_zones@0,880,16,16
-418   res_zones@16,880,16,16
-419   res_zones@32,880,16,16
-420   res_zones@0,896,16,16
-421   res_zones@16,896,16,16
-422   res_zones@32,896,16,16
+240   res_zones@0,0
+241   res_zones@16,0
+242   res_zones@32,0
+243   res_zones@0,16
+244   res_zones@16,16
+245   res_zones@32,16
+246   res_zones@0,32
+247   res_zones@16,32
+248   res_zones@32,32
+249   res_houses@0,0
+250   res_houses@0,16
+251   res_houses@0,32
+252   res_houses@0,48
+253   res_houses@0,64
+254   res_houses@0,80
+255   res_houses@0,96
+256   res_houses@0,112
+257   res_houses@0,128
+258   res_houses@0,144
+259   res_houses@0,160
+260   res_houses@0,176
+261   res_zones@0,48
+262   res_zones@16,48
+263   res_zones@32,48
+264   res_zones@0,64
+265   res_zones@16,64
+266   res_zones@32,64
+267   res_zones@0,80
+268   res_zones@16,80
+269   res_zones@32,80
+270   res_zones@0,96
+271   res_zones@16,96
+272   res_zones@32,96
+273   res_zones@0,112
+274   res_zones@16,112
+275   res_zones@32,112
+276   res_zones@0,128
+277   res_zones@16,128
+278   res_zones@32,128
+279   res_zones@0,144
+280   res_zones@16,144
+281   res_zones@32,144
+282   res_zones@0,160
+283   res_zones@16,160
+284   res_zones@32,160
+285   res_zones@0,176
+286   res_zones@16,176
+287   res_zones@32,176
+288   res_zones@0,192
+289   res_zones@16,192
+290   res_zones@32,192
+291   res_zones@0,208
+292   res_zones@16,208
+293   res_zones@32,208
+294   res_zones@0,224
+295   res_zones@16,224
+296   res_zones@32,224
+297   res_zones@0,240
+298   res_zones@16,240
+299   res_zones@32,240
+300   res_zones@0,256
+301   res_zones@16,256
+302   res_zones@32,256
+303   res_zones@0,272
+304   res_zones@16,272
+305   res_zones@32,272
+306   res_zones@0,288
+307   res_zones@16,288
+308   res_zones@32,288
+309   res_zones@0,304
+310   res_zones@16,304
+311   res_zones@32,304
+312   res_zones@0,320
+313   res_zones@16,320
+314   res_zones@32,320
+315   res_zones@0,336
+316   res_zones@16,336
+317   res_zones@32,336
+318   res_zones@0,352
+319   res_zones@16,352
+320   res_zones@32,352
+321   res_zones@0,368
+322   res_zones@16,368
+323   res_zones@32,368
+324   res_zones@0,384
+325   res_zones@16,384
+326   res_zones@32,384
+327   res_zones@0,400
+328   res_zones@16,400
+329   res_zones@32,400
+330   res_zones@0,416
+331   res_zones@16,416
+332   res_zones@32,416
+333   res_zones@0,432
+334   res_zones@16,432
+335   res_zones@32,432
+336   res_zones@0,448
+337   res_zones@16,448
+338   res_zones@32,448
+339   res_zones@0,464
+340   res_zones@16,464
+341   res_zones@32,464
+342   res_zones@0,480
+343   res_zones@16,480
+344   res_zones@32,480
+345   res_zones@0,496
+346   res_zones@16,496
+347   res_zones@32,496
+348   res_zones@0,512
+349   res_zones@16,512
+350   res_zones@32,512
+351   res_zones@0,528
+352   res_zones@16,528
+353   res_zones@32,528
+354   res_zones@0,544
+355   res_zones@16,544
+356   res_zones@32,544
+357   res_zones@0,560
+358   res_zones@16,560
+359   res_zones@32,560
+360   res_zones@0,576
+361   res_zones@16,576
+362   res_zones@32,576
+363   res_zones@0,592
+364   res_zones@16,592
+365   res_zones@32,592
+366   res_zones@0,608
+367   res_zones@16,608
+368   res_zones@32,608
+369   res_zones@0,624
+370   res_zones@16,624
+371   res_zones@32,624
+372   res_zones@0,640
+373   res_zones@16,640
+374   res_zones@32,640
+375   res_zones@0,656
+376   res_zones@16,656
+377   res_zones@32,656
+378   res_zones@0,672
+379   res_zones@16,672
+380   res_zones@32,672
+381   res_zones@0,688
+382   res_zones@16,688
+383   res_zones@32,688
+384   res_zones@0,704
+385   res_zones@16,704
+386   res_zones@32,704
+387   res_zones@0,720
+388   res_zones@16,720
+389   res_zones@32,720
+390   res_zones@0,736
+391   res_zones@16,736
+392   res_zones@32,736
+393   res_zones@0,752
+394   res_zones@16,752
+395   res_zones@32,752
+396   res_zones@0,768
+397   res_zones@16,768
+398   res_zones@32,768
+399   res_zones@0,784
+400   res_zones@16,784
+401   res_zones@32,784
+402   res_zones@0,800
+403   res_zones@16,800
+404   res_zones@32,800
+405   res_zones@0,816
+406   res_zones@16,816
+407   res_zones@32,816
+408   res_zones@0,832
+409   res_zones@16,832
+410   res_zones@32,832
+411   res_zones@0,848
+412   res_zones@16,848
+413   res_zones@32,848
+414   res_zones@0,864
+415   res_zones@16,864
+416   res_zones@32,864
+417   res_zones@0,880
+418   res_zones@16,880
+419   res_zones@32,880
+420   res_zones@0,896
+421   res_zones@16,896
+422   res_zones@32,896
 # BEGIN COMMERCIAL #
-423   com_zones@0,0,16,16
-424   com_zones@16,0,16,16
-425   com_zones@32,0,16,16
-426   com_zones@0,16,16,16
-427   com_zones@16,16,16,16
-428   com_zones@32,16,16,16
-429   com_zones@0,32,16,16
-430   com_zones@16,32,16,16
-431   com_zones@32,32,16,16
-432   com_zones@0,48,16,16
-433   com_zones@16,48,16,16
-434   com_zones@32,48,16,16
-435   com_zones@0,64,16,16
-436   com_zones@16,64,16,16
-437   com_zones@32,64,16,16
-438   com_zones@0,80,16,16
-439   com_zones@16,80,16,16
-440   com_zones@32,80,16,16
-441   com_zones@0,96,16,16
-442   com_zones@16,96,16,16
-443   com_zones@32,96,16,16
-444   com_zones@0,112,16,16
-445   com_zones@16,112,16,16
-446   com_zones@32,112,16,16
-447   com_zones@0,128,16,16
-448   com_zones@16,128,16,16
-449   com_zones@32,128,16,16
-450   com_zones@0,144,16,16
-451   com_zones@16,144,16,16
-452   com_zones@32,144,16,16
-453   com_zones@0,160,16,16
-454   com_zones@16,160,16,16
-455   com_zones@32,160,16,16
-456   com_zones@0,176,16,16
-457   com_zones@16,176,16,16
-458   com_zones@32,176,16,16
-459   com_zones@0,192,16,16
-460   com_zones@16,192,16,16
-461   com_zones@32,192,16,16
-462   com_zones@0,208,16,16
-463   com_zones@16,208,16,16
-464   com_zones@32,208,16,16
-465   com_zones@0,224,16,16
-466   com_zones@16,224,16,16
-467   com_zones@32,224,16,16
-468   com_zones@0,240,16,16
-469   com_zones@16,240,16,16
-470   com_zones@32,240,16,16
-471   com_zones@0,256,16,16
-472   com_zones@16,256,16,16
-473   com_zones@32,256,16,16
-474   com_zones@0,272,16,16
-475   com_zones@16,272,16,16
-476   com_zones@32,272,16,16
-477   com_zones@0,288,16,16
-478   com_zones@16,288,16,16
-479   com_zones@32,288,16,16
-480   com_zones@0,304,16,16
-481   com_zones@16,304,16,16
-482   com_zones@32,304,16,16
-483   com_zones@0,320,16,16
-484   com_zones@16,320,16,16
-485   com_zones@32,320,16,16
-486   com_zones@0,336,16,16
-487   com_zones@16,336,16,16
-488   com_zones@32,336,16,16
-489   com_zones@0,352,16,16
-490   com_zones@16,352,16,16
-491   com_zones@32,352,16,16
-492   com_zones@0,368,16,16
-493   com_zones@16,368,16,16
-494   com_zones@32,368,16,16
-495   com_zones@0,384,16,16
-496   com_zones@16,384,16,16
-497   com_zones@32,384,16,16
-498   com_zones@0,400,16,16
-499   com_zones@16,400,16,16
-500   com_zones@32,400,16,16
-501   com_zones@0,416,16,16
-502   com_zones@16,416,16,16
-503   com_zones@32,416,16,16
-504   com_zones@0,432,16,16
-505   com_zones@16,432,16,16
-506   com_zones@32,432,16,16
-507   com_zones@0,448,16,16
-508   com_zones@16,448,16,16
-509   com_zones@32,448,16,16
-510   com_zones@0,464,16,16
-511   com_zones@16,464,16,16
-512   com_zones@32,464,16,16
-513   com_zones@0,480,16,16
-514   com_zones@16,480,16,16
-515   com_zones@32,480,16,16
-516   com_zones@0,496,16,16
-517   com_zones@16,496,16,16
-518   com_zones@32,496,16,16
-519   com_zones@0,512,16,16
-520   com_zones@16,512,16,16
-521   com_zones@32,512,16,16
-522   com_zones@0,528,16,16
-523   com_zones@16,528,16,16
-524   com_zones@32,528,16,16
-525   com_zones@0,544,16,16
-526   com_zones@16,544,16,16
-527   com_zones@32,544,16,16
-528   com_zones@0,560,16,16
-529   com_zones@16,560,16,16
-530   com_zones@32,560,16,16
-531   com_zones@0,576,16,16
-532   com_zones@16,576,16,16
-533   com_zones@32,576,16,16
-534   com_zones@0,592,16,16
-535   com_zones@16,592,16,16
-536   com_zones@32,592,16,16
-537   com_zones@0,608,16,16
-538   com_zones@16,608,16,16
-539   com_zones@32,608,16,16
-540   com_zones@0,624,16,16
-541   com_zones@16,624,16,16
-542   com_zones@32,624,16,16
-543   com_zones@0,640,16,16
-544   com_zones@16,640,16,16
-545   com_zones@32,640,16,16
-546   com_zones@0,656,16,16
-547   com_zones@16,656,16,16
-548   com_zones@32,656,16,16
-549   com_zones@0,672,16,16
-550   com_zones@16,672,16,16
-551   com_zones@32,672,16,16
-552   com_zones@0,688,16,16
-553   com_zones@16,688,16,16
-554   com_zones@32,688,16,16
-555   com_zones@0,704,16,16
-556   com_zones@16,704,16,16
-557   com_zones@32,704,16,16
-558   com_zones@0,720,16,16
-559   com_zones@16,720,16,16
-560   com_zones@32,720,16,16
-561   com_zones@0,736,16,16
-562   com_zones@16,736,16,16
-563   com_zones@32,736,16,16
-564   com_zones@0,752,16,16
-565   com_zones@16,752,16,16
-566   com_zones@32,752,16,16
-567   com_zones@0,768,16,16
-568   com_zones@16,768,16,16
-569   com_zones@32,768,16,16
-570   com_zones@0,784,16,16
-571   com_zones@16,784,16,16
-572   com_zones@32,784,16,16
-573   com_zones@0,800,16,16
-574   com_zones@16,800,16,16
-575   com_zones@32,800,16,16
-576   com_zones@0,816,16,16
-577   com_zones@16,816,16,16
-578   com_zones@32,816,16,16
-579   com_zones@0,832,16,16
-580   com_zones@16,832,16,16
-581   com_zones@32,832,16,16
-582   com_zones@0,848,16,16
-583   com_zones@16,848,16,16
-584   com_zones@32,848,16,16
-585   com_zones@0,864,16,16
-586   com_zones@16,864,16,16
-587   com_zones@32,864,16,16
-588   com_zones@0,880,16,16
-589   com_zones@16,880,16,16
-590   com_zones@32,880,16,16
-591   com_zones@0,896,16,16
-592   com_zones@16,896,16,16
-593   com_zones@32,896,16,16
-594   com_zones@0,912,16,16
-595   com_zones@16,912,16,16
-596   com_zones@32,912,16,16
-597   com_zones@0,928,16,16
-598   com_zones@16,928,16,16
-599   com_zones@32,928,16,16
-600   com_zones@0,944,16,16
-601   com_zones@16,944,16,16
-602   com_zones@32,944,16,16
-603   com_zones@0,960,16,16
-604   com_zones@16,960,16,16
-605   com_zones@32,960,16,16
-606   com_zones@0,976,16,16
-607   com_zones@16,976,16,16
-608   com_zones@32,976,16,16
-609   com_zones@0,992,16,16
-610   com_zones@16,992,16,16
-611   com_zones@32,992,16,16
+423   com_zones@0,0
+424   com_zones@16,0
+425   com_zones@32,0
+426   com_zones@0,16
+427   com_zones@16,16
+428   com_zones@32,16
+429   com_zones@0,32
+430   com_zones@16,32
+431   com_zones@32,32
+432   com_zones@0,48
+433   com_zones@16,48
+434   com_zones@32,48
+435   com_zones@0,64
+436   com_zones@16,64
+437   com_zones@32,64
+438   com_zones@0,80
+439   com_zones@16,80
+440   com_zones@32,80
+441   com_zones@0,96
+442   com_zones@16,96
+443   com_zones@32,96
+444   com_zones@0,112
+445   com_zones@16,112
+446   com_zones@32,112
+447   com_zones@0,128
+448   com_zones@16,128
+449   com_zones@32,128
+450   com_zones@0,144
+451   com_zones@16,144
+452   com_zones@32,144
+453   com_zones@0,160
+454   com_zones@16,160
+455   com_zones@32,160
+456   com_zones@0,176
+457   com_zones@16,176
+458   com_zones@32,176
+459   com_zones@0,192
+460   com_zones@16,192
+461   com_zones@32,192
+462   com_zones@0,208
+463   com_zones@16,208
+464   com_zones@32,208
+465   com_zones@0,224
+466   com_zones@16,224
+467   com_zones@32,224
+468   com_zones@0,240
+469   com_zones@16,240
+470   com_zones@32,240
+471   com_zones@0,256
+472   com_zones@16,256
+473   com_zones@32,256
+474   com_zones@0,272
+475   com_zones@16,272
+476   com_zones@32,272
+477   com_zones@0,288
+478   com_zones@16,288
+479   com_zones@32,288
+480   com_zones@0,304
+481   com_zones@16,304
+482   com_zones@32,304
+483   com_zones@0,320
+484   com_zones@16,320
+485   com_zones@32,320
+486   com_zones@0,336
+487   com_zones@16,336
+488   com_zones@32,336
+489   com_zones@0,352
+490   com_zones@16,352
+491   com_zones@32,352
+492   com_zones@0,368
+493   com_zones@16,368
+494   com_zones@32,368
+495   com_zones@0,384
+496   com_zones@16,384
+497   com_zones@32,384
+498   com_zones@0,400
+499   com_zones@16,400
+500   com_zones@32,400
+501   com_zones@0,416
+502   com_zones@16,416
+503   com_zones@32,416
+504   com_zones@0,432
+505   com_zones@16,432
+506   com_zones@32,432
+507   com_zones@0,448
+508   com_zones@16,448
+509   com_zones@32,448
+510   com_zones@0,464
+511   com_zones@16,464
+512   com_zones@32,464
+513   com_zones@0,480
+514   com_zones@16,480
+515   com_zones@32,480
+516   com_zones@0,496
+517   com_zones@16,496
+518   com_zones@32,496
+519   com_zones@0,512
+520   com_zones@16,512
+521   com_zones@32,512
+522   com_zones@0,528
+523   com_zones@16,528
+524   com_zones@32,528
+525   com_zones@0,544
+526   com_zones@16,544
+527   com_zones@32,544
+528   com_zones@0,560
+529   com_zones@16,560
+530   com_zones@32,560
+531   com_zones@0,576
+532   com_zones@16,576
+533   com_zones@32,576
+534   com_zones@0,592
+535   com_zones@16,592
+536   com_zones@32,592
+537   com_zones@0,608
+538   com_zones@16,608
+539   com_zones@32,608
+540   com_zones@0,624
+541   com_zones@16,624
+542   com_zones@32,624
+543   com_zones@0,640
+544   com_zones@16,640
+545   com_zones@32,640
+546   com_zones@0,656
+547   com_zones@16,656
+548   com_zones@32,656
+549   com_zones@0,672
+550   com_zones@16,672
+551   com_zones@32,672
+552   com_zones@0,688
+553   com_zones@16,688
+554   com_zones@32,688
+555   com_zones@0,704
+556   com_zones@16,704
+557   com_zones@32,704
+558   com_zones@0,720
+559   com_zones@16,720
+560   com_zones@32,720
+561   com_zones@0,736
+562   com_zones@16,736
+563   com_zones@32,736
+564   com_zones@0,752
+565   com_zones@16,752
+566   com_zones@32,752
+567   com_zones@0,768
+568   com_zones@16,768
+569   com_zones@32,768
+570   com_zones@0,784
+571   com_zones@16,784
+572   com_zones@32,784
+573   com_zones@0,800
+574   com_zones@16,800
+575   com_zones@32,800
+576   com_zones@0,816
+577   com_zones@16,816
+578   com_zones@32,816
+579   com_zones@0,832
+580   com_zones@16,832
+581   com_zones@32,832
+582   com_zones@0,848
+583   com_zones@16,848
+584   com_zones@32,848
+585   com_zones@0,864
+586   com_zones@16,864
+587   com_zones@32,864
+588   com_zones@0,880
+589   com_zones@16,880
+590   com_zones@32,880
+591   com_zones@0,896
+592   com_zones@16,896
+593   com_zones@32,896
+594   com_zones@0,912
+595   com_zones@16,912
+596   com_zones@32,912
+597   com_zones@0,928
+598   com_zones@16,928
+599   com_zones@32,928
+600   com_zones@0,944
+601   com_zones@16,944
+602   com_zones@32,944
+603   com_zones@0,960
+604   com_zones@16,960
+605   com_zones@32,960
+606   com_zones@0,976
+607   com_zones@16,976
+608   com_zones@32,976
+609   com_zones@0,992
+610   com_zones@16,992
+611   com_zones@32,992
 # BEGIN INDUSTRIAL #
-612   ind_zones@0,0,16,16
-613   ind_zones@16,0,16,16
-614   ind_zones@32,0,16,16
-615   ind_zones@0,16,16,16
-616   ind_zones@16,16,16,16
-617   ind_zones@32,16,16,16
-618   ind_zones@0,32,16,16
-619   ind_zones@16,32,16,16
-620   ind_zones@32,32,16,16                                            (becomes=852)
-621   ind_zones@0,48,16,16
-622   ind_zones@16,48,16,16
-623   ind_zones@32,48,16,16
-624   ind_zones@0,64,16,16
-625   ind_zones@16,64,16,16
-626   ind_zones@32,64,16,16
-627   ind_zones@0,80,16,16
-628   ind_zones@16,80,16,16
-629   ind_zones@32,80,16,16
-630   ind_zones@0,96,16,16
-631   ind_zones@16,96,16,16
-632   ind_zones@32,96,16,16
-633   ind_zones@0,112,16,16
-634   ind_zones@16,112,16,16
-635   ind_zones@32,112,16,16
-636   ind_zones@0,128,16,16
-637   ind_zones@16,128,16,16
-638   ind_zones@32,128,16,16
-639   ind_zones@0,144,16,16
-640   ind_zones@16,144,16,16
-641   ind_zones@32,144,16,16                                           (becomes=884)
-642   ind_zones@0,160,16,16
-643   ind_zones@16,160,16,16
-644   ind_zones@32,160,16,16                                           (becomes=888)
-645   ind_zones@0,176,16,16
-646   ind_zones@16,176,16,16
-647   ind_zones@32,176,16,16
-648   ind_zones@0,192,16,16
-649   ind_zones@16,192,16,16                                           (becomes=892)
-650   ind_zones@32,192,16,16                                           (becomes=896)
-651   ind_zones@0,208,16,16
-652   ind_zones@16,208,16,16
-653   ind_zones@32,208,16,16
-654   ind_zones@0,224,16,16
-655   ind_zones@16,224,16,16
-656   ind_zones@32,224,16,16
-657   ind_zones@0,240,16,16
-658   ind_zones@16,240,16,16
-659   ind_zones@32,240,16,16
-660   ind_zones@0,256,16,16
-661   ind_zones@16,256,16,16
-662   ind_zones@32,256,16,16
-663   ind_zones@0,272,16,16
-664   ind_zones@16,272,16,16
-665   ind_zones@32,272,16,16
-666   ind_zones@0,288,16,16
-667   ind_zones@16,288,16,16
-668   ind_zones@32,288,16,16
-669   ind_zones@0,304,16,16
-670   ind_zones@16,304,16,16
-671   ind_zones@32,304,16,16
-672   ind_zones@0,320,16,16
-673   ind_zones@16,320,16,16
-674   ind_zones@32,320,16,16
-675   ind_zones@0,336,16,16
-676   ind_zones@16,336,16,16                                           (becomes=900)
-677   ind_zones@32,336,16,16                                           (becomes=904)
-678   ind_zones@0,352,16,16
-679   ind_zones@16,352,16,16
-680   ind_zones@32,352,16,16
-681   ind_zones@0,368,16,16
-682   ind_zones@16,368,16,16
-683   ind_zones@32,368,16,16
-684   ind_zones@0,384,16,16
-685   ind_zones@16,384,16,16
-686   ind_zones@32,384,16,16                                           (becomes=908)
-687   ind_zones@0,400,16,16
-688   ind_zones@16,400,16,16
-689   ind_zones@32,400,16,16                                           (becomes=912)
-690   ind_zones@0,416,16,16
-691   ind_zones@16,416,16,16
-692   ind_zones@32,416,16,16
+612   ind_zones@0,0
+613   ind_zones@16,0
+614   ind_zones@32,0
+615   ind_zones@0,16
+616   ind_zones@16,16
+617   ind_zones@32,16
+618   ind_zones@0,32
+619   ind_zones@16,32
+620   ind_zones@32,32                                            (becomes=852)
+621   ind_zones@0,48
+622   ind_zones@16,48
+623   ind_zones@32,48
+624   ind_zones@0,64
+625   ind_zones@16,64
+626   ind_zones@32,64
+627   ind_zones@0,80
+628   ind_zones@16,80
+629   ind_zones@32,80
+630   ind_zones@0,96
+631   ind_zones@16,96
+632   ind_zones@32,96
+633   ind_zones@0,112
+634   ind_zones@16,112
+635   ind_zones@32,112
+636   ind_zones@0,128
+637   ind_zones@16,128
+638   ind_zones@32,128
+639   ind_zones@0,144
+640   ind_zones@16,144
+641   ind_zones@32,144                                           (becomes=884)
+642   ind_zones@0,160
+643   ind_zones@16,160
+644   ind_zones@32,160                                           (becomes=888)
+645   ind_zones@0,176
+646   ind_zones@16,176
+647   ind_zones@32,176
+648   ind_zones@0,192
+649   ind_zones@16,192                                           (becomes=892)
+650   ind_zones@32,192                                           (becomes=896)
+651   ind_zones@0,208
+652   ind_zones@16,208
+653   ind_zones@32,208
+654   ind_zones@0,224
+655   ind_zones@16,224
+656   ind_zones@32,224
+657   ind_zones@0,240
+658   ind_zones@16,240
+659   ind_zones@32,240
+660   ind_zones@0,256
+661   ind_zones@16,256
+662   ind_zones@32,256
+663   ind_zones@0,272
+664   ind_zones@16,272
+665   ind_zones@32,272
+666   ind_zones@0,288
+667   ind_zones@16,288
+668   ind_zones@32,288
+669   ind_zones@0,304
+670   ind_zones@16,304
+671   ind_zones@32,304
+672   ind_zones@0,320
+673   ind_zones@16,320
+674   ind_zones@32,320
+675   ind_zones@0,336
+676   ind_zones@16,336                                           (becomes=900)
+677   ind_zones@32,336                                           (becomes=904)
+678   ind_zones@0,352
+679   ind_zones@16,352
+680   ind_zones@32,352
+681   ind_zones@0,368
+682   ind_zones@16,368
+683   ind_zones@32,368
+684   ind_zones@0,384
+685   ind_zones@16,384
+686   ind_zones@32,384                                           (becomes=908)
+687   ind_zones@0,400
+688   ind_zones@16,400
+689   ind_zones@32,400                                           (becomes=912)
+690   ind_zones@0,416
+691   ind_zones@16,416
+692   ind_zones@32,416
 # BEGIN SEAPORT #
-693   seaport@0,0,16,16
-694   seaport@16,0,16,16
-695   seaport@32,0,16,16
-696   seaport@48,0,16,16
-697   seaport@0,16,16,16
-698   seaport@16,16,16,16
-699   seaport@32,16,16,16
-700   seaport@48,16,16,16
-701   seaport@0,32,16,16
-702   seaport@16,32,16,16
-703   seaport@32,32,16,16
-704   seaport@48,32,16,16
-705   seaport@0,48,16,16
-706   seaport@16,48,16,16
-707   seaport@32,48,16,16
-708   seaport@48,48,16,16
+693   seaport@0,0
+694   seaport@16,0
+695   seaport@32,0
+696   seaport@48,0
+697   seaport@0,16
+698   seaport@16,16
+699   seaport@32,16
+700   seaport@48,16
+701   seaport@0,32
+702   seaport@16,32
+703   seaport@32,32
+704   seaport@48,32
+705   seaport@0,48
+706   seaport@16,48
+707   seaport@32,48
+708   seaport@48,48
 # BEGIN AIRPORT #
-709   airport@0,0,16,16
-710   airport@16,0,16,16
-711   airport@32,0,16,16                                               (becomes=832)
-712   airport@48,0,16,16
-713   airport@64,0,16,16
-714   airport@80,0,16,16
-715   airport@0,16,16,16
-716   airport@16,16,16,16
-717   airport@32,16,16,16
-718   airport@48,16,16,16
-719   airport@64,16,16,16
-720   airport@80,16,16,16
-721   airport@0,32,16,16
-722   airport@16,32,16,16
-723   airport@32,32,16,16
-724   airport@48,32,16,16
-725   airport@64,32,16,16
-726   airport@80,32,16,16
-727   airport@0,48,16,16
-728   airport@16,48,16,16
-729   airport@32,48,16,16
-730   airport@48,48,16,16
-731   airport@64,48,16,16
-732   airport@80,48,16,16
-733   airport@0,64,16,16
-734   airport@16,64,16,16
-735   airport@32,64,16,16
-736   airport@48,64,16,16
-737   airport@64,64,16,16
-738   airport@80,64,16,16
-739   airport@0,80,16,16
-740   airport@16,80,16,16
-741   airport@32,80,16,16
-742   airport@48,80,16,16
-743   airport@64,80,16,16
-744   airport@80,80,16,16
+709   airport@0,0
+710   airport@16,0
+711   airport@32,0                                               (becomes=832)
+712   airport@48,0
+713   airport@64,0
+714   airport@80,0
+715   airport@0,16
+716   airport@16,16
+717   airport@32,16
+718   airport@48,16
+719   airport@64,16
+720   airport@80,16
+721   airport@0,32
+722   airport@16,32
+723   airport@32,32
+724   airport@48,32
+725   airport@64,32
+726   airport@80,32
+727   airport@0,48
+728   airport@16,48
+729   airport@32,48
+730   airport@48,48
+731   airport@64,48
+732   airport@80,48
+733   airport@0,64
+734   airport@16,64
+735   airport@32,64
+736   airport@48,64
+737   airport@64,64
+738   airport@80,64
+739   airport@0,80
+740   airport@16,80
+741   airport@32,80
+742   airport@48,80
+743   airport@64,80
+744   airport@80,80
 # BEGIN COAL POWER #
-745   coal@0,0,16,16
-746   coal@16,0,16,16
-747   coal@32,0,16,16                                                  (becomes=916)
-748   coal@48,0,16,16                                                  (becomes=920)
-749   coal@0,16,16,16
-750   coal@16,16,16,16
-751   coal@32,16,16,16                                                 (becomes=924)
-752   coal@48,16,16,16                                                 (becomes=928)
-753   coal@0,32,16,16
-754   coal@16,32,16,16
-755   coal@32,32,16,16
-756   coal@48,32,16,16
-757   coal@0,48,16,16
-758   coal@16,48,16,16
-759   coal@32,48,16,16
-760   coal@48,48,16,16
+745   coal@0,0
+746   coal@16,0
+747   coal@32,0                                                  (becomes=916)
+748   coal@48,0                                                  (becomes=920)
+749   coal@0,16
+750   coal@16,16
+751   coal@32,16                                                 (becomes=924)
+752   coal@48,16                                                 (becomes=928)
+753   coal@0,32
+754   coal@16,32
+755   coal@32,32
+756   coal@48,32
+757   coal@0,48
+758   coal@16,48
+759   coal@32,48
+760   coal@48,48
 # BEGIN FIRE DEPT #
-761   firestation@0,0,16,16
-762   firestation@16,0,16,16
-763   firestation@32,0,16,16
-764   firestation@0,16,16,16
-765   firestation@16,16,16,16
-766   firestation@32,16,16,16
-767   firestation@0,32,16,16
-768   firestation@16,32,16,16
-769   firestation@32,32,16,16
-770   police@0,0,16,16
-771   police@16,0,16,16
-772   police@32,0,16,16
-773   police@0,16,16,16
-774   police@16,16,16,16
-775   police@32,16,16,16
-776   police@0,32,16,16
-777   police@16,32,16,16
-778   police@32,32,16,16
+761   firestation@0,0
+762   firestation@16,0
+763   firestation@32,0
+764   firestation@0,16
+765   firestation@16,16
+766   firestation@32,16
+767   firestation@0,32
+768   firestation@16,32
+769   firestation@32,32
+770   police@0,0
+771   police@16,0
+772   police@32,0
+773   police@0,16
+774   police@16,16
+775   police@32,16
+776   police@0,32
+777   police@16,32
+778   police@32,32
 # BEGIN STADIUM #
-779   stadium@0,0,16,16
-780   stadium@16,0,16,16
-781   stadium@32,0,16,16
-782   stadium@48,0,16,16
-783   stadium@0,16,16,16
-784   stadium@16,16,16,16
-785   stadium@32,16,16,16
-786   stadium@48,16,16,16
-787   stadium@0,32,16,16
-788   stadium@16,32,16,16
-789   stadium@32,32,16,16
-790   stadium@48,32,16,16
-791   stadium@0,48,16,16
-792   stadium@16,48,16,16
-793   stadium@32,48,16,16
-794   stadium@48,48,16,16
+779   stadium@0,0
+780   stadium@16,0
+781   stadium@32,0
+782   stadium@48,0
+783   stadium@0,16
+784   stadium@16,16
+785   stadium@32,16
+786   stadium@48,16
+787   stadium@0,32
+788   stadium@16,32
+789   stadium@32,32
+790   stadium@48,32
+791   stadium@0,48
+792   stadium@16,48
+793   stadium@32,48
+794   stadium@48,48
 # BEGIN STADIUM ANIMS #
-795   stadium2@0,0,16,16
-796   stadium2@16,0,16,16
-797   stadium2@32,0,16,16
-798   stadium2@48,0,16,16
-799   stadium2@0,16,16,16
-800   stadium2@16,16,16,16
-801   stadium2@32,16,16,16
-802   stadium2@48,16,16,16
-803   stadium2@0,32,16,16
-804   stadium2@16,32,16,16
-805   stadium2@32,32,16,16
-806   stadium2@48,32,16,16
-807   stadium2@0,48,16,16
-808   stadium2@16,48,16,16
-809   stadium2@32,48,16,16
-810   stadium2@48,48,16,16
+795   stadium2@0,0
+796   stadium2@16,0
+797   stadium2@32,0
+798   stadium2@48,0
+799   stadium2@0,16
+800   stadium2@16,16
+801   stadium2@32,16
+802   stadium2@48,16
+803   stadium2@0,32
+804   stadium2@16,32
+805   stadium2@32,32
+806   stadium2@48,32
+807   stadium2@0,48
+808   stadium2@16,48
+809   stadium2@32,48
+810   stadium2@48,48
 # BEGIN NUCLEAR POWER #
-811   nuclear@0,0,16,16
-812   nuclear@16,0,16,16
-813   nuclear@32,0,16,16
-814   nuclear@48,0,16,16
-815   nuclear@0,16,16,16
-816   nuclear@16,16,16,16
-817   nuclear@32,16,16,16
-818   nuclear@48,16,16,16
-819   nuclear@0,32,16,16
-820   nuclear@16,32,16,16                                              (becomes=952)
-821   nuclear@32,32,16,16
-822   nuclear@48,32,16,16
-823   nuclear@0,48,16,16
-824   nuclear@16,48,16,16
-825   nuclear@32,48,16,16
-826   nuclear@48,48,16,16
+811   nuclear@0,0
+812   nuclear@16,0
+813   nuclear@32,0
+814   nuclear@48,0
+815   nuclear@0,16
+816   nuclear@16,16
+817   nuclear@32,16
+818   nuclear@48,16
+819   nuclear@0,32
+820   nuclear@16,32                                              (becomes=952)
+821   nuclear@32,32
+822   nuclear@48,32
+823   nuclear@0,48
+824   nuclear@16,48
+825   nuclear@32,48
+826   nuclear@48,48
 # BEGIN POWER OUT + BRIDGES #
-827   misc_animation@0,0,16,16
-828   misc_animation@0,16,16,16
-829   misc_animation@0,32,16,16
-830   misc_animation@0,48,16,16
-831   misc_animation@0,64,16,16
+827   misc_animation@0,0
+828   misc_animation@0,16
+829   misc_animation@0,32
+830   misc_animation@0,48
+831   misc_animation@0,64
 # BEGIN RADAR DISH #
-832   misc_animation@0,80,16,16                                        (becomes=833)
-833   misc_animation@0,96,16,16                                        (becomes=834)
-834   misc_animation@0,112,16,16                                       (becomes=835)
-835   misc_animation@0,128,16,16                                       (becomes=836)
-836   misc_animation@0,144,16,16                                       (becomes=837)
-837   misc_animation@0,160,16,16                                       (becomes=838)
-838   misc_animation@0,176,16,16                                       (becomes=839)
-839   misc_animation@0,192,16,16                                       (becomes=832)
+832   misc_animation@0,80                                        (becomes=833)
+833   misc_animation@0,96                                        (becomes=834)
+834   misc_animation@0,112                                       (becomes=835)
+835   misc_animation@0,128                                       (becomes=836)
+836   misc_animation@0,144                                       (becomes=837)
+837   misc_animation@0,160                                       (becomes=838)
+838   misc_animation@0,176                                       (becomes=839)
+839   misc_animation@0,192                                       (becomes=832)
 # BEGIN FOUNTAIN / FLAG #
-840   misc_animation@0,208,16,16                                       (becomes=841)
-841   misc_animation@0,224,16,16                                       (becomes=842)
-842   misc_animation@0,240,16,16                                       (becomes=843)
-843   misc_animation@0,256,16,16                                       (becomes=840)
-844   misc_animation@0,272,16,16                                       (becomes=845)
-845   misc_animation@0,288,16,16                                       (becomes=846)
-846   misc_animation@0,304,16,16                                       (becomes=847)
-847   misc_animation@0,320,16,16                                       (becomes=848)
-848   misc_animation@0,336,16,16                                       (becomes=849)
-849   misc_animation@0,352,16,16                                       (becomes=850)
-850   misc_animation@0,368,16,16                                       (becomes=851)
-851   misc_animation@0,384,16,16                                       (becomes=844)
-852   misc_animation@0,400,16,16                                       (becomes=853)
-853   misc_animation@0,416,16,16                                       (becomes=854)
-854   misc_animation@0,432,16,16                                       (becomes=855)
-855   misc_animation@0,448,16,16                                       (becomes=856)
-856   misc_animation@0,464,16,16                                       (becomes=857)
-857   misc_animation@0,480,16,16                                       (becomes=858)
-858   misc_animation@0,496,16,16                                       (becomes=859)
-859   misc_animation@0,512,16,16                                       (becomes=852)
+840   misc_animation@0,208                                       (becomes=841)
+841   misc_animation@0,224                                       (becomes=842)
+842   misc_animation@0,240                                       (becomes=843)
+843   misc_animation@0,256                                       (becomes=840)
+844   misc_animation@0,272                                       (becomes=845)
+845   misc_animation@0,288                                       (becomes=846)
+846   misc_animation@0,304                                       (becomes=847)
+847   misc_animation@0,320                                       (becomes=848)
+848   misc_animation@0,336                                       (becomes=849)
+849   misc_animation@0,352                                       (becomes=850)
+850   misc_animation@0,368                                       (becomes=851)
+851   misc_animation@0,384                                       (becomes=844)
+852   misc_animation@0,400                                       (becomes=853)
+853   misc_animation@0,416                                       (becomes=854)
+854   misc_animation@0,432                                       (becomes=855)
+855   misc_animation@0,448                                       (becomes=856)
+856   misc_animation@0,464                                       (becomes=857)
+857   misc_animation@0,480                                       (becomes=858)
+858   misc_animation@0,496                                       (becomes=859)
+859   misc_animation@0,512                                       (becomes=852)
 # BEGIN ZONE DESTRUCT & RUBBLIZE #
-860   misc_animation@0,528,16,16                                       (becomes=861)
-861   misc_animation@0,544,16,16                                       (becomes=862)
-862   misc_animation@0,560,16,16                                       (becomes=863)
-863   misc_animation@0,576,16,16                                       (becomes=864)
-864   misc_animation@0,592,16,16                                       (becomes=865)
-865   misc_animation@0,608,16,16                                       (becomes=866)
-866   misc_animation@0,624,16,16                                       (becomes=867)
-867   misc_animation@0,640,16,16
+860   misc_animation@0,528                                       (becomes=861)
+861   misc_animation@0,544                                       (becomes=862)
+862   misc_animation@0,560                                       (becomes=863)
+863   misc_animation@0,576                                       (becomes=864)
+864   misc_animation@0,592                                       (becomes=865)
+865   misc_animation@0,608                                       (becomes=866)
+866   misc_animation@0,624                                       (becomes=867)
+867   misc_animation@0,640
 # not used
-868   misc_animation@0,656,16,16
-869   misc_animation@0,672,16,16
-870   misc_animation@0,688,16,16
-871   misc_animation@0,704,16,16
-872   misc_animation@0,720,16,16
-873   misc_animation@0,736,16,16
-874   misc_animation@0,752,16,16
-875   misc_animation@0,768,16,16
-876   misc_animation@0,784,16,16
-877   misc_animation@0,800,16,16
-878   misc_animation@0,816,16,16
-879   misc_animation@0,832,16,16
-880   misc_animation@0,848,16,16
-881   misc_animation@0,864,16,16
-882   misc_animation@0,880,16,16
-883   misc_animation@0,896,16,16
+868   misc_animation@0,656
+869   misc_animation@0,672
+870   misc_animation@0,688
+871   misc_animation@0,704
+872   misc_animation@0,720
+873   misc_animation@0,736
+874   misc_animation@0,752
+875   misc_animation@0,768
+876   misc_animation@0,784
+877   misc_animation@0,800
+878   misc_animation@0,816
+879   misc_animation@0,832
+880   misc_animation@0,848
+881   misc_animation@0,864
+882   misc_animation@0,880
+883   misc_animation@0,896
 # BEGIN SMOKE STACKS #
-884   misc_animation@0,912,16,16                                       (becomes=885)
-885   misc_animation@0,928,16,16                                       (becomes=886)
-886   misc_animation@0,944,16,16                                       (becomes=887)
-887   misc_animation@0,960,16,16                                       (becomes=884)
-888   misc_animation@0,976,16,16                                       (becomes=889)
-889   misc_animation@0,992,16,16                                       (becomes=890)
-890   misc_animation@0,1008,16,16                                      (becomes=891)
-891   misc_animation@0,1024,16,16                                      (becomes=888)
-892   misc_animation@0,1040,16,16                                      (becomes=893)
-893   misc_animation@0,1056,16,16                                      (becomes=894)
-894   misc_animation@0,1072,16,16                                      (becomes=895)
-895   misc_animation@0,1088,16,16                                      (becomes=892)
-896   misc_animation@0,1104,16,16                                      (becomes=897)
-897   misc_animation@0,1120,16,16                                      (becomes=898)
-898   misc_animation@0,1136,16,16                                      (becomes=899)
-899   misc_animation@0,1152,16,16                                      (becomes=896)
-900   misc_animation@0,1168,16,16                                      (becomes=901)
-901   misc_animation@0,1184,16,16                                      (becomes=902)
-902   misc_animation@0,1200,16,16                                      (becomes=903)
-903   misc_animation@0,1216,16,16                                      (becomes=900)
-904   misc_animation@0,1232,16,16                                      (becomes=905)
-905   misc_animation@0,1248,16,16                                      (becomes=906)
-906   misc_animation@0,1264,16,16                                      (becomes=907)
-907   misc_animation@0,1280,16,16                                      (becomes=904)
-908   misc_animation@0,1296,16,16                                      (becomes=909)
-909   misc_animation@0,1312,16,16                                      (becomes=910)
-910   misc_animation@0,1328,16,16                                      (becomes=911)
-911   misc_animation@0,1344,16,16                                      (becomes=908)
-912   misc_animation@0,1360,16,16                                      (becomes=913)
-913   misc_animation@0,1376,16,16                                      (becomes=914)
-914   misc_animation@0,1392,16,16                                      (becomes=915)
-915   misc_animation@0,1408,16,16                                      (becomes=912)
-916   misc_animation@0,1424,16,16                                      (becomes=917)
-917   misc_animation@0,1440,16,16                                      (becomes=918)
-918   misc_animation@0,1456,16,16                                      (becomes=919)
-919   misc_animation@0,1472,16,16                                      (becomes=916)
-920   misc_animation@0,1488,16,16                                      (becomes=921)
-921   misc_animation@0,1504,16,16                                      (becomes=922)
-922   misc_animation@0,1520,16,16                                      (becomes=923)
-923   misc_animation@0,1536,16,16                                      (becomes=920)
-924   misc_animation@0,1552,16,16                                      (becomes=925)
-925   misc_animation@0,1568,16,16                                      (becomes=926)
-926   misc_animation@0,1584,16,16                                      (becomes=927)
-927   misc_animation@0,1600,16,16                                      (becomes=924)
-928   misc_animation@0,1616,16,16                                      (becomes=929)
-929   misc_animation@0,1632,16,16                                      (becomes=930)
-930   misc_animation@0,1648,16,16                                      (becomes=931)
-931   misc_animation@0,1664,16,16                                      (becomes=928)
+884   misc_animation@0,912                                       (becomes=885)
+885   misc_animation@0,928                                       (becomes=886)
+886   misc_animation@0,944                                       (becomes=887)
+887   misc_animation@0,960                                       (becomes=884)
+888   misc_animation@0,976                                       (becomes=889)
+889   misc_animation@0,992                                       (becomes=890)
+890   misc_animation@0,1008                                      (becomes=891)
+891   misc_animation@0,1024                                      (becomes=888)
+892   misc_animation@0,1040                                      (becomes=893)
+893   misc_animation@0,1056                                      (becomes=894)
+894   misc_animation@0,1072                                      (becomes=895)
+895   misc_animation@0,1088                                      (becomes=892)
+896   misc_animation@0,1104                                      (becomes=897)
+897   misc_animation@0,1120                                      (becomes=898)
+898   misc_animation@0,1136                                      (becomes=899)
+899   misc_animation@0,1152                                      (becomes=896)
+900   misc_animation@0,1168                                      (becomes=901)
+901   misc_animation@0,1184                                      (becomes=902)
+902   misc_animation@0,1200                                      (becomes=903)
+903   misc_animation@0,1216                                      (becomes=900)
+904   misc_animation@0,1232                                      (becomes=905)
+905   misc_animation@0,1248                                      (becomes=906)
+906   misc_animation@0,1264                                      (becomes=907)
+907   misc_animation@0,1280                                      (becomes=904)
+908   misc_animation@0,1296                                      (becomes=909)
+909   misc_animation@0,1312                                      (becomes=910)
+910   misc_animation@0,1328                                      (becomes=911)
+911   misc_animation@0,1344                                      (becomes=908)
+912   misc_animation@0,1360                                      (becomes=913)
+913   misc_animation@0,1376                                      (becomes=914)
+914   misc_animation@0,1392                                      (becomes=915)
+915   misc_animation@0,1408                                      (becomes=912)
+916   misc_animation@0,1424                                      (becomes=917)
+917   misc_animation@0,1440                                      (becomes=918)
+918   misc_animation@0,1456                                      (becomes=919)
+919   misc_animation@0,1472                                      (becomes=916)
+920   misc_animation@0,1488                                      (becomes=921)
+921   misc_animation@0,1504                                      (becomes=922)
+922   misc_animation@0,1520                                      (becomes=923)
+923   misc_animation@0,1536                                      (becomes=920)
+924   misc_animation@0,1552                                      (becomes=925)
+925   misc_animation@0,1568                                      (becomes=926)
+926   misc_animation@0,1584                                      (becomes=927)
+927   misc_animation@0,1600                                      (becomes=924)
+928   misc_animation@0,1616                                      (becomes=929)
+929   misc_animation@0,1632                                      (becomes=930)
+930   misc_animation@0,1648                                      (becomes=931)
+931   misc_animation@0,1664                                      (becomes=928)
 # BEGIN STADIUM PLAYFIELD #
-932   misc_animation@0,1680,16,16                                      (becomes=933)
-933   misc_animation@0,1696,16,16                                      (becomes=934)
-934   misc_animation@0,1712,16,16                                      (becomes=935)
-935   misc_animation@0,1728,16,16                                      (becomes=936)
-936   misc_animation@0,1744,16,16                                      (becomes=937)
-937   misc_animation@0,1760,16,16                                      (becomes=938)
-938   misc_animation@0,1776,16,16                                      (becomes=939)
-939   misc_animation@0,1792,16,16                                      (becomes=932)
-940   misc_animation@0,1808,16,16                                      (becomes=941)
-941   misc_animation@0,1824,16,16                                      (becomes=942)
-942   misc_animation@0,1840,16,16                                      (becomes=943)
-943   misc_animation@0,1856,16,16                                      (becomes=944)
-944   misc_animation@0,1872,16,16                                      (becomes=945)
-945   misc_animation@0,1888,16,16                                      (becomes=946)
-946   misc_animation@0,1904,16,16                                      (becomes=947)
-947   misc_animation@0,1920,16,16                                      (becomes=940)
+932   misc_animation@0,1680                                      (becomes=933)
+933   misc_animation@0,1696                                      (becomes=934)
+934   misc_animation@0,1712                                      (becomes=935)
+935   misc_animation@0,1728                                      (becomes=936)
+936   misc_animation@0,1744                                      (becomes=937)
+937   misc_animation@0,1760                                      (becomes=938)
+938   misc_animation@0,1776                                      (becomes=939)
+939   misc_animation@0,1792                                      (becomes=932)
+940   misc_animation@0,1808                                      (becomes=941)
+941   misc_animation@0,1824                                      (becomes=942)
+942   misc_animation@0,1840                                      (becomes=943)
+943   misc_animation@0,1856                                      (becomes=944)
+944   misc_animation@0,1872                                      (becomes=945)
+945   misc_animation@0,1888                                      (becomes=946)
+946   misc_animation@0,1904                                      (becomes=947)
+947   misc_animation@0,1920                                      (becomes=940)
 # BEGIN BRIDGE TILES #
-948   misc_animation@0,1936,16,16
-949   misc_animation@0,1952,16,16
-950   misc_animation@0,1968,16,16
-951   misc_animation@0,1984,16,16
+948   misc_animation@0,1936
+949   misc_animation@0,1952
+950   misc_animation@0,1968
+951   misc_animation@0,1984
 # BEGIN NUCLEAR SWIRL #
-952   misc_animation@0,2000,16,16                                      (becomes=953)
-953   misc_animation@0,2016,16,16                                      (becomes=954)
-954   misc_animation@0,2032,16,16                                      (becomes=955)
-955   misc_animation@0,2048,16,16                                      (becomes=952)
-956   misc_animation@0,2064,16,16
-957   misc_animation@0,2080,16,16
-958   misc_animation@0,2096,16,16
-959   misc_animation@0,2112,16,16
+952   misc_animation@0,2000                                      (becomes=953)
+953   misc_animation@0,2016                                      (becomes=954)
+954   misc_animation@0,2032                                      (becomes=955)
+955   misc_animation@0,2048                                      (becomes=952)
+956   misc_animation@0,2064
+957   misc_animation@0,2080
+958   misc_animation@0,2096
+959   misc_animation@0,2112
