@@ -2123,11 +2123,11 @@ public class Micropolis
 			for (int x = 0; x < map[y].length; x++)
 			{
 				char tilevalue = map[y][x];
-				if ((tilevalue & ANIMBIT) != 0)
-				{
+				TileSpec spec = Tiles.get(tilevalue & LOMASK);
+				if (spec != null && spec.animNext != null) {
 					int flags = tilevalue & ALLBITS;
 					setTile(x, y, (char)
-						(Animate.aniTile[tilevalue & LOMASK] | flags)
+						(spec.animNext.tileNumber | flags)
 						);
 				}
 			}

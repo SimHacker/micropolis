@@ -39,7 +39,7 @@ public class MakeTiles
 			String rawSpec = recipe.getProperty(Integer.toString(i));
 			assert rawSpec != null;
 
-			TileSpec tileSpec = TileSpec.parse(rawSpec);
+			TileSpec tileSpec = TileSpec.parse(i, rawSpec);
 			ImageSpec ref = parseImageSpec(tileSpec);
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}

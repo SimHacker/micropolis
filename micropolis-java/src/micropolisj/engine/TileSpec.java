@@ -4,18 +4,21 @@ import java.util.*;
 
 public class TileSpec
 {
+	int tileNumber;
+	TileSpec animNext;
 	Map<String,String> attributes;
 	List<String> images;
 
-	protected TileSpec()
+	protected TileSpec(int tileNumber)
 	{
+		this.tileNumber = tileNumber;
 		this.attributes = new HashMap<String,String>();
 		this.images = new ArrayList<String>();
 	}
 
-	public static TileSpec parse(String inStr)
+	public static TileSpec parse(int tileNumber, String inStr)
 	{
-		TileSpec ts = new TileSpec();
+		TileSpec ts = new TileSpec(tileNumber);
 		ts.load(inStr);
 		return ts;
 	}
