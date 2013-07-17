@@ -54,6 +54,7 @@
 53    terrain@0,848,16,16
 54    terrain@0,864,16,16
 55    terrain@0,880,16,16
+# BEGIN FIRE ANIMATION #
 56    terrain@0,896,16,16                                              (becomes=57)
 57    terrain@0,912,16,16                                              (becomes=58)
 58    terrain@0,928,16,16                                              (becomes=59)
@@ -62,6 +63,7 @@
 61    terrain@0,976,16,16                                              (becomes=62)
 62    terrain@0,992,16,16                                              (becomes=63)
 63    terrain@0,1008,16,16                                             (becomes=56)
+# BEGIN ROADS WITH NO TRAFFIC #
 64    roads@0,0,16,16
 65    roads@0,16,16,16
 66    roads@0,32,16,16
@@ -78,6 +80,7 @@
 77    roads@0,32,16,16  |roadwire@0,0,16,16
 78    roads@0,48,16,16  |roadwire@0,16,16,16
 79    roads@0,240,16,16
+# BEGIN ROADS WITH LIGHT TRAFFIC #
 80    roads@0,0,16,16  |traffic@0,0,16,16                              (becomes=128)
 81    roads@0,16,16,16 |traffic@0,16,16,16                             (becomes=129)
 82    roads@0,32,16,16 |traffic@0,0,16,16                              (becomes=130)
@@ -142,6 +145,7 @@
 141   roads@0,32,16,16 |traffic@48,0,16,16  |roadwire@0,0,16,16        (becomes=125)
 142   roads@0,48,16,16 |traffic@48,16,16,16 |roadwire@0,16,16,16       (becomes=126)
 143   roads@0,240,16,16                                                (becomes=127)
+# BEGIN ROADS WITH HEAVY TRAFFIC #
 144   roads@0,0,16,16  |traffic@64,0,16,16                             (becomes=192)
 145   roads@0,16,16,16 |traffic@64,16,16,16                            (becomes=193)
 146   roads@0,32,16,16 |traffic@64,0,16,16                             (becomes=194)
@@ -206,6 +210,7 @@
 205   roads@0,32,16,16 |traffic@112,0,16,16  |roadwire@0,0,16,16       (becomes=189)
 206   roads@0,48,16,16 |traffic@112,16,16,16 |roadwire@0,16,16,16      (becomes=190)
 207   roads@0,240,16,16                                                (becomes=191)
+# BEGIN WIRES AND RAILS #
 208   wires@0,0,16,16
 209   wires@0,16,16,16
 210   wires@0,32,16,16
@@ -238,6 +243,7 @@
 237   rails@0,208,16,16
 238   rails@0,224,16,16
 239   rails@0,240,16,16
+# BEGIN RESIDENTIAL #
 240   res_zones@0,0,16,16
 241   res_zones@16,0,16,16
 242   res_zones@32,0,16,16
@@ -421,6 +427,7 @@
 420   res_zones@0,896,16,16
 421   res_zones@16,896,16,16
 422   res_zones@32,896,16,16
+# BEGIN COMMERCIAL #
 423   com_zones@0,0,16,16
 424   com_zones@16,0,16,16
 425   com_zones@32,0,16,16
@@ -610,6 +617,7 @@
 609   com_zones@0,992,16,16
 610   com_zones@16,992,16,16
 611   com_zones@32,992,16,16
+# BEGIN INDUSTRIAL #
 612   ind_zones@0,0,16,16
 613   ind_zones@16,0,16,16
 614   ind_zones@32,0,16,16
@@ -691,6 +699,7 @@
 690   ind_zones@0,416,16,16
 691   ind_zones@16,416,16,16
 692   ind_zones@32,416,16,16
+# BEGIN SEAPORT #
 693   seaport@0,0,16,16
 694   seaport@16,0,16,16
 695   seaport@32,0,16,16
@@ -707,6 +716,7 @@
 706   seaport@16,48,16,16
 707   seaport@32,48,16,16
 708   seaport@48,48,16,16
+# BEGIN AIRPORT #
 709   airport@0,0,16,16
 710   airport@16,0,16,16
 711   airport@32,0,16,16                                               (becomes=832)
@@ -743,6 +753,7 @@
 742   airport@48,80,16,16
 743   airport@64,80,16,16
 744   airport@80,80,16,16
+# BEGIN COAL POWER #
 745   coal@0,0,16,16
 746   coal@16,0,16,16
 747   coal@32,0,16,16                                                  (becomes=916)
@@ -759,6 +770,7 @@
 758   coal@16,48,16,16
 759   coal@32,48,16,16
 760   coal@48,48,16,16
+# BEGIN FIRE DEPT #
 761   firestation@0,0,16,16
 762   firestation@16,0,16,16
 763   firestation@32,0,16,16
@@ -777,6 +789,7 @@
 776   police@0,32,16,16
 777   police@16,32,16,16
 778   police@32,32,16,16
+# BEGIN STADIUM #
 779   stadium@0,0,16,16
 780   stadium@16,0,16,16
 781   stadium@32,0,16,16
@@ -793,6 +806,7 @@
 792   stadium@16,48,16,16
 793   stadium@32,48,16,16
 794   stadium@48,48,16,16
+# BEGIN STADIUM ANIMS #
 795   stadium2@0,0,16,16
 796   stadium2@16,0,16,16
 797   stadium2@32,0,16,16
@@ -809,6 +823,7 @@
 808   stadium2@16,48,16,16
 809   stadium2@32,48,16,16
 810   stadium2@48,48,16,16
+# BEGIN NUCLEAR POWER #
 811   nuclear@0,0,16,16
 812   nuclear@16,0,16,16
 813   nuclear@32,0,16,16
@@ -825,11 +840,13 @@
 824   nuclear@16,48,16,16
 825   nuclear@32,48,16,16
 826   nuclear@48,48,16,16
+# BEGIN POWER OUT + BRIDGES #
 827   misc_animation@0,0,16,16
 828   misc_animation@0,16,16,16
 829   misc_animation@0,32,16,16
 830   misc_animation@0,48,16,16
 831   misc_animation@0,64,16,16
+# BEGIN RADAR DISH #
 832   misc_animation@0,80,16,16                                        (becomes=833)
 833   misc_animation@0,96,16,16                                        (becomes=834)
 834   misc_animation@0,112,16,16                                       (becomes=835)
@@ -838,6 +855,7 @@
 837   misc_animation@0,160,16,16                                       (becomes=838)
 838   misc_animation@0,176,16,16                                       (becomes=839)
 839   misc_animation@0,192,16,16                                       (becomes=832)
+# BEGIN FOUNTAIN / FLAG #
 840   misc_animation@0,208,16,16                                       (becomes=841)
 841   misc_animation@0,224,16,16                                       (becomes=842)
 842   misc_animation@0,240,16,16                                       (becomes=843)
@@ -858,6 +876,7 @@
 857   misc_animation@0,480,16,16                                       (becomes=858)
 858   misc_animation@0,496,16,16                                       (becomes=859)
 859   misc_animation@0,512,16,16                                       (becomes=852)
+# BEGIN ZONE DESTRUCT & RUBBLIZE #
 860   misc_animation@0,528,16,16                                       (becomes=861)
 861   misc_animation@0,544,16,16                                       (becomes=862)
 862   misc_animation@0,560,16,16                                       (becomes=863)
@@ -866,6 +885,7 @@
 865   misc_animation@0,608,16,16                                       (becomes=866)
 866   misc_animation@0,624,16,16                                       (becomes=867)
 867   misc_animation@0,640,16,16
+# not used
 868   misc_animation@0,656,16,16
 869   misc_animation@0,672,16,16
 870   misc_animation@0,688,16,16
@@ -882,6 +902,7 @@
 881   misc_animation@0,864,16,16
 882   misc_animation@0,880,16,16
 883   misc_animation@0,896,16,16
+# BEGIN SMOKE STACKS #
 884   misc_animation@0,912,16,16                                       (becomes=885)
 885   misc_animation@0,928,16,16                                       (becomes=886)
 886   misc_animation@0,944,16,16                                       (becomes=887)
@@ -930,6 +951,7 @@
 929   misc_animation@0,1632,16,16                                      (becomes=930)
 930   misc_animation@0,1648,16,16                                      (becomes=931)
 931   misc_animation@0,1664,16,16                                      (becomes=928)
+# BEGIN STADIUM PLAYFIELD #
 932   misc_animation@0,1680,16,16                                      (becomes=933)
 933   misc_animation@0,1696,16,16                                      (becomes=934)
 934   misc_animation@0,1712,16,16                                      (becomes=935)
@@ -946,10 +968,12 @@
 945   misc_animation@0,1888,16,16                                      (becomes=946)
 946   misc_animation@0,1904,16,16                                      (becomes=947)
 947   misc_animation@0,1920,16,16                                      (becomes=940)
+# BEGIN BRIDGE TILES #
 948   misc_animation@0,1936,16,16
 949   misc_animation@0,1952,16,16
 950   misc_animation@0,1968,16,16
 951   misc_animation@0,1984,16,16
+# BEGIN NUCLEAR SWIRL #
 952   misc_animation@0,2000,16,16                                      (becomes=953)
 953   misc_animation@0,2016,16,16                                      (becomes=954)
 954   misc_animation@0,2032,16,16                                      (becomes=955)
