@@ -1964,7 +1964,9 @@ public class Micropolis
 		{
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
-				map[y][x] = (char) dis.readShort();
+				int z = dis.readShort();
+				z &= ~(2048);         // clear ANIMBIT on import
+				map[y][x] = (char) z;
 			}
 		}
 	}
@@ -1976,7 +1978,11 @@ public class Micropolis
 		{
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
-				out.writeShort(map[y][x]);
+				int z = map[y][x];
+				if (isAnimated(z)) {
+					z |= 2048;   //synthesize ANIMBIT on export
+				}
+				out.writeShort(z);
 			}
 		}
 	}

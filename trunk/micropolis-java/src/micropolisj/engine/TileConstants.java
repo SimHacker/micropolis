@@ -283,7 +283,7 @@ public class TileConstants
 	public static boolean isAnimated(int tile)
 	{
 		TileSpec spec = Tiles.get(tile & LOMASK);
-		return spec.animNext != null;
+		return spec != null && spec.animNext != null;
 	}
 
 	//used by setFire()
