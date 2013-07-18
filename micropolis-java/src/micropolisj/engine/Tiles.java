@@ -50,6 +50,11 @@ public class Tiles
 
 	public static TileSpec get(int tileNumber)
 	{
-		return tiles[tileNumber];
+		if (tileNumber >= 0 && tileNumber < tiles.length) {
+			return tiles[tileNumber];
+		}
+		else {
+			return null;
+		}
 	}
 }
