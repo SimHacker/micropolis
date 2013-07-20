@@ -20,10 +20,10 @@ public class TileSpec
 		this.images = new ArrayList<String>();
 	}
 
-	public static TileSpec parse(int tileNumber, String inStr)
+	public static TileSpec parse(int tileNumber, String inStr, Properties tilesRc)
 	{
 		TileSpec ts = new TileSpec(tileNumber);
-		ts.load(inStr);
+		ts.load(inStr, tilesRc);
 		return ts;
 	}
 
@@ -43,7 +43,7 @@ public class TileSpec
 		return images.toArray(new String[0]);
 	}
 
-	protected void load(String inStr)
+	protected void load(String inStr, Properties tilesRc)
 	{
 		Scanner in = new Scanner(inStr);
 
@@ -58,7 +58,17 @@ public class TileSpec
 					v = in.readAttributeValue();
 				}
 				in.eatChar(')');
-				attributes.put(k, v);
+
+				if (!attributes.containsKey(k)) {
+					attributes.put(k, v);
+					String sup = tilesRc.getProperty(k);
+					if (sup != null) {
+						load(sup, tilesRc);
+					}
+				}
+				else {
+					attributes.put(k, v);
+				}
 			}
 
 			else if (in.peekChar() == '|' || in.peekChar() == ',') {
