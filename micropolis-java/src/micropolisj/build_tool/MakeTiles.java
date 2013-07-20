@@ -182,8 +182,7 @@ public class MakeTiles
 
 		String [] cmdline = {
 			inkscapeBin.toString(),
-			"--export-width="+TILE_SIZE,
-			"--export-height="+TILE_SIZE,
+			"--export-dpi="+(TILE_SIZE*90.0/16.0),
 			"--export-png="+pngFile.toString(),
 			svgFile.toString()
 			};
