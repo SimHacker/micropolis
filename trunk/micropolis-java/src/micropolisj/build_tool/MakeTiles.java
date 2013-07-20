@@ -224,6 +224,13 @@ public class MakeTiles
 			}
 		}
 
+		if (pngFile != null && pngFile.exists()) {
+			ImageIcon ii = new ImageIcon(pngFile.toString());
+			return new SourceImage(
+				ii.getImage(),
+				TILE_SIZE);
+		}
+
 		pngFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
 		if (pngFile.exists()) {
 			ImageIcon ii = new ImageIcon(pngFile.toString());
