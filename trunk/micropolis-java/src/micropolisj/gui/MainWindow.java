@@ -996,7 +996,7 @@ public class MainWindow extends JFrame
 
 		int oldZoom = drawingArea.getTileSize();
 		int newZoom = zoomOut ? (oldZoom / 2) : (oldZoom * 2);
-		if (newZoom < 16) { newZoom = 16; }
+		if (newZoom < 8) { newZoom = 8; }
 		if (newZoom > 32) { newZoom = 32; }
 
 		if (oldZoom != newZoom)

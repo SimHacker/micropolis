@@ -29,17 +29,22 @@ public class TileImages
 		this.TILE_WIDTH = size;
 		this.TILE_HEIGHT = size;
 
-		//if (size != 16) {
-		//	this.images = loadTileImages("/tiles_"+size+"x"+size+".png", size);
-		//}
-		//else {
+		if (size != 16) {
+			this.images = loadTileImages("/tiles_"+size+"x"+size+".png", size);
+		}
+		else {
 			this.images = loadTileImages("/tiles.png", 16);
-		//}
+		}
 	}
+
+	static Map<Integer,TileImages> savedInstances = new HashMap<Integer,TileImages>();
 
 	public static TileImages getInstance(int size)
 	{
-		return new TileImages(size);
+		if (!savedInstances.containsKey(size)) {
+			savedInstances.put(size, new TileImages(size));
+		}
+		return savedInstances.get(size);
 	}
 
 	public Image getTileImage(int cell)
