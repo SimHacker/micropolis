@@ -223,9 +223,18 @@ public class MainWindow extends JFrame
 					showErrorMessage(e);
 				}
 			}
+			public void mouseWheelMoved(MouseWheelEvent evt)
+			{
+				try {
+					onMouseWheelMoved(evt);
+				} catch (Throwable e) {
+					showErrorMessage(e);
+				}
+			}
 			};
 		drawingArea.addMouseListener(mouse);
 		drawingArea.addMouseMotionListener(mouse);
+		drawingArea.addMouseWheelListener(mouse);
 
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent ev)
@@ -979,6 +988,28 @@ public class MainWindow extends JFrame
 
 		ZoneStatus z = engine.queryZoneStatus(xpos, ypos);
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
+	}
+
+	private void onMouseWheelMoved(MouseWheelEvent evt)
+	{
+		boolean zoomOut = evt.getWheelRotation() > 0;
+
+		int oldZoom = drawingArea.getTileSize();
+		int newZoom = zoomOut ? (oldZoom / 2) : (oldZoom * 2);
+		if (newZoom < 16) { newZoom = 16; }
+		if (newZoom > 32) { newZoom = 32; }
+
+		if (oldZoom != newZoom)
+		{
+			// preserve effective mouse position in viewport when changing zoom level
+			double f = (double)newZoom / (double)oldZoom;
+			Point pos = drawingAreaScroll.getViewport().getViewPosition();
+			int newX = (int)Math.round(evt.getX() * f - (evt.getX() - pos.x));
+			int newY = (int)Math.round(evt.getY() * f - (evt.getY() - pos.y));
+			drawingArea.selectTileSize(newZoom);
+			drawingAreaScroll.validate();
+			drawingAreaScroll.getViewport().setViewPosition(new Point(newX, newY));
+		}
 	}
 
 	// used when a tool is being pressed

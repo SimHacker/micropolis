@@ -28,7 +28,13 @@ public class TileImages
 	{
 		this.TILE_WIDTH = size;
 		this.TILE_HEIGHT = size;
-		this.images = loadTileImages("/tiles.png");
+
+		//if (size != 16) {
+		//	this.images = loadTileImages("/tiles_"+size+"x"+size+".png", size);
+		//}
+		//else {
+			this.images = loadTileImages("/tiles.png", 16);
+		//}
 	}
 
 	public static TileImages getInstance(int size)
@@ -42,7 +48,7 @@ public class TileImages
 		return images[tile];
 	}
 
-	private Image [] loadTileImages(String resourceName)
+	private Image [] loadTileImages(String resourceName, int srcSize)
 	{
 		URL iconUrl = TileImages.class.getResource(resourceName);
 		Image refImage = new ImageIcon(iconUrl).getImage();
@@ -51,14 +57,14 @@ public class TileImages
 		GraphicsDevice dev = env.getDefaultScreenDevice();
 		GraphicsConfiguration conf = dev.getDefaultConfiguration();
 
-		Image [] images = new Image[refImage.getHeight(null) / TILE_HEIGHT];
+		Image [] images = new Image[refImage.getHeight(null) / srcSize];
 		for (int i = 0; i < images.length; i++)
 		{
 			BufferedImage bi = conf.createCompatibleImage(TILE_WIDTH, TILE_HEIGHT, Transparency.OPAQUE);
 			Graphics2D gr = bi.createGraphics();
 			gr.drawImage(refImage, 0, 0, TILE_WIDTH, TILE_HEIGHT,
-				0, i * TILE_HEIGHT,
-				TILE_WIDTH, (i+1)*TILE_HEIGHT,
+				0, i * srcSize,
+				0 + srcSize, i * srcSize + srcSize,
 				null);
 			
 			images[i] = bi;
