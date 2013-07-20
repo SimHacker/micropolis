@@ -158,14 +158,16 @@ public class MakeTiles
 		throw new Error("INKSCAPE not installed (or not found)");
 	}
 
-	static void renderSvg(File svgFile, File pngFile)
+	static File stagingDir = new File("generated");
+	static File renderSvg(String fileName, File svgFile)
 		throws IOException
 	{
+		File pngFile = new File(stagingDir, fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
 		if (pngFile.exists() &&
 			pngFile.lastModified() > svgFile.lastModified())
 		{
 			// looks like the PNG file is already up-to-date
-			return;
+			return pngFile;
 		}
 
 		File inkscapeBin = findInkscape();
@@ -173,6 +175,9 @@ public class MakeTiles
 		System.out.println("Generating raster image: "+pngFile);
 		if (pngFile.exists()) {
 			pngFile.delete();
+		}
+		else if (!stagingDir.exists()) {
+			stagingDir.mkdir();
 		}
 
 		String [] cmdline = {
@@ -198,26 +203,28 @@ public class MakeTiles
 		if (!pngFile.exists()) {
 			throw new RuntimeException("File not found: "+pngFile);
 		}
+
+		return pngFile;
 	}
 
 	static SourceImage loadImage(String fileName)
 		throws IOException
 	{
-		File svgFile, pngFile;
+		File svgFile, pngFile = null;
 
 		svgFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".svg");
-		pngFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
 
 		if (svgFile.exists()) {
-			renderSvg(svgFile, pngFile);
+			pngFile = renderSvg(fileName, svgFile);
 		}
 		else {
 			svgFile = new File(fileName+".svg");
 			if (svgFile.exists()) {
-				renderSvg(svgFile, pngFile);
+				pngFile = renderSvg(fileName, svgFile);
 			}
 		}
 
+		pngFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
 		if (pngFile.exists()) {
 			ImageIcon ii = new ImageIcon(pngFile.toString());
 			return new SourceImage(
