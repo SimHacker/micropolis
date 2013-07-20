@@ -1965,7 +1965,7 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = dis.readShort();
-				z &= ~(2048);         // clear ANIMBIT on import
+				z &= ~(1024 | 2048);         // clear ZONEBIT,ANIMBIT on import
 				map[y][x] = (char) z;
 			}
 		}
@@ -1981,6 +1981,9 @@ public class Micropolis
 				int z = map[y][x];
 				if (isAnimated(z)) {
 					z |= 2048;   //synthesize ANIMBIT on export
+				}
+				if (isZoneCenter(z)) {
+					z |= 1024;   //synthesize ZONEBIT
 				}
 				out.writeShort(z);
 			}

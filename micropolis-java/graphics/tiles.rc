@@ -248,7 +248,7 @@
 241   res_zones@16,0
 242   res_zones@32,0
 243   res_zones@0,16
-244   res_zones@16,16
+244   res_zones@16,16 (zone)
 245   res_zones@32,16
 246   res_zones@0,32
 247   res_zones@16,32
@@ -269,7 +269,7 @@
 262   res_zones@16,48
 263   res_zones@32,48
 264   res_zones@0,64
-265   res_zones@16,64
+265   res_zones@16,64 (zone)
 266   res_zones@32,64
 267   res_zones@0,80
 268   res_zones@16,80
@@ -278,7 +278,7 @@
 271   res_zones@16,96
 272   res_zones@32,96
 273   res_zones@0,112
-274   res_zones@16,112
+274   res_zones@16,112 (zone)
 275   res_zones@32,112
 276   res_zones@0,128
 277   res_zones@16,128
@@ -287,7 +287,7 @@
 280   res_zones@16,144
 281   res_zones@32,144
 282   res_zones@0,160
-283   res_zones@16,160
+283   res_zones@16,160 (zone)
 284   res_zones@32,160
 285   res_zones@0,176
 286   res_zones@16,176
@@ -296,7 +296,7 @@
 289   res_zones@16,192
 290   res_zones@32,192
 291   res_zones@0,208
-292   res_zones@16,208
+292   res_zones@16,208 (zone)
 293   res_zones@32,208
 294   res_zones@0,224
 295   res_zones@16,224
@@ -305,7 +305,7 @@
 298   res_zones@16,240
 299   res_zones@32,240
 300   res_zones@0,256
-301   res_zones@16,256
+301   res_zones@16,256 (zone)
 302   res_zones@32,256
 303   res_zones@0,272
 304   res_zones@16,272
@@ -314,7 +314,7 @@
 307   res_zones@16,288
 308   res_zones@32,288
 309   res_zones@0,304
-310   res_zones@16,304
+310   res_zones@16,304 (zone)
 311   res_zones@32,304
 312   res_zones@0,320
 313   res_zones@16,320
@@ -323,7 +323,7 @@
 316   res_zones@16,336
 317   res_zones@32,336
 318   res_zones@0,352
-319   res_zones@16,352
+319   res_zones@16,352 (zone)
 320   res_zones@32,352
 321   res_zones@0,368
 322   res_zones@16,368
@@ -332,7 +332,7 @@
 325   res_zones@16,384
 326   res_zones@32,384
 327   res_zones@0,400
-328   res_zones@16,400
+328   res_zones@16,400 (zone)
 329   res_zones@32,400
 330   res_zones@0,416
 331   res_zones@16,416
@@ -341,7 +341,7 @@
 334   res_zones@16,432
 335   res_zones@32,432
 336   res_zones@0,448
-337   res_zones@16,448
+337   res_zones@16,448 (zone)
 338   res_zones@32,448
 339   res_zones@0,464
 340   res_zones@16,464
@@ -350,7 +350,7 @@
 343   res_zones@16,480
 344   res_zones@32,480
 345   res_zones@0,496
-346   res_zones@16,496
+346   res_zones@16,496 (zone)
 347   res_zones@32,496
 348   res_zones@0,512
 349   res_zones@16,512
@@ -359,7 +359,7 @@
 352   res_zones@16,528
 353   res_zones@32,528
 354   res_zones@0,544
-355   res_zones@16,544
+355   res_zones@16,544 (zone)
 356   res_zones@32,544
 357   res_zones@0,560
 358   res_zones@16,560
@@ -368,7 +368,7 @@
 361   res_zones@16,576
 362   res_zones@32,576
 363   res_zones@0,592
-364   res_zones@16,592
+364   res_zones@16,592 (zone)
 365   res_zones@32,592
 366   res_zones@0,608
 367   res_zones@16,608
@@ -377,7 +377,7 @@
 370   res_zones@16,624
 371   res_zones@32,624
 372   res_zones@0,640
-373   res_zones@16,640
+373   res_zones@16,640 (zone)
 374   res_zones@32,640
 375   res_zones@0,656
 376   res_zones@16,656
@@ -386,7 +386,7 @@
 379   res_zones@16,672
 380   res_zones@32,672
 381   res_zones@0,688
-382   res_zones@16,688
+382   res_zones@16,688 (zone)
 383   res_zones@32,688
 384   res_zones@0,704
 385   res_zones@16,704
@@ -395,7 +395,7 @@
 388   res_zones@16,720
 389   res_zones@32,720
 390   res_zones@0,736
-391   res_zones@16,736
+391   res_zones@16,736 (zone)
 392   res_zones@32,736
 393   res_zones@0,752
 394   res_zones@16,752
@@ -404,7 +404,7 @@
 397   res_zones@16,768
 398   res_zones@32,768
 399   res_zones@0,784
-400   res_zones@16,784
+400   res_zones@16,784 (zone)
 401   res_zones@32,784
 402   res_zones@0,800
 403   res_zones@16,800
@@ -413,7 +413,7 @@
 406   res_zones@16,816
 407   res_zones@32,816
 408   res_zones@0,832
-409   res_zones@16,832
+409   res_zones@16,832 (zone)
 410   res_zones@32,832
 411   res_zones@0,848
 412   res_zones@16,848
@@ -422,7 +422,7 @@
 415   res_zones@16,864
 416   res_zones@32,864
 417   res_zones@0,880
-418   res_zones@16,880
+418   res_zones@16,880 (zone)
 419   res_zones@32,880
 420   res_zones@0,896
 421   res_zones@16,896
@@ -432,7 +432,7 @@
 424   com_zones@16,0
 425   com_zones@32,0
 426   com_zones@0,16
-427   com_zones@16,16
+427   com_zones@16,16 (zone)
 428   com_zones@32,16
 429   com_zones@0,32
 430   com_zones@16,32
@@ -441,7 +441,7 @@
 433   com_zones@16,48
 434   com_zones@32,48
 435   com_zones@0,64
-436   com_zones@16,64
+436   com_zones@16,64 (zone)
 437   com_zones@32,64
 438   com_zones@0,80
 439   com_zones@16,80
@@ -450,7 +450,7 @@
 442   com_zones@16,96
 443   com_zones@32,96
 444   com_zones@0,112
-445   com_zones@16,112
+445   com_zones@16,112 (zone)
 446   com_zones@32,112
 447   com_zones@0,128
 448   com_zones@16,128
@@ -459,7 +459,7 @@
 451   com_zones@16,144
 452   com_zones@32,144
 453   com_zones@0,160
-454   com_zones@16,160
+454   com_zones@16,160 (zone)
 455   com_zones@32,160
 456   com_zones@0,176
 457   com_zones@16,176
@@ -468,7 +468,7 @@
 460   com_zones@16,192
 461   com_zones@32,192
 462   com_zones@0,208
-463   com_zones@16,208
+463   com_zones@16,208 (zone)
 464   com_zones@32,208
 465   com_zones@0,224
 466   com_zones@16,224
@@ -477,7 +477,7 @@
 469   com_zones@16,240
 470   com_zones@32,240
 471   com_zones@0,256
-472   com_zones@16,256
+472   com_zones@16,256 (zone)
 473   com_zones@32,256
 474   com_zones@0,272
 475   com_zones@16,272
@@ -486,7 +486,7 @@
 478   com_zones@16,288
 479   com_zones@32,288
 480   com_zones@0,304
-481   com_zones@16,304
+481   com_zones@16,304 (zone)
 482   com_zones@32,304
 483   com_zones@0,320
 484   com_zones@16,320
@@ -495,7 +495,7 @@
 487   com_zones@16,336
 488   com_zones@32,336
 489   com_zones@0,352
-490   com_zones@16,352
+490   com_zones@16,352 (zone)
 491   com_zones@32,352
 492   com_zones@0,368
 493   com_zones@16,368
@@ -504,7 +504,7 @@
 496   com_zones@16,384
 497   com_zones@32,384
 498   com_zones@0,400
-499   com_zones@16,400
+499   com_zones@16,400 (zone)
 500   com_zones@32,400
 501   com_zones@0,416
 502   com_zones@16,416
@@ -513,7 +513,7 @@
 505   com_zones@16,432
 506   com_zones@32,432
 507   com_zones@0,448
-508   com_zones@16,448
+508   com_zones@16,448 (zone)
 509   com_zones@32,448
 510   com_zones@0,464
 511   com_zones@16,464
@@ -522,7 +522,7 @@
 514   com_zones@16,480
 515   com_zones@32,480
 516   com_zones@0,496
-517   com_zones@16,496
+517   com_zones@16,496 (zone)
 518   com_zones@32,496
 519   com_zones@0,512
 520   com_zones@16,512
@@ -531,7 +531,7 @@
 523   com_zones@16,528
 524   com_zones@32,528
 525   com_zones@0,544
-526   com_zones@16,544
+526   com_zones@16,544 (zone)
 527   com_zones@32,544
 528   com_zones@0,560
 529   com_zones@16,560
@@ -540,7 +540,7 @@
 532   com_zones@16,576
 533   com_zones@32,576
 534   com_zones@0,592
-535   com_zones@16,592
+535   com_zones@16,592 (zone)
 536   com_zones@32,592
 537   com_zones@0,608
 538   com_zones@16,608
@@ -549,7 +549,7 @@
 541   com_zones@16,624
 542   com_zones@32,624
 543   com_zones@0,640
-544   com_zones@16,640
+544   com_zones@16,640 (zone)
 545   com_zones@32,640
 546   com_zones@0,656
 547   com_zones@16,656
@@ -558,7 +558,7 @@
 550   com_zones@16,672
 551   com_zones@32,672
 552   com_zones@0,688
-553   com_zones@16,688
+553   com_zones@16,688 (zone)
 554   com_zones@32,688
 555   com_zones@0,704
 556   com_zones@16,704
@@ -567,7 +567,7 @@
 559   com_zones@16,720
 560   com_zones@32,720
 561   com_zones@0,736
-562   com_zones@16,736
+562   com_zones@16,736 (zone)
 563   com_zones@32,736
 564   com_zones@0,752
 565   com_zones@16,752
@@ -576,7 +576,7 @@
 568   com_zones@16,768
 569   com_zones@32,768
 570   com_zones@0,784
-571   com_zones@16,784
+571   com_zones@16,784 (zone)
 572   com_zones@32,784
 573   com_zones@0,800
 574   com_zones@16,800
@@ -585,7 +585,7 @@
 577   com_zones@16,816
 578   com_zones@32,816
 579   com_zones@0,832
-580   com_zones@16,832
+580   com_zones@16,832 (zone)
 581   com_zones@32,832
 582   com_zones@0,848
 583   com_zones@16,848
@@ -594,7 +594,7 @@
 586   com_zones@16,864
 587   com_zones@32,864
 588   com_zones@0,880
-589   com_zones@16,880
+589   com_zones@16,880 (zone)
 590   com_zones@32,880
 591   com_zones@0,896
 592   com_zones@16,896
@@ -603,7 +603,7 @@
 595   com_zones@16,912
 596   com_zones@32,912
 597   com_zones@0,928
-598   com_zones@16,928
+598   com_zones@16,928 (zone)
 599   com_zones@32,928
 600   com_zones@0,944
 601   com_zones@16,944
@@ -612,7 +612,7 @@
 604   com_zones@16,960
 605   com_zones@32,960
 606   com_zones@0,976
-607   com_zones@16,976
+607   com_zones@16,976 (zone)
 608   com_zones@32,976
 609   com_zones@0,992
 610   com_zones@16,992
@@ -622,7 +622,7 @@
 613   ind_zones@16,0
 614   ind_zones@32,0
 615   ind_zones@0,16
-616   ind_zones@16,16
+616   ind_zones@16,16 (zone)
 617   ind_zones@32,16
 618   ind_zones@0,32
 619   ind_zones@16,32
@@ -631,7 +631,7 @@
 622   ind_zones@16,48
 623   ind_zones@32,48
 624   ind_zones@0,64
-625   ind_zones@16,64
+625   ind_zones@16,64 (zone)
 626   ind_zones@32,64
 627   ind_zones@0,80
 628   ind_zones@16,80
@@ -640,7 +640,7 @@
 631   ind_zones@16,96
 632   ind_zones@32,96
 633   ind_zones@0,112
-634   ind_zones@16,112
+634   ind_zones@16,112 (zone)
 635   ind_zones@32,112
 636   ind_zones@0,128
 637   ind_zones@16,128
@@ -649,7 +649,7 @@
 640   ind_zones@16,144
 641   ind_zones@32,144
 642   ind_zones@0,160
-643   ind_zones@16,160
+643   ind_zones@16,160 (zone)
 644   ind_zones@32,160
 645   ind_zones@0,176
 646   ind_zones@16,176
@@ -658,7 +658,7 @@
 649   ind_zones@16,192
 650   ind_zones@32,192
 651   ind_zones@0,208
-652   ind_zones@16,208
+652   ind_zones@16,208 (zone)
 653   ind_zones@32,208
 654   ind_zones@0,224
 655   ind_zones@16,224
@@ -667,7 +667,7 @@
 658   ind_zones@16,240
 659   ind_zones@32,240
 660   ind_zones@0,256
-661   ind_zones@16,256
+661   ind_zones@16,256 (zone)
 662   ind_zones@32,256
 663   ind_zones@0,272
 664   ind_zones@16,272
@@ -676,7 +676,7 @@
 667   ind_zones@16,288
 668   ind_zones@32,288
 669   ind_zones@0,304
-670   ind_zones@16,304
+670   ind_zones@16,304 (zone)
 671   ind_zones@32,304
 672   ind_zones@0,320
 673   ind_zones@16,320
@@ -685,7 +685,7 @@
 676   ind_zones@16,336
 677   ind_zones@32,336
 678   ind_zones@0,352
-679   ind_zones@16,352
+679   ind_zones@16,352 (zone)
 680   ind_zones@32,352
 681   ind_zones@0,368
 682   ind_zones@16,368
@@ -694,7 +694,7 @@
 685   ind_zones@16,384
 686   ind_zones@32,384
 687   ind_zones@0,400
-688   ind_zones@16,400
+688   ind_zones@16,400 (zone)
 689   ind_zones@32,400
 690   ind_zones@0,416
 691   ind_zones@16,416
@@ -705,7 +705,7 @@
 695   seaport@32,0
 696   seaport@48,0
 697   seaport@0,16
-698   seaport@16,16
+698   seaport@16,16 (zone)
 699   seaport@32,16
 700   seaport@48,16
 701   seaport@0,32
@@ -724,7 +724,7 @@
 713   airport@64,0
 714   airport@80,0
 715   airport@0,16
-716   airport@16,16
+716   airport@16,16 (zone)
 717   airport@32,16
 718   airport@48,16
 719   airport@64,16
@@ -759,7 +759,7 @@
 747   coal@32,0                                                  (becomes=916)
 748   coal@48,0                                                  (becomes=920)
 749   coal@0,16
-750   coal@16,16
+750   coal@16,16 (zone)
 751   coal@32,16                                                 (becomes=924)
 752   coal@48,16                                                 (becomes=928)
 753   coal@0,32
@@ -775,7 +775,7 @@
 762   firestation@16,0
 763   firestation@32,0
 764   firestation@0,16
-765   firestation@16,16
+765   firestation@16,16 (zone)
 766   firestation@32,16
 767   firestation@0,32
 768   firestation@16,32
@@ -784,7 +784,7 @@
 771   police@16,0
 772   police@32,0
 773   police@0,16
-774   police@16,16
+774   police@16,16 (zone)
 775   police@32,16
 776   police@0,32
 777   police@16,32
@@ -795,7 +795,7 @@
 781   stadium@32,0
 782   stadium@48,0
 783   stadium@0,16
-784   stadium@16,16
+784   stadium@16,16 (zone)
 785   stadium@32,16
 786   stadium@48,16
 787   stadium@0,32
@@ -812,7 +812,7 @@
 797   stadium2@32,0
 798   stadium2@48,0
 799   stadium2@0,16
-800   stadium2@16,16
+800   stadium2@16,16 (zone)
 801   stadium2@32,16
 802   stadium2@48,16
 803   stadium2@0,32
@@ -829,7 +829,7 @@
 813   nuclear@32,0
 814   nuclear@48,0
 815   nuclear@0,16
-816   nuclear@16,16
+816   nuclear@16,16 (zone)
 817   nuclear@32,16
 818   nuclear@48,16
 819   nuclear@0,32

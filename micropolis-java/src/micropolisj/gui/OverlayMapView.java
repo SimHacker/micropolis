@@ -256,7 +256,7 @@ public class OverlayMapView extends JComponent
 		if ((rawTile & LOMASK) <= 63) {
 			return rawTile & LOMASK;
 		}
-		else if ((rawTile & ZONEBIT) != 0) {
+		else if (isZoneCenter(rawTile)) {
 			// zone
 			pix = ((rawTile & PWRBIT) != 0) ? POWERED : UNPOWERED;
 		}

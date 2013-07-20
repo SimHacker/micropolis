@@ -6,6 +6,8 @@ public class TileSpec
 {
 	int tileNumber;
 	TileSpec animNext;
+	boolean zone;
+
 	Map<String,String> attributes;
 	List<String> images;
 
@@ -28,6 +30,12 @@ public class TileSpec
 		return attributes.get(key);
 	}
 
+	public boolean getBooleanAttribute(String key)
+	{
+		String v = getAttribute(key);
+		return (v != null && v.equals("true"));
+	}
+
 	public String [] getImages()
 	{
 		return images.toArray(new String[0]);
@@ -42,7 +50,7 @@ public class TileSpec
 			if (in.peekChar() == '(') {
 				in.eatChar('(');
 				String k = in.readAttributeKey();
-				String v = "1";
+				String v = "true";
 				if (in.peekChar() == '=') {
 					in.eatChar('=');
 					v = in.readAttributeValue();
@@ -60,6 +68,8 @@ public class TileSpec
 				images.add(v);
 			}
 		}
+
+		this.zone = getBooleanAttribute("zone");
 	}
 
 	static class Scanner

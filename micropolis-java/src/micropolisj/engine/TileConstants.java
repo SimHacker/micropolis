@@ -213,7 +213,7 @@ public class TileConstants
 	public static final char BURNBIT = 8192;  // bit 13 ... is combustible
 	public static final char BULLBIT = 4096;  // bit 12 ... is bulldozable
 	// bit 11 ... unused
-	public static final char ZONEBIT = 1024;  // bit 10 ... is the special tile for a zone
+	// bit 10 ... unused
 
 	public static final char ALLBITS = 64512;   // mask for upper 6 bits
 	public static final char LOMASK = 1023; //mask for low 10 bits
@@ -290,7 +290,7 @@ public class TileConstants
 	public static boolean isArsonable(int tile)
 	{
 		return (
-			(tile & ZONEBIT) == 0 &&
+			!isZoneCenter(tile) &&
 			(tile & LOMASK) >= LHTHR &&
 			(tile & LOMASK) <= LASTZONE
 			);
@@ -372,7 +372,7 @@ public class TileConstants
 		int tem2 = tile & LOMASK;
 		if (tem2 < RESBASE ||
 			tem2 > LASTZONE ||
-			(tile & ZONEBIT) != 0
+			isZoneCenter(tile)
 			) {
 			return false;
 		} else {
@@ -473,7 +473,8 @@ public class TileConstants
 
 	public static boolean isZoneCenter(int tile)
 	{
-		return tile >= 0 && (tile & ZONEBIT) != 0;
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec != null && spec.zone;
 	}
 
 	/**
