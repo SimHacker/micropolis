@@ -70,7 +70,7 @@ public class TileSpec
 			}
 		}
 
-		this.canBurn = getBooleanAttribute("noburn");
+		this.canBurn = !getBooleanAttribute("noburn");
 		this.zone = getBooleanAttribute("zone");
 	}
 
