@@ -1,24 +1,24 @@
-0     terrain@0,0
-1     terrain@0,16
-2     terrain@0,32
-3     terrain@0,48
-4     terrain@0,64
-5     terrain@0,80
-6     terrain@0,96
-7     terrain@0,112
-8     terrain@0,128
-9     terrain@0,144
-10    terrain@0,160
-11    terrain@0,176
-12    terrain@0,192
-13    terrain@0,208
-14    terrain@0,224
-15    terrain@0,240
-16    terrain@0,256
-17    terrain@0,272
-18    terrain@0,288
-19    terrain@0,304
-20    terrain@0,320
+0     terrain@0,0                     (noburn)
+1     terrain@0,16                    (noburn)
+2     terrain@0,32                    (noburn)
+3     terrain@0,48                    (noburn)
+4     terrain@0,64                    (noburn)
+5     terrain@0,80                    (noburn)
+6     terrain@0,96                    (noburn)
+7     terrain@0,112                   (noburn)
+8     terrain@0,128                   (noburn)
+9     terrain@0,144                   (noburn)
+10    terrain@0,160                   (noburn)
+11    terrain@0,176                   (noburn)
+12    terrain@0,192                   (noburn)
+13    terrain@0,208                   (noburn)
+14    terrain@0,224                   (noburn)
+15    terrain@0,240                   (noburn)
+16    terrain@0,256                   (noburn)
+17    terrain@0,272                   (noburn)
+18    terrain@0,288                   (noburn)
+19    terrain@0,304                   (noburn)
+20    terrain@0,320                   (noburn)
 21    terrain@0,336
 22    terrain@0,352
 23    terrain@0,368
@@ -36,33 +36,38 @@
 35    terrain@0,560
 36    terrain@0,576
 37    terrain@0,592
+# unused
 38    terrain@0,608
 39    terrain@0,624
+# BEGIN WOODS (4 frames) #
 40    terrain@0,640
 41    terrain@0,656
 42    terrain@0,672
 43    terrain@0,688
-44    terrain@0,704
-45    terrain@0,720
-46    terrain@0,736
-47    terrain@0,752
-48    terrain@0,768
-49    terrain@0,784
-50    terrain@0,800
-51    terrain@0,816
-52    terrain@0,832
-53    terrain@0,848
-54    terrain@0,864
-55    terrain@0,880
+# BEGIN RUBBLE (4 frames) #
+44    terrain@0,704     (noburn)
+45    terrain@0,720     (noburn)
+46    terrain@0,736     (noburn)
+47    terrain@0,752     (noburn)
+# BEGIN FLOODING (4 frames) #
+48    terrain@0,768     (noburn)
+49    terrain@0,784     (noburn)
+50    terrain@0,800     (noburn)
+51    terrain@0,816     (noburn)
+# BEGIN RADIATION #
+52    terrain@0,832     (noburn)
+53    terrain@0,848     (noburn)
+54    terrain@0,864     (noburn)
+55    terrain@0,880     (noburn)
 # BEGIN FIRE ANIMATION #
-56    terrain@0,896                                              (becomes=57)
-57    terrain@0,912                                              (becomes=58)
-58    terrain@0,928                                              (becomes=59)
-59    terrain@0,944                                              (becomes=60)
-60    terrain@0,960                                              (becomes=61)
-61    terrain@0,976                                              (becomes=62)
-62    terrain@0,992                                              (becomes=63)
-63    terrain@0,1008                                             (becomes=56)
+56    terrain@0,896                   (noburn)                   (becomes=57)
+57    terrain@0,912                   (noburn)                   (becomes=58)
+58    terrain@0,928                   (noburn)                   (becomes=59)
+59    terrain@0,944                   (noburn)                   (becomes=60)
+60    terrain@0,960                   (noburn)                   (becomes=61)
+61    terrain@0,976                   (noburn)                   (becomes=62)
+62    terrain@0,992                   (noburn)                   (becomes=63)
+63    terrain@0,1008                  (noburn)                   (becomes=56)
 # BEGIN ROADS WITH NO TRAFFIC #
 64    roads@0,0
 65    roads@0,16
@@ -145,7 +150,7 @@
 141   roads@0,32 |traffic@48,0  |roadwire@0,0        (becomes=125)
 142   roads@0,48 |traffic@48,16 |roadwire@0,16       (becomes=126)
 143   roads@0,240                                                (becomes=127)
-# BEGIN ROADS WITH HEAVY TRAFFIC #
+# BEGIN ROADS WITH HEAVY TRAFFIC #                                    
 144   roads@0,0  |traffic@64,0                             (becomes=192)
 145   roads@0,16 |traffic@64,16                            (becomes=193)
 146   roads@0,32 |traffic@64,0                             (becomes=194)
@@ -842,10 +847,10 @@
 826   nuclear@48,48
 # BEGIN POWER OUT + BRIDGES #
 827   misc_animation@0,0
-828   misc_animation@0,16
-829   misc_animation@0,32
-830   misc_animation@0,48
-831   misc_animation@0,64
+828   misc_animation@0,16   (noburn)
+829   misc_animation@0,32   (noburn)
+830   misc_animation@0,48   (noburn)
+831   misc_animation@0,64   (noburn)
 # BEGIN RADAR DISH #
 832   misc_animation@0,80                                        (becomes=833)
 833   misc_animation@0,96                                        (becomes=834)
@@ -860,6 +865,7 @@
 841   misc_animation@0,224                                       (becomes=842)
 842   misc_animation@0,240                                       (becomes=843)
 843   misc_animation@0,256                                       (becomes=840)
+# unknown... (8 frames, known in source code as INDBASE2)
 844   misc_animation@0,272                                       (becomes=845)
 845   misc_animation@0,288                                       (becomes=846)
 846   misc_animation@0,304                                       (becomes=847)
@@ -868,6 +874,7 @@
 849   misc_animation@0,352                                       (becomes=850)
 850   misc_animation@0,368                                       (becomes=851)
 851   misc_animation@0,384                                       (becomes=844)
+# BEGIN INDUSTRIAL ANIMATION (8 frames) #
 852   misc_animation@0,400                                       (becomes=853)
 853   misc_animation@0,416                                       (becomes=854)
 854   misc_animation@0,432                                       (becomes=855)
@@ -877,14 +884,14 @@
 858   misc_animation@0,496                                       (becomes=859)
 859   misc_animation@0,512                                       (becomes=852)
 # BEGIN ZONE DESTRUCT & RUBBLIZE #
-860   misc_animation@0,528                                       (becomes=861)
-861   misc_animation@0,544                                       (becomes=862)
-862   misc_animation@0,560                                       (becomes=863)
-863   misc_animation@0,576                                       (becomes=864)
-864   misc_animation@0,592                                       (becomes=865)
-865   misc_animation@0,608                                       (becomes=866)
-866   misc_animation@0,624                                       (becomes=867)
-867   misc_animation@0,640
+860   misc_animation@0,528                                   (noburn)    (becomes=861)
+861   misc_animation@0,544                                   (noburn)    (becomes=862)
+862   misc_animation@0,560                                   (noburn)    (becomes=863)
+863   misc_animation@0,576                                   (noburn)    (becomes=864)
+864   misc_animation@0,592                                   (noburn)    (becomes=865)
+865   misc_animation@0,608                                   (noburn)    (becomes=866)
+866   misc_animation@0,624                                   (noburn)    (becomes=867)
+867   misc_animation@0,640                                   (noburn)
 # not used
 868   misc_animation@0,656
 869   misc_animation@0,672
@@ -935,6 +942,7 @@
 913   misc_animation@0,1376                                      (becomes=914)
 914   misc_animation@0,1392                                      (becomes=915)
 915   misc_animation@0,1408                                      (becomes=912)
+# BEGIN COAL PLANT SMOKE #
 916   misc_animation@0,1424                                      (becomes=917)
 917   misc_animation@0,1440                                      (becomes=918)
 918   misc_animation@0,1456                                      (becomes=919)
@@ -952,6 +960,7 @@
 930   misc_animation@0,1648                                      (becomes=931)
 931   misc_animation@0,1664                                      (becomes=928)
 # BEGIN STADIUM PLAYFIELD #
+#   Note: the original source code made these unburnable, which doesn't make sense
 932   misc_animation@0,1680                                      (becomes=933)
 933   misc_animation@0,1696                                      (becomes=934)
 934   misc_animation@0,1712                                      (becomes=935)
@@ -969,10 +978,10 @@
 946   misc_animation@0,1904                                      (becomes=947)
 947   misc_animation@0,1920                                      (becomes=940)
 # BEGIN BRIDGE TILES #
-948   misc_animation@0,1936
-949   misc_animation@0,1952
-950   misc_animation@0,1968
-951   misc_animation@0,1984
+948   misc_animation@0,1936  (noburn)
+949   misc_animation@0,1952  (noburn)
+950   misc_animation@0,1968  (noburn)
+951   misc_animation@0,1984  (noburn)
 # BEGIN NUCLEAR SWIRL #
 952   misc_animation@0,2000                                      (becomes=953)
 953   misc_animation@0,2016                                      (becomes=954)
