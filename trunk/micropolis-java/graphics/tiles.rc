@@ -839,7 +839,7 @@
 817   nuclear@32,16          (conducts)
 818   nuclear@48,16          (conducts)
 819   nuclear@0,32           (conducts)
-820   nuclear@16,32          (conducts)  (becomes=952)
+820   nuclear@16,32          (conducts)  (onpower=952)
 821   nuclear@32,32          (conducts)
 822   nuclear@48,32          (conducts)
 823   nuclear@0,48           (conducts)
@@ -984,10 +984,10 @@
 950   misc_animation@0,1968  (noburn)
 951   misc_animation@0,1984  (noburn)
 # BEGIN NUCLEAR SWIRL #
-952   misc_animation@0,2000  (conducts) (becomes=953)
-953   misc_animation@0,2016  (conducts) (becomes=954)
-954   misc_animation@0,2032  (conducts) (becomes=955)
-955   misc_animation@0,2048  (conducts) (becomes=952)
+952   misc_animation@0,2000  (conducts) (becomes=953)(onshutdown=820)
+953   misc_animation@0,2016  (conducts) (becomes=954)(onshutdown=820)
+954   misc_animation@0,2032  (conducts) (becomes=955)(onshutdown=820)
+955   misc_animation@0,2048  (conducts) (becomes=952)(onshutdown=820)
 # unused #
 956   misc_animation@0,2064
 957   misc_animation@0,2080
