@@ -37,7 +37,7 @@ public class Tiles
 				continue;
 			}
 
-			tiles[i] = TileSpec.parse(i, rawSpec);
+			tiles[i] = TileSpec.parse(i, rawSpec, tilesRc);
 		}
 
 		for (int i = 0; i < tiles.length; i++) {
