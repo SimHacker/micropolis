@@ -176,8 +176,8 @@ public class MakeTiles
 		if (pngFile.exists()) {
 			pngFile.delete();
 		}
-		else if (!stagingDir.exists()) {
-			stagingDir.mkdir();
+		else {
+			pngFile.getParentFile().mkdirs();
 		}
 
 		String [] cmdline = {
