@@ -62,11 +62,6 @@ class MapScanner
 
 		cchr9 = (char) (cchr & LOMASK);
 
-		if (city.newPower && isConductive(cchr))
-		{
-			setZonePower();
-		}
-
 		if (isRoad(cchr))
 		{
 			doRoad();
