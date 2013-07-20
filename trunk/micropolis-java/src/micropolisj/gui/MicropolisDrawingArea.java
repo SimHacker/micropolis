@@ -58,11 +58,17 @@ public class MicropolisDrawingArea extends JComponent
 		});
 	}
 
-	private void selectTileSize(int newTileSize)
+	public void selectTileSize(int newTileSize)
 	{
 		tileImages = TileImages.getInstance(newTileSize);
 		TILE_WIDTH = tileImages.TILE_WIDTH;
 		TILE_HEIGHT = tileImages.TILE_HEIGHT;
+		revalidate();
+	}
+
+	public int getTileSize()
+	{
+		return TILE_WIDTH;
 	}
 
 	public CityLocation getCityLocation(int x, int y)
