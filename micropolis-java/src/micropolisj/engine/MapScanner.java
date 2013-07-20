@@ -1334,16 +1334,15 @@ class MapScanner
 	 */
 	void coalSmoke()
 	{
-		final int [] SmTb = { COALSMOKE1, COALSMOKE2, COALSMOKE3, COALSMOKE4 };
-		final int [] dx = { 1, 2, 1, 2 };
-		final int [] dy = { -1, -1, 0, 0 };
-
-		for (int z = 0; z < 4; z++) {
-			int tile = city.getTile(xpos+dx[z], ypos+dy[z]) & LOMASK;
-			if (tile >= COALBASE && tile < COALBASE + 4*4) {
-				city.setTile(xpos + dx[z], ypos + dy[z],
-				(char) (SmTb[z] | PWRBIT)
-				);
+		for (int dx = -1; dx <= 2; dx++) {
+			for (int dy = -1; dy <= 2; dy++) {
+				int tile = city.getTile(xpos+dx, ypos+dy);
+				TileSpec ts = Tiles.get(tile & LOMASK);
+				if (ts != null && ts.onPower != null) {
+					city.setTile(xpos + dx, ypos + dy,
+					(char) (ts.onPower.tileNumber | (tile & ALLBITS))
+					);
+				}
 			}
 		}
 	}

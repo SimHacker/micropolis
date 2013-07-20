@@ -45,6 +45,10 @@ public class Tiles
 			if (tmp != null) {
 				tiles[i].animNext = get(Integer.parseInt(tmp));
 			}
+			tmp = tiles[i].getAttribute("onpower");
+			if (tmp != null) {
+				tiles[i].onPower = get(Integer.parseInt(tmp));
+			}
 		}
 	}
 
