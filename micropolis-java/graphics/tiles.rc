@@ -82,8 +82,8 @@
 74    roads@0,160
 75    roads@0,176
 76    roads@0,192
-77    roads@0,32  |roadwire@0,0
-78    roads@0,48  |roadwire@0,16
+77    roads@0,32  |roadwire@0,0       (conducts)
+78    roads@0,48  |roadwire@0,16      (conducts)
 79    roads@0,240
 # BEGIN ROADS WITH LIGHT TRAFFIC #
 80    roads@0,0  |traffic@0,0                              (becomes=128)
@@ -99,8 +99,8 @@
 90    roads@0,160|traffic@0,0                              (becomes=138)
 91    roads@0,176|traffic@0,16                             (becomes=139)
 92    roads@0,192|traffic@0,192                            (becomes=140)
-93    roads@0,32 |traffic@0,0  |roadwire@0,0         (becomes=141)
-94    roads@0,48 |traffic@0,16 |roadwire@0,16        (becomes=142)
+93    roads@0,32 |traffic@0,0  |roadwire@0,0    (conducts)(becomes=141)
+94    roads@0,48 |traffic@0,16 |roadwire@0,16   (conducts)(becomes=142)
 95    roads@0,240                                                (becomes=143)
 96    roads@0,0  |traffic@16,0                             (becomes=80)
 97    roads@0,16 |traffic@16,16                            (becomes=81)
@@ -115,8 +115,8 @@
 106   roads@0,160|traffic@16,0                             (becomes=90)
 107   roads@0,176|traffic@16,16                            (becomes=91)
 108   roads@0,192|traffic@16,192                           (becomes=92)
-109   roads@0,32 |traffic@16,0  |roadwire@0,0        (becomes=93)
-110   roads@0,48 |traffic@16,16 |roadwire@0,16       (becomes=94)
+109   roads@0,32 |traffic@16,0  |roadwire@0,0   (conducts)(becomes=93)
+110   roads@0,48 |traffic@16,16 |roadwire@0,16  (conducts)(becomes=94)
 111   roads@0,240                                                (becomes=95)
 112   roads@0,0  |traffic@32,0                             (becomes=96)
 113   roads@0,16 |traffic@32,16                            (becomes=97)
@@ -131,8 +131,8 @@
 122   roads@0,160|traffic@32,0                             (becomes=106)
 123   roads@0,176|traffic@32,16                            (becomes=107)
 124   roads@0,192|traffic@32,192                           (becomes=108)
-125   roads@0,32 |traffic@32,0  |roadwire@0,0        (becomes=109)
-126   roads@0,48 |traffic@32,16 |roadwire@0,16       (becomes=110)
+125   roads@0,32 |traffic@32,0  |roadwire@0,0   (conducts)(becomes=109)
+126   roads@0,48 |traffic@32,16 |roadwire@0,16  (conducts)(becomes=110)
 127   roads@0,240                                                (becomes=111)
 128   roads@0,0  |traffic@48,0                             (becomes=112)
 129   roads@0,16 |traffic@48,16                            (becomes=113)
@@ -147,8 +147,8 @@
 138   roads@0,160|traffic@48,0                             (becomes=122)
 139   roads@0,176|traffic@48,16                            (becomes=123)
 140   roads@0,192|traffic@48,192                           (becomes=124)
-141   roads@0,32 |traffic@48,0  |roadwire@0,0        (becomes=125)
-142   roads@0,48 |traffic@48,16 |roadwire@0,16       (becomes=126)
+141   roads@0,32 |traffic@48,0  |roadwire@0,0   (conducts)(becomes=125)
+142   roads@0,48 |traffic@48,16 |roadwire@0,16  (conducts)(becomes=126)
 143   roads@0,240                                                (becomes=127)
 # BEGIN ROADS WITH HEAVY TRAFFIC #                                    
 144   roads@0,0  |traffic@64,0                             (becomes=192)
@@ -164,8 +164,8 @@
 154   roads@0,160|traffic@64,0                             (becomes=202)
 155   roads@0,176|traffic@64,16                            (becomes=203)
 156   roads@0,192|traffic@64,192                           (becomes=204)
-157   roads@0,32 |traffic@64,0  |roadwire@0,0        (becomes=205)
-158   roads@0,48 |traffic@64,16 |roadwire@0,16       (becomes=206)
+157   roads@0,32 |traffic@64,0  |roadwire@0,0   (conducts)(becomes=205)
+158   roads@0,48 |traffic@64,16 |roadwire@0,16  (conducts)(becomes=206)
 159   roads@0,240                                                (becomes=207)
 160   roads@0,0  |traffic@80,0                             (becomes=144)
 161   roads@0,16 |traffic@80,16                            (becomes=145)
@@ -180,8 +180,8 @@
 170   roads@0,160|traffic@80,0                             (becomes=154)
 171   roads@0,176|traffic@80,16                            (becomes=155)
 172   roads@0,192|traffic@80,192                           (becomes=156)
-173   roads@0,32 |traffic@80,0  |roadwire@0,0        (becomes=157)
-174   roads@0,48 |traffic@80,16 |roadwire@0,16       (becomes=158)
+173   roads@0,32 |traffic@80,0  |roadwire@0,0   (conducts)(becomes=157)
+174   roads@0,48 |traffic@80,16 |roadwire@0,16  (conducts)(becomes=158)
 175   roads@0,240                                                (becomes=159)
 176   roads@0,0  |traffic@96,0                             (becomes=160)
 177   roads@0,16 |traffic@96,16                            (becomes=161)
@@ -196,8 +196,8 @@
 186   roads@0,160|traffic@96,0                             (becomes=170)
 187   roads@0,176|traffic@96,16                            (becomes=171)
 188   roads@0,192|traffic@96,192                           (becomes=172)
-189   roads@0,32 |traffic@96,0  |roadwire@0,0        (becomes=173)
-190   roads@0,48 |traffic@96,16 |roadwire@0,16       (becomes=174)
+189   roads@0,32 |traffic@96,0  |roadwire@0,0   (conducts)(becomes=173)
+190   roads@0,48 |traffic@96,16 |roadwire@0,16  (conducts)(becomes=174)
 191   roads@0,240                                                (becomes=175)
 192   roads@0,0  |traffic@112,0                            (becomes=176)
 193   roads@0,16 |traffic@112,16                           (becomes=177)
@@ -212,26 +212,26 @@
 202   roads@0,160|traffic@112,0                            (becomes=186)
 203   roads@0,176|traffic@112,16                           (becomes=187)
 204   roads@0,192|traffic@112,192                          (becomes=188)
-205   roads@0,32 |traffic@112,0  |roadwire@0,0       (becomes=189)
-206   roads@0,48 |traffic@112,16 |roadwire@0,16      (becomes=190)
+205   roads@0,32 |traffic@112,0  |roadwire@0,0  (conducts)(becomes=189)
+206   roads@0,48 |traffic@112,16 |roadwire@0,16 (conducts)(becomes=190)
 207   roads@0,240                                                (becomes=191)
 # BEGIN WIRES AND RAILS #
-208   wires@0,0
-209   wires@0,16
-210   wires@0,32
-211   wires@0,48
-212   wires@0,64
-213   wires@0,80
-214   wires@0,96
-215   wires@0,112
-216   wires@0,128
-217   wires@0,144
-218   wires@0,160
-219   wires@0,176
-220   wires@0,192
-221   wires@0,208
-222   wires@0,224
-223   wires@0,240
+208   wires@0,0                 (conducts)
+209   wires@0,16                (conducts)
+210   wires@0,32                (conducts)
+211   wires@0,48                (conducts)
+212   wires@0,64                (conducts)
+213   wires@0,80                (conducts)
+214   wires@0,96                (conducts)
+215   wires@0,112               (conducts)
+216   wires@0,128               (conducts)
+217   wires@0,144               (conducts)
+218   wires@0,160               (conducts)
+219   wires@0,176               (conducts)
+220   wires@0,192               (conducts)
+221   wires@0,208               (conducts)
+222   wires@0,224               (conducts)
+223   wires@0,240               (conducts)
 224   rails@0,0
 225   rails@0,16
 226   rails@0,32
@@ -249,602 +249,603 @@
 238   rails@0,224
 239   rails@0,240
 # BEGIN RESIDENTIAL #
-240   res_zones@0,0
-241   res_zones@16,0
-242   res_zones@32,0
-243   res_zones@0,16
-244   res_zones@16,16 (zone)
-245   res_zones@32,16
-246   res_zones@0,32
-247   res_zones@16,32
-248   res_zones@32,32
-249   res_houses@0,0
-250   res_houses@0,16
-251   res_houses@0,32
-252   res_houses@0,48
-253   res_houses@0,64
-254   res_houses@0,80
-255   res_houses@0,96
-256   res_houses@0,112
-257   res_houses@0,128
-258   res_houses@0,144
-259   res_houses@0,160
-260   res_houses@0,176
-261   res_zones@0,48
-262   res_zones@16,48
-263   res_zones@32,48
-264   res_zones@0,64
-265   res_zones@16,64 (zone)
-266   res_zones@32,64
-267   res_zones@0,80
-268   res_zones@16,80
-269   res_zones@32,80
-270   res_zones@0,96
-271   res_zones@16,96
-272   res_zones@32,96
-273   res_zones@0,112
-274   res_zones@16,112 (zone)
-275   res_zones@32,112
-276   res_zones@0,128
-277   res_zones@16,128
-278   res_zones@32,128
-279   res_zones@0,144
-280   res_zones@16,144
-281   res_zones@32,144
-282   res_zones@0,160
-283   res_zones@16,160 (zone)
-284   res_zones@32,160
-285   res_zones@0,176
-286   res_zones@16,176
-287   res_zones@32,176
-288   res_zones@0,192
-289   res_zones@16,192
-290   res_zones@32,192
-291   res_zones@0,208
-292   res_zones@16,208 (zone)
-293   res_zones@32,208
-294   res_zones@0,224
-295   res_zones@16,224
-296   res_zones@32,224
-297   res_zones@0,240
-298   res_zones@16,240
-299   res_zones@32,240
-300   res_zones@0,256
-301   res_zones@16,256 (zone)
-302   res_zones@32,256
-303   res_zones@0,272
-304   res_zones@16,272
-305   res_zones@32,272
-306   res_zones@0,288
-307   res_zones@16,288
-308   res_zones@32,288
-309   res_zones@0,304
-310   res_zones@16,304 (zone)
-311   res_zones@32,304
-312   res_zones@0,320
-313   res_zones@16,320
-314   res_zones@32,320
-315   res_zones@0,336
-316   res_zones@16,336
-317   res_zones@32,336
-318   res_zones@0,352
-319   res_zones@16,352 (zone)
-320   res_zones@32,352
-321   res_zones@0,368
-322   res_zones@16,368
-323   res_zones@32,368
-324   res_zones@0,384
-325   res_zones@16,384
-326   res_zones@32,384
-327   res_zones@0,400
-328   res_zones@16,400 (zone)
-329   res_zones@32,400
-330   res_zones@0,416
-331   res_zones@16,416
-332   res_zones@32,416
-333   res_zones@0,432
-334   res_zones@16,432
-335   res_zones@32,432
-336   res_zones@0,448
-337   res_zones@16,448 (zone)
-338   res_zones@32,448
-339   res_zones@0,464
-340   res_zones@16,464
-341   res_zones@32,464
-342   res_zones@0,480
-343   res_zones@16,480
-344   res_zones@32,480
-345   res_zones@0,496
-346   res_zones@16,496 (zone)
-347   res_zones@32,496
-348   res_zones@0,512
-349   res_zones@16,512
-350   res_zones@32,512
-351   res_zones@0,528
-352   res_zones@16,528
-353   res_zones@32,528
-354   res_zones@0,544
-355   res_zones@16,544 (zone)
-356   res_zones@32,544
-357   res_zones@0,560
-358   res_zones@16,560
-359   res_zones@32,560
-360   res_zones@0,576
-361   res_zones@16,576
-362   res_zones@32,576
-363   res_zones@0,592
-364   res_zones@16,592 (zone)
-365   res_zones@32,592
-366   res_zones@0,608
-367   res_zones@16,608
-368   res_zones@32,608
-369   res_zones@0,624
-370   res_zones@16,624
-371   res_zones@32,624
-372   res_zones@0,640
-373   res_zones@16,640 (zone)
-374   res_zones@32,640
-375   res_zones@0,656
-376   res_zones@16,656
-377   res_zones@32,656
-378   res_zones@0,672
-379   res_zones@16,672
-380   res_zones@32,672
-381   res_zones@0,688
-382   res_zones@16,688 (zone)
-383   res_zones@32,688
-384   res_zones@0,704
-385   res_zones@16,704
-386   res_zones@32,704
-387   res_zones@0,720
-388   res_zones@16,720
-389   res_zones@32,720
-390   res_zones@0,736
-391   res_zones@16,736 (zone)
-392   res_zones@32,736
-393   res_zones@0,752
-394   res_zones@16,752
-395   res_zones@32,752
-396   res_zones@0,768
-397   res_zones@16,768
-398   res_zones@32,768
-399   res_zones@0,784
-400   res_zones@16,784 (zone)
-401   res_zones@32,784
-402   res_zones@0,800
-403   res_zones@16,800
-404   res_zones@32,800
-405   res_zones@0,816
-406   res_zones@16,816
-407   res_zones@32,816
-408   res_zones@0,832
-409   res_zones@16,832 (zone)
-410   res_zones@32,832
-411   res_zones@0,848
-412   res_zones@16,848
-413   res_zones@32,848
-414   res_zones@0,864
-415   res_zones@16,864
-416   res_zones@32,864
-417   res_zones@0,880
-418   res_zones@16,880 (zone)
-419   res_zones@32,880
-420   res_zones@0,896
-421   res_zones@16,896
-422   res_zones@32,896
+240   res_zones@0,0          (conducts)
+241   res_zones@16,0         (conducts)
+242   res_zones@32,0         (conducts)
+243   res_zones@0,16         (conducts)
+244   res_zones@16,16  (zone)(conducts)
+245   res_zones@32,16        (conducts)
+246   res_zones@0,32         (conducts)
+247   res_zones@16,32        (conducts)
+248   res_zones@32,32        (conducts)
+249   res_houses@0,0         (conducts)
+250   res_houses@0,16        (conducts)
+251   res_houses@0,32        (conducts)
+252   res_houses@0,48        (conducts)
+253   res_houses@0,64        (conducts)
+254   res_houses@0,80        (conducts)
+255   res_houses@0,96        (conducts)
+256   res_houses@0,112       (conducts)
+257   res_houses@0,128       (conducts)
+258   res_houses@0,144       (conducts)
+259   res_houses@0,160       (conducts)
+260   res_houses@0,176       (conducts)
+261   res_zones@0,48         (conducts)
+262   res_zones@16,48        (conducts)
+263   res_zones@32,48        (conducts)
+264   res_zones@0,64         (conducts)
+265   res_zones@16,64  (zone)(conducts)
+266   res_zones@32,64        (conducts)
+267   res_zones@0,80         (conducts)
+268   res_zones@16,80        (conducts)
+269   res_zones@32,80        (conducts)
+270   res_zones@0,96         (conducts)
+271   res_zones@16,96        (conducts)
+272   res_zones@32,96        (conducts)
+273   res_zones@0,112        (conducts)
+274   res_zones@16,112 (zone)(conducts)
+275   res_zones@32,112       (conducts)
+276   res_zones@0,128        (conducts)
+277   res_zones@16,128       (conducts)
+278   res_zones@32,128       (conducts)
+279   res_zones@0,144        (conducts)
+280   res_zones@16,144       (conducts)
+281   res_zones@32,144       (conducts)
+282   res_zones@0,160        (conducts)
+283   res_zones@16,160 (zone)(conducts)
+284   res_zones@32,160       (conducts)
+285   res_zones@0,176        (conducts)
+286   res_zones@16,176       (conducts)
+287   res_zones@32,176       (conducts)
+288   res_zones@0,192        (conducts)
+289   res_zones@16,192       (conducts)
+290   res_zones@32,192       (conducts)
+291   res_zones@0,208        (conducts)
+292   res_zones@16,208 (zone)(conducts)
+293   res_zones@32,208       (conducts)
+294   res_zones@0,224        (conducts)
+295   res_zones@16,224       (conducts)
+296   res_zones@32,224       (conducts)
+297   res_zones@0,240        (conducts)
+298   res_zones@16,240       (conducts)
+299   res_zones@32,240       (conducts)
+300   res_zones@0,256        (conducts)
+301   res_zones@16,256 (zone)(conducts)
+302   res_zones@32,256       (conducts)
+303   res_zones@0,272        (conducts)
+304   res_zones@16,272       (conducts)
+305   res_zones@32,272       (conducts)
+306   res_zones@0,288        (conducts)
+307   res_zones@16,288       (conducts)
+308   res_zones@32,288       (conducts)
+309   res_zones@0,304        (conducts)
+310   res_zones@16,304 (zone)(conducts)
+311   res_zones@32,304       (conducts)
+312   res_zones@0,320        (conducts)
+313   res_zones@16,320       (conducts)
+314   res_zones@32,320       (conducts)
+315   res_zones@0,336        (conducts)
+316   res_zones@16,336       (conducts)
+317   res_zones@32,336       (conducts)
+318   res_zones@0,352        (conducts)
+319   res_zones@16,352 (zone)(conducts)
+320   res_zones@32,352       (conducts)
+321   res_zones@0,368        (conducts)
+322   res_zones@16,368       (conducts)
+323   res_zones@32,368       (conducts)
+324   res_zones@0,384        (conducts)
+325   res_zones@16,384       (conducts)
+326   res_zones@32,384       (conducts)
+327   res_zones@0,400        (conducts)
+328   res_zones@16,400 (zone)(conducts)
+329   res_zones@32,400       (conducts)
+330   res_zones@0,416        (conducts)
+331   res_zones@16,416       (conducts)
+332   res_zones@32,416       (conducts)
+333   res_zones@0,432        (conducts)
+334   res_zones@16,432       (conducts)
+335   res_zones@32,432       (conducts)
+336   res_zones@0,448        (conducts)
+337   res_zones@16,448 (zone)(conducts)
+338   res_zones@32,448       (conducts)
+339   res_zones@0,464        (conducts)
+340   res_zones@16,464       (conducts)
+341   res_zones@32,464       (conducts)
+342   res_zones@0,480        (conducts)
+343   res_zones@16,480       (conducts)
+344   res_zones@32,480       (conducts)
+345   res_zones@0,496        (conducts)
+346   res_zones@16,496 (zone)(conducts)
+347   res_zones@32,496       (conducts)
+348   res_zones@0,512        (conducts)
+349   res_zones@16,512       (conducts)
+350   res_zones@32,512       (conducts)
+351   res_zones@0,528        (conducts)
+352   res_zones@16,528       (conducts)
+353   res_zones@32,528       (conducts)
+354   res_zones@0,544        (conducts)
+355   res_zones@16,544 (zone)(conducts)
+356   res_zones@32,544       (conducts)
+357   res_zones@0,560        (conducts)
+358   res_zones@16,560       (conducts)
+359   res_zones@32,560       (conducts)
+360   res_zones@0,576        (conducts)
+361   res_zones@16,576       (conducts)
+362   res_zones@32,576       (conducts)
+363   res_zones@0,592        (conducts)
+364   res_zones@16,592 (zone)(conducts)
+365   res_zones@32,592       (conducts)
+366   res_zones@0,608        (conducts)
+367   res_zones@16,608       (conducts)
+368   res_zones@32,608       (conducts)
+369   res_zones@0,624        (conducts)
+370   res_zones@16,624       (conducts)
+371   res_zones@32,624       (conducts)
+372   res_zones@0,640        (conducts)
+373   res_zones@16,640 (zone)(conducts)
+374   res_zones@32,640       (conducts)
+375   res_zones@0,656        (conducts)
+376   res_zones@16,656       (conducts)
+377   res_zones@32,656       (conducts)
+378   res_zones@0,672        (conducts)
+379   res_zones@16,672       (conducts)
+380   res_zones@32,672       (conducts)
+381   res_zones@0,688        (conducts)
+382   res_zones@16,688 (zone)(conducts)
+383   res_zones@32,688       (conducts)
+384   res_zones@0,704        (conducts)
+385   res_zones@16,704       (conducts)
+386   res_zones@32,704       (conducts)
+387   res_zones@0,720        (conducts)
+388   res_zones@16,720       (conducts)
+389   res_zones@32,720       (conducts)
+390   res_zones@0,736        (conducts)
+391   res_zones@16,736 (zone)(conducts)
+392   res_zones@32,736       (conducts)
+393   res_zones@0,752        (conducts)
+394   res_zones@16,752       (conducts)
+395   res_zones@32,752       (conducts)
+396   res_zones@0,768        (conducts)
+397   res_zones@16,768       (conducts)
+398   res_zones@32,768       (conducts)
+399   res_zones@0,784        (conducts)
+400   res_zones@16,784 (zone)(conducts)
+401   res_zones@32,784       (conducts)
+402   res_zones@0,800        (conducts)
+403   res_zones@16,800       (conducts)
+404   res_zones@32,800       (conducts)
+405   res_zones@0,816        (conducts)
+406   res_zones@16,816       (conducts)
+407   res_zones@32,816       (conducts)
+408   res_zones@0,832        (conducts)
+409   res_zones@16,832 (zone)(conducts)
+410   res_zones@32,832       (conducts)
+411   res_zones@0,848        (conducts)
+412   res_zones@16,848       (conducts)
+413   res_zones@32,848       (conducts)
+414   res_zones@0,864        (conducts)
+415   res_zones@16,864       (conducts)
+416   res_zones@32,864       (conducts)
+417   res_zones@0,880        (conducts)
+418   res_zones@16,880 (zone)(conducts)
+419   res_zones@32,880       (conducts)
+420   res_zones@0,896        (conducts)
+421   res_zones@16,896       (conducts)
+422   res_zones@32,896       (conducts)
 # BEGIN COMMERCIAL #
-423   com_zones@0,0
-424   com_zones@16,0
-425   com_zones@32,0
-426   com_zones@0,16
-427   com_zones@16,16 (zone)
-428   com_zones@32,16
-429   com_zones@0,32
-430   com_zones@16,32
-431   com_zones@32,32
-432   com_zones@0,48
-433   com_zones@16,48
-434   com_zones@32,48
-435   com_zones@0,64
-436   com_zones@16,64 (zone)
-437   com_zones@32,64
-438   com_zones@0,80
-439   com_zones@16,80
-440   com_zones@32,80
-441   com_zones@0,96
-442   com_zones@16,96
-443   com_zones@32,96
-444   com_zones@0,112
-445   com_zones@16,112 (zone)
-446   com_zones@32,112
-447   com_zones@0,128
-448   com_zones@16,128
-449   com_zones@32,128
-450   com_zones@0,144
-451   com_zones@16,144
-452   com_zones@32,144
-453   com_zones@0,160
-454   com_zones@16,160 (zone)
-455   com_zones@32,160
-456   com_zones@0,176
-457   com_zones@16,176
-458   com_zones@32,176
-459   com_zones@0,192
-460   com_zones@16,192
-461   com_zones@32,192
-462   com_zones@0,208
-463   com_zones@16,208 (zone)
-464   com_zones@32,208
-465   com_zones@0,224
-466   com_zones@16,224
-467   com_zones@32,224
-468   com_zones@0,240
-469   com_zones@16,240
-470   com_zones@32,240
-471   com_zones@0,256
-472   com_zones@16,256 (zone)
-473   com_zones@32,256
-474   com_zones@0,272
-475   com_zones@16,272
-476   com_zones@32,272
-477   com_zones@0,288
-478   com_zones@16,288
-479   com_zones@32,288
-480   com_zones@0,304
-481   com_zones@16,304 (zone)
-482   com_zones@32,304
-483   com_zones@0,320
-484   com_zones@16,320
-485   com_zones@32,320
-486   com_zones@0,336
-487   com_zones@16,336
-488   com_zones@32,336
-489   com_zones@0,352
-490   com_zones@16,352 (zone)
-491   com_zones@32,352
-492   com_zones@0,368
-493   com_zones@16,368
-494   com_zones@32,368
-495   com_zones@0,384
-496   com_zones@16,384
-497   com_zones@32,384
-498   com_zones@0,400
-499   com_zones@16,400 (zone)
-500   com_zones@32,400
-501   com_zones@0,416
-502   com_zones@16,416
-503   com_zones@32,416
-504   com_zones@0,432
-505   com_zones@16,432
-506   com_zones@32,432
-507   com_zones@0,448
-508   com_zones@16,448 (zone)
-509   com_zones@32,448
-510   com_zones@0,464
-511   com_zones@16,464
-512   com_zones@32,464
-513   com_zones@0,480
-514   com_zones@16,480
-515   com_zones@32,480
-516   com_zones@0,496
-517   com_zones@16,496 (zone)
-518   com_zones@32,496
-519   com_zones@0,512
-520   com_zones@16,512
-521   com_zones@32,512
-522   com_zones@0,528
-523   com_zones@16,528
-524   com_zones@32,528
-525   com_zones@0,544
-526   com_zones@16,544 (zone)
-527   com_zones@32,544
-528   com_zones@0,560
-529   com_zones@16,560
-530   com_zones@32,560
-531   com_zones@0,576
-532   com_zones@16,576
-533   com_zones@32,576
-534   com_zones@0,592
-535   com_zones@16,592 (zone)
-536   com_zones@32,592
-537   com_zones@0,608
-538   com_zones@16,608
-539   com_zones@32,608
-540   com_zones@0,624
-541   com_zones@16,624
-542   com_zones@32,624
-543   com_zones@0,640
-544   com_zones@16,640 (zone)
-545   com_zones@32,640
-546   com_zones@0,656
-547   com_zones@16,656
-548   com_zones@32,656
-549   com_zones@0,672
-550   com_zones@16,672
-551   com_zones@32,672
-552   com_zones@0,688
-553   com_zones@16,688 (zone)
-554   com_zones@32,688
-555   com_zones@0,704
-556   com_zones@16,704
-557   com_zones@32,704
-558   com_zones@0,720
-559   com_zones@16,720
-560   com_zones@32,720
-561   com_zones@0,736
-562   com_zones@16,736 (zone)
-563   com_zones@32,736
-564   com_zones@0,752
-565   com_zones@16,752
-566   com_zones@32,752
-567   com_zones@0,768
-568   com_zones@16,768
-569   com_zones@32,768
-570   com_zones@0,784
-571   com_zones@16,784 (zone)
-572   com_zones@32,784
-573   com_zones@0,800
-574   com_zones@16,800
-575   com_zones@32,800
-576   com_zones@0,816
-577   com_zones@16,816
-578   com_zones@32,816
-579   com_zones@0,832
-580   com_zones@16,832 (zone)
-581   com_zones@32,832
-582   com_zones@0,848
-583   com_zones@16,848
-584   com_zones@32,848
-585   com_zones@0,864
-586   com_zones@16,864
-587   com_zones@32,864
-588   com_zones@0,880
-589   com_zones@16,880 (zone)
-590   com_zones@32,880
-591   com_zones@0,896
-592   com_zones@16,896
-593   com_zones@32,896
-594   com_zones@0,912
-595   com_zones@16,912
-596   com_zones@32,912
-597   com_zones@0,928
-598   com_zones@16,928 (zone)
-599   com_zones@32,928
-600   com_zones@0,944
-601   com_zones@16,944
-602   com_zones@32,944
-603   com_zones@0,960
-604   com_zones@16,960
-605   com_zones@32,960
-606   com_zones@0,976
-607   com_zones@16,976 (zone)
-608   com_zones@32,976
-609   com_zones@0,992
-610   com_zones@16,992
-611   com_zones@32,992
+423   com_zones@0,0          (conducts)
+424   com_zones@16,0         (conducts)
+425   com_zones@32,0         (conducts)
+426   com_zones@0,16         (conducts)
+427   com_zones@16,16  (zone)(conducts)
+428   com_zones@32,16        (conducts)
+429   com_zones@0,32         (conducts)
+430   com_zones@16,32        (conducts)
+431   com_zones@32,32        (conducts)
+432   com_zones@0,48         (conducts)
+433   com_zones@16,48        (conducts)
+434   com_zones@32,48        (conducts)
+435   com_zones@0,64         (conducts)
+436   com_zones@16,64  (zone)(conducts)
+437   com_zones@32,64        (conducts)
+438   com_zones@0,80         (conducts)
+439   com_zones@16,80        (conducts)
+440   com_zones@32,80        (conducts)
+441   com_zones@0,96         (conducts)
+442   com_zones@16,96        (conducts)
+443   com_zones@32,96        (conducts)
+444   com_zones@0,112        (conducts)
+445   com_zones@16,112 (zone)(conducts)
+446   com_zones@32,112       (conducts)
+447   com_zones@0,128        (conducts)
+448   com_zones@16,128       (conducts)
+449   com_zones@32,128       (conducts)
+450   com_zones@0,144        (conducts)
+451   com_zones@16,144       (conducts)
+452   com_zones@32,144       (conducts)
+453   com_zones@0,160        (conducts)
+454   com_zones@16,160 (zone)(conducts)
+455   com_zones@32,160       (conducts)
+456   com_zones@0,176        (conducts)
+457   com_zones@16,176       (conducts)
+458   com_zones@32,176       (conducts)
+459   com_zones@0,192        (conducts)
+460   com_zones@16,192       (conducts)
+461   com_zones@32,192       (conducts)
+462   com_zones@0,208        (conducts)
+463   com_zones@16,208 (zone)(conducts)
+464   com_zones@32,208       (conducts)
+465   com_zones@0,224        (conducts)
+466   com_zones@16,224       (conducts)
+467   com_zones@32,224       (conducts)
+468   com_zones@0,240        (conducts)
+469   com_zones@16,240       (conducts)
+470   com_zones@32,240       (conducts)
+471   com_zones@0,256        (conducts)
+472   com_zones@16,256 (zone)(conducts)
+473   com_zones@32,256       (conducts)
+474   com_zones@0,272        (conducts)
+475   com_zones@16,272       (conducts)
+476   com_zones@32,272       (conducts)
+477   com_zones@0,288        (conducts)
+478   com_zones@16,288       (conducts)
+479   com_zones@32,288       (conducts)
+480   com_zones@0,304        (conducts)
+481   com_zones@16,304 (zone)(conducts)
+482   com_zones@32,304       (conducts)
+483   com_zones@0,320        (conducts)
+484   com_zones@16,320       (conducts)
+485   com_zones@32,320       (conducts)
+486   com_zones@0,336        (conducts)
+487   com_zones@16,336       (conducts)
+488   com_zones@32,336       (conducts)
+489   com_zones@0,352        (conducts)
+490   com_zones@16,352 (zone)(conducts)
+491   com_zones@32,352       (conducts)
+492   com_zones@0,368        (conducts)
+493   com_zones@16,368       (conducts)
+494   com_zones@32,368       (conducts)
+495   com_zones@0,384        (conducts)
+496   com_zones@16,384       (conducts)
+497   com_zones@32,384       (conducts)
+498   com_zones@0,400        (conducts)
+499   com_zones@16,400 (zone)(conducts)
+500   com_zones@32,400       (conducts)
+501   com_zones@0,416        (conducts)
+502   com_zones@16,416       (conducts)
+503   com_zones@32,416       (conducts)
+504   com_zones@0,432        (conducts)
+505   com_zones@16,432       (conducts)
+506   com_zones@32,432       (conducts)
+507   com_zones@0,448        (conducts)
+508   com_zones@16,448 (zone)(conducts)
+509   com_zones@32,448       (conducts)
+510   com_zones@0,464        (conducts)
+511   com_zones@16,464       (conducts)
+512   com_zones@32,464       (conducts)
+513   com_zones@0,480        (conducts)
+514   com_zones@16,480       (conducts)
+515   com_zones@32,480       (conducts)
+516   com_zones@0,496        (conducts)
+517   com_zones@16,496 (zone)(conducts)
+518   com_zones@32,496       (conducts)
+519   com_zones@0,512        (conducts)
+520   com_zones@16,512       (conducts)
+521   com_zones@32,512       (conducts)
+522   com_zones@0,528        (conducts)
+523   com_zones@16,528       (conducts)
+524   com_zones@32,528       (conducts)
+525   com_zones@0,544        (conducts)
+526   com_zones@16,544 (zone)(conducts)
+527   com_zones@32,544       (conducts)
+528   com_zones@0,560        (conducts)
+529   com_zones@16,560       (conducts)
+530   com_zones@32,560       (conducts)
+531   com_zones@0,576        (conducts)
+532   com_zones@16,576       (conducts)
+533   com_zones@32,576       (conducts)
+534   com_zones@0,592        (conducts)
+535   com_zones@16,592 (zone)(conducts)
+536   com_zones@32,592       (conducts)
+537   com_zones@0,608        (conducts)
+538   com_zones@16,608       (conducts)
+539   com_zones@32,608       (conducts)
+540   com_zones@0,624        (conducts)
+541   com_zones@16,624       (conducts)
+542   com_zones@32,624       (conducts)
+543   com_zones@0,640        (conducts)
+544   com_zones@16,640 (zone)(conducts)
+545   com_zones@32,640       (conducts)
+546   com_zones@0,656        (conducts)
+547   com_zones@16,656       (conducts)
+548   com_zones@32,656       (conducts)
+549   com_zones@0,672        (conducts)
+550   com_zones@16,672       (conducts)
+551   com_zones@32,672       (conducts)
+552   com_zones@0,688        (conducts)
+553   com_zones@16,688 (zone)(conducts)
+554   com_zones@32,688       (conducts)
+555   com_zones@0,704        (conducts)
+556   com_zones@16,704       (conducts)
+557   com_zones@32,704       (conducts)
+558   com_zones@0,720        (conducts)
+559   com_zones@16,720       (conducts)
+560   com_zones@32,720       (conducts)
+561   com_zones@0,736        (conducts)
+562   com_zones@16,736 (zone)(conducts)
+563   com_zones@32,736       (conducts)
+564   com_zones@0,752        (conducts)
+565   com_zones@16,752       (conducts)
+566   com_zones@32,752       (conducts)
+567   com_zones@0,768        (conducts)
+568   com_zones@16,768       (conducts)
+569   com_zones@32,768       (conducts)
+570   com_zones@0,784        (conducts)
+571   com_zones@16,784 (zone)(conducts)
+572   com_zones@32,784       (conducts)
+573   com_zones@0,800        (conducts)
+574   com_zones@16,800       (conducts)
+575   com_zones@32,800       (conducts)
+576   com_zones@0,816        (conducts)
+577   com_zones@16,816       (conducts)
+578   com_zones@32,816       (conducts)
+579   com_zones@0,832        (conducts)
+580   com_zones@16,832 (zone)(conducts)
+581   com_zones@32,832       (conducts)
+582   com_zones@0,848        (conducts)
+583   com_zones@16,848       (conducts)
+584   com_zones@32,848       (conducts)
+585   com_zones@0,864        (conducts)
+586   com_zones@16,864       (conducts)
+587   com_zones@32,864       (conducts)
+588   com_zones@0,880        (conducts)
+589   com_zones@16,880 (zone)(conducts)
+590   com_zones@32,880       (conducts)
+591   com_zones@0,896        (conducts)
+592   com_zones@16,896       (conducts)
+593   com_zones@32,896       (conducts)
+594   com_zones@0,912        (conducts)
+595   com_zones@16,912       (conducts)
+596   com_zones@32,912       (conducts)
+597   com_zones@0,928        (conducts)
+598   com_zones@16,928 (zone)(conducts)
+599   com_zones@32,928       (conducts)
+600   com_zones@0,944        (conducts)
+601   com_zones@16,944       (conducts)
+602   com_zones@32,944       (conducts)
+603   com_zones@0,960        (conducts)
+604   com_zones@16,960       (conducts)
+605   com_zones@32,960       (conducts)
+606   com_zones@0,976        (conducts)
+607   com_zones@16,976 (zone)(conducts)
+608   com_zones@32,976       (conducts)
+609   com_zones@0,992        (conducts)
+610   com_zones@16,992       (conducts)
+611   com_zones@32,992       (conducts)
 # BEGIN INDUSTRIAL #
-612   ind_zones@0,0
-613   ind_zones@16,0
-614   ind_zones@32,0
-615   ind_zones@0,16
-616   ind_zones@16,16 (zone)
-617   ind_zones@32,16
-618   ind_zones@0,32
-619   ind_zones@16,32
-620   ind_zones@32,32
-621   ind_zones@0,48
-622   ind_zones@16,48
-623   ind_zones@32,48
-624   ind_zones@0,64
-625   ind_zones@16,64 (zone)
-626   ind_zones@32,64
-627   ind_zones@0,80
-628   ind_zones@16,80
-629   ind_zones@32,80
-630   ind_zones@0,96
-631   ind_zones@16,96
-632   ind_zones@32,96
-633   ind_zones@0,112
-634   ind_zones@16,112 (zone)
-635   ind_zones@32,112
-636   ind_zones@0,128
-637   ind_zones@16,128
-638   ind_zones@32,128
-639   ind_zones@0,144
-640   ind_zones@16,144
-641   ind_zones@32,144
-642   ind_zones@0,160
-643   ind_zones@16,160 (zone)
-644   ind_zones@32,160
-645   ind_zones@0,176
-646   ind_zones@16,176
-647   ind_zones@32,176
-648   ind_zones@0,192
-649   ind_zones@16,192
-650   ind_zones@32,192
-651   ind_zones@0,208
-652   ind_zones@16,208 (zone)
-653   ind_zones@32,208
-654   ind_zones@0,224
-655   ind_zones@16,224
-656   ind_zones@32,224
-657   ind_zones@0,240
-658   ind_zones@16,240
-659   ind_zones@32,240
-660   ind_zones@0,256
-661   ind_zones@16,256 (zone)
-662   ind_zones@32,256
-663   ind_zones@0,272
-664   ind_zones@16,272
-665   ind_zones@32,272
-666   ind_zones@0,288
-667   ind_zones@16,288
-668   ind_zones@32,288
-669   ind_zones@0,304
-670   ind_zones@16,304 (zone)
-671   ind_zones@32,304
-672   ind_zones@0,320
-673   ind_zones@16,320
-674   ind_zones@32,320
-675   ind_zones@0,336
-676   ind_zones@16,336
-677   ind_zones@32,336
-678   ind_zones@0,352
-679   ind_zones@16,352 (zone)
-680   ind_zones@32,352
-681   ind_zones@0,368
-682   ind_zones@16,368
-683   ind_zones@32,368
-684   ind_zones@0,384
-685   ind_zones@16,384
-686   ind_zones@32,384
-687   ind_zones@0,400
-688   ind_zones@16,400 (zone)
-689   ind_zones@32,400
-690   ind_zones@0,416
-691   ind_zones@16,416
-692   ind_zones@32,416
+612   ind_zones@0,0          (conducts)
+613   ind_zones@16,0         (conducts)
+614   ind_zones@32,0         (conducts)
+615   ind_zones@0,16         (conducts)
+616   ind_zones@16,16  (zone)(conducts)
+617   ind_zones@32,16        (conducts)
+618   ind_zones@0,32         (conducts)
+619   ind_zones@16,32        (conducts)
+620   ind_zones@32,32        (conducts)
+621   ind_zones@0,48         (conducts)
+622   ind_zones@16,48        (conducts)
+623   ind_zones@32,48        (conducts)
+624   ind_zones@0,64         (conducts)
+625   ind_zones@16,64  (zone)(conducts)
+626   ind_zones@32,64        (conducts)
+627   ind_zones@0,80         (conducts)
+628   ind_zones@16,80        (conducts)
+629   ind_zones@32,80        (conducts)
+630   ind_zones@0,96         (conducts)
+631   ind_zones@16,96        (conducts)
+632   ind_zones@32,96        (conducts)
+633   ind_zones@0,112        (conducts)
+634   ind_zones@16,112 (zone)(conducts)
+635   ind_zones@32,112       (conducts)
+636   ind_zones@0,128        (conducts)
+637   ind_zones@16,128       (conducts)
+638   ind_zones@32,128       (conducts)
+639   ind_zones@0,144        (conducts)
+640   ind_zones@16,144       (conducts)
+641   ind_zones@32,144       (conducts)
+642   ind_zones@0,160        (conducts)
+643   ind_zones@16,160 (zone)(conducts)
+644   ind_zones@32,160       (conducts)
+645   ind_zones@0,176        (conducts)
+646   ind_zones@16,176       (conducts)
+647   ind_zones@32,176       (conducts)
+648   ind_zones@0,192        (conducts)
+649   ind_zones@16,192       (conducts)
+650   ind_zones@32,192       (conducts)
+651   ind_zones@0,208        (conducts)
+652   ind_zones@16,208 (zone)(conducts)
+653   ind_zones@32,208       (conducts)
+654   ind_zones@0,224        (conducts)
+655   ind_zones@16,224       (conducts)
+656   ind_zones@32,224       (conducts)
+657   ind_zones@0,240        (conducts)
+658   ind_zones@16,240       (conducts)
+659   ind_zones@32,240       (conducts)
+660   ind_zones@0,256        (conducts)
+661   ind_zones@16,256 (zone)(conducts)
+662   ind_zones@32,256       (conducts)
+663   ind_zones@0,272        (conducts)
+664   ind_zones@16,272       (conducts)
+665   ind_zones@32,272       (conducts)
+666   ind_zones@0,288        (conducts)
+667   ind_zones@16,288       (conducts)
+668   ind_zones@32,288       (conducts)
+669   ind_zones@0,304        (conducts)
+670   ind_zones@16,304 (zone)(conducts)
+671   ind_zones@32,304       (conducts)
+672   ind_zones@0,320        (conducts)
+673   ind_zones@16,320       (conducts)
+674   ind_zones@32,320       (conducts)
+675   ind_zones@0,336        (conducts)
+676   ind_zones@16,336       (conducts)
+677   ind_zones@32,336       (conducts)
+678   ind_zones@0,352        (conducts)
+679   ind_zones@16,352 (zone)(conducts)
+680   ind_zones@32,352       (conducts)
+681   ind_zones@0,368        (conducts)
+682   ind_zones@16,368       (conducts)
+683   ind_zones@32,368       (conducts)
+684   ind_zones@0,384        (conducts)
+685   ind_zones@16,384       (conducts)
+686   ind_zones@32,384       (conducts)
+687   ind_zones@0,400        (conducts)
+688   ind_zones@16,400 (zone)(conducts)
+689   ind_zones@32,400       (conducts)
+690   ind_zones@0,416        (conducts)
+691   ind_zones@16,416       (conducts)
+692   ind_zones@32,416       (conducts)
 # BEGIN SEAPORT #
-693   seaport@0,0
-694   seaport@16,0
-695   seaport@32,0
-696   seaport@48,0
-697   seaport@0,16
-698   seaport@16,16 (zone)
-699   seaport@32,16
-700   seaport@48,16
-701   seaport@0,32
-702   seaport@16,32
-703   seaport@32,32
-704   seaport@48,32
-705   seaport@0,48
-706   seaport@16,48
-707   seaport@32,48
-708   seaport@48,48
+693   seaport@0,0            (conducts)
+694   seaport@16,0           (conducts)
+695   seaport@32,0           (conducts)
+696   seaport@48,0           (conducts)
+697   seaport@0,16           (conducts)
+698   seaport@16,16    (zone)(conducts)
+699   seaport@32,16          (conducts)
+700   seaport@48,16          (conducts)
+701   seaport@0,32           (conducts)
+702   seaport@16,32          (conducts)
+703   seaport@32,32          (conducts)
+704   seaport@48,32          (conducts)
+705   seaport@0,48           (conducts)
+706   seaport@16,48          (conducts)
+707   seaport@32,48          (conducts)
+708   seaport@48,48          (conducts)
 # BEGIN AIRPORT #
-709   airport@0,0
-710   airport@16,0
-711   airport@32,0
-712   airport@48,0
-713   airport@64,0
-714   airport@80,0
-715   airport@0,16
-716   airport@16,16 (zone)
-717   airport@32,16
-718   airport@48,16
-719   airport@64,16
-720   airport@80,16
-721   airport@0,32
-722   airport@16,32
-723   airport@32,32
-724   airport@48,32
-725   airport@64,32
-726   airport@80,32
-727   airport@0,48
-728   airport@16,48
-729   airport@32,48
-730   airport@48,48
-731   airport@64,48
-732   airport@80,48
-733   airport@0,64
-734   airport@16,64
-735   airport@32,64
-736   airport@48,64
-737   airport@64,64
-738   airport@80,64
-739   airport@0,80
-740   airport@16,80
-741   airport@32,80
-742   airport@48,80
-743   airport@64,80
-744   airport@80,80
+709   airport@0,0            (conducts)
+710   airport@16,0           (conducts)
+711   airport@32,0           (conducts)
+712   airport@48,0           (conducts)
+713   airport@64,0           (conducts)
+714   airport@80,0           (conducts)
+715   airport@0,16           (conducts)
+716   airport@16,16    (zone)(conducts)
+717   airport@32,16          (conducts)
+718   airport@48,16          (conducts)
+719   airport@64,16          (conducts)
+720   airport@80,16          (conducts)
+721   airport@0,32           (conducts)
+722   airport@16,32          (conducts)
+723   airport@32,32          (conducts)
+724   airport@48,32          (conducts)
+725   airport@64,32          (conducts)
+726   airport@80,32          (conducts)
+727   airport@0,48           (conducts)
+728   airport@16,48          (conducts)
+729   airport@32,48          (conducts)
+730   airport@48,48          (conducts)
+731   airport@64,48          (conducts)
+732   airport@80,48          (conducts)
+733   airport@0,64           (conducts)
+734   airport@16,64          (conducts)
+735   airport@32,64          (conducts)
+736   airport@48,64          (conducts)
+737   airport@64,64          (conducts)
+738   airport@80,64          (conducts)
+739   airport@0,80           (conducts)
+740   airport@16,80          (conducts)
+741   airport@32,80          (conducts)
+742   airport@48,80          (conducts)
+743   airport@64,80          (conducts)
+744   airport@80,80          (conducts)
 # BEGIN COAL POWER #
-745   coal@0,0
-746   coal@16,0
-747   coal@32,0                                                  (becomes=916)
-748   coal@48,0                                                  (becomes=920)
-749   coal@0,16
-750   coal@16,16 (zone)
-751   coal@32,16                                                 (becomes=924)
-752   coal@48,16                                                 (becomes=928)
-753   coal@0,32
-754   coal@16,32
-755   coal@32,32
-756   coal@48,32
-757   coal@0,48
-758   coal@16,48
-759   coal@32,48
-760   coal@48,48
+745   coal@0,0               (conducts)
+746   coal@16,0              (conducts)
+747   coal@32,0              (conducts)   (becomes=916)
+748   coal@48,0              (conducts)   (becomes=920)
+749   coal@0,16              (conducts)                                                
+750   coal@16,16       (zone)(conducts)                                        
+751   coal@32,16             (conducts)   (becomes=924)
+752   coal@48,16             (conducts)   (becomes=928)
+753   coal@0,32              (conducts)
+754   coal@16,32             (conducts)
+755   coal@32,32             (conducts)
+756   coal@48,32             (conducts)
+757   coal@0,48              (conducts)
+758   coal@16,48             (conducts)
+759   coal@32,48             (conducts)
+760   coal@48,48             (conducts)
 # BEGIN FIRE DEPT #
-761   firestation@0,0
-762   firestation@16,0
-763   firestation@32,0
-764   firestation@0,16
-765   firestation@16,16 (zone)
-766   firestation@32,16
-767   firestation@0,32
-768   firestation@16,32
-769   firestation@32,32
-770   police@0,0
-771   police@16,0
-772   police@32,0
-773   police@0,16
-774   police@16,16 (zone)
-775   police@32,16
-776   police@0,32
-777   police@16,32
-778   police@32,32
+761   firestation@0,0         (conducts)
+762   firestation@16,0        (conducts)
+763   firestation@32,0        (conducts)
+764   firestation@0,16        (conducts)
+765   firestation@16,16 (zone)(conducts)
+766   firestation@32,16       (conducts)
+767   firestation@0,32        (conducts)
+768   firestation@16,32       (conducts)
+769   firestation@32,32       (conducts)
+# BEGIN POLICE STATION #
+770   police@0,0             (conducts)
+771   police@16,0            (conducts)
+772   police@32,0            (conducts)
+773   police@0,16            (conducts)
+774   police@16,16     (zone)(conducts)
+775   police@32,16           (conducts)
+776   police@0,32            (conducts)
+777   police@16,32           (conducts)
+778   police@32,32           (conducts)
 # BEGIN STADIUM #
-779   stadium@0,0
-780   stadium@16,0
-781   stadium@32,0
-782   stadium@48,0
-783   stadium@0,16
-784   stadium@16,16 (zone)
-785   stadium@32,16
-786   stadium@48,16
-787   stadium@0,32
-788   stadium@16,32
-789   stadium@32,32
-790   stadium@48,32
-791   stadium@0,48
-792   stadium@16,48
-793   stadium@32,48
-794   stadium@48,48
+779   stadium@0,0            (conducts)
+780   stadium@16,0           (conducts)
+781   stadium@32,0           (conducts)
+782   stadium@48,0           (conducts)
+783   stadium@0,16           (conducts)
+784   stadium@16,16    (zone)(conducts)
+785   stadium@32,16          (conducts)
+786   stadium@48,16          (conducts)
+787   stadium@0,32           (conducts)
+788   stadium@16,32          (conducts)
+789   stadium@32,32          (conducts)
+790   stadium@48,32          (conducts)
+791   stadium@0,48           (conducts)
+792   stadium@16,48          (conducts)
+793   stadium@32,48          (conducts)
+794   stadium@48,48          (conducts)
 # BEGIN STADIUM ANIMS #
-795   stadium2@0,0
-796   stadium2@16,0
-797   stadium2@32,0
-798   stadium2@48,0
-799   stadium2@0,16
-800   stadium2@16,16 (zone)
-801   stadium2@32,16
-802   stadium2@48,16
-803   stadium2@0,32
-804   stadium2@16,32
-805   stadium2@32,32
-806   stadium2@48,32
-807   stadium2@0,48
-808   stadium2@16,48
-809   stadium2@32,48
-810   stadium2@48,48
+795   stadium2@0,0           (conducts)
+796   stadium2@16,0          (conducts)
+797   stadium2@32,0          (conducts)
+798   stadium2@48,0          (conducts)
+799   stadium2@0,16          (conducts)
+800   stadium2@16,16   (zone)(conducts)
+801   stadium2@32,16         (conducts)
+802   stadium2@48,16         (conducts)
+803   stadium2@0,32          (conducts)
+804   stadium2@16,32         (conducts)
+805   stadium2@32,32         (conducts)
+806   stadium2@48,32         (conducts)
+807   stadium2@0,48          (conducts)
+808   stadium2@16,48         (conducts)
+809   stadium2@32,48         (conducts)
+810   stadium2@48,48         (conducts)
 # BEGIN NUCLEAR POWER #
-811   nuclear@0,0
-812   nuclear@16,0
-813   nuclear@32,0
-814   nuclear@48,0
-815   nuclear@0,16
-816   nuclear@16,16 (zone)
-817   nuclear@32,16
-818   nuclear@48,16
-819   nuclear@0,32
-820   nuclear@16,32                                              (becomes=952)
-821   nuclear@32,32
-822   nuclear@48,32
-823   nuclear@0,48
-824   nuclear@16,48
-825   nuclear@32,48
-826   nuclear@48,48
+811   nuclear@0,0            (conducts)
+812   nuclear@16,0           (conducts)
+813   nuclear@32,0           (conducts)
+814   nuclear@48,0           (conducts)
+815   nuclear@0,16           (conducts)
+816   nuclear@16,16    (zone)(conducts)
+817   nuclear@32,16          (conducts)
+818   nuclear@48,16          (conducts)
+819   nuclear@0,32           (conducts)
+820   nuclear@16,32          (conducts)  (becomes=952)
+821   nuclear@32,32          (conducts)
+822   nuclear@48,32          (conducts)
+823   nuclear@0,48           (conducts)
+824   nuclear@16,48          (conducts)
+825   nuclear@32,48          (conducts)
+826   nuclear@48,48          (conducts)
 # BEGIN POWER OUT + BRIDGES #
 827   misc_animation@0,0
 828   misc_animation@0,16   (noburn)
@@ -852,14 +853,14 @@
 830   misc_animation@0,48   (noburn)
 831   misc_animation@0,64   (noburn)
 # BEGIN RADAR DISH #
-832   misc_animation@0,80                                        (becomes=833)
-833   misc_animation@0,96                                        (becomes=834)
-834   misc_animation@0,112                                       (becomes=835)
-835   misc_animation@0,128                                       (becomes=836)
-836   misc_animation@0,144                                       (becomes=837)
-837   misc_animation@0,160                                       (becomes=838)
-838   misc_animation@0,176                                       (becomes=839)
-839   misc_animation@0,192                                       (becomes=832)
+832   misc_animation@0,80   (conducts)   (becomes=833)
+833   misc_animation@0,96   (conducts)   (becomes=834)
+834   misc_animation@0,112  (conducts)   (becomes=835)
+835   misc_animation@0,128  (conducts)   (becomes=836)
+836   misc_animation@0,144  (conducts)   (becomes=837)
+837   misc_animation@0,160  (conducts)   (becomes=838)
+838   misc_animation@0,176  (conducts)   (becomes=839)
+839   misc_animation@0,192  (conducts)   (becomes=832)
 # BEGIN FOUNTAIN / FLAG #
 840   misc_animation@0,208                                       (becomes=841)
 841   misc_animation@0,224                                       (becomes=842)
@@ -875,14 +876,14 @@
 850   misc_animation@0,368                                       (becomes=851)
 851   misc_animation@0,384                                       (becomes=844)
 # BEGIN INDUSTRIAL ANIMATION (8 frames) #
-852   misc_animation@0,400                                       (becomes=853)
-853   misc_animation@0,416                                       (becomes=854)
-854   misc_animation@0,432                                       (becomes=855)
-855   misc_animation@0,448                                       (becomes=856)
-856   misc_animation@0,464                                       (becomes=857)
-857   misc_animation@0,480                                       (becomes=858)
-858   misc_animation@0,496                                       (becomes=859)
-859   misc_animation@0,512                                       (becomes=852)
+852   misc_animation@0,400  (conducts)      (becomes=853)
+853   misc_animation@0,416  (conducts)      (becomes=854)
+854   misc_animation@0,432  (conducts)      (becomes=855)
+855   misc_animation@0,448  (conducts)      (becomes=856)
+856   misc_animation@0,464  (conducts)      (becomes=857)
+857   misc_animation@0,480  (conducts)      (becomes=858)
+858   misc_animation@0,496  (conducts)      (becomes=859)
+859   misc_animation@0,512  (conducts)      (becomes=852)
 # BEGIN ZONE DESTRUCT & RUBBLIZE #
 860   misc_animation@0,528                                   (noburn)    (becomes=861)
 861   misc_animation@0,544                                   (noburn)    (becomes=862)
@@ -910,83 +911,83 @@
 882   misc_animation@0,880
 883   misc_animation@0,896
 # BEGIN SMOKE STACKS #
-884   misc_animation@0,912                                       (becomes=885)
-885   misc_animation@0,928                                       (becomes=886)
-886   misc_animation@0,944                                       (becomes=887)
-887   misc_animation@0,960                                       (becomes=884)
-888   misc_animation@0,976                                       (becomes=889)
-889   misc_animation@0,992                                       (becomes=890)
-890   misc_animation@0,1008                                      (becomes=891)
-891   misc_animation@0,1024                                      (becomes=888)
-892   misc_animation@0,1040                                      (becomes=893)
-893   misc_animation@0,1056                                      (becomes=894)
-894   misc_animation@0,1072                                      (becomes=895)
-895   misc_animation@0,1088                                      (becomes=892)
-896   misc_animation@0,1104                                      (becomes=897)
-897   misc_animation@0,1120                                      (becomes=898)
-898   misc_animation@0,1136                                      (becomes=899)
-899   misc_animation@0,1152                                      (becomes=896)
-900   misc_animation@0,1168                                      (becomes=901)
-901   misc_animation@0,1184                                      (becomes=902)
-902   misc_animation@0,1200                                      (becomes=903)
-903   misc_animation@0,1216                                      (becomes=900)
-904   misc_animation@0,1232                                      (becomes=905)
-905   misc_animation@0,1248                                      (becomes=906)
-906   misc_animation@0,1264                                      (becomes=907)
-907   misc_animation@0,1280                                      (becomes=904)
-908   misc_animation@0,1296                                      (becomes=909)
-909   misc_animation@0,1312                                      (becomes=910)
-910   misc_animation@0,1328                                      (becomes=911)
-911   misc_animation@0,1344                                      (becomes=908)
-912   misc_animation@0,1360                                      (becomes=913)
-913   misc_animation@0,1376                                      (becomes=914)
-914   misc_animation@0,1392                                      (becomes=915)
-915   misc_animation@0,1408                                      (becomes=912)
+884   misc_animation@0,912  (conducts) (becomes=885)
+885   misc_animation@0,928  (conducts) (becomes=886)
+886   misc_animation@0,944  (conducts) (becomes=887)
+887   misc_animation@0,960  (conducts) (becomes=884)
+888   misc_animation@0,976  (conducts) (becomes=889)
+889   misc_animation@0,992  (conducts) (becomes=890)
+890   misc_animation@0,1008 (conducts) (becomes=891)
+891   misc_animation@0,1024 (conducts) (becomes=888)
+892   misc_animation@0,1040 (conducts) (becomes=893)
+893   misc_animation@0,1056 (conducts) (becomes=894)
+894   misc_animation@0,1072 (conducts) (becomes=895)
+895   misc_animation@0,1088 (conducts) (becomes=892)
+896   misc_animation@0,1104 (conducts) (becomes=897)
+897   misc_animation@0,1120 (conducts) (becomes=898)
+898   misc_animation@0,1136 (conducts) (becomes=899)
+899   misc_animation@0,1152 (conducts) (becomes=896)
+900   misc_animation@0,1168 (conducts) (becomes=901)
+901   misc_animation@0,1184 (conducts) (becomes=902)
+902   misc_animation@0,1200 (conducts) (becomes=903)
+903   misc_animation@0,1216 (conducts) (becomes=900)
+904   misc_animation@0,1232 (conducts) (becomes=905)
+905   misc_animation@0,1248 (conducts) (becomes=906)
+906   misc_animation@0,1264 (conducts) (becomes=907)
+907   misc_animation@0,1280 (conducts) (becomes=904)
+908   misc_animation@0,1296 (conducts) (becomes=909)
+909   misc_animation@0,1312 (conducts) (becomes=910)
+910   misc_animation@0,1328 (conducts) (becomes=911)
+911   misc_animation@0,1344 (conducts) (becomes=908)
+912   misc_animation@0,1360 (conducts) (becomes=913)
+913   misc_animation@0,1376 (conducts) (becomes=914)
+914   misc_animation@0,1392 (conducts) (becomes=915)
+915   misc_animation@0,1408 (conducts) (becomes=912)
 # BEGIN COAL PLANT SMOKE #
-916   misc_animation@0,1424                                      (becomes=917)
-917   misc_animation@0,1440                                      (becomes=918)
-918   misc_animation@0,1456                                      (becomes=919)
-919   misc_animation@0,1472                                      (becomes=916)
-920   misc_animation@0,1488                                      (becomes=921)
-921   misc_animation@0,1504                                      (becomes=922)
-922   misc_animation@0,1520                                      (becomes=923)
-923   misc_animation@0,1536                                      (becomes=920)
-924   misc_animation@0,1552                                      (becomes=925)
-925   misc_animation@0,1568                                      (becomes=926)
-926   misc_animation@0,1584                                      (becomes=927)
-927   misc_animation@0,1600                                      (becomes=924)
-928   misc_animation@0,1616                                      (becomes=929)
-929   misc_animation@0,1632                                      (becomes=930)
-930   misc_animation@0,1648                                      (becomes=931)
-931   misc_animation@0,1664                                      (becomes=928)
+916   misc_animation@0,1424 (conducts) (becomes=917)
+917   misc_animation@0,1440 (conducts) (becomes=918)
+918   misc_animation@0,1456 (conducts) (becomes=919)
+919   misc_animation@0,1472 (conducts) (becomes=916)
+920   misc_animation@0,1488 (conducts) (becomes=921)
+921   misc_animation@0,1504 (conducts) (becomes=922)
+922   misc_animation@0,1520 (conducts) (becomes=923)
+923   misc_animation@0,1536 (conducts) (becomes=920)
+924   misc_animation@0,1552 (conducts) (becomes=925)
+925   misc_animation@0,1568 (conducts) (becomes=926)
+926   misc_animation@0,1584 (conducts) (becomes=927)
+927   misc_animation@0,1600 (conducts) (becomes=924)
+928   misc_animation@0,1616 (conducts) (becomes=929)
+929   misc_animation@0,1632 (conducts) (becomes=930)
+930   misc_animation@0,1648 (conducts) (becomes=931)
+931   misc_animation@0,1664 (conducts) (becomes=928)
 # BEGIN STADIUM PLAYFIELD #
 #   Note: the original source code made these unburnable, which doesn't make sense
-932   misc_animation@0,1680                                      (becomes=933)
-933   misc_animation@0,1696                                      (becomes=934)
-934   misc_animation@0,1712                                      (becomes=935)
-935   misc_animation@0,1728                                      (becomes=936)
-936   misc_animation@0,1744                                      (becomes=937)
-937   misc_animation@0,1760                                      (becomes=938)
-938   misc_animation@0,1776                                      (becomes=939)
-939   misc_animation@0,1792                                      (becomes=932)
-940   misc_animation@0,1808                                      (becomes=941)
-941   misc_animation@0,1824                                      (becomes=942)
-942   misc_animation@0,1840                                      (becomes=943)
-943   misc_animation@0,1856                                      (becomes=944)
-944   misc_animation@0,1872                                      (becomes=945)
-945   misc_animation@0,1888                                      (becomes=946)
-946   misc_animation@0,1904                                      (becomes=947)
-947   misc_animation@0,1920                                      (becomes=940)
+932   misc_animation@0,1680 (conducts) (becomes=933)
+933   misc_animation@0,1696 (conducts) (becomes=934)
+934   misc_animation@0,1712 (conducts) (becomes=935)
+935   misc_animation@0,1728 (conducts) (becomes=936)
+936   misc_animation@0,1744 (conducts) (becomes=937)
+937   misc_animation@0,1760 (conducts) (becomes=938)
+938   misc_animation@0,1776 (conducts) (becomes=939)
+939   misc_animation@0,1792 (conducts) (becomes=932)
+940   misc_animation@0,1808 (conducts) (becomes=941)
+941   misc_animation@0,1824 (conducts) (becomes=942)
+942   misc_animation@0,1840 (conducts) (becomes=943)
+943   misc_animation@0,1856 (conducts) (becomes=944)
+944   misc_animation@0,1872 (conducts) (becomes=945)
+945   misc_animation@0,1888 (conducts) (becomes=946)
+946   misc_animation@0,1904 (conducts) (becomes=947)
+947   misc_animation@0,1920 (conducts) (becomes=940)
 # BEGIN BRIDGE TILES #
 948   misc_animation@0,1936  (noburn)
 949   misc_animation@0,1952  (noburn)
 950   misc_animation@0,1968  (noburn)
 951   misc_animation@0,1984  (noburn)
 # BEGIN NUCLEAR SWIRL #
-952   misc_animation@0,2000                                      (becomes=953)
-953   misc_animation@0,2016                                      (becomes=954)
-954   misc_animation@0,2032                                      (becomes=955)
-955   misc_animation@0,2048                                      (becomes=952)
+952   misc_animation@0,2000  (conducts) (becomes=953)
+953   misc_animation@0,2016  (conducts) (becomes=954)
+954   misc_animation@0,2032  (conducts) (becomes=955)
+955   misc_animation@0,2048  (conducts) (becomes=952)
 # unused #
 956   misc_animation@0,2064
 957   misc_animation@0,2080
