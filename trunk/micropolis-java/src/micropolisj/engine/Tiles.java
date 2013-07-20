@@ -49,6 +49,10 @@ public class Tiles
 			if (tmp != null) {
 				tiles[i].onPower = get(Integer.parseInt(tmp));
 			}
+			tmp = tiles[i].getAttribute("onshutdown");
+			if (tmp != null) {
+				tiles[i].onShutdown = get(Integer.parseInt(tmp));
+			}
 		}
 	}
 

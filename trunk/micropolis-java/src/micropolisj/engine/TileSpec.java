@@ -7,6 +7,7 @@ public class TileSpec
 	int tileNumber;
 	TileSpec animNext;
 	TileSpec onPower;
+	TileSpec onShutdown;
 	boolean canBurn;
 	boolean canConduct;
 	boolean zone;

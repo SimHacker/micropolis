@@ -2322,6 +2322,7 @@ public class Micropolis
 	 * Should be called whenever the key zone tile of a zone is destroyed,
 	 * since otherwise the user would no longer have a way of destroying
 	 * the zone.
+	 * @see #shutdownZone
 	 */
 	void killZone(int xpos, int ypos, int zoneTile)
 	{
@@ -2329,6 +2330,9 @@ public class Micropolis
 
 		int sz = TileConstants.getZoneSizeFor(zoneTile);
 		int zoneBase = (zoneTile&LOMASK)-1-sz;
+
+		// this will take care of stopping smoke animations
+		shutdownZone(xpos, ypos, sz);
 
 		for (int y = 0; y < sz; y++) {
 			for (int x = 0; x < sz; x++, zoneBase++) {
@@ -2338,16 +2342,55 @@ public class Micropolis
 					continue;
 
 				int t = getTile(xtem, ytem);
-				if ((zoneTile & LOMASK) == POWERPLANT &&
-					(t & LOMASK) >= COALSMOKE1 &&
-					(t & LOMASK) < COALSMOKE4+4) {
-					// animated coal smoke
-					setTile(xtem, ytem, (char)(zoneBase | BULLBIT));
-					continue;
-				}
-
 				if ((t & LOMASK) >= ROADBASE) {
 					setTile(xtem, ytem, (char)(t | BULLBIT));
+				}
+			}
+		}
+	}
+
+	/**
+	 * If a zone has a different image (animation) for when it is
+	 * powered, switch to that different image here.
+	 * Note: pollution is not accumulated here; see ptlScan()
+	 * instead.
+	 * @see #shutdownZone
+	 */
+	void powerZone(int xpos, int ypos, int zoneSize)
+	{
+		for (int dx = 0; dx < zoneSize; dx++) {
+			for (int dy = 0; dy < zoneSize; dy++) {
+				int x = xpos - 1 + dx;
+				int y = ypos - 1 + dy;
+				int tile = getTile(x, y);
+				TileSpec ts = Tiles.get(tile & LOMASK);
+				if (ts != null && ts.onPower != null) {
+					setTile(x, y,
+					(char) (ts.onPower.tileNumber | (tile & ALLBITS))
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * If a zone has a different image (animation) for when it is
+	 * powered, switch back to the original image.
+	 * @see #powerZone
+	 * @see #killZone
+	 */
+	void shutdownZone(int xpos, int ypos, int zoneSize)
+	{
+		for (int dx = 0; dx < zoneSize; dx++) {
+			for (int dy = 0; dy < zoneSize; dy++) {
+				int x = xpos - 1 + dx;
+				int y = ypos - 1 + dy;
+				int tile = getTile(x, y);
+				TileSpec ts = Tiles.get(tile & LOMASK);
+				if (ts != null && ts.onShutdown != null) {
+					setTile(x, y,
+					(char) (ts.onShutdown.tileNumber | (tile & ALLBITS))
+					);
 				}
 			}
 		}
