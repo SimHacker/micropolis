@@ -62,7 +62,7 @@ class MapScanner
 
 		cchr9 = (char) (cchr & LOMASK);
 
-		if (city.newPower && ((cchr & CONDBIT) != 0))
+		if (city.newPower && isConductive(cchr))
 		{
 			setZonePower();
 		}
@@ -118,7 +118,7 @@ class MapScanner
 			// deteriorating roads
 			if (PRNG.nextInt(512) == 0)
 			{
-				if ((cchr & CONDBIT) == 0)
+				if (!isConductive(cchr))
 				{
 					if (city.roadEffect < PRNG.nextInt(32))
 					{
@@ -251,7 +251,7 @@ class MapScanner
 
 		if (city.roadEffect < 30) { // deteriorating rail
 			if (PRNG.nextInt(512) == 0) {
-				if ((cchr & CONDBIT) == 0) {
+				if (!isConductive(cchr)) {
 					if (city.roadEffect < PRNG.nextInt(32)) {
 						if (isOverWater(cchr)) {
 							city.setTile(xpos,ypos,RIVER);
@@ -509,7 +509,7 @@ class MapScanner
 		{
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
-				city.setTile(x, y, (char)(base | CONDBIT | (x == xpos && y == ypos ? BULLBIT : 0)));
+				city.setTile(x, y, (char)(base | (x == xpos && y == ypos ? BULLBIT : 0)));
 				base++;
 			}
 		}
@@ -631,13 +631,13 @@ class MapScanner
 			{
 				if ((city.map[ypos-1][xpos+1] & LOMASK) == RADAR) {
 					city.setTile(xpos+1,ypos-1, (char)
-					(RADAR_ANIM + CONDBIT)
+					(RADAR_ANIM)
 					);
 				}
 			}
 			else
 			{
-				city.setTile(xpos+1,ypos-1,(char)(RADAR + CONDBIT));
+				city.setTile(xpos+1,ypos-1,(char)(RADAR));
 			}
 
 			if (powerOn) {
@@ -759,7 +759,7 @@ class MapScanner
 					{  //not rubble, radiactive, on fire or flooded
 
 						city.setTile(xx,yy,(char)
-						(zoneBase+CONDBIT)
+						(zoneBase)
 						);
 					}
 				}
@@ -849,12 +849,12 @@ class MapScanner
 				if (powerOn) {
 					if (t == Smoke.AniTabC[z]) //expected non-animated tile
 					{
-						city.setTile(xx,yy,(char)(Smoke.ASCBIT | (SMOKEBASE + Smoke.AniTabA[z])));
+						city.setTile(xx,yy,(char)(SMOKEBASE + Smoke.AniTabA[z]));
 					}
 				}
 				else {
 					if (t > Smoke.AniTabC[z]) {
-						city.setTile(xx,yy,(char)(Smoke.REGBIT | Smoke.AniTabC[z]));
+						city.setTile(xx,yy,(char)(Smoke.AniTabC[z]));
 					}
 				}
 			}
@@ -866,12 +866,12 @@ class MapScanner
 				int t = city.map[yy][xx] & LOMASK;
 				if (powerOn) {
 					if (t == Smoke.AniTabD[z]) {
-						city.setTile(xx,yy,(char)(Smoke.ASCBIT | (SMOKEBASE + Smoke.AniTabB[z])));
+						city.setTile(xx,yy,(char)(SMOKEBASE + Smoke.AniTabB[z]));
 					}
 				}
 				else {
 					if (t > Smoke.AniTabD[z]) {
-						city.setTile(xx,yy,(char)(Smoke.REGBIT | Smoke.AniTabD[z]));
+						city.setTile(xx,yy,(char)(Smoke.AniTabD[z]));
 					}
 				}
 			}
@@ -1080,7 +1080,7 @@ class MapScanner
 			assert houseNumber >= 0 && houseNumber < 12;
 
 			assert city.testBounds(xx, yy);
-			city.setTile(xx, yy, (char)((HOUSE + houseNumber) | BULLBIT | CONDBIT));
+			city.setTile(xx, yy, (char)((HOUSE + houseNumber) | BULLBIT));
 		}
 	}
 
@@ -1207,7 +1207,7 @@ class MapScanner
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT | CONDBIT));
+			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
@@ -1218,7 +1218,7 @@ class MapScanner
 						{
 							// pick a random small house
 							int houseNumber = value * 3 + PRNG.nextInt(3);
-							city.setTile(x, y, (char) ((HOUSE + houseNumber) | BULLBIT | CONDBIT));
+							city.setTile(x, y, (char) ((HOUSE + houseNumber) | BULLBIT));
 						}
 					}
 				}
@@ -1243,7 +1243,7 @@ class MapScanner
 						int loc = city.map[y][x] & LOMASK;
 						if (loc >= LHTHR && loc <= HHTHR)
 						{ //little house
-							city.setTile(x, y, (char)((Brdr[z] + FREEZ - 4) | BULLBIT | CONDBIT));
+							city.setTile(x, y, (char)((Brdr[z] + FREEZ - 4) | BULLBIT));
 							return;
 						}
 					}
@@ -1342,7 +1342,7 @@ class MapScanner
 			int tile = city.getTile(xpos+dx[z], ypos+dy[z]) & LOMASK;
 			if (tile >= COALBASE && tile < COALBASE + 4*4) {
 				city.setTile(xpos + dx[z], ypos + dy[z],
-				(char) (SmTb[z] | CONDBIT | PWRBIT)
+				(char) (SmTb[z] | PWRBIT)
 				);
 			}
 		}
@@ -1374,7 +1374,7 @@ class MapScanner
 			for (int x = 0; x < 4; x++, zoneBase++)
 			{
 				city.setTile(xpos - 1 + x, ypos - 1 + y,
-					(char) (zoneBase | CONDBIT | (x == 1 && y == 1 ? (PWRBIT) : 0)));
+					(char) (zoneBase | (x == 1 && y == 1 ? (PWRBIT) : 0)));
 			}
 		}
 	}

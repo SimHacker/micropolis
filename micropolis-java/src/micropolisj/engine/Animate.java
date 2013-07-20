@@ -37,9 +37,6 @@ class Animate
 		static int [] AniTabB = {    0,    0,   36,   44,    0,    0,   52,   60 };
 		static int [] AniTabC = { IND1,    0, IND2, IND4,    0,    0, IND6, IND8 };
 		static int [] AniTabD = { IND1,    0, IND3, IND5,    0,    0, IND7, IND9 };
-
-		static final int ASCBIT = (CONDBIT);
-		static final int REGBIT = (CONDBIT);
 	}
 
 }

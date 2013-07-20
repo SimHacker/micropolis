@@ -260,7 +260,7 @@ public class OverlayMapView extends JComponent
 			// zone
 			pix = ((rawTile & PWRBIT) != 0) ? POWERED : UNPOWERED;
 		}
-		else if ((rawTile & CONDBIT) != 0) {
+		else if (isConductive(rawTile)) {
 			pix = CONDUCTIVE;
 		}
 		else {

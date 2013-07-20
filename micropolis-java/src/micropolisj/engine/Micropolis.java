@@ -906,11 +906,6 @@ public class Micropolis
 		fireMapOverlayDataChanged(MapState.FIRE_OVERLAY);
 	}
 
-	private boolean isConductive(int x, int y)
-	{
-		return (map[y][x] & CONDBIT) != 0;
-	}
-
 	private boolean testForCond(CityLocation loc, int dir)
 	{
 		int xsave = loc.x;
@@ -920,7 +915,7 @@ public class Micropolis
 		if (movePowerLocation(loc,dir))
 		{
 			rv = (
-				isConductive(loc.x, loc.y) &&
+				isConductive(map[loc.y][loc.x]) &&
 				map[loc.y][loc.x] != NUCLEAR &&
 				map[loc.y][loc.x] != POWERPLANT &&
 				!hasPower(loc.x, loc.y)
@@ -1965,7 +1960,7 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = dis.readShort();
-				z &= ~(1024 | 2048 | 8192); // clear ZONEBIT,ANIMBIT,BURNBIT on import
+				z &= ~(1024 | 2048 | 8192 | 16384); // clear ZONEBIT,ANIMBIT,BURNBIT,CONDBIT on import
 				map[y][x] = (char) z;
 			}
 		}
@@ -1979,6 +1974,9 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = map[y][x];
+				if (isConductive(z)) {
+					z |= 16384;  //synthesize CONDBIT on export
+				}
 				if (isCombustible(z)) {
 					z |= 8192;   //synthesize BURNBIT on export
 				}
@@ -2344,7 +2342,7 @@ public class Micropolis
 					(t & LOMASK) >= COALSMOKE1 &&
 					(t & LOMASK) < COALSMOKE4+4) {
 					// animated coal smoke
-					setTile(xtem, ytem, (char)(zoneBase | CONDBIT | BULLBIT));
+					setTile(xtem, ytem, (char)(zoneBase | BULLBIT));
 					continue;
 				}
 

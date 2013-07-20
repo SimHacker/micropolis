@@ -182,7 +182,7 @@ public class ToolStroke
 			for (int columnNum = 0; columnNum < width; columnNum++)
 			{
 				eff.setTile(columnNum, rowNum, (char) (
-					tileBase | CONDBIT
+					tileBase
 					));
 				tileBase++;
 			}
@@ -412,7 +412,7 @@ public class ToolStroke
 			{
 				tile = eff.getTile(0, -1);
 				char ntile = neutralizeRoad(tile);
-				if ((tile & CONDBIT) != 0 &&
+				if (isConductive(tile) &&
 					ntile != VPOWER &&
 					ntile != VROADPOWER &&
 					ntile != RAILVPOWERH)
@@ -425,7 +425,7 @@ public class ToolStroke
 			{
 				tile = eff.getTile(1, 0);
 				char ntile = neutralizeRoad(tile);
-				if ((tile & CONDBIT) != 0 &&
+				if (isConductive(tile) &&
 					ntile != HPOWER &&
 					ntile != HROADPOWER &&
 					ntile != RAILHPOWERV)
@@ -438,7 +438,7 @@ public class ToolStroke
 			{
 				tile = eff.getTile(0, 1);
 				char ntile = neutralizeRoad(tile);
-				if ((tile & CONDBIT) != 0 &&
+				if (isConductive(tile) &&
 					ntile != VPOWER &&
 					ntile != VROADPOWER &&
 					ntile != RAILVPOWERH)
@@ -451,7 +451,7 @@ public class ToolStroke
 			{
 				tile = eff.getTile(-1, 0);
 				char ntile = neutralizeRoad(tile);
-				if ((tile & CONDBIT) != 0 &&
+				if (isConductive(tile) &&
 					ntile != HPOWER &&
 					ntile != HROADPOWER &&
 					ntile != RAILHPOWERV)
@@ -460,7 +460,7 @@ public class ToolStroke
 				}
 			}
 
-			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT | CONDBIT));
+			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT));
 		} //end if on a rail tile
 
 		return;

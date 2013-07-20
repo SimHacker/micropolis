@@ -209,7 +209,7 @@ public class TileConstants
 	// status bits
 	//
 	public static final char PWRBIT = 32768;  // bit 15 ... currently powered
-	public static final char CONDBIT = 16384; // bit 14 ... can conduct power
+	// bit 14 ... unused
 	// bit 13 ... unused
 	public static final char BULLBIT = 4096;  // bit 12 ... is bulldozable
 	// bit 11 ... unused
@@ -302,6 +302,12 @@ public class TileConstants
 	{
 		TileSpec spec = Tiles.get(tile & LOMASK);
 		return spec != null && spec.canBurn;
+	}
+
+	public static boolean isConductive(int tile)
+	{
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec != null && spec.canConduct;
 	}
 
 	public static boolean isFire(int tile)
