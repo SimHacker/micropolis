@@ -456,18 +456,25 @@ class MapScanner
 		cchr = city.map[ypos][xpos];
 		cchr9 = (char) (cchr & LOMASK);
 
-		if (cchr9 == NUCLEAR ||
+		boolean oldPower = (cchr & PWRBIT) == PWRBIT;
+		boolean newPower = (
+			cchr9 == NUCLEAR ||
 			cchr9 == POWERPLANT ||
-			city.hasPower(xpos,ypos))
+			city.hasPower(xpos,ypos)
+			);
+
+		if (newPower && !oldPower)
 		{
 			city.setTile(xpos, ypos, (char) (cchr | PWRBIT));
-			return true;
+			city.powerZone(xpos, ypos, getZoneSizeFor(cchr));
 		}
-		else
+		else if (!newPower && oldPower)
 		{
 			city.setTile(xpos, ypos, (char) (cchr & (~PWRBIT)));
-			return false;
+			city.shutdownZone(xpos, ypos, getZoneSizeFor(cchr));
 		}
+
+		return newPower;
 	}
 
 	/**
@@ -528,7 +535,6 @@ class MapScanner
 			}
 
 			city.powerPlants.add(new CityLocation(xpos,ypos));
-			coalSmoke();
 			return;
 
 		case NUCLEAR:
@@ -1320,26 +1326,6 @@ class MapScanner
 			return 2;
 
 		return 3;
-	}
-
-	/**
-	 * Process the coal powerplant animation.
-	 * Note: pollution is not accumulated here; see ptlScan()
-	 * instead.
-	 */
-	void coalSmoke()
-	{
-		for (int dx = -1; dx <= 2; dx++) {
-			for (int dy = -1; dy <= 2; dy++) {
-				int tile = city.getTile(xpos+dx, ypos+dy);
-				TileSpec ts = Tiles.get(tile & LOMASK);
-				if (ts != null && ts.onPower != null) {
-					city.setTile(xpos + dx, ypos + dy,
-					(char) (ts.onPower.tileNumber | (tile & ALLBITS))
-					);
-				}
-			}
-		}
 	}
 
 	/**
