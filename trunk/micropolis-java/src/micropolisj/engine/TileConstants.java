@@ -210,7 +210,7 @@ public class TileConstants
 	//
 	public static final char PWRBIT = 32768;  // bit 15 ... currently powered
 	public static final char CONDBIT = 16384; // bit 14 ... can conduct power
-	public static final char BURNBIT = 8192;  // bit 13 ... is combustible
+	// bit 13 ... unused
 	public static final char BULLBIT = 4096;  // bit 12 ... is bulldozable
 	// bit 11 ... unused
 	// bit 10 ... unused
@@ -300,7 +300,8 @@ public class TileConstants
 
 	public static boolean isCombustible(int tile)
 	{
-		return (tile & BURNBIT) != 0;
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec != null && spec.canBurn;
 	}
 
 	public static boolean isFire(int tile)

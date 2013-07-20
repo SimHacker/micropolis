@@ -6,6 +6,7 @@ public class TileSpec
 {
 	int tileNumber;
 	TileSpec animNext;
+	boolean canBurn;
 	boolean zone;
 
 	Map<String,String> attributes;
@@ -69,6 +70,7 @@ public class TileSpec
 			}
 		}
 
+		this.canBurn = getBooleanAttribute("noburn");
 		this.zone = getBooleanAttribute("zone");
 	}
 

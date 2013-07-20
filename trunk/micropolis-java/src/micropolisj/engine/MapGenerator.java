@@ -479,7 +479,7 @@ public class MapGenerator
 
 			if ((map[mapY][mapX] & LOMASK) == DIRT)
 			{
-				map[mapY][mapX] = WOODS | BULLBIT | BURNBIT;
+				map[mapY][mapX] = WOODS | BULLBIT;
 			}
 		}
 	}
@@ -532,7 +532,7 @@ public class MapGenerator
 								temp -= 8;
 							}
 						}
-						map[mapY][mapX] = (char)(temp | BULLBIT | BURNBIT);
+						map[mapY][mapX] = (char)(temp | BULLBIT);
 					}
 					else
 					{
