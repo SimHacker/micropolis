@@ -52,6 +52,7 @@ public class MakeTiles
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
 
+		System.out.println("Generating tiles array: "+outputFile);
 		ImageIO.write(buf, "png", outputFile);
 	}
 
@@ -136,25 +137,102 @@ public class MakeTiles
 		return result;
 	}
 
+	static File findInkscape()
+	{
+		String exeName = "inkscape";
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			exeName += ".exe";
+		}
+
+		File [] pathsToTry = {
+			new File("/usr/bin"),
+			new File("c:\\Program Files\\Inkscape"),
+			new File("c:\\Program Files (x86)\\Inkscape")
+			};
+		for (File p : pathsToTry) {
+			File f = new File(p, exeName);
+			if (f.exists()) {
+				return f;
+			}
+		}
+		throw new Error("INKSCAPE not installed (or not found)");
+	}
+
+	static void renderSvg(File svgFile, File pngFile)
+		throws IOException
+	{
+		if (pngFile.exists() &&
+			pngFile.lastModified() > svgFile.lastModified())
+		{
+			// looks like the PNG file is already up-to-date
+			return;
+		}
+
+		File inkscapeBin = findInkscape();
+
+		System.out.println("Generating raster image: "+pngFile);
+		if (pngFile.exists()) {
+			pngFile.delete();
+		}
+
+		String [] cmdline = {
+			inkscapeBin.toString(),
+			"--export-width="+TILE_SIZE,
+			"--export-height="+TILE_SIZE,
+			"--export-png="+pngFile.toString(),
+			svgFile.toString()
+			};
+		Process p = Runtime.getRuntime().exec(cmdline);
+		int exit_value;
+		try {
+			exit_value = p.waitFor();
+		}
+		catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
+		if (exit_value != 0) {
+			throw new RuntimeException("Helper exit status: "+exit_value);
+		}
+
+		if (!pngFile.exists()) {
+			throw new RuntimeException("File not found: "+pngFile);
+		}
+	}
+
 	static SourceImage loadImage(String fileName)
 		throws IOException
 	{
-		File f = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
-		if (f.exists()) {
-			ImageIcon ii = new ImageIcon(f.toString());
+		File svgFile, pngFile;
+
+		svgFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".svg");
+		pngFile = new File(fileName+"_"+TILE_SIZE+"x"+TILE_SIZE+".png");
+
+		if (svgFile.exists()) {
+			renderSvg(svgFile, pngFile);
+		}
+		else {
+			svgFile = new File(fileName+".svg");
+			if (svgFile.exists()) {
+				renderSvg(svgFile, pngFile);
+			}
+		}
+
+		if (pngFile.exists()) {
+			ImageIcon ii = new ImageIcon(pngFile.toString());
 			return new SourceImage(
 				ii.getImage(),
 				TILE_SIZE);
 		}
 
-		f = new File(fileName+".png");
-		if (f.exists()) {
-			ImageIcon ii = new ImageIcon(f.toString());
+		pngFile = new File(fileName+".png");
+		if (pngFile.exists()) {
+			ImageIcon ii = new ImageIcon(pngFile.toString());
 			return new SourceImage(
 				ii.getImage(),
 				16);
 		}
 
-		throw new IOException("File not found: "+fileName+".png");
+		throw new IOException("File not found: "+fileName+".{svg,png}");
 	}
 }
