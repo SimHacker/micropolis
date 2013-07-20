@@ -509,7 +509,7 @@ class MapScanner
 		{
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
-				city.setTile(x, y, (char)(base | BNCNBIT | (x == xpos && y == ypos ? BULLBIT : 0)));
+				city.setTile(x, y, (char)(base | BURNBIT | CONDBIT | (x == xpos && y == ypos ? BULLBIT : 0)));
 				base++;
 			}
 		}
@@ -1080,7 +1080,7 @@ class MapScanner
 			assert houseNumber >= 0 && houseNumber < 12;
 
 			assert city.testBounds(xx, yy);
-			city.setTile(xx, yy, (char)(HOUSE + houseNumber + BLBNCNBIT));
+			city.setTile(xx, yy, (char)((HOUSE + houseNumber) | BULLBIT | BURNBIT | CONDBIT));
 		}
 	}
 
@@ -1207,7 +1207,7 @@ class MapScanner
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			city.setTile(xpos, ypos, (char)(FREEZ | BLBNCNBIT));
+			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT | BURNBIT | CONDBIT));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
@@ -1218,7 +1218,7 @@ class MapScanner
 						{
 							// pick a random small house
 							int houseNumber = value * 3 + PRNG.nextInt(3);
-							city.setTile(x, y, (char) (HOUSE + houseNumber + BLBNCNBIT));
+							city.setTile(x, y, (char) ((HOUSE + houseNumber) | BULLBIT | BURNBIT | CONDBIT));
 						}
 					}
 				}
@@ -1243,7 +1243,7 @@ class MapScanner
 						int loc = city.map[y][x] & LOMASK;
 						if (loc >= LHTHR && loc <= HHTHR)
 						{ //little house
-							city.setTile(x, y, (char)(Brdr[z] + BLBNCNBIT + FREEZ - 4));
+							city.setTile(x, y, (char)((Brdr[z] + FREEZ - 4) | BULLBIT | BURNBIT | CONDBIT));
 							return;
 						}
 					}
@@ -1374,7 +1374,7 @@ class MapScanner
 			for (int x = 0; x < 4; x++, zoneBase++)
 			{
 				city.setTile(xpos - 1 + x, ypos - 1 + y,
-					(char) (zoneBase | BNCNBIT | (x == 1 && y == 1 ? (PWRBIT) : 0)));
+					(char) (zoneBase | BURNBIT | CONDBIT | (x == 1 && y == 1 ? (PWRBIT) : 0)));
 			}
 		}
 	}

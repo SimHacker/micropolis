@@ -182,7 +182,7 @@ public class ToolStroke
 			for (int columnNum = 0; columnNum < width; columnNum++)
 			{
 				eff.setTile(columnNum, rowNum, (char) (
-					tileBase + BNCNBIT
+					tileBase | BURNBIT | CONDBIT
 					));
 				tileBase++;
 			}
