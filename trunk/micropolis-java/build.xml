@@ -91,6 +91,7 @@
 
 <target name="clean">
 <delete dir="${builddir}" />
+<delete dir="graphics/generated" />
 <delete file="${distfile}" />
 <delete>
 	<fileset dir="." includes="${ant.project.name}*.zip" />
