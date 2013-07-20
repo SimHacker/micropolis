@@ -12,7 +12,6 @@ import java.util.*;
 
 import static micropolisj.engine.TileConstants.*;
 import static micropolisj.engine.Micropolis.ZoneType;
-import static micropolisj.engine.Animate.Smoke;
 
 /**
  * Process individual tiles of the map for each cycle.
@@ -823,63 +822,6 @@ class MapScanner
 	}
 
 	/**
-	 * Animate tiles in an industrial zone.
-	 * Note: pollution is not accumulated here; it is instead
-	 * accumulated in ptlScan(), by adding up each tile's
-	 * pollution value.
-	 *
-	 * @param powerOn indicates whether the building has power
-	 */
-	void setSmoke(boolean powerOn)
-	{
-		int cchr9 = cchr & LOMASK;
-
-		if (cchr9 < IZB)
-			return;
-
-		int z = ((cchr9 - IZB) / 8) % 8;
-		if (Smoke.AniThis[z])
-		{
-			int xx = xpos + Smoke.DX1[z];
-			int yy = ypos + Smoke.DY1[z];
-
-			if (city.testBounds(xx, yy))
-			{
-				int t = city.map[yy][xx] & LOMASK;
-
-				if (powerOn) {
-					if (t == Smoke.AniTabC[z]) //expected non-animated tile
-					{
-						city.setTile(xx,yy,(char)(SMOKEBASE + Smoke.AniTabA[z]));
-					}
-				}
-				else {
-					if (t > Smoke.AniTabC[z]) {
-						city.setTile(xx,yy,(char)(Smoke.AniTabC[z]));
-					}
-				}
-			}
-
-			xx = xpos + Smoke.DX2[z];
-			yy = ypos + Smoke.DY2[z];
-			if (city.testBounds(xx, yy) && !(Smoke.DX1[z] == Smoke.DX2[z] && Smoke.DY1[z] == Smoke.DY2[z]))
-			{
-				int t = city.map[yy][xx] & LOMASK;
-				if (powerOn) {
-					if (t == Smoke.AniTabD[z]) {
-						city.setTile(xx,yy,(char)(SMOKEBASE + Smoke.AniTabB[z]));
-					}
-				}
-				else {
-					if (t > Smoke.AniTabD[z]) {
-						city.setTile(xx,yy,(char)(Smoke.AniTabD[z]));
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Called when the current tile is the key tile of an
 	 * industrial zone.
 	 * @param powerOn indicates whether the building has power
@@ -887,7 +829,6 @@ class MapScanner
 	void doIndustrial(boolean powerOn)
 	{
 		city.indZoneCount++;
-		setSmoke(powerOn);
 
 		int tpop = industrialZonePop(cchr);
 		city.indPop += tpop;
