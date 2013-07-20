@@ -1965,7 +1965,7 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = dis.readShort();
-				z &= ~(1024 | 2048);         // clear ZONEBIT,ANIMBIT on import
+				z &= ~(1024 | 2048 | 8192); // clear ZONEBIT,ANIMBIT,BURNBIT on import
 				map[y][x] = (char) z;
 			}
 		}
@@ -1979,6 +1979,9 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = map[y][x];
+				if (isCombustible(z)) {
+					z |= 8192;   //synthesize BURNBIT on export
+				}
 				if (isAnimated(z)) {
 					z |= 2048;   //synthesize ANIMBIT on export
 				}

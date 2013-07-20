@@ -182,7 +182,7 @@ public class ToolStroke
 			for (int columnNum = 0; columnNum < width; columnNum++)
 			{
 				eff.setTile(columnNum, rowNum, (char) (
-					tileBase | BURNBIT | CONDBIT
+					tileBase | CONDBIT
 					));
 				tileBase++;
 			}
@@ -240,9 +240,9 @@ public class ToolStroke
 		int z = inPreview ? 0 : city.PRNG.nextInt(5);
 		int tile;
 		if (z < 4) {
-			tile = (WOODS2 + z) | BURNBIT | BULLBIT;
+			tile = (WOODS2 + z) | BULLBIT;
 		} else {
-			tile = FOUNTAIN | BURNBIT | BULLBIT;
+			tile = FOUNTAIN | BULLBIT;
 		}
 
 		eff.spend(cost);
@@ -340,7 +340,7 @@ public class ToolStroke
 				}
 			}
 
-			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT | BURNBIT));
+			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT));
 		} //endif on a road tile
 
 		else if (tile >= LHRAIL && tile <= LVRAIL10)
@@ -400,7 +400,7 @@ public class ToolStroke
 				}
 			}
 
-			eff.setTile(0, 0, (RailTable[adjTile] | BULLBIT | BURNBIT));
+			eff.setTile(0, 0, (RailTable[adjTile] | BULLBIT));
 		} //end if on a rail tile
 
 		else if (tile >= LHPOWER && tile <= LVPOWER10)
@@ -460,7 +460,7 @@ public class ToolStroke
 				}
 			}
 
-			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT | BURNBIT | CONDBIT));
+			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT | CONDBIT));
 		} //end if on a rail tile
 
 		return;
