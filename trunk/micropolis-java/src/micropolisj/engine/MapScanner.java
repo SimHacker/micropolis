@@ -509,7 +509,7 @@ class MapScanner
 		{
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
-				city.setTile(x, y, (char)(base | BNCNBIT | (x == xpos && y == ypos ? ZONEBIT + BULLBIT : 0)));
+				city.setTile(x, y, (char)(base | BNCNBIT | (x == xpos && y == ypos ? BULLBIT : 0)));
 				base++;
 			}
 		}
@@ -1207,7 +1207,7 @@ class MapScanner
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			city.setTile(xpos, ypos, (char)(FREEZ | BLBNCNBIT | ZONEBIT));
+			city.setTile(xpos, ypos, (char)(FREEZ | BLBNCNBIT));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
@@ -1374,7 +1374,7 @@ class MapScanner
 			for (int x = 0; x < 4; x++, zoneBase++)
 			{
 				city.setTile(xpos - 1 + x, ypos - 1 + y,
-					(char) (zoneBase | BNCNBIT | (x == 1 && y == 1 ? (ZONEBIT|PWRBIT) : 0)));
+					(char) (zoneBase | BNCNBIT | (x == 1 && y == 1 ? (PWRBIT) : 0)));
 			}
 		}
 	}
