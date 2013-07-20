@@ -36,9 +36,15 @@ public class MicropolisDrawingArea extends JComponent
 	static final Dimension PREFERRED_VIEWPORT_SIZE = new Dimension(640,640);
 	static final ResourceBundle strings = MainWindow.strings;
 
+	static final int DEFAULT_TILE_SIZE = 16;
+	TileImages tileImages;
+	int TILE_WIDTH;
+	int TILE_HEIGHT;
+
 	public MicropolisDrawingArea(Micropolis engine)
 	{
 		this.m = engine;
+		selectTileSize(DEFAULT_TILE_SIZE);
 		m.addMapListener(this);
 
 		addAncestorListener(new AncestorListener() {
@@ -50,6 +56,18 @@ public class MicropolisDrawingArea extends JComponent
 		}
 		public void ancestorMoved(AncestorEvent evt) {}
 		});
+	}
+
+	private void selectTileSize(int newTileSize)
+	{
+		tileImages = TileImages.getInstance(newTileSize);
+		TILE_WIDTH = tileImages.TILE_WIDTH;
+		TILE_HEIGHT = tileImages.TILE_HEIGHT;
+	}
+
+	public CityLocation getCityLocation(int x, int y)
+	{
+		return new CityLocation(x / TILE_WIDTH, y / TILE_HEIGHT);
 	}
 
 	@Override
@@ -77,65 +95,11 @@ public class MicropolisDrawingArea extends JComponent
 		repaint();
 	}
 
-	static Image [] tileImages = loadTileImages("/tiles.png");
-	public static final int TILE_WIDTH = 16;
-	public static final int TILE_HEIGHT = 16;
-
-	static Image [] loadTileImages(String resourceName)
-	{
-		URL iconUrl = MicropolisDrawingArea.class.getResource(resourceName);
-		Image refImage = new ImageIcon(iconUrl).getImage();
-
-		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice dev = env.getDefaultScreenDevice();
-		GraphicsConfiguration conf = dev.getDefaultConfiguration();
-
-		Image [] images = new Image[refImage.getHeight(null) / TILE_HEIGHT];
-		for (int i = 0; i < images.length; i++)
-		{
-			BufferedImage bi = conf.createCompatibleImage(TILE_WIDTH, TILE_HEIGHT, Transparency.OPAQUE);
-			Graphics2D gr = bi.createGraphics();
-			gr.drawImage(refImage, 0, 0, TILE_WIDTH, TILE_HEIGHT,
-				0, i * TILE_HEIGHT,
-				TILE_WIDTH, (i+1)*TILE_HEIGHT,
-				null);
-			
-			images[i] = bi;
-		}
-		return images;
-	}
-
-	static Map<SpriteKind, Map<Integer, Image> > spriteImages;
-	static {
-		spriteImages = new EnumMap<SpriteKind, Map<Integer,Image> >(SpriteKind.class);
-		for (SpriteKind kind : SpriteKind.values())
-		{
-			HashMap<Integer,Image> imgs = new HashMap<Integer,Image>();
-			for (int i = 0; i < kind.numFrames; i++) {
-				Image img = loadSpriteImage(kind, i);
-				if (img != null) {
-					imgs.put(i, img);
-				}
-			}
-			spriteImages.put(kind, imgs);
-		}
-	}
-
-	static Image loadSpriteImage(SpriteKind kind, int frameNo)
-	{
-		String resourceName = "/obj"+kind.objectId+"-"+frameNo+".png";
-		URL iconUrl = MicropolisDrawingArea.class.getResource(resourceName);
-		if (iconUrl == null)
-			return null;
-
-		return new ImageIcon(iconUrl).getImage();
-	}
-
 	void drawSprite(Graphics gr, Sprite sprite)
 	{
 		assert sprite.isVisible();
 
-		Image img = spriteImages.get(sprite.kind).get(sprite.frame-1);
+		Image img = tileImages.getSpriteImage(sprite.kind, sprite.frame-1);
 		if (img != null) {
 			gr.drawImage(img, sprite.x + sprite.offx, sprite.y + sprite.offy, null);
 		}
@@ -179,8 +143,7 @@ public class MicropolisDrawingArea extends JComponent
 					}
 				}
 
-				int tile = (cell & LOMASK) % tileImages.length;
-				gr.drawImage(tileImages[tile],
+				gr.drawImage(tileImages.getTileImage(cell),
 					x*TILE_WIDTH + (shakeStep != 0 ? getShakeModifier(y) : 0),
 					y*TILE_HEIGHT,
 					null);

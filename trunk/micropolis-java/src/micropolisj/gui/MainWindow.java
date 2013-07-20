@@ -991,8 +991,8 @@ public class MainWindow extends JFrame
 	private void onToolDown(MouseEvent ev)
 	{
 		if (ev.getButton() == MouseEvent.BUTTON3) {
-			doQueryTool(ev.getX() / MicropolisDrawingArea.TILE_WIDTH,
-				ev.getY() / MicropolisDrawingArea.TILE_HEIGHT);
+			CityLocation loc = drawingArea.getCityLocation(ev.getX(), ev.getY());
+			doQueryTool(loc.x, loc.y);
 			return;
 		}
 
@@ -1002,8 +1002,9 @@ public class MainWindow extends JFrame
 		if (currentTool == null)
 			return;
 
-		int x = ev.getX() / MicropolisDrawingArea.TILE_WIDTH;
-		int y = ev.getY() / MicropolisDrawingArea.TILE_HEIGHT;
+		CityLocation loc = drawingArea.getCityLocation(ev.getX(), ev.getY());
+		int x = loc.x;
+		int y = loc.y;
 
 		if (currentTool == MicropolisTool.QUERY) {
 			doQueryTool(x, y);
@@ -1058,8 +1059,9 @@ public class MainWindow extends JFrame
 		if ((ev.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) == 0)
 			return;
 
-		int x = ev.getX() / MicropolisDrawingArea.TILE_WIDTH;
-		int y = ev.getY() / MicropolisDrawingArea.TILE_HEIGHT;
+		CityLocation loc = drawingArea.getCityLocation(ev.getX(), ev.getY());
+		int x = loc.x;
+		int y = loc.y;
 		if (x == lastX && y == lastY)
 			return;
 
@@ -1083,8 +1085,9 @@ public class MainWindow extends JFrame
 			return;
 		}
 
-		int x = ev.getX() / MicropolisDrawingArea.TILE_WIDTH;
-		int y = ev.getY() / MicropolisDrawingArea.TILE_HEIGHT;
+		CityLocation loc = drawingArea.getCityLocation(ev.getX(), ev.getY());
+		int x = loc.x;
+		int y = loc.y;
 		int w = currentTool.getWidth();
 		int h = currentTool.getHeight();
 
