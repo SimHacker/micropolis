@@ -386,10 +386,10 @@ public class OverlayMapView extends JComponent
 	{
 		Rectangle rawRect = cv.scrollPane.getViewport().getViewRect();
 		return new Rectangle(
-			rawRect.x * 3 / 16, 
-			rawRect.y * 3 / 16,
-			rawRect.width * 3 / 16,
-			rawRect.height * 3 / 16
+			rawRect.x * 3 / cv.view.getTileSize(), 
+			rawRect.y * 3 / cv.view.getTileSize(),
+			rawRect.width * 3 / cv.view.getTileSize(),
+			rawRect.height * 3 / cv.view.getTileSize()
 			);
 	}
 
@@ -403,8 +403,8 @@ public class OverlayMapView extends JComponent
 		Dimension mapSize = cv.scrollPane.getViewport().getViewSize();
 
 		Point np = new Point(
-				p.x * 16 / 3 - d.width / 2,
-				p.y * 16 / 3 - d.height / 2
+				p.x * cv.view.getTileSize() / 3 - d.width / 2,
+				p.y * cv.view.getTileSize() / 3 - d.height / 2
 				);
 		np.x = Math.max(0, Math.min(np.x, mapSize.width - d.width));
 		np.y = Math.max(0, Math.min(np.y, mapSize.height - d.height));
@@ -482,10 +482,12 @@ public class OverlayMapView extends JComponent
 
 	class ConnectedView implements ChangeListener
 	{
+		MicropolisDrawingArea view;
 		JScrollPane scrollPane;
 
 		ConnectedView(MicropolisDrawingArea view, JScrollPane scrollPane)
 		{
+			this.view = view;
 			this.scrollPane = scrollPane;
 			scrollPane.getViewport().addChangeListener(this);
 		}
