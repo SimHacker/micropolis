@@ -182,9 +182,10 @@ public class MainWindow extends JFrame
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
 
-		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("ADD"), "zoomIn");
-		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("shift EQUALS"), "zoomIn");
-		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("MINUS"), "zoomOut");
+		InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		inputMap.put(KeyStroke.getKeyStroke("ADD"), "zoomIn");
+		inputMap.put(KeyStroke.getKeyStroke("shift EQUALS"), "zoomIn");
+		inputMap.put(KeyStroke.getKeyStroke("MINUS"), "zoomOut");
 
 		getRootPane().getActionMap().put("zoomIn", new AbstractAction() {
 			public void actionPerformed(ActionEvent evt) {
