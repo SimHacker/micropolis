@@ -100,14 +100,41 @@ public class TileImages
 		}
 	}
 
-	static Image loadSpriteImage(SpriteKind kind, int frameNo)
+	Image loadSpriteImage(SpriteKind kind, int frameNo)
 	{
-		String resourceName = "/obj"+kind.objectId+"-"+frameNo+".png";
-		URL iconUrl = TileImages.class.getResource(resourceName);
+		String resourceName = "/obj"+kind.objectId+"-"+frameNo;
+
+		// first, try to load specific size image
+		URL iconUrl = TileImages.class.getResource(resourceName+"_"+TILE_WIDTH+"x"+TILE_HEIGHT+".png");
+		if (iconUrl != null) {
+			return new ImageIcon(iconUrl).getImage();
+		}
+
+		iconUrl = TileImages.class.getResource(resourceName+".png");
 		if (iconUrl == null)
 			return null;
 
-		return new ImageIcon(iconUrl).getImage();
+		if (TILE_WIDTH==16 && TILE_HEIGHT==16) {
+			return new ImageIcon(iconUrl).getImage();
+		}
+
+		// scale the image ourselves
+		ImageIcon ii = new ImageIcon(iconUrl);
+		int destWidth = ii.getIconWidth() * TILE_WIDTH / 16;
+		int destHeight = ii.getIconHeight() * TILE_HEIGHT / 16;
+
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice dev = env.getDefaultScreenDevice();
+		GraphicsConfiguration conf = dev.getDefaultConfiguration();
+		BufferedImage bi = conf.createCompatibleImage(destWidth, destHeight, Transparency.TRANSLUCENT);
+		Graphics2D gr = bi.createGraphics();
+
+		gr.drawImage(ii.getImage(),
+			0, 0, destWidth, destHeight,
+			0, 0,
+			ii.getIconWidth(), ii.getIconHeight(),
+			null);
+		return bi;
 	}
 
 }
