@@ -182,6 +182,21 @@ public class MainWindow extends JFrame
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
 
+		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("ADD"), "zoomIn");
+		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("shift EQUALS"), "zoomIn");
+		getRootPane().getInputMap().put(KeyStroke.getKeyStroke("MINUS"), "zoomOut");
+
+		getRootPane().getActionMap().put("zoomIn", new AbstractAction() {
+			public void actionPerformed(ActionEvent evt) {
+				doZoom(1);
+			}
+			});
+		getRootPane().getActionMap().put("zoomOut", new AbstractAction() {
+			public void actionPerformed(ActionEvent evt) {
+				doZoom(-1);
+			}
+			});
+
 		MouseAdapter mouse = new MouseAdapter() {
 			public void mousePressed(MouseEvent ev)
 			{
@@ -990,12 +1005,10 @@ public class MainWindow extends JFrame
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
 	}
 
-	private void onMouseWheelMoved(MouseWheelEvent evt)
+	private void doZoom(int dir, Point mousePt)
 	{
-		boolean zoomOut = evt.getWheelRotation() > 0;
-
 		int oldZoom = drawingArea.getTileSize();
-		int newZoom = zoomOut ? (oldZoom / 2) : (oldZoom * 2);
+		int newZoom = dir < 0 ? (oldZoom / 2) : (oldZoom * 2);
 		if (newZoom < 8) { newZoom = 8; }
 		if (newZoom > 32) { newZoom = 32; }
 
@@ -1004,11 +1017,31 @@ public class MainWindow extends JFrame
 			// preserve effective mouse position in viewport when changing zoom level
 			double f = (double)newZoom / (double)oldZoom;
 			Point pos = drawingAreaScroll.getViewport().getViewPosition();
-			int newX = (int)Math.round(evt.getX() * f - (evt.getX() - pos.x));
-			int newY = (int)Math.round(evt.getY() * f - (evt.getY() - pos.y));
+			int newX = (int)Math.round(mousePt.x * f - (mousePt.x - pos.x));
+			int newY = (int)Math.round(mousePt.y * f - (mousePt.y - pos.y));
 			drawingArea.selectTileSize(newZoom);
 			drawingAreaScroll.validate();
 			drawingAreaScroll.getViewport().setViewPosition(new Point(newX, newY));
+		}
+	}
+
+	private void doZoom(int dir)
+	{
+		Rectangle rect = drawingAreaScroll.getViewport().getViewRect();
+		doZoom(dir,
+			new Point(rect.x + rect.width/2,
+				rect.y + rect.height/2
+				)
+			);
+	}
+
+	private void onMouseWheelMoved(MouseWheelEvent evt)
+	{
+		if (evt.getWheelRotation() < 0) {
+			doZoom(1, evt.getPoint());
+		}
+		else {
+			doZoom(-1, evt.getPoint());
 		}
 	}
 
