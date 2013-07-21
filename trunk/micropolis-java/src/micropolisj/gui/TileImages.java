@@ -35,6 +35,8 @@ public class TileImages
 		else {
 			this.images = loadTileImages("/tiles.png", 16);
 		}
+
+		loadSpriteImages();
 	}
 
 	static Map<Integer,TileImages> savedInstances = new HashMap<Integer,TileImages>();
