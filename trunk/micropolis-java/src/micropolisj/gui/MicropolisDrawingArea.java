@@ -105,15 +105,20 @@ public class MicropolisDrawingArea extends JComponent
 	{
 		assert sprite.isVisible();
 
+		Point p = new Point(
+			sprite.x * TILE_WIDTH / 16,
+			sprite.y * TILE_HEIGHT / 16
+			);
+
 		Image img = tileImages.getSpriteImage(sprite.kind, sprite.frame-1);
 		if (img != null) {
-			gr.drawImage(img, sprite.x + sprite.offx, sprite.y + sprite.offy, null);
+			gr.drawImage(img, p.x + sprite.offx, p.y + sprite.offy, null);
 		}
 		else {
 			gr.setColor(Color.RED);
-			gr.fillRect(sprite.x, sprite.y, 16, 16);
+			gr.fillRect(p.x, p.y, 16, 16);
 			gr.setColor(Color.WHITE);
-			gr.drawString(Integer.toString(sprite.frame-1),sprite.x,sprite.y);
+			gr.drawString(Integer.toString(sprite.frame-1),p.x,p.y);
 		}
 	}
 
@@ -307,7 +312,10 @@ public class MicropolisDrawingArea extends JComponent
 
 	private Rectangle getSpriteBounds(Sprite sprite, int x, int y)
 	{
-		return new Rectangle(x+sprite.offx, y+sprite.offy, sprite.width, sprite.height);
+		return new Rectangle(
+			x*TILE_WIDTH/16+sprite.offx,
+			y*TILE_HEIGHT/16+sprite.offy,
+			sprite.width, sprite.height);
 	}
 
 	public Rectangle getTileBounds(int xpos, int ypos)
