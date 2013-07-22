@@ -86,6 +86,7 @@ class Bulldozer extends ToolStroke
 			eff.setTile(0, 0, DIRT);
 		}
 
+		fixZone(eff);
 		eff.spend(1);
 		return;
 	}
@@ -105,6 +106,7 @@ class Bulldozer extends ToolStroke
 				}
 			}
 		}
+		fixBorder(eff, w, h);
 	}
 
 	int checkSize(int tile)
