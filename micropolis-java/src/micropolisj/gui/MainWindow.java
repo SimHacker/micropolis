@@ -185,6 +185,7 @@ public class MainWindow extends JFrame
 		InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		inputMap.put(KeyStroke.getKeyStroke("ADD"), "zoomIn");
 		inputMap.put(KeyStroke.getKeyStroke("shift EQUALS"), "zoomIn");
+		inputMap.put(KeyStroke.getKeyStroke("SUBTRACT"), "zoomOut");
 		inputMap.put(KeyStroke.getKeyStroke("MINUS"), "zoomOut");
 
 		getRootPane().getActionMap().put("zoomIn", new AbstractAction() {
