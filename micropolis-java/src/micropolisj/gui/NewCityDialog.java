@@ -126,6 +126,12 @@ public class NewCityDialog extends JDialog
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(owner);
+		getRootPane().registerKeyboardAction(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				dispose();
+			}},
+			KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+			JComponent.WHEN_IN_FOCUSED_WINDOW);
 	}
 
 	private void onPreviousMapClicked()
