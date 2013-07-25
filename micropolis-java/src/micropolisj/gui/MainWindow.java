@@ -189,6 +189,7 @@ public class MainWindow extends JFrame
 		inputMap.put(KeyStroke.getKeyStroke("shift EQUALS"), "zoomIn");
 		inputMap.put(KeyStroke.getKeyStroke("SUBTRACT"), "zoomOut");
 		inputMap.put(KeyStroke.getKeyStroke("MINUS"), "zoomOut");
+		inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escape");
 
 		getRootPane().getActionMap().put("zoomIn", new AbstractAction() {
 			public void actionPerformed(ActionEvent evt) {
@@ -198,6 +199,11 @@ public class MainWindow extends JFrame
 		getRootPane().getActionMap().put("zoomOut", new AbstractAction() {
 			public void actionPerformed(ActionEvent evt) {
 				doZoom(-1);
+			}
+			});
+		getRootPane().getActionMap().put("escape", new AbstractAction() {
+			public void actionPerformed(ActionEvent evt) {
+				onEscapePressed();
 			}
 			});
 
@@ -1164,6 +1170,20 @@ public class MainWindow extends JFrame
 
 		this.lastX = x;
 		this.lastY = y;
+	}
+
+	private void onEscapePressed()
+	{
+		// if currently dragging a tool...
+		if (toolStroke != null) {
+			// cancel the current mouse operation
+			toolStroke = null;
+			drawingArea.setToolPreview(null);
+			drawingArea.setToolCursor(null);
+		}
+		else {
+			// TODO dismiss any alerts currently visible
+		}
 	}
 
 	private void onToolUp(MouseEvent ev)
