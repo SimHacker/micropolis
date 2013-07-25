@@ -1182,7 +1182,8 @@ public class MainWindow extends JFrame
 			drawingArea.setToolCursor(null);
 		}
 		else {
-			// TODO dismiss any alerts currently visible
+			// dismiss any alerts currently visible
+			notificationPane.setVisible(false);
 		}
 	}
 
