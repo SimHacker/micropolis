@@ -400,15 +400,43 @@ public class MainWindow extends JFrame
 		return pane;
 	}
 
+	private void setupKeys(JMenu menu, String prefix)
+	{
+		if (strings.containsKey(prefix+".access_key")) {
+			String mnemonic = strings.getString(prefix+".access_key");
+			menu.setMnemonic(
+				KeyStroke.getKeyStroke(mnemonic).getKeyCode()
+				);
+		}
+	}
+
+	private void setupKeys(JMenuItem menuItem, String prefix)
+	{
+		if (strings.containsKey(prefix+".access_key")) {
+			String mnemonic = strings.getString(prefix+".access_key");
+			menuItem.setMnemonic(
+				KeyStroke.getKeyStroke(mnemonic).getKeyCode()
+				);
+		}
+		if (strings.containsKey(prefix+".shortcut")) {
+			String shortcut = strings.getString(prefix+".shortcut");
+			menuItem.setAccelerator(
+				KeyStroke.getKeyStroke(shortcut)
+				);
+		}
+	}
+
 	private void makeMenu()
 	{
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu gameMenu = new JMenu(strings.getString("menu.game"));
+		setupKeys(gameMenu, "menu.game");
 		menuBar.add(gameMenu);
 
 		JMenuItem menuItem;
 		menuItem = new JMenuItem(strings.getString("menu.game.new"));
+		setupKeys(menuItem, "menu.game.new");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -419,6 +447,7 @@ public class MainWindow extends JFrame
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.load"));
+		setupKeys(menuItem, "menu.game.load");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -429,6 +458,7 @@ public class MainWindow extends JFrame
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.save"));
+		setupKeys(menuItem, "menu.game.save");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -439,6 +469,7 @@ public class MainWindow extends JFrame
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.save_as"));
+		setupKeys(menuItem, "menu.game.save_as");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -449,6 +480,7 @@ public class MainWindow extends JFrame
 		gameMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.game.exit"));
+		setupKeys(menuItem, "menu.game.exit");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
