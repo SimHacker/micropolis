@@ -46,18 +46,18 @@
 
 <target name="compose-tiles" depends="init-builddir,compile">
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
-	fork="true" failonerror="true" dir="graphics">
+	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<arg file="graphics/tiles.rc" />
 	<arg file="${builddir}/tiles.png" />
 </java>
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
-	fork="true" failonerror="true" dir="graphics">
+	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<sysproperty key="tile_size" value="8" />
 	<arg file="graphics/tiles.rc" />
 	<arg file="${builddir}/tiles_8x8.png" />
 </java>
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
-	fork="true" failonerror="true" dir="graphics">
+	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<sysproperty key="tile_size" value="32" />
 	<arg file="graphics/tiles.rc" />
 	<arg file="${builddir}/tiles_32x32.png" />
