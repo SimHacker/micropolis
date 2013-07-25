@@ -558,6 +558,26 @@ public class MainWindow extends JFrame
 			}));
 		optionsMenu.add(soundsMenuItem);
 
+		menuItem = new JMenuItem(strings.getString("menu.options.zoom_in"));
+		setupKeys(menuItem, "menu.options.zoom_in");
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
+			public void actionPerformed(ActionEvent ev)
+			{
+				doZoom(1);
+			}}));
+		optionsMenu.add(menuItem);
+
+		menuItem = new JMenuItem(strings.getString("menu.options.zoom_out"));
+		setupKeys(menuItem, "menu.options.zoom_out");
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
+			public void actionPerformed(ActionEvent ev)
+			{
+				doZoom(-1);
+			}}));
+		optionsMenu.add(menuItem);
+
 		JMenu disastersMenu = new JMenu(strings.getString("menu.disasters"));
 		setupKeys(disastersMenu, "menu.disasters");
 		menuBar.add(disastersMenu);
