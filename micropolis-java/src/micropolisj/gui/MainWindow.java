@@ -402,8 +402,8 @@ public class MainWindow extends JFrame
 
 	private void setupKeys(JMenu menu, String prefix)
 	{
-		if (strings.containsKey(prefix+".access_key")) {
-			String mnemonic = strings.getString(prefix+".access_key");
+		if (strings.containsKey(prefix+".key")) {
+			String mnemonic = strings.getString(prefix+".key");
 			menu.setMnemonic(
 				KeyStroke.getKeyStroke(mnemonic).getKeyCode()
 				);
@@ -412,8 +412,8 @@ public class MainWindow extends JFrame
 
 	private void setupKeys(JMenuItem menuItem, String prefix)
 	{
-		if (strings.containsKey(prefix+".access_key")) {
-			String mnemonic = strings.getString(prefix+".access_key");
+		if (strings.containsKey(prefix+".key")) {
+			String mnemonic = strings.getString(prefix+".key");
 			menuItem.setMnemonic(
 				KeyStroke.getKeyStroke(mnemonic).getKeyCode()
 				);
@@ -491,9 +491,11 @@ public class MainWindow extends JFrame
 		gameMenu.add(menuItem);
 
 		JMenu optionsMenu = new JMenu(strings.getString("menu.options"));
+		setupKeys(optionsMenu, "menu.options");
 		menuBar.add(optionsMenu);
 
 		JMenu levelMenu = new JMenu(strings.getString("menu.difficulty"));
+		setupKeys(levelMenu, "menu.difficulty");
 		optionsMenu.add(levelMenu);
 
 		difficultyMenuItems = new HashMap<Integer,JMenuItem>();
@@ -501,6 +503,7 @@ public class MainWindow extends JFrame
 		{
 			final int level = i;
 			menuItem = new JRadioButtonMenuItem(strings.getString("menu.difficulty."+level));
+			setupKeys(menuItem, "menu.difficulty."+level);
 			menuItem.addActionListener(wrapActionListener(
 				new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -512,6 +515,7 @@ public class MainWindow extends JFrame
 		}
 
 		autoBudgetMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_budget"));
+		setupKeys(autoBudgetMenuItem, "menu.options.auto_budget");
 		autoBudgetMenuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -522,6 +526,7 @@ public class MainWindow extends JFrame
 		optionsMenu.add(autoBudgetMenuItem);
 
 		autoBulldozeMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_bulldoze"));
+		setupKeys(autoBulldozeMenuItem, "menu.options.auto_bulldoze");
 		autoBulldozeMenuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -532,6 +537,7 @@ public class MainWindow extends JFrame
 		optionsMenu.add(autoBulldozeMenuItem);
 
 		disastersMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.disasters"));
+		setupKeys(disastersMenuItem, "menu.options.disasters");
 		disastersMenuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -542,6 +548,7 @@ public class MainWindow extends JFrame
 		optionsMenu.add(disastersMenuItem);
 
 		soundsMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.sound"));
+		setupKeys(soundsMenuItem, "menu.options.sound");
 		soundsMenuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -552,9 +559,11 @@ public class MainWindow extends JFrame
 		optionsMenu.add(soundsMenuItem);
 
 		JMenu disastersMenu = new JMenu(strings.getString("menu.disasters"));
+		setupKeys(disastersMenu, "menu.disasters");
 		menuBar.add(disastersMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.MONSTER"));
+		setupKeys(menuItem, "menu.disasters.MONSTER");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -565,6 +574,7 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.FIRE"));
+		setupKeys(menuItem, "menu.disasters.FIRE");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -575,6 +585,7 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.FLOOD"));
+		setupKeys(menuItem, "menu.disasters.FLOOD");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -585,6 +596,7 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.MELTDOWN"));
+		setupKeys(menuItem, "menu.disasters.MELTDOWN");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -595,6 +607,7 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.TORNADO"));
+		setupKeys(menuItem, "menu.disasters.TORNADO");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -605,6 +618,7 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.EARTHQUAKE"));
+		setupKeys(menuItem, "menu.disasters.EARTHQUAKE");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -615,10 +629,12 @@ public class MainWindow extends JFrame
 		disastersMenu.add(menuItem);
 
 		JMenu priorityMenu = new JMenu(strings.getString("menu.speed"));
+		setupKeys(priorityMenu, "menu.speed");
 		menuBar.add(priorityMenu);
 
 		priorityMenuItems = new EnumMap<Speed,JMenuItem>(Speed.class);
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.SUPER_FAST"));
+		setupKeys(menuItem, "menu.speed.SUPER_FAST");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -630,6 +646,7 @@ public class MainWindow extends JFrame
 		priorityMenuItems.put(Speed.SUPER_FAST, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.FAST"));
+		setupKeys(menuItem, "menu.speed.FAST");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -641,6 +658,7 @@ public class MainWindow extends JFrame
 		priorityMenuItems.put(Speed.FAST, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.NORMAL"));
+		setupKeys(menuItem, "menu.speed.NORMAL");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -652,6 +670,7 @@ public class MainWindow extends JFrame
 		priorityMenuItems.put(Speed.NORMAL, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.SLOW"));
+		setupKeys(menuItem, "menu.speed.SLOW");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -663,6 +682,7 @@ public class MainWindow extends JFrame
 		priorityMenuItems.put(Speed.SLOW, menuItem);
 
 		menuItem = new JRadioButtonMenuItem(strings.getString("menu.speed.PAUSED"));
+		setupKeys(menuItem, "menu.speed.PAUSED");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -674,9 +694,11 @@ public class MainWindow extends JFrame
 		priorityMenuItems.put(Speed.PAUSED, menuItem);
 
 		JMenu windowsMenu = new JMenu(strings.getString("menu.windows"));
+		setupKeys(windowsMenu, "menu.windows");
 		menuBar.add(windowsMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.budget"));
+		setupKeys(menuItem, "menu.windows.budget");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -687,6 +709,7 @@ public class MainWindow extends JFrame
 		windowsMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.evaluation"));
+		setupKeys(menuItem, "menu.windows.evaluation");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -697,6 +720,7 @@ public class MainWindow extends JFrame
 		windowsMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.windows.graph"));
+		setupKeys(menuItem, "menu.windows.graph");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
@@ -707,9 +731,11 @@ public class MainWindow extends JFrame
 		windowsMenu.add(menuItem);
 
 		JMenu helpMenu = new JMenu(strings.getString("menu.help"));
+		setupKeys(helpMenu, "menu.help");
 		menuBar.add(helpMenu);
 
 		menuItem = new JMenuItem(strings.getString("menu.help.launch-translation-tool"));
+		setupKeys(menuItem, "menu.help.launch-translation-tool");
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt)
 			{
@@ -718,6 +744,7 @@ public class MainWindow extends JFrame
 		helpMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.help.about"));
+		setupKeys(menuItem, "menu.help.about");
 		menuItem.addActionListener(wrapActionListener(
 			new ActionListener() {
 			public void actionPerformed(ActionEvent ev)
