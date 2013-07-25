@@ -128,26 +128,28 @@ public class MainWindow extends JFrame
 		mapViewContainer.add(mapMenu, BorderLayout.NORTH);
 
 		JMenu zonesMenu = new JMenu(strings.getString("menu.zones"));
+		setupKeys(zonesMenu, "menu.zones");
 		mapMenu.add(zonesMenu);
 
-		zonesMenu.add(makeMapStateMenuItem(strings.getString("menu.zones.ALL"), MapState.ALL));
-		zonesMenu.add(makeMapStateMenuItem(strings.getString("menu.zones.RESIDENTIAL"), MapState.RESIDENTIAL));
-		zonesMenu.add(makeMapStateMenuItem(strings.getString("menu.zones.COMMERCIAL"), MapState.COMMERCIAL));
-		zonesMenu.add(makeMapStateMenuItem(strings.getString("menu.zones.INDUSTRIAL"), MapState.INDUSTRIAL));
-		zonesMenu.add(makeMapStateMenuItem(strings.getString("menu.zones.TRANSPORT"), MapState.TRANSPORT));
+		zonesMenu.add(makeMapStateMenuItem("menu.zones.ALL", MapState.ALL));
+		zonesMenu.add(makeMapStateMenuItem("menu.zones.RESIDENTIAL", MapState.RESIDENTIAL));
+		zonesMenu.add(makeMapStateMenuItem("menu.zones.COMMERCIAL", MapState.COMMERCIAL));
+		zonesMenu.add(makeMapStateMenuItem("menu.zones.INDUSTRIAL", MapState.INDUSTRIAL));
+		zonesMenu.add(makeMapStateMenuItem("menu.zones.TRANSPORT", MapState.TRANSPORT));
 
 		JMenu overlaysMenu = new JMenu(strings.getString("menu.overlays"));
+		setupKeys(overlaysMenu, "menu.overlays");
 		mapMenu.add(overlaysMenu);
 
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.POPDEN_OVERLAY"), MapState.POPDEN_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.GROWTHRATE_OVERLAY"), MapState.GROWTHRATE_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.LANDVALUE_OVERLAY"), MapState.LANDVALUE_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.CRIME_OVERLAY"), MapState.CRIME_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.POLLUTE_OVERLAY"), MapState.POLLUTE_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.TRAFFIC_OVERLAY"), MapState.TRAFFIC_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.POWER_OVERLAY"), MapState.POWER_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.FIRE_OVERLAY"), MapState.FIRE_OVERLAY));
-		overlaysMenu.add(makeMapStateMenuItem(strings.getString("menu.overlays.POLICE_OVERLAY"), MapState.POLICE_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.POPDEN_OVERLAY", MapState.POPDEN_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.GROWTHRATE_OVERLAY", MapState.GROWTHRATE_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.LANDVALUE_OVERLAY", MapState.LANDVALUE_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.CRIME_OVERLAY", MapState.CRIME_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.POLLUTE_OVERLAY", MapState.POLLUTE_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.TRAFFIC_OVERLAY", MapState.TRAFFIC_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.POWER_OVERLAY", MapState.POWER_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.FIRE_OVERLAY", MapState.FIRE_OVERLAY));
+		overlaysMenu.add(makeMapStateMenuItem("menu.overlays.POLICE_OVERLAY", MapState.POLICE_OVERLAY));
 
 		mapMenu.add(Box.createHorizontalGlue());
 		mapLegendLbl = new JLabel();
@@ -1629,9 +1631,11 @@ public class MainWindow extends JFrame
 		}
 	}
 
-	private JMenuItem makeMapStateMenuItem(String caption, final MapState state)
+	private JMenuItem makeMapStateMenuItem(String stringPrefix, final MapState state)
 	{
+		String caption = strings.getString(stringPrefix);
 		JMenuItem menuItem = new JRadioButtonMenuItem(caption);
+		setupKeys(menuItem, stringPrefix);
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				setMapState(state);
