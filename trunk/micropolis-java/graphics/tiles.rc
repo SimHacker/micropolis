@@ -69,8 +69,8 @@
 62    terrain@0,992                   (noburn)                   (becomes=63)
 63    terrain@0,1008                  (noburn)                   (becomes=56)
 # BEGIN ROADS WITH NO TRAFFIC #
-64    roads@0,0
-65    roads@0,16
+64    roads@0,0                       (noburn)
+65    roads@0,16                      (noburn)
 66    roads@0,32
 67    roads@0,48
 68    roads@0,64
@@ -216,8 +216,8 @@
 206   roads@0,48 |traffic@112,16 |roadwire@0,16 (conducts)(becomes=190)
 207   roads@0,240                                                (becomes=191)
 # BEGIN WIRES AND RAILS #
-208   wires@0,0                 (conducts)
-209   wires@0,16                (conducts)
+208   wires@0,0                 (noburn)(conducts)
+209   wires@0,16                (noburn)(conducts)
 210   wires@0,32                (conducts)
 211   wires@0,48                (conducts)
 212   wires@0,64                (conducts)
@@ -232,8 +232,8 @@
 221   wires@0,208               (conducts)
 222   wires@0,224               (conducts)
 223   wires@0,240               (conducts)
-224   rails@0,0
-225   rails@0,16
+224   rails@0,0                 (noburn)
+225   rails@0,16                (noburn)
 226   rails@0,32
 227   rails@0,48
 228   rails@0,64
