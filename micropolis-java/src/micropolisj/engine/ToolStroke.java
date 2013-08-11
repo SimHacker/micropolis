@@ -371,16 +371,4 @@ public class ToolStroke
 
 		return;
 	}
-
-	boolean isBigZone(int tile)
-	{
-		if (tile >= RESBASE && tile <= LASTZONE)
-			return true;
-		else if (tile >= SMOKEBASE && tile < TINYEXP)
-			return true;
-		else if (tile >= COALSMOKE1)
-			return true;
-		else
-			return false;
-	}
 }
