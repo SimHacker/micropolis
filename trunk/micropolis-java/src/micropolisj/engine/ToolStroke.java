@@ -271,8 +271,7 @@ public class ToolStroke
 
 	private void fixSingle(ToolEffectIfc eff)
 	{
-		int tile = (eff.getTile(0, 0) & LOMASK);
-		tile = neutralizeRoad(tile);
+		int tile = eff.getTile(0, 0);
 
 		if (isRoadDynamic(tile))
 		{
@@ -306,121 +305,65 @@ public class ToolStroke
 			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT));
 		} //endif on a road tile
 
-		else if (tile >= LHRAIL && tile <= LVRAIL10)
+		else if (isRailDynamic(tile))
 		{
 			// cleanup Rail
 			int adjTile = 0;
 
 			// check rail to north
+			if (railConnectsSouth(eff.getTile(0, -1)))
 			{
-				tile = eff.getTile(0, -1);
-				tile = neutralizeRoad(tile);
-				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
-					tile != RAILHPOWERV &&
-					tile != HRAILROAD &&
-					tile != HRAIL)
-				{
-					adjTile |= 1;
-				}
+				adjTile |= 1;
 			}
 
 			// check rail to east
+			if (railConnectsWest(eff.getTile(1, 0)))
 			{
-				tile = eff.getTile(1, 0);
-				tile = neutralizeRoad(tile);
-				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
-					tile != RAILVPOWERH &&
-					tile != VRAILROAD &&
-					tile != VRAIL)
-				{
-					adjTile |= 2;
-				}
+				adjTile |= 2;
 			}
 
 			// check rail to south
+			if (railConnectsNorth(eff.getTile(0, 1)))
 			{
-				tile = eff.getTile(0, 1);
-				tile = neutralizeRoad(tile);
-				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
-					tile != RAILHPOWERV &&
-					tile != HRAILROAD &&
-					tile != HRAIL)
-				{
-					adjTile |= 4;
-				}
+				adjTile |= 4;
 			}
 
 			// check rail to west
+			if (railConnectsEast(eff.getTile(-1, 0)))
 			{
-				tile = eff.getTile(-1, 0);
-				tile = neutralizeRoad(tile);
-				if (tile >= RAILHPOWERV && tile <= VRAILROAD &&
-					tile != RAILVPOWERH &&
-					tile != VRAILROAD &&
-					tile != VRAIL)
-				{
-					adjTile |= 8;
-				}
+				adjTile |= 8;
 			}
 
 			eff.setTile(0, 0, (RailTable[adjTile] | BULLBIT));
 		} //end if on a rail tile
 
-		else if (tile >= LHPOWER && tile <= LVPOWER10)
+		else if (isWireDynamic(tile))
 		{
 			// Cleanup Wire
 			int adjTile = 0;
 
 			// check wire to north
+			if (wireConnectsSouth(eff.getTile(0, -1)))
 			{
-				tile = eff.getTile(0, -1);
-				char ntile = neutralizeRoad(tile);
-				if (isConductive(tile) &&
-					ntile != VPOWER &&
-					ntile != VROADPOWER &&
-					ntile != RAILVPOWERH)
-				{
-					adjTile |= 1;
-				}
+				adjTile |= 1;
 			}
 
 			// check wire to east
+			if (wireConnectsWest(eff.getTile(1, 0)))
 			{
-				tile = eff.getTile(1, 0);
-				char ntile = neutralizeRoad(tile);
-				if (isConductive(tile) &&
-					ntile != HPOWER &&
-					ntile != HROADPOWER &&
-					ntile != RAILHPOWERV)
-				{
-					adjTile |= 2;
-				}
+				adjTile |= 2;
 			}
 
 			// check wire to south
+			if (wireConnectsNorth(eff.getTile(0, 1)))
 			{
-				tile = eff.getTile(0, 1);
-				char ntile = neutralizeRoad(tile);
-				if (isConductive(tile) &&
-					ntile != VPOWER &&
-					ntile != VROADPOWER &&
-					ntile != RAILVPOWERH)
-				{
-					adjTile |= 4;
-				}
+				adjTile |= 4;
 			}
 
 			// check wire to west
+			if (wireConnectsEast(eff.getTile(-1, 0)))
 			{
-				tile = eff.getTile(-1, 0);
-				char ntile = neutralizeRoad(tile);
-				if (isConductive(tile) &&
-					ntile != HPOWER &&
-					ntile != HROADPOWER &&
-					ntile != RAILHPOWERV)
-				{
-					adjTile |= 8;
-				}
+				adjTile |= 8;
 			}
 
 			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT));
