@@ -495,6 +495,90 @@ public class TileConstants
 		return (tmp >= RAILBASE && tmp < RESBASE);
 	}
 
+	public static boolean isRailDynamic(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= LHRAIL && tmp <= LVRAIL10);
+	}
+
+	public static boolean railConnectsEast(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (tile >= RAILHPOWERV && tile <= VRAILROAD &&
+			tile != RAILVPOWERH &&
+			tile != VRAILROAD &&
+			tile != VRAIL);
+	}
+
+	public static boolean railConnectsNorth(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (tile >= RAILHPOWERV && tile <= VRAILROAD &&
+			tile != RAILHPOWERV &&
+			tile != HRAILROAD &&
+			tile != HRAIL);
+	}
+
+	public static boolean railConnectsSouth(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (tile >= RAILHPOWERV && tile <= VRAILROAD &&
+			tile != RAILHPOWERV &&
+			tile != HRAILROAD &&
+			tile != HRAIL);
+	}
+
+	public static boolean railConnectsWest(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (tile >= RAILHPOWERV && tile <= VRAILROAD &&
+			tile != RAILVPOWERH &&
+			tile != VRAILROAD &&
+			tile != VRAIL);
+	}
+
+	public static boolean isWireDynamic(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= LHPOWER && tile <= LVPOWER10);
+	}
+
+	public static boolean wireConnectsEast(int tile)
+	{
+		int ntile = neutralizeRoad(tile);
+		return (isConductive(tile) &&
+			ntile != HPOWER &&
+			ntile != HROADPOWER &&
+			ntile != RAILHPOWERV);
+	}
+
+	public static boolean wireConnectsNorth(int tile)
+	{
+		int ntile = neutralizeRoad(tile);
+		return (isConductive(tile) &&
+			ntile != VPOWER &&
+			ntile != VROADPOWER &&
+			ntile != RAILVPOWERH);
+	}
+
+	public static boolean wireConnectsSouth(int tile)
+	{
+		int ntile = neutralizeRoad(tile);
+		return (isConductive(tile) &&
+			ntile != VPOWER &&
+			ntile != VROADPOWER &&
+			ntile != RAILVPOWERH);
+	}
+
+	public static boolean wireConnectsWest(int tile)
+	{
+		int ntile = neutralizeRoad(tile);
+		return (isConductive(tile) &&
+			ntile != HPOWER &&
+			ntile != HROADPOWER &&
+			ntile != RAILHPOWERV);
+	}
+
 	public static boolean isCommercialZone(int tile)
 	{
 		assert isZoneCenter(tile);
