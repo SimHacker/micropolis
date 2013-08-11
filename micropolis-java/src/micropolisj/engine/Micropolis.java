@@ -1106,7 +1106,7 @@ public class Micropolis
 								continue;
 							}
 							plevel += getPollutionValue(tile);
-							if (tile >= ROADBASE)
+							if (isConstructed(tile))
 								lvflag++;
 						}
 					}
@@ -2342,7 +2342,7 @@ public class Micropolis
 					continue;
 
 				int t = getTile(xtem, ytem);
-				if ((t & LOMASK) >= ROADBASE) {
+				if (isConstructed(t)) {
 					setTile(xtem, ytem, (char)(t | BULLBIT));
 				}
 			}
