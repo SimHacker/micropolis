@@ -488,7 +488,7 @@ public class TileConstants
 	public static boolean isRoadDynamic(int tile)
 	{
 		int tmp = neutralizeRoad(tile);
-		return (tmp >= ROADS && tile <= INTERSECTION);
+		return (tmp >= ROADS && tmp <= INTERSECTION);
 	}
 
 	public static boolean roadConnectsEast(int tile)
