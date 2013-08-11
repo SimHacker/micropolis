@@ -274,70 +274,33 @@ public class ToolStroke
 		int tile = (eff.getTile(0, 0) & LOMASK);
 		tile = neutralizeRoad(tile);
 
-		if (tile >= TileConstants.ROADS && tile <= INTERSECTION)
+		if (isRoadDynamic(tile))
 		{
 			// cleanup road
 			int adjTile = 0;
 
 			// check road to north
+			if (roadConnectsSouth(eff.getTile(0, -1)))
 			{
-				tile = eff.getTile(0, -1);
-				tile = neutralizeRoad(tile);
-				if (((tile == HRAILROAD) ||
-					(tile >= ROADBASE && tile <= VROADPOWER)
-					) &&
-					(tile != HROADPOWER) &&
-					(tile != VRAILROAD) &&
-					(tile != ROADBASE))
-				{
-					adjTile |= 1;
-				}
+				adjTile |= 1;
 			}
 
 			// check road to east
+			if (roadConnectsWest(eff.getTile(1, 0)))
 			{
-				tile = eff.getTile(1, 0);
-				tile = neutralizeRoad(tile);
-				if (((tile == VRAILROAD) ||
-					(tile >= ROADBASE && tile <= VROADPOWER)	
-					) &&
-					(tile != VROADPOWER) &&
-					(tile != HRAILROAD) &&
-					(tile != VBRIDGE))
-				{
-					adjTile |= 2;
-				}
+				adjTile |= 2;
 			}
 
 			// check road to south
+			if (roadConnectsNorth(eff.getTile(0, 1)))
 			{
-				tile = eff.getTile(0, 1);
-				tile = neutralizeRoad(tile);
-				if (((tile == HRAILROAD) ||
-					(tile >= ROADBASE && tile <= VROADPOWER)
-					) &&
-					(tile != HROADPOWER) &&
-					(tile != VRAILROAD) &&
-					(tile != ROADBASE))
-				{
-					adjTile |= 4;
-				}
-				
+				adjTile |= 4;
 			}
 
 			// check road to west
+			if (roadConnectsEast(eff.getTile(-1, 0)))
 			{
-				tile = eff.getTile(-1, 0);
-				tile = neutralizeRoad(tile);
-				if (((tile == VRAILROAD) ||
-					(tile >= ROADBASE && tile <= VROADPOWER)
-					) &&
-					(tile != VROADPOWER) &&
-					(tile != HRAILROAD) &&
-					(tile != VBRIDGE))
-				{
-					adjTile |= 8;
-				}
+				adjTile |= 8;
 			}
 
 			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT));
