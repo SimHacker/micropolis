@@ -435,6 +435,60 @@ public class TileConstants
 		return (tmp >= ROADBASE && tmp < POWERBASE);
 	}
 
+	/**
+	 * Checks whether the tile is a road that will automatically change to connect to
+	 * neighboring roads.
+	 */
+	public static boolean isRoadDynamic(int tile)
+	{
+		int tmp = neutralizeRoad(tile);
+		return (tmp >= ROADS && tile <= INTERSECTION);
+	}
+
+	public static boolean roadConnectsEast(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (((tile == VRAILROAD) ||
+			(tile >= ROADBASE && tile <= VROADPOWER)
+			) &&
+			(tile != VROADPOWER) &&
+			(tile != HRAILROAD) &&
+			(tile != VBRIDGE));
+	}
+
+	public static boolean roadConnectsNorth(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (((tile == HRAILROAD) ||
+			(tile >= ROADBASE && tile <= VROADPOWER)
+			) &&
+			(tile != HROADPOWER) &&
+			(tile != VRAILROAD) &&
+			(tile != ROADBASE));
+	}
+
+	public static boolean roadConnectsSouth(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (((tile == HRAILROAD) ||
+			(tile >= ROADBASE && tile <= VROADPOWER)
+			) &&
+			(tile != HROADPOWER) &&
+			(tile != VRAILROAD) &&
+			(tile != ROADBASE));
+	}
+
+	public static boolean roadConnectsWest(int tile)
+	{
+		tile = neutralizeRoad(tile);
+		return (((tile == VRAILROAD) ||
+			(tile >= ROADBASE && tile <= VROADPOWER)	
+			) &&
+			(tile != VROADPOWER) &&
+			(tile != HRAILROAD) &&
+			(tile != VBRIDGE));
+	}
+
 	public static boolean isRail(int tile)
 	{
 		int tmp = tile & LOMASK;
