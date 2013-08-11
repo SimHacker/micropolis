@@ -1037,14 +1037,11 @@ public class Micropolis
 			if (tile >= LTRFBASE)
 				return 50; //light traffic
 
-			if (tile < ROADBASE)
-			{
-				if (tile > FIREBASE)
-					return 90;  //active fire
+			if (isFire(tile))
+				return 90; //active fire
 
-				if (tile >= RADTILE)
-					return 255; //radioactivity
-			}
+			if (isRadioactive(tile))
+				return 255; //radioactivity
 
 			return 0;
 		}
