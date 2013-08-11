@@ -1149,7 +1149,8 @@ class MapScanner
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT));
+			int pwrBit = (cchr & PWRBIT);
+			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT | pwrBit));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
