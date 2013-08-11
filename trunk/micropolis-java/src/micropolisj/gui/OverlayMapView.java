@@ -301,26 +301,38 @@ public class OverlayMapView extends JComponent
 				int tile = engine.getTile(x,y) & LOMASK;
 				switch (mapState) {
 				case RESIDENTIAL:
-					if (tile >= COMBASE) { tile = DIRT; }
+					if (isZoneAny(tile) &&
+						!isResidentialZone(tile) &&
+						!isHospitalOrChurch(tile))
+					{
+						tile = DIRT;
+					}
 					break;
 				case COMMERCIAL:
-					if (tile > COMLAST || (tile >= RESBASE && tile < COMBASE)) { tile = DIRT; }
+					if (isZoneAny(tile) &&
+						!isCommercialZone(tile))
+					{
+						tile = DIRT;
+					}
 					break;
 				case INDUSTRIAL:
-					if ((tile >= RESBASE && tile < INDBASE) ||
-						(tile >= PORTBASE && tile < SMOKEBASE) ||
-						(tile >= TINYEXP && tile < 884) ||
-						tile >= FOOTBALLGAME1)
-						{ tile = DIRT; }
+					if (isZoneAny(tile) &&
+						!isIndustrialZone(tile))
+					{
+						tile = DIRT;
+					}
 					break;
 				case POWER_OVERLAY:
 					tile = checkPower(img, x, y, engine.getTile(x,y));
 					break;
 				case TRANSPORT:
 				case TRAFFIC_OVERLAY:
-					if (tile >= RESBASE ||
-						(tile >= 207 && tile <= LVPOWER10) ||
-						tile == 223) { tile = DIRT; }
+					if (isConstructed(tile)
+						&& !isRoadAny(tile)
+						&& !isRailAny(tile))
+					{
+						tile = DIRT;
+					}
 					break;
 				default:
 				}
