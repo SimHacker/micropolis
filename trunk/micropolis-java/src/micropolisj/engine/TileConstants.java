@@ -408,6 +408,11 @@ public class TileConstants
 		}
 	}
 
+	public static boolean isConstructed(int tile)
+	{
+		return tile >= 0 && (tile & LOMASK) >= ROADBASE;
+	}
+
 	static boolean isRiverEdge(int tile)
 	{
 		return (tile & LOMASK) > 4 && (tile & LOMASK) < 21;
