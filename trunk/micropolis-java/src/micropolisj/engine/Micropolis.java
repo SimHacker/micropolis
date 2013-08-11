@@ -1028,36 +1028,6 @@ public class Micropolis
 		}
 	}
 
-	static int getPollutionValue(int tile)
-	{
-		if (tile < POWERBASE)
-		{
-			if (tile >= HTRFBASE)
-				return 75; //heavy traffic
-			if (tile >= LTRFBASE)
-				return 50; //light traffic
-
-			if (isFire(tile))
-				return 90; //active fire
-
-			if (isRadioactive(tile))
-				return 255; //radioactivity
-
-			return 0;
-		}
-
-		if (tile <= LASTIND)
-			return 0;
-
-		if (tile < PORTBASE)
-			return 50;
-
-		if (tile <= LASTPOWERPLANT)
-			return 100;
-
-		return 0;
-	}
-
 	public int getTrafficDensity(int xpos, int ypos)
 	{
 		if (testBounds(xpos, ypos)) {
