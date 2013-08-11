@@ -594,7 +594,7 @@ public class TileConstants
 	public static boolean isWireDynamic(int tile)
 	{
 		int tmp = tile & LOMASK;
-		return (tmp >= LHPOWER && tile <= LVPOWER10);
+		return (tmp >= LHPOWER && tmp <= LVPOWER10);
 	}
 
 	public static boolean wireConnectsEast(int tile)
