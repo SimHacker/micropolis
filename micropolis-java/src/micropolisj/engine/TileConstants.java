@@ -171,10 +171,7 @@ public class TileConstants
 	public static final char TINYEXP = 860;
 	public static final char SOMETINYEXP = 864;
 	public static final char LASTTINYEXP = 867;
-	public static final char COALSMOKE1 = 916;
-	public static final char COALSMOKE2 = 920;
-	public static final char COALSMOKE3 = 924;
-	public static final char COALSMOKE4 = 928;
+	public static final char SMOKEBASE2 = 884;
 	public static final char FOOTBALLGAME1 = 932;
 	public static final char FOOTBALLGAME2 = 940;
 	public static final char VBRDG0 = 948;   //draw bridge tiles (vert)
@@ -466,10 +463,22 @@ public class TileConstants
 		return (tile == DIRT || ((tile & BULLBIT) != 0 && isCombustible(tile)));
 	}
 
+	/**
+	 * Note: does not include rail/road tiles.
+	 * @see #isRoadAny
+	 */
 	public static boolean isRoad(int tile)
 	{
 		int tmp = tile & LOMASK;
 		return (tmp >= ROADBASE && tmp < POWERBASE);
+	}
+
+	public static boolean isRoadAny(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= ROADBASE && tmp < POWERBASE)
+			|| (tmp == HRAILROAD)
+			|| (tmp == VRAILROAD);
 	}
 
 	/**
@@ -530,6 +539,14 @@ public class TileConstants
 	{
 		int tmp = tile & LOMASK;
 		return (tmp >= RAILBASE && tmp < RESBASE);
+	}
+
+	public static boolean isRailAny(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tmp >= RAILBASE && tmp < RESBASE)
+			|| (tmp == RAILHPOWERV)
+			|| (tmp == RAILVPOWERH);
 	}
 
 	public static boolean isRailDynamic(int tile)
@@ -618,35 +635,50 @@ public class TileConstants
 
 	public static boolean isCommercialZone(int tile)
 	{
-		assert isZoneCenter(tile);
 		return (tile & LOMASK) >= COMBASE &&
 			(tile & LOMASK) < INDBASE;
 	}
 
 	public static boolean isHospitalOrChurch(int tile)
 	{
-		assert isZoneCenter(tile);
 		return (tile & LOMASK) >= HOSPITAL &&
 			(tile & LOMASK) < COMBASE;
 	}
 
 	public static boolean isIndustrialZone(int tile)
 	{
-		assert isZoneCenter(tile);
-		return (tile & LOMASK) >= INDBASE &&
-			(tile & LOMASK) < PORTBASE;
+		int tmp = tile & LOMASK;
+		return (tmp >= INDBASE && tmp < PORTBASE)
+		|| (tmp >= SMOKEBASE && tmp < TINYEXP)
+		|| (tmp >= SMOKEBASE2 && tmp < FOOTBALLGAME1);
 	}
 
+	/** Note: does not include hospital/church.
+	 * @see #isHospitalOrChurch
+	 */
 	public static boolean isResidentialZone(int tile)
 	{
-		assert isZoneCenter(tile);
-		return (tile & LOMASK) < HOSPITAL;
+		return (tile & LOMASK) >= RESBASE &&
+			(tile & LOMASK) < HOSPITAL;
+	}
+
+	// includes hospital/church.
+	public static boolean isResidentialZoneAny(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return (tile >= RESBASE && tile < COMBASE);
 	}
 
 	public static boolean isSpecialZone(int tile)
 	{
 		assert isZoneCenter(tile);
 		return (tile & LOMASK) >= PORTBASE;
+	}
+
+	/** Tile represents a part of any sort of building. */
+	public static boolean isZoneAny(int tile)
+	{
+		return (tile & LOMASK) >= RESBASE;
 	}
 
 	public static boolean isZoneCenter(int tile)
