@@ -144,7 +144,6 @@ public class TileConstants
 	public static final char PORT = 698;
 	public static final char LASTPORT = 708;
 	public static final char AIRPORTBASE = 709;
-	public static final char RADAR = 711;
 	public static final char AIRPORT = 716;
 	public static final char COALBASE = 745;
 	public static final char POWERPLANT = 750;

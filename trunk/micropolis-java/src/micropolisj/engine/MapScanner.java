@@ -627,19 +627,6 @@ class MapScanner
 				repairZone(AIRPORT, 6);
 			}
 
-			if (powerOn)
-			{
-				if ((city.map[ypos-1][xpos+1] & LOMASK) == RADAR) {
-					city.setTile(xpos+1,ypos-1, (char)
-					(RADAR_ANIM)
-					);
-				}
-			}
-			else
-			{
-				city.setTile(xpos+1,ypos-1,(char)(RADAR));
-			}
-
 			if (powerOn) {
 				doAirport();
 			}
