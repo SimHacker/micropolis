@@ -107,6 +107,7 @@
 <target name="dist" depends="build">
 <zip destfile="${zipfile}">
 	<fileset dir="." includes="${distfile}, ${ant.project.name}.ico, README, COPYING" />
+	<zipfileset dir="resources" includes="micropolism.png" fullpath="${ant.project.name}-icon.png"/>
 </zip>
 </target>
 
