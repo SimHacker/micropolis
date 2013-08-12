@@ -174,9 +174,6 @@ public class ToolStroke
 
 		eff.spend(cost);
 
-		int centerRowNum = height >= 3 ? 1 : 0;
-		int centerColNum = width >= 3 ? 1 : 0;
-
 		for (int rowNum = 0; rowNum < height; rowNum++)
 		{
 			for (int columnNum = 0; columnNum < width; columnNum++)
