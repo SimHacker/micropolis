@@ -26,3 +26,6 @@ City size notifications-
 Graphics-
  *Let graphics be pluggable; use a mechanism similar to how the UI strings
   are pluggable according to locale.
+
+Draw-Bridge-
+ *If there's traffic on a bridge, the draw bridge does not open correctly.
