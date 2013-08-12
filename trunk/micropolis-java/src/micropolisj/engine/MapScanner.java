@@ -355,6 +355,11 @@ class MapScanner
 	 */
 	private void applyBridgeChange(int [] Dx, int [] Dy, char [] fromTab, char [] toTab)
 	{
+	//FIXME- a closed bridge with traffic on it is not
+	// correctly handled by this subroutine, because the
+	// the tiles representing traffic on a bridge do not match
+	// the expected tile values of fromTab
+
 		for (int z = 0; z < 7; z++) {
 			int x = xpos + Dx[z];
 			int y = ypos + Dy[z];
