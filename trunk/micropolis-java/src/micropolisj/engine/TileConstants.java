@@ -80,7 +80,7 @@ public class TileConstants
 	public static final char LTRFBASE = 80;
 	public static final char BRWV = 95;       //vert bridge, open
 	public static final char HTRFBASE = 144;
-	public static final char LASTROAD = 206;
+	private static final char LASTROAD = 206;
 	public static final char POWERBASE = 208;
 	public static final char HPOWER = 208;    //underwater power-line
 	public static final char VPOWER = 209;
@@ -662,6 +662,11 @@ public class TileConstants
 		return (tmp >= INDBASE && tmp < PORTBASE)
 		|| (tmp >= SMOKEBASE && tmp < TINYEXP)
 		|| (tmp >= SMOKEBASE2 && tmp < FOOTBALLGAME1);
+	}
+
+	public static boolean isResidentialClear(int tile)
+	{
+		return (tile & LOMASK) >= RESBASE && (tile & LOMASK) <= RESBASE+8;
 	}
 
 	/** Note: does not include hospital/church.

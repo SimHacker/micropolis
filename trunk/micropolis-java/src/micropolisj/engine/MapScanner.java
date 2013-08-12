@@ -936,10 +936,8 @@ class MapScanner
 	int evalLot(int x, int y)
 	{
 		// test for clear lot
-		int tmp = city.getTile(x,y) & LOMASK;
-
-		if (tmp != DIRT && (tmp < RESBASE || tmp > RESBASE+8))
-		{
+		int tile = city.getTile(x,y);
+		if (tile != DIRT && !isResidentialClear(tile)) {
 			return -1;
 		}
 
@@ -952,11 +950,13 @@ class MapScanner
 			int xx = x + DX[z];
 			int yy = y + DY[z];
 
-			if (city.testBounds(xx, yy) &&
-				city.map[yy][xx] != DIRT &&
-				((city.map[yy][xx] & LOMASK) <= LASTROAD)) //look for road
-			{
-				score++;
+			// look for road
+			if (city.testBounds(xx, yy)) {
+				int tmp = city.getTile(xx, yy);
+				if (isRoad(tmp) || isRail(tmp))
+				{
+					score++;
+				}
 			}
 		}
 
