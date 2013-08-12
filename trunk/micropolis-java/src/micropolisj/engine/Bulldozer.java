@@ -47,7 +47,7 @@ class Bulldozer extends ToolStroke
 		assert isZoneCenter(currTile);
 
 		eff.spend(1);
-		switch (checkSize(currTile))
+		switch (getZoneSizeFor(currTile))
 		{
 		case 3:
 			eff.makeSound(0, 0, Sound.EXPLOSION_HIGH);
@@ -107,29 +107,5 @@ class Bulldozer extends ToolStroke
 			}
 		}
 		fixBorder(eff, w, h);
-	}
-
-	int checkSize(int tile)
-	{
-		tile = tile & LOMASK;
-		if ((tile >= (RESBASE-1) && tile <= (PORTBASE-1)) ||
-			(tile >= (LASTPOWERPLANT+1) && tile <= (POLICESTATION+4)))
-		{
-			return 3;
-		}
-		else if ((tile >= PORTBASE && tile <= LASTPORT) ||
-			(tile >= COALBASE && tile <= LASTPOWERPLANT) ||
-			(tile >= STADIUMBASE && tile <= LASTZONE))
-		{
-			return 4;
-		}
-		else if (tile == TileConstants.AIRPORT)
-		{
-			return 6;
-		}
-		else
-		{
-			return 0;
-		}
 	}
 }

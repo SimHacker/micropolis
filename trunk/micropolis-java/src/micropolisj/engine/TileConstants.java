@@ -426,14 +426,26 @@ public class TileConstants
 	public static int getZoneSizeFor(int tile)
 	{
 		int ch = tile & LOMASK;
-		if (ch < PORTBASE) {
+		if (ch >= RESBASE && ch < PORTBASE) {
 			return 3;
 		}
-		else if (ch == AIRPORT) {
+		else if (ch >= PORTBASE && ch <= LASTPORT) {
+			return 4;
+		}
+		else if (ch >= AIRPORTBASE && ch < COALBASE) {
 			return 6;
 		}
-		else {
+		else if (ch >= COALBASE && ch <= LASTPOWERPLANT) {
 			return 4;
+		}
+		else if (ch >= FIRESTBASE && ch < STADIUMBASE) {
+			return 3;
+		}
+		else if (ch >= STADIUMBASE && ch <= LASTZONE) {
+			return 4;
+		}
+		else {
+			return 0;
 		}
 	}
 
