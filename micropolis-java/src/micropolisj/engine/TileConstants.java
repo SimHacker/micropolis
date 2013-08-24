@@ -336,6 +336,12 @@ public class TileConstants
 		return (tmp >= FIREBASE && tmp < ROADBASE);
 	}
 
+	public static boolean isIndestructible(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return tmp >= RUBBLE && tmp < ROADBASE;
+	}
+
 	public static boolean isRadioactive(int tile)
 	{
 		int tmp = tile & LOMASK;
