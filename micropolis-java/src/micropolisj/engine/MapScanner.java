@@ -503,8 +503,7 @@ class MapScanner
 		{
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
-				char c = (char)(city.map[y][x] & LOMASK);
-				if (c >= FLOOD && c < ROADBASE) {
+				if (isIndestructible2(city.getTile(x,y))) {
 					// radioactive, on fire, or flooded
 					return false;
 				}

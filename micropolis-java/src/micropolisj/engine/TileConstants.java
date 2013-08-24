@@ -336,10 +336,18 @@ public class TileConstants
 		return (tmp >= FIREBASE && tmp < ROADBASE);
 	}
 
+	/** Used in repairZone(). */
 	public static boolean isIndestructible(int tile)
 	{
 		int tmp = tile & LOMASK;
 		return tmp >= RUBBLE && tmp < ROADBASE;
+	}
+
+	/** Used in zonePlop(). */
+	public static boolean isIndestructible2(int tile)
+	{
+		int tmp = tile & LOMASK;
+		return tmp >= FLOOD && tmp < ROADBASE;
 	}
 
 	public static boolean isRadioactive(int tile)
