@@ -746,13 +746,10 @@ class MapScanner
 					if (isAnimated(thCh))
 						continue;
 
-					thCh &= LOMASK;
-					if (thCh < RUBBLE || thCh >= ROADBASE)
+					if (!isIndestructible(thCh))
 					{  //not rubble, radiactive, on fire or flooded
 
-						city.setTile(xx,yy,(char)
-						(zoneBase)
-						);
+						city.setTile(xx,yy,(char) zoneBase);
 					}
 				}
 			}
