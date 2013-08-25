@@ -1262,9 +1262,9 @@ public class Micropolis
 		if (z2 > 20)
 			z2 = 20;
 
-		resRatio = (resRatio - 1) * 600 + TaxTable[z];
-		comRatio = (comRatio - 1) * 600 + TaxTable[z];
-		indRatio = (indRatio - 1) * 600 + TaxTable[z];
+		resRatio = (resRatio - 1) * 600 + TaxTable[z2];
+		comRatio = (comRatio - 1) * 600 + TaxTable[z2];
+		indRatio = (indRatio - 1) * 600 + TaxTable[z2];
 
 		// ratios are velocity changes to valves
 		resValve += (int) resRatio;
