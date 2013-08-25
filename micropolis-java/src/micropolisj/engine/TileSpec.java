@@ -45,6 +45,17 @@ public class TileSpec
 		return images.toArray(new String[0]);
 	}
 
+	public int getPopulation()
+	{
+		String v = getAttribute("population");
+		if (v != null) {
+			return Integer.parseInt(v);
+		}
+		else {
+			return 0;
+		}
+	}
+
 	protected void load(String inStr, Properties tilesRc)
 	{
 		Scanner in = new Scanner(inStr);

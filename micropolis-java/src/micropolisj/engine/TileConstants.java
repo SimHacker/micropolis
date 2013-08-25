@@ -730,9 +730,8 @@ public class TileConstants
 	 */
 	public static int residentialZonePop(int tile)
 	{
-		tile &= LOMASK;
-		int czDen = ((tile - RZB) / 9) % 4;
-		return czDen * 8 + 16;
+		TileSpec ts = Tiles.get(tile & LOMASK);
+		return ts.getPopulation();
 	}
 
 	/**
@@ -743,12 +742,8 @@ public class TileConstants
 	 */
 	public static int commercialZonePop(int tile)
 	{
-		tile &= LOMASK;
-		if (tile == COMCLR)
-			return 0;
-
-		int czDen = ((tile - CZB) / 9) % 5 + 1;
-		return czDen;
+		TileSpec ts = Tiles.get(tile & LOMASK);
+		return ts.getPopulation() / 8;
 	}
 
 	/**
@@ -758,11 +753,7 @@ public class TileConstants
 	 */
 	public static int industrialZonePop(int tile)
 	{
-		tile &= LOMASK;
-		if (tile == INDCLR)
-			return 0;
-
-		int czDen = ((tile - IZB) / 9) % 4 + 1;
-		return czDen;
+		TileSpec ts = Tiles.get(tile & LOMASK);
+		return ts.getPopulation() / 8;
 	}
 }
