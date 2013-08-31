@@ -4,7 +4,15 @@
 
 This page presents a history of the Micropolis open source release.
 
-== Java Micropolis, version 1.2 (May 22, 2013) ==
+== Java Micropolis, version 1.5 (August 31, 2013) ==
+
+Another update to the Java Micropolis project. This version adds
+support for zooming the main map in/out and canceling a tool
+operation by pressing Escape. It also contains fixes for a few
+minor bugs in the simulation logic, and various internal
+improvements to the code.
+
+== Java Micropolis, version 1.3 (May 22, 2013) ==
 
 An update to the Java Micropolis project. This version redesigns the tool functionality, making it easier to place roads and buildings in straight lines. (However, now it's harder to free-draw things; let us know what you think!)
 
