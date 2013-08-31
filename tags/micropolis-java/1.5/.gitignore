@@ -1,0 +1,4 @@
+build
+*.jar
+docs/api
+graphics/generated
