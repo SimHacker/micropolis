@@ -182,6 +182,17 @@ public class GraphsPane extends JPanel
 		return btn;
 	}
 
+	int getHistoryMax()
+	{
+		int max = 0;
+		for (GraphData g : GraphData.values()) {
+			for (int pos = 0; pos < 240; pos++) {
+				max = Math.max(max, getHistoryValue(g, pos));
+			}
+		}
+		return max;
+	}
+
 	int getHistoryValue(GraphData graph, int pos)
 	{
 		assert pos >= 0 && pos < 240;
@@ -265,6 +276,7 @@ public class GraphsPane extends JPanel
 
 			int H = isOneTwenty ? 239 : 119;
 			final HashMap<GraphData, Path2D.Double> paths = new HashMap<GraphData,Path2D.Double>();
+			double scale = Math.max(256.0, getHistoryMax());
 			for (GraphData gd : GraphData.values())
 			{
 				if (dataBtns.get(gd).isSelected()) {
@@ -272,7 +284,7 @@ public class GraphsPane extends JPanel
 					Path2D.Double path = new Path2D.Double();
 					for (int i = 0; i < 120; i++) {
 						double xp = leftEdge + i * x_interval;
-						double yp = bottomEdge - getHistoryValue(gd,H-i) * (bottomEdge-topEdge) / 256.0;
+						double yp = bottomEdge - getHistoryValue(gd,H-i) * (bottomEdge-topEdge) / scale;
 						if (i == 0) {
 							path.moveTo(xp, yp);
 						} else {
