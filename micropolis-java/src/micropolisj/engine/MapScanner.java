@@ -415,16 +415,7 @@ class MapScanner
 	void doZone()
 	{
 		// set power bit in map, from powermap
-		boolean zonePwrFlag = setZonePower();
-
-		if (zonePwrFlag)
-		{
-			city.poweredZoneCount++;
-		}
-		else
-		{
-			city.unpoweredZoneCount++;
-		}
+		boolean zonePwrFlag = checkZonePower();
 
 		if (isSpecialZone(cchr))
 		{
@@ -453,6 +444,22 @@ class MapScanner
 		assert isIndustrialZone(cchr);
 		doIndustrial(zonePwrFlag);
 		return;
+	}
+
+	boolean checkZonePower()
+	{
+		boolean zonePwrFlag = setZonePower();
+
+		if (zonePwrFlag)
+		{
+			city.poweredZoneCount++;
+		}
+		else
+		{
+			city.unpoweredZoneCount++;
+		}
+
+		return zonePwrFlag;
 	}
 
 	boolean setZonePower()
