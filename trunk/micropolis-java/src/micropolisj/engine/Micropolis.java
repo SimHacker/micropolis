@@ -2549,7 +2549,7 @@ public class Micropolis
 	public ZoneStatus queryZoneStatus(int xpos, int ypos)
 	{
 		ZoneStatus zs = new ZoneStatus();
-		zs.building = getBuildingId(getTile(xpos, ypos));
+		zs.building = getDescriptionNumber(getTile(xpos, ypos));
 
 		int z;
 		z = (popDensity[ypos/2][xpos/2] / 64) % 4;

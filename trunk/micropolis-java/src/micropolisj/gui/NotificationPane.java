@@ -114,7 +114,7 @@ public class NotificationPane extends JPanel
 		headerLbl.setText(strings.getString("notification.query_hdr"));
 		headerLbl.setBackground(QUERY_COLOR);
 
-		String buildingStr = s_strings.getString("zone."+zone.building);
+		String buildingStr = zone.building != -1 ? s_strings.getString("zone."+zone.building) : "";
 		String popDensityStr = s_strings.getString("status."+zone.popDensity);
 		String landValueStr = s_strings.getString("status."+zone.landValue);
 		String crimeLevelStr = s_strings.getString("status."+zone.crimeLevel);
