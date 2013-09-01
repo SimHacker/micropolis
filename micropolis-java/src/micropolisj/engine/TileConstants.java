@@ -242,6 +242,14 @@ public class TileConstants
 		}
 	}
 
+	//used by scanTile
+	public static String getTileBehavior(int tile)
+	{
+		tile &= LOMASK;
+		TileSpec ts = Tiles.get(tile);
+		return ts != null ? ts.getAttribute("behavior") : null;
+	}
+
 	//used by queryZoneStatus
 	public static int getDescriptionNumber(int tile)
 	{
