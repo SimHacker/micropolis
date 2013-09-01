@@ -1996,8 +1996,6 @@ public class Micropolis
 
 		powerScan();
 		newPower = true;
-
-		assert powerPlants.isEmpty();
 	}
 
 	public void load(InputStream inStream)
