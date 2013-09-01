@@ -891,14 +891,14 @@
 858   misc_animation@0,496  (conducts)(building-part=625,-1,-1)(description=#23)      (becomes=859)(onshutdown=621)
 859   misc_animation@0,512  (conducts)(building-part=625,-1,-1)(description=#23)      (becomes=852)(onshutdown=621)
 # BEGIN ZONE DESTRUCT & RUBBLIZE #
-860   misc_animation@0,528                                   (noburn)(description=#23)    (becomes=861)
-861   misc_animation@0,544                                   (noburn)(description=#23)    (becomes=862)
-862   misc_animation@0,560                                   (noburn)(description=#23)    (becomes=863)
-863   misc_animation@0,576                                   (noburn)(description=#23)    (becomes=864)
-864   misc_animation@0,592                                   (noburn)(description=#23)    (becomes=865)
-865   misc_animation@0,608                                   (noburn)(description=#23)    (becomes=866)
-866   misc_animation@0,624                                   (noburn)(description=#23)    (becomes=867)
-867   misc_animation@0,640                                   (noburn)(description=#23)
+860   misc_animation@0,528                                   (noburn)(description=#3)    (becomes=861)
+861   misc_animation@0,544                                   (noburn)(description=#3)    (becomes=862)
+862   misc_animation@0,560                                   (noburn)(description=#3)    (becomes=863)
+863   misc_animation@0,576                                   (noburn)(description=#3)    (becomes=864)
+864   misc_animation@0,592                                   (noburn)(description=#3)    (becomes=865)
+865   misc_animation@0,608                                   (noburn)(description=#3)    (becomes=866)
+866   misc_animation@0,624                                   (noburn)(description=#3)    (becomes=867)
+867   misc_animation@0,640                                   (noburn)(description=#3)
 # not used
 868   misc_animation@0,656
 869   misc_animation@0,672
