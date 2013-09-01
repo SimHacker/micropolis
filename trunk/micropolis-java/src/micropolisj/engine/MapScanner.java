@@ -414,36 +414,27 @@ class MapScanner
 	 */
 	void doZone()
 	{
-		// set power bit in map, from powermap
-		boolean zonePwrFlag = checkZonePower();
-
 		if (isSpecialZone(cchr))
 		{
-			doSpecialZone(zonePwrFlag);
-			return;
+			doSpecialZone();
 		}
-
-		if (isResidentialZone(cchr))
+		else if (isResidentialZone(cchr))
 		{
-			doResidential(zonePwrFlag);
-			return;
+			doResidential();
 		}
-
-		if (isHospitalOrChurch(cchr))
+		else if (isHospitalOrChurch(cchr))
 		{
-			doHospitalChurch(zonePwrFlag);
-			return;
+			doHospitalChurch();
 		}
-
-		if (isCommercialZone(cchr))
+		else if (isCommercialZone(cchr))
 		{
-			doCommercial(zonePwrFlag);
-			return;
+			doCommercial();
 		}
-
-		assert isIndustrialZone(cchr);
-		doIndustrial(zonePwrFlag);
-		return;
+		else
+		{
+			assert isIndustrialZone(cchr);
+			doIndustrial();
+		}
 	}
 
 	boolean checkZonePower()
@@ -538,10 +529,10 @@ class MapScanner
 
 	/**
 	 * Called when the current tile is the key tile of a "special" zone.
-	 * @param powerOn indicates whether the building has power
 	 */
-	void doSpecialZone(boolean powerOn)
+	void doSpecialZone()
 	{
+		boolean powerOn = checkZonePower();
 		switch (cchr9)
 		{
 		case POWERPLANT:
@@ -688,10 +679,10 @@ class MapScanner
 	/**
 	 * Called when the current tile is the key tile of a
 	 * hospital or church.
-	 * @param powerOn indicates whether the building has power
 	 */
-	void doHospitalChurch(boolean powerOn)
+	void doHospitalChurch()
 	{
+		boolean powerOn = checkZonePower();
 		if (cchr9 == HOSPITAL)
 		{
 			city.hospitalCount++;
@@ -771,10 +762,10 @@ class MapScanner
 	/**
 	 * Called when the current tile is the key tile of a commercial
 	 * zone.
-	 * @param powerOn indicates whether the building has power
 	 */
-	void doCommercial(boolean powerOn)
+	void doCommercial()
 	{
+		boolean powerOn = checkZonePower();
 		city.comZoneCount++;
 
 		int tpop = commercialZonePop(cchr);
@@ -825,10 +816,10 @@ class MapScanner
 	/**
 	 * Called when the current tile is the key tile of an
 	 * industrial zone.
-	 * @param powerOn indicates whether the building has power
 	 */
-	void doIndustrial(boolean powerOn)
+	void doIndustrial()
 	{
+		boolean powerOn = checkZonePower();
 		city.indZoneCount++;
 
 		int tpop = industrialZonePop(cchr);
@@ -877,10 +868,10 @@ class MapScanner
 	/**
 	 * Called when the current tile is the key tile of a
 	 * residential zone.
-	 * @param powerOn indicates whether the building has power
 	 */
-	void doResidential(boolean powerOn)
+	void doResidential()
 	{
+		boolean powerOn = checkZonePower();
 		city.resZoneCount++;
 
 		int tpop; //population of this zone
