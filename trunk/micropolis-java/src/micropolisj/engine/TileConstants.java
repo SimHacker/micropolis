@@ -652,8 +652,15 @@ public class TileConstants
 
 	public static boolean isCommercialZone(int tile)
 	{
-		return (tile & LOMASK) >= COMBASE &&
-			(tile & LOMASK) < INDBASE;
+		int tmp = tile & LOMASK;
+		TileSpec ts = Tiles.get(tmp);
+		if (ts != null) {
+			if (ts.owner != null) {
+				ts = ts.owner;
+			}
+			return ts.getBooleanAttribute("commercial-zone");
+		}
+		return false;
 	}
 
 	public static boolean isHospitalOrChurch(int tile)
@@ -698,7 +705,14 @@ public class TileConstants
 	public static boolean isResidentialZoneAny(int tile)
 	{
 		int tmp = tile & LOMASK;
-		return (tile >= RESBASE && tile < COMBASE);
+		TileSpec ts = Tiles.get(tmp);
+		if (ts != null) {
+			if (ts.owner != null) {
+				ts = ts.owner;
+			}
+			return ts.getBooleanAttribute("residential-zone");
+		}
+		return false;
 	}
 
 	public static boolean isSpecialZone(int tile)
