@@ -52,7 +52,7 @@ public class TileSpec
 
 	public BuildingInfo getBuildingInfo()
 	{
-		String tmp = getAttribute("compound");
+		String tmp = getAttribute("building");
 		if (tmp == null) { return null; }
 
 		BuildingInfo bi = new BuildingInfo();
@@ -62,12 +62,15 @@ public class TileSpec
 
 		bi.width = Integer.parseInt(p2[0]);
 		bi.height = Integer.parseInt(p2[1]);
-		short startTile = Short.parseShort(parts[1]);
 
 		bi.members = new short[bi.width*bi.height];
+		int startTile = tileNumber;
+		if (bi.width >= 3) { startTile--; }
+		if (bi.height >= 3) { startTile -= bi.width; }
+
 		for (int row = 0; row < bi.height; row++) {
 			for (int col = 0; col < bi.width; col++) {
-				bi.members[row*bi.width+col] = startTile;
+				bi.members[row*bi.width+col] = (short)startTile;
 				startTile++;
 			}
 		}
