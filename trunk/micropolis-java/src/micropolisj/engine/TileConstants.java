@@ -662,6 +662,11 @@ public class TileConstants
 			(tile & LOMASK) < COMBASE;
 	}
 
+	/**
+	 * Checks whether the tile is defined with the "industrial-zone" attribute.
+	 * Note: the old version of this function erroneously included the coal power
+	 * plant smoke as an industrial zone.
+	 */
 	public static boolean isIndustrialZone(int tile)
 	{
 		int tmp = tile & LOMASK;
@@ -673,14 +678,6 @@ public class TileConstants
 			return ts.getBooleanAttribute("industrial-zone");
 		}
 		return false;
-	}
-
-	public static boolean isIndustrialZoneOld(int tile)
-	{
-		int tmp = tile & LOMASK;
-		return (tmp >= INDBASE && tmp < PORTBASE)
-		|| (tmp >= SMOKEBASE && tmp < TINYEXP)
-		|| (tmp >= SMOKEBASE2 && tmp < FOOTBALLGAME1);
 	}
 
 	public static boolean isResidentialClear(int tile)
