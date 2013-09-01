@@ -53,6 +53,16 @@ public class Tiles
 			if (tmp != null) {
 				tiles[i].onShutdown = get(Integer.parseInt(tmp));
 			}
+
+			TileSpec.BuildingInfo bi = tiles[i].getBuildingInfo();
+			if (bi != null) {
+				for (int j = 0; j < bi.members.length; j++) {
+					int tid = bi.members[j];
+					tiles[tid].owner = tiles[i];
+					tiles[tid].ownerOffsetX = (bi.width >= 3 ? -1 : 0) + j % bi.width;
+					tiles[tid].ownerOffsetY = (bi.height >= 3 ? -1 : 0) + j / bi.width;
+				}
+			}
 		}
 	}
 

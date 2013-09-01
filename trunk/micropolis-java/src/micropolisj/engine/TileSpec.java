@@ -11,6 +11,9 @@ public class TileSpec
 	boolean canBurn;
 	boolean canConduct;
 	boolean zone;
+	public TileSpec owner;
+	public int ownerOffsetX;
+	public int ownerOffsetY;
 
 	Map<String,String> attributes;
 	List<String> images;
