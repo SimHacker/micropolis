@@ -231,4 +231,9 @@ public class TileSpec
 			return peekChar() != -1;
 		}
 	}
+
+	public String toString()
+	{
+		return "{tile#"+tileNumber+"}";
+	}
 }

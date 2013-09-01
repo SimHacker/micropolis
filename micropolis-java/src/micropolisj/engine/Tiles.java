@@ -53,17 +53,42 @@ public class Tiles
 			if (tmp != null) {
 				tiles[i].onShutdown = get(Integer.parseInt(tmp));
 			}
-
+			tmp = tiles[i].getAttribute("building-part");
+			if (tmp != null) {
+				handleBuildingPart(tiles[i], tmp);
+			}
 			TileSpec.BuildingInfo bi = tiles[i].getBuildingInfo();
 			if (bi != null) {
 				for (int j = 0; j < bi.members.length; j++) {
 					int tid = bi.members[j];
-					tiles[tid].owner = tiles[i];
-					tiles[tid].ownerOffsetX = (bi.width >= 3 ? -1 : 0) + j % bi.width;
-					tiles[tid].ownerOffsetY = (bi.height >= 3 ? -1 : 0) + j / bi.width;
+					int offx = (bi.width >= 3 ? -1 : 0) + j % bi.width;
+					int offy = (bi.height >= 3 ? -1 : 0) + j / bi.width;
+
+					if (tiles[tid].owner == null &&
+						(offx != 0 || offy != 0)
+						)
+					{
+						tiles[tid].owner = tiles[i];
+						tiles[tid].ownerOffsetX = offx;
+						tiles[tid].ownerOffsetY = offy;
+					}
 				}
 			}
 		}
+	}
+
+	private static void handleBuildingPart(TileSpec partTile, String tmp)
+	{
+		String [] parts = tmp.split(",");
+		if (parts.length != 3) {
+			throw new Error("Invalid building-part specification");
+		}
+
+		partTile.owner = get(Integer.parseInt(parts[0]));
+		partTile.ownerOffsetX = Integer.parseInt(parts[1]);
+		partTile.ownerOffsetY = Integer.parseInt(parts[2]);
+
+		assert partTile.ownerOffsetX != 0 || partTile.ownerOffsetY != 0;
 	}
 
 	public static TileSpec get(int tileNumber)
