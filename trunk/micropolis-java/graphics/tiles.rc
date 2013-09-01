@@ -985,10 +985,10 @@
 946   misc_animation@0,1904 (conducts)(description=#24)(becomes=947)
 947   misc_animation@0,1920 (conducts)(description=#24)(becomes=940)
 # BEGIN BRIDGE TILES #
-948   misc_animation@0,1936  (noburn)(description=#25)
-949   misc_animation@0,1952  (noburn)(description=#25)
-950   misc_animation@0,1968  (noburn)(description=#25)
-951   misc_animation@0,1984  (noburn)(description=#25)
+948   misc_animation@0,1936  (noburn)(description=#20)
+949   misc_animation@0,1952  (noburn)(description=#20)
+950   misc_animation@0,1968  (noburn)(description=#20)
+951   misc_animation@0,1984  (noburn)(description=#20)
 # BEGIN NUCLEAR SWIRL #
 952   misc_animation@0,2000  (conducts)(description=#26)(becomes=953)(onshutdown=820)
 953   misc_animation@0,2016  (conducts)(description=#26)(becomes=954)(onshutdown=820)
