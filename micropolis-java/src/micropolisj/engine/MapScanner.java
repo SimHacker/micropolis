@@ -706,14 +706,14 @@ class MapScanner
 	{
 		if (city.needHospital > 0)
 		{
-			zonePlop(HOSPITAL - 4);
+			zonePlopNew(HOSPITAL);
 			city.needHospital = 0;
 		}
 
 //FIXME- should be 'else if'
 		if (city.needChurch > 0)
 		{
-			zonePlop(CHURCH - 4);
+			zonePlopNew(CHURCH);
 			city.needChurch = 0;
 		}
 	}
@@ -737,7 +737,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(RESBASE);
+					zonePlopNew(FREEZ);
 				}
 			}
 		}
@@ -753,7 +753,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(RESBASE);
+					zonePlopNew(FREEZ);
 				}
 			}
 		}
@@ -1118,20 +1118,20 @@ class MapScanner
 
 	void comPlop(int density, int value)
 	{
-		int base = (value * 5 + density) * 9 + CZB - 4;
-		zonePlop(base);
+		int base = (value * 5 + density) * 9 + CZB;
+		zonePlopNew(base);
 	}
 
 	void indPlop(int density, int value)
 	{
-		int base = (value * 4 + density) * 9 + (IZB - 4);
-		zonePlop(base);
+		int base = (value * 4 + density) * 9 + IZB;
+		zonePlopNew(base);
 	}
 
 	void residentialPlop(int density, int value)
 	{
-		int base = (value * 4 + density) * 9 + RZB - 4;
-		zonePlop(base);
+		int base = (value * 4 + density) * 9 + RZB;
+		zonePlopNew(base);
 	}
 
 	private void doCommercialOut(int pop, int value)
@@ -1143,7 +1143,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlop(COMBASE);
+			zonePlopNew(COMCLR);
 			adjustROG(-8);
 		}
 	}
@@ -1157,7 +1157,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlop(INDCLR-4);
+			zonePlopNew(INDCLR);
 			adjustROG(-8);
 		}
 	}
