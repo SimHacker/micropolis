@@ -40,6 +40,38 @@ public class TileSpec
 		return (v != null && v.equals("true"));
 	}
 
+	public static class BuildingInfo
+	{
+		int width;
+		int height;
+		short [] members;
+	}
+
+	public BuildingInfo getBuildingInfo()
+	{
+		String tmp = getAttribute("compound");
+		if (tmp == null) { return null; }
+
+		BuildingInfo bi = new BuildingInfo();
+
+		String [] parts = tmp.split(",");
+		String [] p2 = parts[0].split("x");
+
+		bi.width = Integer.parseInt(p2[0]);
+		bi.height = Integer.parseInt(p2[1]);
+		short startTile = Short.parseShort(parts[1]);
+
+		bi.members = new short[bi.width*bi.height];
+		for (int row = 0; row < bi.height; row++) {
+			for (int col = 0; col < bi.width; col++) {
+				bi.members[row*bi.width+col] = startTile;
+				startTile++;
+			}
+		}
+
+		return bi;
+	}
+
 	public String [] getImages()
 	{
 		return images.toArray(new String[0]);
