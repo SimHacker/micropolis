@@ -40,12 +40,7 @@ class MapScanner
 	{
 		if (isFire(cchr))
 		{
-			city.firePop++;
-			if (PRNG.nextInt(4) == 0)
-			{
-				// one in four times
-				doFire();
-			}
+			doFire();
 			return;
 		}
 		else if (isFlood(cchr))
@@ -163,6 +158,13 @@ class MapScanner
 	 */
 	void doFire()
 	{
+		city.firePop++;
+
+		// one in four times
+		if (PRNG.nextInt(4) != 0) {
+			return;
+		}
+
 		final int [] DX = { 0, 1, 0, -1 };
 		final int [] DY = { -1, 0, 1, 0 };
 
