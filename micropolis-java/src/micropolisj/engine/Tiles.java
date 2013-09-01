@@ -105,9 +105,7 @@ public class Tiles
 	static void checkTiles()
 	{
 		for (int i = 0; i < tiles.length; i++) {
-			if (TileConstants.isIndustrialZone(i) != TileConstants.isIndustrialZoneOld(i)) {
-				System.err.println("industrial zone disagreement: "+i);
-			}
+			// do something here
 		}
 	}
 }
