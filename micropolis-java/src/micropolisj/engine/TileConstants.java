@@ -665,6 +665,19 @@ public class TileConstants
 	public static boolean isIndustrialZone(int tile)
 	{
 		int tmp = tile & LOMASK;
+		TileSpec ts = Tiles.get(tmp);
+		if (ts != null) {
+			if (ts.owner != null) {
+				ts = ts.owner;
+			}
+			return ts.getBooleanAttribute("industrial-zone");
+		}
+		return false;
+	}
+
+	public static boolean isIndustrialZoneOld(int tile)
+	{
+		int tmp = tile & LOMASK;
 		return (tmp >= INDBASE && tmp < PORTBASE)
 		|| (tmp >= SMOKEBASE && tmp < TINYEXP)
 		|| (tmp >= SMOKEBASE2 && tmp < FOOTBALLGAME1);
