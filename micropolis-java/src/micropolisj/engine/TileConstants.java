@@ -208,16 +208,6 @@ public class TileConstants
 
 	private TileConstants() {}
 
-	private static int [] buildingBases = {
-		DIRT, RIVER, TREEBASE, RUBBLE,
-		FLOOD, RADTILE, FIRE, ROADBASE,
-		POWERBASE, RAILBASE, RESBASE, COMBASE,
-		INDBASE, PORTBASE, AIRPORTBASE, COALBASE,
-		FIRESTBASE, POLICESTBASE, STADIUMBASE, NUCLEARBASE,
-		HBRDG0, RADAR_ANIM, FOUNTAIN, INDBASE2,
-		FOOTBALLGAME1, VBRDG0, URANIUM_FUEL, LAST_TILE
-		};
-
 	/**
 	 * Checks whether the tile can be auto-bulldozed for
 	 * placement of road, rail, or wire.
@@ -253,14 +243,15 @@ public class TileConstants
 	}
 
 	//used by queryZoneStatus
-	public static int getBuildingId(int tile)
+	public static int getDescriptionNumber(int tile)
 	{
 		tile &= LOMASK;
-		int i = Arrays.binarySearch(buildingBases, tile);
-		if (i >= 0) {
-			return i;
-		} else {
-			return -i - 2;
+		TileSpec ts = Tiles.get(tile);
+		if (ts != null) {
+			return ts.getDescriptionNumber();
+		}
+		else {
+			return -1;
 		}
 	}
 
