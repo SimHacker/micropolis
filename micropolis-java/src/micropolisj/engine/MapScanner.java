@@ -489,7 +489,7 @@ class MapScanner
 	 * @param base The "zone" tile value for this zone.
 	 * @return true iff the zone was actually placed.
 	 */
-	boolean zonePlopNew(int base)
+	boolean zonePlop(int base)
 	{
 		assert isZoneCenter(base);
 
@@ -664,14 +664,14 @@ class MapScanner
 	{
 		if (city.needHospital > 0)
 		{
-			zonePlopNew(HOSPITAL);
+			zonePlop(HOSPITAL);
 			city.needHospital = 0;
 		}
 
 //FIXME- should be 'else if'
 		if (city.needChurch > 0)
 		{
-			zonePlopNew(CHURCH);
+			zonePlop(CHURCH);
 			city.needChurch = 0;
 		}
 	}
@@ -695,7 +695,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlopNew(FREEZ);
+					zonePlop(FREEZ);
 				}
 			}
 		}
@@ -711,7 +711,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlopNew(FREEZ);
+					zonePlop(FREEZ);
 				}
 			}
 		}
@@ -1077,19 +1077,19 @@ class MapScanner
 	void comPlop(int density, int value)
 	{
 		int base = (value * 5 + density) * 9 + CZB;
-		zonePlopNew(base);
+		zonePlop(base);
 	}
 
 	void indPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + IZB;
-		zonePlopNew(base);
+		zonePlop(base);
 	}
 
 	void residentialPlop(int density, int value)
 	{
 		int base = (value * 4 + density) * 9 + RZB;
-		zonePlopNew(base);
+		zonePlop(base);
 	}
 
 	private void doCommercialOut(int pop, int value)
@@ -1101,7 +1101,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlopNew(COMCLR);
+			zonePlop(COMCLR);
 			adjustROG(-8);
 		}
 	}
@@ -1115,7 +1115,7 @@ class MapScanner
 		}
 		else if (pop == 1)
 		{
-			zonePlopNew(INDCLR);
+			zonePlop(INDCLR);
 			adjustROG(-8);
 		}
 	}
