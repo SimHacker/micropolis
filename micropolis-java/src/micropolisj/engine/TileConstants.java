@@ -390,12 +390,6 @@ public class TileConstants
 			((cell & LOMASK) <= LASTRUBBLE));
 	}
 
-	public static boolean isTinyExplosion(int tile)
-	{
-		int tmp = tile & LOMASK;
-		return (tmp >= SOMETINYEXP && tmp <= LASTTINYEXP);
-	}
-
 	public static boolean isTree(char cell)
 	{
 		return (((cell & LOMASK) >= WOODS_LOW) &&
@@ -466,12 +460,6 @@ public class TileConstants
 	public static boolean isDozeable(int tile)
 	{
 		return tile >= 0 && (tile & BULLBIT) != 0;
-	}
-
-	public static boolean isFlood(int tile)
-	{
-		int tmp = tile & LOMASK;
-		return (tmp >= FLOOD && tmp < RADTILE);
 	}
 
 	static boolean isFloodable(int tile)
