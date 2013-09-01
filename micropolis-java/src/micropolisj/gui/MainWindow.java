@@ -1093,13 +1093,6 @@ public class MainWindow extends JFrame
 
 		ZoneStatus z = engine.queryZoneStatus(xpos, ypos);
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
-
-		TileSpec ts = Tiles.get(engine.getTile(xpos, ypos) & TileConstants.LOMASK);
-		if (ts != null) {
-			System.out.println("owner: "+ts.owner);
-			System.out.println("    x: "+ts.ownerOffsetX);
-			System.out.println("    y: "+ts.ownerOffsetY);
-		}
 	}
 
 	private void doZoom(int dir, Point mousePt)
