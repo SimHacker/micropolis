@@ -106,6 +106,11 @@ public class Tiles
 	{
 		for (int i = 0; i < tiles.length; i++) {
 			// do something here
+			int old = TileConstants.getBuildingId(i);
+			int n = Tiles.get(i).getDescriptionNumber();
+			if (old != n) {
+				System.err.println("Tile "+i+": expected "+old+" but got "+n);
+			}
 		}
 	}
 }

@@ -78,6 +78,18 @@ public class TileSpec
 		return bi;
 	}
 
+	public int getDescriptionNumber()
+	{
+		String v = getAttribute("description");
+		if (v != null && v.startsWith("#")) {
+			return Integer.parseInt(v.substring(1));
+		}
+		if (owner != null) {
+			return owner.getDescriptionNumber();
+		}
+		return -1;
+	}
+
 	public String [] getImages()
 	{
 		return images.toArray(new String[0]);
