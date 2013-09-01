@@ -1,5 +1,7 @@
+# DIRT
 0     terrain@0,0                     (noburn)(description=#0)
-1     terrain@0,16                    (noburn)(description=#0)
+1     terrain@0,16                    (noburn)
+# BEGIN WATER AND RIVER EDGE #
 2     terrain@0,32                    (noburn)(description=#1)
 3     terrain@0,48                    (noburn)(description=#1)
 4     terrain@0,64                    (noburn)(description=#1)
@@ -19,6 +21,7 @@
 18    terrain@0,288                   (noburn)(description=#1)
 19    terrain@0,304                   (noburn)(description=#1)
 20    terrain@0,320                   (noburn)(description=#1)
+# BEGIN TREES #
 21    terrain@0,336			(description=#2)
 22    terrain@0,352			(description=#2)
 23    terrain@0,368			(description=#2)
@@ -37,8 +40,8 @@
 36    terrain@0,576			(description=#2)
 37    terrain@0,592			(description=#2)
 # unused
-38    terrain@0,608			(description=#2)
-39    terrain@0,624			(description=#2)
+38    terrain@0,608
+39    terrain@0,624
 # BEGIN WOODS (4 frames) #
 40    terrain@0,640			(description=#2)
 41    terrain@0,656			(description=#2)
@@ -215,7 +218,7 @@
 205   roads@0,32 |traffic@112,0  |roadwire@0,0  (conducts)(becomes=189)(description=#7)
 206   roads@0,48 |traffic@112,16 |roadwire@0,16 (conducts)(becomes=190)(description=#7)
 207   roads@0,240                                                (becomes=191)(description=#7)
-# BEGIN WIRES AND RAILS #
+# BEGIN WIRES #
 208   wires@0,0                 (noburn)(conducts)(description=#8)
 209   wires@0,16                (noburn)(conducts)(description=#8)
 210   wires@0,32                (conducts)(description=#8)
@@ -232,6 +235,7 @@
 221   wires@0,208               (conducts)(description=#8)
 222   wires@0,224               (conducts)(description=#8)
 223   wires@0,240               (conducts)(description=#8)
+# BEGIN RAILS #
 224   rails@0,0                 (noburn)(description=#9)
 225   rails@0,16                (noburn)(description=#9)
 226   rails@0,32                (description=#9)
@@ -847,8 +851,9 @@
 824   nuclear@16,48          (conducts)
 825   nuclear@32,48          (conducts)
 826   nuclear@48,48          (conducts)
-# BEGIN POWER OUT + BRIDGES #
-827   misc_animation@0,0    (description=#19)
+# POWER OUT INDICATOR #
+827   misc_animation@0,0
+# BEGIN BRIDGES #
 828   misc_animation@0,16   (noburn)(description=#20)
 829   misc_animation@0,32   (noburn)(description=#20)
 830   misc_animation@0,48   (noburn)(description=#20)
@@ -862,7 +867,7 @@
 837   misc_animation@0,160  (conducts)(building-part=716,1,-1)(description=#21)   (becomes=838)(onshutdown=711)
 838   misc_animation@0,176  (conducts)(building-part=716,1,-1)(description=#21)   (becomes=839)(onshutdown=711)
 839   misc_animation@0,192  (conducts)(building-part=716,1,-1)(description=#21)   (becomes=832)(onshutdown=711)
-# BEGIN FOUNTAIN / FLAG #
+# BEGIN FOUNTAIN #
 840   misc_animation@0,208                                       (description=#22)(becomes=841)
 841   misc_animation@0,224                                       (description=#22)(becomes=842)
 842   misc_animation@0,240                                       (description=#22)(becomes=843)
@@ -895,22 +900,22 @@
 866   misc_animation@0,624                                   (noburn)(description=#23)    (becomes=867)
 867   misc_animation@0,640                                   (noburn)(description=#23)
 # not used
-868   misc_animation@0,656   (description=#23)
-869   misc_animation@0,672   (description=#23)
-870   misc_animation@0,688   (description=#23)
-871   misc_animation@0,704   (description=#23)
-872   misc_animation@0,720   (description=#23)
-873   misc_animation@0,736   (description=#23)
-874   misc_animation@0,752   (description=#23)
-875   misc_animation@0,768   (description=#23)
-876   misc_animation@0,784   (description=#23)
-877   misc_animation@0,800   (description=#23)
-878   misc_animation@0,816   (description=#23)
-879   misc_animation@0,832   (description=#23)
-880   misc_animation@0,848   (description=#23)
-881   misc_animation@0,864   (description=#23)
-882   misc_animation@0,880   (description=#23)
-883   misc_animation@0,896   (description=#23)
+868   misc_animation@0,656
+869   misc_animation@0,672
+870   misc_animation@0,688
+871   misc_animation@0,704
+872   misc_animation@0,720
+873   misc_animation@0,736
+874   misc_animation@0,752
+875   misc_animation@0,768
+876   misc_animation@0,784
+877   misc_animation@0,800
+878   misc_animation@0,816
+879   misc_animation@0,832
+880   misc_animation@0,848
+881   misc_animation@0,864
+882   misc_animation@0,880
+883   misc_animation@0,896
 # BEGIN SMOKE STACKS #
 884   misc_animation@0,912  (conducts)(building-part=643,1,-1)(description=#23)(becomes=885)(onshutdown=641)
 885   misc_animation@0,928  (conducts)(building-part=643,1,-1)(description=#23)(becomes=886)(onshutdown=641)
@@ -990,7 +995,7 @@
 954   misc_animation@0,2032  (conducts)(description=#26)(becomes=955)(onshutdown=820)
 955   misc_animation@0,2048  (conducts)(description=#26)(becomes=952)(onshutdown=820)
 # unused #
-956   misc_animation@0,2064  (description=#27)
-957   misc_animation@0,2080  (description=#27)
-958   misc_animation@0,2096  (description=#27)
-959   misc_animation@0,2112  (description=#27)
+956   misc_animation@0,2064
+957   misc_animation@0,2080
+958   misc_animation@0,2096
+959   misc_animation@0,2112
