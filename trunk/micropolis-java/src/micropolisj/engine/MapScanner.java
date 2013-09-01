@@ -486,6 +486,52 @@ class MapScanner
 	 * Note: nothing is done if part of this zone is off the edge
 	 * of the map or is being flooded or radioactive.
 	 *
+	 * @param base The "zone" tile value for this zone.
+	 * @return true iff the zone was actually placed.
+	 */
+	boolean zonePlopNew(int base)
+	{
+		assert isZoneCenter(base);
+
+		TileSpec.BuildingInfo bi = Tiles.get(base).getBuildingInfo();
+		assert bi != null;
+		if (bi == null)
+			return false;
+
+		for (int y = ypos-1; y < ypos-1+bi.height; y++)
+		{
+			for (int x = xpos-1; x < xpos-1+bi.width; x++)
+			{
+				if (!city.testBounds(x, y)) {
+					return false;
+				}
+				if (isIndestructible2(city.getTile(x,y))) {
+					// radioactive, on fire, or flooded
+					return false;
+				}
+			}
+		}
+
+		assert bi.members.length == bi.width * bi.height;
+		int i = 0;
+		for (int y = ypos-1; y < ypos-1+bi.height; y++)
+		{
+			for (int x = xpos-1; x < xpos-1+bi.width; x++)
+			{
+				city.setTile(x, y, (char)(bi.members[i] | (x == xpos && y == ypos ? BULLBIT : 0)));
+				i++;
+			}
+		}
+
+		setZonePower();
+		return true;
+	}
+
+	/**
+	 * Place a 3x3 zone on to the map, centered on the current location.
+	 * Note: nothing is done if part of this zone is off the edge
+	 * of the map or is being flooded or radioactive.
+	 *
 	 * @param base The first/north-western tile value for this zone.
 	 * @return true iff the zone was actually placed.
 	 */
