@@ -302,8 +302,7 @@ public class OverlayMapView extends JComponent
 				switch (mapState) {
 				case RESIDENTIAL:
 					if (isZoneAny(tile) &&
-						!isResidentialZone(tile) &&
-						!isHospitalOrChurch(tile))
+						!isResidentialZoneAny(tile))
 					{
 						tile = DIRT;
 					}
