@@ -33,51 +33,70 @@ class MapScanner
 		this.PRNG = city.PRNG;
 	}
 
+	static enum TileBehavior
+	{
+		FIRE,
+		FLOOD,
+		RADIOACTIVE,
+		ROAD,
+		RAIL,
+		EXPLOSION,
+		RESIDENTIAL,
+		HOSPITAL_CHURCH,
+		COMMERCIAL,
+		INDUSTRIAL,
+		SPECIAL;
+	}
+
 	/**
 	 * Activate the tile identified by xpos and ypos properties.
 	 */
 	public void scanTile()
 	{
-		if (isFire(cchr))
-		{
-			doFire();
-			return;
-		}
-		else if (isFlood(cchr))
-		{
-			doFlood();
-			return;
-		}
-		else if (isRadioactive(cchr))
-		{
-			doRadioactiveTile();
-			return;
-		}
-
 		cchr9 = (char) (cchr & LOMASK);
 
-		if (isRoad(cchr))
-		{
+		String behaviorStr = getTileBehavior(cchr);
+		if (behaviorStr == null) {
+			return;
+		}
+
+		switch (TileBehavior.valueOf(behaviorStr)) {
+		case FIRE:
+			doFire();
+			return;
+		case FLOOD:
+			doFlood();
+			return;
+		case RADIOACTIVE:
+			doRadioactiveTile();
+			return;
+		case ROAD:
 			doRoad();
 			return;
-		}
-
-		if (isZoneCenter(cchr))
-		{
-			doZone();
-			return;
-		}
-
-		if (isRail(cchr))
-		{
+		case RAIL:
 			doRail();
 			return;
-		}
-
-		if (isTinyExplosion(cchr))
-		{
+		case EXPLOSION:
 			// clear AniRubble
 			city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
+			return;
+		case RESIDENTIAL:
+			doResidential();
+			return;
+		case HOSPITAL_CHURCH:
+			doHospitalChurch();
+			return;
+		case COMMERCIAL:
+			doCommercial();
+			return;
+		case INDUSTRIAL:
+			doIndustrial();
+			return;
+		case SPECIAL:
+			doSpecialZone();
+			return;
+		default:
+			throw new Error("Unknown behavior: "+behaviorStr);
 		}
 	}
 
@@ -406,34 +425,6 @@ class MapScanner
 
 		if (PRNG.nextInt(13) == 0) {
 			city.generateCopter(xpos, ypos);
-		}
-	}
-
-	/**
-	 * Called when the current tile is the key tile of any zone.
-	 */
-	void doZone()
-	{
-		if (isSpecialZone(cchr))
-		{
-			doSpecialZone();
-		}
-		else if (isResidentialZone(cchr))
-		{
-			doResidential();
-		}
-		else if (isHospitalOrChurch(cchr))
-		{
-			doHospitalChurch();
-		}
-		else if (isCommercialZone(cchr))
-		{
-			doCommercial();
-		}
-		else
-		{
-			assert isIndustrialZone(cchr);
-			doIndustrial();
 		}
 	}
 
