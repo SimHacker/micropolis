@@ -45,7 +45,14 @@ class MapScanner
 		HOSPITAL_CHURCH,
 		COMMERCIAL,
 		INDUSTRIAL,
-		SPECIAL;
+		COAL,
+		NUCLEAR,
+		FIRESTATION,
+		POLICESTATION,
+		STADIUM_EMPTY,
+		STADIUM_FULL,
+		AIRPORT,
+		SEAPORT;
 	}
 
 	/**
@@ -92,8 +99,29 @@ class MapScanner
 		case INDUSTRIAL:
 			doIndustrial();
 			return;
-		case SPECIAL:
-			doSpecialZone();
+		case COAL:
+			doCoalPower();
+			return;
+		case NUCLEAR:
+			doNuclearPower();
+			return;
+		case FIRESTATION:
+			doFireStation();
+			return;
+		case POLICESTATION:
+			doPoliceStation();
+			return;
+		case STADIUM_EMPTY:
+			doStadiumEmpty();
+			return;
+		case STADIUM_FULL:
+			doStadiumFull();
+			return;
+		case AIRPORT:
+			doAirport();
+			return;
+		case SEAPORT:
+			doSeaport();
 			return;
 		default:
 			throw new Error("Unknown behavior: "+behaviorStr);
@@ -636,51 +664,6 @@ class MapScanner
 
 		if (powerOn && !city.hasSprite(SpriteKind.SHI)) {
 			city.generateShip();
-		}
-	}
-
-	/**
-	 * Called when the current tile is the key tile of a "special" zone.
-	 */
-	void doSpecialZone()
-	{
-		switch (cchr9)
-		{
-		case POWERPLANT:
-			doCoalPower();
-			return;
-
-		case NUCLEAR:
-			doNuclearPower();
-			return;
-
-		case FIRESTATION:
-			doFireStation();
-			return;
-
-		case POLICESTATION:
-			doPoliceStation();
-			return;
-
-		case STADIUM:
-			doStadiumEmpty();
-			return;
-
-		case FULLSTADIUM:
-			doStadiumFull();
-			return;
-
-		case AIRPORT:
-			doAirport();
-			return;
-
-		case PORT:
-			doSeaport();
-			return;
-
-		default:
-			// should not happen
-			assert false;
 		}
 	}
 
