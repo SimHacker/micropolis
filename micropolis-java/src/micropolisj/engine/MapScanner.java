@@ -414,20 +414,6 @@ class MapScanner
 		return dist;
 	}
 
-	/**
-	 * Called when the current tile is the key tile of an airport.
-	 */
-	void doAirport()
-	{
-		if (PRNG.nextInt(6) == 0) {
-			city.generatePlane(xpos, ypos);
-		}
-
-		if (PRNG.nextInt(13) == 0) {
-			city.generateCopter(xpos, ypos);
-		}
-	}
-
 	boolean checkZonePower()
 	{
 		boolean zonePwrFlag = setZonePower();
@@ -518,128 +504,178 @@ class MapScanner
 		return true;
 	}
 
+	void doCoalPower()
+	{
+		boolean powerOn = checkZonePower();
+		city.coalCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(POWERPLANT, 4);
+		}
+
+		city.powerPlants.add(new CityLocation(xpos,ypos));
+	}
+
+	void doNuclearPower()
+	{
+		boolean powerOn = checkZonePower();
+		if (!city.noDisasters && PRNG.nextInt(city.MltdwnTab[city.gameLevel]+1) == 0) {
+			city.doMeltdown(xpos, ypos);
+			return;
+		}
+
+		city.nuclearCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(NUCLEAR, 4);
+		}
+
+		city.powerPlants.add(new CityLocation(xpos, ypos));
+	}
+
+	void doFireStation()
+	{
+		boolean powerOn = checkZonePower();
+		city.fireStationCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(FIRESTATION, 3);
+		}
+
+		int z;
+		if (powerOn) {
+			z = city.fireEffect;  //if powered, get effect
+		} else {
+			z = city.fireEffect/2; // from the funding ratio
+		}
+
+		city.traffic.mapX = xpos;
+		city.traffic.mapY = ypos;
+		if (!city.traffic.findPerimeterRoad()) {
+			z /= 2;
+		}
+
+		city.fireStMap[ypos/8][xpos/8] += z;
+	}
+
+	void doPoliceStation()
+	{
+		boolean powerOn = checkZonePower();
+		city.policeCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(POLICESTATION, 3);
+		}
+
+		int z;
+		if (powerOn) {
+			z = city.policeEffect;
+		} else {
+			z = city.policeEffect / 2;
+		}
+
+		city.traffic.mapX = xpos;
+		city.traffic.mapY = ypos;
+		if (!city.traffic.findPerimeterRoad()) {
+			z /= 2;
+		}
+
+		city.policeMap[ypos/8][xpos/8] += z;
+	}
+
+	void doStadiumEmpty()
+	{
+		boolean powerOn = checkZonePower();
+		city.stadiumCount++;
+		if ((city.cityTime % 16) == 0) {
+			repairZone(STADIUM, 4);
+		}
+
+		if (powerOn)
+		{
+			if (((city.cityTime + xpos + ypos) % 32) == 0) {
+				drawStadium(FULLSTADIUM);
+				city.setTile(xpos+1,ypos, (char)(FOOTBALLGAME1));
+				city.setTile(xpos+1,ypos+1,(char)(FOOTBALLGAME2));
+			}
+		}
+	}
+
+	void doStadiumFull()
+	{
+		boolean powerOn = checkZonePower();
+		city.stadiumCount++;
+		if (((city.cityTime + xpos + ypos) % 8) == 0) {
+			drawStadium(STADIUM);
+		}
+	}
+
+	void doAirport()
+	{
+		boolean powerOn = checkZonePower();
+		city.airportCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(AIRPORT, 6);
+		}
+
+		if (powerOn) {
+
+			if (PRNG.nextInt(6) == 0) {
+				city.generatePlane(xpos, ypos);
+			}
+
+			if (PRNG.nextInt(13) == 0) {
+				city.generateCopter(xpos, ypos);
+			}
+		}
+	}
+
+	void doSeaport()
+	{
+		boolean powerOn = checkZonePower();
+		city.seaportCount++;
+		if ((city.cityTime % 16) == 0) {
+			repairZone(PORT, 4);
+		}
+
+		if (powerOn && !city.hasSprite(SpriteKind.SHI)) {
+			city.generateShip();
+		}
+	}
+
 	/**
 	 * Called when the current tile is the key tile of a "special" zone.
 	 */
 	void doSpecialZone()
 	{
-		boolean powerOn = checkZonePower();
 		switch (cchr9)
 		{
 		case POWERPLANT:
-			city.coalCount++;
-			if ((city.cityTime % 8) == 0) {
-				repairZone(POWERPLANT, 4);
-			}
-
-			city.powerPlants.add(new CityLocation(xpos,ypos));
+			doCoalPower();
 			return;
 
 		case NUCLEAR:
-			if (!city.noDisasters && PRNG.nextInt(city.MltdwnTab[city.gameLevel]+1) == 0) {
-				city.doMeltdown(xpos, ypos);
-				return;
-			}
-
-			city.nuclearCount++;
-			if ((city.cityTime % 8) == 0) {
-				repairZone(NUCLEAR, 4);
-			}
-
-			city.powerPlants.add(new CityLocation(xpos, ypos));
+			doNuclearPower();
 			return;
 
 		case FIRESTATION:
-		{
-			city.fireStationCount++;
-			if ((city.cityTime % 8) == 0) {
-				repairZone(FIRESTATION, 3);
-			}
-
-			int z;
-			if (powerOn) {
-				z = city.fireEffect;  //if powered, get effect
-			} else {
-				z = city.fireEffect/2; // from the funding ratio
-			}
-
-			city.traffic.mapX = xpos;
-			city.traffic.mapY = ypos;
-			if (!city.traffic.findPerimeterRoad()) {
-				z /= 2;
-			}
-
-			city.fireStMap[ypos/8][xpos/8] += z;
+			doFireStation();
 			return;
-		}
 
 		case POLICESTATION:
-		{
-			city.policeCount++;
-			if ((city.cityTime % 8) == 0) {
-				repairZone(POLICESTATION, 3);
-			}
-
-			int z;
-			if (powerOn) {
-				z = city.policeEffect;
-			} else {
-				z = city.policeEffect / 2;
-			}
-
-			city.traffic.mapX = xpos;
-			city.traffic.mapY = ypos;
-			if (!city.traffic.findPerimeterRoad()) {
-				z /= 2;
-			}
-
-			city.policeMap[ypos/8][xpos/8] += z;
+			doPoliceStation();
 			return;
-		}
 
 		case STADIUM:
-			city.stadiumCount++;
-			if ((city.cityTime % 16) == 0) {
-				repairZone(STADIUM, 4);
-			}
-
-			if (powerOn)
-			{
-				if (((city.cityTime + xpos + ypos) % 32) == 0) {
-					drawStadium(FULLSTADIUM);
-					city.setTile(xpos+1,ypos, (char)(FOOTBALLGAME1));
-					city.setTile(xpos+1,ypos+1,(char)(FOOTBALLGAME2));
-				}
-			}
+			doStadiumEmpty();
 			return;
 
 		case FULLSTADIUM:
-			city.stadiumCount++;
-			if (((city.cityTime + xpos + ypos) % 8) == 0) {
-				drawStadium(STADIUM);
-			}
+			doStadiumFull();
 			return;
 
 		case AIRPORT:
-			city.airportCount++;
-			if ((city.cityTime % 8) == 0) {
-				repairZone(AIRPORT, 6);
-			}
-
-			if (powerOn) {
-				doAirport();
-			}
+			doAirport();
 			return;
 
 		case PORT:
-			city.seaportCount++;
-			if ((city.cityTime % 16) == 0) {
-				repairZone(PORT, 4);
-			}
-
-			if (powerOn && !city.hasSprite(SpriteKind.SHI)) {
-				city.generateShip();
-			}
+			doSeaport();
 			return;
 
 		default:
