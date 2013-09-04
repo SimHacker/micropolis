@@ -95,6 +95,21 @@ public class TileSpec
 		return images.toArray(new String[0]);
 	}
 
+	public int getPollutionValue()
+	{
+		String v = getAttribute("pollution");
+		if (v != null) {
+			return Integer.parseInt(v);
+		}
+		else if (owner != null) {
+			// pollution inherits from building tile
+			return owner.getPollutionValue();
+		}
+		else {
+			return 0;
+		}
+	}
+
 	public int getPopulation()
 	{
 		String v = getAttribute("population");
