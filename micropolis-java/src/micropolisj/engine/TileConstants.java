@@ -127,28 +127,17 @@ public class TileConstants
 	public static final char COMBASE = 423;
 	public static final char COMCLR = 427;
 	public static final char CZB = 436; //commercial zone base
-	private static final char COMLAST = 609;
 	public static final char INDBASE = 612;
 	public static final char INDCLR = 616;
-	private static final char LASTIND = 620;
-	private static final char IND1 = 621;
 	public static final char IZB = 625;
 	public static final char PORTBASE = 693;
 	public static final char PORT = 698;
-	private static final char LASTPORT = 708;
-	public static final char AIRPORTBASE = 709;
 	public static final char AIRPORT = 716;
-	public static final char COALBASE = 745;
 	public static final char POWERPLANT = 750;
-	private static final char LASTPOWERPLANT = 760;
-	public static final char FIRESTBASE = 761;
 	public static final char FIRESTATION = 765;
-	public static final char POLICESTBASE = 770;
 	public static final char POLICESTATION = 774;
-	public static final char STADIUMBASE = 779;
 	public static final char STADIUM = 784;
 	public static final char FULLSTADIUM = 800;
-	public static final char NUCLEARBASE = 811;
 	public static final char NUCLEAR = 816;
 	public static final char LASTZONE = 826;
 	public static final char LIGHTNINGBOLT = 827;
@@ -156,21 +145,16 @@ public class TileConstants
 	public static final char HBRDG1 = 829;
 	public static final char HBRDG2 = 830;
 	public static final char HBRDG3 = 831;
-	private static final char RADAR_ANIM = 832;
 	public static final char FOUNTAIN = 840;
-	private static final char INDBASE2 = 844;
-	private static final char SMOKEBASE = 852;
 	public static final char TINYEXP = 860;
 	private static final char SOMETINYEXP = 864;
 	private static final char LASTTINYEXP = 867;
-	private static final char SMOKEBASE2 = 884;
 	public static final char FOOTBALLGAME1 = 932;
 	public static final char FOOTBALLGAME2 = 940;
 	public static final char VBRDG0 = 948;   //draw bridge tiles (vert)
 	public static final char VBRDG1 = 949;
 	public static final char VBRDG2 = 950;
 	public static final char VBRDG3 = 951;
-	private static final char URANIUM_FUEL = 952;
 	public static final char LAST_TILE = 956;
 
 	static final char [] RoadTable = new char[] {
@@ -657,12 +641,6 @@ public class TileConstants
 			return ts.getBooleanAttribute("residential-zone");
 		}
 		return false;
-	}
-
-	public static boolean isSpecialZone(int tile)
-	{
-		assert isZoneCenter(tile);
-		return (tile & LOMASK) >= PORTBASE;
 	}
 
 	/** Tile represents a part of any sort of building. */
