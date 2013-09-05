@@ -52,16 +52,13 @@ public class TileSpec
 
 	public BuildingInfo getBuildingInfo()
 	{
-		String tmp = getAttribute("building");
-		if (tmp == null) { return null; }
+		CityDimension buildingSize = getBuildingSize();
+		if (buildingSize == null) { return null; }
 
 		BuildingInfo bi = new BuildingInfo();
 
-		String [] parts = tmp.split(",");
-		String [] p2 = parts[0].split("x");
-
-		bi.width = Integer.parseInt(p2[0]);
-		bi.height = Integer.parseInt(p2[1]);
+		bi.width = buildingSize.width;
+		bi.height = buildingSize.height;
 
 		bi.members = new short[bi.width*bi.height];
 		int startTile = tileNumber;
@@ -76,6 +73,18 @@ public class TileSpec
 		}
 
 		return bi;
+	}
+
+	public CityDimension getBuildingSize()
+	{
+		String tmp = getAttribute("building");
+		if (tmp == null) { return null; }
+
+		String [] p2 = tmp.split("x");
+		return new CityDimension(
+			Integer.parseInt(p2[0]),
+			Integer.parseInt(p2[1])
+			);
 	}
 
 	public int getDescriptionNumber()
