@@ -116,6 +116,7 @@ public class TileConstants
 	public static final char VRAILROAD = 238;
 	public static final char LASTRAIL = 238;
 	public static final char RESBASE = 240;
+	public static final char RESCLR = 244;
 	public static final char FREEZ = 244;  //free zone?
 	public static final char HOUSE = 249;
 	public static final char LHTHR = 249;  //12 house tiles

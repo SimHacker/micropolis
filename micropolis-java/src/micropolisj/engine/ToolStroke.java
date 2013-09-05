@@ -70,34 +70,34 @@ public class ToolStroke
 			return applyParkTool(eff);
 
 		case RESIDENTIAL:
-			return applyZone(eff, 3, 3, RESBASE);
+			return applyZone(eff, RESCLR);
 
 		case COMMERCIAL:
-			return applyZone(eff, 3, 3, COMBASE);
+			return applyZone(eff, COMCLR);
 
 		case INDUSTRIAL:
-			return applyZone(eff, 3, 3, INDBASE);
+			return applyZone(eff, INDCLR);
 
 		case FIRE:
-			return applyZone(eff, 3, 3, FIRESTBASE);
+			return applyZone(eff, FIRESTATION);
 
 		case POLICE:
-			return applyZone(eff, 3, 3, POLICESTBASE);
+			return applyZone(eff, POLICESTATION);
 
 		case POWERPLANT:
-			return applyZone(eff, 4, 4, COALBASE);
+			return applyZone(eff, POWERPLANT);
 
 		case STADIUM:
-			return applyZone(eff, 4, 4, STADIUMBASE);
+			return applyZone(eff, STADIUM);
 
 		case SEAPORT:
-			return applyZone(eff, 4, 4, PORTBASE);
+			return applyZone(eff, PORT);
 
 		case NUCLEAR:
-			return applyZone(eff, 4, 4, NUCLEARBASE);
+			return applyZone(eff, NUCLEAR);
 
 		case AIRPORT:
-			return applyZone(eff, 6, 6, AIRPORTBASE);
+			return applyZone(eff, AIRPORT);
 
 		default:
 			// not expected
@@ -147,12 +147,19 @@ public class ToolStroke
 		return new CityLocation(xpos, ypos);
 	}
 
-	boolean applyZone(ToolEffectIfc eff, int width, int height, char tileBase)
+	boolean applyZone(ToolEffectIfc eff, int base)
 	{
+		assert isZoneCenter(base);
+
+		TileSpec.BuildingInfo bi = Tiles.get(base).getBuildingInfo();
+		if (bi == null) {
+			throw new Error("Cannot applyZone to #"+base);
+		}
+
 		int cost = tool.getToolCost();
 		boolean canBuild = true;
-		for (int rowNum = 0; rowNum < height; rowNum++) {
-			for (int columnNum = 0; columnNum < width; columnNum++)
+		for (int rowNum = 0; rowNum < bi.height; rowNum++) {
+			for (int columnNum = 0; columnNum < bi.width; columnNum++)
 			{
 				int tileValue = eff.getTile(columnNum, rowNum);
 				tileValue = tileValue & LOMASK;
@@ -174,18 +181,17 @@ public class ToolStroke
 
 		eff.spend(cost);
 
-		for (int rowNum = 0; rowNum < height; rowNum++)
+		int i = 0;
+		for (int rowNum = 0; rowNum < bi.height; rowNum++)
 		{
-			for (int columnNum = 0; columnNum < width; columnNum++)
+			for (int columnNum = 0; columnNum < bi.width; columnNum++)
 			{
-				eff.setTile(columnNum, rowNum, (char) (
-					tileBase
-					));
-				tileBase++;
+				eff.setTile(columnNum, rowNum, (char) bi.members[i]);
+				i++;
 			}
 		}
 
-		fixBorder(eff, width, height);
+		fixBorder(eff, bi.width, bi.height);
 		return true;
 	}
 
