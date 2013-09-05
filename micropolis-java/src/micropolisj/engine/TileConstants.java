@@ -396,30 +396,13 @@ public class TileConstants
 			x == BRWV);
 	}
 
-	public static int getZoneSizeFor(int tile)
+	public static CityDimension getZoneSizeFor(int tile)
 	{
-		int ch = tile & LOMASK;
-		if (ch >= RESBASE && ch < PORTBASE) {
-			return 3;
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		if (spec.owner != null) {
+			spec = spec.owner;
 		}
-		else if (ch >= PORTBASE && ch <= LASTPORT) {
-			return 4;
-		}
-		else if (ch >= AIRPORTBASE && ch < COALBASE) {
-			return 6;
-		}
-		else if (ch >= COALBASE && ch <= LASTPOWERPLANT) {
-			return 4;
-		}
-		else if (ch >= FIRESTBASE && ch < STADIUMBASE) {
-			return 3;
-		}
-		else if (ch >= STADIUMBASE && ch <= LASTZONE) {
-			return 4;
-		}
-		else {
-			return 0;
-		}
+		return spec.getBuildingSize();
 	}
 
 	public static boolean isConstructed(int tile)

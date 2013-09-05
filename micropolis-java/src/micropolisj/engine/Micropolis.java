@@ -2293,14 +2293,19 @@ public class Micropolis
 	{
 		rateOGMem[ypos/8][xpos/8] -= 20;
 
-		int sz = TileConstants.getZoneSizeFor(zoneTile);
-		int zoneBase = (zoneTile&LOMASK)-1-sz;
+		assert isZoneCenter(zoneTile);
+		CityDimension dim = getZoneSizeFor(zoneTile);
+		assert dim != null;
+		assert dim.width >= 3;
+		assert dim.height >= 3;
+
+		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
 
 		// this will take care of stopping smoke animations
-		shutdownZone(xpos, ypos, sz);
+		shutdownZone(xpos, ypos, dim);
 
-		for (int y = 0; y < sz; y++) {
-			for (int x = 0; x < sz; x++, zoneBase++) {
+		for (int y = 0; y < dim.height; y++) {
+			for (int x = 0; x < dim.width; x++, zoneBase++) {
 				int xtem = xpos - 1 + x;
 				int ytem = ypos - 1 + y;
 				if (!testBounds(xtem, ytem))
@@ -2321,10 +2326,13 @@ public class Micropolis
 	 * instead.
 	 * @see #shutdownZone
 	 */
-	void powerZone(int xpos, int ypos, int zoneSize)
+	void powerZone(int xpos, int ypos, CityDimension zoneSize)
 	{
-		for (int dx = 0; dx < zoneSize; dx++) {
-			for (int dy = 0; dy < zoneSize; dy++) {
+		assert zoneSize.width >= 3;
+		assert zoneSize.height >= 3;
+
+		for (int dx = 0; dx < zoneSize.width; dx++) {
+			for (int dy = 0; dy < zoneSize.height; dy++) {
 				int x = xpos - 1 + dx;
 				int y = ypos - 1 + dy;
 				int tile = getTile(x, y);
@@ -2344,10 +2352,13 @@ public class Micropolis
 	 * @see #powerZone
 	 * @see #killZone
 	 */
-	void shutdownZone(int xpos, int ypos, int zoneSize)
+	void shutdownZone(int xpos, int ypos, CityDimension zoneSize)
 	{
-		for (int dx = 0; dx < zoneSize; dx++) {
-			for (int dy = 0; dy < zoneSize; dy++) {
+		assert zoneSize.width >= 3;
+		assert zoneSize.height >= 3;
+
+		for (int dx = 0; dx < zoneSize.width; dx++) {
+			for (int dy = 0; dy < zoneSize.height; dy++) {
 				int x = xpos - 1 + dx;
 				int y = ypos - 1 + dy;
 				int tile = getTile(x, y);
