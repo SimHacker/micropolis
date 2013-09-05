@@ -398,11 +398,10 @@ public class TileConstants
 
 	public static CityDimension getZoneSizeFor(int tile)
 	{
+		assert isZoneCenter(tile);
+
 		TileSpec spec = Tiles.get(tile & LOMASK);
-		if (spec.owner != null) {
-			spec = spec.owner;
-		}
-		return spec.getBuildingSize();
+		return spec != null ? spec.getBuildingSize() : null;
 	}
 
 	public static boolean isConstructed(int tile)
