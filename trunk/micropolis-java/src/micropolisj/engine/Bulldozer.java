@@ -46,25 +46,27 @@ class Bulldozer extends ToolStroke
 		// zone center bit is set
 		assert isZoneCenter(currTile);
 
+		CityDimension dim = getZoneSizeFor(currTile);
+		assert dim != null;
+		assert dim.width >= 3;
+		assert dim.height >= 3;
+
 		eff.spend(1);
-		switch (getZoneSizeFor(currTile))
-		{
-		case 3:
+
+		// make explosion sound;
+		// bigger zones => bigger explosions
+
+		if (dim.width * dim.height < 16) {
 			eff.makeSound(0, 0, Sound.EXPLOSION_HIGH);
-			putRubble(new TranslatedToolEffect(eff, -1, -1), 3, 3);
-			break;
-		case 4:
-			eff.makeSound(0, 0, Sound.EXPLOSION_LOW);
-			putRubble(new TranslatedToolEffect(eff, -1, -1), 4, 4);
-			break;
-		case 6:
-			eff.makeSound(0, 0, Sound.EXPLOSION_BOTH);
-			putRubble(new TranslatedToolEffect(eff, -1, -1), 6, 6);
-			break;
-		default:
-			assert false;
-			break;
 		}
+		else if (dim.width * dim.height < 36) {
+			eff.makeSound(0, 0, Sound.EXPLOSION_LOW);
+		}
+		else {
+			eff.makeSound(0, 0, Sound.EXPLOSION_BOTH);
+		}
+
+		putRubble(new TranslatedToolEffect(eff, -1, -1), dim.width, dim.height);
 		return;
 	}
 
