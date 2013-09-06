@@ -302,12 +302,6 @@ public class TileConstants
 		return tmp >= FLOOD && tmp < ROADBASE;
 	}
 
-	public static boolean isRadioactive(int tile)
-	{
-		int tmp = tile & LOMASK;
-		return (tmp >= RADTILE && tmp < FIREBASE);
-	}
-
 	public static boolean isOverWater(int tile)
 	{
 		// Note: BRWV will be converted to BRWH by the following
