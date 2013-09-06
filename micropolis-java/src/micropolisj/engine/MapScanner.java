@@ -968,7 +968,7 @@ class MapScanner
 			// look for road
 			if (city.testBounds(xx, yy)) {
 				int tmp = city.getTile(xx, yy);
-				if (isRoad(tmp) || isRail(tmp))
+				if (isRoadAny(tmp) || isRail(tmp))
 				{
 					score++;
 				}
