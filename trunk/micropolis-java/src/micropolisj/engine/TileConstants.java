@@ -288,12 +288,6 @@ public class TileConstants
 		return spec != null && spec.canConduct;
 	}
 
-	public static boolean isFire(int tile)
-	{
-		int tmp = tile & LOMASK;
-		return (tmp >= FIREBASE && tmp < ROADBASE);
-	}
-
 	/** Used in repairZone(). */
 	public static boolean isIndestructible(int tile)
 	{
