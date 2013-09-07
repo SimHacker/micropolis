@@ -40,6 +40,8 @@ public class MicropolisDrawingArea extends JComponent
 	TileImages tileImages;
 	int TILE_WIDTH;
 	int TILE_HEIGHT;
+	int dragX, dragY;
+	boolean dragging;
 
 	public MicropolisDrawingArea(Micropolis engine)
 	{
@@ -55,6 +57,46 @@ public class MicropolisDrawingArea extends JComponent
 			stopBlinkTimer();
 		}
 		public void ancestorMoved(AncestorEvent evt) {}
+		});
+		
+		addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.getButton()==MouseEvent.BUTTON2)
+					startDrag(e.getX(), e.getY());
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.getButton()==MouseEvent.BUTTON2)
+					endDrag(e.getX(), e.getY());
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
+		addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(dragging)
+					continueDrag(e.getX(), e.getY());
+			}
 		});
 	}
 
@@ -350,6 +392,27 @@ public class MicropolisDrawingArea extends JComponent
 		repaint();
 	}
 
+	protected void startDrag(int x, int y)
+	{
+		dragging = true;
+		dragX = x;
+		dragY = y;
+	}
+	protected void endDrag(int x, int y)
+	{
+		dragging = false;
+	}
+	protected void continueDrag(int x, int y)
+	{
+		int dx = x - dragX;		
+		int dy = y - dragY;
+		JScrollPane js = (JScrollPane)getParent().getParent();
+		js.getHorizontalScrollBar().setValue(
+				js.getHorizontalScrollBar().getValue()-dx);
+		js.getVerticalScrollBar().setValue(
+				js.getVerticalScrollBar().getValue()-dy);
+	}
+	
 	void doBlink()
 	{
 		if (!unpoweredZones.isEmpty())
