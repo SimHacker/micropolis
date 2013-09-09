@@ -1,6 +1,5 @@
 package micropolisj.engine;
 
-import java.awt.Rectangle;
 import java.util.*;
 import static micropolisj.engine.TileConstants.*;
 
@@ -45,9 +44,9 @@ public class ToolPreview implements ToolEffectIfc
 		}
 	}
 
-	public Rectangle getBounds()
+	public CityRect getBounds()
 	{
-		return new Rectangle(
+		return new CityRect(
 			-offsetX,
 			-offsetY,
 			getWidth(),

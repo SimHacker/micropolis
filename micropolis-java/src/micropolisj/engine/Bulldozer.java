@@ -1,6 +1,5 @@
 package micropolisj.engine;
 
-import java.awt.Rectangle;
 import static micropolisj.engine.TileConstants.*;
 
 class Bulldozer extends ToolStroke
@@ -13,7 +12,7 @@ class Bulldozer extends ToolStroke
 	@Override
 	protected void applyArea(ToolEffectIfc eff)
 	{
-		Rectangle b = getBounds();
+		CityRect b = getBounds();
 
 		// scan selection area for rubble, forest, etc...
 		for (int y = 0; y < b.height; y++) {

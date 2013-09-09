@@ -8,7 +8,6 @@
 
 package micropolisj.engine;
 
-import java.awt.Rectangle;
 import static micropolisj.engine.TileConstants.*;
 
 public class ToolStroke
@@ -53,7 +52,7 @@ public class ToolStroke
 
 	protected void applyArea(ToolEffectIfc eff)
 	{
-		Rectangle r = getBounds();
+		CityRect r = getBounds();
 
 		for (int i = 0; i < r.height; i += tool.getHeight()) {
 			for (int j = 0; j < r.width; j += tool.getWidth()) {
@@ -111,9 +110,9 @@ public class ToolStroke
 		this.ydest = ydest;
 	}
 
-	public Rectangle getBounds()
+	public CityRect getBounds()
 	{
-		Rectangle r = new Rectangle();
+		CityRect r = new CityRect();
 
 		r.x = xpos;
 		if (tool.getWidth() >= 3) {

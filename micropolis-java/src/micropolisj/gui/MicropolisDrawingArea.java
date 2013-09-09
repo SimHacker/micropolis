@@ -243,12 +243,12 @@ public class MicropolisDrawingArea extends JComponent
 
 	static class ToolCursor
 	{
-		Rectangle rect;
+		CityRect rect;
 		Color borderColor;
 		Color fillColor;
 	}
 
-	public void setToolCursor(Rectangle newRect, MicropolisTool tool)
+	public void setToolCursor(CityRect newRect, MicropolisTool tool)
 	{
 		ToolCursor tp = new ToolCursor();
 		tp.rect = newRect;
@@ -292,7 +292,7 @@ public class MicropolisDrawingArea extends JComponent
 	public void setToolPreview(ToolPreview newPreview)
 	{
 		if (toolPreview != null) {
-			Rectangle b = toolPreview.getBounds();
+			CityRect b = toolPreview.getBounds();
 			Rectangle r = new Rectangle(
 				b.x*TILE_WIDTH,
 				b.y*TILE_HEIGHT,
@@ -305,7 +305,7 @@ public class MicropolisDrawingArea extends JComponent
 		toolPreview = newPreview;
 		if (toolPreview != null) {
 
-			Rectangle b = toolPreview.getBounds();
+			CityRect b = toolPreview.getBounds();
 			Rectangle r = new Rectangle(
 				b.x*TILE_WIDTH,
 				b.y*TILE_HEIGHT,
