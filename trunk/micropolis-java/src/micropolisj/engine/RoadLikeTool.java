@@ -1,6 +1,5 @@
 package micropolisj.engine;
 
-import java.awt.Rectangle;
 import static micropolisj.engine.TileConstants.*;
 
 class RoadLikeTool extends ToolStroke
@@ -27,7 +26,7 @@ class RoadLikeTool extends ToolStroke
 	{
 		boolean anyChange = false;
 
-		Rectangle b = getBounds();
+		CityRect b = getBounds();
 		for (int i = b.height - 1; i >= 0; i--) {
 			for (int j = b.width - 1; j >= 0; j--) {
 				TranslatedToolEffect tte = new TranslatedToolEffect(eff, b.x+j, b.y+i);
@@ -41,7 +40,7 @@ class RoadLikeTool extends ToolStroke
 	{
 		boolean anyChange = false;
 
-		Rectangle b = getBounds();
+		CityRect b = getBounds();
 		for (int i = 0; i < b.height; i++) {
 			for (int j = 0; j < b.width; j++) {
 				TranslatedToolEffect tte = new TranslatedToolEffect(eff, b.x+j, b.y+i);
@@ -52,7 +51,7 @@ class RoadLikeTool extends ToolStroke
 	}
 
 	@Override
-	public Rectangle getBounds()
+	public CityRect getBounds()
 	{
 		// constrain bounds to be a rectangle with
 		// either width or height equal to one.
@@ -62,7 +61,7 @@ class RoadLikeTool extends ToolStroke
 
 		if (Math.abs(xdest-xpos) >= Math.abs(ydest-ypos)) {
 			// horizontal line
-			Rectangle r = new Rectangle();
+			CityRect r = new CityRect();
 			r.x = Math.min(xpos, xdest);
 			r.width = Math.abs(xdest-xpos) + 1;
 			r.y = ypos;
@@ -71,7 +70,7 @@ class RoadLikeTool extends ToolStroke
 		}
 		else {
 			// vertical line
-			Rectangle r = new Rectangle();
+			CityRect r = new CityRect();
 			r.x = xpos;
 			r.width = 1;
 			r.y = Math.min(ypos, ydest);

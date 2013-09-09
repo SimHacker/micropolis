@@ -1265,7 +1265,7 @@ public class MainWindow extends JFrame
 		if (h >= 3)
 			y--;
 
-		drawingArea.setToolCursor(new Rectangle(x,y,w,h), currentTool);
+		drawingArea.setToolCursor(new CityRect(x,y,w,h), currentTool);
 	}
 
 	private void onToolExited(MouseEvent ev)
