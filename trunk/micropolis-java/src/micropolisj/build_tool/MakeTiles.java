@@ -15,7 +15,8 @@ public class MakeTiles
 	static HashMap<String,SourceImage> loadedImages = new HashMap<String,SourceImage>();
 
 	static final Charset UTF8 = Charset.forName("UTF-8");
-	static final int NTILES = 960;
+	static int SKIP_TILES = 0;
+	static int NTILES = 960;
 	static int TILE_SIZE = 16;
 
 	public static void main(String [] args)
@@ -27,6 +28,12 @@ public class MakeTiles
 
 		if (System.getProperty("tile_size") != null) {
 			TILE_SIZE = Integer.parseInt(System.getProperty("tile_size"));
+		}
+		if (System.getProperty("skip_tiles") != null) {
+			SKIP_TILES = Integer.parseInt(System.getProperty("skip_tiles"));
+		}
+		if (System.getProperty("tile_count") != null) {
+			NTILES = Integer.parseInt(System.getProperty("tile_count"));
 		}
 
 		File recipeFile = new File(args[0]);
@@ -44,10 +51,11 @@ public class MakeTiles
 		Graphics2D gr = buf.createGraphics();
 
 		for (int i = 0; i < NTILES; i++) {
-			String rawSpec = recipe.getProperty(Integer.toString(i));
+			int tileNumber = SKIP_TILES + i;
+			String rawSpec = recipe.getProperty(Integer.toString(tileNumber));
 			assert rawSpec != null;
 
-			TileSpec tileSpec = TileSpec.parse(i, rawSpec, recipe);
+			TileSpec tileSpec = TileSpec.parse(tileNumber, rawSpec, recipe);
 			FrameSpec ref = parseFrameSpec(tileSpec);
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
