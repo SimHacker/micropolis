@@ -78,6 +78,10 @@ public class DemandIndicator extends JComponent
 	static final int UPPER_EDGE = 19;
 	static final int LOWER_EDGE = 28;
 	static final int MAX_LENGTH = 16;
+	static final int RES_LEFT = 8;
+	static final int COM_LEFT = 17;
+	static final int IND_LEFT = 26;
+	static final int BAR_WIDTH = 6;
 
 	public void paintComponent(Graphics gr1)
 	{
@@ -104,7 +108,7 @@ public class DemandIndicator extends JComponent
 
 		if (ry0 != ry1)
 		{
-			Rectangle resRect = new Rectangle(8, Math.min(ry0,ry1), 6, Math.abs(ry1-ry0));
+			Rectangle resRect = new Rectangle(RES_LEFT, Math.min(ry0,ry1), BAR_WIDTH, Math.abs(ry1-ry0));
 			gr.setColor(Color.GREEN);
 			gr.fill(resRect);
 			gr.setColor(Color.BLACK);
@@ -113,7 +117,7 @@ public class DemandIndicator extends JComponent
 
 		if (cy0 != cy1)
 		{
-			Rectangle comRect = new Rectangle(17, Math.min(cy0,cy1), 6, Math.abs(cy1-cy0));
+			Rectangle comRect = new Rectangle(COM_LEFT, Math.min(cy0,cy1), BAR_WIDTH, Math.abs(cy1-cy0));
 			gr.setColor(Color.BLUE);
 			gr.fill(comRect);
 			gr.setColor(Color.BLACK);
@@ -122,7 +126,7 @@ public class DemandIndicator extends JComponent
 
 		if (iy0 != iy1)
 		{
-			Rectangle indRect = new Rectangle(26, Math.min(iy0,iy1), 6, Math.abs(iy1-iy0));
+			Rectangle indRect = new Rectangle(IND_LEFT, Math.min(iy0,iy1), BAR_WIDTH, Math.abs(iy1-iy0));
 			gr.setColor(Color.YELLOW);
 			gr.fill(indRect);
 			gr.setColor(Color.BLACK);
