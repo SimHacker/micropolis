@@ -53,7 +53,9 @@ public class MakeTiles
 		for (int i = 0; i < NTILES; i++) {
 			int tileNumber = SKIP_TILES + i;
 			String rawSpec = recipe.getProperty(Integer.toString(tileNumber));
-			assert rawSpec != null;
+			if (rawSpec == null) {
+				continue;
+			}
 
 			TileSpec tileSpec = TileSpec.parse(tileNumber, rawSpec, recipe);
 			FrameSpec ref = parseFrameSpec(tileSpec);
