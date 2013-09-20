@@ -58,7 +58,6 @@ public class TileConstants
 	static final char LASTFLOOD = 51;
 	static final char RADTILE = 52;
 	static final char FIRE = 56;
-	static final char FIREBASE = 56;
 	static final char ROADBASE = 64;
 	static final char HBRIDGE = 64;
 	static final char VBRIDGE = 65;
@@ -146,7 +145,6 @@ public class TileConstants
 	static final char HBRDG3 = 831;
 	static final char FOUNTAIN = 840;
 	static final char TINYEXP = 860;
-	private static final char SOMETINYEXP = 864;
 	private static final char LASTTINYEXP = 867;
 	static final char FOOTBALLGAME1 = 932;
 	static final char FOOTBALLGAME2 = 940;
