@@ -705,7 +705,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(FREEZ);
+					zonePlop(RESCLR);
 				}
 			}
 		}
@@ -721,7 +721,7 @@ class MapScanner
 			{
 				if (PRNG.nextInt(21) == 0)
 				{
-					zonePlop(FREEZ);
+					zonePlop(RESCLR);
 				}
 			}
 		}
@@ -885,7 +885,7 @@ class MapScanner
 		city.resZoneCount++;
 
 		int tpop; //population of this zone
-		if (cchr9 == FREEZ)
+		if (cchr9 == RESCLR)
 		{
 			tpop = city.doFreePop(xpos, ypos);
 		}
@@ -913,7 +913,7 @@ class MapScanner
 			return;
 		}
 
-		if (cchr9 == FREEZ || PRNG.nextInt(8) == 0)
+		if (cchr9 == RESCLR || PRNG.nextInt(8) == 0)
 		{
 			int locValve = evalResidential(trafficGood);
 			int zscore = city.resValve + locValve;
@@ -1059,7 +1059,7 @@ class MapScanner
 			return;
 
 		int cchr9 = cchr & LOMASK;
-		if (cchr9 == FREEZ)
+		if (cchr9 == RESCLR)
 		{
 			if (pop < 8)
 			{
@@ -1152,7 +1152,7 @@ class MapScanner
 			// downgrade from full-size zone to 8 little houses
 
 			int pwrBit = (cchr & PWRBIT);
-			city.setTile(xpos, ypos, (char)(FREEZ | BULLBIT | pwrBit));
+			city.setTile(xpos, ypos, (char)(RESCLR | BULLBIT | pwrBit));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
@@ -1188,7 +1188,7 @@ class MapScanner
 						int loc = city.map[y][x] & LOMASK;
 						if (loc >= LHTHR && loc <= HHTHR)
 						{ //little house
-							city.setTile(x, y, (char)((Brdr[z] + FREEZ - 4) | BULLBIT));
+							city.setTile(x, y, (char)((Brdr[z] + RESCLR - 4) | BULLBIT));
 							return;
 						}
 					}

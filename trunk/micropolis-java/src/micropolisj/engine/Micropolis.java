@@ -609,7 +609,7 @@ public class Micropolis
 
 	private int computePopDen(int x, int y, char tile)
 	{
-		if (tile == FREEZ)
+		if (tile == RESCLR)
 			return doFreePop(x, y);
 
 		if (tile < COMBASE)
