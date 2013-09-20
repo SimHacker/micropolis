@@ -49,8 +49,7 @@ public class TileConstants
 	static final char TREEBASE = 21;
 	static final char WOODS_LOW = TREEBASE;
 	static final char WOODS = 37;
-	static final char UNUSED_TRASH2 = 39;
-	static final char WOODS_HIGH = UNUSED_TRASH2;
+	static final char WOODS_HIGH = 39;
 	static final char WOODS2 = 40;
 	static final char WOODS5 = 43;
 	static final char RUBBLE = 44;
