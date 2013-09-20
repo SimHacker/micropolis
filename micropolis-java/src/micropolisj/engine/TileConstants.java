@@ -115,7 +115,6 @@ public class TileConstants
 	static final char LASTRAIL = 238;
 	static final char RESBASE = 240;
 	static final char RESCLR = 244;
-	static final char FREEZ = 244;  //free zone?
 	static final char HOUSE = 249;
 	static final char LHTHR = 249;  //12 house tiles
 	static final char HHTHR = 260;
