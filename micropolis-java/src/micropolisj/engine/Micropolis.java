@@ -257,10 +257,10 @@ public class Micropolis
 		}
 	}
 
-	void fireCityMessage(MicropolisMessage message, CityLocation loc, boolean isPic)
+	void fireCityMessage(MicropolisMessage message, CityLocation loc)
 	{
 		for (Listener l : listeners) {
-			l.cityMessage(message, loc, isPic);
+			l.cityMessage(message, loc);
 		}
 	}
 
@@ -380,7 +380,7 @@ public class Micropolis
 	 */
 	public interface Listener
 	{
-		void cityMessage(MicropolisMessage message, CityLocation loc, boolean isPic);
+		void cityMessage(MicropolisMessage message, CityLocation loc);
 		void citySound(Sound sound, CityLocation loc);
 
 		/**
@@ -1783,7 +1783,7 @@ public class Micropolis
 		}
 
 		clearMes();
-		sendMessageAtPic(MicropolisMessage.MELTDOWN_REPORT, xpos, ypos);
+		sendMessageAt(MicropolisMessage.MELTDOWN_REPORT, xpos, ypos);
 	}
 
 	static final int [] MltdwnTab = { 30000, 20000, 10000 };
@@ -2124,7 +2124,7 @@ public class Micropolis
 		makeSound(centerMassX, centerMassY, Sound.EXPLOSION_LOW);
 		fireEarthquakeStarted();
 
-		sendMessageAtPic(MicropolisMessage.EARTHQUAKE_REPORT, centerMassX, centerMassY);
+		sendMessageAt(MicropolisMessage.EARTHQUAKE_REPORT, centerMassX, centerMassY);
 		int time = PRNG.nextInt(701) + 300;
 		for (int z = 0; z < time; z++) {
 			int x = PRNG.nextInt(getWidth());
@@ -2150,7 +2150,7 @@ public class Micropolis
 		if (TileConstants.isArsonable(t)) {
 			setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 			crashLocation = new CityLocation(x, y);
-			sendMessageAtPic(MicropolisMessage.FIRE_REPORT, x, y);
+			sendMessageAt(MicropolisMessage.FIRE_REPORT, x, y);
 		}
 	}
 
@@ -2249,7 +2249,7 @@ public class Micropolis
 		int xpos = PRNG.nextInt(getWidth() - 19) + 10;
 		int ypos = PRNG.nextInt(getHeight() - 19) + 10;
 		sprites.add(new TornadoSprite(this, xpos, ypos));
-		sendMessageAtPic(MicropolisMessage.TORNADO_REPORT, xpos, ypos);
+		sendMessageAt(MicropolisMessage.TORNADO_REPORT, xpos, ypos);
 	}
 
 	public void makeFlood()
@@ -2271,7 +2271,7 @@ public class Micropolis
 						if (isFloodable(c)) {
 							setTile(xx, yy, FLOOD);
 							floodCnt = 30;
-							sendMessageAtPic(MicropolisMessage.FLOOD_REPORT, xx, yy);
+							sendMessageAt(MicropolisMessage.FLOOD_REPORT, xx, yy);
 							floodX = xx;
 							floodY = yy;
 							return;
@@ -2403,7 +2403,7 @@ public class Micropolis
 					z = MicropolisMessage.POP_2K_REACHED;
 				}
 				if (z != null) {
-					sendMessage(z, true);
+					sendMessage(z);
 				}
 			}
 			lastCityPop = newPop;
@@ -2479,12 +2479,12 @@ public class Micropolis
 			break;
 		case 35:
 			if (pollutionAverage > 60) { // FIXME, consider changing threshold to 80
-				sendMessage(MicropolisMessage.HIGH_POLLUTION, true);
+				sendMessage(MicropolisMessage.HIGH_POLLUTION);
 			}
 			break;
 		case 42:
 			if (crimeAverage > 100) {
-				sendMessage(MicropolisMessage.HIGH_CRIME, true);
+				sendMessage(MicropolisMessage.HIGH_CRIME);
 			}
 			break;
 		case 45:
@@ -2537,22 +2537,12 @@ public class Micropolis
 
 	void sendMessage(MicropolisMessage message)
 	{
-		fireCityMessage(message, null, false);
-	}
-
-	void sendMessage(MicropolisMessage message, boolean isPic)
-	{
-		fireCityMessage(message, null, true);
+		fireCityMessage(message, null);
 	}
 
 	void sendMessageAt(MicropolisMessage message, int x, int y)
 	{
-		fireCityMessage(message, new CityLocation(x,y), false);
-	}
-
-	void sendMessageAtPic(MicropolisMessage message, int x, int y)
-	{
-		fireCityMessage(message, new CityLocation(x,y), true);
+		fireCityMessage(message, new CityLocation(x,y));
 	}
 
 	public ZoneStatus queryZoneStatus(int xpos, int ypos)

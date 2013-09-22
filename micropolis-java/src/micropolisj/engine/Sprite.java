@@ -130,20 +130,20 @@ public abstract class Sprite
 		switch (kind) {
 		case AIR:
 			city.crashLocation = new CityLocation(xpos, ypos);
-			city.sendMessageAtPic(MicropolisMessage.PLANECRASH_REPORT, xpos, ypos);
+			city.sendMessageAt(MicropolisMessage.PLANECRASH_REPORT, xpos, ypos);
 			break;
 		case SHI:
 			city.crashLocation = new CityLocation(xpos, ypos);
-			city.sendMessageAtPic(MicropolisMessage.SHIPWRECK_REPORT, xpos, ypos);
+			city.sendMessageAt(MicropolisMessage.SHIPWRECK_REPORT, xpos, ypos);
 			break;
 		case TRA:
 		case BUS:
 			city.crashLocation = new CityLocation(xpos, ypos);
-			city.sendMessageAtPic(MicropolisMessage.TRAIN_CRASH_REPORT, xpos, ypos);
+			city.sendMessageAt(MicropolisMessage.TRAIN_CRASH_REPORT, xpos, ypos);
 			break;
 		case COP:
 			city.crashLocation = new CityLocation(xpos, ypos);
-			city.sendMessageAtPic(MicropolisMessage.COPTER_CRASH_REPORT, xpos, ypos);
+			city.sendMessageAt(MicropolisMessage.COPTER_CRASH_REPORT, xpos, ypos);
 			break;
 		}
 
