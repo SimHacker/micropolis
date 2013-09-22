@@ -1540,11 +1540,11 @@ public class MainWindow extends JFrame
 	}
 
 	//implements Micropolis.Listener
-	public void cityMessage(MicropolisMessage m, CityLocation p, boolean pictureMessage)
+	public void cityMessage(MicropolisMessage m, CityLocation p)
 	{
 		messagesPane.appendCityMessage(m);
 
-		if (pictureMessage && p != null)
+		if (m.useNotificationPane && p != null)
 		{
 			notificationPane.showMessage(engine, m, p.x, p.y);
 		}

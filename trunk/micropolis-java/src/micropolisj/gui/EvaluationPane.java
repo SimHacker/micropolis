@@ -242,7 +242,7 @@ public class EvaluationPane extends JPanel
 	}
 
 	//implements Micropolis.Listener
-	public void cityMessage(MicropolisMessage message, CityLocation loc, boolean isPic) {}
+	public void cityMessage(MicropolisMessage message, CityLocation loc) {}
 	public void citySound(Sound sound, CityLocation loc) {}
 	public void censusChanged() {}
 	public void demandChanged() {}
