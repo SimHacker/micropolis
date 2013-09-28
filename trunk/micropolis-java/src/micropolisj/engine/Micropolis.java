@@ -63,7 +63,7 @@ public class Micropolis
 	 * If between 64 and 192, then the "light traffic" animation is used.
 	 * If 192 or higher, then the "heavy traffic" animation is used.
 	 */
-	public int [][] trfDensity;
+	int [][] trfDensity;
 
 	// quarter-size arrays
 
