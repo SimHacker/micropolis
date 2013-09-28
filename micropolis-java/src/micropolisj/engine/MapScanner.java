@@ -185,7 +185,7 @@ class MapScanner
 			tden = 2;
 		}
 
-		int trafficDensity = city.trfDensity[ypos/2][xpos/2];
+		int trafficDensity = city.getTrafficDensity(xpos, ypos);
 		int newLevel = trafficDensity < 64 ? 0 :
 			trafficDensity < 192 ? 1 : 2;
 		
