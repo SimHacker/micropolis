@@ -182,17 +182,6 @@ public class OverlayMapView extends JComponent
 		}
 	}
 
-	private void drawTrafficMap(Graphics gr)
-	{
-		int [][] A = engine.trfDensity;
-
-		for (int y = 0; y < A.length; y++) {
-			for (int x = 0; x < A[y].length; x++) {
-				maybeDrawRect(gr, getCI(A[y][x]),x*6,y*6,6,6);
-			}
-		}
-	}
-
 	private void drawPopDensity(Graphics gr)
 	{
 		int [][] A = engine.popDensity;
@@ -278,6 +267,26 @@ public class OverlayMapView extends JComponent
 		           //since it was performed here
 	}
 
+	private int checkTrafficOverlay(BufferedImage img, int xpos, int ypos, int tile)
+	{
+		int d = engine.getTrafficDensity(xpos, ypos);
+		Color c = getCI(d);
+		if (c == null) {
+			return tile;
+		}
+
+		int pix = c.getRGB();
+		for (int yy = 0; yy < TILE_HEIGHT; yy++) {
+			for (int xx = 0; xx < TILE_WIDTH; xx++) {
+				img.setRGB(
+					xpos*TILE_WIDTH+xx,
+					ypos*TILE_HEIGHT+yy,
+					pix);
+			}
+		}
+		return CLEAR;
+	}
+
 	@Override
 	public void paintComponent(Graphics gr)
 	{
@@ -332,6 +341,10 @@ public class OverlayMapView extends JComponent
 					{
 						tile = DIRT;
 					}
+					if (mapState == MapState.TRAFFIC_OVERLAY)
+					{
+						tile = checkTrafficOverlay(img, x, y, tile);
+					}
 					break;
 				default:
 				}
@@ -370,8 +383,6 @@ public class OverlayMapView extends JComponent
 			drawCrimeMap(gr); break;
 		case POLLUTE_OVERLAY:
 			drawPollutionMap(gr); break;
-		case TRAFFIC_OVERLAY:
-			drawTrafficMap(gr); break;
 		case GROWTHRATE_OVERLAY:
 			drawRateOfGrowth(gr); break;
 		case POPDEN_OVERLAY:
