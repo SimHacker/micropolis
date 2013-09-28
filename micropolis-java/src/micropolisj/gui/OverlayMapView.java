@@ -149,17 +149,6 @@ public class OverlayMapView extends JComponent
 			return null;
 	}
 
-	private void drawLandMap(Graphics gr)
-	{
-		int [][] A = engine.landValueMem;
-
-		for (int y = 0; y < A.length; y++) {
-			for (int x = 0; x < A[y].length; x++) {
-				maybeDrawRect(gr, getCI(A[y][x]),x*6,y*6,6,6);
-			}
-		}
-	}
-
 	private void drawPollutionMap(Graphics gr)
 	{
 		int [][] A = engine.pollutionMem;
@@ -267,6 +256,26 @@ public class OverlayMapView extends JComponent
 		           //since it was performed here
 	}
 
+	private int checkLandValueOverlay(BufferedImage img, int xpos, int ypos, int tile)
+	{
+		int v = engine.getLandValue(xpos, ypos);
+		Color c = getCI(v);
+		if (c == null) {
+			return tile;
+		}
+
+		int pix = c.getRGB();
+		for (int yy = 0; yy < TILE_HEIGHT; yy++) {
+			for (int xx = 0; xx < TILE_WIDTH; xx++) {
+				img.setRGB(
+					xpos*TILE_WIDTH+xx,
+					ypos*TILE_HEIGHT+yy,
+					pix);
+			}
+		}
+		return CLEAR;
+	}
+
 	private int checkTrafficOverlay(BufferedImage img, int xpos, int ypos, int tile)
 	{
 		int d = engine.getTrafficDensity(xpos, ypos);
@@ -346,6 +355,11 @@ public class OverlayMapView extends JComponent
 						tile = checkTrafficOverlay(img, x, y, tile);
 					}
 					break;
+
+				case LANDVALUE_OVERLAY:
+					tile = checkLandValueOverlay(img, x, y, tile);
+					break;
+
 				default:
 				}
 
@@ -377,8 +391,6 @@ public class OverlayMapView extends JComponent
 			drawPoliceRadius(gr); break;
 		case FIRE_OVERLAY:
 			drawFireRadius(gr); break;
-		case LANDVALUE_OVERLAY:
-			drawLandMap(gr); break;
 		case CRIME_OVERLAY:
 			drawCrimeMap(gr); break;
 		case POLLUTE_OVERLAY:

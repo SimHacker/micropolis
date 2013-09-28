@@ -35,7 +35,7 @@ public class Micropolis
 	 * 0 is lowest land value; 250 is maximum land value.
 	 * Updated each cycle by ptlScan().
 	 */
-	public int [][] landValueMem;
+	int [][] landValueMem;
 
 	/**
 	 * For each 2x2 section of the city, the pollution level of the city (0-255).
