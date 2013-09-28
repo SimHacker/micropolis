@@ -1058,6 +1058,17 @@ public class Micropolis
 		trfDensity[mapY/2][mapX/2] = z;
 	}
 
+	/** Accessor method for landValueMem overlay. */
+	public int getLandValue(int xpos, int ypos)
+	{
+		if (testBounds(xpos, ypos)) {
+			return landValueMem[ypos/2][xpos/2];
+		}
+		else {
+			return 0;
+		}
+	}
+
 	public int getTrafficDensity(int xpos, int ypos)
 	{
 		if (testBounds(xpos, ypos)) {
