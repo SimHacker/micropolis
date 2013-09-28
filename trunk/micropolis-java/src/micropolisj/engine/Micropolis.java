@@ -1028,6 +1028,36 @@ public class Micropolis
 		}
 	}
 
+	/**
+	 * Increase the traffic-density measurement at a particular
+	 * spot.
+	 * @param traffic the amount to add to the density
+	 */
+	void addTraffic(int mapX, int mapY, int traffic)
+	{
+		int z = trfDensity[mapY/2][mapX/2];
+		z += traffic;
+
+		//FIXME- why is this only capped to 240
+		// by random chance. why is there no cap
+		// the rest of the time?
+
+		if (z > 240 && PRNG.nextInt(6) == 0)
+		{
+			z = 240;
+			trafficMaxLocationX = mapX;
+			trafficMaxLocationY = mapY;
+
+			HelicopterSprite copter = (HelicopterSprite) getSprite(SpriteKind.COP);
+			if (copter != null) {
+				copter.destX = mapX;
+				copter.destY = mapY;
+			}
+		}
+
+		trfDensity[mapY/2][mapX/2] = z;
+	}
+
 	public int getTrafficDensity(int xpos, int ypos)
 	{
 		if (testBounds(xpos, ypos)) {
