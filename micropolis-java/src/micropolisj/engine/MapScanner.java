@@ -1030,7 +1030,7 @@ class MapScanner
 
 	private void doCommercialIn(int pop, int value)
 	{
-		int z = city.landValueMem[ypos/2][xpos/2] / 32;
+		int z = city.getLandValue(xpos, ypos) / 32;
 		if (pop > z)
 			return;
 
@@ -1235,7 +1235,7 @@ class MapScanner
 		if (traf < 0)
 			return -3000;
 
-		int value = city.landValueMem[ypos/2][xpos/2];
+		int value = city.getLandValue(xpos, ypos);
 		value -= city.pollutionMem[ypos/2][xpos/2];
 
 		if (value < 0)
@@ -1257,7 +1257,7 @@ class MapScanner
 	 */
 	int getCRValue()
 	{
-		int lval = city.landValueMem[ypos/2][xpos/2];
+		int lval = city.getLandValue(xpos, ypos);
 		lval -= city.pollutionMem[ypos/2][xpos/2];
 
 		if (lval < 30)
