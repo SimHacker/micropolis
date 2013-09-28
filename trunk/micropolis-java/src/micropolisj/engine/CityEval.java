@@ -178,10 +178,11 @@ public class CityEval
 		int count = 1;
 		int total = 0;
 
-		for (int hy = 0; hy < engine.trfDensity.length; hy++) {
-			for (int hx = 0; hx < engine.trfDensity[hy].length; hx++) {
-				if (engine.landValueMem[hy][hx] != 0) {
-					total += engine.trfDensity[hy][hx];
+		for (int y = 0; y < engine.getHeight(); y++) {
+			for (int x = 0; x < engine.getWidth(); x++) {
+				// only consider tiles that have nonzero landvalue
+				if (engine.getLandValue(x, y) != 0) {
+					total += engine.getTrafficDensity(x, y);
 					count++;
 				}
 			}
