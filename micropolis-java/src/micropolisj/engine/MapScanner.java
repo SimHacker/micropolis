@@ -18,22 +18,17 @@ import static micropolisj.engine.Micropolis.ZoneType;
  * In each sim cycle each tile will get activated, and this
  * class contains the activation code.
  */
-class MapScanner
+class MapScanner extends TileBehavior
 {
-	final Micropolis city;
-	final Random PRNG;
-	int xpos;
-	int ypos;
-	int rawTile;
-	int tile;
+	final B behavior;
 
-	MapScanner(Micropolis city)
+	MapScanner(Micropolis city, B behavior)
 	{
-		this.city = city;
-		this.PRNG = city.PRNG;
+		super(city);
+		this.behavior = behavior;
 	}
 
-	static enum TileBehaviorEnum
+	public static enum B
 	{
 		FIRE,
 		FLOOD,
@@ -58,16 +53,9 @@ class MapScanner
 	/**
 	 * Activate the tile identified by xpos and ypos properties.
 	 */
-	public void scanTile()
+	public void apply()
 	{
-		tile = rawTile & LOMASK;
-
-		String behaviorStr = getTileBehavior(rawTile);
-		if (behaviorStr == null) {
-			return;
-		}
-
-		switch (TileBehaviorEnum.valueOf(behaviorStr)) {
+		switch (behavior) {
 		case FIRE:
 			doFire();
 			return;
@@ -124,7 +112,7 @@ class MapScanner
 			doSeaport();
 			return;
 		default:
-			throw new Error("Unknown behavior: "+behaviorStr);
+			assert false;
 		}
 	}
 
