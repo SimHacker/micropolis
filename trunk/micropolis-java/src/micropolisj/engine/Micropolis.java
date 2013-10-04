@@ -215,6 +215,7 @@ public class Micropolis
 		PRNG = DEFAULT_PRNG;
 		evaluation = new CityEval(this);
 		init(width, height);
+		initTileBehaviors();
 	}
 
 	protected void init(int width, int height)
@@ -1388,20 +1389,59 @@ public class Micropolis
 			return z;
 	}
 
+	Map<String,TileBehavior> tileBehaviors;
+	void initTileBehaviors()
+	{
+		HashMap<String,TileBehavior> bb;
+		bb = new HashMap<String,TileBehavior>();
+
+		bb.put("FIRE", new MapScanner(this, MapScanner.B.FIRE));
+		bb.put("FLOOD", new MapScanner(this, MapScanner.B.FLOOD));
+		bb.put("RADIOACTIVE", new MapScanner(this, MapScanner.B.RADIOACTIVE));
+		bb.put("ROAD", new MapScanner(this, MapScanner.B.ROAD));
+		bb.put("RAIL", new MapScanner(this, MapScanner.B.RAIL));
+		bb.put("EXPLOSION", new MapScanner(this, MapScanner.B.EXPLOSION));
+		bb.put("RESIDENTIAL", new MapScanner(this, MapScanner.B.RESIDENTIAL));
+		bb.put("HOSPITAL_CHURCH", new MapScanner(this, MapScanner.B.HOSPITAL_CHURCH));
+		bb.put("COMMERCIAL", new MapScanner(this, MapScanner.B.COMMERCIAL));
+		bb.put("INDUSTRIAL", new MapScanner(this, MapScanner.B.INDUSTRIAL));
+		bb.put("COAL", new MapScanner(this, MapScanner.B.COAL));
+		bb.put("NUCLEAR", new MapScanner(this, MapScanner.B.NUCLEAR));
+		bb.put("FIRESTATION", new MapScanner(this, MapScanner.B.FIRESTATION));
+		bb.put("POLICESTATION", new MapScanner(this, MapScanner.B.POLICESTATION));
+		bb.put("STADIUM_EMPTY", new MapScanner(this, MapScanner.B.STADIUM_EMPTY));
+		bb.put("STADIUM_FULL", new MapScanner(this, MapScanner.B.STADIUM_FULL));
+		bb.put("AIRPORT", new MapScanner(this, MapScanner.B.AIRPORT));
+		bb.put("SEAPORT", new MapScanner(this, MapScanner.B.SEAPORT));
+
+		this.tileBehaviors = bb;
+	}
+
 	void mapScan(int x0, int x1)
 	{
-		MapScanner scanner = new MapScanner(this);
-
 		for (int x = x0; x < x1; x++)
 		{
-			scanner.xpos = x;
-
 			for (int y = 0; y < getHeight(); y++)
 			{
-				scanner.ypos = y;
-				scanner.rawTile = map[y][x];
-				scanner.scanTile();
+				mapScanTile(x, y);
 			}
+		}
+	}
+
+	void mapScanTile(int xpos, int ypos)
+	{
+		int rawTile = getTile(xpos, ypos);
+		String behaviorStr = getTileBehavior(rawTile & LOMASK);
+		if (behaviorStr == null) {
+			return; //nothing to do
+		}
+
+		TileBehavior b = tileBehaviors.get(behaviorStr);
+		if (b != null) {
+			b.processTile(xpos, ypos);
+		}
+		else {
+			throw new Error("Unknown behavior: "+behaviorStr);
 		}
 	}
 
