@@ -1399,7 +1399,7 @@ public class Micropolis
 			for (int y = 0; y < getHeight(); y++)
 			{
 				scanner.ypos = y;
-				scanner.cchr = map[y][x];
+				scanner.rawTile = map[y][x];
 				scanner.scanTile();
 			}
 		}
