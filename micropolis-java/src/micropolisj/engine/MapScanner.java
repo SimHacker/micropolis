@@ -24,8 +24,8 @@ class MapScanner
 	final Random PRNG;
 	int xpos;
 	int ypos;
-	char cchr;
-	char cchr9;
+	int rawTile;
+	int tile;
 
 	MapScanner(Micropolis city)
 	{
@@ -60,9 +60,9 @@ class MapScanner
 	 */
 	public void scanTile()
 	{
-		cchr9 = (char) (cchr & LOMASK);
+		tile = rawTile & LOMASK;
 
-		String behaviorStr = getTileBehavior(cchr);
+		String behaviorStr = getTileBehavior(rawTile);
 		if (behaviorStr == null) {
 			return;
 		}
@@ -154,11 +154,11 @@ class MapScanner
 			// deteriorating roads
 			if (PRNG.nextInt(512) == 0)
 			{
-				if (!isConductive(cchr))
+				if (!isConductive(rawTile))
 				{
 					if (city.roadEffect < PRNG.nextInt(32))
 					{
-						if (isOverWater(cchr))
+						if (isOverWater(rawTile))
 							city.setTile(xpos, ypos, RIVER);
 						else
 							city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
@@ -168,7 +168,7 @@ class MapScanner
 			}
 		}
 
-		if (!isCombustible(cchr)) //bridge
+		if (!isCombustible(rawTile)) //bridge
 		{
 			city.roadTotal += 4;
 			if (doBridge())
@@ -176,9 +176,9 @@ class MapScanner
 		}
 
 		int tden;
-		if ((cchr & LOMASK) < LTRFBASE)
+		if ((rawTile & LOMASK) < LTRFBASE)
 			tden = 0;
-		else if ((cchr & LOMASK) < HTRFBASE)
+		else if ((rawTile & LOMASK) < HTRFBASE)
 			tden = 1;
 		else {
 			city.roadTotal++;
@@ -193,8 +193,8 @@ class MapScanner
 
 		if (tden != newLevel)
 		{
-			int z = (((cchr & LOMASK) - ROADBASE) & 15) + TRAFFIC_DENSITY_TAB[newLevel];
-			z += cchr & ALLBITS;
+			int z = (((rawTile & LOMASK) - ROADBASE) & 15) + TRAFFIC_DENSITY_TAB[newLevel];
+			z += rawTile & ALLBITS;
 
 			city.setTile(xpos, ypos, (char) z);
 		}
@@ -294,9 +294,9 @@ class MapScanner
 
 		if (city.roadEffect < 30) { // deteriorating rail
 			if (PRNG.nextInt(512) == 0) {
-				if (!isConductive(cchr)) {
+				if (!isConductive(rawTile)) {
 					if (city.roadEffect < PRNG.nextInt(32)) {
-						if (isOverWater(cchr)) {
+						if (isOverWater(rawTile)) {
 							city.setTile(xpos,ypos,RIVER);
 						} else {
 							city.setTile(xpos,ypos,(char)(RUBBLE + PRNG.nextInt(4)+BULLBIT));
@@ -346,7 +346,7 @@ class MapScanner
 			VBRIDGE | BULLBIT,      VBRIDGE | BULLBIT,
 			RIVER };
 
-		if (cchr9 == BRWV) {
+		if (tile == BRWV) {
 			// vertical bridge, open
 			if (PRNG.nextInt(4) == 0 && getBoatDis() > 340/16) {
 				//close the bridge
@@ -354,7 +354,7 @@ class MapScanner
 			}
 			return true;
 		}
-		else if (cchr9 == BRWH) {
+		else if (tile == BRWH) {
 			// horizontal bridge, open
 			if (PRNG.nextInt(4) == 0 && getBoatDis() > 340/16) {
 				// close the bridge
@@ -364,7 +364,7 @@ class MapScanner
 		}
 
 		if (getBoatDis() < 300/16 && PRNG.nextInt(8) == 0) {
-			if ((cchr & 1) != 0) {
+			if ((rawTile & 1) != 0) {
 				// vertical bridge
 				if (xpos < city.getWidth()-1) {
 					// look for CHANNEL tile to right of
@@ -460,27 +460,27 @@ class MapScanner
 
 	boolean setZonePower()
 	{
-		// refresh cchr, cchr9, since this can get called after the
+		// refresh rawTile, tile, since this can get called after the
 		// tile's been changed
-		cchr = city.map[ypos][xpos];
-		cchr9 = (char) (cchr & LOMASK);
+		this.rawTile = city.map[ypos][xpos];
+		this.tile = (char) (rawTile & LOMASK);
 
-		boolean oldPower = (cchr & PWRBIT) == PWRBIT;
+		boolean oldPower = (rawTile & PWRBIT) == PWRBIT;
 		boolean newPower = (
-			cchr9 == NUCLEAR ||
-			cchr9 == POWERPLANT ||
+			tile == NUCLEAR ||
+			tile == POWERPLANT ||
 			city.hasPower(xpos,ypos)
 			);
 
 		if (newPower && !oldPower)
 		{
-			city.setTile(xpos, ypos, (char) (cchr | PWRBIT));
-			city.powerZone(xpos, ypos, getZoneSizeFor(cchr));
+			city.setTile(xpos, ypos, (char) (rawTile | PWRBIT));
+			city.powerZone(xpos, ypos, getZoneSizeFor(rawTile));
 		}
 		else if (!newPower && oldPower)
 		{
-			city.setTile(xpos, ypos, (char) (cchr & (~PWRBIT)));
-			city.shutdownZone(xpos, ypos, getZoneSizeFor(cchr));
+			city.setTile(xpos, ypos, (char) (rawTile & (~PWRBIT)));
+			city.shutdownZone(xpos, ypos, getZoneSizeFor(rawTile));
 		}
 
 		return newPower;
@@ -693,7 +693,7 @@ class MapScanner
 	void doHospitalChurch()
 	{
 		boolean powerOn = checkZonePower();
-		if (cchr9 == HOSPITAL)
+		if (tile == HOSPITAL)
 		{
 			city.hospitalCount++;
 
@@ -709,7 +709,7 @@ class MapScanner
 				}
 			}
 		}
-		else if (cchr9 == CHURCH)
+		else if (tile == CHURCH)
 		{
 			city.churchCount++;
 
@@ -778,7 +778,7 @@ class MapScanner
 		boolean powerOn = checkZonePower();
 		city.comZoneCount++;
 
-		int tpop = commercialZonePop(cchr);
+		int tpop = commercialZonePop(rawTile);
 		city.comPop += tpop;
 
 		int trafficGood;
@@ -832,7 +832,7 @@ class MapScanner
 		boolean powerOn = checkZonePower();
 		city.indZoneCount++;
 
-		int tpop = industrialZonePop(cchr);
+		int tpop = industrialZonePop(rawTile);
 		city.indPop += tpop;
 
 		int trafficGood;
@@ -885,13 +885,13 @@ class MapScanner
 		city.resZoneCount++;
 
 		int tpop; //population of this zone
-		if (cchr9 == RESCLR)
+		if (tile == RESCLR)
 		{
 			tpop = city.doFreePop(xpos, ypos);
 		}
 		else
 		{
-			tpop = residentialZonePop(cchr);
+			tpop = residentialZonePop(rawTile);
 		}
 
 		city.resPop += tpop;
@@ -913,7 +913,7 @@ class MapScanner
 			return;
 		}
 
-		if (cchr9 == RESCLR || PRNG.nextInt(8) == 0)
+		if (tile == RESCLR || PRNG.nextInt(8) == 0)
 		{
 			int locValve = evalResidential(trafficGood);
 			int zscore = city.resValve + locValve;
@@ -951,8 +951,8 @@ class MapScanner
 	int evalLot(int x, int y)
 	{
 		// test for clear lot
-		int tile = city.getTile(x,y);
-		if (tile != DIRT && !isResidentialClear(tile)) {
+		int aTile = city.getTile(x,y);
+		if (aTile != DIRT && !isResidentialClear(aTile)) {
 			return -1;
 		}
 
@@ -1058,8 +1058,8 @@ class MapScanner
 		if (z > 128)
 			return;
 
-		int cchr9 = cchr & LOMASK;
-		if (cchr9 == RESCLR)
+		this.tile = rawTile & LOMASK;
+		if (tile == RESCLR)
 		{
 			if (pop < 8)
 			{
@@ -1151,7 +1151,7 @@ class MapScanner
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			int pwrBit = (cchr & PWRBIT);
+			int pwrBit = (rawTile & PWRBIT);
 			city.setTile(xpos, ypos, (char)(RESCLR | BULLBIT | pwrBit));
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
