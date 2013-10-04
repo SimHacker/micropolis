@@ -33,7 +33,7 @@ class MapScanner
 		this.PRNG = city.PRNG;
 	}
 
-	static enum TileBehavior
+	static enum TileBehaviorEnum
 	{
 		FIRE,
 		FLOOD,
@@ -67,7 +67,7 @@ class MapScanner
 			return;
 		}
 
-		switch (TileBehavior.valueOf(behaviorStr)) {
+		switch (TileBehaviorEnum.valueOf(behaviorStr)) {
 		case FIRE:
 			doFire();
 			return;
