@@ -35,5 +35,8 @@ public abstract class TileBehavior
 		apply();
 	}
 
+	/**
+	 * Activate the tile identified by xpos and ypos properties.
+	 */
 	public abstract void apply();
 }

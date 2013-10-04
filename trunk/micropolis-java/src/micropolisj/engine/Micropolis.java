@@ -1395,12 +1395,12 @@ public class Micropolis
 		HashMap<String,TileBehavior> bb;
 		bb = new HashMap<String,TileBehavior>();
 
-		bb.put("FIRE", new MapScanner(this, MapScanner.B.FIRE));
-		bb.put("FLOOD", new MapScanner(this, MapScanner.B.FLOOD));
-		bb.put("RADIOACTIVE", new MapScanner(this, MapScanner.B.RADIOACTIVE));
-		bb.put("ROAD", new MapScanner(this, MapScanner.B.ROAD));
-		bb.put("RAIL", new MapScanner(this, MapScanner.B.RAIL));
-		bb.put("EXPLOSION", new MapScanner(this, MapScanner.B.EXPLOSION));
+		bb.put("FIRE", new TerrainBehavior(this, TerrainBehavior.B.FIRE));
+		bb.put("FLOOD", new TerrainBehavior(this, TerrainBehavior.B.FLOOD));
+		bb.put("RADIOACTIVE", new TerrainBehavior(this, TerrainBehavior.B.RADIOACTIVE));
+		bb.put("ROAD", new TerrainBehavior(this, TerrainBehavior.B.ROAD));
+		bb.put("RAIL", new TerrainBehavior(this, TerrainBehavior.B.RAIL));
+		bb.put("EXPLOSION", new TerrainBehavior(this, TerrainBehavior.B.EXPLOSION));
 		bb.put("RESIDENTIAL", new MapScanner(this, MapScanner.B.RESIDENTIAL));
 		bb.put("HOSPITAL_CHURCH", new MapScanner(this, MapScanner.B.HOSPITAL_CHURCH));
 		bb.put("COMMERCIAL", new MapScanner(this, MapScanner.B.COMMERCIAL));
