@@ -107,11 +107,6 @@ class MapScanner extends TileBehavior
 
 	boolean setZonePower()
 	{
-		// refresh rawTile, tile, since this can get called after the
-		// tile's been changed
-		this.rawTile = city.map[ypos][xpos];
-		this.tile = (char) (rawTile & LOMASK);
-
 		boolean oldPower = (rawTile & PWRBIT) == PWRBIT;
 		boolean newPower = (
 			tile == NUCLEAR ||
@@ -174,6 +169,10 @@ class MapScanner extends TileBehavior
 				i++;
 			}
 		}
+
+		// refresh rawTile, tile
+		this.rawTile = city.map[ypos][xpos];
+		this.tile = (char) (rawTile & LOMASK);
 
 		setZonePower();
 		return true;
