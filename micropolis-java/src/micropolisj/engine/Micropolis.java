@@ -1059,6 +1059,12 @@ public class Micropolis
 		trfDensity[mapY/2][mapX/2] = z;
 	}
 
+	/** Accessor method for fireRate[]. */
+	public int getFireStationCoverage(int xpos, int ypos)
+	{
+		return fireRate[ypos/8][xpos/8];
+	}
+
 	/** Accessor method for landValueMem overlay. */
 	public int getLandValue(int xpos, int ypos)
 	{
