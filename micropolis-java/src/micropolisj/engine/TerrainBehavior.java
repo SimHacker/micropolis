@@ -50,8 +50,7 @@ class TerrainBehavior extends TileBehavior
 			doRail();
 			return;
 		case EXPLOSION:
-			// clear AniRubble
-			city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
+			doExplosion();
 			return;
 		default:
 			assert false;
@@ -367,5 +366,11 @@ class TerrainBehavior extends TileBehavior
 			}
 		}
 		return dist;
+	}
+
+	void doExplosion()
+	{
+		// clear AniRubble
+		city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
 	}
 }
