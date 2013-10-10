@@ -19,7 +19,7 @@ class TrafficGen
 	final Micropolis city;
 	int mapX;
 	int mapY;
-	Micropolis.ZoneType sourceZone;
+	ZoneType sourceZone;
 
 	int lastdir;
 	Stack<CityLocation> positions = new Stack<CityLocation>();
@@ -220,5 +220,13 @@ class TrafficGen
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * The three main types of zones found in Micropolis.
+	 */
+	static enum ZoneType
+	{
+		RESIDENTIAL, COMMERCIAL, INDUSTRIAL;
 	}
 }

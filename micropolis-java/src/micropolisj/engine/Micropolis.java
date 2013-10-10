@@ -1813,27 +1813,6 @@ public class Micropolis
 		return b;
 	}
 
-	/**
-	 * The three main types of zones found in Micropolis.
-	 */
-	static enum ZoneType
-	{
-		RESIDENTIAL, COMMERCIAL, INDUSTRIAL;
-	}
-
-	TrafficGen traffic = new TrafficGen(this);
-
-	/**
-	 * @return 1 if traffic "passed", 0 if traffic "failed", -1 if no roads found
-	 */
-	int makeTraffic(int xpos, int ypos, ZoneType zoneType)
-	{
-		traffic.mapX = xpos;
-		traffic.mapY = ypos;
-		traffic.sourceZone = zoneType;
-		return traffic.makeTraffic();
-	}
-
 	int getPopulationDensity(int xpos, int ypos)
 	{
 		return popDensity[ypos/2][xpos/2];

@@ -11,7 +11,7 @@ package micropolisj.engine;
 import java.util.*;
 
 import static micropolisj.engine.TileConstants.*;
-import static micropolisj.engine.Micropolis.ZoneType;
+import static micropolisj.engine.TrafficGen.ZoneType;
 
 /**
  * Process individual tiles of the map for each cycle.
@@ -21,11 +21,13 @@ import static micropolisj.engine.Micropolis.ZoneType;
 class MapScanner extends TileBehavior
 {
 	final B behavior;
+	TrafficGen traffic;
 
 	MapScanner(Micropolis city, B behavior)
 	{
 		super(city);
 		this.behavior = behavior;
+		this.traffic = new TrafficGen(city);
 	}
 
 	public static enum B
@@ -220,9 +222,9 @@ class MapScanner extends TileBehavior
 			z = city.fireEffect/2; // from the funding ratio
 		}
 
-		city.traffic.mapX = xpos;
-		city.traffic.mapY = ypos;
-		if (!city.traffic.findPerimeterRoad()) {
+		traffic.mapX = xpos;
+		traffic.mapY = ypos;
+		if (!traffic.findPerimeterRoad()) {
 			z /= 2;
 		}
 
@@ -244,9 +246,9 @@ class MapScanner extends TileBehavior
 			z = city.policeEffect / 2;
 		}
 
-		city.traffic.mapX = xpos;
-		city.traffic.mapY = ypos;
-		if (!city.traffic.findPerimeterRoad()) {
+		traffic.mapX = xpos;
+		traffic.mapY = ypos;
+		if (!traffic.findPerimeterRoad()) {
 			z /= 2;
 		}
 
@@ -430,7 +432,7 @@ class MapScanner extends TileBehavior
 		int trafficGood;
 		if (tpop > PRNG.nextInt(6))
 		{
-			trafficGood = city.makeTraffic(xpos, ypos, ZoneType.COMMERCIAL);
+			trafficGood = makeTraffic(ZoneType.COMMERCIAL);
 		}
 		else
 		{
@@ -484,7 +486,7 @@ class MapScanner extends TileBehavior
 		int trafficGood;
 		if (tpop > PRNG.nextInt(6))
 		{
-			trafficGood = city.makeTraffic(xpos, ypos, ZoneType.INDUSTRIAL);
+			trafficGood = makeTraffic(ZoneType.INDUSTRIAL);
 		}
 		else
 		{
@@ -545,7 +547,7 @@ class MapScanner extends TileBehavior
 		int trafficGood;
 		if (tpop > PRNG.nextInt(36))
 		{
-			trafficGood = city.makeTraffic(xpos, ypos, ZoneType.RESIDENTIAL);
+			trafficGood = makeTraffic(ZoneType.RESIDENTIAL);
 		}
 		else
 		{
@@ -949,4 +951,14 @@ class MapScanner extends TileBehavior
 		}
 	}
 
+	/**
+	 * @return 1 if traffic "passed", 0 if traffic "failed", -1 if no roads found
+	 */
+	int makeTraffic(ZoneType zoneType)
+	{
+		traffic.mapX = xpos;
+		traffic.mapY = ypos;
+		traffic.sourceZone = zoneType;
+		return traffic.makeTraffic();
+	}
 }
