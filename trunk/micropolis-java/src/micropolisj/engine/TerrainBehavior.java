@@ -91,7 +91,7 @@ class TerrainBehavior extends TileBehavior
 			}
 		}
 
-		int cov = city.fireRate[ypos/8][xpos/8];  //fire station coverage
+		int cov = city.getFireStationCoverage(xpos, ypos);
 		int rate = cov > 100 ? 1 :
 			cov > 20 ? 2 :
 			cov != 0 ? 3 : 10;
