@@ -122,4 +122,19 @@
 </javadoc>
 </target>
 
+<target name="dist-mac" depends="build">
+<bundleapp outputdirectory="./"
+	name="MicropolisJ"
+	icon="micropolisj.icns"
+	shortversion="${package-version}"
+	applicationCategory="public.app-category.games"
+	displayname="MicropolisJ"
+	identifier="net.micropolis.micropolisj"
+	mainclassname="micropolisj.Main"
+	>
+	<classpath file="micropolisj.jar" />
+	<option value="-Dapple.laf.useScreenMenuBar=true"/>
+</bundleapp>
+</target>
+
 </project>
