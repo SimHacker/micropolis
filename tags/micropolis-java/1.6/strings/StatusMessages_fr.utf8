@@ -1,0 +1,64 @@
+!! This file is part of MicropolisJ.
+!! Copyright (C) 2013 Jason Long
+!! Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+!!
+!! MicropolisJ is free software; you can redistribute it and/or modify
+!! it under the terms of the GNU GPLv3, with additional terms.
+!! See the README file, included in this distribution, for details.
+
+!! French - France Translation by Benoît Gross June 2013
+
+zone.0 = Vierge
+zone.1 = Eau
+zone.2 = Arbres
+zone.3 = Gravas
+zone.4 = Inondation
+zone.5 = Déchets radioactifs
+zone.6 = Feu
+zone.7 = Route
+zone.8 = Énergie
+zone.9 = Rail
+zone.10 = Résidence
+zone.11 = Commerce
+zone.12 = Industrie
+zone.13 = Port maritime
+zone.14 = Aéroport
+zone.15 = Centrale au charbon
+zone.16 = Caserne de pompiers
+zone.17 = Poste de police
+zone.18 = Stade
+zone.19 = Centrale nucléaire
+zone.20 = Pont
+zone.21 = Radar
+zone.22 = Fontaine
+zone.23 = Industrie
+zone.24 = Olympique Métro 38  Barzeques 3
+zone.25 = Pont
+zone.26 = Uranium 238
+zone.27 = 
+
+! population density
+status.1 = Basse
+status.2 = Moyenne
+status.3 = Élevée
+status.4 = Très élevée
+! land value
+status.5 = Bidonville
+status.6 = Classe populaire
+status.7 = Classe moyenne
+status.8 = Classe aisée
+! crime level
+status.9 = Aucune
+status.10 = Légère
+status.11 = Modérée
+status.12 = Dangereuse
+! pollution
+status.13 = Aucune
+status.14 = Modérée
+status.15 = Élevée
+status.16 = Très élevée
+! growth rate
+status.17 = En déclin
+status.18 = Stable
+status.19 = Croissance lente
+status.20 = Croissance rapide
