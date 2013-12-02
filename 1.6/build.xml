@@ -1,0 +1,140 @@
+<!--
+// This file is part of MicropolisJ.
+// Copyright (C) 2013 Jason Long
+// Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+//
+// MicropolisJ is free software; you can redistribute it and/or modify
+// it under the terms of the GNU GPLv3, with additional terms.
+// See the README file, included in this distribution, for details.
+-->
+<project name="micropolisj" default="all">
+
+<property name="package-version" value="1.6" />
+
+<property name="srcdir" location="src" />
+<property name="builddir" location="build" />
+<property name="distfile" value="${ant.project.name}.jar" />
+<property name="zipfile" value="${ant.project.name}-${package-version}.zip" />
+
+<path id="build-classpath">
+  <fileset dir="extlib">
+    <include name="*.jar" />
+  </fileset>
+</path>
+
+<target name="init-builddir">
+<mkdir dir="${builddir}" />
+<mkdir dir="extlib" />
+</target>
+
+<target name="copy-resources" depends="init-builddir">
+<copy todir="${builddir}">
+	<fileset dir="resources"
+		excludes="**/*.xcf **/Thumbs.db"
+		/>
+</copy>
+<native2ascii encoding="UTF-8" ext=".properties"
+	src="strings"
+	includes="**/*.utf8"
+	dest="${builddir}/micropolisj"
+	/>
+
+<copy todir="${builddir}/micropolisj">
+	<fileset dir="strings" excludes="**/*.utf8" />
+</copy>
+</target>
+
+<target name="compose-tiles" depends="init-builddir,compile">
+<java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
+	fork="true" failonerror="true" dir="graphics" inputstring="">
+	<arg file="graphics/tiles.rc" />
+	<arg file="${builddir}/tiles.png" />
+</java>
+<java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
+	fork="true" failonerror="true" dir="graphics" inputstring="">
+	<sysproperty key="tile_size" value="8" />
+	<arg file="graphics/tiles.rc" />
+	<arg file="${builddir}/tiles_8x8.png" />
+</java>
+<java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
+	fork="true" failonerror="true" dir="graphics" inputstring="">
+	<sysproperty key="tile_size" value="32" />
+	<arg file="graphics/tiles.rc" />
+	<arg file="${builddir}/tiles_32x32.png" />
+</java>
+<copy todir="${builddir}" file="graphics/tiles.rc" />
+</target>
+
+<target name="compile" depends="init-builddir">
+<javac srcdir="${srcdir}"
+       destdir="${builddir}"
+       classpathref="build-classpath"
+	includeantruntime="false"
+	debug="true" debuglevel="lines,vars,source"
+	source="1.6" target="1.6"
+       >
+	<compilerarg value="-Xlint:unchecked" />
+	<compilerarg value="-Xlint:deprecation" />
+</javac>
+</target>
+
+<target name="build" depends="copy-resources,compile,compose-tiles">
+<pathconvert property="runtime-classpath" pathsep=" " refid="build-classpath">
+<map from="${basedir}" to="." />
+</pathconvert>
+
+<jar destfile="${distfile}" basedir="${builddir}" excludes="/micropolisj/build_tool/**">
+	<manifest>
+		<attribute name="Main-Class" value="micropolisj.Main" />
+		<attribute name="Class-Path" value="${runtime-classpath}" />
+		<attribute name="Implementation-Version" value="${package-version}" />
+	</manifest>
+</jar>
+</target>
+
+<target name="all" depends="build">
+</target>
+
+<target name="clean">
+<delete dir="${builddir}" />
+<delete dir="graphics/generated" />
+<delete file="${distfile}" />
+<delete>
+	<fileset dir="." includes="${ant.project.name}*.zip" />
+</delete>
+</target>
+
+<target name="dist" depends="build">
+<zip destfile="${zipfile}">
+	<fileset dir="." includes="${distfile}, ${ant.project.name}.ico, README, COPYING" />
+	<zipfileset dir="resources" includes="micropolism.png" fullpath="${ant.project.name}-icon.png"/>
+</zip>
+</target>
+
+<target name="javadoc">
+<mkdir dir="docs/api" />
+<javadoc sourcepath="src" destdir="docs/api"
+	classpathref="build-classpath"
+	Private="true"
+	>
+	<link href="http://docs.oracle.com/javase/7/docs/api" />
+	<link href="http://docs.oracle.com/cd/E17802_01/j2se/javase/technologies/desktop/java3d/forDevelopers/J3D_1_3_API/j3dapi" />
+</javadoc>
+</target>
+
+<target name="dist-mac" depends="build">
+<bundleapp outputdirectory="./"
+	name="MicropolisJ"
+	icon="micropolisj.icns"
+	shortversion="${package-version}"
+	applicationCategory="public.app-category.games"
+	displayname="MicropolisJ"
+	identifier="net.micropolis.micropolisj"
+	mainclassname="micropolisj.Main"
+	>
+	<classpath file="micropolisj.jar" />
+	<option value="-Dapple.laf.useScreenMenuBar=true"/>
+</bundleapp>
+</target>
+
+</project>
