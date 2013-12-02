@@ -18,6 +18,7 @@ public class TileSpec
 	TileSpec onShutdown;
 	boolean canBurn;
 	boolean canConduct;
+	boolean overWater;
 	boolean zone;
 	public TileSpec owner;
 	public int ownerOffsetX;
@@ -178,6 +179,7 @@ public class TileSpec
 
 		this.canBurn = !getBooleanAttribute("noburn");
 		this.canConduct = getBooleanAttribute("conducts");
+		this.overWater = getBooleanAttribute("overwater");
 		this.zone = getBooleanAttribute("zone");
 	}
 
