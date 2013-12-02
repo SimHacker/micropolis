@@ -96,7 +96,7 @@
 77    roads@0,32  |roadwire@0,0       (conducts)(description=#7)(behavior=ROAD)
 78    roads@0,48  |roadwire@0,16      (conducts)(description=#7)(behavior=ROAD)
 # open draw bridge (east-west) -
-79    roads@0,240                     (description=#7)(behavior=ROAD)
+79    roads@0,240                     (noburn)(description=#7)(behavior=ROAD)
 # BEGIN ROADS WITH LIGHT TRAFFIC #
 80    (64) |traffic@0,0                                          (becomes=128)(pollution=50)
 81    (65) |traffic@0,16                                         (becomes=129)(pollution=50)
@@ -114,7 +114,7 @@
 93    roads@0,32 |traffic@0,0  |roadwire@0,0    (conducts)(becomes=141)(description=#7)(behavior=ROAD)(pollution=50)
 94    roads@0,48 |traffic@0,16 |roadwire@0,16   (conducts)(becomes=142)(description=#7)(behavior=ROAD)(pollution=50)
 # open draw bridge (north-south) -
-95    roads@0,240                                                (becomes=143)(description=#7)(behavior=ROAD)(pollution=50)
+95    roads@0,240                                                (noburn)(becomes=143)(description=#7)(behavior=ROAD)(pollution=50)
 96    (64) |traffic@16,0                                         (becomes=80)(pollution=50)
 97    (65) |traffic@16,16                                        (becomes=81)(pollution=50)
 98    (66) |traffic@16,0                                         (becomes=82)(pollution=50)
