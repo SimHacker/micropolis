@@ -300,31 +300,8 @@ public class TileConstants
 
 	public static boolean isOverWater(int tile)
 	{
-		// Note: BRWV will be converted to BRWH by the following
-		// function.
-		int tmp = neutralizeRoad(tile & LOMASK);
-		switch (tmp)
-		{
-		case HBRIDGE:
-		case VBRIDGE:
-		case BRWV:
-		case BRWH:
-		case HBRDG0:
-		case HBRDG1:
-		case HBRDG2:
-		case HBRDG3:
-		case VBRDG0:
-		case VBRDG1:
-		case VBRDG2:
-		case VBRDG3:
-		case HPOWER:
-		case VPOWER:
-		case HRAIL:
-		case VRAIL:
-			return true;
-		default:
-			return false;
-		}
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec != null && spec.overWater;
 	}
 
 	public static boolean isRubble(int cell)
