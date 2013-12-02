@@ -59,6 +59,11 @@ public class MakeTiles
 
 			TileSpec tileSpec = TileSpec.parse(tileNumber, rawSpec, recipe);
 			FrameSpec ref = parseFrameSpec(tileSpec);
+			if (ref == null) {
+				// tile is defined, but it has no images
+				continue;
+			}
+
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
 
