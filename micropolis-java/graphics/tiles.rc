@@ -130,7 +130,7 @@
 108   (76) |traffic@16,192                                       (becomes=92)(pollution=50)
 109   roads@0,32 |traffic@16,0  |roadwire@0,0   (conducts)(becomes=93)(description=#7)(behavior=ROAD)(pollution=50)
 110   roads@0,48 |traffic@16,16 |roadwire@0,16  (conducts)(becomes=94)(description=#7)(behavior=ROAD)(pollution=50)
-111   roads@0,240                                                (becomes=95)(description=#7)(behavior=ROAD)(pollution=50)
+111
 112   (64) |traffic@32,0                                         (becomes=96)(pollution=50)
 113   (65) |traffic@32,16                                        (becomes=97)(pollution=50)
 114   (66) |traffic@32,0                                         (becomes=98)(pollution=50)
@@ -146,7 +146,7 @@
 124   (76) |traffic@32,192                                       (becomes=108)(pollution=50)
 125   roads@0,32 |traffic@32,0  |roadwire@0,0   (conducts)(becomes=109)(description=#7)(behavior=ROAD)(pollution=50)
 126   roads@0,48 |traffic@32,16 |roadwire@0,16  (conducts)(becomes=110)(description=#7)(behavior=ROAD)(pollution=50)
-127   roads@0,240                                                (becomes=111)(description=#7)(behavior=ROAD)(pollution=50)
+127
 128   (64) |traffic@48,0                                         (becomes=112)(pollution=50)
 129   (65) |traffic@48,16                                        (becomes=113)(pollution=50)
 130   (66) |traffic@48,0                                         (becomes=114)(pollution=50)
@@ -162,7 +162,7 @@
 140   (76) |traffic@48,192                                       (becomes=124)(pollution=50)
 141   roads@0,32 |traffic@48,0  |roadwire@0,0   (conducts)(becomes=125)(description=#7)(behavior=ROAD)(pollution=50)
 142   roads@0,48 |traffic@48,16 |roadwire@0,16  (conducts)(becomes=126)(description=#7)(behavior=ROAD)(pollution=50)
-143   roads@0,240                                                (becomes=127)(description=#7)(behavior=ROAD)(pollution=50)
+143
 # BEGIN ROADS WITH HEAVY TRAFFIC #                                    
 144   (64) |traffic@64,0                                         (becomes=192)(pollution=75)
 145   (65) |traffic@64,16                                        (becomes=193)(pollution=75)
@@ -179,7 +179,7 @@
 156   (76) |traffic@64,192                                       (becomes=204)(pollution=75)
 157   roads@0,32 |traffic@64,0  |roadwire@0,0   (conducts)(becomes=205)(description=#7)(behavior=ROAD)(pollution=75)
 158   roads@0,48 |traffic@64,16 |roadwire@0,16  (conducts)(becomes=206)(description=#7)(behavior=ROAD)(pollution=75)
-159   roads@0,240                                                (becomes=207)(description=#7)(behavior=ROAD)(pollution=75)
+159
 160   (64) |traffic@80,0                                         (becomes=144)(pollution=75)
 161   (65) |traffic@80,16                                        (becomes=145)(pollution=75)
 162   (66) |traffic@80,0                                         (becomes=146)(pollution=75)
@@ -195,7 +195,7 @@
 172   (76) |traffic@80,192                                       (becomes=156)(pollution=75)
 173   roads@0,32 |traffic@80,0  |roadwire@0,0   (conducts)(becomes=157)(description=#7)(behavior=ROAD)(pollution=75)
 174   roads@0,48 |traffic@80,16 |roadwire@0,16  (conducts)(becomes=158)(description=#7)(behavior=ROAD)(pollution=75)
-175   roads@0,240                                                (becomes=159)(description=#7)(behavior=ROAD)(pollution=75)
+175
 176   (64) |traffic@96,0                                         (becomes=160)(pollution=75)
 177   (65) |traffic@96,16                                        (becomes=161)(pollution=75)
 178   (66) |traffic@96,0                                         (becomes=162)(pollution=75)
@@ -211,7 +211,7 @@
 188   (76) |traffic@96,192                                       (becomes=172)(pollution=75)
 189   roads@0,32 |traffic@96,0  |roadwire@0,0   (conducts)(becomes=173)(description=#7)(behavior=ROAD)(pollution=75)
 190   roads@0,48 |traffic@96,16 |roadwire@0,16  (conducts)(becomes=174)(description=#7)(behavior=ROAD)(pollution=75)
-191   roads@0,240                                                (becomes=175)(description=#7)(behavior=ROAD)(pollution=75)
+191
 192   (64) |traffic@112,0                                        (becomes=176)(pollution=75)
 193   (65) |traffic@112,16                                       (becomes=177)(pollution=75)
 194   (66) |traffic@112,0                                        (becomes=178)(pollution=75)
@@ -227,7 +227,7 @@
 204   (76) |traffic@112,192                                      (becomes=188)(pollution=75)
 205   roads@0,32 |traffic@112,0  |roadwire@0,0  (conducts)(becomes=189)(description=#7)(behavior=ROAD)(pollution=75)
 206   roads@0,48 |traffic@112,16 |roadwire@0,16 (conducts)(becomes=190)(description=#7)(behavior=ROAD)(pollution=75)
-207   roads@0,240                                                (becomes=191)(description=#7)(behavior=ROAD)(pollution=75)
+207
 # BEGIN WIRES #
 208   wires@0,0                 (noburn)(overwater)(conducts)(description=#8)
 209   wires@0,16                (noburn)(overwater)(conducts)(description=#8)
