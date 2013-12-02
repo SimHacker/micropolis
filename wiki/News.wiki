@@ -4,6 +4,11 @@
 
 This page presents a history of the Micropolis open source release.
 
+== Java Micropolis, version 1.6 (December 1, 2013) ==
+
+A minor update to the Java Micropolis project. This version adds
+German language support, bringing the total number of supported locales to four (English, French, German, and Swedish). There are also some fixes for a few minor bugs in how pollution was handled, and some more internal improvements to the code. The internal improvements are mainly to do with how tile behavior is specified. Instead of hard-coding tile numbers all through the code, effort is being made to make the behavior dependent on attributes specified in the tiles.rc control file.
+
 == Java Micropolis, version 1.5 (August 31, 2013) ==
 
 Another update to the Java Micropolis project. This version adds
