@@ -391,10 +391,10 @@ public class MapGenerator
 	}
 
 	static final char [] REdTab = new char[] {
-		13 + BULLBIT, 13 + BULLBIT, 17 + BULLBIT, 15 + BULLBIT,
-		5 + BULLBIT,  2,            19 + BULLBIT, 17 + BULLBIT,
-		9 + BULLBIT,  11 + BULLBIT, 2,            13 + BULLBIT,
-		7 + BULLBIT,  9 + BULLBIT,  5 + BULLBIT,  2
+		(RIVEDGE+8) + BULLBIT, (RIVEDGE+8) + BULLBIT, (RIVEDGE+12)+ BULLBIT, (RIVEDGE+10)+ BULLBIT,
+		(RIVEDGE+0) + BULLBIT, RIVER,                 (RIVEDGE+14)+ BULLBIT, (RIVEDGE+12)+ BULLBIT,
+		(RIVEDGE+4) + BULLBIT, (RIVEDGE+6) + BULLBIT, RIVER,                 (RIVEDGE+8) + BULLBIT,
+		(RIVEDGE+2) + BULLBIT, (RIVEDGE+4) + BULLBIT, (RIVEDGE+0) + BULLBIT, RIVER
 		};
 
 	private void smoothRiver()
