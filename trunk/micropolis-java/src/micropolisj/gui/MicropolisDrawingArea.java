@@ -182,7 +182,7 @@ public class MicropolisDrawingArea extends JComponent
 				int cell = m.getTile(x,y);
 				if (blinkUnpoweredZones &&
 					isZoneCenter(cell) &&
-					(cell & PWRBIT) == 0)
+					!m.isTilePowered(x, y))
 				{
 					unpoweredZones.add(new Point(x,y));
 					if (blink)
