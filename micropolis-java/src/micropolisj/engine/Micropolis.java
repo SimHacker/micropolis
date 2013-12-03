@@ -428,6 +428,11 @@ public class Micropolis
 		return map[ypos][xpos];
 	}
 
+	public boolean isTilePowered(int xpos, int ypos)
+	{
+		return (getTile(xpos, ypos) & PWRBIT) == PWRBIT;
+	}
+
 	public void setTile(int xpos, int ypos, char newTile)
 	{
 		if (map[ypos][xpos] != newTile)
