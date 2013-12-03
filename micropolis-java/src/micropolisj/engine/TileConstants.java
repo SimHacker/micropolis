@@ -44,6 +44,7 @@ public class TileConstants
 	static final char RIVER = 2;
 	static final char REDGE = 3;
 	static final char CHANNEL = 4;
+	static final char RIVEDGE = 5;
 	static final char FIRSTRIVEDGE = 5;
 	static final char LASTRIVEDGE = 20;
 	static final char TREEBASE = 21;
