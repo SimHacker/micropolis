@@ -708,11 +708,10 @@ public class Micropolis
 		{
 			for (int y = 0; y < height; y++)
 			{
-				char tile = map[y][x];
+				char tile = getTile(x, y);
 				if (isZoneCenter(tile))
 				{
-					tile &= LOMASK;
-					int den = computePopDen(x, y, (char)tile) * 8;
+					int den = computePopDen(x, y, tile) * 8;
 					if (den > 254)
 						den = 254;
 					tem[y/2][x/2] = den;
@@ -951,10 +950,11 @@ public class Micropolis
 		boolean rv = false;
 		if (movePowerLocation(loc,dir))
 		{
+			char t = getTile(loc.x, loc.y);
 			rv = (
-				isConductive(map[loc.y][loc.x]) &&
-				map[loc.y][loc.x] != NUCLEAR &&
-				map[loc.y][loc.x] != POWERPLANT &&
+				isConductive(t) &&
+				t != NUCLEAR &&
+				t != POWERPLANT &&
 				!hasPower(loc.x, loc.y)
 				);
 		}
@@ -2043,19 +2043,19 @@ public class Micropolis
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = map[y][x];
-				if (isConductive(z)) {
+				if (isConductive(z & LOMASK)) {
 					z |= 16384;  //synthesize CONDBIT on export
 				}
-				if (isCombustible(z)) {
+				if (isCombustible(z & LOMASK)) {
 					z |= 8192;   //synthesize BURNBIT on export
 				}
 				if (isTileDozeable(x, y)) {
 					z |= 4096;   //synthesize BULLBIT on export
 				}
-				if (isAnimated(z)) {
+				if (isAnimated(z & LOMASK)) {
 					z |= 2048;   //synthesize ANIMBIT on export
 				}
-				if (isZoneCenter(z)) {
+				if (isZoneCenter(z & LOMASK)) {
 					z |= 1024;   //synthesize ZONEBIT
 				}
 				out.writeShort(z);
@@ -2266,10 +2266,9 @@ public class Micropolis
 		{
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
-			int tile = map[y][x];
+			int tile = getTile(x, y);
 			if (!isZoneCenter(tile) && isCombustible(tile))
 			{
-				tile &= LOMASK;
 				if (tile > 21 && tile < LASTZONE) {
 					setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 					sendMessageAt(MicropolisMessage.FIRE_REPORT, x, y);

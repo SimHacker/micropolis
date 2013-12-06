@@ -119,12 +119,12 @@ class MapScanner extends TileBehavior
 		if (newPower && !oldPower)
 		{
 			city.setTile(xpos, ypos, (char) (rawTile | PWRBIT));
-			city.powerZone(xpos, ypos, getZoneSizeFor(rawTile));
+			city.powerZone(xpos, ypos, getZoneSizeFor(tile));
 		}
 		else if (!newPower && oldPower)
 		{
 			city.setTile(xpos, ypos, (char) (rawTile & (~PWRBIT)));
-			city.shutdownZone(xpos, ypos, getZoneSizeFor(rawTile));
+			city.shutdownZone(xpos, ypos, getZoneSizeFor(tile));
 		}
 
 		return newPower;
@@ -399,7 +399,7 @@ class MapScanner extends TileBehavior
 
 				if (city.testBounds(xx, yy))
 				{
-					int thCh = city.map[yy][xx];
+					int thCh = city.getTile(xx, yy);
 					if (isZoneCenter(thCh)) {
 						continue;
 					}
@@ -426,7 +426,7 @@ class MapScanner extends TileBehavior
 		boolean powerOn = checkZonePower();
 		city.comZoneCount++;
 
-		int tpop = commercialZonePop(rawTile);
+		int tpop = commercialZonePop(tile);
 		city.comPop += tpop;
 
 		int trafficGood;
@@ -480,7 +480,7 @@ class MapScanner extends TileBehavior
 		boolean powerOn = checkZonePower();
 		city.indZoneCount++;
 
-		int tpop = industrialZonePop(rawTile);
+		int tpop = industrialZonePop(tile);
 		city.indPop += tpop;
 
 		int trafficGood;
@@ -539,7 +539,7 @@ class MapScanner extends TileBehavior
 		}
 		else
 		{
-			tpop = residentialZonePop(rawTile);
+			tpop = residentialZonePop(tile);
 		}
 
 		city.resPop += tpop;
