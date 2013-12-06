@@ -163,7 +163,7 @@ class RoadLikeTool extends ToolStroke
 					eTile == HRAIL ||
 					(eTile >= LHRAIL && eTile <= HRAILROAD))
 				{
-					eff.setTile(0, 0, (char) (HRAIL | BULLBIT));
+					eff.setTile(0, 0, HRAIL);
 					break;
 				}
 			}
@@ -175,7 +175,7 @@ class RoadLikeTool extends ToolStroke
 					wTile == HRAIL ||
 					(wTile > VRAIL && wTile < VRAILROAD))
 				{
-					eff.setTile(0, 0, (char) (HRAIL | BULLBIT));
+					eff.setTile(0, 0, HRAIL);
 					break;
 				}
 			}
@@ -187,7 +187,7 @@ class RoadLikeTool extends ToolStroke
 					sTile == VRAILROAD ||
 					(sTile > HRAIL && sTile < HRAILROAD))
 				{
-					eff.setTile(0, 0, (char) (VRAIL | BULLBIT));
+					eff.setTile(0, 0, VRAIL);
 					break;
 				}
 			}
@@ -199,7 +199,7 @@ class RoadLikeTool extends ToolStroke
 					nTile == VRAILROAD ||
 					(nTile > HRAIL && nTile < HRAILROAD))
 				{
-					eff.setTile(0, 0, (char) (VRAIL | BULLBIT));
+					eff.setTile(0, 0, VRAIL);
 					break;
 				}
 			}
@@ -208,19 +208,19 @@ class RoadLikeTool extends ToolStroke
 			return false;
 
 		case LHPOWER: // rail on power
-			eff.setTile(0, 0, (char) (RAILVPOWERH | BULLBIT));
+			eff.setTile(0, 0, RAILVPOWERH);
 			break;
 
 		case LVPOWER: // rail on power
-			eff.setTile(0, 0, (char) (RAILHPOWERV | BULLBIT));
+			eff.setTile(0, 0, RAILHPOWERV);
 			break;
 
 		case TileConstants.ROADS:	// rail on road (case 1)
-			eff.setTile(0, 0, (char) (VRAILROAD | BULLBIT));
+			eff.setTile(0, 0, VRAILROAD);
 			break;
 
 		case ROADS2:	// rail on road (case 2)
-			eff.setTile(0, 0, (char) (HRAILROAD | BULLBIT));
+			eff.setTile(0, 0, HRAILROAD);
 			break;
 
 		default:
@@ -235,7 +235,7 @@ class RoadLikeTool extends ToolStroke
 			}
 
 		  	//rail on dirt
-			eff.setTile(0, 0, (char) (LHRAIL | BULLBIT));
+			eff.setTile(0, 0, LHRAIL);
 			break;
 		}
 
@@ -266,7 +266,7 @@ class RoadLikeTool extends ToolStroke
 					eTile == HBRIDGE ||
 					(eTile >= TileConstants.ROADS && eTile <= HROADPOWER))
 				{
-					eff.setTile(0, 0, (char) (HBRIDGE | BULLBIT));
+					eff.setTile(0, 0, HBRIDGE);
 					break;
 				}
 			}
@@ -278,7 +278,7 @@ class RoadLikeTool extends ToolStroke
 					wTile == HBRIDGE ||
 					(wTile >= TileConstants.ROADS && wTile <= INTERSECTION))
 				{
-					eff.setTile(0, 0, (char) (HBRIDGE | BULLBIT));
+					eff.setTile(0, 0, HBRIDGE);
 					break;
 				}
 			}
@@ -290,7 +290,7 @@ class RoadLikeTool extends ToolStroke
 					sTile == VROADPOWER ||
 					(sTile >= VBRIDGE && sTile <= INTERSECTION))
 				{
-					eff.setTile(0, 0, (char) (VBRIDGE | BULLBIT));
+					eff.setTile(0, 0, VBRIDGE);
 					break;
 				}
 			}
@@ -302,7 +302,7 @@ class RoadLikeTool extends ToolStroke
 					nTile == VROADPOWER ||
 					(nTile >= VBRIDGE && nTile <= INTERSECTION))
 				{
-					eff.setTile(0, 0, (char) (VBRIDGE | BULLBIT));
+					eff.setTile(0, 0, VBRIDGE);
 					break;
 				}
 			}
@@ -311,19 +311,19 @@ class RoadLikeTool extends ToolStroke
 			return false;
 
 		case LHPOWER: //road on power
-			eff.setTile(0, 0, (char) (VROADPOWER | BULLBIT));
+			eff.setTile(0, 0, VROADPOWER);
 			break;
 
 		case LVPOWER: //road on power #2
-			eff.setTile(0, 0, (char) (HROADPOWER | BULLBIT));
+			eff.setTile(0, 0, HROADPOWER);
 			break;
 
 		case LHRAIL: //road on rail
-			eff.setTile(0, 0, (char) (HRAILROAD | BULLBIT));
+			eff.setTile(0, 0, HRAILROAD);
 			break;
 
 		case LVRAIL: //road on rail #2
-			eff.setTile(0, 0, (char) (VRAILROAD | BULLBIT));
+			eff.setTile(0, 0, VRAILROAD);
 			break;
 
 		default:
@@ -339,7 +339,7 @@ class RoadLikeTool extends ToolStroke
 
 			// road on dirt;
 			// just build a plain road, fixZone will fix it.
-			eff.setTile(0, 0, (char) (TileConstants.ROADS | BULLBIT));
+			eff.setTile(0, 0, TileConstants.ROADS);
 			break;
 		}
 	
@@ -375,7 +375,7 @@ class RoadLikeTool extends ToolStroke
 					tmpn != RAILHPOWERV &&
 					tmpn != HPOWER)
 				{
-					eff.setTile(0, 0, (char) (VPOWER | BULLBIT));
+					eff.setTile(0, 0, VPOWER);
 					break;
 				}
 			}
@@ -390,7 +390,7 @@ class RoadLikeTool extends ToolStroke
 					tmpn != RAILHPOWERV &&
 					tmpn != HPOWER)
 				{
-					eff.setTile(0, 0, (char) (VPOWER | BULLBIT));
+					eff.setTile(0, 0, VPOWER);
 					break;
 				}
 			}
@@ -405,7 +405,7 @@ class RoadLikeTool extends ToolStroke
 					tmpn != RAILVPOWERH &&
 					tmpn != VPOWER)
 				{
-					eff.setTile(0, 0, (char) (HPOWER | BULLBIT));
+					eff.setTile(0, 0, HPOWER);
 					break;
 				}
 			}
@@ -420,7 +420,7 @@ class RoadLikeTool extends ToolStroke
 					tmpn != RAILVPOWERH &&
 					tmpn != VPOWER)
 				{
-					eff.setTile(0, 0, (char) (HPOWER | BULLBIT));
+					eff.setTile(0, 0, HPOWER);
 					break;
 				}
 			}
@@ -429,19 +429,19 @@ class RoadLikeTool extends ToolStroke
 			return false;
 
 		case TileConstants.ROADS: // wire on E/W road
-			eff.setTile(0, 0, (char) (HROADPOWER | BULLBIT));
+			eff.setTile(0, 0, HROADPOWER);
 			break;
 
 		case ROADS2: // wire on N/S road
-			eff.setTile(0, 0, (char) (VROADPOWER | BULLBIT));
+			eff.setTile(0, 0, VROADPOWER);
 			break;
 
 		case LHRAIL:	// wire on E/W railroad tracks
-			eff.setTile(0, 0, (char) (RAILHPOWERV | BULLBIT));
+			eff.setTile(0, 0, RAILHPOWERV);
 			break;
 
 		case LVRAIL:	// wire on N/S railroad tracks
-			eff.setTile(0, 0, (char) (RAILVPOWERH | BULLBIT));
+			eff.setTile(0, 0, RAILVPOWERH);
 			break;
 
 		default:
@@ -456,7 +456,7 @@ class RoadLikeTool extends ToolStroke
 			}
 
 			//wire on dirt
-			eff.setTile(0, 0, (char) (LHPOWER | BULLBIT));
+			eff.setTile(0, 0, LHPOWER);
 			break;
 		}
 

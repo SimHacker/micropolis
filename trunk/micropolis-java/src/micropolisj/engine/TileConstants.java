@@ -181,7 +181,7 @@ public class TileConstants
 	public static final char PWRBIT = 32768;  // bit 15 ... currently powered
 	// bit 14 ... unused
 	// bit 13 ... unused
-	public static final char BULLBIT = 4096;  // bit 12 ... is bulldozable
+	// bit 12 ... unused
 	// bit 11 ... unused
 	// bit 10 ... unused
 
@@ -363,12 +363,13 @@ public class TileConstants
 
 	public static boolean isDozeable(int tile)
 	{
-		return tile >= 0 && (tile & BULLBIT) != 0;
+		TileSpec spec = Tiles.get(tile & LOMASK);
+		return spec != null && spec.canBulldoze;
 	}
 
 	static boolean isFloodable(int tile)
 	{
-		return (tile == DIRT || ((tile & BULLBIT) != 0 && isCombustible(tile)));
+		return (tile == DIRT || (isDozeable(tile) && isCombustible(tile)));
 	}
 
 	/**

@@ -97,7 +97,7 @@ class TerrainBehavior extends TileBehavior
 			cov != 0 ? 3 : 10;
 
 		if (PRNG.nextInt(rate+1) == 0) {
-			city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
+			city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4)));
 		}
 	}
 
@@ -171,7 +171,7 @@ class TerrainBehavior extends TileBehavior
 						if (isOverWater(rawTile))
 							city.setTile(xpos, ypos, RIVER);
 						else
-							city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
+							city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4)));
 						return;
 					}
 				}
@@ -225,7 +225,7 @@ class TerrainBehavior extends TileBehavior
 						if (isOverWater(rawTile)) {
 							city.setTile(xpos,ypos,RIVER);
 						} else {
-							city.setTile(xpos,ypos,(char)(RUBBLE + PRNG.nextInt(4)+BULLBIT));
+							city.setTile(xpos,ypos,(char)(RUBBLE + PRNG.nextInt(4)));
 						}
 					}
 				}
@@ -249,27 +249,27 @@ class TerrainBehavior extends TileBehavior
 		final int HDx[] = { -2,  2, -2, -1,  0,  1,  2 };
 		final int HDy[] = { -1, -1,  0,  0,  0,  0,  0 };
 		final char HBRTAB[] = {
-			HBRDG1 | BULLBIT,       HBRDG3 | BULLBIT,
-			HBRDG0 | BULLBIT,       RIVER,
-			BRWH | BULLBIT,         RIVER,
-			HBRDG2 | BULLBIT };
+			HBRDG1,       HBRDG3,
+			HBRDG0,       RIVER,
+			BRWH,         RIVER,
+			HBRDG2 };
 		final char HBRTAB2[] = {
-			RIVER,                  RIVER,
-			HBRIDGE | BULLBIT,      HBRIDGE | BULLBIT,
-			HBRIDGE | BULLBIT,      HBRIDGE | BULLBIT,
-			HBRIDGE | BULLBIT };
+			RIVER,        RIVER,
+			HBRIDGE,      HBRIDGE,
+			HBRIDGE,      HBRIDGE,
+			HBRIDGE };
 
 		final int VDx[] = {  0,  1,  0,  0,  0,  0,  1 };
 		final int VDy[] = { -2, -2, -1,  0,  1,  2,  2 };
 		final char VBRTAB[] = {
-			VBRDG0 | BULLBIT,       VBRDG1 | BULLBIT,
-			RIVER,                  BRWV | BULLBIT,
-			RIVER,                  VBRDG2 | BULLBIT,
-			VBRDG3 | BULLBIT };
+			VBRDG0,       VBRDG1,
+			RIVER,        BRWV,
+			RIVER,        VBRDG2,
+			VBRDG3 };
 		final char VBRTAB2[] = {
-			VBRIDGE | BULLBIT,      RIVER,
-			VBRIDGE | BULLBIT,      VBRIDGE | BULLBIT,
-			VBRIDGE | BULLBIT,      VBRIDGE | BULLBIT,
+			VBRIDGE,      RIVER,
+			VBRIDGE,      VBRIDGE,
+			VBRIDGE,      VBRIDGE,
 			RIVER };
 
 		if (tile == BRWV) {
@@ -371,6 +371,6 @@ class TerrainBehavior extends TileBehavior
 	void doExplosion()
 	{
 		// clear AniRubble
-		city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4) + BULLBIT));
+		city.setTile(xpos, ypos, (char)(RUBBLE + PRNG.nextInt(4)));
 	}
 }

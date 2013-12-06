@@ -192,8 +192,7 @@ public abstract class Sprite
 				city.setTile(xpos, ypos, RIVER);
 			}
 			else {
-				city.setTile(xpos, ypos,
-					(char) (TINYEXP | BULLBIT));
+				city.setTile(xpos, ypos, TINYEXP);
 			}
 		}
 	}

@@ -2204,7 +2204,7 @@ public class Micropolis
 
 			if (isVulnerable(getTile(x, y))) {
 				if (PRNG.nextInt(4) != 0) {
-					setTile(x, y, (char)(RUBBLE + BULLBIT + PRNG.nextInt(4)));
+					setTile(x, y, (char)(RUBBLE + PRNG.nextInt(4)));
 				} else {
 					setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 				}
@@ -2374,20 +2374,6 @@ public class Micropolis
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);
-
-		for (int y = 0; y < dim.height; y++) {
-			for (int x = 0; x < dim.width; x++, zoneBase++) {
-				int xtem = xpos - 1 + x;
-				int ytem = ypos - 1 + y;
-				if (!testBounds(xtem, ytem))
-					continue;
-
-				int t = getTile(xtem, ytem);
-				if (isConstructed(t)) {
-					setTile(xtem, ytem, (char)(t | BULLBIT));
-				}
-			}
-		}
 	}
 
 	/**
