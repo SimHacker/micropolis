@@ -16,6 +16,7 @@ public class TileSpec
 	TileSpec animNext;
 	TileSpec onPower;
 	TileSpec onShutdown;
+	boolean canBulldoze;
 	boolean canBurn;
 	boolean canConduct;
 	boolean overWater;
@@ -177,6 +178,7 @@ public class TileSpec
 			}
 		}
 
+		this.canBulldoze = getBooleanAttribute("bulldozable");
 		this.canBurn = !getBooleanAttribute("noburn");
 		this.canConduct = getBooleanAttribute("conducts");
 		this.overWater = getBooleanAttribute("overwater");
