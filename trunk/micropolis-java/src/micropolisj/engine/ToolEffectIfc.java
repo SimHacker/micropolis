@@ -12,6 +12,7 @@ public interface ToolEffectIfc
 {
 	/**
 	 * Gets the tile at a relative location.
+	 * @return a non-negative tile identifier
 	 */
 	int getTile(int dx, int dy);
 
