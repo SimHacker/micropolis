@@ -357,7 +357,8 @@ public class TileConstants
 
 	static boolean isRiverEdge(int tile)
 	{
-		return (tile & LOMASK) > 4 && (tile & LOMASK) < 21;
+		tile &= LOMASK;
+		return tile >= FIRSTRIVEDGE && tile <= LASTRIVEDGE;
 	}
 
 	public static boolean isDozeable(int tile)
