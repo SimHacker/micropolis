@@ -242,9 +242,9 @@ public class ToolStroke
 		int z = inPreview ? 0 : city.PRNG.nextInt(5);
 		int tile;
 		if (z < 4) {
-			tile = (WOODS2 + z) | BULLBIT;
+			tile = WOODS2 + z;
 		} else {
-			tile = FOUNTAIN | BULLBIT;
+			tile = FOUNTAIN;
 		}
 
 		eff.spend(cost);
@@ -304,7 +304,7 @@ public class ToolStroke
 				adjTile |= 8;
 			}
 
-			eff.setTile(0, 0, (RoadTable[adjTile] | BULLBIT));
+			eff.setTile(0, 0, RoadTable[adjTile]);
 		} //endif on a road tile
 
 		else if (isRailDynamic(tile))
@@ -336,7 +336,7 @@ public class ToolStroke
 				adjTile |= 8;
 			}
 
-			eff.setTile(0, 0, (RailTable[adjTile] | BULLBIT));
+			eff.setTile(0, 0, RailTable[adjTile]);
 		} //end if on a rail tile
 
 		else if (isWireDynamic(tile))
@@ -368,7 +368,7 @@ public class ToolStroke
 				adjTile |= 8;
 			}
 
-			eff.setTile(0, 0, (WireTable[adjTile] | BULLBIT));
+			eff.setTile(0, 0, WireTable[adjTile]);
 		} //end if on a rail tile
 
 		return;

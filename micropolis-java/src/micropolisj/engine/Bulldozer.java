@@ -110,7 +110,7 @@ class Bulldozer extends ToolStroke
 				tile = tile & LOMASK;
 				if (tile != RADTILE && tile != DIRT) {
 					int z = inPreview ? 0 : city.PRNG.nextInt(3);
-					int nTile = (TINYEXP + z) | BULLBIT;
+					int nTile = TINYEXP + z;
 					eff.setTile(xx, yy, nTile);
 				}
 			}
