@@ -2202,7 +2202,7 @@ public class Micropolis
 			int y = PRNG.nextInt(getHeight());
 			assert testBounds(x, y);
 
-			if (TileConstants.isVulnerable(getTile(x, y))) {
+			if (isVulnerable(getTile(x, y))) {
 				if (PRNG.nextInt(4) != 0) {
 					setTile(x, y, (char)(RUBBLE + BULLBIT + PRNG.nextInt(4)));
 				} else {
@@ -2218,7 +2218,7 @@ public class Micropolis
 		int y = PRNG.nextInt(getHeight());
 		int t = getTile(x, y);
 
-		if (TileConstants.isArsonable(t)) {
+		if (isArsonable(t)) {
 			setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
 			crashLocation = new CityLocation(x, y);
 			sendMessageAt(MicropolisMessage.FIRE_REPORT, x, y);
