@@ -339,8 +339,8 @@ class TerrainBehavior extends TileBehavior
 			int x = xpos + Dx[z];
 			int y = ypos + Dy[z];
 			if (city.testBounds(x,y)) {
-				if ((city.map[y][x] & LOMASK) == (fromTab[z] & LOMASK) ||
-					(city.map[y][x] == CHANNEL)
+				if ((city.getTile(x,y) == fromTab[z]) ||
+					(city.getTile(x,y) == CHANNEL)
 					) {
 					city.setTile(x, y, toTab[z]);
 				}
