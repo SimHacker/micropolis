@@ -44,7 +44,7 @@ public abstract class Sprite
 		int xpos = x / 16;
 		int ypos = y / 16;
 		if (city.testBounds(xpos, ypos)) {
-			return (city.getTile(xpos, ypos) & LOMASK);
+			return city.getTile(xpos, ypos);
 		} else {
 			return -1;
 		}
@@ -171,7 +171,7 @@ public abstract class Sprite
 		if (!city.testBounds(xpos, ypos))
 			return;
 
-		int z = city.getTile(xpos, ypos);
+		int z = city.getTileRaw(xpos, ypos);
 		int t = z & LOMASK;
 
 		if (t >= TREEBASE) {

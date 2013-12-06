@@ -61,7 +61,7 @@ class TrafficGen
 			assert city.testBounds(mapX, mapY);
 
 			// check for road/rail
-			int tile = city.getTile(mapX, mapY) & LOMASK;
+			int tile = city.getTile(mapX, mapY);
 			if (tile >= ROADBASE && tile < POWERBASE)
 			{
 				city.addTraffic(mapX, mapY, 50);
@@ -95,7 +95,6 @@ class TrafficGen
 		}
 
 		char c = city.getTile(tx, ty);
-		c &= LOMASK;
 
 		if (c < ROADBASE)
 			return false;
@@ -197,25 +196,25 @@ class TrafficGen
 
 		if (mapY > 0)
 		{
-			int tile = city.getTile(mapX, mapY-1) & LOMASK;
+			int tile = city.getTile(mapX, mapY-1);
 			if (tile >= low && tile <= high)
 				return true;
 		}
 		if (mapX + 1 < city.getWidth())
 		{
-			int tile = city.getTile(mapX + 1, mapY) & LOMASK;
+			int tile = city.getTile(mapX + 1, mapY);
 			if (tile >= low && tile <= high)
 				return true;
 		}
 		if (mapY + 1 < city.getHeight())
 		{
-			int tile = city.getTile(mapX, mapY + 1) & LOMASK;
+			int tile = city.getTile(mapX, mapY + 1);
 			if (tile >= low && tile <= high)
 				return true;
 		}
 		if (mapX > 0)
 		{
-			int tile = city.getTile(mapX - 1, mapY) & LOMASK;
+			int tile = city.getTile(mapX - 1, mapY);
 			if (tile >= low && tile <= high)
 				return true;
 		}

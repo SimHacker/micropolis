@@ -74,7 +74,7 @@ public class ShipSprite extends Sprite
 				int ypos = this.y / 16 + BDy[z];
 	
 				if (city.testBounds(xpos, ypos)) {
-					t = city.getTile(xpos, ypos) & LOMASK;
+					t = city.getTile(xpos, ypos);
 					if ((t == CHANNEL) || (t == BRWH) || (t == BRWV) ||
 						tryOther(t, this.dir, z))
 					{

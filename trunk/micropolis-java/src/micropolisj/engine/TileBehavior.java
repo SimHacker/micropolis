@@ -30,7 +30,7 @@ public abstract class TileBehavior
 	{
 		this.xpos = xpos;
 		this.ypos = ypos;
-		this.rawTile = city.getTile(xpos, ypos);
+		this.rawTile = city.getTileRaw(xpos, ypos);
 		this.tile = rawTile & LOMASK;
 		apply();
 	}
