@@ -1147,7 +1147,7 @@ public class Micropolis
 				{
 					for (int my = zy; my <= zy+1; my++)
 					{
-						int tile = (map[my][mx] & LOMASK);
+						int tile = getTile(mx, my);
 						if (tile != DIRT)
 						{
 							if (tile < RUBBLE) //natural land features
@@ -1472,8 +1472,8 @@ public class Micropolis
 
 	void mapScanTile(int xpos, int ypos)
 	{
-		int rawTile = getTileRaw(xpos, ypos);
-		String behaviorStr = getTileBehavior(rawTile & LOMASK);
+		int tile = getTile(xpos, ypos);
+		String behaviorStr = getTileBehavior(tile);
 		if (behaviorStr == null) {
 			return; //nothing to do
 		}
@@ -1583,7 +1583,7 @@ public class Micropolis
 			{
 				if (testBounds(x,y))
 				{
-					char loc = (char) (map[y][x] & LOMASK);
+					char loc = getTile(x, y);
 					if (loc >= LHTHR && loc <= HHTHR)
 						count++;
 				}
@@ -2287,7 +2287,7 @@ public class Micropolis
 		ArrayList<CityLocation> candidates = new ArrayList<CityLocation>();
 		for (int y = 0; y < map.length; y++) {
 			for (int x = 0; x < map[y].length; x++) {
-				if ((map[y][x] & LOMASK) == NUCLEAR) {
+				if (getTile(x, y) == NUCLEAR) {
 					candidates.add(new CityLocation(x,y));
 				}
 			}
@@ -2364,7 +2364,7 @@ public class Micropolis
 		for (int z = 0; z < 300; z++) {
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
-			int tile = map[y][x] & LOMASK;
+			int tile = getTile(x, y);
 			if (isRiverEdge(tile))
 			{
 				for (int t = 0; t < 4; t++) {
