@@ -171,19 +171,18 @@ public abstract class Sprite
 		if (!city.testBounds(xpos, ypos))
 			return;
 
-		int z = city.getTileRaw(xpos, ypos);
-		int t = z & LOMASK;
+		int t = city.getTile(xpos, ypos);
 
 		if (t >= TREEBASE) {
-			if (isBridge(z)) {
+			if (isBridge(t)) {
 				city.setTile(xpos, ypos, RIVER);
 				return;
 			}
-			if (!isCombustible(z)) {
+			if (!isCombustible(t)) {
 				return; //cannot destroy it
 			}
-			if (isZoneCenter(z)) {
-				city.killZone(xpos, ypos, z);
+			if (isZoneCenter(t)) {
+				city.killZone(xpos, ypos, t);
 				if (t > RZB) {
 					city.makeExplosion(xpos, ypos);
 				}
