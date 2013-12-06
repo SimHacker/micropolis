@@ -227,7 +227,8 @@ public class TileConstants
 	//used by scanTile
 	public static String getTileBehavior(int tile)
 	{
-		tile &= LOMASK;
+		assert (tile & LOMASK) == tile;
+
 		TileSpec ts = Tiles.get(tile);
 		return ts != null ? ts.getAttribute("behavior") : null;
 	}
@@ -235,7 +236,8 @@ public class TileConstants
 	//used by queryZoneStatus
 	public static int getDescriptionNumber(int tile)
 	{
-		tile &= LOMASK;
+		assert (tile & LOMASK) == tile;
+
 		TileSpec ts = Tiles.get(tile);
 		if (ts != null) {
 			return ts.getDescriptionNumber();
@@ -247,23 +249,29 @@ public class TileConstants
 
 	public static int getPollutionValue(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null ? spec.getPollutionValue() : 0;
 	}
 
 	public static boolean isAnimated(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.animNext != null;
 	}
 
 	//used by setFire()
 	public static boolean isArsonable(int tile)
 	{
+		assert (tile & LOMASK) == tile;
+
 		return (
 			!isZoneCenter(tile) &&
-			(tile & LOMASK) >= LHTHR &&
-			(tile & LOMASK) <= LASTZONE
+			tile >= LHTHR &&
+			tile <= LASTZONE
 			);
 	}
 
@@ -275,54 +283,67 @@ public class TileConstants
 
 	public static boolean isCombustible(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.canBurn;
 	}
 
 	public static boolean isConductive(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.canConduct;
 	}
 
 	/** Used in repairZone(). */
 	public static boolean isIndestructible(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return tmp >= RUBBLE && tmp < ROADBASE;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= RUBBLE && tile < ROADBASE;
 	}
 
 	/** Used in zonePlop(). */
 	public static boolean isIndestructible2(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return tmp >= FLOOD && tmp < ROADBASE;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= FLOOD && tile < ROADBASE;
 	}
 
 	public static boolean isOverWater(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.overWater;
 	}
 
-	public static boolean isRubble(int cell)
+	public static boolean isRubble(int tile)
 	{
-		return (((cell & LOMASK) >= RUBBLE) &&
-			((cell & LOMASK) <= LASTRUBBLE));
+		assert (tile & LOMASK) == tile;
+
+		return ((tile >= RUBBLE) &&
+			(tile <= LASTRUBBLE));
 	}
 
-	public static boolean isTree(char cell)
+	public static boolean isTree(char tile)
 	{
-		return (((cell & LOMASK) >= WOODS_LOW) &&
-			((cell & LOMASK) <= WOODS_HIGH));
+		assert (tile & LOMASK) == tile;
+
+		return ((tile >= WOODS_LOW) &&
+			(tile <= WOODS_HIGH));
 	}
 
 	//used by makeEarthquake
 	public static boolean isVulnerable(int tile)
 	{
-		int tem2 = tile & LOMASK;
-		if (tem2 < RESBASE ||
-			tem2 > LASTZONE ||
+		assert (tile & LOMASK) == tile;
+
+		if (tile < RESBASE ||
+			tile > LASTZONE ||
 			isZoneCenter(tile)
 			) {
 			return false;
@@ -333,42 +354,51 @@ public class TileConstants
 
 	public static boolean checkWet(int tile)
 	{
-		int x = tile & LOMASK;
-		return (x == POWERBASE ||
-			x == POWERBASE+1 ||
-			x == RAILBASE ||
-			x == RAILBASE + 1 ||
-			x == BRWH ||
-			x == BRWV);
+		assert (tile & LOMASK) == tile;
+
+		return (tile == POWERBASE ||
+			tile == POWERBASE+1 ||
+			tile == RAILBASE ||
+			tile == RAILBASE + 1 ||
+			tile == BRWH ||
+			tile == BRWV);
 	}
 
 	public static CityDimension getZoneSizeFor(int tile)
 	{
 		assert isZoneCenter(tile);
+		assert (tile & LOMASK) == tile;
 
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		TileSpec spec = Tiles.get(tile);
 		return spec != null ? spec.getBuildingSize() : null;
 	}
 
 	public static boolean isConstructed(int tile)
 	{
-		return tile >= 0 && (tile & LOMASK) >= ROADBASE;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= 0 && tile >= ROADBASE;
 	}
 
 	static boolean isRiverEdge(int tile)
 	{
-		tile &= LOMASK;
+		assert (tile & LOMASK) == tile;
+
 		return tile >= FIRSTRIVEDGE && tile <= LASTRIVEDGE;
 	}
 
 	public static boolean isDozeable(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.canBulldoze;
 	}
 
 	static boolean isFloodable(int tile)
 	{
+		assert (tile & LOMASK) == tile;
+
 		return (tile == DIRT || (isDozeable(tile) && isCombustible(tile)));
 	}
 
@@ -378,16 +408,18 @@ public class TileConstants
 	 */
 	public static boolean isRoad(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= ROADBASE && tmp < POWERBASE);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= ROADBASE && tile < POWERBASE);
 	}
 
 	public static boolean isRoadAny(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= ROADBASE && tmp < POWERBASE)
-			|| (tmp == HRAILROAD)
-			|| (tmp == VRAILROAD);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= ROADBASE && tile < POWERBASE)
+			|| (tile == HRAILROAD)
+			|| (tile == VRAILROAD);
 	}
 
 	/**
@@ -446,22 +478,25 @@ public class TileConstants
 
 	public static boolean isRail(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= RAILBASE && tmp < RESBASE);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= RAILBASE && tile < RESBASE);
 	}
 
 	public static boolean isRailAny(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= RAILBASE && tmp < RESBASE)
-			|| (tmp == RAILHPOWERV)
-			|| (tmp == RAILVPOWERH);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= RAILBASE && tile < RESBASE)
+			|| (tile == RAILHPOWERV)
+			|| (tile == RAILVPOWERH);
 	}
 
 	public static boolean isRailDynamic(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= LHRAIL && tmp <= LVRAIL10);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= LHRAIL && tile <= LVRAIL10);
 	}
 
 	public static boolean railConnectsEast(int tile)
@@ -502,8 +537,9 @@ public class TileConstants
 
 	public static boolean isWireDynamic(int tile)
 	{
-		int tmp = tile & LOMASK;
-		return (tmp >= LHPOWER && tmp <= LVPOWER10);
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= LHPOWER && tile <= LVPOWER10);
 	}
 
 	public static boolean wireConnectsEast(int tile)
@@ -544,8 +580,9 @@ public class TileConstants
 
 	public static boolean isCommercialZone(int tile)
 	{
-		int tmp = tile & LOMASK;
-		TileSpec ts = Tiles.get(tmp);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		if (ts != null) {
 			if (ts.owner != null) {
 				ts = ts.owner;
@@ -557,8 +594,10 @@ public class TileConstants
 
 	public static boolean isHospitalOrChurch(int tile)
 	{
-		return (tile & LOMASK) >= HOSPITAL &&
-			(tile & LOMASK) < COMBASE;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= HOSPITAL &&
+			tile < COMBASE;
 	}
 
 	/**
@@ -568,8 +607,9 @@ public class TileConstants
 	 */
 	public static boolean isIndustrialZone(int tile)
 	{
-		int tmp = tile & LOMASK;
-		TileSpec ts = Tiles.get(tmp);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		if (ts != null) {
 			if (ts.owner != null) {
 				ts = ts.owner;
@@ -581,7 +621,9 @@ public class TileConstants
 
 	public static boolean isResidentialClear(int tile)
 	{
-		return (tile & LOMASK) >= RESBASE && (tile & LOMASK) <= RESBASE+8;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= RESBASE && tile <= RESBASE+8;
 	}
 
 	/** Note: does not include hospital/church.
@@ -589,15 +631,18 @@ public class TileConstants
 	 */
 	public static boolean isResidentialZone(int tile)
 	{
-		return (tile & LOMASK) >= RESBASE &&
-			(tile & LOMASK) < HOSPITAL;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= RESBASE &&
+			tile < HOSPITAL;
 	}
 
 	// includes hospital/church.
 	public static boolean isResidentialZoneAny(int tile)
 	{
-		int tmp = tile & LOMASK;
-		TileSpec ts = Tiles.get(tmp);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		if (ts != null) {
 			if (ts.owner != null) {
 				ts = ts.owner;
@@ -610,12 +655,16 @@ public class TileConstants
 	/** Tile represents a part of any sort of building. */
 	public static boolean isZoneAny(int tile)
 	{
-		return (tile & LOMASK) >= RESBASE;
+		assert (tile & LOMASK) == tile;
+
+		return tile >= RESBASE;
 	}
 
 	public static boolean isZoneCenter(int tile)
 	{
-		TileSpec spec = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec spec = Tiles.get(tile);
 		return spec != null && spec.zone;
 	}
 
@@ -625,7 +674,8 @@ public class TileConstants
 	 */
 	public static char neutralizeRoad(int tile)
 	{
-		tile &= LOMASK;
+		assert (tile & LOMASK) == tile;
+
 		if (tile >= ROADBASE && tile <= LASTROAD) {
 			tile = ((tile - ROADBASE) & 0xf) + ROADBASE;
 		}
@@ -640,7 +690,9 @@ public class TileConstants
 	 */
 	public static int residentialZonePop(int tile)
 	{
-		TileSpec ts = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		return ts.getPopulation();
 	}
 
@@ -652,7 +704,9 @@ public class TileConstants
 	 */
 	public static int commercialZonePop(int tile)
 	{
-		TileSpec ts = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		return ts.getPopulation() / 8;
 	}
 
@@ -663,7 +717,9 @@ public class TileConstants
 	 */
 	public static int industrialZonePop(int tile)
 	{
-		TileSpec ts = Tiles.get(tile & LOMASK);
+		assert (tile & LOMASK) == tile;
+
+		TileSpec ts = Tiles.get(tile);
 		return ts.getPopulation() / 8;
 	}
 }
