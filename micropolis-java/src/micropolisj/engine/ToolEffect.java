@@ -42,7 +42,9 @@ class ToolEffect implements ToolEffectIfc
 			return city.getTile(originX + dx, originY + dy);
 		}
 		else {
-			return CLEAR;
+			// tiles outside city's boundary assumed to be
+			// tile #0 (dirt).
+			return 0;
 		}
 	}
 
