@@ -26,10 +26,10 @@ class Bulldozer extends ToolStroke
 		for (int y = 0; y < b.height; y++) {
 			for (int x = 0; x < b.width; x++) {
 
-				int tile = eff.getTile(b.x+x, b.y+y);
-				if (isDozeable(tile) && !isZoneCenter(tile)) {
+				ToolEffectIfc subEff = new TranslatedToolEffect(eff, b.x+x, b.y+y);
+				if (city.isTileDozeable(subEff)) {
 
-					dozeField(new TranslatedToolEffect(eff, b.x+x, b.y+y));
+					dozeField(subEff);
 				}
 
 			}
@@ -80,9 +80,6 @@ class Bulldozer extends ToolStroke
 	void dozeField(ToolEffectIfc eff)
 	{
 		int tile = eff.getTile(0, 0);
-
-		// check dozeable bit
-		assert isDozeable(tile);
 
 		if (isOverWater(tile))
 		{

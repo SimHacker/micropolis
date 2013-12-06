@@ -428,6 +428,32 @@ public class Micropolis
 		return map[ypos][xpos];
 	}
 
+	boolean isTileDozeable(ToolEffectIfc eff)
+	{
+		int myTile = eff.getTile(0, 0) & LOMASK;
+		TileSpec ts = Tiles.get(myTile);
+		if (ts.canBulldoze) {
+			return true;
+		}
+
+		if (ts.owner != null) {
+			// part of a zone; only bulldozeable if the owner tile is
+			// no longer intact.
+
+			int baseTile = eff.getTile(-ts.ownerOffsetX, -ts.ownerOffsetY) & LOMASK;
+			return !(ts.owner.tileNumber == baseTile);
+		}
+
+		return false;
+	}
+
+	boolean isTileDozeable(int xpos, int ypos)
+	{
+		return isTileDozeable(
+			new ToolEffect(this, xpos, ypos)
+			);
+	}
+
 	public boolean isTilePowered(int xpos, int ypos)
 	{
 		return (getTile(xpos, ypos) & PWRBIT) == PWRBIT;
@@ -2018,7 +2044,7 @@ public class Micropolis
 				if (isCombustible(z)) {
 					z |= 8192;   //synthesize BURNBIT on export
 				}
-				if (isDozeable(z)) {
+				if (isTileDozeable(x, y)) {
 					z |= 4096;   //synthesize BULLBIT on export
 				}
 				if (isAnimated(z)) {
