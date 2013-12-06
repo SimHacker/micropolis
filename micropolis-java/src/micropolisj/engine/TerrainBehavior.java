@@ -117,7 +117,7 @@ class TerrainBehavior extends TileBehavior
 					int xx = xpos + DX[z];
 					int yy = ypos + DY[z];
 					if (city.testBounds(xx, yy)) {
-						int c = city.getTile(xx, yy);
+						int c = city.getTileRaw(xx, yy);
 						int t = c & LOMASK;
 						if (isCombustible(c) || c == DIRT ||
 							(t >= WOODS5 && t < FLOOD))

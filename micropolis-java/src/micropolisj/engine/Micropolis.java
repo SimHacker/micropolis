@@ -425,12 +425,17 @@ public class Micropolis
 
 	public char getTile(int xpos, int ypos)
 	{
+		return (char)(map[ypos][xpos] & LOMASK);
+	}
+
+	public char getTileRaw(int xpos, int ypos)
+	{
 		return map[ypos][xpos];
 	}
 
 	boolean isTileDozeable(ToolEffectIfc eff)
 	{
-		int myTile = eff.getTile(0, 0) & LOMASK;
+		int myTile = eff.getTile(0, 0);
 		TileSpec ts = Tiles.get(myTile);
 		if (ts.canBulldoze) {
 			return true;
@@ -440,7 +445,7 @@ public class Micropolis
 			// part of a zone; only bulldozeable if the owner tile is
 			// no longer intact.
 
-			int baseTile = eff.getTile(-ts.ownerOffsetX, -ts.ownerOffsetY) & LOMASK;
+			int baseTile = eff.getTile(-ts.ownerOffsetX, -ts.ownerOffsetY);
 			return !(ts.owner.tileNumber == baseTile);
 		}
 
@@ -456,7 +461,7 @@ public class Micropolis
 
 	public boolean isTilePowered(int xpos, int ypos)
 	{
-		return (getTile(xpos, ypos) & PWRBIT) == PWRBIT;
+		return (getTileRaw(xpos, ypos) & PWRBIT) == PWRBIT;
 	}
 
 	public void setTile(int xpos, int ypos, char newTile)
@@ -1467,7 +1472,7 @@ public class Micropolis
 
 	void mapScanTile(int xpos, int ypos)
 	{
-		int rawTile = getTile(xpos, ypos);
+		int rawTile = getTileRaw(xpos, ypos);
 		String behaviorStr = getTileBehavior(rawTile & LOMASK);
 		if (behaviorStr == null) {
 			return; //nothing to do
@@ -2083,11 +2088,11 @@ public class Micropolis
 		for (int y = 0; y < map.length; y++) {
 			for (int x = 0; x < map[y].length; x++) {
 				int tile = getTile(x,y);
-				if ((tile & LOMASK) == NUCLEAR) {
+				if (tile == NUCLEAR) {
 					nuclearCount++;
 					powerPlants.add(new CityLocation(x,y));
 				}
-				else if ((tile & LOMASK) == POWERPLANT) {
+				else if (tile == POWERPLANT) {
 					coalCount++;
 					powerPlants.add(new CityLocation(x,y));
 				}
@@ -2319,7 +2324,7 @@ public class Micropolis
 			int x = PRNG.nextInt(getWidth() - 19) + 10;
 			int y = PRNG.nextInt(getHeight() - 9) + 5;
 			int t = getTile(x, y);
-			if ((t & LOMASK) == RIVER) {
+			if (t == RIVER) {
 				makeMonsterAt(x, y);
 				return;
 			}
@@ -2421,7 +2426,7 @@ public class Micropolis
 			for (int dy = 0; dy < zoneSize.height; dy++) {
 				int x = xpos - 1 + dx;
 				int y = ypos - 1 + dy;
-				int tile = getTile(x, y);
+				int tile = getTileRaw(x, y);
 				TileSpec ts = Tiles.get(tile & LOMASK);
 				if (ts != null && ts.onPower != null) {
 					setTile(x, y,
@@ -2447,7 +2452,7 @@ public class Micropolis
 			for (int dy = 0; dy < zoneSize.height; dy++) {
 				int x = xpos - 1 + dx;
 				int y = ypos - 1 + dy;
-				int tile = getTile(x, y);
+				int tile = getTileRaw(x, y);
 				TileSpec ts = Tiles.get(tile & LOMASK);
 				if (ts != null && ts.onShutdown != null) {
 					setTile(x, y,

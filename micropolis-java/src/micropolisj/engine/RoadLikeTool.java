@@ -145,7 +145,7 @@ class RoadLikeTool extends ToolStroke
 
 		int cost = RAIL_COST;
 
-		char tile = (char) (eff.getTile(0, 0) & LOMASK);
+		char tile = (char) eff.getTile(0, 0);
 		tile = neutralizeRoad(tile);
 
 		switch (tile)
@@ -250,7 +250,7 @@ class RoadLikeTool extends ToolStroke
 
 		int cost = ROAD_COST;
 
-		char tile = (char) (eff.getTile(0, 0) & LOMASK);
+		char tile = (char) eff.getTile(0, 0);
 		switch (tile)
 		{
 		case RIVER:		// road on water
@@ -354,7 +354,7 @@ class RoadLikeTool extends ToolStroke
 
 		int cost = WIRE_COST;
 
-		char tile = (char) (eff.getTile(0, 0) & LOMASK);
+		char tile = (char) eff.getTile(0, 0);
 		tile = neutralizeRoad(tile);
 
 		switch (tile)

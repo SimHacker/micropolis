@@ -52,7 +52,7 @@ public class ExplosionSprite extends Sprite
 		if (!city.testBounds(xpos, ypos))
 			return;
 
-		int z = city.getTile(xpos, ypos);
+		int z = city.getTileRaw(xpos, ypos);
 		int t = z & LOMASK;
 		if (!isCombustible(z) && t != DIRT)
 			return;
