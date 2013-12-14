@@ -24,6 +24,7 @@ public class TileSpec
 	public TileSpec owner;
 	public int ownerOffsetX;
 	public int ownerOffsetY;
+	BuildingInfo buildingInfo;
 
 	Map<String,String> attributes;
 	List<String> images;
@@ -62,13 +63,19 @@ public class TileSpec
 
 	public BuildingInfo getBuildingInfo()
 	{
-		CityDimension buildingSize = getBuildingSize();
-		if (buildingSize == null) { return null; }
+		return buildingInfo;
+	}
+
+	private void resolveBuildingInfo(Map<String,TileSpec> tileMap)
+	{
+		String tmp = getAttribute("building");
+		if (tmp == null) { return; }
 
 		BuildingInfo bi = new BuildingInfo();
 
-		bi.width = buildingSize.width;
-		bi.height = buildingSize.height;
+		String [] p2 = tmp.split("x");
+		bi.width = Integer.parseInt(p2[0]);
+		bi.height = Integer.parseInt(p2[1]);
 
 		bi.members = new short[bi.width*bi.height];
 		int startTile = tileNumber;
@@ -82,19 +89,20 @@ public class TileSpec
 			}
 		}
 
-		return bi;
+		this.buildingInfo = bi;
 	}
 
 	public CityDimension getBuildingSize()
 	{
-		String tmp = getAttribute("building");
-		if (tmp == null) { return null; }
-
-		String [] p2 = tmp.split("x");
-		return new CityDimension(
-			Integer.parseInt(p2[0]),
-			Integer.parseInt(p2[1])
-			);
+		if (buildingInfo != null) {
+			return new CityDimension(
+				buildingInfo.width,
+				buildingInfo.height
+				);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public int getDescriptionNumber()
@@ -303,6 +311,8 @@ public class TileSpec
 		if (tmp != null) {
 			this.handleBuildingPart(tmp, tileMap);
 		}
+
+		resolveBuildingInfo(tileMap);
 	}
 
 	private void handleBuildingPart(String text, Map<String,TileSpec> tileMap)
