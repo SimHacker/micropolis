@@ -54,22 +54,8 @@ public class Tiles
 		tiles = tilesList.toArray(new TileSpec[0]);
 
 		for (int i = 0; i < tiles.length; i++) {
-			String tmp = tiles[i].getAttribute("becomes");
-			if (tmp != null) {
-				tiles[i].animNext = get(Integer.parseInt(tmp));
-			}
-			tmp = tiles[i].getAttribute("onpower");
-			if (tmp != null) {
-				tiles[i].onPower = get(Integer.parseInt(tmp));
-			}
-			tmp = tiles[i].getAttribute("onshutdown");
-			if (tmp != null) {
-				tiles[i].onShutdown = get(Integer.parseInt(tmp));
-			}
-			tmp = tiles[i].getAttribute("building-part");
-			if (tmp != null) {
-				handleBuildingPart(tiles[i], tmp);
-			}
+			tiles[i].resolveReferences(tilesByName);
+
 			TileSpec.BuildingInfo bi = tiles[i].getBuildingInfo();
 			if (bi != null) {
 				for (int j = 0; j < bi.members.length; j++) {
@@ -88,20 +74,6 @@ public class Tiles
 				}
 			}
 		}
-	}
-
-	private static void handleBuildingPart(TileSpec partTile, String tmp)
-	{
-		String [] parts = tmp.split(",");
-		if (parts.length != 3) {
-			throw new Error("Invalid building-part specification");
-		}
-
-		partTile.owner = get(Integer.parseInt(parts[0]));
-		partTile.ownerOffsetX = Integer.parseInt(parts[1]);
-		partTile.ownerOffsetY = Integer.parseInt(parts[2]);
-
-		assert partTile.ownerOffsetX != 0 || partTile.ownerOffsetY != 0;
 	}
 
 	public static TileSpec get(int tileNumber)

@@ -284,4 +284,65 @@ public class TileSpec
 	{
 		return "{tile#"+tileNumber+"}";
 	}
+
+	void resolveReferences(Map<String,TileSpec> tileMap)
+	{
+		String tmp = this.getAttribute("becomes");
+		if (tmp != null) {
+			this.animNext = tileMap.get(tmp);
+		}
+		tmp = this.getAttribute("onpower");
+		if (tmp != null) {
+			this.onPower = tileMap.get(tmp);
+		}
+		tmp = this.getAttribute("onshutdown");
+		if (tmp != null) {
+			this.onShutdown = tileMap.get(tmp);
+		}
+		tmp = this.getAttribute("building-part");
+		if (tmp != null) {
+			this.handleBuildingPart(tmp, tileMap);
+		}
+	}
+
+	private void handleBuildingPart(String text, Map<String,TileSpec> tileMap)
+	{
+		String [] parts = text.split(",");
+		if (parts.length != 3) {
+			throw new Error("Invalid building-part specification");
+		}
+
+		this.owner = tileMap.get(parts[0]);
+		this.ownerOffsetX = Integer.parseInt(parts[1]);
+		this.ownerOffsetY = Integer.parseInt(parts[2]);
+
+		assert this.owner != null;
+		assert this.ownerOffsetX != 0 || this.ownerOffsetY != 0;
+	}
+
+	public static String [] generateTileNames(Properties recipe)
+	{
+		int ntiles = recipe.size();
+		String [] tileNames = new String[ntiles];
+		ntiles = 0;
+		for (int i = 0; recipe.containsKey(Integer.toString(i)); i++) {
+			tileNames[ntiles++] = Integer.toString(i);
+		}
+		int naturalNumberTiles = ntiles;
+
+		for (Object n_obj : recipe.keySet()) {
+			String n = (String)n_obj;
+			if (n.matches("^\\d+$")) {
+				int x = Integer.parseInt(n);
+				if (x >= 0 && x < naturalNumberTiles) {
+					assert tileNames[x].equals(n);
+					continue;
+				}
+			}
+			assert ntiles < tileNames.length;
+			tileNames[ntiles++] = n;
+		}
+		assert ntiles == tileNames.length;
+		return tileNames;
+	}
 }
