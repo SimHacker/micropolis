@@ -15,7 +15,7 @@ import java.util.*;
 public class Tiles
 {
 	static final Charset UTF8 = Charset.forName("UTF-8");
-	static TileSpec [] tiles = new TileSpec[960];
+	static TileSpec [] tiles;
 	static {
 		try {
 			readTiles();
@@ -29,7 +29,7 @@ public class Tiles
 	static void readTiles()
 		throws IOException
 	{
-		tiles = new TileSpec[960];
+		ArrayList<TileSpec> tilesList = new ArrayList<TileSpec>();
 
 		Properties tilesRc = new Properties();
 		tilesRc.load(
@@ -39,15 +39,16 @@ public class Tiles
 				)
 			);
 
-		for (int i = 0; i < tiles.length; i++) {
+		for (int i = 0; ; i++) {
 			String tileName = Integer.toString(i);
 			String rawSpec = tilesRc.getProperty(tileName);
 			if (rawSpec == null) {
-				continue;
+				break;
 			}
 
-			tiles[i] = TileSpec.parse(i, rawSpec, tilesRc);
+			tilesList.add( TileSpec.parse(i, rawSpec, tilesRc) );
 		}
+		tiles = tilesList.toArray(new TileSpec[0]);
 
 		for (int i = 0; i < tiles.length; i++) {
 			String tmp = tiles[i].getAttribute("becomes");
