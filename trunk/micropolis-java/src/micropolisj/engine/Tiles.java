@@ -16,6 +16,7 @@ public class Tiles
 {
 	static final Charset UTF8 = Charset.forName("UTF-8");
 	static TileSpec [] tiles;
+	static Map<String,TileSpec> tilesByName = new HashMap<String,TileSpec>();
 	static {
 		try {
 			readTiles();
@@ -46,7 +47,9 @@ public class Tiles
 				break;
 			}
 
-			tilesList.add( TileSpec.parse(i, rawSpec, tilesRc) );
+			TileSpec ts = TileSpec.parse(i, rawSpec, tilesRc);
+			tilesByName.put(tileName, ts);
+			tilesList.add(ts);
 		}
 		tiles = tilesList.toArray(new TileSpec[0]);
 
