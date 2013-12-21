@@ -316,7 +316,7 @@ public class OverlayMapView extends JComponent
 		{
 			for (int x = minX; x < maxX; x++)
 			{
-				int tile = engine.getTile(x,y) & LOMASK;
+				int tile = engine.getTile(x,y);
 				switch (mapState) {
 				case RESIDENTIAL:
 					if (isZoneAny(tile) &&
@@ -367,16 +367,7 @@ public class OverlayMapView extends JComponent
 				// in the checkPower function
 
 				if (tile != -1) {
-				if (tile >= 0 && tile <= LAST_TILE) {
-				for (int yy = 0; yy < TILE_HEIGHT; yy++)
-				{
-					for (int xx = 0; xx < TILE_WIDTH; xx++)
-					{
-						img.setRGB(x*TILE_WIDTH+xx,y*TILE_HEIGHT+yy,
-							tileArrayImage.getRGB(xx,tile*TILE_OFFSET_Y+yy));
-					}
-				}
-				}
+					paintTile(img, x, y, tile);
 				}
 			}
 		}
@@ -413,6 +404,20 @@ public class OverlayMapView extends JComponent
 
 			gr.setColor(Color.YELLOW);
 			gr.drawRect(rect.x-1,rect.y-1,rect.width+2,rect.height+2);
+		}
+	}
+
+	void paintTile(BufferedImage img, int x, int y, int tile)
+	{
+		assert tile >= 0;
+
+		for (int yy = 0; yy < TILE_HEIGHT; yy++)
+		{
+			for (int xx = 0; xx < TILE_WIDTH; xx++)
+			{
+				img.setRGB(x*TILE_WIDTH+xx,y*TILE_HEIGHT+yy,
+					tileArrayImage.getRGB(xx,tile*TILE_OFFSET_Y+yy));
+			}
 		}
 	}
 
