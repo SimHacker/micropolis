@@ -75,7 +75,11 @@ public class TornadoSprite extends Sprite
 			return;
 		}
 
-		// FIXME- the original code checks here for an ending condition
+		if (this.count == 0 && city.PRNG.nextInt(501) == 0) {
+			// early termination
+			this.frame = 0;
+			return;
+		}
 
 		destroyTile(x/16, y/16);
 	}
