@@ -945,10 +945,20 @@ public class MainWindow extends JFrame
 
 	private JToggleButton makeToolBtn(final MicropolisTool tool)
 	{
+		String iconName = strings.containsKey("tool."+tool.name()+".icon") ?
+			strings.getString("tool."+tool.name()+".icon") :
+			"/graphics/tools/"+tool.name().toLowerCase()+".png";
+		String iconSelectedName = strings.containsKey("tool."+tool.name()+".selected_icon") ?
+			strings.getString("tool."+tool.name()+".selected_icon") :
+			iconName;
+		String tipText = strings.containsKey("tool."+tool.name()+".tip") ?
+			strings.getString("tool."+tool.name()+".tip") :
+			tool.name();
+
 		JToggleButton btn = new JToggleButton();
-		btn.setIcon(new ImageIcon(MainWindow.class.getResource(strings.getString("tool."+tool.name()+".icon"))));
-		btn.setSelectedIcon(new ImageIcon(MainWindow.class.getResource(strings.getString("tool."+tool.name()+".selected_icon"))));
-		btn.setToolTipText(strings.getString("tool."+tool.name()+".tip"));
+		btn.setIcon(new ImageIcon(MainWindow.class.getResource(iconName)));
+		btn.setSelectedIcon(new ImageIcon(MainWindow.class.getResource(iconSelectedName)));
+		btn.setToolTipText(tipText);
 		btn.setMargin(new Insets(0,0,0,0));
 		btn.setBorderPainted(false);
 		btn.addActionListener(new ActionListener() {
@@ -1059,7 +1069,11 @@ public class MainWindow extends JFrame
 
 		currentTool = newTool;
 
-		currentToolLbl.setText(strings.getString("tool."+currentTool.name()+".name"));
+		currentToolLbl.setText(
+			strings.containsKey("tool."+currentTool.name()+".name") ?
+			strings.getString("tool."+currentTool.name()+".name") :
+			currentTool.name()
+			);
 
 		int cost = currentTool.getToolCost();
 		currentToolCostLbl.setText(cost != 0 ? formatFunds(cost) : " ");
