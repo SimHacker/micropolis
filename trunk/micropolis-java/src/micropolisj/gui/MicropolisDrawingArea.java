@@ -253,10 +253,14 @@ public class MicropolisDrawingArea extends JComponent
 		ToolCursor tp = new ToolCursor();
 		tp.rect = newRect;
 		tp.borderColor = parseColor(
-			strings.getString("tool."+tool.name()+".border")
+			strings.containsKey("tool."+tool.name()+".border") ?
+			strings.getString("tool."+tool.name()+".border") :
+			strings.getString("tool.*.border")
 			);
 		tp.fillColor = parseColor(
-			strings.getString("tool."+tool.name()+".bgcolor")
+			strings.containsKey("tool."+tool.name()+".bgcolor") ?
+			strings.getString("tool."+tool.name()+".bgcolor") :
+			strings.getString("tool.*.bgcolor")
 			);
 		setToolCursor(tp);
 	}
