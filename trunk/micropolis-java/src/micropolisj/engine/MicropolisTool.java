@@ -16,46 +16,35 @@ import static micropolisj.engine.TileConstants.*;
  */
 public enum MicropolisTool
 {
-	BULLDOZER,
-	WIRE,
-	ROADS,
-	RAIL,
-	RESIDENTIAL,
-	COMMERCIAL,
-	INDUSTRIAL,
-	FIRE,
-	POLICE,
-	STADIUM,
-	PARK,
-	SEAPORT,
-	POWERPLANT,
-	NUCLEAR,
-	AIRPORT,
-	QUERY;
+	BULLDOZER(1, 1),
+	WIRE(1, 5),   //cost=25 for underwater
+	ROADS(1, 10), //cost=50 for over water
+	RAIL(1, 20),  //cost=100 for underwater
+	RESIDENTIAL(3, 100),
+	COMMERCIAL(3, 100),
+	INDUSTRIAL(3, 100),
+	FIRE(3, 500),
+	POLICE(3, 500),
+	STADIUM(4, 5000),
+	PARK(1, 10),
+	SEAPORT(4, 3000),
+	POWERPLANT(4, 3000),
+	NUCLEAR(4, 5000),
+	AIRPORT(6, 10000),
+	QUERY(1, 0);
+
+	int size;
+	int cost;
+
+	private MicropolisTool(int size, int cost)
+	{
+		this.size = size;
+		this.cost = cost;
+	}
 
 	public int getWidth()
 	{
-		switch(this)
-		{
-		case RESIDENTIAL:
-		case COMMERCIAL:
-		case INDUSTRIAL:
-		case FIRE:
-		case POLICE:
-			return 3;
-
-		case STADIUM:
-		case SEAPORT:
-		case POWERPLANT:
-		case NUCLEAR:
-			return 4;
-
-		case AIRPORT:
-			return 6;
-
-		default:
-			return 1;
-		}
+		return size;
 	}
 
 	public int getHeight()
@@ -83,29 +72,14 @@ public enum MicropolisTool
 		return beginStroke(engine, xpos, ypos).apply();
 	}
 
+	/**
+	 * This is the cost displayed in the GUI when the tool is selected.
+	 * It does not necessarily reflect the cost charged when a tool is
+	 * applied, as extra may be charged for clearing land or building
+	 * over or through water.
+	 */
 	public int getToolCost()
 	{
-		switch (this)
-		{
-		case BULLDOZER: return 1;
-		case WIRE: return 5; //25 for underwater
-		case ROADS: return 10;  //50 for over water
-		case RAIL: return 20;   //100 for underwater
-		case RESIDENTIAL: return 100;
-		case COMMERCIAL: return 100;
-		case INDUSTRIAL: return 100;
-		case FIRE: return 500;
-		case POLICE: return 500;
-		case STADIUM: return 5000;
-		case PARK: return 10;
-		case SEAPORT: return 3000;
-		case POWERPLANT: return 3000;
-		case NUCLEAR: return 5000;
-		case AIRPORT: return 10000;
-		case QUERY: return 0;
-		default:
-			assert false;
-			return 1;
-		}
+		return cost;
 	}
 }
