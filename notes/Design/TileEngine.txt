@@ -1,0 +1,54 @@
+Hierarchical lego component renderer.
+
+Import digital lego buildings, sprites and effects.
+
+It could also import Minecraft buildings.
+
+The tile render that matches tile patterns, which may be parameterized by animated tiles, or tiles used literally to store state, and it maps them to lego model file names, with numeric indexed parameters in the file name components (like animation index, development level, land value, etc).
+
+For example, the football stadium recognizes two states: no game, and playing game.
+
+There is only one static pattern that matches no game, that maps to the empty stadium with no players or cars, which is also the base layer for the playing game stadium.
+
+When the game was playing, it would enable a static overlay of cars in the parking lot, and an animated overlay of players running back and forth.
+
+The running players animation would be indexed by a pattern that matched the various tile animation states. 
+
+The pattern that is parameterized by the animated tiles of the football game, which index into different overlay components, that just show the players on the field, but not the rest of the statium. 
+
+That overlay could add or subtract blocks to any part of the model, not just the tiles that were driving the animation. The actual low level flat simcity tiles would be hidden "underground" and not seen unless in debug mode, and you'd normally see the solid model and its overlays that covered the entire zone.
+
+The reason you need clipping, is so you can build a virtual building with roads and sidewalks and fields around it, or a whole city or neighborhood, and then clip out different parts of it to use in SimCity. 
+
+The reason you need scaling, is so you can stretch any building from whatever size it was built at, to fit perfectly into the zone. 
+
+So we can map from any building size, including the official Micropolis Lego spec, and clip out any extransous parts (the Micropolis spec reserves space for roads, which we represent as small single independent tiles, not part of the buildings). 
+
+And it's nice for the artists to build their sets of buildings next to each other in a natural setting, and then slice it up any way they like to import into Micropolis the game. 
+
+This makes it easier to package and present and browse and select from building sets! 
+
+The tastefully arranged building sets can even be used as wysiwyg direct manipulation "tool palettes" for selecting the building tool.
+
+A lego building or sub-component is defined by a lego model file, 
+
+plus a clipping region (a bounding box, and possibly any other blocks to subtract, like a sparse bitmap, that you can make by building a model out of magic "black hole colored" bricks).
+
+A building can have modular overlays placed into it as children (or overlapping it as siblings), at any translation, rotation, scale and clipping.
+
+So "sprite" overlays can cut holes in buildings. 
+
+A sibling component placed after it can clip out blocks (in the parent coordinate system), and add new blocks (in its own coordinate system).
+
+So an octopus could attack a building by slicing out a big hole, and sticking its tendrils out and waving them around.
+
+Or other effects could cut away and add to the building in many ways.
+
+Like a lego editing layer: remove bricks then add bricks.
+
+Open the garage door by animating an overlay that cuts away the door from bottom to top as it opens. Then create a car agent that drives out of the garage, and onto the street. 
+
+Data visualization overlays that can do things like matrix transforms that stretch the y-scale of buildings up or down to visualize data layers, and even crush the tiles down flat so it looks like the building is viewed from above -- or at a diagonal angle -- and then create data visualization bricks over the buildings. 
+
+Lego particle systems! Players can provide a bunch of models to use as particles. Birds, vultures, drones, fire, fountains, etc. 
+

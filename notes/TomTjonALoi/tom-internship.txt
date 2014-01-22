@@ -1,0 +1,951 @@
+========================================================================
+
+Don Hopkins is an interactive digital artist, user interface designer
+and graphics programmer. His mentors during college at the University
+of Maryland were Mark Weiser (inventor of Ubiquitous Computing), Ben
+Shneiderman (human computer interaction researcher), and Mitch Bradley
+(Sun Microsystems hardware hacker).
+
+http://www.DonHopkins.com
+http://en.wikipedia.org/wiki/Don_Hopkins
+http://www.micropolisonline.com/wiki/index.php/Don_Hopkins
+
+He has worked on the user interface of the SimCity game since 1992,
+and in 2007 worked with Electronic Arts to release the original code
+as "Open Source" software in January 2008, for the One Laptop per
+Child project. 
+
+http://www.micropolisonline.com/wiki/index.php/History
+http://www.micropolisonline.com/wiki/index.php/Future
+
+Since SimCity was made open souce, he has been developing an
+educationally oriented, constructionist, socially networked, multi
+player version of SimCity, which runs over the internet with Flash in
+a web browser. Kennisnet and IBM Netherlands are supporting the
+project, named "Micropolis Eduverse", to use the open source version
+of SimCity in Dutch classrooms.
+
+http://www.micropolisonline.com/wiki/index.php/Vision
+http://www.micropolisonline.com/wiki/index.php/Development_Plan
+
+He worked with Will Wright at Maxis on The Sims from 1997-2000, and
+for EA on The Sims Online. He later worked at Wright's independent
+think tank, the "Stupid Fun Club," on robotics, speech recognition and
+synthesis, facial animation, personality simulation, live performance,
+teleoperation, reality TV show production, toy prototypes, expressive
+speech editing, and other stuff. He will soon be working again with
+Wright at the Stupid Fun Club, on iPhone applications, user created
+content, music metadata, and implementing other ideas that Wright
+dreams up.
+
+http://www.StupidFunClub.com
+http://www.donhopkins.com/drupal/node/32
+
+Other places he's worked on user interface design and programming
+include TomTom, Interval Research Corporation, Laszlo Systems,
+Viacom/Noggin Network, Kaleida Labs, Carnegie Mellon CS Department,
+Turing Institute, Sun Microsystems, and the University of Maryland
+Human Computer Interaction Lab.
+
+http://www.donhopkins.com/home/resume.html
+
+Will Wright, the original designer of SimCity, The Sims and Spore, has
+agreed to be an advisor for this project. By phone and over the
+internet, he will review and discuss the plans and results, and offer
+his ideas and advice for research and design.
+
+http://en.wikipedia.org/wiki/Will_Wright_(game_designer)
+http://www.donhopkins.com/drupal/node/9
+
+Alan Kay, the inventor of the Dynabook and object oriented
+programming, is a strong supporter of this project, and has offered
+much useful advice, encouragement and inspiration.
+
+http://en.wikipedia.org/wiki/Alan_Kay
+
+"The best way to predict the future is to invent it."
+
+-Alan Kay, OOP and GUI pioneer
+
+"One of the most wonderful possibilities about this venture is that it
+will bring together very fluent designers from many worlds of
+computing (more worlds than usually combine to make a game) in the
+service of the children. We should really try to pull this off!"
+
+- Alan Kay, on developing an educational, programmable version of SimCity
+
+http://www.micropolisonline.com/wiki/index.php/Alan_Kay
+
+========================================================================
+
+"Micropolis Eduverse" is an educational, web based, open source
+version of SimCity, based on the original city simulation game from
+Maxis by Will Wright.
+
+Goals:
+
+Design a visual interactive user interface for Micropolis.
+
+Design an interactive multi player user interface for constructionist
+learning, colaboration, chat, debate, voting, building, visualizing
+and controling the simulation.
+
+Localize and style the user interface for use in the Dutch educational
+system.
+
+Explore the constructionist learning design space.
+
+Tasks:
+
+Writing
+
+  Translate the text used of the user interface and documentation to
+  Dutch.
+
+  Write and illustrate documentation, tutorials, help text,
+  educational courseware, in Dutch and English.
+
+Graphical Design
+
+  Design and produce an overall theme and specific graphics for the
+  user interface.
+
+      Logos, icons, typography, backgrounds and visual effects for the
+      user interface, including menus and palettes of editing tools,
+      scenarios, map info visualizations, dialogs, widgets, cursors,
+      editing tools, playing cards, avatars, etc.
+
+Interaction Design
+
+  Write user stories for teachers and students about contructionist
+  learning experiences with Micropolis.
+
+  Research and storyboard scenarios for adapting and applying
+  Micropolis to teaching various subjects.
+
+  Design social interactivities that facilitate constructionist learning.
+
+  Design graphical user interfaces for colaborative multi player
+  social activities like voting, chatting, journalism, machinima,
+  avatar presentation and construction, map editing, etc.
+
+========================================================================
+
+Constructionist Education Background:
+
+"Constructionism is a philosophy of education in which children learn 
+by doing and making in a public, guided, collaborative process including
+feedback from peers, not just from teachers."
+
+-OLPC Wiki: http://wiki.laptop.org/go/Constructionist
+
+Develop constructionist educational materials, scenarios, user
+stories. 
+
+Seymour Papert defined constructionism in a proposal to the National
+Science Foundation entitled Constructionism: A New Opportunity for
+Elementary Science Education as follows: "The word constructionism is
+a mnemonic for two aspects of the theory of science education
+underlying this project. From constructivist theories of psychology we
+take a view of learning as a reconstruction rather than as a
+transmission of knowledge. Then we extend the idea of manipulative
+materials to the idea that learning is most effective when part of an
+activity the learner experiences as constructing a meaningful
+product."
+
+While constructionism has, due to its impetus, been primarily used in
+science and mathematics teaching (in the form of inquiry-based
+science), it is arguable that it developed in a different form in the
+field of media studies in which students often engage with media
+theory and practice simultaneously, in a complementary praxis. More
+recently it has gained a foot hold in Applied linguistics, in the
+field of second language acquisition (or SLA). One such application
+has been the use of the popular game SimCity as a means of teaching
+English using constructionist techniques (Gromik:2004).
+
+http://en.wikipedia.org/wiki/Constructionism_(learning_theory)
+
+========================================================================
+
+Micropolis Art Assets:
+
+  This is a list of required and optional assets for Micropolis. 
+
+  As noted, some of them are for the current TCL/Tk based version of
+  Micropolis that we want to get out right away.  Others are for the more
+  advanced Python version that we're developing after releasing the
+  TCL/Tk version.
+
+  The TCL/Tk version currently works ok with its current assets, and
+  these are just suggestions that would improve it but are not
+  necessary. The Python version is not yet fully designed or
+  implemented, and it will be more open-ended and powerful, so this is
+  just a rough estimate of the assets it will need. 
+
+  Sound
+
+    NeWS and TCL/Tk sound servers supported playing sounds back at different rates, and repeating. 
+
+    Sound effects for tools. 
+      Currently playing vocal vowles at different pitches. 
+
+  User Interface Graphics and Icons
+
+    These aren't all necessary, but it would be nice to have some of
+    them to make the interface look nicer, more graphical, and kid
+    friendly.
+
+    The style should be international, kid oriented, big, bright,
+    saturated, simple. 
+
+    Icons should look good and be readable when shown in desaturated
+    gray scale on the OLPC's monochrome screen in low power reflective
+    mode. The brightness detail can be full resolution but the color
+    detail should be lower resolution by about half (not depending on
+    color detail as fine as brightness detail), because of the nature
+    of the OLPC's screen: 200 dots per inch monochrome gray scale,
+    with lower resolution color. For example, text on an icon should
+    be a noticeably different brightness than the background color,
+    instead of relying on color variation, which is not as detailed
+    and won't show up in monochrome mode.
+
+    SVG is the idea source format, because it can be scaled to any
+    size, rendered with antialiased edges, and will be easily used in
+    the Python version. Illustrator exports SVG. For now the TCL/Tk
+    version can use versions of the SVG files converted to "XPM"
+    format (which I can do).
+
+    Later, the Python user interface will require a bunch more icons
+    and graphics, depending on the user interface and features we
+    decide to support. It would be great to be able to use the same
+    SVG source graphics in the Python version, scaling them as
+    appropriate to adapt to the screen layout. We should revisit the
+    icons and graphics after we port Micropolis to Python.
+
+    What follows is a complete list of graphics we could use in the
+    TCL/Tk version. SVG is ideal but PNG is sufficient for this time.
+
+    Micropolis icon for use in Sugar user interface, in SVG or PNG. 
+
+    Logos:
+      Micropolis logo
+      Micropolis lettering
+      OLPC Project logo
+      XO Laptop logo
+      Linux Penguin logo
+      Python Programming Language logo
+
+    Small menu item icons for map overlay menus:
+      Zones
+        All
+        Residential
+        Commercial
+        Industrial
+        Transportation
+      Overlays
+        Population Density
+        Rate of Growth
+        Land Value
+        Crime Rate
+        Pollution Density
+        Traffic Density
+        Power Grid
+        Fire Coverage
+        Police Coverage
+
+    Small menu item icons for File menu:
+      Save City
+      Save City as...
+      Add Player...
+      Choose City!
+      Quit Playing!
+
+    Small menu item icons for Options menu:
+      Auto Budget
+      Auto Bulldoze
+      Disasters
+      Sound
+      Animation
+      Messages
+      Notices
+
+    Small menu item icons for Disasters menu:
+      Monster
+      Fire
+      Flood
+      Meltdown
+      Air Crash
+      Tornado
+      Earthquake
+
+    Small menu item icons for Time menu:
+      Pause
+      Slow
+      Medium
+      Fast
+
+    Small menu item icons for Priority menu:
+      Flat Out!
+      Zoom Zoom
+      Whoosh Whoosh
+      Buzz Buzz
+      Putter Putter
+      Drip Drip
+      Snore Snore
+
+    Small menu item icons for Windows menu (maybe the same as ones used in buttons):
+      Budget
+      Evaluation
+      Graph
+
+    Small menu item icons for Map Options menu:
+      Auto Goto
+      Palette Panel
+      Chalk Overlay
+
+    Small "OK" button for confirmation dialog buttons.
+
+    Small "Cancel" button for confirmation dialog buttons.
+
+    Large "Question" icon for dialogs asking questions (ok/cancel questions).
+
+    Large "Notice" icon for notice window (informational).
+
+    Large "Query" icon for zone query window (zone tricorder).
+
+    Medium "Generate New City" icon for button to generate new city, on start screen.
+
+    Medium Game Level icons for start screen radio buttons:
+      Easy
+      Medium
+      Hard
+
+    Big "Load City" icon for load city dialog.
+    Meduim "Load City" icon for button to load city, on start screen.
+
+    Big "Save City" icon for save city dialog.
+    Small "Save City" icon for button to save city.
+
+    Big Evaluation icon for evaluation window. 
+    Small Evaluation icon for button to bring up evaluation window.
+
+    Big Graph icon for graph window. 
+    Small Graph icon for button to bring up graph window.
+
+    Big Simolean/Budget symbol for Budget window. 
+    Small Simolean/Budget symbol for button to bring up budget window.
+
+    Big Quit symbol for Quit confirmation dialog.
+    Small Quit symbol for button to bring up Quit confirmation dialog.
+
+    Big About symbol for About dialog.
+    Small About symbol for button to open About dialog.
+
+    Big Choose City symbol for Choose City confirmation dialog.
+    Small Choose City symbol for button to open Choose City confirmation dialog.
+
+
+  Simulation and User Interface Sounds
+
+    Right now it's using the original sounds, plus some interface
+    sounds I recorded. I can convert them to the format required by
+    the Linux sound interface we use. 
+
+    I can supply a list of required interface sounds, but I think we
+    can go with the sounds we have right now without any trouble.
+
+    Later, the Python version will require a bunch more sounds for its
+    user interface, which will depend on the user interface features
+    we decide to support. So we should revisit the sound effects
+    later once Micropolis is ported to Python. 
+
+    To be authentic, I would like to use the original sounds that the
+    simulator made (like the Skywatch One helicopter), or re-record
+    high quality replacements. Maybe we can get Will to record a fresh
+    version of "Skywatch One reporting heavy traffic!" in his own
+    voice (he made that original sound) and the sound people can add
+    in the helicopter sound over his voice to re-create the original
+    sound at high quality. The other sounds could be re-made from
+    scratch without any problem or help from Will. 
+
+    Voice overs reading the user interface text, notices, help text
+    and documentation would be great for pre-literate children. Would
+    need to be translated to other languages. 
+
+
+  Update Documentation
+
+    I have translated the Micropolis manual to HTML. 
+
+    It's the original version that applies to the multi player
+    X11/TCL/Tk version, which needs to be update in a few places where
+    it's specific about the user interface or installation instructions.
+
+    It would benefit from some nice reformatting and CSS styles, as well
+    as some illustrations and screen snapshots.
+
+    After we port Micropolis to Python, the interface-specific
+    documentation will have to be rewritten, re-illustrated, and then it
+    will have to be translated to different languages.
+
+    The documentation consists of the following files:
+
+    Index
+      Introduction
+      Tutorial
+      User Reference
+      Inside the Simulator
+      History of Cities and City Planning
+      Bibliography
+      Credits
+
+    Help Text
+
+      There are also HTML files corresponding to user interface help text.
+      The user interface components are tagged with help ids that are the
+      base names of html files. The existing HTML help files are just
+      placeholders that don't have any useful help text, and there are
+      some help files for user interface components and windows that have
+      since been removed, as well as some help files missing for user
+      interface components and windows that have been added.
+
+      To finish implementing help, we need to go through the code and
+      identify all help tags and opportunities for adding missing help
+      tags to the user interface, then make all help files corresponding
+      to the existing tags, delete obsolete help files, and write all the
+      help text. It would be nice for the help text to hsve illustrations
+      of the corresponding windows and components in use.
+
+      After we port Micropolis to Python, the help files will have to be
+      re-inventoried, rewritten, re-illustrated, and translated to
+      different languages.
+
+    Courseware
+
+      We need to include any Micropolis courseware or teacher's guides with
+      the documentation, and update it to relect the current user
+      interface.
+
+      After we port Micropolis to Python, we will need to update the
+      courseware to reflect the features and user interface of the new
+      user interface.
+
+========================================================================
+
+Plan for developing Micropolis for OLPC and other platforms.
+
+DONE:
+
+    First, get the old TCL/Tk/X11 version cleaned up and running on
+    the current OLPC platform, and passed through EA's legal and
+    quality assurance process.
+
+DONE:
+
+    Screen depth and size: fixed size of OLPC screen.
+    Window management: one window. 
+    Simplify window management. Single map and editor view. Tiled graph and evaluation windows. 
+    Rearrange startup screen so it works in the full window mode.
+    Make budget window and file dialogs be transient popup windows.
+    Add "Enable/Disable Auto Budget" button to budget window.
+    Click on small R/C/I gauge to toggle evaluation window.
+    Click on small graph to toggle graph window.
+    Click on funds or tax rate to show budget window.
+    Disable multi player features by default (added -m flag to enable multi player mode).
+    Disable other experimental features (cellular automata, dynamic query, etc).
+    Add -S flag to enable Sugar features, and TCL access to test flag.
+    Enable audio: Use Sugar audio server.
+      Convert sounds to new audio format (currently wav).
+
+    Fix fonts. 
+      Pick nice Sugar fonts to use, based on Sugar flag. 
+
+    Make Sugar activity wrapper in Python.
+
+TODO, in progress:
+
+    Update manual and documentation.
+
+    Put new graphics and icons into interface and menus.
+
+DONE:
+
+Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
+
+  Implement custom components in PyGTK.
+    Map view.
+    Editor view.
+    Date view.
+    Graph view.
+    Pie menus.
+    Cellular Automata Machine view.
+
+DONE:
+
+Implement web based interface with TurboGears/Cairo/OpenLaszlo/Flash/AMF.
+
+TODO for OLPC:
+
+  Integrate with Sugar and OLPC hardware.
+    Audio.
+      Support CSound audio mixer.
+      Switch to a smaller audio format.
+      Record better sounds.
+    Internationalization.
+    Graphics.
+      Hires monochrome. 
+      SVG graphics and icons. 
+      Create better icons. 
+    Sugar integration. 
+      Integrate with OLPC activity system, window manager, etc. 
+      Rework user interface to follow Sugar user interface guidelines. 
+    Keyboard control.
+      Support OLPC keyboard layout and device buttons. 
+      Game keypad interface for book mode.
+    Optimization.
+      Optimize power management.
+      Optimize size.
+      Optimize speed.
+    Documentation.
+      Integrated help, tutorials, essays on city design from manual, etc. 
+      Voiceovers, demos, journal playback.
+      Courseware. 
+      Map annotation. 
+    Journaling.
+      Event history.
+      Edit history. 
+      Checkpointing. 
+      Branching histories. 
+      Rewinding and fast forwarding. 
+      Publishing newspaper articles linking to save files.
+      URL to link into a city at a particular location on the map.
+    Grid networking. 
+      Multi player stupport.
+        Sharing cities.
+        Colaborative editing.
+        Voting. 
+        Chat. 
+        White board.
+
+TODO for Education:
+
+    Educational.
+      Bring old Micropolis courseware up to date, and integrate with the game. 
+      Export simulation data to spreadsheet or xml. 
+      Creative writing, storytelling, newspaper reporting, blogging, etc.
+      Scenarios and experiments.
+      What-if? 
+        Branching history at decision point, and comparing different results. 
+      Scripting. 
+        Open up the simulator to Python. 
+        Web services to remotely monitor and control simulation. 
+        HTML or AJAX web server remote control interface.
+          Support multi player interactions through web server.
+            Submit a proposal to build a stadium over the web.
+            Style it like a real civic government web page, that allows citizens to participate online. 
+        Enable extending the graphics, tiles, sprites. 
+        Enable programming behaviors, defining new zones, new global variables, overlays, etc. 
+        Cellular automata.
+        Visual programming.
+        Programming by example. 
+        KidSim, AgentSheets. 
+        Robot Odyssey.
+
+TODO for Programming:
+
+    Visual Programming
+
+      Simplify the Micropolis interface and make it easier for kids to
+      use it with the game controller, in a way that will support
+      multi player interaction.
+
+      Collapse the separate concepts of game editing tool (bulldozer,
+      road, residential zone, etc) and agent (sprites like the
+      monster, tornado, helicopter, train, etc).
+
+      Agents with specialized tool represent different roles that kids
+      can play. A bunch of kids can join together and play different
+      roles at the same time in the same city. Instead of having a
+      bunch of editing tools to switch between, you have a bunch of
+      different agents you can drive around the map, like using a
+      monster to crush things instead of a bulldozer, or riding around
+      in a helicopter to scroll around and observe the map. Make a
+      meta-game like pokemon trading cards or magic the gathering,
+      about acquiring and deploying and using agents on the map. Give
+      agents different budgets and constraints.
+
+      Use an agent to represent a user in the world, and control an
+      editing tool. You see other users in the map driving around
+      their editing tool agents.
+
+      Each editing tool can be associated with a particular agent,
+      with a keyboard/game controller based user interface for moving
+      around, as well as a mouse based interface for picking it up and
+      dragging it around.
+
+      The road tool becomes a road building vehicle, that you can
+      easily move up/down/left/right/diagonally with the game
+      controller directional input. Requires much less coordination to
+      draw straight roads than with a mouse. 
+
+      The bulldozer tool becomes an actual bulldozer that you can
+      drive around the map, crushing things in your wake.
+
+      This makes the game easily usable by little kids in book mode. 
+
+      Also support small children using Micropolis like a drawing tool or
+      etch-a-sketch, simply doodling with the editing tools for the
+      visceral pleasure of it, and setting fires and other disasters
+      to watch it burn and mutate.
+
+      Logo Turtles (as a generalization of the monster, tornado,
+      helicopter, etc)
+
+        Implement programmable logo turtles as agents that can move
+        around on the map, sense it, and edit it. 
+
+        Like Robot Odyssey agents, so you can go "inside" an agent,
+        and travel around with it, operate its controls, read its
+        sensors, and automate its behvior by wiring up visual programs
+        with logic and math and nested "ic chip" components.
+
+        Plug in graphics to represent the agent: use classic logo
+        turtle and Micropolis sprites, but also allow kids to plug in
+        their own.
+          Micropolis sprites have 8 rotations. 
+          SVG or Cairo drawings can be rotated continuously.
+
+        Re-implement the classic Micropolis agents like the monster,
+        tornado, helicopter, train, etc in terms of logo turtles, that
+        kids can drive around, learn to use, open up and modify (by
+        turning internal tuning knobs, or even rewiring).
+
+        Let kids reprogram the agents to do all kinds of other stuff.
+
+        Mobile robots, that you can double click to open up into
+        Robot-Odyssey-esque visual program editors.
+
+        Agents have local cellular-automata-like sensors to read
+        information about the current and surrounding tiles.
+
+        KidSim / Cocoa / StageCraft Creator let kids define visual
+        cellular automata rules by example, based on tile patterns and
+        rules. Show it a pattern that you want to match by selecting
+        an instance of that pattern in the world, then abstract it
+        with wildcards if necessary, then demonstrate the result you
+        want it to change the cell to in the next generation.
+
+        Sense high level information about zones and overlays, so the
+        agents can base their behavior on any aspect of the world
+        model.
+
+          Support an extensible model by allowing users to add more
+          layers.
+
+            Add layers with arbitrary names and data types at
+            different resolutions:
+
+              byte, int, float, n-dimensional vector, color, boolean
+              mask, musical note, dict, parametric field (i.e. perlin
+              noise or other mathematical function) at each cell, etc.
+
+        Edit the world. 
+
+          All Micropolis editing tools (including colored pens that draw
+          on overlays) should be available to the agent.
+
+          Enable users to plug in their own editing tools, that they
+          can use themselves with the mouse, keyboard or game
+          controller, or program agents to use to edit the map under
+          program control.
+
+      Robot Odyssey
+
+        Build your own universal programmable editing tool.
+        Roll your own von Neuman Universal Constructor. 
+        Smart robots you program to perform special purpose editing tasks. 
+
+        The "Painter" picture editing program had a way of recording
+        and playing back high level editing commands, relative to the
+        current cursor position.
+
+        Remixing. Journaling. Programming by demonstration or example.
+        You could use a tape recorder to record a bunch of Micropolis
+        editing commands that you act out (or you can just select them
+        from the journal), then you can play those tapes back with
+        relative coordinates, so they apply relative to where the
+        agent currently is on the map. You can copy and paste and cut
+        and splice any editing commands into tapes that you can use to
+        program the robot to play back in arbitrary sequences. 
+
+        Program an urban sprawl development-bot to lay out entire
+        residential subdivisions, complete with zones, roads, parks and
+        wires. Then program a luddite roomba-bot that sucks them all
+        up and plants trees in their place.
+
+        This becomes really fun when we let players plug in their own
+        programmed zones for the robot to lay out, and layers of data
+        to control the robot's behavior, out of which they can program
+        their own cellular automata rules and games (like KidSim /
+        Cocoa / StageCraft Creator).
+
+========================================================================
+
+Plan for developing Micropolis for OLPC and other platforms.
+
+DONE:
+
+    First, get the old TCL/Tk/X11 version cleaned up and running on
+    the current OLPC platform, and passed through EA's legal and
+    quality assurance process.
+
+DONE:
+
+    Screen depth and size: fixed size of OLPC screen.
+    Window management: one window. 
+    Simplify window management. Single map and editor view. Tiled graph and evaluation windows. 
+    Rearrange startup screen so it works in the full window mode.
+    Make budget window and file dialogs be transient popup windows.
+    Add "Enable/Disable Auto Budget" button to budget window.
+    Click on small R/C/I gauge to toggle evaluation window.
+    Click on small graph to toggle graph window.
+    Click on funds or tax rate to show budget window.
+    Disable multi player features by default (added -m flag to enable multi player mode).
+    Disable other experimental features (cellular automata, dynamic query, etc).
+    Add -S flag to enable Sugar features, and TCL access to test flag.
+    Enable audio: Use Sugar audio server.
+      Convert sounds to new audio format (currently wav).
+
+    Fix fonts. 
+      Pick nice Sugar fonts to use, based on Sugar flag. 
+
+    Make Sugar activity wrapper in Python.
+
+TODO, in progress:
+
+    Update manual and documentation.
+
+    Put new graphics and icons into interface and menus.
+
+DONE:
+
+Replace TCL/Tk with Python/GTK, and use Pango/Cairo for graphics.
+
+  Implement custom components in PyGTK.
+    Map view.
+    Editor view.
+    Date view.
+    Graph view.
+    Pie menus.
+    Cellular Automata Machine view.
+
+DONE:
+
+Implement web based interface with TurboGears/Cairo/OpenLaszlo/Flash/AMF.
+
+TODO for OLPC:
+
+  Integrate with Sugar and OLPC hardware.
+    Audio.
+      Support CSound audio mixer.
+      Switch to a smaller audio format.
+      Record better sounds.
+    Internationalization.
+    Graphics.
+      Hires monochrome. 
+      SVG graphics and icons. 
+      Create better icons. 
+    Sugar integration. 
+      Integrate with OLPC activity system, window manager, etc. 
+      Rework user interface to follow Sugar user interface guidelines. 
+    Keyboard control.
+      Support OLPC keyboard layout and device buttons. 
+      Game keypad interface for book mode.
+    Optimization.
+      Optimize power management.
+      Optimize size.
+      Optimize speed.
+    Documentation.
+      Integrated help, tutorials, essays on city design from manual, etc. 
+      Voiceovers, demos, journal playback.
+      Courseware. 
+      Map annotation. 
+    Journaling.
+      Event history.
+      Edit history. 
+      Checkpointing. 
+      Branching histories. 
+      Rewinding and fast forwarding. 
+      Publishing newspaper articles linking to save files.
+      URL to link into a city at a particular location on the map.
+    Grid networking. 
+      Multi player stupport.
+        Sharing cities.
+        Colaborative editing.
+        Voting. 
+        Chat. 
+        White board.
+
+TODO for Education:
+
+    Educational.
+      Bring old Micropolis courseware up to date, and integrate with the game. 
+      Export simulation data to spreadsheet or xml. 
+      Creative writing, storytelling, newspaper reporting, blogging, etc.
+      Scenarios and experiments.
+      What-if? 
+        Branching history at decision point, and comparing different results. 
+      Scripting. 
+        Open up the simulator to Python. 
+        Web services to remotely monitor and control simulation. 
+        HTML or AJAX web server remote control interface.
+          Support multi player interactions through web server.
+            Submit a proposal to build a stadium over the web.
+            Style it like a real civic government web page, that allows citizens to participate online. 
+        Enable extending the graphics, tiles, sprites. 
+        Enable programming behaviors, defining new zones, new global variables, overlays, etc. 
+        Cellular automata.
+        Visual programming.
+        Programming by example. 
+        KidSim, AgentSheets. 
+        Robot Odyssey.
+
+TODO for Programming:
+
+    Visual Programming
+
+      Simplify the Micropolis interface and make it easier for kids to
+      use it with the game controller, in a way that will support
+      multi player interaction.
+
+      Collapse the separate concepts of game editing tool (bulldozer,
+      road, residential zone, etc) and agent (sprites like the
+      monster, tornado, helicopter, train, etc).
+
+      Agents with specialized tool represent different roles that kids
+      can play. A bunch of kids can join together and play different
+      roles at the same time in the same city. Instead of having a
+      bunch of editing tools to switch between, you have a bunch of
+      different agents you can drive around the map, like using a
+      monster to crush things instead of a bulldozer, or riding around
+      in a helicopter to scroll around and observe the map. Make a
+      meta-game like pokemon trading cards or magic the gathering,
+      about acquiring and deploying and using agents on the map. Give
+      agents different budgets and constraints.
+
+      Use an agent to represent a user in the world, and control an
+      editing tool. You see other users in the map driving around
+      their editing tool agents.
+
+      Each editing tool can be associated with a particular agent,
+      with a keyboard/game controller based user interface for moving
+      around, as well as a mouse based interface for picking it up and
+      dragging it around.
+
+      The road tool becomes a road building vehicle, that you can
+      easily move up/down/left/right/diagonally with the game
+      controller directional input. Requires much less coordination to
+      draw straight roads than with a mouse. 
+
+      The bulldozer tool becomes an actual bulldozer that you can
+      drive around the map, crushing things in your wake.
+
+      This makes the game easily usable by little kids in book mode. 
+
+      Also support small children using Micropolis like a drawing tool or
+      etch-a-sketch, simply doodling with the editing tools for the
+      visceral pleasure of it, and setting fires and other disasters
+      to watch it burn and mutate.
+
+      Logo Turtles (as a generalization of the monster, tornado,
+      helicopter, etc)
+
+        Implement programmable logo turtles as agents that can move
+        around on the map, sense it, and edit it. 
+
+        Like Robot Odyssey agents, so you can go "inside" an agent,
+        and travel around with it, operate its controls, read its
+        sensors, and automate its behvior by wiring up visual programs
+        with logic and math and nested "ic chip" components.
+
+        Plug in graphics to represent the agent: use classic logo
+        turtle and Micropolis sprites, but also allow kids to plug in
+        their own.
+          Micropolis sprites have 8 rotations. 
+          SVG or Cairo drawings can be rotated continuously.
+
+        Re-implement the classic Micropolis agents like the monster,
+        tornado, helicopter, train, etc in terms of logo turtles, that
+        kids can drive around, learn to use, open up and modify (by
+        turning internal tuning knobs, or even rewiring).
+
+        Let kids reprogram the agents to do all kinds of other stuff.
+
+        Mobile robots, that you can double click to open up into
+        Robot-Odyssey-esque visual program editors.
+
+        Agents have local cellular-automata-like sensors to read
+        information about the current and surrounding tiles.
+
+        KidSim / Cocoa / StageCraft Creator let kids define visual
+        cellular automata rules by example, based on tile patterns and
+        rules. Show it a pattern that you want to match by selecting
+        an instance of that pattern in the world, then abstract it
+        with wildcards if necessary, then demonstrate the result you
+        want it to change the cell to in the next generation.
+
+        Sense high level information about zones and overlays, so the
+        agents can base their behavior on any aspect of the world
+        model.
+
+          Support an extensible model by allowing users to add more
+          layers.
+
+            Add layers with arbitrary names and data types at
+            different resolutions:
+
+              byte, int, float, n-dimensional vector, color, boolean
+              mask, musical note, dict, parametric field (i.e. perlin
+              noise or other mathematical function) at each cell, etc.
+
+        Edit the world. 
+
+          All Micropolis editing tools (including colored pens that draw
+          on overlays) should be available to the agent.
+
+          Enable users to plug in their own editing tools, that they
+          can use themselves with the mouse, keyboard or game
+          controller, or program agents to use to edit the map under
+          program control.
+
+      Robot Odyssey
+
+        Build your own universal programmable editing tool.
+        Roll your own von Neuman Universal Constructor. 
+        Smart robots you program to perform special purpose editing tasks. 
+
+        The "Painter" picture editing program had a way of recording
+        and playing back high level editing commands, relative to the
+        current cursor position.
+
+        Remixing. Journaling. Programming by demonstration or example.
+        You could use a tape recorder to record a bunch of Micropolis
+        editing commands that you act out (or you can just select them
+        from the journal), then you can play those tapes back with
+        relative coordinates, so they apply relative to where the
+        agent currently is on the map. You can copy and paste and cut
+        and splice any editing commands into tapes that you can use to
+        program the robot to play back in arbitrary sequences. 
+
+        Program an urban sprawl development-bot to lay out entire
+        residential subdivisions, complete with zones, roads, parks and
+        wires. Then program a luddite roomba-bot that sucks them all
+        up and plants trees in their place.
+
+        This becomes really fun when we let players plug in their own
+        programmed zones for the robot to lay out, and layers of data
+        to control the robot's behavior, out of which they can program
+        their own cellular automata rules and games (like KidSim /
+        Cocoa / StageCraft Creator).
+
+========================================================================

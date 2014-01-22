@@ -1,0 +1,91 @@
+SimCity Product Information
+---------------------------
+
+SimCity Requirements:
+
+	SimCity requires a SPARC workstation running the SunOS 4.1
+	operating system, with the OpenWindows 3.0 window system
+	installed, an 8 bit deep color graphics display, a kernel with
+	the shared memory option enabled, and at least 16 megabytes of
+	memory. It doesn't support 1 bit deep monochrome displays, nor
+	does it work with earlier or different window systems.
+
+	This version of SimCity was built using the HyperLook user
+	interface design system, and is shipped with a HyperLook run
+	time system. It includes an demonstration of HyperLook,
+	featuring a fully functional PostScript graphics editor, that
+	was used to draw parts of the SimCity user interface.
+
+	SimCity is copy protected, using the Elan License Manager. If
+	you don't have a license, SimCity will run in demo mode:
+	saving the city is disabled, and you can play for five minutes
+	before something dreadful happens.
+
+SimCity Features:
+
+    On-Line Help
+	You can get help on the SimCity user interface, by pointing
+	the mouse at anything mysterious and pressing the "Help" key.
+	The HyperLook Help window will pop up, giving instructions and
+	useful hints on how to use the controls.
+
+    Multiple Views
+	It's possible to display several animated views of the city on
+	the screen at once. You can even zoom in and out, to magnify
+	or shrink the graphics! The animation is slower when a view is
+	scaled, but you can still scroll around and edit your city as
+	usual, at any size.
+
+    Open Look
+	HyperLook is integrated with The NeWS Toolkit (TNT), to
+	implement the Open Look user interface. SimCity uses Open Look
+	buttons, menus, sliders, settings, text and numeric fields.
+	They help to make the interface familiar and easy to use.
+
+    Pie Menus
+	SimCity features pop up "pie menus" for selecting between city editing
+	tools. Pie menus are circular menus with their choices in
+	different directions, and they're very fast and efficient to
+	use. Since you change editing tools quite often while building
+	a city, you can save much time and effort by using pie menus
+	instead of the tool pallet.
+
+    Sound Mixer
+	SimCity plays its sound effects using the HyperLook sound server,
+	which makes real time sound effects by mixing them together
+	and playing them immediately when needed. So you can hear the
+	bulldozer rumbling, buildings crashing, and the monster
+	roaring at the same time, all synchronized with the animation.
+
+    PostScript Printing
+	You can print your city on a color or monochrome PostScript printer.
+	It's possible to print the whole city on one page, or a twelve
+	page poster.
+
+SimCity Legal Information
+-------------------------
+
+Unix SimCity Implementation, User Interface & Graphics
+by Don Hopkins, DUX Software. Thanks to The Turing Institute.
+Original Concept & Design by Will Wright, Maxis Software.
+Unix SimCity HyperLook Edition 1.0 Copyright (C) 1992 MAXIS, DUX Software
+HyperLook 1.5 Copyright (C) 1992 The Turing Institute, Ltd.
+SimCity is a registered trademark of Maxis Software.
+HyperLook is a trademark of The Turing Institute, Ltd.
+
+SimCity Ordering Information
+----------------------------
+
+This version of SimCity will run in demo mode (you can play for a
+while, but you can't save your city, and after 5 minutes, something
+horrible happens to your city), until you get a license and install a
+valid key. To get a license, contact DUX Software at:
+
+	DUX Software
+	4906 El Camino Real
+	Suite 1
+	Los Altos, CA 94022
+
+	Phone:	+1-800-543-4999
+		+1-415-967-1500
+	FAX:	+1-415-967-5528

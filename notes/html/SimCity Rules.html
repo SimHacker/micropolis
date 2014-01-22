@@ -1,0 +1,270 @@
+<p>
+From: Alan Kay<br/>
+Subject: Just curious ...
+</p>
+<p>
+Has anyone tried to articulate the SimCity rules (e.g. in English sentences)?
+</p>
+<p>
+Cheers,
+</p>
+<p>
+Alan
+</p>
+<p>
+From: Don Hopkins<br/>
+Subject: Just curious ...
+</p>
+<p>
+I'm interested in writing some English documentation about how it works.
+But it would make sense to write a high level overview, more like a tour than
+a reference manual, and describe the behaviors and interactions of the
+different kinds of tiles and agents and layers and global computations.
+There is certainly a lot of ad-hockery involved!
+</p>
+<p>
+<a href="http://www.donhopkins.com/drupal/node/9" target="_blank">http://www.donhopkins.com/drupal/node/9</a>
+</p>
+<blockquote>
+<p>
+  Some muckety-muck architecture magazine was interviewing Will Wright
+  about SimCity, and they asked him a question something like "which
+  ontological urban paridigm most influenced your design of the
+  simulator, the Exo-Hamiltonian Pattern Language Movement, or the
+  Intra-Urban Deconstructionist Sub-Culture Hypothesis?" He replied,
+  "I just kind of optimized for game play."
+</p>
+</blockquote>
+<p>
+There are also a lot of smarts in the SimCity editing tools, which maintain
+the integrity of the tile patterns on the map.
+Like the way roads and railroads combine into intersections when they cross,
+turn into bridges over water, and tiles are combined into bigger 3x3, 4x4 and
+5x5 zones, and stuff like that.
+Those behaviors are similar to cellular automata rules, but less structured
+and regular. Kind of like what you could do in KidSim.
+</p>
+<p>
+<a href="http://lists.laptop.org/pipermail/sugar/2007-March/001829.html" target="_blank">http://lists.laptop.org/pipermail/sugar/2007-March/001829.html</a>
+</p>
+<blockquote>
+<p>
+    KidSim / Cocoa / StageCraft Creator let kids define visual
+    cellular automata rules by example, based on tile patterns and
+    rules. Show it a pattern that you want to match by selecting
+    an instance of that pattern in the world, then abstract it
+    with wildcards if necessary, then demonstrate the result you
+    want it to change the cell to in the next generation.
+</p>
+</blockquote>
+<p>
+One of the plug-in interfaces that SimCity should support is plug-in editing tools.
+</p>
+<p>
+Another interface is plug-in agents like the monster, tornado, helicopter, etc.
+</p>
+<p>
+And for user interface and ease of use purposes, I'd like to combine the
+notion of an agent and an editing tool, instead of using a traditional
+"cursor" metaphore.
+</p>
+<p>
+The agent could be controlled by the touchpad or the gamepad, and it would
+have a cursor-like footprint showing the area of the map it would effect.
+</p>
+<p>
+That would make it much easier for small kids to use simple tools, and make
+it possible to use SimCity in book mode with the gamepad.
+</p>
+<p>
+The multi player mode would enable a bunch of kids to pick up different tools
+and perform complementary functions together.
+</p>
+<p>
+Once you have a rich library of interesting tools, there could even be a
+meta-game like Magic the Gathering or Pokeman cards that let kids trade and
+use tools and special effects (disasters, miracles, magic spells, special
+buildings, bribes, cheats, etc).
+</p>
+<p>
+You could navigate the tool around the map in various ways appropriate to the
+tool's function.
+</p>
+<p>
+So you could drive a bulldozer around, or drive a road building machine
+around, or drive a residential zone stamp-pad that had a programmed gap
+between houses for lower density housing, or was smart about finding a place
+to plop down down the house, based on a set of constraints and search
+algorithms.
+</p>
+<p>
+Then you could take a generic house plopping tool, and go inside of it like a
+Robot Odyssey robot, and rewire its behavior to make it smarter about finding
+a location to plop the house (or dumber), or moving around until it found a
+good place.
+</p>
+<p>
+It could call on other tools like the bulldozer tool to smash stuff
+underneath if it wanted to (this behavior is already built into the zoning
+tool to a limited extent, called "auto bulldoze mode", which automatically
+bulldozes "soft" tiles like grass and dirt whever you try to build something.
+</p>
+<p>
+It could even measure properties of the map like the pollution, traffic,
+population density, etc, and base its navigation and decisions on any
+function of any parameter imaginable.
+</p>
+<p>
+An interesting exercise would be to program a bulldozer to stop a fire from
+spreading, by bulldozing around the edge of the fire to create a fire block.
+</p>
+<p>
+As we open up SimCity, we can put in user defined layers for the tools to use
+as storage and control, and let the user edit the numeric values in those
+layers, or specify rules to define their value. Like a mask layer that
+computes if a zone is on fire, or adjacent to a zone that's on fire, for the
+bulldozer to follow.
+</p>
+<p>
+Of course that would be for advanced kids, but it would be great for making
+games like KidSim could do, but with the full power of Python underneath and
+easily accessible!
+</p>
+<p>
+  -Don
+</p>
+<p>
+PS:
+Here's a summary of one of Will Wright's talk to Terry Winnograd's user
+interface class.
+</p>
+<p>
+It covers a lot of interesting stuff, but unfortunately I *still* haven't
+typed in the stuff about SimCity yet. :(
+</p>
+<p>
+The funny part is the description of "Dollhouse", which I wrote less than a
+year before going to Maxis and working on it!
+</p>
+<p>
+A summary of Will Wright's talk, by Don Hopkins
+<br/>
+<a href="http://www.donhopkins.com/drupal/node/9" target="_blank">http://www.donhopkins.com/drupal/node/9</a>
+</p>
+<p>
+SimCity Info
+<br/>
+<a href="http://www.art.net/~hopkins/Don/simcity/index.html" target="_blank">http://www.art.net/~hopkins/Don/simcity/index.html
+</a>
+</p>
+<p>
+From: Samuel Klein<br/>
+Subject: Just curious ...
+</p>
+<p>
+Hey, Don, this is great stuff.  I'm starting a section for such essays
+on the laptop wiki (see [[category:essay]]) as a preface to tours or
+more interactive guides.
+</p>
+<p>
+Alan, there's a programmer who has been haning out on olpc channels
+who wants to help make Robot Odyssey... I'm starting a related thread
+on games@lists.laptop.org .
+</p>
+<p>
+SJ
+</p>
+<p>
+From: Alan Kay<br/>
+Subject: Just curious ...
+</p>
+<p>
+Hi SJ --
+</p>
+<p>
+Robot Odyssey is another game that would benefit from having a clean separation between the graphical/physical modeling simulation and the behavioral parts (both the games levels and the robot programming could be independently separated out) -- this would make a great target for those who would like to try their hand at game play and at robot behavioral programming systems.
+</p>
+<p>
+This is a long undropped shoe for me. When I was the CS at Atari in 82-84, it was one of our goals to make a number of the very best games into frameworks for end-user (especially children's) creativity. Alas, Atari had quite a down turn towards the end of 83 ...  We did get "the Aquarium" idea from Ann Marion to morph into the Vivarium project at Apple ... And some of the results there helped with the later Etoys design.
+</p>
+<p>
+Cheers,
+</p>
+<p>
+Alan
+</p>
+<p>
+From: SJ Klein<br/>
+Sent: Monday, November 12, 2007 5:29:24 PM
+Subject: Game ideas for the XO: Robot Odyssey
+</p>
+<p>
+Don and Alan have been having a great discussion about Robot Odyssey,
+which I'd like to share with the list.  By coincidence, a discussion in
+#sugar today around SimCity's open sourcing turned to how to get Robot
+Odyssey onto the laptops... so I'd like to open the discussion to a wider
+audience.
+</p>
+<p>
+Who is interested in helping develop a R.O. port, and in improving on the
+old implementation?  Alan has some excellent ideas about how to turn the
+updating of the design into a useful exercise, perhaps for an eager coder
+or class.
+</p>
+<p>
+Of course other nifty project ideas are more than welcome.
+</p>
+<p>
+Don and Alan -- I think the entirety of your discussions about simulation
+and game design are worth sharing; if you don't mind, I'll transcribe some
+of them to the wiki for further elaboration.
+</p>
+<p>
+Cheers,<br/>
+SJ
+</p>
+<p>
+From: Alan Kay<br/>
+Subject: Game ideas for the XO: Robot Odyssey
+</p>
+<p>
+Thanks SJ --
+</p>
+<p>
+We are benefiting here from Don Hopkins' generosity (and of the original designers and owners of these games).
+</p>
+<p>
+The basic notion is that there are many games that, if modularized with nice separable interfaces, would be great environments for exploring various kinds of "learning by doing". For example, there is a nice separation between the "rules/dynamics" of a games world and the "strategies/actions" of the characters. There could be a third separation to break out the graphics and sound routines as a media environment.
+</p>
+<p>
+For example, in SimCity, the first and most useful breakout for children would be to allow various UIs to be made that would let children find out about and try experiments with the "city dynamics rules". It's not clear what the best forms for this would be, so it would be great to have a variety of different designers supply modules that would try to bridge the gaps to the child users.
+</p>
+<p>
+This could work even for pretty young children (we helped the Open Magnet School set up Doreen Nelson's "City Building" curriculum in the third grade of the school and this was very successful -- a child controlled SimCity would have been wonderful to have).
+</p>
+<p>
+Maybe this separation could be set up via the D-bus so that separate processes written in any language the authors choose could be used. This would open this game up to different experiments by different researchers to explore different kinds of UIs and strategy languages for various ages of children. I think this would be really cool! We would all learn a lot from this and the children would benefit greatly.
+</p>
+<p>
+A trickier deal would be the world dynamics (I'm just guessing here, but Don would know). This is one of the really great things about SimCity -- it can really accommodate lots of different changes and stitch things together to make a pretty decent simulation without too many seams showing. (Given the machines this game originally ran on, many of the heuristics are likely to be a little patchy. Don has indicated as much.) I think doing a great world dynamics engine for games like SimCity would be really wonderful -- and could even be a thesis project or two.
+</p>
+<p>
+Don has talked about doing the separations so that many new games can be made in addition to the variations.
+</p>
+<p>
+Similarly, Robot Odyssey (one of the best games concepts ever) was marred by choosing a way to program the robots where the complexity of programming grew much faster than the functionality that could be given to the robots. This game was way ahead of its time.
+</p>
+<p>
+Again, the idea would be do make a game in which environment, levels of challenge, and how the robots are programmed would be broken out into separate processes that a variety of gamers and researchers could do experiments in language and UI.
+</p>
+<p>
+One of the most wonderful possibilities about this venture is that it will bring together very fluent designers from many worlds of computing (more worlds than usually combine to make a game) in the service of the children. We should really try to pull this off!
+</p>
+<p>
+Cheers,
+</p>
+<p>
+Alan
+</p>
+<!--break-->
+

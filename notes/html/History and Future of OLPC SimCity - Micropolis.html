@@ -1,0 +1,44 @@
+<p>
+There are several different versions of SimCity, and at least two different names (so far):
+<ul>
+<li>
+The original version of SimCity was developed by Maxis on the C64, and ported to various platforms, including the Macintosh. Maxis licensed the Macintosh SimCity source code to DUX software, to port to Unix. 
+</li>
+<li>
+DUX Software contracted me (Don Hopkins) to port SimCity to Unix, and I developed "SimCity HyperLook Edition", while working at the Turing Institute on HyperLook with Arthur van Hoff. 
+The user interface was written in PostScript, which ran on the NeWS window system on Sun workstations, and it supported multiple zoomable views, pie menus, annotating and printing maps, and many user interface improvements. 
+</li>
+<li>
+After Sun canceled NeWS, DUX Software contracted me to rewrite the HyperLook user interface in TCL/Tk for X11, and I developed a multi-player networked user interface using the X11 protocol. 
+The TCL/Tk version of SimCity has been ported to various Unix and non-Unix platforms, including SunOS, Solaris, Irix, HP/UX, OSF/1, Quarterdeck Desqview/X, NDC X Terminals, Warp, and Linux. 
+The contract to sell SimCity for Unix expired after ten years, so the TCL/Tk version was no longer commercially available. 
+</li>
+<li>
+OLPC SimCity is based on the TCL/Tk version of SimCity. 
+SimCity is a trademark of Electronic Arts. 
+Don Hopkins adapted SimCity to the OLPC, thanks to the support of John Gilmore. 
+OLPC SimCity will be shipped with the OLPC, and it has been run through EA's quality assurance process and reviewed for integrity. EA reserves the right to review and approve any version of the game distributed under the name SimCity. 
+</li>
+<li>
+"Micropolis" is the name of the current GPL open source code version of OLPC SimCity.
+That was the original working title of Will Wright's city simulation game. 
+Since Micropolis is licensed under the GPL, anyone can do anything they want with it that conforms with the GPL, except they can't call it "SimCity" (and a few other limitations to protect EA's trademarks). 
+</li>
+<li>
+Other differently named projects can be forked from the Micropolis source code, as long as they're not called SimCity. 
+</li>
+<li>
+Improvements to the open source code base that merits EA's approval may be incorporated into the official "OLPC SimCity" source code, to be distributed with the OLPC under the trademarked name "OLPC SimCity", but only after it's been reviewed and approved by EA. 
+</li>
+<li>
+In the short term, the TCL/Tk version of Micropolis can be upgraded to support the latest version of TCL/Tk, fix bugs, improve the user interface and Sugar integration, etc. Once that is stable as well integrated into Sugar, it could be submitted to EA to become the official version of "OLPC SimCity" distributed on the XO laptop. 
+</li>
+<li>
+In the long term, Micropolis can be recast from C to C++ classes, so it's possible to define clean interfaces between software modules, and make multiple instances of the simulator that don't interfere with each other, as well as easily interfacing it to Python using the SWIG interface generator.
+That should be done in a language-neutral way, so you could plug the simulator engine into many different languages and programming systems.
+Then more work needs to be done to open it up, and make it re-vectorable (plug-ins, events, callbacks, hooks, aspect oriented programming, etc), so you can replace and extend the various modules with the host language(s), eventually re-implementing most if not all of SimCity in another language.
+</li>
+</ul>
+</p>
+<!--break-->
+

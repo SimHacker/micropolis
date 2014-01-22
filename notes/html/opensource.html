@@ -1,0 +1,235 @@
+<html>
+    <head>
+        <title>Open Source Technology</title>
+    </head>
+    <body>
+
+	<h1>Open Source Technology</h1>
+
+	<p>
+	    We are systematically building on the shoulders of giants,
+	    by using a carefully chosen stack of proven, best of
+	    breed, actively developed and supported, open source
+	    software. 
+	</p>
+
+	<p>
+	    We are purposefully developing modular, reusable open
+	    source software components that other people can learn
+	    from, and freely use for their own purposes.
+	</p>
+
+	<h2>Open Source Server Technology</h2>
+
+	<ul>
+
+	    <li>
+	        <h3>This project uses the following open 
+		source components:</h3>
+	    </li>
+
+
+	    <li>
+		<a href="http://www.python.org">Python</a>
+		is a powerful, practical, efficient, Dutch-invented
+		programming language, which is the standard language
+		for the OLPC, a great first language to learn, and has
+		a rich ecosystem of open source modules available.
+	    </li>
+
+	    <li>
+		<a href="http://www.swig.org">SWIG</a> 
+		is a programming language integration tool, that makes
+		it easy to interface the C++ SimCity code with Python
+		and other languages.  The advantage to using SWIG is
+		that it saves a vast amount of effort, and it makes it
+		possible to integrate the same source code with other
+		programming languages and runtime systems, like Java,
+		Ruby or Lua as well as Python.
+	    </li>
+
+	    <li>
+		<a href="http://www.turbogears.org">TurboGears</a> 
+		is the web application server framework, which
+		integrates SimCity with networking, database, xml,
+		web page and graphics generation modules. The
+		advantage of TurboGears is that it is small, modular,
+		actively developed and supported, and well integrated
+		with a powerful set of database and templating
+		modules. (Including the following...)
+	    </li>
+
+	    <li>
+		<a href="http://www.sqlalchemy.org">SQLAlchemy</a>
+		is the SQL Toolkit and Object Relational Mapper, that
+		makes it easy and efficient to store and retrieve
+		Python objects and any other kind of data in an SQL
+		database. SQLAlchemy is capable of scaling up and
+		taking advantage of advanced database features.
+	    </li>
+
+	    <li>
+		<a href="http://genshi.edgewall.org">Genshi</a> 
+		is a template system, which uses text and XML based
+		macros for generating dynamic data driven HTML web
+		pages, SVG graphics, and XML web services for AJAX
+		clients. Genshi makes it easy to produce
+		excruciatingly correct and clean web pages and XML
+		protocols from dynamic data.
+	    </li>
+
+	    <li>
+		<a href="http://www.cairographics.org">Cairo</a>
+		is a high quality graphics library which is the
+		standard graphics interface for the OLPC, and also
+		useful on web servers for drawing dynamic images,
+		maps, and visualizations.  It's cross platform,
+		hardware accelerated, supports antialiased scalable
+		PostScript-like graphics, outline fonts,
+		internationalized text, and is very well suited for
+		the needs of SimCity (zooming maps, overlays, graphs,
+		data visualizations, printing). Cairo runs with
+		hardware acceleration on Linux, Windows and Mac, and
+		is used by the Mozilla Firefox web browser for
+		rendering HTML web pages and SVG graphics.
+	    </li>
+
+	    <li>
+	        <h3>This project has developed the following open 
+		source components:</h3>
+	    </li>
+
+	    <li>
+	        The 
+		<a href="http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/Micropolis">Micropolis Core Engine</a>
+		is written in C++, and integrated into Python with
+	        SWIG. The C++ code is based on the original SimCity C
+	        code, but it has been cleaned up, re-organized and
+	        optimized. It implements the authentic "SimCity
+	        Algorithm", but it is a lot easier to understand and
+	        maintain than the original code. All of the user
+	        interface and graphics code has been stripped out, so
+	        it can be implemented independently by the gui or web
+	        server. Micropolis has a generic scripting language
+	        independent callback mechanism, so the game can send
+	        messages with parameters back to Python or Lua to
+	        handle.  This enables scripting interesting scenarios
+	        and extensions.
+	    </li>
+
+	    <li>
+	        The 
+		<a href="http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/TileEngine">Tile Engine</a>
+		uses Cairo to efficiently draw a scrolling zooming
+	        grid of tiles: graphical symbols representing the
+	        state of the map layer. It's independent of
+	        Micropolis, and can be used to display any grid of
+	        tiles for games, cellular automata, or scientific
+	        visualizations.  It is implemented in C++, and calls
+	        on the Cairo library to efficiently draw tiles with
+	        hardware acceleration.  It supports seamless panning
+	        and zooming like Google maps, and it can draw crisply
+	        detailed tiles by calling back into the scripting
+	        language to dynamically render scalable graphics
+	        (i.e. SVG, PDF or Cairo drawings) into a cache.
+	    </li>
+
+	    <li>
+	        The
+		<a href="http://code.google.com/p/micropolis/source/browse/#svn/trunk/MicropolisCore/src/CellEngine">Cellular Automata Machine Engine</a>
+		is another tile based mathematical simulation, about
+		the intersection of artifical life, chaos and
+		performance art. It's written in C++, and plugs into
+		the Tile Engine, like Micropolis, but with a different
+		set of tiles. It's a useful proving application, to
+		make sure the Tile Engine is independent of Micropolis
+		and useful for other purposes. It's also a fun way to
+		teach mathematics and game theory, as well as the
+		history of computing, since one of the historic rules
+		it 
+		<a href="http://code.google.com/p/micropolis/source/browse/trunk/MicropolisCore/src/CellEngine/cellengine.cpp#5209">implements</a>
+		is John von Neumann's original
+		<a href="http://en.wikipedia.org/wiki/Von_Neumann_cellular_automaton">29 state universal construction cellular automata</a>.
+	    </li>
+
+	</ul>
+
+	<p>
+	    All of the above software is currently running on this web server,
+	    but it is not yet a playable game.
+	</p>
+
+	<h2>Open Source Client Technology</h2>
+
+	<p>
+	    The Micropolis web server is independent of the
+	    user interface, and it will support multiple ways of
+	    viewing and manipulating the same model. It will be
+	    possible to develop many advanced user interfaces,
+	    visualizations and control techniques. But first we will
+	    support the most practical delivery formats of our time:
+	    DHTML and Flash.
+	</p>
+
+	<p>
+	    From the starting gate, we want an easily accessible
+	    DHTML/JavaScript "AJAX" user interface to SimCity, the
+	    quality and usability of Google Maps: playable by a wide
+	    audience, in standard browsers, on Linux, Mac, Windows,
+	    from OLPC to iPhone.
+	</p>
+
+	<p>
+	    We also want a high end "cinematic" Flash based user
+	    interface, which will take advantage of Flash's advanced
+	    multimedia capabilities, dynamic scalable graphics,
+	    streaming video and real time events. It will deliver the
+	    quality of experience that people take for granted from
+	    YouTube and Flash web games, to Flash's 98% installed base.
+	</p>
+
+	<p>
+	    Fortunately there is excellent open source software that
+	    makes it possible to achieve both of those goals with one
+	    open source software base.
+	</p>
+
+	<p>
+	    <a href="http://www.openlaszlo.org">OpenLaszlo</a>
+	    is an open source user interface programming system, which
+	    produces both Flash and HTML/JavaScript AJAX applications
+	    from the same XML/JavaScript source code.  OpenLaszlo
+	    makes it possible to create rich web based AJAX
+	    applications that run in both Flash and ordinary web
+	    browsers, using a proven stack of open source tools.
+	</p>
+
+	<p>
+	    Don Hopkins will apply his previous experience with
+	    SimCity gui design and OpenLaszlo development to this
+	    project, to develop a web brower and Flash based user
+	    interface for Micropolis Eduverse, while enabling other
+	    web based interfaces to the same Micropolis Eduverse
+	    server.
+	</p>
+
+        <p>
+	    He has written an IBM DeveloperWorks article about OpenLaszlo:
+	    <a href="http://www-128.ibm.com/developerworks/edu/os-dw-os-php-openlaszlo1-i.html">Spice up PHP applications with OpenLaszlo</a>,
+	    a summary of OpenLaszlo:
+	    <a href="http://www.donhopkins.com/home/124">What is OpenLaszlo, and what is it good for?</a>,
+	    and has developed and written about Python and OpenLaszlo on
+	    <a href="http://www.DonHopkins.com">his blog</a>.
+	    He has used OpenLaszlo for a variety of
+	    <a href="http://www.donhopkins.com/drupal/node/40">components</a>
+	    and
+	    <a href="http://www.donhopkins.com/drupal/node/43">applications</a>, 
+	    and has worked for Laszlo Systems developing
+	    <a href="http://www.laszlosystems.com/products/webtop/applications/mail">LaszloMail</a>,
+	    <a href="http://www.laszlosystems.com/products/webtop/overview">WebTop</a>,
+	    and
+	    <a href="http://www.openlaszlo.org/showcase">streaming video components and demos</a>.
+	</p>
+
+    </body>
+</html>

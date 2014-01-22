@@ -1,0 +1,37 @@
+http://www.youtube.com/watch?v=CdgQyq3hEPo&list=PL05EC29BE935F2D1A
+Design a box that conveys a model of what the game is about.
+
+----
+
+high vs low detail
+26:00 27:00
+
+high detail: hard to edit
+low detail: easy to edit
+
+understanding comics
+
+put 2 people in front of a computer and they verbalize what they are thinking
+building elaborate narratives
+giving simulator the benefit of the doubt
+managed to make sense of the narrative
+emergence
+
+cellular automata
+56:00
+
+1:27:50
+But on the other hand I think you can make very compelling educational
+games, and sell it to the kid based on its entertainment value,
+because I think that education and entertainment, really, when done
+the right way, become the same thing.
+
+
+----
+
+Ask Danny Stieben to write an article about the project:
+
+http://www.makeuseof.com/tag/lincity-ng-for-linux-vs-simcity-is-free-always-better/
+
+http://www.makeuseof.com/tag/micropolis-a-new-name-for-a-classic-city-simulator-game/
+

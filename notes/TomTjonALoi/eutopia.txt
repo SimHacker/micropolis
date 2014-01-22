@@ -1,0 +1,97 @@
+Presentation of Eutopia
+
+Introduction to SimCity / Micropolis.
+
+SimCity is a city building simulation game, which provides players with a set of rules and tools to describe, create and control a simulated city. It's less structured and goal oriented than most computer games, and more like a free form sandbox or constructive legos.
+
+Micropolis is the open source version of SimCity. Electronic Arts and Will Wright relicensed the original game source code and artwork under the Gnu General Public License version 3, so it can be renovated and developed into an easily accessible, educational game.
+
+Why is SimCity so successful as a game and educational tool?
+
+Daniel G. Lobo, Playing with Urban Life, Space Time & Play
+
+"SimCity: One of the most influencial strategy games in the history of urban planning."
+
+"From the beginning, SimCity stressed a desire to influence policy and especially education by nurturing reflection on the nature of ideal cities. No other game has been used so widely at so many levels of schooling to help illuminate the different elements of local government."
+
+"The difference between SimCity and a real city seems to be narrowing as new versions of the game take more sophisticated real-life issues into consideration."
+
+David Thomas, SimCity, Space Time & Play
+
+"SimCity allows players to test theories and construct mental models of a hidden system."
+
+http://www.donhopkins.com/drupal/node/9
+
+"The digital models running on a computer are only compilers for the mental models users construct in their heads. The actual end product of SimCity is not the shallow model of the city running in the computer. More importantly, it's the deeper model of the real world, and the intuitive understanding of complex dynamic systems, that people learn from playing it, in the context of everything else about a city that they already know. In that sense, SimCity, SimEarth, and SimAnt are quite educational, since they implant useful models in their users minds."
+
+Goals of the Micropolis Eduverse Project.
+
+Develop a fun, community oriented, web based, educational game, based on the original SimCity source code, called "Micropolis Eduverse".
+
+Focused on constructionist education.
+
+Built out of free open source software.
+
+Runs on the server, plays in the browser.
+
+Supports collaborative, democratic, multi-user play.
+
+Constructionist Education.
+
+Micropolis can be used to teach many things: language skills, creative writing, journalism, social studies, science, interpersonal communication, democratic process, debating.
+
+We will develop constructionist educational materials, scenarios and user stories for Micropolis.
+
+OLPC Wiki: http://wiki.laptop.org/go/Constructionist
+
+"Constructionism is a philosophy of education in which children learn by doing and making in a public, guided, collaborative process including feedback from peers, not just from teachers."
+
+http://en.wikipedia.org/wiki/Constructionism_(learning_theory)
+
+Seymour Papert defined constructionism in a proposal to the National Science Foundation entitled "Constructionism: A New Opportunity for Elementary Science Education" as follows: "The word constructionism is a mnemonic for two aspects of the theory of science education underlying this project. From constructivist theories of psychology we take a view of learning as a reconstruction rather than as a transmission of knowledge. Then we extend the idea of manipulative materials to the idea that learning is most effective when part of an activity the learner experiences as constructing a meaningful product."
+
+While constructionism has, due to its impetus, been primarily used in science and mathematics teaching (in the form of inquiry-based science), it is arguable that it developed in a different form in the field of media studies in which students often engage with media theory and practice simultaneously, in a complementary praxis. More recently it has gained a foot hold in Applied linguistics, in the field of second language acquisition (or SLA). One such application has been the use of the popular game SimCity as a means of teaching English using constructionist techniques (Gromik:2004).
+
+Online Client/Server Architecture.
+
+Micropolis plays in the web browser with Flash, so players can run the game on any computer, without installing any software.
+
+The simulation and community site runs on the web server, which connects players together, so they can communicate with each other, form communities, share games and collaborate.
+
+Multi Player Collaboration.
+
+Players have an identity, and a profile in which they can describe themselves and their interests.
+
+The web server provides a medium for chat, discussion and debate, and a library of cities for players to share.
+
+Players participate in the democratic process, colaborate online, propose and debate issues, vote on propositions, build zones and develop the city.
+
+Solution: Web server / Flash client user interface for SimCity.
+
+Storytelling.
+
+Micrpolis will give players the opportinuty to write stories and articles about events and issues in the city.
+
+Journalism. Newpaper publishing. Blogging. Twitter. Facebook.
+
+"The Sims Exchange" is a popular online community where players of "The Sims" publish web pages about their houses, their families, and their stories, with save files that other players can download and play on their own computers.
+
+Micropolis will apply that idea at the urban level, by publishing web pages about cities, around which players can write and publish stories like a newspaper or blog, about events and issues that interest and educate them.
+
+Solution: Wikimedia integration. 
+
+Build on top of standard Wikimedia technology (the same as used by Wikipedia). Integrate Micropolis with Wikimedia in several useful ways: Wiki pages can embed live simulations, data visualizations, graphs and pictures from Micropolis, so players can write Wiki pages, stories and discussions about their cities. Micropolis can generate dynamic content, so it can write Wiki pages with hyperlinked information about cities, journals, stories, scenarios and educational experiences.
+
+Community.
+
+Micropolis will be integrated with online communities and social networks, to enable colaboration and sharing, and as a medium for storytelling and interactive discussion.
+
+Community. Groups. Collaboration. Journal.
+
+Solution: Facebook integration.
+
+Build on top of the widely used Facebook social network: "Facebook is a social utility that connects people with friends and others who work, study and live around them." Leverage the well supported features of Facebook, including identity, groups, walls, notices, discussions, communities. Enable your friends to see important events and stories about your city, and comment and vote on issues.
+
+Connecting Micropolis with Society.
+
+We are adding plug-in cultures to Micropolis, so you can have zones representing different religions, communities, social institutions and lifestyles. The plug-in cultures can affect your city, interact with each other, send you messages, tell you about themselves, and link to more information on the internet.

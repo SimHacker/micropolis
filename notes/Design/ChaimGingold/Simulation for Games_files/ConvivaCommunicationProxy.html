@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://livepassdl.conviva.com/ConvivaCommunicationProxy.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body>
+<script>
+var addEvent = function (obj, evname, evhandler) {
+        if (obj.addEventListener) {
+            obj.addEventListener(evname, evhandler , false);
+        } else {
+            obj.attachEvent('on'+evname, evhandler );
+        }
+};
+
+
+/* For IE9 we must use this magic/hack that injects VBScript in the page. 
+   This is the only way to get access to the raw bytes in a binary 
+   response. Otherwise, the bytes 128-159 are mangled.
+*/
+var isIE = (typeof (window.ActiveXObject) != 'undefined');
+if(isIE) { 
+    var IEBinaryToArray_ByteStr_Script = 
+    	"<!-- IEBinaryToArray_ByteStr -->\r\n"+
+    	"<script type='text/vbscript'>\r\n"+
+    	"Function IEBinaryToArray_ByteStr(Binary)\r\n"+
+    	"	IEBinaryToArray_ByteStr = CStr(Binary)\r\n"+
+    	"End Function\r\n"+
+    	"Function IEBinaryToArray_ByteStr_Last(Binary)\r\n"+
+    	"	Dim lastIndex\r\n"+
+    	"	lastIndex = LenB(Binary)\r\n"+
+    	"	if lastIndex mod 2 Then\r\n"+
+    	"		IEBinaryToArray_ByteStr_Last = Chr( AscB( MidB( Binary, lastIndex, 1 ) ) )\r\n"+
+    	"	Else\r\n"+
+    	"		IEBinaryToArray_ByteStr_Last = "+'""'+"\r\n"+
+    	"	End If\r\n"+
+    	"End Function\r\n"+
+    	"</scr" + "ipt>\r\n";
+    document.write(IEBinaryToArray_ByteStr_Script);
+
+    /* The VB code below will return one char for every 2 chars in the 
+       string. We construct a mapping table to replace every such 
+       composed character with the two characters it encodes */
+    var ByteMapping = {};
+    for ( var i = 0; i < 256; i++ ) {
+      for ( var j = 0; j < 256; j++ ) {
+	ByteMapping[ String.fromCharCode( i + j * 256 ) ] = 
+		String.fromCharCode(i) + String.fromCharCode(j);
+      }
+    }
+    function GetIEByteArray_ByteStr(IEByteArray) {
+	var rawBytes = IEBinaryToArray_ByteStr(IEByteArray);
+	var lastChr = IEBinaryToArray_ByteStr_Last(IEByteArray);
+	return rawBytes.replace(/[\s\S]/g, 
+		function( match ) { return ByteMapping[match]; }) + lastChr;
+    }
+
+    /* IE9 also has another problem in postMessage: it cannot deal with 
+       strings that contain the character with code 0. We encode chr(0) 
+       as chr(1) + chr(1) and chr(1) as chr(1) + chr(2). 
+    */
+    var transl0 = String.fromCharCode(1) + String.fromCharCode(1);
+    var transl1 = String.fromCharCode(1) + String.fromCharCode(2);
+
+    var encodeZerosRe = new RegExp("["+String.fromCharCode(0)+String.fromCharCode(1)+"]", "g");
+    function encodeZeros(s) {
+        return s.replace(encodeZerosRe, 
+                  function (match) { return (match == String.fromCharCode(0) ? transl0 : transl1);} );
+    }
+
+    var decodeZerosRe = new RegExp(String.fromCharCode(1) + ".", "g");
+    function decodeZeros(msg) {
+        // Decode the 0s
+        msg = msg.replace(decodeZerosRe, 
+                          function (match) { return (match == transl0 ? String.fromCharCode(0) 
+                                                                      : String.fromCharCode(1)); });
+        return msg;
+    }
+
+}
+
+// AJAX support
+// @param method String (either POST or GET) 
+// @param contentType String
+function makeRequest(url, method, contentType, data, 
+                     datacallback, 
+                     errorcallback) {
+    //alert("makeRequest url="+url+" method="+method+" contentType="+contentType);
+    var xmlHttpReq = false;
+    if (window.XMLHttpRequest) {
+        // Mozilla/Safari
+        xmlHttpReq = new XMLHttpRequest();
+        if(contentType && xmlHttpReq.overrideMimeType) { 
+            xmlHttpReq.overrideMimeType = contentType;
+        }
+    } else if (window.ActiveXObject) {
+        // IE
+        xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlHttpReq.open(method, url, true);
+ 
+    if(contentType) {
+        xmlHttpReq.setRequestHeader('Content-Type',  contentType);
+    }
+    // If the data contains \0  Firefox will truncate the data
+    // xmlHttpReq.setRequestHeader('Content-Length', data.length);
+    // The Connection header is refused by Chrome
+    //xmlHttpReq.setRequestHeader('Connection', 'close')
+    xmlHttpReq.onreadystatechange = function() {
+        if (xmlHttpReq.readyState != 4) return;
+        xmlHttpReq.onreadystatechange = null; // Break the GC cycle
+        if (xmlHttpReq.status == 200) {
+           if(datacallback) {
+               var bytes = xmlHttpReq.responseText;
+               if(isIE && contentType && /octet-stream/.test(contentType) >= 0) {
+                  bytes = encodeZeros(GetIEByteArray_ByteStr(xmlHttpReq.responseBody));
+               }
+               if(0 && window.console) {
+                   var now = (new Date().getTime() / 1000).toFixed(3);
+                   var debugMsg = "["+now+"] Received: (len="+bytes.length+"): ";
+                   for(var i=0;i<bytes.length;i++) {
+                       debugMsg += bytes.charCodeAt(i).toString(16)+",";
+                   }
+                   window.console.log(debugMsg);
+               }
+               datacallback(bytes);
+           }
+        } else {
+            if(errorcallback) errorcallback(xmlHttpReq.status);
+        }
+    }
+    if(xmlHttpReq.sendAsBinary != undefined) {
+        xmlHttpReq.sendAsBinary(data);
+    } else {
+        xmlHttpReq.send(data);
+    }
+}
+
+// This is a message coming from DataLoader
+addEvent(window, "message", function(e) {
+    var data = e.data;
+    var source = e.source; // Apparently in IE9 this is deleted from @e after this handler is done, so we save a copy for later.
+                           //NOTE(henry): Perhaps we should copy the string here (and e.data) instead?  Perhaps this is what is failing in IE9.
+    var origin = e.origin; // Same as above.
+    // Ensure that we can match message data that contains newline.
+    // We do not use the browser's regex engine to match the binary message data, in case it doesn't work.
+    var m = data.match(/^id=([^,]+),method=([^,]+),url=([^,]*),contentType=([^,]*),/m);
+    if(! m) {
+        // alert("ConvivaCommunicationProxy: Cannot parse message: "+data);
+        return;
+    }
+    var preBodyMessageLength = m[0].length;
+    var body = null;
+    if (preBodyMessageLength == data.length) {
+        body = ""; // Body is empty.
+    } else {
+        body = data.substring(preBodyMessageLength);
+    }
+    var reqId = m[1];
+    var method = m[2];
+    var url = m[3];
+    var contentType = m[4];
+    if(isIE && /octet-stream/.test(contentType)) {
+        body = decodeZeros(body);						   
+    }
+    
+    var baseUrl = window.location.href;
+    baseUrl = baseUrl.replace(window.location.pathname+window.location.search+window.location.hash, "")
+    if(url) {
+        if(url.charAt(0) != '/') {
+           baseUrl += "/";
+        } 
+        baseUrl += url;
+    }
+    // We are ready to make the request
+    makeRequest(baseUrl, method, contentType, body, 
+                function (bodyArg) {
+                       source.postMessage("id="+reqId+",ok,"+bodyArg,origin);
+                },
+                function (status) {
+                       source.postMessage("id="+reqId+",error,"+status,origin);
+               });
+   });
+   
+</script>
+<div id="log"></div>
+
+
+
+</body></html>

@@ -1,0 +1,83 @@
+<p>
+<h1>Pie Menus on Python/GTK/Cairo for OLPC Sugar, by Don Hopkins.</h1>
+<h2><a href="http://www.DonHopkins.com/home/code/piemenu.py">Python Source Code</a></h2>
+<h2><a href="http://www.DonHopkins.com/home/code/piemenu.tgz">Tar File with Source, Demos and Icons.</a></h2>
+</p>
+<p>
+<h3>Demos of Pie Menus for OLPC (One Laptop Per Child) Sugar User Interface on XO Laptop</h3>
+</p>
+<p>
+I've been doing some fun OLPC user interface programming in Python. The OLPC's open source software environment includes Linux (for operating), Python (for scripting), GTK (for widgets), Cairo (for structured/stencil/paint/outline graphics) and Pango (for formatted text with markup), and it totally rocks! 
+</p>
+<p>
+Four item pie menu with submenus:
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/root_pie_none.png" border="0" />
+</p>
+<p>
+Pop up the "Compass" pie submenu, which has eight pie items and three linear overflow items and select "NE". These menus support pure pie menus, pure linear menus, and hybrid pie/linear menus. They can limit the number of pie items to a convenient number like 8, and make the rest linear items.
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/root_pie_0.png" border="0" /> <br/>
+<img src="http://www.DonHopkins.com/home/images/compass_pie_none.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/compass_pie_0.png" border="0" /> 
+</p>
+<p>
+Pop up a ridiculously complex "Ringed" pie submenu, which has four rings of items, the inner ring with only four, which are very easy to select, the next ring with eight, which are easy to select because they're further out, the next ring with 24, and the next ring with a bunch more, which are harder but possible to select. This is the ultimate stress test of ringed pie menus. (Well actually there is no limit to the number of rings, but too many rings and menu items may result in heavy, unstable, radioactive pie menus!)
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/root_pie_2.png" border="0" /> <br/>
+<img src="http://www.DonHopkins.com/home/images/ringed_pie_none.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/ringed_pie_0.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/ringed_pie_1.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/ringed_pie_2.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/ringed_pie_3.png" border="0" />
+</p>
+<p>
+<h3>Example SimCity Pie Menus</h3>
+</p>
+<p>
+To demonstrate how icons can work together with help text in the footer, I've made a set of example pie menus for selecting SimCity editing tools (based on the graphics and layout of the old X11/TCL/Tk SimCity interface), in simcity_piemenus.py.
+Note: They do not actually do anything -- it's just a simulated simulation! 
+</p>
+<p>
+SimCity tool selection menu, with two submenus ("Zone..." and "Build..."), and six important quickly selectable editing tool items. Shows icons without labels, and descriptive help text in the footers. 
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_none.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_0.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_1.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_2.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_3.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_4.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_5.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_6.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_tools_7.png" border="0" />
+</p>
+<p>
+SimCity Zone pie submenu. Six items for zoning residential, commercial and industrial, fire stations, police stations, and querying zones. 
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_none.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_0.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_1.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_2.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_3.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_4.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_zone_5.png" border="0" />
+</p>
+<p>
+SimCity Build pie submenu. Six items for building parks, stadiums, seaports, coal power plants, nuclear power plants, and airports. 
+</p>
+<p>
+<img src="http://www.DonHopkins.com/home/images/simcity_build_none.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_0.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_1.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_2.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_3.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_4.png" border="0" />
+<img src="http://www.DonHopkins.com/home/images/simcity_build_5.png" border="0" />
+</p>
+<!--break-->
+

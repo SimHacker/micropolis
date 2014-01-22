@@ -1,0 +1,133 @@
+Retrieving and Installing SimCity
+---------------------------------
+
+Retrieve the following files:
+    SimCity.README
+    SimCity.tar.Z
+    HyperLook1.5-runtime.tar.Z
+
+Read the README file and make sure you have the appropriate configuration 
+to run SimCity and HyperLook. You will need 2,600 Kbytes of disk space
+for SimCity and 1,500 Kbytes for HyperLook, for a total of 4,100 Kbytes. 
+You must also have 3,200 Kbytes of disk space on /tmp (or some other
+local file system) on the machine that runs SimCity, for shared memory.
+
+    % df
+    % more SimCity.README
+
+Uncompress and untar the two .tar.Z files, and you'll have the directories
+"SimCity" and "HyperLook1.5-runtime.tar.Z".  
+
+    % uncompress SimCity.tar.Z
+    % uncompress HyperLook1.5-runtime.tar.Z
+    % tar xfv SimCity.tar
+    % tar xfv HyperLook1.5-runtime.tar
+
+Go into the SimCity directory, and run the "InstallSimCity" shell script.
+A typical installation is shown, where <return> means pressing the
+"Return" key to accept the default.  If the default is not acceptable,
+then enter the full path name of the appropriate directory (or the
+host name of the license server).
+
+    % cd SimCity
+    % InstallSimCity
+    SimCity Installation:
+
+    Please enter the name of the top level SimCity directory,
+    or press return to accept the default of:
+	       /g/demo/SimCity
+    Directory: <return>
+
+    Please enter the name of the top level HyperLook directory,
+    or press return to accept the default of:
+	       /g/demo/HyperLook1.5-runtime
+    Directory: <return>
+
+    Please enter the name of the SimCity license key directory,
+    or press return to accept the default of:
+	       /g/demo/SimCity/Resources/Keys
+    Directory: <return>
+
+    Please enter the name of a local directory that SimCity can use
+    to store its shared memory images. It must have plenty of space.
+    Press return to accept the default of:
+		     /tmp
+    Local Directory: <return>
+
+    Please enter the host name of the SimCity license server,
+    or press return to accept the default of:
+	       delta9
+    Host Name: <return>
+
+    Configuring shell scripts:
+	    GetKey
+	    SimCity
+	    SimCity.GenerateCity
+	    SimCity.NewCity
+	    Scenario.Bern
+	    Scenario.Boston
+	    Scenario.Rio_de_Janeiro
+	    Scenario.Detroit
+	    Scenario.San_Francisco
+	    Scenario.Dullsville
+	    Scenario.Tokyo
+	    Scenario.Hamburg
+
+    All done. Now you can play SimCity!
+    If you don't have a key, SimCity will run in demo mode.
+    Run the 'GetKey' script or select 'Get Key...' from
+    SimCity's 'File' menu to get a key.
+
+Now that you have installed SimCity, you can run the "GetKey" shell
+script to get a license key from DUX software, or run "SimCity" in
+demo mode without getting a key. In demo mode, your city will melt
+after 5 minutes, or when you try to save it to disk, so buy a license,
+it's cheap! When you buy a license, DUX will ship you the latest
+version of the software, a nice 100 page manual with lots of nifty
+illustrations, and a handy reference card.  And when you're ordering,
+don't forget to ask how to embezzle funds!
+
+    % GetKey
+    To get a key for SimCity, contact DUX Software at:
+
+		    DUX Software
+		    4906 El Camino Real
+		    Suite 1
+		    Los Altos, CA 94022
+		    Phone #:  1-800-543-4999
+			   or 1-415-967-1500
+		    FAX #:    1-415-967-5528
+
+	    and give them your server code.
+
+    Your server code is:   1234 5678 9012 3456
+    Please enter your key: 9876 5432 1098 7654<return>
+
+    Feature name: 16 [16]
+	Number of licenses: 1
+
+    Key successfully installed.
+    % SimCity
+    Got a license!
+
+Now you're playing SimCity!  An introduction window will pop up while
+the rest of the system loads.  Then the startup screen will appear.
+Point the cursor at the controls and pictures and press the "Help" key
+(usually at the lower left corner of the keyboard) to learn how to use
+the user interface!
+
+To get the most out of the game:
+
+  1. Get a license key!
+     It's cheap, and you'll get a manual with lots more tips!
+  2. Save your city often.
+     You have to have a key to do that, though!
+  3. Print out your city periodically.  But don't kill too many trees.
+     You can even edit the city map images in the HyperLook drawing editor,
+     annotate them, print them out, and save them as drawing or EPS files. 
+  4. Don't forget to eat.
+     Keep in mind the closing times of local restaurants, or keep lots
+     of munchies on hand.
+  5. Have fun!
+     If things are going bad, remember not to take it too seriously,
+     it's only a simulation!

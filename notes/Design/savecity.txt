@@ -1,0 +1,40 @@
+loggedIn == False, gameMode == 'start':
+
+  session.cityID = 0
+
+  Load Scenario:
+    gApp.citySource = 'scenario'
+    gApp.cityID = <scenario id>
+    gApp.title = <scenario title>
+    gApp.description = <scenario description>
+
+  Generate Map:
+    gApp.citySource = 'generated'
+    gApp.cityID = <random seed>
+    gApp.title = _('Generated Map')
+    gApp.description = _('Generated a new random map.')
+
+  Load Shared City:
+    gApp.citySource = 'sharedcity'
+    gApp.cityID = <shared city id>
+    gApp.title = <shared city title>
+    gApp.description = <shared city description>
+
+  Load My City:
+    session.cityID = <my city id>
+    gApp.citySource = 'mycity'
+    gApp.cityID = <my city id>
+    gApp.title = <my city title>
+    gApp.description = <my city description>
+
+  Log In or Create Account:
+
+  Play With This Map:
+    gApp.gameMode = 'play'
+
+loggedIn == True, gameMode == 'start':
+
+loggedIn == False, gameMode == 'play':
+
+loggedIn == True, gameMode == 'play':
+  

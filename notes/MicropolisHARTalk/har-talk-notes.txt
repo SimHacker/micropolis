@@ -1,0 +1,530 @@
+I started working on SimCity about 1992.
+
+I saw SimCity in college, fell in love with it, wanted to figure out
+how it worked, do stuff with the user interface.
+
+So I jumped at the change to port it to the Sun workstation.
+
+First I made a version of it with the NeWS window system, James
+Gosling's PostScript based window system.
+
+Then I developed an X11 version that was multi player.
+
+DUX Software sold both of those as commercial products for Unix.
+
+But the contract with Maxis expired after ten years.
+
+In the mean time on I went on to Maxis to work on The Sims with Will
+Wright.
+
+Later I dredged up the SimCity code, and we talked EA into making it
+open source under GPLv3.
+
+The thing that convinced them it was a good idea was the OLPC project.
+
+It's focused on constructionist education: learning by building
+things.
+
+SimCity is pretty much the quintessential constructionist educational
+game.
+
+But it needs to be opened up to be even better.
+
+The OLPC project is based on Seymour Papert's ideas about teaching
+children to program when they're very young.
+
+It's inspired by Alan Kay's ideas about the DynaBook and object
+oriented programming, and learning how do kids learn?
+
+One of the important things about constructionism is kids helping each
+other, communicating, and teaching each other.
+
+I took the X11 version of SimCity. I had made multi player for
+X-Windows. But I simplified that and took the multi player features
+out for the OLPC, since they were rough, complex and didn't scale.
+
+Now that's on the OLPC.
+
+But what we really needed to do was make a new version that had a much
+better user interface designed to take advantage of the things the
+OLPC can do.
+
+So they used Python as the scripting langauge for OLPC.
+
+The goals:
+
+We want to make a fun game, that's based on the original source.
+
+Constructionist education is the overall theme, but it's very hard to
+figure out how that actually manifests in a game.
+
+We're using free open source software, and making it distributed, run
+centralized on a server.
+
+We want to put things in to support collaboration and voting, and
+teach democracy, and also teach language skills and interpersonal
+communication skills.
+
+So far what I've done:
+
+We took this TCL/Tk/X11 version, cleaned it up, got it through EA's
+quality assurance, and put it on the OLPC.
+
+The I stripped down the code, and made it into C++, and then cleaned
+it up, and refactored it, took out all the user interface, then
+started buiding a new user interface on top of it.
+
+I had some really great help from some people who volunteered.
+
+Albert Hoffcamp is a Dutch university programmer, and he helped me
+clean up this code, and put doxygen documentation into it.
+
+Now the code is much sturdier and easier to do something with.
+
+Tom Tjon A Loi is an artist who's also helping on the project, and
+I'll show you some ideas we've put together about what directions it's
+going to go in the future.
+
+I'm also working with Robert Shepherd, the Eduverse foundation, to
+make this into an educational game.
+
+We're also benefitting from Kennisnet and IBM Netherlands who are
+helping us make an educational version of this game.
+
+The OLPC is something for people to focus on and get a bunch of people
+on board to really make this happen.
+
+What's really wonderful is that I've had some really conversations
+about this with and encouragement from Alan Kay.
+
+He's been trying to do this stuff with years, with kids making things.
+
+His criticisms of SimCity were that you can't see inside of it and
+understand what it's doing, and you have to accept it as a black box.
+
+So now I'm trying to solve that problem.
+
+We're using a whole bunch of open source software, building on top of
+it, and then making new software that's open source.
+
+One of the things the OLPC project wants game developers to do is to
+make games out of modular components that can be plugged together to
+make other games.
+
+So I'm separating out the tile engine of SimCity, and the sprites, and
+the sound, and trying to make those work for other things.
+
+The architecture of the web server is:
+
+There's a C++ game.
+
+I'm using SWIG, which is a tool for making wrappers for libraries, and
+plugging them into extenstion languages.
+
+And it lets you get your library to a whole bunch of different
+extension languages.
+
+Right now it's Python, but it could be Lua or Java or whatever.
+
+So then there's another layer which is gluing the game into Python.
+
+The nice thing about SWIG is that you can subclass your C++ classes in
+Python, and then just script in a nice language.
+
+It's all open source stuff, and the web server does http, and it does
+Adobe AMF, which is kind of like binary JSON.
+
+I'm doing the client in another open source scripting language called
+OpenLaszlo.
+
+OpenLaszlo is like JavaScript and XML that compiled into Flash.
+
+But it will also compile into generic DHTML.
+
+Right now I'm concentrating on just getting the Flash interface
+working, and then once the paint is dry on that, I can then do the
+parts that were Flash specific using the canvas in DHTML.
+
+The intention is to get it independent of Flash, but Flash is the
+fastest way to get it working first.
+
+The other thing I have is a GTK user interface for the desktop.
+
+Another important thing I've done is internationalizing it and getting
+all the strings out.
+
+I would love to have volunteers to help translate it to other
+languages.
+
+I've made a little tool to do that, and translated it to Dutch.
+
+We're doing this for the Dutch educational system with Kennisnet's
+support.
+
+Previously I made a multi player version of this for X11.
+
+X11 doesn't scale very well, and it was kind of an experiment, but it
+did test out some ideas of making it a collaborative, cooperative
+game, instead of a competitive game.
+
+I didn't want to mess up the game, but I wanted to layer another
+social game on top of it.
+
+We're all sharing the money, and trying to achieve the same goals, so
+if somebody does something that pisses you off, you're going to get
+mad at them, and won't play with them, and that will play out at a
+higher level than the game.
+
+It's got voting for expensive things, like making a nuclear power
+plant, or changing the taxes, and then non-expensive things are just a
+free-for-all.
+
+I want to re-visit the multi-player game, but first get a really solid
+base to build it on top of.
+
+And doing a web based game is the best way to do that.
+
+I'm adding stuff like integrating it with WikiMedia.
+
+One of the important things about constructionist education is getting
+people to help each other out, and chat.
+
+I want to teach language skills with this, not just how to be a good
+mayor, that's not the goal.
+
+It's how to write about what you want to do, and convince other people
+to vote for it.
+
+I think it's going to be nice to embed this in things like Facebook
+and WikiMedia, because what you're doing is writing stories and
+newspapers and blogging.
+
+The Sims has something called "The Sims Exchange", where when you save
+your game file, it also writes out a bunch of web files that describe
+your house, you family, the story you've told about them with
+pictures, and then it uploads that to the web.
+
+So really playing the game is a web publishing tools.
+
+I want to apply those ideas to SimCity, and that would manifest in the
+form of a newspaper.
+
+So you could act as a journalist, and when something happened, these
+events in the game are generating opportunities for you to click on it
+and open it up and write about what your interpretation of it is, and
+automatically push it into a wiki page or a blog.
+
+So basically the result of playing a game will be this rich save file
+which has rich points of interest with stories attached to them.
+
+You could look at it geographically as a map, to see all the points of
+interest.
+
+You could look at it as a calandar, like a blog, and then things that
+happen with the story can link to a save file, so you can then jump
+back into the game at that point.
+
+Basically I want to make like TiVo for SimCity, is the eventual goal.
+
+You have all these save file snapshots, and you can fast forward and
+reverse by re-playing the edits that you did.
+
+You can imagine that when you play a game, at any point if you decide
+"let's raise taxes", you make a checkpoint there, and then you can
+revisit that decision, and then branch reality out to another thing if
+you didn't raise taxes, and then see what happens.
+
+I want players to be able to make a tree of possibilities, and then
+share all these save files, and then comment on them, and write about
+them.
+
+That's where the educational stuff comes in.
+
+The teacher should be able to write scenarios that plug into the game,
+that generate events, and give people things to discuss.
+
+Alan Kay said some wonderful things:
+
+"One of the most wonderful possibilities about this venture is that it
+will bring together very fluent designers from many worlds of
+computing (more worlds than usually combine to make a game) in the
+service of the children. We should really try to pull this off!"
+
+I'm looking for volunteers.
+
+I never though I'd be working directly or indirectly with Alan Kay,
+and it just blew my mind that he was interested in it.
+
+He's very supportive.
+
+Here's the long term goal.
+
+There's a game, and there's a robot or a monster.
+
+You double click on the monster and it opens up a visual program that
+controls what it does.
+
+This has already been dones in the 1980's on the Apple ][, and it was
+a game called Robot Odyssey, by Warren Robinet, who made the Atari
+Adventure.
+
+And it was so before its time, it turns out that it was Alan Kay's
+favorite game, and he's waiting for the other shoe to drop.
+
+It taught visual programming and logic to kids.
+
+You go inside a robot, and it's a room with plugs and sensors, and you
+have logic parts that you can bring out and make a circuit inside that
+robot.
+
+What I'm trying to do is do this within SimCity, with a visual
+programming language that's just a layer on top of Python.
+
+We already have Python. I like Python. It's well designed.
+
+I'm not going to try to invent something different.
+
+I just want to give you a visual way to get to anything.
+
+How does Constructionist Education manifest itself in something like
+SimCity?
+
+Creative writing, blogging, twittering and chatting. All this social
+stuff that people do.
+
+Democracy. Writing proposals. Trying to get somebody to support your
+proposal.
+
+Publishing things into wikis.
+
+Opening it up to plug-in programming.
+
+The first step is to just look at the code to see how it works, and
+then tweak it and change it and then make your whole things.
+
+The older kids I want to touch Python and C++ programming.
+
+And the younger kids will have this eaiser higher level language to do
+logic.
+
+This is version three, I'm only at version one right now.
+
+I have the web server running.
+
+I want to put in sharing a city, tagging, journals, discussions, you
+know, the whole social network thing.
+
+It occurrs to me that maybe I should just let Facebook handle a lot of
+that stuff, and just make a Facebook plug-in.
+
+And then slow the game down a lot, so on your Facebook page it will
+let your friends vote on things.
+
+MediaWiki integration. Take well known things that solve a problem
+well and piggyback on top of them instead of trying to invent your own
+things.
+
+PayPal. Maybe we can pay for all the CPU time it takes.
+
+Tom made these mock-ups of what SimCity could look like inside of a
+social network.
+
+The important thing is that you have an identity, it knows about you,
+and you've got friends.
+
+This could be a Facebook app, where if you add the app you can do all
+this stuff and play it yourself, but even if you don't add the app you
+can see what other people are doing.
+
+It's all about having people see what you're doing and explaining it
+to them.
+
+You can have these links into the save files, and people saying
+things.
+
+I want to make it so one game might last a week, and take little
+steps.
+
+What I've made to test plug-ins, is that I've made plug-in zones, and
+the first plug-in zone I made was a plug-in church, because that's
+contravertial and will upset people.
+
+The idea is that I want to be able to script churches in Python.
+
+The other plug-ins are plug-in characters.
+
+In a multi player game there could be several people in, and you're on
+the map at a place, and you can chat embedded in the game, and then
+collaborative editing.
+
+If you put something down, it will put an interface that says "Hey!
+Somebody wants to make this. Do you vote for it? Yes or No." And then
+have a chat associated with that.
+
+And then imagine, other people can come into you game and say "Hey,
+this zone is not developed, we're going to open a coffeeshop here."
+
+I want it eventually to be open enough that other people can come in
+and effect your game.
+
+And of course you always have a save file.
+
+There's a tool for doing translations.
+
+It's all in google code.
+
+That's the robot. I wanted to show some code.
+
+This is how PacMan works. He follows roads.
+
+I wrote a plug-in robot that you can put into the thing.
+
+I'd better get to the actual code that's running.
+
+These are the different scenarios we can load, or generate something
+randomly.
+
+I'll do one of my favorite cities that I made, San Francisco Haight
+Ashbury.
+
+This is a lazy tile view.
+
+There are 120x100 tiles on the server, and we're telling the server
+where we're looking at, and it's sending the tiles that we need to
+see.
+
+Things that happen in the city get logged, and there's a chat, and
+this will help you figure out what you need to do to improve your
+city, and this is a history.
+
+It's so funny because taxes in the Netherlands are so much more than
+20%, the highest tax in SimCity.
+
+Here's a meltdown. When we have a meltdown, it says "Hey, there's a
+meltdown" with a picture, which we click on to go there.
+
+This little window up here, when something interesting happens in the
+game, it's going to show you a live view and tell you something, but
+we can have a link to Wikipedia or whatever.
+
+I want to put in more educational stuff, so that the church says "Hey!
+Did you know that Scientoligists believe this?" (click here for more)
+
+You can think of the church as like in-game advertising.
+
+And then if you have too many churches, you just use the bulldozer to
+get rid of them.
+
+There's the speed control. I can make it go super-duper fast, and
+everybody just left.
+
+This is more like a twitch game.
+
+Let me do the cheat, ok. What is it? I just added this, so I'm not
+sure. You go "!faith 1000",
+
+That makes them want a lot more churches. Woah, so I'm getting
+churches!
+
+So I've only done one church besides the generic one, so they just
+have numbers on them.
+
+I'm going to have a "Tax the Churches" option too.
+
+So those are weird generic churches.
+
+Ok, I'll lower the taxes.
+
+More people will come in and the churches will recruite them.
+
+Oh, ok, ran out of money.
+
+Let me do the robots real quick.
+
+This is PacMan here.
+
+Oh, I'm out of money.
+
+The fastest way is to refresh the screen and start fresh.
+
+We'll go straigh in, get rid of this.
+
+Oh, pie menus, right!
+
+If you click here. Taartmenu. I've got to have a talk with my
+translator.
+
+You click and you get a pie menu, which has items in different
+directions.
+
+If you click and go right, you get a road, and you can do a little
+road.
+
+And if you click and go up and right, you get a bulldozer.
+
+And then submenus for zoning, parks, and stuff like that.
+
+This gives you a nice quick gesture interface.
+
+But the one I wanted was the PacBot.
+
+So if you click him, now that's running Python code that's looking at
+the map, and it looks for the traffic, and it goes up, up, up, up, up.
+
+You can have lots of them, and then they compete.
+
+You have this wonderful emergent behavior of PacMan looking for
+traffic and then the other PacMan eats it.
+
+You really need to zoom this up a little bit.
+
+The great thing about this is that this is anotehr game layered on
+top.
+
+You can make you PacMan maze, and then you can torture them.
+
+Let's see, he'll go crazy, it's like a lion in his cage here.
+
+Aah, caught one! He's blue. Ok, let's get him here.
+
+Ok, he's not going to be happy about this.
+
+Where'd he go? There was a menu to get rid of him.
+
+Now he's just going nuts there.
+
+Where's my iPhone? Did I leave the phone down here? Oh well.
+
+You can't see it so you'll have to believe me.
+
+The first multi-player interface I'm making is an iPhone app.
+
+It loads the city and it lets you zoom and fly over it.
+
+I'm just about to hook it up with the server so that you'll be able to
+come into the game as a helicopter, and just tilt and fly around, and
+then just chat.
+
+Eventually I want to do the whole game on the iPhone, and Android of
+course, and whatever else.
+
+But the first step is to just get presence and chatting in there.
+
+One interesting thing is that SimCity is GPLv3, so you can't put it on
+the iPhone on purpose because of the anti-TiVoization clause.
+
+But it's ok though to have it running on the server, and I think it's
+more interesting having it running on the server, because there's
+already a SimCity that runs on the iPhone.
+
+Any questions? What's the cheat code to get money?
+
+Q: War?
+
+A: War. That's what churches are for.
+
+I encourage you to script your own church and plug it in.
+
+I'm totally going to have the Flying Spaghetti Monster, and he's going
+to actually convert all the other churches to Flying Spaghetti Monster
+churches, so it will be a moot point, and there will be no war.

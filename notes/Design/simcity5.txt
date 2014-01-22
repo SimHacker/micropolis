@@ -1,0 +1,6 @@
+https://gist.github.com/jtheoof/5152575#file-simcity-2013-javascript-ui-architecture-md
+https://news.ycombinator.com/item?id=5359143
+
+http://codeutopia.net/blog/2009/04/28/i-wrote-a-sim-city-clone-in-javascript/
+http://codeutopia.net/projects/city/
+ttp://codeutopia.net/projects/city/help.html

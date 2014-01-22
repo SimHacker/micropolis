@@ -1,0 +1,339 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, pre, code, blockquote {
+	margin:0;
+	padding:0;
+	border-width:0;
+}
+td, th {
+	border-style:solid;
+	border-width:1px;
+}
+table {
+	border-collapse:collapse;
+}
+li {
+	display:block;
+}
+body {
+	font-size:12px;
+	-epub-hyphens:auto;
+}
+p.Basic-Paragraph {
+	-epub-ruby-position:over;
+	color:#000000;
+	font-family:Times, serif;
+	font-size:12px;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:1.2;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	text-align:left;
+	text-decoration:none;
+	text-indent:0px;
+}
+p.para-style-override-1 {
+	font-family:"Orator Std", sans-serif;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-2 {
+	font-family:"Perpetua Titling MT", serif;
+	font-size:36px;
+	font-style:normal;
+	font-weight:bold;
+	text-align:justify;
+}
+p.para-style-override-3 {
+	font-family:"Perpetua Titling MT", serif;
+	font-size:30px;
+	font-style:normal;
+	font-weight:bold;
+	text-align:justify;
+}
+p.para-style-override-4 {
+	font-family:"Perpetua Titling MT", serif;
+	font-style:normal;
+	font-weight:bold;
+	text-align:justify;
+}
+p.para-style-override-5 {
+	font-family:"Orator Std", sans-serif;
+	font-size:18px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:right;
+}
+p.para-style-override-6 {
+	font-family:"Orator Std", sans-serif;
+	font-size:35px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-7 {
+	font-family:"Orator Std", sans-serif;
+	font-size:18px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-8 {
+	font-family:"Orator Std", serif;
+	font-size:8px;
+	font-style:italic;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-9 {
+	font-family:"Orator Std", sans-serif;
+	font-size:20px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-10 {
+	font-family:"Perpetua Titling MT", serif;
+	font-size:8px;
+	font-style:normal;
+	font-weight:bold;
+	text-align:right;
+}
+p.para-style-override-11 {
+	font-family:"Orator Std", sans-serif;
+	font-size:6px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:left;
+}
+p.para-style-override-12 {
+	font-family:"Orator Std", sans-serif;
+	font-size:6px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-13 {
+	text-align:justify;
+}
+p.para-style-override-14 {
+	font-family:"Orator Std", sans-serif;
+	font-size:21px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+	text-decoration:underline;
+}
+p.para-style-override-15 {
+	font-family:"Orator Std", sans-serif;
+	font-size:21px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-16 {
+	font-family:"Orator Std", serif;
+	font-size:21px;
+	font-style:italic;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-17 {
+	font-family:"Orator Std", sans-serif;
+	font-size:28px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-18 {
+	font-family:"Orator Std", serif;
+	font-size:22px;
+	font-style:italic;
+	font-weight:normal;
+}
+p.para-style-override-19 {
+	font-family:"Orator Std", sans-serif;
+	font-size:22px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-20 {
+	font-family:"Orator Std", serif;
+	font-size:6px;
+	font-style:italic;
+	font-variant:small-caps;
+	font-weight:normal;
+	text-align:right;
+}
+p.para-style-override-21 {
+	font-family:"Orator Std", sans-serif;
+	font-size:30px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-22 {
+	font-family:"Orator Std", sans-serif;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+}
+p.para-style-override-23 {
+	font-family:"Orator Std", sans-serif;
+	font-size:28px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-24 {
+	font-family:"Orator Std", serif;
+	font-size:8px;
+	font-style:italic;
+	font-weight:normal;
+}
+p.para-style-override-25 {
+	font-family:"Orator Std", serif;
+	font-style:italic;
+	font-weight:normal;
+}
+p.para-style-override-26 {
+	font-family:"Orator Std", serif;
+	font-size:6px;
+	font-style:italic;
+	font-weight:normal;
+}
+p.para-style-override-27 {
+	font-family:"Orator Std", sans-serif;
+	font-size:24px;
+	font-style:normal;
+	font-weight:normal;
+}
+p.para-style-override-28 {
+	font-family:"Orator Std", sans-serif;
+	font-size:18px;
+	font-style:normal;
+	font-weight:normal;
+	text-align:justify;
+}
+span.char-style-override-1 {
+	font-family:"Perpetua Titling MT", serif;
+	font-size:35px;
+	font-style:normal;
+	font-weight:bold;
+}
+span.char-style-override-2 {
+	font-family:"Orator Std", sans-serif;
+	font-size:35px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-3 {
+	font-family:"Orator Std", sans-serif;
+	font-size:20px;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:underline;
+}
+span.char-style-override-4 {
+	font-family:"Orator Std", sans-serif;
+	font-size:20px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-5 {
+	font-family:"Orator Std", sans-serif;
+	font-size:6px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-6 {
+	font-family:"Orator Std", sans-serif;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-7 {
+	font-family:"Orator Std", sans-serif;
+	font-size:21px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-8 {
+	font-family:"Orator Std", sans-serif;
+	font-size:21px;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:underline;
+}
+span.char-style-override-9 {
+	font-family:"Orator Std", serif;
+	font-size:21px;
+	font-style:italic;
+	font-weight:normal;
+}
+span.char-style-override-10 {
+	font-family:"Orator Std", sans-serif;
+	font-size:24px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-11 {
+	font-family:"Orator Std", sans-serif;
+	font-size:22px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-12 {
+	font-family:"Orator Std", serif;
+	font-size:22px;
+	font-style:italic;
+	font-weight:normal;
+}
+span.char-style-override-13 {
+	font-family:"Perpetua Titling MT", serif;
+	font-size:30px;
+	font-style:normal;
+	font-weight:bold;
+}
+span.char-style-override-14 {
+	font-family:"Orator Std", sans-serif;
+	font-size:30px;
+	font-style:normal;
+	font-weight:normal;
+}
+span.char-style-override-15 {
+	font-family:"Orator Std", serif;
+	font-size:6px;
+	font-style:italic;
+	font-weight:normal;
+}
+span.char-style-override-16 {
+	font-family:"Orator Std", serif;
+	font-style:italic;
+	font-weight:normal;
+}
+span.char-style-override-17 {
+	font-family:"Orator Std", sans-serif;
+	font-size:8px;
+	font-style:normal;
+	font-weight:normal;
+}
+img.frame-1 {
+	height:840px;
+	width:595px;
+}
+div.frame-2 {
+	margin:0px auto 0px auto;
+	text-align:center;
+}
+img.frame-3 {
+	height:317px;
+	width:423px;
+}
+video.frame-4, object.frame-4 {
+	height:197px;
+	width:425px;
+}
+img.frame-5 {
+	height:134px;
+	width:141px;
+}
+img.frame-6 {
+	height:306px;
+	width:452px;
+}

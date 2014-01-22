@@ -1,0 +1,138 @@
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#micropolis-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#micropolis-tools {
+  width: 63px;
+  height: 100%;
+background: #e1ffff; /* Old browsers */
+background: -moz-linear-gradient(top,  #e1ffff 0%, #e1ffff 7%, #e1ffff 12%, #fdffff 12%, #e6f8fd 30%, #c8eefb 54%, #bee4f8 75%, #b1d8f5 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e1ffff), color-stop(7%,#e1ffff), color-stop(12%,#e1ffff), color-stop(12%,#fdffff), color-stop(30%,#e6f8fd), color-stop(54%,#c8eefb), color-stop(75%,#bee4f8), color-stop(100%,#b1d8f5)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #e1ffff 0%,#e1ffff 7%,#e1ffff 12%,#fdffff 12%,#e6f8fd 30%,#c8eefb 54%,#bee4f8 75%,#b1d8f5 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1ffff', endColorstr='#b1d8f5',GradientType=0 ); /* IE6-9 */
+  border-right: 1px solid #666;
+  z-index: 100;
+  position: relative;
+  padding: 0px 0px;
+  box-shadow: 0px 0 25px rgba(0,0,0,0.45);
+}
+
+#micropolis-tools h2 {
+  margin: 0;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+  text-align: center;
+  font-size: 14px;
+  padding-top: 10px;
+  clear: both;
+}
+
+#micropolis-tools ul.tools {
+  list-style-type: none;
+  list-style: none;
+  list-style-image: none;
+  margin: 10px 0px 0 5px;
+  padding: 0;
+}
+
+#micropolis-tools ul.tools li {
+  list-style-type: none;
+  list-style: none;
+  list-style-image: none;
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-left: 0;
+  padding: 0;
+}
+
+#micropolis-tools ul.tools li.selected {
+  box-shadow: 0px 0px 0px 4px navy;
+  border-radius: 2px;
+}
+
+#micropolis-tools ul.tools li img:hover {
+  cursor: pointer;
+}
+
+#micropolis-tools p {
+  font-size: 10px;
+  text-align: center;
+  margin: 5px 0 5px 0;
+}
+
+#micropolis-tools select#terrain-complexity {
+  margin-left: 5px;
+  width: 52px;
+}
+
+#micropolis-game {
+  z-index: 1;
+  left: 64px;
+  top: 0px;
+  position: absolute;
+}
+
+#micropolis-tools a {
+  color: black;
+  text-decoration:  none;
+  background-color: #ccc;
+  border: 1px solid #666;
+  border-radius: 3px;
+  padding: 3px;
+}
+
+#micropolis-tool-overlay {
+  background: #000000;
+  opacity: 0.5;
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  pointer-events:none;
+}
+
+#micropolis-minimap-container {
+  z-index: 2;
+  position: absolute;
+  top: 32px;
+  left: 96px;
+  background: rgba(0,0,0,0.25);
+}
+
+#micropolis-minimap {
+}
+
+h3 {
+  font-size: 10px;
+  margin: 0px;
+  padding: 3px 0 3px 5px;
+background: #45484d; /* Old browsers */
+background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#45484d), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #45484d 0%,#000000 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #45484d 0%,#000000 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+  color: white;
+  text-shadow: 1px 1px 0px rgba(0,0,0,1);
+  cursor: default;
+}
+
+h3::selection, h3::-moz-selection {
+  background: transparent;
+  cursor: default;
+}

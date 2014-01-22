@@ -1,0 +1,301 @@
+a:link    {text-decoration:none; color:#000; font-weight:700;}
+a:visited {text-decoration:none; color:#777; background:#DDF;}
+a:hover   {text-decoration:none; color:#000; background:#DDF;}
+a:active  {text-decoration:none; color:#444;}
+
+
+#header {
+/*    border: 1px solid #CDC;*/
+	min-height: 50px;
+}
+
+#footer {
+/*    border: 1px solid #CDC;*/
+	min-height: 100px;
+}
+
+#main-column {
+    
+    //border: 1px solid #CDC;
+    width:800px;
+    
+//    background: #E;
+    
+    //overflow:auto;
+    margin: 0px auto;
+
+}
+
+#video {
+	margin: 0px auto;
+	background: #222;
+}
+
+#student-list {
+	 line-height:150%;
+	 margin-top: -3px;
+}
+
+#main-column li {
+	
+	list-style-type: none;
+	
+/*    padding: 0px 0px 0px 0px;*/
+/*    margin: 0px 0px 0px 0px;*/
+    
+//    background: #EEE;
+/*    border: 1px solid #FDD;*/
+/*    width:100%;*/
+    
+    overflow:auto;
+}
+
+#main-column li.week-title {
+    margin: 50px 0px 0px 0px;    
+}
+
+
+
+/*.row:after {
+    content:'';
+    display:block;
+    clear: both;
+}*/
+
+/*
+.row {
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    
+//    background: #EEE;
+    border: 1px solid #FDD;
+    width:100%;
+    
+    overflow:auto;
+}
+
+.row:after {
+    content:'';
+    display:block;
+    clear: both;
+}*/
+
+.unit-week {
+    
+/*    border: 1px solid #CCC;*/
+
+    margin: 0px 0px 0px 0px;
+    padding: 38px 10px 0px 0px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-style:italic;
+    font-size: 130%;
+    font-weight: 200;
+    
+    text-align: right;
+    
+    letter-spacing: -2px;
+
+    float:left;
+    width:160px;
+}
+
+h2 {
+    
+/*    border: 1px solid #CCC;*/
+
+    margin: 0px 30px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-style:italic;
+    font-size: 100%;
+    font-weight: 200;
+    
+    text-align: right;
+    
+    letter-spacing: -1px;
+
+    float:left;
+    width:140px;
+    height:15px;
+}
+
+.text {
+/*    border: 1px solid #CCC;*/
+
+    font-family: 'Titillium Web', sans-serif;
+    
+    font-size: 100%;
+    font-weight: 200;
+    float:left;
+    
+    width: 450px;
+    
+   // margin-right: 15px;
+    padding: 0px 0px 15px 3px;
+}
+
+.margin-note {
+    
+/*    border: 1px solid #CCC;*/
+
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 70%;
+    font-weight: 200;
+    
+    text-align: left;
+    
+    letter-spacing: 0px;
+
+    float:right;
+    width:140px;
+}
+
+.margin-note p {
+	margin: 0px 0px 5px 0px;
+	padding: 0px;
+}
+
+.unit-week {
+    
+    //border: 1px solid #CCC;
+
+    margin: -10px 0px 20px 169px;
+    padding: 0px 22px 0px 5px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-style:italic;
+    font-size: 100%;
+    font-weight: 200;
+    
+    text-align: left;
+    
+    letter-spacing: 0px;
+
+//    float:left;
+    width:145px;
+    height:20px;
+}
+
+.w2 {
+    
+    //border: 1px solid #CCC;
+
+    margin: 40px 30px 0px 0px;
+    padding: 45px 0px 0px 0px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-style:italic;
+    font-size: 100%;
+    font-weight: 200;
+    
+    text-align: right;
+    
+    letter-spacing: -1px;
+
+    float:left;
+    width:140px;
+    height:15px;
+}
+
+h1 {
+    
+    //border: 1px solid #CCC;
+
+    margin: 50px 0px 25px 169px;
+    padding: 0px 0px 0px 0px;
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 400%;
+    font-weight: 700;
+    
+    line-height:85%;
+/*    text-transform: capitalize;*/
+        
+    width:500px;
+    //height:200px;
+
+    letter-spacing: -4px;
+    
+//    float:left;
+}
+
+.projects li {
+    width:100px;
+    height:100px;
+/*	min-height:32px;*/
+	
+    margin: 5px ;
+    float:left;
+
+    padding: 0px ;
+
+/*    border-top-style: 1px solid #CCC;*/
+    
+    text-align: left;
+/*    font-size: small;*/
+/*    font-weight: normal;*/
+    
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 80%;
+    font-weight: 200;
+	
+    background-color: #EEE;
+	
+	overflow:hidden;
+	
+	position:relative; /* enable us to position bottom contained text*/
+}
+
+/*.projectLink {
+	overflow:hidden;
+}
+*/
+.project-maker {
+
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+/*	So we can have padding and leave width at 100%, otherwise div grows beyond & scrolls*/
+	/* Doesn't work on IE<8, but we can reduce width manually if we want. */
+	
+	padding: 2px 1px 1px 3px ;
+/*	padding: 0px 0px 0px 2px ;*/
+	margin:0px;
+	
+ 	background-color : black ;
+	color : white ;
+
+    font-family: 'Titillium Web', sans-serif;
+/*    font-style:italic;*/
+    font-size: 85%;
+    font-weight: 700;
+	
+	position:absolute;
+	bottom:0px;
+	
+	width:100%;
+	
+	overflow:hidden;
+}
+
+/*.project-li:link	{border:0px solid red;}
+.project-li:visited{background-color:#FFFF85;}
+.project-li:hover	{border:0px solid blue;}
+.project-li:active	{background-color:#FF704D;}
+*/
+/*.projectLink:link		{background-color:#0000FF; color:white;}
+.projectLink:visited	{background-color:#FFFFFF; color:#CCC;}
+.projectLink:hover	{background-color:#F11; color:white;}
+.projectLink:active	{background-color:#FF704D; color:white;}
+*/
+/*.project-maker:link		{background-color:#0000FF; color:white;}*/
+/*.project-maker:visited	{background-color:#FFFFFF; color:#CCC;}*/
+/*.project-maker:hover	{background-color:#F11; color:white;}*/
+/*.project-maker:active	{background-color:#FF704D; color:white;}*/
+
+/*.project-maker-visited	{background-color:#555; color:white;}*/

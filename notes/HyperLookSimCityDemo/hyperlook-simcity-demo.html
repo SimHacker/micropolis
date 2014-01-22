@@ -1,0 +1,368 @@
+<HTML>
+<HEAD>
+    <TITLE>Video Tape Transcript of HyperLook SimCity Demo</TITLE>
+</HEAD>
+<BODY>
+<H1>Video Tape Transcript of HyperLook SimCity Demo<BR>
+<HR></H1>
+<BLOCKQUOTE>This is a transcript of a video taped demonstration of <A HREF="index.html">SimCity</A>
+on <A HREF="../hyperlook/index.html">HyperLook<BR>
+</A>in <A HREF="../lang/NeWS.html">NeWS</A>. The normal text is <A HREF="http://www.catalog.com/hopkins">Don
+Hopkins</A> talking. The <I>&quot;quoted italic text&quot;</I> is Abbe Don
+talking, who's running the camera. The <I>(parenthetcal italic text)</I>
+is extra annotation and explanation that's not on the video tape. <BR>
+</BLOCKQUOTE>
+<HR><B><BR>
+-- Beginning of Video Tape --</B> <BR>
+<BR>
+This is the <A HREF="../hyperlook/index.html">HyperLook</A> user interface
+system, written in <A HREF="../lang/NeWS.html">NeWS</A>, and it's running
+on a Sun on OpenWindows 3.0, and this is <A HREF="index.html">SimCity</A>,
+and application that I ported to HyperLook. <BR>
+<BR>
+<A HREF="images/h01.gif"><IMG SRC="previews/h01.gif" WIDTH="128" HEIGHT=
+"103" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Now we can press a button to play a city, and it will load a map of that.
+<BR>
+<BR>
+This is the overall map view, and this is the editor. <BR>
+<BR>
+<A HREF="images/h02.gif"><IMG SRC="previews/h02.gif" WIDTH="128" HEIGHT=
+"99" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+I can drag this rectangle around to scroll the map.<BR>
+<BR>
+And then I can throw it, and it has some inertia, so it bounces around.
+<BR>
+<BR>
+And then with this &quot;Zoom&quot; button here, I can zoom my view in,
+to look closer and closer into the map, so that we're actually scooting
+around quite close to the city. <BR>
+<BR>
+<A HREF="images/h03.gif"><IMG SRC="previews/h03.gif" WIDTH="128" HEIGHT=
+"99" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+And then, we can actually edit in this scale. (Wee!) Put some roads down.
+I think you can get even closer. And then you can zoom out. <BR>
+<BR>
+<A HREF="images/h04.gif"><IMG SRC="previews/h04.gif" WIDTH="128" HEIGHT=
+"97" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+All this is written in PostScript, all the graphics. The SimCity engine
+is in C, but all the user interface and the graphics are in PostScript.
+<BR>
+<BR>
+The neat thing about doing something like this in HyperLook is that HyperLook
+is kind of like HyperCard, in that all of the user interface is editable.
+So these windows we're looking at here are like stacks, that we can edit.<BR>
+<BR>
+Now I'll flip this into edit mode, while the program's running. That's a
+unique thing. <BR>
+<BR>
+Now I'm in edit mode, and this reset button here is just a user interface
+component that I can move around, and I can hit the &quot;Props&quot; key,
+and get a property sheet on it. <BR>
+<BR>
+I'll show you what it really is. See, every one of these HyperLook objects
+has a property sheet, and you can define its graphics. I'll zoom in here.
+We have this nice PostScript graphics editor, and we could turn it upside
+down, or sideways, or, you know, like that. Or scale it. I'll just undo,
+that's pretty useful. <BR>
+<BR>
+<A HREF="images/h05.gif"><IMG SRC="previews/h05.gif" WIDTH="128" HEIGHT=
+"91" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+This just defines what the button looks like. Here, there's a flip function:
+Special... Flip Top/Bottom. I'll just center them, and apply, and now we
+have a little upside-down reset button. <BR>
+<BR>
+So we have these Open Look components up here. I'll put this into edit mode.
+See, I can highlight all the components. <BR>
+<BR>
+HyperLook is integrated with The <A HREF="../lang/NeWS.html">NeWS</A> Toolkit,
+so we can get all these ancient looking Open Look menus and what not, and
+do things like cut this slider out here, and stick it onto here, to set
+the tax rate. <BR>
+<BR>
+<A HREF="images/h06.gif"><IMG SRC="previews/h06.gif" WIDTH="128" HEIGHT=
+"94" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+This slider happens to set the transportation fund. Every interface object
+here has a script that defines its behavior, and this guy says his action
+is to send the SetTransportationFund message to MyStack. The scripting language
+for the HyperLook system is PostScript, and some people complained about
+that, so Arthur van Hoff wrote a C to PostScript compiler, so that they
+can program in C. But however, I'd rather program in PostScript, myself.
+<BR>
+<BR>
+Woops. Let me put the button back on the window. There's quite a possibility
+for user interface vandalism in this system, so what we've done is make
+the user interface editor be just a user interface component that's in the
+stack, that you can remove to make the stack not editable. I've done some
+amount of magic to make SimCity editable, but when it's delivered as a product,
+it's just with a runtime system and not editable. <BR>
+<BR>
+We will go back and turn on Auto-Budget. Ok, now this is showing us something's
+happened, and I can click in here to bring my other view there. <BR>
+<BR>
+The neat thing is that this view here itself is just another user interface
+component, and I can copy and paste that, and have multiple views. Each
+one of these animated scrolling SimCity editors, once I've made one, I can
+put them anywhere. This window, you can click here to get three of them.<BR>
+<BR>
+<A HREF="images/h07.gif"><IMG SRC="previews/h07.gif" WIDTH="128" HEIGHT=
+"90" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+I put this nice high level component into this user interface system, and
+now anybody can just cut and paste it. <BR>
+<BR>
+One of the neat components that HyperLook comes with is the graphics editor,
+which is pretty ubiquituous. Like if I were to edit this button by hitting
+the properties key, I get this property sheet that has a graphics editor
+in it.<BR>
+<BR>
+Now this property sheet itself is a stack that I can edit. So its graphics
+editor, the menu here, and all this stuff is just fair play.<BR>
+<BR>
+<A HREF="images/h08.gif"><IMG SRC="previews/h08.gif" WIDTH="128" HEIGHT=
+"99" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+So when you make a new component class, you also construct another property
+sheet for it, or just copy one that almost does what you want, and then
+edit it so that it has the new things. <BR>
+<BR>
+That completely separates this notion of property sheets from the user interface,
+because you can just plug in a new set of property sheets that have a different
+look and feel, like if you want to give more novice people the ability to
+edit their user interface, you could have a simpler set of property sheets.
+<BR>
+<BR>
+So now we're going to get weird. I'm going to pause SimCity so it doesn't
+take all the CPU time, and iconify it. And of course, when you iconify it,
+the icons are miniatures of the window, and they're active too, so when
+I scroll these views around in the uniconified overall window, they keep
+scrolling down here in the icon.<BR>
+<BR>
+<A HREF="images/h09.gif"><IMG SRC="previews/h09.gif" WIDTH="128" HEIGHT=
+"84" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+You just get all this stuff for free with PostScript. Well, you know, it's
+not exactly free, but... ha ha!<BR>
+<BR>
+Now here is, oh yes, right here, this is a stack full of components, of
+clocks. You can get a property sheet on any of these clocks. The property
+sheet has three graphics editors, for the face and the two hands. We could
+just change the color of the hand, or change the total look of anything.
+<BR>
+<BR>
+<A HREF="images/h10.gif"><IMG SRC="previews/h10.gif" WIDTH="128" HEIGHT=
+"103" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+The whole thing is just Legos. The property sheet just plugs the drawing
+into the clock, and the clock knows how to rotate the hands around the face.
+<BR>
+<BR>
+<I>&quot;That's all the same object with different representations?&quot;</I><BR>
+<BR>
+Right. One of the data types this system knows is the structured graphics
+drawing. It plugs it into this property sheet with Alan Turing's head. It
+just lets me edit the three instance variables.<BR>
+<BR>
+<A HREF="images/h11.gif"><IMG SRC="previews/h11.gif" WIDTH="128" HEIGHT=
+"101" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+There's this protocol for property sheets of taking the instance variables,
+letting you edit them, and then putting them back in when you hit apply.
+As long as your property sheet plays that protocol, you can plug and play
+different property sheets, and customize them. <BR>
+<BR>
+We could make some really crazy looking clocks. Here's a good way to make
+crazy looking clocks. Woah, oh, let me show you one other thing first. <BR>
+<BR>
+This clock stack is a warehouse of objects, this is a bunch of examples
+of objects that I might want to use elsewhere. So I hit the &quot;Install&quot;
+button, this now installs them into the user interface editor. I'll make
+myself a new stack. I get a brand new stack. I go into edit mode, and there's
+this edit menu, and I select &quot;New...&quot;, and it's added this menu
+of new items that I can create! That &quot;Install&quot; button has added
+this &quot;Neat Clocks&quot; submenu to my edit menu. <BR>
+<BR>
+<A HREF="images/h12.gif"><IMG SRC="previews/h12.gif" WIDTH="128" HEIGHT=
+"104" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+So now I can get a &quot;Freaky Clock&quot;. And I can get rid of this &quot;Neat
+Clocks&quot; stack here. And then I can go get other warehouses. Say I wanted
+a warehouse of Open Look components, then I could just plop them down. New...
+System... Color Selector. Boing. Now I can select colors from this. <BR>
+<BR>
+<A HREF="images/h13.gif"><IMG SRC="previews/h13.gif" WIDTH="128" HEIGHT=
+"91" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Anyway, now here's another neat way of making patterns.<BR>
+<BR>
+<A HREF="images/h14.gif"><IMG SRC="previews/h14.gif" WIDTH="128" HEIGHT=
+"109" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+This is a &quot;Cellular Automata Machine&quot; program, and it's a little
+klunky on the user interface side, but we've got several pages. This is
+the introduction. It shows you this real time cellular automata, and you
+can draw in it with the mouse. <BR>
+<BR>
+<I>(Check out my collection of stuff about <A HREF="../art/cell.html">Cellular
+Automata</A> for more information!)</I><BR>
+<BR>
+There are different controls: we can set how fast it goes, start and stop,
+and there's all these different rules that you can run, that look totally
+different. <BR>
+<BR>
+There's Life, then there's Brian's Brain. And you can draw in any of them.
+<BR>
+<BR>
+And there are interesting initial configurations, like the heat rule. Heat
+diffusion is good to start with a circle in the middle. And then you can
+always draw. <BR>
+<BR>
+Now the editor lets you fill it with random numbers, and heat diffusion
+does a good job on that. And you can do some other crazy things that are
+hard to explain, but ...<BR>
+<BR>
+The really useful thing that this is good for is this background button
+labeled &quot;Tile&quot;, and we can just go whomp, and just tile the background
+with the pattern, so it's an interesting screen background generator!<BR>
+<BR>
+<A HREF="images/h15.gif"><IMG SRC="previews/h15.gif" WIDTH="128" HEIGHT=
+"80" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+We can also copy the image to the clipboard, and I'll open up a graphics
+editor, um, where's my Royal Pine, yeah. So here's a graphics editor, and
+I can paste this image into my graphics editor, and go in there and do neat
+stuff with it. Clip it to an interesting shape, wee! <BR>
+<BR>
+<A HREF="images/h16.gif"><IMG SRC="previews/h16.gif" WIDTH="128" HEIGHT=
+"120" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+I can bring this into my graphics environment, and I can take this structured
+PostScript graphic, this Royal Pine Car Freshner, and then I can take it
+back over here to the Cellular Automata Machine, and then paste it in. <BR>
+<BR>
+<A HREF="images/h17.gif"><IMG SRC="previews/h17.gif" WIDTH="128" HEIGHT=
+"116" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Then I can copy that back out. What I like doing is to paste the Royal Pine,
+oh, first let's cool this down a little bit. You paste the Royal Pine, then
+you let it go a little bit, then you stop it, and then you paste it again.
+Woops, oh, my goodness. Here's let's do another rule. <BR>
+<BR>
+<A HREF="images/h18.gif"><IMG SRC="previews/h18.gif" WIDTH="128" HEIGHT=
+"100" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+OK, the good one is ld-heat, ok, very subtle, very subtle. Ok, copy that,
+paste it into here, and then you stop it, and then you paste it again, then
+you copy it out, and you go here and paste it into the graphics editor,
+and you have this nice air freshner with an aura!<BR>
+<BR>
+<A HREF="images/h19.gif"><IMG SRC="previews/h19.gif" WIDTH="128" HEIGHT=
+"110" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+So who knows what people may decide to do with this kind of stuff. But once
+you can plug things into each other very easily, and have ubiquituous graphics,
+it becomes very interesting. Now I could go and use this car freshner, I
+could copy it onto my clipboard, and go to my new stack, and paste it in,
+and now it's a button, so now I can make it do things when I click on it.
+<BR>
+<BR>
+<A HREF="images/h20.gif"><IMG SRC="previews/h20.gif" WIDTH="128" HEIGHT=
+"100" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Oh, oh, oh, oh! Here's a useful little program. When I was working at Sun,
+my manager came and said, &quot;I need to know you happyness index, a number
+from one to ten. It doesn't matter how you come up with your happyness,
+but you have to remember the algorithm you use, so that you can give me
+the same happyness index later, and we can track your happyness.&quot; So
+what we did, we made &quot;Happy Tool&quot;. <BR>
+<BR>
+<A HREF="images/h21.gif"><IMG SRC="previews/h21.gif" WIDTH="128" HEIGHT=
+"93" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+This is a HyperLook version of HappyTool. It's going to be a really great
+thing, once we get this on the network with the biorhythm daemon and birthday
+dragon and everything else integrated. Basically, you can dial how happy
+you are, and then, once you've got that, you can click on the face, and
+it puts it into your clipboard, and you can paste it into the graphics editor.
+<BR>
+<BR>
+<A HREF="images/h22.gif"><IMG SRC="previews/h22.gif" WIDTH="128" HEIGHT=
+"107" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+So now you can paste these into your letters to mom, or whatever, or even,
+you know, paste them into the Cellular Automata Machine! <BR>
+<BR>
+You can actually get some really good effects by pasting happy faces into
+the Cellular Automata Machine. Yeah, let's do a monster. Yeah, ok. I have
+found the face of Barney in here. <BR>
+<BR>
+<A HREF="images/h23.gif"><IMG SRC="previews/h23.gif" WIDTH="128" HEIGHT=
+"96" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Ok, let's get a good one here. <BR>
+<BR>
+<A HREF="images/h24.gif"><IMG SRC="previews/h24.gif" WIDTH="128" HEIGHT=
+"114" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Let's do a little more symetrical rule here, then paste away. Ok, a little
+more steam. Oh, ok, here we go, yeah, ok. Aaah. <BR>
+<BR>
+<A HREF="images/h25.gif"><IMG SRC="previews/h25.gif" WIDTH="128" HEIGHT=
+"114" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Yeah, ok, symetry, that's where it's at. Aaauugh! Yeah, try it the other
+direction. <BR>
+<BR>
+<A HREF="images/h26.gif"><IMG SRC="previews/h26.gif" WIDTH="128" HEIGHT=
+"123" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+<I>&quot;What happens if you put Turing's face in there?&quot;</I><BR>
+<BR>
+Oh, Turing's face! Where did I put that? It's over here. <BR>
+<BR>
+<A HREF="images/h27.gif"><IMG SRC="previews/h27.gif" WIDTH="128" HEIGHT=
+"79" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+You can hit &quot;Props&quot;. Just copy that out.<BR>
+<BR>
+<A HREF="images/h28.gif"><IMG SRC="previews/h28.gif" WIDTH="128" HEIGHT=
+"97" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Bring him to the top. And paste! <BR>
+<BR>
+<A HREF="images/h29.gif"><IMG SRC="previews/h29.gif" WIDTH="128" HEIGHT=
+"132" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Aaah! It melted.<BR>
+<BR>
+<A HREF="images/h30.gif"><IMG SRC="previews/h30.gif" WIDTH="128" HEIGHT=
+"130" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Oh wait, let's try it this way. Woah. Oh, oh, and there are other rules
+that do different things. Let's try pasting Turing's face here. <BR>
+<BR>
+<A HREF="images/h31.gif"><IMG SRC="previews/h31.gif" WIDTH="128" HEIGHT=
+"116" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+Oh yeah. Or the big happy face. Woops! Well that slagged. Oh yeah!<BR>
+<BR>
+<A HREF="images/h32.gif"><IMG SRC="previews/h32.gif" WIDTH="128" HEIGHT=
+"96" NATURALSIZEFLAG="3" ALIGN="BOTTOM"></A><BR>
+<BR>
+<B>-- End of Video Tape --</B>
+<BLOCKQUOTE><B></B></BLOCKQUOTE>
+<HR><BR>
+<UL>
+  <LI><A HREF="keynote.html">Video Tape of Toronto Usenix Address</A> 
+  <LI><A HREF="x11-demo.html">Video Tape of X11 SimCity Demo</A> 
+</UL>
+<BR>
+<HR><BR>
+</BODY>
+</HTML>

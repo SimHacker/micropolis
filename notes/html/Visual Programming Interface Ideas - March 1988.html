@@ -1,0 +1,134 @@
+<p>
+Notes on visual programming interface design, written by Don Hopkins on March 10, 1988.
+</p>
+<p>
+Use buttons, menus, etc to indicate nouns and to activate verbs.
+</p>
+<p>
+When you
+indicate a noun, (send it an "indicate" message) it's pushed onto the
+noun stack.
+</p>
+<p>
+When you activate a verb, (send it an "activate" message)
+it tries to collect its arguments, if any, from the stack.
+</p>
+<p>
+If it can get all of its arguments, then it is enabled, (sent an "enable
+message") and can be applied to them.
+</p>
+<p>
+Otherwise, it blocks until all the right arguments are there, possibly prompting
+for them to be pushed onto the stack or indicated somehow.
+</p>
+<p>
+When a noun is put on the stack, active verbs are given a chance to check for
+their arguments. (sent "try-to-enable")
+</p>
+<p>
+If one finds the arguments it needs, and whatever other conditions as
+needed are met, then it could be enabled, (sent "enable" message).
+</p>
+<p>
+Enabled verbs can be applied at the discretion of the user, or at
+their own discretion.
+</p>
+<p>
+Perhaps they could be a general priority mechanism, and the user can
+move his focus of attention up and down priority levels, making it
+more and less automatic.
+</p>
+<p>
+Any enabled verbs above the attention priority are applied, in some automatic order.
+(What sorts of mechanisms could control the order? This is important.)
+</p>
+<p>
+[A stack/queue? Verbs when they're activated get pushed onto the top.
+They can manipulate the verb stack if they want.]
+</p>
+<p>
+Somehow integrate multitasking into this.
+It seems best for each verb to have control over how it's scheduled.
+</p>
+<p>
+The scheduling of enabled verbs at or below the attention level is under
+control of the user). If there are several enabled verbs, a menu could
+be presented, giving the choices.
+</p>
+<p>
+The user should be able to select a verb, or keep selecting more nouns,
+possibly expanding the list of active verbs.
+</p>
+<p>
+There should be a way to put a noun on the stack that does not automatically
+invoke any pending verbs that it enables.
+</p>
+<p>
+Adjectives and adverbs can be used as optional arguments.
+Verbs can consume their arguments and leave results,
+that in turn might active other pending verbs.
+They can pend other verbs if they like.
+</p>
+<p>
+Adjectives, nouns nouns and verbs) can be made sticky,
+so they stay on the stack and aren't consumed.
+</p>
+<p>
+Perhaps there can be several places verbs look for arguments.
+Arguments on one stack are consumed, arguments on another aren't.
+</p>
+<p>
+Arguments can be read interactivly from the mouse, by prompting the
+user to click on an item of some type. Arguments can be taken from the
+environment, or a defaults file, or calculated somehow. (Along the
+lines of the gnu emacs "interactive" argument function.)
+</p>
+<p>
+Activated verbs should be smart about when to enable themselves. They
+could look for certian patterns of arguments. They could send messages
+to all the objects asking them about themselves, to see if they
+qualify.
+</p>
+<p>
+I want to activate a verb that chomps up every "electronic mail
+address" noun that's indicated, appends its textual representation
+relative to my host to a file (supplied as an arg on the shelf), and
+sticks it into the right place in a template (also on the shelf),
+relative to the some other host.
+</p>
+<p>
+There's another active verb that's waiting for a template to be
+filled out, that when it is will grab it, do some calculations
+with the fields, poop it out as text, wrap it up, put it in the
+outgoing mail hopper, and replace it with a fresh one.
+</p>
+<p>
+Templates have classes, and you can send them an "are-you-filled-out"
+message. They have required and optional fields. They are good to use as
+arguments of functions. They are generic composite objects, out of
+which everything else is built.
+</p>
+<p>
+"are-you-filled-out" messages take as an argument a dictionary that is
+used as a pattern. You can match for keywords being bound, or for
+keywords both being bound and matching somehow.
+</p>
+<p>
+So a template can be filled out for the purposes of one verb and not another.
+The "are-you-an-acceptable-argument" message could look at the argument class,
+and it's acceptable, might send an "are-you-filled-out" message to see
+if it's qualified.
+</p>
+<p>
+So a template can be filled out for the purposes of one verb and not another.
+The "are-you-an-acceptable-argument" message could look at the argument class,
+and it's acceptable, might send an "are-you-filled-out" message to see
+if it's qualified.
+</p>
+<p>
+PostScript has no explicit notion of a pointer. A pointer really an
+(address space, index) pair. i.e. (dict, key), (array, index),
+(string, index). In order to edit an object, you need a pointer to it,
+so you can replace it.
+</p>
+

@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://secure-a.vimeocdn.com/p/2.3.5/proxy.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Vimeo Player LocalStorage Proxy</title><script>(function(c,g){var e,f;try{e=c.localStorage&&(c.localStorage.a=1),c.localStorage.removeItem("a")}catch(h){e=!1}c.addEventListener("message",function(a){if(/^https?:\/\/([\w.]+)?vimeo(ws)?.(com|dev)/.test(a.origin)){var b=a.data;f=a.origin;if("method"in b&&"ping"===b.method)return a.source.postMessage("ping",a.origin);var d={};if("method"in b&&"get"===b.method){if("keys"in b&&b.keys.length)return b.keys.forEach(function(a){d[a]=e?JSON.parse(c.localStorage.getItem(a)):null}),a.source.postMessage(d,
+a.origin);if("key"in b){try{d=c.localStorage.getItem(key),d=JSON.parse(d)}catch(k){d=null}return a.source.postMessage(d,a.origin)}}else"method"in b&&"set"===b.method&&e&&(a=JSON.stringify(b.val),a!==c.localStorage.getItem(b.key)&&c.localStorage.setItem(b.key,a))}},!1);c.addEventListener("storage",function(a){if(0===a.key.indexOf("sync_")&&a.oldValue!==a.newValue)try{var b=JSON.parse(a.newValue),d=JSON.parse(a.oldValue);c.parent.postMessage({oldValue:d,newValue:b,key:a.key},f)}catch(e){}});try{c.parent.postMessage("ready",
+"*")}catch(l){}})(this,document);
+</script></head><body></body></html>

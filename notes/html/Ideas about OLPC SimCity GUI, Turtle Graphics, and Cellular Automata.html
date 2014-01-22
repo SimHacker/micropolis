@@ -1,0 +1,190 @@
+<p>
+From: Don Hopkins
+</p>
+<p>
+SimCity in Python will be totally programmable in Python, so what should 
+we program it to do?  And how can we refactor it into general purpose, 
+reusable components?
+</p>
+<p>
+Here is an outline (in the next blog posting) of some ideas I've had 
+about simplifying the SimCity user interface and making it more fun and 
+educational. It should be easy and fun for little kids to use, work well 
+in book mode with the game controller, support the mouse but not require 
+it, and enable collaboration over the network with other players.
+</p>
+<p>
+Instead of (or in addition to) using the mouse to paint with a palette 
+of editing tools like Photoshop, the interface could be based on agents 
+like logo turtles that represent the user on the map, which carry around 
+SimCity editing tools that they can draw with. When you throw in a 
+visual programming language, it leads the way to a Robot-Odyssey-esque 
+version of SimCity!
+</p>
+<p>
+This is one reason I want to have a nice plug-in visual programming 
+language!
+</p>
+<p>
+Just for fun, and for the enjoyment of cellular automata freaks and von 
+Neumann fans, here is a nerd toy I wrote in OpenLaszlo (a von Neumann 29 
+State CA editor and simulator), with a cellular automata grid editing 
+tool that you can move around over the grid and edit the map like an 
+agent or logo turtle, using the keyboard or mouse. It's a half-baked 
+experimental user interface, so I'm not claiming that it isn't bizarre 
+or doesn't suck, but it does demonstrate some ideas that might be 
+applied to the SimCity user interface.
+</p>
+<p>
+John von Neumann's 29 state Cellular Automata Implemented in OpenLaszlo:<br/>
+<a href="http://www.donhopkins.com/drupal/?q=node/41" target="_blank">http://www.donhopkins.com/drupal/?q=node/41</a>
+</p>
+<p>
+Full window demo in Flash player:<br/>
+<a href="http://www.donhopkins.com/lzxnet/my-apps/vonNeumann/vonNeumann.lzx?lzt=swf" target="_blank">http://www.donhopkins.com/lzxnet/my-apps/vonNeumann/vonNeumann.lzx?lzt=swf</a>
+</p>
+<p>
+Source code:<br/>
+<a href="http://www.donhopkins.com/lzxnet/my-apps/vonNeumann/vonNeumann.lzx?lzt=source" target="_blank">http://www.donhopkins.com/lzxnet/my-apps/vonNeumann/vonNeumann.lzx?lzt=source</a>
+</p>
+<p>
+The arrow keys move the tool, space clears the cell under the tool, the 
+letter diamonds "wasz"/"rdfc" make an unexcited ordinary/special 
+directional arrow cell in the corresponding direction, and "WASD"/"RDFC" 
+make excited versions of those arrow cells, other letters and numbers 
+are for miscellaneous states, and so on. The "." key advances the 
+current cell to the next logical state, so you can toggle the excited 
+state of any arrow cell in a standard way without changing its 
+direction, or cycle confluent cells through their four states. Clicking 
+the mouse on the tool pops of a pie menu with submenus of all possible 
+states organized by category (some of which arrange naturally into pie 
+menus, because they are directionally oriented). Clicking the mouse 
+anywhere else moves the tool to that cell. The goal is to be able to 
+quickly key in a cellular automata configuration, as well as randomly 
+accessing and editing it (even while it's running).
+</p>
+<p>
+[I'm not going to attempt to explain how the CA itself works (just press 
+"Run" and enjoy the blinking lights), but it's based on one of my 
+favorite classics: John von Neumann's 29 state CA rule, which he 
+specifically designed (on paper!) to program self-reproducing machines. 
+The source code has some good references and obtuse comments! Sadly, the 
+Flash player is way too slow to run enough cells to actually house a 
+complete self-reproducing machine (and its offspring, and their 
+offspring...) in their full glory and splendor. Fortunately I do have an 
+efficient C++ implementation of that rule (and others), as a Python 
+extension! Once we have a good tile display/editing engine in Python, it 
+will be fun to hook that code up to drive it, and efficiently run huge 
+self-reproducing cellular automata!]
+</p>
+<p>
+For hard core cellular automata freaks: Hit "Next" a few times till you 
+get to "Autoinitializing Exclusive Or", then hit "Load" then "Run", to 
+see a cool self modifying cellular automata bootstrap! A special signal 
+of 5 excited states in a row goes through first, which initializes the 
+circuit, ignites all the pilot lights and synchronizes all its internal 
+clocks at just the right time and phase, and then cuts off the ignition 
+circuit (blows the explosive bolts so to speak, with construction 
+commands) so the circuit is only initialized once, and subsequent 
+signals flow through the normal part of the circuit. In this case, the 
+circuit performs an exclusive-or (which is easier said than done in this 
+rule, requiring synchronized clocks), two of which are needed to cross 
+two signals without interfering. 
+</p>
+<p>
+The point of all this, is that machines 
+in this CA rule can only construct other machines in the powered-off 
+state (or they might get electrocuted ;-), so there has to be a way to 
+turn a machine on and start all its clocks ticking by 
+"autoinitialization" -- self modifying CA code! The self-reproduction 
+process has two phases: first build a copy of yourself in the 
+powered-down ready-to-initialize state, by scanning back and forth with 
+the builder arm like an ink jet printer, programmed from a huge spiral 
+of memory (the machine's dna). Then once you're done, dock your 
+construction arm into the new machine's naval at the base of it's memory 
+loop (like an umbillical cord for data), then switch into playback mode 
+and loop all your memory back through, injecting a copy of it into the 
+duplicate's memory loop. Then send a start signal to initialize the copy 
+and start it reproducing itself. 
+</p>
+<p>
+This stuff was described (and 
+illustrated ;-) in a paper by William R. Buckley and Amar Mukherjee. The 
+examples in this demo show different ways to effect a signal crossings 
+(with different advantages and disadvantages). Some (like the real time 
+crossing) are not "constructible", and some have interference problems 
+(like the coded channel crossing), and some are enormous (like two 
+autoinitializing exclusive or's). Of course people have come up with 
+much more efficient rules since then (and that is a fun game too), but 
+John von Neumann's 29 state rule is classic coke, the real thing.
+</p>
+<p>
+    -Don
+</p>
+<p>
+From: Andrew Clunis<br/>
+</p>
+<p>
+Will SimCity itself be implemented in Python, or will there just be some
+kind of scripting interface to SimCity?
+</p>
+<p>
+btw, Develop (or pieces of it) might provide the code editing
+functionality.  In fact, Develop (possibly not until gen2) might also
+provide a visual code editor (flow chart-ish, or similar)
+</p>
+<p>
+That is pretty cool!  However, it might be desirable to leave in classic
+SimCity mouse-based editing as an option, in case someone wants to build
+a large map by hand with the mouse.
+</p>
+<p>
+From: Don Hopkins
+</p>
+<p>
+The idea is to preserve the original SimCity code (written in C) so it 
+you can still play the original game, and expose it to Python through 
+functions, variables, hooks and callbacks.
+</p>
+<p>
+I might have to wrap the C code in a C++ class, so it's encapsulated and 
+possible to have any number of the simulators running independently in 
+memory at the same time, without using any global variables. (As 
+distasteful as C++ is, it's good for a few things like encapsulating old 
+C code!)
+</p>
+<p>
+I'm planning on using SWIG to expose the SimCity interface to Python, so 
+it will be possible to plug the same code into other scripting languages 
+that SWIG supports as well (given some work with language-specific 
+typemaps and convenience functions, etc).
+</p>
+<p>
+Over time, I'd like to document how the code works, and factor out parts 
+of SimCity into modular functions that you can call from Python, which 
+you can override in Python to do your own stuff before, after, or 
+instead of the original C code. Then you can replace and instrument 
+parts of the simulator in Python (like the traffic simulation, or the 
+economic simulation), and plug in new features (like your own scripted 
+disasters), but still have the original simulator there if you want to 
+run the classic SimCity. Parts of it can be rewritten in Python so they 
+act the same but they're general purpose and easy to reprogram by 
+subclassing, like the monster, tornado, helicopter, etc. Then you could 
+use a visual programming language to subclass them and customize their 
+behavior.
+</p>
+<p>
+Absolutely: it's important to always support the original SimCity user 
+interface and behavior!
+</p>
+<p>
+I want to enable extensions through optional plug-ins, hooks (extension 
+points, like "aspect oriented programming") and subclassing, and 
+preserve the original behavior and interface, while cleaning up and 
+modularizing the code.
+</p>
+<p>
+    -Don
+</p>
+<!--break-->
+

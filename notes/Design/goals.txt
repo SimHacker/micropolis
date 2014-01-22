@@ -1,0 +1,23 @@
+Open up the simulator to expose and document more of its parameters
+and algorithms, so users can "open the hood", see how it works, and
+tweak it.
+
+Create visualizations and graphical views and editors for all aspects
+of the model.
+
+Import Micropolis lego files and use them as buildings and tiles.
+
+http://twinlug.com/micropolis-micro-city-standard/
+http://www.mocpages.com/folder.php/33802
+http://www.reasonablyclever.com/lego/contest/badday/basic.html
+http://ldd.lego.com/
+http://bricksviewer.sourceforge.net/index.shtml
+
+https://en.wikipedia.org/wiki/OpenCity
+http://www.opencity.info/
+
+Respond to this:
+http://www.reddit.com/r/linux_gaming/comments/1ajq63/
+
+http://freegamer.blogspot.nl/2009/02/simulate-this-city-building-tycoon-game.html
+

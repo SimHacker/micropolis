@@ -1,0 +1,414 @@
+%!PS-HyperLook drawing-
+% -- drawlib.ps -- Header file for PostScript drawings.
+/SC {dup type /arraytype eq {aload pop setrgbcolor} {setgray} ifelse} def
+/MX {1 0 0 1} def
+/CT {curveto} def
+/CP {closepath} def
+/LT {lineto} def
+/PT {moveto} def
+/PC {{lineto} stopped {moveto} if} def
+/LN {PT LT} def
+/LC {0 0 PC LT} def
+/FL {SC fill} def
+/ST {SC setlinewidth stroke} def
+/FS {gsave FL grestore ST} def
+/CM {matrix currentmatrix 1 index type /arraytype eq 
+     {exch concat}{3 1 roll translate}ifelse} def
+/SM {setmatrix} def
+/BO {gsave newpath dup type /arraytype eq {concat} {translate} ifelse} def
+/EO {grestore} def
+/SG {gsave SC eofill grestore ST} def
+/FG {SC eofill} def
+/AR {	%  c s a x y -- 'x 'y
+	newpath matrix currentmatrix 5 1 roll
+	newpath translate rotate
+	0 0 moveto 0 0 2 index 3 mul 10 add -20 20 arc 0 0 lineto
+	%2 mul 10 add 0 moveto setmatrix currentpoint 3 -1 roll FL
+	2 mul 10 add 0 transform 3 -1 roll setmatrix itransform 3 -1 roll FL
+} def
+/DA {	% x1 y1 x2 y2 --
+	matrix currentmatrix 5 1 roll
+	exch 3 index sub exch 2 index sub 4 2 roll translate scale
+	0 1 1 -90 0 arc
+	setmatrix
+} def
+/DR {	% w h --
+	0 0 moveto
+	exch dup 0 lineto
+	1 index lineto
+	0 exch lineto
+	closepath
+} def
+/DO {	% w h --
+	matrix currentmatrix 3 1 roll
+	scale 1 0.5 moveto 0.5 0.5 translate 0 0 0.5 0 360 arc closepath
+	setmatrix
+} def
+/RR {	% w h c --
+	10 dict begin 
+	2 index abs 2 index abs 
+	dup 2 index lt {exch pop} {pop} ifelse 2 div
+	dup 2 index lt {exch pop} {pop} ifelse
+	/c exch def /h exch def /w exch def
+	c 0 moveto
+	mark
+	w 0 w h c arcto
+	w h 0 h c arcto
+	0 h 0 0 c arcto
+	0 0 w 0 c arcto
+	cleartomark closepath
+	end
+} def
+/DP {	% d1 d2 w h --
+	matrix currentmatrix 5 1 roll scale
+	0.5 0.5 moveto
+	0.5 0.5 0.5 5 -2 roll arc
+	0.5 0.5 lineto
+	setmatrix
+} def
+/ISOLatin1Encoding [
+StandardEncoding 0 160 getinterval aload pop
+115 -1 roll pop /minus 115 1 roll
+/space/exclamdown/cent/sterling/currency/yen 
+/brokenbar/section/dieresis/copyright/ordfeminine/guillemotleft 
+/logicalnot/hyphen/registered/macron/degree/plusminus/twosuperior 
+/threesuperior/acute/mu/paragraph/periodcentered/cedilla/onesuperior 
+/ordmasculine/guillemotright/onequarter/onehalf/threequarters 
+/questiondown/Agrave/Aacute/Acircumflex/Atilde/Adieresis/Aring/AE 
+/Ccedilla/Egrave/Eacute/Ecircumflex/Edieresis/Igrave/Iacute 
+/Icircumflex/Idieresis/Eth/Ntilde/Ograve/Oacute/Ocircumflex 
+/Otilde/Odieresis/multiply/Oslash/Ugrave/Uacute/Ucircumflex 
+/Udieresis/Yacute/Thorn/germandbls/agrave/aacute/acircumflex 
+/atilde/adieresis/aring/ae/ccedilla/egrave/eacute/ecircumflex 
+/edieresis/igrave/iacute/icircumflex/idieresis/eth/ntilde 
+/ograve/oacute/ocircumflex/otilde/odieresis/divide/oslash/ugrave 
+/uacute/ucircumflex/udieresis/yacute/thorn/ydieresis] def
+/EF {	% font -- isolatin1-font
+	dup length dict begin
+	{1 index /FID ne {def} {pop pop} ifelse} forall
+	/Encoding //ISOLatin1Encoding def
+	currentdict end /HyperLookFont exch definefont
+} def
+/SF {	% text col fontsize font -- text width
+	findfont EF exch scalefont setfont SC
+	1 1 index {stringwidth pop abs 2 copy lt {exch} if pop} forall
+} def
+/TS {	% width w h --
+	exch 2 index div exch scale
+} def
+/TL {	% text w h lh --
+	5 dict begin /h exch def 0 exch moveto pop
+	{gsave show grestore 0 h rmoveto} forall
+	end
+} def
+/TR {	% text w h bh --
+	5 dict begin /h exch def moveto 
+	{ gsave dup stringwidth pop neg 0 rmoveto show 
+	  grestore 0 h rmoveto} forall
+	end
+} def
+/TC {	% text w h bh --
+	5 dict begin /h exch def 
+	exch 2 div exch moveto 
+	{ gsave dup stringwidth pop 2 div neg 0 rmoveto show 
+	  grestore 0 h rmoveto} forall
+	end
+} def
+/IR {	% w h
+	DR gsave 1 setgray fill grestore 0 setgray stroke
+} def
+/IM {	% ... --
+	/pstr exch string def
+	0 exch translate scale
+	{} settransfer
+	0 0 3 -1 roll 0 0 6 array astore
+	{currentfile pstr readhexstring pop} image
+} def
+/EPSdict 10 dict begin
+/initmatrix {
+	#Matrisk# setmatrix 
+} def
+/initgraphics {
+	#Matrisk# setmatrix 0 setgray 1 setlinewidth
+} def
+/showpage {} def
+/SC {setrgbcolor} def
+/EF //EF def
+currentdict end def
+/BEPS {
+	save 5 1 roll
+	EPSdict begin
+	gsave scale translate
+	matrix currentmatrix /#Matrisk# exch def
+	500 dict begin
+} def
+/EEPS {
+	end grestore end restore
+	{currentdict /EEPS known {exit} if end}loop
+} def
+save /psnewssav exch def
+gsave initmatrix 47.580 58.280 translate
+0.820 0.820 scale
+160 840 BO
+%EPS: arthur, HyperLook EPSF file, 
+155 37 DR
+gsave
+1 FL
+grestore clip newpath
+-0 -0 1 1 BEPS
+%prolog
+%newpath 1 setgray 0 0 155 37 rectpath fill
+
+%body
+systemdict /shareddict known {
+	1 0 0 .5 .62 1 .75 .75 .75 .75 .75 .75
+} {
+	.2 .2 .2 .3 .3 .3 .7 .7 .7 .7 .7 .7
+} ifelse
+/LucidaSans-BoldItalic findfont 24 scalefont setfont
+4 setlinewidth
+{
+	setrgbcolor matrix currentmatrix newpath 
+	48 0 translate 28 rotate 16 8 scale
+	0 0 1 90 0 arcn
+	2 0 1 180 270 arc
+	2 -2 1 90 0 arcn
+	4 -2 1 180 270 arc
+	4 -4 1 90 0 arcn
+	6 -4 1 180 270 arc
+	setmatrix stroke
+	setrgbcolor 2 15 moveto (HyperLook) show
+} dup 8 1 roll exec -2 1 translate exec
+
+%trailer
+
+EEPS
+gsave
+grestore
+EO
+320 844.8 BO
+[(Order Form)] 0 24 /Helvetica-Oblique SF 124.007 1 TS 7.6 -26 TL
+EO
+304 867.2 BO
+[(TM)] 0 8 /Helvetica-Oblique SF 11.5519 1 TS 4.4 -10 TL
+EO
+0 799.2 BO
+[(Name)] 0 18 /Helvetica SF 48.0056 1 TS 6.4 -20 TL
+EO
+368 800 BO
+[(Title)] 0 18 /Helvetica SF 34.0013 1 TS 6.4 -20 TL
+EO
+0 768 BO
+[(Organisation)] 0 18 /Helvetica SF 102.041 1 TS 6.4 -20 TL
+EO
+0 736 BO
+[(Address)] 0 18 /Helvetica SF 66.0237 1 TS 6.4 -20 TL
+EO
+376 704 BO
+[(Zip Code)] 0 18 /Helvetica SF 73.0253 1 TS 6.4 -20 TL
+EO
+0 672 BO
+[(Tel)] 0 18 /Helvetica SF 25.0016 1 TS 6.4 -20 TL
+EO
+304 672 BO
+[(Fax)] 0 18 /Helvetica SF 30.0059 1 TS 6.4 -20 TL
+EO
+52 808 BO
+0 0 300 0 LN 1 0 ST
+EO
+404 808 BO
+0 0 220 0 LN 1 0 ST
+EO
+108 776 BO
+0 0 516 0 LN 1 0 ST
+EO
+72 744 BO
+0 0 552 0 LN 1 0 ST
+EO
+456 712 BO
+0 0 168 0 LN 1 0 ST
+EO
+372 712 BO
+0 0 -372 0 LN 1 0 ST
+EO
+32 680 BO
+0 0 256 0 LN 1 0 ST
+EO
+344 680 BO
+0 0 280 0 LN 1 0 ST
+EO
+64 540.8 BO
+[(Single User Licence)(System + Manual)(US $995 or £495)] 0 14 /Helvetica SF 124.487 1 TS 41.6 -16 TC
+EO
+48 476.8 BO
+[(Network Licence \(5 users\))(System + 5 Manuals)(US $3500 or UK £1950)] 0 14 /Helvetica SF 162.595 1 TS 41.6 -16 TC
+EO
+44 408 BO
+[(Network Licence \(Unlimited\))(System + 10 Manuals)(US $7000 or UK £3900)] 0 14 /Helvetica SF 175.026 1 TS 41.6 -16 TC
+EO
+16 608 BO
+228 -68 DR
+1 0 ST
+EO
+244 608 BO
+180 -68 DR
+1 0 ST
+EO
+424 608 BO
+184 -68 DR
+1 0 ST
+EO
+16 540 BO
+228 -68 DR
+1 0 ST
+EO
+244 540 BO
+180 -68 DR
+1 0 ST
+EO
+424 540 BO
+184 -68 DR
+1 0 ST
+EO
+16 472 BO
+228 -68 DR
+1 0 ST
+EO
+244 472 BO
+180 -68 DR
+1 0 ST
+EO
+424 472 BO
+184 -68 DR
+1 0 ST
+EO
+16 644 BO
+228 -36 DR
+1 0 0.937255 FS
+EO
+244 644 BO
+180 -36 DR
+1 0 0.937255 FS
+EO
+424 644 BO
+184 -36 DR
+1 0 0.937255 FS
+EO
+80 611.2 BO
+[(HyperLook)] 0 18 /Helvetica SF 87.0296 1 TS 6.4 -20 TC
+EO
+292 612 BO
+[(Quantity)] 0 18 /Helvetica SF 67.0317 1 TS 6.4 -20 TC
+EO
+488 612 BO
+[(Total)] 0 18 /Helvetica SF 40.0136 1 TS 6.4 -20 TC
+EO
+424 404 BO
+184 -40 DR
+1 0 ST
+EO
+424 364 BO
+184 -40 DR
+1 0 ST
+EO
+424 324 BO
+184 -40 DR
+1 0 ST
+EO
+220 368 BO
+[(VAT @ 17.5% \(UK only\))] 0 18 /Helvetica SF 194.326 1 TS 6.4 -20 TC
+EO
+236 328 BO
+[(Shipping and handling)] 0 18 /Helvetica SF 178.109 1 TS 6.4 -20 TC
+EO
+372 288 BO
+[(Total)] 0 18 /Helvetica SF 40.0136 1 TS 6.4 -20 TC
+EO
+480 327.2 BO
+[($15 or £7)] 0 18 /Helvetica SF 76.0498 1 TS 6.4 -20 TC
+EO
+0 240 BO
+[(I enclose a cheque      or purchase order      in the amount of)] 0 18 /Helvetica SF 482.273 1 TS 6.4 -20 TL
+EO
+156 260 BO
+16 -16 DR
+1 0 ST
+EO
+328 260 BO
+16 -16 DR
+1 0 ST
+EO
+488 248 BO
+0 0 136 0 LN 1 0 ST
+EO
+0 208 BO
+[(OR please debit my Access/Mastercard/Barclaycard/Visa for:)] 0 18 /Helvetica SF 487.149 1 TS 6.4 -20 TL
+EO
+492 216 BO
+0 0 132 0 LN 1 0 ST
+EO
+0 180 BO
+[(Card No)] 0 18 /Helvetica SF 67.0133 1 TS 6.4 -20 TC
+EO
+76 188 BO
+0 0 64 0 LN 1 0 ST
+EO
+148 188 BO
+0 0 64 0 LN 1 0 ST
+EO
+220 188 BO
+0 0 64 0 LN 1 0 ST
+EO
+292 188 BO
+0 0 64 0 LN 1 0 ST
+EO
+384 180 BO
+[(Expires:)] 0 18 /Helvetica SF 65.0154 1 TS 6.4 -20 TC
+EO
+452 188 BO
+0 0 52 0 LN 1 0 ST
+EO
+512 188 BO
+0 0 52 0 LN 1 0 ST
+EO
+572 188 BO
+0 0 52 0 LN 1 0 ST
+EO
+508 184 BO
+0 0 4 20 LN 1 0 ST
+EO
+568 184 BO
+0 0 4 20 LN 1 0 ST
+EO
+0 96 BO
+[(Signature:)] 0 18 /Helvetica SF 82.0434 1 TS 6.4 -20 TC
+EO
+88 104 BO
+0 0 536 0 LN 1 0 ST
+EO
+0 152 BO
+[(Cardholder's name and address \(if different from above\):)] 0 18 /Helvetica SF 452.175 1 TS 6.4 -20 TC
+EO
+456 160 BO
+0 0 168 0 LN 1 0 ST
+EO
+0 132 BO
+0 0 624 0 LN 1 0 ST
+EO
+268 56 BO
+[(Please send this completed form to:)] 0 14 /Helvetica SF 222.543 1 TS 5.6 -16 TC
+EO
+0 36 BO
+[(The Turing Institute Limited, 36 North Hanover Street, Glasgow G1 2AD Scotland)] 0 14 /Helvetica-Bold SF 535.999 1 TS 5.6 -16 TC
+EO
+0 16 BO
+[(Fax: +44 41 552 2985, Tel: +44 41 552 8858 or +44 41 552 6400, Email: hyperlook@turing.com)] 0 14 /Helvetica-Bold SF 614.037 1 TS 5.6 -16 TC
+EO
+0 0 BO
+[(HyperLook and the HyperLook logo are trademarks of the Turing Institute Limited)] 0 9.33333 /Helvetica SF 323.143 1 TS 4.66667 -11.3333 TC
+EO
+0 56 BO
+[(This offer is only available until 1-Aug-92.)] 0 14 /Helvetica SF 263.016 1 TS 5.6 -16 TC
+EO
+showpage grestore psnewssav restore
+

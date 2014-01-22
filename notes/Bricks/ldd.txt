@@ -1,0 +1,81 @@
+https://en.wikipedia.org/wiki/Lego_Digital_Designer
+
+http://www.ldraw.org/
+
+http://wiki.ldraw.org/
+http://www.ldraw.org/documentation/ldraw-org-file-format-standards.html
+http://wiki.ldraw.org/index.php?title=Macintosh_compatible_LDraw_software
+http://wiki.ldraw.org/index.php?title=Web-based_Applications
+
+https://en.wikipedia.org/wiki/LDraw
+
+----
+
+http://bricksmith.sourceforge.net/
+
+http://anoved.net/software/ldraw/bitsticker/
+http://anoved.net/files/bitsticker/bitsticker.txt
+
+Import ldd files.
+
+Use as tile sets for SimCity.
+
+Build sprite animations as legos too.
+
+----
+
+http://bricksviewer.sourceforge.net/
+http://bricksviewer.sourceforge.net/lxf.shtml
+http://bricksviewer.sourceforge.net/docs/part_format.html
+http://sourceforge.net/projects/bricksviewer/
+
+http://sourceforge.net/projects/brickutils/
+
+http://sourceforge.net/projects/block2brick/
+http://www.minecraftforum.net/topic/1124003-block2brick-01-convert-minecraft-to-lego/
+
+http://www.eurobricks.com/forum/index.php?showtopic=60531
+
+http://www.leocad.org/trac
+
+https://en.wikipedia.org/wiki/MLCAD
+http://mlcad.lm-software.com/
+
+http://wiki.ldraw.org/index.php?title=LDraw_to_LDD_conversion
+
+http://www.mediafire.com/download/mrzsd2ho6iiu3wv/LIF_Extractor.zip
+
+http://www.f-lohmueller.de/pov_tut/lego/lg2pov160e.htm
+
+http://bricks.stackexchange.com/questions/1349/explaination-of-lxfml-file-contents
+
+LXF files - info and XML schema
+http://news.lugnet.com/cad/ldd/?n=140
+
+https://code.google.com/p/ldxna/
+
+http://news.lugnet.com/cad/ldd/?n=124&t=i&v=a
+
+----
+
+https://en.wikipedia.org/wiki/The_Lego_Movie
+released February 7, 2014.
+
+----
+
+javascript webgl brick viewer
+
+https://bitbucket.org/msx80/brigl
+http://www.lugato.net/brigl/index.html
+
+hg clone https://bitbucket.org/msx80/brigl
+
+https://bitbucket.org/msx80/brigl/raw/c3fb77f71102c0ff9832858972a979559c9e1ce9/HOWTO.txt
+
+official parts library:
+http://www.ldraw.org/library/updates/complete.zip
+
+unofficial parts library:
+http://www.ldraw.org/library/unofficial/ldrawunf.zip
+
+

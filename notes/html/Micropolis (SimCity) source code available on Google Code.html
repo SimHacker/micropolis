@@ -1,0 +1,36 @@
+<p>
+I've checked the Micropolis (SimCity) source code into the 
+<a href="http://code.google.com/p/micropolis/" target="_blank">Micropolis Google Code Project</a>.
+</p>
+<p>
+The subversion repository contains two different projects based on the original SimCity source code from Maxis:
+<ul>
+<li>
+<b>micropolis-activity:</b><br/>
+Source code of TCL/Tk Micropolis for the OLPC XO-1 and Linux.
+</li>
+<li>
+<b>MicropolisCore:</b><br/>
+Source code of three Python modules: micropolis, cellengine and tileengine.
+<ul>
+<li>
+The micropolis module is the new version of Micropolis (SimCity), cleaned up and recast as a C++ class.
+</li>
+<li>
+The cellengine module is a cellular automata machine engine. 
+</li>
+<li>
+The tileengine module is a Cairo based tile renderer, used to display micropolis tiles and cellengine cells. It plugs into micropolis and cellengine, but is independent of them and useful for other applications.
+</li>
+<li>
+These modules require Python 2.5 and the Python modules pygtk, pycairo and PIL to be installed. Probably some other modules I can't think of off the top of my head, too.
+</li>
+<li>
+This code will compile on Windows or Linux. It is intended to be used with the OLPC's Sugar user interface environemnt (depending on Cairo and Pango for graphics and text formatting), but layered so the core code is useful in other contexts such as different scripting languages, web servers, desktop applications, embedded devices, etc.
+</li>
+</ul>
+</li>
+</ul>
+</p>
+<!--break-->
+

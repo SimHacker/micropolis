@@ -1,0 +1,281 @@
+Video Tape of Toronto Usenix Symposium Keynote Address
+
+Hello, my name is Don Hopkins, and I ported SimCity to Unix on top of X11 using the TCL/Tk toolkit, and also on top of the NeWS window system using HyperLook.
+Unfortunately I can't be in Toronto to demonstrate this stuff to you, but fortunately I have som video tapes that you can see that demonstrate the whole system.
+The X11 version of SimCity is multi player, and several people can join the game, and cooperate, and people draw roads, and put down buildings in different places, and then when you do something important, like change the tax rate, or build an airport, you have to get everybody else who's playing to agree where to put it, and which thing to put down.
+So it makes you slow down and rationalize what you're doing, and explain to people why it is you want to put it there. It's a really interesting addition to SimCity because it adds politics. 
+I'm going to show first the X11 version, which is on top of TCL/Tk, and that's a free toolkit that's available, written by John Ousterhaut at Berkeley. There's a book that's coming out describing it, and you can just get TCL/Tk and use it to make products for free. You don't have to pay anything for it, and it's actually very good code.
+It really beats the pants off of Motif, and we were able to modify it in order to support things like colormaps and multiple displays the way we needed to, and add things to it like a sound server to make sound effects, and pie menus for quickly selecting city editing tools. TCL/Tk made alot of sense for SimCity.
+The first port of SimCity that I did to Unix is on HyperLook, which is an interactive graphical environment based on NeWS.
+We took the source code to SimCity for the Mac, and I threw away all the user interface code written in C, and just took the core simulator, and then rewrote the user interface using HyperLook, which is this direct manipulation graphical environment, kind of like HyperCard, where you can take pictures and paste them in to define the look, and then every object has a script on it that in HyperLook, the script is PostScript, which defines its behavior.
+So you just create a user interface by drawing it, and then hook it up to the application, and that user interface is separated from the application, and they send messages back and forth. Now this separation of the user interface from the application is really important, and that made it much easier later to port SimCity to X11.
+HyperLook has this scripting language in it, and TCL/Tk has the TCL scripting language in it, so I was able to translate the things I had written in PostScript into TCL, and have a very similar structure.
+It makes it much easier to develop a thing as complex as SimCity if you have an interpretive programming language there, so you can just fiddle around, and paste new function definitions into the running system.
+There are some user interface editors that have been developed for TCL/Tk, but I just wrote code by hand because I was doing some more specialized things, like multiple views and putting up views on different X11 displays over the net, that the user interface editors didn't support. 
+HyperLook has a built in user interface editor, and I'll demonstrate HyperLook SimCity and the HyperLook environment in the following video tape. 
+The X11 version of SimCity supports multi player, so you can add several people to the same game, and it connects up like an octopus, several X11 displays connected to one X11 client. You can cooperate on these important decisions like setting taxes and building airports. Everybody's participating in the same game and lives with the consequences of each others actions, so now you have politics in the game. There are some tools for communicating and drawing on the map, and seeing what other people are doing. 
+Unix was very good for porting SimCity because it's a very good programming environment. It's very difficult and lacking in multimedia things like the sound, and just doing animation easily.
+I had to create alot of things that didn't exist before, that other people are independantly working on creating too. That stuff is slowly fading into view, like for example there's the NetAudio server now that lets two programs make sounds at once, it just mixes them together.
+SimCity wants to go"Roar!", "Roar!", "Kaboom!", and my email program wants to go "dinga linga linga ling" at the same time, so you have to have one program handling the sound that mixes them. 
+One of the things I developed for TCL/Tk and for HyperLook was this sound mixer server. And then we got an NCD X-Terminal, and just layered my sound mixer on top of their sound server. It can either use the built-in audio device and be a TCL sound server, or it can use the sound server that's in your X-Terminal or your Sun or SGI or whatever, if you're running NetAudio. 
+There are some other hard problems to solve like the bitmap animation. X has some extensions like shared memory, that make it easy to animate, but you can't depend on it, and some peoples servers don't have quite the whole shared memory extension. It's just a pretty frightening prospect just trying to write pixels onto the screen. You have to deal with about 50 different possible combinations of different display devices, and different ways of getting to that display device. 
+It's very difficult programming this stuff under X. It was alot more fun doing it in NeWS.
+We had to give up alot of the neat graphical features for the X version that we had in the NeWS version, like scaling and zooming around. You just can't do that in X.
+Unfortunatly, NeWS is dead. There's no longer any support for it. The thing that was really wrong with it was that it was not cross platform. You were just stuck on Suns.
+The good news though is that there are much better systems, I'm working on one right now at Kaleida called ScriptX, that are cross platform. Their whole purpose in life is to provide you a really nice high level abstraction, that lets you ignore which operating system you're running on, so instead of developing for Unix, or for MS-DOS, or for the Mac, you would develop for ScriptX, and that would get you to Unix, and the Mac, and MS-DOS. More interestingly, that would get you to things that don't exist yet, that are just coming into existance, things like set top boxes with really hot graphics, and nicer systems than you're currently even dreaming about. 
+What we need are high level multimedia abstractions; the X graphics model is very low level, and just doesn't work, but the NeWS PostScript graphics model is really nice, but we want the best of both worlds: a high level system that runs fast on lots of platforms. Once we have a trurly object oriented system, things start plugging and playing like Legos, as this video tape of the HyperLook system will demonstrate. 
+The good news is that in the future, we will have systems like this that plug and play with each other over the network, and it won't matter what kind of hardware you're using. And that'll be in the hands of consumers too, it won't be just for Unix weenies.
+I will show you a video tape of a talk that I gave at Interval, about "Self Revealing Gestural Interfaces", which is computer jargon for "pie menus". That is a thing that I put into both version of SimCity that lets you select editing tools really quickly. 
+One of the nice things about running on a fast platform, is that SimCity runs really fast, and now it's a question of keeping up with the simulator. You need a streamlined user interface in order to keep up with this city that's zooming years into the future at you sit. That's what the pie menus are for, and I'll demonstrate that.
+For the pie menus and the multi player interaction stuff, like putting up windows on different screens and letting people have a shared view of this one environment, it was really nice to have the source code to the TCL/Tk toolkit, in order to support that kind of stuff.
+It wouldn't have been possible to port SimCity to X11 using Open Software Foundation's Motif toolkit. It just absolutely sucks. It's not open, and you have to pay for the source code, and it's not being maintained. 
+But there's a really wonderful community that's grown around TCL/Tk, and people are allowed to use it in their products for free, and get the source code. I implemented pie menus with TCL/Tk for SimCity, and out of gratitude, I put the source code for the pie menu module out for other people to use, just to help to community. It's a nice positive feedback situation, as opposed to the cold war situation you have with COSE, Motif, and Open Software Foundation. 
+We bundled the HyperLook runtime system with the NeWS version of SimCity. If you're running OpenWindows 3.0, you can get it and try it out. 
+We have been distributing SimCity over the Internet, and on CDROMs. That's possible  because Unix systems have serial numbers, so we can node lock SimCity, and you can run the program for five minutes if you don't have a license, and then it melts, so you get the whole feel of the whole full blown product, and if you like it, then you call up DUX Software's 800 number, give them your credit card number, tell them your serial number, and they tell you a password to type in that will unlock it for your particular machine, then you're up and playing SimCity. No physical transaction has taken place. You're encouraged to get a copy of it over the net, and give it to your friends.
+This is the best way to distribute software. Whenever we make updates, we can just put them right online, and people can just grab a new copy. I think that's the future of software distribution. I don't like the little boxes with plastic insets and little pieces of cardboard folded up to make then seem heavier and thicker. The instant gratification of distributing it over the net is really great. 
+Well, anyway, here's the talk, and the video tapes. 
+
+-- end of video tape --
+
+Video Tape of X11 SimCity Demo
+
+"Skywatch 20 reporting heavy traffic."
+[Figure 1]
+I'm Don Hopkins from DUX Software, demonstrating multi user SimCity for Unix, running on X11 on an Indigo workstation, based on the original SimCity by Will Wright from Maxis. 
+"Skywatch 20 reporting heavy traffic."
+[Figure 2]
+On the left is an overall map window, and on the right is a close-up animated view.
+You can pan the animated view around, by dragging the yellow rectangle on the map.
+Then you can edit "Rumble, crash!"  with the bulldozer, and build.
+"Residential."
+"Skywatch 20 reporting heavy traffic."
+You can pan by dragging the middle button, directly, without moving to the scroll bars, which don't exist. 
+And you can select from "Road."  the pallet of editing tools, "Wire." by pressing on the icon. "Police Station."
+Or clicking the right button, "Whoosh!"  and popping up a pie menu. 
+[Figure 3]
+"Zone?"
+"Fire Station."
+"Skywatch 20 reporting heavy traffic."
+"Whoosh!" 
+"Wire."
+"Whoosh!" 
+"Bulldozer."
+"Crash, crash, rumble, crash!"
+"Skywatch 20 reporting heavy traffic."
+"Whoosh!" 
+[Figure 4]
+"Zone?"
+[Figure 5]
+"Industrial."
+"Whoosh!" 
+"Bulldozer."
+"Rumble, rumble, rumble!"
+"Skywatch 20 reporting heavy traffic."
+"Whoosh!" 
+"Build?"
+"[Figure 6]
+"Nuclear Power."
+"Whoosh!" 
+"Road."
+"Whoosh!" 
+"Wire."
+ Pie menus work with mouse-ahead. If I remember the direction, I can press down, move, and release, to select without showing the menu.
+"Whoosh!" 
+"Road."
+"Whoosh!" 
+"Rail."
+"Whoosh!" 
+"Bulldozer."
+Or I can always pause, "Whoosh!"   to see ...  the menu.
+"Road."
+"Whoosh!" 
+"Zone?"
+"Fire Station."
+"Skywatch 20 reporting heavy traffic."
+"Whoosh!" 
+"Bulldozer."
+"Rumble, crash!"
+"[Figure 7]
+"Whoosh!"
+"Zone?"
+"Industrial."
+(Pan on over to the Panhandle, in Haight Ashbury, east of Golden Gate Park.)
+"Whoosh!" 
+"Bulldozer."
+"Rumble, rumble, rumble."
+(Clear away some park in the Panhandle.)
+"[Figure 8]
+Whoosh!" 
+"Road."
+(Fix up the part of Oak Street that we accidentally destroyed.)
+"Whoosh!"
+"Zone?"
+"Residential."
+(Put down a residential zone in the park.)
+"Wire."
+(Wire the new zone onto the power grid.)
+"Whoosh!"
+"Zone?"
+"Park."
+(Put park land back down around the residential zone.)
+"Whoosh!"
+"Zone?"
+"Residential."
+(Put down another residential zone in the park.)
+"Wire."
+(Wire the zone to the power grid.)
+"Whoosh!"
+"Zone?"
+"Park."
+(Put more parks  around the new zone.)
+[Figure 9]
+"Rail."
+"Skywatch 20 reporting heavy traffic."
+(Put a railroad down along the north edge of park next to Fell Street.)
+(The train appears and starts heading down the railroad, as it's being drawn.)
+(Oh no, we're missing one piece of rail because there was a fountain in the way!)
+(The train is heading for the fountain! Quick, pie menus to the rescue!)
+[Figure 10]
+"Whoosh!" 
+"Bulldozer."
+"Rumble, rumble."
+(Bulldoze the fountain out of the way.)
+"Whoosh!" 
+"Rail."
+(Put down the rail just in time, right under the wheels of the oncoming train!)
+(Make a little maze of railroad tracks to keep the train busy while we bulldoze another couple of fountains and lay down the rest of the track.)
+[Figure 11]
+"Whoosh!" 
+"Rail."
+"Whoosh!" 
+"Bulldozer."
+"Rumble, rumble."
+"Whoosh!" 
+"Rail."
+[Figure 12]
+"Whoosh!" 
+"Bulldozer."
+"Rumble, rumble, rumble, rumble!"
+"Whoosh!" 
+"Bulldozer."
+"Whoosh!" 
+"Build?"
+"Airport."
+"Whoosh!" 
+""Oop."
+(Build an airport in the middle of the Panhandle.)
+ [Figure 13]
+"Whoosh!"
+"Road."
+(Build an access road to the airport from Fell Street.)
+"Whoosh!" 
+"Bulldozer."
+"Whoosh!" 
+"Wire."
+(Hook the airport up to the power grid.)
+"Whoosh!"
+"Road."
+"Whoosh!"
+"Zone?"
+"Park."
+(Airport's radar starts spinning, as the train rolls back down the track.)
+ [Figure 14]
+
+-- end of video tape --
+
+Video Tape of HyperLook SimCity Demo
+
+This is the HyperLook user interface system, and it's running on a Sun on OpenWindows 3.0, and this is SimCity, and application that I ported to HyperLook. 
+[Figure 1]
+Now we can press a button to play a city, and it will load a map of that. 
+This is the overall map view, and this is the editor. 
+[Figure 2]
+I can drag this rectangle around to scroll the map.
+And then I can throw it, and it has some inertia, so it bounces around. 
+And then with this "Zoom" button here, I can zoom my view in, to look closer and closer into the map, so that we're actually scooting around quite close to the city. 
+[Figure 3]
+And then, we can actually edit in this scale. (Wee!) Put some roads down. I think you can get even closer. And then you can zoom out. 
+[Figure 4]
+All this is written in PostScript, all the graphics. The SimCity engine is in C, but all the user interface and the graphics are in PostScript. 
+The neat thing about doing something like this in HyperLook is that HyperLook is kind of like HyperCard, in that all of the user interface is editable. So these windows we're looking at here are like stacks, that we can edit.
+Now I'll flip this into edit mode, while the program's running. That's a unique thing. 
+Now I'm in edit mode, and this reset button here is just a user interface component that I can move around, and I can hit the "Props" key, and get a property sheet on it. 
+I'll show you what it really is. See, every one of these HyperLook objects has a property sheet, and you can define its graphics. I'll zoom in here. We have this nice PostScript graphics editor, and we could turn it upside down, or sideways, or, you know, like that. Or scale it. I'll just undo, that's pretty useful. 
+[Figure 5]
+This just defines what the button looks like. Here, there's a flip function: Special... Flip Top/Bottom. I'll just center them, and apply, and now we have a little upside-down reset button. 
+So we have these Open Look components up here. I'll put this into edit mode. See, I can highlight all the components. 
+HyperLook is integrated with The NeWS Toolkit, so we can get all these ancient looking Open Look menus and what not, and do things like cut  this slider out here, and stick it onto here, to set the tax rate. 
+[Figure 6]
+This slider happens to set the transportation fund. Every interface object here has a script that defines its behavior, and this guy says his action is to send the SetTransportationFund message to MyStack. The scripting language for the HyperLook system is PostScript, and some people complained about that, so Arthur van Hoff wrote a C to PostScript compiler, so that they can program in C. But however, I'd rather program in PostScript, myself. 
+Woops. Let me put the button back on the window. There's quite a possibility for user interface vandalism in this system, so what we've done is make the user interface editor be just a user interface component that's in the stack, that you can remove to make the stack not editable. I've done some amount of magic to make SimCity editable, but when it's delivered as a product, it's just with a runtime system and not editable. 
+We will go back and turn on Auto-Budget. Ok, now this is showing us something's happened, and I can click in here to bring my other view there. 
+The neat thing is that this view here itself is just another user interface component, and I can copy and paste that, and have multiple views. Each one of these animated scrolling SimCity editors, once I've made one, I can put them anywhere. This window, you can click here to get three of them.
+[Figure 7]
+I put this nice high level component into this user interface system, and now anybody can just cut and paste it. 
+One of the neat components that HyperLook comes with is the graphics editor, which is pretty ubiquituous. Like if I were to edit this button by hitting the properties key, I get this property sheet that has a graphics editor in it.
+Now this property sheet itself is a stack that I can edit. So its graphics editor, the menu here, and all this stuff is just fair play.
+[Figure 8]
+So when you make a new component class, you also construct another property sheet for it, or just copy one that almost does what you want, and then edit it so that it has the new things. 
+That completely separates this notion of property sheets from the user interface, because you can just plug in a new set of property sheets that have a different look and feel, like if you want to give more novice people the ability to edit their user interface, you could have a simpler set of property sheets. 
+So now we're going to get weird. I'm going to pause SimCity so it doesn't take all the CPU time, and iconify it. And of course, when you iconify it, the icons are miniatures of the window, and they're active too, so when I scroll these views around in the uniconified overall window, they keep scrolling down here in the icon.
+[Figure 9]
+You just get all this stuff for free with PostScript. Well, you know, it's not exactly free, but... ha ha!
+Now here is, oh yes, right here, this is a stack full of components, of clocks. You can get a property sheet on any of these clocks. The property sheet has three graphics editors, for the face and the two hands. We could just change the color of the hand, or change the total look of anything. 
+[Figure 10]
+The whole thing is just Legos. The property sheet just plugs the drawing into the clock, and the clock knows how to rotate the hands around the face. 
+That's all the same object with different representations?
+Right. One of the data types this system knows is the structured graphics drawing. It plugs it into this property sheet with Alan Turing's head. It just lets me edit the three instance variables.
+[Figure 11]
+There's this protocol for property sheets of taking the instance variables, letting you edit them, and then putting them back in when you hit apply. As long as your property sheet plays that protocol, you can plug and play different property sheets, and customize them. 
+We could make some really crazy looking clocks. Here's a good way to make crazy looking clocks. Woah, oh, let me show you one other thing first. 
+This clock stack is a warehouse of objects, this is a bunch of examples of objects that I might want to use elsewhere. So I hit the "Install" button, this now installs them into the user interface editor. I'll make myself a new stack. I get a brand new stack. I go into edit mode, and there's this edit menu, and I select "New...", and it's added this menu of new items that I can create! That "Install" button has added this "Neat Clocks" submenu to my edit menu. 
+[Figure 12]
+So now I can get a "Freaky Clock". And I can get rid of this "Neat Clocks" stack here. And then I can go get other warehouses. Say I wanted a warehouse of Open Look components, then I could just plop them down. New... System... Color Selector. Boing. Now I can select colors from this. 
+[Figure 13]
+Anyway, now here's another neat way of making patterns.
+[Figure 14]
+This is a "Cellular Automata Machine" program, and it's a little klunky on the user interface side, but we've got several pages. This is the introduction. It shows you this real time cellular automata, and you can draw in it with the mouse. 
+There are different controls: we can set how fast it goes, start and stop, and  there's all these different rules that you can run, that look totally different. 
+There's Life, then there's Brian's Brain. And you can draw in any of them. 
+And there are interesting initial configurations, like the heat rule. Heat diffusion is good to start with a circle in the middle. And then you can always draw. 
+Now the editor lets you fill it with random numbers, and heat diffusion does a good job on that. And you can do some other crazy things that are hard to explain, but ...
+The really useful thing that this is good for is this background button labeled "Tile", and we can just go whomp, and just tile the background with the pattern, so it's an interesting screen background generator!
+[Figure 15]
+We can also copy the image to the clipboard, and I'll open up a graphics editor, um, where's my Royal Pine, yeah. So here's a graphics editor, and I can paste this image into my graphics editor, and go in there and do neat stuff with it. Clip it to an interesting shape, wee! 
+[Figure 16]
+I can bring this into my graphics environment, and I can take this structured PostScript graphic, this Royal Pine Car Freshner, and then I can take it back over here to the Cellular Automata Machine, and then paste it in. 
+[Figure 17]
+Then I can copy that back out. What I like doing is to paste the Royal Pine, oh, first let's cool this down a little bit. You paste the Royal Pine, then you let it go a little bit, then you stop it, and then you paste it again. Woops, oh, my goodness. Here's let's do another rule. 
+[Figure 18]
+OK, the good one is ld-heat, ok, very subtle, very subtle. Ok, copy that, paste it into here, and then you stop it, and then you paste it again, then you copy it out, and you go here and paste it into the graphics editor, and you have this nice air freshner with an aura!
+[Figure 19]
+So who knows what people may decide to do with this kind of stuff. But once you can plug things into each other very easily, and have ubiquituous graphics, it becomes very interesting. Now I could go and use this car freshner, I could copy it onto my clipboard, and go to my new stack, and paste it in, and now it's a button, so now I can make it do things when I click on it. 
+[Figure 20]
+Oh, oh, oh, oh! Here's a useful little program. When I was working at Sun, my manager came and said, "I need to know you happyness index, a number from one to ten. It doesn't matter how you come up with your happyness, but you have to remember the algorithm you use, so that you can give me the same happyness index later, and we can track your happyness." So what we did, we made "Happy Tool". 
+[Figure 21]
+This is a HyperLook version of HappyTool. It's going to be a really great thing, once we get this on the network with the biorhythm daemon and birthday dragon and everything else integrated. Basically, you can dial how happy you are, and then, once you've got that, you can click on the face, and it puts it into your clipboard, and you can paste it into the graphics editor. 
+[Figure 22]
+So now you can paste these into your letters to mom, or whatever, or even, you know, paste them into the Cellular Automata Machine! 
+You can actually get some really good effects by pasting happy faces into the Cellular Automata Machine. Yeah, let's do a monster. Yeah, ok. I have found the face of Barney in here. 
+[Figure 23]
+Ok, let's get a good one here. 
+[Figure 24]
+Let's do a little more symetrical rule here, then paste away. Ok, a little more steam. Oh, ok, here we go, yeah, ok. Aaah. 
+[Figure 25]
+Yeah, ok, symetry, that's where it's at. Aaauugh! Yeah, try it the other direction. 
+[Figure 26]
+What happens if you put Turing's face in there?
+Oh, Turing's face! Where did I put that? It's over here. 
+[Figure 27]
+You can hit "Props". Just copy that out.
+[Figure 28]
+Bring him to the top. And paste! 
+[Figure 29]
+Aaah! It melted.
+[Figure 30]
+Oh wait, let's try it this way. Woah. Oh, oh, and there are other rules that do different things. Let's try pasting Turing's face here. 
+[Figure 31]
+Oh yeah. Or the big happy face. Woops! Well that slagged. Oh yeah!
+[Figure 32]
+
+-- end of video tape --

@@ -1,0 +1,229 @@
+Open windows with HyperLook
+===========================
+
+HyperLook is an interactive application design system, that lets you
+develop advanced multimedia systems, via simple direct manipulation,
+property sheets, and object oriented programming. It releases the
+full power of OpenWindows to the whole spectrum of users, ranging from
+casual users who want a configurable desktop and handy presentation
+tools, to professional programmers who want to push the limits in
+interactive mulltimedia.
+
+You design interfaces by taking fully functional components from an
+object warehouse. You lay them out in your own window, configure them
+with menus and property sheets, define their appearance in colorful
+PostScript fonts and graphics, and write scripts to customize their
+behavior.
+
+You can write applications in C or other languages, that communicate
+with HyperLook by sending high level messages across the network.
+They need not worry about details like layout, look and feel, or fonts
+and colors. You can edit HyperLook applications while they're running,
+or deliver them in an uneditable runtime form.
+
+HyperLook is totally extensible and open ended. It comes with a
+toolkit of user interface classes, property sheets, and warehouses of
+pre-configured components with useful behavior.
+
+Earlier versions have been in use at more than 300 sites worldwide, to
+build presentations, prototype user interfaces, create gis systems,
+control robots, model satellites, monitor sensors, control processes,
+implement games and serve as a front end for databases, machine
+learning and expert systems.
+
+FREE HYPERLOOK RUNTIME
+======================
+
+The HyperLook runtime system lets you run uneditable HyperLook
+applications. It includes many interesting demos, presentations and
+useful stacks, including a fully functional drawing tool.
+
+Requirements
+------------
+
+- SunOS 4.1.1 or higher
+- OpenWindows version 2.0 with TNT version 2.0 or OpenWindows version 3.0
+- Color screen
+
+Included with the free HyperLook Runtime
+----------------------------------------
+
+- Graphics editing
+
+PostScript graphics are fully integrated with the system. It's
+possible to import almost any PostScript graphic into the editor, then
+edit and print it.  Most importantly, the graphics editor is a totally
+integrated HyperLook component.
+
+- Integrated on-line help
+
+Help for any interface or application can be created on-line, without
+programming. Graphics can be incorporated using the integrated editor.
+
+- Stacks and desktop tools
+System stack, drawing tool, color pallet, clipboard, notepad, stack
+manager, resource manager, class documentation browser, file selection
+dialogs, printer queue monitor and user interface component examples. 
+
+Availablility
+-------------
+
+The HyperLook runtime system is availiable for free via anonymous ftp,
+from the following systems:
+
+ftp.uu.net (137.39.1.9)		graphics/NeWS/HyperLook1.5-runtime.tar.Z
+turing.com (192.133.90.28)	pub/HyperLook1.5-runtime.tar.Z
+
+HYPERLOOK PRODUCT
+=================
+
+The HyperLook product allows you to develop HyperLook applications,
+and create interactive presentations, that you can deliver in an
+uneditable form with the free HyperLook runtime system. 
+
+Included with the HyperLook Product
+-----------------------------------
+
+- HyperLook runtime system
+- Direct manipulation stack editing
+- Property sheets to edit all user interface objects
+- C client interface and development utilities
+
+Features
+--------
+
+- Stack editing
+
+You can create stacks, incorporate text and graphics, design
+interfaces, etc. 
+
+- Scripting in PostScript
+
+By scripting it is possible to add behaviour to objects, and to create
+new classes of object with enhanced functionality.
+
+- Programming from C clients
+
+Header files and client library are provided, enabling HyperLook to be
+used as the front end for sophisticated applications.  
+
+- Manuals
+
+A full manual is provided, with over 300 illustrations, covering all
+aspects of HyperLook.
+
+Tools/stacks
+------------
+- The system stack
+
+Provides instant access to the facilities of the HyperLook desktop.
+Like all other aspects of HyperLook, the user can configure and edit
+this stack to provide a customized set of utilities.
+
+- Property stacks
+
+Each object class in the system has an associated property stack, with
+which most of an object's display properties can be edited.  These
+stacks can also serve as the basis for property sheets for new objects.
+
+- HyperDraw drawing tool
+
+A full featured PostScript drawing editor, which can import and
+export files in EPSF format.
+
+- Clipboard
+
+A 16 page clipboard for storing text and graphics.
+
+- Color pallet
+
+Select thte color of your choice.  The pallet is user configurable.
+
+- Stack manager
+
+Shows which stacks you have loaded and their current status.
+
+- Resource manager
+
+Specifies where in your system resources are stored.  Allows you to
+configure HyperLook without worring about the Unix file system. 
+
+- Error handler
+
+Comprehensive error reporting and debugging of user scripts.
+
+- SystemStatus
+
+A handy way of seeing what HyperLook is doing at any time.
+
+- Object Warehouse
+
+A customizable stack containing prototype objects you can include in
+your applications. The objects in the warehouse can be installed on
+the menu that places new objects on stacks.
+
+- Class browser
+
+Interactively browse the HyperLook class hierarchy including
+user-defined classes. Find the documentation for all methods on-line!
+
+- Utility stacks such as file dialogs.
+
+Demos
+-----
+
+- Clocks
+
+A bunch of different clocks, scripted in HyperLook.
+
+- Notepad
+
+A scratch pad for ideas, on your desktop.
+
+- ButtonIdeas
+
+A whole range of interesting buttons, many with embedded
+functionality.
+
+- ClientExamples
+
+Examples of applications with a client program.
+
+- Printer Queue
+
+A line printer queue viewer.  Shows how simple it is to create
+graphical desktop applications with HyperLook.
+
+Promotional stacks
+------------------
+
+The promotional stacks demonstrate how colorful effective presentations
+can be created, without programming, using HyperLook.
+
+- Introduction
+
+The startup stack.
+
+- HyperLook information
+
+Information about HyperLook, and what you can do with it as a casual
+user.
+
+- Turing information
+
+Information about the Turing Institute and the work it does. Some
+interactive graphics and sound to show more of the presentational
+abilities of HyperLook.
+
+
+More Information
+================
+
+The Turing Institute
+36 North Hanover Street
+Glasgow G1 2AD
+Scotland
+
+Tel: +44 41 552 8858
+Fax: +44 41 552 2985
+Email: hyperlook@turing.com

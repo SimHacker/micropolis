@@ -1,0 +1,40 @@
+<p>
+Here are some ideas about <a href="http://mailman.laptop.org/pipermail/sugar/2007-March/001829.html" target="_blank">applying Seymour Papert's philosophy</a> of "<a target="_blank" href="http://wiki.laptop.org/go/Constructionist">Constructionist Education</a>" to SimCity, by integrating it with the OLPC's "Sugar" user interface and Python-based scripting system. 
+</p>
+<p>
+<a href="http://www.donhopkins.com/home/images/SimCity-For-X11.gif" target="_blank"><img style="float: right" src="http://www.donhopkins.com/home/images/SimCity-For-X11-small.gif" border="0" width="400" height="300"/></a>
+Back in the early 90's, I ported the classic version of SimCity to <a href="http://art.net/~hopkins/Don/simcity/simcity-announcement.html" target="_blank">Unix</a>, first implementing a <a href="http://www.donhopkins.com/home/images/HyperLook-SimCity.gif" target="_blank">PostScript-based user interface for the NeWS window system with the HyperLook gui environment</a>, then a <a href="http://www.donhopkins.com/home/images/SimCity-For-X11.gif" target="_blank">multi-player TCL/Tk based user interface for the X11 window system</a>, for the <a href="http://www.donhopkins.com/home/images/SimCity-Sun.gif" target="_blank">Sun</a>, <a href="http://www.donhopkins.com/home/images/SimCity-Indigo.gif" target="_blank">SGI</a>, <a href="http://www.donhopkins.com/home/images/SimCity-NCD.gif" target="_blank">NCD</a> and other X11-based systems. 
+</p>
+<p>
+I've updated the TCL/Tk/X11 version of SimCity to run on the latest version of Linux, and I'm in the process of adapting it for the OLPC. I got permission from Will Wright to show the unreleased development version of OLPC SimCity at the <a href="http://www.flickr.com/photos/neb/414422075/" target="_blank">2007 Game Developer's Conference (GDC)</a>. 
+OLPC News wrote an <a href="http://www.olpcnews.com/content/games/simcity_on_the_olpc_xo.html">article about SimCity on the OLPC XO</a>, and Gamasutra reported that <a href="http://www.gamasutra.com/php-bin/news_index.php?story=13017">SJ Klein Asks For Serious OLPC Content</a> at GCD. 
+</p>
+<p>
+SJ said that the OLPC project is looking not just for games, but for <a href="http://wiki.laptop.org/go/Game_development" target="_blank">tools that enable kids to program their own games</a>. "Existing games are nice, and cute," but games for things like learning language are the "gem they're targeting." Most importantly, Klein said in a direct plea to the serious game developers in front of him, the project needed frameworks and scripting environments -- tools with which children themselves could create their own content.
+</p>
+<p>
+The TCL/Tk scripting languages and user interface toolkit was <a href="http://art.net/~hopkins/Don/simcity/keynote.html">a great choice for X11 at the time</a> (around 1992), and it still runs fine because the code is self-contained and X11 hasn't changed in all that time. But it would be wonderful to re-implement SimCity with a modern, powerful scripting language like Python, and create a kid-friendly user interface and scripting API, focused on <a href="http://wiki.laptop.org/go/Constructionist" target="_blank">Constructionist Education</a>, and teaching kids creative writing and programming language skills. 
+</p>
+<p>
+The <a href="http://mailman.laptop.org/pipermail/sugar/2006-December/001022.html" target="_blank">HyperLook version of SimCity</a> had some cool features like <a href="http://www.art.net/~hopkins/Don/hyperlook/TalkView.gif" target="_blank">map zooming and editing at any scale</a>, and a <a href="http://www.art.net/~hopkins/Don/hyperlook/TalkRunTime.gif" target="_blank">user-customizable hypercard-like interface</a>, that weren't easy to implement in TCL/Tk/X11 at the time. But fortunately, the OLPC's Sugar user interface takes advantage of Cairo and Pango for rendering graphics and text, which are better than PostScript! 
+</p>
+<p>
+The first step in integrating SimCity with Sugar is to clean up and modularize the C simulator code, and plug it into Python (which is a much more powerful scripting language than TCL, and the standard language for OLPC programming).
+</p>
+<p>
+Sugar is based on Python, and uses the GTK toolkit, Cairo rendering library, Pango international text layout library, and Hippo drawing canvas, and many others useful modules. Once SimCity is integrated with Python, it will be great fun to create a kid-friendly multi-player user interface that's totally integrated with the OLPC's unique hardware design (like the hires mono/color LCD screen, which flips over into book mode with a game controller pad) and Sugar's advanced features, like scalable graphics, journaling, mesh networking, messaging, collaboration, and (most importantly) applying Seymour Papert's philosophy of "<a target="_blank" href="http://wiki.laptop.org/go/Constructionist">Constructionist Education</a>" to SimCity. 
+</p>
+<p>
+The goals of deeply integrating SimCity with Sugar are to focus on education and accessibility for younger kids, as well as motivating and enabling older kids to learn programming, in the spirit of Seymour Papert's work with Logo. It should be easy to extend and re-program SimCity in many interesting ways. For example: kids should be able to create new disasters and agents (like the monster, tornado, helicopter and train), and program them like <a href="http://en.wikipedia.org/wiki/Logo_programming_language" target="_blank">Logo's turtle graphics</a> or <a href="http://en.wikipedia.org/wiki/Robot_Odyssey" target="_blank">Robot Odyssey's</a> <a href="http://members.aol.com/Fractal101/odyssey.htm" target="_blank">visual</a> <a href="http://members.aol.com/Fractal101/token_so.gif" target="_blank">robot</a> <a href="http://members.aol.com/Fractal101/relay_so.gif" target="_blank">programming</a> <a href="http://members.aol.com/Fractal101/sound_s2.gif" target="_blank">language</a>!
+</p>
+<p>
+The long term goal is to refactor the code so it can be scripted and extended in Python, and break out reusable general purpose components like the tile engine, sprite engine, etc, so kids can use them to build their own games, or create plug-ins and modify the graphics and behavior of SimCity.
+</p>
+<p>
+The Cairo graphics based user interface will let you zoom into the map like Google Maps, overlay scalable information visualizations, drawings and text. The journaling interface will extend the SimCity save files with a blog-like history of events in the city timeline, enable players to write their own time-stamped and geo-coded stories about events on the map, and let you fast forward, rewind and branch time like a virtual TiVo. The mesh networking interface will let you share cities and play with friends over the network, vote on plans and issues, tell stories and publish journals/newspapers/blogs/maps about your cities.
+</p>
+<p>
+Other Sugar developers are <a href="http://mailman.laptop.org/pipermail/sugar/2007-March/001779.html" target="_blank">building visual programming interfaces</a> that can be eventually be used to script the behavior of SimCity plug-ins!
+</p>
+<!--break-->
+

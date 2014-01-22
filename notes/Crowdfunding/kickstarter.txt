@@ -1,0 +1,177 @@
+Unique prizes:
+
+Be personable.
+
+Build a connection.
+
+Give back.
+
+One of the reasons some projects get 300% or more funding is because people see the item/game/etcâ¦ being made, and they back the project at whatever level will get them a copy. 
+
+Original design notes from SimCity or The Sims, or The Sims bug reports,
+with a personal thank you note written on it.
+
+Appeal to the audience. Who is the audience? 
+
+People who played SimCity as kids.
+Parents with kids and want to play educational games with them.
+
+----
+
+Video:
+
+Video is a mock-up of a lesson embedded in SimCity.
+
+Play several videos and live simulations at once.
+3x3tile grid of parallel synchronized videos.
+Different aspects of the narration are shown in different tiles.
+Focus down and up and zoom in and out of tiles.
+"Flat" user interface style.
+
+Sources:
+
+http://video.csupomona.edu/DNelson/CityBuilding-245.asx
+Powers of 10
+In The News intro
+HAR talk
+Old demo videos
+Alan Kay
+Cellular automata -- visualizing simulations and data
+http://www.donhopkins.com/home/movies/CellularSimCity.mov
+http://www.donhopkins.com/home/movies/HyperLookDemo.mov
+
+Show a lot of stuff in parallel at once, and let people click on the things that interest them. 
+
+Click on any tile of video for more information and commentary about it, 
+to queue playing it full size, full length (or most interesting parts).
+
+----
+
+http://www.kickstarter.com/projects/271766523/bowerbirds-new-album-and-side-project-made-in-diy
+
+make time to talk with you, answer questions, email, skype.
+
+----
+
+https://en.wikipedia.org/wiki/Crowdfunding_in_video_games
+
+https://en.wikipedia.org/wiki/Broken_Age
+
+http://kotaku.com/5883864/why-the-internet-gave-this-video-game-1-million-in-a-single-day
+
+http://kotaku.com/5883769/lets-not-jump-to-conclusions-about-kickstarter+funded-games-just-yet
+
+http://www.engadget.com/2013/07/03/double-fine-kickstarter-debacle/
+
+http://www.icopartners.com/blog/archives/3439
+
+http://www.kickspy.com/top
+
+
+http://sites.davidson.edu/dig101/responder-kickstarter/
+
+While we like to think we are charitable and benevolent, if there is
+no face to the recipient (AIDS quilt), there is no benefit to giving.
+You cannot see the reaction of a quilt, so there is no gratification
+to giving. However, in the second Kickstarter, the giver not only
+contributed to a useful product, but received a useful gift in return.
+
+----
+
+http://www.cc.gatech.edu/news/georgia-tech-researchers-reveal-phrases-pay-kickstarter
+
+http://www.kickstarter.com/projects/finnmorgan/sprite-lamp-dynamic-lighting-for-2d-art
+
+http://en.reddit.com/r/gamedev/comments/1shtxu/im_finn_morgan_a_guy_making_a_2d_dynamic_lighting/
+
+http://crowdfundingdojo.com/
+
+http://steamcommunity.com/workshop/news/?appid=765
+
+http://crowdfundingdojo.com/blog/how-freedom-planet-funded-700-with-no-media-outreach
+
+http://crowdfundingdojo.com/blog/zero-budget-all-results-with-project-londons-kickstarter
+
+http://crowdfundingdojo.com/blog/the-art-of-brom-and-getting-nearly-2000-funded-on-kickstarter
+
+http://crowdfundingdojo.com/blog/advice-from-a-22-million-dollar-kickstarter-project
+
+http://crowdfundingdojo.com/articles/million-dollar-kickstarters
+
+http://crowdfundingdojo.com/articles/boosted-boards-unknown-to-100k-in-under-24-hours-kickstarter-tips-ep-002
+
+http://crowdfundingdojo.com/blog/why-did-kickstarter-reject-my-project-because
+
+non-US kickstarter guide
+http://www.xenonauts.com/kickstarter.html
+
+http://www.crowdfundingguides.com/The%20Crowdfunding%20Bible.pdf
+
+http://gigaom.com/2012/06/28/analyzing-kickstarter-what-succeeds-by-how-much-and-how-often/
+
+http://www.kickstarter.com/blog/happy-birthday-kickstarter
+
+http://michaelwolf.us/post/26013155618/kickstarter-by-the-numbers
+
+========================================================================
+
+http://crowdfundingdojo.com/blog/5-project-crushing-kickstarter-mistakes-how-to-avoid-them
+
+Problem 1: Lack of clarity about what's being Kickstarted
+
+Problem 2: No call to action
+
+Problem 3: Expecting to be found, rather than showing the way
+
+Problem 4: Making it about you
+
+Problem 5: Bloat
+
+====
+
+Simple enough for younger children to understand. 
+
+Appeals to both girls and boys. 
+
+The Sims was popular with girls, but not because it was "targeted" at girls.
+
+
+====
+
+rewards:
+
+votes. bribes. bribe us to develop the project in the directon you want.
+
+original design notes and sims bugs.
+
+not just your name in the credits, but make a sim with your name who is used by the game to give feedback to the mayor. 
+
+3d print a tile or zone.
+
+3d print an entire city
+
+====
+
+1) browser game
+2) community web site, wiki, discussion, documentation, tutorials
+3) content sharing
+     save files
+     buildings
+     courseware
+     stories
+4) save city to map, open street map overlay, transparent tiles. earth. moon. mars.
+5) save city in tree of branching possibilities, rewind, fast forward, alternatives, tivo
+
+merchandising
+  t-shirts, mouse pads, underware, etc: cafe press
+  dye sub solid simcity fabric t-shirt: like electric sheep shirts
+
+http://www.dyesubforum.co.uk/vbforum/activity.php
+
+http://print-garments.co.uk/t-shirt-printing-techniques/all-over-sublimation-printing-uk/
+
+----
+
+http://www.kickstarter.com/projects/544670315/balance-of-the-planet?ref=search
+
+http://edition.cnn.com/2010/BUSINESS/09/15/eu.lego.trademark/
