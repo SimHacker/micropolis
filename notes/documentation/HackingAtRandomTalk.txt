@@ -1,0 +1,93 @@
+Micropolis, the open source version of SimCity, is a fun, engaging
+game, that helps teach kids about science, language, mathematics, art
+and politics. Its goal is to fulfill SimCity's potential as a
+microworld for children's learning and exploration.
+
+A web based version of Micropolis is the best way to quickly reach the
+largest audience, and an important step towards the long term goal of
+developing an open source, collaborative multi player, educationally
+oriented simulation gaming platform.
+
+This project is about creating educational open source software. It's
+the culmination of years of research and development, that is now
+possible thanks to Electronic Arts making SimCity open source.
+
+Will Wright wrote the original SimCity city simulation game, first
+released in 1989. Since 1992, Don Hopkins ported SimCity to various
+platforms, redesigned the user interface, added multi player support,
+cleaned and refactored the code, and integrated it with scripting
+languages and web servers.
+
+On January 10, 2008 the SimCity source code was released under the
+free software GPL 3 license, under the name "Micropolis". Now that
+it's GPL, it can be adapted to many platforms, including Linux, Mac,
+and Windows guis, as well as web servers, cell phones and embedded
+devices! And it can be improved and extended to make it a better
+educational tool and open source programming example.
+
+The Micropolis project is building an exemplary open source game out
+of modular reusable components, that other people can learn from,
+build on top of, integrate with other languages and user interfaces,
+and use as a starting point for their own projects.
+
+The plan to develop Micropolis into an educational gaming platform
+draws heavily on the vision and experience of educators, researchers
+and designers including Seymour Papert, Hal Abelson, Alan Kay, Will
+Wright, Ben Shneiderman, and Mark Weiser.
+
+Accomplishments of the Micropolis project so far:
+
+Translated the original C SimCity code to C++.
+
+Cleaned up all the code, organized into types and classes, refactored
+and rewrote old crappy code, renamed variables and functions, measured
+performance and optimized bottlenecks, applied a consistent
+programming style, and heavily commented the code, wrote lots of
+documentation and designs.
+
+Used doxygen to generate extensive online documentation from formatted
+commments in the code, with an html reference manual, member and
+parameter descriptions, usage cross references, hyperlinked listings,
+bug and todo lists, etc.
+
+Removed all of the user interface code from the core simulation engine
+(called MicropolisCore), and added programming interfaces to
+efficiently access the internal data and control the simulation.
+
+Implemented a general purpose TileEngine module, used by but
+independent of Micropolis. Supports various memory formats, efficient
+rendering techniques, graphics sets, tile mapping, lazy procedural
+tile rendering, scaling and panning, caching, and tile animation
+compressed network protocols. The CellEngine cellular automata machine
+module also uses the TileEngine. 
+
+Integrated MicropolisCore, TileEngine and CellEngine with Python by
+using SWIG, a scripting language interface wrapper generator. SWIG
+makes it easy to develop and change the programming interface (C++
+classes, etc), and automatically generate all the glue code that makes
+it possible to access and control the C++ objects from Python (or
+other languages). SWIG's advantage is that it makes it easy to plug
+the same C++ code into many other languages like Lua, Ruby, Java, etc.
+
+Implemented a desktop based GTK user interface to Micropolis, which
+runs on Mac, Windows and Linux. The user interface is written in
+Python, and based on PyGTK for user interface widgets, Cairo for
+graphics, and Pango for text.
+
+Implemented a desktop based GTK user interface to the CellEngine
+module, a cellular automata machine simulation, which uses the same
+TileEngine as Micropolis.
+
+Implemented a web server based OpenLaszlo (Flash) user interface to
+Micropolis, which runs the simulation on the web server, and displays
+the user interface in a web browser with Flash (or eventually any
+mainstream DHTML browser).
+
+Internationalized the web based version of Micropolis, and implemented
+a web based tool for localization, managing and editing translations
+into different languages.
+
+Implemented a MediaWiki extension for embedding OpenLaszlo
+applications in wiki pages, so you can write Wiki pages including live
+playable views of cities.
+

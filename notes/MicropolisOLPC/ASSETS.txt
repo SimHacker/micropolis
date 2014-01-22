@@ -1,0 +1,315 @@
+Micropolis Assets:
+
+  This is a list of required and optional assets for Micropolis. 
+
+  As noted, some of them are for the current TCL/Tk based version of
+  Micropolis that we want to get out right away.  Others are for the more
+  advanced Python version that we're developing after releasing the
+  TCL/Tk version.
+
+  The TCL/Tk version currently works ok with its current assets, and
+  these are just suggestions that would improve it but are not
+  necessary. The Python version is not yet fully designed or
+  implemented, and it will be more open-ended and powerful, so this is
+  just a rough estimate of the assets it will need. 
+
+  User Interface Graphics and Icons
+
+    These aren't all necessary, but it would be nice to have some of
+    them to make the interface look nicer, more graphical, and kid
+    friendly.
+
+    The style should be international, kid oriented, big, bright,
+    saturated, simple. 
+
+    Icons should look good and be readable when shown in desaturated
+    gray scale on the OLPC's monochrome screen in low power reflective
+    mode. The the brightness detail can be full resolution but the
+    color detail should be lower resolution by about half (not
+    depending on color detail as fine as brightness detail), because
+    of the nature of the OLPC's screen: 200 dots per inch monochrome
+    gray scale, with lower resolution color. For example, text on an
+    icon should be a noticeably different brightness than the
+    background color, instead of relying on color variation, which is
+    not as detailed and won't show up in monochrome mode.
+
+    SVG is the idea source format, because it can be scaled to any
+    size, rendered with antialiased edges, and will be easily used in
+    the Python version. Illustrator exports SVG. For now the TCL/Tk
+    version can use versions of the SVG files converted to "XPM"
+    format (which I can do).
+
+    Later, the Python user interface will require a bunch more icons
+    and graphics, depending on the user interface and features we
+    decide to support. It would be great to be able to use the same
+    SVG source graphics in the Python version, scaling them as
+    appropriate to adapt to the screen layout. We should revisit the
+    icons and graphics after we port Micropolis to Python.
+
+    What follows is a complete list of graphics we could use in the
+    TCL/Tk version. SVG is ideal but PNG is sufficient for this time.
+
+    Micropolis icon for use in Sugar user interface, in SVG or PNG. 
+
+    Logos:
+      Micropolis logo
+      Micropolis lettering
+      OLPC Project logo
+      XO Laptop logo
+      Linux Penguin logo
+      Python Programming Language logo
+
+    Small menu item icons for map overlay menus:
+      Zones
+        All
+	Residential
+	Commercial
+	Industrial
+	Transportation
+      Overlays
+        Population Density
+        Rate of Growth
+        Land Value
+        Crime Rate
+        Pollution Density
+        Traffic Density
+        Power Grid
+        Fire Coverage
+        Police Coverage
+
+    Small menu item icons for File menu:
+      Save City
+      Save City as...
+      Add Player...
+      Choose City!
+      Quit Playing!
+
+    Small menu item icons for Options menu:
+      Auto Budget
+      Auto Bulldoze
+      Disasters
+      Sound
+      Animation
+      Messages
+      Notices
+
+    Small menu item icons for Disasters menu:
+      Monster
+      Fire
+      Flood
+      Meltdown
+      Air Crash
+      Tornado
+      Earthquake
+
+    Small menu item icons for Time menu:
+      Pause
+      Slow
+      Medium
+      Fast
+
+    Small menu item icons for Priority menu:
+      Flat Out!
+      Zoom Zoom
+      Whoosh Whoosh
+      Buzz Buzz
+      Putter Putter
+      Drip Drip
+      Snore Snore
+
+    Small menu item icons for Windows menu (maybe the same as ones used in buttons):
+      Budget
+      Evaluation
+      Graph
+
+    Small menu item icons for Map Options menu:
+      Auto Goto
+      Palette Panel
+      Chalk Overlay
+
+    Small "OK" button for confirmation dialog buttons.
+
+    Small "Cancel" button for confirmation dialog buttons.
+
+    Large "Question" icon for dialogs asking questions (ok/cancel questions).
+
+    Large "Notice" icon for notice window (informational).
+
+    Large "Query" icon for zone query window (zone tricorder).
+
+    Medium "Generate New City" icon for button to generate new city, on start screen.
+
+    Medium Game Level icons for start screen radio buttons:
+      Easy
+      Medium
+      Hard
+
+    Big "Load City" icon for load city dialog.
+    Meduim "Load City" icon for button to load city, on start screen.
+
+    Big "Save City" icon for save city dialog.
+    Small "Save City" icon for button to save city.
+
+    Big Evaluation icon for evaluation window. 
+    Small Evaluation icon for button to bring up evaluation window.
+
+    Big Graph icon for graph window. 
+    Small Graph icon for button to bring up graph window.
+
+    Big Simolean/Budget symbol for Budget window. 
+    Small Simolean/Budget symbol for button to bring up budget window.
+
+    Big Quit symbol for Quit confirmation dialog.
+    Small Quit symbol for button to bring up Quit confirmation dialog.
+
+    Big About symbol for About dialog.
+    Small About symbol for button to open About dialog.
+
+    Big Choose City symbol for Choose City confirmation dialog.
+    Small Choose City symbol for button to open Choose City confirmation dialog.
+
+
+  Simulation and User Interface Sounds
+
+    Right now it's using the original sounds, plus some interface
+    sounds I recorded. I can convert them to the format required by
+    the Linux sound interface we use. 
+
+    I can supply a list of required interface sounds, but I think we
+    can go with the sounds we have right now without any trouble.
+
+    Later, the Python version will require a bunch more sounds for its
+    user interface, which will depend on the user interface features
+    we decide to support. So we should revisit the sound effects
+    later once Micropolis is ported to Python. 
+
+    To be authentic, I would like to use the original sounds that the
+    simulator made (like the Skywatch One helicopter), or re-record
+    high quality replacements. Maybe we can get Will to record a fresh
+    version of "Skywatch One reporting heavy traffic!" in his own
+    voice (he made that original sound) and the sound people can add
+    in the helicopter sound over his voice to re-create the original
+    sound at high quality. The other sounds could be re-made from
+    scratch without any problem or help from Will. 
+
+    Voice overs reading the user interface text, notices, help text
+    and documentation would be great for pre-literate children. Would
+    need to be translated to other languages. 
+
+
+  Update Documentation
+
+    I have translated the Micropolis manual to HTML. 
+
+    It's the original version that applies to the multi player
+    X11/TCL/Tk version, which needs to be update in a few places where
+    it's specific about the user interface or installation instructions.
+
+    It would benefit from some nice reformatting and CSS styles, as well
+    as some illustrations and screen snapshots.
+
+    After we port Micropolis to Python, the interface-specific
+    documentation will have to be rewritten, re-illustrated, and then it
+    will have to be translated to different languages.
+
+    The documentation consists of the following files:
+
+    Index
+      Introduction
+      Tutorial
+      User Reference
+      Inside the Simulator
+      History of Cities and City Planning
+      Bibliography
+      Credits
+
+    Help Text
+
+      There are also HTML files corresponding to user interface help text.
+      The user interface components are tagged with help ids that are the
+      base names of html files. The existing HTML help files are just
+      placeholders that don't have any useful help text, and there are
+      some help files for user interface components and windows that have
+      since been removed, as well as some help files missing for user
+      interface components and windows that have been added.
+
+      To finish implementing help, we need to go through the code and
+      identify all help tags and opportunities for adding missing help
+      tags to the user interface, then make all help files corresponding
+      to the existing tags, delete obsolete help files, and write all the
+      help text. It would be nice for the help text to hsve illustrations
+      of the corresponding windows and components in use.
+
+      After we port Micropolis to Python, the help files will have to be
+      re-inventoried, rewritten, re-illustrated, and translated to
+      different languages.
+
+    Courseware
+
+      We need to include any Micropolis courseware or teacher's guides with
+      the documentation, and update it to relect the current user
+      interface.
+
+      After we port Micropolis to Python, we will need to update the
+      courseware to reflect the features and user interface of the new
+      user interface.
+
+--
+Micropolis, Unix Version.  This game was released for the Unix platform
+in or about 1990 and has been modified for inclusion in the One Laptop
+Per Child program.  Copyright (C) 1989 - 2007 Electronic Arts Inc.  If
+you need assistance with this program, you may contact:
+  http://wiki.laptop.org/go/Micropolis  or email  micropolis@laptop.org.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.  You should have received a
+copy of the GNU General Public License along with this program.  If
+not, see <http://www.gnu.org/licenses/>.
+
+            ADDITIONAL TERMS per GNU GPL Section 7
+
+No trademark or publicity rights are granted.  This license does NOT
+give you any right, title or interest in the trademark SimCity or any
+other Electronic Arts trademark.  You may not distribute any
+modification of this program using the trademark SimCity or claim any
+affliation or association with Electronic Arts Inc. or its employees.
+
+Any propagation or conveyance of this program must include this
+copyright notice and these terms.
+
+If you convey this program (or any modifications of it) and assume
+contractual liability for the program to recipients of it, you agree
+to indemnify Electronic Arts for any liability that those contractual
+assumptions impose on Electronic Arts.
+
+You may not misrepresent the origins of this program; modified
+versions of the program must be marked as such and not identified as
+the original program.
+
+This disclaimer supplements the one included in the General Public
+License.  TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, THIS
+PROGRAM IS PROVIDED TO YOU "AS IS," WITH ALL FAULTS, WITHOUT WARRANTY
+OF ANY KIND, AND YOUR USE IS AT YOUR SOLE RISK.  THE ENTIRE RISK OF
+SATISFACTORY QUALITY AND PERFORMANCE RESIDES WITH YOU.  ELECTRONIC ARTS
+DISCLAIMS ANY AND ALL EXPRESS, IMPLIED OR STATUTORY WARRANTIES,
+INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY,
+FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT OF THIRD PARTY
+RIGHTS, AND WARRANTIES (IF ANY) ARISING FROM A COURSE OF DEALING,
+USAGE, OR TRADE PRACTICE.  ELECTRONIC ARTS DOES NOT WARRANT AGAINST
+INTERFERENCE WITH YOUR ENJOYMENT OF THE PROGRAM; THAT THE PROGRAM WILL
+MEET YOUR REQUIREMENTS; THAT OPERATION OF THE PROGRAM WILL BE
+UNINTERRUPTED OR ERROR-FREE, OR THAT THE PROGRAM WILL BE COMPATIBLE
+WITH THIRD PARTY SOFTWARE OR THAT ANY ERRORS IN THE PROGRAM WILL BE
+CORRECTED.  NO ORAL OR WRITTEN ADVICE PROVIDED BY ELECTRONIC ARTS OR
+ANY AUTHORIZED REPRESENTATIVE SHALL CREATE A WARRANTY.  SOME
+JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF OR LIMITATIONS ON IMPLIED
+WARRANTIES OR THE LIMITATIONS ON THE APPLICABLE STATUTORY RIGHTS OF A
+CONSUMER, SO SOME OR ALL OF THE ABOVE EXCLUSIONS AND LIMITATIONS MAY
+NOT APPLY TO YOU.

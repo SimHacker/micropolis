@@ -1,0 +1,1103 @@
+<?xml version="1.0" ?>
+<strings language="cs-CZ">
+
+
+    <!--
+
+        This XML file defines all the strings in Micropolis,
+	for specific languages.
+
+	The "strings_en-US.xml" file is considered the master file.
+	It is used as a template for the other languages.
+	In order to add a string, first add it to the "en-US" file,
+	then use the web "/server/getTranslations" web interface to
+	update the other language strings from the "en-US" strings.
+	That will add any new strings in place, and mark them as 
+	needing to be translated, with at-signs like "@nl-NL".
+	Then you can use the web interface to translate the
+	strings into other languages.
+
+	The top level <strings> element should have a language attribute, 
+	which specifies the language of the translated strings. 
+
+	Each <string> sub-element has an id attribute, 
+	which is the name by which the string is refered in the code.
+	The ID can be the string itself in English, 
+	possibly abbreviated with a "*" at the end, 
+	or it may be a logical name called out by the code. 
+	Some string elements have an optional comment attribute,
+	which tells the translator how to deal with the string.
+	Each string element contains utf-8 unicode text, 
+	which is the translated string. 
+
+	Strings should not contain any markup as actual tags. Any
+	markup or entities to be displayed as html in the user
+	interface should be escaped.
+
+    -->
+
+
+    <!-- appview.lzx -->
+
+    <string id="Micropolis: Choose a City">Micropolis: Vyberte si město</string>
+
+    <string comment="The tab and button names in the text should be the same as the translated names." id="Welcome to Micropolis!*">Vítejte na Micropolis! &lt;br/&gt; Vyberte si město výběrem scénář z záložku 'scénáře', nebo vytváření nové náhodné město od záložku 'generátoru', nebo zatížení města v knihovně od 'knihovny 'tab. &lt;br/&gt; Poté stiskněte' Play s tlačítkem Toto město 'níže, začít hrát Micropolis!</string>
+
+    <string id="Please log in or create an account in order to save your city.">Prosím přihlašte se nebo vytvořte účet s cílem zachránit své město.</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/About">/wiki/index.php/About?lang=en-US</string>
+
+    <string comment="Change the lang parameter (en-US) to the appropriate 5 character language-COUNTRY code, but leave the rest of the URL the same." id="/wiki/index.php/Help">/wiki/index.php/Help?lang=cs-CZ</string>
+
+    <string comment="Three letter month abbreviation." id="Jan">leden</string>
+
+    <string comment="Three letter month abbreviation." id="Feb">únor</string>
+
+    <string comment="Three letter month abbreviation." id="Mar">březen</string>
+
+    <string comment="Three letter month abbreviation." id="Apr">duben</string>
+
+    <string comment="Three letter month abbreviation." id="May">květen</string>
+
+    <string comment="Three letter month abbreviation." id="Jun">červen</string>
+
+    <string comment="Three letter month abbreviation." id="Jul">červenec</string>
+
+    <string comment="Three letter month abbreviation." id="Aug">srpen</string>
+
+    <string comment="Three letter month abbreviation." id="Sep">září</string>
+
+    <string comment="Three letter month abbreviation." id="Oct">říjen</string>
+
+    <string comment="Three letter month abbreviation." id="Nov">listopad</string>
+
+    <string comment="Three letter month abbreviation." id="Dec">prosinec</string>
+
+
+    <!-- budgetview.lzx -->
+
+    <string id="Taxes Collected:">Daně Sbíral:</string>
+
+    <string id="Cash Flow:">Pohyb hotovosti:</string>
+
+    <string id="Previous Funds:">Předchozí fondy:</string>
+
+    <string id="Current Funds:">Aktuální fondy:</string>
+
+    <string id="Tax Rate:">Daňová sazba:</string>
+
+    <string id="Road Request:">Silniční Poptávka:</string>
+
+    <string id="Fire Request:">Požární Poptávka:</string>
+
+    <string id="Police Request:">Policie Poptávka:</string>
+
+
+    <!-- changepassword.lzx -->
+
+    <string id="To change your password,*">Chcete-li změnit své heslo, zadejte své staré heslo, zadejte nové heslo dvakrát.</string>
+
+    <string id="Change Password">Změna hesla</string>
+
+
+    <!-- connectscreen.lzx -->
+
+    <string id="Connecting to Micropolis Online server.">Připojení k Micropolis Online server.</string>
+
+    <string id="Connection to Micropolis Online server failed.">Připojení k serveru Micropolis Online nezdařilo.</string>
+
+    <string id="Status:">Status:</string>
+
+    <string id="Reconnect">Znovu připojit</string>
+
+
+    <!-- controlpanel.lzx -->
+
+    <string id="Are you really sure you want to start a new city?">Jste si opravdu jisti, že chcete začít nové město?</string>
+
+    <string id="No, keep playing with this city.">Ne, ponechat si hrát s tímto městem.</string>
+
+    <string id="Yes, choose another city.">Ano, zvolit jiného města.</string>
+
+    <string id="Ultra Slow">Ultra Pomalé</string>
+
+    <string id="Super Slow">Super Pomalé</string>
+
+    <string id="Very Slow">Velmi pomalé</string>
+
+    <string id="Slow">Pomalý</string>
+
+    <string id="Medium">Střední</string>
+
+    <string id="Fast">Rychle</string>
+
+    <string id="Very Fast">Velmi rychle</string>
+
+    <string id="Super Fast">Super rychlá</string>
+
+    <string id="Ultra Fast">Ultra Fast</string>
+
+    <string id="Astronomically Fast">Astronomicky rychle</string>
+
+    <string id="Resume">Pokračovat</string>
+
+    <string id="Pause">Pauza</string>
+
+    <string id="Simulator">Simulátor</string>
+
+    <string id="Paused.">Odmlčel.</string>
+
+    <string id="Running!">Běží!</string>
+
+    <string id="Speed">Rychlost</string>
+
+    <string id="Save City">Uložit města</string>
+
+    <string id="New City">Nové Město</string>
+
+    <string id="Help">Nápověda</string>
+
+    <string id="About">O</string>
+
+    <string id="Disasters">Katastrofy</string>
+
+    <string id="Auto Budget">Auto rozpočtu</string>
+
+    <string id="Auto Bulldoze">Auto buldozerem</string>
+
+    <string id="Auto Goto">Auto Goto</string>
+
+    <string id="Sound">Zvuk</string>
+
+    <string id="Animation">Animace</string>
+
+    <string id="Journal">Deník</string>
+
+    <string id="Notices">Oznámení</string>
+
+
+    <!-- datefundsview.lzx -->
+
+    <string id="Date:">Datum:</string>
+
+    <string id="Funds:">Fondy:</string>
+
+
+    <!-- demandgauge.lzx -->
+
+    <string comment="One letter abreviation for 'Residential'." id="R">R</string>
+
+    <string comment="One letter abreviation for 'Commercial'." id="C">C</string>
+
+    <string comment="One letter abreviation for 'Industrial'." id="I">I</string>
+
+
+    <!-- edittileviewpie.lzx -->
+
+    <string id="Tools">Nástroje</string>
+
+    <string id="Zone">Zóna</string>
+
+    <string id="Build">Stavět</string>
+
+    <string id="More">Více</string>
+
+    <string id="Tab">Záložka</string>
+
+    <string id="Evaluation">Hodnocení</string>
+
+    <string id="History">Historie</string>
+
+    <string id="Budget">Rozpočet</string>
+
+    <string id="Overlays">Překryvy</string>
+
+    <string id="Control">Ovládání</string>
+
+    <string id="Funds">Fondy</string>
+
+    <string id="Tax Rate">Daňová sazba</string>
+
+    <string id="Police Funds">Policie fondů</string>
+
+    <string id="Road Funds">Silniční fondů</string>
+
+    <string id="Fire Funds">Požární fondů</string>
+
+
+    <!-- evaluationview.lzx -->
+
+    <string id="Crime">Zločin</string>
+
+    <string id="Pollution">Znečištění</string>
+
+    <string id="Housing">Bydlení</string>
+
+    <string id="Taxes">Daně</string>
+
+    <string id="Traffic">Provozu</string>
+
+    <string id="Unemployment">Nezaměstnanost</string>
+
+    <string id="Fire">Požár</string>
+
+    <string id="Village">Obec</string>
+
+    <string id="Town">Město</string>
+
+    <string id="City">Město</string>
+
+    <string id="Capital">Kapitál</string>
+
+    <string id="Metropolis">Metropole</string>
+
+    <string id="Megalopolis">Megalopolis</string>
+
+    <string id="Easy">Snadné</string>
+
+    <string id="Hard">Tvrdé</string>
+
+    <string id="Approve:">Schválit:</string>
+
+    <string id="Disapprove:">Neschválit:</string>
+
+    <string id="Population:">Obyvatelstvo:</string>
+
+    <string id="Migration:">Migrace:</string>
+
+    <string id="City Value:">Město hodnoty:</string>
+
+    <string id="Category:">Kategorie:</string>
+
+    <string id="Game Level:">Herní úroveň:</string>
+
+    <string id="Current Score:">Aktuální skóre:</string>
+
+    <string id="Annual Change:">Roční změna:</string>
+
+    <string id="Popularity:">Popularita:</string>
+
+    <string id="Problems:">Problémy:</string>
+
+
+    <!-- generatorview.lzx -->
+
+    <string id="Generate Random Map">Generování náhodných Mapa</string>
+
+    <string id="Generated Map">Generované mapy</string>
+
+    <string id="Generated a new random map.">Generovány nové náhodné mapy.</string>
+
+
+    <!-- historyview.lzx -->
+
+    <string id="Residential">Obytný</string>
+
+    <string id="Show the residential population history.">Zobrazit obytné populace historii.</string>
+
+    <string id="Commercial">Obchodní</string>
+
+    <string id="Show the commercial population history.">Zobrazit komerční populace historii.</string>
+
+    <string id="Industrial">Průmyslová</string>
+
+    <string id="Show the industrial population history.">Zobrazit průmyslové populace historii.</string>
+
+    <string id="Money">Peníze</string>
+
+    <string id="Show the city funds history.">Zobrazit fondů města historie.</string>
+
+    <string id="Show the crime rate history.">Zobrazit kriminality historii.</string>
+
+    <string id="Show the pollution rate history.">Zobrazit znečištění sazby historie.</string>
+
+    <string id="10 Years">10 let</string>
+
+    <string id="120 Years">120 let</string>
+
+    
+    <!-- libraryview.lzx -->
+
+    <string id="Shared Cities">Sdílené Města</string>
+
+    <string id="My Cities">My Města</string>
+
+    <string id="Log in to see your cities.">Přihlaste se do svého města vidět.</string>
+
+    <string id="You haven't saved any cities yet.">Nemáte uložené žádné městech dosud.</string>
+
+    <string id="Are you really sure you want to delete your city?">Jste si opravdu jisti, že chcete smazat vaše město?</string>
+
+    <string id="No, don't delete it.">Ne, ne jej odstranit.</string>
+
+    <string id="Yes, delete my city.">Ano, odstranit své město.</string>
+
+    <string id="Forward">Vpřed</string>
+
+    <string id="Backward">Zaostalý</string>
+
+    <string id="by">podle</string>
+
+    <string id="Created Date">Vytvořeno Datum</string>
+
+    <string id="Modified Date">Datum změny</string>
+
+    <string id="Created">Vytvořeno</string>
+
+    <string id="Modified">Modifikovaná</string>
+
+    <!-- loginview.lzx -->
+
+    <string id="You are logged in as">Jste přihlášen jako</string>
+
+    <string id="Please log in*">Prosím, přihlaste se nebo vytvořte nový účet, takže si můžete uložit města a podílet se na komunitě Micropolis Online.</string>
+
+    <!-- userview.lzx -->
+
+    <string id="You have successfully logged in,*">Úspěšně jste přihlášeni, a můžete si nastavit svůj účet.</string>
+
+    <string id="Please log in or create a new account.">Prosím, přihlaste se nebo vytvořte nový účet.</string>
+
+    <string id="New and Registered Users:*">Nové a registrovaní uživatelé, prosím, zadejte své uživatelské jméno a heslo a stiskněte příslušné tlačítko.</string>
+
+    <string id="User Name:">Uživatelské jméno:</string>
+
+    <string id="Old Password:">Staré heslo:</string>
+
+    <string id="Password:">Heslo:</string>
+
+    <string id="Log In to Existing Account">Přihlásit se na existující účet</string>
+
+    <string comment="Make sure the quoted 'Create New Account' is the same as the 'Create New Account' button translation." id="New Users:*">Noví uživatelé: Prosím zopakujte Vaše heslo, a zadejte své celé jméno a e-mailovou adresu. Pak stiskněte tlačítko 'Vytvořit nový účet' tlačítko.</string>
+
+    <string id="Repeat Password:">Opakovat heslo:</string>
+
+    <string id="Full Name:">Celé jméno:</string>
+
+    <string id="EMail Address:">EMail:</string>
+
+    <string comment="Make sure this is the same as quoted in the 'New Users:*' translation." id="Create New Account">Vytvořit nový účet</string>
+
+    <string id="Please enter your*">Prosím, zadejte své celé jméno a e-mailovou adresu.</string>
+
+    <string id="New Password:">Nové heslo:</string>
+
+    <string id="Log Out">Odhlásit se</string>
+
+    <string id="Cancel">Zrušit</string>
+
+    <string id="Log In">Přihlásit se</string>
+
+
+    <!-- noticeview.lzx -->
+
+    <string id="Micropolis">Micropolis</string>
+
+    <string id="The city simulation has begun!">Město simulace začalo!</string>
+
+    <string id="Learn More">Dozvědět se více</string>
+
+
+    <!-- pancursor.lzx -->
+
+    <string comment="Label for cursor that pans the map." id="Pan Map">Pan Mapa</string>
+
+
+    <!-- piecursor.lzx -->
+
+    <string comment="Label for cursor that pops up a pie menu." id="Pie Menu">Menu koláč</string>
+
+
+    <!-- playscreen.lzx -->
+
+
+    <!-- remoteserver.lzx -->
+
+    <string comment="Abnormal disconnection that is an error." id="Disconnected (error).">Odpojen (chyba).</string>
+
+    <string comment="Normal disconnection that is not an error." id="Disconnected.">Odpojeno.</string>
+
+    <string id="Connection failed.">Připojení se nezdařilo.</string>
+
+    <string id="Connection rejected.">Spojení odmítl.</string>
+
+    <string id="Connected.">Připojeno.</string>
+
+    <string id="Message failed.">Zprávy se nezdařilo.</string>
+
+    <string id="To">Chcete-li</string>
+
+
+    <!-- robot.lzx -->
+
+
+    <string id="Score">Přehled</string>
+
+
+    <!-- scenariosview.lzx -->
+
+    <string id="Scenario">Scénář</string>
+
+
+    <!-- startscreen.lzx -->
+
+    <string id="Play With This Map">Zahrajte si s touto mapou</string>
+
+    <string id="Scenarios">Scénáře</string>
+
+    <string id="Generator">Generátor</string>
+
+    <string id="Library">Knihovna</string>
+
+    <string id="User">Uživatel</string>
+
+    <string id="Configure Your City">Konfigurace města</string>
+
+    <string id="Title">Název</string>
+
+    <string id="Description">Popis</string>
+
+    <string id="Share My City">Sdílet města</string>
+
+    <string id="Delete My City">Odstranit My City</string>
+
+
+    <!-- toolcursor.lzx -->
+
+    <string id="Cost">Náklady</string>
+
+
+    <!-- toolpalette.lzx -->
+
+    <string id="Residential (tool description)">Dává lidem místo k životu. Generuje občanů a dopravy.</string>
+
+    <string id="Commercial (tool description)">Dává lidem místo k nakupování. Vytváří pracovní místa a dopravní.</string>
+
+    <string id="Industrial (tool description)">Dává lidem místo k práci. Vytváří pracovní místa a dopravní.</string>
+
+    <string id="Fire Station">Požární stanice</string>
+
+    <string id="Fire Station (tool description)">Klade požárů v okolí.</string>
+
+    <string id="Query">Dotaz</string>
+
+    <string id="Query (tool description)">Popisuje zóny.</string>
+
+    <string id="Police Station">Policejní stanice</string>
+
+    <string id="Police Station (tool description)">Snižuje trestné činnosti v okolí.</string>
+
+    <string id="Wire">Drát</string>
+
+    <string id="Wire (tool description)">Připojuje zóny s výkonem.</string>
+
+    <string id="Bulldozer">Buldozer</string>
+
+    <string id="Bulldozer (tool description)">Ničí zóny a funkce.</string>
+
+    <string id="Railroad">Železniční</string>
+
+    <string id="Railroad (tool description)">Čerpá železnice na souši nebo tunelem pod vodou.</string>
+
+    <string id="Road">Silnice</string>
+
+    <string id="Road (tool description)">Čerpá silnice na souši nebo most přes vodu.</string>
+
+    <string id="Center">Centrum</string>
+
+    <string id="Center (tool description)">Posouvá umístění do středu obrazovky.</string>
+
+    <string comment="Do not translate the proper name PacBot." id="PacBot">PacBot</string>
+
+    <string id="PacBot (tool description)">Vyplývá silnice směrem k rušné, a sní vozy, omezení dopravy.</string>
+
+    <string id="Stadium">Stadión</string>
+
+    <string id="Stadium (tool description)">Pomáhá obytné zóny.</string>
+
+    <string id="Park">Park</string>
+
+    <string id="Park (tool description)">Dělá město hezčí místo k životu.</string>
+
+    <string id="Seaport">Námořní přístav</string>
+
+    <string id="Seaport (tool description)">Pomáhá průmyslových zón.</string>
+
+    <string id="Coal Power">Uhelných elektráren</string>
+
+    <string id="Coal Power (tool description)">Poskytuje výkon, ale znečišťuje.</string>
+
+    <string id="Airport">Letiště</string>
+
+    <string id="Airport (tool description)">Pomáhá komerční zóny.</string>
+
+    <string id="Nuclear Power">Jaderná elektrárna</string>
+
+    <string id="Nuclear Power (tool description)">Poskytuje výkon, ale může roztavit.</string>
+
+
+    <!-- disasters.xml -->
+
+    <string id="disaster_monster_title">Netvor</string>
+
+    <string id="disaster_fire_title">Požár</string>
+
+    <string id="disaster_flood_title">Povodňových</string>
+
+    <string id="disaster_meltdown_title">Meltdown</string>
+
+    <string id="disaster_tornado_title">Tornádo</string>
+
+    <string id="disaster_earthquake_title">Zemětřesení</string>
+
+
+    <!-- notices.xml -->
+
+    <string id="notice_10_title">ZNEČIŠTĚNÍ ALERT!</string>
+
+    <string id="notice_10_description">Znečištění ve vašem městě překročila maximální přípustnou částek stanovených Micropolis znečištění agentury. Používáte riziko vzniku vážné ekologické následky. &lt;br/&gt; Buď vyčistit vaše jednání nebo otevřete plynovou masku koncesi na radnici.</string>
+
+    <string id="notice_10_url"></string>
+
+    <string id="notice_11_title">KRIMINALITA ALERT!</string>
+
+    <string id="notice_11_description">Kriminality ve vašem městě je z ruky. Angry davy jsou plenění a demolovat metropoli. Prezident pošle v národní garda brzy, pokud nemůžete ovládat problém.</string>
+
+    <string id="notice_11_url"></string>
+
+    <string id="notice_12_title">DOPRAVNÍ VAROVÁNÍ!</string>
+
+    <string id="notice_12_description">Dopravy v tomto městě je hrozné. Město chaosu se rozšiřuje. Dojíždějící jsou stále militantnější. &lt;br/&gt; Buď postavit více silnic a kolejí, nebo si neprůstřelné limuzíny.</string>
+
+    <string id="notice_12_url"></string>
+
+    <string id="notice_20_title">POŽÁR HLÁŠEN!</string>
+
+    <string id="notice_20_description">Požár byl hlášen!</string>
+
+    <string id="notice_20_url"></string>
+
+    <string id="notice_21_title">MONSTER ATTACK!</string>
+
+    <string id="notice_21_description">Velké plazí tvor byl spatřen ve vodě. Zdá se být přitahovány k oblastem s vysokým znečištěním. Tam je cesta ničení kdekoli to jde. &lt;br/&gt; Jediné, co můžete udělat, je počkat, až on odejde, pak znovu z trosek.</string>
+
+    <string id="notice_21_url"></string>
+
+    <string id="notice_22_title">TORNADO ALERT!</string>
+
+    <string id="notice_22_description">Tornádo bylo hlášeno! Není nic, co můžete udělat pro zastavení, takže si radši připravit uklidit po katastrofě!</string>
+
+    <string id="notice_22_url"></string>
+
+    <string id="notice_23_title">Zemětřesení!</string>
+
+    <string id="notice_23_description">Velké zemětřesení došlo! Uhasit co nejrychleji, než se rozšíří, pak znovu připojte napájecí sítě a přestavět město.</string>
+
+    <string id="notice_23_url"></string>
+
+    <string id="notice_24_title">Zřícení letadla!</string>
+
+    <string id="notice_24_description">Letadlo havarovalo!</string>
+
+    <string id="notice_24_url"></string>
+
+    <string id="notice_25_title">Vrak!</string>
+
+    <string id="notice_25_description">Loď byla zničena!</string>
+
+    <string id="notice_25_url"></string>
+
+    <string id="notice_26_title">Vlakové neštěstí!</string>
+
+    <string id="notice_26_description">Vlak se zřítil!</string>
+
+    <string id="notice_26_url"></string>
+
+    <string id="notice_27_title">Zřícení vrtulníku!</string>
+
+    <string id="notice_27_description">Vrtulník se zřítil!</string>
+
+    <string id="notice_27_url"></string>
+
+    <string id="notice_30_title">Firebombing HLÁŠEN!</string>
+
+    <string id="notice_30_description">Zápalné bomby padají!</string>
+
+    <string id="notice_30_url"></string>
+
+    <string id="notice_32_title">VÝBUCHU HLÁŠEN!</string>
+
+    <string id="notice_32_description">Došlo k výbuchu!</string>
+
+    <string id="notice_32_url"></string>
+
+    <string id="notice_35_title">MĚSTO</string>
+
+    <string id="notice_35_description">Gratulujeme, vaše obec rozrostla na město. Nyní máte 2.000 občanů.</string>
+
+    <string id="notice_35_url"></string>
+
+    <string id="notice_36_title">CITY</string>
+
+    <string id="notice_36_description">Vaše město se rozrostla do plné velikosti města, se současná populace 10,000. Pokračovat v dobré práci!</string>
+
+    <string id="notice_36_url"></string>
+
+    <string id="notice_37_title">KAPITÁL</string>
+
+    <string id="notice_37_description">Vaše město se stalo kapitálem. Současná populace je zde 50.000. Vaše politická budoucnost vypadá jasně.</string>
+
+    <string id="notice_37_url"></string>
+
+    <string id="notice_38_title">METROPOLIS</string>
+
+    <string id="notice_38_description">Vaše hlavní město má nyní dosáhla statusu metropole. Aktuální populace je 100,000. Díky své manažerské schopnosti, měli byste vážně uvažovat o běh pro guvernéra.</string>
+
+    <string id="notice_38_url"></string>
+
+    <string id="notice_39_title">Megalopolis</string>
+
+    <string id="notice_39_description">Gratulujeme, jste dosáhli nejvyšší kategorie rozvoje měst, megalopolis.</string>
+
+    <string id="notice_39_url"></string>
+
+    <string id="notice_41_title">Rušné!</string>
+
+    <string id="notice_41_description">Sky Sledujte Jeden zpráv rušné!</string>
+
+    <string id="notice_41_url"></string>
+
+    <string id="notice_42_title">Záplavy HLÁŠEN!</string>
+
+    <string id="notice_42_description">Záplavy byly hlášeny podél břehu!</string>
+
+    <string id="notice_42_url"></string>
+
+    <string id="notice_43_title">Jaderného reaktoru!</string>
+
+    <string id="notice_43_description">Jaderného reaktoru, došlo na své elektrárny. Nacházíte se doporučuje vyhnout se této oblasti až do rozpadu radioaktivních izotopů. &lt;br/&gt; Mnoho generací bude řešit tento problém dříve, než to jde pryč, takže se nemusíte zadržte dech.</string>
+
+    <string id="notice_43_url"></string>
+
+    <string id="notice_44_title">Vzpoury!</string>
+
+    <string id="notice_44_description">Občané jsou nepokoje v ulicích!</string>
+
+    <string id="notice_44_url"></string>
+
+    <string id="notice_45_title">Start Nové Město</string>
+
+    <string id="notice_45_description">Sestavte si svůj vlastní město od základu, od této mapě neobývané země.</string>
+
+    <string id="notice_45_url"></string>
+
+    <string id="notice_46_title">Obnovení Uložené města</string>
+
+    <string id="notice_46_description">Město bylo obnoveno.</string>
+
+    <string id="notice_46_url"></string>
+
+    <string id="notice_47_title">YOU'RE VÍTĚZ!</string>
+
+    <string id="notice_47_description">Vaše mayorial dovednost a urbanismus zkušenosti získali jste klíč k městu. Místní obyvatelé se postavit pomníky na své slávě a jméno jejich první-dětí narozených po vás. Proč ne kandidovat na guvernéra?</string>
+
+    <string id="notice_47_url"></string>
+
+    <string id="notice_48_title">Obžaloba UPOZORNĚNÍ!</string>
+
+    <string id="notice_48_description">Celá populace tohoto města má konečně dost nešikovný vašeho plánování a nekompetentní řízení. Rozzlobený dav - pod vedením své matky - byl spatřen v blízkosti radnice &lt;br/&gt; byste měli vážně zvážit, prodlužuje dovolenou -. TEĎ. (Nebo si přečíst manuál a zkuste to znovu.)</string>
+
+    <string id="notice_48_url"></string>
+
+    <string id="notice_49_title">O Micropolis</string>
+
+    <string id="notice_49_description">Micropolis Copyright (C) 2007 od Electronic Arts. &lt;br/&gt; Na základě původního SimCity koncept, design a kód Will Wright a Fred Haslam. &lt;br/&gt; Uživatelského rozhraní a vytvořil Don Hopkins. &lt;br/&gt; Portované do Linux, optimalizované a přizpůsobené pro OLPC Don Hopkins. &lt;br/&gt; pod licencí GNU General Public License, verze 3, s dalšími podmínkami.</string>
+
+    <string id="notice_49_url"></string>
+
+    <string id="notice_50_title">DULLSVILLE, USA 1900</string>
+
+    <string id="notice_50_description">Věci se příliš nezměnil tady v posledních sto let nebo tak, a obyvatelé se začínají nudit. Myslí si, že Dullsville by mohla být další velká města s pravým vůdcem. &lt;br/&gt; Vaším úkolem je přilákat nový růst a vývoj, soustružení Dullsville do metropole do 30 let.</string>
+
+    <string id="notice_50_url"></string>
+
+    <string id="notice_51_title">SAN FRANCISCO, CA. 1906</string>
+
+    <string id="notice_51_description">Škoda ze zemětřesení byl menší ve srovnání s tím následné požáry, které se dny na kontrolu. 1500 lidí zemřelo. &lt;br/&gt; Controlling požáry by měla být vaše první problém. Zrušte sutiny a začít přestavět. Máte 5 let.</string>
+
+    <string id="notice_51_url"></string>
+
+    <string id="notice_52_title">Hamburg, Německo 1944</string>
+
+    <string id="notice_52_description">Spojenecké oheň-bombardovat německých měst v druhé světové válce způsobila obrovské škody a ztráty na životech. Lidé žijící v centrech měst byly v největší riziko. &lt;br/&gt; Musíte kontrolovat požární bouře během bombardování a pak znovu na město po válce. Máte 5 let.</string>
+
+    <string id="notice_52_url"></string>
+
+    <string id="notice_53_title">Bern, Švýcarsko 1965</string>
+
+    <string id="notice_53_description">Silnice jsou zde stále více přetížené každý den, a obyvatelé jsou naštvaní. Požadují, aby vás něco udělat. &lt;br/&gt; Někteří navrhli systém hromadné dopravy jako odpověď, ale to by vyžadovalo velké rezoning v centru města. Máte 10 let.</string>
+
+    <string id="notice_53_url">Silnice jsou zde stále více přetížené každý den, a obyvatelé jsou naštvaní. Požadují, aby vás něco udělat. &lt;br/&gt; Někteří navrhli systém hromadné dopravy jako odpověď, ale to by vyžadovalo velké rezoning v centru města. Máte 10 let.</string>
+
+    <string id="notice_54_title">Tokio, Japonsko 1957</string>
+
+    <string id="notice_54_description">Velké plazí tvor byl spatřen okruh pro zálivu Tokiu. Zdá se, že přitahuje velké množství průmyslového znečištění tam. &lt;br/&gt; Zkuste kontrolu požáry, pak znovu průmyslové centrum. Máte 5 let.</string>
+
+    <string id="notice_54_url"></string>
+
+    <string id="notice_55_title">Detroit, MI. 1972</string>
+
+    <string id="notice_55_description">V roce 1970, konkurence ze zámoří a jiných ekonomických faktorů tlačil jednou &quot;automobil světové hlavní město&quot;, do recese. Poklesem hodnoty půdy a nezaměstnanost pak zvýšení kriminality ve vnitřní-město chronické úrovně. &lt;br/&gt; Máte 10 let, snížení kriminality a obnovit průmyslovou základnu města.</string>
+
+    <string id="notice_55_url"></string>
+
+    <string id="notice_56_title">BOSTON, MA. 2010</string>
+
+    <string id="notice_56_description">Hlavní zhroucení má nastat v jedné z nových reaktorů jaderných centru. Oblasti v blízkosti reaktoru bude hrozně kontaminované radiací, nutí vás k restrukturalizaci město kolem ní. &lt;br/&gt; Máš 5 let dostat situaci pod kontrolou.</string>
+
+    <string id="notice_56_url"></string>
+
+    <string id="notice_57_title">RIO DE JANEIRO, Brazílie 2047</string>
+
+    <string id="notice_57_description">V polovině 21. století-, skleníkový efekt zvýšila globální teploty 6 ° F. Polar ledovců tál a zvedl hladiny moří po celém světě. Pobřežní oblasti byly zničené povodní a eroze. &lt;br/&gt; Máte 10 let na přelomu tohoto bažiny zpět do města znovu.</string>
+
+    <string id="notice_57_url"></string>
+
+    <!-- overlays.xml -->
+
+    <string id="overlay_all_title">Všechny zóny</string>
+
+    <string id="overlay_residential_title">Obytných zón</string>
+
+    <string id="overlay_commercial_title">Komerční zóny</string>
+
+    <string id="overlay_industrial_title">Průmyslové zóny</string>
+
+    <string id="overlay_powergrid_title">Připojení napájení</string>
+
+    <string id="overlay_transportation_title">Dopravní síť</string>
+
+    <string id="overlay_populationdensity_title">Hustota obyvatel</string>
+
+    <string id="overlay_rateofgrowth_title">Míra růstu</string>
+
+    <string id="overlay_trafficdensity_title">Hustota provozu</string>
+
+    <string id="overlay_pollutiondensity_title">Hustota znečištění</string>
+
+    <string id="overlay_crimerate_title">Kriminalita</string>
+
+    <string id="overlay_landvalue_title">Hodnota pozemků</string>
+
+    <string id="overlay_firecoverage_title">Hasičská stanice pokrytí</string>
+
+    <string id="overlay_policecoverage_title">Policejní stanice pokrytí</string>
+
+
+    <!-- scenarios.xml -->
+
+    <string id="scenario_1_title">Dullsville</string>
+
+    <string id="scenario_1_tagline">Nuda</string>
+
+    <string id="scenario_2_title">San Francsico</string>
+
+    <string id="scenario_2_tagline">Zemětřesení</string>
+
+    <string id="scenario_3_title">Hamburg</string>
+
+    <string id="scenario_3_tagline">Bombardování</string>
+
+    <string id="scenario_4_title">Bern</string>
+
+    <string id="scenario_4_tagline">Provozu</string>
+
+    <string id="scenario_5_title">Tokio</string>
+
+    <string id="scenario_5_tagline">Monster Attack</string>
+
+    <string id="scenario_6_title">Detroit</string>
+
+    <string id="scenario_6_tagline">Zločin</string>
+
+    <string id="scenario_7_title">Boston</string>
+
+    <string id="scenario_7_tagline">Jaderná Meltdown</string>
+
+    <string id="scenario_8_title">Rio de Janeiro</string>
+
+    <string id="scenario_8_tagline">Pobřežních záplav</string>
+
+
+    <!-- micropolisturbogearsengine.py -->
+
+    <string id="You are logged in.*">Jste přihlášen Vítejte zpět na Micropolis on-line!</string>
+
+    <string id="Incorrect user name or password.">Nesprávné uživatelské jméno nebo heslo.</string>
+
+    <string id="You are already logged out,*">Jste již přihlášeni, a můžete se přihlásit nebo si vytvořit účet.</string>
+
+    <string id="You are logged out.*">Byli jste odhlášeni. Vrať se brzy!</string>
+
+    <string id="Please enter a user name.">Zadejte prosím uživatelské jméno.</string>
+
+    <string id="The user name contains invalid characters.*">Uživatelské jméno obsahuje neplatné znaky. Prosím, používejte pouze písmena, číslice, podtržítka a pomlčky.</string>
+
+    <string id="Please enter a password.">Prosím, zadejte heslo.</string>
+
+    <string id="A user of that name already exists.*">Uživatel tohoto jména již existuje.</string>
+
+    <string id="Please repeat the same password in the next field.">Prosím, zopakujte stejné heslo do dalšího pole.</string>
+
+    <string id="An account with that email address already exists.">Účet vedený u e-mailová adresa již existuje.</string>
+
+    <string id="A new account has been created*">Nový účet byl vytvořen pro vás, a vy jste přihlášeni Vítejte na Micropolis on-line!</string>
+
+    <string id="Incorrect old password.">Nesprávné staré heslo.</string>
+
+    <string id="The new passwords do not match.">Nová hesla se neshodují.</string>
+
+    <string id="You must enter your new password twice.">Musíte zadat nové heslo dvakrát.</string>
+
+    <string id="Your password has been changed.">Vaše heslo bylo změněno.</string>
+
+
+    <!-- Robots -->
+
+    <string id="Autonomous">Autonomní</string>
+
+    <string id="Reset">Reset</string>
+
+    <string id="Manual">Ruční</string>
+
+    <string id="Delete">Odstranit</string>
+
+    <string comment="Do not translate the proper name Xenu." id="Xenu">Xenu</string>
+
+
+    <!-- Zones -->
+
+    <string id="zone-christian-title">Křesťanská církev</string>
+
+    <string id="zone-christian-description">To je křesťanská církev.</string>
+
+    <string id="zone-pacmania-title">Pacmania církev</string>
+
+    <string id="zone-pacmania-description">Jedná se o kostel Pacmania.</string>
+
+    <string id="zone-pacmania-message-0-url">http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-0-title">Kostel Pacmania</string>
+
+    <string id="zone-pacmania-message-0-text">Pacmania je náboženství věnován PacBot.</string>
+
+    <string id="zone-pacmania-message-1-url">http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-1-title">Kostel Pacmania</string>
+
+    <string id="zone-pacmania-message-1-text">Pacmania je polytheistic: každý kostel Pacmania může plodit až čtyři PacBots.</string>
+
+    <string id="zone-pacmania-message-2-url">http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-2-title">Kostel Pacmania</string>
+
+    <string id="zone-pacmania-message-2-text">PacBot následuje silnicích v okolí, stravování provozu.</string>
+
+    <string id="zone-pacmania-message-3-url">http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-3-title">Kostel Pacmania</string>
+
+    <string id="zone-pacmania-message-3-text">PacBot je přitahován k rušné, který miluje konzumovat.</string>
+
+    <string id="zone-pacmania-message-4-url">http://en.wikipedia.org/wiki/PacMan</string>
+
+    <string id="zone-pacmania-message-4-title">Kostel Pacmania</string>
+
+    <string id="zone-pacmania-message-4-text">Pacmania kostely vytvářejí hodně frekventovaná, přilákat PacBot.</string>
+
+    <string id="zone-scientology-title">Scientologická církev</string>
+
+    <string id="zone-scientology-description">To je Scientologická církev.</string>
+
+    <string id="zone-scientology-message-0-url">http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-0-title">Scientologická církev</string>
+
+    <string id="zone-scientology-message-0-text">Scientologie je tělo přesvědčení a praktiky vytvořil L. Ron Hubbard (1911-1986), od roku 1952, jako nástupce své dřívější svépomoc systému, Dianetics. Hubbard charakterizován Scientologie jako náboženství, a v roce 1953 začleněna Scientologické církve v New Jersey.</string>
+
+    <string id="zone-scientology-message-1-url">http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-1-title">Scientologická církev</string>
+
+    <string id="zone-scientology-message-1-text">Scientologie učí, že lidé jsou nesmrtelné duchovní bytosti, kteří zapomněli své skutečné povaze. Jeho metoda duchovní obnovy je typ poradenství známý jako audit, ve kterém praktici cílem vědomě re-zkušenosti bolestivé nebo traumatické události v jejich minulosti, aby se vymanit z jejich omezení účinků. Studijní materiály a auditu kurzy jsou k dispozici členům na oplátku pro konkrétní dary. Scientologie je právně uznána jako daň-vyňatý náboženství ve Spojených státech a některých jiných zemích, a Scientologická církev zdůrazňuje to jako důkaz, že to je bona fide náboženství. Jiné země jako Německo a Francie nadále popírat scientologické náboženské postavení.</string>
+
+    <string id="zone-scientology-message-2-url">http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-2-title">Scientologická církev</string>
+
+    <string id="zone-scientology-message-2-text">Velké množství organizací, dohlíží na uplatňování Scientologie byly vytvořeny, nejpozoruhodnější tito být Scientologické církve. Scientology sponzory různých sociálních služeb programů. Mezi ně patří soubor mravních pokynů vyjádřených v brožuře s názvem Cesta ke štěstí, Narconon anti-omámit program, věznice Criminon rehabilitační program, obor vzdělání Tech metodiky, dobrovolnická organizace a řízení podniku metodou.</string>
+
+    <string id="zone-scientology-message-3-url">http://en.wikipedia.org/wiki/Scientology</string>
+
+    <string id="zone-scientology-message-3-title">Scientologická církev</string>
+
+    <string id="zone-scientology-message-3-text">Scientology byl obklopen spory od jeho založení. To bylo často popisováno jako kult, který finančně defrauds a zneužívání svých členů, nabíjecí přemrštěné poplatky za své duchovní služby. Scientologická církev důsledně používá soudního řízení proti takové kritiky, a jeho agresivita při výkonu své nepřátele byl odsouzen za obtěžování. Další diskuse se zaměřila na přesvědčení, že duše Scientology (&quot;Thetans&quot;) reinkarnovat a žili na jiných planetách než na Zemi žít. Bývalí členové říkají, že některé spisy Hubbarda o této vzdálené mimozemské minulosti, který je součástí důvěrné horních patrech, nejsou odhalil praktiky, dokud platí tisíce dolarů do Scientologické církve. Další spornou víra v držení scientologů je, že praxe psychiatrie je destruktivní a zneužívající a musí být zrušena.</string>
+
+    <string id="zone-scientology-message-4-url">http://en.wikipedia.org/wiki/Scientology#Beliefs_and_practices</string>
+
+    <string id="zone-scientology-message-4-title">Scientology víry a praxe</string>
+
+    <string id="zone-scientology-message-4-text">Scientology byl obklopen spory od jeho založení. To bylo často popisováno jako kult, který finančně defrauds a zneužívání svých členů, nabíjecí přemrštěné poplatky za své duchovní služby. Scientologická církev důsledně používá soudního řízení proti takové kritiky, a jeho agresivita při výkonu své nepřátele byl odsouzen za obtěžování. Další diskuse se zaměřila na přesvědčení, že duše Scientology (&quot;Thetans&quot;) reinkarnovat a žili na jiných planetách než na Zemi žít. Bývalí členové říkají, že některé spisy Hubbarda o této vzdálené mimozemské minulosti, který je součástí důvěrné horních patrech, nejsou odhalil praktiky, dokud platí tisíce dolarů do Scientologické církve. Další spornou víra v držení scientologů je, že praxe psychiatrie je destruktivní a zneužívající a musí být zrušena.</string>
+
+    <string id="zone-scientology-message-5-url">http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-5-title">Scientology víry a praxe: Tělo a duch</string>
+
+    <string id="zone-scientology-message-5-text">Scientology je spojena mytologie že jeho přívrženci drží, aby odrážel náboženskou pravdu. V Scientology, toto bájesloví se točí kolem Tetan, věřil být individuální výraz kosmické zdroje, nebo síla života, pojmenované po řecké písmeno theta (θ). Tetan je myšlenka být skutečnou totožnost osoby - skutečně dobrý, vševědoucí, non-materiální jádro schopné neomezenou kreativitu.</string>
+
+    <string id="zone-scientology-message-6-url">http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-6-title">Scientology víry a praxe: Tělo a duch</string>
+
+    <string id="zone-scientology-message-6-text">V prvotní minulosti, podle Scientologist učení, Thetans přinesl materiál vesmír do bytí z velké části pro vlastní potěšení. Vesmír je myšlenka mít žádné nezávislé reality, ale odvozovat své vyplývá ze skutečnosti, že většina Thetans souhlasit, že existuje. Scientologové věří, že Thetans upadl v nemilost, když začali identifikovat s jejich tvorby, spíše než jejich původní stav duchovní čistoty. Nakonec, oni ztratili paměť jejich skutečné povahy, spolu s tím spojené duchovní a tvořivé síly. Jako výsledek, Thetans přišel myslet na sebe jako nic, ale ztělesněný bytosti.</string>
+
+    <string id="zone-scientology-message-7-url">http://en.wikipedia.org/wiki/Scientology#Body_and_spirit</string>
+
+    <string id="zone-scientology-message-7-title">Scientology víry a praxe: Tělo a duch</string>
+
+    <string id="zone-scientology-message-7-text">Thetans jsou věřil být reborn znovu a znovu v nové subjekty prostřednictvím procesu nazvaného &quot;předpoklad&quot;, který je analogický k reinkarnaci. Podobně jako hinduismus, Scientology předpokládá příčinná souvislost mezi zkušeností z dřívějších inkarnací, a něčí současného života, a s každým znovuzrození, jsou účinky MEST vesmír (MEST zde kandiduje na záležitosti, energie, prostor a čas) na Tetan věřil silnější.</string>
+
+    <string id="zone-scientology-message-8-url">http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-8-title">Scientology víry a praxe: Emoce a mysl</string>
+
+    <string id="zone-scientology-message-8-text">Scientology představuje dvě hlavní divize mysli. Reaktivní mysli je myšlenka pojmout všechnu bolest a emocionální trauma, zatímco analytická mysl je racionální mechanismus, který je zodpovědný za vědomí. Reaktivní mysli ukládá mentální obrazy, které nejsou snadno dostupné analytické (vědomé) mysli, tyto jsou označovány jako engrams. Engrams jsou věřil být bolestivé, tak oslabující, jak se hromadí, lidé se stěhují dál od své pravé identity. Abyste se vyhnuli tomuto osudu je Scientologist základní cíl. Dianetic školení je nástroj, jehož prostřednictvím Scientologist postupuje vůči státu Clear, vítězných postupné svobodě z reaktivní mysli engrams, a získání jistoty o jeho nebo její realitu jako Tetan.</string>
+
+    <string id="zone-scientology-message-9-url">http://en.wikipedia.org/wiki/Scientology#Emotions_and_the_mind</string>
+
+    <string id="zone-scientology-message-9-title">Scientology víry a praxe: Emoce a mysl</string>
+
+    <string id="zone-scientology-message-9-text">Scientology používá emocionální klasifikační systém nazvaný tónu stupnice. Tónová stupnice je nástroj používaný v poradenství; Scientologové tvrdí, že věděl, osoby místo na stupnici usnadňuje předvídat jejich akce a pomáhat jim v jejich stavu lepšit.</string>
+
+    <string id="zone-scientology-message-10-url">http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-10-title">Scientology víry a praxe: Přežití a etika</string>
+
+    <string id="zone-scientology-message-10-text">Scientology zdůrazňuje význam pro přežití, které rozdělí do osmi klasifikace, které jsou označovány jako dynamiku. Individuální touha přežít je považován za první dynamický, zatímco druhá se vztahuje k plození dynamické a rodině. Zbývající dynamika zahrnují širší oblasti akce, která zahrnuje skupiny, lidstvo, celý život, fyzický vesmír, duch, a nejvyšší bytí. Optimální řešení jakéhokoli problému, je považován za ten, který přináší největší užitek co největšímu počtu dynamiky.</string>
+
+    <string id="zone-scientology-message-11-url">http://en.wikipedia.org/wiki/Scientology#Survival_and_ethics</string>
+
+    <string id="zone-scientology-message-11-title">Scientology víry a praxe: Přežití a etika</string>
+
+    <string id="zone-scientology-message-11-text">Scientologie učí, že duchovní pokrok vyžaduje a umožňuje dosažení vysoké etické standardy. V Scientology, je racionalita zdůraznil nad morálkou. Akce jsou považovány za etické, pokud podporují přežití všech osm dynamiku, což přispěje k co největší počet lidí, možné při poškození nejméně.</string>
+
+    <string id="zone-scientology-message-12-url">http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-12-title">Scientology víry a praxe: ARC a KRC trojúhelníky</string>
+
+    <string id="zone-scientology-message-12-text">ARC a KRC trojúhelníky jsou koncepce mapy, které ukazují vztah mezi tři koncepty tvořit další koncept. Tyto dva trojúhelníky jsou přítomny v logu Scientology. Spodní trojúhelník, trojúhelník ARC, je souhrnem reprezentace znalostí Scientologist usiluje o. To zahrnuje Affinity (cit, lásku či sympatie), Reality (konsensuální realita) a komunikaci (výměnu názorů). Scientologové věří, že zlepšení jeden ze tří aspektů trojúhelníku &quot;zvyšuje hladinu&quot; z dalších dvou, ale komunikace je považována za nejdůležitější. Horní trojúhelník je trojúhelník KRC, dopisy KRC předpokládat podobný vztah mezi znalostmi, odpovědnost a kontrolu.</string>
+
+    <string id="zone-scientology-message-13-url">http://en.wikipedia.org/wiki/Scientology#ARC_and_KRC_triangles</string>
+
+    <string id="zone-scientology-message-13-title">Scientology víry a praxe: ARC a KRC trojúhelníky</string>
+
+    <string id="zone-scientology-message-13-text">V Scientology, jsou sociální problémy připsal poruchy ARC - jinými slovy, nedostatek dohody o reality, neschopnost efektivně komunikovat, nebo neschopnost rozvíjet afinitu. Ty mohou mít podobu overts - škodlivé činy proti jinému, ať už úmyslně nebo opomenutí - které jsou obvykle následuje zatají - úsilí, aby skryli provinění, které dále zvyšují úroveň napětí ve vztahu.</string>
+
+    <string id="zone-scientology-message-14-url">http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-14-title">Scientology víry a praxe: sociální a asociální osobnosti</string>
+
+    <string id="zone-scientology-message-14-text">Zatímco Scientology je přesvědčen, že mnohé sociální problémy jsou neúmyslné výsledky nedokonalostí lidí, uvádí, že existují i opravdu zlomyslný osob. Hubbard věřil, že přibližně 80 procent všech lidí je to, co on nazývá sociální osobnosti - lidi, kteří vítají a přispívají k blahobytu druhých. Zbývajících 20 procent populace, Hubbard myslel, bylo supresivní osob. Podle Hubbarda, jen asi 2,5 procenta z 20 procent to jsou beznadějně antisociální osobnosti, ty tvoří malý podíl skutečně nebezpečných jedinců v lidství: &quot;Adolf Hitlerem a Genghis chánů, nestoudný vrahy a drogové magnáty.&quot; Scientologové věří, že jakýkoli kontakt s represivní nebo antisociální jedinci má nepříznivý vliv na něčí duchovní stav, která vyžaduje odpojení.</string>
+
+    <string id="zone-scientology-message-15-url">http://en.wikipedia.org/wiki/Scientology#Social_and_antisocial_personalities</string>
+
+    <string id="zone-scientology-message-15-title">Scientology víry a praxe: sociální a asociální osobnosti</string>
+
+    <string id="zone-scientology-message-15-text">V Scientology, odpadlíci, kteří se obracejí do kritiky hnutí jsou deklarovány potlačovací osoby, a Scientologická církev má pověst pro pohybující se agresivně proti takové kritiky. Scientologist, kdo se aktivně při komunikaci s supresivní osobou a jako výsledek vykazuje známky antisociálního chování se označuje jako potenciální potíže Source.</string>
+
+    <string id="zone-scientology-message-16-url">http://en.wikipedia.org/wiki/Scientology#audit</string>
+
+    <string id="zone-scientology-message-16-title">Scientology víry a praxe: Audit</string>
+
+    <string id="zone-scientology-message-16-text">Scientologie tvrdí, že lidé mají skryté schopnosti, které dosud nebyly zcela naplněny. To je věřil, že zvýšené duchovní uvědomění a fyzické výhody jsou prováděny prostřednictvím poradenských sezení jen audit. Prostřednictvím auditu, to je říkal, že lidé mohou řešit své problémy a osvobodit sebe engrams. Toto je obnoví do jejich přirozeného stavu, Thetans a umožňuje jim, aby se na příčinu v jejich každodenním životě, reagovat racionálně a tvořivě životních událostí, spíše než na ně reagovat pod vedením uložených engrams. V důsledku toho ti, kdo studují Scientology materiály a obdržet auditu zasedání zálohy stavu preclear Vymazat a provozní Thetan. Scientology utopické cílem je &quot;jasné, planeta&quot;, svět, v němž má každý zbaven sebe jejich engrams.</string>
+
+    <string id="zone-scientology-message-17-url">http://en.wikipedia.org/wiki/Scientology#audit</string>
+
+    <string id="zone-scientology-message-17-title">Scientology víry a praxe: Audit</string>
+
+    <string id="zone-scientology-message-17-text">Audit je jeden-na-jedno sezení s poradcem Scientology nebo auditora. To nese povrchní podobnost ke zpovědi nebo pastorační poradenství, ale auditor nezbavuje odpuštění nebo radu, jak pastor nebo kněz mohl udělat. Místo toho, auditora úkolem je pomoci osobě, objevit a pochopit engrams, a jejich limitující účinky, pro sebe. Většina audit vyžaduje E-metr, přístroj, který opatření minutu změny elektrického odporu v těle, když člověk drží elektrody (kovové &quot;plechovky&quot;), a malý proud je prošel ně. Scientologie tvrdí, že sleduje změny v E-metr na displeji pomáhá lokalizovat engrams. Poté, co oblast zájmu byla identifikována, auditor požádá jednotlivé konkrétní otázky na to, aby jim pomohla odstranit engram, a používá E-metr potvrdit, že engram je &quot;poplatek&quot; byl prostopášný a engram má v Skutečnost byla vymazána. Jako jednotlivec postupuje, zaměření auditu se pohybuje od jednoduchých až engrams engrams rostoucí složitosti. Na pokročilé úrovni OT auditu, scientologové hrát sólo auditu zasedání, jako jejich vlastní auditory.</string>
+
+    <string id="zone-scientology-message-18-url">http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-18-title">Scientology víry a praxe: Most do naprosté svobody</string>
+
+    <string id="zone-scientology-message-18-text">Duchovní vývoj uvnitř Scientology je dosaženo tím, že studuje Scientology materiálů. Scientology materiály (tzv. technologie či technika v žargonu Scientology) jsou strukturovány sekvenční úrovních (nebo přechody), takže se snadněji kroky první a větší složitost jsou vyřizovány ve vhodnou dobu. Tento proces je někdy označováno jako pohybující se podél mostu k naprosté svobody, nebo prostě most. To má dvě strany: školení a zpracování. Školení se rozumí vzdělávání v zásad a postupů auditu. Zpracování je osobní rozvoj prostřednictvím účasti na zasedáních auditu.</string>
+
+    <string id="zone-scientology-message-19-url">http://en.wikipedia.org/wiki/Scientology#The_Bridge_to_Total_Freedom</string>
+
+    <string id="zone-scientology-message-19-title">Scientology víry a praxe: Most do naprosté svobody</string>
+
+    <string id="zone-scientology-message-19-text">Scientologická církev věří v zásadě reciprocity, zahrnující dát-a-brát v každé lidské transakci. V důsledku toho jsou členové požadováno, aby dary pro studijní obory a auditu, jak oni se pohybují nahoru most, částky zvyšující se jako vyšší úrovně je dosaženo. Účast na vyšší úrovni-kurzy na mostě může stát několik tisíc dolarů, a scientologové obvykle pohybovat nahoru na most rychlostí řídí jejich příjmů.</string>
+
+    <string id="zone-scientology-message-20-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-20-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-20-text">Scientologická církev si myslí, že na vyšších úrovních o zahájení (OT úrovně) mystické učení je předával, které mohou být škodlivé pro nepřipravené čtenáře. Tato učení jsou chované tajemství od členů, kteří nedosáhli těchto úrovních. Církev říká, že tajemství je zaručeno, aby využila svého materiály 'v kontextu, a chránit své členy před vystaveni materiály, které ještě nejsou připraveni.</string>
+
+    <string id="zone-scientology-message-21-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-21-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-21-text">Jedná se o OT úrovně, úrovní nad Clear, jejichž obsah je hlídané uvnitř Scientology. OT úroveň výuky zahrnují účty různých kosmických katastrof, které postihly Thetans. Hubbard popsal tyto události brzy kolektivně jako space opera.</string>
+
+    <string id="zone-scientology-message-22-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-22-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-22-text">V OT úrovně, Hubbard vysvětluje, jak zvrátit účinky vzory v minulosti-život trauma, které údajně rozšířit miliony let do minulosti. Mezi tyto moderní učení je příběh Xenu (někdy Xemu), představil jako cizí pravítko &quot;galaktické konfederace.&quot; Podle tohoto příběhu, před 75 miliony let Xenu přinesl miliardy lidí na Zemi v kosmické lodi se podobat Douglas DC-8 letadla, skládali je kolem sopky a odpálili vodíkové bomby v sopkách. Thetans pak seskupeny, přilepená na těla živých, a pokračovat, jak to udělat dnes. Scientologové na pokročilé úrovni kladou značný důraz na izolaci těla Thetans a neutralizovat jejich škodlivé účinky.</string>
+
+    <string id="zone-scientology-message-23-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-23-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-23-text">Materiálu obsažené v OT úrovně byl charakterizován jako špatné sci-fi kritiky, zatímco jiní prohlašují, že to nese strukturální podobnosti s gnostické myšlení a starověké hinduistické mýty o stvoření a kosmického boje. J. Gordon Melton naznačuje, že tyto prvky OT úrovně může nikdy byli určeni jako popis historických událostí, a že, stejně jako jiné náboženské mytologie, mohou mít svou pravdu v realitě těla a mysli, které symbolizují. Dodává, že na jakékoliv úrovni scientologů by obdrželi tento mytologie, zdá se, že zjistil, že je užitečné v jejich duchovního hledání.</string>
+
+    <string id="zone-scientology-message-24-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-24-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-24-text">Vysoce postavený OT úrovně jsou k dispozici pouze na pozvání scientology, po přezkoumání kandidáta charakter a přispět k dosažení cílů scientologie. Jedinci, kteří četli tyto materiály nesmí sdělovat, co obsahují, aniž by ohrozily jejich postavení v církvi. Výňatky a popisy OT materiály byly publikovány online bývalý člen v roce 1995 a pak rozeslána v médiích hlavního proudu. To se stalo po vyučování byla předložena jako důkaz u soudu případech týkajících se scientologie, čímž se stal předmětem veřejného záznamu. Existuje osm veřejně známé-OT úrovně, OT I až VIII. Nejvyšší úrovni, OT VIII, je pouze zveřejněny na moři, na výletní lodi Freewinds Scientology. To bylo propuštěno v pozdní 1980. To se říkalo, že další OT úrovně, řekl, aby byl založený na materiálu napsal Hubbard dávno, budou zveřejněny na nějaké vhodné místo v budoucnosti.</string>
+
+    <string id="zone-scientology-message-25-url">http://en.wikipedia.org/wiki/Scientology#Space_opera_and_confidential_materials</string>
+
+    <string id="zone-scientology-message-25-title">Scientology víry a praxe: Space opera a důvěrných materiálů</string>
+
+    <string id="zone-scientology-message-25-text">Tam je velký kostel duchovní symbol technologie vytesaný do země na Trementina Base Scientology, které je viditelné ze vzduchu. Washington Post reportér Richard Leiby napsal: &quot;Bývalý scientologové obeznámen s učením Hubbard o reinkarnaci říci symbol ochranné známky 'návrat bod' tak loajální zaměstnanci vědí, kde mohou najít zakladatele funguje, když cestují zde v budoucnu od jiných míst ve vesmíru . &quot;</string>
+
+    <string id="zone-scientology-message-26-url">http://en.wikipedia.org/wiki/Scientology#Ceremonies</string>
+
+    <string id="zone-scientology-message-26-title">Scientology víry a praxe: obřady</string>
+
+    <string id="zone-scientology-message-26-text">V Scientology, jsou pozorovány obřady pro akce jako jsou svatby, dítě jmenovat, a pohřby. Pátek služby jsou drženy připomínat dokončení osoby bohoslužeb v průběhu předchozího týdne. Vysvěcen Scientology ministři mohou provádět takové obřady. Nicméně, tyto služby a duchovenstvo, které vykonávají jim hrají jen malou roli v náboženské scientologů 'života.</string>
+
+    <string id="zone-scientology-message-27-url">http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-27-title">Scientology víry a praxe: Vlivy</string>
+
+    <string id="zone-scientology-message-27-text">V Dianetika, Hubbard dá úvěr Francis Bacon a Herbert Spencer. Hubbard připomenout zasedání Cmdr. Joseph Cheesman Thompson, americký námořní důstojník, který studoval s Sigmund Freud, když mu bylo 12 let, a když Hubbard napsal Americké psychologické asociace v roce 1949, on říkal, že on byl provádějící výzkum založený na &quot;rané dílo Freud&quot;. Scientology je pohled na mysl má některé podobnosti s freudovské jeden.</string>
+
+    <string id="zone-scientology-message-28-url">http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-28-title">Scientology víry a praxe: Vlivy</string>
+
+    <string id="zone-scientology-message-28-text">V roce 1940, Hubbard byl v kontaktu s Jack Parsons, raketový vědec a člen Ordo Templi Orientis pak vedl o Aleister Crowley, a tam byly návrhy že této souvislosti ovlivnila některé myšlenky a symboly Scientology. Náboženští učenci, jako Gerald Willms a J. Gordon Melton poukazují na to, že učení &quot;satanismu&quot; Crowleyho jen málo, pokud nějakou podobnost s doktrínou Scientology.</string>
+
+    <string id="zone-scientology-message-29-url">http://en.wikipedia.org/wiki/Scientology#Influences</string>
+
+    <string id="zone-scientology-message-29-title">Scientology víry a praxe: Vlivy</string>
+
+    <string id="zone-scientology-message-29-text">Jak již bylo uvedeno, existují prvky východních náboženství evidentní v scientologii, zejména pojetí karmy, jak je přítomný v hinduismu a džinismu, a dharma. Kromě odkazů na hinduistické texty, Hubbard se pokusili připojit Scientology s taoismu a buddhismu. Scientology byl řekl, aby sdílí rysy s Gnosticism stejně.</string>
+
+
+</strings>

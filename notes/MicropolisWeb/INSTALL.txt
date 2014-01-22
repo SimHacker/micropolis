@@ -1,0 +1,44 @@
+Building on Mac OS/X:
+
+Install: GTK+, pygobject, pycairo, pygtk
+
+GTK+:
+http://www.gtk-osx.org/
+
+How to install pygobject, pycairo, pygtk:
+
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig/
+
+http://ifeghali.blogspot.com/2008/03/gtk-python-bindings-for-mac-os-x-105.html
+
+GTK Python bindings for Mac OS X 10.5 Leopard
+Following my previous post we are now ready to compile and install the python bindings in order to have UMIT ready to go.
+
+we start with pygobject which is cursed by Murphy's law. At the first attempt I got make stopped by an error message, that could be fixed by telling which python version we would like to use (one more time thanks to macports).
+
+    wget http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.14/pygobject-2.14.1.tar.bz2
+    tar -jxf pygobject-2.14.1.tar.bz2
+    cd pygobject-2.14.1
+    ./configure --prefix=/usr/local --disable-glibtest CFLAGS="-arch i686" PYTHON=/usr/bin/python2.5
+    make
+    sudo make install
+
+next pycairo:
+
+    wget http://cairographics.org/releases/pycairo-1.4.12.tar.gz
+    tar -zxf pycairo-1.4.12.tar.gz
+    cd pycairo-1.4.12.tar
+    ./configure --prefix=/usr/local CFLAGS="-arch i686" PYTHON=/usr/bin/python2.5
+    make
+    sudo make install
+
+and finally pygtk:
+
+    wget http://gensho.acc.umu.se/pub/GNOME/sources/pygtk/2.12/pygtk-2.12.1.tar.bz2
+    tar -jxf pygtk-2.12.1.tar.bz2
+    cd pygtk-2.12.1
+    ./configure --prefix=/usr/local CFLAGS="-arch i686" PYTHON=/usr/bin/python2.5
+    make
+    sudo make install
+
+that's the end of our saga. You can now enjoy UMIT on your Mac OS :) 

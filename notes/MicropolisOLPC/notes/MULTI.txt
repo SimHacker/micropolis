@@ -1,0 +1,26 @@
+keep track of one per display:
+  tk_priv(...)
+    window
+    posted
+    focus
+    relief
+    cursor
+    activeBg activeFg
+    inMenuButton
+    dragging x y
+    selectMode
+    buttons
+
+fix button tracking
+fix menu tracking
+fix pie menu tracking
+
+tk_mbUnpost needs argument to tell which display
+tk_nextMenu needs argument to tell which display
+tk_nextMenuEntry needs argument to tell which display
+
+which display does "selection" work on???
+
+fix c event focus code to keep focus in display instead of main window
+
+added "focus -query window" form to find out focus on a particular display

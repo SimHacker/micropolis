@@ -1,0 +1,241 @@
+Date: Tue, 24 Nov 92 22:25:59 -0500
+From: ben@cs.UMD.EDU (Ben Shneiderman)
+To: bam@cs.cmu.edu, ben@cs.umd.edu, callahan@cerc.wvu.wvnet.edu,
+        hopkins@bongo.garnet.cs.cmu.edu, weiser.pa@xerox.com
+Subject: Re: more pie menus!
+
+I couldn't resist sending you all this latest essay which is
+destined for IEEE Software...some readers expect it to generate
+some strong responses...Ben
+
+
+Beyond Intelligent Machines:
+    Designing Predictable and Controllable User Interfaces
+ 
+ 
+  Ben Shneiderman  November 24, 1992
+ 
+       University of Maryland, College Park, MD 20742  
+ 
+   Professor, Department of Computer Science,
+   Head, Human-Computer Interaction Laboratory at the 
+      Center for Automation Research &
+   Member, Institute for Systems Research
+ 
+ 
+Who's in control?
+
+An important shift is occurring from the old vision of computers
+as 'intelligent' to a new vision based on predictable and controllable
+user interfaces that depend on direct manipulation of objects and actions.
+Appropriate metaphors and terminology are important since they shape
+the thoughts of researchers, designers, managers, congress-people, 
+journalists, etc.  Most of us have learned the importance of gender 
+neutral terminology and similarly I have been strongly opposed to 
+suggesting that computers are 'intelligent' or 'smart' for several 
+reasons:
+ 
+1) Limits to Imagination
+ 
+I think we should have much greater ambition than to make a computer 
+behave like an intelligent butler or other human agent.  Computer 
+supported cooperative work (CSCW), hypertext/hypermedia, multi-media, 
+information visualization, and virtual realities are powerful 
+technologies that enable human users to accomplish tasks that no human 
+has ever done.  If we describe computers in human terms then we
+run the risk of limiting our ambition and creativity in the design
+of future computer capabilities.
+ 
+ 
+2) Predictability and Control are Desirable
+ 
+If machines are 'intelligent' or 'adaptive' then they may become less 
+predictable and controllable.  Our usability studies show that users 
+want feelings of mastery, 
+competence, and understanding that come from a predictable and 
+controllable interface.  Most users seek a sense of 
+accomplishment at the end of the day, not the sense that this 
+'intelligent' machine magically did their job for them. 
+ 
+ 
+3) Human Responsibility
+ 
+I am concerned that if designers are successful in convincing the users 
+that computers are intelligent, then the users will have a reduced sense 
+of responsibility for failures.  The tendency to blame the machine is 
+already widespread and I think we will be on dangerous grounds if we 
+encourage this trend.
+ 
+ 
+4)  Machines are not People  AND  People are not Machines
+ 
+I have a basic philosophical objection to the suggestion that machines 
+are, or can ever be, intelligent.  I know that many of my colleagues are 
+quite happy to call machines intelligent and knowledgeable, but I prefer 
+to treat and think about machines in very different ways from the way I 
+treat and think about people.
+ 
+
+The lessons of history
+ 
+While some productive work has been done under the banner of
+`intelligent', often those who use this term reveal how little they
+know about what users want or need.  The users's goal is not to
+interact with an 'intelligent' machine, but to create, communicate, 
+explore, plan, draw, compose, design, or learn.  Ample evidence 
+exists of the misguided directions brought by 'intelligent' machines:
+ 
+  - natural language interaction seems clumsy and slow compared to 
+direct manipulation and information visualization methods that use 
+rapid, high-resolution, color displays with pointing devices.  Lotus HAL 
+is gone, AI INTELLECT hangs on but is not catching on.  There are some 
+interesting directions for tools that support human work through 
+natural language processing: aiding human translators, parsing 
+texts, and generating reports from structured databases.
+ 
+  - speech I/O in talking cars and vending machines is gone.
+Voice recognition is fine for handicapped users plus special situations, 
+but doesn't seem to be viable in general office, home, or school 
+settings.  Our recent studies suggest that speech I/O has a greater
+interference with short term and working memory than hand-eye 
+coordination for mouse menu selection.  Voice store and forward,
+phone-based information retrieval, and voice annotation have great 
+potential but these are not the 'intelligent' applications.
+ 
+  - adaptive interfaces are unstable and unpredictable, often leading 
+users to worry about what will change next.  I see only modest chances 
+for success in user modeling to recognize the level of expertise and
+revise the interface accordingly - can anyone point to successful
+studies or commercial products?  By contrast, user controlled 
+adaptation through control panels, cruise control for cars, and 
+remote controls for TV are success stories.  While algorithms to 
+deal with dynamic
+issues in network or disk space management are needed, the task domain 
+and user interface issues of the application program
+should generally be under direct user control.
+ 
+  - Intelligent CAI (Computer Assisted Instruction) only prolonged the 
+time (compared to traditional CAI) until the users felt they were the 
+victims of the machine.  Newer variations such as Intelligent Tutoring 
+Systems are giving way to Interactive Learning Environments where 
+students are in control and actively creating or exploring.
+ 
+  - intelligent talking robots with five-fingered hands and human facial 
+features (quaint fantasy that did well in Hollywood but not in Detroit 
+or elsewhere) are mostly gone in favor of flexible manufacturing systems 
+that enable supervisors to specify behavior with predictable results.
+ 
+ 
+It seems that some designers continue to ignore this historical pattern 
+and still dream of creating 'intelligent' or 'smart' machines.  It is an 
+ancient and primitive fantasy, and its seems most new technologies must 
+pass through this child-like animistic phase.  Lewis Mumford identified 
+this pattern (Technics and Civilization, 1934) when he wrote about the 
+Obstacle of Animism: 'the most ineffective kind of machine is the 
+realistic mechanical imitation of a man or another animal...for 
+thousands of years animism has stood in the way of...development.'   
+ 
+ 
+An alternate vision
+
+My point in this essay is not merely to counter a popular design 
+philosophy, but to offer a new vision that is more in harmony with what 
+users want.  I believe that the future will be filled with powerful, but 
+predictable and controllable computers that genuinely serve human needs  
+(Designing the User Interface: Strategies for Effective Human-Computer
+Interaction, Second Edition, Addison-Wesley Publ. Co., Reading, MA, 1992).
+
+In this vision of predictable and controllable (PC) computing, 
+the promising strategies are rapid,
+visual, animated, colorful, high resolution interfaces built on
+meaningful control panels, appropriate preference boxes,
+user-selectable toolbars, rapid menu selection, easy to create macros,
+and comprehensible shortcuts.  These enable me to specify rapidly, 
+accurately, and confidently how I want my email filtered, what documents 
+I want retrieved and in what order, and how my documents will be 
+formatted.
+ 
+ 
+Our Human-Computer Interaction Laboratory has applied these principles 
+to information visualization methods that give users X-ray vision to see 
+through their mountains of data.  Treemaps enable users to see (and 
+hear) 2-3000 nodes of hierarchically structured information by utilizing 
+every pixel on the display.  Each node is represented by a rectangle 
+whose location preserves the logical tree structure and whose area is 
+proportional to one of its attributes.  Color represents a second 
+attribute and sound a third (B. Johnson & D. Turo,  Improving the 
+Visualization of Hierarchies with Treemaps: Design Issues and 
+Experimentation, Proc. IEEE Visualization '92).  Treemaps have been 
+applied to Macintosh directory browsing (Figure 1), in which area could 
+be set to file size, color to application type, and sound to file age 
+(our TreeViz application is available from the University of Maryland's 
+Office of Technology Liaison, (301) 405-4210).  When users first try 
+TreeViz they usually discover duplicate or misplaced files, redundant 
+and chaotic directories, and many useless files or applications.  Other 
+applications include: stock market portfolio management, sales data, 
+voting patterns, sports (48 statistics on 459 NBA players, in 27 teams, 
+in four leagues), etc.
+ 
+ 
+Dynamic queries allow rapid adjustment of query parameters and immediate 
+display of updated result sets.  These animations enable users to 
+develop intuitions, discover patterns, spot trends, find exceptions, and 
+see anomalies.  The Dynamic HomeFinder prototype (Figure 2) allows users 
+to adjust the cost, number of bedrooms, location, etc. and see points of 
+light come and go on a map to indicate a matching home.  Users execute
+up to 100 queries/second (rather than one query per 100 seconds)
+producing a revealing animated view of where high or low priced homes
+are found, and there are no syntax errors.  Clicking on a point of
+light brings up a description or image (videotape available, or for 
+an empirical comparison with a natural language system, see 
+Williamson, C. and Shneiderman, B., The Dynamic HomeFinder: Evaluating 
+dynamic queries in a real-estate information exploration system, 1992 
+ACM SIGIR Proceedings).  
+
+Dynamic queries are very effective when a visual environment such as a
+map, calendar, or schematic diagram are available, but they can be
+easily applied with standard text file output (Figure 3).  Dynamic 
+queries exemplify the future of interaction; You don't need to
+describe your goals, negotiate with an intelligent agent, and wait for
+a response, you Just Do It!   Furthermore, dynamically seeing the 
+results enables you to explore and rapidly reformulate your goals in 
+an engaging videogame-like manner.  
+ 
+ 
+Open problems in information visualization include screen organization, 
+widget design, algorithms for rapid search and display, use of color
+and sound, and strategies to accommodate human perceptual skills.  
+We also see promise in expanding macro makers into the graphical 
+environment with visual triggers based on controlled replay of 
+desired actions - the 
+general idea is Programming in the User Interface (PITUI) to 
+Do-What-I-Did (DWID).
+ 
+ 
+I want to encourage the exploration of new metaphors and visions of how 
+computers can empower people by presenting information, allowing rapid 
+selection, supporting personally specified automation, and providing 
+relevant feedback.  Metaphors related to controlling tools or machines 
+such as driving, steering, flying, directing, conducting, piloting, 
+or operating seem more generative of effective and acceptable 
+interfaces, than 'intelligent' machines.
+
+
+A scientific approach to user interface research
+ 
+Whether you agree with the design philosophy in this essay, and
+especially if you disagree, I hope that you will add to our scientific
+knowledge by conducting well-designed empirical studies of learning
+time, measuring performance time for appropriate tasks, recording error
+rates, evaluating human retention of interface features, and assessing
+subjective satisfaction.  There's much work to be done to make
+computing accessible, effective, and enjoyable.
+ 
+ 
+Acknowledgements:  This essay was prompted by the discussion between 
+Mark Weiser and Bill Hefley, stimulated by lively email and personal 
+discussions with Paul Resnick, Tom Malone, and Christopher Fry at MIT, 
+and refined by comments from Catherine Plaisant, Rick Chimera, Brian 
+Johnson, David Turo, Richard Huddleston, and Richard Potter at the 
+Human-Computer Interaction Lab at Univ. of Maryland.  I appreciate Bill 
+Curtis's support for this vision.  Thanks to all.

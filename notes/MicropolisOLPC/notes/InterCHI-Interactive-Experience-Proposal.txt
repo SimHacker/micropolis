@@ -1,0 +1,85 @@
+MicropolisNet: a Cooperative Multi User City Simulation
+
+MicropolisNet is an animated interactive system simulation game, providing 
+a set of rules and tools for planning and building a complex
+dynamic simulated city.  Several people on different workstations can
+participate in the same game, cooperating and coordinating their
+actions over the net. 
+
+Working together, you can zone land use, hook up the power grid, build
+roads, bridges, parks and stadiums, raise taxes, and even summon
+disasters, causing the city to grow and thrive, or crumble and die.
+MicropolisNet features multiple city views and maps with overlays,
+simultaneous editing and user interface interaction, "voting panels"
+for group decision making, and multimedia communication and
+annotation features ("bridges between players").
+
+The multi user interface supports communication via three media in
+parallel: text, sound, and graphics.  It includes a scrolling text log
+for telegram messages, a networked audio server for sound effects and
+voice intercom, and shared cursors and graphical overlays for
+pointing, gesturing, annotating and editing the map.
+
+I propose to build a model of the Amsterdam neighborhood near
+the conference ("bridges between dijks"), and let people walk up 
+and interact as they please.  Experienced MicropolisNet players can
+participate, using the shared environment and communication features
+to demonstrate the system, advise other players, and coordinate the
+game.  
+
+The purpose of the experience is to create a constructive cooperative
+virtual environment, where people can collaborate towards a common goal, 
+take part in group decisions, and share resources, responsibility, 
+and the consequences of each others actions. 
+
+MicropolisNet is robust and easy to use, with engaging interactive sound
+effects and lively graphical animation, so it's fun to watch as well
+as play.  
+
+MicropolisNet can be played across several different makes of computer at 
+once ("bridges between brands").  It presently runs on color SPARC and 
+Indigo workstations (and is easily portable to other Unix platforms), 
+and plays over the net (but without sound) on other 8 bit color X 
+terminals and workstations.  I can ship my own SPARC if necessary, and 
+I'm trying to obtain support and a loan of equipment (hopefully Indigos) 
+in Holland.
+
+It would be useful to have a high resolution video projector, visible 
+from the other workstations.  The projector could display overall city 
+maps, graphs, messages, statistics and other global data, so players 
+don't need to spend their own screen space.  
+
+I need enough floor and table space to place workstations where people 
+can walk up to them and use the keyboard, mouse, and microphone.  Most 
+could be together in a group within view of the video projector, but 
+others could be in remote locations. 
+
+The workstations, network, video projector, and posters must be set 
+up and torn down, but none of that's very difficult.  Thin wire ethernet
+would be preferable, and would require thick to thin transceiver for the
+workstations equipped with thick wire ethernet plugs.  
+
+Once MicropolisNet is set up and running, it doesn't require special
+supervision.  I will attend and demonstrate the system as much as I
+can, but during other times, unless someone volunteers, it can run 
+on its own, as long as there's enough security that none of the 
+equipment walks off.  
+
+I'm presently implementing MicropolisNet on X11 for DUX Software (who
+licensed Micropolis from Maxis).  It's mostly functional now, and will
+be ready to demonstrate, but not yet released as a product, by the time 
+of the conference.  Soon I'll have an "Alpha" demo version for the SGI
+and SPARC, for limited distribution to INTERCHI reviewers and other
+interested people.  I'll make a video tape as soon as I have the 
+time and equipment.  
+
+I've given many talks and interactive presentations at conferences, 
+and run demos at trade show booths.  At CHI'90, I participated in the 
+"Empowered" performance (giving a whirlwind tour of pie menu based user
+interfaces I'd implemented).  Last year, I ported Micropolis (single user) 
+to OpenWindows on the SPARC (which won "Product of the Year 1992" from
+Unix World).  I worked as a developer of The NeWS Toolkit (at Sun in
+Mountain View) and the HyperLook UIMS (at the Turing Institute in
+Glasgow), both of which I used to port Micropolis to the SPARC.  To 
+implement MicropolisNet on X11, I'm using the Tk toolkit, which I chose 
+to use because it's free, simple, and extensible. 

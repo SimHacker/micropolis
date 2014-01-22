@@ -1,0 +1,27 @@
+Here are the things that need to be done before releasing a single
+user version of the game, and how much effort I think they'll take
+(Simple = 1, Difficult = 9).  We also need to allocate time for user
+testing (to get feedback from people using it, and make changes based
+on their input), and of course debugging and smoothing out rough
+edges.
+
+* keyboard commands: arrow, function keys (3)
+  also need to disable autorepeat
+* save/restore overlay (5)
+  write all overlay information into another file, like Glasgow.city.overlay
+
+* print city dialog (6)
+  need to implement printing function and control panel from scratch
+* help (8)
+  must implement a help mechanism and put in lots of help
+* manual (9)
+  need to re-write manual, and do new illustrations
+  must have a framemaker license to do this
+
+We could probably come out with a solid beta release without printing,
+help, or a manual. 
+
+	-Don
+
+
+DONE:

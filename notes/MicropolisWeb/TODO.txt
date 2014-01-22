@@ -1,0 +1,256 @@
+Facebook Integration
+
+  Facebook User Identity
+  City Preview
+  Friend Participation
+
+User Interface
+
+  Choose City Dialog
+
+  Move City Map.
+  Move Play Button.
+  Move City Description.
+  Move Scenarios Tab
+  Move Generator Tab
+  Move Library Tab
+    Rearrange to fit better on page.
+
+  Log In Tab
+    Remove. No longer needed with Facebook user support.
+
+  Add Control Bar
+    Add a toolbar of commands and window toggles at the bottom of the editor.
+
+  Tool Palette
+    Integrate with toolbar at bottom of editor window.
+
+  Demand gauge.
+    Integrate with toolbar at bottom of editor window.
+
+  Date and Funds.
+    Integrate with toolbar at bottom of editor window.
+
+  Notice Tab
+  Journal Tab
+
+    Make into an overlay at the top edge of the editor.
+    Make into a window that slides on and off of the bottom of the editor.
+    Or combine the notice and journal into a "city wall", modeled on a Facebook page.
+
+      Some events can have a "share on my wall" button to publish them
+      to Facebook. 
+
+      Some events invite interaction, serve as learning opportunities,
+      goals or quests that invite you and your friends to participate
+      by following links, answering questions, voting on issues, even
+      if the haven't added the application.
+
+      An event can pose a problem, and let you write a question and
+      ask your friends for advice and support.
+
+      An event can write a snapshot of the city, and invite your
+      friends to play a copy of the city from that point in time. You
+      and your friends can compete to solve the problem posed by the
+      event. (i.e. nuclear meltdown, earthquake, policy change, moral
+      delima, etc)
+
+      Deeply integrated chat. Real time chat with friends playing the
+      game. Chat with NPC bots who play various roles: help and
+      tutorial about playing the game, knowledge about cities and
+      other topics, teachers and experts about various topics, bankers
+      to borrow money from, etc. Integrate with ALICE and Facebook
+      chat.
+
+  Evaluation Tab
+    Make into a window that slides on and off the side of the editor.
+
+  History Tab
+    Make into a window that slides on and off the side of the editor.
+
+  Budget Tab
+    Make into a window that slides on and off the side of the editor.
+
+  Overlays Tab
+    Make into a window that slides on and off the side of the map.
+
+  Disasters Tab
+    Make into a window that slides on and off the side fo the editor.
+
+  Control Tab
+    Make into a window that slides on and off the side fo the editor.
+
+  Log In Tab
+    Remove. No longer needed with Facebook user support.
+
+------------------------------------------------------------------------
+
+Design and implement a configuration system, to configure the
+application at run-time by downloading an xml file.
+
+------------------------------------------------------------------------
+
+classes/remoteconnection.lzx
+
+  Implement dhtml remote connection using json gateway.
+
+  Make these reconfigurable parameters:
+    url http:/server/amfGateway
+    connectionTimeout 10000
+    pollTimeout 20000
+
+------------------------------------------------------------------------
+
+classes/appview.lzx
+
+  Make these reconfigurable parameters:
+    pollDelay 250
+    pollDelaySoon 10
+    animateDelay 100
+    newTilesPerTick 300
+    chatChannel all
+    aboutURL /wiki/index.php/About (localized)
+    aboutTarget _blank
+    helpURL /wiki/index.php/Help (localized)
+    helpTarget _blank
+
+  Fix sounds to use different channels: city, gui, music, etc.
+  Enable user to mute various channels.
+
+  Remove user login, new account, user edit stuff.
+  Implement general purpose user data loading and saving.
+    Store json in database.
+
+------------------------------------------------------------------------
+
+classes/noticeview.lzx
+
+  Make notices more data driven, less hard wired to old notice numbers
+  and configurations. Factor out scenario descriptions to a separate 
+  type of extensible plug-in.
+
+------------------------------------------------------------------------
+
+classes/mytooltip.lzx
+
+  Should not pop up until you hover for a certain amount of time.
+  Should go away when you move the cursor a certain amount of distance, or click.
+  Fix the location it pops up for tool icons at the bottom edge of the map.
+
+------------------------------------------------------------------------
+
+Resources
+
+resources/images/tool_stadium.png
+  Icon is highlighted, but should be dark.
+
+------------------------------------------------------------------------
+
+Facebook Integration
+
+  Facebook Page Support
+
+    When someone puts Micropolis on their Facebook page, it
+    automatically creates them an account and a city. The page admins
+    have permission to edit the city. Non-admins can do read-only
+    stuff, leave comments, etc. The admins can configure what other
+    users are allowed to do on the Micropolis Page Admin page.
+
+  Notice window should have a "Share" button that publishes the notice
+  on your wall, along with links for your friends to interact with the
+  game.
+
+------------------------------------------------------------------------
+
+Saving and Structuring Cities and Scenarios
+
+Each city has a "parent" field pointing to the city that it was loaded from. 
+
+Are city save files mutable? Ideally, no, so parent links will point
+to the city at the state it was saved. But pragmatically we want to be
+able to save the state of an ongoing simulation as a checkpoint
+efficiently. When do you branch off a new save file? If there are any
+children pointing to the current city as their parent, then you should
+branch off a new city to save the current city state. So there will be
+immutable "branch" cities that have children, and mutable "leaf"
+cities that are actively simulating.
+
+Each user is initially allowed one mutable "leaf" city. They can
+generate a new terrain, load a scenario, or load any of their cities
+or other user's shared cities into it. They can simulate it, and
+during the simulation, the state is regularlarly saved into the
+mutable city. They can save their mutable city into a new immutable
+city, and share it if they like, so any users can load, play and
+branch off from it. The city saves are arranged in a tree, and users
+can branch off of other users' cities. The user interface lets you
+branch off of a user's active mutable city, but behind the scenes it
+clones the current state of the mutable city into a new immutable
+snapshot, branches off from that (by loading it into the user's
+current mutable city).
+
+Unify the identification of scenarios, anonymous generated cities, and
+saved cities. Make an immutable city for each scenario. Add a field
+to specify which scenario preparation function is run when the city is
+loaded (or none if empty). Generalize that for scripting plug-in
+scenarios in both python and xml. An xml file will describe and
+program the scenario (some dialogs to show, some variables to
+configure, some python code to run at start-up, etc). Save scenarios
+as separate objects from cities, and associate an ordered list of
+scenarios with city save files, so you can make general purpose
+layered scenarios, and plug any city into any scenario. Scenarios can
+be layered to dynamically generate terrains of different types, set up
+initial conditions for lessons and experiments, show dialogs and
+inject events into the game, detect success and failure state, report
+progress, add user interface elements, tools, zones, agents, etc.
+
+------------------------------------------------------------------------
+
+Multi Player
+
+Chat interface.
+
+Language translation. Enters select their language from a menu.
+Server calls Google Translate to translate what they say to different
+langauge of other players in the chat.
+
+Chat visibility.
+  Who can see you, your messages, your cities?
+
+Channels.
+  IRC-like channels for various conversation topics. 
+
+Visual/video chat.
+  Scrolling chat message window.
+  Messages show the Facebook profile image or avatar of the user. 
+  Messages can include URLs to link to external web pages.
+  Mesages can include images to show. 
+  Mesages can include videos to show. 
+  Mesages can show video feeds of other users. 
+  Click on a chat message to puff it up into the notice window.
+  Notice window has a history of messages that have been displayed in it, so the user can go back to previous messages.
+  Notice views of messages can include full sized pictures, links and controls. 
+  Open up the user's avatar to see and load their current and saved cities.
+  A flat list of one user's cities, or tree browser view (linked into other users' cities). 
+  Notice window can include user interface dialogs. 
+  Answer a yes/no or multiple choice question.
+  Users can vote on issues that effect each others' simulations. 
+  If you want to raise taxes, you have to write an explanation, and get other users (who are playing their own cities) to vote for it. 
+  You can share messages on your facebook page, including links to vote or answer questions. 
+
+Virutal friends. 
+  Online documentation, tutorials, tips and advice, and psychiatric
+  counseling in the form of agents like Elize, Alice,
+  Currently has an Elize bot. Integrate ALICE bots running remotely.
+  http://www.pandorabots.com/botmaster/en/home
+
+Speech synthesis.
+
+Connect games to real-world problems.
+
+Write a letter to your congressman from within the game, about a
+particular issue that you learned about and played around with in the
+game.
+
+http://positiveimpactsig.wordpress.com/
+
+------------------------------------------------------------------------

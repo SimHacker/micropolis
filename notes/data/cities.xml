@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cities language="en-US">
+    <city
+	id="about"
+	title="About Micropolis"
+	description="The city 'About Micropolis'."
+    />
+    <city
+	id="badnews"
+	title="Bad News Town"
+	description="The city 'Bad News Town'."
+    />
+    <city
+	id="bluebird"
+	title="Bluebird Meltdown"
+	description="The city 'Bluebird Meltdown'."
+    />
+    <city
+	id="bruce"
+	title="Bruceville"
+	description="The city 'Bruceville'."
+    />
+    <city
+	id="deadwood"
+	title="Deadwood"
+	description="The city 'Deadwood'."
+    />
+    <city
+	id="finnigan"
+	title="Finnigan's Isle"
+	description="The city 'Finnigan's Isle'."
+    />
+    <city
+	id="freds"
+	title="Fred's Town"
+	description="The city 'Fred's Town'."
+    />
+    <city
+	id="haight"
+	title="Haight Ashbury, San Francisco"
+	description="The city 'Haight Ashbury, San Francisco'."
+    />
+    <city
+	id="happisle"
+	title="Happy Isle"
+	description="The city 'Happy Isle'."
+    />
+    <city
+	id="joffburg"
+	title="Joffburg"
+	description="The city 'Joffburg'."
+    />
+    <city
+	id="kamakura"
+	title="Kamakura"
+	description="The city 'Kamakura'."
+    />
+    <city
+	id="kobe"
+	title="Kobe"
+	description="The city 'Kobe'."
+    />
+    <city
+	id="kowloon"
+	title="Kowloon"
+	description="The city 'Kowloon'."
+    />
+    <city
+	id="kyoto"
+	title="Kyoto"
+	description="The city 'Kyoto'."
+    />
+    <city
+	id="linecity"
+	title="Liner City"
+	description="The city 'Liner City'."
+    />
+    <city
+	id="med_isle"
+	title="Medville Isle"
+	description="The city 'Medville Isle'."
+    />
+    <city
+	id="ndulls"
+	title="Not so Dullsville"
+	description="The city 'Not so Dullsville'."
+    />
+    <city
+	id="neatmap"
+	title="Neat Map"
+	description="The city 'Neat Map'."
+    />
+    <city
+	id="radial"
+	title="Radial City"
+	description="The city 'Radial City'."
+    />
+    <city
+	id="senri"
+	title="Senri"
+	description="The city 'Senri'."
+    />
+    <city
+	id="southpac"
+	title="South Pacific"
+	description="The city 'South Pacific'."
+    />
+    <city
+	id="splats"
+	title="Splatsville"
+	description="The city 'Splatsville'."
+    />
+    <city
+	id="wetcity"
+	title="Wet City"
+	description="The city 'Wet City'."
+    />
+    <city
+	id="yokohama"
+	title="Yokohama"
+	description="The city 'Yokohama'."
+    />
+</cities>

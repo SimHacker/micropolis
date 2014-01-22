@@ -1,0 +1,366 @@
+Micropolis for OLCP Sugar User Interface
+By Don Hopkins (dhopkins@DonHopkins.com)
+
+Why is Micropolis such a great match for OLPC's Sugar interface?
+
+Constructivist education.
+  Children learn by doing and experiencing. 
+  Playful learning (as opposed to edutainment).
+  People learn effectively through making things. 
+  Micropolis is often mentioned as a great example of an educational,
+  constructivist game, in the academic literature and popular press.
+
+Multi player
+  Sharing, collaborating, conferencing, voting. 
+
+Writing journals about Micropolis
+  The Micropolis Journal: newspaper metaphore.
+
+Drive the development and prove the worthyness of the technology.
+
+  Develop Micropolis hand-in-hand with Sugar, so they synergize with each other.
+
+  I developed the HyperLook version of Micropolis in parallel with the
+  HyperLook user interface environment, and they both were better
+  because of it. Micropolis required HyperLook to support useful
+  multimedia extensions like a shared audio mixer server, an efficient
+  shared memory based bitmap animation system, and integration with
+  TNT Open Look user interface components (sliders, pin-up menus,
+  buttons, etc). And Micropolis was able to take full advantage of
+  HyperLook's features like outline graphics, scaling images,
+  graphical editing, printing PostScript, etc. Micropolis was extremely
+  useful as an engaging promotional demonstation that proved the
+  capabilities and quality of HyperLook.
+
+Use Micropolis to showcase the unique ideas and features of Sugar, in an
+exciting way that many people can easily understand.
+
+CSound audio mixer.
+Mesh networking. 
+D-bus messaging system.
+Python scripting langauge.
+GTK widgets. 
+Pie menus. 
+Communication and conferencing.
+Chat, shared whiteboard, voting interface. 
+Learn to work together with other people, and argue your ideas. 
+Politics. Interpersonal communication and cooperation. 
+Immersive microworlds. 
+Inspire and teach kids to program.
+Virtual datalogger, tricorder, lets you export and analyze logs and data from simulation.
+Micropolis courseware.
+Teach ecological and environmental issues.
+Social studies.
+Creative writing, developing language skills.
+Science education. 
+
+========================================================================
+
+Notes on adapting Micropolis to the OLPC Sugar user interface:
+
+Core Ideas:
+
+  Activities, not Applications
+
+    First cut: 
+
+      Integrate the current TCL/Tk version of Micropolis to run as a simple activity within Sugar. 
+
+        Restructure the multi-window TCL/Tk code to run in a single full screen window.
+	Implement a simple activity-oriented tiled window management interface. 
+	Disable advanced features like multiple editor and map windows, 
+	that require more sophisticated window management. 
+	Instead of using a traditional multi-window management approach, 
+
+        Make a simple wrapper around it that makes it appear in the Sugar user interface as an activity, like eToys does.
+
+      Long term:
+
+	Implement activity specific modes that reconfigure the user inteface (like Eclipse "perspectives").
+	  - build/edit oriented interface
+	  - query/analysis oriented interface
+	  - financial oriented interface
+	  - communication/coordination oriented interface
+	  - dynamic zone finder analysis
+	  - grid of several overall map views, each configured to show a different overlay. 
+	  - grid of several close-up map views, each centered on a different parts of the city (or tracking a player's cursor)
+        
+	Collaboration: Enhance multi player mode to support sharing activities.
+	  Both publishing your game for others to clone and play themselves (massively single player, like Spore),
+	  and letting others join in your game (like the current cooperative multi-player mode)). 
+	  Multi player inte
+
+	Expression: Enhance chat, journaling, storytelling, and personalization aspects of the game. 
+
+	Journaling: Record all events (both user edits and simulation events), chat messages and drawings.
+	  Checkpoint the game state, and implement the ability to deterministically replay time stamped 
+	  editing events into the simulation, so you can fast forward and rewind from any checkpoint to 
+	  any step of the simulation. 
+	  Enable players to write newspaper articles about the cities, with live links to a snapshot 
+	  of the simulation and a place on the map, related to the story. Other players could browse
+	  their published newspapers about the history of a city, and jump into that history at any time
+	  from any story. 
+
+	Iteration: Checkpoint game save files, allowing players to rewind history, and try "what-if" experiments. 
+
+  Presence is Always Present
+
+    First cut:
+
+      Enhance the current X11 based multi player interface to support presence, the grid network, and messaging.
+      The current multi player interface runs a single Micropolis process on one laptop, 
+      which connects to the local X server, and/or several other X servers on laptops over the net.
+      Rewrite the "Add User" dialog to be grid-network aware. 
+      Instead of asking for an X server DISPLAY screen, provide a list of friends on the network. 
+      Send an invitation to play to friends on the network. 
+      Rewrite the built-in chat interface to integrate with the chat system used by Sugar. 
+      Improve the shared "white board" overlay, so kids can draw on the map in different colors, 
+      enable and disable different overlays, save overlays with the map, add text to overlays, etc.
+      Implement location based chat, by overlaying people icons and chat bubbles on the map. 
+        Each player has a people icon "cursor" that they can move around the map (which follows 
+	their selected editing cursor), and their chat messages show up in bubbles overlayed on the map.
+	When you select an editing tool, you can type what you're doing with the tool, 
+	other people will be able to watch you, and make comments on what you're doing.
+
+    Long term:
+
+      Rewrite Micropolis in terms of Python/GTK/Cairo, and take full advantage of the Sugar libraries and services. 
+      Support sharing, mentoring, colaboration, voting, political dialogs, journaling, etc.
+      Develop Micropolis into a exemplary, cutting edge demonstration of all that's great about Sugar. 
+
+  Tools of Expression
+
+    Micropolis is great at supporting personal expression, interpretation and storytelling, 
+    and leveraging what the player already knows to make connections to new knowledge,
+    and stimulating conversation, debate and analytical thinking.
+
+    Develop a web based "Wikipedia" oriented interface to Micropolis, supporting colaboration, discussion, 
+    annotation, history journaling, and branching alternative histories. 
+
+  Journaling
+
+    The "Micropolis Journal" could be realized as a web-based
+    newspaper-like interface.
+
+    Expose the multi player user interface through the web, instead of
+    using X11.
+
+    Automatically generate a newspaper for any particular time in a
+    city's history, from the simulator events and state, combined with
+    user written articles and chat messages.
+
+    The newspaper has sections that present automatically generated
+    snapshots of the information displayed in the various dialogs
+    (graph, evaluation, chat, notices, etc), and stories about
+    significant events (both user-generated and simulation-generated).
+
+    Enrich the city save file with metadata including the chat and
+    event journal, overlays, snapshots at different points in time (in
+    a branching "what-if" tree structure), etc.
+
+    In the Python version of Micropolis it will be easy to implement a
+    web server based interface that lets users read the city's
+    newspaper through the web browser, automatically inserting
+    pictures of the map corresponding to particular events in time. An
+    article about pollution going down could show a before and after
+    overall map with the polution overlay, and stuff like that.
+
+    Plug in modules to the simulator that analyze the state of the
+    city and generate events for the newspaper to write articles
+    about, including interesting stastical information and other
+    parameters to insert into the story template. 
+
+    Implement "online surveys" that let newspaper readers vote on proposals
+    (expose the voting interface to web based users).
+
+    Use OpenLaszlo to develop a rich graphical AJAXian web service
+    based Micropolis interface, eliminating the need for the X11
+    interface, and enabling all kinds of interesting interface
+    customizations and mash-ups with other web services.
+
+Know your Audience
+
+  Inexperienced
+
+    Keep the user interface simple, low surface area, direct, obvious, redundant, forgiving. 
+    Gentle learning curve. Self revealing interface. Direct manipulation. 
+    Integrated help and educational content. 
+    Playback journals with voice-overs, so kids can learn by watching and listening to
+    recordings of teachers playing and describing what they're doing. 
+    Multi player support for mentoring. 
+
+  Young
+
+    Micropolis appeals to a wide range of age levels. 
+
+    Design the user interface to support zooming, use large colorful
+    graphics, etc.
+
+    Do not require high coordination, fine pointer positioning, moving
+    the mouse while holding down the button, etc.
+
+    Scale across age levels by using interfaces that clearly reveal
+    themselves to novice users, but can be reconfigured by more
+    experienced users to be more streamlined.
+
+    For example, from the current interface: the map editor window has
+    a palette of editing tools, which makes it easy for novice users
+    to see and learn all the available editing commands, but consumes
+    precious screen space.
+
+    It also provides pie menus as a short cut to the palette, which
+    are layed out in the same arrangement as the palett (so the
+    palette serves as a map to the pie menus). Intermediate users can
+    use the palette as a map, to help learn the pie menus, and when
+    they are more experienced, they can close the palette to make the
+    map bigger, and use the pie menus exclusively.
+
+    The pie menus themselves are self-revealing, and have their own
+    gradual learning curve that supports graduation from inexperienced
+    users (click the menu up, look at the screen, move in the
+    direction, select the item), intermediate users (press down and
+    move in the direction, look at screen to make sure the right item
+    is selected, then select the item), and advanced users (mouse
+    ahead in the correct direction without looking at the screen).
+
+  International
+
+    The text in Micropolis needs to be broken out into external files so
+    it can be translated to different languages.
+
+    The Micropolis documentation, supporting essays about city planning,
+    and study guides need to be translated.
+
+    Best to do this after converting to Python/GTK/Cairo, since the
+    old version of TCL/Tk that Micropolis currently uses does not support
+    unicode or i18n.
+
+    Dig up the tile sets for different kinds of cities (old west,
+    european, futuristic, moon base, etc), develop new tile sets, and
+    enable children to easily develop their own tile sets and
+    interface skins.
+
+Key Design Principles
+
+  Performance
+
+    Micropolis was designed to run well in a C64. 
+
+    I've profiled and optimized it to run efficiently on Unix, and
+    take optimal advantage of the X11 window system.
+
+  Usability
+
+    Micropolis is fairly usable and approachable, but every effort should
+    be made to improve it, take maximum advantage of the Sugar user
+    interface, and for Micropolis to serve as a good example of Sugar
+    interface design, for others to emulate.
+
+  Simplicity
+
+    Some of the advanced features of the multi player X11 version of
+    Micropolis (like multiple map views and editors) will have to be
+    temporarily sidelined, and eventually reimplemented in simpler,
+    activity-oriented ways.
+
+  Reliability
+
+    Micropolis is currently pretty robust and can run for an indefinite
+    time without leaking memory or crashing. 
+
+    The scripting language interface should try to protect against hard crashes, 
+    but once you open it up to scripting, there are an infinite number of ways 
+    programmers could make mistakes. 
+
+  Security
+
+    The code should be audited for security. 
+
+    User access to the scripting language and network remote control
+    code should be disabled.
+
+    Currently it allows any users to type TCL expressions, which is
+    great for cheating, but bad for security. 
+
+    Currently there is some code in there to enable network remote
+    control (setting the tax rate and other parameters via a midi
+    slider box on a Mac running Bounce/Body Electric that sends UDP
+    packets to Micropolis when the user changes the slider).  That should
+    be disabled (and eventually be replaced by a secure web service
+    based network interface.).
+
+  Adaptability
+
+    Adapt to different screen display modes and resolutions.  Micropolis
+    has a high contrast monochrome tile set that it could use in
+    monochrome mode.
+
+    The color tiles look great in monochrome mode with gray scales, 
+    but the high contrast monochrome tiles might be easier to see. 
+
+    Need to support zooming into the map with any magnification, like
+    google maps (or the old PostScript-based HyperLook version of
+    Micropolis).
+
+    Support playing Micropolis with the game controller in book mode. 
+
+    Instead of using X11 for multi player interaction (which will
+    cause the application to crash horribly if the network connection
+    is lost), reimplement the multi player mode on top of the dbus
+    messaging system, so it is more robust, and every player runs
+    their own instance of the simulator, so they all simulate together
+    in lock-step, like The Sims Online.
+
+  Recoverability
+
+    Use checkpointing and journaling to implement automatic back-up,
+    and expose a "rewind/fast forward" interface to the user, so they
+    can back up, change history, and replay changes at any point in time.
+
+    This is also the key to implementing a more advanced multi player
+    interface (better than the current X11 based system, more like The
+    Sims Online, where everyone runs their own copy of the simulation
+    in lock-step), so anyone can join the game by cloning its current
+    state, subscribing to its edit event stream, and submitting all
+    their edits to the master simulation (or going through the voting
+    negotiation system, like the current voting interface for building
+    expensive items and changing the tax rate).
+
+    Solve the colaborative undo/redo problem by allowing children to
+    branch out to their own private alternative histories. Instead of
+    overwriting the one main history, it inserts a branch point into
+    the shared history that links to their own private Idaho, which
+    itself may branch out into many histories. See Larry Niven's "All
+    the Myriad Ways".
+
+  Interoperability
+
+    Exposing Micropolis as a set of web services would enable all kinds
+    of interesting mash-ups and rich web based user interfaces.
+
+  Mobility
+
+    Support playing Micropolis in book mode with the game pad. 
+
+  Transparency
+
+    The "view source" button could bring up the Micropolis source code.
+    Develop some source code documentation and extend the "How the
+    Simulator Works" documentation to link into the appropriate source
+    code. Annotate the C and Python source code to better explain how
+    it works.
+
+    Encourage children to learn Python programming (rather than
+    focusing on the C source code). Develop a robust Python scripting
+    interface that lets you hook into and control all aspects of the
+    simulator. Enable users to develop various kinds of Micropolis
+    plug-ins (buildings, editing tools, agents, disasters, etc) that
+    are easily scripted in Python, by subclassing.
+
+  Accessibility
+
+    Enable full keyboard control. 
+    Enable full game pad control.
+    Enable full network control. 
+    Speech synthesis and recorded voice feedback. 
+    Zooming interface. 

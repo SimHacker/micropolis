@@ -1,0 +1,68 @@
+Work to be done on MicropolisCore:
+
+========================================================================
+TODO
+========================================================================
+
+Replace explicit world bounds checking with a macro. 
+
+Implement sound support. 
+
+Implement zooming in laszlo interface.
+
+Implement overlays in laszlo interface.
+
+Need a way to blink the unpowered tiles in laszlo interface.
+
+Integrate map view and editor view with seamless zooming. 
+
+Make sure the explosion decays into a static dirt tile and animates properly in the client.
+
+Remove all i18n related code from the simulator, and do it properly in the user interface instead. 
+
+Web update client pushes any changes to the sessions looking at the game.
+
+Smart about what needs to be sent, because it tracks what it knows the client has, and sends deltas or nothing if no change. 
+
+How do we make this robust against missed updates? 
+  Easy, stupid: If we detect an out of sequence update, just flush all caches and re-send everything. 
+    (Re-sync when connection is lost.)
+  Hard, smart: Send a simulator timestamp back and forth, so we know how long in the past to update from. 
+    (Re-invent TCP/IP).
+  Try easy and stupid for now. 
+
+========================================================================
+DOING
+========================================================================
+
+Rework the build system. 
+  Old fashioned crude makefiles need to be brought up to date. 
+  Currently using python setup.py to compile to Python extensions. 
+    Is setup.py the thing to be using to compile SWIG python extensions? 
+    Is using setup.py a good idea or not? What are the alternatives? (Ian Bicking would know.)
+  To use gnu configure or not?
+    I can't stand it, but I realize there are reasons to use it. 
+  What about compiling extensions for other languages. 
+  The code and makefiles need to be able to compile any number of wrapers for different extension langauges. 
+  The "make clean" command should not delete the swig generated files, and we should check in and distribute the swig generated wrappers.
+    Different people have different versions of SWIG, or might not have it at all. 
+    Once things stabilize, most developers won't have to change the swig bindings very often.
+    Have a "make cleanswig" command to clean out the SWIG output files, so you can regenerate everything from scratch. 
+      Not checking in swig generated files any more. 
+      make clean deletes all swig generated files.
+
+Implement overall map view and overlays.
+
+========================================================================
+DONE
+========================================================================
+
+Refactor the tool code. Move out of game. Make stateless tool API. All state in client. 
+
+Implement sprites in gtk interface.
+
+Clean up and rationalize callbacks.
+Make a generic update notification system. 
+Don't try formatting, converting and passing parameters, if they can be read from the simulator. 
+Update clients read the data out of the simulator that they need. 
+Format date, money, translate strings, etc, themselves. 

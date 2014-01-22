@@ -1,0 +1,8 @@
+Package as a Sugar activity.
+
+Adjust position and width of buttons in scenario panel, wider and to right. 
+
+When running in wire mode, the incremental overall map updating code
+(XDrawPoints) seems to draw in the wrong place horizontally, half a
+screen to the right.
+

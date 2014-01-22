@@ -1,0 +1,79 @@
+
+
+Callback("UIAutoGoto", "dd", x, y);
+  Useful. 
+
+Callback("UIDidGenerateNewCity", "");
+  UI notification.
+
+Callback("UIDidLoadCity", "");
+  UI notification.
+
+Callback("UIDidLoadScenario", "");
+  UI notification.
+
+Callback("UIDidSaveCity", "");
+  UI notification.
+
+Callback("UIDidTool", "sdd", name, x, y);
+Callback("UIDidntLoadCity", "s", msg);
+Callback("UIDidntSaveCity", "s", msg);
+Callback("UIDoPendTool", "ddd", tool, x, y);
+Callback("UIDropFireBombs", "");
+Callback("UILoseGame", "");
+Callback("UIMakeSound", "ssdd", channel, sound, x, y);
+Callback("UINewGame", "");
+Callback("UIPlayNewCity", "");
+Callback("UIReallyStartGame", "");
+Callback("UISaveCityAs", "");
+Callback("UISetCityName", "s", CityName);
+Callback("UISetDate", "sdd", str, m, y);
+Callback("UISetGameLevel", "d", GameLevel);
+Callback("UISetMessage", "s", str);
+Callback("UISetSpeed", "d", speed);
+  Should stop timer if speed == 0, and start timer if speed > 0.
+Callback("UIShowBudgetAndWait", "");
+Callback("UIShowPicture", "d", id);
+Callback("UIShowZoneStatus", "ssssssdd", str, s0, s1, s2, s3, s4, x, y);
+Callback("UIStartEarthquake", "");
+Callback("UIStartLoad", "");
+Callback("UIStartScenario", "d", scenario);
+Callback("UIStopEarthquake", "d", magnitude);
+Callback("UIWinGame", "");
+Callback("UINewEvaluation", "");
+Callback("UISimRobots", "");
+Callback("UIUpdate", "s", name);
+  Called when an aspect of the model has changed:
+    map: when small overall map changes
+      Called by stubs.cpp.
+      Called by python micropolis engine subclass.
+    graph: when graph changes
+      Called by graph.cpp.
+    evaluation: when evaluation changes
+      Called by evaluation.cpp.
+    budget: when budget changes
+      Called by budget.cpp.
+    date: when date changes
+      Called by update.cpp.
+    funds: when funds change
+      Called by update.cpp.
+    demand: when demand changes
+      Called by update.cpp.
+    gamelevel: when game level changes
+      Called by utilities.cpp.
+    cityname: when city name changes
+      Called by utilities.cpp.
+    paused: when game is paused or resumed
+      Called by utilities.cpp.
+    speed: when speed changes
+      Called by utilities.cpp.
+    passes: when passes changes
+      Called by utilities.cpp.
+    options: when an option changed
+      Called by update.cpp.
+    taxrate: tax rate
+      Called by budget.cpp.
+    message(dddbb): message changed
+      Called by message.cpp.
+
+    

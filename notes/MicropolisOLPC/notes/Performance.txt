@@ -1,0 +1,47 @@
+8878317760   31.79  31.79     163289     14 animateTiles (g_ani.c)
+  funky funky
+
+1807963847    6.47  50.11      66550     18 MapScan (s_sim.c)
+
+1041273098    3.73  62.74         26     24 GetFromMap (s_traf.c)
+  unwind and inline
+
+ 909060732    3.25  69.71         39     34 SetZPower (s_zone.c)
+  frequently called from DoZone, MapScan
+
+1041273098    3.73  62.74         26     24 GetFromMap (s_traf.c)
+ 603351309    2.16  80.21         84     23 DriveDone (s_traf.c)
+  unwound and inlined DriveDone's 4 calls to GetFromMap
+
+
+1398123339    3.85  66.07        103     28 Rand (s_sim.c)
+ 199605792    0.55  90.82         76     17 RandInt (s_sim.c)
+   1336958    0.00  99.77         80     26 GRand (s_gen.c)
+    280400    0.00  99.95         29     17 random (random.c)
+    270800    0.00  99.95        102     30 ORand (s_mvobj.c)
+       340    0.00 100.00         34     52 ReallyRandom (tclxmath.c)
+       100    0.00 100.00         10     20 rand (rand.c)
+
+lose as many calls to Rand as possible (RandInt is faster)
+inline TestBounds2
+
+malloc            117467  29.27       1022  Tk_DoWhenIdle (tkevent.c)
+                   73203  18.24        908  Tk_CreateTimerHandler (tkevent.c)
+Tk_DoWhenIdle and Tk_CreateTimerHandler should keep a list of reusable frobs
+
+free               73201  18.48       1296  Tk_DoOneEvent (tkevent.c)
+                   59107  14.92       1065  Tk_CancelIdleCall (tkevent.c)
+                   58360  14.73       1372  Tk_DoOneEvent (tkevent.c)
+Tk_DoOneEvent should reuse stuff
+
+strlen             71590  22.28        518  StringCreate (tclhash.c)
+                   65469  20.37        410  Tcl_SetVar2 (tclvar.c)
+
+strcmp            108488  73.40         99  xpmHashSlot (hashtab.c)
+
+XSync              73384  99.94        100  UpdateFlush (w_x.c)
+
+Tk_DeleteTimerHandler   73202  99.99        818  StopMicropolisTimer (w_tk.c)
+Tk_CreateTimerHandler   73203 100.00        810  StartMicropolisTimer (w_tk.c)
+Tk_CancelIdleCall   59067  99.87        277  CancelRedrawView (w_tk.c)
+

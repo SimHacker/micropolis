@@ -1,0 +1,202 @@
+To: ouster@sprite.berkeley.edu
+Cc: hopkins
+Subject: more multiple display stuff
+--text follows this line--
+A problem I fixed is that the "focus" command only returns the focus
+of the main window's display, and there's no way to find out the focus
+on other displays.  I fixed this by adding a "focus -query .window"
+form, that returns the focus of the display of the named window.  When
+the tcl menu tracking code supports multiple displays, it will need to
+use this form to save the focus of the appropriate display before
+popping up a menu. 
+
+A problem I haven't fixed yet is with the "selection" command, which
+right now will only retrieve the selection from the display of the
+main window.  Pasting into a text field on another display with ^V
+inserts the selection from the main display.  It could be changed to
+take a window argument similar to "focus". 
+
+I wish I could think of a better flag name than "-query"...  
+
+I had a go at hacking the Tk C code to keep track of one focus per
+display instead of per main window.  (Should I be using one main
+window per display?  I'm not now, I'm just creating remote toplevels
+with the -screen argument.)  I moved the "struct TkWindow *focusPtr;"
+from the TkMainInfo to the TkDisplay structure, and modified the code
+in tkEvent.c that handled it and tkWindow.c that initialized it.  
+
+In tkEvent.c, I changed 3 "winPtr->mainPtr->focusPtr"'s to
+"winPtr->dispPtr->focusPtr", in Tk_HandleEvent and TkEventDeadWindow.  
+I worked over Tk_FocusCmd and TkFocusEventProc, included below.  
+I'm not sure what the "winPtr == winPtr->dispPtr->mouseMainPtr" test
+at the end of Tk_FocusCmd really intends, but the transformation was
+pretty straightforward, and it seems to work for my cases.  
+
+I've looked at the tcl code to try to figure out how to make it track
+properly with multiple displays.  I think I'll need a function that
+given the name of a window, returns a unique string describing the
+display, that I can use to make tk_priv keys that distinguish between
+displays.  The tcl functions tk_mbUnpost, tk_nextMenu, and
+tk_nextMenuEntry all need to take an argument so they can figure out
+which display to work on. 
+
+Another unrelated fix I made to Tk and Tcl was to put the TK_LIBRARY
+and TCL_LIBRARY strings into global variables, and refer to those
+variables instead of embeding strings in the code, so it's possible to
+set them up properly before initializing, since I want to be able to
+set a couple environment variables and run the application with no
+installation.  Is there a more appropriate way to do this? 
+
+	-Don
+
+Here is the code for Tk_FocusCmd and TkFocusEventProc:
+
+
+/*
+ *--------------------------------------------------------------
+ *
+ * Tk_FocusCmd --
+ *
+ *	This procedure is invoked to process the "focus" Tcl command.
+ *	See the user documentation for details on what it does.
+ *
+ * Results:
+ *	A standard Tcl result.
+ *
+ * Side effects:
+ *	See the user documentation.
+ *
+ *--------------------------------------------------------------
+ */
+
+int
+Tk_FocusCmd(clientData, interp, argc, argv)
+    ClientData clientData;	/* Main window associated with
+				 * interpreter. */
+    Tcl_Interp *interp;		/* Current interpreter. */
+    int argc;			/* Number of arguments. */
+    char **argv;		/* Argument strings. */
+{
+    Tk_Window tkwin = (Tk_Window) clientData;
+    register TkWindow *winPtr = (TkWindow *) clientData;
+    register TkWindow *newPtr;
+
+    if (argc > 3) {
+	focusSyntax:
+	Tcl_AppendResult(interp, "too many args: should be \"",
+		argv[0], " ?-query? ?window?\"", (char *) NULL);
+	return TCL_ERROR;
+    }
+
+    if (argc == 1) {
+	if (winPtr->dispPtr->focusPtr == NULL) {
+	    interp->result = "none";
+	} else {
+	    interp->result = winPtr->dispPtr->focusPtr->pathName;
+	}
+	return TCL_OK;
+    }
+
+    if (argv[1][0] == '-') {
+	int switchLength;
+
+	switchLength = strlen(argv[1]);
+	if ((switchLength >= 2)
+		&& (strncmp(argv[1], "-query", switchLength) == 0)) {
+
+	    if (argc != 3) {
+		goto focusSyntax;
+	    }
+
+	    newPtr = (TkWindow *) Tk_NameToWindow(interp, argv[2], tkwin);
+	    if (newPtr == NULL) {
+		return TCL_ERROR;
+	    }
+	    if (newPtr->dispPtr->focusPtr == NULL) {
+		interp->result = "none";
+	    } else {
+		interp->result = newPtr->dispPtr->focusPtr->pathName;
+	    }
+	    return TCL_OK;
+	}
+    }
+
+    if (argc != 2) {
+	goto focusSyntax;
+    }
+
+    if (strcmp(argv[1], "none") == 0) {
+	newPtr = NULL;
+    } else {
+	newPtr = (TkWindow *) Tk_NameToWindow(interp, argv[1], tkwin);
+	if (newPtr == NULL) {
+	    return TCL_ERROR;
+	}
+    }
+    if (newPtr->dispPtr->focusPtr == newPtr) {
+	return TCL_OK;
+    }
+    if (winPtr == newPtr->dispPtr->mouseMainPtr) { /* XXX: ??? presumably */
+	if ((newPtr->dispPtr->focusPtr != NULL)
+		&& (newPtr->dispPtr->focusPtr->focusProc != NULL)) {
+	    (*newPtr->dispPtr->focusPtr->focusProc)(
+		    newPtr->dispPtr->focusPtr->focusData, 0);
+	}
+	newPtr->dispPtr->focusPtr = newPtr;
+	if ((newPtr != NULL) && (newPtr->focusProc != NULL)) {
+	    (*newPtr->focusProc)(newPtr->focusData, 1);
+	}
+    } else {
+	newPtr->dispPtr->focusPtr = newPtr;
+    }
+    return TCL_OK;
+}
+
+/*
+ *--------------------------------------------------------------
+ *
+ * TkFocusEventProc --
+ *
+ *	This procedure is invoked whenever the pointer enters
+ *	or leaves a top-level window.  It notifies the current
+ *	owner of the focus, if any.
+ *
+ * Results:
+ *	None.
+ *
+ * Side effects:
+ *	None.
+ *
+ *--------------------------------------------------------------
+ */
+
+void
+TkFocusEventProc(winPtr, eventPtr)
+    register TkWindow *winPtr;	/* Top-level window just entered or left. */
+    XEvent *eventPtr;		/* EnterWindow or LeaveWindow event. */
+{
+    register TkWindow *focusPtr;
+    TkWindow *newMouseMainPtr = NULL;
+
+    if (eventPtr->type == EnterNotify) {
+	newMouseMainPtr = winPtr->mainPtr->winPtr;
+    }
+    if (winPtr->dispPtr->mouseMainPtr == newMouseMainPtr) {
+	return;
+    }
+    if (winPtr->dispPtr->mouseMainPtr != NULL) {
+	focusPtr = winPtr->dispPtr->focusPtr;
+	if ((focusPtr != NULL)
+		&& (focusPtr->focusProc != NULL)) {
+	    (*focusPtr->focusProc)(focusPtr->focusData, 0);
+	}
+    }
+    winPtr->dispPtr->mouseMainPtr = newMouseMainPtr;
+    if (newMouseMainPtr != NULL) {
+	focusPtr = newMouseMainPtr->dispPtr->focusPtr;
+	if ((focusPtr != NULL)
+		&& (focusPtr->focusProc != NULL)) {
+	    (*focusPtr->focusProc)(focusPtr->focusData, 1);
+	}
+    }
+}

@@ -1,0 +1,68 @@
+    Multi Player Micropolis for X11 is now available from DUX Software!
+
+DESCRIPTION:
+	Micropolis, the original award winning city simulation game from
+Maxis Software, now runs on powerful Unix workstations with X11!  DUX's
+implementation of Micropolis for Unix was awarded product of the year 1992
+by Unix World in the January 1993 issue, and reviewed in the April 1993
+issue.  Now it's souped up, works with standard X11 servers, and even
+supports networked multi user collaboration!  Multi Player Micropolis is
+designed to be a fun cooperative educational experience!
+
+	Micropolis is a colorful animated interactive system simulation
+game, providing a set of rules and tools for planning and building a
+complex dynamic simulated city.  Several people on different X11
+workstations can participate in the same city, cooperating and
+coordinating their actions across the network.
+
+	Working together, you can zone land use, hook up the power grid,
+build roads, bridges, parks and stadiums, raise taxes, and even summon
+disasters, causing the city to grow and thrive, or crumble and die.  It's
+a creative, entertaining way to develop your political skills!
+
+REQUIREMENTS:
+	Micropolis runs on Silicon Graphics Irix, SPARC SunOS, and other
+Unix workstations.  You can play it locally or over the network on most 8
+bit color or monochrome X11 displays, like NCD X terminals.  And you can
+hear it on standard sound devices, and NCD's NetAudio server.
+
+OPTIONS:
+	Micropolis supports but doesn't require the X11 shared memory and
+shaped window extensions, and a local sound device or NetAudio server.
+And you can turn off the sound so your boss doesn't know you're playing!
+
+FEATURES:
+	Multi Player Micropolis for X11 sports the Motif look and feel,
+implemented using the efficient TCL/Tk toolkit.  It features multiple
+city editors and maps with overlays, fast colorful animation, engaging
+sound effects, easy to use pie menus and direct manipulation interaction,
+simultaneous multi player editing, communication and annotation
+facilities, and voting dialogs for group decision making.  It includes
+eight challenging scenarios and a library of interesting cities.
+
+AVAILABILITY:
+	Multi Player Micropolis is available directly from DUX Software, and
+via anonymous ftp from ftp.uu.net (192.48.96.9), in the directory
+"vendor/dux/Micropolis".  You may freely copy it, and play the fully
+functional game in "demo mode" on one display without a license, but the
+city melts every 5 minutes.  If you enjoy Micropolis, you can buy a license
+over the phone by credit card, without leaving your seat!  A single
+player license lets you save and restore your cities, and play for as
+long as you like on one display; a multi player license lets you play
+Micropolis with your friends over the net!
+
+PRICING:
+	Single Player Node Locked License:	 $49
+	Multi Player Node Locked License:	 $89
+	Single Player Floating License:		$129
+	Multi Player Floating License:		$149
+
+PLEASE CONTACT:
+	DUX Software, 4906 El Camino Real, Suite 1, Los Altos, CA 94022
+	Phone #: 1-800-543-4999 or 1-415-967-1500, FAX #: 1-415-967-5528
+	Email: micropolis@dux.com
+
+NOTICE:
+	X11 Micropolis Copyright (C) 1993 by Electronic Arts.
+Unix implementation and multi player user interface by Don Hopkins, DUX.
+Based on the original Micropolis concept and design by Will Wright, MAXIS.

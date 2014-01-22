@@ -1,0 +1,553 @@
+web controller http api
+
+  index
+    => html
+
+  adminConsole
+    => html
+
+  adminUser
+    user_id => html
+
+  adminCity
+    user_id, city_id => html
+
+  adminProduct
+    product_id => html
+
+  adminOrder
+    order_id, user_id => html
+
+  adminFacebookPayment
+    payment_id, startTime, endTime, daysAgo => html
+
+  cityIcon
+    cookie or city_id => image/png
+
+  cityThumbnail
+    cookie or city_id => image/png
+
+  product
+    item_id => html
+
+  login
+    forward_url => html
+
+  logout
+    => html
+
+  micropolisSessionStart
+    => xml session
+
+  getTiles
+    sessionID, col, row, cols, rows, code => tile data
+
+  getMapImage
+    sessionID, width, height, overlay => image/png
+
+  getCityIcon
+    sessionID, cityCookie => image/png
+
+  heartBeat
+    cookie => "!"
+
+  translations
+    language, command, kw => html
+
+  amfGateway
+    kw => amf protocol
+
+    startSessionService
+      => sessionID
+
+    pollService
+      pollDict => pollDict
+      { 'ref': '', 'sessionid': '', 'messages': [{}...] }
+
+  facebookCanvas
+    args, kw => html
+
+  facebookDeauthorize
+    args, kw => ""
+
+  facebookPageAdmin
+    args, kw => html
+
+  facebookCredits
+    args, kw => json
+
+AMF TurboGearsGateway
+
+  getResponse(request)
+    request: array of (name, message)
+    returns: dict of mappingmessage name to result.
+
+  micropolis.startSession: startSessionService
+  micropolis.poll: pollService
+
+----
+
+Session messages:
+
+                self.sendMessage({
+                    'message': 'generateCity',
+                    'collapse': False,
+                })
+
+                self.sendMessage({
+                    'message': 'cancelScreenCapture',
+                    'id': id,
+                })
+
+                    session.sendMessage({
+                        'message': 'chatMessage',
+                        'from': 'Micropolis', # TODO: translate
+                        'channel': 'all',
+                        'text': 'Current faith is ' + str(self.faith) + '.', # TODO: translate
+                        'collapse': False,
+                    })
+
+            session.sendMessage({
+                'message': 'update',
+                'variable': 'tiles',
+                'view': {
+                    'id': id,
+                    'col': col,
+                    'row': row,
+                    'cols': cols,
+                    'rows': rows,
+                    'viewX': viewX,
+                    'viewY': viewY,
+                    'viewWidth': viewWidth,
+                    'viewHeight': viewHeight,
+                    'tiles': tiles,
+                    'code': code,
+                },
+                #'collapse': True,
+            })
+
+            session.sendMessage({
+                'message': 'update',
+                'variable': 'sprites',
+                'sprites': sprites,
+                'collapse': True,
+            })
+
+        session.sendMessage({
+            'message': 'update',
+            'variable': 'robots',
+            'robots': robots,
+            'collapse': True,
+        })
+
+            msg = {
+                'message': 'update',
+                'variable': 'historyview',
+                'id': id,
+                'scale': historyScale,
+                'count': historyCount,
+                'offset': historyOffset,
+                'types': historyTypes,
+                'width': historyWidth,
+                'height': historyHeight,
+                'year': year,
+                'month': month,
+                'histories': histories,
+                'range': historyRange,
+                'collapse': True,
+            }
+            #print "HISTORY MESSAGE", msg
+            session.sendMessage(msg)
+
+        self.sendSessions({
+            'message': 'update',
+            'variable': 'notice',
+            'notice': {
+                'title': title,
+                'description': description,
+                'url': url,
+                'showPicture': showPicture,
+                'picture': picture,
+                'showMap': showMap,
+                'x': x,
+                'y': y,
+            },
+            'collapse': False,
+        })
+
+        self.sendSessions({
+            'message': 'update',
+            'variable': 'savedCities',
+            'savedCities': (user and user.getSavedCities(session)) or [],
+        })
+
+        self.sendSessions({
+            'message': 'autoGoto',
+            'x': x,
+            'y': y,
+            'collapse': true,
+        })
+
+        self.sendSessions({
+            'message': 'didGenerateMap',
+            'seed': self.generatedCitySeed
+        })
+
+        #self.sendSessions({
+        #    'message': 'didLoadCity',
+        #    'cityID': self.cityID,
+        #})
+
+        self.sendSessions({
+            'message': 'didLoadScenario',
+            'scenario': self.scenario,
+        })
+
+        self.sendSessions({
+            'message': 'didSaveCity',
+        })
+
+        self.sendSessions({
+            'message': 'didTool',
+            'name': name,
+            'x': x,
+            'y': y,
+        })
+
+        self.sendSessions({
+            'message': 'didntLoadCity',
+            'msg': msg,
+        })
+
+        self.sendSessions({
+            'message': 'didntSaveCity',
+            'msg': msg,
+        })
+
+        self.sendSessions({
+            'message': 'loseGame',
+        })
+
+        self.sendSessions({
+            'message': 'makeSound',
+            'channel': channel,
+            'sound': sound,
+            'x': x,
+            'y': y,
+        })
+
+        self.sendSessions({
+            'message': 'newGame',
+        })
+
+        self.sendSessions({
+            'message': 'playNewCity',
+        })
+
+        self.sendSessions({
+            'message': 'reallyStartGame',
+        })
+
+        self.sendSessions({
+            'message': 'saveCityAs',
+        })
+
+        self.sendSessions({
+            'message': 'showBudgetAndWait',
+        })
+
+        self.sendSessions({
+            'message': 'showPicture',
+            'id': id,
+        })
+
+        self.sendSessions({
+            'message': 'showZoneStatus',
+            'tileCategory': tileCategory,
+            's0': s0,
+            's1': s1,
+            's2': s2,
+            's3': s3,
+            's4': s4,
+            'x': x,
+            'y': y,
+            'collapse': True,
+        })
+
+        self.sendSessions({
+            'message': 'startEarthquake',
+            'magnitude': magnitude,
+        })
+
+        self.sendSessions({
+            'message': 'stopEarthquake',
+        })
+
+        self.sendSessions({
+            'message': 'startLoad',
+        })
+
+        self.sendSessions({
+            'message': 'startScenario',
+            'scenario': scenario,
+        })
+
+        self.sendSessions({
+            'message': 'winGame',
+        })
+
+        self.engine.sendSessions({
+            'message': 'update',
+            'variable': 'notice',
+            'notice': {
+                'title': messageNameBase + '-title',
+                'description': messageNameBase + '-text',
+                'url': messageNameBase + '-url',
+                'showPicture': False,
+                'picture': None,
+                'showMap': True,
+                'x': self.x,
+                'y': self.y,
+            },
+        })
+
+    messages:
+
+        disaster:
+            disaster = messageDict.get('disaster', None)
+
+        setTaxRate:
+            taxRateStr = messageDict.get('taxRate', self.cityTax)
+
+        setRoadPercent:
+            roadPercentStr = messageDict.get('roadPercent', roadPercent)
+
+        setFirePercent:
+            firePercentStr = messageDict.get('firePercent', firePercent)
+
+        setPolicePercent:
+            policePercentStr = messageDict.get('policePercent', policePercent)
+
+        loadSharedCity:
+            id = messageDict.get('id', None)
+
+        loadScenario:
+            scenarioStr = messageDict.get('id', 0)
+            
+        generateCity:
+
+        loadMyCity:
+            cookie = messageDict['cookie']
+
+        startGame:
+            citySource = messageDict['citySource']
+            cityID = messageDict['cityID']
+            title = messageDict['title']
+            description = messageDict['description']
+
+        setGameMode:
+            gameMode = messageDict.get('gameMode')
+
+        setPaused:
+            paused = messageDict.get('paused')
+
+        abandonCity:
+
+        saveCity:
+            cookie = messageDict['cookie']
+            title = messageDict['title'].decode('utf8')
+            description = messageDict['description'].decode('utf8')
+
+        setMyCityTitle:
+            cookie = messageDict['cookie']
+            title = messageDict['title']
+
+        setMyCityDescription:
+            cookie = messageDict['cookie']
+            description = messageDict['description']
+
+        setMyCityShared:
+            cookie = messageDict['cookie']
+            shared = messageDict['shared']
+        
+        deleteMyCity:
+            cookie = messageDict['cookie']
+
+        drawToolStart:
+            tool = messageDict.get('tool')
+            x = int(messageDict.get('x'))
+            y = int(messageDict.get('y'))
+
+        drawToolMove:
+            tool = messageDict.get('tool')
+            x0 = int(messageDict.get('x0'))
+            y0 = int(messageDict.get('y0'))
+            x1 = int(messageDict.get('x1'))
+            y1 = int(messageDict.get('y1'))
+
+        drawToolStop:
+            tool = messageDict.get('tool')
+            x = int(messageDict.get('x'))
+            y = int(messageDict.get('y'))
+
+        sendChatMessage:
+            text = messageDict['text']
+            channel = messageDict['channel']
+            language = messageDict['language']
+
+        tiles:
+            id = messageDict['id']
+            col = messageDict['col']
+            row = messageDict['row']
+            cols = messageDict['cols']
+            rows = messageDict['rows']
+            viewX = messageDict['viewX']
+            viewY = messageDict['viewY']
+            viewWidth = messageDict['viewWidth']
+            viewHeight = messageDict['viewHeight']
+            code = messageDict['code']
+
+        sprites:
+
+        robots:
+
+        historyview:
+            id = messageDict['id']
+            historyScale = messageDict['scale']
+            historyCount = messageDict['count']
+            historyOffset = messageDict['offset']
+            historyTypes = messageDict['types']
+            historyWidth = messageDict['width']
+            historyHeight = messageDict['height']
+
+        setLanguage:
+            session.language = messageDict['language']
+
+        sendRobot:
+            robotID = messageDict['robotID']
+            command = messageDict['command']
+            args = messageDict['args']
+
+        screenCapture:
+            ...
+
+        cancelScreenCapture:
+            ...
+
+        autoGoto
+
+        update:
+
+            message = {
+                'message': 'update',
+                'variable': variable,
+                'args': args,
+            }
+
+            funds:
+                message['funds'] = self.totalFunds
+                message['collapse'] = True
+
+            history:
+                self.historySerial += 1
+                message['historySerial'] = self.historySerial
+          
+            date:
+                message['cityTime'] = cityTime
+                message['startingYear'] = startingYear
+                message['year'] = year
+                message['month'] = month
+                message['collapse'] = True
+
+            evaluation:
+                message.update({
+                    'year': self.currentYear(),
+                    'population': self.cityPop,
+                    'migration': self.cityPopDelta,
+                    'assessedValue': self.cityAssessedValue,
+                    'category': self.cityClass,
+                    'gameLevel': self.gameLevel,
+                    'currentScore': self.cityScore,
+                    'annualChange': self.cityScoreDelta,
+                    'goodJob': self.cityYes,
+                    'worstProblems': problems,
+                    'collapse': True,
+                })
+
+           paused:
+                message['paused'] = paused
+                message['collapse'] = True
+
+          tick:
+          passes:
+          speed:
+              (no extras)
+
+
+          delay:
+                message['pollDelay'] = speedConfiguration['pollDelay']
+                message['animateDelay'] = speedConfiguration['animateDelay']
+                message['collapse'] = True
+
+          demand:
+                message['demand'] = {
+                    'resDemand': resDemand,
+                    'comDemand': comDemand,
+                    'indDemand': indDemand,
+                }
+                message['collapse'] = True
+
+
+          options:
+                message['options'] = {
+                    'disasters': self.enableDisasters,
+                }
+                message['collapse'] = True
+          gameLevel:
+                message['gameLevel'] = self.gameLevel
+                message['collapse'] = True
+          cityName:
+                message['cityName'] = self.cityName
+                message['collapse'] = True
+          budget or taxRate:
+                budget['taxRate'] = self.cityTax
+                budget['totalFunds'] = self.totalFunds
+                budget['taxFund'] = self.taxFund
+                budget['firePercent'] = math.floor(self.firePercent * 100.0)
+                budget['fireFund'] = self.fireFund
+                budget['fireValue'] = self.fireValue
+                budget['policePercent'] = math.floor(self.policePercent * 100.0)
+                budget['policeFund'] = self.policeFund
+                budget['policeValue'] = self.policeValue
+                budget['roadPercent'] = math.floor(self.roadPercent * 100.0)
+                budget['roadFund'] = self.roadFund
+                budget['roadValue'] = self.roadValue
+                budget['cashFlow'] = (
+                    budget['taxFund'] -
+                    budget['fireValue'] -
+                    budget['policeValue'] -
+                    budget['roadValue']
+                )
+                budget['previousFunds'] = budget['totalFunds']
+                budget['currentFunds'] = budget['cashFlow'] + budget['totalFunds']
+                budget['taxesCollected'] = budget['taxFund']
+                message['variable'] = 'budget'
+                message['budget'] = budget
+                message['collapse'] = True
+
+          message:
+                msg = {
+                    'number': args[0],
+                    'x': args[1],
+                    'y': args[2],
+                    'picture': args[3],
+                    'important': args[4],
+                }
+                message['msg'] = msg
+                message['args'] = None
+
+          virtualSpeed:
+                message['virtualSpeed'] = virtualSpeed
+                message['pollDelay'] = speedConfiguration['pollDelay']
+                message['animateDelay'] = speedConfiguration['animateDelay']
+                message['collapse'] = True

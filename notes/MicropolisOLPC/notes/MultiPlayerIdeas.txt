@@ -1,0 +1,304 @@
+Notice window
+  welcome
+  scenario descriptions
+  warnings
+
+zone status window
+  display live map picture
+  reconfigure to support various tasks
+  editors for chaging zone
+  invest $ => develop zone => increase land value
+  population density
+  crime prevention
+  environmental cleanup
+  enance growth
+
+editor
+  pie menus
+  demand gauge
+
+budget
+  multi user dialog
+  hour glass timeout
+  auto budget toggle
+  pause/resume toggle (to allow changing budget while simulation is running)
+
+map
+  drag rectangles to pan map views
+  menus on palette
+  generate terrain mode
+  lengend
+  rearrange
+  switch overlays
+  dynamic zone finder
+
+graph
+  2x3 palelet, 10/120 years
+  double buffering
+  communicate data. ard wire in c? 
+
+evaluation
+  historical graphis?
+
+surveyor
+  other editors
+
+dynamic zone finder
+  washboard filter sliders
+
+get key dialog
+
+new city -- or "use map"?
+  name, level
+  scenario selection
+  random terrain generator
+  player can propose a city by selecting a scenario, loading a city, or generating a random terrain. 
+  all players must vote unanimously on a city to play
+  selecting a new city clears all votes
+  players can press next/previous to page through proposed city history
+    you can go back to randomly generated terrains, because it saves the random number generator seed
+    clears votes, proposes new or old city
+  terrain editor todo:
+    Integrate terrain editor code into map editor, 
+    and have a button on the new city map to run in terrain editor mode.
+    Terrain editor will include only terrain editing tools,
+    plus random terrain generation interface,
+    and simulator will be paused.
+
+print dialog
+  Newspaper printing and publishing metaphore. 
+
+  Optionally save a snapshot of the city state, to link to from the newspaper article. 
+
+  Publish in newspaper, print on paper, save to disk, copy to clipboard, 
+  add to journal, blog, etc.
+
+  Allow user to enter text to be printed along with an image, like blogging. 
+  Can print any map or editor view with data overlay and chalk drawings, 
+  entire map (fit on one page, or split across multiple pages), 
+  or other windows like graph, evaluation, notices, messages, chat log, etc. 
+
+  Export text content as html with embedded images. 
+
+  Make an html/image city overview and journal, like The Sims family view and scrapbook. 
+
+  Printable windows and views should have a "print" button or function that pops up a 
+  pie menu of possible destinations, for quickly making snapshots in your journal, etc.
+
+  Publish illustrated newspapers in the game, like The Sims storybook, with newspaper 
+  articles composed of pictures of the city, text excerpts from chat logs, etc. 
+
+  A player could be a "reporter" interviewing other player politicians via chat,
+  before and after the vote on building a stadium, asking them to make their case for
+  or against the stadium, and publish the interviews in the game's newspaper, the
+  "Micropolis Journal".
+
+  Players can browse each others newspapers over the net, and download the city snapshots 
+  the articles write about. 
+
+  Flash: Monster invades Micropolis, near nuclear reactor! 
+  (story and link to saved city so you can read the story, then bring up the city and 
+  play it live from the point the story was written)
+
+quit
+  confirm
+  multi player logout
+
+save dialog
+
+load dialog
+
+network city browsing and sharing
+  "What-If?" history tree.
+  Publish your cities on the net.
+  Download other peoples cities.
+  Use a URL to point to a saved city. 
+  Grab a live snapshot of somebody's running city.
+  Checkpoint and branch timelines.
+  Save a city back to the point where it branched, 
+  to create an alternate history that other players can load.
+  Multiple players build a tree of saved cities with branching alternate histories.
+    Like the parallel universes in Niven's All the Myriad Ways.
+  Rewind any city up the tree and select available alternate histories at each branch point. 
+  Play back alternate histories edit by edit, stop them at any point and take over, 
+  making a new branch point at that location.
+  When you play together in the same city, you have to discuss and agree with other players 
+  about what to do, and convince other people of your ideas.
+  You can try an idea out yourself, by branching your own private history, 
+  giving your idea a try, and reporting back to the other players in the main shared timeline
+  what happened (with links to the save file and history so other players can see for themselves). 
+  GUI: Branching history tree outline viewer of saved files. 
+  Drag and drop a history point into the chat log which other players can click on to open a 
+  live view playing that history. 
+
+status control
+  views
+  players
+  new player
+  new view
+
+Keep and export logs of simulation values
+  r, c, i demand
+  evaluation
+  tax rate, collected
+  funds
+  funding levels
+  event logs
+    simulation events
+      extend simulator to log all interesting simulation events, 
+      so newspaper reporters can write stories about them
+    editing commands
+      Log enough information to replay all edits against a save file to recreate same city.
+      This is the key to high level multi player protocol between
+      multiple parallel lock-step simulations, like The Sims Online,
+      better than using low level x11 to implement the multi player
+      interface)
+      Treat any editing command as a "what-if" branch point where it could go another way.
+      Give players an easy interface to replay a simulation up to a branch point, and 
+      and re-make the decision, to see how it would turn out differently. 
+  chat logs
+  everything else of course
+  web service to access logs
+  export logs as xml for programs or csv for spreadsheets
+  import and export chalk overlay as vector drawing
+  support image overlays with transparency (begs for photoshop-like drawing interface)?
+    Careful how far down that road you go, because you could use it to paint the image of
+    a happy emerald green city over a dreary industrial wasteland. 
+    The simple white chalk overlay has the advantage that you always know what's chalk and what's not. 
+  opml outline with geo-codes
+    store city overlay information in opml
+    register the corners of the map with real-world lat/long values
+      allow rotation and scaling but not arbitrary shearing or distortion
+    register nodes of the opml outline at lat/long points and areas on the map
+      what's a good way to associate an opml node with an arbitrary area on the map? 
+      an attribute with a polygon in lat/long coordinates?
+      a list of rectangles in lat/long coordinates?
+      a list of tiles in row/col coordinates?
+    associate geo-coded opml nodes with features on the map like 
+    zones, buildings, streets, neighborhoods
+      use opml nodes to give names to features, 
+	take notes about them, 
+	attach pictures to them,
+	write stories about them,
+      support overlapping features, so roads can cross, 
+      and each tile can belong to any number of features.
+    allow users to plant signs on the map, like micropolis 2000. 
+      represent signs with an opml node. 
+        signs can contains arbitrary opml outlines
+          with links to other opml nodes
+	    like a sign at a crossroad, linked to the nodes representing each road, 
+	    and the regions of the city that the roads bring you to.
+      use opml to write a city guide
+      attach chalk overlays and signs to opml nodes so you can show and hide them hierarchically
+
+head window
+  Represents root window of Micropolis application to TCL, and ties all the other windows together. 
+  Contains the application's main menus and scrolling message and chat log.
+
+  An artifact of the way TCL/Tk/X11 works. 
+
+  With another gui, might be the main base window that contains all other subwindows. 
+
+  In X11, we depend on the user's chosen X11 window manager to manage all the separate windows. 
+
+  In a better world (Sugar) Micropolis should let users save and restore windows
+  configurations and multiple views, tailored for various roles and tasks. 
+
+  When a new player joins, the select a role to play, which will grant them 
+  permissions and customize the interface, opening and positioning the appropriate
+  windows and tools for their role. 
+
+  Each role supports various tasks that might themselves reconfigure the user interface. 
+
+  User interface configurations should be selected based on the role and the task. 
+
+  Users first select a role that stays the same (forever or most of the time) 
+  and which grants them a set of permissions. 
+
+  Each role supports a set of tasks (like Eclipse's "aspects"), which users may
+  switch between, to reconfigure the user interface. 
+
+  Players can hold elections to grant each other roles 
+  (like mayor, treasurer, planner, builder, reporter, god, etc).
+
+Ownershop
+
+  This vastly complicates the game, so I didn't try it, but I wrote down some ideas.
+
+  Consider the screen area of the user interface it would require to 
+  enable the user to micro-manage all the ownership issues, in terms of 
+  the number of acres of city map it would cover. 
+
+  It seemed like it would be too complicated to be fun. 
+
+  Even if it could be magically implemented with a simple gui, would it be any fun? 
+
+  That said, here are some ideas. 
+
+  Ownership plane: 0 => nobody, 1-256 => user id 
+    (note: Can't save ownership user ids into save files if we want multiple  
+    players to enter and exit independently from the city itself, or if we
+    want to support an open-ended, possibly large number of players over time. 
+    As I said, this gets complicated pretty fast, without a lot of beneficial fun.)
+
+  Players have separate funds. 
+    This raises issues about: who gets paid how much of the city's overall income,
+    and who pays for city services?
+
+    Could have a main shared city budget, then certain players can be appropriated 
+    funds from that budget earmarked to perform various tasks.
+    But again, that gets pretty complicated, and how is it fun? 
+
+  Competition or cooperation?
+    Should we attempt to make the game support competition between players,
+    or is it better to keep it cooperation-oriented, by requiring unanimous votes,
+    sharing the budget, etc. 
+
+    I think it's simpler and more educational to give players the freedom to misbehave, 
+    while building in social networking and accountability, to let players discuss, 
+    negotiate, make and break deals, establish reputations, reward good behavior, 
+    and punish bad behavior, by developing real-world social interaction skills. 
+
+    What fun would politics be if you couldn't have scandals? 
+
+  Land value
+    higher resolution land value grid
+    effected by sales
+
+  asking price
+    Tiles are owned by someone, and may be for sale, and given an asking price by the owner.
+      Requires complex user interface for selecting tiles, assigning price, etc. 
+      How is that fun? 
+    Groups of tiles: parcels of land, for sale all at once, to highest bidder. 
+      M.U.L.E.-like multi player auctions for land.
+    Developers can build on empty tiles that are for sale, and they're bought automatically. 
+      What's so fun about being a developer? Nothing to do after setting the price of the land. 
+    Buyers can offer to buy something that doesn't have a price, which initiates an 
+    M.U.L.E. dialog with the owner, and allows other players to join in the auction, 
+    submitting their own bids. 
+
+  Transaction tool - $ (or local currency symbol)
+    select group of cells
+  negitiate deals with the owners
+  automatically calculates default land value suggested price (upon which the tax rate based) 
+    based on modified land value through worth
+
+  communication window
+    so people can negotiate and talk
+    irc-like chat rooms where people can have a side discussion
+    private person-to-person messages
+
+  calculate evaluation for each player
+    Independent and combined scores and statistics.
+    Hard to define what this means in terms of the current simulation.
+    Would have to deeply change the way the simulation works,
+    but then would it still be fun?
+
+  Zone ownership.
+    Develop Micropolis into a more Monopoly-like game: SimCitopoly.
+    A player can own power plants and other utilities, and makes money
+    by selling electricity and other services to other players. 
+    Zones don't develop until someone buys them.
+    Own residential => collect rent, pay maintainence. 
+    Own industrial, commercial => collect income, pay expenses.
+    All zone owners pay taxes.

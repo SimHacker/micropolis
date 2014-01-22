@@ -1,0 +1,114 @@
+From: skaven@carson.u.washington.edu (Willilam Gilliland)
+Newsgroups: comp.sys.mac.games
+Subject: Micropolis Strategies for Success
+Summary: How to build a better burg.
+Date: 24 Oct 92 20:15:41 GMT
+Organization: University of Washington, Seattle
+
+What follows is the general strategy I use whenever I play 
+Micropolis.  With it I have been able to build a self-sustaining
+city of 270,000 on Medium without resorting to cheats such as
+F-U-N-D or banzai taxation or the 'no disaster' setting.  
+This strategy was based on a few ideas given to me by Kevin 
+Ames (kja5@po.CWRU.edu) who has had a city last 1000 years,
+long enough that two nuclear meltdowns have occured and the
+radiation has decayed.  
+
+Note, however, that this strategy will not let you keep 
+growth going indefinately.  In about 250 years (at least the 
+way I play) the screen is filled and the zones are at 
+operating capacity.  While population will fluctuate due to 
+the world economy (+/- about 10000 people) it will not grow 
+significantly beyond that level.
+
+This strategy is based on two principles in the game.
+
+P1. Zones are affected greatest by the 1-thick row of spaces
+surrounding them.
+
+P2. The life or death of a city is based on cash flow.
+
+Therefore, the strategy revolves around maximizing your 
+income by affecting the spaces around every zone and at the
+same time minimizing your expenses.  To do this you should
+follow these guidelines.
+
+1. MAXIMIZE zone contact with parks, forests, and shoreline. 
+Since the important contact is the one space around them, to 
+maximize your profit you should space zones one space apart, 
+leaving a strip of forest between them.  Since I prefer maps 
+with a river running down the middle, I will put zones in 
+small blocks of 3 or 4 to increase density at the city 
+center.  Any empty spaces should be filled with parks.
+
+Since natural forests and shoreline are worth more than parks 
+and bulldozed shoreline, you should always strive to preserve 
+as much as you can while getting the most use out of them.
+
+2. MINIMIZE the amount of rails, roads and power lines you 
+have.  A good way to do this is to have a long straight road 
+with zones along both sides of it.  Do NOT surround zones 
+with roads like city blocks in real life -- this increases 
+expenses for road maintenance, increases pollution, and 
+lowers property values by reducing contact with forest/parks.  
+Besides, only one contact space is necessary.  Since you can 
+send power lines (perpendicularly) over road sections you 
+should do this whenever possible, as it increases the space 
+available for parks/forests.
+
+Since roads are cheaper to build and maintain than rails you 
+should keep them in the low-usage areas and keep the rails 
+for the high usage areas.  Another way to reduce your rails 
+is to have small 'buds' of zones connected by roads to a main 
+rail strip.
+
+An example of a 'long strip' is below.
+
+  #########################################################
+  #rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#
+  -rrr#rrr-ccc#rrr-rrr#ccc-rrr#rrr-ccc#rrr-rrr#ccc-rrr#rrr#
+  #rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#
+  ==+===+===+===+===+===+===+===+===+===+===+===+===+==+###
+  #rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#
+  #rrr-rrr#ccc-rrr#rrr-ccc#rrr-rrr#ccc-rrr#rrr-ccc#rrr-rrr#
+  #rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#ccc#rrr#rrr#
+  #########################################################
+
+#      forest or park        - power line
+=      rail                  + power line crossing rail
+r      r-zone
+c      c-zone
+
+3. MINIMIZE pollution near R and C zones.  The easiest way to 
+do this is to bunch all your I-zones together at the 
+periphery of the map, to leave the city center for the more 
+valuable R and C zones.  You should also leave a 1-wide strip 
+of parks between the zones to decrease the severity of the 
+pollution.  Remember, roads add to pollution too, so if you 
+have a lot of traffic put in rails.
+
+4. MINIMIZE the number of police and fire stations while you 
+MAXIMIZE coverage area.  The spacing takes practice to figure 
+out, but on my screen the ideal spacing is to have the police 
+stations in a triangular pattern that just fits on the 
+screen.  In other words, I have two stations in the bottom 
+corners of the window and one at the top in the center (or 
+vice versa).  Concentrated police coverage is much more 
+important than concentrated fire coverage, and I use a wider 
+triangular pattern for fire departments.
+
+While there are a number of tips to improve game play, these guidelines
+are general patterns that, if followed, will let you build cities that have
+a positive cash flow with a low tax level.  And that is all you need to have
+cities last indefinately.
+
+===============================================================================
+   __                                                                    ____
+  |  |                    The Missionary of Montlake                    /    \
+  |~~|              Bill Gilliland, skaven@u.washington.edu             |    | 
+ /    \                    Expatriate Member, SUDS                      |    |
+ |    |                                                                 |    |
+ |    |                        IN VINO VERITAS                          |    |
+ |    |                                                                 \    /
+ |    |                    "In Wine there is Truth"                      |  | 
+ \____/                                                                  |__|

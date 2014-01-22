@@ -1,0 +1,69 @@
+Micropolis Eduverse
+
+The Micropolis project's goal is to develop an educationally focused,
+open source, online, community based version of Micropolis (based on
+the original SimCity source code).
+
+Status:
+
+Developed an open source, internationalized, web based version of
+Micropolis, based on OpenLaszlo/Flash on the client, and
+TurboGears/Python on the server. Also developed a cross platform,
+desktop version of Micropolis, based on GTK/Python.
+
+The Micrpolis web server installs and runs on MacOS, Amazon Elastic
+Computing servers, and other Linux and Unix based systems.
+
+Conserves network and processing resources efficiently. Uses Flash
+AMF, an effcient binary asynchronous messaging protocol. Employs a
+compressed, delta encoded, low bandwidth message format. Offloads user
+interface and animation processing to client.
+
+The original SimCity source code has been cleaned up, refactored,
+rewritten, internationalized, extended and documented in modern C++,
+Python and JavaScript.
+
+  The new code is much more portable, and more easily adapted to other
+  platforms. It's well documented, easier to understand, maintain and
+  extend, because it used modern programming practices, sensible style
+  and clear naming conventions. The user interface is cleanly
+  separated from the simulation engine, and it's fully
+  internationalized and can be translated into other languages and
+  delivery platforms.
+
+The Micropolis project has established a solid groundwork and open
+framework for an online, colaborative, multi-player version of
+SimCity.
+
+  Don Hopkins has already desgined, developed and shipped a
+  multi-player X11 based version of SimCity in 1993 for DUX software.
+  The web based version of Micropolis has been redesigned with
+  multi-player support and education in mind, so the new web based
+  multi player game will be much better and more educationally focused
+  than the old X11 based version.
+
+The project has benefited from the vision, inspiration and
+encouragement of Alan Kay and Will Wright.
+
+It applies Alan Kay and Seymour Papert's ideas about constructionist
+education, microworlds, agents, visual programming.
+
+It leverages Don Hopkins' experience with user interface and game
+design, network programming, working with Will Wright on The Sims, The
+Sims Online, SimCity, user created content, social networking,
+intelligent toys and robot.
+
+Technical Overview
+
+  Server
+
+    Linux, Apache, MySQL, Python, SWIG, GCC C++, TurboGears, CherryPy,
+    Genshi, SQLAlchemy, PyAMF, Cairo, Pango. Subversion, Doxygen,
+    WikiMedia, PHP. Wiki integration. Amazon AWS deployment.
+
+  Client
+
+    OpenLaszlo, XML, JavaScript, Flash, AMF, pie menus, chat, multiple
+    scrolling map views, info-visualization overlays, efficient
+    networking protocol, interactive "AJAX" user interface and local
+    animation, internationalized unicode text.

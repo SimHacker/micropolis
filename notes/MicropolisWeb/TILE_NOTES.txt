@@ -1,0 +1,27 @@
+Notes on the client/server tile engine:
+
+  Animated tiles
+
+    The client tells the server a list of its views, each with the
+    bounding box of the tiles it's displaying. 
+
+    The coordinates are in pixel coordinates (i.e. tiles are 16x1), so
+    the server can tell other clients where this client is looking in
+    pixel coordinates, and figure out the exact tiles using the same
+    rounding algorithm as the client.
+
+    The client can send a "reset" command to the server to flush its
+    cache of the client state, in case it gets out of sync or
+    reconnects. (TODO)
+
+    The server keeps track of the tiles in the client's buffer (which
+    is filled lazily). It maps all tiles in an animation group to the
+    lowest tile number tile of that group. The server does not care 
+    which tile of an animation loop or sequence the client is displaying,
+    because the client animates the tiles, to reduces network traffic by
+    not sending all the tile animation changes. 
+
+    Tiles in the animation set are displayed in at least one of the
+    views the client told the server about, so they should be lazily
+    animated once every time one or more ticks pass, and the client
+    displays one or more views.

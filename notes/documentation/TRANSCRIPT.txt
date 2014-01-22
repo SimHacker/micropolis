@@ -1,0 +1,56 @@
+Hi. My name is Don Hopkins, and this is Micropolis, the open source version of SimCity.
+You can pick different scenarios, or generate a random map, or load a city from the library.
+Now the simulator is running on the web server, and it's programmed in C++ and Python.
+And the actual user interface is programed in OpenLaszlo, running in the Flash player.
+So you can log in, so that you can save a city or share cities with other users.
+And we'll play with this map of Haight Ashbury.
+Now, you can use these tabs to change things about the simlator, like the speed.
+And it can go super fast, or slow.
+So, these notices tell you important things that happened in your city, 
+and you can click on the live view there to center on it, and look at it.
+Now we have something good for traffic, which is the PacBot.
+This is an agent that goes around on the map.
+He looks at the map, follows roads, and looks for traffic, and then he eats it.
+So their score there shows how many cars they've eaten.
+So we could put lots of those out on the map.
+That will help our city by keeping the traffic low.
+Anyway, um...
+Now the journal is a log of things that have happened,
+and also it serves as a chat window,
+and also a cheat window.
+You can say "hi" to the chat,
+or you can say "!million" to get a million simoleans.
+So the evaluation window tells us how we've been doing, what the problems are, how popular we are.
+But never pay attention to that.
+Anyway, the history tells us the 10 or 120 year history of the city, of the different zones, and how much money.
+Now, the budget window lets us change the tax rate, and different aspects of the city services.
+So we'll just raise taxes really high and see what happens.
+The traffic density map is an overlay that we can look at.
+For example, we could zoom in, like this, and see the areas of the city that have high traffic.
+And now what we're interested in is the population density, because we have raised taxes really high.
+And let's just have a monster here to top things off.
+So we can go there.
+No we'll go to the control window and make time go really fast, and watch everybody just leave town.
+See how the population is going down and the buildings are getting short?
+Now we can go to the budget window and make taxes really low, and lo and behold, everybody moves back in!
+And then make taxes high again.
+You get it.
+Now what we can do, let's go back to normal speed.
+All these little icons here are for editing the map.
+Like we can repair the damage to the roads.
+Oh, better check the budget here, lower the taxes a little bit.
+Now we can get rid of this by sliding it up.
+Now you'll notice that when you're editing the map, you tend to go back and forth between the map here, and this palette.
+So as an alternative to that, you can actually slide this out of the way.
+And then use the pie menu by holding down the shift key and clicking.
+And then there's all these items around you like railroad.
+There's a railroad.
+And bulldozer.
+So you can clear these zones.
+So the pie menus you can use with quick gestures once you learn them.
+They're very easy to remember, because you use them again and again.
+Like up gives you a zone submenu, and you have residential, commercial and industrial zones you can choose from.
+So if you make a mistake, like up, up: commercial, you can redo it, up, up and left: residential.
+See, I put it in the wrong place, so I can quickly bulldoze, and then zone residential, and move it here.
+And then I can make a road. 
+So see how the pie menus give you easy to use gestures, and you don't have to look at the screen, you can remember that...

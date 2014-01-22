@@ -1,0 +1,57 @@
+Choose City Dialog
+
+  Micropolis Logo
+
+  Scenario Buttons
+    "Dullsville, 1900: Boredom" button
+    "San Francisco, 1906: Earthquake" button
+    "Hamburg, 1944: Bombing" button
+    "Bern, 1965: Traffic" button
+    "Tokyo, 1957: Monster Attack" button
+    "Detroit, 1972: Crime" button
+    "Boston, 2010: Nuclear Meltdown" button
+    "Rio de Janeiro, 2047: Coastal Flooding" button
+
+  Generator
+    "Generate Random Map" button
+    (todo: sliders and buttons to make different kinds of maps)
+
+  Library
+    "Load City" button
+
+  "Play with This City" button
+
+Tool Menu
+  ...
+
+Notices Icon
+  Pictures for Notices
+    ...
+
+Messages Icon
+  ..
+
+Evaluation Icon
+  ..
+
+History Icon
+  ...
+
+Budget Icon
+  ...
+
+Overlays Icon
+  Overlay Icons
+    ...
+
+Disasters Icon
+  Disaster Buttons
+    "Monster" button
+    "Fire" button
+    "Flood" button
+    "Meltdown" button
+    "Tornado" button
+    "Earthquake" button
+
+Control Icon
+  ...

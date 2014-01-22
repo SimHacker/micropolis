@@ -1,0 +1,50 @@
+* notice views on flood, 41 heavy traffic, 22 tornado
+
+* shell scripts & licensing
+  include elmnotify etc
+
+* configuration panel
+  preferences (global, per head)
+    auto scroll edge
+    auto scroll step
+    auto scroll delay
+    pie menu popup delay
+    sound effect level
+
+* players
+  more info, saved in database
+  name, server, email addresses
+  audio servers (per head?)
+  save/restore named window configurations
+
+* help (8)
+  must implement a help mechanism and put in lots of help
+
+* documentation
+  manual entries for Micropolis, elm stuff, audio servers
+
+* manual (9)
+  need to re-write manual, and do new illustrations
+  must have a framemaker license to do this
+
+* keyboard commands: arrow, function keys (3)
+  also need to disable autorepeat
+
+* save/restore overlay (5)
+  write all overlay information into another file, like Glasgow.city.overlay
+
+* print city dialog (6)
+  need to implement printing function and control panel from scratch
+
+* In file dialog boxes, highlight text and then typing doesn't replace it,
+  you still have to backspace.
+
+* In file dialog boxes, ~ isn't interpreted correctly.
+
+* Start Hamburg, restart another scenario.  the new scenario gets bombed.
+  can't reproduce
+
+* Tk text fields don't display cursor on second screen
+
+* One person inserting text into text field moves everybody else's 
+  insertion point to the end.

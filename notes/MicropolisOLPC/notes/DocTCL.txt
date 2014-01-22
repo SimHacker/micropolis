@@ -1,0 +1,88 @@
+editorview .editor
+	-display host:0?
+
+.editor
+	configure ...
+	position ?x y?
+	size ?w h?
+	Pan ?x y?
+	ToolState ?state?
+	ToolMoveTo x y
+	ToolDragTo x y
+	PanStart x y
+	PanTo x y
+	Visible ?0..1?
+	KeyDown key
+	KeyUp key
+	TileCoord x y
+
+mapview .map
+	?-display host:0?
+
+.map
+	configure ...
+	position ?x y?
+	size ?w h?
+	MapState ?0..8?
+	ZoneType ?0..3?
+	PopnRate ?0..1?
+	PoliceRadius ?0..1?
+	PanStart x y
+	PanTo x y
+	ViewAt x y
+	Visible ?0..1?
+
+sim
+	GameStarted
+	InitGame
+	SaveCity
+	GenerateNewCity
+	ReallyQuit
+        UpdateMaps
+	UpdateGraphs
+	UpdateEvaluations
+	UpdateBudgets
+	DoBudget
+	Pause
+	Resume
+	CheckLicense
+	StartBulldozer
+	StopBulldozer
+	MakeFire
+	MakeFlood
+	MakeAirCrash
+	MakeTornado
+	MakeEarthquake
+	MakeMonster
+	MakeMeltdown
+	SoundOff
+	LoadScenario 1..8
+	LoadCity filename
+	SaveCityAs filename
+	MakeExplosion x y
+	InstallKey 0..1 key
+	MakeSound id
+	StartSound id
+	StopSound id
+	CityName ?name?
+	GameLevel ?1..2?
+	Speed ?0..7?
+	Delay ?int?
+	HeatSteps ?steps?
+	HeatFlow ?flow?
+	HeatRule ?rule?
+	Funds ?funds?
+	TaxRate ?0..20?
+	FireFund ?int?
+	PoliceFund ?int?
+	RoadFund ?int?
+	AutoBudget ?0..1?
+	AutoGoto ?0..1?
+	AutoBulldoze ?0..1?
+	Disasters ?0..1?
+	Sound ?0..1?
+	FlushStyle ?0..2?
+	MonsterGoal ?x y?
+	TornadoGoal ?x y?
+	HelicopterGoal ?x y?
+	MonsterDirection ?-1..7?
