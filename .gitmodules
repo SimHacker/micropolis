@@ -1,0 +1,12 @@
+[submodule "jquery-pie"]
+	path = jquery-pie
+	url = https://github.com/SimHacker/jquery-pie.git
+	branch = master
+[submodule "jquery-mousewheel"]
+	path = jquery-mousewheel
+	url = https://github.com/brandonaaron/jquery-mousewheel.git
+	branch = master
+[submodule "seedrandom"]
+	path = seedrandom
+	url = https://github.com/davidbau/seedrandom.git
+	branch = master
