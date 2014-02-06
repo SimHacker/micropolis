@@ -1,0 +1,288 @@
+Google APIs
+https://developers.google.com/apis-explorer/#p/
+
+Google Cloud Messaging for Chrome
+http://developer.chrome.com/apps/pushMessaging.html
+
+Google Apps
+https://en.wikipedia.org/wiki/Google_Apps
+https://admin.google.com/donhopkins.com/AdminHome?pli=1&fral=1
+
+Google Drive
+https://en.wikipedia.org/wiki/Google_drive
+
+Google Docs
+https://en.wikipedia.org/wiki/Google_docs
+
+Google Documents
+
+Google Spreadsheets
+https://en.wikipedia.org/wiki/Google_Spreadsheets
+https://developers.google.com/google-apps/spreadsheets/
+http://stackoverflow.com/questions/4143901/access-google-spreadsheet-or-google-data-api-only-with-javascript
+https://github.com/mikeymckay/google-spreadsheet-javascript
+https://github.com/rw3iss/google-spreadsheet-javascript
+https://developers.google.com/gdata/samples/spreadsheet_sample
+https://developers.google.com/apps-script/guides/sheets
+https://developers.google.com/gdata/samples/spreadsheet_sample
+https://code.google.com/p/google-api-javascript-client/wiki/GettingStarted
+https://github.com/jsoma/tabletop
+
+Google Data API
+https://en.wikipedia.org/wiki/Google_Data_API
+https://developers.google.com/gdata/docs/developers-guide
+https://developers.google.com/gdata/samples?csw=1
+http://gdatatips.blogspot.nl/2008/12/using-javascript-client-library-w-non.html
+http://www.mail-archive.com/google-help-dataapi@googlegroups.com/msg01924.html
+http://www.rfc-editor.org/rfc/rfc5023.txt
+
+Google Forms
+https://support.google.com/drive/answer/87809?hl=en
+
+Google Drawings
+
+Google Slides
+
+Google Charts
+https://developers.google.com/chart/
+
+Google Visualization API
+https://developers.google.com/chart/interactive/docs/reference?hl=en
+
+Google Document List API
+https://developers.google.com/google-apps/documents-list/?csw=1
+
+Fusion Tables API
+https://en.wikipedia.org/wiki/Google_Fusion_Tables
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/fusiontables
+https://developers.google.com/fusiontables/?csw=1
+
+Google Keep
+https://en.wikipedia.org/wiki/Google_Keep
+
+Google Apps Script
+https://en.wikipedia.org/wiki/Google_Apps_Script
+https://developers.google.com/apps-script/
+
+Google Big Query API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/bigquery
+https://developers.google.com/bigquery/
+
+Google Cloud SQL
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/sql_component
+https://developers.google.com/cloud-sql/?csw=1
+
+Google Cloud Storage
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/storage_component
+https://developers.google.com/storage/?csw=1
+
+Google Cloud Storage JSON API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/storage_api
+https://developers.google.com/storage/docs/json_api/v1/
+
+Google Blogger API v3
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/blogger
+https://developers.google.com/blogger/docs/3.0/getting_started
+
+Google Calendar API
+https://en.wikipedia.org/wiki/Google_Calendar
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/calendar
+https://developers.google.com/google-apps/calendar/?csw=1
+
+CalDAV API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/caldav
+https://developers.google.com/google-apps/calendar/caldav/v2/guide
+
+Google Drive API
+https://drive.google.com/a/micropolisonline.com/
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/drive
+https://developers.google.com/drive/
+
+Google Drive SDK
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/drive_sdk_component
+https://developers.google.com/drive/
+
+Google Drive SDK Docs:
+https://developers.google.com/drive/web/about-sdk
+
+Google Drive SDK Reference:
+https://developers.google.com/drive/v2/reference/
+
+Google Drive SDK Examples:
+https://developers.google.com/drive/web/examples/
+
+Google Drive SDK JavaScript Client:
+https://code.google.com/p/google-api-javascript-client/
+https://developers.google.com/api-client-library/javascript/samples/samples
+
+Google Drive SDK Node.js Client:
+https://github.com/google/google-api-nodejs-client/
+https://github.com/google/google-api-nodejs-client/tree/master/examples
+
+Google Drive SDK Realtime API
+https://developers.google.com/drive/realtime/
+
+Google Cloud Datastore API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/datastore
+https://developers.google.com/datastore/
+
+Google Cloud Messaging for Chrome
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/gcm_for_chrome
+http://developer.chrome.com/apps/pushMessaging.html
+
+Google Cloud SQL API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/sqladmin
+https://developers.google.com/cloud-sql/
+
+Google Compute Engine
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/compute_component
+https://developers.google.com/compute/
+
+Google Maps API v3
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/maps_backend
+
+Google Maps Coordinate API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/coordinate
+https://developers.google.com/coordinate/
+
+Google Maps Engine API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/mapsengine
+https://developers.google.com/maps-engine/
+
+Google Maps Geolocation API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/geolocation
+https://developers.google.com/maps/documentation/business/geolocation/
+
+Google Maps Tracks API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/tracks
+https://developers.google.com/maps/documentation/tracks/
+
+Geocoding API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/geocoding_backend
+https://developers.google.com/maps/documentation/geocoding/?csw=1
+
+Static Maps API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/static_maps_backend
+https://developers.google.com/maps/documentation/staticmaps/?csw=1
+
+Street View Image API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/street_view_image_backend
+https://developers.google.com/maps/documentation/streetview/?csw=1
+
+Places API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/places_backend
+https://developers.google.com/places/documentation/
+
+Google Play
+https://en.wikipedia.org/wiki/Google_Play
+
+Google Play App State
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/appstate
+https://developers.google.com/games/
+
+Google Play Game Management
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/gamesManagement
+https://developers.google.com/games/
+
+Google Play Game Services
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/games
+https://developers.google.com/games/
+
+Google Play Game Management
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/gamesManagement
+https://developers.google.com/games/
+
+Identity Toolkit API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/identitytoolkit
+https://developers.google.com/identity-toolkit/?csw=1
+
+Google Picker API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/picker
+https://developers.google.com/picker/
+https://developers.google.com/picker/docs/index
+
+Google+ API
+https://en.wikipedia.org/wiki/Google%2B
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/plus
+https://developers.google.com/+/api/
+
+Google+ Domains API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/plusDomains
+https://developers.google.com/+/domains/
+
+Google+ Hangouts API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/plusHangouts
+https://developers.google.com/+/hangouts/
+
+YouTube Data API v3
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/youtube
+https://developers.google.com/youtube/
+
+Tasks API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/tasks
+https://developers.google.com/google-apps/tasks/?csw=1
+
+URL Shortener API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/urlshortener
+https://developers.google.com/url-shortener/?csw=1
+
+Translate API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/translate
+https://developers.google.com/translate/v2/getting_started?csw=1
+
+Freebase API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/freebase
+https://developers.google.com/freebase/v1/getting-started
+
+Google Civic Information API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/civicinfo
+https://developers.google.com/civic-information/
+
+URL Shortener API
+https://cloud.google.com/console/project/apps~micropolis-project/apiui/api/urlshortener
+https://developers.google.com/url-shortener/?csw=1
+
+Google Gadgets
+https://en.wikipedia.org/wiki/Google_Gadgets
+https://developers.google.com/gadgets/docs/gs
+
+Google Bookmarks
+https://www.google.com/bookmarks
+https://en.wikipedia.org/wiki/Google_Bookmarks
+
+Google Talk
+https://en.wikipedia.org/wiki/Google_Talk
+http://www.google.com/hangouts/
+https://developers.google.com/talk/talk_developers_home
+http://googletalk.blogspot.nl/
+
+Google Voice
+https://en.wikipedia.org/wiki/Google_Voice
+
+----
+
+https://cloud.google.com/console/project/apps~micropolis-project
+
+Compute Engine and App Engine
+Client ID      434080723618.apps.googleusercontent.com
+Email address  434080723618@developer.gserviceaccount.com
+
+{"web":{"auth_uri":"https://accounts.google.com/o/oauth2/auth","client_secret":"g9Ewa9g_oXgnNJHyAeQEwqHX","token_uri":"https://accounts.google.com/o/oauth2/token","client_email":"434080723618@developer.gserviceaccount.com","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/434080723618@developer.gserviceaccount.com","client_id":"434080723618.apps.googleusercontent.com","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"}}
+
+Key for server applications
+API key AIzaSyB8BhoXWkwqPJFTGrvVhv_bHXBCkjPMYU8
+IPs 
+5.9.204.154
+176.9.247.64/28
+Activation date Dec 31, 1969 4:00 PM
+Activated by     simhacker@gmail.com (you)
+Edit allowed IPs
+
+Key for browser applications
+API key AIzaSyAfghv8Wr5JX2ZY72IQ1re7C7P7tAwHL4w
+Referers        
+http://www.micropolisonline.com
+Activation date Dec 31, 1969 4:00 PM
+Activated by     simhacker@gmail.com (you)
+Edit allowed referers
+

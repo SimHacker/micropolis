@@ -4,10 +4,15 @@
 
     <title>Micropolis Test</title>
 
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+
 	<link rel="stylesheet" type="text/css" href="jquery-pie/jquery-ui/themes/base/jquery.ui.all.css"/>
     <link rel="stylesheet" type="text/css" href="jquery-pie/css/jquery-pie.css"/>
 	<link rel="stylesheet" type="text/css" href="css/micropolis.css"/>
 
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/realtime-client-utils.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=LoadGoogleClientAPI"></script>
     <script type="text/javascript" src="jquery-pie/jquery-ui/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="jquery-pie/jquery-ui/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="jquery-pie/jquery-ui/ui/jquery.ui.widget.js"></script>
@@ -27,9 +32,17 @@
     <script type="text/javascript" src="javascript/micropolis.js"></script>
 
     <script>
-      $(function() {
-          TestMicropolis();
-      });
+
+        function LoadGoogleClientAPI()
+        {
+            console.log("Google Client API loaded.");
+            gapi.client.setApiKey('AIzaSyAfghv8Wr5JX2ZY72IQ1re7C7P7tAwHL4w');
+        }
+
+        $(function() {
+            TestMicropolis();
+        });
+
     </script>
 
   </head>
