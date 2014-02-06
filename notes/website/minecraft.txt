@@ -1,0 +1,29 @@
+Minecraft web site:
+
+  Home
+  Game
+    What is Minecraft?
+    Getting Started
+    Credits
+  Community
+    Email community@mojang.com
+    Support Center
+    Official Resources
+      Developer Contacts
+      Facebook
+      Forums
+      Wiki
+    iOS Applications
+      Minecraft Explorer Pro
+      Minecraft Seeds Pro
+      Minecraft Skin Studio
+      Minecraft Reality
+      Minecraft Papercraft Studio
+    Forums and Communities
+    Galleries Dedicated to Minecraft
+    IRC
+    Indie Game Development
+    Notch's Buddies
+  Store
+  Profile
+  Help

@@ -1,0 +1,45 @@
+Integrate with Google Docs:
+
+Export data to Google Sheets.
+
+Trigger and log events in Google Calendar.
+
+Export graphs, visualizations and reports to Google Draw, Google Slides, Google Docs.
+
+Google Forms for configuring and controlling simulation and scenarios.
+
+Street view links. 
+
+  Embed a Google Street View panorame in a location on a SimCity map, that illustrates what it looks like.
+    (rotated to align with the SimCity coordinate system)
+
+  Render "street view" panoramic images from 3d lego models, to embed and view in Google Maps.
+
+  Drive a virtual Google Mapping car around your simcity map to build a digital map and render 3d streetview images.
+
+  Represent streets as vectors in a map overlay, that drive the street building (and repairing) tools, 
+  and associate metadata like street name, house numbers, intersections, etc with the street. 
+
+  Declarative building tools. Create "blueprint layer" map overlays
+  that declare plans to build named streets, zones and buildings
+  beforehand, wait for approval and funding, then build over time,
+  incrementally consume budget and resources, pause when unfunded or
+  put on hold, repair after disasters, and permanently represent
+  properties in the city.
+
+  Copy and paste and edit these "blueprints" from map to map. 
+
+  The building tools will create objects representing the things
+  you're building, which are saved as overlays on map. They can have
+  names, descriptions, stories, discussion forums, metadata, state,
+  plug-in extensions, user interfaces, micro-simulators, etc.
+
+  When you create a plan, it goes into the calendar on its creation
+  date, and also on its construction milestones. 
+
+  Events that happen in the simulation can publish stores and data
+  into the calendar in a newspaper channel (or tv news show). 
+
+  Use the calendar to schedule things in the future, and record things
+  as they happen.
+

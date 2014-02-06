@@ -1,0 +1,63 @@
+Mini game for SimCity: Street View Warrior
+
+Backstory: 
+
+To encourage competition and break up the giant digital mapping
+monopolies of the 2010's, The Open Streetmap Mega-Corporation decreed
+that they would license the most recent data gathered for each
+geolocation on the map, until such a time as somebody else gathered
+more recent data.
+
+This lead the way to the great Street View Wars. 
+
+You deploy a fleet of Google Street View cars around the map to gather
+the most recent data, but your enemy has deployed combative TomTom
+Street View cars around the city to foil your mission. 
+
+It's a twisted metal cross between PacMan and Dungeon Keeper, where
+you're driving around measuring GPS coordinates and taking panorama
+pictures and trying to cover the whole city, intend of eating pills
+and trying to clear the whole maze. 
+
+The cars take 3d panoramas of each tile they drive on, to posess them.
+
+It will be a fast action twitch combat game, so most the street view
+photos will show pictures of explosions and combat during chase
+scenes.
+
+The cars can operate autonomously, driving around the map on their
+own, and you can drag and drop them around like minions in dungeon
+keeper, or take one of them first-person and drive it around.
+
+They can fight each other and defend their territories. You can outfit
+them with weapons and upgrades, and deploy specialized combat and
+defenive vehicles. (The mapping cars are like the imps in dungeon
+keeper, who cast the posession spells, but must be defended by other
+stronger characters.)
+
+If you're the most recent one to drive through a zone, you "posess" it
+and earn licensing fees for the data during the time you data is the
+most recent. 
+
+The end result of the game is a KML overlay with each player's map,
+including street view panorama from their point of view, rendered with
+the lego brick houses of course. (or whatever virtual environment
+you're playing in, even CG over real street view photos.)
+
+Whoever took the last street view photo in a tile would "own" it, but
+all previous ones would be available to flip through, to show what
+happened on that tile.
+
+So during a car chase, it record both driver's points of view, and you
+can play them back together and see it from both perspectives.
+
+So then you use the normal simcity editing tools to build interesting
+maps for the game!
+
+----
+
+play it in a simcity map, rendering 3d lego buildings
+
+play it in a real google map, rendering virtual cars on top of real street view images.
+
+----
