@@ -1,0 +1,77 @@
+- Base Goals:
+
+  - Classic Micropolis City Simulator Web Browser Game
+    - Based on the original SimCity Classic source code.
+    - True to the original SimCity game.
+    - Open source code and graphics.
+    - Runs online or offline.
+    - Documentation and tutorial.
+
+  - Community Web Site
+    - Sharing cities.
+    - Discussion forum.
+    - Documentation wiki.
+    - In game chat.
+
+  - Inside the Simulator Documentation
+    - See how the simulator works.
+    - Learn about game programming.
+
+  - Educational Groundwork
+    - Spreadsheet export and import.
+    - Calendar planning and logging.
+
+- Stretch Goals:
+
+  - Contributors can vote on which stretch goals they want.
+  - Diagram dependencies and costs of stretch goals as a skill tree.
+
+  - Save Cities on World Map
+
+  - Rewind / Fast Forward / Branch
+    - Go forwards and backwards in time.
+    - Revisit decisions.
+    - Explore alternate universes.
+    - Compare different outcomes.
+
+  - Plug-In Extensibility
+    - Add new tile sets, zones, agents, scenarios, disasters.
+    - Program and customize simulation behavior.
+
+  - Mobile Micropolis City Simulator Game
+    - Mobile and tablet friendly user interface.
+    - Runs online or offline.
+
+  - Unity3D Port
+    - Enable high performance 3D and 2D user interfaces.
+    - Port to all platforms supported by Unity3D.
+
+  - Node.js Port
+    - Run on web servers.
+    - Desktop apps for Mac, Windows, Linux.
+
+  - Game Center Integration
+    - Free to play the full game.
+    - No sleazy "Cow Clicker" game mechanics.
+      - https://en.wikipedia.org/wiki/Cow_Clicker
+    - Contibutors vote on which services to support.
+      - Facebook.
+      - Steam.
+      - Chrome Web Store.
+      - Google Play.
+      - Apple Game Center.
+      - Windows Game Center.
+
+  - 3D City
+    - WebGL renderer.
+    - Lego and Minecraft buildings and agents.
+    - First person view.
+    - Street view panoramas.
+
+- Later Projects:
+
+  - Multi Player
+
+  - Educational
+
+  - Visual Programming
