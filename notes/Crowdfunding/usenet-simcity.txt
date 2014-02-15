@@ -1,0 +1,40 @@
+Path: utzoo!utgpu!jarvis.csri.toronto.edu!mailrus!wuarchive!zaphod.mps.ohio-state.edu!think!ames!haven!mimsy!brillig.umd.edu!don
+From: don@brillig.umd.edu (Don Hopkins)
+Newsgroups: comp.theory.cell-automata
+Subject: SimCity
+Summary: Urban development simulation where it belongs: in a video game!
+Message-ID: <21436@mimsy.umd.edu>
+Date: 26 Dec 89 13:37:09 GMT
+Sender: news@mimsy.umd.edu
+Reply-To: don@brillig.umd.edu (Don Hopkins)
+Organization: U of Maryland, Dept. of Computer Science, Human Computer Interaction Lab, Coll. Pk., MD 20742
+Lines: 28
+
+I just got a chance to play SimCity! It's like a drawing program that
+lets you build cities, by zoning districts, putting down power plants
+and football stadiums, wiring up the power grid, laying down roads and
+railroads. The simulation is actually running *while* you're
+constructing it! It acts like cellular automita with very high level
+rules -- it keeps track of each cell's population, land value,
+pollution, and many other factors, and the rules that govern how the
+zones develop are based on the state of neighboring zones, and other
+global factors (tax rate, etc). Districts that you've zoned don't come
+online and start developing until they're hooked into the power grid,
+by being connected through power line cells or adjacent buildings.
+Buildings seem to "feed" off of people brought in by roads and
+railroads. Residential zones in busy districts grow into high-rise
+apartment buildings. Traffic patterns develop on the roads, and you
+can see little cars zooming around based on the population of the
+area, and the flow of the roads! Once you build an airport, a
+helicoptor flies around the city and reports on heavy traffic,
+encouraging you to redesign the roads in that area!
+
+You may wonder what traffic copters have to do with cellular automita. 
+You just have to play it yourself to understand.
+
+SimCity is absolutely the most amazing game I've seen on the Macintosh
+to date! (It's available on other computers like the Amiga, as well.) 
+The graphics and animation are beautiful. I'll leave it at that --
+mere text cannot do it justice. 
+
+     -Don

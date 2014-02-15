@@ -1,0 +1,61 @@
+Ask influential ambassadors to lend their voice to the project.
+
+  - Will Wright
+  - Alan Kay
+  - SJ Klein
+  - Ian Bogost
+
+Social Media:
+
+  - Facebook
+    - Don't bother advertising on Facebook.
+  - Twitter
+  - Pinterest
+  - Google
+    - Buy google ads.
+
+Web Site:
+
+  - Game Plan
+  - Vidoes
+  - Forum
+  - Wiki
+  - Demos
+
+Communities:
+
+  - Lego
+  - Minecraft
+  - OLPC
+  - Reddit
+    - http://www.reddit.com/r/simcity
+    - http://www.reddit.com/r/micropolis
+  - Hacker News
+
+Media:
+
+  - Penny Arcade
+  - Kotaku
+  - IGN
+  - PC Gamer
+  - Joystiq
+  - Rock Paper Shotgun
+  - Cracked.com
+  - Something Awful
+  - RPG Codex
+
+Videos:
+
+  - Pre-load a series of videos to roll out over time to maintain interest in the project.
+  - Produce new videos for the project, and rerun old videos from the past. 
+
+Contact:
+
+  - Github users who forked Graeme's microplisJS project:
+    - martinsv serkanserttop sirg2003 tvance929 victordarras
+
+  - Bloggers and tweeters who have written about Micropolis
+
+  - ViziCities developers
+
+

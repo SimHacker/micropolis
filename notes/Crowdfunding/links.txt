@@ -1,0 +1,25 @@
+====
+
+MicropolisJS
+
+http://www.graememcc.co.uk/2013/10/27/reticulating-splines/#more-285
+http://micropolisjs.graememcc.co.uk/
+http://micropolisjs.graememcc.co.uk/participate.html
+https://github.com/graememcc/micropolisJS/
+
+====
+
+ViziCities @ViziCities
+
+Peter Smart @petewsmart
+Rob Hawkes @robhawkes
+
+http://vizicities.com/
+http://rawkes.com/articles/announcing-vizicities
+http://rawkes.com/articles/vizicities-dev-diary-1
+http://rawkes.com/articles/vizicities-dev-diary-2
+http://www.reddit.com/r/SimCity/comments/1ags23/vizicities_dev_diary_1_simcitylike_3d/c8xghdq
+http://gis.stackexchange.com/
+http://postgis.org/
+
+====
