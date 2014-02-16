@@ -1,0 +1,235 @@
+I want to tell you about my first time with SimCity.
+
+I was in college, working with Ben Shneiderman at the University of
+Maryland Human Computer Interaction Lab, where we were researching and
+developing advanced user interface technologies like pie menus,
+hypermedia browsers, the blue underline, and the world's first
+hypermedia joke.
+
+We had a couple of Macs in Human Computer Interaction lab named
+"Touch" and "Feel". Just before the "Winter Holiday", somebody came by
+the lab and dropped off a copy of SimCity for Macintosh as a Chanukah
+present, saying "you should take a look at this!" and then scampering
+mischeviously away. That fateful unexpected gift induced me to
+dedicate my life to SimCity.
+
+When I finally came up for air after my first binge marathon, I wrote
+this evangelical testamony about how I spent my vacation burning the
+midnight oil in the lab with SimCity:
+
+    Path: utzoo!utgpu!jarvis.csri.toronto.edu!mailrus!wuarchive!zaphod.mps.ohio-state.edu!think!ames!haven!mimsy!brillig.umd.edu!don
+    From: don@brillig.umd.edu (Don Hopkins)
+    Newsgroups: comp.theory.cell-automata
+    Subject: SimCity
+    Summary: Urban development simulation where it belongs: in a video game!
+    Message-ID: <21436@mimsy.umd.edu>
+    Date: 26 Dec 89 13:37:09 GMT
+    Sender: news@mimsy.umd.edu
+    Reply-To: don@brillig.umd.edu (Don Hopkins)
+    Organization: U of Maryland, Dept. of Computer Science, Human Computer Interaction Lab, Coll. Pk., MD 20742
+    Lines: 28
+
+    I just got a chance to play SimCity! It's like a drawing program that
+    lets you build cities, by zoning districts, putting down power plants
+    and football stadiums, wiring up the power grid, laying down roads and
+    railroads. The simulation is actually running *while* you're
+    constructing it! It acts like cellular automita with very high level
+    rules -- it keeps track of each cell's population, land value,
+    pollution<, and many other factors, and the rules that govern how the
+    zones develop are based on the state of neighboring zones, and other
+    global factors (tax rate, etc). Districts that you've zoned don't come
+    online and start developing until they're hooked into the power grid,
+    by being connected through power line cells or adjacent buildings.
+    Buildings seem to "feed" off of people brought in by roads and
+    railroads. Residential zones in busy districts grow into high-rise
+    apartment buildings. Traffic patterns develop on the roads, and you
+    can see little cars zooming around based on the population of the
+    area, and the flow of the roads! Once you build an airport, a
+    helicoptor flies around the city and reports on heavy traffic,
+    encouraging you to redesign the roads in that area!
+
+    You may wonder what traffic copters have to do with cellular automita. 
+    You just have to play it yourself to understand.
+
+    SimCity is absolutely the most amazing game I've seen on the Macintosh
+    to date! (It's available on other computers like the Amiga, as well.) 
+    The graphics and animation are beautiful. I'll leave it at that --
+    mere text cannot do it justice. 
+
+         -Don
+
+I spent the entire holiday in the lab glued to the Mac. And as I
+became dangerously obsessed with SimCity, school started again, yet I
+kept devoting more and more of my time to "research simulaton":
+playing SimCity when I should have been studying computer science, to
+learn how to do things like correctly spelling big words like
+automata, and doing real computer science research, like writing
+PostScript interpreters in PostScript and feeding them to themselves
+to see what they draw.
+
+But then I realized that SimCity was actually pretending to do a whole
+lot of real work on my behalf, and that I was actually learning a lot
+by playing it.
+
+As a user interface flower child, I studied how the ebb and flow
+emerged from the point and click of the user interface, and imagined
+how I could make it even more friendly and efficient.
+
+As an anal retentive programmer, I studied the behavior and model of
+the simulation, by running experients, poking and prodding it, trying
+to find its underlying flaws, presumptions, limitations, quirks and
+edge conditions.
+
+In my lurid imagination, I "reverse over-engineered" an elaborate
+story about how the system really worked, and how I could improve it
+by making the simulation much more clever, and the user interface even
+easier to use and more fun to play, if only someone would die and make
+me Darth Vader. 
+
+It turns out I was quite idealistic and naively mistaken about the
+idea that becoming Darth Vader was the best way to go about world
+domination. But that didn't matter, because it was a great mental
+exercise to go through.
+
+The ultimate consequence of playing SimCity took on my life was that
+it required an extra year for me to graduate from college (or at least
+that seems like a convenient rationalization after the fact). SimCity
+may have sent my STAT400 grades to hell in a handbasket, but at least
+I enjoyed the ride. Doctor Brin was gratious enough to explain how
+clever his son was and that I would understand statistics eventually
+if I repeated his class a random number of times.
+
+Staying in school as long as it took to finally graduate was worth the
+effort and persistence, and it also made my mom happy, because then
+she could kick me out of the house and let the cats have my room.
+
+It set me on the path that soon led to holding a floppy disk with
+source code to Macintosh SimCity in my own hands, without being Darth
+Vader. Then reading and reindenting it, to discovering how it actually
+works. Then refactoring and rewriting the user interface and simulator
+time and again, as technology rapidly advanced and made my most recent
+efforts obsolete and unusable.
+
+Even after graduating, you keep on learning throughout your whole
+life. Finishing school and moving out of my mom's house led to
+learning enough in the real world to get a great job working with Will
+Wright at Maxis.
+
+Thanks to the continuous education of learning from co-workers and
+colleagues, my path eventually led to being invited to join a small
+eccentric team, working on a quirky flakey game about eating and
+shitting, that nobody with a real life would ever want to play.
+
+But I had no fucking clue how to do what I was tasked to deliver, so I
+looked to great teachers like Ken "The Noise" Perlin, whose
+foundational publications and instructional demos taught me how to
+improvise layered character animation with procedural spline
+reticulation, head faking and moon walking.
+
+And to Ocean "Inside-Out Holodeck" Quigly, who taught me how to
+singlehandedly pilot the beautifully dazzle painted nuclear aircraft
+carrier that is 3D Studio Max through enemy waters.
+
+And to Jamie "And they said Semi-Globals would never work!!!"
+Doornbos, who taught me how to just make shit magically happen no
+matter how impossible or complicated or ridiculous it seems.
+
+And to Eric "I fucking LOVE C++" Bowman, who taught me how cherish and
+celebrate the subtleties and nuances of his favorite programming
+language,
+
+And to Patrick "The Third J" Barret, who taught me how to weave
+spaghetti code into durable cloth that will last you a lifetime.
+
+And to Will Wright "Games For Food", who taught me how gratiously
+accept an unwrapped can of lima beans as a Christmas present.
+
+At first, we called the game we were developing "DH" for "Doll House",
+but the focus groups told us that boys would never play a game like
+that.
+
+Then we thought of calling it "AFA" for "Action Figure House", but the
+focus groups told us that girls would never play a game like that.
+
+Then we called it "TDS" for "Tactical Domestic Simulation", but the
+focus groups told us that gay people would never play a game like that.
+
+Then we called it "IDEAOGSFWPHPS" for "Interior Decorating, Exterior
+Architecting, Outdoor Gardening, Social Flirting, Wedding Planning and
+House Partying Simulator", but the focus groups told us that straight
+people would never play a game like that, and marketing told us the
+domain name was taken.
+
+Somewhere in there, the team was brainstorming together at a
+cheeseburger party after work, and we thought of something we can only
+now refer to as "TGNITW" for "The Greatest Name In The World", which
+everyone agreed perfectly captured what it was all about, was short,
+sweet and exciting, rolled deliciously off the tongue and into the
+ear, rhymed poetically with thesaurus pages of flattering adjectives,
+looked typographically elegent even when rendered in Comic Sans, and
+the domain name had not even been taken!
+
+But the next morning, nobody could rememember what that name was, so
+we ended up calling it something boring and stupid like "The Sims",
+because that was the only domain name still available.
+
+Then out of the blue, this weird guy wearing cool sneakers whose name
+we weren't allowed to know visited and asked us a lot of questions
+about the game, and how we could tolerate working under Will, and if
+all of those complaints we'd been filing with HR were true, and where
+had he touched us? 
+
+We had a difficult time explaining verbally. So I gave him a copy of
+Scott McClouds "Understanding Comics" with a doobie tucked inside the
+front cover, and pointed desparately at the picture of a smiling happy
+face against a serene watercolor background. Then he exclaimed, "Oh, I
+understand: In your hearts and minds! Good day then!" and left.
+
+Then EA bought Maxis, and saved us from our living hell by firing the
+focus groups, who were the ones actually tormenting us. And they
+forced us to stop focusing, playing with prototypes, reading comic
+books, spinning foosball and thinking up names, and then fucking well
+finish the damn game.
+
+Now I want to finish another damn game, Micropolis, by bringing it up
+to date with modern automatic machinery, operating practices and
+packaging conventions, while preserving the spirit and feeling of the
+original game.
+
+The first goal on the plate is to faithfuly reconstruct the original
+game experience in the web browser as free open software written in
+JavaScript, that runs on or offline, and has a few improvements. And
+to build a web site where the community can gather together, share
+their content, debate in their forums, document in their wikis, and
+build and explore each other's cities on the map of their Earth (and
+other cellestial and non-cellestial bodies).
+
+The layered cake of stretch goals are levels towards opening up the
+game, modularizing and documenting it, and enabling modders and
+players to create, script and plug in their own content and tools,
+like buildings, scenarios, disasters, vehicles, monsters and easter
+eggs.
+
+Baking and slicing up all that stuff will be a piece of cake, with the
+healthy crop of open source tools, frameworks and libraries available
+today, including JavaScript, HTML5, Canvas, WebGL, WebRTC, Node.js,
+GitHub, and the lush open source software ecology in which they exist.
+The difficult part is choosing which of many delicious alternatives to
+harvest and cook.
+
+The ultimate stretch goal is to put a thick layer of 3D frosting on
+the cake, so players can build their own zones, roads and sprites with
+exsiting 3D tools like Minecraft, Lego Digital Designer, and Build
+with Chrome.
+
+All that bread and butter work will lay the foundation for subsequent
+more ambitous projects, including scaling Micropolis into a social,
+collaborative, creative, democratic, multi player game, and fully
+developing its educational potential by applying the great ideas of
+philosophers and teachers like Jean Piaget, Seymour Papert, Alan Kay,
+Doreen Nelson, Upmanu Lall and others.
+
+For the past 25 years, this simulated city has been my home, school
+and work, and I invite you to help me make it yours too, by kicking in
+some dough.
+
