@@ -18,6 +18,8 @@ On Game Load-
 Disasters-
  *When running FAST or SUPER_FAST, automatically pause or slow down the
   simulation when a disaster occurs.
+ *Floods- should be allowed to flood zones, but I think this is currently
+  not the case.
 
 City size notifications-
  *Pause and pop up a message the first time the city reaches 2000, 10000,
