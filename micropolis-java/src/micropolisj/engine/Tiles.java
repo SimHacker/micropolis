@@ -12,6 +12,9 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
+/**
+ * Provides global methods for loading tile specifications.
+ */
 public class Tiles
 {
 	static final Charset UTF8 = Charset.forName("UTF-8");
@@ -76,6 +79,12 @@ public class Tiles
 		}
 	}
 
+	/**
+	 * Access a tile specification by index number.
+	 *
+	 * @return a tile specification, or null if there is no tile
+	 * with the given number
+	 */
 	public static TileSpec get(int tileNumber)
 	{
 		if (tileNumber >= 0 && tileNumber < tiles.length) {
