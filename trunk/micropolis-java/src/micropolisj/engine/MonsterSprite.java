@@ -10,6 +10,9 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Implements a monster (one of the Micropolis disasters).
+ */
 public class MonsterSprite extends Sprite
 {
 	int count;

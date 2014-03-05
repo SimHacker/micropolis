@@ -10,6 +10,12 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Implements the commuter train.
+ * The commuter train appears if the city has a certain amount of
+ * railroad track. It wanders around the city's available track
+ * randomly.
+ */
 public class TrainSprite extends Sprite
 {
 	static int [] Cx = { 0, 16, 0, -16 };

@@ -8,6 +8,9 @@
 
 package micropolisj.engine;
 
+/**
+ * Implements a tornado (one of the Micropolis disasters).
+ */
 public class TornadoSprite extends Sprite
 {
 	static int [] CDx = {  2,  3,  2,  0, -2, -3 };

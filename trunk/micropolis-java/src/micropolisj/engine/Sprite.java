@@ -10,6 +10,13 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Represents a mobile entity on the city map, such as a tornado
+ * or a train. There can be any number present in a city, and each one
+ * gets a chance to act on every tick of the simulation.
+ *
+ * @see Micropolis#moveObjects
+ */
 public abstract class Sprite
 {
 	Micropolis city;

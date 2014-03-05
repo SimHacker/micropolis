@@ -8,6 +8,12 @@
 
 package micropolisj.engine;
 
+/**
+ * Implements the airplane.
+ * The airplane appears if the city contains an airport.
+ * It first takes off, then flies around randomly,
+ * occassionally crashing.
+ */
 public class AirplaneSprite extends Sprite
 {
 	int destX;
