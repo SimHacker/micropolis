@@ -8,6 +8,11 @@
 
 package micropolisj.engine;
 
+/**
+ * Specifies a rectangular area in the city's coordinate space.
+ * This class is functionally equivalent to Java AWT's Rectangle
+ * class, but is portable to Java editions that do not contain AWT.
+ */
 public class CityRect
 {
 	/** The X coordinate of the upper-left corner of the rectangle. */
@@ -16,7 +21,10 @@ public class CityRect
 	/** The Y coordinate of the upper-left corner of the rectangle. */
 	public int y;
 
+	/** The width of the rectangle. */
 	public int width;
+
+	/** The height of the rectangle. */
 	public int height;
 
 	public CityRect()
