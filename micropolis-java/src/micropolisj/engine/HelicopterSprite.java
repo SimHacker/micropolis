@@ -8,6 +8,12 @@
 
 package micropolisj.engine;
 
+/**
+ * Implements the helicopter.
+ * The helicopter appears if the city contains an airport.
+ * It usually flies to the location in the city with the highest
+ * traffic density, but sometimes flies to other locations.
+ */
 public class HelicopterSprite extends Sprite
 {
 	int count;

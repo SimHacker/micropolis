@@ -10,6 +10,11 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
+/**
+ * Implements an explosion.
+ * An explosion occurs when certain sprites collide,
+ * or when a zone is demolished by fire.
+ */
 public class ExplosionSprite extends Sprite
 {
 	public ExplosionSprite(Micropolis engine, int x, int y)
