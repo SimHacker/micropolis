@@ -10,3 +10,6 @@
 	path = seedrandom
 	url = https://github.com/davidbau/seedrandom.git
 	branch = master
+[submodule "excellentexport"]
+	path = excellentexport
+	url = https://github.com/jmaister/excellentexport
