@@ -1,0 +1,25 @@
+This is the scene configuration for Blender, as of 2014-03-29.
+
+CAMERA
+	(x,y,z) = (-42,-42,60)
+	X: 45 deg
+	Y: 0 deg
+	Z: -45 deg
+Orthographic scale: 92.000
+
+RENDER RESOLUTION
+	X: 1600
+	Y: 1200
+	50%
+
+LIGHTS
+ * Hemi light at (0, 0, 48)
+	aimed in -Z direction
+	White
+	Energy: 0.400
+ * Sun light
+	X: 40.00 deg
+	Y: 0
+	Z: -140.00 deg
+	White
+	Energy: 1.200
