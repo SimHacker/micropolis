@@ -19,6 +19,7 @@ my @zones = qw(
 	firestation 3x3
 	police      3x3
 	hospital    3x3
+	church      3x3
 	coal        4x4
 	com01       3x3
 	com02       3x3
