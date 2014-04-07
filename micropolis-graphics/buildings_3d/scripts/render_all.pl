@@ -30,6 +30,7 @@ my @zones = qw(
 	res2        3x3
 	res3        3x3
 	res4        3x3
+	res09       3x3
 	);
 
 unless (-d "raw_renders") {
