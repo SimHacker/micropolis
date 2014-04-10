@@ -30,6 +30,8 @@ my @zones = qw(
 	res2        3x3
 	res3        3x3
 	res4        3x3
+	res05       3x3
+	res06       3x3
 	res09       3x3
 	);
 
