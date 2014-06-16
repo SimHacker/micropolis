@@ -3,14 +3,27 @@
 
 = Micropolis Source Code Description =
 
-This page describes the several source code releases for Micropolis
-which you can find by browsing the Source code of this project
-(click the Source tab above).
+This page describes the several source code releases for Micropolis,
+some of which are hosted here (click the Source tab above), others
+are hosted elsewhere.
+
+== DiverCity ==
+
+Written in Java (based on MicropolisJ),
+this project implements a large number of enhancements
+to the basic Micropolis game, including better traffic,
+education and culture points, a new road type, schools, museums,
+solar plants and more.
+Introduced March 2014.
+Hosted on Github.
+Check it out at https://github.com/Team--Rocket/divercity.
+
 
 == micropolis-java ==
 
-This is the new (as of February 2013) Java rewrite of Micropolis.
-Functionality-wise it is almost equivalent to the TCL/Tk edition,
+This is the original Java rewrite of Micropolis.
+First released in Feburary 2013, it is functionality-wise almost
+equivalent to the TCL/Tk edition,
 but the source code is probably more cleanly organized, and all
 strings are translatable. Being in Java, it can easily be made to
 run on any modern desktop operating system.
