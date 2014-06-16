@@ -7,7 +7,7 @@ This page describes the several source code releases for Micropolis,
 some of which are hosted here (click the Source tab above), others
 are hosted elsewhere.
 
-== DiverCity ==
+== !DiverCity ==
 
 Written in Java (based on MicropolisJ),
 this project implements a large number of enhancements
