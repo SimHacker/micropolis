@@ -18,8 +18,15 @@ Introduced March 2014.
 Hosted on Github.
 Check it out at https://github.com/Team--Rocket/divercity.
 
+== micropolis-android ==
 
-== micropolis-java ==
+Written in Java (based on MicropolisJ),
+this project brings Micropolis to the Android operating
+system. It is still a work-in-progress.
+Hosted on Github.
+Check it out at https://github.com/jason17055/micropolis-android.
+
+== MicropolisJ (micropolis-java) ==
 
 This is the original Java rewrite of Micropolis.
 First released in Feburary 2013, it is functionality-wise almost
