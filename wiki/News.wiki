@@ -4,6 +4,19 @@
 
 This page presents a history of the Micropolis open source release.
 
+== Students from Freie Universität in Berlin enhance Micropolis (June 16, 2014) ==
+
+A team of students taking a three-week programming course at
+Freie Universität Berlin this Spring have studied the MicropolisJ
+source code and developed enhancements to it, which they have named
+*DiverCity*.
+
+The source code (along with a description of their enhancements)
+is available from their Github repository:
+https://github.com/Team--Rocket/divercity
+
+Go check it out!
+
 == Java Micropolis, version 1.6 (December 1, 2013) ==
 
 A minor update to the Java Micropolis project. This version adds
