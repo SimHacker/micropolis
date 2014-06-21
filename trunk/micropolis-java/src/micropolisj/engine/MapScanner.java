@@ -943,12 +943,13 @@ class MapScanner extends TileBehavior
 
 		for (int y = 0; y < 4; y++)
 		{
-			for (int x = 0; x < 4; x++, zoneBase++)
+			for (int x = 0; x < 4; x++)
 			{
-				city.setTile(xpos - 1 + x, ypos - 1 + y,
-					(char) (zoneBase | (x == 1 && y == 1 ? (PWRBIT) : 0)));
+				city.setTile(xpos - 1 + x, ypos - 1 + y, (char)zoneBase);
+				zoneBase++;
 			}
 		}
+		city.setTilePower(xpos, ypos, true);
 	}
 
 	/**
