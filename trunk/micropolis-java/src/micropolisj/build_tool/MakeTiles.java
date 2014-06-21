@@ -127,8 +127,8 @@ public class MakeTiles
 			destX+TILE_SIZE, destY+TILE_SIZE,
 			ref.offsetX * sourceImg.basisSize / 16,
 			ref.offsetY * sourceImg.basisSize / 16,
-			(ref.offsetX + (ref.width != 0 ? ref.width : 16)) * sourceImg.basisSize / 16,
-			(ref.offsetY + (ref.height != 0 ? ref.height : 16)) * sourceImg.basisSize / 16,
+			(ref.offsetX + 16) * sourceImg.basisSize / 16,
+			(ref.offsetY + 16) * sourceImg.basisSize / 16,
 			null);
 	}
 
@@ -149,8 +149,6 @@ public class MakeTiles
 		String fileName;
 		int offsetX;
 		int offsetY;
-		int width;
-		int height;
 	}
 
 	static FrameSpec parseFrameSpec(TileSpec spec)
@@ -174,12 +172,6 @@ public class MakeTiles
 			}
 			if (parts.length >= 2) {
 				rv.offsetY = Integer.parseInt(parts[1]);
-			}
-			if (parts.length >= 3) {
-				rv.width = Integer.parseInt(parts[2]);
-			}
-			if (parts.length >= 4) {
-				rv.height = Integer.parseInt(parts[3]);
 			}
 		}//endif something given after '@' in image specifier
 
