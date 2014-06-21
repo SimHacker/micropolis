@@ -18,7 +18,6 @@ public abstract class TileBehavior
 	int xpos;
 	int ypos;
 	int tile;
-	int rawTile;
 
 	protected TileBehavior(Micropolis city)
 	{
@@ -30,8 +29,7 @@ public abstract class TileBehavior
 	{
 		this.xpos = xpos;
 		this.ypos = ypos;
-		this.rawTile = city.getTileRaw(xpos, ypos);
-		this.tile = rawTile & LOMASK;
+		this.tile = city.getTile(xpos, ypos);
 		apply();
 	}
 
