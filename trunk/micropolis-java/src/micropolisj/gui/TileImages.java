@@ -29,13 +29,7 @@ public class TileImages
 		this.TILE_WIDTH = size;
 		this.TILE_HEIGHT = size;
 
-		if (size != 16) {
-			this.images = loadTileImages("/tiles_"+size+"x"+size+".png", size);
-		}
-		else {
-			this.images = loadTileImages("/tiles.png", 16);
-		}
-
+		this.images = loadTileImages("/"+size+"x"+size+"/tiles.png", size);
 		loadSpriteImages();
 	}
 
