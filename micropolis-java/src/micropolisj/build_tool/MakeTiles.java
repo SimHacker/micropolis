@@ -85,7 +85,12 @@ public class MakeTiles
 		System.out.println("Generating tiles array: "+outputFile);
 		ImageIO.write(buf, "png", outputFile);
 
-		File indexFile = new File("tiles.idx");
+		File indexFile = new File(
+				outputFile.getParentFile(),
+				outputFile.getName()
+					.replaceFirst("\\.png$","")
+					+ ".idx"
+				);
 		System.out.println("Generating tiles index: "+indexFile);
 		writeIndexFile(tileNames, indexFile);
 	}
