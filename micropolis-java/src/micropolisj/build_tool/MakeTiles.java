@@ -39,12 +39,12 @@ public class MakeTiles
 		}
 
 		File recipeFile = new File(args[0]);
-		File outputFile = new File(args[1]);
+		File outputDir = new File(args[1]);
 
-		generateFromRecipe(recipeFile, outputFile);
+		generateFromRecipe(recipeFile, outputDir);
 	}
 
-	static void generateFromRecipe(File recipeFile, File outputFile)
+	static void generateFromRecipe(File recipeFile, File outputDir)
 		throws IOException
 	{
 		Properties recipe = new Properties();
@@ -82,15 +82,17 @@ public class MakeTiles
 			drawTo(ref, gr, 0, TILE_SIZE*i);
 		}
 
+		// make parent directories if necessary
+		outputDir.mkdirs();
+
+		// output the composed images
+		File outputFile = new File(outputDir, "tiles.png");
 		System.out.println("Generating tiles array: "+outputFile);
 		ImageIO.write(buf, "png", outputFile);
 
-		File indexFile = new File(
-				outputFile.getParentFile(),
-				outputFile.getName()
-					.replaceFirst("\\.png$","")
-					+ ".idx"
-				);
+		// output an index of all tile names and their offset into
+		// the composed tile array
+		File indexFile = new File(outputDir, "tiles.idx");
 		System.out.println("Generating tiles index: "+indexFile);
 		writeIndexFile(tileNames, indexFile);
 	}
