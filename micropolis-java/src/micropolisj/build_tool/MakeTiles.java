@@ -39,6 +39,12 @@ public class MakeTiles
 		File recipeFile = new File(args[0]);
 		File outputFile = new File(args[1]);
 
+		generateFromRecipe(recipeFile, outputFile);
+	}
+
+	static void generateFromRecipe(File recipeFile, File outputFile)
+		throws IOException
+	{
 		Properties recipe = new Properties();
 		recipe.load(
 			new InputStreamReader(
