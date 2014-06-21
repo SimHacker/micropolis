@@ -19,7 +19,8 @@ public class MakeTiles
 	static final Charset UTF8 = Charset.forName("UTF-8");
 	static int SKIP_TILES = 0;
 	static int COUNT_TILES = -1;
-	static int TILE_SIZE = 16;
+	static final int STD_SIZE = 16;
+	static int TILE_SIZE = STD_SIZE;
 
 	public static void main(String [] args)
 		throws Exception
@@ -122,10 +123,10 @@ public class MakeTiles
 			sourceImg.image,
 			destX, destY,
 			destX+TILE_SIZE, destY+TILE_SIZE,
-			ref.offsetX * sourceImg.basisSize / 16,
-			ref.offsetY * sourceImg.basisSize / 16,
-			(ref.offsetX + 16) * sourceImg.basisSize / 16,
-			(ref.offsetY + 16) * sourceImg.basisSize / 16,
+			ref.offsetX * sourceImg.basisSize / STD_SIZE,
+			ref.offsetY * sourceImg.basisSize / STD_SIZE,
+			(ref.offsetX + STD_SIZE) * sourceImg.basisSize / STD_SIZE,
+			(ref.offsetY + STD_SIZE) * sourceImg.basisSize / STD_SIZE,
 			null);
 	}
 
@@ -223,7 +224,7 @@ public class MakeTiles
 
 		String [] cmdline = {
 			inkscapeBin.toString(),
-			"--export-dpi="+(TILE_SIZE*90.0/16.0),
+			"--export-dpi="+(TILE_SIZE*90.0/STD_SIZE),
 			"--export-png="+pngFile.toString(),
 			svgFile.toString()
 			};
@@ -295,7 +296,7 @@ public class MakeTiles
 			ImageIcon ii = new ImageIcon(pngFile.toString());
 			return new SourceImage(
 				ii.getImage(),
-				16);
+				STD_SIZE);
 		}
 
 		throw new IOException("File not found: "+fileName+".{svg,png}");
