@@ -43,18 +43,20 @@ public class Tiles
 				)
 			);
 
-		for (int i = 0; ; i++) {
-			String tileName = Integer.toString(i);
+		String [] tileNames = TileSpec.generateTileNames(tilesRc);
+		tiles = new TileSpec[tileNames.length];
+
+		for (int i = 0; i < tileNames.length; i++) {
+			String tileName = tileNames[i];
 			String rawSpec = tilesRc.getProperty(tileName);
 			if (rawSpec == null) {
 				break;
 			}
 
-			TileSpec ts = TileSpec.parse(i, rawSpec, tilesRc);
+			TileSpec ts = TileSpec.parse(i, tileName, rawSpec, tilesRc);
 			tilesByName.put(tileName, ts);
-			tilesList.add(ts);
+			tiles[i] = ts;
 		}
-		tiles = tilesList.toArray(new TileSpec[0]);
 
 		for (int i = 0; i < tiles.length; i++) {
 			tiles[i].resolveReferences(tilesByName);
@@ -77,6 +79,11 @@ public class Tiles
 				}
 			}
 		}
+	}
+
+	public static TileSpec load(String tileName)
+	{
+		return tilesByName.get(tileName);
 	}
 
 	/**
