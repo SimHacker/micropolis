@@ -31,3 +31,7 @@ Graphics-
 
 Draw-Bridge-
  *If there's traffic on a bridge, the draw bridge does not open correctly.
+
+Scenarios-
+ *Implement. See original C/Tcl code, src/sim/s_fileio.c LoadScenario(),
+  and res/snro.111, res/snro.222, etc.
