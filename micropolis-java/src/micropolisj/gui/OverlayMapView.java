@@ -94,7 +94,7 @@ public class OverlayMapView extends JComponent
 		repaint();
 	}
 
-	static BufferedImage tileArrayImage = loadImage("/tilessm.png");
+	static BufferedImage tileArrayImage = loadImage("/sm/tiles.png");
 	static final int TILE_WIDTH = 3;
 	static final int TILE_HEIGHT = 3;
 	static final int TILE_OFFSET_Y = 3;
