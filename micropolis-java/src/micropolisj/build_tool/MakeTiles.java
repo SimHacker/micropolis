@@ -52,12 +52,13 @@ public class MakeTiles
 
 		for (int i = 0; i < NTILES; i++) {
 			int tileNumber = SKIP_TILES + i;
-			String rawSpec = recipe.getProperty(Integer.toString(tileNumber));
+			String tileName = Integer.toString(tileNumber);
+			String rawSpec = recipe.getProperty(tileName);
 			if (rawSpec == null) {
 				continue;
 			}
 
-			TileSpec tileSpec = TileSpec.parse(tileNumber, rawSpec, recipe);
+			TileSpec tileSpec = TileSpec.parse(tileNumber, tileName, rawSpec, recipe);
 			FrameSpec ref = parseFrameSpec(tileSpec);
 			if (ref == null) {
 				// tile is defined, but it has no images

@@ -13,6 +13,7 @@ import java.util.*;
 public class TileSpec
 {
 	int tileNumber;
+	String name;
 	TileSpec animNext;
 	TileSpec onPower;
 	TileSpec onShutdown;
@@ -29,16 +30,17 @@ public class TileSpec
 	Map<String,String> attributes;
 	List<String> images;
 
-	protected TileSpec(int tileNumber)
+	protected TileSpec(int tileNumber, String tileName)
 	{
 		this.tileNumber = tileNumber;
+		this.name = tileName;
 		this.attributes = new HashMap<String,String>();
 		this.images = new ArrayList<String>();
 	}
 
-	public static TileSpec parse(int tileNumber, String inStr, Properties tilesRc)
+	public static TileSpec parse(int tileNumber, String tileName, String inStr, Properties tilesRc)
 	{
-		TileSpec ts = new TileSpec(tileNumber);
+		TileSpec ts = new TileSpec(tileNumber, tileName);
 		ts.load(inStr, tilesRc);
 		return ts;
 	}
@@ -290,7 +292,12 @@ public class TileSpec
 
 	public String toString()
 	{
-		return "{tile#"+tileNumber+"}";
+		return "{tile:"+name+"}";
+	}
+
+	boolean isNumberedTile()
+	{
+		return name.matches("^\\d+$");
 	}
 
 	void resolveReferences(Map<String,TileSpec> tileMap)
