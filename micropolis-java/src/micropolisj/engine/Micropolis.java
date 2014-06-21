@@ -464,13 +464,25 @@ public class Micropolis
 		return (getTileRaw(xpos, ypos) & PWRBIT) == PWRBIT;
 	}
 
+	/**
+	 * Note: this method clears the PWRBIT of the given location.
+	 */
 	public void setTile(int xpos, int ypos, char newTile)
 	{
+		// check to make sure we aren't setting an upper bit using
+		// this method
+		assert (newTile & LOMASK) == newTile;
+
 		if (map[ypos][xpos] != newTile)
 		{
 			map[ypos][xpos] = newTile;
 			fireTileChanged(xpos, ypos);
 		}
+	}
+
+	public void setTilePower(int xpos, int ypos, boolean power)
+	{
+		map[ypos][xpos] = (char)(map[ypos][xpos] & (~PWRBIT) | (power ? PWRBIT : 0));
 	}
 
 	final public boolean testBounds(int xpos, int ypos)

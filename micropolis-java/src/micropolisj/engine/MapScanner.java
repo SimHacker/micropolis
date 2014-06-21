@@ -109,7 +109,7 @@ class MapScanner extends TileBehavior
 
 	boolean setZonePower()
 	{
-		boolean oldPower = (rawTile & PWRBIT) == PWRBIT;
+		boolean oldPower = city.isTilePowered(xpos, ypos);
 		boolean newPower = (
 			tile == NUCLEAR ||
 			tile == POWERPLANT ||
@@ -118,12 +118,12 @@ class MapScanner extends TileBehavior
 
 		if (newPower && !oldPower)
 		{
-			city.setTile(xpos, ypos, (char) (rawTile | PWRBIT));
+			city.setTilePower(xpos, ypos, true);
 			city.powerZone(xpos, ypos, getZoneSizeFor(tile));
 		}
 		else if (!newPower && oldPower)
 		{
-			city.setTile(xpos, ypos, (char) (rawTile & (~PWRBIT)));
+			city.setTilePower(xpos, ypos, false);
 			city.shutdownZone(xpos, ypos, getZoneSizeFor(tile));
 		}
 
@@ -172,9 +172,8 @@ class MapScanner extends TileBehavior
 			}
 		}
 
-		// refresh rawTile, tile
-		this.rawTile = city.map[ypos][xpos];
-		this.tile = (char) (rawTile & LOMASK);
+		// refresh own tile property
+		this.tile = city.getTile(xpos, ypos);
 
 		setZonePower();
 		return true;
@@ -798,8 +797,10 @@ class MapScanner extends TileBehavior
 		{
 			// downgrade from full-size zone to 8 little houses
 
-			int pwrBit = (rawTile & PWRBIT);
-			city.setTile(xpos, ypos, (char)(RESCLR | pwrBit));
+			boolean pwr = city.isTilePowered(xpos, ypos);
+			city.setTile(xpos, ypos, RESCLR);
+			city.setTilePower(xpos, ypos, pwr);
+
 			for (int x = xpos-1; x <= xpos+1; x++)
 			{
 				for (int y = ypos-1; y <= ypos+1; y++)
