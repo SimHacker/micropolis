@@ -9,6 +9,8 @@ import java.util.*;
 import javax.imageio.*;
 import javax.swing.ImageIcon;
 
+import static micropolisj.engine.TileSpec.generateTileNames;
+
 public class MakeTiles
 {
 	static HashMap<String,String> tileData = new HashMap<String,String>();
@@ -16,7 +18,7 @@ public class MakeTiles
 
 	static final Charset UTF8 = Charset.forName("UTF-8");
 	static int SKIP_TILES = 0;
-	static int NTILES = 960;
+	static int COUNT_TILES = -1;
 	static int TILE_SIZE = 16;
 
 	public static void main(String [] args)
@@ -33,7 +35,7 @@ public class MakeTiles
 			SKIP_TILES = Integer.parseInt(System.getProperty("skip_tiles"));
 		}
 		if (System.getProperty("tile_count") != null) {
-			NTILES = Integer.parseInt(System.getProperty("tile_count"));
+			COUNT_TILES = Integer.parseInt(System.getProperty("tile_count"));
 		}
 
 		File recipeFile = new File(args[0]);
@@ -52,17 +54,23 @@ public class MakeTiles
 				UTF8
 			));
 
+		// count number of images
+		String [] tileNames = generateTileNames(recipe);
+		int ntiles = COUNT_TILES == -1 ? tileNames.length : COUNT_TILES;
+
 		// actually assemble the image
-		BufferedImage buf = new BufferedImage(TILE_SIZE,TILE_SIZE*NTILES,BufferedImage.TYPE_INT_RGB);
+		BufferedImage buf = new BufferedImage(TILE_SIZE,TILE_SIZE*ntiles,BufferedImage.TYPE_INT_RGB);
 		Graphics2D gr = buf.createGraphics();
 
-		for (int i = 0; i < NTILES; i++) {
+		for (int i = 0; i < ntiles; i++) {
 			int tileNumber = SKIP_TILES + i;
-			String tileName = Integer.toString(tileNumber);
-			String rawSpec = recipe.getProperty(tileName);
-			if (rawSpec == null) {
+			if (!(tileNumber >= 0 && tileNumber < tileNames.length)) {
 				continue;
 			}
+
+			String tileName = tileNames[tileNumber];
+			String rawSpec = recipe.getProperty(tileName);
+			assert rawSpec != null;
 
 			TileSpec tileSpec = TileSpec.parse(tileNumber, tileName, rawSpec, recipe);
 			FrameSpec ref = parseFrameSpec(tileSpec);
@@ -76,6 +84,22 @@ public class MakeTiles
 
 		System.out.println("Generating tiles array: "+outputFile);
 		ImageIO.write(buf, "png", outputFile);
+
+		File indexFile = new File("tiles.idx");
+		System.out.println("Generating tiles index: "+indexFile);
+		writeIndexFile(tileNames, indexFile);
+	}
+
+	static void writeIndexFile(String [] tileNames, File indexFile)
+		throws IOException
+	{
+		PrintWriter out = new PrintWriter(
+			new FileWriter(indexFile)
+			);
+		for (int i = 0; i < tileNames.length; i++) {
+			out.printf("%s %d\n", tileNames[i], i);
+		}
+		out.close();
 	}
 
 	static void drawTo(FrameSpec ref, Graphics2D gr, int destX, int destY)
