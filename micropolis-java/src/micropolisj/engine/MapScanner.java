@@ -706,7 +706,6 @@ class MapScanner extends TileBehavior
 		if (z > 128)
 			return;
 
-		this.tile = rawTile & LOMASK;
 		if (tile == RESCLR)
 		{
 			if (pop < 8)
