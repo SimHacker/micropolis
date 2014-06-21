@@ -48,25 +48,25 @@
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
 	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<arg file="graphics/tiles.rc" />
-	<arg file="${builddir}/tiles.png" />
+	<arg file="${builddir}/16x16" />
 </java>
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
 	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<sysproperty key="tile_size" value="8" />
 	<arg file="graphics/tiles.rc" />
-	<arg file="${builddir}/tiles_8x8.png" />
+	<arg file="${builddir}/8x8" />
 </java>
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
 	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<sysproperty key="tile_size" value="32" />
 	<arg file="graphics/tiles.rc" />
-	<arg file="${builddir}/tiles_32x32.png" />
+	<arg file="${builddir}/32x32" />
 </java>
 <java classname="micropolisj.build_tool.MakeTiles" classpath="${builddir}"
 	fork="true" failonerror="true" dir="graphics" inputstring="">
 	<sysproperty key="tile_size" value="3" />
 	<arg file="graphics/tiles.rc" />
-	<arg file="${builddir}/tilessm.png" />
+	<arg file="${builddir}/sm" />
 </java>
 <copy todir="${builddir}" file="graphics/tiles.rc" />
 </target>
