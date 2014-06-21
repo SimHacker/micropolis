@@ -116,7 +116,7 @@ public class MakeTiles
 			drawTo(ref.background, gr, destX, destY);
 		}
 
-		SourceImage sourceImg = loadImage(ref.fileName);
+		SourceImage sourceImg = ref.image;
 
 		gr.drawImage(
 			sourceImg.image,
@@ -143,12 +143,13 @@ public class MakeTiles
 	static class FrameSpec
 	{
 		FrameSpec background;
-		String fileName;
+		SourceImage image;
 		int offsetX;
 		int offsetY;
 	}
 
 	static FrameSpec parseFrameSpec(TileSpec spec)
+		throws IOException
 	{
 		FrameSpec result = null;
 
@@ -159,7 +160,7 @@ public class MakeTiles
 		result = rv;
 
 		String [] parts = layerStr.split("@", 2);
-		rv.fileName = parts[0];
+		rv.image = loadImage(parts[0]);
 
 		if (parts.length >= 2) {
 			String offsetInfo = parts[1];
