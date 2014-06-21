@@ -290,7 +290,7 @@ class TerrainBehavior extends TileBehavior
 		}
 
 		if (getBoatDis() < 300/16 && PRNG.nextInt(8) == 0) {
-			if ((rawTile & 1) != 0) {
+			if ((tile & 1) != 0) {
 				// vertical bridge
 				if (xpos < city.getWidth()-1) {
 					// look for CHANNEL tile to right of
