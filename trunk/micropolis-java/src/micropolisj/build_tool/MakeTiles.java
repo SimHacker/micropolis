@@ -116,12 +116,7 @@ public class MakeTiles
 			drawTo(ref.background, gr, destX, destY);
 		}
 
-		if (!loadedImages.containsKey(ref.fileName)) {
-			loadedImages.put(ref.fileName,
-				loadImage(ref.fileName));
-		}
-
-		SourceImage sourceImg = loadedImages.get(ref.fileName);
+		SourceImage sourceImg = loadImage(ref.fileName);
 
 		gr.drawImage(
 			sourceImg.image,
@@ -252,6 +247,17 @@ public class MakeTiles
 	}
 
 	static SourceImage loadImage(String fileName)
+		throws IOException
+	{
+		if (!loadedImages.containsKey(fileName)) {
+			loadedImages.put(fileName,
+				loadImageReal(fileName));
+		}
+
+		return loadedImages.get(fileName);
+	}
+
+	static SourceImage loadImageReal(String fileName)
 		throws IOException
 	{
 		File svgFile, pngFile = null;
