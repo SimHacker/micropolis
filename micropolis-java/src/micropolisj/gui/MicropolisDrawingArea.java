@@ -177,7 +177,7 @@ public class MicropolisDrawingArea extends JComponent
 
 		for (int y = minY; y < maxY; y++)
 		{
-			for (int x = minX; x < maxX; x++)
+			for (int x = maxX-1; x >= minX; x--)
 			{
 				int cell = m.getTile(x,y);
 				if (blinkUnpoweredZones &&
@@ -219,20 +219,22 @@ public class MicropolisDrawingArea extends JComponent
 			int y1 = (toolCursor.rect.y + toolCursor.rect.height) * TILE_HEIGHT;
 
 			gr.setColor(Color.BLACK);
-			gr.drawLine(x0-1,y0-1,x0-1,y1-1);
-			gr.drawLine(x0-1,y0-1,x1-1,y0-1);
-			gr.drawLine(x1+3,y0-3,x1+3,y1+3);
-			gr.drawLine(x0-3,y1+3,x1+3,y1+3);
+			gr.fillRect(x0-1, y0-1, x1-(x0-1), 1);
+			gr.fillRect(x0-1, y0, 1, y1-y0);
+			gr.fillRect(x0-3, y1+3, x1+4-(x0-3), 1);
+			gr.fillRect(x1+3, y0-3, 1, y1+3-(y0-3));
 
 			gr.setColor(Color.WHITE);
-			gr.drawLine(x0-4,y0-4,x1+3,y0-4);
-			gr.drawLine(x0-4,y0-4,x0-4,y1+3);
-			gr.drawLine(x1,  y0-1,x1,  y1  );
-			gr.drawLine(x0-1,y1,  x1,  y1  );
+			gr.fillRect(x0-4, y0-4, x1+4-(x0-4), 1);
+			gr.fillRect(x0-4, y0-3, 1, (y1+4)-(y0-3));
+			gr.fillRect(x0-1, y1, x1+1-(x0-1), 1);
+			gr.fillRect(x1, y0-1, 1, y1-(y0-1));
 
 			gr.setColor(toolCursor.borderColor);
-			gr.drawRect(x0-3,y0-3,x1-x0+5,y1-y0+5);
-			gr.drawRect(x0-2,y0-2,x1-x0+3,y1-y0+3);
+			gr.fillRect(x0-3, y0-3, x1+1-(x0-3), 2);
+			gr.fillRect(x1+1, y0-3, 2, y1+1-(y0-3));
+			gr.fillRect(x0-1, y1+1, x1+3-(x0-1), 2);
+			gr.fillRect(x0-3, y0-1, 2, y1+3-(y0-1));
 
 			if (toolCursor.fillColor != null) {
 				gr.setColor(toolCursor.fillColor);
