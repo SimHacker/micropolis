@@ -27,6 +27,8 @@ my @zones = qw(
 	com05       3x3
 	com06       3x3
 	com11       3x3
+	ind01       3x3
+	ind02       3x3
 	res2        3x3
 	res3        3x3
 	res4        3x3
