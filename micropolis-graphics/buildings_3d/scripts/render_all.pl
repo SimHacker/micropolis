@@ -16,6 +16,7 @@ my @zones = qw(
 	house10     1x1
 	house11     1x1
 	house12     1x1
+	house13     1x1
 	firestation 3x3
 	police      3x3
 	hospital    3x3
