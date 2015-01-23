@@ -79,6 +79,7 @@ public enum MicropolisMessage
 	// location-specific
 	FLOOD_REPORT.useNotificationPane = true;
 	FIRE_REPORT.useNotificationPane = true;
+	MONSTER_REPORT.useNotificationPane = true;
 	TORNADO_REPORT.useNotificationPane = true;
 	MELTDOWN_REPORT.useNotificationPane = true;
 	EARTHQUAKE_REPORT.useNotificationPane = true;
