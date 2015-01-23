@@ -114,7 +114,7 @@
 93    roads@0,32 |traffic@0,0  |roadwire@0,0    (bulldozable)(conducts)(becomes=141)(description=#7)(behavior=ROAD)(pollution=50)
 94    roads@0,48 |traffic@0,16 |roadwire@0,16   (bulldozable)(conducts)(becomes=142)(description=#7)(behavior=ROAD)(pollution=50)
 # open draw bridge (north-south) -
-95    roads@0,240                                                (bulldozable)(noburn)(overwater)(becomes=143)(description=#7)(behavior=ROAD)(pollution=50)
+95    roads@0,240                     (bulldozable)(noburn)(overwater)(description=#7)(behavior=ROAD)
 96    (64) |traffic@16,0                                         (becomes=80)(pollution=50)
 97    (65) |traffic@16,16                                        (becomes=81)(pollution=50)
 98    (66) |traffic@16,0                                         (becomes=82)(pollution=50)
