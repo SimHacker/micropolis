@@ -2349,6 +2349,7 @@ public class Micropolis
 	{
 		assert !hasSprite(SpriteKind.GOD);
 		sprites.add(new MonsterSprite(this, xpos, ypos));
+		sendMessageAt(MicropolisMessage.MONSTER_REPORT, xpos, ypos);
 	}
 
 	public void makeTornado()
