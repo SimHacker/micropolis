@@ -4,19 +4,19 @@ This is the source code for Micropolis (based on [SimCity](http://en.wikipedia.o
 
 To download Micropolis for your computer, click the Downloads link above.
 
-## [Description](Description.md) ##
+## [Description](../wiki/Description.md) ##
 A description of the Micropolis project source code release.
 
-## [News](News.md) ##
+## [News](../wiki/News.md) ##
 The latest news about recent development.
 
-## [DevelopmentPlan](DevelopmentPlan.md) ##
+## [DevelopmentPlan](../wiki/DevelopmentPlan.md) ##
 The development plan, and a high level description of tasks that need to be done.
 
-## [ThePlan](ThePlan.md) ##
+## [ThePlan](../wiki/ThePlan.md) ##
 Older development plan for the TCL/Tk version of Micropolis and the C++/Python version too.
 
-## [Assets](Assets.md) ##
+## [Assets](../wiki/Assets.md) ##
 List of art and text assets, and work that needs to be done for Micropolis.
 
 ## Documentation ##
@@ -24,15 +24,15 @@ List of art and text assets, and work that needs to be done for Micropolis.
 This is the old documentation of the HyperLook version of SimCity, converted to wiki text.
 It needs to be brought up to date and illustrated.
 
-  * [Introduction](Introduction.md)
-  * [Tutorial](Tutorial.md)
-  * [User Reference](UserReference.md)
-  * [Inside The Simulator](InsideTheSimulator.md)
-  * [History Of Cities And City Planning](History.md)
-  * [Bibliography](Bibliography.md)
-  * [Credits](Credits.md)
+  * [Introduction](../wiki/Introduction.md)
+  * [Tutorial](../wiki/Tutorial.md)
+  * [User Reference](../wiki/UserReference.md)
+  * [Inside The Simulator](../wiki/InsideTheSimulator.md)
+  * [History Of Cities And City Planning](../wiki/History.md)
+  * [Bibliography](../wiki/Bibliography.md)
+  * [Credits](../wiki/Credits.md)
 
-## [License](License.md) ##
+## [License](../wiki/License.md) ##
 The Micropolis GPL license.
 
 ## Tools ##
