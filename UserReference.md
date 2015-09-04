@@ -158,7 +158,7 @@ it.<br>
 
 <hr />
 
-<ul><li>Detroit, MI 1927 -- Crime</li></ul>
+<ul><li>Detroit, MI 1972 -- Crime</li></ul>
 
 By 1970, competition from overseas and other economic factors pushed<br>
 the once "automobile capital of the world" into recession. Plummeting<br>
