@@ -189,7 +189,40 @@ void Micropolis::simUpdate()
 
 
 /**
- * ????
+ * ???? - It seems to be a sort of Cellular Automaton / Averaging(Smoothing) function across the map.
+ * 
+ * A deeper understanding of what the Map value holds, is required to fully understand what the effect of this function is.
+ * 
+ * This is how the function works (assuming HeatWrap == 3 (as its a constant of 3), and heatRule == 0 (as its again a constant)):
+ *
+ * Step 1. HeatWrap == 3 - Case #3 in first Switch does the following (actual memory layout is different)
+ *
+ *		e.g. A B       ->   D C D C
+ *		     C D            B A B A
+ *							D C D C
+ *							B A B A
+ *
+ *		1. Why do we copy the Map?
+			a. So we can reuse the original values
+ *
+ * Step 2. HeatRule == 0 (if HeatRule == 1 then same general logic applies, BUT mutation function is different)
+ *
+ *		Work our way through the Map reading each square 
+ *			-> Save the result of a mutation function to the center of the square on the map
+ *			-> The result is used again each time the mutation function runs, so the value is passed through the whole map
+ *				-> The mutation function is:
+ *					
+ *					a = 0 or previous result
+ *					a = a & 7
+ *					a += sum(all cells in square) + 7
+ *					
+ *					cell[x,y] = ((a >> 3) & LOMASK) | ANIMBIT | BURNBIT | BULLBIT
+ *
+ *		Square's are processed in the following order:
+ *
+ *				A B     ->		A C D B is the order the Squares are processed in
+ *				C D
+ *
  * @todo Why is Micropolis::cellSrc not allocated together with all the other
  *       variables?
  * @todo What is the purpose of this function?
