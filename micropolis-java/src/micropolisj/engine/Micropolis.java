@@ -102,7 +102,7 @@ public class Micropolis
 
 	public int gameLevel;
 
-	boolean autoGo;
+	public boolean autoGo = true;
 
 	// census numbers, reset in phase 0 of each cycle, summed during map scan
 	int poweredZoneCount;
@@ -2166,6 +2166,12 @@ public class Micropolis
 	public void toggleAutoBulldoze()
 	{
 		autoBulldoze = !autoBulldoze;
+		fireOptionsChanged();
+	}
+
+	public void toggleAutoGo()
+	{
+		autoGo = !autoGo;
 		fireOptionsChanged();
 	}
 
