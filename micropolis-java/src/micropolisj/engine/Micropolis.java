@@ -1983,6 +1983,8 @@ public class Micropolis
 		resCap = false;
 		comCap = false;
 		indCap = false;
+
+		lastCityPop = calcPopulation();
 	}
 
 	void writeMisc(DataOutputStream out)
@@ -2491,7 +2493,7 @@ public class Micropolis
 	void checkGrowth()
 	{
 		if (cityTime % 4 == 0) {
-			int newPop = (resPop + comPop * 8 + indPop * 8) * 20;
+			int newPop = calcPopulation();
 			if (lastCityPop != 0) {
 				MicropolisMessage z = null;
 				if (lastCityPop < 500000 && newPop >= 500000) {
@@ -2511,6 +2513,11 @@ public class Micropolis
 			}
 			lastCityPop = newPop;
 		}
+	}
+
+	int calcPopulation()
+	{
+		return (resPop + comPop * 8 + indPop * 8) * 20;
 	}
 
 	void doMessages()

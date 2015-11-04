@@ -281,6 +281,7 @@ public class MainWindow extends JFrame
 		engine.addListener(this);
 		engine.addEarthquakeListener(this);
 		reloadFunds();
+		updateDateLabel();
 		reloadOptions();
 		startTimer();
 		makeClean();
@@ -312,6 +313,7 @@ public class MainWindow extends JFrame
 		demandInd.setEngine(engine);
 		graphsPane.setEngine(engine);
 		reloadFunds();
+		updateDateLabel();
 		reloadOptions();
 		notificationPane.setVisible(false);
 
