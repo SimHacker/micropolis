@@ -2506,7 +2506,7 @@ public class Micropolis
 					z = MicropolisMessage.POP_2K_REACHED;
 				}
 				if (z != null) {
-					sendMessage(z);
+					sendMessageAt(z, centerMassX, centerMassY);
 				}
 			}
 			lastCityPop = newPop;
@@ -2582,12 +2582,12 @@ public class Micropolis
 			break;
 		case 35:
 			if (pollutionAverage > 60) { // FIXME, consider changing threshold to 80
-				sendMessage(MicropolisMessage.HIGH_POLLUTION);
+				sendMessageAt(MicropolisMessage.HIGH_POLLUTION, pollutionMaxLocationX, pollutionMaxLocationY);
 			}
 			break;
 		case 42:
 			if (crimeAverage > 100) {
-				sendMessage(MicropolisMessage.HIGH_CRIME);
+				sendMessageAt(MicropolisMessage.HIGH_CRIME, crimeMaxLocationX, crimeMaxLocationY);
 			}
 			break;
 		case 45:
@@ -2622,7 +2622,7 @@ public class Micropolis
 			break;
 		case 63:
 			if (trafficAverage > 60) {
-				sendMessage(MicropolisMessage.HIGH_TRAFFIC);
+				sendMessageAt(MicropolisMessage.HIGH_TRAFFIC, trafficMaxLocationX, trafficMaxLocationY);
 			}
 			break;
 		default:
