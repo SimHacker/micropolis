@@ -61,10 +61,10 @@
 46    terrain@0,736     (bulldozable)(noburn)(description=#3)
 47    terrain@0,752     (bulldozable)(noburn)(description=#3)
 # BEGIN FLOODING (4 frames) #
-48    terrain@0,768     (noburn)(description=#4)(behavior=FLOOD)
-49    terrain@0,784     (noburn)(description=#4)(behavior=FLOOD)
-50    terrain@0,800     (noburn)(description=#4)(behavior=FLOOD)
-51    terrain@0,816     (noburn)(description=#4)(behavior=FLOOD)
+48    terrain@0,768     (noburn)(description=#4)(behavior=FLOOD)(becomes=49)
+49    terrain@0,784     (noburn)(description=#4)(behavior=FLOOD)(becomes=50)
+50    terrain@0,800     (noburn)(description=#4)(behavior=FLOOD)(becomes=51)
+51    terrain@0,816     (noburn)(description=#4)(behavior=FLOOD)(becomes=48)
 # BEGIN RADIATION #
 52    terrain@0,832     (noburn)(description=#5)(behavior=RADIOACTIVE)(pollution=255)
 53    terrain@0,848     (noburn)(description=#5)(behavior=RADIOACTIVE)(pollution=255)
