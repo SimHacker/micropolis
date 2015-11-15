@@ -94,6 +94,9 @@ public class Micropolis
 	static final int DEFAULT_WIDTH = 120;
 	static final int DEFAULT_HEIGHT = 100;
 
+	public boolean keepHeader = false;
+	byte [] bbHeader = new byte[128];
+
 	public final CityBudget budget = new CityBudget(this);
 	public boolean autoBulldoze = true;
 	public boolean autoBudget = false;
@@ -2085,7 +2088,7 @@ public class Micropolis
 			// but otherwise use the same format as us,
 			// so read in that 128-byte header and continue
 			// as before.
-			byte [] bbHeader = new byte[128];
+			keepHeader = true;
 			fis.read(bbHeader);
 		}
 		load(fis);
@@ -2146,6 +2149,9 @@ public class Micropolis
 		throws IOException
 	{
 		DataOutputStream out = new DataOutputStream(outStream);
+		if (keepHeader) {
+			out.write(bbHeader);
+		}
 		writeHistoryArray(history.res, out);
 		writeHistoryArray(history.com, out);
 		writeHistoryArray(history.ind, out);
@@ -2178,6 +2184,12 @@ public class Micropolis
 	public void setSpeed(Speed newSpeed)
 	{
 		simSpeed = newSpeed;
+		fireOptionsChanged();
+	}
+
+	public void toggleKeepHeader()
+	{
+		keepHeader = !keepHeader;
 		fireOptionsChanged();
 	}
 
