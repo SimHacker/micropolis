@@ -129,6 +129,7 @@
 </target>
 
 <target name="dist-mac" depends="build">
+<taskdef name="bundleapp" classname="com.oracle.appbundler.AppBundlerTask" classpath="./mac/appbundler-1.0.jar"/>
 <bundleapp outputdirectory="./"
 	name="MicropolisJ"
 	icon="micropolisj.icns"
