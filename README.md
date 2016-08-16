@@ -1,6 +1,9 @@
-# Open Source Micropolis, based on the original SimCity Classic from Maxis, by Will Wright. #
+# Fork of a Java version of Open Source Micropolis, based on the original SimCity Classic from Maxis, by Will Wright. #
 
-This is the source code for Micropolis (based on [SimCity](http://en.wikipedia.org/wiki/SimCity_(1989_video_game))), released under the GPL. Micropolis is based on the original SimCity from Electronic Arts / Maxis, and designed and written by Will Wright.
+This fork is intended to provide better support for Micropolis-java in terms of documentation and newest jar-executable.
+
+This is the source code for Micropolis (based on [SimCity](http://en.wikipedia.org/wiki/SimCity_(1989_video_game))), released under the GPL.
+Micropolis is based on the original SimCity from Electronic Arts / Maxis, and designed and written by Will Wright.
 
 ## [Description](../wiki/Description.md) ##
 A description of the Micropolis project source code release.
