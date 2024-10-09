@@ -17,6 +17,13 @@ Older development plan for the TCL/Tk version of Micropolis and the C++/Python v
 ## [Assets](../wiki/Assets.md) ##
 List of art and text assets, and work that needs to be done for Micropolis.
 
+## [Micropolis Public Name License](../wiki/MicropolisPublicNameLicense.md) ##
+The name/term "MICROPOLIS" is a registered trademark owned by and
+exclusively licensed to Micropolis GmbH (Micropolis Corporation, the
+"licensor"). It is here (upstream) licensed to the authors/publishers of
+the "Micropolis" city simulation game and its source code (the project or
+"licensee(s)").
+
 ## Documentation ##
 
 This is the old documentation of the HyperLook version of SimCity, converted to wiki text.
