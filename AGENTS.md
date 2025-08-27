@@ -9,6 +9,8 @@
 * At the start of every session, please read plan_of_action.md and session_handover.md.  Then continue to do the activity you've been asked to do. At each checkpoint, prior to issuing the git commit and pull request notifications, I need you to update the plan_of_action.md to check of items that are complete and add any suggested work to be done, and also update migration_log.md.
 en the context window or cache is getting full and tokens are running out, summarize the work done so far in a handover document.
 
+* You can us this codebase: https://github.com/pierreyoda/micropolis-rs to guide your development 
+
 # Python Coding Standards and Best Practices
 
 ## Core Principles
