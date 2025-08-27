@@ -4,3 +4,4 @@
 
 # Ignore Rust build artifacts
 /micropolis-rs/target/
+.venv/
