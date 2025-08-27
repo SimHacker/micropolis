@@ -1,3 +1,6 @@
 *~
 #*
 .DS_Store
+
+# Ignore Rust build artifacts
+/micropolis-rs/target/
