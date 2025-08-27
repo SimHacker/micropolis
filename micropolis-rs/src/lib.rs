@@ -17,6 +17,8 @@ pub const ANIMBIT: u16 = 2048;
 pub const ZONEBIT: u16 = 1024;
 pub const ALLBITS: u16 = 64512;
 pub const LOMASK: u16 = 1023;
+pub const BNCNBIT: u16 = BURNBIT | CONDBIT;
+pub const BLBNCNBIT: u16 = BULLBIT | BURNBIT | CONDBIT;
 
 const WORLD_X: usize = 120;
 const WORLD_Y: usize = 100;
@@ -26,6 +28,8 @@ const QWX: usize = WORLD_X / 4;
 const QWY: usize = WORLD_Y / 4;
 const SMX: usize = WORLD_X / 8;
 const SMY: usize = (WORLD_Y + 7) / 8;
+
+const PROBNUM: usize = 10;
 
 const PWRMAPROW: usize = (WORLD_X + 15) / 16;
 const PWRMAPSIZE: usize = PWRMAPROW * WORLD_Y;
@@ -224,6 +228,20 @@ pub struct Micropolis {
     com_z_pop: i32,
     ind_z_pop: i32,
     fire_pop: i32,
+    hosp_pop: i32,
+    church_pop: i32,
+    need_hosp: i16,
+    need_church: i16,
+    road_total: i32,
+    rail_total: i32,
+    police_pop: i32,
+    fire_st_pop: i32,
+    stadium_pop: i32,
+    port_pop: i32,
+    aport_pop: i32,
+    coal_pop: i32,
+    nuclear_pop: i32,
+    power_stack_num: i32,
 
     #[pyo3(get, set)]
     pub city_time: i64,
@@ -251,6 +269,25 @@ pub struct Micropolis {
     com_cap: bool,
     ind_cap: bool,
 
+    eval_valid: bool,
+    city_yes: i16,
+    city_no: i16,
+    problem_table: [i16; 10],
+    problem_taken: [i16; 10],
+    problem_votes: [i16; 10],
+    problem_order: [i16; 4],
+    city_pop: i64,
+    delta_city_pop: i64,
+    city_ass_value: i64,
+    city_class: i16,
+    city_score: i16,
+    delta_city_score: i16,
+    average_city_score: i16,
+    traffic_average: i16,
+    lv_average: i16,
+    pollute_average: i16,
+    crime_average: i16,
+
     // History arrays
     res_his: Vec<i16>,
     com_his: Vec<i16>,
@@ -259,6 +296,16 @@ pub struct Micropolis {
     crime_his: Vec<i16>,
     pollution_his: Vec<i16>,
     misc_his: Vec<i16>,
+}
+
+impl Micropolis {
+    pub fn test_bounds(&self, x: i16, y: i16) -> bool {
+        x >= 0 && x < WORLD_X as i16 && y >= 0 && y < WORLD_Y as i16
+    }
+
+    fn power_word(&self, x: i16, y: i16) -> usize {
+        (x as usize >> 4) + ((y as usize) << 3)
+    }
 }
 
 #[pymethods]
@@ -289,6 +336,20 @@ impl Micropolis {
             com_z_pop: 0,
             ind_z_pop: 0,
             fire_pop: 0,
+            hosp_pop: 0,
+            church_pop: 0,
+            need_hosp: 0,
+            need_church: 0,
+            road_total: 0,
+            rail_total: 0,
+            police_pop: 0,
+            fire_st_pop: 0,
+            stadium_pop: 0,
+            coal_pop: 0,
+            nuclear_pop: 0,
+            port_pop: 0,
+            aport_pop: 0,
+            power_stack_num: 0,
 
             city_time: 0,
             total_funds: 20000,
@@ -311,6 +372,26 @@ impl Micropolis {
             res_cap: false,
             com_cap: false,
             ind_cap: false,
+
+            eval_valid: false,
+            city_yes: 0,
+            city_no: 0,
+            problem_table: [0; 10],
+            problem_taken: [0; 10],
+            problem_votes: [0; 10],
+            problem_order: [0; 4],
+            city_pop: 0,
+            delta_city_pop: 0,
+            city_ass_value: 0,
+            city_class: 0,
+            city_score: 500,
+            delta_city_score: 0,
+            average_city_score: 0,
+            traffic_average: 0,
+            lv_average: 0,
+            pollute_average: 0,
+            crime_average: 0,
+
             res_his: vec![0; 480],
             com_his: vec![0; 480],
             ind_his: vec![0; 480],
@@ -356,7 +437,7 @@ impl Micropolis {
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn micropolis_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn micropolis_engine(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<CityStats>()?;
     m.add_class::<Micropolis>()?;
     m.add("DIRT", DIRT)?;
