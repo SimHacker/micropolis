@@ -9,7 +9,15 @@ This phase focuses on building the foundational simulation logic in Rust.
 
 * **Data Modeling**: Define the core simulation data structures, such as `City`, `Tile`, and `ZoneData`, within a new Rust library crate.
 * **Logic Porting**: Systematically port the existing C simulation logic from files like `s_sim.c`, `s_zone.c`, `s_scan.c`, and `s_traf.c` into idiomatic Rust functions or systems.
+    *   **Completed**:
+        *   Ported `DoHospChur` and `RepairZone` from `s_zone.c` to `zone.rs`.
+        *   Ported `GetAssValue` and `DoPopNum` from `s_eval.c` to `sim.rs`.
+        *   Ported `DoProblems` from `s_eval.c` to `sim.rs` with stubs for helper functions.
 * **Unit Testing**: Develop a comprehensive suite of unit and integration tests in Rust to validate the correctness of the ported logic. This may involve comparing outputs against the original C implementation. This phase is complete when a headless Rust library can successfully load a city state, run a simulation for N cycles, and produce a verifiably correct new city state.
+    *   **Completed**:
+        *   Added unit tests for `do_hosp_chur` and `repair_zone` in `zone.rs`.
+        *   Added unit tests for `get_ass_value` and `do_pop_num` in `sim.rs`.
+        *   Added an integration test for `step_simulation`.
 
 ---
 
