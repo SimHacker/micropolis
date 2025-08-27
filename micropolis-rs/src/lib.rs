@@ -406,8 +406,26 @@ impl Micropolis {
         self.sim_frame();
     }
 
-    pub fn get_map_view(&self) -> Vec<u16> {
-        self.map.iter().flatten().cloned().collect()
+    pub fn get_map_view(&self, x: usize, y: usize, w: usize, h: usize) -> PyResult<Vec<u16>> {
+        if x + w > WORLD_X || y + h > WORLD_Y {
+            return Err(PyErr::new::<pyo3::exceptions::PyValueError, _>(
+                "View dimensions are out of bounds",
+            ));
+        }
+        let mut view = Vec::with_capacity(w * h);
+        for i in y..y + h {
+            for j in x..x + w {
+                view.push(self.map[j][i]);
+            }
+        }
+        Ok(view)
+    }
+
+    #[staticmethod]
+    pub fn create_city(_width: usize, _height: usize) -> PyResult<Micropolis> {
+        // The core engine currently only supports a fixed size.
+        // We accept width and height for API compatibility.
+        Ok(Micropolis::new())
     }
 
     pub fn get_city_stats(&self) -> CityStats {

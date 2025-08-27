@@ -1,11 +1,11 @@
-import micropolis_rs
+import micropolis_engine
 
 def main():
-    print("Testing micropolis_rs Python wheel...")
+    print("Testing micropolis_engine Python wheel...")
 
-    # Create a new Micropolis instance
-    print("Creating Micropolis instance...")
-    micro = micropolis_rs.Micropolis()
+    # Create a new Micropolis instance using the new static method
+    print("Creating Micropolis instance via create_city(120, 100)...")
+    micro = micropolis_engine.Micropolis.create_city(120, 100)
     print("Instance created.")
 
     # Get initial city stats
@@ -22,12 +22,19 @@ def main():
     micro.step_simulation()
     print("Simulation stepped.")
 
-    # Get map view
-    print("Getting map view...")
-    map_view = micro.get_map_view()
-    print(f"Map view length: {len(map_view)}")
+    # Get map view (full)
+    print("Getting full map view (0, 0, 120, 100)...")
+    map_view = micro.get_map_view(0, 0, 120, 100)
+    print(f"Full map view length: {len(map_view)}")
     print(f"Expected length: {120 * 100}")
     assert len(map_view) == 120 * 100
+
+    # Get map view (partial)
+    print("Getting partial map view (10, 10, 20, 20)...")
+    partial_map_view = micro.get_map_view(10, 10, 20, 20)
+    print(f"Partial map view length: {len(partial_map_view)}")
+    print(f"Expected length: {20 * 20}")
+    assert len(partial_map_view) == 20 * 20
 
     print("All tests passed!")
 
@@ -35,7 +42,7 @@ def test_save_load():
     print("\nTesting save/load functionality...")
 
     # Create a new Micropolis instance
-    micro = micropolis_rs.Micropolis()
+    micro = micropolis_engine.Micropolis.create_city(120, 100)
     micro.city_time = 123
     micro.total_funds = 456
 
@@ -47,7 +54,7 @@ def test_save_load():
 
     # Load the city
     print(f"Loading city from {file_path}...")
-    loaded_micro = micropolis_rs.Micropolis.load_city(file_path)
+    loaded_micro = micropolis_engine.Micropolis.load_city(file_path)
     print("City loaded.")
 
     # Compare stats
