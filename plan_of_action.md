@@ -9,6 +9,12 @@ This phase focuses on building the foundational simulation logic in Rust.
 
 * **Data Modeling**: Define the core simulation data structures, such as `City`, `Tile`, and `ZoneData`, within a new Rust library crate.
 * **Logic Porting**: Systematically port the existing C simulation logic from files like `s_sim.c`, `s_zone.c`, `s_scan.c`, and `s_traf.c` into idiomatic Rust functions or systems.
+    *   **Migration Targets**:
+        *   `micropolis-activity/src/sim/s_sim.c`: Contains the main simulation loop and coordination logic.
+        *   `micropolis-activity/src/sim/s_zone.c`: Handles logic related to zone development (residential, commercial, industrial).
+        *   `micropolis-activity/src/sim/s_scan.c`: Contains scanning functions that iterate over the city map.
+        *   `micropolis-activity/src/sim/s_traf.c`: Manages the traffic simulation logic.
+        *   `micropolis-activity/src/sim/s_eval.c`: Contains city evaluation logic.
     *   **Completed**:
         *   Ported `DoHospChur` and `RepairZone` from `s_zone.c` to `zone.rs`.
         *   Ported `GetAssValue` and `DoPopNum` from `s_eval.c` to `sim.rs`.
