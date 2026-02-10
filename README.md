@@ -14,7 +14,7 @@ The full lineage of the code is C64 => Mac => SunOS/NeWS/HyperLook => Unix/X11/T
 
 Now it compiles with emscripten/embind into WASM, and it's possible to run it "headless" in node, or with any kind of user interface in the browser.
 
-So if you're making something new, you should use [MicropolisCore](https://github.com/SimHacker/MicropolisCore), but if you're into retrocomputing and want to renovate the TCL version, or even the old Python/TurboGears/AMF/Flash/OpenLaszlo version, then this repo's got what you need!
+So if you're making something new, you should use [MicropolisCore](https://github.com/SimHacker/MicropolisCore), but if you're into retrocomputing and want to renovate the TCL version, or even the old PyGTK or Python/TurboGears/AMF/Flash/OpenLaszlo version, then this repo's got what you need!
 
 ## [Description](../wiki/Description.md) ##
 A description of the Micropolis project source code release.
