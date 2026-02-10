@@ -2,6 +2,20 @@
 
 This is the source code for Micropolis (based on [SimCity](http://en.wikipedia.org/wiki/SimCity_(1989_video_game))), released under the GPL. Micropolis is based on the original SimCity from Electronic Arts / Maxis, and designed and written by Will Wright.
 
+# NOTE: Please See: [MicropolisCore](https://github.com/SimHacker/MicropolisCore)
+
+This "micropolis" repo is mainly for historical purpose, and it's probably better to use the newer [MicropolisCore](https://github.com/SimHacker/MicropolisCore) repo for development. 
+
+I rebooted micropolis into the fresh new [MicropolisCore](https://github.com/SimHacker/MicropolisCore) repo, without all the old X11/TCL/Tk stuff.
+
+[MicropolisCore](https://github.com/SimHacker/MicropolisCore) is a C++ rewrite/refactor/cleanup of the original C code into a simulation engine that's independent of the user interface. 
+
+The full lineage of the code is C64 => Mac => SunOS/NeWS/HyperLook => Unix/X11/TCL/Tk + multiplayer => Linux/X11/TCL/Tk + multiplayer => OLPC/X11/TCL/Tk (single player) => C++ MicropolisCore => C++/SWIG/Python/PyGTK => C++/SWIG/Python/TurboGears/AMF/Flash/OpenLaszlo => C++/Emscripten/Embind/TypeScript/SvelteKit.
+
+Now it compiles with emscripten/embind into WASM, and it's possible to run it "headless" in node, or with any kind of user interface in the browser.
+
+So you're making something new, you should use [MicropolisCore](https://github.com/SimHacker/MicropolisCore), but if you're into retrocomputing and want to renovate the TCL version, or even the old Python/TurboGears/AMF/Flash/OpenLaszlo version, then this repo's got what you need!
+
 ## [Description](../wiki/Description.md) ##
 A description of the Micropolis project source code release.
 
