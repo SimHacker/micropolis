@@ -23,6 +23,8 @@ public class NotificationPane extends JPanel
 	MicropolisDrawingArea mapView;
 	JPanel mainPane;
 	JComponent infoPane;
+	MainWindow mainWindow;
+	CityLocation loc = null;
 
 	static final Dimension VIEWPORT_SIZE = new Dimension(160,160);
 	static final Color QUERY_COLOR = new Color(255,165,0);
@@ -30,16 +32,27 @@ public class NotificationPane extends JPanel
 	static final ResourceBundle mstrings = ResourceBundle.getBundle("micropolisj.CityMessages");
 	static final ResourceBundle s_strings = ResourceBundle.getBundle("micropolisj.StatusMessages");
 
-	public NotificationPane(Micropolis engine)
+	public NotificationPane(Micropolis engine, MainWindow mainWindow)
 	{
 		super(new BorderLayout());
+		this.mainWindow = mainWindow;
 		setVisible(false);
 
 		headerLbl = new JLabel();
 		headerLbl.setOpaque(true);
 		headerLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		headerLbl.setBorder(BorderFactory.createRaisedBevelBorder());
-		add(headerLbl, BorderLayout.NORTH);
+
+		JButton goBtn = new JButton(strings.getString("notification.go_btn"));
+		goBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onGoClicked();
+			}});
+
+		JPanel headerPane = new JPanel(new BorderLayout());
+		headerPane.add(headerLbl, BorderLayout.CENTER);
+		headerPane.add(goBtn, BorderLayout.EAST);
+		add(headerPane, BorderLayout.NORTH);
 
 		JButton dismissBtn = new JButton(strings.getString("notification.dismiss"));
 		dismissBtn.addActionListener(new ActionListener() {
@@ -74,8 +87,16 @@ public class NotificationPane extends JPanel
 		setVisible(false);
 	}
 
+	private void onGoClicked()
+	{
+		if (loc != null) {
+			mainWindow.centering(loc);
+		}
+	}
+
 	void setPicture(Micropolis engine, int xpos, int ypos)
 	{
+		loc = new CityLocation(xpos, ypos);
 		Dimension sz = VIEWPORT_SIZE;
 
 		mapView.setEngine(engine);

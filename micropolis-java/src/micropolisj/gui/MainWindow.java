@@ -177,7 +177,7 @@ public class MainWindow extends JFrame
 
 		c.gridy = 3;
 		c.weighty = 0.0;
-		notificationPane = new NotificationPane(engine);
+		notificationPane = new NotificationPane(engine, this);
 		leftPane.add(notificationPane, c);
 
 		pack();
@@ -545,6 +545,17 @@ public class MainWindow extends JFrame
 			}));
 		optionsMenu.add(autoBulldozeMenuItem);
 
+		autoGoMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_go"));
+		setupKeys(autoGoMenuItem, "menu.options.auto_go");
+		autoGoMenuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
+			public void actionPerformed(ActionEvent ev)
+			{
+				onAutoGoClicked();
+			}
+			}));
+		optionsMenu.add(autoGoMenuItem);
+
 		disastersMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.disasters"));
 		setupKeys(disastersMenuItem, "menu.options.disasters");
 		disastersMenuItem.addActionListener(wrapActionListener(
@@ -793,6 +804,7 @@ public class MainWindow extends JFrame
 
 	JMenuItem autoBudgetMenuItem;
 	JMenuItem autoBulldozeMenuItem;
+	JMenuItem autoGoMenuItem;
 	JMenuItem disastersMenuItem;
 	JMenuItem soundsMenuItem;
 	Map<Speed,JMenuItem> priorityMenuItems;
@@ -808,6 +820,12 @@ public class MainWindow extends JFrame
 	{
 		dirty1 = true;
 		getEngine().toggleAutoBulldoze();
+	}
+
+	private void onAutoGoClicked()
+	{
+		dirty1 = true;
+		getEngine().toggleAutoGo();
 	}
 
 	private void onDisastersClicked()
@@ -1107,6 +1125,21 @@ public class MainWindow extends JFrame
 
 		ZoneStatus z = engine.queryZoneStatus(xpos, ypos);
 		notificationPane.showZoneStatus(engine, xpos, ypos, z);
+	}
+
+	public void centering(CityLocation loc)
+	{
+		Dimension d = drawingAreaScroll.getViewport().getExtentSize();
+		Dimension mapSize = drawingAreaScroll.getViewport().getViewSize();
+
+		Point np = new Point(
+				loc.x * drawingArea.getTileSize() - d.width / 2,
+				loc.y * drawingArea.getTileSize() - d.height / 2
+				);
+		np.x = Math.max(0, Math.min(np.x, mapSize.width - d.width));
+		np.y = Math.max(0, Math.min(np.y, mapSize.height - d.height));
+
+		drawingAreaScroll.getViewport().setViewPosition(np);
 	}
 
 	private void doZoom(int dir, Point mousePt)
@@ -1562,6 +1595,10 @@ public class MainWindow extends JFrame
 		{
 			notificationPane.showMessage(engine, m, p.x, p.y);
 		}
+		if (getEngine().autoGo && p != null)
+		{
+			centering(p);
+		}
 	}
 
 	//implements Micropolis.Listener
@@ -1580,6 +1617,7 @@ public class MainWindow extends JFrame
 	{
 		autoBudgetMenuItem.setSelected(getEngine().autoBudget);
 		autoBulldozeMenuItem.setSelected(getEngine().autoBulldoze);
+		autoGoMenuItem.setSelected(getEngine().autoGo);
 		disastersMenuItem.setSelected(!getEngine().noDisasters);
 		soundsMenuItem.setSelected(doSounds);
 		for (Speed spd : priorityMenuItems.keySet())
