@@ -34,9 +34,11 @@ main.about_text = <html>\
 	<p>Traduction Française: Benoît Gross<br>\
 	Portions Copyright 1989-2007 Electronic Arts Inc.</p>\
 	<p>Ceci est un logiciel libre; vous pouvez le redistribuer/modifier <br>\
-	sous les termes de la licence GNU GPLv3; voir le fichier README pour plus de détails.</p>\
+	sous les termes de la licence GNU GPLv3.<br>\
+	Consultez voir le fichier README pour de plus amples détails.</p>\
 	<p>Il n'y a aucune garantie, dans la mesure permise par la loi.</p>\
-	<p>Pour le code source, visitez http://code.google.com/p/micropolis/.</p>\
+	<p>Le code source de MicropolisJ est disponible à l'adresse suivante:<br>\
+	<a href="https://github.com/SimHacker/micropolis">https://github.com/SimHacker/micropolis</a></p>\
 	</html>
 cty_file = Fichier CTY
 funds = ${0,number,integer}
@@ -263,7 +265,7 @@ statistics-head = Statistiques
 city-score-head = Score global de la ville (0 - 1000)
 stats-population = Population:
 stats-net-migration = Migration nette:
-stats-last-year = (année dernière)
+stats-last-year = (année précédente)
 stats-assessed-value = Évaluation:
 stats-category = Catégorie:
 stats-game-level = Difficulté:

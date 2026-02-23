@@ -31,11 +31,12 @@ zone.19 = Centrale nucléaire
 zone.20 = Pont
 zone.21 = Radar
 zone.22 = Fontaine
-zone.23 = Industrie
+zone.23 = Parc
 zone.24 = Olympique Métro 38  Barzeques 3
-zone.25 = Pont
+zone.25 = Fumée
 zone.26 = Uranium 238
-zone.27 = 
+zone.27 = Hôpital
+zone.28 = Église
 
 ! population density
 status.1 = Basse

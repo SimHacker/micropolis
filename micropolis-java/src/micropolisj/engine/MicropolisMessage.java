@@ -75,6 +75,7 @@ public enum MicropolisMessage
 	POP_500K_REACHED.useNotificationPane = true;
 	HIGH_CRIME.useNotificationPane = true;
 	HIGH_POLLUTION.useNotificationPane = true;
+	HIGH_TRAFFIC.useNotificationPane = true;
 
 	// location-specific
 	FLOOD_REPORT.useNotificationPane = true;
@@ -87,5 +88,6 @@ public enum MicropolisMessage
 	SHIPWRECK_REPORT.useNotificationPane = true;
 	COPTER_CRASH_REPORT.useNotificationPane = true;
 	PLANECRASH_REPORT.useNotificationPane = true;
+	FIREBOMBING_REPORT.useNotificationPane = true;
 	}
 }
