@@ -14,6 +14,18 @@ Building the Package
   2. Type `ant' to compile the package.
 
 
+Building the Mac Bundle App (optional)
+====================
+
+  1. `cd' to the directory containing the package's source code.
+
+  2. Create a `mac' directory.
+
+  3. Download the appbundler-1.0.jar package available at https://java.net/projects/appbundler into the `mac' directory.
+
+  4. Type `ant dist-mac' to build the Mac Bundle.
+
+
 Installing MicropolisJ
 ======================
 
