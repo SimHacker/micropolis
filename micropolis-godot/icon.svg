@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" fill="#2d5a27"/>
+  <rect x="20" y="40" width="30" height="50" fill="#4a90a4"/>
+  <rect x="55" y="30" width="25" height="60" fill="#5a9ab4"/>
+  <rect x="85" y="50" width="20" height="40" fill="#3a80a4"/>
+  <rect x="10" y="95" width="108" height="8" fill="#555"/>
+  <rect x="10" y="100" width="108" height="5" fill="#444"/>
+  <text x="64" y="25" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="16" font-weight="bold">MICROPOLIS</text>
+</svg>

@@ -1,0 +1,4130 @@
+{
+  "project_root": "/home/joseph/Phoenix-Construction/projects/micropolis",
+  "scanned_at": "2026-04-01T02:46:00.813144+00:00",
+  "summary": {
+    "total_files": 471,
+    "total_code_files": 419,
+    "total_test_files": 9,
+    "total_lines": 227384,
+    "languages": {
+      "C++": 36,
+      "Python": 73,
+      "C Header": 44,
+      "C#": 24,
+      "C": 172,
+      "Java": 62,
+      "JavaScript": 7,
+      "PHP": 1
+    },
+    "primary_language": "C"
+  },
+  "modules": [
+    {
+      "path": "MicropolisCore/src/CellEngine/src/ruletables.cpp",
+      "lines": 6570
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/cellengine.cpp",
+      "lines": 5685
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/all_pretty.js",
+      "lines": 3988
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcanvas.c",
+      "lines": 3633
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/micropolis.h",
+      "lines": 3011
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktcp.c",
+      "lines": 2956
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/piemenu.py",
+      "lines": 2820,
+      "purpose": "Pie Menu for GTK/Cairo/Pango/Sugar."
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Micropolis.java",
+      "lines": 2704
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/pie.py",
+      "lines": 2645,
+      "purpose": "Pie Menu for GTK/Cairo/Pango/Sugar."
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py",
+      "lines": 2426,
+      "purpose": "micropolisturbogearsengine.py"
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwm.c",
+      "lines": 2416
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxbtre.c",
+      "lines": 2375
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_piem.c",
+      "lines": 2359
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclvar.c",
+      "lines": 2265
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbind.c",
+      "lines": 2229
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxdisp.c",
+      "lines": 2094
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmenu.c",
+      "lines": 2074
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/sprite.cpp",
+      "lines": 2034
+    },
+    {
+      "path": "turbogears/micropolis/controllers.py",
+      "lines": 1911,
+      "purpose": "controllers.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/tkucbsrc/tkevent.c",
+      "lines": 1910
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkevent.c",
+      "lines": 1904
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkselect.c",
+      "lines": 1889
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkentry.c",
+      "lines": 1785
+    },
+    {
+      "path": "micropolis-activity/src/tk/tklist.c",
+      "lines": 1785
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MainWindow.java",
+      "lines": 1733
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/simulate.cpp",
+      "lines": 1709
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxaz.c",
+      "lines": 1709
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sim.c",
+      "lines": 1697
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_tool.c",
+      "lines": 1695
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sprite.c",
+      "lines": 1641
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_inter.c",
+      "lines": 1604
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwindow.c",
+      "lines": 1601
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/tool.cpp",
+      "lines": 1595
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_editor.c",
+      "lines": 1583
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_x.c",
+      "lines": 1564
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbutton.c",
+      "lines": 1545
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvarc.c",
+      "lines": 1524
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktext.c",
+      "lines": 1516
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxlib.c",
+      "lines": 1505
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvline.c",
+      "lines": 1452
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclutil.c",
+      "lines": 1422
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdmz.c",
+      "lines": 1420
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkscale.c",
+      "lines": 1418
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvtext.c",
+      "lines": 1369
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ucbsrc/tclexpr.c",
+      "lines": 1337
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclexpr.c",
+      "lines": 1336
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkoption.c",
+      "lines": 1336
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgenericengine.py",
+      "lines": 1316,
+      "purpose": "micropolisgenericengine.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tiledrawingarea.py",
+      "lines": 1303,
+      "purpose": "tiledrawingarea.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_sim.c",
+      "lines": 1240
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_cam.c",
+      "lines": 1236
+    },
+    {
+      "path": "micropolis-activity/src/tcl/regexp.c",
+      "lines": 1233
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkscrbar.c",
+      "lines": 1190
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktrig.c",
+      "lines": 1185
+    },
+    {
+      "path": "micropolis-activity/src/tk/tksend.c",
+      "lines": 1177
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclparse.c",
+      "lines": 1174
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmnbut.c",
+      "lines": 1166
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdil.c",
+      "lines": 1149
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgrab.c",
+      "lines": 1112
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhist.c",
+      "lines": 1093
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/tileengine.cpp",
+      "lines": 1087
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ucbsrc/tclbasic.c",
+      "lines": 1067
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxtag.c",
+      "lines": 1067
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclbasic.c",
+      "lines": 1063
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpack.c",
+      "lines": 1053
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxsig.c",
+      "lines": 1034
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxut.c",
+      "lines": 1033
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/zone.cpp",
+      "lines": 1025
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/map.cpp",
+      "lines": 1013
+    },
+    {
+      "path": "micropolis-activity/src/tk/tk3d.c",
+      "lines": 993
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapScanner.java",
+      "lines": 965
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py",
+      "lines": 952,
+      "purpose": "micropolisrobot.py"
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkplace.c",
+      "lines": 939
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhash.c",
+      "lines": 931
+    },
+    {
+      "path": "micropolis-activity/src/tk/ks_names.h",
+      "lines": 917
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdah.c",
+      "lines": 913
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_graph.c",
+      "lines": 894
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkrectov.c",
+      "lines": 878
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_cam.c",
+      "lines": 877
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py",
+      "lines": 870,
+      "purpose": "micropolisdrawingarea.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/terra.c",
+      "lines": 868
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfcmd.c",
+      "lines": 856
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkconfig.c",
+      "lines": 847
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxklst.c",
+      "lines": 844
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_tk.c",
+      "lines": 840
+    },
+    {
+      "path": "micropolis-activity/src/sim/sim.c",
+      "lines": 834
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclint.h",
+      "lines": 834
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/embed-compressed.js",
+      "lines": 820
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcmds.c",
+      "lines": 818
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/cellengine.h",
+      "lines": 801
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmsg.c",
+      "lines": 788
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkfont.c",
+      "lines": 773
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvwind.c",
+      "lines": 772
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/micropolis.cpp",
+      "lines": 770
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvpoly.c",
+      "lines": 770
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/generate.cpp",
+      "lines": 751
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxutil.c",
+      "lines": 749
+    },
+    {
+      "path": "micropolis-activity/src/tk/tk.h",
+      "lines": 743
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_date.c",
+      "lines": 736
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/connect.cpp",
+      "lines": 734
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stubs.cpp",
+      "lines": 733
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxst.c",
+      "lines": 730
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileConstants.java",
+      "lines": 725
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxprof.c",
+      "lines": 702
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkrawtcp.c",
+      "lines": 694
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfmat.c",
+      "lines": 693
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/sim.h",
+      "lines": 687
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistoryview.py",
+      "lines": 673,
+      "purpose": "micropolishistoryview.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_zone.c",
+      "lines": 659
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpixmap.c",
+      "lines": 656
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_con.c",
+      "lines": 646
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/fileio.cpp",
+      "lines": 645
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_gen.c",
+      "lines": 643
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcursor.c",
+      "lines": 643
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvbmap.c",
+      "lines": 641
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxidx.c",
+      "lines": 640
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_map.c",
+      "lines": 611
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolispiemenus.py",
+      "lines": 609,
+      "purpose": "micropolispiemenus.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_fileio.c",
+      "lines": 604
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcolor.c",
+      "lines": 602
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkget.c",
+      "lines": 593
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/scan.cpp",
+      "lines": 590
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgtkengine.py",
+      "lines": 589,
+      "purpose": "micropolisgtkengine.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfsca.c",
+      "lines": 582
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclglob.c",
+      "lines": 580
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclplus.h",
+      "lines": 570
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py",
+      "lines": 569,
+      "purpose": "tiletool.py"
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclproc.c",
+      "lines": 567
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkint.h",
+      "lines": 566
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/evaluate.cpp",
+      "lines": 563
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/OverlayMapView.java",
+      "lines": 560
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapGenerator.java",
+      "lines": 546
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_scan.c",
+      "lines": 540
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxunix.c",
+      "lines": 537
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py",
+      "lines": 536,
+      "purpose": "micropolistool.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxint.h",
+      "lines": 535
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclckall.c",
+      "lines": 533
+    },
+    {
+      "path": "micropolis-activity/src/tk/library/demos/tkSquare.c",
+      "lines": 531
+    },
+    {
+      "path": "turbogears/micropolis/model.py",
+      "lines": 529,
+      "purpose": "model.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswindow.py",
+      "lines": 517,
+      "purpose": "micropoliswindow.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/terragen.c",
+      "lines": 508
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/traffic.cpp",
+      "lines": 507
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkframe.c",
+      "lines": 507
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_map.c",
+      "lines": 503
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxstup.c",
+      "lines": 502
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxstr.c",
+      "lines": 498
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbitmap.c",
+      "lines": 496
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxrexp.c",
+      "lines": 493
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/json2.js",
+      "lines": 481
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/message.cpp",
+      "lines": 473
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strerror.c",
+      "lines": 471
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MicropolisDrawingArea.java",
+      "lines": 469
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/RoadLikeTool.java",
+      "lines": 466
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxhndl.c",
+      "lines": 456
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py",
+      "lines": 454,
+      "purpose": "This file was automatically generated by SWIG (http://www.swig.org)."
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/main.cpp",
+      "lines": 452
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_msg.c",
+      "lines": 448
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_setup.c",
+      "lines": 443
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclenv.c",
+      "lines": 435
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkargv.c",
+      "lines": 432
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxsel.c",
+      "lines": 429
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/utilities.cpp",
+      "lines": 427
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxchmd.c",
+      "lines": 420
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellconfigurations.py",
+      "lines": 419,
+      "purpose": "cellconfigurations.py"
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktext.h",
+      "lines": 416
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_smmaps.c",
+      "lines": 414
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py",
+      "lines": 411,
+      "purpose": "micropoliszone.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/mapgener.c",
+      "lines": 411
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkshare.c",
+      "lines": 409
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/disasters.cpp",
+      "lines": 408
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxdebg.c",
+      "lines": 406
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisbudgetpanel.py",
+      "lines": 401,
+      "purpose": "micropolisbudgetpanel.py"
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcanvas.h",
+      "lines": 401
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/BudgetDialog.java",
+      "lines": 400
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/perlinnoise.h",
+      "lines": 393
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/graph.cpp",
+      "lines": 388
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxclp.c",
+      "lines": 388
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TerrainBehavior.java",
+      "lines": 374
+    },
+    {
+      "path": "micropolis-activity/src/sim/random.c",
+      "lines": 366
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileSpec.java",
+      "lines": 365
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py",
+      "lines": 361,
+      "purpose": "micropoliswebserver.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/tkucbsrc/main.c",
+      "lines": 357
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmsgc.c",
+      "lines": 356
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxbsrc.c",
+      "lines": 355
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolStroke.java",
+      "lines": 355
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfctl.c",
+      "lines": 352
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_budget.c",
+      "lines": 349
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/budget.cpp",
+      "lines": 344
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_eval.c",
+      "lines": 344
+    },
+    {
+      "path": "micropolis-activity/src/tk/default.h",
+      "lines": 341
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tcl.h",
+      "lines": 340
+    },
+    {
+      "path": "micropolis-activity/src/tk/main.c",
+      "lines": 334
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgc.c",
+      "lines": 334
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/GraphsPane.java",
+      "lines": 332
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgaugeview.py",
+      "lines": 331,
+      "purpose": "micropolisgaugeview.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxid.c",
+      "lines": 331
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_traf.c",
+      "lines": 330
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/map_type.h",
+      "lines": 328
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/view.h",
+      "lines": 328
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellmodel.py",
+      "lines": 327,
+      "purpose": "cellmodel.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliscontrolpanel.py",
+      "lines": 327,
+      "purpose": "micropoliscontrolpanel.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_keys.c",
+      "lines": 325
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/TranslationTool.java",
+      "lines": 325
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisview.py",
+      "lines": 323,
+      "purpose": "micropolisview.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_disast.c",
+      "lines": 321
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunix.h",
+      "lines": 321
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/eliza.py",
+      "lines": 320,
+      "purpose": "eliza.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_bigmap.c",
+      "lines": 317
+    },
+    {
+      "path": "micropolis-activity/micropolisactivity.py",
+      "lines": 313,
+      "purpose": "-*- mode: python; tab-width: 4 -*-"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/build_tool/MakeTiles.java",
+      "lines": 304
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxcret.c",
+      "lines": 302
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/EvaluationPane.java",
+      "lines": 298
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxproc.c",
+      "lines": 297
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/strftime.c",
+      "lines": 296
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_util.c",
+      "lines": 295
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkerror.c",
+      "lines": 294
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellrulecompiler.py",
+      "lines": 289,
+      "purpose": "cellrulecompiler.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/animtab.h",
+      "lines": 287
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityEval.java",
+      "lines": 283
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationview.py",
+      "lines": 279,
+      "purpose": "micropolisevaluationview.py"
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxlist.c",
+      "lines": 278
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_update.c",
+      "lines": 272
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/tileengine.h",
+      "lines": 271
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/update.cpp",
+      "lines": 269
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxdup.c",
+      "lines": 267
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtod.c",
+      "lines": 259
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisstartpanel.py",
+      "lines": 255,
+      "purpose": "micropolisstartpanel.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_power.c",
+      "lines": 253
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/tool.h",
+      "lines": 244
+    },
+    {
+      "path": "laszlo/micropolis/resources/images/tiles/makezone.py",
+      "lines": 244,
+      "purpose": "makezone.py"
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/resource.cpp",
+      "lines": 239
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/StringsModel.java",
+      "lines": 239
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/animate.cpp",
+      "lines": 237
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpresrv.c",
+      "lines": 236
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/NewCityDialog.java",
+      "lines": 233
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TrafficGen.java",
+      "lines": 231
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Sprite.java",
+      "lines": 229
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/position.cpp",
+      "lines": 222
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnotebook.py",
+      "lines": 217,
+      "purpose": "micropolisnotebook.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/cam.h",
+      "lines": 217
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxtend.h",
+      "lines": 214
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisDisastersPanel.cs",
+      "lines": 213
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticeview.py",
+      "lines": 211,
+      "purpose": "micropolisnoticeview.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismappanel.py",
+      "lines": 209,
+      "purpose": "micropolismappanel.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_alloc.c",
+      "lines": 209
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_resrc.c",
+      "lines": 208
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclassem.c",
+      "lines": 207
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmath.c",
+      "lines": 207
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_stubs.c",
+      "lines": 198
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtoul.c",
+      "lines": 188
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxgenl.c",
+      "lines": 186
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/power.cpp",
+      "lines": 185
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclget.c",
+      "lines": 184
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MonsterSprite.java",
+      "lines": 184
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/micropolisFacebook.js",
+      "lines": 184
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/position.h",
+      "lines": 183
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/xmlutilities.py",
+      "lines": 181,
+      "purpose": "xmlutilities.py"
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/random.cpp",
+      "lines": 177
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/NotificationPane.java",
+      "lines": 176
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolPreview.java",
+      "lines": 166
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/genAnimationTable.py",
+      "lines": 165,
+      "purpose": "Generate tile animation table."
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkatom.c",
+      "lines": 165
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/celltool.py",
+      "lines": 164,
+      "purpose": "celltool.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismessagespanel.py",
+      "lines": 163,
+      "purpose": "micropolismessagespanel.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_eval.c",
+      "lines": 163
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticepanel.py",
+      "lines": 162,
+      "purpose": "micropolisnoticepanel.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/celldrawingarea.py",
+      "lines": 161,
+      "purpose": "celldrawingarea.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sound.c",
+      "lines": 161
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/allocate.cpp",
+      "lines": 160
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgeo.c",
+      "lines": 159
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/text.h",
+      "lines": 156
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_init.c",
+      "lines": 154
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_net.c",
+      "lines": 154
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/DemandIndicator.java",
+      "lines": 150
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellwindow.py",
+      "lines": 147,
+      "purpose": "cellwindow.py"
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhash.h",
+      "lines": 147
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ShipSprite.java",
+      "lines": 144
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdisasterspanel.py",
+      "lines": 142,
+      "purpose": "micropolisdisasterspanel.py"
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/initialize.cpp",
+      "lines": 137
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/TileImages.java",
+      "lines": 134
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tilewindow.py",
+      "lines": 130,
+      "purpose": "tilewindow.py"
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/convert-tiles.py",
+      "lines": 129,
+      "purpose": "convert-tiles.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellpiemenus.py",
+      "lines": 127,
+      "purpose": "cellpiemenus.py"
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/macros.h",
+      "lines": 127
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkconfig.h",
+      "lines": 127
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stubs.h",
+      "lines": 118
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Bulldozer.java",
+      "lines": 117
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/setup.py",
+      "lines": 116,
+      "purpose": "setup.py"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolEffect.java",
+      "lines": 113
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Tiles.java",
+      "lines": 111
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_print.c",
+      "lines": 110
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxclck.c",
+      "lines": 109
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/HelicopterSprite.java",
+      "lines": 107
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/opendir.c",
+      "lines": 106
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisZone.cs",
+      "lines": 105
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistorypanel.py",
+      "lines": 105,
+      "purpose": "micropolishistorypanel.py"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationpanel.py",
+      "lines": 104,
+      "purpose": "micropolisevaluationpanel.py"
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/setup.py",
+      "lines": 103,
+      "purpose": "setup.py"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TrainSprite.java",
+      "lines": 102
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_ani.c",
+      "lines": 98
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stdafx.h",
+      "lines": 96
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MicropolisTool.java",
+      "lines": 95
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/AirplaneSprite.java",
+      "lines": 93
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxcclk.c",
+      "lines": 92
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/setup.py",
+      "lines": 91,
+      "purpose": "setup.py"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MicropolisMessage.java",
+      "lines": 91
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/mac.h",
+      "lines": 90
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TornadoSprite.java",
+      "lines": 89
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtol.c",
+      "lines": 88
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisPannedWindow.cs",
+      "lines": 81
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/ids.c",
+      "lines": 80
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/main.c",
+      "lines": 79
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisGaugeView.cs",
+      "lines": 78
+    },
+    {
+      "path": "turbogears/setup.py",
+      "lines": 78,
+      "purpose": "-*- coding: utf-8 -*-"
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/data_types.h",
+      "lines": 76
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisBudgetPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisControlPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisEvaluationPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisGenericEngine.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisHistoryPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisMapPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisMessagesPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNotebook.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNoticePanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisStartPanel.cs",
+      "lines": 74
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisView.cs",
+      "lines": 74
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strstr.c",
+      "lines": 73
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisEvaluationView.cs",
+      "lines": 72
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisHistoryView.cs",
+      "lines": 72
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNoticeView.cs",
+      "lines": 72
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisWinFormsEngine.cs",
+      "lines": 72
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/generate.h",
+      "lines": 71
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/all.js",
+      "lines": 71
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ExplosionSprite.java",
+      "lines": 67
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmerr.c",
+      "lines": 65
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/Resources.Designer.cs",
+      "lines": 63
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/main.py",
+      "lines": 62,
+      "purpose": "@file main.py Main file for running Micropolis with the GTK frontend"
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/dirent2.h",
+      "lines": 62
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityRect.java",
+      "lines": 62
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/BuildingTool.java",
+      "lines": 60
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktcp.h",
+      "lines": 58
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityLocation.java",
+      "lines": 58
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/string.h",
+      "lines": 56
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/build_tool/RearrangeTiles.java",
+      "lines": 56
+    },
+    {
+      "path": "micropolis-activity/src/sim/rand.c",
+      "lines": 55
+    },
+    {
+      "path": "turbogears/micropolis/commands.py",
+      "lines": 55,
+      "purpose": "-*- coding: utf-8 -*-"
+    },
+    {
+      "path": "micropolis-activity/src/tcl/panic.c",
+      "lines": 54
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TranslatedToolEffect.java",
+      "lines": 53
+    },
+    {
+      "path": "wikimedia/openlaszlo/openlaszlo.php",
+      "lines": 51
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Program.cs",
+      "lines": 49
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/stdlib.h",
+      "lines": 48
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityDimension.java",
+      "lines": 48
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Sound.java",
+      "lines": 47
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/times.c",
+      "lines": 46
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityBudget.java",
+      "lines": 45
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MessagesPane.java",
+      "lines": 44
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/fcntl.c",
+      "lines": 40
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/sigs.c",
+      "lines": 40
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileBehavior.java",
+      "lines": 40
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisPannedWindow.Designer.cs",
+      "lines": 38
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/maincell.py",
+      "lines": 38,
+      "purpose": "@file maincell.py Main file for running the CellEngine with the GTK frontend"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Speed.java",
+      "lines": 37
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/AssemblyInfo.cs",
+      "lines": 36
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/stdafx.h",
+      "lines": 35,
+      "purpose": "stdafx.h : include file for standard system include files,"
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/stdafx.h",
+      "lines": 35,
+      "purpose": "stdafx.h : include file for standard system include files,"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/ColorParser.java",
+      "lines": 35
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/BudgetNumbers.java",
+      "lines": 34
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/GameLevel.java",
+      "lines": 34
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/linuxcompat.h",
+      "lines": 33
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/SpriteKind.java",
+      "lines": 33
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolEffectIfc.java",
+      "lines": 32
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/jquery.js",
+      "lines": 32
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/Main.java",
+      "lines": 31
+    },
+    {
+      "path": "micropolis-activity/src/tcl/regexp.h",
+      "lines": 30
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapState.java",
+      "lines": 30
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ZoneStatus.java",
+      "lines": 30
+    },
+    {
+      "path": "turbogears/start-micropolis.py",
+      "lines": 30,
+      "purpose": "-*- coding: utf-8 -*-"
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapListener.java",
+      "lines": 28
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/Settings.Designer.cs",
+      "lines": 26
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/dirent.h",
+      "lines": 26
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityProblem.java",
+      "lines": 23
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/CellEngineMain.cpp",
+      "lines": 22,
+      "purpose": "CellEngineMain.cpp : Defines the entry point for the DLL application."
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/python/MicropolisMain.cpp",
+      "lines": 22,
+      "purpose": "MicropolisMain.cpp : Defines the entry point for the DLL application."
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/python/TileEngineMain.cpp",
+      "lines": 22,
+      "purpose": "TileEngineMain.cpp : Defines the entry point for the DLL application."
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Disaster.java",
+      "lines": 22
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/TranslatedStringsTable.java",
+      "lines": 22
+    },
+    {
+      "path": "turbogears/debug-micropolis.py",
+      "lines": 22,
+      "purpose": "-*- coding: utf-8 -*-"
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/limits.h",
+      "lines": 20
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolResult.java",
+      "lines": 20
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/EarthquakeListener.java",
+      "lines": 17
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwm.h",
+      "lines": 16
+    },
+    {
+      "path": "turbogears/micropolis/release.py",
+      "lines": 14,
+      "purpose": "Release information about micropolis"
+    },
+    {
+      "path": "turbogears/micropolis/json.py",
+      "lines": 10,
+      "purpose": "A JSON-based API(view) for your app."
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/stdafx.cpp",
+      "lines": 8,
+      "purpose": "stdafx.cpp : source file that includes just the standard includes"
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/python/stdafx.cpp",
+      "lines": 8,
+      "purpose": "stdafx.cpp : source file that includes just the standard includes"
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/python/stdafx.cpp",
+      "lines": 8,
+      "purpose": "stdafx.cpp : source file that includes just the standard includes"
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/__init__.py",
+      "lines": 7,
+      "purpose": "@package pyMicropolis"
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/micropolis.js",
+      "lines": 7
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/patchlvl.h",
+      "lines": 2
+    },
+    {
+      "path": "MicropolisCore/src/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "micropolis-activity/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "turbogears/micropolis/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "turbogears/micropolis/config/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "turbogears/micropolis/templates/__init__.py",
+      "lines": 0
+    },
+    {
+      "path": "turbogears/micropolis/tests/__init__.py",
+      "lines": 0
+    }
+  ],
+  "dependencies": {
+    "packages": [],
+    "source": ""
+  },
+  "architecture": {
+    "patterns": [
+      "Testing: 9 test file(s)",
+      "CI/CD: Configured",
+      "Pattern: Models/schemas layer",
+      "Entry points: MicropolisCore/src/pyMicropolis/gtkFrontend/main.py, MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py, micropolis-activity/src/tclx/src/main.c, micropolis-activity/src/tclx/tkucbsrc/main.c, micropolis-activity/src/tk/main.c"
+    ]
+  },
+  "test_coverage": {
+    "test_files": 9,
+    "source_files": 410,
+    "covered_modules": 4,
+    "uncovered_modules": [
+      "MicropolisCore/src/CellEngine/python/CellEngineMain.cpp",
+      "MicropolisCore/src/CellEngine/python/convert-tiles.py",
+      "MicropolisCore/src/CellEngine/python/stdafx.cpp",
+      "MicropolisCore/src/CellEngine/setup.py",
+      "MicropolisCore/src/CellEngine/src/cellengine.cpp",
+      "MicropolisCore/src/CellEngine/src/cellengine.h",
+      "MicropolisCore/src/CellEngine/src/linuxcompat.h",
+      "MicropolisCore/src/CellEngine/src/perlinnoise.h",
+      "MicropolisCore/src/CellEngine/src/ruletables.cpp",
+      "MicropolisCore/src/CellEngine/src/stdafx.h",
+      "MicropolisCore/src/MicropolisEngine/doc/genAnimationTable.py",
+      "MicropolisCore/src/MicropolisEngine/python/MicropolisMain.cpp",
+      "MicropolisCore/src/MicropolisEngine/python/stdafx.cpp",
+      "MicropolisCore/src/MicropolisEngine/setup.py",
+      "MicropolisCore/src/MicropolisEngine/src/allocate.cpp",
+      "MicropolisCore/src/MicropolisEngine/src/animate.cpp",
+      "MicropolisCore/src/MicropolisEngine/src/budget.cpp",
+      "MicropolisCore/src/MicropolisEngine/src/connect.cpp",
+      "MicropolisCore/src/MicropolisEngine/src/data_types.h",
+      "MicropolisCore/src/MicropolisEngine/src/disasters.cpp"
+    ]
+  },
+  "file_inventory": [
+    {
+      "path": ".github/copilot-instructions.md",
+      "lines": 0,
+      "size": 5008
+    },
+    {
+      "path": ".gitignore",
+      "lines": 0,
+      "size": 16
+    },
+    {
+      "path": "BUGS.txt",
+      "lines": 0,
+      "size": 5536
+    },
+    {
+      "path": "INSTALL.txt",
+      "lines": 0,
+      "size": 4650
+    },
+    {
+      "path": "MicropolisCore/documentation/HackingAtRandomTalk.txt",
+      "lines": 0,
+      "size": 4509
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/README.txt",
+      "lines": 0,
+      "size": 972
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/CellEngineMain.cpp",
+      "lines": 22,
+      "size": 334
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/convert-tiles.py",
+      "lines": 129,
+      "size": 5004
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/stdafx.cpp",
+      "lines": 8,
+      "size": 301
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/python/test.py",
+      "lines": 1096,
+      "size": 32736
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/setup.py",
+      "lines": 91,
+      "size": 3993
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/cellengine.cpp",
+      "lines": 5685,
+      "size": 151681
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/cellengine.h",
+      "lines": 801,
+      "size": 21152
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/linuxcompat.h",
+      "lines": 33,
+      "size": 566
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/perlinnoise.h",
+      "lines": 393,
+      "size": 15343
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/ruletables.cpp",
+      "lines": 6570,
+      "size": 466850
+    },
+    {
+      "path": "MicropolisCore/src/CellEngine/src/stdafx.h",
+      "lines": 35,
+      "size": 1469
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/ASSETS.txt",
+      "lines": 0,
+      "size": 12331
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/AnimationSequences.txt",
+      "lines": 0,
+      "size": 4228
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/CALLBACKS.txt",
+      "lines": 0,
+      "size": 2406
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/CODING-STYLE.txt",
+      "lines": 0,
+      "size": 1899
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/PLAN.txt",
+      "lines": 0,
+      "size": 13600
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/README-Mac.txt",
+      "lines": 0,
+      "size": 390
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/ROADMAP.txt",
+      "lines": 0,
+      "size": 7470
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/SIMULATOR.txt",
+      "lines": 0,
+      "size": 1963
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/TODO.txt",
+      "lines": 0,
+      "size": 3135
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/UserInterfacePlan.txt",
+      "lines": 0,
+      "size": 6784
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/doc/genAnimationTable.py",
+      "lines": 165,
+      "size": 4707
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/python/MicropolisMain.cpp",
+      "lines": 22,
+      "size": 334
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/python/stdafx.cpp",
+      "lines": 8,
+      "size": 301
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/setup.py",
+      "lines": 116,
+      "size": 4790
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/allocate.cpp",
+      "lines": 160,
+      "size": 5410
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/animate.cpp",
+      "lines": 237,
+      "size": 11772
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/budget.cpp",
+      "lines": 344,
+      "size": 10289
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/connect.cpp",
+      "lines": 734,
+      "size": 22808
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/data_types.h",
+      "lines": 76,
+      "size": 3550
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/disasters.cpp",
+      "lines": 408,
+      "size": 11680
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/evaluate.cpp",
+      "lines": 563,
+      "size": 16069
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/fileio.cpp",
+      "lines": 645,
+      "size": 18211
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/generate.cpp",
+      "lines": 751,
+      "size": 21001
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/generate.h",
+      "lines": 71,
+      "size": 3558
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/graph.cpp",
+      "lines": 388,
+      "size": 11344
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/initialize.cpp",
+      "lines": 137,
+      "size": 4968
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/main.cpp",
+      "lines": 452,
+      "size": 13217
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/map.cpp",
+      "lines": 1013,
+      "size": 27935
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/map_type.h",
+      "lines": 328,
+      "size": 10194
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/message.cpp",
+      "lines": 473,
+      "size": 13701
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/micropolis.cpp",
+      "lines": 770,
+      "size": 16218
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/micropolis.h",
+      "lines": 3011,
+      "size": 69661
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/position.cpp",
+      "lines": 222,
+      "size": 7061
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/position.h",
+      "lines": 183,
+      "size": 6454
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/power.cpp",
+      "lines": 185,
+      "size": 6676
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/random.cpp",
+      "lines": 177,
+      "size": 5937
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/resource.cpp",
+      "lines": 239,
+      "size": 8059
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/scan.cpp",
+      "lines": 590,
+      "size": 17835
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/simulate.cpp",
+      "lines": 1709,
+      "size": 45805
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/sprite.cpp",
+      "lines": 2034,
+      "size": 50032
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stdafx.h",
+      "lines": 96,
+      "size": 4811
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stubs.cpp",
+      "lines": 733,
+      "size": 21635
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/stubs.h",
+      "lines": 118,
+      "size": 4397
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/text.h",
+      "lines": 156,
+      "size": 8128
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/tool.cpp",
+      "lines": 1595,
+      "size": 46346
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/tool.h",
+      "lines": 244,
+      "size": 8764
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/traffic.cpp",
+      "lines": 507,
+      "size": 15154
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/update.cpp",
+      "lines": 269,
+      "size": 6984
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/utilities.cpp",
+      "lines": 427,
+      "size": 10930
+    },
+    {
+      "path": "MicropolisCore/src/MicropolisEngine/src/zone.cpp",
+      "lines": 1025,
+      "size": 26162
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/README.txt",
+      "lines": 0,
+      "size": 1411
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/python/TileEngineMain.cpp",
+      "lines": 22,
+      "size": 410
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/python/stdafx.cpp",
+      "lines": 8,
+      "size": 301
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/setup.py",
+      "lines": 103,
+      "size": 4411
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/stdafx.h",
+      "lines": 35,
+      "size": 1469
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/tileengine.cpp",
+      "lines": 1087,
+      "size": 27400
+    },
+    {
+      "path": "MicropolisCore/src/TileEngine/src/tileengine.h",
+      "lines": 271,
+      "size": 7476
+    },
+    {
+      "path": "MicropolisCore/src/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisBudgetPanel.cs",
+      "lines": 74,
+      "size": 3671
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisControlPanel.cs",
+      "lines": 74,
+      "size": 3674
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisDisastersPanel.cs",
+      "lines": 213,
+      "size": 9895
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisEvaluationPanel.cs",
+      "lines": 74,
+      "size": 3683
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisEvaluationView.cs",
+      "lines": 72,
+      "size": 3652
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisGaugeView.cs",
+      "lines": 78,
+      "size": 3812
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisGenericEngine.cs",
+      "lines": 74,
+      "size": 3670
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisHistoryPanel.cs",
+      "lines": 74,
+      "size": 3674
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisHistoryView.cs",
+      "lines": 72,
+      "size": 3643
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisMapPanel.cs",
+      "lines": 74,
+      "size": 3662
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisMessagesPanel.cs",
+      "lines": 74,
+      "size": 3675
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNotebook.cs",
+      "lines": 74,
+      "size": 3660
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNoticePanel.cs",
+      "lines": 74,
+      "size": 3671
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisNoticeView.cs",
+      "lines": 72,
+      "size": 3640
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisPannedWindow.Designer.cs",
+      "lines": 38,
+      "size": 1204
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisPannedWindow.cs",
+      "lines": 81,
+      "size": 3901
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisStartPanel.cs",
+      "lines": 74,
+      "size": 3666
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisView.cs",
+      "lines": 74,
+      "size": 3649
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisWinFormsEngine.cs",
+      "lines": 72,
+      "size": 3659
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/MicropolisZone.cs",
+      "lines": 105,
+      "size": 4235
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Program.cs",
+      "lines": 49,
+      "size": 1251
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/AssemblyInfo.cs",
+      "lines": 36,
+      "size": 1462
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/Resources.Designer.cs",
+      "lines": 63,
+      "size": 2858
+    },
+    {
+      "path": "MicropolisCore/src/csMicropolis/Properties/Settings.Designer.cs",
+      "lines": 26,
+      "size": 1097
+    },
+    {
+      "path": "MicropolisCore/src/notes/MultiPlayerIdeas.txt",
+      "lines": 0,
+      "size": 18831
+    },
+    {
+      "path": "MicropolisCore/src/notes/OLPC-notes.txt",
+      "lines": 0,
+      "size": 16370
+    },
+    {
+      "path": "MicropolisCore/src/notes/Tiles.txt",
+      "lines": 0,
+      "size": 10778
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/__init__.py",
+      "lines": 7,
+      "size": 107
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellconfigurations.py",
+      "lines": 419,
+      "size": 12182
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/celldrawingarea.py",
+      "lines": 161,
+      "size": 5445
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellengine.py",
+      "lines": 454,
+      "size": 30734
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellmodel.py",
+      "lines": 327,
+      "size": 8643
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellpiemenus.py",
+      "lines": 127,
+      "size": 4783
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellrulecompiler.py",
+      "lines": 289,
+      "size": 9260
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/celltool.py",
+      "lines": 164,
+      "size": 5265
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/cellEngine/cellwindow.py",
+      "lines": 147,
+      "size": 4962
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/main.py",
+      "lines": 62,
+      "size": 1665
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/gtkFrontend/maincell.py",
+      "lines": 38,
+      "size": 840
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/eliza.py",
+      "lines": 320,
+      "size": 10585
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisbudgetpanel.py",
+      "lines": 401,
+      "size": 14871
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliscontrolpanel.py",
+      "lines": 327,
+      "size": 12778
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdisasterspanel.py",
+      "lines": 142,
+      "size": 5636
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisdrawingarea.py",
+      "lines": 870,
+      "size": 20899
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationpanel.py",
+      "lines": 104,
+      "size": 4150
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisevaluationview.py",
+      "lines": 279,
+      "size": 8207
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgaugeview.py",
+      "lines": 331,
+      "size": 9210
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgenericengine.py",
+      "lines": 1316,
+      "size": 38425
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisgtkengine.py",
+      "lines": 589,
+      "size": 22669
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistorypanel.py",
+      "lines": 105,
+      "size": 4160
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolishistoryview.py",
+      "lines": 673,
+      "size": 18924
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismappanel.py",
+      "lines": 209,
+      "size": 8694
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolismessagespanel.py",
+      "lines": 163,
+      "size": 5492
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnotebook.py",
+      "lines": 217,
+      "size": 7030
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticepanel.py",
+      "lines": 162,
+      "size": 5804
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisnoticeview.py",
+      "lines": 211,
+      "size": 6741
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolispiemenus.py",
+      "lines": 609,
+      "size": 20816
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisrobot.py",
+      "lines": 952,
+      "size": 28492
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisstartpanel.py",
+      "lines": 255,
+      "size": 8558
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolistool.py",
+      "lines": 536,
+      "size": 12817
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisturbogearsengine.py",
+      "lines": 2426,
+      "size": 78433
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropolisview.py",
+      "lines": 323,
+      "size": 9174
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswebserver.py",
+      "lines": 361,
+      "size": 10884
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliswindow.py",
+      "lines": 517,
+      "size": 15848
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/micropoliszone.py",
+      "lines": 411,
+      "size": 12004
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/micropolisEngine/xmlutilities.py",
+      "lines": 181,
+      "size": 6006
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/pie.py",
+      "lines": 2645,
+      "size": 80463
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/piemenu/piemenu.py",
+      "lines": 2820,
+      "size": 85424
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tiledrawingarea.py",
+      "lines": 1303,
+      "size": 36256
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tiletool.py",
+      "lines": 569,
+      "size": 13460
+    },
+    {
+      "path": "MicropolisCore/src/pyMicropolis/tileEngine/tilewindow.py",
+      "lines": 130,
+      "size": 4632
+    },
+    {
+      "path": "MicropolisCore/src/run-gtkfrontend.bat",
+      "lines": 0,
+      "size": 161
+    },
+    {
+      "path": "MicropolisPublicNameLicense.md",
+      "lines": 0,
+      "size": 5091
+    },
+    {
+      "path": "NOTES.txt",
+      "lines": 0,
+      "size": 3551
+    },
+    {
+      "path": "PROGRESS.txt",
+      "lines": 0,
+      "size": 17472
+    },
+    {
+      "path": "README.md",
+      "lines": 0,
+      "size": 1934
+    },
+    {
+      "path": "aws/InstallingOnAWS.txt",
+      "lines": 0,
+      "size": 4548
+    },
+    {
+      "path": "laszlo/micropolis/ASSETS.txt",
+      "lines": 0,
+      "size": 920
+    },
+    {
+      "path": "laszlo/micropolis/NOTES.txt",
+      "lines": 0,
+      "size": 1222
+    },
+    {
+      "path": "laszlo/micropolis/TODO.txt",
+      "lines": 0,
+      "size": 9585
+    },
+    {
+      "path": "laszlo/micropolis/resources/images/tiles/makezone.py",
+      "lines": 244,
+      "size": 7776
+    },
+    {
+      "path": "micropolis-activity/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "micropolis-activity/micropolisactivity.py",
+      "lines": 313,
+      "size": 10937
+    },
+    {
+      "path": "micropolis-activity/src/ASSETS.txt",
+      "lines": 0,
+      "size": 12102
+    },
+    {
+      "path": "micropolis-activity/src/PLAN.txt",
+      "lines": 0,
+      "size": 12716
+    },
+    {
+      "path": "micropolis-activity/src/ROADMAP.txt",
+      "lines": 0,
+      "size": 7435
+    },
+    {
+      "path": "micropolis-activity/src/notes/MultiPlayerIdeas.txt",
+      "lines": 0,
+      "size": 12892
+    },
+    {
+      "path": "micropolis-activity/src/notes/OLPC-notes.txt",
+      "lines": 0,
+      "size": 16167
+    },
+    {
+      "path": "micropolis-activity/src/notes/bugs.txt",
+      "lines": 0,
+      "size": 267
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_ani.c",
+      "lines": 98,
+      "size": 4154
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_bigmap.c",
+      "lines": 317,
+      "size": 9441
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_cam.c",
+      "lines": 1236,
+      "size": 26402
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_map.c",
+      "lines": 503,
+      "size": 11849
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_setup.c",
+      "lines": 443,
+      "size": 11197
+    },
+    {
+      "path": "micropolis-activity/src/sim/g_smmaps.c",
+      "lines": 414,
+      "size": 11270
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/animtab.h",
+      "lines": 287,
+      "size": 16375
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/cam.h",
+      "lines": 217,
+      "size": 6404
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/mac.h",
+      "lines": 90,
+      "size": 3789
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/macros.h",
+      "lines": 127,
+      "size": 4732
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/sim.h",
+      "lines": 687,
+      "size": 18066
+    },
+    {
+      "path": "micropolis-activity/src/sim/headers/view.h",
+      "lines": 328,
+      "size": 8000
+    },
+    {
+      "path": "micropolis-activity/src/sim/rand.c",
+      "lines": 55,
+      "size": 2104
+    },
+    {
+      "path": "micropolis-activity/src/sim/random.c",
+      "lines": 366,
+      "size": 13317
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_alloc.c",
+      "lines": 209,
+      "size": 6576
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_disast.c",
+      "lines": 321,
+      "size": 8279
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_eval.c",
+      "lines": 344,
+      "size": 8804
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_fileio.c",
+      "lines": 604,
+      "size": 13937
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_gen.c",
+      "lines": 643,
+      "size": 14620
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_init.c",
+      "lines": 154,
+      "size": 4895
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_msg.c",
+      "lines": 448,
+      "size": 10513
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_power.c",
+      "lines": 253,
+      "size": 6777
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_scan.c",
+      "lines": 540,
+      "size": 13575
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_sim.c",
+      "lines": 1240,
+      "size": 29203
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_traf.c",
+      "lines": 330,
+      "size": 8734
+    },
+    {
+      "path": "micropolis-activity/src/sim/s_zone.c",
+      "lines": 659,
+      "size": 14547
+    },
+    {
+      "path": "micropolis-activity/src/sim/sim.c",
+      "lines": 834,
+      "size": 19090
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/mapgener.c",
+      "lines": 411,
+      "size": 9706
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/terra.c",
+      "lines": 868,
+      "size": 25935
+    },
+    {
+      "path": "micropolis-activity/src/sim/terrain/terragen.c",
+      "lines": 508,
+      "size": 13263
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_budget.c",
+      "lines": 349,
+      "size": 9412
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_cam.c",
+      "lines": 877,
+      "size": 21272
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_con.c",
+      "lines": 646,
+      "size": 15193
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_date.c",
+      "lines": 736,
+      "size": 18192
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_editor.c",
+      "lines": 1583,
+      "size": 39189
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_eval.c",
+      "lines": 163,
+      "size": 6385
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_graph.c",
+      "lines": 894,
+      "size": 22467
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_inter.c",
+      "lines": 1604,
+      "size": 52720
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_keys.c",
+      "lines": 325,
+      "size": 8900
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_map.c",
+      "lines": 611,
+      "size": 14877
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_net.c",
+      "lines": 154,
+      "size": 5053
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_piem.c",
+      "lines": 2359,
+      "size": 66898
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_print.c",
+      "lines": 110,
+      "size": 4025
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_resrc.c",
+      "lines": 208,
+      "size": 6102
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sim.c",
+      "lines": 1697,
+      "size": 30545
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sound.c",
+      "lines": 161,
+      "size": 4754
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_sprite.c",
+      "lines": 1641,
+      "size": 36929
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_stubs.c",
+      "lines": 198,
+      "size": 5108
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_tk.c",
+      "lines": 840,
+      "size": 20641
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_tool.c",
+      "lines": 1695,
+      "size": 36496
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_update.c",
+      "lines": 272,
+      "size": 6581
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_util.c",
+      "lines": 295,
+      "size": 7142
+    },
+    {
+      "path": "micropolis-activity/src/sim/w_x.c",
+      "lines": 1564,
+      "size": 38862
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/dirent.h",
+      "lines": 26,
+      "size": 809
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/dirent2.h",
+      "lines": 62,
+      "size": 1658
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/limits.h",
+      "lines": 20,
+      "size": 893
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/opendir.c",
+      "lines": 106,
+      "size": 1983
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/stdlib.h",
+      "lines": 48,
+      "size": 1937
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strerror.c",
+      "lines": 471,
+      "size": 11479
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/string.h",
+      "lines": 56,
+      "size": 2180
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strstr.c",
+      "lines": 73,
+      "size": 1922
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtod.c",
+      "lines": 259,
+      "size": 6087
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtol.c",
+      "lines": 88,
+      "size": 2267
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/strtoul.c",
+      "lines": 188,
+      "size": 4318
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/testpid.c",
+      "lines": 30,
+      "size": 907
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/teststrtoul.c",
+      "lines": 39,
+      "size": 1277
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/testuid.c",
+      "lines": 30,
+      "size": 907
+    },
+    {
+      "path": "micropolis-activity/src/tcl/compat/testwait.c",
+      "lines": 40,
+      "size": 1244
+    },
+    {
+      "path": "micropolis-activity/src/tcl/panic.c",
+      "lines": 54,
+      "size": 1603
+    },
+    {
+      "path": "micropolis-activity/src/tcl/porting.txt",
+      "lines": 0,
+      "size": 5608
+    },
+    {
+      "path": "micropolis-activity/src/tcl/readme.txt",
+      "lines": 0,
+      "size": 8761
+    },
+    {
+      "path": "micropolis-activity/src/tcl/regexp.c",
+      "lines": 1233,
+      "size": 28088
+    },
+    {
+      "path": "micropolis-activity/src/tcl/regexp.h",
+      "lines": 30,
+      "size": 806
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tcl.h",
+      "lines": 340,
+      "size": 11810
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclassem.c",
+      "lines": 207,
+      "size": 5815
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclbasic.c",
+      "lines": 1063,
+      "size": 28329
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclckall.c",
+      "lines": 533,
+      "size": 15386
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdah.c",
+      "lines": 913,
+      "size": 22196
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdil.c",
+      "lines": 1149,
+      "size": 29590
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclcmdmz.c",
+      "lines": 1420,
+      "size": 35676
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclenv.c",
+      "lines": 435,
+      "size": 11261
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclexpr.c",
+      "lines": 1336,
+      "size": 34332
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclget.c",
+      "lines": 184,
+      "size": 5183
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclglob.c",
+      "lines": 580,
+      "size": 15285
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhash.c",
+      "lines": 931,
+      "size": 25017
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhash.h",
+      "lines": 147,
+      "size": 4968
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclhist.c",
+      "lines": 1093,
+      "size": 30514
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclint.h",
+      "lines": 834,
+      "size": 32413
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclparse.c",
+      "lines": 1174,
+      "size": 32722
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclproc.c",
+      "lines": 567,
+      "size": 14709
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tcltest.c",
+      "lines": 157,
+      "size": 3332
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunix.h",
+      "lines": 321,
+      "size": 8384
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxaz.c",
+      "lines": 1709,
+      "size": 43274
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxst.c",
+      "lines": 730,
+      "size": 15307
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclunxut.c",
+      "lines": 1033,
+      "size": 28420
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclutil.c",
+      "lines": 1422,
+      "size": 36607
+    },
+    {
+      "path": "micropolis-activity/src/tcl/tclvar.c",
+      "lines": 2265,
+      "size": 63934
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/fcntl.c",
+      "lines": 40,
+      "size": 946
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/ids.c",
+      "lines": 80,
+      "size": 1578
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/sigs.c",
+      "lines": 40,
+      "size": 986
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/strftime.c",
+      "lines": 296,
+      "size": 6896
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ossupp/times.c",
+      "lines": 46,
+      "size": 1135
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/main.c",
+      "lines": 79,
+      "size": 2476
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/patchlvl.h",
+      "lines": 2,
+      "size": 22
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclplus.h",
+      "lines": 570,
+      "size": 14411
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxbsrc.c",
+      "lines": 355,
+      "size": 10746
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxcclk.c",
+      "lines": 92,
+      "size": 2963
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxchmd.c",
+      "lines": 420,
+      "size": 12052
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxclck.c",
+      "lines": 109,
+      "size": 3256
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxclp.c",
+      "lines": 388,
+      "size": 12024
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxcret.c",
+      "lines": 302,
+      "size": 11188
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxdebg.c",
+      "lines": 406,
+      "size": 11565
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxdup.c",
+      "lines": 267,
+      "size": 8133
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfcmd.c",
+      "lines": 856,
+      "size": 25276
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfctl.c",
+      "lines": 352,
+      "size": 10095
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfmat.c",
+      "lines": 693,
+      "size": 19148
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxfsca.c",
+      "lines": 582,
+      "size": 18202
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxgenl.c",
+      "lines": 186,
+      "size": 5745
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxhndl.c",
+      "lines": 456,
+      "size": 15380
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxid.c",
+      "lines": 331,
+      "size": 9702
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxint.h",
+      "lines": 535,
+      "size": 13942
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxklst.c",
+      "lines": 844,
+      "size": 26556
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxlib.c",
+      "lines": 1505,
+      "size": 46571
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxlist.c",
+      "lines": 278,
+      "size": 7384
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmath.c",
+      "lines": 207,
+      "size": 5237
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmerr.c",
+      "lines": 65,
+      "size": 2091
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxmsgc.c",
+      "lines": 356,
+      "size": 9625
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxproc.c",
+      "lines": 297,
+      "size": 8275
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxprof.c",
+      "lines": 702,
+      "size": 22542
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxrexp.c",
+      "lines": 493,
+      "size": 16414
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxsel.c",
+      "lines": 429,
+      "size": 13908
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxsig.c",
+      "lines": 1034,
+      "size": 30778
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxstr.c",
+      "lines": 498,
+      "size": 13601
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxstup.c",
+      "lines": 502,
+      "size": 17273
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxtend.h",
+      "lines": 214,
+      "size": 7154
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxunix.c",
+      "lines": 537,
+      "size": 14132
+    },
+    {
+      "path": "micropolis-activity/src/tclx/src/tclxutil.c",
+      "lines": 749,
+      "size": 21294
+    },
+    {
+      "path": "micropolis-activity/src/tclx/tkucbsrc/main.c",
+      "lines": 357,
+      "size": 9165
+    },
+    {
+      "path": "micropolis-activity/src/tclx/tkucbsrc/tkevent.c",
+      "lines": 1910,
+      "size": 53187
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ucbsrc/tclbasic.c",
+      "lines": 1067,
+      "size": 28460
+    },
+    {
+      "path": "micropolis-activity/src/tclx/ucbsrc/tclexpr.c",
+      "lines": 1337,
+      "size": 34383
+    },
+    {
+      "path": "micropolis-activity/src/tk/default.h",
+      "lines": 341,
+      "size": 11431
+    },
+    {
+      "path": "micropolis-activity/src/tk/ks_names.h",
+      "lines": 917,
+      "size": 22724
+    },
+    {
+      "path": "micropolis-activity/src/tk/library/demos/tkSquare.c",
+      "lines": 531,
+      "size": 15725
+    },
+    {
+      "path": "micropolis-activity/src/tk/main.c",
+      "lines": 334,
+      "size": 8456
+    },
+    {
+      "path": "micropolis-activity/src/tk/tk.h",
+      "lines": 743,
+      "size": 29192
+    },
+    {
+      "path": "micropolis-activity/src/tk/tk3d.c",
+      "lines": 993,
+      "size": 28230
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkargv.c",
+      "lines": 432,
+      "size": 11516
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkatom.c",
+      "lines": 165,
+      "size": 4570
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbind.c",
+      "lines": 2229,
+      "size": 63596
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbitmap.c",
+      "lines": 496,
+      "size": 14484
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkbutton.c",
+      "lines": 1545,
+      "size": 49754
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcanvas.c",
+      "lines": 3633,
+      "size": 110732
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcanvas.h",
+      "lines": 401,
+      "size": 15655
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcmds.c",
+      "lines": 818,
+      "size": 24149
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcolor.c",
+      "lines": 602,
+      "size": 16192
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkconfig.c",
+      "lines": 847,
+      "size": 22834
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkconfig.h",
+      "lines": 127,
+      "size": 3099
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcursor.c",
+      "lines": 643,
+      "size": 19208
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvarc.c",
+      "lines": 1524,
+      "size": 45917
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvbmap.c",
+      "lines": 641,
+      "size": 18184
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvline.c",
+      "lines": 1452,
+      "size": 43661
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvpoly.c",
+      "lines": 770,
+      "size": 22452
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvtext.c",
+      "lines": 1369,
+      "size": 40317
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkcvwind.c",
+      "lines": 772,
+      "size": 22266
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkentry.c",
+      "lines": 1785,
+      "size": 55452
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkerror.c",
+      "lines": 294,
+      "size": 8824
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkevent.c",
+      "lines": 1904,
+      "size": 52960
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkfont.c",
+      "lines": 773,
+      "size": 22252
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkframe.c",
+      "lines": 507,
+      "size": 15378
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgc.c",
+      "lines": 334,
+      "size": 9027
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgeo.c",
+      "lines": 159,
+      "size": 4724
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkget.c",
+      "lines": 593,
+      "size": 14416
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkgrab.c",
+      "lines": 1112,
+      "size": 34409
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkint.h",
+      "lines": 566,
+      "size": 18977
+    },
+    {
+      "path": "micropolis-activity/src/tk/tklist.c",
+      "lines": 1785,
+      "size": 53288
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmenu.c",
+      "lines": 2074,
+      "size": 63236
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmnbut.c",
+      "lines": 1166,
+      "size": 37007
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkmsg.c",
+      "lines": 788,
+      "size": 23468
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkoption.c",
+      "lines": 1336,
+      "size": 37494
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpack.c",
+      "lines": 1053,
+      "size": 30546
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpixmap.c",
+      "lines": 656,
+      "size": 20144
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkplace.c",
+      "lines": 939,
+      "size": 27568
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkpresrv.c",
+      "lines": 236,
+      "size": 6336
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkrawtcp.c",
+      "lines": 694,
+      "size": 17379
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkrectov.c",
+      "lines": 878,
+      "size": 26580
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkscale.c",
+      "lines": 1418,
+      "size": 44267
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkscrbar.c",
+      "lines": 1190,
+      "size": 36703
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkselect.c",
+      "lines": 1889,
+      "size": 55044
+    },
+    {
+      "path": "micropolis-activity/src/tk/tksend.c",
+      "lines": 1177,
+      "size": 32687
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkshare.c",
+      "lines": 409,
+      "size": 12088
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktcp.c",
+      "lines": 2956,
+      "size": 80913
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktcp.h",
+      "lines": 58,
+      "size": 1807
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktext.c",
+      "lines": 1516,
+      "size": 46052
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktext.h",
+      "lines": 416,
+      "size": 16057
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktrig.c",
+      "lines": 1185,
+      "size": 32241
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxbtre.c",
+      "lines": 2375,
+      "size": 67340
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxdisp.c",
+      "lines": 2094,
+      "size": 63634
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxidx.c",
+      "lines": 640,
+      "size": 16933
+    },
+    {
+      "path": "micropolis-activity/src/tk/tktxtag.c",
+      "lines": 1067,
+      "size": 30802
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwindow.c",
+      "lines": 1601,
+      "size": 45586
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwm.c",
+      "lines": 2416,
+      "size": 72261
+    },
+    {
+      "path": "micropolis-activity/src/tk/tkwm.h",
+      "lines": 16,
+      "size": 353
+    },
+    {
+      "path": "micropolis-godot/.godot/editor/main.tscn-folding-3ad5c15c4f3250da0cc7c1af1770d85f.cfg",
+      "lines": 0,
+      "size": 703
+    },
+    {
+      "path": "micropolis-godot/.godot/editor/project_metadata.cfg",
+      "lines": 0,
+      "size": 131
+    },
+    {
+      "path": "micropolis-godot/.godot/global_script_class_cache.cfg",
+      "lines": 0,
+      "size": 339
+    },
+    {
+      "path": "micropolis-graphics/buildings_3d/scripts/render.sh",
+      "lines": 0,
+      "size": 240
+    },
+    {
+      "path": "micropolis-graphics/buildings_3d/standards.txt",
+      "lines": 0,
+      "size": 349
+    },
+    {
+      "path": "micropolis-java/.gitignore",
+      "lines": 0,
+      "size": 47
+    },
+    {
+      "path": "micropolis-java/FILE_FORMAT.txt",
+      "lines": 0,
+      "size": 408
+    },
+    {
+      "path": "micropolis-java/graphics/HACKING.txt",
+      "lines": 0,
+      "size": 950
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/Main.java",
+      "lines": 31,
+      "size": 704
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/build_tool/MakeTiles.java",
+      "lines": 304,
+      "size": 7483
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/build_tool/RearrangeTiles.java",
+      "lines": 56,
+      "size": 1497
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/AirplaneSprite.java",
+      "lines": 93,
+      "size": 2206
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/BudgetNumbers.java",
+      "lines": 34,
+      "size": 883
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/BuildingTool.java",
+      "lines": 60,
+      "size": 1249
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Bulldozer.java",
+      "lines": 117,
+      "size": 2564
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityBudget.java",
+      "lines": 45,
+      "size": 948
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityDimension.java",
+      "lines": 48,
+      "size": 993
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityEval.java",
+      "lines": 283,
+      "size": 6982
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityLocation.java",
+      "lines": 58,
+      "size": 1239
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityProblem.java",
+      "lines": 23,
+      "size": 542
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/CityRect.java",
+      "lines": 62,
+      "size": 1393
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Disaster.java",
+      "lines": 22,
+      "size": 503
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/EarthquakeListener.java",
+      "lines": 17,
+      "size": 503
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ExplosionSprite.java",
+      "lines": 67,
+      "size": 1541
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/GameLevel.java",
+      "lines": 34,
+      "size": 840
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/HelicopterSprite.java",
+      "lines": 107,
+      "size": 2572
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapGenerator.java",
+      "lines": 546,
+      "size": 9549
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapListener.java",
+      "lines": 28,
+      "size": 925
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapScanner.java",
+      "lines": 965,
+      "size": 18163
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MapState.java",
+      "lines": 30,
+      "size": 862
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Micropolis.java",
+      "lines": 2704,
+      "size": 59343
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MicropolisMessage.java",
+      "lines": 91,
+      "size": 3726
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MicropolisTool.java",
+      "lines": 95,
+      "size": 2069
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/MonsterSprite.java",
+      "lines": 184,
+      "size": 3841
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/RoadLikeTool.java",
+      "lines": 466,
+      "size": 8762
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ShipSprite.java",
+      "lines": 144,
+      "size": 3316
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Sound.java",
+      "lines": 47,
+      "size": 1238
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Speed.java",
+      "lines": 37,
+      "size": 1233
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Sprite.java",
+      "lines": 229,
+      "size": 5022
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/SpriteKind.java",
+      "lines": 33,
+      "size": 735
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TerrainBehavior.java",
+      "lines": 374,
+      "size": 7992
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileBehavior.java",
+      "lines": 40,
+      "size": 920
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileConstants.java",
+      "lines": 725,
+      "size": 17799
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TileSpec.java",
+      "lines": 365,
+      "size": 7449
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/Tiles.java",
+      "lines": 111,
+      "size": 2565
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolEffect.java",
+      "lines": 113,
+      "size": 2496
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolEffectIfc.java",
+      "lines": 32,
+      "size": 799
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolPreview.java",
+      "lines": 166,
+      "size": 3479
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolResult.java",
+      "lines": 20,
+      "size": 556
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ToolStroke.java",
+      "lines": 355,
+      "size": 6986
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TornadoSprite.java",
+      "lines": 89,
+      "size": 1693
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TrafficGen.java",
+      "lines": 231,
+      "size": 4123
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TrainSprite.java",
+      "lines": 102,
+      "size": 2732
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/TranslatedToolEffect.java",
+      "lines": 53,
+      "size": 1127
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/engine/ZoneStatus.java",
+      "lines": 30,
+      "size": 1095
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/BudgetDialog.java",
+      "lines": 400,
+      "size": 12113
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/ColorParser.java",
+      "lines": 35,
+      "size": 1033
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/DemandIndicator.java",
+      "lines": 150,
+      "size": 3598
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/EvaluationPane.java",
+      "lines": 298,
+      "size": 8284
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/GraphsPane.java",
+      "lines": 332,
+      "size": 9452
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MainWindow.java",
+      "lines": 1733,
+      "size": 44360
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MessagesPane.java",
+      "lines": 44,
+      "size": 1117
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/MicropolisDrawingArea.java",
+      "lines": 469,
+      "size": 10569
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/NewCityDialog.java",
+      "lines": 233,
+      "size": 6102
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/NotificationPane.java",
+      "lines": 176,
+      "size": 5336
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/OverlayMapView.java",
+      "lines": 560,
+      "size": 12751
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/gui/TileImages.java",
+      "lines": 134,
+      "size": 3790
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/StringsModel.java",
+      "lines": 239,
+      "size": 4688
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/TranslatedStringsTable.java",
+      "lines": 22,
+      "size": 625
+    },
+    {
+      "path": "micropolis-java/src/micropolisj/util/TranslationTool.java",
+      "lines": 325,
+      "size": 7693
+    },
+    {
+      "path": "turbogears/README.txt",
+      "lines": 0,
+      "size": 131
+    },
+    {
+      "path": "turbogears/debug-micropolis.py",
+      "lines": 22,
+      "size": 592
+    },
+    {
+      "path": "turbogears/dev.cfg",
+      "lines": 0,
+      "size": 1778
+    },
+    {
+      "path": "turbogears/micropolis/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "turbogears/micropolis/commands.py",
+      "lines": 55,
+      "size": 1793
+    },
+    {
+      "path": "turbogears/micropolis/config/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "turbogears/micropolis/config/app.cfg",
+      "lines": 0,
+      "size": 7202
+    },
+    {
+      "path": "turbogears/micropolis/config/log.cfg",
+      "lines": 0,
+      "size": 598
+    },
+    {
+      "path": "turbogears/micropolis/controllers.py",
+      "lines": 1911,
+      "size": 58295
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/all.js",
+      "lines": 71,
+      "size": 105622
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/all_pretty.js",
+      "lines": 3988,
+      "size": 154041
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/embed-compressed.js",
+      "lines": 820,
+      "size": 46600
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/jquery.js",
+      "lines": 32,
+      "size": 55774
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/json2.js",
+      "lines": 481,
+      "size": 17454
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/micropolis.js",
+      "lines": 7,
+      "size": 245
+    },
+    {
+      "path": "turbogears/micropolis/htdocs/static/javascript/micropolisFacebook.js",
+      "lines": 184,
+      "size": 4505
+    },
+    {
+      "path": "turbogears/micropolis/json.py",
+      "lines": 10,
+      "size": 311
+    },
+    {
+      "path": "turbogears/micropolis/model.py",
+      "lines": 529,
+      "size": 17258
+    },
+    {
+      "path": "turbogears/micropolis/release.py",
+      "lines": 14,
+      "size": 425
+    },
+    {
+      "path": "turbogears/micropolis/templates/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "turbogears/micropolis/testming.py",
+      "lines": 89,
+      "size": 2376
+    },
+    {
+      "path": "turbogears/micropolis/tests/__init__.py",
+      "lines": 0,
+      "size": 0
+    },
+    {
+      "path": "turbogears/micropolis/tests/test_controllers.py",
+      "lines": 25,
+      "size": 765
+    },
+    {
+      "path": "turbogears/micropolis/tests/test_model.py",
+      "lines": 45,
+      "size": 1781
+    },
+    {
+      "path": "turbogears/prod.cfg",
+      "lines": 0,
+      "size": 1779
+    },
+    {
+      "path": "turbogears/sample-prod.cfg",
+      "lines": 0,
+      "size": 2382
+    },
+    {
+      "path": "turbogears/setup.py",
+      "lines": 78,
+      "size": 2488
+    },
+    {
+      "path": "turbogears/start-micropolis.py",
+      "lines": 30,
+      "size": 765
+    },
+    {
+      "path": "turbogears/test.cfg",
+      "lines": 0,
+      "size": 779
+    },
+    {
+      "path": "wikimedia/openlaszlo/openlaszlo.php",
+      "lines": 51,
+      "size": 1879
+    }
+  ],
+  "conventions": {
+    "items": [
+      "Docstrings present"
+    ]
+  }
+}

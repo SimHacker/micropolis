@@ -77,7 +77,7 @@
        classpathref="build-classpath"
 	includeantruntime="false"
 	debug="true" debuglevel="lines,vars,source"
-	source="1.6" target="1.6"
+	source="1.8" target="1.8"
        >
 	<compilerarg value="-Xlint:unchecked" />
 	<compilerarg value="-Xlint:deprecation" />
