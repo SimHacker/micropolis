@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3city_view"]
+
+[ext_resource type="Script" path="res://scenes/city_view.gd" id="1_cityview"]
+
+[node name="CityView" type="Node2D"]
+script = ExtResource("1_cityview")
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 800)
+zoom = Vector2(1, 1)
