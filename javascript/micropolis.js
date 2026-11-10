@@ -13802,7 +13802,9 @@ var gMicropolis;
 function TestMicropolis()
 {
 
-    var gMicropolis = 
+    console.log("TestMicropolis");
+
+    gMicropolis = 
         new Micropolis();
     console.log("gMicropolis", gMicropolis);
 

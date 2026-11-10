@@ -1,0 +1,5 @@
+Script minecraft in js
+http://dev.bukkit.org/bukkit-plugins/scriptcraft/
+
+Add blocks
+http://dev.bukkit.org/bukkit-plugins/serverblocks/#comments

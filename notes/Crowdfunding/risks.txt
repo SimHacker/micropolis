@@ -2,3 +2,139 @@ Document risks and challenges.
 
 "What are the risks and challenges this project faces, and what qualifies you to overcome them?"
 
+Licensing.
+
+  There could theoretically be legal issues from EA in regards to the
+  use of their intellectual property and trademarks.
+
+  We have copies of the contracts for the License and Distribution
+  Agreement between EA and OLPC, as well as the original licensing
+  contracts between Maxis and DUX Software, and DUX Software and Don
+  Hopkins, to develop the Unix based version of SimCity. We are
+  careful to abide by the terms of the contracts and the GPLv3.
+
+  The original SimCity Classic source code is licensed under GPLv3,
+  and we are being very careful to follow the terms of the license,
+  which include not using EA's trademark name "SimCity", so we are
+  calling our version "Micropolis" instead, which was Will Wright's
+  original working title, before it was called SimCity.
+
+  We will license all of the source code that is based on EA's
+  original SimCity code under GPLv3, so the game will be free to use
+  and redistrubute. We will not charge any fee for the game, or
+  implement any kind of DRM or online connection requirement. We are
+  allowed to commercialize and charge money for independent code and
+  content that we develop ourselves.
+
+  In the unlikely event the Micropolis disk drive company asks the
+  Micropolis city simulation game project to stop using its name
+  (which would be frivolous because there is no chance of anyone
+  confusing a disk drive with a city simulation game), and if we can't
+  dissuade them from doing such a ridiculous thing, we will change the
+  name to something else, if necessary.
+
+Performance.
+
+  I'm very confident that the 2d version of the game will perform
+  spectacularly, even on low powered mobile devices.
+
+  The question is how fast can we make the 3d user interface run, and
+  how good can we make the 3d content look?
+
+  That is highly dependent on the complexity of the building models,
+  and the efficency of the content optimization tools and rendering
+  code we implement.
+
+  We will develop a content pipeline that exports 3d voxel models from
+  Minecraft, and optimizes them by reducing the number of polygons and
+  textures.
+
+  Obviously you don't have to draw all the internal cube faces, and
+  you can also collapse faces with repeated textures, which are
+  common.
+
+  First we will develop a base set of "low resolution" chunky
+  buildings based on the classic SimCity tile set, for running the
+  game on lower-end computers and mobile devices.
+
+  Then we will develop some higher definition buildings to test out
+  the model optimizer and the rendering performance.
+
+  Then, only after we have some content that stresses the renderer, we
+  will measure the performance and discover the hot spots, and do what
+  we can to optimize the rendering performance.
+
+Scheduling.
+
+  There may be more work to be done than we realize, so the schedule
+  may slip.
+
+  Other projects or events in life may distract us from putting enough
+  time into the project, or I might get hit by a bus.
+
+  I have been working with SimCity/Micropolis for more than 21 years,
+  and I am extremely dedicated to finishing this project, and I have a
+  very good idea of how much work it will be rewriting the code and
+  developing another user interface, because I have already done that
+  several times before for a number of different platforms, using much
+  cruder tools that are available today.
+
+  The code is free open source software, so we will freely distribute
+  it on github as we are developing it, and volunteers in the
+  community can help out during development, and take over the project
+  if we take too long or are not able to complete it.
+
+  In terms of today's typical game, it really isn't that much code at
+  all. But we have every intention of making it beautiful, well
+  documented, easy to read, understand and learn from, extensible,
+  efficient, and modular code.
+
+  That of course takes longer to do that to throw together some messy
+  code and ship it. So we are taking an iterative approach, first
+  developing a minimum viable product, then incrementally improving 
+  and optimizing it in a series of steps that build on each other while
+  maintaining a playable game.
+
+  Fortunately, we have already done a huge amount of work with the old
+  C code, translating it to C++, modularizing it, cleaning it up,
+  refactoring it, documenting it, integrating it with Python, and
+  developing plug-in interfaces. 
+
+  We are building on top of all that work with the JavaScript
+  translation. But it's still important to make the code take
+  advantage of JavaScript's strengths, peculiararities and idioms, and
+  integrate it will with modern web technologies.
+
+Scope Creep
+
+  We are well aware of the temptation of scope creep if we raise more
+  money than we asked for, or even if we don't.
+
+  The Micropolis project's long term plans include multi player
+  support, constructionist education support, and even visual
+  programming language support.
+
+  We are determined to use this first project as an opportunity to prove
+  that we can make realistic goals, and deliver what we promise. That
+  will enable us to do subsequent Kickstarter projects to develop the
+  more ambitious longer term goals, to give them the design and focus
+  that they deserve. 
+
+  This first Kickstarter project will build on my previous 21 years of
+  work with SimCity/Micropolis, and my real world game development
+  experience working with Will Wright developing and shipping The
+  Sims.
+
+  It will be tightly focusing on developing a solid foundation for
+  those long term goals, by implementing a great browser based version
+  of the original 2D game as the base goal, as well as the tractable
+  stretch goals of developing a 3D user interface, 3D content
+  development tools, and 3D content expansion packs.
+
+  We can refer our supporters to the source code for previous versions
+  of Micropolis, as well as playable proof of content prototypes that
+  demonstrate that the goals of this project are achievable, and also
+  documentation of our previous development experience, products and
+  projects that prove we are capable of achieving the goals of this
+  Kickstarter project.
+

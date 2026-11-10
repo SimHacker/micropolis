@@ -13,3 +13,4 @@
 [submodule "excellentexport"]
 	path = excellentexport
 	url = https://github.com/jmaister/excellentexport
+	branch = master

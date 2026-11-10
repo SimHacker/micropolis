@@ -1,0 +1,102 @@
+Develop a set of tools for creating content and a pipeline to get it into voxeljs.
+
+Minecraft importer.
+
+Lego importer.
+
+Build with Chrome importer.
+
+Web based 3D video editor.
+
+    View nd edit Kinect z-buffered video editor.
+
+    3D Kinect video importer.
+
+    3d Video Editor
+        3D video painting tool.
+        edit layers of z-buffered alpha channeled video
+        time start, time end, time scale, clip rectangle, alpha mask, translation, rotation, scale
+
+    Block animation creation tool.
+        Import 3D video and output Voxel animations.
+        Colors blocks by matching video color/depth/gradient/etc with block texture sets somehow intelligently, or even making block texture sets.
+
+    Block texture paint tool.
+
+    Block animation editor.
+
+    Animated textured block editor.
+
+      Clip texture map frames out of full res frames from video,
+      stable texture animations automatically made by tracking objects
+      and camera motion in video. 
+
+      Drag the four corners of the block anywhere over the video, and
+      animation those texture map corners over time, first by tracking
+      automatally, then fine tune by hand.
+
+    Makes it possible to record 3d video with a Kinetix, lift out
+    useful parts, reuse them in other compositions by moving and
+    scaling and rotating them into place, looping or ping ponging them
+    to some tile scale, or depending on some input parameter (like
+
+    mouth opening to talk). Put named registration points in the video that track faces, objects, add camera motion, etc.
+
+    Combine 3D video of an object from different angles, to get 1 full 3D representation and texture.
+      Kind of like 3D photosynth, recovering camera motion and turning the object around and incrementally building a mesh and texture an your turned it.
+      Surely somebody must have already done this or published a paper about it.
+
+    3D Video Skeletons made out of these 3d video objects.
+
+    3D Video Skeleton Animation Editor
+
+Block Editor
+    Smart blocks that can be brought to life by plug-ins.
+    Blocks have a class name which is looked up in the registry.
+    Multiple plug-ins can register for the same block.
+    Could have multiple plugins active at once.
+    Block data is stored in js dict in block.
+    Block plug-ins can share the same data.
+    Use Lasloesque constraints and data binding to bind the attributes of the plug-in class to the shared json dict key/value pairs. 
+    Use constrints instead of MVC to automatically synchronize multiple views and editors.
+    Like Unity3D components, but better because it has data binding to arbitrary keys of the shared dict.
+    Keep a parallel dict of the events (insteaod of prefixing with _ in the data dict). 
+    Best to keep the persistent data separate from the runtime data.
+    The data dict is loaded and saved literally and edited in place.
+    Leave alone keys you don't understand, they belong to other plug-ins that might not be loaded.
+    So plug-in editor could be removed from the runtime system the only need view-only versions of the block, and in the editor you can add and remove (or enabled and disabled) special editors or views of various types. 
+
+Make an object in the world that is a "field projector" that applies a simulation of some sort to a region of the world.
+
+Blocks in the world don't usually have any simulations running them, but you can create objects the world that run various simulations the blocks of the world. 
+
+Cellular automata rules like "eco," using lava and ice as water and land, with some other cool looking blocks for firey "brain's brain" critters on lava and crystaline "life" critters on ice).
+
+Plop these cool simulation objects into the voxel world and configure and script them to do cool stuff.
+
+They create and run simulation components on blocks of a region of the world.
+
+Multiple fields can overlap the same blocks, and they can be synchronized in sequence, or each run at its own clock rate and phase.
+
+They share data with each other through the "layers" of named properties they create in the block dictionaries. 
+
+Configure the speed it runs (ticks per second), and the box it effects. 
+
+Fields can operate on single blocks or any pattern or subset of blocks in the area.
+
+they can be used as editing tools, probes or agents, that can move around or change shape if they like. 
+
+Running simulations could cost "energy" or "mana" according the the speed and enumber of components running.
+
+Script the simulation projectors as well as the block components it creates.
+
+Use the JavaScript implementation of Forth to interpret cellular automata rules from the examples in the book.
+
+Use an Apple ][ emulator to write rules in Applesoft or Integer Basic, 6502 assembly, UCSD Pascal, etc.
+
+Web site for artists to sell or give away their content.
+
+Integrate Cafe Press and other vendors so artists can sell their own swag!
+
+So fans can contribute to artists by buying their swag, and get something in return.
+

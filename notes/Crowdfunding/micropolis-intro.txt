@@ -136,7 +136,7 @@ matter how impossible or complicated or ridiculous it seems.
 
 And to Eric "I fucking LOVE C++" Bowman, who taught me how cherish and
 celebrate the subtleties and nuances of his favorite programming
-language,
+language.
 
 And to Patrick "The Third J" Barret, who taught me how to weave
 spaghetti code into durable cloth that will last you a lifetime.
